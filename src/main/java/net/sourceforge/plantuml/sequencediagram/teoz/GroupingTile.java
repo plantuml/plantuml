@@ -37,8 +37,12 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.plantuml.asciiverse.ADimension2D;
 import net.sourceforge.plantuml.asciiverse.AElseSeparator;
@@ -59,6 +63,9 @@ import net.sourceforge.plantuml.sequencediagram.GroupingLeaf;
 import net.sourceforge.plantuml.sequencediagram.GroupingStart;
 import net.sourceforge.plantuml.sequencediagram.GroupingType;
 import net.sourceforge.plantuml.sequencediagram.HSpace;
+import net.sourceforge.plantuml.sequencediagram.LifeEvent;
+import net.sourceforge.plantuml.sequencediagram.Message;
+import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.Area;
@@ -354,6 +361,115 @@ public class GroupingTile extends AbstractTile {
 		for (Tile tile : tiles)
 			tile.addConstraints();
 
+		ensureFollowingParticipantClearsFrame();
+	}
+
+	// A child tile only reserves room for ITS OWN footprint against its
+	// immediate neighbour (e.g. CommunicationTileSelf.addConstraints() pushes
+	// the participant declared right after it just past its own self-message
+	// loop). None of them know that this GroupingTile's frame extends a
+	// further MARGINX + EXTERNAL_MARGINX2 beyond whatever their own footprint
+	// is (see the min/max computation in the constructor above) -- so a
+	// participant declared right after the group, but never itself used
+	// inside it, can end up placed UNDER the group's frame whenever no child
+	// constraint happened to reserve enough room on its own (typically: the
+	// group's last-touched participant ends on a self-message, whose own
+	// loop is narrower than "loop width + group frame margin") (issue #2788).
+	// Explicitly push the very next participant (in declaration order) past
+	// this group's own resolved right edge; the existing sequential
+	// LivingSpaces.addConstraints() 10px-gap chain takes care of every
+	// participant further right, once this first one is clear.
+	//
+	// CRITICAL, same trap as PlayingSpace.ensureDisjoint() (see its own comment):
+	// this must NEVER feed `this.max` -- or any other RealUtils.max()/min()
+	// composed Real, e.g. a plain CommunicationTile.getMaxX() -- into an
+	// ensureBiggerThan() call. RealMax/RealMin cache their resolved value the
+	// FIRST time getCurrentValue() is read, permanently, with no invalidation.
+	// A force's apply() reads both its endpoints on EVERY compile() pass, so a
+	// RealMax handed to ensureBiggerThan() gets read (and frozen) on pass one --
+	// typically before the dependents it aggregates (e.g. a message's target
+	// participant, still being pushed rightward by that message's OWN,
+	// separately-registered force) have converged. The frame then draws at the
+	// stale, too-small frozen width while the participant it was supposed to
+	// include keeps moving right on later passes, right out of the frame (this
+	// exact bug, shipped once already: an `alt`/`else` branch using a plain,
+	// non-self message to a participant not touched by the `if` branch
+	// rendered outside the frame because this method used to pass `max`
+	// directly). The fix below only ever reads plain LivingSpace positions
+	// (posC, a chained RealDelta over posB, never cached) and, for a
+	// self-message, CommunicationTileSelf.getMaxX() (also a plain delta chain,
+	// confirmed by inspection to never construct a RealUtils.max()) -- both
+	// safe to re-read on every compile() pass.
+	private void ensureFollowingParticipantClearsFrame() {
+		final LivingSpaces livingSpaces = tileArguments.getLivingSpaces();
+		final Set<LivingSpace> touched = new HashSet<>();
+		final Map<LivingSpace, List<Tile>> selfMessagesByLivingSpace = new HashMap<>();
+		collectTouchedLivingSpaces(tiles, livingSpaces, touched, selfMessagesByLivingSpace);
+
+		LivingSpace rightmost = null;
+		for (LivingSpace candidate : livingSpaces.values())
+			if (touched.contains(candidate))
+				rightmost = candidate;
+
+		if (rightmost == null)
+			return;
+
+		final LivingSpace next = livingSpaces.next(rightmost);
+		if (next == null)
+			return;
+
+		final Real nextPosA = next.getPosA(getStringBounder());
+		final double frameMargin = MARGINX + EXTERNAL_MARGINX2;
+
+		// Baseline: the rightmost touched participant's own lifeline, plus the
+		// frame's margin. For a normal (non-self) message this already matches
+		// the frame's true edge once the graph stabilizes: the message's own
+		// addConstraints() guarantees its target's posC clears the arrow+label,
+		// so the target's posC alone dominates the same RealUtils.max() the
+		// constructor would otherwise have computed.
+		nextPosA.ensureBiggerThan(rightmost.getPosC(getStringBounder()).addFixed(frameMargin));
+
+		// A self-message ending on the rightmost participant reaches further
+		// right than its own posC (that's the whole shape of issue #2788) --
+		// each one found gets its own extra push, safe to add independently
+		// since ensureBiggerThan() calls simply stack (the solver satisfies all
+		// of them, which is exactly the "max" this deliberately avoids computing
+		// via RealUtils.max()).
+		final List<Tile> selfMessages = selfMessagesByLivingSpace.get(rightmost);
+		if (selfMessages != null)
+			for (Tile tile : selfMessages)
+				nextPosA.ensureBiggerThan(tile.getMaxX().addFixed(frameMargin));
+	}
+
+	// Walks this group's tiles (and any nested groups) to find every
+	// LivingSpace touched by a message/self-message/life-event, and
+	// separately buckets the CommunicationTileSelf tiles by the LivingSpace
+	// they self-message on (needed above to add their loop width on top of
+	// the plain posC baseline). Declaration order tracks left-to-right layout
+	// order (the same assumption PlayingSpace.ensureDisjoint() already relies
+	// on), so the touched set alone is enough to find "the group's own
+	// rightmost content" without reading any not-yet-resolved Real position.
+	private static void collectTouchedLivingSpaces(List<Tile> tiles, LivingSpaces livingSpaces,
+			Set<LivingSpace> touched, Map<LivingSpace, List<Tile>> selfMessagesByLivingSpace) {
+		for (Tile tile : tiles) {
+			final Event ev = tile.getEvent();
+			if (ev instanceof Message) {
+				final LivingSpace ls1 = livingSpaces.get(((Message) ev).getParticipant1());
+				final LivingSpace ls2 = livingSpaces.get(((Message) ev).getParticipant2());
+				touched.add(ls1);
+				touched.add(ls2);
+				if (tile instanceof CommunicationTileSelf)
+					selfMessagesByLivingSpace.computeIfAbsent(ls1, k -> new ArrayList<>()).add(tile);
+			} else if (ev instanceof MessageExo) {
+				touched.add(livingSpaces.get(((MessageExo) ev).getParticipant()));
+			} else if (ev instanceof LifeEvent) {
+				touched.add(livingSpaces.get(((LifeEvent) ev).getParticipant()));
+			}
+
+			if (tile instanceof GroupingTile)
+				collectTouchedLivingSpaces(((GroupingTile) tile).tiles, livingSpaces, touched,
+						selfMessagesByLivingSpace);
+		}
 	}
 
 	// ===================== ASCII =====================

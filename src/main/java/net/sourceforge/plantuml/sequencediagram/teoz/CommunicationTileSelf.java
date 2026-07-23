@@ -166,11 +166,51 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 				livingSpace1.getPosC(getStringBounder())
 						.ensureBiggerThan(previous.getPosC2(getStringBounder()).addFixed(getCompWidth()));
 			}
+			ensureOwnBoxClearsLoop();
 		} else {
 			final LivingSpace next = getNext();
 			if (next != null) {
 				next.getPosC(getStringBounder()).ensureBiggerThan(getMaxX());
 			}
+			ensureOwnBoxClearsLoop();
+		}
+	}
+
+	// A `box "..." ... endbox` grouping (net.sourceforge.plantuml.sequencediagram.Doll)
+	// draws its rectangle purely from its first/last participant's LivingSpace
+	// marginBefore/marginAfter (see Doll.getPosA()/getPosE()) -- it never looks at
+	// any message's own footprint. Above, this self-message already reserves room
+	// against its NEXT (forward loop, `a->a`) or PREVIOUS (reverse loop, `a<-a`)
+	// neighbour, but that does nothing when this participant is the edge of its own
+	// box: there may be no such neighbour at all (this participant is last/first in
+	// the whole diagram, issue #2791's own example), or the neighbour may sit
+	// outside the box entirely, in which case pushing it does not widen THIS box.
+	//
+	// So, independently of any neighbour, grow this LivingSpace's own margin to
+	// cover the loop's overflow past its plain posB/posD footprint -- exactly the
+	// same lever Doll.addInternalConstraints() already pulls to make room for a
+	// centered box title. When this participant is not a box's first/last member
+	// (or is in no box at all), the margin is simply never read by anything (see
+	// LivingSpace.getPosA()/getPosE(), read only by Doll), so this is harmless.
+	//
+	// Both getMinX()/getMaxX() and posB/posD are, at their core, fixed pixel
+	// offsets from this same LivingSpace's posB (the loop's own component width,
+	// the activation-level delta, and the participant's head width are all plain
+	// StringBounder measurements, never a cross-participant dependency) -- so
+	// reading their current values here, during constraint registration, is safe
+	// and mirrors what Doll.addInternalConstraints() already does with posB/posD.
+	private void ensureOwnBoxClearsLoop() {
+		final StringBounder stringBounder = getStringBounder();
+		if (isReverseDefine()) {
+			final double overflowLeft = livingSpace1.getPosB(stringBounder).getCurrentValue()
+					- getMinX().getCurrentValue();
+			if (overflowLeft > 0)
+				livingSpace1.ensureMarginBefore(overflowLeft);
+		} else {
+			final double overflowRight = getMaxX().getCurrentValue()
+					- livingSpace1.getPosD(stringBounder).getCurrentValue();
+			if (overflowRight > 0)
+				livingSpace1.ensureMarginAfter(overflowRight);
 		}
 	}
 
