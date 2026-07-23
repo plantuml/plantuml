@@ -166,63 +166,103 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 <span class="fc" id="L166">				livingSpace1.getPosC(getStringBounder())</span>
 <span class="fc" id="L167">						.ensureBiggerThan(previous.getPosC2(getStringBounder()).addFixed(getCompWidth()));</span>
 			}
-<span class="fc" id="L169">		} else {</span>
-<span class="fc" id="L170">			final LivingSpace next = getNext();</span>
-<span class="fc bfc" id="L171" title="All 2 branches covered.">			if (next != null) {</span>
-<span class="fc" id="L172">				next.getPosC(getStringBounder()).ensureBiggerThan(getMaxX());</span>
+<span class="fc" id="L169">			ensureOwnBoxClearsLoop();</span>
+<span class="fc" id="L170">		} else {</span>
+<span class="fc" id="L171">			final LivingSpace next = getNext();</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">			if (next != null) {</span>
+<span class="fc" id="L173">				next.getPosC(getStringBounder()).ensureBiggerThan(getMaxX());</span>
 			}
+<span class="fc" id="L175">			ensureOwnBoxClearsLoop();</span>
 		}
-<span class="fc" id="L175">	}</span>
+<span class="fc" id="L177">	}</span>
+
+	// A `box &quot;...&quot; ... endbox` grouping (net.sourceforge.plantuml.sequencediagram.Doll)
+	// draws its rectangle purely from its first/last participant's LivingSpace
+	// marginBefore/marginAfter (see Doll.getPosA()/getPosE()) -- it never looks at
+	// any message's own footprint. Above, this self-message already reserves room
+	// against its NEXT (forward loop, `a-&gt;a`) or PREVIOUS (reverse loop, `a&lt;-a`)
+	// neighbour, but that does nothing when this participant is the edge of its own
+	// box: there may be no such neighbour at all (this participant is last/first in
+	// the whole diagram, issue #2791's own example), or the neighbour may sit
+	// outside the box entirely, in which case pushing it does not widen THIS box.
+	//
+	// So, independently of any neighbour, grow this LivingSpace's own margin to
+	// cover the loop's overflow past its plain posB/posD footprint -- exactly the
+	// same lever Doll.addInternalConstraints() already pulls to make room for a
+	// centered box title. When this participant is not a box's first/last member
+	// (or is in no box at all), the margin is simply never read by anything (see
+	// LivingSpace.getPosA()/getPosE(), read only by Doll), so this is harmless.
+	//
+	// Both getMinX()/getMaxX() and posB/posD are, at their core, fixed pixel
+	// offsets from this same LivingSpace's posB (the loop's own component width,
+	// the activation-level delta, and the participant's head width are all plain
+	// StringBounder measurements, never a cross-participant dependency) -- so
+	// reading their current values here, during constraint registration, is safe
+	// and mirrors what Doll.addInternalConstraints() already does with posB/posD.
+	private void ensureOwnBoxClearsLoop() {
+<span class="fc" id="L203">		final StringBounder stringBounder = getStringBounder();</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">		if (isReverseDefine()) {</span>
+<span class="fc" id="L205">			final double overflowLeft = livingSpace1.getPosB(stringBounder).getCurrentValue()</span>
+<span class="fc" id="L206">					- getMinX().getCurrentValue();</span>
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">			if (overflowLeft &gt; 0)</span>
+<span class="fc" id="L208">				livingSpace1.ensureMarginBefore(overflowLeft);</span>
+<span class="fc" id="L209">		} else {</span>
+<span class="fc" id="L210">			final double overflowRight = getMaxX().getCurrentValue()</span>
+<span class="fc" id="L211">					- livingSpace1.getPosD(stringBounder).getCurrentValue();</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">			if (overflowRight &gt; 0)</span>
+<span class="fc" id="L213">				livingSpace1.ensureMarginAfter(overflowRight);</span>
+		}
+<span class="fc" id="L215">	}</span>
 
 	private boolean isReverseDefine() {
-<span class="fc" id="L178">		return message.getArrowConfiguration().isReverseDefine();</span>
+<span class="fc" id="L218">		return message.getArrowConfiguration().isReverseDefine();</span>
 	}
 
 	private LivingSpace getPrevious() {
-<span class="fc" id="L182">		LivingSpace previous = null;</span>
-<span class="pc bpc" id="L183" title="1 of 2 branches missed.">		for (Iterator&lt;LivingSpace&gt; it = livingSpaces.values().iterator(); it.hasNext();) {</span>
-<span class="fc" id="L184">			final LivingSpace current = it.next();</span>
-<span class="fc bfc" id="L185" title="All 2 branches covered.">			if (current == livingSpace1) {</span>
-<span class="fc" id="L186">				return previous;</span>
+<span class="fc" id="L222">		LivingSpace previous = null;</span>
+<span class="pc bpc" id="L223" title="1 of 2 branches missed.">		for (Iterator&lt;LivingSpace&gt; it = livingSpaces.values().iterator(); it.hasNext();) {</span>
+<span class="fc" id="L224">			final LivingSpace current = it.next();</span>
+<span class="fc bfc" id="L225" title="All 2 branches covered.">			if (current == livingSpace1) {</span>
+<span class="fc" id="L226">				return previous;</span>
 			}
-<span class="fc" id="L188">			previous = current;</span>
-<span class="fc" id="L189">		}</span>
-<span class="nc" id="L190">		return null;</span>
+<span class="fc" id="L228">			previous = current;</span>
+<span class="fc" id="L229">		}</span>
+<span class="nc" id="L230">		return null;</span>
 	}
 
 	private LivingSpace getNext() {
-<span class="fc bfc" id="L194" title="All 2 branches covered.">		for (Iterator&lt;LivingSpace&gt; it = livingSpaces.values().iterator(); it.hasNext();) {</span>
-<span class="fc" id="L195">			final LivingSpace current = it.next();</span>
-<span class="fc bfc" id="L196" title="All 4 branches covered.">			if (current == livingSpace1 &amp;&amp; it.hasNext()) {</span>
-<span class="fc" id="L197">				return it.next();</span>
+<span class="fc bfc" id="L234" title="All 2 branches covered.">		for (Iterator&lt;LivingSpace&gt; it = livingSpaces.values().iterator(); it.hasNext();) {</span>
+<span class="fc" id="L235">			final LivingSpace current = it.next();</span>
+<span class="fc bfc" id="L236" title="All 4 branches covered.">			if (current == livingSpace1 &amp;&amp; it.hasNext()) {</span>
+<span class="fc" id="L237">				return it.next();</span>
 			}
-<span class="fc" id="L199">		}</span>
-<span class="fc" id="L200">		return null;</span>
+<span class="fc" id="L239">		}</span>
+<span class="fc" id="L240">		return null;</span>
 	}
 
 	private Real getPoint1(final StringBounder stringBounder) {
-<span class="fc" id="L204">		return livingSpace1.getPosC(stringBounder);</span>
+<span class="fc" id="L244">		return livingSpace1.getPosC(stringBounder);</span>
 	}
 
 	public Real getMinX() {
-<span class="fc bfc" id="L208" title="All 2 branches covered.">		if (isReverseDefine()) {</span>
-<span class="fc bfc" id="L209" title="All 2 branches covered.">			double liveDeltaWidthAdjustment = livingSpace1.getLevelAt(this,</span>
-<span class="fc" id="L210">					EventsHistoryMode.IGNORE_FUTURE_ACTIVATE) &gt; 0 ? CommunicationTile.LIVE_DELTA_SIZE : 0.0;</span>
-<span class="fc" id="L211">			return livingSpace1.getPosC(getStringBounder()).addFixed(-getCompWidth() - liveDeltaWidthAdjustment);</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">		if (isReverseDefine()) {</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">			double liveDeltaWidthAdjustment = livingSpace1.getLevelAt(this,</span>
+<span class="fc" id="L250">					EventsHistoryMode.IGNORE_FUTURE_ACTIVATE) &gt; 0 ? CommunicationTile.LIVE_DELTA_SIZE : 0.0;</span>
+<span class="fc" id="L251">			return livingSpace1.getPosC(getStringBounder()).addFixed(-getCompWidth() - liveDeltaWidthAdjustment);</span>
 		}
-<span class="fc" id="L213">		return getPoint1(getStringBounder());</span>
+<span class="fc" id="L253">		return getPoint1(getStringBounder());</span>
 	}
 
 	public Real getMaxX() {
-<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (isReverseDefine()) {</span>
-<span class="fc" id="L218">			return livingSpace1.getPosC2(getStringBounder());</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">		if (isReverseDefine()) {</span>
+<span class="fc" id="L258">			return livingSpace1.getPosC2(getStringBounder());</span>
 		}
-<span class="fc" id="L220">		return livingSpace1.getPosC2(getStringBounder()).addFixed(getCompWidth());</span>
+<span class="fc" id="L260">		return livingSpace1.getPosC2(getStringBounder()).addFixed(getCompWidth());</span>
 	}
 
 	private double getCompWidth() {
-<span class="fc" id="L224">		final Component comp = getComponent(getStringBounder());</span>
-<span class="fc" id="L225">		return comp.getPreferredDimension(getStringBounder()).getWidth();</span>
+<span class="fc" id="L264">		final Component comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L265">		return comp.getPreferredDimension(getStringBounder()).getWidth();</span>
 	}
 
 	// ---------------------------------------------------------------------
@@ -260,14 +300,14 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 	// loop box, never on a lifeline column, so there is no margin-cell/pipe
 	// collision to guard against.
 	private AsciiBlock asciiLabel() {
-<span class="fc" id="L263">		return message.getLabel().marginLR(1, 1);</span>
+<span class="fc" id="L303">		return message.getLabel().marginLR(1, 1);</span>
 	}
 
 	// At least 1, exactly like CommunicationTile.asciiLabelRows(): a
 	// label-less self-message still gets one row for its (empty) label, so
 	// the loop keeps its historical 3-row minimum height.
 	private int asciiLabelRows() {
-<span class="fc" id="L270">		return Math.max(1, asciiLabel().asciiDimension().getHeight());</span>
+<span class="fc" id="L310">		return Math.max(1, asciiLabel().asciiDimension().getHeight());</span>
 	}
 
 	// How far the loop (box, plus label if any) reaches beyond the lifeline
@@ -275,64 +315,64 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 	// the box itself, the same &quot;don't pad what has no content&quot; rule
 	// AsciiBlockMarginLR already applies.
 	private int asciiSelfWidth() {
-<span class="fc" id="L278">		final int labelWidth = asciiLabel().asciiDimension().getWidth();</span>
-<span class="fc bfc" id="L279" title="All 2 branches covered.">		if (labelWidth == 0)</span>
-<span class="fc" id="L280">			return ASCII_SELF_BOX_WIDTH;</span>
+<span class="fc" id="L318">		final int labelWidth = asciiLabel().asciiDimension().getWidth();</span>
+<span class="fc bfc" id="L319" title="All 2 branches covered.">		if (labelWidth == 0)</span>
+<span class="fc" id="L320">			return ASCII_SELF_BOX_WIDTH;</span>
 
-<span class="fc" id="L282">		return ASCII_SELF_BOX_WIDTH + ASCII_SELF_LABEL_GAP + labelWidth;</span>
+<span class="fc" id="L322">		return ASCII_SELF_BOX_WIDTH + ASCII_SELF_LABEL_GAP + labelWidth;</span>
 	}
 
 	@Override
 	public void asciiDraw(InfinitePlan plan) {
-<span class="fc" id="L287">		final int xa = (int) livingSpace1.getAsciiLifeColumn().getCurrentValue();</span>
-<span class="fc" id="L288">		final boolean dotted = message.getArrowConfiguration().isDotted();</span>
-<span class="fc" id="L289">		final int rows = asciiLabelRows();</span>
-<span class="fc" id="L290">		final int bottomRow = rows + 1;</span>
-<span class="fc" id="L291">		final AsciiBlock label = asciiLabel();</span>
-<span class="fc" id="L292">		final int labelWidth = label.asciiDimension().getWidth();</span>
+<span class="fc" id="L327">		final int xa = (int) livingSpace1.getAsciiLifeColumn().getCurrentValue();</span>
+<span class="fc" id="L328">		final boolean dotted = message.getArrowConfiguration().isDotted();</span>
+<span class="fc" id="L329">		final int rows = asciiLabelRows();</span>
+<span class="fc" id="L330">		final int bottomRow = rows + 1;</span>
+<span class="fc" id="L331">		final AsciiBlock label = asciiLabel();</span>
+<span class="fc" id="L332">		final int labelWidth = label.asciiDimension().getWidth();</span>
 
-<span class="fc bfc" id="L294" title="All 2 branches covered.">		if (isReverseDefine()) {</span>
+<span class="fc bfc" id="L334" title="All 2 branches covered.">		if (isReverseDefine()) {</span>
 			// The loop opens to the LEFT of the lifeline: the box's far corner sits
 			// at xa - ASCII_SELF_BOX_WIDTH, the arrowhead points back INTO the
 			// lifeline (rightward, '&gt;'), and the label -- if any -- grows leftward
 			// from the box, ending one gap column before it.
-<span class="fc" id="L299">			final int nearCol = xa - 1; // dash/arrowhead column closest to the lifeline</span>
-<span class="fc" id="L300">			final int farCol = xa - ASCII_SELF_BOX_WIDTH; // the box's own far corner column</span>
+<span class="fc" id="L339">			final int nearCol = xa - 1; // dash/arrowhead column closest to the lifeline</span>
+<span class="fc" id="L340">			final int farCol = xa - ASCII_SELF_BOX_WIDTH; // the box's own far corner column</span>
 
-<span class="fc" id="L302">			plan.drawHLine(farCol + 1, nearCol, 0, dotted);</span>
-<span class="fc" id="L303">			plan.move(farCol, 0).drawChar(plan.getTopLeftChar());</span>
+<span class="fc" id="L342">			plan.drawHLine(farCol + 1, nearCol, 0, dotted);</span>
+<span class="fc" id="L343">			plan.move(farCol, 0).drawChar(plan.getTopLeftChar());</span>
 
-<span class="fc bfc" id="L305" title="All 2 branches covered.">			for (int r = 1; r &lt;= rows; r++)</span>
-<span class="fc" id="L306">				plan.move(farCol, r).drawChar(plan.getVLineChar());</span>
+<span class="fc bfc" id="L345" title="All 2 branches covered.">			for (int r = 1; r &lt;= rows; r++)</span>
+<span class="fc" id="L346">				plan.move(farCol, r).drawChar(plan.getVLineChar());</span>
 
-<span class="fc" id="L308">			plan.drawHLine(farCol + 1, nearCol, bottomRow, dotted);</span>
-<span class="fc" id="L309">			plan.move(farCol, bottomRow).drawChar(plan.getBottomLeftChar());</span>
-<span class="fc" id="L310">			plan.move(nearCol, bottomRow).drawChar('&gt;');</span>
+<span class="fc" id="L348">			plan.drawHLine(farCol + 1, nearCol, bottomRow, dotted);</span>
+<span class="fc" id="L349">			plan.move(farCol, bottomRow).drawChar(plan.getBottomLeftChar());</span>
+<span class="fc" id="L350">			plan.move(nearCol, bottomRow).drawChar('&gt;');</span>
 
-<span class="fc bfc" id="L312" title="All 2 branches covered.">			if (labelWidth &gt; 0)</span>
-<span class="fc" id="L313">				label.asciiDraw(plan.move(farCol - ASCII_SELF_LABEL_GAP - labelWidth, 1));</span>
-<span class="fc" id="L314">		} else {</span>
+<span class="fc bfc" id="L352" title="All 2 branches covered.">			if (labelWidth &gt; 0)</span>
+<span class="fc" id="L353">				label.asciiDraw(plan.move(farCol - ASCII_SELF_LABEL_GAP - labelWidth, 1));</span>
+<span class="fc" id="L354">		} else {</span>
 			// The loop opens to the RIGHT of the lifeline (the common case): the
 			// box's far corner sits at xa + ASCII_SELF_BOX_WIDTH, the arrowhead
 			// points back into the lifeline (leftward, '&lt;'), and the label -- if
 			// any -- starts one gap column after the box.
-<span class="fc" id="L319">			final int nearCol = xa + 1; // dash/arrowhead column closest to the lifeline</span>
-<span class="fc" id="L320">			final int farCol = xa + ASCII_SELF_BOX_WIDTH; // the box's own far corner column</span>
+<span class="fc" id="L359">			final int nearCol = xa + 1; // dash/arrowhead column closest to the lifeline</span>
+<span class="fc" id="L360">			final int farCol = xa + ASCII_SELF_BOX_WIDTH; // the box's own far corner column</span>
 
-<span class="fc" id="L322">			plan.drawHLine(nearCol, farCol - 1, 0, dotted);</span>
-<span class="fc" id="L323">			plan.move(farCol, 0).drawChar(plan.getTopRightChar());</span>
+<span class="fc" id="L362">			plan.drawHLine(nearCol, farCol - 1, 0, dotted);</span>
+<span class="fc" id="L363">			plan.move(farCol, 0).drawChar(plan.getTopRightChar());</span>
 
-<span class="fc bfc" id="L325" title="All 2 branches covered.">			for (int r = 1; r &lt;= rows; r++)</span>
-<span class="fc" id="L326">				plan.move(farCol, r).drawChar(plan.getVLineChar());</span>
+<span class="fc bfc" id="L365" title="All 2 branches covered.">			for (int r = 1; r &lt;= rows; r++)</span>
+<span class="fc" id="L366">				plan.move(farCol, r).drawChar(plan.getVLineChar());</span>
 
-<span class="fc" id="L328">			plan.drawHLine(nearCol, farCol - 1, bottomRow, dotted);</span>
-<span class="fc" id="L329">			plan.move(farCol, bottomRow).drawChar(plan.getBottomRightChar());</span>
-<span class="fc" id="L330">			plan.move(nearCol, bottomRow).drawChar('&lt;');</span>
+<span class="fc" id="L368">			plan.drawHLine(nearCol, farCol - 1, bottomRow, dotted);</span>
+<span class="fc" id="L369">			plan.move(farCol, bottomRow).drawChar(plan.getBottomRightChar());</span>
+<span class="fc" id="L370">			plan.move(nearCol, bottomRow).drawChar('&lt;');</span>
 
-<span class="fc bfc" id="L332" title="All 2 branches covered.">			if (labelWidth &gt; 0)</span>
-<span class="fc" id="L333">				label.asciiDraw(plan.move(farCol + ASCII_SELF_LABEL_GAP, 1));</span>
+<span class="fc bfc" id="L372" title="All 2 branches covered.">			if (labelWidth &gt; 0)</span>
+<span class="fc" id="L373">				label.asciiDraw(plan.move(farCol + ASCII_SELF_LABEL_GAP, 1));</span>
 		}
-<span class="fc" id="L335">	}</span>
+<span class="fc" id="L375">	}</span>
 
 	// Total ASCII footprint: the loop's own width (box, plus label if any)
 	// and label rows + 2 (top row, label rows, bottom row) -- the exact same
@@ -340,7 +380,7 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 	// for a multi-line label.
 	@Override
 	public ADimension2D asciiDimension() {
-<span class="fc" id="L343">		return new ADimension2D(asciiSelfWidth(), asciiLabelRows() + 2);</span>
+<span class="fc" id="L383">		return new ADimension2D(asciiSelfWidth(), asciiLabelRows() + 2);</span>
 	}
 
 	// ASCII counterpart of addConstraints() above: reserves room for the loop
@@ -351,17 +391,17 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 	// LivingSpaces map, no pixel-specific state involved.
 	@Override
 	public void asciiAddConstraints() {
-<span class="fc" id="L354">		final int width = asciiSelfWidth();</span>
-<span class="fc bfc" id="L355" title="All 2 branches covered.">		if (isReverseDefine()) {</span>
-<span class="fc" id="L356">			final LivingSpace previous = getPrevious();</span>
-<span class="fc bfc" id="L357" title="All 2 branches covered.">			if (previous != null)</span>
-<span class="fc" id="L358">				livingSpace1.getAsciiPosC().ensureBiggerThan(previous.getAsciiPosC().addFixed(width));</span>
-<span class="fc" id="L359">		} else {</span>
-<span class="fc" id="L360">			final LivingSpace next = getNext();</span>
-<span class="fc bfc" id="L361" title="All 2 branches covered.">			if (next != null)</span>
-<span class="fc" id="L362">				next.getAsciiPosC().ensureBiggerThan(livingSpace1.getAsciiPosC().addFixed(width));</span>
+<span class="fc" id="L394">		final int width = asciiSelfWidth();</span>
+<span class="fc bfc" id="L395" title="All 2 branches covered.">		if (isReverseDefine()) {</span>
+<span class="fc" id="L396">			final LivingSpace previous = getPrevious();</span>
+<span class="fc bfc" id="L397" title="All 2 branches covered.">			if (previous != null)</span>
+<span class="fc" id="L398">				livingSpace1.getAsciiPosC().ensureBiggerThan(previous.getAsciiPosC().addFixed(width));</span>
+<span class="fc" id="L399">		} else {</span>
+<span class="fc" id="L400">			final LivingSpace next = getNext();</span>
+<span class="fc bfc" id="L401" title="All 2 branches covered.">			if (next != null)</span>
+<span class="fc" id="L402">				next.getAsciiPosC().ensureBiggerThan(livingSpace1.getAsciiPosC().addFixed(width));</span>
 		}
-<span class="fc" id="L364">	}</span>
+<span class="fc" id="L404">	}</span>
 
 	// ASCII counterpart of getMinX()/getMaxX(): composable Real (not yet
 	// resolved to columns), so an enclosing GroupingTile can fold this tile's
@@ -369,18 +409,18 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 	// same contract as CommunicationTile.getAsciiMinX()/getAsciiMaxX().
 	@Override
 	public Real getAsciiMinX() {
-<span class="fc bfc" id="L372" title="All 2 branches covered.">		if (isReverseDefine())</span>
-<span class="fc" id="L373">			return livingSpace1.getAsciiPosC().addFixed(-asciiSelfWidth());</span>
+<span class="fc bfc" id="L412" title="All 2 branches covered.">		if (isReverseDefine())</span>
+<span class="fc" id="L413">			return livingSpace1.getAsciiPosC().addFixed(-asciiSelfWidth());</span>
 
-<span class="fc" id="L375">		return livingSpace1.getAsciiPosC();</span>
+<span class="fc" id="L415">		return livingSpace1.getAsciiPosC();</span>
 	}
 
 	@Override
 	public Real getAsciiMaxX() {
-<span class="fc bfc" id="L380" title="All 2 branches covered.">		if (isReverseDefine())</span>
-<span class="fc" id="L381">			return livingSpace1.getAsciiPosC();</span>
+<span class="fc bfc" id="L420" title="All 2 branches covered.">		if (isReverseDefine())</span>
+<span class="fc" id="L421">			return livingSpace1.getAsciiPosC();</span>
 
-<span class="fc" id="L383">		return livingSpace1.getAsciiPosC().addFixed(asciiSelfWidth());</span>
+<span class="fc" id="L423">		return livingSpace1.getAsciiPosC().addFixed(asciiSelfWidth());</span>
 	}
 
 }

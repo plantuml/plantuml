@@ -278,16 +278,16 @@ public class LivingSpace {
 	private double marginAfter;
 
 	public void ensureMarginBefore(double margin) {
-<span class="nc bnc" id="L281" title="All 2 branches missed.">		if (margin &lt; 0)</span>
+<span class="pc bpc" id="L281" title="1 of 2 branches missed.">		if (margin &lt; 0)</span>
 <span class="nc" id="L282">			throw new IllegalArgumentException();</span>
-<span class="nc" id="L283">		this.marginBefore = Math.max(marginBefore, margin);</span>
-<span class="nc" id="L284">	}</span>
+<span class="fc" id="L283">		this.marginBefore = Math.max(marginBefore, margin);</span>
+<span class="fc" id="L284">	}</span>
 
 	public void ensureMarginAfter(double margin) {
-<span class="nc bnc" id="L287" title="All 2 branches missed.">		if (margin &lt; 0)</span>
+<span class="pc bpc" id="L287" title="1 of 2 branches missed.">		if (margin &lt; 0)</span>
 <span class="nc" id="L288">			throw new IllegalArgumentException();</span>
-<span class="nc" id="L289">		this.marginAfter = Math.max(marginAfter, margin);</span>
-<span class="nc" id="L290">	}</span>
+<span class="fc" id="L289">		this.marginAfter = Math.max(marginAfter, margin);</span>
+<span class="fc" id="L290">	}</span>
 
 	public Real getPosA(StringBounder stringBounder) {
 <span class="fc" id="L293">		return getPosB(stringBounder).addFixed(-marginBefore);</span>

@@ -100,13 +100,13 @@ import net.sourceforge.plantuml.skin.Context2D;
 	}
 
 	public LivingSpace next(LivingSpace element) {
-<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		for (Iterator&lt;LivingSpace&gt; it = all.values().iterator(); it.hasNext();) {</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		for (Iterator&lt;LivingSpace&gt; it = all.values().iterator(); it.hasNext();) {</span>
 <span class="fc" id="L104">			final LivingSpace current = it.next();</span>
-<span class="pc bpc" id="L105" title="2 of 4 branches missed.">			if (current == element &amp;&amp; it.hasNext()) {</span>
+<span class="fc bfc" id="L105" title="All 4 branches covered.">			if (current == element &amp;&amp; it.hasNext()) {</span>
 <span class="fc" id="L106">				return it.next();</span>
 			}
-<span class="nc" id="L108">		}</span>
-<span class="nc" id="L109">		return null;</span>
+<span class="fc" id="L108">		}</span>
+<span class="fc" id="L109">		return null;</span>
 
 	}
 
