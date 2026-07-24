@@ -201,8 +201,19 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 			if (url != null)
 				ug.startUrl(url);
 
-			printExtremityAtStart(dotPath, ug.apply(color));
-			printExtremityAtEnd(dotPath, ug.apply(color));
+			// Filled decorations (eg -->> ) must be painted with the line color, as
+			// SvekEdge.drawU does on the dot pipeline. The background stays none here,
+			// so hollow decorations are already covered by the ug built above.
+			UGraphic ugStart = ug.apply(color);
+			if (linkType.getDecor2().isFill())
+				ugStart = ugStart.apply(color.bg());
+
+			UGraphic ugEnd = ug.apply(color);
+			if (linkType.getDecor1().isFill())
+				ugEnd = ugEnd.apply(color.bg());
+
+			printExtremityAtStart(dotPath, ugStart);
+			printExtremityAtEnd(dotPath, ugEnd);
 			ug.apply(stroke).apply(color).draw(dotPath);
 
 			if (url != null)
