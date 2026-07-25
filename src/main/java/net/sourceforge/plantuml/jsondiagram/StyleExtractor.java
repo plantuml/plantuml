@@ -35,13 +35,17 @@
  */
 package net.sourceforge.plantuml.jsondiagram;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.NoStyleAvailableException;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleLoader;
 import net.sourceforge.plantuml.style.parser.StyleParser;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.text.StringLocated;
@@ -110,6 +114,19 @@ public class StyleExtractor {
 	public void applyStyles(ISkinParam skinParam) throws StyleParsingException {
 		if (newSkin != null) {
 			final String filename = newSkin + ".skin";
+			// Check the file right now, so that an invalid style is reported here
+			// instead of crashing later. StyleLoader caches, so this costs nothing.
+			final StyleBuilder loaded;
+			try {
+				loaded = StyleLoader.loadSkin(filename);
+			} catch (IOException | NoStyleAvailableException e) {
+				throw new StyleParsingException("Cannot find style " + newSkin);
+			}
+			// As in TitledDiagram: a fragment cannot replace the whole style sheet.
+			final List<PName> missing = StyleLoader.getMissingRootProperties(loaded);
+			if (missing.size() > 0)
+				throw new StyleParsingException("Incomplete style " + newSkin + ": root does not define " + missing);
+
 			skinParam.setDefaultSkin(filename);
 		}
 

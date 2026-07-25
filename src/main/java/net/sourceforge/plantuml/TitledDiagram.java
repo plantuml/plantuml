@@ -37,10 +37,10 @@ package net.sourceforge.plantuml;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.abel.DisplayPositioned;
@@ -70,12 +70,14 @@ import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.SkinParam;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.NoStyleAvailableException;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleLoader;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.warning.Warning;
 
@@ -157,10 +159,23 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 	@DuplicateCode(reference = "StyleExtractor")
 	public CommandExecutionResult loadSkin(String newSkin) throws IOException {
 		final String filename = newSkin + ".skin";
-		final InputStream is = StyleLoader.getInputStreamForStyle(filename);
-		if (is == null)
+		// Load the file right now, so that a missing or invalid style is reported on
+		// this very line rather than crashing much later, during the drawing.
+		// StyleLoader caches its result, so this is not an extra cost.
+		final StyleBuilder styleBuilder;
+		try {
+			styleBuilder = StyleLoader.loadSkin(filename);
+		} catch (NoStyleAvailableException e) {
 			return CommandExecutionResult.error("Cannot find style " + newSkin);
-		is.close();
+		} catch (StyleParsingException e) {
+			return CommandExecutionResult.error("Cannot parse style " + newSkin + ": " + e.getMessage());
+		}
+
+		// This command replaces the whole style sheet, so a mere fragment (a file
+		// designed to be merged on top of another one) cannot be accepted here.
+		final List<PName> missing = StyleLoader.getMissingRootProperties(styleBuilder);
+		if (missing.size() > 0)
+			return CommandExecutionResult.error("Incomplete style " + newSkin + ": root does not define " + missing);
 
 		getSkinParam().setDefaultSkin(filename);
 		return CommandExecutionResult.ok();

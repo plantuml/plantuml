@@ -91,6 +91,7 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.FromSkinparamToStyle;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.LengthAdjust;
+import net.sourceforge.plantuml.style.NoStyleAvailableException;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -117,8 +118,10 @@ public class SkinParam implements ISkinParam {
 	// TODO not clear whether SkinParam or ImageBuilder is responsible for defaults
 	public static final String DEFAULT_PRESERVE_ASPECT_RATIO = "none";
 
+	public static final String DEFAULT_SKIN = "plantuml.skin";
+
 	// private String skin = "debug.skin";
-	private String skin = "plantuml.skin";
+	private String skin = DEFAULT_SKIN;
 	private StyleBuilder styleBuilder;
 	private final Pragma pragma;
 	private final PathSystem pathSystem;
@@ -153,13 +156,7 @@ public class SkinParam implements ISkinParam {
 	@Override
 	public StyleBuilder getCurrentStyleBuilder() {
 		if (styleBuilder == null)
-			try {
-				this.styleBuilder = getCurrentStyleBuilderInternal();
-			} catch (StyleParsingException e) {
-				Logme.error(e);
-			} catch (IOException e) {
-				Logme.error(e);
-			}
+			this.styleBuilder = getCurrentStyleBuilderInternal();
 
 		return styleBuilder;
 	}
@@ -179,12 +176,21 @@ public class SkinParam implements ISkinParam {
 		this.skin = newSkin;
 	}
 
-	private StyleBuilder getCurrentStyleBuilderInternal() throws IOException, StyleParsingException {
-		StyleBuilder result = StyleLoader.loadSkin(this.getDefaultSkin());
-		if (result == null)
-			result = StyleLoader.loadSkin("plantuml.skin");
-
-		return result;
+	// This must never return null: many callers use the result without any check, so
+	// returning null would only turn a style issue into an unrelated NullPointerException.
+	private StyleBuilder getCurrentStyleBuilderInternal() {
+		try {
+			return StyleLoader.loadSkin(this.getDefaultSkin());
+		} catch (IOException | StyleParsingException | NoStyleAvailableException e) {
+			Logme.error(e);
+		}
+		// The requested skin is unusable: fall back on the default one rather than
+		// rendering with no style at all.
+		try {
+			return StyleLoader.loadSkin(DEFAULT_SKIN);
+		} catch (IOException | StyleParsingException e) {
+			throw new IllegalStateException("Cannot load " + DEFAULT_SKIN, e);
+		}
 	}
 
 	public static int zeroMargin(int defaultValue) {

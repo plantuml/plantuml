@@ -37,7 +37,11 @@ package net.sourceforge.plantuml.style;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
@@ -91,7 +95,15 @@ public final class StyleLoader {
 			throw new NoStyleAvailableException();
 		}
 		final BlocLines lines2 = BlocLines.load(internalIs, new LineLocationImpl(filename, null));
-		for (Style newStyle : new StyleParser(styleBuilder).parse(lines2))
+		final Collection<Style> styles = new StyleParser(styleBuilder).parse(lines2);
+		// A file that parses without any error but that defines no style at all is not
+		// a style sheet: this happens with legacy skinparam files, where every line is
+		// silently ignored because the key is unknown. Accepting it here would give an
+		// empty StyleBuilder, and every later getStyle() would return null.
+		if (styles.isEmpty())
+			throw new StyleParsingException("No style found in " + filename);
+
+		for (Style newStyle : styles)
 			styleBuilder.loadInternal(newStyle.getSignature(), newStyle);
 
 		return styleBuilder;
@@ -127,6 +139,40 @@ public final class StyleLoader {
 			}
 			return is;
 		}
+	}
+
+	/**
+	 * Properties that any complete style sheet has to define on its root style.
+	 *
+	 * A .skin file that does not define all of them is only a fragment, meant to be
+	 * merged on top of an existing style sheet: this is the case of strictuml.skin,
+	 * which is loaded by "skinparam style strictuml". Using such a fragment with the
+	 * "skin" command would replace the whole style sheet by almost nothing, and the
+	 * drawing would then fail with puzzling errors, for example a missing FontSize
+	 * ending up as "IllegalArgumentException: width=0.0".
+	 *
+	 * Shadowing, RoundCorner, DiagonalCorner and HyperLinkColor are deliberately not
+	 * required here: they all have a harmless default.
+	 */
+	private static final PName[] MANDATORY_ROOT_PROPERTIES = { PName.FontName, PName.FontSize, PName.FontStyle,
+			PName.FontColor, PName.LineColor, PName.LineThickness, PName.BackGroundColor, PName.HorizontalAlignment };
+
+	/**
+	 * Returns the mandatory root properties that this style sheet does not define.
+	 *
+	 * An empty list means the style sheet is complete, and so can be used on its own
+	 * by the "skin" command.
+	 */
+	public static List<PName> getMissingRootProperties(StyleBuilder styleBuilder) {
+		final Style root = styleBuilder == null ? null
+				: styleBuilder.getMergedStyle(StyleSignatureBasic.of(SName.root));
+
+		final List<PName> result = new ArrayList<>();
+		for (PName property : MANDATORY_ROOT_PROPERTIES)
+			if (root == null || root.hasValue(property) == false)
+				result.add(property);
+
+		return Collections.unmodifiableList(result);
 	}
 
 	public static final int DELTA_PRIORITY_FOR_STEREOTYPE = 1000;
