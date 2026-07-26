@@ -58,7 +58,11 @@
         <mkdir dir=".ant-temp"/>
         <echo file=".ant-temp/Timestamp.java">public class Timestamp { public static void main(String[] a) { System.out.print(System.currentTimeMillis()); } }</echo>
         <javac srcdir=".ant-temp" destdir=".ant-temp" includeantruntime="false"/>
-        <java classname="Timestamp" classpath=".ant-temp" outputproperty="compile.timestamp.millis" fork="true"/>
+        <!-- errorproperty is mandatory: without it Ant merges the forked JVM's stderr into
+             outputproperty, and any environment setting JAVA_TOOL_OPTIONS / _JAVA_OPTIONS
+             (containers, CI agents) makes the JVM print "Picked up JAVA_TOOL_OPTIONS: ..."
+             there, corrupting COMPILE_TIMESTAMP and breaking the build. -->
+        <java classname="Timestamp" classpath=".ant-temp" outputproperty="compile.timestamp.millis" errorproperty="ignored.stderr" fork="true"/>
         <delete dir=".ant-temp"/>
         
         <echo>Version: ${project.version}</echo>
