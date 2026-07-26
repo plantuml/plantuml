@@ -58,7 +58,7 @@ svg[data-diagram-type=SEQUENCE] g.participant {
     cursor: pointer;
 }
 
-xsvg[data-diagram-type=SEQUENCE].filter-active g,
+svg[data-diagram-type=SEQUENCE].filter-active g,
 svg[data-diagram-type=SEQUENCE].filter-active g  > g:not(.header) {
     opacity: 0.2;
 }
