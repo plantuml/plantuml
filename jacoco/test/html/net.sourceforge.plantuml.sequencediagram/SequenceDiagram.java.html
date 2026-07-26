@@ -495,22 +495,22 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 	private ParticipantEnglober participantEnglober;
 
 	public void boxStart(Display comment, HColor color, Stereotype stereotype) {
-<span class="nc bnc" id="L498" title="All 2 branches missed.">		if (participantEnglober == null)</span>
-<span class="nc" id="L499">			this.participantEnglober = ParticipantEnglober.build(comment, color, stereotype);</span>
+<span class="pc bpc" id="L498" title="1 of 2 branches missed.">		if (participantEnglober == null)</span>
+<span class="fc" id="L499">			this.participantEnglober = ParticipantEnglober.build(comment, color, stereotype);</span>
 		else
 <span class="nc" id="L501">			this.participantEnglober = participantEnglober.newChild(comment, color, stereotype);</span>
 
-<span class="nc" id="L503">	}</span>
+<span class="fc" id="L503">	}</span>
 
 	public void endBox() {
-<span class="nc bnc" id="L506" title="All 2 branches missed.">		if (participantEnglober == null)</span>
+<span class="pc bpc" id="L506" title="1 of 2 branches missed.">		if (participantEnglober == null)</span>
 <span class="nc" id="L507">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L509">		this.participantEnglober = participantEnglober.getParent();</span>
-<span class="nc" id="L510">	}</span>
+<span class="fc" id="L509">		this.participantEnglober = participantEnglober.getParent();</span>
+<span class="fc" id="L510">	}</span>
 
 	public boolean isBoxPending() {
-<span class="nc bnc" id="L513" title="All 2 branches missed.">		return participantEnglober != null;</span>
+<span class="pc bpc" id="L513" title="1 of 2 branches missed.">		return participantEnglober != null;</span>
 	}
 
 	@Override

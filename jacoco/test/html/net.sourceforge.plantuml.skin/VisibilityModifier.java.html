@@ -126,14 +126,14 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 	private void drawInternal(UGraphic ug, int size, final HColor foregroundColor, final HColor backgoundColor,
 			double x, double y) {
-<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		if (backgoundColor == null)</span>
-<span class="nc" id="L130">			ug = ug.apply(HColors.none().bg());</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">		if (backgoundColor == null)</span>
+<span class="fc" id="L130">			ug = ug.apply(HColors.none().bg());</span>
 		else
 <span class="fc" id="L132">			ug = ug.apply(backgoundColor.bg());</span>
 
 <span class="fc" id="L134">		ug = ug.apply(foregroundColor);</span>
 <span class="fc" id="L135">		size = ensureEven(size);</span>
-<span class="pc bpc" id="L136" title="8 of 10 branches missed.">		switch (this) {</span>
+<span class="pc bpc" id="L136" title="7 of 10 branches missed.">		switch (this) {</span>
 		case PACKAGE_PRIVATE_FIELD:
 <span class="nc" id="L138">			drawTriangle(ug, false, size, x, y);</span>
 <span class="nc" id="L139">			break;</span>
@@ -147,8 +147,8 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 <span class="nc" id="L147">			break;</span>
 
 		case PUBLIC_FIELD:
-<span class="nc" id="L150">			drawCircle(ug, false, size, x, y);</span>
-<span class="nc" id="L151">			break;</span>
+<span class="fc" id="L150">			drawCircle(ug, false, size, x, y);</span>
+<span class="fc" id="L151">			break;</span>
 
 		case PACKAGE_PRIVATE_METHOD:
 <span class="fc" id="L154">			drawTriangle(ug, true, size, x, y);</span>
@@ -327,8 +327,8 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 	}
 
 	public boolean isField() {
-<span class="pc bpc" id="L330" title="4 of 8 branches missed.">		if (this == PUBLIC_FIELD || this == PRIVATE_FIELD || this == PROTECTED_FIELD || this == PACKAGE_PRIVATE_FIELD)</span>
-<span class="nc" id="L331">			return true;</span>
+<span class="pc bpc" id="L330" title="3 of 8 branches missed.">		if (this == PUBLIC_FIELD || this == PRIVATE_FIELD || this == PROTECTED_FIELD || this == PACKAGE_PRIVATE_FIELD)</span>
+<span class="fc" id="L331">			return true;</span>
 
 <span class="fc" id="L333">		return false;</span>
 	}
@@ -337,7 +337,7 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 <span class="pc bpc" id="L337" title="1 of 2 branches missed.">		if (this == IE_MANDATORY)</span>
 <span class="nc" id="L338">			return StyleSignatureBasic.of(SName.root, SName.element, SName.visibilityIcon, SName.IEMandatory);</span>
 
-<span class="pc bpc" id="L340" title="1 of 4 branches missed.">		if (this == PUBLIC_FIELD || this == PUBLIC_METHOD)</span>
+<span class="fc bfc" id="L340" title="All 4 branches covered.">		if (this == PUBLIC_FIELD || this == PUBLIC_METHOD)</span>
 <span class="fc" id="L341">			return StyleSignatureBasic.of(SName.root, SName.element, SName.visibilityIcon, SName.public_);</span>
 
 <span class="pc bpc" id="L343" title="2 of 4 branches missed.">		if (this == PRIVATE_FIELD || this == PRIVATE_METHOD)</span>

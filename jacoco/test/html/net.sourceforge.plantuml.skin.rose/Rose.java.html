@@ -261,14 +261,14 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 <span class="pc bpc" id="L261" title="1 of 2 branches missed.">		if (type == ComponentType.NEWPAGE)</span>
 <span class="nc" id="L262">			throw new UnsupportedOperationException();</span>
 
-<span class="pc bpc" id="L264" title="1 of 2 branches missed.">		if (type == ComponentType.DIVIDER)</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">		if (type == ComponentType.DIVIDER)</span>
 <span class="fc" id="L265">			return new ComponentRoseDivider(styles[0], stringsToDisplay, param);</span>
 
-<span class="nc bnc" id="L267" title="All 2 branches missed.">		if (type == ComponentType.REFERENCE)</span>
+<span class="pc bpc" id="L267" title="1 of 2 branches missed.">		if (type == ComponentType.REFERENCE)</span>
 <span class="nc" id="L268">			return new ComponentRoseReference(styles[0], styles[1], stringsToDisplay, param);</span>
 
-<span class="nc bnc" id="L270" title="All 2 branches missed.">		if (type == ComponentType.ENGLOBER)</span>
-<span class="nc" id="L271">			return new ComponentRoseEnglober(styles[0], stringsToDisplay, param);</span>
+<span class="pc bpc" id="L270" title="1 of 2 branches missed.">		if (type == ComponentType.ENGLOBER)</span>
+<span class="fc" id="L271">			return new ComponentRoseEnglober(styles[0], stringsToDisplay, param);</span>
 
 <span class="nc" id="L273">		throw new UnsupportedOperationException();</span>
 	}

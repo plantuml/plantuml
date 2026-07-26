@@ -215,13 +215,13 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 <span class="fc" id="L215">		final UStroke stroke = getStyle().getStroke(lineConfig.getColors());</span>
 
 <span class="fc" id="L217">		UGraphic ugHeader = ug;</span>
-<span class="pc bpc" id="L218" title="5 of 6 branches missed.">		if (roundCorner == 0 &amp;&amp; headerBackcolor != null &amp;&amp; backcolor.equals(headerBackcolor) == false) {</span>
+<span class="pc bpc" id="L218" title="2 of 6 branches missed.">		if (roundCorner == 0 &amp;&amp; headerBackcolor != null &amp;&amp; backcolor.equals(headerBackcolor) == false) {</span>
 <span class="nc" id="L219">			ug.apply(stroke).draw(rect);</span>
 <span class="nc" id="L220">			final Shadowable rect2 = URectangle.build(widthTotal, dimHeader.getHeight());</span>
 <span class="nc" id="L221">			rect2.setDeltaShadow(0);</span>
 <span class="nc" id="L222">			ugHeader = ugHeader.apply(headerBackcolor.bg());</span>
 <span class="nc" id="L223">			ugHeader.apply(stroke).draw(rect2);</span>
-<span class="pc bpc" id="L224" title="3 of 6 branches missed.">		} else if (roundCorner != 0 &amp;&amp; headerBackcolor != null &amp;&amp; backcolor.equals(headerBackcolor) == false) {</span>
+<span class="pc bpc" id="L224" title="2 of 6 branches missed.">		} else if (roundCorner != 0 &amp;&amp; headerBackcolor != null &amp;&amp; backcolor.equals(headerBackcolor) == false) {</span>
 <span class="nc" id="L225">			ug.apply(stroke).draw(rect);</span>
 <span class="nc" id="L226">			final Shadowable rect2 = URectangle.build(widthTotal, dimHeader.getHeight()).rounded(roundCorner);</span>
 <span class="nc" id="L227">			final URectangle rect3 = URectangle.build(widthTotal, roundCorner / 2);</span>

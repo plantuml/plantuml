@@ -70,11 +70,11 @@ public class CommandBoxEnd extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (diagram.isBoxPending() == false)</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (diagram.isBoxPending() == false)</span>
 <span class="nc" id="L74">			return CommandExecutionResult.error(&quot;Missing starting box&quot;);</span>
 
-<span class="nc" id="L76">		diagram.endBox();</span>
-<span class="nc" id="L77">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L76">		diagram.endBox();</span>
+<span class="fc" id="L77">		return CommandExecutionResult.ok();</span>
 	}
 
 }

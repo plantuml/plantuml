@@ -37,7 +37,11 @@ package net.sourceforge.plantuml.style;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
@@ -54,89 +58,131 @@ import net.sourceforge.plantuml.utils.LineLocationImpl;
 import net.sourceforge.plantuml.utils.Log;
 
 public final class StyleLoader {
-<span class="fc" id="L57">	private static final ConcurrentMap&lt;String, StyleBuilder&gt; cache = new ConcurrentHashMap&lt;&gt;();</span>
+<span class="fc" id="L61">	private static final ConcurrentMap&lt;String, StyleBuilder&gt; cache = new ConcurrentHashMap&lt;&gt;();</span>
 
 	private StyleLoader() {
 	}
 
 	public static StyleBuilder loadSkin(String filename) throws IOException, StyleParsingException {
 		try {
-<span class="pc bpc" id="L64" title="1 of 2 branches missed.">			if (cache.size() &gt;= 30)</span>
-<span class="nc" id="L65">				cache.clear();</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">			if (cache.size() &gt;= 30)</span>
+<span class="nc" id="L69">				cache.clear();</span>
 
-<span class="fc" id="L67">			final StyleBuilder builder = cache.computeIfAbsent(filename, key -&gt; {</span>
+<span class="fc" id="L71">			final StyleBuilder builder = cache.computeIfAbsent(filename, key -&gt; {</span>
 				try {
-<span class="fc" id="L69">					return loadSkinSlow(key);</span>
-<span class="nc" id="L70">				} catch (IOException | StyleParsingException e) {</span>
-<span class="nc" id="L71">					throw new RuntimeException(e);</span>
+<span class="fc" id="L73">					return loadSkinSlow(key);</span>
+<span class="fc" id="L74">				} catch (IOException | StyleParsingException e) {</span>
+<span class="fc" id="L75">					throw new RuntimeException(e);</span>
 				}
 			});
-<span class="fc" id="L74">			return builder.cloneMe();</span>
-<span class="nc" id="L75">		} catch (RuntimeException ex) {</span>
-<span class="nc" id="L76">			Throwable cause = ex.getCause();</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">			if (cause instanceof IOException)</span>
-<span class="nc" id="L78">				throw (IOException) cause;</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">			if (cause instanceof StyleParsingException)</span>
-<span class="nc" id="L80">				throw (StyleParsingException) cause;</span>
-<span class="nc" id="L81">			throw ex;</span>
+<span class="fc" id="L78">			return builder.cloneMe();</span>
+<span class="fc" id="L79">		} catch (RuntimeException ex) {</span>
+<span class="fc" id="L80">			Throwable cause = ex.getCause();</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">			if (cause instanceof IOException)</span>
+<span class="nc" id="L82">				throw (IOException) cause;</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">			if (cause instanceof StyleParsingException)</span>
+<span class="fc" id="L84">				throw (StyleParsingException) cause;</span>
+<span class="fc" id="L85">			throw ex;</span>
 		}
 	}
 
 	private static StyleBuilder loadSkinSlow(String filename) throws IOException, StyleParsingException {
-<span class="fc" id="L86">		final StyleBuilder styleBuilder = new StyleBuilder();</span>
+<span class="fc" id="L90">		final StyleBuilder styleBuilder = new StyleBuilder();</span>
 
-<span class="fc" id="L88">		final InputStream internalIs = getInputStreamForStyle(filename);</span>
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (internalIs == null) {</span>
-<span class="nc" id="L90">			Log.error(&quot;No .skin file seems to be available&quot;);</span>
-<span class="nc" id="L91">			throw new NoStyleAvailableException();</span>
+<span class="fc" id="L92">		final InputStream internalIs = getInputStreamForStyle(filename);</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		if (internalIs == null) {</span>
+<span class="fc" id="L94">			Log.error(&quot;No .skin file seems to be available&quot;);</span>
+<span class="fc" id="L95">			throw new NoStyleAvailableException();</span>
 		}
-<span class="fc" id="L93">		final BlocLines lines2 = BlocLines.load(internalIs, new LineLocationImpl(filename, null));</span>
-<span class="fc bfc" id="L94" title="All 2 branches covered.">		for (Style newStyle : new StyleParser(styleBuilder).parse(lines2))</span>
-<span class="fc" id="L95">			styleBuilder.loadInternal(newStyle.getSignature(), newStyle);</span>
+<span class="fc" id="L97">		final BlocLines lines2 = BlocLines.load(internalIs, new LineLocationImpl(filename, null));</span>
+<span class="fc" id="L98">		final Collection&lt;Style&gt; styles = new StyleParser(styleBuilder).parse(lines2);</span>
+		// A file that parses without any error but that defines no style at all is not
+		// a style sheet: this happens with legacy skinparam files, where every line is
+		// silently ignored because the key is unknown. Accepting it here would give an
+		// empty StyleBuilder, and every later getStyle() would return null.
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (styles.isEmpty())</span>
+<span class="fc" id="L104">			throw new StyleParsingException(&quot;No style found in &quot; + filename);</span>
 
-<span class="fc" id="L97">		return styleBuilder;</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">		for (Style newStyle : styles)</span>
+<span class="fc" id="L107">			styleBuilder.loadInternal(newStyle.getSignature(), newStyle);</span>
+
+<span class="fc" id="L109">		return styleBuilder;</span>
 	}
 
 	public static InputStream getInputStreamForStyle(String filename) throws IOException {
 
-<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
-<span class="nc" id="L103">			return EmbeddedResources.openPlantumlSkin();</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
+<span class="nc" id="L115">			return EmbeddedResources.openPlantumlSkin();</span>
 		} else {
-<span class="fc" id="L105">			InputStream is = null;</span>
+<span class="fc" id="L117">			InputStream is = null;</span>
 
-<span class="fc" id="L107">			SFile localFile = new SFile(filename);</span>
-<span class="pc" id="L108">			Log.info(() -&gt; &quot;Trying to load style &quot; + filename);</span>
+<span class="fc" id="L119">			SFile localFile = new SFile(filename);</span>
+<span class="pc" id="L120">			Log.info(() -&gt; &quot;Trying to load style &quot; + filename);</span>
 			try {
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">				if (localFile.exists() == false)</span>
-<span class="fc" id="L111">					localFile = FileSystem.getInstance().getFile(filename);</span>
-<span class="nc" id="L112">			} catch (IOException e) {</span>
-<span class="nc" id="L113">				Log.info(() -&gt; &quot;Cannot open file. &quot; + e);</span>
-<span class="fc" id="L114">			}</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">				if (localFile.exists() == false)</span>
+<span class="fc" id="L123">					localFile = FileSystem.getInstance().getFile(filename);</span>
+<span class="nc" id="L124">			} catch (IOException e) {</span>
+<span class="nc" id="L125">				Log.info(() -&gt; &quot;Cannot open file. &quot; + e);</span>
+<span class="fc" id="L126">			}</span>
 
-<span class="fc" id="L116">			final SFile localFile2 = localFile;</span>
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">			if (localFile.exists()) {</span>
-<span class="nc" id="L118">				Log.info(() -&gt; &quot;File found : &quot; + localFile2.getPrintablePath());</span>
-<span class="nc" id="L119">				is = localFile.openFile();</span>
+<span class="fc" id="L128">			final SFile localFile2 = localFile;</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">			if (localFile.exists()) {</span>
+<span class="pc" id="L130">				Log.info(() -&gt; &quot;File found : &quot; + localFile2.getPrintablePath());</span>
+<span class="fc" id="L131">				is = localFile.openFile();</span>
 			} else {
-<span class="pc" id="L121">				Log.info(() -&gt; &quot;File not found : &quot; + localFile2.getPrintablePath());</span>
-<span class="fc" id="L122">				final String res = &quot;/skin/&quot; + filename;</span>
-<span class="fc" id="L123">				is = StyleLoader.class.getResourceAsStream(res);</span>
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">				if (is != null)</span>
-<span class="pc" id="L125">					Log.info(() -&gt; &quot;... but &quot; + filename + &quot; found inside the .jar&quot;);</span>
+<span class="pc" id="L133">				Log.info(() -&gt; &quot;File not found : &quot; + localFile2.getPrintablePath());</span>
+<span class="fc" id="L134">				final String res = &quot;/skin/&quot; + filename;</span>
+<span class="fc" id="L135">				is = StyleLoader.class.getResourceAsStream(res);</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">				if (is != null)</span>
+<span class="pc" id="L137">					Log.info(() -&gt; &quot;... but &quot; + filename + &quot; found inside the .jar&quot;);</span>
 
 			}
-<span class="fc" id="L128">			return is;</span>
+<span class="fc" id="L140">			return is;</span>
 		}
+	}
+
+	/**
+	 * Properties that any complete style sheet has to define on its root style.
+	 *
+	 * A .skin file that does not define all of them is only a fragment, meant to be
+	 * merged on top of an existing style sheet: this is the case of strictuml.skin,
+	 * which is loaded by &quot;skinparam style strictuml&quot;. Using such a fragment with the
+	 * &quot;skin&quot; command would replace the whole style sheet by almost nothing, and the
+	 * drawing would then fail with puzzling errors, for example a missing FontSize
+	 * ending up as &quot;IllegalArgumentException: width=0.0&quot;.
+	 *
+	 * Shadowing, RoundCorner, DiagonalCorner and HyperLinkColor are deliberately not
+	 * required here: they all have a harmless default.
+	 */
+<span class="fc" id="L157">	private static final PName[] MANDATORY_ROOT_PROPERTIES = { PName.FontName, PName.FontSize, PName.FontStyle,</span>
+			PName.FontColor, PName.LineColor, PName.LineThickness, PName.BackGroundColor, PName.HorizontalAlignment };
+
+	/**
+	 * Returns the mandatory root properties that this style sheet does not define.
+	 *
+	 * An empty list means the style sheet is complete, and so can be used on its own
+	 * by the &quot;skin&quot; command.
+	 */
+	public static List&lt;PName&gt; getMissingRootProperties(StyleBuilder styleBuilder) {
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">		final Style root = styleBuilder == null ? null</span>
+<span class="fc" id="L168">				: styleBuilder.getMergedStyle(StyleSignatureBasic.of(SName.root));</span>
+
+<span class="fc" id="L170">		final List&lt;PName&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">		for (PName property : MANDATORY_ROOT_PROPERTIES)</span>
+<span class="pc bpc" id="L172" title="1 of 4 branches missed.">			if (root == null || root.hasValue(property) == false)</span>
+<span class="fc" id="L173">				result.add(property);</span>
+
+<span class="fc" id="L175">		return Collections.unmodifiableList(result);</span>
 	}
 
 	public static final int DELTA_PRIORITY_FOR_STEREOTYPE = 1000;
 
 	public static Map&lt;PName, Value&gt; addPriorityForStereotype(Map&lt;PName, Value&gt; tmp) {
-<span class="fc" id="L135">		final Map&lt;PName, Value&gt; result = new EnumMap&lt;&gt;(PName.class);</span>
-<span class="fc bfc" id="L136" title="All 2 branches covered.">		for (Entry&lt;PName, Value&gt; ent : tmp.entrySet())</span>
-<span class="fc" id="L137">			result.put(ent.getKey(), ((ValueImpl) ent.getValue()).addPriority(DELTA_PRIORITY_FOR_STEREOTYPE));</span>
+<span class="fc" id="L181">		final Map&lt;PName, Value&gt; result = new EnumMap&lt;&gt;(PName.class);</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">		for (Entry&lt;PName, Value&gt; ent : tmp.entrySet())</span>
+<span class="fc" id="L183">			result.put(ent.getKey(), ((ValueImpl) ent.getValue()).addPriority(DELTA_PRIORITY_FOR_STEREOTYPE));</span>
 
-<span class="fc" id="L139">		return result;</span>
+<span class="fc" id="L185">		return result;</span>
 	}
 
 }

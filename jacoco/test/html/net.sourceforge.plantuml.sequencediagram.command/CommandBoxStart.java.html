@@ -113,21 +113,21 @@ public class CommandBoxStart extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 //		if (diagram.isBoxPending())
 //			return CommandExecutionResult.error(&quot;Box cannot be nested&quot;);
 
-<span class="nc" id="L116">		final String argTitle = arg.getLazzy(&quot;NAME&quot;, 0);</span>
-<span class="nc" id="L117">		final String argColor = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="fc" id="L116">		final String argTitle = arg.getLazzy(&quot;NAME&quot;, 0);</span>
+<span class="fc" id="L117">		final String argColor = arg.get(&quot;COLOR&quot;, 0);</span>
 
-<span class="nc" id="L119">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
-<span class="nc" id="L120">		Stereotype stereotype = null;</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (stereo != null) {</span>
+<span class="fc" id="L119">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="fc" id="L120">		Stereotype stereotype = null;</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (stereo != null) {</span>
 <span class="nc" id="L122">			final ISkinParam skinParam = diagram.getSkinParam();</span>
 <span class="nc" id="L123">			stereotype = Stereotype.build(stereo);</span>
 		}
 
-<span class="nc" id="L126">		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		final String title = argTitle == null ? &quot;&quot; : argTitle;</span>
-<span class="nc" id="L128">		diagram.boxStart(Display.getWithNewlines(diagram.getPragma(), title), colors.getColor(ColorType.BACK),</span>
+<span class="fc" id="L126">		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		final String title = argTitle == null ? &quot;&quot; : argTitle;</span>
+<span class="fc" id="L128">		diagram.boxStart(Display.getWithNewlines(diagram.getPragma(), title), colors.getColor(ColorType.BACK),</span>
 				stereotype);
-<span class="nc" id="L130">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L130">		return CommandExecutionResult.ok();</span>
 	}
 
 }

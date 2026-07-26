@@ -56,44 +56,44 @@ public class ParticipantEnglober {
 	}
 
 	public static ParticipantEnglober build(Display title, HColor boxColor, Stereotype stereotype) {
-<span class="nc" id="L59">		return new ParticipantEnglober(null, title, boxColor, stereotype);</span>
+<span class="fc" id="L59">		return new ParticipantEnglober(null, title, boxColor, stereotype);</span>
 	}
 
 	public ParticipantEnglober newChild(Display title, HColor boxColor, Stereotype stereotype) {
 <span class="nc" id="L63">		return new ParticipantEnglober(this, title, boxColor, stereotype);</span>
 	}
 
-<span class="nc" id="L66">	private ParticipantEnglober(ParticipantEnglober parent, Display title, HColor boxColor, Stereotype stereotype) {</span>
-<span class="nc" id="L67">		this.parent = parent;</span>
-<span class="nc" id="L68">		this.title = title;</span>
-<span class="nc" id="L69">		this.boxColor = boxColor;</span>
-<span class="nc" id="L70">		this.stereotype = stereotype;</span>
-<span class="nc" id="L71">	}</span>
+<span class="fc" id="L66">	private ParticipantEnglober(ParticipantEnglober parent, Display title, HColor boxColor, Stereotype stereotype) {</span>
+<span class="fc" id="L67">		this.parent = parent;</span>
+<span class="fc" id="L68">		this.title = title;</span>
+<span class="fc" id="L69">		this.boxColor = boxColor;</span>
+<span class="fc" id="L70">		this.stereotype = stereotype;</span>
+<span class="fc" id="L71">	}</span>
 
 	public final Display getTitle() {
-<span class="nc" id="L74">		return title;</span>
+<span class="fc" id="L74">		return title;</span>
 	}
 
 	public final HColor getBoxColor() {
-<span class="nc" id="L78">		return boxColor;</span>
+<span class="fc" id="L78">		return boxColor;</span>
 	}
 
 	public final Stereotype getStereotype() {
-<span class="nc" id="L82">		return stereotype;</span>
+<span class="fc" id="L82">		return stereotype;</span>
 	}
 
 	public final ParticipantEnglober getParent() {
-<span class="nc" id="L86">		return parent;</span>
+<span class="fc" id="L86">		return parent;</span>
 	}
 
 	public final List&lt;ParticipantEnglober&gt; getGenealogy() {
-<span class="nc" id="L90">		final LinkedList&lt;ParticipantEnglober&gt; result = new LinkedList&lt;&gt;();</span>
-<span class="nc" id="L91">		ParticipantEnglober current = this;</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		while (current != null) {</span>
-<span class="nc" id="L93">			result.addFirst(current);</span>
-<span class="nc" id="L94">			current = current.getParent();</span>
+<span class="fc" id="L90">		final LinkedList&lt;ParticipantEnglober&gt; result = new LinkedList&lt;&gt;();</span>
+<span class="fc" id="L91">		ParticipantEnglober current = this;</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		while (current != null) {</span>
+<span class="fc" id="L93">			result.addFirst(current);</span>
+<span class="fc" id="L94">			current = current.getParent();</span>
 		}
-<span class="nc" id="L96">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L96">		return Collections.unmodifiableList(result);</span>
 	}
 
 }

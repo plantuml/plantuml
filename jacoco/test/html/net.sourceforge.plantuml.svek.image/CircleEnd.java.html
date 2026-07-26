@@ -90,14 +90,14 @@ public class CircleEnd implements TextBlock {
 
 		// This is *really* weird, but because of anti-aliasing we have to use middle
 		// color when lineColor and backColor are the same (!)
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (lineColor.equals(backColor)) {</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		if (lineColor.equals(backColor)) {</span>
 <span class="fc" id="L94">			final HColor middle = HColors.middle(lineColor, backColor);</span>
 <span class="fc" id="L95">			ug = ug.apply(backColor.bg());</span>
 <span class="fc" id="L96">			ug = ug.apply(middle);</span>
 
 <span class="fc" id="L98">		} else {</span>
-<span class="nc" id="L99">			ug = ug.apply(backColor.bg());</span>
-<span class="nc" id="L100">			ug = ug.apply(lineColor);</span>
+<span class="fc" id="L99">			ug = ug.apply(backColor.bg());</span>
+<span class="fc" id="L100">			ug = ug.apply(lineColor);</span>
 		}
 <span class="fc" id="L102">		ug.apply(new UTranslate(delta, delta)).draw(circleSmall);</span>
 <span class="fc" id="L103">	}</span>

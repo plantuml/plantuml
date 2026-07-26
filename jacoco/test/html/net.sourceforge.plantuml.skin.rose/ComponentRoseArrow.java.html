@@ -163,9 +163,9 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 
 <span class="fc" id="L164">		final ArrowDirection direction2 = getDirection2();</span>
 		final double textPos;
-<span class="pc bpc" id="L166" title="1 of 2 branches missed.">		if (messagePosition == HorizontalAlignment.CENTER) {</span>
-<span class="nc" id="L167">			final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();</span>
-<span class="nc" id="L168">			textPos = (dimensionToUse.getWidth() - Math.abs(area.getTextDeltaX()) - textWidth) / 2;</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">		if (messagePosition == HorizontalAlignment.CENTER) {</span>
+<span class="fc" id="L167">			final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L168">			textPos = (dimensionToUse.getWidth() - Math.abs(area.getTextDeltaX()) - textWidth) / 2;</span>
 <span class="pc bpc" id="L169" title="1 of 2 branches missed.">		} else if (messagePosition == HorizontalAlignment.RIGHT) {</span>
 <span class="nc" id="L170">			final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();</span>
 <span class="nc" id="L171">			textPos = dimensionToUse.getWidth() - Math.abs(area.getTextDeltaX()) - textWidth - getOldPaddingX2()</span>

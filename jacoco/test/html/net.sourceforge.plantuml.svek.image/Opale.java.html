@@ -134,11 +134,11 @@ public class Opale extends TextBlockMemoized {
 	public static UPath getCorner(double width, double roundCorner) {
 <span class="fc" id="L135">		final UPath path = UPath.none();</span>
 <span class="fc" id="L136">		path.moveTo(width - cornersize, 0);</span>
-<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (roundCorner == 0) {</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">		if (roundCorner == 0) {</span>
 <span class="fc" id="L138">			path.lineTo(width - cornersize, cornersize);</span>
 		} else {
-<span class="nc" id="L140">			path.lineTo(width - cornersize, cornersize - roundCorner / 4);</span>
-<span class="nc" id="L141">			path.arcTo(new XPoint2D(width - cornersize + roundCorner / 4, cornersize), roundCorner / 4, 0, 0);</span>
+<span class="fc" id="L140">			path.lineTo(width - cornersize, cornersize - roundCorner / 4);</span>
+<span class="fc" id="L141">			path.arcTo(new XPoint2D(width - cornersize + roundCorner / 4, cornersize), roundCorner / 4, 0, 0);</span>
 		}
 <span class="fc" id="L143">		path.lineTo(width, cornersize);</span>
 <span class="fc" id="L144">		path.lineTo(width - cornersize, 0);</span>
@@ -148,7 +148,7 @@ public class Opale extends TextBlockMemoized {
 
 	public static UPath getPolygonNormal(double width, double height, double roundCorner) {
 <span class="fc" id="L150">		final UPath polygon = UPath.none();</span>
-<span class="pc bpc" id="L151" title="1 of 2 branches missed.">		if (roundCorner == 0) {</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">		if (roundCorner == 0) {</span>
 <span class="fc" id="L152">			polygon.moveTo(0, 0);</span>
 <span class="fc" id="L153">			polygon.lineTo(0, height);</span>
 <span class="fc" id="L154">			polygon.lineTo(width, height);</span>
@@ -156,15 +156,15 @@ public class Opale extends TextBlockMemoized {
 <span class="fc" id="L156">			polygon.lineTo(width - cornersize, 0);</span>
 <span class="fc" id="L157">			polygon.lineTo(0, 0);</span>
 		} else {
-<span class="nc" id="L159">			polygon.moveTo(0, roundCorner / 2);</span>
-<span class="nc" id="L160">			polygon.lineTo(0, height - roundCorner / 2);</span>
-<span class="nc" id="L161">			polygon.arcTo(new XPoint2D(roundCorner / 2, height), roundCorner / 2, 0, 0);</span>
-<span class="nc" id="L162">			polygon.lineTo(width - roundCorner / 2, height);</span>
-<span class="nc" id="L163">			polygon.arcTo(new XPoint2D(width, height - roundCorner / 2), roundCorner / 2, 0, 0);</span>
-<span class="nc" id="L164">			polygon.lineTo(width, cornersize);</span>
-<span class="nc" id="L165">			polygon.lineTo(width - cornersize, 0);</span>
-<span class="nc" id="L166">			polygon.lineTo(roundCorner / 2, 0);</span>
-<span class="nc" id="L167">			polygon.arcTo(new XPoint2D(0, roundCorner / 2), roundCorner / 2, 0, 0);</span>
+<span class="fc" id="L159">			polygon.moveTo(0, roundCorner / 2);</span>
+<span class="fc" id="L160">			polygon.lineTo(0, height - roundCorner / 2);</span>
+<span class="fc" id="L161">			polygon.arcTo(new XPoint2D(roundCorner / 2, height), roundCorner / 2, 0, 0);</span>
+<span class="fc" id="L162">			polygon.lineTo(width - roundCorner / 2, height);</span>
+<span class="fc" id="L163">			polygon.arcTo(new XPoint2D(width, height - roundCorner / 2), roundCorner / 2, 0, 0);</span>
+<span class="fc" id="L164">			polygon.lineTo(width, cornersize);</span>
+<span class="fc" id="L165">			polygon.lineTo(width - cornersize, 0);</span>
+<span class="fc" id="L166">			polygon.lineTo(roundCorner / 2, 0);</span>
+<span class="fc" id="L167">			polygon.arcTo(new XPoint2D(0, roundCorner / 2), roundCorner / 2, 0, 0);</span>
 		}
 <span class="fc" id="L169">		polygon.closePath();</span>
 <span class="fc" id="L170">		return polygon;</span>

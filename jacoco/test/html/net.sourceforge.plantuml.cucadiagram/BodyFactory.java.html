@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.style.Style;
 	public final static boolean BODY3 = false;
 
 	public static Bodier createLeaf(ISkinParam skinParam, LeafType type, Set&lt;VisibilityModifier&gt; hideVisibilityModifier) {
-<span class="pc bpc" id="L59" title="1 of 4 branches missed.">		if (type.isLikeClass() || type == LeafType.OBJECT)</span>
+<span class="fc bfc" id="L59" title="All 4 branches covered.">		if (type.isLikeClass() || type == LeafType.OBJECT)</span>
 <span class="fc" id="L60">			return new BodierLikeClassOrObject(type, hideVisibilityModifier);</span>
 
 <span class="fc" id="L62">		return new BodierSimple(skinParam);</span>
