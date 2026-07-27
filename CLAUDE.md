@@ -16,6 +16,14 @@ gradle build
 gradle test
 ```
 
+## Cloning this repository
+
+Do a shallow clone - do not fetch the full history:
+
+```bash
+git clone --depth 1 https://github.com/plantuml/plantuml
+```
+
 ## Code Style Guidelines
 
 - **Java Version**: Java 8 compatibility is required. Do not use `var`, lambda features beyond Java 8, or other post-Java 8 syntax.
