@@ -1,6 +1,12 @@
 package net.sourceforge.plantuml.klimt.font;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.awt.font.TextAttribute;
 
@@ -19,33 +25,33 @@ class UFontFaceTest {
 	@Test
 	void normalFaceHasWeight400AndIsNotItalic() {
 		final UFontFace face = UFontFace.normal();
-		assertThat(face.getCssWeight()).isEqualTo(400);
-		assertThat(face.isItalic()).isFalse();
-		assertThat(face.isBold()).isFalse();
+		assertEquals(400, face.getCssWeight());
+		assertFalse(face.isItalic());
+		assertFalse(face.isBold());
 	}
 
 	@Test
 	void boldFaceHasWeight700AndIsNotItalic() {
 		final UFontFace face = UFontFace.bold();
-		assertThat(face.getCssWeight()).isEqualTo(700);
-		assertThat(face.isBold()).isTrue();
-		assertThat(face.isItalic()).isFalse();
+		assertEquals(700, face.getCssWeight());
+		assertTrue(face.isBold());
+		assertFalse(face.isItalic());
 	}
 
 	@Test
 	void italicFaceHasWeight400AndIsItalic() {
 		final UFontFace face = UFontFace.italic();
-		assertThat(face.getCssWeight()).isEqualTo(400);
-		assertThat(face.isItalic()).isTrue();
-		assertThat(face.isBold()).isFalse();
+		assertEquals(400, face.getCssWeight());
+		assertTrue(face.isItalic());
+		assertFalse(face.isBold());
 	}
 
 	@Test
 	void boldItalicFaceHasWeight700AndIsItalic() {
 		final UFontFace face = UFontFace.boldItalic();
-		assertThat(face.getCssWeight()).isEqualTo(700);
-		assertThat(face.isBold()).isTrue();
-		assertThat(face.isItalic()).isTrue();
+		assertEquals(700, face.getCssWeight());
+		assertTrue(face.isBold());
+		assertTrue(face.isItalic());
 	}
 
 	// -----------------------------------------------------------------------
@@ -55,75 +61,75 @@ class UFontFaceTest {
 	@Test
 	void fromCssWeightNormalKeyword() {
 		final UFontFace face = UFontFace.fromCssWeight("normal");
-		assertThat(face).isNotNull();
-		assertThat(face.getCssWeight()).isEqualTo(400);
+		assertNotNull(face);
+		assertEquals(400, face.getCssWeight());
 	}
 
 	@Test
 	void fromCssWeightBoldKeyword() {
 		final UFontFace face = UFontFace.fromCssWeight("bold");
-		assertThat(face).isNotNull();
-		assertThat(face.getCssWeight()).isEqualTo(700);
+		assertNotNull(face);
+		assertEquals(700, face.getCssWeight());
 	}
 
 	@Test
 	void fromCssWeightLighterKeyword() {
 		final UFontFace face = UFontFace.fromCssWeight("lighter");
-		assertThat(face).isNotNull();
-		assertThat(face.getCssWeight()).isEqualTo(300);
+		assertNotNull(face);
+		assertEquals(300, face.getCssWeight());
 	}
 
 	@Test
 	void fromCssWeightBolderKeyword() {
 		final UFontFace face = UFontFace.fromCssWeight("bolder");
-		assertThat(face).isNotNull();
-		assertThat(face.getCssWeight()).isEqualTo(800);
+		assertNotNull(face);
+		assertEquals(800, face.getCssWeight());
 	}
 
 	@Test
 	void fromCssWeightNumeric500() {
 		final UFontFace face = UFontFace.fromCssWeight("500");
-		assertThat(face).isNotNull();
-		assertThat(face.getCssWeight()).isEqualTo(500);
+		assertNotNull(face);
+		assertEquals(500, face.getCssWeight());
 	}
 
 	@Test
 	void fromCssWeightNumeric100() {
 		final UFontFace face = UFontFace.fromCssWeight("100");
-		assertThat(face).isNotNull();
-		assertThat(face.getCssWeight()).isEqualTo(100);
+		assertNotNull(face);
+		assertEquals(100, face.getCssWeight());
 	}
 
 	@Test
 	void fromCssWeightNumeric900() {
 		final UFontFace face = UFontFace.fromCssWeight("900");
-		assertThat(face).isNotNull();
-		assertThat(face.getCssWeight()).isEqualTo(900);
+		assertNotNull(face);
+		assertEquals(900, face.getCssWeight());
 	}
 
 	@Test
 	void fromCssWeightWithWhitespace() {
 		final UFontFace face = UFontFace.fromCssWeight("  600  ");
-		assertThat(face).isNotNull();
-		assertThat(face.getCssWeight()).isEqualTo(600);
+		assertNotNull(face);
+		assertEquals(600, face.getCssWeight());
 	}
 
 	@Test
 	void fromCssWeightKeywordCaseInsensitive() {
-		assertThat(UFontFace.fromCssWeight("BOLD")).isNotNull();
-		assertThat(UFontFace.fromCssWeight("BOLD").getCssWeight()).isEqualTo(700);
-		assertThat(UFontFace.fromCssWeight("Normal").getCssWeight()).isEqualTo(400);
+		assertNotNull(UFontFace.fromCssWeight("BOLD"));
+		assertEquals(700, UFontFace.fromCssWeight("BOLD").getCssWeight());
+		assertEquals(400, UFontFace.fromCssWeight("Normal").getCssWeight());
 	}
 
 	@Test
 	void fromCssWeightNullReturnsNull() {
-		assertThat(UFontFace.fromCssWeight(null)).isNull();
+		assertNull(UFontFace.fromCssWeight(null));
 	}
 
 	@Test
 	void fromCssWeightGarbageReturnsNull() {
-		assertThat(UFontFace.fromCssWeight("ultra")).isNull();
-		assertThat(UFontFace.fromCssWeight("abc")).isNull();
+		assertNull(UFontFace.fromCssWeight("ultra"));
+		assertNull(UFontFace.fromCssWeight("abc"));
 	}
 
 	// -----------------------------------------------------------------------
@@ -134,32 +140,32 @@ class UFontFaceTest {
 	void withWeightReturnsNewInstanceWithUpdatedWeight() {
 		final UFontFace original = UFontFace.normal();
 		final UFontFace mutated = original.withWeight(500);
-		assertThat(mutated.getCssWeight()).isEqualTo(500);
-		assertThat(original.getCssWeight()).isEqualTo(400); // original unchanged
+		assertEquals(500, mutated.getCssWeight());
+		assertEquals(400, original.getCssWeight()); // original unchanged
 	}
 
 	@Test
 	void withWeightSameValueReturnsSameOrEqualInstance() {
 		final UFontFace face = UFontFace.normal();
 		final UFontFace same = face.withWeight(400);
-		assertThat(same.getCssWeight()).isEqualTo(400);
-		assertThat(same.isItalic()).isFalse();
+		assertEquals(400, same.getCssWeight());
+		assertFalse(same.isItalic());
 	}
 
 	@Test
 	void withStyleReturnsNewInstanceWithItalic() {
 		final UFontFace original = UFontFace.normal();
 		final UFontFace mutated = original.withStyle(UFontStyle.ITALIC);
-		assertThat(mutated.isItalic()).isTrue();
-		assertThat(mutated.getCssWeight()).isEqualTo(400);
-		assertThat(original.isItalic()).isFalse(); // original unchanged
+		assertTrue(mutated.isItalic());
+		assertEquals(400, mutated.getCssWeight());
+		assertFalse(original.isItalic()); // original unchanged
 	}
 
 	@Test
 	void withStyleSameStyleReturnsSameOrEqualInstance() {
 		final UFontFace face = UFontFace.normal();
 		final UFontFace same = face.withStyle(UFontStyle.NORMAL);
-		assertThat(same.isItalic()).isFalse();
+		assertFalse(same.isItalic());
 	}
 
 	// -----------------------------------------------------------------------
@@ -168,18 +174,18 @@ class UFontFaceTest {
 
 	@Test
 	void toCssWeightStringProducesNumericString() {
-		assertThat(UFontFace.normal().toCssWeightString()).isEqualTo("400");
-		assertThat(UFontFace.bold().toCssWeightString()).isEqualTo("700");
-		assertThat(UFontFace.fromCssWeight("500").toCssWeightString()).isEqualTo("500");
-		assertThat(UFontFace.fromCssWeight("300").toCssWeightString()).isEqualTo("300");
+		assertEquals("400", UFontFace.normal().toCssWeightString());
+		assertEquals("700", UFontFace.bold().toCssWeightString());
+		assertEquals("500", UFontFace.fromCssWeight("500").toCssWeightString());
+		assertEquals("300", UFontFace.fromCssWeight("300").toCssWeightString());
 	}
 
 	@Test
 	void toCssStyleStringReturnsItalicOrNormal() {
-		assertThat(UFontFace.normal().toCssStyleString()).isEqualTo("normal");
-		assertThat(UFontFace.italic().toCssStyleString()).isEqualTo("italic");
-		assertThat(UFontFace.boldItalic().toCssStyleString()).isEqualTo("italic");
-		assertThat(UFontFace.bold().toCssStyleString()).isEqualTo("normal");
+		assertEquals("normal", UFontFace.normal().toCssStyleString());
+		assertEquals("italic", UFontFace.italic().toCssStyleString());
+		assertEquals("italic", UFontFace.boldItalic().toCssStyleString());
+		assertEquals("normal", UFontFace.bold().toCssStyleString());
 	}
 
 	// -----------------------------------------------------------------------
@@ -188,30 +194,30 @@ class UFontFaceTest {
 
 //	@Test
 //	void toLegacyStylePreservesPlain() {
-//		assertThat(UFontFace.normal().toLegacyStyle()).isEqualTo(0); // Font.PLAIN
+//		assertEquals(0, UFontFace.normal().toLegacyStyle()); // Font.PLAIN
 //	}
 //
 //	@Test
 //	void toLegacyStylePreservesBold() {
-//		assertThat(UFontFace.bold().toLegacyStyle()).isEqualTo(1); // Font.BOLD
+//		assertEquals(1, UFontFace.bold().toLegacyStyle()); // Font.BOLD
 //	}
 //
 //	@Test
 //	void toLegacyStylePreservesItalic() {
-//		assertThat(UFontFace.italic().toLegacyStyle()).isEqualTo(2); // Font.ITALIC
+//		assertEquals(2, UFontFace.italic().toLegacyStyle()); // Font.ITALIC
 //	}
 //
 //	@Test
 //	void toLegacyStyleMapsNonBoldWeightToPlain() {
 //		// weight 500 is not >= 700, so legacy considers it non-bold
 //		final UFontFace face = UFontFace.fromCssWeight("500");
-//		assertThat(face.toLegacyStyle() & 1).isEqualTo(0); // & Font.BOLD
+//		assertEquals(0, face.toLegacyStyle() & 1); // & Font.BOLD
 //	}
 //
 //	@Test
 //	void toLegacyStyleMapsWeight700ToBold() {
 //		final UFontFace face = UFontFace.fromCssWeight("700");
-//		assertThat(face.toLegacyStyle() & 1).isEqualTo(1); // & Font.BOLD == Font.BOLD
+//		assertEquals(1, face.toLegacyStyle() & 1); // & Font.BOLD == Font.BOLD
 //	}
 
 	// -----------------------------------------------------------------------
@@ -221,25 +227,25 @@ class UFontFaceTest {
 	@Test
 	void weight400MapsToTextAttributeWeightRegular() {
 		final float w = UFontFace.normal().toTextAttributeWeight();
-		assertThat(w).isEqualTo(TextAttribute.WEIGHT_REGULAR);
+		assertEquals(TextAttribute.WEIGHT_REGULAR, w);
 	}
 
 	@Test
 	void weight700MapsToTextAttributeWeightBold() {
 		final float w = UFontFace.bold().toTextAttributeWeight();
-		assertThat(w).isEqualTo(TextAttribute.WEIGHT_BOLD);
+		assertEquals(TextAttribute.WEIGHT_BOLD, w);
 	}
 
 	@Test
 	void weight300MapsToTextAttributeWeightLight() {
 		final UFontFace face = UFontFace.fromCssWeight("300");
-		assertThat(face.toTextAttributeWeight()).isEqualTo(TextAttribute.WEIGHT_LIGHT);
+		assertEquals(TextAttribute.WEIGHT_LIGHT, face.toTextAttributeWeight());
 	}
 
 	@Test
 	void weight500MapsToTextAttributeWeightMedium() {
 		final UFontFace face = UFontFace.fromCssWeight("500");
-		assertThat(face.toTextAttributeWeight()).isEqualTo(TextAttribute.WEIGHT_MEDIUM);
+		assertEquals(TextAttribute.WEIGHT_MEDIUM, face.toTextAttributeWeight());
 	}
 
 	// -----------------------------------------------------------------------
@@ -248,11 +254,11 @@ class UFontFaceTest {
 
 	@Test
 	void differentWeightFacesAreNotEqual() {
-		assertThat(UFontFace.normal()).isNotEqualTo(UFontFace.fromCssWeight("500"));
+		assertNotEquals(UFontFace.fromCssWeight("500"), UFontFace.normal());
 	}
 
 	@Test
 	void differentStyleFacesAreNotEqual() {
-		assertThat(UFontFace.normal()).isNotEqualTo(UFontFace.italic());
+		assertNotEquals(UFontFace.italic(), UFontFace.normal());
 	}
 }

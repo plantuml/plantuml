@@ -1,7 +1,7 @@
 package net.sourceforge.plantuml.klimt.drawing.font;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.within;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 import org.junit.jupiter.api.Test;
 
@@ -22,57 +22,57 @@ class StringBounderFromWidthTableTest {
 
 	@Test
 	void testFileFormatIsKept() {
-		assertThat(SB.getFileFormat()).isEqualTo(FileFormat.SVG);
+		assertEquals(FileFormat.SVG, SB.getFileFormat());
 	}
 
 	@Test
 	void testHeightEqualsFontSize() {
-		assertThat(SB.calculateDimension(UFontFactory.sansSerif(16), "anything").getHeight()).isEqualTo(16);
-		assertThat(SB.calculateDimension(UFontFactory.sansSerif(42), "anything").getHeight()).isEqualTo(42);
+		assertEquals(16, SB.calculateDimension(UFontFactory.sansSerif(16), "anything").getHeight());
+		assertEquals(42, SB.calculateDimension(UFontFactory.sansSerif(42), "anything").getHeight());
 	}
 
 	@Test
 	void testSingleCharAtReferenceSize() {
 		// '!' (U+0021) has a tabulated advance of 4.4 pt at size 16.
 		final XDimension2D dim = SB.calculateDimension(UFontFactory.sansSerif(16), "!");
-		assertThat(dim.getWidth()).isCloseTo(4.4, within(EPSILON));
-		assertThat(dim.getHeight()).isEqualTo(16);
+		assertEquals(4.4, dim.getWidth(), EPSILON);
+		assertEquals(16, dim.getHeight());
 	}
 
 	@Test
 	void testWidthScalesLinearlyWithFontSize() {
 		// The reference size is 16, so factor = size / 16.
-		assertThat(SB.calculateDimension(UFontFactory.sansSerif(16), "!").getWidth()).isCloseTo(4.4, within(EPSILON));
-		assertThat(SB.calculateDimension(UFontFactory.sansSerif(32), "!").getWidth()).isCloseTo(8.8, within(EPSILON));
-		assertThat(SB.calculateDimension(UFontFactory.sansSerif(8), "!").getWidth()).isCloseTo(2.2, within(EPSILON));
+		assertEquals(4.4, SB.calculateDimension(UFontFactory.sansSerif(16), "!").getWidth(), EPSILON);
+		assertEquals(8.8, SB.calculateDimension(UFontFactory.sansSerif(32), "!").getWidth(), EPSILON);
+		assertEquals(2.2, SB.calculateDimension(UFontFactory.sansSerif(8), "!").getWidth(), EPSILON);
 	}
 
 	@Test
 	void testMultiCharIsSumOfAdvances() {
 		// 'H'=11.6 'e'=8.9 'l'=3.6 'l'=3.6 'o'=8.9 -> 36.6 pt at size 16.
 		final XDimension2D dim = SB.calculateDimension(UFontFactory.sansSerif(16), "Hello");
-		assertThat(dim.getWidth()).isCloseTo(36.6, within(EPSILON));
+		assertEquals(36.6, dim.getWidth(), EPSILON);
 	}
 
 	@Test
 	void testKnownGlyphWidths() {
-		assertThat(SB.calculateDimension(UFontFactory.sansSerif(16), "A").getWidth()).isCloseTo(10.7, within(EPSILON));
-		assertThat(SB.calculateDimension(UFontFactory.sansSerif(16), "i").getWidth()).isCloseTo(3.6, within(EPSILON));
-		assertThat(SB.calculateDimension(UFontFactory.sansSerif(16), "W").getWidth()).isCloseTo(15.1, within(EPSILON));
-		assertThat(SB.calculateDimension(UFontFactory.sansSerif(16), "@").getWidth()).isCloseTo(16.3, within(EPSILON));
+		assertEquals(10.7, SB.calculateDimension(UFontFactory.sansSerif(16), "A").getWidth(), EPSILON);
+		assertEquals(3.6, SB.calculateDimension(UFontFactory.sansSerif(16), "i").getWidth(), EPSILON);
+		assertEquals(15.1, SB.calculateDimension(UFontFactory.sansSerif(16), "W").getWidth(), EPSILON);
+		assertEquals(16.3, SB.calculateDimension(UFontFactory.sansSerif(16), "@").getWidth(), EPSILON);
 	}
 
 	@Test
 	void testSpaceHasZeroWidth() {
 		// The tabulated advance for U+0020 is 0.
-		assertThat(SB.calculateDimension(UFontFactory.sansSerif(16), " ").getWidth()).isCloseTo(0.0, within(EPSILON));
+		assertEquals(0.0, SB.calculateDimension(UFontFactory.sansSerif(16), " ").getWidth(), EPSILON);
 	}
 
 	@Test
 	void testEmptyStringHasZeroWidth() {
 		final XDimension2D dim = SB.calculateDimension(UFontFactory.sansSerif(16), "");
-		assertThat(dim.getWidth()).isEqualTo(0);
-		assertThat(dim.getHeight()).isEqualTo(16);
+		assertEquals(0, dim.getWidth());
+		assertEquals(16, dim.getHeight());
 	}
 
 	@Test
@@ -80,17 +80,15 @@ class StringBounderFromWidthTableTest {
 		// Block 0x07 collapses to a single value {81} -> every code point in that
 		// block has an advance of 8.1 pt at size 16.
 		final XDimension2D dim = SB.calculateDimension(UFontFactory.sansSerif(16), "\u0700");
-		assertThat(dim.getWidth()).isCloseTo(8.1, within(EPSILON));
+		assertEquals(8.1, dim.getWidth(), EPSILON);
 	}
 
 	@Test
 	void testCharOutsideTableUsesFallbackWidth() {
 		// The table covers blocks 0x00..0xFE. A code point in block 0xFF (>= U+FF00)
 		// falls back to a fixed advance of 13 pt at size 16.
-		assertThat(SB.calculateDimension(UFontFactory.sansSerif(16), "\uFF21").getWidth()).isCloseTo(13.0,
-				within(EPSILON));
-		assertThat(SB.calculateDimension(UFontFactory.sansSerif(32), "\uFF21").getWidth()).isCloseTo(26.0,
-				within(EPSILON));
+		assertEquals(13.0, SB.calculateDimension(UFontFactory.sansSerif(16), "\uFF21").getWidth(), EPSILON);
+		assertEquals(26.0, SB.calculateDimension(UFontFactory.sansSerif(32), "\uFF21").getWidth(), EPSILON);
 	}
 
 }

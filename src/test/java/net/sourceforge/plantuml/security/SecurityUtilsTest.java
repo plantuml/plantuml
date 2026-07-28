@@ -1,6 +1,12 @@
 package net.sourceforge.plantuml.security;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -64,32 +70,31 @@ class SecurityUtilsTest {
 
 		Files.write(secretFile.toPath(), jsonCredentials.getBytes(StandardCharsets.UTF_8));
 
-		assertThat(secretFile).describedAs("File should be existing with content")
-				.exists().isNotEmpty();
+		assertTrue(secretFile.exists()); assertTrue(secretFile.length() > 0);
 
-		assertThat(SecurityUtils.getSecurityPath()).isNotNull();
+		assertNotNull(SecurityUtils.getSecurityPath());
 
 		String secretFileName = secretFile.getName();
 
 		SecurityCredentials credentials = SecurityUtils.loadSecurityCredentials(
 				secretFileName.substring(0, secretFileName.length() - EXT.length()));
 
-		assertThat(credentials).isNotNull();
+		assertNotNull(credentials);
 
-		assertThat(credentials.getName()).isEqualTo("jenkins");
-		assertThat(credentials.getIdentifier()).isEqualTo("alice");
-		assertThat(credentials.getSecret()).isEqualTo(new char[]{'s', 'e', 'c', 'r', 'e', 't'});
+		assertEquals("jenkins", credentials.getName());
+		assertEquals("alice", credentials.getIdentifier());
+		assertArrayEquals(new char[]{'s', 'e', 'c', 'r', 'e', 't'}, credentials.getSecret());
 
-		assertThat(credentials.getProxy()).isNotNull();
+		assertNotNull(credentials.getProxy());
 		Proxy proxy = credentials.getProxy();
-		assertThat(proxy.type()).isEqualTo(Proxy.Type.SOCKS);
+		assertEquals(Proxy.Type.SOCKS, proxy.type());
 
-		assertThat(proxy.address()).isNotNull();
-		assertThat(proxy.address()).isInstanceOf(InetSocketAddress.class);
+		assertNotNull(proxy.address());
+		assertInstanceOf(InetSocketAddress.class, proxy.address());
 
 		InetSocketAddress address = (InetSocketAddress) proxy.address();
-		assertThat(address.getPort()).isEqualTo(8080);
-		assertThat(address.getHostString()).isEqualTo("192.168.92.250");
+		assertEquals(8080, address.getPort());
+		assertEquals("192.168.92.250", address.getHostString());
 	}
 
 	/**
@@ -115,15 +120,14 @@ class SecurityUtilsTest {
 
 		Files.write(secretFile.toPath(), jsonCredentials.getBytes(StandardCharsets.UTF_8));
 
-		assertThat(secretFile).describedAs("File should be existing with content")
-				.exists().isNotEmpty();
+		assertTrue(secretFile.exists()); assertTrue(secretFile.length() > 0);
 
 		String secretFileName = secretFile.getName();
 
 		SecurityCredentials credentials = SecurityUtils.loadSecurityCredentials(
 				secretFileName.substring(0, secretFileName.length() - EXT.length()));
 
-		assertThat(credentials).isEqualTo(SecurityCredentials.NONE);
+		assertEquals(SecurityCredentials.NONE, credentials);
 	}
 
 
@@ -149,15 +153,14 @@ class SecurityUtilsTest {
 
 		Files.write(secretFile.toPath(), jsonCredentials.getBytes(StandardCharsets.UTF_8));
 
-		assertThat(secretFile).describedAs("File should be existing with content")
-				.exists().isNotEmpty();
+		assertTrue(secretFile.exists()); assertTrue(secretFile.length() > 0);
 
 		String secretFileName = secretFile.getName();
 
 		SecurityCredentials credentials = SecurityUtils.loadSecurityCredentials(
 				secretFileName.substring(0, secretFileName.length() - EXT.length()));
 
-		assertThat(credentials).isNotEqualTo(SecurityCredentials.NONE);
+		assertNotEquals(SecurityCredentials.NONE, credentials);
 	}
 
 

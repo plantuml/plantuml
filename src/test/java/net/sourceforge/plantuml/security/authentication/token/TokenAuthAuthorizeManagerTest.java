@@ -1,6 +1,9 @@
 package net.sourceforge.plantuml.security.authentication.token;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 
 import java.net.Proxy;
 import java.util.HashMap;
@@ -28,10 +31,9 @@ class TokenAuthAuthorizeManagerTest {
 
 		SecurityAuthentication securityAuthentication = cut.create(credentials);
 
-		assertThat(securityAuthentication).isNotNull();
+		assertNotNull(securityAuthentication);
 
-		assertThat(securityAuthentication.isPublic()).isFalse();
-		assertThat(securityAuthentication.getTokens())
-				.containsEntry("headers.Authorization", "ApiKey a4db08b7-5729-4ba9-8c08-f2df493465a1");
+		assertFalse(securityAuthentication.isPublic());
+		assertEquals("ApiKey a4db08b7-5729-4ba9-8c08-f2df493465a1", securityAuthentication.getTokens().get("headers.Authorization"));
 	}
 }

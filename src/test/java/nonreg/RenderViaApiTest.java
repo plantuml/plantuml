@@ -1,8 +1,9 @@
 package nonreg;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.util.Lists.newArrayList;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -51,6 +52,6 @@ class RenderViaApiTest {
         final String rendered = RenderViaApiTest(input, FileFormat.PREPROC);
         // OK with:
         // final String rendered = RenderViaApiTest(input, FileFormat.UTXT);
-        assertThat(rendered).doesNotContain("syntax").contains(expected);
+        assertFalse(rendered.contains("syntax")); assertTrue(rendered.contains(expected));
     }   
 }

@@ -1,6 +1,9 @@
 package net.sourceforge.plantuml.cheneer.command;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.util.ArrayList;
 
@@ -30,11 +33,11 @@ public class CommandSimpleSubclassTest {
 		IRegex regex = CommandSimpleSubclass.getRegexConcat();
 		RegexResult matcher = regex.matcher("E1 -<- E2");
 
-		assertThat(matcher).isNotNull();
-		assertThat(matcher.get("NAME1", 0)).isEqualTo("E1");
-		assertThat(matcher.get("NAME2", 0)).isEqualTo("E2");
-		assertThat(matcher.get("PARTICIPATION", 0)).isEqualTo("-");
-		assertThat(matcher.get("DIRECTION", 0)).isEqualTo("<");
+		assertNotNull(matcher);
+		assertEquals("E1", matcher.get("NAME1", 0));
+		assertEquals("E2", matcher.get("NAME2", 0));
+		assertEquals("-", matcher.get("PARTICIPATION", 0));
+		assertEquals("<", matcher.get("DIRECTION", 0));
 	}
 
 	@Test
@@ -42,11 +45,11 @@ public class CommandSimpleSubclassTest {
 		IRegex regex = CommandSimpleSubclass.getRegexConcat();
 		RegexResult matcher = regex.matcher("E1 =<= E2");
 
-		assertThat(matcher).isNotNull();
-		assertThat(matcher.get("NAME1", 0)).isEqualTo("E1");
-		assertThat(matcher.get("NAME2", 0)).isEqualTo("E2");
-		assertThat(matcher.get("PARTICIPATION", 0)).isEqualTo("=");
-		assertThat(matcher.get("DIRECTION", 0)).isEqualTo("<");
+		assertNotNull(matcher);
+		assertEquals("E1", matcher.get("NAME1", 0));
+		assertEquals("E2", matcher.get("NAME2", 0));
+		assertEquals("=", matcher.get("PARTICIPATION", 0));
+		assertEquals("<", matcher.get("DIRECTION", 0));
 	}
 
 	@Test
@@ -54,11 +57,11 @@ public class CommandSimpleSubclassTest {
 		IRegex regex = CommandSimpleSubclass.getRegexConcat();
 		RegexResult matcher = regex.matcher("E1 ->- E2");
 
-		assertThat(matcher).isNotNull();
-		assertThat(matcher.get("NAME1", 0)).isEqualTo("E1");
-		assertThat(matcher.get("NAME2", 0)).isEqualTo("E2");
-		assertThat(matcher.get("PARTICIPATION", 0)).isEqualTo("-");
-		assertThat(matcher.get("DIRECTION", 0)).isEqualTo(">");
+		assertNotNull(matcher);
+		assertEquals("E1", matcher.get("NAME1", 0));
+		assertEquals("E2", matcher.get("NAME2", 0));
+		assertEquals("-", matcher.get("PARTICIPATION", 0));
+		assertEquals(">", matcher.get("DIRECTION", 0));
 	}
 
 	@Test
@@ -69,13 +72,13 @@ public class CommandSimpleSubclassTest {
 		BlocLines lines = BlocLines.singleString("E1 -<- E2");
 		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
-		assertThat(result).matches(CommandExecutionResult::isOk);
+		assertTrue(result.isOk());
 
 		Link link = diagram.getLinks().get(0);
-		assertThat(link.getEntity1().getName()).isEqualTo("E1");
-		assertThat(link.getEntity2().getName()).isEqualTo("E2");
-		assertThat(link.getType().getStyle().getStroke3().getThickness()).isEqualTo(1);
-		assertThat(link.getType().getMiddleDecor()).isEqualTo(LinkMiddleDecor.SUBSET);
+		assertEquals("E1", link.getEntity1().getName());
+		assertEquals("E2", link.getEntity2().getName());
+		assertEquals(1, link.getType().getStyle().getStroke3().getThickness());
+		assertEquals(LinkMiddleDecor.SUBSET, link.getType().getMiddleDecor());
 	}
 
 	@Test
@@ -86,13 +89,13 @@ public class CommandSimpleSubclassTest {
 		BlocLines lines = BlocLines.singleString("E1 =<= E2");
 		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
-		assertThat(result).matches(CommandExecutionResult::isOk);
+		assertTrue(result.isOk());
 
 		Link link = diagram.getLinks().get(0);
-		assertThat(link.getEntity1().getName()).isEqualTo("E1");
-		assertThat(link.getEntity2().getName()).isEqualTo("E2");
-		assertThat(link.getType().getStyle().getStroke3().getThickness()).isEqualTo(2);
-		assertThat(link.getType().getMiddleDecor()).isEqualTo(LinkMiddleDecor.SUBSET);
+		assertEquals("E1", link.getEntity1().getName());
+		assertEquals("E2", link.getEntity2().getName());
+		assertEquals(2, link.getType().getStyle().getStroke3().getThickness());
+		assertEquals(LinkMiddleDecor.SUBSET, link.getType().getMiddleDecor());
 	}
 
 	@Test
@@ -103,12 +106,12 @@ public class CommandSimpleSubclassTest {
 		BlocLines lines = BlocLines.singleString("E1 ->- E2");
 		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
-		assertThat(result).matches(CommandExecutionResult::isOk);
+		assertTrue(result.isOk());
 
 		Link link = diagram.getLinks().get(0);
-		assertThat(link.getEntity1().getName()).isEqualTo("E1");
-		assertThat(link.getEntity2().getName()).isEqualTo("E2");
-		assertThat(link.getType().getStyle().getStroke3().getThickness()).isEqualTo(1);
-		assertThat(link.getType().getMiddleDecor()).isEqualTo(LinkMiddleDecor.SUPERSET);
+		assertEquals("E1", link.getEntity1().getName());
+		assertEquals("E2", link.getEntity2().getName());
+		assertEquals(1, link.getType().getStyle().getStroke3().getThickness());
+		assertEquals(LinkMiddleDecor.SUPERSET, link.getType().getMiddleDecor());
 	}
 }

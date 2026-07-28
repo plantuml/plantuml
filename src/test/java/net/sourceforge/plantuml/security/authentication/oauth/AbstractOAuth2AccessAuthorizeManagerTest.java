@@ -1,6 +1,8 @@
 package net.sourceforge.plantuml.security.authentication.oauth;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.util.Map;
 
@@ -27,11 +29,7 @@ class AbstractOAuth2AccessAuthorizeManagerTest {
 		JsonValue response = Json.parse(jsonResponse);
 		Map<String, Object> responseMap = cut.buildAccessDataFromResponse(response.asObject(), null);
 
-		assertThat(responseMap)
-				.containsEntry(OAuth2Tokens.ACCESS_TOKEN.key(), "7fea8201-eebb-4101-a76f-ddc1efdd3bbd")
-				.containsEntry(OAuth2Tokens.SCOPE.key(), "read write")
-				.containsEntry(OAuth2Tokens.TOKEN_TYPE.key(), "bearer")
-				.containsEntry(OAuth2Tokens.EXPIRES_IN.key(), 300);
+		assertEquals("7fea8201-eebb-4101-a76f-ddc1efdd3bbd", responseMap.get(OAuth2Tokens.ACCESS_TOKEN.key())); assertEquals("read write", responseMap.get(OAuth2Tokens.SCOPE.key())); assertEquals("bearer", responseMap.get(OAuth2Tokens.TOKEN_TYPE.key())); assertEquals(300, responseMap.get(OAuth2Tokens.EXPIRES_IN.key()));
 	}
 
 	@ParameterizedTest
@@ -43,11 +41,7 @@ class AbstractOAuth2AccessAuthorizeManagerTest {
 		JsonValue response = Json.parse(jsonResponse);
 		Map<String, Object> responseMap = cut.buildAccessDataFromResponse(response.asObject(), "apikey");
 
-		assertThat(responseMap)
-				.containsEntry(OAuth2Tokens.ACCESS_TOKEN.key(), "7fea8201-eebb-4101-a76f-ddc1efdd3bbd")
-				.containsEntry(OAuth2Tokens.SCOPE.key(), "read write")
-				.containsEntry(OAuth2Tokens.TOKEN_TYPE.key(), "apikey")
-				.containsEntry(OAuth2Tokens.EXPIRES_IN.key(), 300);
+		assertEquals("7fea8201-eebb-4101-a76f-ddc1efdd3bbd", responseMap.get(OAuth2Tokens.ACCESS_TOKEN.key())); assertEquals("read write", responseMap.get(OAuth2Tokens.SCOPE.key())); assertEquals("apikey", responseMap.get(OAuth2Tokens.TOKEN_TYPE.key())); assertEquals(300, responseMap.get(OAuth2Tokens.EXPIRES_IN.key()));
 	}
 
 	@Test
@@ -56,7 +50,7 @@ class AbstractOAuth2AccessAuthorizeManagerTest {
 		JsonValue response = Json.parse(jsonResponse);
 		Map<String, Object> responseMap = cut.buildAccessDataFromResponse(response.asObject(), null);
 
-		assertThat(responseMap).as("Empty map should not contain default token-type 'bearer'").isEmpty();
+		assertTrue(responseMap.isEmpty());
 	}
 
 	@Test
@@ -65,16 +59,16 @@ class AbstractOAuth2AccessAuthorizeManagerTest {
 		JsonValue response = Json.parse(jsonResponse);
 		Map<String, Object> responseMap = cut.buildAccessDataFromResponse(response.asObject(), "apikey");
 
-		assertThat(responseMap).as("Empty map should not contain override token-type 'apikey'").isEmpty();
+		assertTrue(responseMap.isEmpty());
 	}
 
 	@Test
 	void urlEncodeTest() {
-		assertThat(cut.urlEncode("alice")).isEqualTo("alice");
-		assertThat(cut.urlEncode("bob")).isEqualTo("bob");
-		assertThat(cut.urlEncode("alice and bob")).isEqualTo("alice+and+bob");
-		assertThat(cut.urlEncode("Müller")).isEqualTo("M%C3%BCller");
-		assertThat(cut.urlEncode("s?ecret=-110%")).isEqualTo("s%3Fecret%3D-110%25");
+		assertEquals("alice", cut.urlEncode("alice"));
+		assertEquals("bob", cut.urlEncode("bob"));
+		assertEquals("alice+and+bob", cut.urlEncode("alice and bob"));
+		assertEquals("M%C3%BCller", cut.urlEncode("Müller"));
+		assertEquals("s%3Fecret%3D-110%25", cut.urlEncode("s?ecret=-110%"));
 	}
 
 	/**

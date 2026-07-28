@@ -1,6 +1,10 @@
 package net.sourceforge.plantuml.security.authentication.basicauth;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 
 import org.junit.jupiter.api.Test;
 
@@ -20,11 +24,9 @@ class BasicAuthAuthorizeManagerTest {
 		SecurityAuthentication securityAuthentication = cut.create(
 				SecurityCredentials.basicAuth("alice", new char[]{'s', 'e', 'c', 'r', 'e', 't'}));
 
-		assertThat(securityAuthentication).isNotNull();
+		assertNotNull(securityAuthentication);
 
-		assertThat(securityAuthentication.isPublic()).isFalse();
-		assertThat(securityAuthentication.getTokens())
-				.containsEntry("identifier", "alice")
-				.containsEntry("secret", new char[]{'s', 'e', 'c', 'r', 'e', 't'});
+		assertFalse(securityAuthentication.isPublic());
+		assertEquals("alice", securityAuthentication.getTokens().get("identifier")); assertArrayEquals(new char[]{'s', 'e', 'c', 'r', 'e', 't'}, (char[]) securityAuthentication.getTokens().get("secret"));
 	}
 }

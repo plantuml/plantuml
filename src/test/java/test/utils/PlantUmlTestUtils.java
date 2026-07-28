@@ -1,7 +1,8 @@
 package test.utils;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -46,7 +47,7 @@ public class PlantUmlTestUtils {
 
 		public ExportDiagram assertDiagramType(Class<? extends Diagram> klass) {
 			assertNoError();
-			assertThat(diagram).isInstanceOf(klass);
+			assertInstanceOf(klass, diagram);
 			return this;
 		}
 

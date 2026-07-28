@@ -1,6 +1,8 @@
 package net.sourceforge.plantuml.cheneer.command;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.util.ArrayList;
 
@@ -34,7 +36,7 @@ public class CommandEndGroupTest {
 		IRegex regex = CommandEndGroup.getRegexConcat();
 		RegexResult matcher = regex.matcher("}");
 
-		assertThat(matcher).isNotNull();
+		assertNotNull(matcher);
 	}
 
 	@Test
@@ -44,7 +46,7 @@ public class CommandEndGroupTest {
 		BlocLines lines = BlocLines.singleString("}");
 		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
-		assertThat(result).matches(CommandExecutionResult::isOk);
+		assertTrue(result.isOk());
 
 		Mockito.verify(diagram).popOwner();
 	}

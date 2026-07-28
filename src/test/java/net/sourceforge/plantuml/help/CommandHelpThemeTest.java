@@ -1,6 +1,7 @@
 package net.sourceforge.plantuml.help;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import static test.utils.PlantUmlTestUtils.exportDiagram;
 
 import org.junit.jupiter.api.Test;
@@ -16,8 +17,6 @@ class CommandHelpThemeTest {
 				"@enduml"
 		).asString();
 
-		assertThat(output)
-				.contains("Help on themes")
-				.contains("bluegray", "hacker");
+		assertTrue(output.contains("Help on themes")); assertTrue(output.contains("bluegray")); assertTrue(output.contains("hacker"));
 	}
 }

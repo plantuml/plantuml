@@ -24,7 +24,6 @@ dependencies {
 	compileOnly(libs.ant)
 	compileOnly(libs.teavm.jso.apis)
 	compileOnly(libs.teavm.classlib)
-	testImplementation(libs.assertj.core)
 	testImplementation(libs.junit.jupiter)
 	testImplementation(libs.jlatexmath)
 	testImplementation(libs.xmlunit.core)

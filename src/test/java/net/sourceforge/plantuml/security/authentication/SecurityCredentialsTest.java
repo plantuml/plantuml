@@ -1,6 +1,14 @@
 package net.sourceforge.plantuml.security.authentication;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.net.InetSocketAddress;
 import java.net.Proxy;
@@ -29,15 +37,15 @@ class SecurityCredentialsTest {
 						"\"identifier\": \"alice\", \"secret\": \"secret\"}");
 		SecurityCredentials credentials = SecurityCredentials.fromJson(jsonValue);
 
-		assertThat(credentials).isNotNull().isNotEqualTo(SecurityCredentials.NONE);
+		assertNotNull(credentials); assertNotEquals(SecurityCredentials.NONE, credentials);
 
-		assertThat(credentials.getName()).isEqualTo("jenkins");
-		assertThat(credentials.getType()).isEqualTo("basicauth");
-		assertThat(credentials.getIdentifier()).isEqualTo("alice");
-		assertThat(credentials.getSecret()).isEqualTo(new char[]{'s', 'e', 'c', 'r', 'e', 't'});
-		assertThat(credentials.getProperties()).isEmpty();
+		assertEquals("jenkins", credentials.getName());
+		assertEquals("basicauth", credentials.getType());
+		assertEquals("alice", credentials.getIdentifier());
+		assertArrayEquals(new char[]{'s', 'e', 'c', 'r', 'e', 't'}, credentials.getSecret());
+		assertTrue(credentials.getProperties().isEmpty());
 
-		assertThat(credentials.getProxy()).isNull();
+		assertNull(credentials.getProxy());
 	}
 
 	/**
@@ -54,18 +62,18 @@ class SecurityCredentialsTest {
 						", " + jsonProxy + "}");
 		SecurityCredentials credentials = SecurityCredentials.fromJson(jsonValue);
 
-		assertThat(credentials).isNotNull().isNotEqualTo(SecurityCredentials.NONE);
+		assertNotNull(credentials); assertNotEquals(SecurityCredentials.NONE, credentials);
 
-		assertThat(credentials.getName()).isEqualTo("jenkins");
-		assertThat(credentials.getType()).isEqualTo("basicauth");
-		assertThat(credentials.getIdentifier()).isEqualTo("alice");
-		assertThat(credentials.getSecret()).isEqualTo(new char[]{'s', 'e', 'c', 'r', 'e', 't'});
-		assertThat(credentials.getProperties()).isEmpty();
+		assertEquals("jenkins", credentials.getName());
+		assertEquals("basicauth", credentials.getType());
+		assertEquals("alice", credentials.getIdentifier());
+		assertArrayEquals(new char[]{'s', 'e', 'c', 'r', 'e', 't'}, credentials.getSecret());
+		assertTrue(credentials.getProperties().isEmpty());
 
-		assertThat(credentials.getProxy()).isNotNull();
+		assertNotNull(credentials.getProxy());
 		Proxy proxy = credentials.getProxy();
-		assertThat(proxy.type()).isEqualTo(Proxy.Type.DIRECT);
-		assertThat(proxy.address()).isNull();
+		assertEquals(Proxy.Type.DIRECT, proxy.type());
+		assertNull(proxy.address());
 	}
 
 	/**
@@ -81,24 +89,24 @@ class SecurityCredentialsTest {
 						", " + jsonProxy + "}");
 		SecurityCredentials credentials = SecurityCredentials.fromJson(jsonValue);
 
-		assertThat(credentials).isNotNull().isNotEqualTo(SecurityCredentials.NONE);
+		assertNotNull(credentials); assertNotEquals(SecurityCredentials.NONE, credentials);
 
-		assertThat(credentials.getName()).isEqualTo("jenkins");
-		assertThat(credentials.getType()).as("basicauth should be the default").isEqualTo("basicauth");
-		assertThat(credentials.getIdentifier()).isEqualTo("alice");
-		assertThat(credentials.getSecret()).isEqualTo(new char[]{'s', 'e', 'c', 'r', 'e', 't'});
-		assertThat(credentials.getProperties()).isEmpty();
+		assertEquals("jenkins", credentials.getName());
+		assertEquals("basicauth", credentials.getType());
+		assertEquals("alice", credentials.getIdentifier());
+		assertArrayEquals(new char[]{'s', 'e', 'c', 'r', 'e', 't'}, credentials.getSecret());
+		assertTrue(credentials.getProperties().isEmpty());
 
-		assertThat(credentials.getProxy()).isNotNull();
+		assertNotNull(credentials.getProxy());
 		Proxy proxy = credentials.getProxy();
-		assertThat(proxy.type()).isEqualTo(Proxy.Type.SOCKS);
+		assertEquals(Proxy.Type.SOCKS, proxy.type());
 
-		assertThat(proxy.address()).isNotNull();
-		assertThat(proxy.address()).isInstanceOf(InetSocketAddress.class);
+		assertNotNull(proxy.address());
+		assertInstanceOf(InetSocketAddress.class, proxy.address());
 
 		InetSocketAddress address = (InetSocketAddress) proxy.address();
-		assertThat(address.getPort()).isEqualTo(8080);
-		assertThat(address.getHostString()).isEqualTo("192.168.92.250");
+		assertEquals(8080, address.getPort());
+		assertEquals("192.168.92.250", address.getHostString());
 	}
 
 	/**
@@ -114,24 +122,24 @@ class SecurityCredentialsTest {
 						", " + jsonProxy + "}");
 		SecurityCredentials credentials = SecurityCredentials.fromJson(jsonValue);
 
-		assertThat(credentials).isNotNull().isNotEqualTo(SecurityCredentials.NONE);
+		assertNotNull(credentials); assertNotEquals(SecurityCredentials.NONE, credentials);
 
-		assertThat(credentials.getName()).isEqualTo("jenkins");
-		assertThat(credentials.getType()).as("basicauth should be the default").isEqualTo("basicauth");
-		assertThat(credentials.getIdentifier()).isEqualTo("alice");
-		assertThat(credentials.getSecret()).isEqualTo(new char[]{'s', 'e', 'c', 'r', 'e', 't'});
-		assertThat(credentials.getProperties()).isEmpty();
+		assertEquals("jenkins", credentials.getName());
+		assertEquals("basicauth", credentials.getType());
+		assertEquals("alice", credentials.getIdentifier());
+		assertArrayEquals(new char[]{'s', 'e', 'c', 'r', 'e', 't'}, credentials.getSecret());
+		assertTrue(credentials.getProperties().isEmpty());
 
-		assertThat(credentials.getProxy()).isNotNull();
+		assertNotNull(credentials.getProxy());
 		Proxy proxy = credentials.getProxy();
-		assertThat(proxy.type()).isEqualTo(Proxy.Type.HTTP);
+		assertEquals(Proxy.Type.HTTP, proxy.type());
 
-		assertThat(proxy.address()).isNotNull();
-		assertThat(proxy.address()).isInstanceOf(InetSocketAddress.class);
+		assertNotNull(proxy.address());
+		assertInstanceOf(InetSocketAddress.class, proxy.address());
 
 		InetSocketAddress address = (InetSocketAddress) proxy.address();
-		assertThat(address.getPort()).isEqualTo(8080);
-		assertThat(address.getHostString()).isEqualTo("proxy.example.com");
+		assertEquals(8080, address.getPort());
+		assertEquals("proxy.example.com", address.getHostString());
 	}
 
 	/**
@@ -149,14 +157,13 @@ class SecurityCredentialsTest {
 						"\"properties\": " + properties + "}");
 		SecurityCredentials credentials = SecurityCredentials.fromJson(jsonValue);
 
-		assertThat(credentials).isNotNull().isNotEqualTo(SecurityCredentials.NONE);
+		assertNotNull(credentials); assertNotEquals(SecurityCredentials.NONE, credentials);
 
-		assertThat(credentials.getName()).isEqualTo("github");
-		assertThat(credentials.getType()).isEqualTo("tokenauth");
-		assertThat(credentials.getProperties())
-				.isNotEmpty().containsEntry("headers.Authorization", "ApiKey a4db08b7-5729-4ba9-8c08-f2df493465a1");
+		assertEquals("github", credentials.getName());
+		assertEquals("tokenauth", credentials.getType());
+		assertFalse(credentials.getProperties().isEmpty()); assertEquals("ApiKey a4db08b7-5729-4ba9-8c08-f2df493465a1", credentials.getProperties().get("headers.Authorization"));
 
-		assertThat(credentials.getProxy()).isNull();
+		assertNull(credentials.getProxy());
 	}
 
 	/**
@@ -175,14 +182,14 @@ class SecurityCredentialsTest {
 		JsonValue jsonValue = Json.parse(json);
 		SecurityCredentials credentials = SecurityCredentials.fromJson(jsonValue);
 
-		assertThat(credentials).isNotNull().isNotEqualTo(SecurityCredentials.NONE);
+		assertNotNull(credentials); assertNotEquals(SecurityCredentials.NONE, credentials);
 
-		assertThat(credentials.getName()).isEqualTo("jenkins");
-		assertThat(credentials.getIdentifier()).isEqualTo("alice");
-		assertThat(credentials.getSecret()).isNull();
-		assertThat(credentials.getProperties()).isEmpty();
+		assertEquals("jenkins", credentials.getName());
+		assertEquals("alice", credentials.getIdentifier());
+		assertNull(credentials.getSecret());
+		assertTrue(credentials.getProperties().isEmpty());
 
-		assertThat(credentials.getProxy()).isNull();
+		assertNull(credentials.getProxy());
 	}
 
 	/**
@@ -195,12 +202,8 @@ class SecurityCredentialsTest {
 		JsonValue jsonValue = Json.parse(json);
 		SecurityCredentials credentials = SecurityCredentials.fromJson(jsonValue);
 
-		assertThat(credentials.getProperties())
-				.isNotEmpty()
-				.containsEntry("grantType", "client_credentials")
-				.containsEntry("test", Boolean.TRUE)
-				.containsEntry("number", 1.0d)
-				.doesNotContainKey("x");
+		assertFalse(credentials.getProperties().isEmpty()); assertEquals("client_credentials", credentials.getProperties().get("grantType")); assertEquals(Boolean.TRUE, credentials.getProperties().get("test")); assertEquals(1.0d, credentials.getProperties().get("number"));
+		assertFalse(credentials.getProperties().containsKey("x"));
 	}
 
 	/**
@@ -214,10 +217,6 @@ class SecurityCredentialsTest {
 		JsonValue jsonValue = Json.parse(json);
 		SecurityCredentials credentials = SecurityCredentials.fromJson(jsonValue);
 
-		assertThat(credentials.getProperties())
-				.isNotEmpty()
-				.containsEntry("grantType", "client_credentials")
-				.containsEntry("nested.identifier", "serviceId")
-				.containsEntry("nested.secret", "ServiceSecret");
+		assertFalse(credentials.getProperties().isEmpty()); assertEquals("client_credentials", credentials.getProperties().get("grantType")); assertEquals("serviceId", credentials.getProperties().get("nested.identifier")); assertEquals("ServiceSecret", credentials.getProperties().get("nested.secret"));
 	}
 }

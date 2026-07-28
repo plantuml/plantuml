@@ -1,6 +1,8 @@
 package net.sourceforge.plantuml;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -20,11 +22,9 @@ class StringUtilsTest {
 			" ' x '  , false ",
 	})
 	void test_isEmpty_isNotEmpty(String s, boolean empty) {
-		assertThat(StringUtils.isEmpty(s))
-				.isEqualTo(empty);
+		assertEquals(empty, StringUtils.isEmpty(s));
 
-		assertThat(StringUtils.isNotEmpty(s))
-				.isNotEqualTo(empty);
+		assertNotEquals(empty, StringUtils.isNotEmpty(s));
 	}
 
 	@ParameterizedTest
@@ -39,7 +39,6 @@ class StringUtilsTest {
 			" 'e\uE1023', 'e\uE102\uE103' "
 	})
 	void test_toInternalBoldNumber(String s, String result) {
-		assertThat(StringUtils.toInternalBoldNumber(s))
-				.isEqualTo(result);
+		assertEquals(result, StringUtils.toInternalBoldNumber(s));
 	}
 }

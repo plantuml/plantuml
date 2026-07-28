@@ -1,8 +1,8 @@
 package net.sourceforge.plantuml;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.util.Lists.newArrayList;
 import static test.utils.TestUtils.writeUtf8File;
 
 import java.io.BufferedOutputStream;
@@ -10,6 +10,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -48,28 +50,28 @@ public class TestFileDirOption {
 	public void test_picoweb_without_filedir_cannot_find_include() throws Exception {
 
 		final String output = renderViaPicoWeb();
-		assertThat(output).contains("cannot include include.iuml");
+		assertTrue(output.contains("cannot include include.iuml"));
 	}
 
 	@Test
 	public void test_picoweb_with_filedir_succeeds() throws Exception {
 
 		final String output = renderViaPicoWeb("-filedir", tempDir.toString());
-		assertThat(output).contains("included-ok");
+		assertTrue(output.contains("included-ok"));
 	}
 
 	@Test
 	public void test_pipe_without_filedir_cannot_find_include() throws Exception {
 
 		final String output = renderViaPipe();
-		assertThat(output).contains("cannot include include.iuml");
+		assertTrue(output.contains("cannot include include.iuml"));
 	}
 
 	@Test
 	public void test_pipe_with_filedir_succeeds() throws Exception {
 
 		final String output = renderViaPipe("-filedir", tempDir.toString());
-		assertThat(output).contains("included-ok");
+		assertTrue(output.contains("included-ok"));
 	}
 
 	//
@@ -89,7 +91,7 @@ public class TestFileDirOption {
 
 	private String[] optionArray(String... extraOptions) {
 
-		final List<String> list = newArrayList(COMMON_OPTIONS);
+		final List<String> list = new ArrayList<>(Arrays.asList(COMMON_OPTIONS));
 		Collections.addAll(list, extraOptions);
 		return list.toArray(new String[0]);
 	}

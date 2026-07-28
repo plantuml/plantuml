@@ -1,14 +1,17 @@
 package net.sourceforge.plantuml;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.util.Lists.newArrayList;
 import static test.utils.TestUtils.writeUtf8File;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -100,7 +103,7 @@ class LoadJsonTest {
     @Test
     void testLoadJsonSimple() throws Exception {
         String rendered = render(DIAGRAM);
-        assertThat(rendered).doesNotContain("syntax").contains("exampleValue");
+        assertFalse(rendered.contains("syntax")); assertTrue(rendered.contains("exampleValue"));
 
     }
 
@@ -112,7 +115,7 @@ class LoadJsonTest {
     @Test
     void testLoadJsonNotFoundWithDefaultParameter() throws Exception {
         String rendered = render(DIAGRAM_DEF);
-        assertThat(rendered).doesNotContain("syntax").contains("exampleDefaultValue");
+        assertFalse(rendered.contains("syntax")); assertTrue(rendered.contains("exampleDefaultValue"));
     }
 
     /**
@@ -123,11 +126,11 @@ class LoadJsonTest {
     @Test
     void testLoadJsonNotFoundWithDefaultEmpty() throws Exception {
         String rendered = render(DIAGRAM_DEF_EMPTY);
-        assertThat(rendered).doesNotContain("syntax").contains("xx  yy");
+        assertFalse(rendered.contains("syntax")); assertTrue(rendered.contains("xx  yy"));
     }
 
     private String[] optionArray(String... extraOptions) {
-        final List<String> list = newArrayList(COMMON_OPTIONS);
+        final List<String> list = new ArrayList<>(Arrays.asList(COMMON_OPTIONS));
         Collections.addAll(list, extraOptions);
         return list.toArray(new String[0]);
     }

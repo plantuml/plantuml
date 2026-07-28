@@ -1,6 +1,11 @@
 package net.sourceforge.plantuml;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.awt.Color;
 import java.util.Collections;
@@ -53,277 +58,277 @@ class SkinParamTest {
 				Pragma.createEmpty(), ConfigurationStore.createEmpty());
 		final Stereotype fooStereotype = Stereotype.build("<<foo>>");
 
-		assertThat(skinParam.actorStyle()).isEqualTo(ActorStyle.STICKMAN);
+		assertEquals(ActorStyle.STICKMAN, skinParam.actorStyle());
 
-		assertThat(skinParam.getAllSpriteNames()).isEmpty();
+		assertTrue(skinParam.getAllSpriteNames().isEmpty());
 
-		assertThat(skinParam.getBackgroundColor()).isEqualTo(HColors.WHITE);
+		assertEquals(HColors.WHITE, skinParam.getBackgroundColor());
 
-		assertThat(skinParam.getCircledCharacter(fooStereotype)).isEqualTo('\0');
+		assertEquals('\0', skinParam.getCircledCharacter(fooStereotype));
 
-		assertThat(skinParam.getCircledCharacterRadius()).isEqualTo(11);
+		assertEquals(11, skinParam.getCircledCharacterRadius());
 
-		assertThat(skinParam.classAttributeIconSize()).isEqualTo(10);
+		assertEquals(10, skinParam.classAttributeIconSize());
 
-		assertThat(skinParam.colorArrowSeparationSpace()).isZero();
+		assertEquals(0, skinParam.colorArrowSeparationSpace());
 
-		// assertThat(skinParam.getColorMapper()).isEqualTo(ColorMapper.IDENTITY);
+		// assertEquals(ColorMapper.IDENTITY, skinParam.getColorMapper());
 
-		assertThat(skinParam.componentStyle()).isEqualTo(ComponentStyle.UML2);
+		assertEquals(ComponentStyle.UML2, skinParam.componentStyle());
 
-		assertThat(skinParam.getConditionEndStyle()).isEqualTo(ConditionEndStyle.DIAMOND);
+		assertEquals(ConditionEndStyle.DIAMOND, skinParam.getConditionEndStyle());
 
-		assertThat(skinParam.getConditionStyle()).isEqualTo(ConditionStyle.INSIDE_HEXAGON);
+		assertEquals(ConditionStyle.INSIDE_HEXAGON, skinParam.getConditionStyle());
 
-		assertThat(skinParam.getDefaultSkin()).isEqualTo("plantuml.skin");
+		assertEquals("plantuml.skin", skinParam.getDefaultSkin());
 
-		assertThat(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT)).isEqualTo(HorizontalAlignment.LEFT);
+		assertEquals(HorizontalAlignment.LEFT, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT));
 
-		assertThat(skinParam.getDiagonalCorner(CornerParam.agent, null)).isZero();
-		assertThat(skinParam.getDiagonalCorner(CornerParam.archimate, null)).isZero();
-		assertThat(skinParam.getDiagonalCorner(CornerParam.card, null)).isZero();
-		assertThat(skinParam.getDiagonalCorner(CornerParam.component, null)).isZero();
-		assertThat(skinParam.getDiagonalCorner(CornerParam.DEFAULT, null)).isZero();
-		assertThat(skinParam.getDiagonalCorner(CornerParam.rectangle, null)).isZero();
-		assertThat(skinParam.getDiagonalCorner(CornerParam.diagramBorder, null)).isZero();
-		assertThat(skinParam.getDiagonalCorner(CornerParam.titleBorder, null)).isZero();
+		assertEquals(0, skinParam.getDiagonalCorner(CornerParam.agent, null));
+		assertEquals(0, skinParam.getDiagonalCorner(CornerParam.archimate, null));
+		assertEquals(0, skinParam.getDiagonalCorner(CornerParam.card, null));
+		assertEquals(0, skinParam.getDiagonalCorner(CornerParam.component, null));
+		assertEquals(0, skinParam.getDiagonalCorner(CornerParam.DEFAULT, null));
+		assertEquals(0, skinParam.getDiagonalCorner(CornerParam.rectangle, null));
+		assertEquals(0, skinParam.getDiagonalCorner(CornerParam.diagramBorder, null));
+		assertEquals(0, skinParam.getDiagonalCorner(CornerParam.titleBorder, null));
 
-		assertThat(skinParam.getDiagonalCorner(CornerParam.agent, fooStereotype)).isZero();
-		assertThat(skinParam.getDiagonalCorner(CornerParam.archimate, fooStereotype)).isZero();
-		assertThat(skinParam.getDiagonalCorner(CornerParam.card, fooStereotype)).isZero();
-		assertThat(skinParam.getDiagonalCorner(CornerParam.component, fooStereotype)).isZero();
-		assertThat(skinParam.getDiagonalCorner(CornerParam.DEFAULT, fooStereotype)).isZero();
-		assertThat(skinParam.getDiagonalCorner(CornerParam.diagramBorder, fooStereotype)).isZero();
-		assertThat(skinParam.getDiagonalCorner(CornerParam.rectangle, fooStereotype)).isZero();
-		assertThat(skinParam.getDiagonalCorner(CornerParam.titleBorder, fooStereotype)).isZero();
+		assertEquals(0, skinParam.getDiagonalCorner(CornerParam.agent, fooStereotype));
+		assertEquals(0, skinParam.getDiagonalCorner(CornerParam.archimate, fooStereotype));
+		assertEquals(0, skinParam.getDiagonalCorner(CornerParam.card, fooStereotype));
+		assertEquals(0, skinParam.getDiagonalCorner(CornerParam.component, fooStereotype));
+		assertEquals(0, skinParam.getDiagonalCorner(CornerParam.DEFAULT, fooStereotype));
+		assertEquals(0, skinParam.getDiagonalCorner(CornerParam.diagramBorder, fooStereotype));
+		assertEquals(0, skinParam.getDiagonalCorner(CornerParam.rectangle, fooStereotype));
+		assertEquals(0, skinParam.getDiagonalCorner(CornerParam.titleBorder, fooStereotype));
 
-		assertThat(skinParam.displayGenericWithOldFashion()).isFalse();
+		assertFalse(skinParam.displayGenericWithOldFashion());
 
-		assertThat(skinParam.getDotSplines()).isEqualTo(DotSplines.SPLINES);
+		assertEquals(DotSplines.SPLINES, skinParam.getDotSplines());
 
-		assertThat(skinParam.getDpi()).isEqualTo(96);
+		assertEquals(96, skinParam.getDpi());
 
-		assertThat(skinParam.fixCircleLabelOverlapping()).isFalse();
+		assertFalse(skinParam.fixCircleLabelOverlapping());
 
-		assertThat(skinParam.forceSequenceParticipantUnderlined()).isFalse();
+		assertFalse(skinParam.forceSequenceParticipantUnderlined());
 
-		assertThat(skinParam.getHyperlinkColor()).isEqualTo(HColors.BLUE);
+		assertEquals(HColors.BLUE, skinParam.getHyperlinkColor());
 
-		assertThat(skinParam.getlengthAdjust()).isEqualTo(LengthAdjust.SPACING);
+		assertEquals(LengthAdjust.SPACING, skinParam.getlengthAdjust());
 
-		assertThat(skinParam.groupInheritance()).isEqualTo(Integer.MAX_VALUE);
+		assertEquals(Integer.MAX_VALUE, skinParam.groupInheritance());
 
-		assertThat(skinParam.guillemet()).isEqualTo(Guillemet.GUILLEMET);
+		assertEquals(Guillemet.GUILLEMET, skinParam.guillemet());
 
-		// assertThat(skinParam.handwrittenTOBEDELETED()).isFalse();
+		// assertFalse(skinParam.handwrittenTOBEDELETED());
 
-		assertThat(skinParam.hoverPathColor()).isNull();
+		assertNull(skinParam.hoverPathColor());
 
-		assertThat(skinParam.isUseVizJs()).isFalse();
+		assertFalse(skinParam.isUseVizJs());
 
 		final LineBreakStrategy lineBreakStrategy = skinParam.maxMessageSize();
-		assertThat(lineBreakStrategy.isAuto()).isFalse();
-		assertThat(lineBreakStrategy.getMaxWidth()).isZero();
+		assertFalse(lineBreakStrategy.isAuto());
+		assertEquals(0, lineBreakStrategy.getMaxWidth());
 
-		assertThat(skinParam.maxAsciiMessageLength()).isEqualTo(-1);
+		assertEquals(-1, skinParam.maxAsciiMessageLength());
 
-		// assertThat(skinParam.minClassWidth()).isZero();
+		// assertEquals(0, skinParam.minClassWidth());
 
-		assertThat(skinParam.getMonospacedFamily()).isEqualTo("monospaced");
+		assertEquals("monospaced", skinParam.getMonospacedFamily());
 
-		assertThat(skinParam.getNodesep()).isZero();
+		assertEquals(0, skinParam.getNodesep());
 
-		assertThat(skinParam.packageStyle()).isEqualTo(PackageStyle.FOLDER);
+		assertEquals(PackageStyle.FOLDER, skinParam.packageStyle());
 
-		assertThat(skinParam.getPadding().isZero());
-		assertThat(skinParam.getPaddingTOBEREMOVED(PaddingParam.BOX).isZero());
-		assertThat(skinParam.getPaddingTOBEREMOVED(PaddingParam.PARTICIPANT).isZero());
+		skinParam.getPadding().isZero();
+		skinParam.getPaddingTOBEREMOVED(PaddingParam.BOX).isZero();
+		skinParam.getPaddingTOBEREMOVED(PaddingParam.PARTICIPANT).isZero();
 
-		assertThat(skinParam.getPreserveAspectRatio()).isEqualTo("none");
+		assertEquals("none", skinParam.getPreserveAspectRatio());
 
-		assertThat(skinParam.getRankdir()).isEqualTo(Rankdir.TOP_TO_BOTTOM);
+		assertEquals(Rankdir.TOP_TO_BOTTOM, skinParam.getRankdir());
 
-		assertThat(skinParam.getRanksep()).isZero();
+		assertEquals(0, skinParam.getRanksep());
 
-		assertThat(skinParam.responseMessageBelowArrow()).isFalse();
+		assertFalse(skinParam.responseMessageBelowArrow());
 
-		assertThat(skinParam.getRoundCorner(CornerParam.agent, null)).isZero();
-		assertThat(skinParam.getRoundCorner(CornerParam.archimate, null)).isZero();
-		assertThat(skinParam.getRoundCorner(CornerParam.card, null)).isZero();
-		assertThat(skinParam.getRoundCorner(CornerParam.component, null)).isZero();
-		assertThat(skinParam.getRoundCorner(CornerParam.DEFAULT, null)).isZero();
-		assertThat(skinParam.getRoundCorner(CornerParam.rectangle, null)).isZero();
-		assertThat(skinParam.getRoundCorner(CornerParam.diagramBorder, null)).isZero();
-		assertThat(skinParam.getRoundCorner(CornerParam.titleBorder, null)).isZero();
+		assertEquals(0, skinParam.getRoundCorner(CornerParam.agent, null));
+		assertEquals(0, skinParam.getRoundCorner(CornerParam.archimate, null));
+		assertEquals(0, skinParam.getRoundCorner(CornerParam.card, null));
+		assertEquals(0, skinParam.getRoundCorner(CornerParam.component, null));
+		assertEquals(0, skinParam.getRoundCorner(CornerParam.DEFAULT, null));
+		assertEquals(0, skinParam.getRoundCorner(CornerParam.rectangle, null));
+		assertEquals(0, skinParam.getRoundCorner(CornerParam.diagramBorder, null));
+		assertEquals(0, skinParam.getRoundCorner(CornerParam.titleBorder, null));
 
-		assertThat(skinParam.getRoundCorner(CornerParam.agent, fooStereotype)).isZero();
-		assertThat(skinParam.getRoundCorner(CornerParam.archimate, fooStereotype)).isZero();
-		assertThat(skinParam.getRoundCorner(CornerParam.card, fooStereotype)).isZero();
-		assertThat(skinParam.getRoundCorner(CornerParam.component, fooStereotype)).isZero();
-		assertThat(skinParam.getRoundCorner(CornerParam.DEFAULT, fooStereotype)).isZero();
-		assertThat(skinParam.getRoundCorner(CornerParam.diagramBorder, fooStereotype)).isZero();
-		assertThat(skinParam.getRoundCorner(CornerParam.rectangle, fooStereotype)).isZero();
-		assertThat(skinParam.getRoundCorner(CornerParam.titleBorder, fooStereotype)).isZero();
+		assertEquals(0, skinParam.getRoundCorner(CornerParam.agent, fooStereotype));
+		assertEquals(0, skinParam.getRoundCorner(CornerParam.archimate, fooStereotype));
+		assertEquals(0, skinParam.getRoundCorner(CornerParam.card, fooStereotype));
+		assertEquals(0, skinParam.getRoundCorner(CornerParam.component, fooStereotype));
+		assertEquals(0, skinParam.getRoundCorner(CornerParam.DEFAULT, fooStereotype));
+		assertEquals(0, skinParam.getRoundCorner(CornerParam.diagramBorder, fooStereotype));
+		assertEquals(0, skinParam.getRoundCorner(CornerParam.rectangle, fooStereotype));
+		assertEquals(0, skinParam.getRoundCorner(CornerParam.titleBorder, fooStereotype));
 
-		assertThat(skinParam.sameClassWidth()).isFalse();
+		assertFalse(skinParam.sameClassWidth());
 
-		assertThat(skinParam.sequenceDiagramPadder()).isEqualTo(Padder.NONE);
+		assertEquals(Padder.NONE, skinParam.sequenceDiagramPadder());
 
-		assertThat(skinParam.shadowing(null)).isTrue();
-		assertThat(skinParam.shadowing(fooStereotype)).isTrue();
+		assertTrue(skinParam.shadowing(null));
+		assertTrue(skinParam.shadowing(fooStereotype));
 
-		assertThat(skinParam.shadowingForNote(null)).isTrue();
-		assertThat(skinParam.shadowingForNote(fooStereotype)).isTrue();
+		assertTrue(skinParam.shadowingForNote(null));
+		assertTrue(skinParam.shadowingForNote(fooStereotype));
 
 		final SplitParam splitParam = skinParam.getSplitParam();
-		assertThat(splitParam.getBorderColor()).isNull();
-		assertThat(splitParam.getExternalColor()).isNull();
-		assertThat(splitParam.getExternalMargin()).isZero();
+		assertNull(splitParam.getBorderColor());
+		assertNull(splitParam.getExternalColor());
+		assertEquals(0, splitParam.getExternalMargin());
 
-		assertThat(skinParam.getStereotypeAlignment()).isEqualTo(HorizontalAlignment.CENTER);
+		assertEquals(HorizontalAlignment.CENTER, skinParam.getStereotypeAlignment());
 
-		assertThat(skinParam.stereotypePositionTop()).isTrue();
+		assertTrue(skinParam.stereotypePositionTop());
 
-		assertThat(skinParam.strictUmlStyle()).isFalse();
+		assertFalse(skinParam.strictUmlStyle());
 
-		assertThat(skinParam.svgDimensionStyle()).isTrue();
+		assertTrue(skinParam.svgDimensionStyle());
 
-		assertThat(skinParam.getSvgLinkTarget()).isEqualTo("_top");
+		assertEquals("_top", skinParam.getSvgLinkTarget());
 
-		assertThat(skinParam.swimlaneWidth()).isZero();
+		assertEquals(0, skinParam.swimlaneWidth());
 
 		final LineBreakStrategy swimlaneWrapTitleWidth = skinParam.swimlaneWrapTitleWidth();
-		assertThat(swimlaneWrapTitleWidth.isAuto()).isFalse();
-		assertThat(swimlaneWrapTitleWidth.getMaxWidth()).isZero();
+		assertFalse(swimlaneWrapTitleWidth.isAuto());
+		assertEquals(0, swimlaneWrapTitleWidth.getMaxWidth());
 
-		assertThat(skinParam.getTabSize()).isEqualTo(8);
+		assertEquals(8, skinParam.getTabSize());
 
-		assertThat(skinParam.getThickness(LineParam.activityBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.agentBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.archimateBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.arrow, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.cardBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.classBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.componentBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.designedDomainBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.diagramBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.domainBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.hexagonBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.legendBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.machineBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.noteBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.objectBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.packageBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.partitionBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.queueBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.rectangleBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.requirementBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.sequenceActorBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.sequenceArrow, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.sequenceDividerBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.sequenceGroupBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.sequenceLifeLineBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.sequenceParticipantBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.sequenceReferenceBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.swimlaneBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.titleBorder, null)).isNull();
-		assertThat(skinParam.getThickness(LineParam.usecaseBorder, null)).isNull();
+		assertNull(skinParam.getThickness(LineParam.activityBorder, null));
+		assertNull(skinParam.getThickness(LineParam.agentBorder, null));
+		assertNull(skinParam.getThickness(LineParam.archimateBorder, null));
+		assertNull(skinParam.getThickness(LineParam.arrow, null));
+		assertNull(skinParam.getThickness(LineParam.cardBorder, null));
+		assertNull(skinParam.getThickness(LineParam.classBorder, null));
+		assertNull(skinParam.getThickness(LineParam.componentBorder, null));
+		assertNull(skinParam.getThickness(LineParam.designedDomainBorder, null));
+		assertNull(skinParam.getThickness(LineParam.diagramBorder, null));
+		assertNull(skinParam.getThickness(LineParam.domainBorder, null));
+		assertNull(skinParam.getThickness(LineParam.hexagonBorder, null));
+		assertNull(skinParam.getThickness(LineParam.legendBorder, null));
+		assertNull(skinParam.getThickness(LineParam.machineBorder, null));
+		assertNull(skinParam.getThickness(LineParam.noteBorder, null));
+		assertNull(skinParam.getThickness(LineParam.objectBorder, null));
+		assertNull(skinParam.getThickness(LineParam.packageBorder, null));
+		assertNull(skinParam.getThickness(LineParam.partitionBorder, null));
+		assertNull(skinParam.getThickness(LineParam.queueBorder, null));
+		assertNull(skinParam.getThickness(LineParam.rectangleBorder, null));
+		assertNull(skinParam.getThickness(LineParam.requirementBorder, null));
+		assertNull(skinParam.getThickness(LineParam.sequenceActorBorder, null));
+		assertNull(skinParam.getThickness(LineParam.sequenceArrow, null));
+		assertNull(skinParam.getThickness(LineParam.sequenceDividerBorder, null));
+		assertNull(skinParam.getThickness(LineParam.sequenceGroupBorder, null));
+		assertNull(skinParam.getThickness(LineParam.sequenceLifeLineBorder, null));
+		assertNull(skinParam.getThickness(LineParam.sequenceParticipantBorder, null));
+		assertNull(skinParam.getThickness(LineParam.sequenceReferenceBorder, null));
+		assertNull(skinParam.getThickness(LineParam.swimlaneBorder, null));
+		assertNull(skinParam.getThickness(LineParam.titleBorder, null));
+		assertNull(skinParam.getThickness(LineParam.usecaseBorder, null));
 
-		assertThat(skinParam.getThickness(LineParam.activityBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.agentBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.archimateBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.arrow, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.cardBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.classBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.componentBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.designedDomainBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.diagramBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.domainBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.hexagonBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.legendBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.machineBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.noteBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.objectBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.packageBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.partitionBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.queueBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.rectangleBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.requirementBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.sequenceActorBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.sequenceArrow, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.sequenceDividerBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.sequenceGroupBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.sequenceLifeLineBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.sequenceParticipantBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.sequenceReferenceBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.swimlaneBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.titleBorder, fooStereotype)).isNull();
-		assertThat(skinParam.getThickness(LineParam.usecaseBorder, fooStereotype)).isNull();
+		assertNull(skinParam.getThickness(LineParam.activityBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.agentBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.archimateBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.arrow, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.cardBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.classBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.componentBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.designedDomainBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.diagramBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.domainBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.hexagonBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.legendBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.machineBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.noteBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.objectBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.packageBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.partitionBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.queueBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.rectangleBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.requirementBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.sequenceActorBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.sequenceArrow, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.sequenceDividerBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.sequenceGroupBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.sequenceLifeLineBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.sequenceParticipantBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.sequenceReferenceBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.swimlaneBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.titleBorder, fooStereotype));
+		assertNull(skinParam.getThickness(LineParam.usecaseBorder, fooStereotype));
 
 		final TikzFontDistortion tikzFontDistortion = skinParam.getTikzFontDistortion();
-		assertThat(tikzFontDistortion.getDistortion()).isEqualTo(4.0);
-		assertThat(tikzFontDistortion.getMagnify()).isEqualTo(1.20);
+		assertEquals(4.0, tikzFontDistortion.getDistortion());
+		assertEquals(1.20, tikzFontDistortion.getMagnify());
 
-		assertThat(skinParam.useOctagonForActivity(null)).isFalse();
-		assertThat(skinParam.useOctagonForActivity(fooStereotype)).isFalse();
+		assertFalse(skinParam.useOctagonForActivity(null));
+		assertFalse(skinParam.useOctagonForActivity(fooStereotype));
 
-		assertThat(skinParam.useRankSame()).isFalse();
+		assertFalse(skinParam.useRankSame());
 
-		assertThat(skinParam.useSwimlanes(diagramType)).isFalse();
+		assertFalse(skinParam.useSwimlanes(diagramType));
 
-		assertThat(skinParam.useUnderlineForHyperlink()).isNotNull();
+		assertNotNull(skinParam.useUnderlineForHyperlink());
 	}
 
 	@Test
 	public void test_circledCharacterRadius() {
 		final SkinParam skinParam = createSkinParam("circledCharacterRadius", "123");
-		assertThat(skinParam.getCircledCharacterRadius()).isEqualTo(123);
+		assertEquals(123, skinParam.getCircledCharacterRadius());
 	}
 
 	@Test
 	public void test_classAttributeIconSize() {
 		final SkinParam skinParam = createSkinParam("classAttributeIconSize", "123");
-		assertThat(skinParam.classAttributeIconSize()).isEqualTo(123);
+		assertEquals(123, skinParam.classAttributeIconSize());
 	}
 
 	@Test
 	public void test_defaultMonospacedFontName() {
 		final SkinParam skinParam = createSkinParam("defaultMonospacedFontName", "foo");
-		assertThat(skinParam.getMonospacedFamily()).isEqualTo("foo");
+		assertEquals("foo", skinParam.getMonospacedFamily());
 	}
 
 	@Test
 	public void test_dpi() {
 		final SkinParam skinParam = createSkinParam("dpi", "123");
-		assertThat(skinParam.getDpi()).isEqualTo(123);
+		assertEquals(123, skinParam.getDpi());
 	}
 
 	@ParameterizedTest
 	@CsvSource({ "true,        true", "tRUe,        true", "TRUE,        true", "other_value, false", })
 	public void test_fixCircleLabelOverlapping(String paramValue, boolean expected) {
 		final SkinParam skinParam = createSkinParam("fixCircleLabelOverlapping", paramValue);
-		assertThat(skinParam.fixCircleLabelOverlapping()).isEqualTo(expected);
+		assertEquals(expected, skinParam.fixCircleLabelOverlapping());
 	}
 
 	@ParameterizedTest
 	@CsvSource({ "old,         true", "oLd,         true", "OLD,         true", "other_value, false", })
 	public void test_genericDisplay(String paramValue, boolean expected) {
 		final SkinParam skinParam = createSkinParam("genericDisplay", paramValue);
-		assertThat(skinParam.displayGenericWithOldFashion()).isEqualTo(expected);
+		assertEquals(expected, skinParam.displayGenericWithOldFashion());
 	}
 
 	@ParameterizedTest
 	@CsvSource({ "0, MAX_VALUE", "1, MAX_VALUE", "2, 2", "123, 123" })
 	public void test_groupInheritance(String paramValue, String expectedValue) {
 		final SkinParam skinParam = createSkinParam("groupInheritance", paramValue);
-		assertThat(skinParam.groupInheritance()).isEqualTo(intFromCsv(expectedValue));
+		assertEquals(intFromCsv(expectedValue), skinParam.groupInheritance());
 	}
 
 //	@ParameterizedTest
 //	@CsvSource({ "true,        true", "tRUe,        true", "TRUE,        true", "other_value, false", })
 //	public void test_handwritten(String paramValue, boolean expected) {
 //		final SkinParam skinParam = createSkinParam("handwritten", paramValue);
-//		assertThat(skinParam.handwrittenTOBEDELETED()).isEqualTo(expected);
+//		assertEquals(expected, skinParam.handwrittenTOBEDELETED());
 //	}
 
 	@ParameterizedTest
@@ -331,60 +336,60 @@ class SkinParamTest {
 	public void test_hyperlinkUnderline(String paramValue, boolean expected) {
 		final SkinParam skinParam = createSkinParam("hyperlinkUnderline", paramValue);
 		if (expected)
-			assertThat(skinParam.useUnderlineForHyperlink()).isNotNull();
+			assertNotNull(skinParam.useUnderlineForHyperlink());
 		else
-			assertThat(skinParam.useUnderlineForHyperlink()).isNull();
+			assertNull(skinParam.useUnderlineForHyperlink());
 	}
 
 	@Test
 	public void test_maxAsciiMessageLength() {
 		final SkinParam skinParam = createSkinParam("maxAsciiMessageLength", "123");
-		assertThat(skinParam.maxAsciiMessageLength()).isEqualTo(123);
+		assertEquals(123, skinParam.maxAsciiMessageLength());
 	}
 
 //	@Test
 //	public void test_minClassWidth() {
 //		final SkinParam skinParam = createSkinParam("minClassWidth", "123");
-//		assertThat(skinParam.minClassWidth()).isEqualTo(123);
+//		assertEquals(123, skinParam.minClassWidth());
 //	}
 
 	@Test
 	public void test_nodeSep() {
 		final SkinParam skinParam = createSkinParam("nodeSep", "123");
-		assertThat(skinParam.getNodesep()).isEqualTo(123);
+		assertEquals(123, skinParam.getNodesep());
 	}
 
 	@Test
 	public void test_preserveAspectRatio() {
 		final SkinParam skinParam = createSkinParam("preserveAspectRatio", "foo");
-		assertThat(skinParam.getPreserveAspectRatio()).isEqualTo("foo");
+		assertEquals("foo", skinParam.getPreserveAspectRatio());
 	}
 
 	@Test
 	public void test_rankSep() {
 		final SkinParam skinParam = createSkinParam("rankSep", "123");
-		assertThat(skinParam.getRanksep()).isEqualTo(123);
+		assertEquals(123, skinParam.getRanksep());
 	}
 
 	@ParameterizedTest
 	@CsvSource({ "true,        true", "tRUe,        true", "TRUE,        true", "other_value, false", })
 	public void test_responseMessageBelowArrow(String paramValue, boolean expected) {
 		final SkinParam skinParam = createSkinParam("responseMessageBelowArrow", paramValue);
-		assertThat(skinParam.responseMessageBelowArrow()).isEqualTo(expected);
+		assertEquals(expected, skinParam.responseMessageBelowArrow());
 	}
 
 	@ParameterizedTest
 	@CsvSource({ "true,        true", "tRUe,        true", "TRUE,        true", "other_value, false", })
 	public void test_sameClassWidth(String paramValue, boolean expected) {
 		final SkinParam skinParam = createSkinParam("sameClassWidth", paramValue);
-		assertThat(skinParam.sameClassWidth()).isEqualTo(expected);
+		assertEquals(expected, skinParam.sameClassWidth());
 	}
 
 	@ParameterizedTest
 	@CsvSource({ "underline,   true", "undERLine,   true", "UNDERLINE,   true", "other_value, false", })
 	public void test_sequenceParticipant(String paramValue, boolean expected) {
 		final SkinParam skinParam = createSkinParam("sequenceParticipant", paramValue);
-		assertThat(skinParam.forceSequenceParticipantUnderlined()).isEqualTo(expected);
+		assertEquals(expected, skinParam.forceSequenceParticipantUnderlined());
 	}
 
 	@Test
@@ -393,36 +398,36 @@ class SkinParamTest {
 				"pageMargin", "123");
 
 		final SplitParam splitParam = skinParam.getSplitParam();
-		assertThat(splitParam.getBorderColor().toAwtColor()).isEqualTo(Color.RED);
-		assertThat(splitParam.getExternalColor().toAwtColor()).isEqualTo(Color.YELLOW);
-		assertThat(splitParam.getExternalMargin()).isEqualTo(123);
+		assertEquals(Color.RED, splitParam.getBorderColor().toAwtColor());
+		assertEquals(Color.YELLOW, splitParam.getExternalColor().toAwtColor());
+		assertEquals(123, splitParam.getExternalMargin());
 	}
 
 	@ParameterizedTest
 	@CsvSource({ "bottom,      false", "boTTom,      false", "BOTTOM,      false", "other_value, true", })
 	public void test_stereotypePosition(String paramValue, boolean expected) {
 		final SkinParam skinParam = createSkinParam("stereotypePosition", paramValue);
-		assertThat(skinParam.stereotypePositionTop()).isEqualTo(expected);
+		assertEquals(expected, skinParam.stereotypePositionTop());
 	}
 
 	@ParameterizedTest
 	@CsvSource({ "strictuml,   true", "strICTuml,   true", "STRICTUML,   true", "other_value, false", })
 	public void test_style(String paramValue, boolean expected) {
 		final SkinParam skinParam = createSkinParam("style", paramValue);
-		assertThat(skinParam.strictUmlStyle()).isEqualTo(expected);
+		assertEquals(expected, skinParam.strictUmlStyle());
 	}
 
 	@ParameterizedTest
 	@CsvSource({ "false,       false", "fALSe,       false", "FALSE,       false", "other_value, true", })
 	public void test_svgDimensionStyle(String paramValue, boolean expected) {
 		final SkinParam skinParam = createSkinParam("svgDimensionStyle", paramValue);
-		assertThat(skinParam.svgDimensionStyle()).isEqualTo(expected);
+		assertEquals(expected, skinParam.svgDimensionStyle());
 	}
 
 	@Test
 	public void test_svgLinkTarget() {
 		final SkinParam skinParam = createSkinParam("svgLinkTarget", "foo");
-		assertThat(skinParam.getSvgLinkTarget()).isEqualTo("foo");
+		assertEquals("foo", skinParam.getSvgLinkTarget());
 	}
 
 	@ParameterizedTest
@@ -433,13 +438,13 @@ class SkinParamTest {
 			"  other_value, other_value, false", })
 	public void test_swimlanes(String swimlane, String swimlanes, boolean expected) {
 		final SkinParam skinParam = createSkinParam("swimlane", swimlane, "swimlanes", swimlanes);
-		assertThat(skinParam.swimlanes()).isEqualTo(expected);
+		assertEquals(expected, skinParam.swimlanes());
 	}
 
 	@Test
 	public void test_tabSize() {
 		final SkinParam skinParam = createSkinParam("tabSize", "123");
-		assertThat(skinParam.getTabSize()).isEqualTo(123);
+		assertEquals(123, skinParam.getTabSize());
 	}
 
 	//

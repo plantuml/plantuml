@@ -1,12 +1,15 @@
 package nonreg;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.util.Lists.newArrayList;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,7 +44,7 @@ class RenderViaPipeTest {
     // private static final String[] COMMON_OPTIONS = {"-tutxt"};
 
     private String[] optionArray(String... extraOptions) {
-        final List<String> list = newArrayList(COMMON_OPTIONS);
+        final List<String> list = new ArrayList<>(Arrays.asList(COMMON_OPTIONS));
         Collections.addAll(list, extraOptions);
         return list.toArray(new String[0]);
     }
@@ -59,6 +62,6 @@ class RenderViaPipeTest {
 
     public void assertRenderExpectedOutput(String input, String expected) throws Exception {
         final String rendered = renderViaPipe(input);
-        assertThat(rendered).doesNotContain("syntax").contains(expected);
+        assertFalse(rendered.contains("syntax")); assertTrue(rendered.contains(expected));
     }   
 }

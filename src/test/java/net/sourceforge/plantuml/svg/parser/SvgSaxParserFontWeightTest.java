@@ -1,6 +1,9 @@
 package net.sourceforge.plantuml.svg.parser;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
@@ -77,43 +80,43 @@ class SvgSaxParserFontWeightTest {
 	@Test
 	void fontWeight700ProducesWeight700() {
 		final UFontFace face = capturedFace(parserWithText("700", null));
-		assertThat(face.getCssWeight()).isEqualTo(700);
+		assertEquals(700, face.getCssWeight());
 	}
 
 	@Test
 	void fontWeightBoldKeywordProducesWeight700() {
 		final UFontFace face = capturedFace(parserWithText("bold", null));
-		assertThat(face.getCssWeight()).isEqualTo(700);
+		assertEquals(700, face.getCssWeight());
 	}
 
 	@Test
 	void fontWeight500ProducesWeight500() {
 		final UFontFace face = capturedFace(parserWithText("500", null));
-		assertThat(face.getCssWeight()).isEqualTo(500);
+		assertEquals(500, face.getCssWeight());
 	}
 
 	@Test
 	void fontWeight300ProducesWeight300() {
 		final UFontFace face = capturedFace(parserWithText("300", null));
-		assertThat(face.getCssWeight()).isEqualTo(300);
+		assertEquals(300, face.getCssWeight());
 	}
 
 	@Test
 	void fontWeightLighterKeywordProducesWeight300() {
 		final UFontFace face = capturedFace(parserWithText("lighter", null));
-		assertThat(face.getCssWeight()).isEqualTo(300);
+		assertEquals(300, face.getCssWeight());
 	}
 
 	@Test
 	void fontWeightNormalKeywordProducesWeight400() {
 		final UFontFace face = capturedFace(parserWithText("normal", null));
-		assertThat(face.getCssWeight()).isEqualTo(400);
+		assertEquals(400, face.getCssWeight());
 	}
 
 	@Test
 	void missingFontWeightDefaultsTo400() {
 		final UFontFace face = capturedFace(parserWithText(null, null));
-		assertThat(face.getCssWeight()).isEqualTo(400);
+		assertEquals(400, face.getCssWeight());
 	}
 
 	// -----------------------------------------------------------------------
@@ -123,25 +126,25 @@ class SvgSaxParserFontWeightTest {
 	@Test
 	void fontStyleItalicProducesItalicFace() {
 		final UFontFace face = capturedFace(parserWithText(null, "italic"));
-		assertThat(face.isItalic()).isTrue();
+		assertTrue(face.isItalic());
 	}
 
 	@Test
 	void fontStyleObliqueProducesItalicFace() {
 		final UFontFace face = capturedFace(parserWithText(null, "oblique"));
-		assertThat(face.isItalic()).isTrue();
+		assertTrue(face.isItalic());
 	}
 
 	@Test
 	void fontStyleNormalProducesNonItalicFace() {
 		final UFontFace face = capturedFace(parserWithText(null, "normal"));
-		assertThat(face.isItalic()).isFalse();
+		assertFalse(face.isItalic());
 	}
 
 	@Test
 	void missingFontStyleDefaultsToNonItalic() {
 		final UFontFace face = capturedFace(parserWithText(null, null));
-		assertThat(face.isItalic()).isFalse();
+		assertFalse(face.isItalic());
 	}
 
 	// -----------------------------------------------------------------------
@@ -151,15 +154,15 @@ class SvgSaxParserFontWeightTest {
 	@Test
 	void weight600AndItalicAreIndependentAxes() {
 		final UFontFace face = capturedFace(parserWithText("600", "italic"));
-		assertThat(face.getCssWeight()).isEqualTo(600);
-		assertThat(face.isItalic()).isTrue();
+		assertEquals(600, face.getCssWeight());
+		assertTrue(face.isItalic());
 	}
 
 	@Test
 	void weight300NonItalicCombination() {
 		final UFontFace face = capturedFace(parserWithText("300", "normal"));
-		assertThat(face.getCssWeight()).isEqualTo(300);
-		assertThat(face.isItalic()).isFalse();
+		assertEquals(300, face.getCssWeight());
+		assertFalse(face.isItalic());
 	}
 
 	// -----------------------------------------------------------------------
@@ -170,6 +173,6 @@ class SvgSaxParserFontWeightTest {
 	@CsvSource({"100", "200", "300", "400", "500", "600", "700", "800", "900"})
 	void numericWeightRoundTrips(String cssWeight) {
 		final UFontFace face = capturedFace(parserWithText(cssWeight, null));
-		assertThat(face.toCssWeightString()).isEqualTo(cssWeight);
+		assertEquals(cssWeight, face.toCssWeightString());
 	}
 }
