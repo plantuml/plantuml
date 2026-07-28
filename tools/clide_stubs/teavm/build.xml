@@ -1,0 +1,30 @@
+<project name="clide" default="dist" basedir=".">
+	<description>
+		TeaVM stub Build File
+
+		Produces a jar of empty stand-ins for the org.teavm.* types that
+		PlantUML's TeaVM-specific sources reference, just enough for
+		clide/jdtls to compile those files - never to actually run them.
+		See README.md in this folder for the full rationale.
+	</description>
+
+	<property name="src.dir" value="src"/>
+	<property name="build.dir" value="build"/>
+	<property name="classes.dir" value="${build.dir}/classes"/>
+	<property name="jar.file" value="teavm-stub.jar"/>
+
+	<target name="compile">
+		<mkdir dir="${classes.dir}"/>
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" release="11" debug="on" encoding="UTF-8" includeantruntime="false"/>
+	</target>
+
+	<target name="dist" depends="compile">
+		<jar jarfile="${jar.file}" basedir="${classes.dir}"/>
+	</target>
+
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+		<delete file="${jar.file}"/>
+	</target>
+
+</project>

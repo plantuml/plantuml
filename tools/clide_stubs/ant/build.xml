@@ -1,0 +1,39 @@
+<project name="clide" default="dist" basedir=".">
+	<description>
+		Ant stub Build File
+
+		Produces a jar of empty stand-ins for the org.apache.tools.ant.*
+		types that PlantUML's Ant tasks (CheckZipTask, PlantUmlTask)
+		reference, just enough for clide/jdtls to compile those files
+		without the full (fairly large) real ant.jar. See README.md in this
+		folder for the full rationale.
+
+		IMPORTANT: includeantruntime="false" below is what keeps this from
+		being circular. Without it, the javac task would add Ant's own
+		runtime jars (the REAL org.apache.tools.ant.* classes the `ant`
+		command itself is running with) to the compile classpath, which
+		would collide with the stub classes we are defining right here with
+		the same names. With it false, javac only sees the JDK plus
+		whatever we put in classes.dir - a clean, isolated compile.
+	</description>
+
+	<property name="src.dir" value="src"/>
+	<property name="build.dir" value="build"/>
+	<property name="classes.dir" value="${build.dir}/classes"/>
+	<property name="jar.file" value="ant-stub.jar"/>
+
+	<target name="compile">
+		<mkdir dir="${classes.dir}"/>
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" release="11" debug="on" encoding="UTF-8" includeantruntime="false"/>
+	</target>
+
+	<target name="dist" depends="compile">
+		<jar jarfile="${jar.file}" basedir="${classes.dir}"/>
+	</target>
+
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+		<delete file="${jar.file}"/>
+	</target>
+
+</project>
