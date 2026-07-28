@@ -11,6 +11,16 @@ pragma option is enabled, e.g.:
 The `sequencediagram.*` files are used for sequence diagrams
 and the `default.*` files are used for other types of diagrams.
 
+Readable sources live in `default.js` / `default.css` and
+`sequencediagram.js` / `sequencediagram.css`. The corresponding
+`*.min.js` / `*.min.css` files are what PlantUML embeds into the
+SVG. Prefer editing the unminified sources, then regenerate the
+minified files (for example with
+[terser](https://github.com/terser/terser) for JavaScript and a
+simple CSS whitespace pass) so the embedded payload stays small.
+Each minified file starts with a short comment linking back to its
+unminified source on GitHub.
+
 ## Features
 ### Class Diagram Features
 Hovering over an entity will cause most parts of the diagram to be

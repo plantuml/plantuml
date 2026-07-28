@@ -212,7 +212,8 @@ public class SvgGraphics {
 	}
 
 	private XmlNode getStylesForInteractiveMode() {
-		final String text = getData(option.getInteractiveBaseFilename() + ".css");
+		// Prefer the minified asset to keep interactive SVGs smaller (see issue #2023).
+		final String text = getData(option.getInteractiveBaseFilename() + ".min.css");
 		if (text == null)
 			return null;
 
@@ -251,7 +252,8 @@ public class SvgGraphics {
 //	}
 
 	private XmlNode getScriptForInteractiveMode() {
-		final String text = getData(option.getInteractiveBaseFilename() + ".js");
+		// Prefer the minified asset to keep interactive SVGs smaller (see issue #2023).
+		final String text = getData(option.getInteractiveBaseFilename() + ".min.js");
 		if (text == null)
 			return null;
 
