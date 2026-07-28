@@ -1,6 +1,7 @@
 package test.utils;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 
 import java.awt.image.BufferedImage;
 import java.util.Comparator;
@@ -48,8 +49,8 @@ public class ImageTestUtils {
 	}
 
 	public static void assertImageSizeEqual(BufferedImage expected, BufferedImage actual) {
-		assertThat(expected).isNotNull();
-		assertThat(actual).isNotNull();
+		assertNotNull(expected);
+		assertNotNull(actual);
 
 		final int expectedHeight = expected.getHeight();
 		final int expectedWidth = expected.getWidth();

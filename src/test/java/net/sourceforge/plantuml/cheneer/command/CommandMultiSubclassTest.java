@@ -1,6 +1,9 @@
 package net.sourceforge.plantuml.cheneer.command;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.util.ArrayList;
 
@@ -30,11 +33,11 @@ public class CommandMultiSubclassTest {
 		IRegex regex = CommandMultiSubclass.getRegexConcat();
 		RegexResult matcher = regex.matcher("E1 ->- d { E2, E3, E4 }");
 
-		assertThat(matcher).isNotNull();
-		assertThat(matcher.get("SUPERCLASS", 0)).isEqualTo("E1");
-		assertThat(matcher.get("SUBCLASSES", 0)).isEqualTo(" E2, E3, E4 ");
-		assertThat(matcher.get("PARTICIPATION", 0)).isEqualTo("-");
-		assertThat(matcher.get("SYMBOL", 0)).isEqualTo("d");
+		assertNotNull(matcher);
+		assertEquals("E1", matcher.get("SUPERCLASS", 0));
+		assertEquals(" E2, E3, E4 ", matcher.get("SUBCLASSES", 0));
+		assertEquals("-", matcher.get("PARTICIPATION", 0));
+		assertEquals("d", matcher.get("SYMBOL", 0));
 	}
 
 	@Test
@@ -42,11 +45,11 @@ public class CommandMultiSubclassTest {
 		IRegex regex = CommandMultiSubclass.getRegexConcat();
 		RegexResult matcher = regex.matcher("E1 =>= d { E2, E3, E4 }");
 
-		assertThat(matcher).isNotNull();
-		assertThat(matcher.get("SUPERCLASS", 0)).isEqualTo("E1");
-		assertThat(matcher.get("SUBCLASSES", 0)).isEqualTo(" E2, E3, E4 ");
-		assertThat(matcher.get("PARTICIPATION", 0)).isEqualTo("=");
-		assertThat(matcher.get("SYMBOL", 0)).isEqualTo("d");
+		assertNotNull(matcher);
+		assertEquals("E1", matcher.get("SUPERCLASS", 0));
+		assertEquals(" E2, E3, E4 ", matcher.get("SUBCLASSES", 0));
+		assertEquals("=", matcher.get("PARTICIPATION", 0));
+		assertEquals("d", matcher.get("SYMBOL", 0));
 	}
 
 	@Test
@@ -54,11 +57,11 @@ public class CommandMultiSubclassTest {
 		IRegex regex = CommandMultiSubclass.getRegexConcat();
 		RegexResult matcher = regex.matcher("E1 ->- o { E2, E3, E4 }");
 
-		assertThat(matcher).isNotNull();
-		assertThat(matcher.get("SUPERCLASS", 0)).isEqualTo("E1");
-		assertThat(matcher.get("SUBCLASSES", 0)).isEqualTo(" E2, E3, E4 ");
-		assertThat(matcher.get("PARTICIPATION", 0)).isEqualTo("-");
-		assertThat(matcher.get("SYMBOL", 0)).isEqualTo("o");
+		assertNotNull(matcher);
+		assertEquals("E1", matcher.get("SUPERCLASS", 0));
+		assertEquals(" E2, E3, E4 ", matcher.get("SUBCLASSES", 0));
+		assertEquals("-", matcher.get("PARTICIPATION", 0));
+		assertEquals("o", matcher.get("SYMBOL", 0));
 	}
 
 	@Test
@@ -66,11 +69,11 @@ public class CommandMultiSubclassTest {
 		IRegex regex = CommandMultiSubclass.getRegexConcat();
 		RegexResult matcher = regex.matcher("E1 ->- U { E2, E3, E4 }");
 
-		assertThat(matcher).isNotNull();
-		assertThat(matcher.get("SUPERCLASS", 0)).isEqualTo("E1");
-		assertThat(matcher.get("SUBCLASSES", 0)).isEqualTo(" E2, E3, E4 ");
-		assertThat(matcher.get("PARTICIPATION", 0)).isEqualTo("-");
-		assertThat(matcher.get("SYMBOL", 0)).isEqualTo("U");
+		assertNotNull(matcher);
+		assertEquals("E1", matcher.get("SUPERCLASS", 0));
+		assertEquals(" E2, E3, E4 ", matcher.get("SUBCLASSES", 0));
+		assertEquals("-", matcher.get("PARTICIPATION", 0));
+		assertEquals("U", matcher.get("SYMBOL", 0));
 	}
 
 	@Test
@@ -83,29 +86,29 @@ public class CommandMultiSubclassTest {
 		BlocLines lines = BlocLines.singleString("E1 ->- o { E2, E3, E4 }");
 		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
-		assertThat(result).matches(CommandExecutionResult::isOk);
+		assertTrue(result.isOk());
 
-		assertThat(diagram.getLinks().size()).isEqualTo(4);
+		assertEquals(4, diagram.getLinks().size());
 		Link link1 = diagram.getLinks().get(0);
-		assertThat(link1.getEntity1().getName()).isEqualTo("E1");
-		assertThat(link1.getEntity2().getName()).isEqualTo("E1/o E2, E3, E4 /center");
-		assertThat(link1.getType().getStyle().getStroke3().getThickness()).isEqualTo(1);
-		assertThat(link1.getType().getMiddleDecor()).isEqualTo(LinkMiddleDecor.NONE);
+		assertEquals("E1", link1.getEntity1().getName());
+		assertEquals("E1/o E2, E3, E4 /center", link1.getEntity2().getName());
+		assertEquals(1, link1.getType().getStyle().getStroke3().getThickness());
+		assertEquals(LinkMiddleDecor.NONE, link1.getType().getMiddleDecor());
 		Link link2 = diagram.getLinks().get(1);
-		assertThat(link2.getEntity1().getName()).isEqualTo("E1/o E2, E3, E4 /center");
-		assertThat(link2.getEntity2().getName()).isEqualTo("E2");
-		assertThat(link2.getType().getStyle().getStroke3().getThickness()).isEqualTo(1);
-		assertThat(link2.getType().getMiddleDecor()).isEqualTo(LinkMiddleDecor.SUPERSET);
+		assertEquals("E1/o E2, E3, E4 /center", link2.getEntity1().getName());
+		assertEquals("E2", link2.getEntity2().getName());
+		assertEquals(1, link2.getType().getStyle().getStroke3().getThickness());
+		assertEquals(LinkMiddleDecor.SUPERSET, link2.getType().getMiddleDecor());
 		Link link3 = diagram.getLinks().get(2);
-		assertThat(link3.getEntity1().getName()).isEqualTo("E1/o E2, E3, E4 /center");
-		assertThat(link3.getEntity2().getName()).isEqualTo("E3");
-		assertThat(link3.getType().getStyle().getStroke3().getThickness()).isEqualTo(1);
-		assertThat(link3.getType().getMiddleDecor()).isEqualTo(LinkMiddleDecor.SUPERSET);
+		assertEquals("E1/o E2, E3, E4 /center", link3.getEntity1().getName());
+		assertEquals("E3", link3.getEntity2().getName());
+		assertEquals(1, link3.getType().getStyle().getStroke3().getThickness());
+		assertEquals(LinkMiddleDecor.SUPERSET, link3.getType().getMiddleDecor());
 		Link link4 = diagram.getLinks().get(3);
-		assertThat(link4.getEntity1().getName()).isEqualTo("E1/o E2, E3, E4 /center");
-		assertThat(link4.getEntity2().getName()).isEqualTo("E4");
-		assertThat(link4.getType().getStyle().getStroke3().getThickness()).isEqualTo(1);
-		assertThat(link4.getType().getMiddleDecor()).isEqualTo(LinkMiddleDecor.SUPERSET);
+		assertEquals("E1/o E2, E3, E4 /center", link4.getEntity1().getName());
+		assertEquals("E4", link4.getEntity2().getName());
+		assertEquals(1, link4.getType().getStyle().getStroke3().getThickness());
+		assertEquals(LinkMiddleDecor.SUPERSET, link4.getType().getMiddleDecor());
 	}
 
 	@Test
@@ -118,29 +121,29 @@ public class CommandMultiSubclassTest {
 		BlocLines lines = BlocLines.singleString("E1 =>= o { E2, E3, E4 }");
 		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
-		assertThat(result).matches(CommandExecutionResult::isOk);
+		assertTrue(result.isOk());
 
-		assertThat(diagram.getLinks().size()).isEqualTo(4);
+		assertEquals(4, diagram.getLinks().size());
 		Link link1 = diagram.getLinks().get(0);
-		assertThat(link1.getEntity1().getName()).isEqualTo("E1");
-		assertThat(link1.getEntity2().getName()).isEqualTo("E1/o E2, E3, E4 /center");
-		assertThat(link1.getType().getStyle().getStroke3().getThickness()).isEqualTo(2);
-		assertThat(link1.getType().getMiddleDecor()).isEqualTo(LinkMiddleDecor.NONE);
+		assertEquals("E1", link1.getEntity1().getName());
+		assertEquals("E1/o E2, E3, E4 /center", link1.getEntity2().getName());
+		assertEquals(2, link1.getType().getStyle().getStroke3().getThickness());
+		assertEquals(LinkMiddleDecor.NONE, link1.getType().getMiddleDecor());
 		Link link2 = diagram.getLinks().get(1);
-		assertThat(link2.getEntity1().getName()).isEqualTo("E1/o E2, E3, E4 /center");
-		assertThat(link2.getEntity2().getName()).isEqualTo("E2");
-		assertThat(link2.getType().getStyle().getStroke3().getThickness()).isEqualTo(1);
-		assertThat(link2.getType().getMiddleDecor()).isEqualTo(LinkMiddleDecor.SUPERSET);
+		assertEquals("E1/o E2, E3, E4 /center", link2.getEntity1().getName());
+		assertEquals("E2", link2.getEntity2().getName());
+		assertEquals(1, link2.getType().getStyle().getStroke3().getThickness());
+		assertEquals(LinkMiddleDecor.SUPERSET, link2.getType().getMiddleDecor());
 		Link link3 = diagram.getLinks().get(2);
-		assertThat(link3.getEntity1().getName()).isEqualTo("E1/o E2, E3, E4 /center");
-		assertThat(link3.getEntity2().getName()).isEqualTo("E3");
-		assertThat(link3.getType().getStyle().getStroke3().getThickness()).isEqualTo(1);
-		assertThat(link3.getType().getMiddleDecor()).isEqualTo(LinkMiddleDecor.SUPERSET);
+		assertEquals("E1/o E2, E3, E4 /center", link3.getEntity1().getName());
+		assertEquals("E3", link3.getEntity2().getName());
+		assertEquals(1, link3.getType().getStyle().getStroke3().getThickness());
+		assertEquals(LinkMiddleDecor.SUPERSET, link3.getType().getMiddleDecor());
 		Link link4 = diagram.getLinks().get(3);
-		assertThat(link4.getEntity1().getName()).isEqualTo("E1/o E2, E3, E4 /center");
-		assertThat(link4.getEntity2().getName()).isEqualTo("E4");
-		assertThat(link4.getType().getStyle().getStroke3().getThickness()).isEqualTo(1);
-		assertThat(link4.getType().getMiddleDecor()).isEqualTo(LinkMiddleDecor.SUPERSET);
+		assertEquals("E1/o E2, E3, E4 /center", link4.getEntity1().getName());
+		assertEquals("E4", link4.getEntity2().getName());
+		assertEquals(1, link4.getType().getStyle().getStroke3().getThickness());
+		assertEquals(LinkMiddleDecor.SUPERSET, link4.getType().getMiddleDecor());
 	}
 
 	@Test
@@ -153,29 +156,29 @@ public class CommandMultiSubclassTest {
 		BlocLines lines = BlocLines.singleString("E1 ->- U { E2, E3, E4 }");
 		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
-		assertThat(result).matches(CommandExecutionResult::isOk);
+		assertTrue(result.isOk());
 
-		assertThat(diagram.getLinks().size()).isEqualTo(4);
+		assertEquals(4, diagram.getLinks().size());
 		Link link1 = diagram.getLinks().get(0);
-		assertThat(link1.getEntity1().getName()).isEqualTo("E1");
-		assertThat(link1.getEntity2().getName()).isEqualTo("E1/U E2, E3, E4 /center");
-		assertThat(link1.getType().getStyle().getStroke3().getThickness()).isEqualTo(1);
-		assertThat(link1.getType().getMiddleDecor()).isEqualTo(LinkMiddleDecor.SUPERSET);
+		assertEquals("E1", link1.getEntity1().getName());
+		assertEquals("E1/U E2, E3, E4 /center", link1.getEntity2().getName());
+		assertEquals(1, link1.getType().getStyle().getStroke3().getThickness());
+		assertEquals(LinkMiddleDecor.SUPERSET, link1.getType().getMiddleDecor());
 		Link link2 = diagram.getLinks().get(1);
-		assertThat(link2.getEntity1().getName()).isEqualTo("E1/U E2, E3, E4 /center");
-		assertThat(link2.getEntity2().getName()).isEqualTo("E2");
-		assertThat(link2.getType().getStyle().getStroke3().getThickness()).isEqualTo(1);
-		assertThat(link2.getType().getMiddleDecor()).isEqualTo(LinkMiddleDecor.NONE);
+		assertEquals("E1/U E2, E3, E4 /center", link2.getEntity1().getName());
+		assertEquals("E2", link2.getEntity2().getName());
+		assertEquals(1, link2.getType().getStyle().getStroke3().getThickness());
+		assertEquals(LinkMiddleDecor.NONE, link2.getType().getMiddleDecor());
 		Link link3 = diagram.getLinks().get(2);
-		assertThat(link3.getEntity1().getName()).isEqualTo("E1/U E2, E3, E4 /center");
-		assertThat(link3.getEntity2().getName()).isEqualTo("E3");
-		assertThat(link3.getType().getStyle().getStroke3().getThickness()).isEqualTo(1);
-		assertThat(link3.getType().getMiddleDecor()).isEqualTo(LinkMiddleDecor.NONE);
+		assertEquals("E1/U E2, E3, E4 /center", link3.getEntity1().getName());
+		assertEquals("E3", link3.getEntity2().getName());
+		assertEquals(1, link3.getType().getStyle().getStroke3().getThickness());
+		assertEquals(LinkMiddleDecor.NONE, link3.getType().getMiddleDecor());
 		Link link4 = diagram.getLinks().get(3);
-		assertThat(link4.getEntity1().getName()).isEqualTo("E1/U E2, E3, E4 /center");
-		assertThat(link4.getEntity2().getName()).isEqualTo("E4");
-		assertThat(link4.getType().getStyle().getStroke3().getThickness()).isEqualTo(1);
-		assertThat(link4.getType().getMiddleDecor()).isEqualTo(LinkMiddleDecor.NONE);
+		assertEquals("E1/U E2, E3, E4 /center", link4.getEntity1().getName());
+		assertEquals("E4", link4.getEntity2().getName());
+		assertEquals(1, link4.getType().getStyle().getStroke3().getThickness());
+		assertEquals(LinkMiddleDecor.NONE, link4.getType().getMiddleDecor());
 	}
 
 	@Test
@@ -188,28 +191,28 @@ public class CommandMultiSubclassTest {
 		BlocLines lines = BlocLines.singleString("E1 =>= U { E2, E3, E4 }");
 		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
-		assertThat(result).matches(CommandExecutionResult::isOk);
+		assertTrue(result.isOk());
 
-		assertThat(diagram.getLinks().size()).isEqualTo(4);
+		assertEquals(4, diagram.getLinks().size());
 		Link link1 = diagram.getLinks().get(0);
-		assertThat(link1.getEntity1().getName()).isEqualTo("E1");
-		assertThat(link1.getEntity2().getName()).isEqualTo("E1/U E2, E3, E4 /center");
-		assertThat(link1.getType().getStyle().getStroke3().getThickness()).isEqualTo(2);
-		assertThat(link1.getType().getMiddleDecor()).isEqualTo(LinkMiddleDecor.SUPERSET);
+		assertEquals("E1", link1.getEntity1().getName());
+		assertEquals("E1/U E2, E3, E4 /center", link1.getEntity2().getName());
+		assertEquals(2, link1.getType().getStyle().getStroke3().getThickness());
+		assertEquals(LinkMiddleDecor.SUPERSET, link1.getType().getMiddleDecor());
 		Link link2 = diagram.getLinks().get(1);
-		assertThat(link2.getEntity1().getName()).isEqualTo("E1/U E2, E3, E4 /center");
-		assertThat(link2.getEntity2().getName()).isEqualTo("E2");
-		assertThat(link2.getType().getStyle().getStroke3().getThickness()).isEqualTo(1);
-		assertThat(link2.getType().getMiddleDecor()).isEqualTo(LinkMiddleDecor.NONE);
+		assertEquals("E1/U E2, E3, E4 /center", link2.getEntity1().getName());
+		assertEquals("E2", link2.getEntity2().getName());
+		assertEquals(1, link2.getType().getStyle().getStroke3().getThickness());
+		assertEquals(LinkMiddleDecor.NONE, link2.getType().getMiddleDecor());
 		Link link3 = diagram.getLinks().get(2);
-		assertThat(link3.getEntity1().getName()).isEqualTo("E1/U E2, E3, E4 /center");
-		assertThat(link3.getEntity2().getName()).isEqualTo("E3");
-		assertThat(link3.getType().getStyle().getStroke3().getThickness()).isEqualTo(1);
-		assertThat(link3.getType().getMiddleDecor()).isEqualTo(LinkMiddleDecor.NONE);
+		assertEquals("E1/U E2, E3, E4 /center", link3.getEntity1().getName());
+		assertEquals("E3", link3.getEntity2().getName());
+		assertEquals(1, link3.getType().getStyle().getStroke3().getThickness());
+		assertEquals(LinkMiddleDecor.NONE, link3.getType().getMiddleDecor());
 		Link link4 = diagram.getLinks().get(3);
-		assertThat(link4.getEntity1().getName()).isEqualTo("E1/U E2, E3, E4 /center");
-		assertThat(link4.getEntity2().getName()).isEqualTo("E4");
-		assertThat(link4.getType().getStyle().getStroke3().getThickness()).isEqualTo(1);
-		assertThat(link4.getType().getMiddleDecor()).isEqualTo(LinkMiddleDecor.NONE);
+		assertEquals("E1/U E2, E3, E4 /center", link4.getEntity1().getName());
+		assertEquals("E4", link4.getEntity2().getName());
+		assertEquals(1, link4.getType().getStyle().getStroke3().getThickness());
+		assertEquals(LinkMiddleDecor.NONE, link4.getType().getMiddleDecor());
 	}
 }

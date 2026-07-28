@@ -1,6 +1,7 @@
 package net.sourceforge.plantuml.tim.builtin;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -27,12 +28,12 @@ class GetAllStdlibTest {
 	void Test_without_Param() throws EaterException {
 		final List<TValue> empty = Collections.emptyList();
 		final TValue tValue = cut.executeReturnFunction(null, null, null, empty, null);
-		assertThat(tValue.toString()).contains("archimate", "aws", "tupadr3");
+		assertTrue(tValue.toString().contains("archimate")); assertTrue(tValue.toString().contains("aws")); assertTrue(tValue.toString().contains("tupadr3"));
 	}
 
 	@Test
 	void Test_with_one_argument() throws EaterException {
 		final TValue tValue = cut.executeReturnFunction(null, null, null, Arrays.asList(TValue.fromInt(0)), null);
-		assertThat(tValue.toString()).contains("archimate", "https://github.com/plantuml-stdlib/Archimate-PlantUML");
+		assertTrue(tValue.toString().contains("archimate")); assertTrue(tValue.toString().contains("https://github.com/plantuml-stdlib/Archimate-PlantUML"));
 	}
 }

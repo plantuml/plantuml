@@ -35,8 +35,11 @@
  */
 package net.sourceforge.plantuml.gantt.ngm.math;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDateTime;
@@ -52,9 +55,9 @@ class SegmentTest {
 
 		Segment segment = Segment.forward(start, end, value);
 
-		assertThat(segment.startExclusive()).isEqualTo(start);
-		assertThat(segment.endExclusive()).isEqualTo(end);
-		assertThat(segment.getValue()).isEqualTo(value);
+		assertEquals(start, segment.startExclusive());
+		assertEquals(end, segment.endExclusive());
+		assertEquals(value, segment.getValue());
 	}
 	
 	@Test
@@ -62,8 +65,7 @@ class SegmentTest {
 		LocalDateTime end = LocalDateTime.of(2024, 1, 1, 17, 0);
 		Fraction value = Fraction.of(1);
 		
-		assertThatThrownBy(() -> Segment.forward(null, end, value))
-			.isInstanceOf(NullPointerException.class);
+		assertThrows(NullPointerException.class, () -> Segment.forward(null, end, value));
 	}
 
 	@Test
@@ -71,8 +73,7 @@ class SegmentTest {
 		LocalDateTime start = LocalDateTime.of(2024, 2, 1, 15, 0);
 		Fraction value = Fraction.of(1);
 		
-		assertThatThrownBy(() -> Segment.forward(start, null, value))
-			.isInstanceOf(NullPointerException.class);
+		assertThrows(NullPointerException.class, () -> Segment.forward(start, null, value));
 	}
 	
 	@Test
@@ -80,8 +81,7 @@ class SegmentTest {
 		LocalDateTime start = LocalDateTime.of(2024, 2, 1, 15, 0);
 		LocalDateTime end = LocalDateTime.of(2024, 2, 1, 17, 0);
 		
-		assertThatThrownBy(() -> Segment.forward(start, end, null))
-			.isInstanceOf(NullPointerException.class);
+		assertThrows(NullPointerException.class, () -> Segment.forward(start, end, null));
 	}
 	
 	@Test 
@@ -90,8 +90,7 @@ class SegmentTest {
 		LocalDateTime end = LocalDateTime.of(2024, 2, 1, 15, 0);
 		Fraction value = Fraction.of(1);
 		
-		assertThatThrownBy(() -> Segment.forward(start, end, value))
-			.isInstanceOf(IllegalArgumentException.class);
+		assertThrows(IllegalArgumentException.class, () -> Segment.forward(start, end, value));
 	}
 	
 	@Test 
@@ -100,8 +99,7 @@ class SegmentTest {
 		LocalDateTime end = LocalDateTime.of(2024, 2, 1, 15, 0);
 		Fraction value = Fraction.of(1);
 		
-		assertThatThrownBy(() -> Segment.forward(start, end, value))
-			.isInstanceOf(IllegalArgumentException.class);
+		assertThrows(IllegalArgumentException.class, () -> Segment.forward(start, end, value));
 	}
 		
 //	@Test
@@ -112,13 +110,13 @@ class SegmentTest {
 //		Segment segment = Segment.forward(start, end, value);
 //		
 //		LocalDateTime insideTime = LocalDateTime.of(2024, 3, 1, 12, 0);
-//		assertThat(segment.includes(insideTime)).isTrue();
+//		assertTrue(segment.includes(insideTime));
 //		
 //		LocalDateTime beforeTime = LocalDateTime.of(2024, 3, 1, 8, 0);
-//		assertThat(segment.includes(beforeTime)).isFalse();
+//		assertFalse(segment.includes(beforeTime));
 //		
 //		LocalDateTime afterTime = LocalDateTime.of(2024, 3, 1, 18, 0);
-//		assertThat(segment.includes(afterTime)).isFalse();
+//		assertFalse(segment.includes(afterTime));
 //	}
 //	
 //	@Test
@@ -128,8 +126,8 @@ class SegmentTest {
 //		Fraction value = Fraction.of(1);
 //		Segment segment = Segment.forward(start, end, value);
 //		
-//		assertThat(segment.includes(start)).isTrue();
-//		assertThat(segment.includes(end)).isFalse();
+//		assertTrue(segment.includes(start));
+//		assertFalse(segment.includes(end));
 //	}
 	
 	@Test
@@ -142,14 +140,14 @@ class SegmentTest {
 		LocalDateTime splitTime = LocalDateTime.of(2024, 5, 1, 13, 0);
 		Segment[] splitSegments = segment.split(splitTime);
 		
-		assertThat(splitSegments).hasSize(2);
-		assertThat(splitSegments[0].startExclusive()).isEqualTo(start);
-		assertThat(splitSegments[0].endExclusive()).isEqualTo(splitTime);
-		assertThat(splitSegments[0].getValue()).isEqualTo(value);
+		assertEquals(2, splitSegments.length);
+		assertEquals(start, splitSegments[0].startExclusive());
+		assertEquals(splitTime, splitSegments[0].endExclusive());
+		assertEquals(value, splitSegments[0].getValue());
 		
-		assertThat(splitSegments[1].startExclusive()).isEqualTo(splitTime);
-		assertThat(splitSegments[1].endExclusive()).isEqualTo(end);
-		assertThat(splitSegments[1].getValue()).isEqualTo(value);
+		assertEquals(splitTime, splitSegments[1].startExclusive());
+		assertEquals(end, splitSegments[1].endExclusive());
+		assertEquals(value, splitSegments[1].getValue());
 	}
 	
 	@Test
@@ -159,8 +157,7 @@ class SegmentTest {
 		Fraction value = Fraction.of(1);
 		Segment segment = Segment.forward(start, end, value);
 		
-		assertThatThrownBy(() -> segment.split(null))
-			.isInstanceOf(NullPointerException.class);
+		assertThrows(NullPointerException.class, () -> segment.split(null));
 	}
 	
 	@Test
@@ -171,12 +168,10 @@ class SegmentTest {
 		Segment segment = Segment.forward(start, end, value);
 		
 		LocalDateTime beforeSplitTime = LocalDateTime.of(2024, 5, 1, 8, 0);
-		assertThatThrownBy(() -> segment.split(beforeSplitTime))
-			.isInstanceOf(IllegalArgumentException.class);
+		assertThrows(IllegalArgumentException.class, () -> segment.split(beforeSplitTime));
 		
 		LocalDateTime afterSplitTime = LocalDateTime.of(2024, 5, 1, 18, 0);
-		assertThatThrownBy(() -> segment.split(afterSplitTime))
-			.isInstanceOf(IllegalArgumentException.class);
+		assertThrows(IllegalArgumentException.class, () -> segment.split(afterSplitTime));
 	}
 	
 	@Test
@@ -186,11 +181,9 @@ class SegmentTest {
 		Fraction value = Fraction.of(1);
 		Segment segment = Segment.forward(start, end, value);
 		
-		assertThatThrownBy(() -> segment.split(start))
-			.isInstanceOf(IllegalArgumentException.class);
+		assertThrows(IllegalArgumentException.class, () -> segment.split(start));
 		
-		assertThatThrownBy(() -> segment.split(end))
-			.isInstanceOf(IllegalArgumentException.class);
+		assertThrows(IllegalArgumentException.class, () -> segment.split(end));
 	}
 	
 	///// Testing intersection of segments
@@ -209,7 +202,7 @@ class SegmentTest {
 		
 		Segment result = Segment.intersection(new Segment[] { segment });
 		
-		assertThat(result).isSameAs(segment);
+		assertSame(segment, result);
 	}
 	
 	@Test
@@ -243,9 +236,9 @@ class SegmentTest {
 		
 		Segment result = Segment.intersection(new Segment[] { segment1, segment2 });	
 		
-		assertThat(result.startExclusive()).isEqualTo(LocalDateTime.of(2025, 7, 1, 12, 0));
-		assertThat(result.endExclusive()).isEqualTo(LocalDateTime.of(2025, 7, 1, 13, 0));
-		assertThat(result.getValue()).isEqualTo(new Fraction(1, 2));
+		assertEquals(LocalDateTime.of(2025, 7, 1, 12, 0), result.startExclusive());
+		assertEquals(LocalDateTime.of(2025, 7, 1, 13, 0), result.endExclusive());
+		assertEquals(new Fraction(1, 2), result.getValue());
 	}
 	
 	
@@ -268,10 +261,10 @@ class SegmentTest {
 		
 		Segment result = Segment.intersection(segments, Fraction.SUM);	
 		
-		assertThat(result.startExclusive()).isEqualTo(LocalDateTime.of(2025, 7, 1, 10, 0));
-		assertThat(result.endExclusive()).isEqualTo(LocalDateTime.of(2025, 7, 1, 16, 0));
+		assertEquals(LocalDateTime.of(2025, 7, 1, 10, 0), result.startExclusive());
+		assertEquals(LocalDateTime.of(2025, 7, 1, 16, 0), result.endExclusive());
 		// 1 + 2/3 + 3/4 = 12/12 + 8/12 + 9/12 = 29/12
-		assertThat(result.getValue()).isEqualTo(new Fraction(29, 12));
+		assertEquals(new Fraction(29, 12), result.getValue());
 	}
 
 	///// Testing backward segments
@@ -284,10 +277,10 @@ class SegmentTest {
 
 		Segment segment = Segment.backward(a, b, value);
 
-		assertThat(segment.startExclusive()).isEqualTo(a);
-		assertThat(segment.endExclusive()).isEqualTo(b);
-		assertThat(segment.getValue()).isEqualTo(value);
-		assertThat(segment.getTimeDirection()).isEqualTo(TimeDirection.BACKWARD);
+		assertEquals(a, segment.startExclusive());
+		assertEquals(b, segment.endExclusive());
+		assertEquals(value, segment.getValue());
+		assertEquals(TimeDirection.BACKWARD, segment.getTimeDirection());
 	}
 	
 	@Test
@@ -296,8 +289,7 @@ class SegmentTest {
 		LocalDateTime b = LocalDateTime.of(2024, 1, 1, 17, 0); // b is later (invalid)
 		Fraction value = Fraction.of(1);
 		
-		assertThatThrownBy(() -> Segment.backward(a, b, value))
-			.isInstanceOf(IllegalArgumentException.class);
+		assertThrows(IllegalArgumentException.class, () -> Segment.backward(a, b, value));
 	}
 	
 //	@Test
@@ -308,13 +300,13 @@ class SegmentTest {
 //		Segment segment = Segment.backward(a, b, value);
 //		
 //		LocalDateTime insideTime = LocalDateTime.of(2024, 3, 1, 12, 0);
-//		assertThat(segment.includes(insideTime)).isTrue();
+//		assertTrue(segment.includes(insideTime));
 //		
 //		LocalDateTime beforeB = LocalDateTime.of(2024, 3, 1, 8, 0);
-//		assertThat(segment.includes(beforeB)).isFalse();
+//		assertFalse(segment.includes(beforeB));
 //		
 //		LocalDateTime afterA = LocalDateTime.of(2024, 3, 1, 18, 0);
-//		assertThat(segment.includes(afterA)).isFalse();
+//		assertFalse(segment.includes(afterA));
 //	}
 //	
 //	@Test
@@ -324,8 +316,8 @@ class SegmentTest {
 //		Fraction value = Fraction.of(1);
 //		Segment segment = Segment.backward(a, b, value);
 //		
-//		assertThat(segment.includes(a)).isTrue();
-//		assertThat(segment.includes(b)).isFalse();
+//		assertTrue(segment.includes(a));
+//		assertFalse(segment.includes(b));
 //	}
 	
 	///// Testing strictIncludes for forward segments
@@ -338,13 +330,13 @@ class SegmentTest {
 		Segment segment = Segment.forward(start, end, value);
 		
 		LocalDateTime insideTime = LocalDateTime.of(2024, 3, 1, 12, 0);
-		assertThat(segment.includes(insideTime)).isTrue();
+		assertTrue(segment.includes(insideTime));
 		
 		LocalDateTime beforeTime = LocalDateTime.of(2024, 3, 1, 8, 0);
-		assertThat(segment.includes(beforeTime)).isFalse();
+		assertFalse(segment.includes(beforeTime));
 		
 		LocalDateTime afterTime = LocalDateTime.of(2024, 3, 1, 18, 0);
-		assertThat(segment.includes(afterTime)).isFalse();
+		assertFalse(segment.includes(afterTime));
 	}
 	
 	@Test
@@ -354,8 +346,8 @@ class SegmentTest {
 		Fraction value = Fraction.of(1);
 		Segment segment = Segment.forward(start, end, value);
 		
-		assertThat(segment.includes(start)).isFalse();
-		assertThat(segment.includes(end)).isFalse();
+		assertFalse(segment.includes(start));
+		assertFalse(segment.includes(end));
 	}
 	
 	///// Testing strictIncludes for backward segments
@@ -368,13 +360,13 @@ class SegmentTest {
 		Segment segment = Segment.backward(a, b, value);
 		
 		LocalDateTime insideTime = LocalDateTime.of(2024, 3, 1, 12, 0);
-		assertThat(segment.includes(insideTime)).isTrue();
+		assertTrue(segment.includes(insideTime));
 		
 		LocalDateTime beforeB = LocalDateTime.of(2024, 3, 1, 8, 0);
-		assertThat(segment.includes(beforeB)).isFalse();
+		assertFalse(segment.includes(beforeB));
 		
 		LocalDateTime afterA = LocalDateTime.of(2024, 3, 1, 18, 0);
-		assertThat(segment.includes(afterA)).isFalse();
+		assertFalse(segment.includes(afterA));
 	}
 	
 	@Test
@@ -384,8 +376,8 @@ class SegmentTest {
 		Fraction value = Fraction.of(1);
 		Segment segment = Segment.backward(a, b, value);
 		
-		assertThat(segment.includes(a)).isFalse();
-		assertThat(segment.includes(b)).isFalse();
+		assertFalse(segment.includes(a));
+		assertFalse(segment.includes(b));
 	}
 	
 	///// Testing split for backward segments
@@ -400,19 +392,19 @@ class SegmentTest {
 		LocalDateTime splitTime = LocalDateTime.of(2024, 5, 1, 13, 0);
 		Segment[] splitSegments = segment.split(splitTime);
 		
-		assertThat(splitSegments).hasSize(2);
+		assertEquals(2, splitSegments.length);
 		
 		// First segment: [a, splitTime) in backward direction
-		assertThat(splitSegments[0].startExclusive()).isEqualTo(a);
-		assertThat(splitSegments[0].endExclusive()).isEqualTo(splitTime);
-		assertThat(splitSegments[0].getValue()).isEqualTo(value);
-		assertThat(splitSegments[0].getTimeDirection()).isEqualTo(TimeDirection.BACKWARD);
+		assertEquals(a, splitSegments[0].startExclusive());
+		assertEquals(splitTime, splitSegments[0].endExclusive());
+		assertEquals(value, splitSegments[0].getValue());
+		assertEquals(TimeDirection.BACKWARD, splitSegments[0].getTimeDirection());
 		
 		// Second segment: [splitTime, b) in backward direction
-		assertThat(splitSegments[1].startExclusive()).isEqualTo(splitTime);
-		assertThat(splitSegments[1].endExclusive()).isEqualTo(b);
-		assertThat(splitSegments[1].getValue()).isEqualTo(value);
-		assertThat(splitSegments[1].getTimeDirection()).isEqualTo(TimeDirection.BACKWARD);
+		assertEquals(splitTime, splitSegments[1].startExclusive());
+		assertEquals(b, splitSegments[1].endExclusive());
+		assertEquals(value, splitSegments[1].getValue());
+		assertEquals(TimeDirection.BACKWARD, splitSegments[1].getTimeDirection());
 	}
 	
 	@Test
@@ -423,12 +415,10 @@ class SegmentTest {
 		Segment segment = Segment.backward(a, b, value);
 		
 		LocalDateTime beforeB = LocalDateTime.of(2024, 5, 1, 8, 0);
-		assertThatThrownBy(() -> segment.split(beforeB))
-			.isInstanceOf(IllegalArgumentException.class);
+		assertThrows(IllegalArgumentException.class, () -> segment.split(beforeB));
 		
 		LocalDateTime afterA = LocalDateTime.of(2024, 5, 1, 18, 0);
-		assertThatThrownBy(() -> segment.split(afterA))
-			.isInstanceOf(IllegalArgumentException.class);
+		assertThrows(IllegalArgumentException.class, () -> segment.split(afterA));
 	}
 	
 	@Test
@@ -438,11 +428,9 @@ class SegmentTest {
 		Fraction value = Fraction.of(1);
 		Segment segment = Segment.backward(a, b, value);
 		
-		assertThatThrownBy(() -> segment.split(a))
-			.isInstanceOf(IllegalArgumentException.class);
+		assertThrows(IllegalArgumentException.class, () -> segment.split(a));
 		
-		assertThatThrownBy(() -> segment.split(b))
-			.isInstanceOf(IllegalArgumentException.class);
+		assertThrows(IllegalArgumentException.class, () -> segment.split(b));
 	}
 	
 	///// Testing intersection for backward segments
@@ -461,10 +449,10 @@ class SegmentTest {
 		
 		Segment result = Segment.intersection(new Segment[] { segment1, segment2 });
 		
-		assertThat(result.startExclusive()).isEqualTo(LocalDateTime.of(2025, 7, 1, 15, 0));
-		assertThat(result.endExclusive()).isEqualTo(LocalDateTime.of(2025, 7, 1, 10, 0));
-		assertThat(result.getValue()).isEqualTo(new Fraction(1, 2));
-		assertThat(result.getTimeDirection()).isEqualTo(TimeDirection.BACKWARD);
+		assertEquals(LocalDateTime.of(2025, 7, 1, 15, 0), result.startExclusive());
+		assertEquals(LocalDateTime.of(2025, 7, 1, 10, 0), result.endExclusive());
+		assertEquals(new Fraction(1, 2), result.getValue());
+		assertEquals(TimeDirection.BACKWARD, result.getTimeDirection());
 	}
 	
 	@Test
@@ -486,11 +474,11 @@ class SegmentTest {
 		
 		Segment result = Segment.intersection(segments, Fraction.SUM);
 		
-		assertThat(result.startExclusive()).isEqualTo(LocalDateTime.of(2025, 7, 1, 16, 0));
-		assertThat(result.endExclusive()).isEqualTo(LocalDateTime.of(2025, 7, 1, 10, 0));
+		assertEquals(LocalDateTime.of(2025, 7, 1, 16, 0), result.startExclusive());
+		assertEquals(LocalDateTime.of(2025, 7, 1, 10, 0), result.endExclusive());
 		// 1 + 2/3 + 3/4 = 12/12 + 8/12 + 9/12 = 29/12
-		assertThat(result.getValue()).isEqualTo(new Fraction(29, 12));
-		assertThat(result.getTimeDirection()).isEqualTo(TimeDirection.BACKWARD);
+		assertEquals(new Fraction(29, 12), result.getValue());
+		assertEquals(TimeDirection.BACKWARD, result.getTimeDirection());
 	}
 	
 	@Test
@@ -505,8 +493,7 @@ class SegmentTest {
 				LocalDateTime.of(2025, 7, 1, 9, 0),
 				Fraction.of(1));
 		
-		assertThatThrownBy(() -> Segment.intersection(new Segment[] { segment1, segment2 }))
-			.isInstanceOf(IllegalArgumentException.class);
+		assertThrows(IllegalArgumentException.class, () -> Segment.intersection(new Segment[] { segment1, segment2 }));
 	}
 	
 	@Test
@@ -521,9 +508,7 @@ class SegmentTest {
 				LocalDateTime.of(2025, 7, 1, 9, 0),
 				Fraction.of(1));
 		
-		assertThatThrownBy(() -> Segment.intersection(new Segment[] { forwardSegment, backwardSegment }))
-			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessageContaining("same direction");
+		assertTrue(assertThrows(IllegalArgumentException.class, () -> Segment.intersection(new Segment[] { forwardSegment, backwardSegment })).getMessage().contains("same direction"));
 	}
 
 }

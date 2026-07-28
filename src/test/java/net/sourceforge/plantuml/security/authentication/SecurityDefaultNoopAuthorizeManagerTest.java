@@ -1,6 +1,8 @@
 package net.sourceforge.plantuml.security.authentication;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import org.junit.jupiter.api.Test;
 
@@ -15,8 +17,8 @@ class SecurityDefaultNoopAuthorizeManagerTest {
 
 		SecurityAuthentication securityAuthentication = cut.create(null);
 
-		assertThat(securityAuthentication).isNotNull();
+		assertNotNull(securityAuthentication);
 
-		assertThat(securityAuthentication.isPublic()).isTrue();
+		assertTrue(securityAuthentication.isPublic());
 	}
 }

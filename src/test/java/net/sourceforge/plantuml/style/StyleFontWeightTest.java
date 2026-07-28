@@ -1,6 +1,9 @@
 package net.sourceforge.plantuml.style;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.io.IOException;
 import java.util.EnumMap;
@@ -62,21 +65,21 @@ class StyleFontWeightTest {
 	void fontWeight900AloneSetsWeight() {
 		final Style s = style(PName.FontWeight, "900");
 		final UFontFace face = s.getUFont().getFontFace();
-		assertThat(face.getCssWeight()).isEqualTo(900);
+		assertEquals(900, face.getCssWeight());
 	}
 
 	@Test
 	@DisplayName("FontWeight: 300 sets CSS weight 300 (Light)")
 	void fontWeight300SetsWeightLight() {
 		final Style s = style(PName.FontWeight, "300");
-		assertThat(s.getUFont().getFontFace().getCssWeight()).isEqualTo(300);
+		assertEquals(300, s.getUFont().getFontFace().getCssWeight());
 	}
 
 	@Test
 	@DisplayName("FontWeight: bold keyword produces weight 700")
 	void fontWeightBoldKeywordProduces700() {
 		final Style s = style(PName.FontWeight, "bold");
-		assertThat(s.getUFont().getFontFace().getCssWeight()).isEqualTo(700);
+		assertEquals(700, s.getUFont().getFontFace().getCssWeight());
 	}
 
 	@Test
@@ -84,8 +87,8 @@ class StyleFontWeightTest {
 	void fontWeight900AndItalicAreBothPreserved() {
 		final Style s = style(PName.FontWeight, "900", PName.FontStyle, "italic");
 		final UFontFace face = s.getUFont().getFontFace();
-		assertThat(face.getCssWeight()).as("weight").isEqualTo(900);
-		assertThat(face.isItalic()).as("italic").isTrue();
+		assertEquals(900, face.getCssWeight());
+		assertTrue(face.isItalic());
 	}
 
 	@Test
@@ -93,8 +96,8 @@ class StyleFontWeightTest {
 	void fontWeight500AndItalic() {
 		final Style s = style(PName.FontWeight, "500", PName.FontStyle, "italic");
 		final UFontFace face = s.getUFont().getFontFace();
-		assertThat(face.getCssWeight()).as("weight").isEqualTo(500);
-		assertThat(face.isItalic()).as("italic").isTrue();
+		assertEquals(500, face.getCssWeight());
+		assertTrue(face.isItalic());
 	}
 
 	@Test
@@ -102,38 +105,36 @@ class StyleFontWeightTest {
 	void fontWeight900OverridesBoldFromFontStyle() {
 		// FontStyle=bold would give 700; explicit FontWeight=900 must win
 		final Style s = style(PName.FontWeight, "900", PName.FontStyle, "bold");
-		assertThat(s.getUFont().getFontFace().getCssWeight())
-				.as("FontWeight takes precedence over FontStyle bold")
-				.isEqualTo(900);
+		assertEquals(900, s.getUFont().getFontFace().getCssWeight());
 	}
 
 	@Test
 	@DisplayName("No FontWeight: FontStyle: bold still defaults to weight 700 (legacy behavior)")
 	void noFontWeightBoldStyleDefaultsTo700() {
 		final Style s = style(PName.FontStyle, "bold");
-		assertThat(s.getUFont().getFontFace().getCssWeight()).isEqualTo(700);
+		assertEquals(700, s.getUFont().getFontFace().getCssWeight());
 	}
 
 	@Test
 	@DisplayName("No FontWeight, no FontStyle: weight defaults to 400 (normal)")
 	void noFontWeightNoFontStyleDefaultsTo400() {
 		final Style s = style(PName.FontSize, "14"); // some unrelated property
-		assertThat(s.getUFont().getFontFace().getCssWeight()).isEqualTo(400);
+		assertEquals(400, s.getUFont().getFontFace().getCssWeight());
 	}
 
 	@Test
 	@DisplayName("FontWeight: 900 — toCssWeightString() returns '900'")
 	void fontWeight900CssWeightString() {
 		final Style s = style(PName.FontWeight, "900");
-		assertThat(s.getUFont().getFontFace().toCssWeightString()).isEqualTo("900");
+		assertEquals("900", s.getUFont().getFontFace().toCssWeightString());
 	}
 
 	@Test
 	@DisplayName("FontWeight: 900, FontSize: 26 — size is honoured independently")
 	void fontSizeIsIndependentOfFontWeight() {
 		final Style s = style(PName.FontWeight, "900", PName.FontSize, "26");
-		assertThat(s.getUFont().getSize()).isEqualTo(26);
-		assertThat(s.getUFont().getFontFace().getCssWeight()).isEqualTo(900);
+		assertEquals(26, s.getUFont().getSize());
+		assertEquals(900, s.getUFont().getFontFace().getCssWeight());
 	}
 
 	// -----------------------------------------------------------------------
@@ -184,21 +185,13 @@ class StyleFontWeightTest {
 
 		final String svg = exporter.asString(FileFormat.SVG);
 
-		assertThat(svg)
-				.as("Diagram should render without error")
-				.doesNotContain("An error has occurred");
+		assertFalse(svg.contains("An error has occurred"));
 
-		assertThat(svg)
-				.as("font-weight='900' must appear in SVG output")
-				.contains("font-weight=\"900\"");
+		assertTrue(svg.contains("font-weight=\"900\""));
 
-		assertThat(svg)
-				.as("font-style='italic' must appear in SVG output")
-				.contains("font-style=\"italic\"");
+		assertTrue(svg.contains("font-style=\"italic\""));
 
-		assertThat(svg)
-				.as("Legacy 'bold' keyword must never be emitted (Phase 5 guarantee)")
-				.doesNotContain("font-weight=\"bold\"");
+		assertFalse(svg.contains("font-weight=\"bold\""));
 	}
 
 	@Test
@@ -211,12 +204,12 @@ class StyleFontWeightTest {
 				PName.FontSize, "26");
 
 		final UFontFace face = participantStyle.getUFont().getFontFace();
-		assertThat(face.getCssWeight()).isEqualTo(900);
-		assertThat(face.isItalic()).isTrue();
+		assertEquals(900, face.getCssWeight());
+		assertTrue(face.isItalic());
 
 		// Integration path agrees: SVG carries the same weight
 		final String svg = PlantUmlTestUtils.exportDiagram(PARTICIPANT_STYLE_PUML)
 				.asString(FileFormat.SVG);
-		assertThat(svg).contains("font-weight=\"900\"");
+		assertTrue(svg.contains("font-weight=\"900\""));
 	}
 }

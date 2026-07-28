@@ -1,7 +1,8 @@
 package net.sourceforge.plantuml.klimt.color;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import static java.lang.Long.parseLong;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -18,7 +19,6 @@ class ColorHSBTest {
 			" FF7F0000 , ColorHSB[a=FF r=7F g=00 b=00 / h=0.000000 s=1.000000 b=0.498039] ",
 	})
 	void test_toString(String argb, String expectedToString) {
-		assertThat(new ColorHSB((int) parseLong(argb, 16)))
-				.hasToString(expectedToString);
+		assertEquals(expectedToString, new ColorHSB((int) parseLong(argb, 16)).toString());
 	}
 }

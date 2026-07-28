@@ -35,8 +35,11 @@
  */
 package net.sourceforge.plantuml.style;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -114,7 +117,7 @@ class BundledSkinTest {
 			throw new UncheckedIOException(e);
 		}
 		result.sort(Comparator.naturalOrder());
-		assertThat(result).as("bundled .skin files").isNotEmpty();
+		assertFalse(result.isEmpty());
 		return result;
 	}
 
@@ -136,8 +139,8 @@ class BundledSkinTest {
 	@DisplayName("Every bundled .skin loads and defines at least a root style")
 	void bundledSkinLoads(String filename) throws Exception {
 		final StyleBuilder builder = StyleLoader.loadSkin(filename);
-		assertThat(builder).as(filename).isNotNull();
-		assertThat(builder.getMergedStyle(StyleSignatureBasic.of(SName.root))).as(filename + " root style").isNotNull();
+		assertNotNull(builder);
+		assertNotNull(builder.getMergedStyle(StyleSignatureBasic.of(SName.root)));
 	}
 
 	// -----------------------------------------------------------------------
@@ -151,13 +154,12 @@ class BundledSkinTest {
 		final String skin = filename.substring(0, filename.length() - ".skin".length());
 		for (String[] diagram : DIAGRAMS) {
 			final String svg = renderSvg("@startuml\nskin " + skin + "\n" + diagram[1] + "@enduml");
-			assertThat(svg).as(filename + " / " + diagram[0]) //
-					.isNotEmpty() //
-					.doesNotContain("Welcome to PlantUML") // the image drawn when a command fails
-					.doesNotContain("Cannot find style") //
-					.doesNotContain("Cannot parse style") //
-					.doesNotContain("Incomplete style") //
-					.doesNotContain("net.sourceforge.plantuml"); // no stack trace inside the SVG
+			assertFalse(svg.isEmpty());
+			assertFalse(svg.contains("Welcome to PlantUML")); // the image drawn when a command fails
+			assertFalse(svg.contains("Cannot find style"));
+			assertFalse(svg.contains("Cannot parse style"));
+			assertFalse(svg.contains("Incomplete style"));
+			assertFalse(svg.contains("net.sourceforge.plantuml")); // no stack trace inside the SVG
 		}
 	}
 
@@ -165,8 +167,7 @@ class BundledSkinTest {
 	@MethodSource("completeBundledSkins")
 	@DisplayName("Every complete bundled .skin defines a full root style")
 	void bundledSkinHasCompleteRoot(String filename) throws Exception {
-		assertThat(StyleLoader.getMissingRootProperties(StyleLoader.loadSkin(filename))) //
-				.as(filename + " root properties").isEmpty();
+		assertTrue(StyleLoader.getMissingRootProperties(StyleLoader.loadSkin(filename)).isEmpty());
 	}
 
 	// -----------------------------------------------------------------------
@@ -176,8 +177,7 @@ class BundledSkinTest {
 	@Test
 	@DisplayName("An overlay fragment does not define a full root style")
 	void overlayFragmentHasIncompleteRoot() throws Exception {
-		assertThat(StyleLoader.getMissingRootProperties(StyleLoader.loadSkin(OVERLAY_ONLY))) //
-				.as(OVERLAY_ONLY + " root properties").isNotEmpty();
+		assertFalse(StyleLoader.getMissingRootProperties(StyleLoader.loadSkin(OVERLAY_ONLY)).isEmpty());
 	}
 
 	@Test
@@ -185,7 +185,7 @@ class BundledSkinTest {
 	void skinCommandRejectsOverlayFragment() throws Exception {
 		final String skin = OVERLAY_ONLY.substring(0, OVERLAY_ONLY.length() - ".skin".length());
 		final String svg = renderSvg("@startuml\nskin " + skin + "\nparticipant Alice\nAlice -> Bob: hi\n@enduml");
-		assertThat(svg).contains("Incomplete style");
+		assertTrue(svg.contains("Incomplete style"));
 	}
 
 	// -----------------------------------------------------------------------
@@ -199,15 +199,14 @@ class BundledSkinTest {
 		Files.write(legacy, ("SkinParam BackgroundColor #white\n" //
 				+ "SkinParam ParticipantBackgroundColor #dde5ff\n").getBytes(StandardCharsets.UTF_8));
 
-		assertThatThrownBy(() -> StyleLoader.loadSkin(legacy.toAbsolutePath().toString()))
-				.isInstanceOf(StyleParsingException.class);
+		assertThrows(StyleParsingException.class, () -> StyleLoader.loadSkin(legacy.toAbsolutePath().toString()));
 	}
 
 	@Test
 	@DisplayName("An unknown skin is reported on the skin line, not as a crash")
 	void unknownSkinIsReportedAsAnError() throws Exception {
 		final String svg = renderSvg("@startuml\nskin thisSkinDoesNotExist\nobject o1\n@enduml");
-		assertThat(svg).contains("Cannot find style");
+		assertTrue(svg.contains("Cannot find style"));
 	}
 
 	// -----------------------------------------------------------------------

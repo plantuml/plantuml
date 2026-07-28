@@ -44,7 +44,6 @@ dependencies {
     testRuntimeOnly(libs.junit.platform.launcher)
 
 	testImplementation(libs.glytching.junit.extensions)
-	testImplementation(libs.assertj.core)
 	testImplementation(libs.xmlunit.core)
 	testImplementation(libs.mockito.core)
 	testImplementation(libs.mockito.junit.jupiter)

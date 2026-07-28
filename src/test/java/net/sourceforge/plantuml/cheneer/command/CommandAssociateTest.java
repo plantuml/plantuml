@@ -1,6 +1,10 @@
 package net.sourceforge.plantuml.cheneer.command;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.util.ArrayList;
 
@@ -29,11 +33,11 @@ public class CommandAssociateTest {
 		IRegex regex = CommandAssociate.getRegexConcat();
 		RegexResult matcher = regex.matcher("E1 -- E2");
 
-		assertThat(matcher).isNotNull();
-		assertThat(matcher.get("NAME1", 0)).isEqualTo("E1");
-		assertThat(matcher.get("NAME2", 0)).isEqualTo("E2");
-		assertThat(matcher.get("PARTICIPATION", 0)).isEqualTo("-");
-		assertThat(matcher.get("CARDINALITY", 0)).isNull();
+		assertNotNull(matcher);
+		assertEquals("E1", matcher.get("NAME1", 0));
+		assertEquals("E2", matcher.get("NAME2", 0));
+		assertEquals("-", matcher.get("PARTICIPATION", 0));
+		assertNull(matcher.get("CARDINALITY", 0));
 	}
 
 	@Test
@@ -41,11 +45,11 @@ public class CommandAssociateTest {
 		IRegex regex = CommandAssociate.getRegexConcat();
 		RegexResult matcher = regex.matcher("E1 == E2");
 
-		assertThat(matcher).isNotNull();
-		assertThat(matcher.get("NAME1", 0)).isEqualTo("E1");
-		assertThat(matcher.get("NAME2", 0)).isEqualTo("E2");
-		assertThat(matcher.get("PARTICIPATION", 0)).isEqualTo("=");
-		assertThat(matcher.get("CARDINALITY", 0)).isNull();
+		assertNotNull(matcher);
+		assertEquals("E1", matcher.get("NAME1", 0));
+		assertEquals("E2", matcher.get("NAME2", 0));
+		assertEquals("=", matcher.get("PARTICIPATION", 0));
+		assertNull(matcher.get("CARDINALITY", 0));
 	}
 
 	@Test
@@ -53,11 +57,11 @@ public class CommandAssociateTest {
 		IRegex regex = CommandAssociate.getRegexConcat();
 		RegexResult matcher = regex.matcher("E1 -N- E2");
 
-		assertThat(matcher).isNotNull();
-		assertThat(matcher.get("NAME1", 0)).isEqualTo("E1");
-		assertThat(matcher.get("NAME2", 0)).isEqualTo("E2");
-		assertThat(matcher.get("PARTICIPATION", 0)).isEqualTo("-");
-		assertThat(matcher.get("CARDINALITY", 0)).isEqualTo("N");
+		assertNotNull(matcher);
+		assertEquals("E1", matcher.get("NAME1", 0));
+		assertEquals("E2", matcher.get("NAME2", 0));
+		assertEquals("-", matcher.get("PARTICIPATION", 0));
+		assertEquals("N", matcher.get("CARDINALITY", 0));
 	}
 
 	@Test
@@ -65,11 +69,11 @@ public class CommandAssociateTest {
 		IRegex regex = CommandAssociate.getRegexConcat();
 		RegexResult matcher = regex.matcher("E1 -(1, n)- E2");
 
-		assertThat(matcher).isNotNull();
-		assertThat(matcher.get("NAME1", 0)).isEqualTo("E1");
-		assertThat(matcher.get("NAME2", 0)).isEqualTo("E2");
-		assertThat(matcher.get("PARTICIPATION", 0)).isEqualTo("-");
-		assertThat(matcher.get("CARDINALITY", 0)).isEqualTo("(1, n)");
+		assertNotNull(matcher);
+		assertEquals("E1", matcher.get("NAME1", 0));
+		assertEquals("E2", matcher.get("NAME2", 0));
+		assertEquals("-", matcher.get("PARTICIPATION", 0));
+		assertEquals("(1, n)", matcher.get("CARDINALITY", 0));
 	}
 
 	@Test
@@ -80,14 +84,14 @@ public class CommandAssociateTest {
 		BlocLines lines = BlocLines.singleString("E1 -- E2");
 		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
-		assertThat(result).matches(CommandExecutionResult::isOk);
+		assertTrue(result.isOk());
 
-		assertThat(diagram.getLinks().size()).isEqualTo(1);
+		assertEquals(1, diagram.getLinks().size());
 		Link link = diagram.getLinks().get(0);
-		assertThat(link.getEntity1().getName()).isEqualTo("E1");
-		assertThat(link.getEntity2().getName()).isEqualTo("E2");
-		assertThat(link.getType().getStyle().getStroke3().getThickness()).isEqualTo(1);
-		assertThat(link.getLabel().toString()).isEqualTo("NULL");
+		assertEquals("E1", link.getEntity1().getName());
+		assertEquals("E2", link.getEntity2().getName());
+		assertEquals(1, link.getType().getStyle().getStroke3().getThickness());
+		assertEquals("NULL", link.getLabel().toString());
 	}
 
 	@Test
@@ -98,14 +102,14 @@ public class CommandAssociateTest {
 		BlocLines lines = BlocLines.singleString("E1 == E2");
 		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
-		assertThat(result).matches(CommandExecutionResult::isOk);
+		assertTrue(result.isOk());
 
-		assertThat(diagram.getLinks().size()).isEqualTo(1);
+		assertEquals(1, diagram.getLinks().size());
 		Link link = diagram.getLinks().get(0);
-		assertThat(link.getEntity1().getName()).isEqualTo("E1");
-		assertThat(link.getEntity2().getName()).isEqualTo("E2");
-		assertThat(link.getType().getStyle().getStroke3().getThickness()).isEqualTo(2);
-		assertThat(link.getLabel().toString()).isEqualTo("NULL");
+		assertEquals("E1", link.getEntity1().getName());
+		assertEquals("E2", link.getEntity2().getName());
+		assertEquals(2, link.getType().getStyle().getStroke3().getThickness());
+		assertEquals("NULL", link.getLabel().toString());
 	}
 
 	@Test
@@ -116,13 +120,13 @@ public class CommandAssociateTest {
 		BlocLines lines = BlocLines.singleString("E1 -N- E2");
 		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
-		assertThat(result).matches(CommandExecutionResult::isOk);
+		assertTrue(result.isOk());
 
-		assertThat(diagram.getLinks().size()).isEqualTo(1);
+		assertEquals(1, diagram.getLinks().size());
 		Link link = diagram.getLinks().get(0);
-		assertThat(link.getEntity1().getName()).isEqualTo("E1");
-		assertThat(link.getEntity2().getName()).isEqualTo("E2");
-		assertThat(link.getType().getStyle().getStroke3().getThickness()).isEqualTo(1);
-		assertThat(link.getLabel().toString()).isEqualTo("[N]");
+		assertEquals("E1", link.getEntity1().getName());
+		assertEquals("E2", link.getEntity2().getName());
+		assertEquals(1, link.getType().getStyle().getStroke3().getThickness());
+		assertEquals("[N]", link.getLabel().toString());
 	}
 }

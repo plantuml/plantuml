@@ -1,7 +1,8 @@
 package net.sourceforge.plantuml.json;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatNullPointerException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
@@ -23,7 +24,7 @@ class JsonObjectTest {
 	class Merge_Test {
         @Test
         void merge_fails_With_Null() {
-            assertThatNullPointerException().isThrownBy(() -> object.merge(null)).withMessage("object is null");
+            assertEquals("object is null", assertThrows(NullPointerException.class, () -> object.merge(null)).getMessage());
         }
 
         @Test
@@ -31,7 +32,7 @@ class JsonObjectTest {
             object.add("a", 1).add("b", 1);
             object.merge(Json.object().add("c", 2).add("d", 2));
 
-            assertThat(object).isEqualTo(Json.object().add("a", 1).add("b", 1).add("c", 2).add("d", 2));
+            assertEquals(Json.object().add("a", 1).add("b", 1).add("c", 2).add("d", 2), object);
         }
 
         @Test
@@ -39,7 +40,7 @@ class JsonObjectTest {
             object.add("a", 1).add("b", 1).add("c", 1);
             object.merge(Json.object().add("b", 2).add("d", 2));
 
-            assertThat(object).isEqualTo(Json.object().add("a", 1).add("b", 2).add("c", 1).add("d", 2));
+            assertEquals(Json.object().add("a", 1).add("b", 2).add("c", 1).add("d", 2), object);
         }
 
         @Test
@@ -48,8 +49,8 @@ class JsonObjectTest {
             object.merge(Json.object().add("b", Json.object().add("y", 2).add("z", 1)).add("c", 1)
                     .add("d", Json.object().add("B", 1)));
 
-            assertThat(object).isEqualTo(Json.object().add("a", 1).add("b", Json.object().add("y", 2).add("z", 1)).add("c", 1)
-                    .add("d", Json.object().add("B", 1)));
+            assertEquals(Json.object().add("a", 1).add("b", Json.object().add("y", 2).add("z", 1)).add("c", 1)
+                    .add("d", Json.object().add("B", 1)), object);
         }
     }
 
@@ -57,7 +58,7 @@ class JsonObjectTest {
 	class DeepMerge_Test {
         @Test
         void deepMerge_fails_With_Null() {
-            assertThatNullPointerException().isThrownBy(() -> object.deepMerge(null)).withMessage("object is null");
+            assertEquals("object is null", assertThrows(NullPointerException.class, () -> object.deepMerge(null)).getMessage());
         }
 
         @Test
@@ -65,7 +66,7 @@ class JsonObjectTest {
             object.add("a", 1).add("b", 1);
             object.deepMerge(Json.object().add("c", 2).add("d", 2));
 
-            assertThat(object).isEqualTo(Json.object().add("a", 1).add("b", 1).add("c", 2).add("d", 2));
+            assertEquals(Json.object().add("a", 1).add("b", 1).add("c", 2).add("d", 2), object);
         }
 
         @Test
@@ -73,7 +74,7 @@ class JsonObjectTest {
             object.add("a", 1).add("b", 1).add("c", 1);
             object.deepMerge(Json.object().add("b", 2).add("d", 2));
 
-            assertThat(object).isEqualTo(Json.object().add("a", 1).add("b", 2).add("c", 1).add("d", 2));
+            assertEquals(Json.object().add("a", 1).add("b", 2).add("c", 1).add("d", 2), object);
         }
 
         @Test
@@ -82,8 +83,8 @@ class JsonObjectTest {
             object.deepMerge(Json.object().add("b", Json.object().add("y", 2).add("z", 1)).add("c", 1)
                     .add("d", Json.object().add("B", 1)));
 
-            assertThat(object).isEqualTo(Json.object().add("a", 1).add("b", Json.object().add("x", 1).add("y", 2).add("z", 1)).add("c", 1)
-                    .add("d", Json.object().add("B", 1)));
+            assertEquals(Json.object().add("a", 1).add("b", Json.object().add("x", 1).add("y", 2).add("z", 1)).add("c", 1)
+                    .add("d", Json.object().add("B", 1)), object);
         }
     }
 }

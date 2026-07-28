@@ -1,9 +1,14 @@
 package net.sourceforge.plantuml.tim.builtin;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -28,21 +33,21 @@ public class DateFunctionTest {
 
 	@Test
 	public void testCanCoverZeroToThreeArgs() {
-		assertThat(dateFunction.canCover(0, Collections.emptySet())).isTrue();
-		assertThat(dateFunction.canCover(1, Collections.emptySet())).isTrue();
-		assertThat(dateFunction.canCover(2, Collections.emptySet())).isTrue();
-		assertThat(dateFunction.canCover(3, Collections.emptySet())).isTrue();
+		assertTrue(dateFunction.canCover(0, Collections.emptySet()));
+		assertTrue(dateFunction.canCover(1, Collections.emptySet()));
+		assertTrue(dateFunction.canCover(2, Collections.emptySet()));
+		assertTrue(dateFunction.canCover(3, Collections.emptySet()));
 	}
 
 	@Test
 	public void testCanCoverRejectsOtherArities() {
-		assertThat(dateFunction.canCover(4, Collections.emptySet())).isFalse();
-		assertThat(dateFunction.canCover(10, Collections.emptySet())).isFalse();
+		assertFalse(dateFunction.canCover(4, Collections.emptySet()));
+		assertFalse(dateFunction.canCover(10, Collections.emptySet()));
 	}
 
 	@Test
 	public void testSignatureName() {
-		assertThat(dateFunction.getSignature().getFunctionName()).isEqualTo("%date");
+		assertEquals("%date", dateFunction.getSignature().getFunctionName());
 	}
 
 	// =========================================================================
@@ -52,7 +57,7 @@ public class DateFunctionTest {
 	@Test
 	public void testNoArgsReturnsNonEmptyString() throws EaterException {
 		final TValue result = call();
-		assertThat(result.toString()).isNotNull().isNotEmpty();
+		assertNotNull(result.toString()); assertFalse(result.toString().isEmpty());
 	}
 
 	@Test
@@ -66,7 +71,7 @@ public class DateFunctionTest {
 		// "Mo Mär 31 14:23:55 CET 2025"           (German)
 		// "lun mar 31 14:23:55 CET 2025"          (Spanish)
 		final String pattern = "^\\S+\\s+\\S+\\s+\\d{1,2}\\s+\\d{2}:\\d{2}:\\d{2}\\s+\\S+\\s+\\d{4}$";
-		assertThat(dateString).matches(pattern);
+		assertTrue(dateString.matches(pattern));
 	}
 
 	// =========================================================================
@@ -83,13 +88,13 @@ public class DateFunctionTest {
 		final String today = fmt.format(new Date(nowMillis));
 		final String yesterday = fmt.format(new Date(nowMillis - 24L * 3600L * 1000L));
 		final String tomorrow = fmt.format(new Date(nowMillis + 24L * 3600L * 1000L));
-		assertThat(result.toString()).isIn(yesterday, today, tomorrow);
+		assertTrue(Arrays.asList(yesterday, today, tomorrow).contains(result.toString()));
 	}
 
 	@Test
 	public void testWithFormatHourMinuteHasExpectedShape() throws EaterException {
 		final TValue result = call("HH:mm");
-		assertThat(result.toString()).matches("^\\d{2}:\\d{2}$");
+		assertTrue(result.toString().matches("^\\d{2}:\\d{2}$"));
 	}
 
 	// =========================================================================
@@ -105,7 +110,7 @@ public class DateFunctionTest {
 		// motivated adding the optional 3rd time-zone argument). We compare against a
 		// locally formatted SimpleDateFormat — same time zone, same instant, must match.
 		final SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
-		assertThat(result.toString()).isEqualTo(fmt.format(new Date(timestamp * 1000L)));
+		assertEquals(fmt.format(new Date(timestamp * 1000L)), result.toString());
 	}
 
 	@Test
@@ -113,7 +118,7 @@ public class DateFunctionTest {
 		// Unix epoch in UTC is 1970-01-01 00:00:00.
 		final TValue result = call("yyyy", ts(0));
 		// Year is 1969 or 1970 depending on the JVM time zone. Both are fine.
-		assertThat(result.toString()).isIn("1969", "1970");
+		assertTrue(Arrays.asList("1969", "1970").contains(result.toString()));
 	}
 
 	// =========================================================================
@@ -124,21 +129,21 @@ public class DateFunctionTest {
 	public void testWithExplicitUtcTimeZone() throws EaterException {
 		final long timestamp = 1609459200L; // 2021-01-01 00:00:00 UTC
 		final TValue result = call("yyyy-MM-dd", ts(timestamp), "UTC");
-		assertThat(result.toString()).isEqualTo("2021-01-01");
+		assertEquals("2021-01-01", result.toString());
 	}
 
 	@Test
 	public void testWithExplicitUtcFullFormat() throws EaterException {
 		final long timestamp = 1609459200L; // 2021-01-01 00:00:00 UTC
 		final TValue result = call("yyyy-MM-dd HH:mm:ss", ts(timestamp), "UTC");
-		assertThat(result.toString()).isEqualTo("2021-01-01 00:00:00");
+		assertEquals("2021-01-01 00:00:00", result.toString());
 	}
 
 	@Test
 	public void testWithExplicitGmtAlias() throws EaterException {
 		final long timestamp = 1609459200L;
 		final TValue result = call("yyyy-MM-dd HH:mm:ss", ts(timestamp), "GMT");
-		assertThat(result.toString()).isEqualTo("2021-01-01 00:00:00");
+		assertEquals("2021-01-01 00:00:00", result.toString());
 	}
 
 	/**
@@ -162,7 +167,7 @@ public class DateFunctionTest {
 	public void testTimestampAcrossTimeZones(String tz, String expected) throws EaterException {
 		final long timestamp = 1609459200L; // 2021-01-01 00:00:00 UTC
 		final TValue result = call("yyyy-MM-dd HH:mm:ss", ts(timestamp), tz);
-		assertThat(result.toString()).isEqualTo(expected);
+		assertEquals(expected, result.toString());
 	}
 
 	@Test
@@ -179,12 +184,12 @@ public class DateFunctionTest {
 			// If TimeZone.setDefault() were silently ignored, this assertion would fail
 			// and the next one wouldn't actually be testing anything meaningful.
 			final TValue defaultTzResult = call("yyyy-MM-dd", ts(timestamp));
-			assertThat(defaultTzResult.toString()).isEqualTo("2020-12-31");
+			assertEquals("2020-12-31", defaultTzResult.toString());
 
 			// Now, with an explicit "UTC" 3rd argument, the result must be UTC-based
 			// regardless of the (verified) Los_Angeles default.
 			final TValue explicitUtcResult = call("yyyy-MM-dd", ts(timestamp), "UTC");
-			assertThat(explicitUtcResult.toString()).isEqualTo("2021-01-01");
+			assertEquals("2021-01-01", explicitUtcResult.toString());
 		} finally {
 			TimeZone.setDefault(original);
 		}
@@ -195,7 +200,7 @@ public class DateFunctionTest {
 		// 2020-12-31 16:00:00 UTC is already 2021-01-01 in Tokyo (UTC+9).
 		final long timestamp = 1609430400L;
 		final TValue result = call("yyyy-MM-dd", ts(timestamp), "Asia/Tokyo");
-		assertThat(result.toString()).isEqualTo("2021-01-01");
+		assertEquals("2021-01-01", result.toString());
 	}
 
 	// =========================================================================
@@ -206,47 +211,35 @@ public class DateFunctionTest {
 	public void testInvalidFormatThrows() {
 		// An unterminated quote in the pattern makes SimpleDateFormat's constructor
 		// throw IllegalArgumentException, which DateFunction must wrap in EaterException.
-		assertThatThrownBy(() -> call("yyyy '"))
-				.isInstanceOf(EaterException.class)
-				.hasMessageContaining("Bad date pattern");
+		assertTrue(assertThrows(EaterException.class, () -> call("yyyy '")).getMessage().contains("Bad date pattern"));
 	}
 
 	@Test
 	public void testInvalidFormatWithTimestampThrows() {
-		assertThatThrownBy(() -> call("yyyy '", ts(1609459200L)))
-				.isInstanceOf(EaterException.class)
-				.hasMessageContaining("Bad date pattern");
+		assertTrue(assertThrows(EaterException.class, () -> call("yyyy '", ts(1609459200L))).getMessage().contains("Bad date pattern"));
 	}
 
 	@Test
 	public void testInvalidFormatWithTimestampAndTimeZoneThrows() {
-		assertThatThrownBy(() -> call("yyyy '", ts(1609459200L), "UTC"))
-				.isInstanceOf(EaterException.class)
-				.hasMessageContaining("Bad date pattern");
+		assertTrue(assertThrows(EaterException.class, () -> call("yyyy '", ts(1609459200L), "UTC")).getMessage().contains("Bad date pattern"));
 	}
 
 	@Test
 	public void testUnknownTimeZoneThrows() {
 		// SimpleDateFormat silently falls back to GMT for unknown ids; DateFunction
 		// must surface this as a clear error instead so users can spot typos.
-		assertThatThrownBy(() -> call("yyyy-MM-dd", ts(1609459200L), "Not/A/Zone"))
-				.isInstanceOf(EaterException.class)
-				.hasMessageContaining("Unknown time zone");
+		assertTrue(assertThrows(EaterException.class, () -> call("yyyy-MM-dd", ts(1609459200L), "Not/A/Zone")).getMessage().contains("Unknown time zone"));
 	}
 
 	@Test
 	public void testEmptyTimeZoneStringThrows() {
-		assertThatThrownBy(() -> call("yyyy-MM-dd", ts(1609459200L), ""))
-				.isInstanceOf(EaterException.class)
-				.hasMessageContaining("Unknown time zone");
+		assertTrue(assertThrows(EaterException.class, () -> call("yyyy-MM-dd", ts(1609459200L), "")).getMessage().contains("Unknown time zone"));
 	}
 
 	@Test
 	public void testTimeZoneIsCaseSensitive() {
 		// "utc" lowercase is NOT a valid TimeZone id — only "UTC" is.
-		assertThatThrownBy(() -> call("yyyy-MM-dd", ts(1609459200L), "utc"))
-				.isInstanceOf(EaterException.class)
-				.hasMessageContaining("Unknown time zone");
+		assertTrue(assertThrows(EaterException.class, () -> call("yyyy-MM-dd", ts(1609459200L), "utc")).getMessage().contains("Unknown time zone"));
 	}
 
 	// =========================================================================

@@ -5,7 +5,6 @@
 
 [versions]
 ant                 = "1.10.17"
-assertj             = "3.27.7"
 elk                 = "0.10.0"
 glytching-junit-ext = "2.6.0"
 gorylenko-gradle-git-properties = "4.0.1"
@@ -25,7 +24,6 @@ openpdf             = "3.0.5"
 [libraries]
 # name                      = { module = "", version.ref = "" }
 ant                         = { module = "org.apache.ant:ant", version.ref = "ant" }
-assertj-core                = { module = "org.assertj:assertj-core", version.ref = "assertj" }
 elk-core                    = { module = "org.eclipse.elk:org.eclipse.elk.core", version.ref = "elk" }
 elk-alg-layered             = { module = "org.eclipse.elk:org.eclipse.elk.alg.layered", version.ref = "elk" }
 elk-alg-mrtree              = { module = "org.eclipse.elk:org.eclipse.elk.alg.mrtree", version.ref = "elk" }

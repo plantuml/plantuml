@@ -1,7 +1,9 @@
 package test.utils;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import static test.utils.ImageTestUtils.assertImageSizeEqual;
 import static test.utils.ImageTestUtils.assertImagesEqual;
 
@@ -43,17 +45,12 @@ class ImageTestUtilsTest {
 		try {
 			assertImagesEqual(expected, actual);
 		} catch (AssertionFailedError e) {
-			assertThat(e)
-					.hasMessage("expected:ColorHSB[a=00 r=00 g=00 b=00 / h=0.000000 s=0.000000 b=0.000000]" +
-							" but was:ColorHSB[a=AA r=FF g=00 b=00 / h=0.000000 s=1.000000 b=1.000000] at:<[1, 2]>");
-			assertThat(e.isExpectedDefined())
-					.isTrue();
-			assertThat(e.isActualDefined())
-					.isTrue();
-			assertThat(e.getExpected().getStringRepresentation())
-					.isEqualTo("ColorHSB[a=00 r=00 g=00 b=00 / h=0.000000 s=0.000000 b=0.000000]");
-			assertThat(e.getActual().getStringRepresentation())
-					.isEqualTo("ColorHSB[a=AA r=FF g=00 b=00 / h=0.000000 s=1.000000 b=1.000000] at:<[1, 2]>");
+			assertEquals("expected:ColorHSB[a=00 r=00 g=00 b=00 / h=0.000000 s=0.000000 b=0.000000]" +
+						" but was:ColorHSB[a=AA r=FF g=00 b=00 / h=0.000000 s=1.000000 b=1.000000] at:<[1, 2]>", e.getMessage());
+			assertTrue(e.isExpectedDefined());
+			assertTrue(e.isActualDefined());
+			assertEquals("ColorHSB[a=00 r=00 g=00 b=00 / h=0.000000 s=0.000000 b=0.000000]", e.getExpected().getStringRepresentation());
+			assertEquals("ColorHSB[a=AA r=FF g=00 b=00 / h=0.000000 s=1.000000 b=1.000000] at:<[1, 2]>", e.getActual().getStringRepresentation());
 			return;
 		}
 		fail("AssertionFailedError expected");
@@ -79,16 +76,11 @@ class ImageTestUtilsTest {
 					new BufferedImage(11, 22, BufferedImage.TYPE_INT_ARGB)
 			);
 		} catch (AssertionFailedError e) {
-			assertThat(e)
-					.hasMessage("expected:[width=10 height=20] but was:[width=11 height=22]");
-			assertThat(e.isExpectedDefined())
-					.isTrue();
-			assertThat(e.isActualDefined())
-					.isTrue();
-			assertThat(e.getExpected().getStringRepresentation())
-					.isEqualTo("[width=10 height=20]");
-			assertThat(e.getActual().getStringRepresentation())
-					.isEqualTo("[width=11 height=22]");
+			assertEquals("expected:[width=10 height=20] but was:[width=11 height=22]", e.getMessage());
+			assertTrue(e.isExpectedDefined());
+			assertTrue(e.isActualDefined());
+			assertEquals("[width=10 height=20]", e.getExpected().getStringRepresentation());
+			assertEquals("[width=11 height=22]", e.getActual().getStringRepresentation());
 			return;
 		}
 		fail("AssertionFailedError expected");

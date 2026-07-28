@@ -1,10 +1,13 @@
 package net.sourceforge.plantuml;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static net.sourceforge.plantuml.FileFormat.PNG;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
@@ -34,15 +37,15 @@ class PSystemUtilsTest extends AbstractCliTest {
 		assertLs("[output.png, output_001.png, output_002.png, output_003.png, output_004.png, output_005.png]",
 				tempDir);
 
-		assertThat(tempDir.resolve("output.png")).isNotEmptyFile();
-		assertThat(tempDir.resolve("output_001.png")).isNotEmptyFile();
-		assertThat(tempDir.resolve("output_002.png")).isNotEmptyFile();
-		assertThat(tempDir.resolve("output_003.png")).isNotEmptyFile();
-		assertThat(tempDir.resolve("output_004.png")).isNotEmptyFile();
-		assertThat(tempDir.resolve("output_005.png")).isNotEmptyFile();
+		assertTrue(Files.exists(tempDir.resolve("output.png")) && tempDir.resolve("output.png").toFile().length() > 0);
+		assertTrue(Files.exists(tempDir.resolve("output_001.png")) && tempDir.resolve("output_001.png").toFile().length() > 0);
+		assertTrue(Files.exists(tempDir.resolve("output_002.png")) && tempDir.resolve("output_002.png").toFile().length() > 0);
+		assertTrue(Files.exists(tempDir.resolve("output_003.png")) && tempDir.resolve("output_003.png").toFile().length() > 0);
+		assertTrue(Files.exists(tempDir.resolve("output_004.png")) && tempDir.resolve("output_004.png").toFile().length() > 0);
+		assertTrue(Files.exists(tempDir.resolve("output_005.png")) && tempDir.resolve("output_005.png").toFile().length() > 0);
 
-		assertThat(fileImageData).hasSize(6);
-		assertThat(tempDir.toFile().listFiles()).hasSize(6);
+		assertEquals(6, fileImageData.size());
+		assertEquals(6, tempDir.toFile().listFiles().length);
 	}
 
 	@Test
@@ -51,9 +54,9 @@ class PSystemUtilsTest extends AbstractCliTest {
 
 		final List<FileImageData> fileImageData = render(source, tempDir);
 
-		assertThat(tempDir.resolve("output.png")).isNotEmptyFile();
-		assertThat(fileImageData).hasSize(1);
-		assertThat(tempDir.toFile().listFiles()).hasSize(1);
+		assertTrue(Files.exists(tempDir.resolve("output.png")) && tempDir.resolve("output.png").toFile().length() > 0);
+		assertEquals(1, fileImageData.size());
+		assertEquals(1, tempDir.toFile().listFiles().length);
 	}
 
 	//

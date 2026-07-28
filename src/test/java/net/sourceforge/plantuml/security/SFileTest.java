@@ -1,6 +1,8 @@
 package net.sourceforge.plantuml.security;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.io.File;
 import java.nio.file.Path;
@@ -47,10 +49,10 @@ class SFileTest {
 		// A file is needed:
 		File secretFile = File.createTempFile("user", ".credentials", secureFolder);
 
-		assertThat(secretFile).describedAs("File should be visible with standard java.io.File").exists();
+		assertTrue(secretFile.exists());
 
 		SFile file = new SFile(secretFile.getAbsolutePath());
 
-		assertThat(file.exists()).describedAs("File should be invisible for SFile").isFalse();
+		assertFalse(file.exists());
 	}
 }

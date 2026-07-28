@@ -1,6 +1,11 @@
 package net.sourceforge.plantuml.security.authentication;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -19,15 +24,15 @@ class SecurityAuthenticationTest {
 	void isPublicAsPublicTest() {
 		SecurityAuthentication cut = new SecurityAuthentication("public", null, null, EMPTY_MAP);
 
-		assertThat(cut).isNotNull();
-		assertThat(cut.isPublic()).isTrue();
+		assertNotNull(cut);
+		assertTrue(cut.isPublic());
 	}
 
 	@Test
 	void isPublicAsBasicAuthTest() {
 		SecurityAuthentication cut = new SecurityAuthentication("basicauth", null, null, EMPTY_MAP);
 
-		assertThat(cut.isPublic()).isFalse();
+		assertFalse(cut.isPublic());
 	}
 
 	@Test
@@ -37,9 +42,7 @@ class SecurityAuthenticationTest {
 		tokens.put("secret", new char[]{'s', 'e', 'c', 'r', 'e', 't'});
 		SecurityAuthentication cut = new SecurityAuthentication("basicauth", null, null, tokens);
 
-		assertThat(cut.getTokens())
-				.containsEntry("identifier", "alice")
-				.containsEntry("secret", new char[]{'s', 'e', 'c', 'r', 'e', 't'});
+		assertEquals("alice", cut.getTokens().get("identifier")); assertArrayEquals(new char[]{'s', 'e', 'c', 'r', 'e', 't'}, (char[]) cut.getTokens().get("secret"));
 	}
 
 	@Test
@@ -49,11 +52,9 @@ class SecurityAuthenticationTest {
 		tokens.put("secret", new char[]{'s', 'e', 'c', 'r', 'e', 't'});
 		SecurityAuthentication cut = new SecurityAuthentication("basicauth", null, null, tokens);
 
-		assertThat(cut.getTokens())
-				.containsEntry("identifier", "alice")
-				.containsEntry("secret", new char[]{'s', 'e', 'c', 'r', 'e', 't'});
+		assertEquals("alice", cut.getTokens().get("identifier")); assertArrayEquals(new char[]{'s', 'e', 'c', 'r', 'e', 't'}, (char[]) cut.getTokens().get("secret"));
 
 		cut.eraseCredentials();
-		assertThat(cut.getTokens()).isEmpty();
+		assertTrue(cut.getTokens().isEmpty());
 	}
 }

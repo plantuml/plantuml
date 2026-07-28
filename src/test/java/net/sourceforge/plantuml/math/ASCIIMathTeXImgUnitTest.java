@@ -1,6 +1,7 @@
 package net.sourceforge.plantuml.math;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -500,6 +501,6 @@ class ASCIIMathTeXImgUnitTest {
 	})
 	void mathUnitTest(String input, String expected) {
 		final String res = cut.getTeX(input);
-		assertThat(res).isEqualTo(expected);
+		assertEquals(expected, res);
 	}
 }

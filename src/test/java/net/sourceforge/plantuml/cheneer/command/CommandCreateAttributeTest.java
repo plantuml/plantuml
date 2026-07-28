@@ -1,6 +1,11 @@
 package net.sourceforge.plantuml.cheneer.command;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.util.ArrayList;
 
@@ -30,11 +35,11 @@ public class CommandCreateAttributeTest {
 		IRegex regex = CommandCreateAttribute.getRegexConcat();
 		RegexResult matcher = regex.matcher("attr");
 
-		assertThat(matcher).isNotNull();
-		assertThat(matcher.get("DISPLAY", 0)).isNull();
-		assertThat(matcher.get("CODE", 0)).isEqualTo("attr");
-		assertThat(matcher.get("STEREO", 0)).isNull();
-		assertThat(matcher.get("COMPOSITE", 0)).isNull();
+		assertNotNull(matcher);
+		assertNull(matcher.get("DISPLAY", 0));
+		assertEquals("attr", matcher.get("CODE", 0));
+		assertNull(matcher.get("STEREO", 0));
+		assertNull(matcher.get("COMPOSITE", 0));
 	}
 
 	@Test
@@ -42,11 +47,11 @@ public class CommandCreateAttributeTest {
 		IRegex regex = CommandCreateAttribute.getRegexConcat();
 		RegexResult matcher = regex.matcher("attr : String");
 
-		assertThat(matcher).isNotNull();
-		assertThat(matcher.get("DISPLAY", 0)).isNull();
-		assertThat(matcher.get("CODE", 0)).isEqualTo("attr : String");
-		assertThat(matcher.get("STEREO", 0)).isNull();
-		assertThat(matcher.get("COMPOSITE", 0)).isNull();
+		assertNotNull(matcher);
+		assertNull(matcher.get("DISPLAY", 0));
+		assertEquals("attr : String", matcher.get("CODE", 0));
+		assertNull(matcher.get("STEREO", 0));
+		assertNull(matcher.get("COMPOSITE", 0));
 	}
 
 	@Test
@@ -54,11 +59,11 @@ public class CommandCreateAttributeTest {
 		IRegex regex = CommandCreateAttribute.getRegexConcat();
 		RegexResult matcher = regex.matcher("attr{");
 
-		assertThat(matcher).isNotNull();
-		assertThat(matcher.get("DISPLAY", 0)).isNull();
-		assertThat(matcher.get("CODE", 0)).isEqualTo("attr");
-		assertThat(matcher.get("STEREO", 0)).isNull();
-		assertThat(matcher.get("COMPOSITE", 0)).isNotNull();
+		assertNotNull(matcher);
+		assertNull(matcher.get("DISPLAY", 0));
+		assertEquals("attr", matcher.get("CODE", 0));
+		assertNull(matcher.get("STEREO", 0));
+		assertNotNull(matcher.get("COMPOSITE", 0));
 	}
 
 	@Test
@@ -66,11 +71,11 @@ public class CommandCreateAttributeTest {
 		IRegex regex = CommandCreateAttribute.getRegexConcat();
 		RegexResult matcher = regex.matcher("\"My Attribute\" as attr");
 
-		assertThat(matcher).isNotNull();
-		assertThat(matcher.get("DISPLAY", 0)).isEqualTo("My Attribute");
-		assertThat(matcher.get("CODE", 0)).isEqualTo("attr");
-		assertThat(matcher.get("STEREO", 0)).isNull();
-		assertThat(matcher.get("COMPOSITE", 0)).isNull();
+		assertNotNull(matcher);
+		assertEquals("My Attribute", matcher.get("DISPLAY", 0));
+		assertEquals("attr", matcher.get("CODE", 0));
+		assertNull(matcher.get("STEREO", 0));
+		assertNull(matcher.get("COMPOSITE", 0));
 	}
 
 	@Test
@@ -78,11 +83,11 @@ public class CommandCreateAttributeTest {
 		IRegex regex = CommandCreateAttribute.getRegexConcat();
 		RegexResult matcher = regex.matcher("attr<<red>>");
 
-		assertThat(matcher).isNotNull();
-		assertThat(matcher.get("DISPLAY", 0)).isNull();
-		assertThat(matcher.get("CODE", 0)).isEqualTo("attr");
-		assertThat(matcher.get("STEREO", 0)).isEqualTo("<<red>>");
-		assertThat(matcher.get("COMPOSITE", 0)).isNull();
+		assertNotNull(matcher);
+		assertNull(matcher.get("DISPLAY", 0));
+		assertEquals("attr", matcher.get("CODE", 0));
+		assertEquals("<<red>>", matcher.get("STEREO", 0));
+		assertNull(matcher.get("COMPOSITE", 0));
 	}
 
 	@Test
@@ -92,21 +97,21 @@ public class CommandCreateAttributeTest {
 		BlocLines lines = BlocLines.singleString("\"Attribute\" as attr<<stereo>>");
 		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
-		assertThat(result).matches(CommandExecutionResult::isOk);
+		assertTrue(result.isOk());
 
 		Entity entity = diagram.quarkInContext(true, "E").getData();
-		assertThat(entity).isNotNull();
+		assertNotNull(entity);
 
 		Entity attribute = diagram.quarkInContext(true, "E/attr").getData();
-		assertThat(attribute).isNotNull();
-		assertThat(attribute.getDisplay().toString()).isEqualTo("[Attribute]");
-		assertThat(attribute.getStereotype().toString()).isEqualTo("<<stereo>>");
+		assertNotNull(attribute);
+		assertEquals("[Attribute]", attribute.getDisplay().toString());
+		assertEquals("<<stereo>>", attribute.getStereotype().toString());
 
-		assertThat(diagram.getLinks().size()).isEqualTo(1);
+		assertEquals(1, diagram.getLinks().size());
 		Link link = diagram.getLinks().get(0);
-		assertThat(link).isNotNull();
-		assertThat(link.getEntity1()).isSameAs(attribute);
-		assertThat(link.getEntity2()).isSameAs(entity);
+		assertNotNull(link);
+		assertSame(attribute, link.getEntity1());
+		assertSame(entity, link.getEntity2());
 	}
 
 	@Test
@@ -116,29 +121,29 @@ public class CommandCreateAttributeTest {
 		CommandExecutionResult result1 = command.execute(diagram, BlocLines.singleString("attr1{"), ParserPass.ONE);
 		CommandExecutionResult result2 = command.execute(diagram, BlocLines.singleString("attr2"), ParserPass.ONE);
 
-		assertThat(result1).matches(CommandExecutionResult::isOk);
-		assertThat(result2).matches(CommandExecutionResult::isOk);
+		assertTrue(result1.isOk());
+		assertTrue(result2.isOk());
 
 		Entity entity = diagram.quarkInContext(true, "E").getData();
-		assertThat(entity).isNotNull();
+		assertNotNull(entity);
 
 		Entity attribute1 = diagram.quarkInContext(true, "E/attr1").getData();
-		assertThat(attribute1).isNotNull();
-		assertThat(attribute1.getDisplay().toString()).isEqualTo("[attr1]");
+		assertNotNull(attribute1);
+		assertEquals("[attr1]", attribute1.getDisplay().toString());
 
 		Entity attribute2 = diagram.quarkInContext(true, "E/attr1/attr2").getData();
-		assertThat(attribute2).isNotNull();
-		assertThat(attribute2.getDisplay().toString()).isEqualTo("[attr2]");
+		assertNotNull(attribute2);
+		assertEquals("[attr2]", attribute2.getDisplay().toString());
 
-		assertThat(diagram.getLinks().size()).isEqualTo(2);
+		assertEquals(2, diagram.getLinks().size());
 		Link link1 = diagram.getLinks().get(0);
-		assertThat(link1).isNotNull();
-		assertThat(link1.getEntity1()).isSameAs(attribute1);
-		assertThat(link1.getEntity2()).isSameAs(entity);
+		assertNotNull(link1);
+		assertSame(attribute1, link1.getEntity1());
+		assertSame(entity, link1.getEntity2());
 		Link link2 = diagram.getLinks().get(1);
-		assertThat(link2).isNotNull();
-		assertThat(link2.getEntity1()).isSameAs(attribute2);
-		assertThat(link2.getEntity2()).isSameAs(attribute1);
+		assertNotNull(link2);
+		assertSame(attribute2, link2.getEntity1());
+		assertSame(attribute1, link2.getEntity2());
 	}
 
 	@Test
@@ -148,28 +153,28 @@ public class CommandCreateAttributeTest {
 		CommandExecutionResult result1 = command.execute(diagram, BlocLines.singleString("attr1"), ParserPass.ONE);
 		CommandExecutionResult result2 = command.execute(diagram, BlocLines.singleString("attr2"), ParserPass.ONE);
 
-		assertThat(result1).matches(CommandExecutionResult::isOk);
-		assertThat(result2).matches(CommandExecutionResult::isOk);
+		assertTrue(result1.isOk());
+		assertTrue(result2.isOk());
 
 		Entity entity = diagram.quarkInContext(true, "E").getData();
-		assertThat(entity).isNotNull();
+		assertNotNull(entity);
 
 		Entity attribute1 = diagram.quarkInContext(true, "E/attr1").getData();
-		assertThat(attribute1).isNotNull();
-		assertThat(attribute1.getDisplay().toString()).isEqualTo("[attr1]");
+		assertNotNull(attribute1);
+		assertEquals("[attr1]", attribute1.getDisplay().toString());
 
 		Entity attribute2 = diagram.quarkInContext(true, "E/attr2").getData();
-		assertThat(attribute2).isNotNull();
-		assertThat(attribute2.getDisplay().toString()).isEqualTo("[attr2]");
+		assertNotNull(attribute2);
+		assertEquals("[attr2]", attribute2.getDisplay().toString());
 
-		assertThat(diagram.getLinks().size()).isEqualTo(2);
+		assertEquals(2, diagram.getLinks().size());
 		Link link1 = diagram.getLinks().get(0);
-		assertThat(link1).isNotNull();
-		assertThat(link1.getEntity1()).isSameAs(attribute1);
-		assertThat(link1.getEntity2()).isSameAs(entity);
+		assertNotNull(link1);
+		assertSame(attribute1, link1.getEntity1());
+		assertSame(entity, link1.getEntity2());
 		Link link2 = diagram.getLinks().get(1);
-		assertThat(link2).isNotNull();
-		assertThat(link2.getEntity1()).isSameAs(attribute2);
-		assertThat(link2.getEntity2()).isSameAs(entity);
+		assertNotNull(link2);
+		assertSame(attribute2, link2.getEntity1());
+		assertSame(entity, link2.getEntity2());
 	}
 }

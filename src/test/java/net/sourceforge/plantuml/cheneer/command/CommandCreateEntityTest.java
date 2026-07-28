@@ -1,6 +1,11 @@
 package net.sourceforge.plantuml.cheneer.command;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.util.ArrayList;
 
@@ -30,11 +35,11 @@ public class CommandCreateEntityTest {
 		IRegex regex = CommandCreateEntity.getRegexConcat();
 		RegexResult matcher = regex.matcher("entity Bus_123 {");
 
-		assertThat(matcher).isNotNull();
-		assertThat(matcher.get("TYPE", 0)).isEqualTo("entity");
-		assertThat(matcher.get("DISPLAY", 0)).isNull();
-		assertThat(matcher.get("CODE", 0)).isEqualTo("Bus_123");
-		assertThat(matcher.get("STEREO", 0)).isNull();
+		assertNotNull(matcher);
+		assertEquals("entity", matcher.get("TYPE", 0));
+		assertNull(matcher.get("DISPLAY", 0));
+		assertEquals("Bus_123", matcher.get("CODE", 0));
+		assertNull(matcher.get("STEREO", 0));
 	}
 
 	@Test
@@ -42,11 +47,11 @@ public class CommandCreateEntityTest {
 		IRegex regex = CommandCreateEntity.getRegexConcat();
 		RegexResult matcher = regex.matcher("relationship Drives {");
 
-		assertThat(matcher).isNotNull();
-		assertThat(matcher.get("TYPE", 0)).isEqualTo("relationship");
-		assertThat(matcher.get("DISPLAY", 0)).isNull();
-		assertThat(matcher.get("CODE", 0)).isEqualTo("Drives");
-		assertThat(matcher.get("STEREO", 0)).isNull();
+		assertNotNull(matcher);
+		assertEquals("relationship", matcher.get("TYPE", 0));
+		assertNull(matcher.get("DISPLAY", 0));
+		assertEquals("Drives", matcher.get("CODE", 0));
+		assertNull(matcher.get("STEREO", 0));
 	}
 
 	@Test
@@ -54,7 +59,7 @@ public class CommandCreateEntityTest {
 		IRegex regex = CommandCreateEntity.getRegexConcat();
 		RegexResult matcher = regex.matcher("class MyClass {");
 
-		assertThat(matcher).isNull();
+		assertNull(matcher);
 	}
 
 	@Test
@@ -62,11 +67,11 @@ public class CommandCreateEntityTest {
 		IRegex regex = CommandCreateEntity.getRegexConcat();
 		RegexResult matcher = regex.matcher("entity Bus_123 <<red>> {");
 
-		assertThat(matcher).isNotNull();
-		assertThat(matcher.get("TYPE", 0)).isEqualTo("entity");
-		assertThat(matcher.get("DISPLAY", 0)).isNull();
-		assertThat(matcher.get("CODE", 0)).isEqualTo("Bus_123");
-		assertThat(matcher.get("STEREO", 0)).isEqualTo("<<red>>");
+		assertNotNull(matcher);
+		assertEquals("entity", matcher.get("TYPE", 0));
+		assertNull(matcher.get("DISPLAY", 0));
+		assertEquals("Bus_123", matcher.get("CODE", 0));
+		assertEquals("<<red>>", matcher.get("STEREO", 0));
 	}
 
 	@Test
@@ -74,11 +79,11 @@ public class CommandCreateEntityTest {
 		IRegex regex = CommandCreateEntity.getRegexConcat();
 		RegexResult matcher = regex.matcher("entity \"Red Bus :)\" as Bus_123 <<red>> {");
 
-		assertThat(matcher).isNotNull();
-		assertThat(matcher.get("TYPE", 0)).isEqualTo("entity");
-		assertThat(matcher.get("DISPLAY", 0)).isEqualTo("Red Bus :)");
-		assertThat(matcher.get("CODE", 0)).isEqualTo("Bus_123");
-		assertThat(matcher.get("STEREO", 0)).isEqualTo("<<red>>");
+		assertNotNull(matcher);
+		assertEquals("entity", matcher.get("TYPE", 0));
+		assertEquals("Red Bus :)", matcher.get("DISPLAY", 0));
+		assertEquals("Bus_123", matcher.get("CODE", 0));
+		assertEquals("<<red>>", matcher.get("STEREO", 0));
 	}
 
 	@Test
@@ -86,15 +91,15 @@ public class CommandCreateEntityTest {
 		BlocLines lines = BlocLines.singleString("entity \"display\" as code <<stereo>> {");
 		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
-		assertThat(result).matches(CommandExecutionResult::isOk);
+		assertTrue(result.isOk());
 
 		Entity entity = diagram.quarkInContext(true, "code").getData();
-		assertThat(entity).isNotNull();
-		assertThat(entity.getLeafType()).isEqualTo(LeafType.CHEN_ENTITY);
-		assertThat(entity.getDisplay().toString()).isEqualTo("[display]");
-		assertThat(entity.getStereotype().toString()).isEqualTo("<<stereo>>");
+		assertNotNull(entity);
+		assertEquals(LeafType.CHEN_ENTITY, entity.getLeafType());
+		assertEquals("[display]", entity.getDisplay().toString());
+		assertEquals("<<stereo>>", entity.getStereotype().toString());
 
-		assertThat(diagram.peekOwner()).isSameAs(entity);
+		assertSame(entity, diagram.peekOwner());
 	}
 
 	@Test
@@ -102,15 +107,15 @@ public class CommandCreateEntityTest {
 		BlocLines lines = BlocLines.singleString("relationship \"display\" as code <<stereo>> {");
 		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
-		assertThat(result).matches(CommandExecutionResult::isOk);
+		assertTrue(result.isOk());
 
 		Entity entity = diagram.quarkInContext(true, "code").getData();
-		assertThat(entity).isNotNull();
-		assertThat(entity.getLeafType()).isEqualTo(LeafType.CHEN_RELATIONSHIP);
-		assertThat(entity.getDisplay().toString()).isEqualTo("[display]");
-		assertThat(entity.getStereotype().toString()).isEqualTo("<<stereo>>");
+		assertNotNull(entity);
+		assertEquals(LeafType.CHEN_RELATIONSHIP, entity.getLeafType());
+		assertEquals("[display]", entity.getDisplay().toString());
+		assertEquals("<<stereo>>", entity.getStereotype().toString());
 
-		assertThat(diagram.peekOwner()).isSameAs(entity);
+		assertSame(entity, diagram.peekOwner());
 	}
 
 	@Test
@@ -120,6 +125,6 @@ public class CommandCreateEntityTest {
 
 		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
-		assertThat(result).matches(CommandExecutionResult::isOk);
+		assertTrue(result.isOk());
 	}
 }

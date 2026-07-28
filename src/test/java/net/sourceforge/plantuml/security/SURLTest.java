@@ -1,6 +1,10 @@
 package net.sourceforge.plantuml.security;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -56,11 +60,10 @@ class SURLTest {
 	void urlWithoutSecurity(String url) {
 		SURL surl = SURL.create(url);
 
-		assertThat(surl).isNotNull();
-		assertThat(surl.isAuthorizationConfigured()).isFalse();
+		assertNotNull(surl);
+		assertFalse(surl.isAuthorizationConfigured());
 
-		assertThat(surl).describedAs("URL should be untouched")
-				.hasToString(url);
+		assertEquals(url, surl.toString());
 	}
 
 	/**
@@ -80,11 +83,10 @@ class SURLTest {
 	void removeUserInfo(String url) throws MalformedURLException, URISyntaxException {
 		SURL surl = SURL.createWithoutUser(new URI(url).toURL());
 
-		assertThat(surl).isNotNull();
-		assertThat(surl.isAuthorizationConfigured()).isFalse();
+		assertNotNull(surl);
+		assertFalse(surl.isAuthorizationConfigured());
 		// Check http and https and removed UserInfo part
-		assertThat(surl.toString()).describedAs("User info should be removed from URL")
-				.startsWith("http").endsWith("://localhost:8080/api");
+		assertTrue(surl.toString().startsWith("http")); assertTrue(surl.toString().endsWith("://localhost:8080/api"));
 	}
 
 	/**
@@ -111,19 +113,17 @@ class SURLTest {
 		Files.write(secretFile.toPath(), jsonCredentials.getBytes(StandardCharsets.UTF_8));
 
 		// pre-check, if test can start
-		assertThat(secretFile).describedAs("File should be existing with content")
-				.exists().isNotEmpty();
+		assertTrue(secretFile.exists()); assertTrue(secretFile.length() > 0);
 
-		assertThat(SecurityUtils.getSecurityPath()).isNotNull();
+		assertNotNull(SecurityUtils.getSecurityPath());
 
 		// Our test goes here
 		SURL surl = SURL.create(url);
 
-		assertThat(surl).isNotNull();
-		assertThat(surl.isAuthorizationConfigured()).isTrue();
+		assertNotNull(surl);
+		assertTrue(surl.isAuthorizationConfigured());
 
-		assertThat(surl.toString()).describedAs("User info should be removed from URL")
-				.startsWith("http").endsWith("://localhost:8080/api");
+		assertTrue(surl.toString().startsWith("http")); assertTrue(surl.toString().endsWith("://localhost:8080/api"));
 
 		secretFile.delete();
 	}

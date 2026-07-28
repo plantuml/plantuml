@@ -1,6 +1,8 @@
 package net.sourceforge.plantuml.tim.builtin;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.util.Collections;
 import java.util.List;
@@ -33,7 +35,7 @@ class GetenvTest {
 
 		List<TValue> values = Collections.singletonList(TValue.fromString(name));
 		TValue tValue = cut.executeReturnFunction(null, null, null, values, null);
-		assertThat (tValue.toString()).isEmpty();
+		assertTrue(tValue.toString().isEmpty());
 	}
 
 	/**
@@ -51,6 +53,6 @@ class GetenvTest {
 
 		List<TValue> values = Collections.singletonList(TValue.fromString(name));
 		TValue tValue = cut.executeReturnFunction(null, null, null, values, null);
-		assertThat (tValue.toString()).isNotEmpty();
+		assertFalse(tValue.toString().isEmpty());
 	}
 }

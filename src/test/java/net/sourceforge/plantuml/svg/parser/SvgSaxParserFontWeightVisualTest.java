@@ -1,6 +1,8 @@
 package net.sourceforge.plantuml.svg.parser;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -60,11 +62,11 @@ public class SvgSaxParserFontWeightVisualTest {
 
 	private static String renderSvg(String pumlFileName) throws IOException {
 		final Path pumlFile = RESOURCES.resolve(pumlFileName);
-		assertThat(pumlFile).exists();
+		assertTrue(Files.exists(pumlFile));
 
 		final String source = Files.readString(pumlFile, StandardCharsets.UTF_8);
 		// Verify the SAX pragma is present in the source
-		assertThat(source).as("PUML must contain !pragma svgparser sax").contains("!pragma svgparser sax");
+		assertTrue(source.contains("!pragma svgparser sax"));
 
 		final PlantUmlTestUtils.ExportDiagram exporter = PlantUmlTestUtils.exportDiagram(source);
 		exporter.assertNoError();
@@ -86,55 +88,49 @@ public class SvgSaxParserFontWeightVisualTest {
 	@DisplayName("Multi-weight fonts: diagram renders without error")
 	void multiWeightFonts_noRenderError() throws IOException {
 		final String svg = renderSvg("svgFontWeightMultiWeight.puml");
-		assertThat(svg).doesNotContain("An error has occurred");
+		assertFalse(svg.contains("An error has occurred"));
 	}
 
 	@Test
 	@DisplayName("Multi-weight fonts: lightweight (300) preserved in SVG output")
 	void multiWeightFonts_weight300Present() throws IOException {
 		final String svg = renderSvg("svgFontWeightMultiWeight.puml");
-		assertThat(svg).as("font-weight=\"300\" (Light) should appear in SVG output")
-				.contains("font-weight=\"300\"");
+		assertTrue(svg.contains("font-weight=\"300\""));
 	}
 
 	@Test
 	@DisplayName("Multi-weight fonts: semibold (600) preserved in SVG output")
 	void multiWeightFonts_weight600Present() throws IOException {
 		final String svg = renderSvg("svgFontWeightMultiWeight.puml");
-		assertThat(svg).as("font-weight=\"600\" (SemiBold) should appear in SVG output")
-				.contains("font-weight=\"600\"");
+		assertTrue(svg.contains("font-weight=\"600\""));
 	}
 
 	@Test
 	@DisplayName("Multi-weight fonts: bold (700) preserved as numeric in SVG output")
 	void multiWeightFonts_weight700Present() throws IOException {
 		final String svg = renderSvg("svgFontWeightMultiWeight.puml");
-		assertThat(svg).as("font-weight=\"700\" (Bold) should appear in SVG output")
-				.contains("font-weight=\"700\"");
+		assertTrue(svg.contains("font-weight=\"700\""));
 	}
 
 	@Test
 	@DisplayName("Multi-weight fonts: extra-bold (800) preserved in SVG output")
 	void multiWeightFonts_weight800Present() throws IOException {
 		final String svg = renderSvg("svgFontWeightMultiWeight.puml");
-		assertThat(svg).as("font-weight=\"800\" (ExtraBold) should appear in SVG output")
-				.contains("font-weight=\"800\"");
+		assertTrue(svg.contains("font-weight=\"800\""));
 	}
 
 	@Test
 	@DisplayName("Multi-weight fonts: italic axis preserved in SVG output")
 	void multiWeightFonts_italicPresent() throws IOException {
 		final String svg = renderSvg("svgFontWeightMultiWeight.puml");
-		assertThat(svg).as("font-style=\"italic\" should appear in SVG output")
-				.contains("font-style=\"italic\"");
+		assertTrue(svg.contains("font-style=\"italic\""));
 	}
 
 	@Test
 	@DisplayName("Multi-weight fonts: no legacy 'bold' keyword in font-weight attribute")
 	void multiWeightFonts_noLegacyBoldKeyword() throws IOException {
 		final String svg = renderSvg("svgFontWeightMultiWeight.puml");
-		assertThat(svg).as("Phase 5: font-weight should never be the literal string 'bold'")
-				.doesNotContain("font-weight=\"bold\"");
+		assertFalse(svg.contains("font-weight=\"bold\""));
 	}
 
 	// -----------------------------------------------------------------------
@@ -145,38 +141,34 @@ public class SvgSaxParserFontWeightVisualTest {
 	@DisplayName("Standard fonts: diagram renders without error")
 	void standardFonts_noRenderError() throws IOException {
 		final String svg = renderSvg("svgFontWeightStandardFonts.puml");
-		assertThat(svg).doesNotContain("An error has occurred");
+		assertFalse(svg.contains("An error has occurred"));
 	}
 
 	@Test
 	@DisplayName("Standard fonts: bold (700) preserved as numeric in SVG output")
 	void standardFonts_weight700Present() throws IOException {
 		final String svg = renderSvg("svgFontWeightStandardFonts.puml");
-		assertThat(svg).as("font-weight=\"700\" should appear in SVG (from Arial Bold etc.)")
-				.contains("font-weight=\"700\"");
+		assertTrue(svg.contains("font-weight=\"700\""));
 	}
 
 	@Test
 	@DisplayName("Standard fonts: intermediate weight (500) preserved even though font ignores it at Java2D level")
 	void standardFonts_weight500Present() throws IOException {
 		final String svg = renderSvg("svgFontWeightStandardFonts.puml");
-		assertThat(svg).as("font-weight=\"500\" should appear in SVG (Tahoma 500) even though rendered as normal")
-				.contains("font-weight=\"500\"");
+		assertTrue(svg.contains("font-weight=\"500\""));
 	}
 
 	@Test
 	@DisplayName("Standard fonts: italic axis preserved in SVG output")
 	void standardFonts_italicPresent() throws IOException {
 		final String svg = renderSvg("svgFontWeightStandardFonts.puml");
-		assertThat(svg).as("font-style=\"italic\" should appear from Times NR and Georgia italic entries")
-				.contains("font-style=\"italic\"");
+		assertTrue(svg.contains("font-style=\"italic\""));
 	}
 
 	@Test
 	@DisplayName("Standard fonts: no legacy 'bold' keyword in font-weight attribute")
 	void standardFonts_noLegacyBoldKeyword() throws IOException {
 		final String svg = renderSvg("svgFontWeightStandardFonts.puml");
-		assertThat(svg).as("Phase 5: font-weight should never be the literal string 'bold'")
-				.doesNotContain("font-weight=\"bold\"");
+		assertFalse(svg.contains("font-weight=\"bold\""));
 	}
 }

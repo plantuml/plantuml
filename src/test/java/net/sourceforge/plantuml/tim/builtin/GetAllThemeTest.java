@@ -1,6 +1,7 @@
 package net.sourceforge.plantuml.tim.builtin;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.util.Collections;
 import java.util.List;
@@ -26,6 +27,6 @@ class GetAllThemeTest {
 	void Test_without_Param() throws EaterException {
 		final List<TValue> empty = Collections.emptyList();
 		final TValue tValue = cut.executeReturnFunction(null, null, null, empty, null);
-		assertThat(tValue.toString()).contains("_none_", "amiga", "vibrant");
+		assertTrue(tValue.toString().contains("_none_")); assertTrue(tValue.toString().contains("amiga")); assertTrue(tValue.toString().contains("vibrant"));
 	}
 }

@@ -1,6 +1,11 @@
 package test.test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.io.IOException;
 
@@ -29,33 +34,33 @@ class ApiV2CsvTest {
 		// TBC...
 	})
 	public void test_exportDiagram(String diagSource, String error, String diagramType, String className, String description,
-						 Integer nbImages, Integer totalLineCount, Integer errorLine, Integer nbTitle, String title) throws IOException {
+					 Integer nbImages, Integer totalLineCount, Integer errorLine, Integer nbTitle, String title) throws IOException {
 		final DiagramReturn result = DiagramUtils.exportDiagram(diagSource);
 		final Diagram diagram = result.getDiagram();
 
 		if (StringUtils.isNotEmpty(error)) {
-			assertThat(result.error()).isEqualTo(error);
-			assertThat(result.getErrorLine().isPresent()).isTrue();
-			assertThat(result.getErrorLine().get()).isEqualTo(errorLine);
+			assertEquals(error, result.error());
+			assertTrue(result.getErrorLine().isPresent());
+			assertEquals(errorLine, result.getErrorLine().get());
 		}
 		else {
-			assertThat(result.error()).isNull();
-			assertThat(result.getErrorLine().isPresent()).isFalse();
+			assertNull(result.error());
+			assertFalse(result.getErrorLine().isPresent());
  		}
 
-		assertThat(diagram).isNotNull();
-		assertThat(diagram.getSource().getDiagramTypes()).contains(DiagramType.valueOf(diagramType));
-		assertThat(diagram.getClass().getSimpleName()).isEqualTo(className);
-		assertThat(diagram.getDescription().getDescription()).isEqualTo(description);
-		assertThat(diagram.getNbImages()).isEqualTo(nbImages);
-		assertThat(diagram.getSource().getTotalLineCount()).isEqualTo(totalLineCount);
+		assertNotNull(diagram);
+		assertTrue(diagram.getSource().getDiagramTypes().contains(DiagramType.valueOf(diagramType)));
+		assertEquals(className, diagram.getClass().getSimpleName());
+		assertEquals(description, diagram.getDescription().getDescription());
+		assertEquals(nbImages, diagram.getNbImages());
+		assertEquals(totalLineCount, diagram.getSource().getTotalLineCount());
 
-		assertThat(diagram.getTitleDisplay().asList().size()).isEqualTo(nbTitle);
+		assertEquals(nbTitle, diagram.getTitleDisplay().asList().size());
 		if (nbTitle > 0) {
-			assertThat(diagram.getTitleDisplay().get(0)).isEqualTo(title);
+			assertEquals(title, diagram.getTitleDisplay().get(0));
 		}
 		else {
-			assertThat(Display.isNull(diagram.getTitleDisplay())).isTrue();
+			assertTrue(Display.isNull(diagram.getTitleDisplay()));
 		}
 	}
 }
