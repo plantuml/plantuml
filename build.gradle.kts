@@ -45,8 +45,6 @@ dependencies {
 
 	testImplementation(libs.glytching.junit.extensions)
 	testImplementation(libs.xmlunit.core)
-	testImplementation(libs.mockito.core)
-	testImplementation(libs.mockito.junit.jupiter)
 	testImplementation(libs.junit.pioneer)
 	implementation(libs.jlatexmath)
     implementation(libs.elk.core)

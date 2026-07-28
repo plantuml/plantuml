@@ -4,23 +4,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
-import java.util.Arrays;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.mockito.ArgumentCaptor;
 
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.awt.XColor;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
-import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic;
+import net.sourceforge.plantuml.klimt.drawing.debug.StringBounderDebug;
 import net.sourceforge.plantuml.klimt.font.UFontFace;
 import net.sourceforge.plantuml.klimt.shape.UText;
 
@@ -32,8 +31,8 @@ import net.sourceforge.plantuml.klimt.shape.UText;
  *
  * <p>Strategy: build minimal SVG fragments containing a {@code <text>} element
  * with specific font-weight attributes, parse with {@code SvgSaxParser}, call
- * {@code drawU} with a mock {@link UGraphic}, capture the drawn shape, and assert
- * the weight on the resulting {@link UFontFace}.
+ * {@code drawU} with a {@link RecordingUGraphic} that just records every shape
+ * it is asked to draw, and assert the weight on the resulting {@link UFontFace}.
  */
 class SvgSaxParserFontWeightTest {
 
@@ -56,16 +55,12 @@ class SvgSaxParserFontWeightTest {
 		return new SvgSaxParser(svg);
 	}
 
-	/** Draws the parser, captures the first UText argument passed to draw(), and returns its UFontFace. */
+	/** Draws the parser, finds the first drawn UText shape, and returns its UFontFace. */
 	private static UFontFace capturedFace(SvgSaxParser parser) {
-		final UGraphic ug = mock(UGraphic.class, org.mockito.Mockito.RETURNS_SELF);
+		final RecordingUGraphic ug = new RecordingUGraphic();
 		parser.drawU(ug, 1.0, FONT_COLOR, FORCED_COLOR);
 
-		final ArgumentCaptor<UShape> captor = ArgumentCaptor.forClass(UShape.class);
-		verify(ug, atLeastOnce()).draw(captor.capture());
-
-		final List<UShape> shapes = captor.getAllValues();
-		for (UShape shape : shapes) {
+		for (final UShape shape : ug.getShapes()) {
 			if (shape instanceof UText) {
 				return ((UText) shape).getFontConfiguration().getFontFace();
 			}
@@ -174,5 +169,41 @@ class SvgSaxParserFontWeightTest {
 	void numericWeightRoundTrips(String cssWeight) {
 		final UFontFace face = capturedFace(parserWithText(cssWeight, null));
 		assertEquals(cssWeight, face.toCssWeightString());
+	}
+
+	// -----------------------------------------------------------------------
+	// Test double: a real (if minimal) UGraphic implementation - not a mock -
+	// that just records every shape it is asked to draw, the same
+	// architectural family as UGraphicTxt/UGraphicNull.
+	// -----------------------------------------------------------------------
+
+	private static final class RecordingUGraphic extends AbstractCommonUGraphic {
+
+		private final List<UShape> shapes = new ArrayList<>();
+
+		RecordingUGraphic() {
+			super(new StringBounderDebug());
+			basicCopy(HColors.BLACK, ColorMapper.IDENTITY);
+		}
+
+		@Override
+		protected AbstractCommonUGraphic copyUGraphic() {
+			return this;
+		}
+
+		@Override
+		public <SHAPE extends UShape> void draw(final SHAPE shape) {
+			shapes.add(shape);
+		}
+
+		List<UShape> getShapes() {
+			return shapes;
+		}
+
+		@Override
+		public void writeToStream(final OutputStream os, final String metadata, final int dpi) throws IOException {
+			// never called: this test never exports the drawing to a stream
+		}
+
 	}
 }
