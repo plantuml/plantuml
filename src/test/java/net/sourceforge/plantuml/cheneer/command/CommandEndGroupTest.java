@@ -1,5 +1,6 @@
 package net.sourceforge.plantuml.cheneer.command;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -7,10 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
-import org.mockito.Spy;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import net.sourceforge.plantuml.cheneer.ChenEerDiagram;
 import net.sourceforge.plantuml.command.Command;
@@ -23,12 +20,10 @@ import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.BlocLines;
 
-@ExtendWith(MockitoExtension.class)
 public class CommandEndGroupTest {
 
 	private final Command<ChenEerDiagram> command = new CommandEndGroup();
 
-	@Spy
 	private final ChenEerDiagram diagram = new ChenEerDiagram(UmlSource.create(new ArrayList<>(), false), null, new PreprocessingArtifact());
 
 	@Test
@@ -48,6 +43,9 @@ public class CommandEndGroupTest {
 
 		assertTrue(result.isOk());
 
-		Mockito.verify(diagram).popOwner();
+		// popOwner() was called by CommandEndGroup.execute(): the owner stack
+		// (which had exactly one entry from pushOwner(null) above) is now
+		// empty, so popping again returns false.
+		assertFalse(diagram.popOwner());
 	}
 }

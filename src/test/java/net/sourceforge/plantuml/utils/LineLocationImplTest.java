@@ -10,23 +10,14 @@ import io.github.glytching.junit.extension.random.RandomBeansExtension;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.extension.Extensions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-@Extensions({
-    @ExtendWith(MockitoExtension.class),
-    @ExtendWith(RandomBeansExtension.class)
-})
-
+@ExtendWith(RandomBeansExtension.class)
 class LineLocationImplTest {
-    @Mock
-    private LineLocation parent;
-    @Mock
-    private LineLocation parent2;
+
+    private final LineLocation parent = new FakeLineLocation();
+    private final LineLocation parent2 = new FakeLineLocation();
 
     @Random
     private String desc;
@@ -118,5 +109,29 @@ class LineLocationImplTest {
 
         assertEquals(-2, loc1.compareTo(loc3));
         assertEquals(2, loc3.compareTo(loc1));
+    }
+
+    private static final class FakeLineLocation implements LineLocation {
+
+        @Override
+        public int getPosition() {
+            return 0;
+        }
+
+        @Override
+        public String getDescription() {
+            return "";
+        }
+
+        @Override
+        public LineLocation getParent() {
+            return null;
+        }
+
+        @Override
+        public int compareTo(LineLocation other) {
+            return 0;
+        }
+
     }
 }

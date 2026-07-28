@@ -1,26 +1,27 @@
 package net.sourceforge.plantuml.svg.parser;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.Arrays;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import net.sourceforge.plantuml.klimt.drawing.UGraphic;
-import net.sourceforge.plantuml.svg.parser.SvgSaxParser;
-import net.sourceforge.plantuml.klimt.color.HColorSimple;
+import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.awt.XColor;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColorSimple;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic;
+import net.sourceforge.plantuml.klimt.drawing.debug.StringBounderDebug;
 
 /**
  * Unit tests for SvgSaxParser focusing on public drawU behavior.
  * - Verifies that drawing the parser will invoke underlying UGraphic draw operations.
  * - Verifies gray-level range computation for simple SVG with known fills.
- *
- * These tests use Mockito to stub UGraphic and do not require rendering to an image.
  */
 public class SvgNanoParserTest {
 
@@ -33,9 +34,11 @@ public class SvgNanoParserTest {
     @Test
     public void testDrawUInvokesGraphicDraw() {
         SvgSaxParser parser = new SvgSaxParser(SAMPLE_SVG);
-        
-        // Create a mock UGraphic that returns itself for chained apply(...) calls
-        UGraphic ug = mock(UGraphic.class, org.mockito.Mockito.RETURNS_SELF);
+
+        // Real (if minimal) UGraphic implementation, not a mock: records every
+        // shape it is asked to draw, the same architectural family as
+        // UGraphicTxt/UGraphicNull.
+        RecordingUGraphic ug = new RecordingUGraphic();
 
         HColorSimple fontColor = HColorSimple.create(XColor.BLACK);
         HColorSimple forcedColor = HColorSimple.create(XColor.RED);
@@ -44,7 +47,7 @@ public class SvgNanoParserTest {
         parser.drawU(ug, 1.0, fontColor, forcedColor);
 
         // Expect at least one draw invocation on the provided UGraphic (paths/text rendered)
-        verify(ug, atLeastOnce()).draw(any());
+        assertFalse(ug.getShapes().isEmpty());
     }
 
     @Test
@@ -57,9 +60,39 @@ public class SvgNanoParserTest {
 
         // For the sample svg we expect min and max to be within 0..255
         // (exact values can vary depending on color mapping implementation)
-        assert min >= 0 && min <= 255;
-        assert max >= 0 && max <= 255;
+        assertTrue(min >= 0 && min <= 255);
+        assertTrue(max >= 0 && max <= 255);
         // max should be >= min
-        assert max >= min;
+        assertTrue(max >= min);
+    }
+
+    private static final class RecordingUGraphic extends AbstractCommonUGraphic {
+
+        private final List<UShape> shapes = new ArrayList<>();
+
+        RecordingUGraphic() {
+            super(new StringBounderDebug());
+            basicCopy(HColors.BLACK, ColorMapper.IDENTITY);
+        }
+
+        @Override
+        protected AbstractCommonUGraphic copyUGraphic() {
+            return this;
+        }
+
+        @Override
+        public <SHAPE extends UShape> void draw(final SHAPE shape) {
+            shapes.add(shape);
+        }
+
+        List<UShape> getShapes() {
+            return shapes;
+        }
+
+        @Override
+        public void writeToStream(final OutputStream os, final String metadata, final int dpi) throws IOException {
+            // never called: this test never exports the drawing to a stream
+        }
+
     }
 }
