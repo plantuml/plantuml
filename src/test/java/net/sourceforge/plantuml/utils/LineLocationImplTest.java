@@ -5,24 +5,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import io.github.glytching.junit.extension.random.Random;
-import io.github.glytching.junit.extension.random.RandomBeansExtension;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-@ExtendWith(RandomBeansExtension.class)
 class LineLocationImplTest {
 
     private final LineLocation parent = new FakeLineLocation();
     private final LineLocation parent2 = new FakeLineLocation();
 
-    @Random
-    private String desc;
-    @Random
-    private String desc2;
+    // Arbitrary (but distinct) descriptions, none of them starting with '<'
+    private final String desc = randomDescription();
+    private final String desc2 = randomDescription();
+
+    private static String randomDescription() {
+        return "desc-" + UUID.randomUUID();
+    }
 
     @Test
     void ctorDestArgMustNotBeNull() {

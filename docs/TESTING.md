@@ -62,10 +62,6 @@ T -->|"Non-regression Test"| N[nonreg]
 
 ### JUnit extensions
 - doc: [JUnit extensions](https://junit.org/junit5/docs/current/user-guide/#extensions)
-- The "Glytching" JUnit extensions
-  - doc: [Glytching JUnit extensions](https://glytching.github.io/junit-extensions/)
-  - doc: [`randomBeans` doc](https://glytching.github.io/junit-extensions/randomBeans)
-  - src: [:octocat:glytching/junit-extensions](https://github.com/glytching/junit-extensions)
 
 ### AssertJ
 - doc: [AssertJ](https://assertj.github.io/doc/)

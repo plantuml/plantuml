@@ -6,7 +6,6 @@
 [versions]
 ant                 = "1.10.17"
 elk                 = "0.10.0"
-glytching-junit-ext = "2.6.0"
 gorylenko-gradle-git-properties = "4.0.1"
 graalvm-native      = "1.1.6"
 jdepend             = "2.9.1"
@@ -26,7 +25,6 @@ ant                         = { module = "org.apache.ant:ant", version.ref = "an
 elk-core                    = { module = "org.eclipse.elk:org.eclipse.elk.core", version.ref = "elk" }
 elk-alg-layered             = { module = "org.eclipse.elk:org.eclipse.elk.alg.layered", version.ref = "elk" }
 elk-alg-mrtree              = { module = "org.eclipse.elk:org.eclipse.elk.alg.mrtree", version.ref = "elk" }
-glytching-junit-extensions  = { module = "io.github.glytching:junit-extensions", version.ref = "glytching-junit-ext" }
 jdepend                     = { module = "jdepend:jdepend", version.ref = "jdepend" }
 jlatexmath                  = { module = "org.scilab.forge:jlatexmath", version.ref = "jlatexmath" }
 junit-jupiter               = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }

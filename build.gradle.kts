@@ -43,7 +43,6 @@ dependencies {
     testImplementation(libs.junit.jupiter)
     testRuntimeOnly(libs.junit.platform.launcher)
 
-	testImplementation(libs.glytching.junit.extensions)
 	testImplementation(libs.xmlunit.core)
 	testImplementation(libs.junit.pioneer)
 	implementation(libs.jlatexmath)
