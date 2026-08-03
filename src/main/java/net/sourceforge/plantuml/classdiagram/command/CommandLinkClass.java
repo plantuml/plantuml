@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -88,7 +88,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 	// Two-character separators must be listed explicitly
 	// Only '::' (legacy UML namespace) and '\\'
-	private static final String SEPARATOR_CHAR_DOUBLE = "[\\\\]{2}|::";
+	// Package-visible so CommandNamespaceSeparator can reuse it (issue #2801).
+	static final String SEPARATOR_CHAR_DOUBLE = "[\\\\]{2}|::";
 
 	public static String getSeparator() {
 		return "(?:" + SEPARATOR_CHAR_SINGLE + "|" + SEPARATOR_CHAR_DOUBLE + ")";

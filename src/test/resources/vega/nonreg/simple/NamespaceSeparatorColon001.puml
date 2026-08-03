@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (1 entities)
+---
+@startuml
+set namespaceSeparator :
+
+class "lib:class" {
+{field} field
+{static} {method} +method()
+}
+
+@enduml

@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -51,6 +51,16 @@ public class CommandNamespaceSeparator extends SingleLineCommand2<TitledDiagram>
 
 	public static final CommandNamespaceSeparator ME = new CommandNamespaceSeparator();
 
+	// A namespace separator may be 'none'/'null' (disabled), one of the usual
+	// double separators ('::' or '\\', see CommandLinkClass), or a single
+	// character. Unlike CommandLinkClass.getSeparator(), ':' is allowed as a
+	// single-character separator here: at this point in the grammar it
+	// cannot be confused with a relation label ("A --> B : label"), so it
+	// does not need to be excluded (issue #2801).
+	private static final String SEPARATOR_CHAR_SINGLE = "[^%pLN%s_$#\\\\{}<>%g]";
+	private static final String SEPARATOR = "((?:none|null)|" + CommandLinkClass.SEPARATOR_CHAR_DOUBLE + "|"
+			+ SEPARATOR_CHAR_SINGLE + ")";
+
 	private CommandNamespaceSeparator() {
 		super(getRegexConcat());
 	}
@@ -64,7 +74,7 @@ public class CommandNamespaceSeparator extends SingleLineCommand2<TitledDiagram>
 						new RegexLeaf("separator"), //
 						new RegexLeaf("namespaceseparator")), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf(1, "SEPARATOR", "((?:none|null)|" + CommandLinkClass.getSeparator() + ")"),
+				new RegexLeaf(1, "SEPARATOR", SEPARATOR),
 				RegexLeaf.end()); //
 	}
 
