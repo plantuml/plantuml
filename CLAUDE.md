@@ -16,6 +16,83 @@ gradle build
 gradle test
 ```
 
+If Gradle cannot download its distribution (offline or restricted sandbox), Ant
+is a fully working fallback and needs no network access:
+
+```bash
+# Requires a full JDK (not just a JRE) and ant
+ant dist          # compiles src/main/java and produces ./plantuml.jar
+```
+
+`.clide/` holds the committed compile-only stubs (TeaVM, OpenPDF, Ant, opentest4j).
+The test jars themselves (JUnit 5, JUnit Pioneer, XMLUnit) are **not** committed:
+clide unpacks them into the gitignored `.clide/tmp/jar-junit/` the first time it
+opens this project, and they can also be copied from a clide checkout (`lib/`).
+Once they are there, tests compile and run without Gradle:
+
+```bash
+javac -nowarn -d /tmp/testclasses \
+      -cp "plantuml.jar:.clide/*:.clide/tmp/jar-junit/*" \
+      -sourcepath src/test/java src/test/java/test/vega/VegaTest.java
+
+java -jar .clide/tmp/jar-junit/junit-platform-console-standalone-*.jar execute \
+     -cp "plantuml.jar:/tmp/testclasses:src/test/resources" \
+     --select-class test.vega.VegaTest --details=summary
+```
+
+`src/test/resources` must be on the runtime classpath, and the working directory
+must be the repository root (Vega resolves `src/test/resources/vega` relatively).
+
+## Reproducing a diagram from the command line
+
+```bash
+java -jar plantuml.jar -tsvg  -pipe < test.puml   # SVG on stdout
+java -jar plantuml.jar -tutxt -pipe < test.puml   # quick ASCII check
+```
+
+A syntax error usually shows up as `Syntax Error? (Assumed diagram type: sequence)`:
+when a command regex stops matching, the parser falls back to a sequence diagram,
+so the reported line is rarely the real culprit.
+
+## Vega: the main regression harness
+
+`test.vega.VegaTest` walks `src/test/resources/vega/**` and turns every `.puml`
+file into a dynamic test. Adding a non-regression test means adding one file:
+
+```
+---
+output: svg              # also: utxt, atxt, debug, latex, scxml, graphml, xmi, preproc
+expected-description: (1 entities)
+---
+@startuml
+...
+@enduml
+```
+
+Then generate the reference file(s) once, review them, and re-run without the flag:
+
+```bash
+VEGA_FORCE_WRITE=true <run VegaTest>   # writes the .svg/.txt/... next to the .puml
+```
+
+Notes:
+- Always check that the new test **fails** before the fix and passes after it.
+- A file with no YAML header is always regenerated and never asserted.
+- `vega.json`, `vega-summary.txt` and `vega-summary.md` are rewritten on every
+  run; revert them unless the change is meaningful.
+- The `.puml` file name has no meaning for the framework: the directory groups
+  the tests, so put a class-diagram non-regression in `vega/nonreg/simple/`.
+
+## Digging into history
+
+The recommended shallow clone has no history to bisect. To find when a line
+changed, deepen first:
+
+```bash
+git fetch --deepen 500
+git log -L <start>,<end>:<file>
+```
+
 ## Cloning this repository
 
 Do a shallow clone - do not fetch the full history:
