@@ -249,8 +249,8 @@ public class MethodsOrFieldsArea extends TextBlockMemoized implements WithPorts 
 <span class="pc bpc" id="L249" title="1 of 2 branches missed.">			if (m.isAbstract())</span>
 <span class="nc" id="L250">				config = config.italic();</span>
 
-<span class="pc bpc" id="L252" title="1 of 2 branches missed.">			if (m.isStatic())</span>
-<span class="nc" id="L253">				config = config.underline();</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">			if (m.isStatic())</span>
+<span class="fc" id="L253">				config = config.underline();</span>
 
 <span class="fc" id="L255">			TextBlock block = Display.getWithNewlines(skinParam.getPragma(), s).create8(config, align, skinParam,</span>
 <span class="fc" id="L256">					CreoleMode.SIMPLE_LINE, style.wrapWidth());</span>
