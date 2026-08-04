@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.statediagram.command.CommandHideEmptyDescription
 import net.sourceforge.plantuml.style.CommandStyleImport;
 import net.sourceforge.plantuml.style.CommandStyleMultilinesCSS;
 import net.sourceforge.plantuml.style.CommandStyleSingleLineCSS;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public final class UBrexCommonCommands {
 
@@ -76,8 +77,10 @@ public final class UBrexCommonCommands {
 		cmds.add(factorySpriteCommand.createMultiLine(false));
 		cmds.add(factorySpriteCommand.createSingleLine());
 		cmds.add(CommandSpriteSvg.ME);
-		cmds.add(CommandSpriteStdlib.ME);
-		cmds.add(CommandSpriteStdlibSvg.ME);
+		if (!TeaVM.isTeaVM()) {
+			cmds.add(CommandSpriteStdlib.ME);
+			cmds.add(CommandSpriteStdlibSvg.ME);
+		}
 		cmds.add(CommandSpriteSvgMultiline.ME);
 		cmds.add(CommandSpriteFile.ME);
 

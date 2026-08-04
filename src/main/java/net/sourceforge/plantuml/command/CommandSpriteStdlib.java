@@ -68,7 +68,6 @@ public class CommandSpriteStdlib extends SingleLineCommand2<TitledDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-		// ::comment when __TEAVM__
 		try {
 			final Stdlib lib = Stdlib.retrieve(arg.get("STDLIB", 0));
 			final String exportedName = arg.get("STDLIB", 1);
@@ -79,7 +78,6 @@ public class CommandSpriteStdlib extends SingleLineCommand2<TitledDiagram> {
 		} catch (IOException e) {
 			return CommandExecutionResult.error("Cannot read sprite " + e.toString());
 		}
-		// ::done
 		return CommandExecutionResult.ok();
 	}
 
