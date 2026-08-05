@@ -1,3 +1,5 @@
+[![MCP Toplist](https://mcptoplist.com/badge/glama%2Fplantuml.svg)](https://mcptoplist.com/server/glama%2Fplantuml)
+
 > [!TIP]
 > 🧩 **New!** Render PlantUML diagrams directly inside GitHub with [our official browser extension](https://github.com/plantuml/plantuml-for-github) &mdash; No server. No tokens. No tracking. Zero permissions but clipboard.
 >
