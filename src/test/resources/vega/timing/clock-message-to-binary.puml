@@ -1,0 +1,10 @@
+---
+output: svg, debug
+expected-description: (Timing Diagram)
+---
+@startuml
+clock "Sample Clock" as sample with period 10
+binary "Threshold Reached" as threshold
+
+sample -> threshold : compare sample
+@enduml

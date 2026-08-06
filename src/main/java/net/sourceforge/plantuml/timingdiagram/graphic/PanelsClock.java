@@ -40,6 +40,7 @@ import java.util.List;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
@@ -71,9 +72,43 @@ public class PanelsClock extends PanelsNoLeft {
 		return suggestedHeight - 2 * MARGIN_Y;
 	}
 
+	private double getYhigh() {
+		return MARGIN_Y;
+	}
+
+	private double getYlow(StringBounder stringBounder) {
+		return MARGIN_Y + getLineHeight(stringBounder);
+	}
+
+	/**
+	 * Whether the clock waveform is in the high pulse at the given absolute time.
+	 * Matches the drawing in {@link #drawRightPanel(UGraphic)}: optional initial
+	 * low offset, then repeating high pulse followed by low remainder.
+	 */
+	private boolean isHighAt(double time) {
+		final double periodValue = period.doubleValue();
+		if (periodValue <= 0)
+			return false;
+
+		final double offsetValue = offset.doubleValue();
+		if (time < offsetValue)
+			return false;
+
+		final double vpulse = pulse.doubleValue() == 0 ? periodValue / 2.0 : pulse.doubleValue();
+		final double phase = (time - offsetValue) % periodValue;
+		// Java's % can be negative for negative dividends; normalize.
+		final double normalized = phase < 0 ? phase + periodValue : phase;
+		return normalized < vpulse;
+	}
+
 	@Override
 	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
-		throw new UnsupportedOperationException();
+		if (tick == null)
+			return null;
+		final double x = ruler.getPosInPixel(tick);
+		final double y = isHighAt(tick.getTime().doubleValue()) ? getYhigh() : getYlow(stringBounder);
+		final XPoint2D point = new XPoint2D(x, y);
+		return new IntricatedPoint(point, point);
 	}
 
 	@Override
