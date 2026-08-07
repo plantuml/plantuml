@@ -243,8 +243,8 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 <span class="fc" id="L243">		final IntricatedPoint pt1 = player1.panels().getTimeProjection(stringBounder, message.getTick1());</span>
 <span class="fc" id="L244">		final IntricatedPoint pt2 = player2.panels().getTimeProjection(stringBounder, message.getTick2());</span>
 
-<span class="pc bpc" id="L246" title="2 of 4 branches missed.">		if (pt1 == null || pt2 == null)</span>
-<span class="nc" id="L247">			return;</span>
+<span class="pc bpc" id="L246" title="1 of 4 branches missed.">		if (pt1 == null || pt2 == null)</span>
+<span class="fc" id="L247">			return;</span>
 
 <span class="fc" id="L249">		final TimeArrow timeArrow = TimeArrow.create(pt1.translated(translate1), pt2.translated(translate2),</span>
 <span class="fc" id="L250">				message.getLabel(), getSkinParam(), message);</span>

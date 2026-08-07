@@ -79,8 +79,8 @@ public class PanelsBinary extends PanelsNoLeft {
 
 	@Override
 	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (tick == null)</span>
-<span class="nc" id="L83">			return null;</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (tick == null)</span>
+<span class="fc" id="L83">			return null;</span>
 <span class="nc" id="L84">		final double x = ruler.getPosInPixel(tick);</span>
 <span class="nc" id="L85">		return new IntricatedPoint(new XPoint2D(x, getYpos(stringBounder, HIGH_STRING)),</span>
 <span class="nc" id="L86">				new XPoint2D(x, getYpos(stringBounder, HIGH_STRING)));</span>
