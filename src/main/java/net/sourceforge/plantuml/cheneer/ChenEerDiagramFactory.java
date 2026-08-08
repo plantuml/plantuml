@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.cheneer.command.CommandCreateAttribute;
 import net.sourceforge.plantuml.cheneer.command.CommandCreateEntity;
 import net.sourceforge.plantuml.cheneer.command.CommandEndGroup;
 import net.sourceforge.plantuml.cheneer.command.CommandMultiSubclass;
+import net.sourceforge.plantuml.cheneer.command.CommandNotationCompact;
 import net.sourceforge.plantuml.cheneer.command.CommandSimpleSubclass;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandRankDir;
@@ -63,6 +64,7 @@ public class ChenEerDiagramFactory extends PSystemCommandFactory {
 	protected void initCommandsList(List<Command> cmds) {
 		CommonCommands.addCommonCommands1(cmds);
 		cmds.add(new CommandRankDir());
+		cmds.add(new CommandNotationCompact());
 
 		cmds.add(new CommandCreateEntity());
 		cmds.add(new CommandCreateAttribute());

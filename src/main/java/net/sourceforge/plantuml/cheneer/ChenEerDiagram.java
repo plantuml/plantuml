@@ -34,14 +34,30 @@
  */
 package net.sourceforge.plantuml.cheneer;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.IdentityHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
 import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.abel.LinkArg;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.decoration.LinkDecor;
+import net.sourceforge.plantuml.decoration.LinkType;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class ChenEerDiagram extends AbstractEntityDiagram {
 
@@ -49,7 +65,28 @@ public class ChenEerDiagram extends AbstractEntityDiagram {
 		super(source, DiagramType.CHEN_EER, previous, preprocessingArtifact);
 	}
 
-	private final Stack<Entity> ownerStack = new Stack<Entity>();
+	private static final String RELATIONSHIP_ATTRIBUTE_BOX = "/__plantuml_compact_relationship_attributes__";
+
+	private final Stack<OwnerFrame> ownerStack = new Stack<>();
+	private final Map<Entity, List<CompactChenAttribute>> compactAttributes = new IdentityHashMap<>();
+	private final Map<Entity, Entity> relationshipBoxes = new IdentityHashMap<>();
+	private final Set<String> compactAttributeIds = new LinkedHashSet<>();
+	private boolean compactNotation;
+	private boolean declarationSeen;
+
+	private static final class OwnerFrame {
+		private final Entity owner;
+		private final Entity rootOwner;
+		private final String attributePath;
+		private final int depth;
+
+		private OwnerFrame(Entity owner, Entity rootOwner, String attributePath, int depth) {
+			this.owner = owner;
+			this.rootOwner = rootOwner;
+			this.attributePath = attributePath;
+			this.depth = depth;
+		}
+	}
 
 	/**
 	 * Pushes the owner of the following attributes.
@@ -58,7 +95,13 @@ public class ChenEerDiagram extends AbstractEntityDiagram {
 	 * @param group the entity that owns the following attributes
 	 */
 	public void pushOwner(Entity group) {
-		ownerStack.push(group);
+		ownerStack.push(new OwnerFrame(group, group, "", 0));
+	}
+
+	void pushCompactAttribute(String identity) {
+		final OwnerFrame parent = ownerStack.peek();
+		final String path = parent.attributePath.length() == 0 ? identity : parent.attributePath + "/" + identity;
+		ownerStack.push(new OwnerFrame(parent.rootOwner, parent.rootOwner, path, parent.depth + 1));
 	}
 
 	/**
@@ -90,7 +133,74 @@ public class ChenEerDiagram extends AbstractEntityDiagram {
 		if (ownerStack.isEmpty()) {
 			return null;
 		}
-		return ownerStack.peek();
+		return ownerStack.peek().owner;
+	}
+
+	public boolean isCompactNotation() {
+		return compactNotation;
+	}
+
+	public boolean useCompactNotation() {
+		if (declarationSeen)
+			return false;
+
+		compactNotation = true;
+		return true;
+	}
+
+	public void markDeclaration() {
+		declarationSeen = true;
+	}
+
+	public boolean addCompactAttribute(LineLocation location, String identity, String displayName, String domain,
+			Stereotype stereotype, boolean composite) {
+		final OwnerFrame frame = ownerStack.peek();
+		final String path = frame.attributePath.length() == 0 ? identity : frame.attributePath + "/" + identity;
+		final String qualifiedIdentity = frame.rootOwner.getName() + "/" + path;
+		if (compactAttributeIds.add(qualifiedIdentity) == false)
+			return false;
+
+		final CompactChenAttribute row = new CompactChenAttribute(qualifiedIdentity, displayName, domain, frame.depth,
+				stereotype);
+		final Entity rowOwner;
+		if (frame.rootOwner.getLeafType() == LeafType.CHEN_RELATIONSHIP)
+			rowOwner = getOrCreateRelationshipBox(location, frame.rootOwner);
+		else
+			rowOwner = frame.rootOwner;
+
+		compactAttributes.computeIfAbsent(rowOwner, key -> new ArrayList<>()).add(row);
+		if (composite)
+			pushCompactAttribute(identity);
+
+		return true;
+	}
+
+	private Entity getOrCreateRelationshipBox(LineLocation location, Entity relationship) {
+		Entity box = relationshipBoxes.get(relationship);
+		if (box != null)
+			return box;
+
+		final String id = relationship.getName() + RELATIONSHIP_ATTRIBUTE_BOX;
+		final Quark<Entity> quark = quarkInContext(true, id);
+		box = reallyCreateLeaf(location, quark, Display.empty(), LeafType.CHEN_RELATIONSHIP_ATTRIBUTE, null);
+		box.setColors(relationship.getColors());
+		box.setStereotype(relationship.getStereotype());
+		relationshipBoxes.put(relationship, box);
+
+		final LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE).goDashed();
+		final Link link = new Link(location, this, getCurrentStyleBuilder(), box, relationship, linkType,
+				LinkArg.build(Display.NULL, 2));
+		link.setColors(relationship.getColors());
+		addLink(link);
+		return box;
+	}
+
+	List<CompactChenAttribute> getCompactAttributes(Entity owner) {
+		final List<CompactChenAttribute> rows = compactAttributes.get(owner);
+		if (rows == null)
+			return Collections.emptyList();
+
+		return Collections.unmodifiableList(rows);
 	}
 
 }

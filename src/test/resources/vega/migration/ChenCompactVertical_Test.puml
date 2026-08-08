@@ -1,0 +1,37 @@
+---
+output: svg
+expected-description: (4 entities)
+---
+@startchen
+notation compact
+
+entity "Customer record" as Customer {
+  "Customer number" as Number : INTEGER <<key>> #lime;line:orange
+  Name {
+    First
+    Last
+  }
+  Aliases <<multi>>
+  Age <<derived>>
+  History <<multi>><<derived>>
+  Partial <<discriminator>>
+  Both <<key>><<discriminator>>
+  Ignored <<keyish>>
+}
+
+entity Child <<weak>> {
+  Id <<key>>
+}
+
+relationship Owns <<identifying>> #pink;line:red {
+  Since : DATE #lime;line:orange
+  Details {
+    Office
+    Code <<discriminator>>
+  }
+}
+
+Customer -1- Owns
+Owns =N= Child
+
+@endchen

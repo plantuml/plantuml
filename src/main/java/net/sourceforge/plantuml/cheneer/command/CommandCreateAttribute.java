@@ -105,9 +105,14 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
 		}
 
 		final LeafType type = LeafType.CHEN_ATTRIBUTE;
-		final String idShort = diagram.cleanId(arg.get("CODE", 0).trim());
+		final boolean compact = diagram.isCompactNotation();
+		final String rawCode = arg.get("CODE", 0).trim();
+		final String idShort = diagram.cleanId(compact ? getIdentity(rawCode) : rawCode);
 		final String id = owner.getName() + "/" + idShort;
-		final Quark<Entity> quark = diagram.quarkInContext(true, id);
+		final Quark<Entity> quark = compact ? null : diagram.quarkInContext(true, id);
+		String domain = null;
+		if (compact)
+			domain = getDomain(rawCode);
 		String displayText = arg.get("DISPLAY", 0);
 		if (displayText == null)
 			displayText = idShort;
@@ -116,6 +121,14 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
 		final boolean composite = arg.get("COMPOSITE", 0) != null;
 
 		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+
+		if (compact) {
+			final Stereotype stereotype = stereo == null ? null : Stereotype.build(stereo);
+			if (diagram.addCompactAttribute(location, idShort, displayText, domain, stereotype, composite) == false)
+				return CommandExecutionResult.error("Attribute already exists");
+
+			return CommandExecutionResult.ok();
+		}
 
 		Entity entity = quark.getData();
 		if (entity == null) {
@@ -143,6 +156,20 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
 		}
 
 		return CommandExecutionResult.ok();
+	}
+
+	private static String getIdentity(String rawCode) {
+		final int colon = rawCode.indexOf(':');
+		return (colon < 0 ? rawCode : rawCode.substring(0, colon)).trim();
+	}
+
+	private static String getDomain(String rawCode) {
+		final int colon = rawCode.indexOf(':');
+		if (colon < 0)
+			return null;
+
+		final String result = rawCode.substring(colon + 1).trim();
+		return result.length() == 0 ? null : result;
 	}
 
 }

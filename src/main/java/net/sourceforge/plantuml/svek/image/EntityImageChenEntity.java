@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.svek.image;
 
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.cheneer.ChenCompactRows;
 import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -50,6 +51,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
@@ -66,6 +68,7 @@ public class EntityImageChenEntity extends AbstractEntityImage {
 	final private boolean isWeak;
 
 	final private TextBlock title;
+	final private TextBlock rows;
 	final private Url url;
 
 	public EntityImageChenEntity(Entity entity) {
@@ -78,6 +81,7 @@ public class EntityImageChenEntity extends AbstractEntityImage {
 
 		title = entity.getDisplay().create8(titleFontConfiguration, HorizontalAlignment.CENTER, getSkinParam(),
 				CreoleMode.FULL, getStyleState().wrapWidth());
+		rows = ChenCompactRows.create(entity);
 
 		url = entity.getUrl99();
 	}
@@ -112,9 +116,14 @@ public class EntityImageChenEntity extends AbstractEntityImage {
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-		final XDimension2D dim = title.calculateDimension(stringBounder);
+		final XDimension2D dimTitle = title.calculateDimension(stringBounder);
+		if (ChenCompactRows.hasRows(getEntity()) == false)
+			return dimTitle.delta(MARGIN * 2 + 2 * MARGIN_LINE);
 
-		return dim.delta(MARGIN * 2 + 2 * MARGIN_LINE);
+		final XDimension2D dimRows = rows.calculateDimension(stringBounder);
+		final double width = Math.max(dimTitle.getWidth(), dimRows.getWidth()) + 2 * (MARGIN + MARGIN_LINE);
+		final double height = dimTitle.getHeight() + dimRows.getHeight() + 4 * (MARGIN + MARGIN_LINE);
+		return new XDimension2D(width, height);
 	}
 
 	@Override
@@ -137,6 +146,12 @@ public class EntityImageChenEntity extends AbstractEntityImage {
 		final double xTitle = (dimTotal.getWidth() - dimTitle.getWidth()) / 2;
 		final double yTitle = MARGIN + MARGIN_LINE;
 		title.drawU(ug.apply(new UTranslate(xTitle, yTitle)));
+
+		if (ChenCompactRows.hasRows(getEntity())) {
+			final double dividerY = dimTitle.getHeight() + 2 * (MARGIN + MARGIN_LINE);
+			ug.apply(UTranslate.dy(dividerY)).draw(ULine.hline(dimTotal.getWidth()));
+			rows.drawU(ug.apply(new UTranslate(MARGIN + MARGIN_LINE, dividerY + MARGIN + MARGIN_LINE)));
+		}
 
 		if (url != null)
 			ug.closeUrl();

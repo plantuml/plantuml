@@ -133,6 +133,7 @@ public class CommandCreateEntity extends SingleLineCommand2<ChenEerDiagram> {
 
 		entity.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));
 
+		diagram.markDeclaration();
 		diagram.pushOwner(entity);
 
 		return CommandExecutionResult.ok();
