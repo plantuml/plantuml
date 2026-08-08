@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -64,6 +65,8 @@ import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.url.Url;
 
 public class EntityImageChenEntity extends AbstractEntityImage {
+
+	private static final int WEAK_INSET = 3;
 
 	final private boolean isWeak;
 
@@ -136,20 +139,35 @@ public class EntityImageChenEntity extends AbstractEntityImage {
 		final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
 
 		final UStroke stroke = getStyleState().getStroke(getEntity().getColors());
-		ug = applyColor(ug);
-		ug = ug.apply(stroke);
-		ug.draw(getShape(dimTotal));
-		if (isWeak) {
-			ug.apply(new UTranslate(3, 3)).draw(getShape(dimTotal.delta(-6)));
+		final HColor border = getBorderColor();
+		final HColor background = getBackgroundColor();
+		final HColor titleBackground = getTitleBackgroundColor(background);
+		final boolean hasRows = ChenCompactRows.hasRows(getEntity());
+		final double dividerY = hasRows ? dimTitle.getHeight() + 2 * (MARGIN + MARGIN_LINE) : 0;
+
+		if (hasRows && titleBackground != null && titleBackground.equals(background) == false) {
+			ug.apply(HColors.none()).apply(background.bg()).draw(getShape(dimTotal));
+			final double titleInset = isWeak ? WEAK_INSET : 0;
+			ug.apply(HColors.none()).apply(titleBackground.bg())
+					.apply(new UTranslate(titleInset, titleInset))
+					.draw(URectangle.build(dimTotal.getWidth() - 2 * titleInset, dividerY - titleInset));
+			ug = ug.apply(border).apply(HColors.none().bg()).apply(stroke);
+		} else {
+			ug = ug.apply(border).apply(background.bg()).apply(stroke);
 		}
+
+		ug.draw(getShape(dimTotal));
+		if (isWeak)
+			ug.apply(new UTranslate(WEAK_INSET, WEAK_INSET)).draw(getShape(dimTotal.delta(-2 * WEAK_INSET)));
 
 		final double xTitle = (dimTotal.getWidth() - dimTitle.getWidth()) / 2;
 		final double yTitle = MARGIN + MARGIN_LINE;
 		title.drawU(ug.apply(new UTranslate(xTitle, yTitle)));
 
-		if (ChenCompactRows.hasRows(getEntity())) {
-			final double dividerY = dimTitle.getHeight() + 2 * (MARGIN + MARGIN_LINE);
-			ug.apply(UTranslate.dy(dividerY)).draw(ULine.hline(dimTotal.getWidth()));
+		if (hasRows) {
+			final double dividerInset = isWeak ? WEAK_INSET : 0;
+			ug.apply(new UTranslate(dividerInset, dividerY))
+					.draw(ULine.hline(dimTotal.getWidth() - 2 * dividerInset));
 			rows.drawU(ug.apply(new UTranslate(MARGIN + MARGIN_LINE, dividerY + MARGIN + MARGIN_LINE)));
 		}
 
@@ -159,20 +177,30 @@ public class EntityImageChenEntity extends AbstractEntityImage {
 		ug.closeGroup();
 	}
 
-	final protected UGraphic applyColor(UGraphic ug) {
-		Colors colors = getEntity().getColors();
-
+	private HColor getBorderColor() {
+		final Colors colors = getEntity().getColors();
 		HColor border = colors.getColor(ColorType.LINE);
 		if (border == null)
 			border = getStyleState().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
-		ug = ug.apply(border);
+		return border;
+	}
 
+	private HColor getBackgroundColor() {
+		final Colors colors = getEntity().getColors();
 		HColor backcolor = colors.getColor(ColorType.BACK);
 		if (backcolor == null)
 			backcolor = getStyleState().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
-		ug = ug.apply(backcolor.bg());
+		return backcolor;
+	}
 
-		return ug;
+	private HColor getTitleBackgroundColor(HColor background) {
+		final HColor explicitBackground = getEntity().getColors().getColor(ColorType.BACK);
+		if (explicitBackground != null)
+			return explicitBackground;
+
+		final HColor titleBackground = getStyleStateTitle(getEntity(), getSkinParam()).value(PName.BackGroundColor)
+				.asColor(getSkinParam().getIHtmlColorSet());
+		return titleBackground == null ? background : titleBackground;
 	}
 
 	private URectangle getShape(XDimension2D dimTotal) {

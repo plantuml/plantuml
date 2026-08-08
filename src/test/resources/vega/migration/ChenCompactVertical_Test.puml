@@ -5,33 +5,44 @@ expected-description: (4 entities)
 @startchen
 notation compact
 
-entity "Customer record" as Customer {
-  "Customer number" as Number : INTEGER <<key>> #lime;line:orange
-  Name {
-    First
-    Last
+entity customer_record {
+  customer_number <<key>>
+  name {
+    first
+    last
   }
-  Aliases <<multi>>
-  Age <<derived>>
-  History <<multi>><<derived>>
-  Partial <<discriminator>>
-  Both <<key>><<discriminator>>
-  Ignored <<keyish>>
+  aliases <<multi>>
+  age <<derived>>
+  history <<multi>><<derived>>
+  both <<key>><<discriminator>>
+  ignored <<keyish>>
 }
 
-entity Child <<weak>> {
-  Id <<key>>
+entity child <<weak>> {
+  name <<discriminator>>
 }
 
-relationship Owns <<identifying>> #pink;line:red {
-  Since : DATE #lime;line:orange
-  Details {
-    Office
-    Code <<discriminator>>
+relationship owns <<identifying>> {
+  since
+}
+
+customer_record -1- owns
+owns =N= child
+
+<style>
+chenEerDiagram {
+  FontName "Serif"
+  FontSize 14
+  FontStyle italic
+  BackGroundColor #EFF8FC
+
+  chenEntity {
+    BackGroundColor White
+    title {
+      BackGroundColor #D2EDF9
+    }
   }
 }
-
-Customer -1- Owns
-Owns =N= Child
+</style>
 
 @endchen

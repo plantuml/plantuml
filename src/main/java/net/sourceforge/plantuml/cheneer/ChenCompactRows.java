@@ -38,7 +38,7 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 /** Internal bridge between the Chen model and its Svek renderers. */
 public final class ChenCompactRows {
 
-	private static final int INDENT = 10;
+	private static final int INDENT = 20;
 	private static final int ROW_GAP = 2;
 
 	private ChenCompactRows() {
@@ -104,9 +104,13 @@ public final class ChenCompactRows {
 		private final FontConfiguration font;
 		private final TextBlock openBrace;
 		private final TextBlock name;
-		private final TextBlock derived;
+		private final TextBlock derivedOpen;
+		private final TextBlock derivedClose;
 		private final TextBlock closeBrace;
 		private final TextBlock domain;
+		private final boolean multi;
+		private final boolean derived;
+		private final boolean hasDomain;
 
 		private Row(Entity entity, CompactChenAttribute attribute, FontConfiguration font,
 				LineBreakStrategy wrapWidth) {
@@ -114,12 +118,15 @@ public final class ChenCompactRows {
 			this.solidUnderline = attribute.getUnderlineStyle() == CompactChenAttribute.UnderlineStyle.SOLID;
 			this.dashedUnderline = attribute.getUnderlineStyle() == CompactChenAttribute.UnderlineStyle.DASHED;
 			this.font = font;
-			final boolean multi = attribute.isMulti();
+			this.multi = attribute.isMulti();
+			this.derived = attribute.isDerived();
+			this.hasDomain = attribute.getDomain() != null;
 			this.openBrace = text(entity, multi ? "{" : "", font, wrapWidth);
 			this.name = text(entity, attribute.getDisplayName(), font, wrapWidth);
-			this.derived = text(entity, attribute.isDerived() ? "()" : "", font, wrapWidth);
+			this.derivedOpen = text(entity, derived ? "(" : "", font, wrapWidth);
+			this.derivedClose = text(entity, derived ? ")" : "", font, wrapWidth);
 			this.closeBrace = text(entity, multi ? "}" : "", font, wrapWidth);
-			this.domain = text(entity, attribute.getDomain() == null ? "" : " : " + attribute.getDomain(), font,
+			this.domain = text(entity, hasDomain ? ": " + attribute.getDomain() : "", font,
 					wrapWidth);
 		}
 
@@ -136,13 +143,19 @@ public final class ChenCompactRows {
 		public XDimension2D calculateDimension(StringBounder stringBounder) {
 			final XDimension2D openDim = openBrace.calculateDimension(stringBounder);
 			final XDimension2D nameDim = name.calculateDimension(stringBounder);
-			final XDimension2D derivedDim = derived.calculateDimension(stringBounder);
+			final XDimension2D derivedOpenDim = derivedOpen.calculateDimension(stringBounder);
+			final XDimension2D derivedCloseDim = derivedClose.calculateDimension(stringBounder);
 			final XDimension2D closeDim = closeBrace.calculateDimension(stringBounder);
 			final XDimension2D domainDim = domain.calculateDimension(stringBounder);
-			final double width = depth * INDENT + openDim.getWidth() + nameDim.getWidth() + derivedDim.getWidth()
-					+ closeDim.getWidth() + domainDim.getWidth();
-			final double height = Math.max(nameDim.getHeight(), Math.max(openDim.getHeight(), Math.max(derivedDim.getHeight(),
-					Math.max(closeDim.getHeight(), domainDim.getHeight()))));
+			final double spacing = whitespaceSpacing();
+			final double width = depth * INDENT + openDim.getWidth() + (multi ? spacing : 0) + nameDim.getWidth()
+					+ (derived ? spacing * 2 + derivedOpenDim.getWidth() + derivedCloseDim.getWidth() : 0)
+					+ (multi ? spacing : 0) + closeDim.getWidth() + (hasDomain ? spacing : 0) + domainDim.getWidth();
+			double height = Math.max(openDim.getHeight(), nameDim.getHeight());
+			height = Math.max(height, derivedOpenDim.getHeight());
+			height = Math.max(height, derivedCloseDim.getHeight());
+			height = Math.max(height, closeDim.getHeight());
+			height = Math.max(height, domainDim.getHeight());
 			return new XDimension2D(width, height);
 		}
 
@@ -151,11 +164,22 @@ public final class ChenCompactRows {
 			final StringBounder stringBounder = ug.getStringBounder();
 			double x = depth * INDENT;
 			x = draw(openBrace, ug, stringBounder, x);
+			if (multi)
+				x += whitespaceSpacing();
 			final double nameStart = x;
 			x = draw(name, ug, stringBounder, x);
 			final double nameWidth = x - nameStart;
-			x = draw(derived, ug, stringBounder, x);
+			if (derived) {
+				x += whitespaceSpacing();
+				x = draw(derivedOpen, ug, stringBounder, x);
+				x += whitespaceSpacing();
+				x = draw(derivedClose, ug, stringBounder, x);
+			}
+			if (multi)
+				x += whitespaceSpacing();
 			x = draw(closeBrace, ug, stringBounder, x);
+			if (hasDomain)
+				x += whitespaceSpacing();
 			draw(domain, ug, stringBounder, x);
 
 			if (solidUnderline || dashedUnderline) {
@@ -168,6 +192,10 @@ public final class ChenCompactRows {
 		private static double draw(TextBlock block, UGraphic ug, StringBounder stringBounder, double x) {
 			block.drawU(ug.apply(UTranslate.dx(x)));
 			return x + block.calculateDimension(stringBounder).getWidth();
+		}
+
+		private double whitespaceSpacing() {
+			return font.getFont().getSize2D() / 3;
 		}
 	}
 

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.svek.image;
 import java.util.Arrays;
 
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.cheneer.ChenEerDiagram;
 import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UShape;
@@ -46,6 +47,7 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -139,9 +141,15 @@ public class EntityImageChenRelationship extends AbstractEntityImage {
 		final UStroke stroke = getStyle().getStroke(getEntity().getColors());
 		ug = applyColor(ug);
 		ug = ug.apply(stroke);
-		ug.draw(getShape(dimTotal));
 		if (isIdentifying) {
+			if (isCompactNotation())
+				ug.apply(HColors.WHITE.bg()).draw(getShape(dimTotal));
+			else
+				ug.draw(getShape(dimTotal));
+
 			ug.apply(new UTranslate(10, 5)).draw(getShape(dimTotal.delta(-20, -10)));
+		} else {
+			ug.draw(getShape(dimTotal));
 		}
 
 		final double xTitle = (dimTotal.getWidth() - dimTitle.getWidth()) / 2;
@@ -152,6 +160,10 @@ public class EntityImageChenRelationship extends AbstractEntityImage {
 			ug.closeUrl();
 
 		ug.closeGroup();
+	}
+
+	private boolean isCompactNotation() {
+		return ((ChenEerDiagram) getEntity().getDiagram()).isCompactNotation();
 	}
 
 	final protected UGraphic applyColor(UGraphic ug) {

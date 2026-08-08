@@ -1,63 +1,61 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHEN_EER" height="596px" preserveAspectRatio="none" style="width:243px;height:596px;background:#FFFFFF;" version="1.1" viewBox="0 0 243 596" width="243px" zoomAndPan="magnify">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHEN_EER" height="531px" preserveAspectRatio="none" style="width:170px;height:531px;background:#FFFFFF;" version="1.1" viewBox="0 0 170 531" width="170px" zoomAndPan="magnify">
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
     <g>
-      <rect fill="#F1F1F1" height="212" style="stroke:#181818;stroke-width:0.5;" width="194.213" x="6" y="12"/>
-      <text fill="#000" font-size="14" textLength="100.275" x="52.969" y="32.889">Customer record</text>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="200.213" y1="46" y2="46"/>
-      <text fill="#000" font-size="14" textLength="108.063" x="16" y="66.889">Customer number</text>
-      <text fill="#000" font-size="14" textLength="66.15" x="124.063" y="66.889">: INTEGER</text>
-      <line style="stroke:#000;stroke-width:1;" x1="16" x2="124.063" y1="69" y2="69"/>
-      <text fill="#000" font-size="14" textLength="37.363" x="16" y="82.889">Name</text>
-      <text fill="#000" font-size="14" textLength="27.213" x="26" y="98.889">First</text>
-      <text fill="#000" font-size="14" textLength="26.425" x="26" y="114.889">Last</text>
-      <text fill="#000" font-size="14" x="16" y="130.889">{</text>
-      <text fill="#000" font-size="14" textLength="45.238" x="20.638" y="130.889">Aliases</text>
-      <text fill="#000" font-size="14" x="65.875" y="130.889">}</text>
-      <text fill="#000" font-size="14" textLength="24.938" x="16" y="146.889">Age</text>
-      <text fill="#000" font-size="14" textLength="9.275" x="40.938" y="146.889">()</text>
-      <text fill="#000" font-size="14" x="16" y="162.889">{</text>
-      <text fill="#000" font-size="14" textLength="43.575" x="20.638" y="162.889">History</text>
-      <text fill="#000" font-size="14" textLength="9.275" x="64.213" y="162.889">()</text>
-      <text fill="#000" font-size="14" x="73.488" y="162.889">}</text>
-      <text fill="#000" font-size="14" textLength="39.725" x="16" y="178.889">Partial</text>
-      <line style="stroke:#000;stroke-width:1;stroke-dasharray:2,2;" x1="16" x2="55.725" y1="181" y2="181"/>
-      <text fill="#000" font-size="14" textLength="28.787" x="16" y="194.889">Both</text>
-      <line style="stroke:#000;stroke-width:1;" x1="16" x2="44.787" y1="197" y2="197"/>
-      <text fill="#000" font-size="14" textLength="47.425" x="16" y="210.889">Ignored</text>
+      <rect fill="#FFF" height="196" style="stroke:none;" width="132.7" x="6" y="12"/>
+      <rect fill="#D2EDF9" height="34" style="stroke:none;" width="132.7" x="6" y="12"/>
+      <rect fill="none" height="196" style="stroke:#181818;stroke-width:0.5;" width="132.7" x="6" y="12"/>
+      <text fill="#000" font-family="serif" font-size="14" font-style="italic" textLength="104.913" x="19.894" y="32.889">customer_record</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="138.7" y1="46" y2="46"/>
+      <text fill="#000" font-family="serif" font-size="14" font-style="italic" textLength="112.7" x="16" y="66.889">customer_number</text>
+      <line style="stroke:#000;stroke-width:1;" x1="16" x2="128.7" y1="69" y2="69"/>
+      <text fill="#000" font-family="serif" font-size="14" font-style="italic" textLength="35" x="16" y="82.889">name</text>
+      <text fill="#000" font-family="serif" font-size="14" font-style="italic" textLength="22.488" x="36" y="98.889">first</text>
+      <text fill="#000" font-family="serif" font-size="14" font-style="italic" textLength="21.787" x="36" y="114.889">last</text>
+      <text fill="#000" font-family="serif" font-size="14" font-style="italic" x="16" y="130.889">{</text>
+      <text fill="#000" font-family="serif" font-size="14" font-style="italic" textLength="43.663" x="25.304" y="130.889">aliases</text>
+      <text fill="#000" font-family="serif" font-size="14" font-style="italic" x="73.633" y="130.889">}</text>
+      <text fill="#000" font-family="serif" font-size="14" font-style="italic" textLength="23.363" x="16" y="146.889">age</text>
+      <text fill="#000" font-family="serif" font-size="14" font-style="italic" x="44.029" y="146.889">(</text>
+      <text fill="#000" font-family="serif" font-size="14" font-style="italic" x="53.333" y="146.889">)</text>
+      <text fill="#000" font-family="serif" font-size="14" font-style="italic" x="16" y="162.889">{</text>
+      <text fill="#000" font-family="serif" font-size="14" font-style="italic" textLength="41.212" x="25.304" y="162.889">history</text>
+      <text fill="#000" font-family="serif" font-size="14" font-style="italic" x="71.183" y="162.889">(</text>
+      <text fill="#000" font-family="serif" font-size="14" font-style="italic" x="80.488" y="162.889">)</text>
+      <text fill="#000" font-family="serif" font-size="14" font-style="italic" x="89.792" y="162.889">}</text>
+      <text fill="#000" font-family="serif" font-size="14" font-style="italic" textLength="27.213" x="16" y="178.889">both</text>
+      <line style="stroke:#000;stroke-width:1;" x1="16" x2="43.213" y1="181" y2="181"/>
+      <text fill="#000" font-family="serif" font-size="14" font-style="italic" textLength="46.725" x="16" y="194.889">ignored</text>
     </g>
     <g>
-      <rect fill="#F1F1F1" height="68" style="stroke:#181818;stroke-width:0.5;" width="52.025" x="115" y="512"/>
-      <rect fill="#F1F1F1" height="62" style="stroke:#181818;stroke-width:0.5;" width="46.025" x="118" y="515"/>
-      <text fill="#000" font-size="14" textLength="32.025" x="125" y="532.889">Child</text>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="115" x2="167.025" y1="546" y2="546"/>
-      <text fill="#000" font-size="14" textLength="11.638" x="125" y="566.889">Id</text>
-      <line style="stroke:#000;stroke-width:1;" x1="125" x2="136.638" y1="569" y2="569"/>
+      <rect fill="#FFF" height="68" style="stroke:none;" width="55" x="72" y="447"/>
+      <rect fill="#D2EDF9" height="31" style="stroke:none;" width="49" x="75" y="450"/>
+      <rect fill="none" height="68" style="stroke:#181818;stroke-width:0.5;" width="55" x="72" y="447"/>
+      <rect fill="none" height="62" style="stroke:#181818;stroke-width:0.5;" width="49" x="75" y="450"/>
+      <text fill="#000" font-family="serif" font-size="14" font-style="italic" textLength="28.875" x="85.063" y="467.889">child</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="75" x2="124" y1="481" y2="481"/>
+      <text fill="#000" font-family="serif" font-size="14" font-style="italic" textLength="35" x="82" y="501.889">name</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:2,2;" x1="82" x2="117" y1="504" y2="504"/>
     </g>
     <g>
-      <polygon fill="#FFC0CB" points="98,401.537,141.074,380,184.148,401.537,141.074,423.074" style="stroke:#F00;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <polygon fill="#FFC0CB" points="108,401.537,141.074,385,174.148,401.537,141.074,418.074" style="stroke:#F00;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <text fill="#000" font-size="14" textLength="35.788" x="123.18" y="405.426">Owns</text>
+      <polygon fill="#FFF" points="58,336.771,99.543,316,141.086,336.771,99.543,357.543" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#EFF8FC" points="68,336.771,99.543,321,131.086,336.771,99.543,352.543" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#000" font-family="serif" font-size="14" font-style="italic" textLength="32.725" x="83.18" y="340.66">owns</text>
     </g>
     <g>
-      <rect fill="#FFC0CB" height="82" style="stroke:#F00;stroke-width:0.5;" width="96.388" x="131" y="261"/>
-      <text fill="#000" font-size="14" textLength="35.088" x="141" y="281.889">Since</text>
-      <text fill="#000" font-size="14" textLength="41.3" x="176.088" y="281.889">: DATE</text>
-      <text fill="#000" font-size="14" textLength="42.875" x="141" y="297.889">Details</text>
-      <text fill="#000" font-size="14" textLength="36.488" x="151" y="313.889">Office</text>
-      <text fill="#000" font-size="14" textLength="33.512" x="151" y="329.889">Code</text>
-      <line style="stroke:#000;stroke-width:1;stroke-dasharray:2,2;" x1="151" x2="184.513" y1="332" y2="332"/>
+      <rect fill="#EFF8FC" height="34" style="stroke:#181818;stroke-width:0.5;" width="52.725" x="101" y="245"/>
+      <text fill="#000" font-family="serif" font-size="14" font-style="italic" textLength="32.725" x="111" y="265.889">since</text>
     </g>
     <g class="link" data-entity-1="ent0004" data-entity-2="ent0003" data-link-type="association" id="lnk5">
-      <path d="M163.325,343.22 C158.418,355.809 153.206,369.182 149.053,379.838" fill="none" style="stroke:#F00;stroke-width:1;stroke-dasharray:7,7;"/>
+      <path d="M121.286,279.201 C117.129,290.038 111.63,304.376 107.196,315.935" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
     </g>
     <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="association" id="lnk6">
-      <path d="M98.055,224.063 C98.655,262.055 102.136,304.948 112,343 C115.339,355.879 121.84,369.209 127.842,379.788" fill="none" style="stroke:#181818;stroke-width:1;"/>
-      <text fill="#000" font-size="11" x="114" y="305.056">1</text>
+      <path d="M73.543,208.319 C74.94,231.607 77.376,256.297 81.5,279 C83.763,291.457 87.957,304.986 91.728,315.736" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" x="83.5" y="265.056">1</text>
     </g>
     <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="association" id="lnk7">
-      <path d="M141,423.221 C141,446.455 141,484.46 141,511.838" fill="none" style="stroke:#181818;stroke-width:2;"/>
-      <text fill="#000" font-size="11" x="143" y="470.556">N</text>
+      <path d="M99.5,358.044 C99.5,381.132 99.5,419.414 99.5,446.933" fill="none" style="stroke:#181818;stroke-width:2;"/>
+      <text fill="#000" font-size="11" x="101.5" y="405.556">N</text>
     </g>
   </g>
 </svg>
