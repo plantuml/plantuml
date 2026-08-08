@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.cheneer.command;
+package net.sourceforge.plantuml.cheneer;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import net.sourceforge.plantuml.cheneer.ChenEerDiagram;
+import net.sourceforge.plantuml.cheneer.command.CommandCreateEntity;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.core.UmlSource;

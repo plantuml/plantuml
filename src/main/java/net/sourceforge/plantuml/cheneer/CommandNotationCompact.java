@@ -12,10 +12,9 @@
  * (at your option) any later version.
  *
  */
-package net.sourceforge.plantuml.cheneer.command;
+package net.sourceforge.plantuml.cheneer;
 
 import net.sourceforge.plantuml.annotation.Explain;
-import net.sourceforge.plantuml.cheneer.ChenEerDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -25,9 +24,9 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandNotationCompact extends SingleLineCommand2<ChenEerDiagram> {
+final class CommandNotationCompact extends SingleLineCommand2<ChenEerDiagram> {
 
-	public CommandNotationCompact() {
+	CommandNotationCompact() {
 		super(getRegexConcat());
 	}
 

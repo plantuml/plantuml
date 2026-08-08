@@ -3,6 +3,7 @@ package net.sourceforge.plantuml.cheneer;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -14,10 +15,8 @@ import org.junit.jupiter.api.Test;
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
-import net.sourceforge.plantuml.cheneer.command.CommandCreateAttribute;
 import net.sourceforge.plantuml.cheneer.command.CommandCreateEntity;
 import net.sourceforge.plantuml.cheneer.command.CommandEndGroup;
-import net.sourceforge.plantuml.cheneer.command.CommandNotationCompact;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -35,10 +34,10 @@ class ChenEerDiagramCompactTest {
 	void test_aliasDomainFlagsAndTopology() throws Exception {
 		execute(new CommandNotationCompact(), "notation compact");
 		execute(new CommandCreateEntity(), "entity Customer {");
-		execute(new CommandCreateAttribute(), "\"Customer number\" as Number : INTEGER <<KEY>><<multi>><<derived>>");
-		execute(new CommandCreateAttribute(), "Partial <<Discriminator>>");
-		execute(new CommandCreateAttribute(), "Ignored <<keyish>>");
-		execute(new CommandCreateAttribute(), "Both <<key>><<discriminator>>");
+		execute(new CommandCreateAttributeDispatch(), "\"Customer number\" as Number : INTEGER <<KEY>><<multi>><<derived>>");
+		execute(new CommandCreateAttributeDispatch(), "Partial <<Discriminator>>");
+		execute(new CommandCreateAttributeDispatch(), "Ignored <<keyish>>");
+		execute(new CommandCreateAttributeDispatch(), "Both <<key>><<discriminator>>");
 
 		final Entity customer = diagram.quarkInContext(true, "Customer").getData();
 		final List<CompactChenAttribute> rows = diagram.getCompactAttributes(customer);
@@ -70,11 +69,11 @@ class ChenEerDiagramCompactTest {
 	void test_nestedPathsDepthAndDuplicates() throws Exception {
 		execute(new CommandNotationCompact(), "notation compact");
 		execute(new CommandCreateEntity(), "entity E {");
-		execute(new CommandCreateAttribute(), "Address {");
-		execute(new CommandCreateAttribute(), "Street");
+		execute(new CommandCreateAttributeDispatch(), "Address {");
+		execute(new CommandCreateAttributeDispatch(), "Street");
 		execute(new CommandEndGroup(), "}");
-		execute(new CommandCreateAttribute(), "Other {");
-		execute(new CommandCreateAttribute(), "Street");
+		execute(new CommandCreateAttributeDispatch(), "Other {");
+		execute(new CommandCreateAttributeDispatch(), "Street");
 
 		final Entity entity = diagram.quarkInContext(true, "E").getData();
 		final List<CompactChenAttribute> rows = diagram.getCompactAttributes(entity);
@@ -84,7 +83,7 @@ class ChenEerDiagramCompactTest {
 		assertEquals("E/Other/Street", rows.get(3).getQualifiedIdentity());
 
 		execute(new CommandEndGroup(), "}");
-		final CommandExecutionResult duplicate = new CommandCreateAttribute().execute(diagram,
+		final CommandExecutionResult duplicate = new CommandCreateAttributeDispatch().execute(diagram,
 				BlocLines.singleString("Address"), ParserPass.ONE);
 		assertFalse(duplicate.isOk());
 	}
@@ -93,16 +92,20 @@ class ChenEerDiagramCompactTest {
 	void test_relationshipGetsOneLazyBoxAndDashedLink() throws Exception {
 		execute(new CommandNotationCompact(), "notation compact");
 		execute(new CommandCreateEntity(), "relationship R #pink;line:red {");
-		execute(new CommandCreateAttribute(), "Started : DATE #lime;line:orange");
-		execute(new CommandCreateAttribute(), "Location <<multi>>");
+		execute(new CommandCreateAttributeDispatch(), "Started : DATE #lime;line:orange");
+		execute(new CommandCreateAttributeDispatch(), "Location <<multi>>");
 
-		final List<Entity> boxes = diagram.leafs().stream()
-				.filter(entity -> entity.getLeafType() == LeafType.CHEN_RELATIONSHIP_ATTRIBUTE).toList();
-		assertEquals(1, boxes.size());
-		assertEquals(2, diagram.getCompactAttributes(boxes.get(0)).size());
+		final Entity box = diagram.quarkInContext(true,
+				"R/__plantuml_compact_relationship_attributes__").getData();
+		assertNotNull(box);
+		assertEquals(LeafType.CHEN_ATTRIBUTE, box.getLeafType());
+		assertEquals(2, diagram.getCompactAttributes(box).size());
 		assertEquals(1, diagram.getLinks().size());
 		assertEquals("NONE-DASHED(null)-NONE", diagram.getLinks().get(0).getType().toString());
-		assertEquals(diagram.quarkInContext(true, "R").getData().getColors(), boxes.get(0).getColors());
+		assertEquals(diagram.quarkInContext(true, "R").getData().getColors(), box.getColors());
+
+		diagram.makeDiagramReady();
+		assertInstanceOf(EntityImageChenRelationshipAttribute.class, box.getSvekImage());
 	}
 
 	@Test
@@ -115,11 +118,24 @@ class ChenEerDiagramCompactTest {
 	}
 
 	@Test
+	void test_standardAttributeCommandKeepsLeafTopology() throws Exception {
+		execute(new CommandCreateEntity(), "entity E {");
+		execute(new CommandCreateAttributeDispatch(), "id");
+
+		assertNotNull(diagram.quarkInContext(true, "E/id").getData());
+		assertEquals(2, diagram.leafs().size());
+		assertEquals(1, diagram.getLinks().size());
+	}
+
+	@Test
 	void test_commonDirectivesMayPrecedeNotation() {
 		final String source = "@startchen\n" + "skinparam backgroundColor white\n"
 				+ "<style>\nchenEerDiagram {\n  BackGroundColor white\n}\n</style>\n" + "left to right direction\n"
 				+ "notation compact\n" + "entity E {\n" + "  id <<key>>\n" + "}\n" + "@endchen\n";
-		assertInstanceOf(ChenEerDiagram.class, new SourceStringReader(source).getBlocks().get(0).getDiagram());
+		final ChenEerDiagram parsed = assertInstanceOf(ChenEerDiagram.class,
+				new SourceStringReader(source).getBlocks().get(0).getDiagram());
+		assertInstanceOf(EntityImageChenCompactEntity.class,
+				parsed.quarkInContext(true, "E").getData().getSvekImage());
 	}
 
 	@Test

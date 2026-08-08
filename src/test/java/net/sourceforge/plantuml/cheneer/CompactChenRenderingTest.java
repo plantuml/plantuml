@@ -3,6 +3,7 @@ package net.sourceforge.plantuml.cheneer;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayOutputStream;
@@ -26,6 +27,10 @@ class CompactChenRenderingTest {
 
 	@Test
 	void test_svgManualUnderlines() throws Exception {
+		final ChenEerDiagram diagram = assertInstanceOf(ChenEerDiagram.class,
+				new SourceStringReader(SOURCE).getBlocks().get(0).getDiagram());
+		assertInstanceOf(EntityImageChenCompactEntity.class,
+				diagram.quarkInContext(true, "E").getData().getSvekImage());
 		final byte[] rendered = render(FileFormat.SVG);
 		final String svg = new String(rendered, UTF_8);
 		assertTrue(svg.contains("Customer number"));

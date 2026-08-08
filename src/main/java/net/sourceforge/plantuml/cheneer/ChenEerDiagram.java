@@ -72,7 +72,6 @@ public class ChenEerDiagram extends AbstractEntityDiagram {
 	private final Map<Entity, Entity> relationshipBoxes = new IdentityHashMap<>();
 	private final Set<String> compactAttributeIds = new LinkedHashSet<>();
 	private boolean compactNotation;
-	private boolean declarationSeen;
 
 	private static final class OwnerFrame {
 		private final Entity owner;
@@ -136,23 +135,19 @@ public class ChenEerDiagram extends AbstractEntityDiagram {
 		return ownerStack.peek().owner;
 	}
 
-	public boolean isCompactNotation() {
+	boolean isCompactNotation() {
 		return compactNotation;
 	}
 
-	public boolean useCompactNotation() {
-		if (declarationSeen)
+	boolean useCompactNotation() {
+		if (leafs().isEmpty() == false)
 			return false;
 
 		compactNotation = true;
 		return true;
 	}
 
-	public void markDeclaration() {
-		declarationSeen = true;
-	}
-
-	public boolean addCompactAttribute(LineLocation location, String identity, String displayName, String domain,
+	boolean addCompactAttribute(LineLocation location, String identity, String displayName, String domain,
 			Stereotype stereotype, boolean composite) {
 		final OwnerFrame frame = ownerStack.peek();
 		final String path = frame.attributePath.length() == 0 ? identity : frame.attributePath + "/" + identity;
@@ -182,7 +177,7 @@ public class ChenEerDiagram extends AbstractEntityDiagram {
 
 		final String id = relationship.getName() + RELATIONSHIP_ATTRIBUTE_BOX;
 		final Quark<Entity> quark = quarkInContext(true, id);
-		box = reallyCreateLeaf(location, quark, Display.empty(), LeafType.CHEN_RELATIONSHIP_ATTRIBUTE, null);
+		box = reallyCreateLeaf(location, quark, Display.empty(), LeafType.CHEN_ATTRIBUTE, null);
 		box.setColors(relationship.getColors());
 		box.setStereotype(relationship.getStereotype());
 		relationshipBoxes.put(relationship, box);
@@ -201,6 +196,24 @@ public class ChenEerDiagram extends AbstractEntityDiagram {
 			return Collections.emptyList();
 
 		return Collections.unmodifiableList(rows);
+	}
+
+	@Override
+	public void makeDiagramReady() {
+		super.makeDiagramReady();
+		if (compactNotation == false)
+			return;
+
+		for (Entity entity : leafs())
+			if (entity.getLeafType() == LeafType.CHEN_RELATIONSHIP)
+				entity.setSvekImage(new EntityImageChenCompactRelationship(entity));
+
+		for (Entity owner : compactAttributes.keySet()) {
+			if (owner.getLeafType() == LeafType.CHEN_ENTITY)
+				owner.setSvekImage(new EntityImageChenCompactEntity(owner));
+			else
+				owner.setSvekImage(new EntityImageChenRelationshipAttribute(owner));
+		}
 	}
 
 }

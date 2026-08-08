@@ -35,8 +35,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
-/** Internal bridge between the Chen model and its Svek renderers. */
-public final class ChenCompactRows {
+final class ChenCompactRows {
 
 	private static final int INDENT = 20;
 	private static final int ROW_GAP = 2;
@@ -44,11 +43,11 @@ public final class ChenCompactRows {
 	private ChenCompactRows() {
 	}
 
-	public static boolean hasRows(Entity entity) {
+	static boolean hasRows(Entity entity) {
 		return getRows(entity).isEmpty() == false;
 	}
 
-	public static TextBlock create(Entity entity) {
+	static TextBlock create(Entity entity) {
 		final ChenEerDiagram diagram = (ChenEerDiagram) entity.getDiagram();
 		final List<Row> rows = new ArrayList<>();
 		for (CompactChenAttribute attribute : diagram.getCompactAttributes(entity)) {

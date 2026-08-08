@@ -12,13 +12,11 @@
  * (at your option) any later version.
  *
  */
-package net.sourceforge.plantuml.svek.image;
+package net.sourceforge.plantuml.cheneer;
 
 import net.sourceforge.plantuml.abel.Entity;
-import net.sourceforge.plantuml.cheneer.ChenCompactRows;
 import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
-import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
@@ -36,13 +34,13 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 
-public class EntityImageChenRelationshipAttribute extends AbstractEntityImage {
+final class EntityImageChenRelationshipAttribute extends AbstractEntityImage {
 
 	private static final int PADDING = 10;
 
 	private final TextBlock rows;
 
-	public EntityImageChenRelationshipAttribute(Entity entity) {
+	EntityImageChenRelationshipAttribute(Entity entity) {
 		super(entity);
 		this.rows = ChenCompactRows.create(entity);
 	}

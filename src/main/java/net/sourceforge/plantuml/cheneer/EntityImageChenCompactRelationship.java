@@ -2,14 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
- *
- * Project Info:  https://plantuml.com
- *
- * If you like this project or if you find it useful, you can support us at:
- *
- * https://plantuml.com/patreon (only 1$ per month!)
- * https://plantuml.com/paypal
+ * (C) Copyright 2009-2026, Arnaud Roques
  *
  * This file is part of PlantUML.
  *
@@ -18,22 +11,8 @@
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * PlantUML distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
- * License for more details.
- *
- * You should have received a copy of the GNU General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
- * USA.
- *
- *
- * Original Author:  Arnaud Roques
- *
- *
  */
-package net.sourceforge.plantuml.svek.image;
+package net.sourceforge.plantuml.cheneer;
 
 import java.util.Arrays;
 
@@ -46,6 +25,7 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -65,25 +45,20 @@ import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.url.Url;
 
-public class EntityImageChenRelationship extends AbstractEntityImage {
+final class EntityImageChenCompactRelationship extends AbstractEntityImage {
 
-	final private boolean isIdentifying;
+	private final boolean identifying;
+	private final TextBlock title;
+	private final Url url;
 
-	final private TextBlock title;
-	final private Url url;
-
-	public EntityImageChenRelationship(Entity entity) {
+	EntityImageChenCompactRelationship(Entity entity) {
 		super(entity);
-
-		isIdentifying = hasStereotype("<<identifying>>");
-
+		this.identifying = hasStereotype("<<identifying>>");
 		final FontConfiguration titleFontConfiguration = getStyleTitle(entity, getSkinParam())
 				.getFontConfiguration(getSkinParam().getIHtmlColorSet(), entity.getColors());
-
-		title = entity.getDisplay().create8(titleFontConfiguration, HorizontalAlignment.CENTER, getSkinParam(),
+		this.title = entity.getDisplay().create8(titleFontConfiguration, HorizontalAlignment.CENTER, getSkinParam(),
 				CreoleMode.FULL, getStyle().wrapWidth());
-
-		url = entity.getUrl99();
+		this.url = entity.getUrl99();
 	}
 
 	private boolean hasStereotype(String stereotype) {
@@ -99,15 +74,15 @@ public class EntityImageChenRelationship extends AbstractEntityImage {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.chenEerDiagram, SName.chenRelationship);
 	}
 
-	private Style getStyle(Entity group, ISkinParam skinParam) {
-		return getStyleSignature().withTOBECHANGED(group.getStereotype())
+	private Style getStyle(Entity entity, ISkinParam skinParam) {
+		return getStyleSignature().withTOBECHANGED(entity.getStereotype())
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
-	private static Style getStyleTitle(Entity group, ISkinParam skinParam) {
+	private static Style getStyleTitle(Entity entity, ISkinParam skinParam) {
 		return StyleSignatureBasic
 				.of(SName.root, SName.element, SName.chenEerDiagram, SName.chenRelationship, SName.title)
-				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.withTOBECHANGED(entity.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
 	@Override
@@ -118,11 +93,6 @@ public class EntityImageChenRelationship extends AbstractEntityImage {
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
 		final XDimension2D dimTitle = title.calculateDimension(stringBounder);
-
-		// Fit a diamond with aspect ratio 2 around the text
-		// diagonal = dimTitle dot ([1, 2] / sqrt(5)) + 2 * MARGIN
-		// dimTotal = diagonal * [sqrt(5), sqrt(5) / 2]
-
 		final double diagonal = (dimTitle.getWidth() + 2 * dimTitle.getHeight()) / Math.sqrt(5) + 2 * MARGIN;
 		return new XDimension2D(diagonal * Math.sqrt(5), diagonal * Math.sqrt(5) / 2);
 	}
@@ -135,13 +105,13 @@ public class EntityImageChenRelationship extends AbstractEntityImage {
 
 		final XDimension2D dimTotal = calculateDimension(ug.getStringBounder());
 		final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
-
 		final UStroke stroke = getStyle().getStroke(getEntity().getColors());
-		ug = applyColor(ug);
-		ug = ug.apply(stroke);
-		ug.draw(getShape(dimTotal));
-		if (isIdentifying) {
+		ug = applyColor(ug).apply(stroke);
+		if (identifying) {
+			ug.apply(HColors.WHITE.bg()).draw(getShape(dimTotal));
 			ug.apply(new UTranslate(10, 5)).draw(getShape(dimTotal.delta(-20, -10)));
+		} else {
+			ug.draw(getShape(dimTotal));
 		}
 
 		final double xTitle = (dimTotal.getWidth() - dimTitle.getWidth()) / 2;
@@ -150,36 +120,25 @@ public class EntityImageChenRelationship extends AbstractEntityImage {
 
 		if (url != null)
 			ug.closeUrl();
-
 		ug.closeGroup();
 	}
 
-	final protected UGraphic applyColor(UGraphic ug) {
-		Colors colors = getEntity().getColors();
-
+	private UGraphic applyColor(UGraphic ug) {
+		final Colors colors = getEntity().getColors();
 		HColor border = colors.getColor(ColorType.LINE);
 		if (border == null)
 			border = getStyle().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
-		ug = ug.apply(border);
-
-		HColor backcolor = colors.getColor(ColorType.BACK);
-		if (backcolor == null)
-			backcolor = getStyle().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
-		ug = ug.apply(backcolor.bg());
-
-		return ug;
+		HColor background = colors.getColor(ColorType.BACK);
+		if (background == null)
+			background = getStyle().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
+		return ug.apply(border).apply(background.bg());
 	}
 
 	private UShape getShape(XDimension2D dimTotal) {
 		final double width = dimTotal.getWidth();
 		final double height = dimTotal.getHeight();
-
-		final XPoint2D p1 = new XPoint2D(0, height / 2);
-		final XPoint2D p2 = new XPoint2D(width / 2, 0);
-		final XPoint2D p3 = new XPoint2D(width, height / 2);
-		final XPoint2D p4 = new XPoint2D(width / 2, height);
-
-		return new UPolygon(Arrays.asList(p1, p2, p3, p4));
+		return new UPolygon(Arrays.asList(new XPoint2D(0, height / 2), new XPoint2D(width / 2, 0),
+				new XPoint2D(width, height / 2), new XPoint2D(width / 2, height)));
 	}
 
 }
