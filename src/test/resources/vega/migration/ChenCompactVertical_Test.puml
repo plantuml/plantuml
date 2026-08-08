@@ -1,0 +1,48 @@
+---
+output: svg
+expected-description: (4 entities)
+---
+@startchen
+notation compact
+
+entity customer_record {
+  customer_number <<key>>
+  name {
+    first
+    last
+  }
+  aliases <<multi>>
+  age <<derived>>
+  history <<multi>><<derived>>
+  both <<key>><<discriminator>>
+  ignored <<keyish>>
+}
+
+entity child <<weak>> {
+  name <<discriminator>>
+}
+
+relationship owns <<identifying>> {
+  since
+}
+
+customer_record -1- owns
+owns =N= child
+
+<style>
+chenEerDiagram {
+  FontName "Serif"
+  FontSize 14
+  FontStyle italic
+  BackGroundColor #EFF8FC
+
+  chenEntity {
+    BackGroundColor White
+    title {
+      BackGroundColor #D2EDF9
+    }
+  }
+}
+</style>
+
+@endchen

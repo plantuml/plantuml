@@ -308,6 +308,20 @@
       "diagram_class": "DescriptionDiagram"
     },
     {
+      "file": "migration/ChenCompactHorizontal_Test.puml",
+      "folder": "migration",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "ChenEerDiagram"
+    },
+    {
+      "file": "migration/ChenCompactVertical_Test.puml",
+      "folder": "migration",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "ChenEerDiagram"
+    },
+    {
       "file": "migration/ChenMovieAlias_Test.puml",
       "folder": "migration",
       "status": "pass",
@@ -1693,8 +1707,8 @@
     }
   ],
   "summary": {
-    "total": 205,
-    "passed": 201,
+    "total": 207,
+    "passed": 203,
     "failed": 0,
     "skipped": 4
   }
