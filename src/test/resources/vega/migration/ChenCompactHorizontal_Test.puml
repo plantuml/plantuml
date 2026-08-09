@@ -1,0 +1,46 @@
+---
+output: svg
+expected-description: (4 entities)
+---
+@startchen
+left to right direction
+skinparam backgroundColor white
+notation compact
+
+entity account {
+  ID <<KEY>>
+  profile {
+    display_name
+  }
+  roles <<MULTI>>
+}
+
+entity session {
+  token <<key>><<derived>>
+}
+
+relationship opens {
+  time
+  agent
+}
+
+account -1- opens
+opens =N= session
+
+<style>
+chenEerDiagram {
+  FontName "Serif"
+  FontSize 14
+  FontStyle italic
+  BackGroundColor #EFF8FC
+
+  chenEntity {
+    BackGroundColor White
+    title {
+      BackGroundColor #D2EDF9
+    }
+  }
+}
+</style>
+
+@endchen

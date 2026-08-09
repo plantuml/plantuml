@@ -215,9 +215,10 @@ public final class GraphvizImageBuilder {
 			final Entity single = dotData.getLeafs().iterator().next();
 			final Entity group = single.getParentContainer();
 			if (group.isRoot() && single.getUSymbol() instanceof USymbolHexagon == false) {
-				final IEntityImage tmp = GeneralImageBuilder.createEntityImageBlock(single,
-						dotData.isHideEmptyDescriptionForState(), dotData.getPortionShower(), null, null,
-						dotData.getLinks());
+				final IEntityImage tmp = single.getSvekImage() == null
+						? GeneralImageBuilder.createEntityImageBlock(single, dotData.isHideEmptyDescriptionForState(),
+								dotData.getPortionShower(), null, null, dotData.getLinks())
+						: single.getSvekImage();
 				return new EntityImageDegenerated(tmp, getBackcolor());
 			}
 		}
