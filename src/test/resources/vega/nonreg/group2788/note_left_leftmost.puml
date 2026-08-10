@@ -1,0 +1,10 @@
+---
+output: svg
+expected-description: (2 participants)
+---
+@startuml
+Bob -> Alice: hello
+alt https://www.plantuml.com
+note left of Bob: https://www.google.com
+end
+@enduml

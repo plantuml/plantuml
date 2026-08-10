@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (5 participants)
+---
+@startuml
+x -> x: start
+group test
+a -> b: 1
+group inner
+c -> c: 2
+end
+end
+d -> d: next
+@enduml

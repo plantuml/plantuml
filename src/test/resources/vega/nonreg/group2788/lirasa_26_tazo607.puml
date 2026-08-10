@@ -1,0 +1,19 @@
+---
+output: svg
+expected-description: (4 participants)
+---
+@startuml
+alt dummy
+alt foo
+Bob->Alice : hello
+else
+Bob<-Alice : hello2
+end
+note right: Some explication on foo.
+else
+Bob<-Alice : hello3
+end
+note right: Some explication on dummy.
+Alice->John_smith : hello
+Alice->An_other_actor : hello
+@enduml

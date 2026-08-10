@@ -1,0 +1,10 @@
+---
+output: svg
+expected-description: (3 participants)
+---
+@startuml
+loop this loop label is much wider than its body
+a -> b: hi
+end
+c -> c: next
+@enduml

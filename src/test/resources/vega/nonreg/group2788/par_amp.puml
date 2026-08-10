@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (4 participants)
+---
+@startuml
+!pragma teoz true
+group g1
+a -> b: 1
+end
+& group g2
+c -> c: 2
+end
+d -> d: next
+@enduml

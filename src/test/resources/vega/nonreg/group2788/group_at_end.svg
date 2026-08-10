@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="207px" preserveAspectRatio="none" style="width:170px;height:207px;background:#FFFFFF;" version="1.1" viewBox="0 0 170 207" width="170px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="none" height="65" style="stroke:#000;stroke-width:1.5;" width="82" x="68.075" y="78"/>
+    <g>
+      <title>a</title>
+      <rect fill="#000" fill-opacity="0" height="128" width="8" x="17.394" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="20.894" x2="20.894" y1="39" y2="167"/>
+    </g>
+    <g>
+      <title>b</title>
+      <rect fill="#000" fill-opacity="0" height="128" width="8" x="49.181" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="52.681" x2="52.681" y1="39" y2="167"/>
+    </g>
+    <g>
+      <title>c</title>
+      <rect fill="#000" fill-opacity="0" height="128" width="8" x="80.575" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="84.075" x2="84.075" y1="39" y2="167"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="10" y="10"/>
+    <text fill="#000" font-size="14" x="17" y="27.889">a</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="41.788" y="10"/>
+    <text fill="#000" font-size="14" x="48.788" y="27.889">b</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21" x="73.575" y="10"/>
+    <text fill="#000" font-size="14" x="80.575" y="27.889">c</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="10" y="167"/>
+    <text fill="#000" font-size="14" x="17" y="184.889">a</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="41.788" y="167"/>
+    <text fill="#000" font-size="14" x="48.788" y="184.889">b</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21" x="73.575" y="167"/>
+    <text fill="#000" font-size="14" x="80.575" y="184.889">c</text>
+    <polygon fill="#181818" points="40.681,62,50.681,66,40.681,70,44.681,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="20.894" x2="46.681" y1="66" y2="66"/>
+    <text fill="#000" font-size="13" x="27.894" y="61.111">1</text>
+    <path d="M68.075,78 L133.956,78 L133.956,83 L123.956,93 L68.075,93 L68.075,78" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="65" style="stroke:#000;stroke-width:1.5;" width="82" x="68.075" y="78"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="20.881" x="83.075" y="89.111">test</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="84.075" x2="126.075" y1="122" y2="122"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="126.075" x2="126.075" y1="122" y2="135"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="85.075" x2="126.075" y1="135" y2="135"/>
+    <polygon fill="#181818" points="95.075,131,85.075,135,95.075,139,91.075,135" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" x="91.075" y="117.111">2</text>
+  </g>
+</svg>

@@ -37,11 +37,9 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.asciiverse.ADimension2D;
@@ -68,6 +66,9 @@ import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.Notes;
+import net.sourceforge.plantuml.sequencediagram.Participant;
+import net.sourceforge.plantuml.sequencediagram.Reference;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
@@ -403,14 +404,9 @@ public class GroupingTile extends AbstractTile {
 	private void ensureFollowingParticipantClearsFrame() {
 		final LivingSpaces livingSpaces = tileArguments.getLivingSpaces();
 		final Set<LivingSpace> touched = new HashSet<>();
-		final Map<LivingSpace, List<Tile>> selfMessagesByLivingSpace = new HashMap<>();
-		collectTouchedLivingSpaces(tiles, livingSpaces, touched, selfMessagesByLivingSpace);
+		collectTouchedLivingSpaces(tiles, livingSpaces, touched);
 
-		LivingSpace rightmost = null;
-		for (LivingSpace candidate : livingSpaces.values())
-			if (touched.contains(candidate))
-				rightmost = candidate;
-
+		final LivingSpace rightmost = rightmostOf(livingSpaces, touched);
 		if (rightmost == null)
 			return;
 
@@ -429,28 +425,148 @@ public class GroupingTile extends AbstractTile {
 		// constructor would otherwise have computed.
 		nextPosA.ensureBiggerThan(rightmost.getPosC(getStringBounder()).addFixed(frameMargin));
 
-		// A self-message ending on the rightmost participant reaches further
-		// right than its own posC (that's the whole shape of issue #2788) --
-		// each one found gets its own extra push, safe to add independently
-		// since ensureBiggerThan() calls simply stack (the solver satisfies all
-		// of them, which is exactly the "max" this deliberately avoids computing
-		// via RealUtils.max()).
-		final List<Tile> selfMessages = selfMessagesByLivingSpace.get(rightmost);
-		if (selfMessages != null)
-			for (Tile tile : selfMessages)
-				nextPosA.ensureBiggerThan(tile.getMaxX().addFixed(frameMargin));
+		// Everything else that can widen the frame beyond that baseline: a
+		// self-message loop, a right-hand note, a note over a participant, the
+		// group's own title, and the same list again for every nested group
+		// (whose frame carries its own margins on top of ours).
+		ensureClearsFrameOf(this, nextPosA, frameMargin, livingSpaces);
+	}
+
+	// The contributors to `max2`/`min2` (see the constructor) that this method is
+	// allowed to replay, and the ONE reason the list is a whitelist rather than a
+	// plain `tile.getMaxX()` on everything: see the RealMax caching trap described
+	// above. A tile is listed here only once its getMaxX() has been read and
+	// confirmed to be a plain delta chain over LivingSpace positions --
+	// CommunicationTile, NotesTile, ElseTile and GroupingTile itself all compose a
+	// RealUtils.max()/min() and are deliberately absent (the first is covered by
+	// the posC baseline, the last by the recursion below). NoteTile answers with a
+	// list rather than one Real: under OVER_SEVERAL its own getMaxX() composes a
+	// RealUtils.max() that has to be split back into its two safe halves.
+	//
+	// DelayTile is absent for a different, unfixable reason: its getMaxX() is built
+	// on RealUtils.middle(FIRST living space, LAST living space) -- the whole
+	// diagram's width, the participant being pushed included. Constraining that
+	// participant from it would feed itself. A `...` inside a group therefore still
+	// stretches the frame across the diagram and can leave the next participant
+	// under it; that width is questionable in its own right and is not something
+	// this method can decide.
+	private static List<Real> stableMaxX(Tile tile) {
+		if (tile instanceof NoteTile)
+			return ((NoteTile) tile).getStableMaxX();
+
+		if (tile instanceof CommunicationTileSelf //
+				|| tile instanceof CommunicationTileNoteRight //
+				|| tile instanceof CommunicationTileSelfNoteRight //
+				|| tile instanceof LifeEventTile //
+				|| tile instanceof ReferenceTile //
+				|| tile instanceof DividerTile)
+			return Collections.singletonList(tile.getMaxX());
+
+		return Collections.emptyList();
+	}
+
+	// Pushes `nextPosA` past every right edge `group`'s own frame is built on,
+	// `margin` beyond each of them. Each push stands on its own -- stacked
+	// ensureBiggerThan() calls are exactly the "max" the constructor computes
+	// with RealUtils.max(), minus the caching trap, since the solver reads each
+	// endpoint afresh on every compile() pass.
+	//
+	// A nested group recurses with `margin` grown by its own frame margins:
+	// nothing else knows that an inner frame sits MARGINX + EXTERNAL_MARGINX2
+	// outside the content it wraps, and that offset stacks once per nesting
+	// level (issue #2788, `group` inside `group`).
+	private void ensureClearsFrameOf(GroupingTile group, Real nextPosA, double margin, LivingSpaces livingSpaces) {
+		ensureClearsTitleOf(group, nextPosA, margin, livingSpaces);
+
+		for (Tile tile : group.tiles) {
+			if (tile instanceof GroupingTile) {
+				// A nested group's own right-hand notes are part of what it reports
+				// as its getMaxX(), so the parent frame is stretched to cover them
+				// too -- they hang INSIDE the parent, unlike this group's own notes,
+				// which hang outside its frame and push nothing. A plain distance
+				// again, so it just joins the margin.
+				final GroupingTile nested = (GroupingTile) tile;
+				final double notes = nested.getNotesWidth(getStringBounder(), NotePosition.RIGHT);
+				ensureClearsFrameOf(nested, nextPosA, margin + MARGINX + EXTERNAL_MARGINX2 + notes, livingSpaces);
+				continue;
+			}
+			for (Real maxX : stableMaxX(tile))
+				nextPosA.ensureBiggerThan(maxX.addFixed(margin));
+		}
+	}
+
+	// A group whose title is wider than its content is stretched by its own
+	// header, not by anything a child tile reports: the constructor says so with
+	// `max2.add(this.min.addFixed(width + 16))`. That `min` is a RealMin and
+	// cannot be handed to ensureBiggerThan(), so the left edge is re-derived from
+	// the leftmost touched participant instead -- which is what `min` resolves to
+	// in the ordinary case, `min2` being built from `tile.getMinX() - MARGINX` and
+	// a message's getMinX() being its leftmost participant's posC. A left-hand
+	// note reaches further left than that, so its overhang -- a fixed distance, not
+	// a Real -- is subtracted back off. Getting that subtraction right matters:
+	// without it, a group whose leftmost participant carries a wide `note over`
+	// pushed the next participant by half that note's width too far, which on a
+	// diagram with two participants and a narrow frame is the whole visible gap.
+	// Anything left unaccounted for still over-estimates the left edge and
+	// therefore the push, which is the harmless direction -- under-estimating
+	// would put the participant back under the frame.
+	private void ensureClearsTitleOf(GroupingTile group, Real nextPosA, double margin, LivingSpaces livingSpaces) {
+		final Set<LivingSpace> touched = new HashSet<>();
+		collectTouchedLivingSpaces(group.tiles, livingSpaces, touched);
+
+		LivingSpace leftmost = null;
+		for (LivingSpace candidate : livingSpaces.values())
+			if (touched.contains(candidate)) {
+				leftmost = candidate;
+				break;
+			}
+
+		if (leftmost == null)
+			return;
+
+		// Two corrections to `margin`, both from the constructor's own formulas:
+		// the left edge is `min = leftmost.posC - MARGINX` (min2 is built from
+		// getMinX() MINUS MARGINX), and the title contributor is added to max2 RAW
+		// -- `max2.add(this.min.addFixed(width + 16))`, with no MARGINX of its own,
+		// unlike every child tile. So only EXTERNAL_MARGINX2 separates it from the
+		// drawn frame edge, and pushing a full frameMargin here would leave 16px of
+		// dead space to the right of every group whose title drives its width.
+		double overhang = 0;
+		for (Tile tile : group.tiles)
+			if (tile instanceof NoteTile && ((NoteTile) tile).getLeftAnchor() == leftmost)
+				overhang = Math.max(overhang, ((NoteTile) tile).getLeftOverhang());
+
+		final double width = group.getPreferredDimensionIfEmpty(getStringBounder()).getWidth();
+		nextPosA.ensureBiggerThan(
+				leftmost.getPosC(getStringBounder()).addFixed(width + 16 - MARGINX - MARGINX - overhang + margin));
+	}
+
+	private static void addTouched(Set<LivingSpace> touched, LivingSpaces livingSpaces, Participant participant) {
+		if (participant == null)
+			return;
+
+		final LivingSpace livingSpace = livingSpaces.get(participant);
+		if (livingSpace != null)
+			touched.add(livingSpace);
+	}
+
+	private static LivingSpace rightmostOf(LivingSpaces livingSpaces, Set<LivingSpace> touched) {
+		LivingSpace rightmost = null;
+		for (LivingSpace candidate : livingSpaces.values())
+			if (touched.contains(candidate))
+				rightmost = candidate;
+
+		return rightmost;
 	}
 
 	// Walks this group's tiles (and any nested groups) to find every
-	// LivingSpace touched by a message/self-message/life-event, and
-	// separately buckets the CommunicationTileSelf tiles by the LivingSpace
-	// they self-message on (needed above to add their loop width on top of
-	// the plain posC baseline). Declaration order tracks left-to-right layout
+	// LivingSpace touched by a message/self-message/life-event.
+	// Declaration order tracks left-to-right layout
 	// order (the same assumption PlayingSpace.ensureDisjoint() already relies
 	// on), so the touched set alone is enough to find "the group's own
 	// rightmost content" without reading any not-yet-resolved Real position.
 	private static void collectTouchedLivingSpaces(List<Tile> tiles, LivingSpaces livingSpaces,
-			Set<LivingSpace> touched, Map<LivingSpace, List<Tile>> selfMessagesByLivingSpace) {
+			Set<LivingSpace> touched) {
 		for (Tile tile : tiles) {
 			final Event ev = tile.getEvent();
 			if (ev instanceof Message) {
@@ -458,17 +574,34 @@ public class GroupingTile extends AbstractTile {
 				final LivingSpace ls2 = livingSpaces.get(((Message) ev).getParticipant2());
 				touched.add(ls1);
 				touched.add(ls2);
-				if (tile instanceof CommunicationTileSelf)
-					selfMessagesByLivingSpace.computeIfAbsent(ls1, k -> new ArrayList<>()).add(tile);
 			} else if (ev instanceof MessageExo) {
 				touched.add(livingSpaces.get(((MessageExo) ev).getParticipant()));
 			} else if (ev instanceof LifeEvent) {
 				touched.add(livingSpaces.get(((LifeEvent) ev).getParticipant()));
+			} else if (ev instanceof Note) {
+				// A note anchored on a participant counts as touching it, exactly
+				// like a message would. Leaving it out is not merely incomplete:
+				// the participant it is drawn over would then be seen as the FIRST
+				// one after the group, and ensureClearsFrameOf() would push its own
+				// posA past a Real derived from its own posC -- a cycle the solver
+				// reports as `IllegalStateException: Infinite Loop?`.
+				addTouched(touched, livingSpaces, ((Note) ev).getParticipant());
+				addTouched(touched, livingSpaces, ((Note) ev).getParticipant2());
+			} else if (ev instanceof Notes) {
+				for (Note note : (Notes) ev) {
+					addTouched(touched, livingSpaces, note.getParticipant());
+					addTouched(touched, livingSpaces, note.getParticipant2());
+				}
+			} else if (ev instanceof Reference) {
+				// Same reasoning as a note, and the same cycle if it is left out:
+				// `ref over b, c` inside a group must make c a participant OF the
+				// group, or c would be seen as the first one after it.
+				for (Participant participant : ((Reference) ev).getParticipant())
+					addTouched(touched, livingSpaces, participant);
 			}
 
 			if (tile instanceof GroupingTile)
-				collectTouchedLivingSpaces(((GroupingTile) tile).tiles, livingSpaces, touched,
-						selfMessagesByLivingSpace);
+				collectTouchedLivingSpaces(((GroupingTile) tile).tiles, livingSpaces, touched);
 		}
 	}
 

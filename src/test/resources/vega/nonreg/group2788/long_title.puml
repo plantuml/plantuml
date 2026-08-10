@@ -1,0 +1,11 @@
+---
+output: svg
+expected-description: (4 participants)
+---
+@startuml
+a -> b: 1
+group a group with a very very very long title indeed
+b -> c: 2
+end
+d -> d: next
+@enduml

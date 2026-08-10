@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (2 participants)
+---
+@startuml
+' https://forum.plantuml.net/13886/plantuml-generating-invalid-example-plantuml-written-beside
+Bob -> Alice : hello
+alt [[https://www.plantuml.com]]
+note over Bob: [[https://www.google.com]]
+else [[https://www.plantuml.com]]
+note over Bob: [[https://www.google.com]]
+end
+@enduml

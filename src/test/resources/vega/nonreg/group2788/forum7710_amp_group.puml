@@ -1,0 +1,12 @@
+---
+output: svg
+expected-description: (3 participants)
+---
+@startuml
+' https://forum.plantuml.net/7710/teoz-and-%26-within-groups-is-not-working (linked from issue 2788)
+!pragma teoz true
+group friends
+Bob -> Alice : Secret
+& Alice -> Stacy : Rumors
+end
+@enduml

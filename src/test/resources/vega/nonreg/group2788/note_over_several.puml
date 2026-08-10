@@ -1,0 +1,12 @@
+---
+output: svg
+expected-description: (5 participants)
+---
+@startuml
+x -> x: start
+group test
+a -> b: 1
+note over b, c: a note spanning b and c
+end
+d -> d: next
+@enduml

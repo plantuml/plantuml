@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="167px" preserveAspectRatio="none" style="width:196px;height:167px;background:#FFFFFF;" version="1.1" viewBox="0 0 196 167" width="196px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="none" height="52" style="stroke:#000;stroke-width:1.5;" width="163.038" x="13.469" y="51"/>
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="88" width="8" x="25.969" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="29.469" x2="29.469" y1="39" y2="127"/>
+    </g>
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="88" width="8" x="87.506" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="91.006" x2="91.006" y1="39" y2="127"/>
+    </g>
+    <g>
+      <title>Stacy</title>
+      <rect fill="#000" fill-opacity="0" height="88" width="8" x="157.006" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="160.506" x2="160.506" y1="39" y2="127"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="10" y="10"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="17" y="27.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="68.781" y="10"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="75.781" y="27.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49" x="136.006" y="10"/>
+    <text fill="#000" font-size="14" textLength="35" x="143.006" y="27.889">Stacy</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="10" y="127"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="17" y="144.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="68.781" y="127"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="75.781" y="144.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49" x="136.006" y="127"/>
+    <text fill="#000" font-size="14" textLength="35" x="143.006" y="144.889">Stacy</text>
+    <path d="M13.469,51 L97.469,51 L97.469,56 L87.469,66 L13.469,66 L13.469,51" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="52" style="stroke:#000;stroke-width:1.5;" width="163.038" x="13.469" y="51"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="39" x="28.469" y="62.111">friends</text>
+    <polygon fill="#181818" points="79.006,91,89.006,95,79.006,99,83.006,95" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="29.469" x2="85.006" y1="95" y2="95"/>
+    <text fill="#000" font-size="13" textLength="37.537" x="36.469" y="90.111">Secret</text>
+    <polygon fill="#181818" points="148.506,91,158.506,95,148.506,99,152.506,95" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="91.006" x2="154.506" y1="95" y2="95"/>
+    <text fill="#000" font-size="13" textLength="45.5" x="98.006" y="90.111">Rumors</text>
+  </g>
+</svg>
