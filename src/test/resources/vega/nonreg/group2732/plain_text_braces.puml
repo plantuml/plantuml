@@ -1,0 +1,10 @@
+---
+output: svg
+expected-description: (Salt)
+---
+@startsalt
+{#
+unescaped | a{b}c
+escaped | a\{b\}c
+}
+@endsalt

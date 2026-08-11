@@ -66,6 +66,18 @@ public class ElementFactoryButton implements ElementFactory {
 
 	public boolean ready() {
 		final String text = dataSource.peek(0).getElement();
+		// A "[[url{tooltip}]]" creole link also starts with "[" and ends with
+		// "]", so without this check it was always claimed here first (this
+		// factory is tried before ElementFactoryText) and rendered as a button
+		// whose literal label is "[url{tooltip}]" - the link was never actually
+		// parsed as a link (see issue #2732). Excluding a leading "[[" lets it
+		// fall through to ElementFactoryText instead, which feeds cell content
+		// through the same shared creole engine that already turns "[[...]]"
+		// into a real link with a tooltip everywhere else (e.g. in notes) -
+		// nothing link-specific needs to be added here or in ElementFactoryText,
+		// this is purely a dispatch-order fix.
+		if (text.startsWith("[["))
+			return false;
 		return text.startsWith("[") && text.endsWith("]");
 	}
 }

@@ -6,7 +6,8 @@ expected-description: (Salt)
 {
 {#
 unescaped | [[http://x.com{tooltip test}]]
-backslash | [[http://x.com{tooltip \{test\}}]]
+backslash | [[http://x.com\{tooltip test\}]]
+nested backslash | [[http://x.com\{tooltip \{test\}\}]]
 }
 }
 @endsalt
