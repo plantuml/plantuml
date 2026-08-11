@@ -71,10 +71,9 @@ public class ElementTree extends AbstractElement {
 		entries.add(new ElementTreeEntry(level, elmt));
 	}
 
-	public void addCellToEntry(String s) {
+	public void addCellToEntry(Element elmt) {
 		final int size = entries.size();
 		if (size > 0) {
-			final Element elmt = new ElementText(Arrays.asList(StringUtils.trin(s)), font, spriteContainer);
 			entries.get(size - 1).addCell(elmt);
 		}
 	}
@@ -85,7 +84,11 @@ public class ElementTree extends AbstractElement {
 		for (ElementTreeEntry entry : entries) {
 			final XDimension2D dim1 = entry.getPreferredDimensionFirstCell(stringBounder);
 			w1 = Math.max(w1, dim1.getWidth());
-			h += dim1.getHeight();
+			// The row must be tall enough for its tallest cell, not just its
+			// first one - otherwise a wider widget or wrapped text in one of
+			// the "other" cells gets silently clipped/overlapped instead of
+			// growing the row (issue #2730, point 3).
+			h += entry.getRowHeight(stringBounder);
 		}
 		double w2 = getWidthOther(stringBounder).getTotalWidthWithMargin(margin);
 		if (w2 > 0) {
@@ -138,7 +141,7 @@ public class ElementTree extends AbstractElement {
 		for (ElementTreeEntry entry : entries) {
 			entry.drawFirstCell(ug, 0, yvar);
 			entry.drawSecondCell(ug, w1 + margin, yvar, otherWidth, margin);
-			final double h = entry.getPreferredDimensionFirstCell(stringBounder).getHeight();
+			final double h = entry.getRowHeight(stringBounder);
 			skeleton.add(entry.getXDelta() - 7, yvar + h / 2 - 1);
 			yvar += h;
 			rows.add(yvar);

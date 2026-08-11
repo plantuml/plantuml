@@ -71,6 +71,17 @@ public class ElementTreeEntry {
 		return result;
 	}
 
+	// The row's height must fit its tallest cell, not just its first one -
+	// otherwise a taller widget (or wrapped text) among the "other" cells
+	// gets clipped instead of growing the row (issue #2730, point 3).
+	public double getRowHeight(StringBounder stringBounder) {
+		double h = getPreferredDimensionFirstCell(stringBounder).getHeight();
+		for (Element element : otherElements) {
+			h = Math.max(h, element.getPreferredDimension(stringBounder, 0, 0).getHeight());
+		}
+		return h;
+	}
+
 	public double getXDelta() {
 		return level * 10;
 	}

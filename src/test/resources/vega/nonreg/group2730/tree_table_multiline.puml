@@ -1,0 +1,15 @@
+---
+output: svg
+expected-description: (Salt)
+---
+@startsalt
+{T#
+Name | "text"
+Description | {
+This is a very long description
+that spans several lines
+and needs a taller row
+}
+Modifiers: | { (X) public | () default }
+}
+@endsalt

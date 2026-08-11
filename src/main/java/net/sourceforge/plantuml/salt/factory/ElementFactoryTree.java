@@ -72,24 +72,38 @@ public class ElementFactoryTree extends AbstractElementFactoryComplex {
 		// table itself, or everything after it in the source gets silently
 		// dropped (see issue #2730: this is what made internal groups break
 		// tree tables, and what made a root-level tree table lose its last
-		// rows entirely once it no longer needed an external wrapper).
+		// rows entirely once it no longer needed an external wrapper). Once
+		// "other" cells are routed through getNextElement() below, a nested
+		// group is consumed as a single call, so this is mostly a safety net
+		// for the raw, single-token first cell.
 		int depth = 0;
 		while (depth > 0 || getDataSource().peek(0).getElement().equals("}") == false) {
-			final Terminated<String> t = getDataSource().next();
-			final Terminator terminator = t.getTerminator();
-			final String s = t.getElement();
-			if (s.equals("}")) {
-				depth--;
-			} else if (s.startsWith("{")) {
-				depth++;
-			}
 			if (takeMe) {
+				// The first cell of a row is the tree label: plain text,
+				// with support for a leading "+" run indicating the nesting
+				// level. It is read as a single raw token (not dispatched
+				// through getNextElement()) precisely so that "+" prefix
+				// stays available to ElementTree#addEntry.
+				final Terminated<String> t = getDataSource().next();
+				final String s = t.getElement();
+				if (s.equals("}")) {
+					depth--;
+				} else if (s.startsWith("{")) {
+					depth++;
+				}
 				result.addEntry(s);
+				takeMe = t.getTerminator() == Terminator.NEWLINE;
 			} else {
-				result.addCellToEntry(s);
+				// Every other cell is dispatched exactly like a regular
+				// table cell (getNextElement() also tries Pyramid/Border/
+				// Scroll, wired in as siblings by PSystemSalt), so a radio
+				// button, a button, a text field or a nested "{...}" group
+				// of alternatives renders as the real widget instead of its
+				// raw source text (issue #2730, point 2).
+				final Terminated<Element> next = getNextElement();
+				result.addCellToEntry(next.getElement());
+				takeMe = next.getTerminator() == Terminator.NEWLINE;
 			}
-			takeMe = terminator == Terminator.NEWLINE;
-
 		}
 		final Terminated<String> next = getDataSource().next();
 		return new Terminated<Element>(result, next.getTerminator());
