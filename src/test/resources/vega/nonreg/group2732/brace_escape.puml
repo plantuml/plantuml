@@ -1,0 +1,12 @@
+---
+output: svg
+expected-description: (Salt)
+---
+@startsalt
+{
+{#
+unescaped | [[http://x.com{tooltip test}]]
+backslash | [[http://x.com{tooltip \{test\}}]]
+}
+}
+@endsalt

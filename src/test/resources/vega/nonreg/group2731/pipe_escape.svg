@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="45px" preserveAspectRatio="none" style="width:166px;height:45px;background:#FFFFFF;" version="1.1" viewBox="0 0 166 45" width="166px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="28.05" x="7" y="16.333">Ratio</text>
+    <text fill="#000" font-size="12" textLength="16.5" x="37.05" y="16.333">3|4</text>
+    <text fill="#000" font-size="12" textLength="25.35" x="7" y="30.333">Note</text>
+    <text fill="#000" font-size="12" textLength="28.725" x="41.05" y="31.333">value</text>
+    <line style="stroke:#000;stroke-width:1;" x1="39.05" x2="82.05" y1="34" y2="34"/>
+    <line style="stroke:#000;stroke-width:1;" x1="39.05" x2="39.05" y1="31" y2="33"/>
+    <line style="stroke:#000;stroke-width:1;" x1="82.05" x2="82.05" y1="31" y2="33"/>
+    <text fill="#000" font-size="12" textLength="71.25" x="86.05" y="31.333">Second|Third</text>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="36.05" y1="6" y2="6"/>
+    <line style="stroke:#000;stroke-width:1;" x1="36.05" x2="159.3" y1="20" y2="20"/>
+    <line style="stroke:#000;stroke-width:1;" x1="36.05" x2="159.3" y1="6" y2="6"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="36.05" y1="38" y2="38"/>
+    <line style="stroke:#000;stroke-width:1;" x1="36.05" x2="159.3" y1="38" y2="38"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="36.05" y1="20" y2="20"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="6" y2="20"/>
+    <line style="stroke:#000;stroke-width:1;" x1="36.05" x2="36.05" y1="20" y2="38"/>
+    <line style="stroke:#000;stroke-width:1;" x1="159.3" x2="159.3" y1="20" y2="38"/>
+    <line style="stroke:#000;stroke-width:1;" x1="36.05" x2="36.05" y1="6" y2="20"/>
+    <line style="stroke:#000;stroke-width:1;" x1="159.3" x2="159.3" y1="6" y2="20"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="20" y2="38"/>
+  </g>
+</svg>
