@@ -177,13 +177,28 @@ public class PSystemSalt extends TitledDiagram {
 
 		final Collection<AbstractElementFactoryComplex> cpx = new ArrayList<>();
 
+		// A single, shared ElementFactoryTree instance, reused everywhere a tree
+		// table can appear (top-level, and as a child of Pyramid/Scroll/Border/
+		// itself below) instead of creating a fresh one per parent. Tree cells
+		// are themselves dispatched through getNextElement() (see
+		// ElementFactoryTree#create()), so whichever instance ends up handling a
+		// given "{T#...}" block needs its own factories wired up exactly like
+		// Pyramid/Scroll/Border do; sharing one instance guarantees that instead
+		// of leaving every other copy with an empty, unusable factory list.
+		final ElementFactoryTree treeFactory = new ElementFactoryTree(source, dictionary);
+
 		// cpx.add(new ElementFactorySimpleFrame(source, dictionnary));
 		cpx.add(new ElementFactoryPyramid(source, dictionary));
 		cpx.add(new ElementFactoryScroll(source, dictionary));
 		cpx.add(new ElementFactoryBorder(source, dictionary));
+		// A tree table ("{T#...}") must be a top-level candidate too, not only
+		// something reachable once already inside a Pyramid/Scroll/Border body -
+		// otherwise a bare tree table needs a useless extra wrapping "{ ... }"
+		// to render at all (see issue #2730).
+		cpx.add(treeFactory);
 
 		for (AbstractElementFactoryComplex f : cpx)
-			addSimpleFactory(f, source, dictionary);
+			addSimpleFactory(f, source, dictionary, treeFactory);
 
 		for (AbstractElementFactoryComplex f1 : cpx)
 			for (AbstractElementFactoryComplex f2 : cpx)
@@ -202,9 +217,9 @@ public class PSystemSalt extends TitledDiagram {
 	}
 
 	private static void addSimpleFactory(final AbstractElementFactoryComplex cpxFactory, final DataSource source,
-			SaltDictionary dictionary) {
+			SaltDictionary dictionary, ElementFactoryTree treeFactory) {
 		cpxFactory.addFactory(new ElementFactoryMenu(source, dictionary));
-		cpxFactory.addFactory(new ElementFactoryTree(source, dictionary));
+		cpxFactory.addFactory(treeFactory);
 		cpxFactory.addFactory(new ElementFactoryTab(source, dictionary));
 		cpxFactory.addFactory(new ElementFactoryLine(source));
 		cpxFactory.addFactory(new ElementFactoryTextField(source, dictionary));

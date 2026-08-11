@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="81px" preserveAspectRatio="none" style="width:226px;height:81px;background:#FFFFFF;" version="1.1" viewBox="0 0 226 81" width="226px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="32.025" x="5" y="14.333">Name</text>
+    <text fill="#000" font-size="12" textLength="19.275" x="78.075" y="14.333">text</text>
+    <line style="stroke:#000;stroke-width:1;" x1="76.075" x2="111.075" y1="17" y2="17"/>
+    <line style="stroke:#000;stroke-width:1;" x1="76.075" x2="76.075" y1="14" y2="16"/>
+    <line style="stroke:#000;stroke-width:1;" x1="111.075" x2="111.075" y1="14" y2="16"/>
+    <text fill="#000" font-size="12" textLength="60.075" x="5" y="28.333">Description</text>
+    <text fill="#000" font-size="12" textLength="141.525" x="76.075" y="29.333">This is a very long description</text>
+    <text fill="#000" font-size="12" textLength="115.425" x="76.075" y="43.333">that spans several lines</text>
+    <text fill="#000" font-size="12" textLength="104.775" x="76.075" y="57.333">and needs a taller row</text>
+    <text fill="#000" font-size="12" textLength="51.975" x="5" y="70.333">Modifiers:</text>
+    <text fill="#000" font-size="12" textLength="31.425" x="96.075" y="71.333">public</text>
+    <ellipse cx="83.075" cy="68" fill="none" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;"/>
+    <ellipse cx="83.075" cy="68" fill="#000" rx="2" ry="2" style="stroke:#000;stroke-width:1.5;"/>
+    <text fill="#000" font-size="12" textLength="36" x="149.5" y="71.333">default</text>
+    <ellipse cx="136.5" cy="68" fill="none" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;"/>
+    <line style="stroke:#888;stroke-width:1;" x1="5" x2="223.6" y1="5" y2="5"/>
+    <line style="stroke:#888;stroke-width:1;" x1="5" x2="223.6" y1="19" y2="19"/>
+    <line style="stroke:#888;stroke-width:1;" x1="5" x2="223.6" y1="61" y2="61"/>
+    <line style="stroke:#888;stroke-width:1;" x1="5" x2="223.6" y1="75" y2="75"/>
+    <line style="stroke:#888;stroke-width:1;" x1="5" x2="5" y1="5" y2="75"/>
+    <line style="stroke:#888;stroke-width:1;" x1="70.075" x2="70.075" y1="5" y2="75"/>
+    <line style="stroke:#888;stroke-width:1;" x1="223.6" x2="223.6" y1="5" y2="75"/>
+  </g>
+</svg>

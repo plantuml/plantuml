@@ -1,0 +1,12 @@
+---
+output: svg
+expected-description: (Salt)
+---
+@startsalt
+{
+{#
+Ratio | 3\|4
+Note | { "value" | Second\|Third }
+}
+}
+@endsalt

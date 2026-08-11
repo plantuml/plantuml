@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="41px" preserveAspectRatio="none" style="width:119px;height:41px;background:#FFFFFF;" version="1.1" viewBox="0 0 119 41" width="119px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="58.725" x="6" y="15.333">unescaped</text>
+    <text fill="#000" font-size="12" x="66.725" y="15.333">a</text>
+    <text fill="#000" font-size="12" x="97.025" y="16.333">b</text>
+    <text fill="#000" font-size="12" x="106.7" y="15.333">c</text>
+    <text fill="#000" font-size="12" textLength="45.375" x="6" y="31.333">escaped</text>
+    <text fill="#000" font-size="12" textLength="27.3" x="66.725" y="31.333">a{b}c</text>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="65.725" y1="5" y2="5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="95.025" x2="105.7" y1="35" y2="35"/>
+    <line style="stroke:#000;stroke-width:1;" x1="65.725" x2="95.025" y1="21" y2="21"/>
+    <line style="stroke:#000;stroke-width:1;" x1="65.725" x2="95.025" y1="5" y2="5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="105.7" x2="113.7" y1="35" y2="35"/>
+    <line style="stroke:#000;stroke-width:1;" x1="95.025" x2="105.7" y1="21" y2="21"/>
+    <line style="stroke:#000;stroke-width:1;" x1="95.025" x2="105.7" y1="5" y2="5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="105.7" x2="113.7" y1="21" y2="21"/>
+    <line style="stroke:#000;stroke-width:1;" x1="105.7" x2="113.7" y1="5" y2="5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="65.725" y1="35" y2="35"/>
+    <line style="stroke:#000;stroke-width:1;" x1="65.725" x2="95.025" y1="35" y2="35"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="65.725" y1="21" y2="21"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="5" y1="5" y2="21"/>
+    <line style="stroke:#000;stroke-width:1;" x1="65.725" x2="65.725" y1="21" y2="35"/>
+    <line style="stroke:#000;stroke-width:1;" x1="65.725" x2="65.725" y1="5" y2="21"/>
+    <line style="stroke:#000;stroke-width:1;" x1="95.025" x2="95.025" y1="21" y2="35"/>
+    <line style="stroke:#000;stroke-width:1;" x1="95.025" x2="95.025" y1="5" y2="21"/>
+    <line style="stroke:#000;stroke-width:1;" x1="113.7" x2="113.7" y1="21" y2="35"/>
+    <line style="stroke:#000;stroke-width:1;" x1="105.7" x2="105.7" y1="5" y2="21"/>
+    <line style="stroke:#000;stroke-width:1;" x1="113.7" x2="113.7" y1="5" y2="21"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="5" y1="21" y2="35"/>
+  </g>
+</svg>

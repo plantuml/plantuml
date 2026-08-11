@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="57px" preserveAspectRatio="none" style="width:238px;height:57px;background:#FFFFFF;" version="1.1" viewBox="0 0 238 57" width="238px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="58.725" x="7" y="16.333">unescaped</text>
+    <text fill="#000" font-size="12" textLength="68.4" x="98.4" y="16.333">[[http://x.com</text>
+    <text fill="#000" font-size="12" textLength="51.3" x="169.8" y="17.333">tooltip test</text>
+    <text fill="#000" font-size="12" textLength="6.6" x="224.1" y="16.333">]]</text>
+    <text fill="#000" font-size="12" textLength="53.4" x="7" y="32.333">backslash</text>
+    <a href="http://x.com" target="_top" title="tooltip test" xlink:actuate="onRequest" xlink:href="http://x.com" xlink:show="new" xlink:title="tooltip test" xlink:type="simple">
+      <text fill="#00F" font-size="12" text-decoration="underline" textLength="61.8" x="98.4" y="32.333">http://x.com</text>
+    </a>
+    <text fill="#000" font-size="12" textLength="89.4" x="7" y="46.333">nested backslash</text>
+    <a href="http://x.com" target="_top" title="tooltip {test}" xlink:actuate="onRequest" xlink:href="http://x.com" xlink:show="new" xlink:title="tooltip {test}" xlink:type="simple">
+      <text fill="#00F" font-size="12" text-decoration="underline" textLength="61.8" x="98.4" y="46.333">http://x.com</text>
+    </a>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="97.4" y1="6" y2="6"/>
+    <line style="stroke:#000;stroke-width:1;" x1="97.4" x2="167.8" y1="6" y2="6"/>
+    <line style="stroke:#000;stroke-width:1;" x1="167.8" x2="223.1" y1="6" y2="6"/>
+    <line style="stroke:#000;stroke-width:1;" x1="223.1" x2="231.7" y1="6" y2="6"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="97.4" y1="50" y2="50"/>
+    <line style="stroke:#000;stroke-width:1;" x1="97.4" x2="167.8" y1="50" y2="50"/>
+    <line style="stroke:#000;stroke-width:1;" x1="167.8" x2="223.1" y1="50" y2="50"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="97.4" y1="22" y2="22"/>
+    <line style="stroke:#000;stroke-width:1;" x1="223.1" x2="231.7" y1="50" y2="50"/>
+    <line style="stroke:#000;stroke-width:1;" x1="97.4" x2="167.8" y1="22" y2="22"/>
+    <line style="stroke:#000;stroke-width:1;" x1="167.8" x2="223.1" y1="22" y2="22"/>
+    <line style="stroke:#000;stroke-width:1;" x1="223.1" x2="231.7" y1="22" y2="22"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="97.4" y1="36" y2="36"/>
+    <line style="stroke:#000;stroke-width:1;" x1="97.4" x2="167.8" y1="36" y2="36"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="6" y2="22"/>
+    <line style="stroke:#000;stroke-width:1;" x1="167.8" x2="167.8" y1="36" y2="50"/>
+    <line style="stroke:#000;stroke-width:1;" x1="97.4" x2="97.4" y1="6" y2="22"/>
+    <line style="stroke:#000;stroke-width:1;" x1="231.7" x2="231.7" y1="36" y2="50"/>
+    <line style="stroke:#000;stroke-width:1;" x1="167.8" x2="167.8" y1="6" y2="22"/>
+    <line style="stroke:#000;stroke-width:1;" x1="223.1" x2="223.1" y1="6" y2="22"/>
+    <line style="stroke:#000;stroke-width:1;" x1="231.7" x2="231.7" y1="6" y2="22"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="22" y2="36"/>
+    <line style="stroke:#000;stroke-width:1;" x1="97.4" x2="97.4" y1="22" y2="36"/>
+    <line style="stroke:#000;stroke-width:1;" x1="167.8" x2="167.8" y1="22" y2="36"/>
+    <line style="stroke:#000;stroke-width:1;" x1="231.7" x2="231.7" y1="22" y2="36"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="36" y2="50"/>
+    <line style="stroke:#000;stroke-width:1;" x1="97.4" x2="97.4" y1="36" y2="50"/>
+  </g>
+</svg>

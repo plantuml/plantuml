@@ -97,7 +97,7 @@ public class ElementFactoryPyramid extends AbstractElementFactoryComplex {
 		if (text.equals("{") || text.equals("{+") || text.equals("{^") || text.equals("{#") || text.equals("{!")
 				|| text.equals("{-")) {
 			final String text1 = getDataSource().peek(1).getElement();
-			if (text1.matches("[NSEW]=|T")) {
+			if (text1.matches("[NSEW]=") || ElementFactoryTree.isTreeMarker(text1)) {
 				return false;
 			}
 			return true;

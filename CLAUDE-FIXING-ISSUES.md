@@ -78,6 +78,23 @@ Writing `find_symbol SomeClassName` on one line fails with `UNKNOWN_KEYWORD`:
 the whole line was looked up as a keyword. `help` lists every command with its
 arity; `man <keyword>` details one.
 
+Each invocation of the wrapper pays a fixed cost - the JVM starting, connecting
+to the daemon, and tearing back down - on top of whatever the command itself
+does; on this project, measured against a warm daemon, that floor is roughly a
+tenth of a second, and even a `rebuild` that finds nothing changed only adds a
+few hundred milliseconds to it. It is paid once per invocation, not once per
+command, so piping in several commands before `exit` amortizes it instead of
+paying it again for each one:
+
+```bash
+printf 'rebuild\nerrors\nfind_symbol\nSomeUnrelatedClassName\n' | /tmp/c.sh
+```
+
+This only pays off when every command's parameters are already known up front:
+stdin is delivered whole, with nothing read back in between, so a command that
+needs a position printed by the one before it - `find_symbol` feeding
+`list_members`, above - still has to be its own invocation.
+
 ---
 
 ## 2. Reproduce first, always
