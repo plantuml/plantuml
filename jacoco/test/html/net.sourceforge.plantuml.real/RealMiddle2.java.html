@@ -37,21 +37,21 @@ package net.sourceforge.plantuml.real;
 
 import net.sourceforge.plantuml.teavm.TeaVM;
 
-<span class="nc" id="L40">class RealMiddle2 extends RealMoveable {</span>
+<span class="fc" id="L40">class RealMiddle2 extends RealMoveable {</span>
 
 	private final RealMoveable p1;
 	private final RealMoveable p2;
 
 	RealMiddle2(RealMoveable p1, RealMoveable p2) {
-<span class="nc" id="L46">		super(p1.getLine(), &quot;middle&quot;);</span>
-<span class="nc bnc" id="L47" title="All 4 branches missed.">		if (TeaVM.a()) assert p1.getLine() == p2.getLine();</span>
-<span class="nc" id="L48">		this.p1 = p1;</span>
-<span class="nc" id="L49">		this.p2 = p2;</span>
-<span class="nc" id="L50">	}</span>
+<span class="fc" id="L46">		super(p1.getLine(), &quot;middle&quot;);</span>
+<span class="pc bpc" id="L47" title="2 of 4 branches missed.">		if (TeaVM.a()) assert p1.getLine() == p2.getLine();</span>
+<span class="fc" id="L48">		this.p1 = p1;</span>
+<span class="fc" id="L49">		this.p2 = p2;</span>
+<span class="fc" id="L50">	}</span>
 
 	@Override
 	double getCurrentValueInternal() {
-<span class="nc" id="L54">		return (p1.getCurrentValue() + p2.getCurrentValue()) / 2;</span>
+<span class="fc" id="L54">		return (p1.getCurrentValue() + p2.getCurrentValue()) / 2;</span>
 	}
 
 	// public Real addFixed(double diff) {

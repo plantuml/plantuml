@@ -150,11 +150,11 @@ public class LivingSpace {
 	public void drawLineAndLiveboxes(UGraphic ug, double height, Context2D context) {
 		// The line is drawn only over the alive segments: a participant may be
 		// created and destroyed several times
-<span class="pc bpc" id="L153" title="1 of 2 branches missed.">		boolean alive = create == false;</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		boolean alive = create == false;</span>
 <span class="fc" id="L154">		double aliveSince = 0;</span>
 <span class="fc bfc" id="L155" title="All 2 branches covered.">		for (Map.Entry&lt;Double, Boolean&gt; ent : aliveChanges.entrySet()) {</span>
-<span class="pc bpc" id="L156" title="3 of 4 branches missed.">			if (alive == false &amp;&amp; ent.getValue())</span>
-<span class="nc" id="L157">				aliveSince = ent.getKey();</span>
+<span class="pc bpc" id="L156" title="1 of 4 branches missed.">			if (alive == false &amp;&amp; ent.getValue())</span>
+<span class="fc" id="L157">				aliveSince = ent.getKey();</span>
 <span class="pc bpc" id="L158" title="2 of 4 branches missed.">			else if (alive &amp;&amp; ent.getValue() == false)</span>
 <span class="fc" id="L159">				mutingLine.drawLine(ug, context, aliveSince, ent.getKey());</span>
 
@@ -168,8 +168,8 @@ public class LivingSpace {
 
 	private double getFirstCreateY() {
 <span class="fc bfc" id="L170" title="All 2 branches covered.">		for (Map.Entry&lt;Double, Boolean&gt; ent : aliveChanges.entrySet())</span>
-<span class="pc bpc" id="L171" title="1 of 2 branches missed.">			if (ent.getValue())</span>
-<span class="nc" id="L172">				return ent.getKey();</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">			if (ent.getValue())</span>
+<span class="fc" id="L172">				return ent.getKey();</span>
 
 <span class="fc" id="L174">		return 0;</span>
 	}
@@ -190,8 +190,8 @@ public class LivingSpace {
 
 	private void drawHeadOrTail(UGraphic ug, Context2D context, VerticalAlignment verticalAlignment,
 			HorizontalAlignment horizontalAlignment, ComponentType type) {
-<span class="pc bpc" id="L193" title="3 of 4 branches missed.">		if (create &amp;&amp; verticalAlignment == VerticalAlignment.BOTTOM) {</span>
-<span class="nc" id="L194">			return;</span>
+<span class="fc bfc" id="L193" title="All 4 branches covered.">		if (create &amp;&amp; verticalAlignment == VerticalAlignment.BOTTOM) {</span>
+<span class="fc" id="L194">			return;</span>
 		}
 <span class="fc" id="L196">		final Component comp = rose.createComponentParticipant(p, type, null, skinParam,</span>
 <span class="fc" id="L197">				p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));</span>
@@ -253,22 +253,22 @@ public class LivingSpace {
 	}
 
 	public void goCreate(double y) {
-<span class="nc" id="L256">		this.aliveChanges.put(y, Boolean.TRUE);</span>
-<span class="nc" id="L257">		this.create = true;</span>
-<span class="nc" id="L258">	}</span>
+<span class="fc" id="L256">		this.aliveChanges.put(y, Boolean.TRUE);</span>
+<span class="fc" id="L257">		this.create = true;</span>
+<span class="fc" id="L258">	}</span>
 
 	public void goCreate() {
-<span class="nc" id="L261">		this.create = true;</span>
-<span class="nc" id="L262">	}</span>
+<span class="fc" id="L261">		this.create = true;</span>
+<span class="fc" id="L262">	}</span>
 
 	public void goDestroy(double y) {
 <span class="fc" id="L265">		this.aliveChanges.put(y, Boolean.FALSE);</span>
 <span class="fc" id="L266">	}</span>
 
 	public void delayOn(double y, double height) {
-<span class="nc" id="L269">		mutingLine.delayOn(y, height);</span>
-<span class="nc" id="L270">		liveboxes.delayOn(y, height);</span>
-<span class="nc" id="L271">	}</span>
+<span class="fc" id="L269">		mutingLine.delayOn(y, height);</span>
+<span class="fc" id="L270">		liveboxes.delayOn(y, height);</span>
+<span class="fc" id="L271">	}</span>
 
 	public ParticipantEnglober getEnglober() {
 <span class="fc" id="L274">		return englober;</span>

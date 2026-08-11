@@ -91,8 +91,8 @@ public class CommunicationTile extends AbstractCommunicationTile {
 <span class="fc" id="L91">		this.skin = skin;</span>
 <span class="fc" id="L92">		this.skinParam = skinParam;</span>
 
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (message.isCreate())</span>
-<span class="nc" id="L95">			livingSpace2.goCreate();</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (message.isCreate())</span>
+<span class="fc" id="L95">			livingSpace2.goCreate();</span>
 
 <span class="fc" id="L97">		final ArrowComponent comp = getComponent(getStringBounder());</span>
 <span class="fc" id="L98">		final double contactRelative = comp.getYPoint(getStringBounder());</span>
@@ -166,7 +166,7 @@ public class CommunicationTile extends AbstractCommunicationTile {
 
 	@Override
 	public double getContactPointRelative() {
-<span class="nc" id="L169">		return getComponent(getStringBounder()).getYPoint(getStringBounder());</span>
+<span class="fc" id="L169">		return getComponent(getStringBounder()).getYPoint(getStringBounder());</span>
 	}
 
 	public static final double LIVE_DELTA_SIZE = 5;
@@ -174,8 +174,8 @@ public class CommunicationTile extends AbstractCommunicationTile {
 	@Override
 	final public void onGaugeResolved() {
 <span class="fc" id="L176">		final double y = getYGauge().getMin().getCurrentValue();</span>
-<span class="pc bpc" id="L177" title="1 of 2 branches missed.">		if (message.isCreate())</span>
-<span class="nc" id="L178">			livingSpace2.goCreate(y);</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">		if (message.isCreate())</span>
+<span class="fc" id="L178">			livingSpace2.goCreate(y);</span>
 
 <span class="fc" id="L180">		final AbstractComponentRoseArrow comp = (AbstractComponentRoseArrow) getComponent(getStringBounder());</span>
 <span class="fc" id="L181">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
@@ -350,8 +350,8 @@ public class CommunicationTile extends AbstractCommunicationTile {
 <span class="fc" id="L350">			x2 += LIVE_DELTA_SIZE * level2;</span>
 <span class="fc" id="L351">			area = Area.create(x2 - x1, dim.getHeight());</span>
 <span class="fc" id="L352">			ug = ug.apply(UTranslate.dx(x1));</span>
-<span class="pc bpc" id="L353" title="1 of 2 branches missed.">			if (isCreate())</span>
-<span class="nc" id="L354">				livingSpace2.drawHead(ug.apply(UTranslate.dx(area.getDimensionToUse().getWidth())), (Context2D) ug,</span>
+<span class="fc bfc" id="L353" title="All 2 branches covered.">			if (isCreate())</span>
+<span class="fc" id="L354">				livingSpace2.drawHead(ug.apply(UTranslate.dx(area.getDimensionToUse().getWidth())), (Context2D) ug,</span>
 						VerticalAlignment.TOP, HorizontalAlignment.LEFT);
 
 		}
@@ -383,8 +383,8 @@ public class CommunicationTile extends AbstractCommunicationTile {
 <span class="fc" id="L383">		final Component comp = getComponent(getStringBounder());</span>
 <span class="fc" id="L384">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
 <span class="fc" id="L385">		double height = dim.getHeight();</span>
-<span class="pc bpc" id="L386" title="1 of 2 branches missed.">		if (isCreate())</span>
-<span class="nc" id="L387">			height = Math.max(height, livingSpace2.getHeadPreferredDimension(getStringBounder()).getHeight());</span>
+<span class="fc bfc" id="L386" title="All 2 branches covered.">		if (isCreate())</span>
+<span class="fc" id="L387">			height = Math.max(height, livingSpace2.getHeadPreferredDimension(getStringBounder()).getHeight());</span>
 
 <span class="fc" id="L389">		return height;</span>
 	}
@@ -421,11 +421,11 @@ public class CommunicationTile extends AbstractCommunicationTile {
 	}
 
 	private Real getPoint2(final StringBounder stringBounder) {
-<span class="pc bpc" id="L424" title="1 of 2 branches missed.">		if (message.isCreate()) {</span>
-<span class="nc bnc" id="L425" title="All 2 branches missed.">			if (isReverse(stringBounder))</span>
+<span class="fc bfc" id="L424" title="All 2 branches covered.">		if (message.isCreate()) {</span>
+<span class="pc bpc" id="L425" title="1 of 2 branches missed.">			if (isReverse(stringBounder))</span>
 <span class="nc" id="L426">				return livingSpace2.getPosD(stringBounder);</span>
 
-<span class="nc" id="L428">			return livingSpace2.getPosB(stringBounder);</span>
+<span class="fc" id="L428">			return livingSpace2.getPosB(stringBounder);</span>
 		}
 <span class="fc" id="L430">		return livingSpace2.getPosC(stringBounder);</span>
 	}

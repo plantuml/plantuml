@@ -432,13 +432,13 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="fc" id="L432">	private final static Pattern2 SPLIT_COMMA = Pattern2.cmpile(&quot;([%pLN_.]+|[%g][^%g]+[%g])&quot;);</span>
 
 	public static List&lt;String&gt; splitComma(String s) {
-<span class="nc" id="L435">		s = trin(s);</span>
-<span class="nc" id="L436">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L437">		final Matcher2 m = SPLIT_COMMA.matcher(s, 0);</span>
-<span class="nc bnc" id="L438" title="All 2 branches missed.">		while (m.find())</span>
-<span class="nc" id="L439">			result.add(eventuallyRemoveStartingAndEndingDoubleQuote(m.group(0)));</span>
+<span class="fc" id="L435">		s = trin(s);</span>
+<span class="fc" id="L436">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L437">		final Matcher2 m = SPLIT_COMMA.matcher(s, 0);</span>
+<span class="fc bfc" id="L438" title="All 2 branches covered.">		while (m.find())</span>
+<span class="fc" id="L439">			result.add(eventuallyRemoveStartingAndEndingDoubleQuote(m.group(0)));</span>
 
-<span class="nc" id="L441">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L441">		return Collections.unmodifiableList(result);</span>
 	}
 
 	public static String getUid(String uid1, int uid2) {

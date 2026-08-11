@@ -69,9 +69,9 @@ public class TileArguments implements Bordered {
 	}
 
 	public TileArguments withBackColor(Reference reference) {
-<span class="nc" id="L72">		final ISkinParam newSkinParam = new SkinParamBackcoloredReference(skinParam, reference.getBackColorElement(),</span>
-<span class="nc" id="L73">				reference.getBackColorGeneral());</span>
-<span class="nc" id="L74">		return new TileArguments(stringBounder, livingSpaces, skin, newSkinParam, xorigin, yorigin);</span>
+<span class="fc" id="L72">		final ISkinParam newSkinParam = new SkinParamBackcoloredReference(skinParam, reference.getBackColorElement(),</span>
+<span class="fc" id="L73">				reference.getBackColorGeneral());</span>
+<span class="fc" id="L74">		return new TileArguments(stringBounder, livingSpaces, skin, newSkinParam, xorigin, yorigin);</span>
 	}
 
 	public final StringBounder getStringBounder() {
@@ -107,11 +107,11 @@ public class TileArguments implements Bordered {
 	}
 
 	public LivingSpace getLastLivingSpace() {
-<span class="nc" id="L110">		LivingSpace result = null;</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">		for (LivingSpace v : livingSpaces.values())</span>
-<span class="nc" id="L112">			result = v;</span>
+<span class="fc" id="L110">		LivingSpace result = null;</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		for (LivingSpace v : livingSpaces.values())</span>
+<span class="fc" id="L112">			result = v;</span>
 
-<span class="nc" id="L114">		return result;</span>
+<span class="fc" id="L114">		return result;</span>
 	}
 
 	private Bordered bordered;

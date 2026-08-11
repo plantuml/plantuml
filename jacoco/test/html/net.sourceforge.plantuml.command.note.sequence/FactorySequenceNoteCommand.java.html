@@ -227,7 +227,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 <span class="fc" id="L227">		final NotePosition position = NotePosition.valueOf(StringUtils.goUpperCase(arg.get(&quot;POSITION&quot;, 0)));</span>
 
 <span class="pc bpc" id="L229" title="1 of 2 branches missed.">		if (display.size() &gt; 0) {</span>
-<span class="pc bpc" id="L230" title="1 of 2 branches missed.">			final boolean tryMerge = arg.get(&quot;VMERGE&quot;, 0) != null;</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">			final boolean tryMerge = arg.get(&quot;VMERGE&quot;, 0) != null;</span>
 <span class="fc bfc" id="L231" title="All 2 branches covered.">			final boolean parallel = arg.get(&quot;PARALLEL&quot;, 0) != null;</span>
 
 <span class="fc" id="L233">			final Note note = new Note(p, position, display, diagram.getSkinParam().getCurrentStyleBuilder());</span>

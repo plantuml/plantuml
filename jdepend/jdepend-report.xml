@@ -14778,8 +14778,8 @@
 
         <Package name="net.sourceforge.plantuml.sequencediagram.teoz">
             <Stats>
-                <TotalClasses>42</TotalClasses>
-                <ConcreteClasses>36</ConcreteClasses>
+                <TotalClasses>43</TotalClasses>
+                <ConcreteClasses>37</ConcreteClasses>
                 <AbstractClasses>6</AbstractClasses>
                 <Ca>0</Ca>
                 <Ce>19</Ce>
@@ -14849,6 +14849,9 @@
                 </Class>
                 <Class sourceFile="EventsHistoryMode.java">
                     net.sourceforge.plantuml.sequencediagram.teoz.EventsHistoryMode
+                </Class>
+                <Class sourceFile="GroupingTile.java">
+                    net.sourceforge.plantuml.sequencediagram.teoz.GroupingTile
                 </Class>
                 <Class sourceFile="GroupingTile.java">
                     net.sourceforge.plantuml.sequencediagram.teoz.GroupingTile$AsciiLayout

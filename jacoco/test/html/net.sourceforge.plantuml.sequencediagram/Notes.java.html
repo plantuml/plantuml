@@ -42,12 +42,12 @@ import java.util.List;
 
 public class Notes extends AbstractEvent implements Event, Iterable&lt;Note&gt; {
 
-<span class="nc" id="L45">	private final List&lt;Note&gt; notes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L45">	private final List&lt;Note&gt; notes = new ArrayList&lt;&gt;();</span>
 
-<span class="nc" id="L47">	public Notes(Note n1, Note n2) {</span>
-<span class="nc" id="L48">		notes.add(n1);</span>
-<span class="nc" id="L49">		notes.add(n2);</span>
-<span class="nc" id="L50">	}</span>
+<span class="fc" id="L47">	public Notes(Note n1, Note n2) {</span>
+<span class="fc" id="L48">		notes.add(n1);</span>
+<span class="fc" id="L49">		notes.add(n2);</span>
+<span class="fc" id="L50">	}</span>
 
 	public void add(Note n) {
 <span class="nc" id="L53">		notes.add(n);</span>
@@ -63,7 +63,7 @@ public class Notes extends AbstractEvent implements Event, Iterable&lt;Note&gt; 
 	}
 
 	public Iterator&lt;Note&gt; iterator() {
-<span class="nc" id="L66">		return notes.iterator();</span>
+<span class="fc" id="L66">		return notes.iterator();</span>
 	}
 
 	public Note get(int i) {
@@ -71,7 +71,7 @@ public class Notes extends AbstractEvent implements Event, Iterable&lt;Note&gt; 
 	}
 
 	public List&lt;Note&gt; asList() {
-<span class="nc" id="L74">		return Collections.unmodifiableList(notes);</span>
+<span class="fc" id="L74">		return Collections.unmodifiableList(notes);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

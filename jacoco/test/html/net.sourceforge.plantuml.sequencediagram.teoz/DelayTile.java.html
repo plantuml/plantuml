@@ -58,76 +58,76 @@ public class DelayTile extends AbstractTile implements Tile {
 	private final YGauge yGauge;
 
 	public Event getEvent() {
-<span class="nc" id="L61">		return delay;</span>
+<span class="fc" id="L61">		return delay;</span>
 	}
 
 	public DelayTile(Delay delay, TileArguments tileArguments, YGauge currentY) {
-<span class="nc" id="L65">		super(tileArguments.getStringBounder(), currentY);</span>
-<span class="nc" id="L66">		this.delay = delay;</span>
-<span class="nc" id="L67">		this.tileArguments = tileArguments;</span>
-<span class="nc" id="L68">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
-<span class="nc" id="L69">	}</span>
+<span class="fc" id="L65">		super(tileArguments.getStringBounder(), currentY);</span>
+<span class="fc" id="L66">		this.delay = delay;</span>
+<span class="fc" id="L67">		this.tileArguments = tileArguments;</span>
+<span class="fc" id="L68">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
+<span class="fc" id="L69">	}</span>
 
 	@Override
 	public YGauge getYGauge() {
-<span class="nc" id="L73">		return yGauge;</span>
+<span class="fc" id="L73">		return yGauge;</span>
 	}
 
 	private void init(StringBounder stringBounder) {
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (middle != null) {</span>
-<span class="nc" id="L78">			return;</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (middle != null) {</span>
+<span class="fc" id="L78">			return;</span>
 		}
-<span class="nc" id="L80">		final Real first = tileArguments.getFirstLivingSpace().getPosC(stringBounder);</span>
-<span class="nc" id="L81">		final Component comp = getComponent(stringBounder);</span>
-<span class="nc" id="L82">		final Real last = tileArguments.getLastLivingSpace().getPosC(stringBounder);</span>
-<span class="nc" id="L83">		this.middle = RealUtils.middle(first, last);</span>
+<span class="fc" id="L80">		final Real first = tileArguments.getFirstLivingSpace().getPosC(stringBounder);</span>
+<span class="fc" id="L81">		final Component comp = getComponent(stringBounder);</span>
+<span class="fc" id="L82">		final Real last = tileArguments.getLastLivingSpace().getPosC(stringBounder);</span>
+<span class="fc" id="L83">		this.middle = RealUtils.middle(first, last);</span>
 
-<span class="nc" id="L85">	}</span>
+<span class="fc" id="L85">	}</span>
 
 	private Component getComponent(StringBounder stringBounder) {
-<span class="nc" id="L88">		final Component comp = tileArguments.getSkin().createComponent(delay.getUsedStyles(), ComponentType.DELAY_TEXT,</span>
-<span class="nc" id="L89">				null, tileArguments.getSkinParam(), delay.getText());</span>
-<span class="nc" id="L90">		return comp;</span>
+<span class="fc" id="L88">		final Component comp = tileArguments.getSkin().createComponent(delay.getUsedStyles(), ComponentType.DELAY_TEXT,</span>
+<span class="fc" id="L89">				null, tileArguments.getSkinParam(), delay.getText());</span>
+<span class="fc" id="L90">		return comp;</span>
 	}
 
 	private double getPreferredWidth(StringBounder stringBounder) {
-<span class="nc" id="L94">		final Component comp = getComponent(stringBounder);</span>
-<span class="nc" id="L95">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
-<span class="nc" id="L96">		return dim.getWidth();</span>
+<span class="fc" id="L94">		final Component comp = getComponent(stringBounder);</span>
+<span class="fc" id="L95">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
+<span class="fc" id="L96">		return dim.getWidth();</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L100">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L101">		init(stringBounder);</span>
-<span class="nc" id="L102">		final Component comp = getComponent(stringBounder);</span>
-<span class="nc" id="L103">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
-<span class="nc" id="L104">		final Area area = Area.create(getPreferredWidth(stringBounder), dim.getHeight());</span>
+<span class="fc" id="L100">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L101">		init(stringBounder);</span>
+<span class="fc" id="L102">		final Component comp = getComponent(stringBounder);</span>
+<span class="fc" id="L103">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
+<span class="fc" id="L104">		final Area area = Area.create(getPreferredWidth(stringBounder), dim.getHeight());</span>
 		// Self-translate prologue: absolute gauge position
-<span class="nc" id="L106">		final double ypos = getYGauge().getMin().getCurrentValue();</span>
-<span class="nc" id="L107">		ug = ug.apply(UTranslate.dy(ypos));</span>
-<span class="nc" id="L108">		tileArguments.getLivingSpaces().delayOn(ypos, dim.getHeight());</span>
+<span class="fc" id="L106">		final double ypos = getYGauge().getMin().getCurrentValue();</span>
+<span class="fc" id="L107">		ug = ug.apply(UTranslate.dy(ypos));</span>
+<span class="fc" id="L108">		tileArguments.getLivingSpaces().delayOn(ypos, dim.getHeight());</span>
 
-<span class="nc" id="L110">		ug = ug.apply(UTranslate.dx(getMinX().getCurrentValue()));</span>
-<span class="nc" id="L111">		comp.drawU(ug, area, (Context2D) ug);</span>
-<span class="nc" id="L112">	}</span>
+<span class="fc" id="L110">		ug = ug.apply(UTranslate.dx(getMinX().getCurrentValue()));</span>
+<span class="fc" id="L111">		comp.drawU(ug, area, (Context2D) ug);</span>
+<span class="fc" id="L112">	}</span>
 
 	public double getPreferredHeight() {
-<span class="nc" id="L115">		final Component comp = getComponent(getStringBounder());</span>
-<span class="nc" id="L116">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
-<span class="nc" id="L117">		return dim.getHeight();</span>
+<span class="fc" id="L115">		final Component comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L116">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L117">		return dim.getHeight();</span>
 	}
 
 	public void addConstraints() {
-<span class="nc" id="L121">	}</span>
+<span class="fc" id="L121">	}</span>
 
 	public Real getMinX() {
-<span class="nc" id="L124">		init(getStringBounder());</span>
-<span class="nc" id="L125">		return this.middle.addFixed(-getPreferredWidth(getStringBounder()) / 2);</span>
+<span class="fc" id="L124">		init(getStringBounder());</span>
+<span class="fc" id="L125">		return this.middle.addFixed(-getPreferredWidth(getStringBounder()) / 2);</span>
 	}
 
 	public Real getMaxX() {
-<span class="nc" id="L129">		init(getStringBounder());</span>
-<span class="nc" id="L130">		return this.middle.addFixed(getPreferredWidth(getStringBounder()) / 2);</span>
+<span class="fc" id="L129">		init(getStringBounder());</span>
+<span class="fc" id="L130">		return this.middle.addFixed(getPreferredWidth(getStringBounder()) / 2);</span>
 	}
 
 	// private double startingY;

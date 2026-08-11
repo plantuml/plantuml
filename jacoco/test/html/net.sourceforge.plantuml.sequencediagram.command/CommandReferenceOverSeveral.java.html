@@ -115,32 +115,32 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2&lt;SequenceD
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L118">		final String s1 = arg.get(&quot;REF&quot;, 0);</span>
-<span class="nc bnc" id="L119" title="All 2 branches missed.">		final HColor backColorElement = s1 == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s1);</span>
+<span class="fc" id="L118">		final String s1 = arg.get(&quot;REF&quot;, 0);</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		final HColor backColorElement = s1 == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s1);</span>
 		// final HtmlColor backColorGeneral =
 		// HtmlColorSetSimple.instance().getColorIfValid(arg.get(&quot;REF&quot;).get(1));
 
-<span class="nc" id="L123">		final List&lt;String&gt; participants = StringUtils.splitComma(arg.get(&quot;PARTS&quot;, 0));</span>
-<span class="nc" id="L124">		final String url = arg.get(UrlBuilder.URL_KEY, 0);</span>
-<span class="nc" id="L125">		final String text = StringUtils.trin(arg.get(&quot;TEXT&quot;, 0));</span>
+<span class="fc" id="L123">		final List&lt;String&gt; participants = StringUtils.splitComma(arg.get(&quot;PARTS&quot;, 0));</span>
+<span class="fc" id="L124">		final String url = arg.get(UrlBuilder.URL_KEY, 0);</span>
+<span class="fc" id="L125">		final String text = StringUtils.trin(arg.get(&quot;TEXT&quot;, 0));</span>
 
-<span class="nc" id="L127">		final List&lt;Participant&gt; p = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L128" title="All 2 branches missed.">		for (String s : participants)</span>
-<span class="nc" id="L129">			p.add(diagram.getOrCreateParticipant(location,</span>
-<span class="nc" id="L130">					StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s)));</span>
+<span class="fc" id="L127">		final List&lt;Participant&gt; p = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">		for (String s : participants)</span>
+<span class="fc" id="L129">			p.add(diagram.getOrCreateParticipant(location,</span>
+<span class="fc" id="L130">					StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s)));</span>
 
-<span class="nc" id="L132">		final Display strings = Display.getWithNewlines(diagram.getPragma(), text);</span>
+<span class="fc" id="L132">		final Display strings = Display.getWithNewlines(diagram.getPragma(), text);</span>
 
-<span class="nc" id="L134">		final UrlBuilder b = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
-<span class="nc" id="L135">		Url u = null;</span>
-<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (url != null)</span>
+<span class="fc" id="L134">		final UrlBuilder b = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="fc" id="L135">		Url u = null;</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">		if (url != null)</span>
 <span class="nc" id="L137">			u = b.getUrl(url);</span>
 
-<span class="nc" id="L139">		final HColor backColorGeneral = null;</span>
-<span class="nc" id="L140">		final Reference ref = new Reference(p, u, strings, backColorGeneral, backColorElement,</span>
-<span class="nc" id="L141">				diagram.getSkinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L142">		diagram.addReference(ref);</span>
-<span class="nc" id="L143">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L139">		final HColor backColorGeneral = null;</span>
+<span class="fc" id="L140">		final Reference ref = new Reference(p, u, strings, backColorGeneral, backColorElement,</span>
+<span class="fc" id="L141">				diagram.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L142">		diagram.addReference(ref);</span>
+<span class="fc" id="L143">		return CommandExecutionResult.ok();</span>
 	}
 
 }

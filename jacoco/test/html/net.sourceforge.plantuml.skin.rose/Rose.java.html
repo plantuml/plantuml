@@ -97,15 +97,15 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 <span class="fc" id="L97">		checkRose();</span>
 		final HorizontalAlignment textAlign;
 		final HorizontalAlignment position;
-<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		if (notePosition == NotePosition.OVER_SEVERAL) {</span>
-<span class="nc" id="L101">			textAlign = param.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null, false,</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		if (notePosition == NotePosition.OVER_SEVERAL) {</span>
+<span class="fc" id="L101">			textAlign = param.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null, false,</span>
 					HorizontalAlignment.LEFT);
-<span class="nc bnc" id="L103" title="All 2 branches missed.">			if (textAlign == param.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null, false,</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">			if (textAlign == param.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null, false,</span>
 					HorizontalAlignment.CENTER))
 				// Which means we use default
 <span class="nc" id="L106">				position = textAlign;</span>
 			else
-<span class="nc" id="L108">				position = HorizontalAlignment.CENTER;</span>
+<span class="fc" id="L108">				position = HorizontalAlignment.CENTER;</span>
 		} else {
 <span class="fc" id="L110">			textAlign = param.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null, false, null);</span>
 <span class="fc" id="L111">			position = textAlign;</span>
@@ -195,7 +195,7 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 			Display stringsToDisplay) {
 <span class="fc" id="L196">		checkRose();</span>
 
-<span class="pc bpc" id="L198" title="2 of 6 branches missed.">		if (type == ComponentType.DELAY_LINE || type == ComponentType.GROUPING_SPACE || type == ComponentType.DESTROY) {</span>
+<span class="pc bpc" id="L198" title="1 of 6 branches missed.">		if (type == ComponentType.DELAY_LINE || type == ComponentType.GROUPING_SPACE || type == ComponentType.DESTROY) {</span>
 
 		} else {
 <span class="pc bpc" id="L201" title="1 of 2 branches missed.">			if (styles == null)</span>
@@ -249,11 +249,11 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 <span class="pc bpc" id="L249" title="1 of 2 branches missed.">		if (type == ComponentType.ACTIVATION_BOX_OPEN_OPEN)</span>
 <span class="nc" id="L250">			return new ComponentRoseActiveLine(styles[0], false, false, stringsToDisplay, param);</span>
 
-<span class="pc bpc" id="L252" title="1 of 2 branches missed.">		if (type == ComponentType.DELAY_LINE)</span>
-<span class="nc" id="L253">			return new ComponentRoseDelayLine(styles[0], param);</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">		if (type == ComponentType.DELAY_LINE)</span>
+<span class="fc" id="L253">			return new ComponentRoseDelayLine(styles[0], param);</span>
 
-<span class="pc bpc" id="L255" title="1 of 2 branches missed.">		if (type == ComponentType.DELAY_TEXT)</span>
-<span class="nc" id="L256">			return new ComponentRoseDelayText(styles[0], stringsToDisplay, param);</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">		if (type == ComponentType.DELAY_TEXT)</span>
+<span class="fc" id="L256">			return new ComponentRoseDelayText(styles[0], stringsToDisplay, param);</span>
 
 <span class="fc bfc" id="L258" title="All 2 branches covered.">		if (type == ComponentType.DESTROY)</span>
 <span class="fc" id="L259">			return new ComponentRoseDestroy(styles[0], param);</span>
@@ -264,8 +264,8 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 <span class="fc bfc" id="L264" title="All 2 branches covered.">		if (type == ComponentType.DIVIDER)</span>
 <span class="fc" id="L265">			return new ComponentRoseDivider(styles[0], stringsToDisplay, param);</span>
 
-<span class="pc bpc" id="L267" title="1 of 2 branches missed.">		if (type == ComponentType.REFERENCE)</span>
-<span class="nc" id="L268">			return new ComponentRoseReference(styles[0], styles[1], stringsToDisplay, param);</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">		if (type == ComponentType.REFERENCE)</span>
+<span class="fc" id="L268">			return new ComponentRoseReference(styles[0], styles[1], stringsToDisplay, param);</span>
 
 <span class="pc bpc" id="L270" title="1 of 2 branches missed.">		if (type == ComponentType.ENGLOBER)</span>
 <span class="fc" id="L271">			return new ComponentRoseEnglober(styles[0], stringsToDisplay, param);</span>

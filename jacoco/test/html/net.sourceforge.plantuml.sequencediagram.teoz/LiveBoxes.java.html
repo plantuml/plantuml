@@ -215,7 +215,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 
 <span class="fc bfc" id="L216" title="All 4 branches covered.">			if (current instanceof Message || current instanceof MessageExo) {</span>
 <span class="fc" id="L217">				Event next = nextButSkippingNotes(it);</span>
-<span class="pc bpc" id="L218" title="1 of 4 branches missed.">				while (next instanceof LifeEvent &amp;&amp; ((LifeEvent) next).getMessage() == current) {</span>
+<span class="fc bfc" id="L218" title="All 4 branches covered.">				while (next instanceof LifeEvent &amp;&amp; ((LifeEvent) next).getMessage() == current) {</span>
 <span class="fc" id="L219">					final LifeEvent le = (LifeEvent) next;</span>
 <span class="fc bfc" id="L220" title="All 4 branches covered.">					if (le.isActivate() &amp;&amp; le.getParticipant() == p)</span>
 <span class="fc" id="L221">						return le.getSpecificColors();</span>
@@ -388,8 +388,8 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="fc" id="L388">	}</span>
 
 	public void delayOn(double y, double height) {
-<span class="nc" id="L391">		delays.put(y, height);</span>
-<span class="nc" id="L392">	}</span>
+<span class="fc" id="L391">		delays.put(y, height);</span>
+<span class="fc" id="L392">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

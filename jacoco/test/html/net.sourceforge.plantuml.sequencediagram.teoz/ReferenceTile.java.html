@@ -64,16 +64,16 @@ public class ReferenceTile extends AbstractTile implements Tile {
 	private Component noteRight;
 
 	public Event getEvent() {
-<span class="nc" id="L67">		return reference;</span>
+<span class="fc" id="L67">		return reference;</span>
 	}
 
 	public ReferenceTile(Reference reference, TileArguments tileArguments, YGauge currentY) {
-<span class="nc" id="L71">		super(tileArguments.getStringBounder(), currentY);</span>
-<span class="nc" id="L72">		this.reference = reference;</span>
-<span class="nc" id="L73">		this.tileArguments = tileArguments;</span>
-<span class="nc" id="L74">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
+<span class="fc" id="L71">		super(tileArguments.getStringBounder(), currentY);</span>
+<span class="fc" id="L72">		this.reference = reference;</span>
+<span class="fc" id="L73">		this.tileArguments = tileArguments;</span>
+<span class="fc" id="L74">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
 
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		for (Note noteOnMessage : reference.getNoteOnMessages()) {</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		for (Note noteOnMessage : reference.getNoteOnMessages()) {</span>
 <span class="nc" id="L77">			final ISkinParam skinParam2 = noteOnMessage.getSkinParamBackcolored(tileArguments.getSkinParam());</span>
 <span class="nc" id="L78">			final Component note = tileArguments.getSkin().createComponentNote(noteOnMessage.getUsedStyles(),</span>
 <span class="nc" id="L79">					noteOnMessage.getNoteStyle().getNoteComponentType(), skinParam2, noteOnMessage.getDisplay(),</span>
@@ -84,99 +84,99 @@ public class ReferenceTile extends AbstractTile implements Tile {
 <span class="nc" id="L84">				noteLeft = note;</span>
 
 <span class="nc" id="L86">		}</span>
-<span class="nc" id="L87">	}</span>
+<span class="fc" id="L87">	}</span>
 
 	@Override
 	public YGauge getYGauge() {
-<span class="nc" id="L91">		return yGauge;</span>
+<span class="fc" id="L91">		return yGauge;</span>
 	}
 
 	private void init(StringBounder stringBounder) {
-<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (first != null)</span>
-<span class="nc" id="L96">			return;</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">		if (first != null)</span>
+<span class="fc" id="L96">			return;</span>
 
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		for (Participant p : reference.getParticipant()) {</span>
-<span class="nc" id="L99">			final LivingSpace livingSpace = tileArguments.getLivingSpace(p);</span>
-<span class="nc" id="L100">			final Real pos = livingSpace.getPosC(stringBounder);</span>
-<span class="nc bnc" id="L101" title="All 4 branches missed.">			if (first == null || pos.getCurrentValue() &lt; first.getCurrentValue())</span>
-<span class="nc" id="L102">				this.first = livingSpace.getPosB(stringBounder);</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">		for (Participant p : reference.getParticipant()) {</span>
+<span class="fc" id="L99">			final LivingSpace livingSpace = tileArguments.getLivingSpace(p);</span>
+<span class="fc" id="L100">			final Real pos = livingSpace.getPosC(stringBounder);</span>
+<span class="pc bpc" id="L101" title="1 of 4 branches missed.">			if (first == null || pos.getCurrentValue() &lt; first.getCurrentValue())</span>
+<span class="fc" id="L102">				this.first = livingSpace.getPosB(stringBounder);</span>
 
-<span class="nc bnc" id="L104" title="All 4 branches missed.">			if (last == null || pos.getCurrentValue() &gt; last.getCurrentValue())</span>
-<span class="nc" id="L105">				this.last = livingSpace.getPosD(stringBounder);</span>
+<span class="pc bpc" id="L104" title="1 of 4 branches missed.">			if (last == null || pos.getCurrentValue() &gt; last.getCurrentValue())</span>
+<span class="fc" id="L105">				this.last = livingSpace.getPosD(stringBounder);</span>
 
-<span class="nc" id="L107">		}</span>
-<span class="nc" id="L108">		final Component comp = getComponent(stringBounder);</span>
-<span class="nc" id="L109">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (reference.getParticipant().size() == 1)</span>
+<span class="fc" id="L107">		}</span>
+<span class="fc" id="L108">		final Component comp = getComponent(stringBounder);</span>
+<span class="fc" id="L109">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (reference.getParticipant().size() == 1)</span>
 <span class="nc" id="L111">			this.last = this.last.addAtLeast(0);</span>
 
-<span class="nc" id="L113">		this.last.ensureBiggerThan(this.first.addFixed(dim.getWidth()));</span>
+<span class="fc" id="L113">		this.last.ensureBiggerThan(this.first.addFixed(dim.getWidth()));</span>
 
-<span class="nc" id="L115">	}</span>
+<span class="fc" id="L115">	}</span>
 
 	private Component getComponent(StringBounder stringBounder) {
-<span class="nc" id="L118">		Display strings = Display.empty();</span>
-<span class="nc" id="L119">		strings = strings.add(&quot;ref&quot;);</span>
-<span class="nc" id="L120">		strings = strings.addAll(reference.getStrings());</span>
+<span class="fc" id="L118">		Display strings = Display.empty();</span>
+<span class="fc" id="L119">		strings = strings.add(&quot;ref&quot;);</span>
+<span class="fc" id="L120">		strings = strings.addAll(reference.getStrings());</span>
 
-<span class="nc" id="L122">		final Component comp = tileArguments.getSkin().createComponent(reference.getUsedStyles(),</span>
-<span class="nc" id="L123">				ComponentType.REFERENCE, null, tileArguments.getSkinParam(), strings);</span>
-<span class="nc" id="L124">		return comp;</span>
+<span class="fc" id="L122">		final Component comp = tileArguments.getSkin().createComponent(reference.getUsedStyles(),</span>
+<span class="fc" id="L123">				ComponentType.REFERENCE, null, tileArguments.getSkinParam(), strings);</span>
+<span class="fc" id="L124">		return comp;</span>
 	}
 
 	public void drawU(UGraphic ug) {
 		// Self-translate prologue: absolute gauge position
-<span class="nc" id="L129">		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));</span>
-<span class="nc" id="L130">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L131">		init(stringBounder);</span>
-<span class="nc" id="L132">		final Component comp = getComponent(stringBounder);</span>
-<span class="nc" id="L133">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
-<span class="nc" id="L134">		final Area area = Area.create(last.getCurrentValue() - first.getCurrentValue(), dim.getHeight());</span>
+<span class="fc" id="L129">		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));</span>
+<span class="fc" id="L130">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L131">		init(stringBounder);</span>
+<span class="fc" id="L132">		final Component comp = getComponent(stringBounder);</span>
+<span class="fc" id="L133">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
+<span class="fc" id="L134">		final Area area = Area.create(last.getCurrentValue() - first.getCurrentValue(), dim.getHeight());</span>
 
-<span class="nc" id="L136">		comp.drawU(ug.apply(UTranslate.dx(first.getCurrentValue())), area, (Context2D) ug);</span>
+<span class="fc" id="L136">		comp.drawU(ug.apply(UTranslate.dx(first.getCurrentValue())), area, (Context2D) ug);</span>
 
-<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (noteLeft != null) {</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		if (noteLeft != null) {</span>
 <span class="nc" id="L139">			final double wn = noteLeft.getPreferredWidth(stringBounder);</span>
 <span class="nc" id="L140">			final double hn = noteLeft.getPreferredHeight(stringBounder);</span>
 <span class="nc" id="L141">			noteLeft.drawU(ug.apply(UTranslate.dx(first.getCurrentValue() - wn)), new Area(new XDimension2D(wn, hn)),</span>
 					(Context2D) ug);
 		}
 
-<span class="nc bnc" id="L145" title="All 2 branches missed.">		if (noteRight != null) {</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">		if (noteRight != null) {</span>
 <span class="nc" id="L146">			final double wn = noteRight.getPreferredWidth(stringBounder);</span>
 <span class="nc" id="L147">			final double hn = noteRight.getPreferredHeight(stringBounder);</span>
 <span class="nc" id="L148">			noteRight.drawU(ug.apply(UTranslate.dx(last.getCurrentValue())), new Area(new XDimension2D(wn, hn)),</span>
 					(Context2D) ug);
 		}
 
-<span class="nc" id="L152">	}</span>
+<span class="fc" id="L152">	}</span>
 
 	public double getPreferredHeight() {
-<span class="nc" id="L155">		final Component comp = getComponent(getStringBounder());</span>
-<span class="nc" id="L156">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
-<span class="nc" id="L157">		return dim.getHeight();</span>
+<span class="fc" id="L155">		final Component comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L156">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L157">		return dim.getHeight();</span>
 	}
 
 	public void addConstraints() {
-<span class="nc" id="L161">	}</span>
+<span class="fc" id="L161">	}</span>
 
 	public Real getMinX() {
-<span class="nc" id="L164">		init(getStringBounder());</span>
-<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (noteLeft != null) {</span>
+<span class="fc" id="L164">		init(getStringBounder());</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		if (noteLeft != null) {</span>
 <span class="nc" id="L166">			final double wn = noteLeft.getPreferredWidth(getStringBounder());</span>
 <span class="nc" id="L167">			return this.first.addFixed(-wn);</span>
 		}
 
-<span class="nc" id="L170">		return this.first;</span>
+<span class="fc" id="L170">		return this.first;</span>
 	}
 
 	public Real getMaxX() {
-<span class="nc" id="L174">		init(getStringBounder());</span>
-<span class="nc bnc" id="L175" title="All 2 branches missed.">		if (noteRight != null) {</span>
+<span class="fc" id="L174">		init(getStringBounder());</span>
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">		if (noteRight != null) {</span>
 <span class="nc" id="L176">			final double wn = noteRight.getPreferredWidth(getStringBounder());</span>
 <span class="nc" id="L177">			return this.last.addFixed(wn);</span>
 		}
-<span class="nc" id="L179">		return this.last;</span>
+<span class="fc" id="L179">		return this.last;</span>
 	}
 
 }

@@ -204,13 +204,13 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 <span class="fc" id="L204">		lastEventWithDeactivate = m;</span>
 <span class="fc" id="L205">		lastDelay = null;</span>
 <span class="fc" id="L206">		events.add(m);</span>
-<span class="pc bpc" id="L207" title="1 of 2 branches missed.">		if (pendingCreate != null) {</span>
-<span class="nc bnc" id="L208" title="All 2 branches missed.">			if (m.compatibleForCreate(pendingCreate.getParticipant()) == false)</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">		if (pendingCreate != null) {</span>
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">			if (m.compatibleForCreate(pendingCreate.getParticipant()) == false)</span>
 <span class="nc" id="L209">				return CommandExecutionResult.error(&quot;After create command, you have to send a message to \&quot;&quot;</span>
 <span class="nc" id="L210">						+ pendingCreate.getParticipant() + &quot;\&quot;&quot;);</span>
 
-<span class="nc" id="L212">			m.addLifeEvent(pendingCreate);</span>
-<span class="nc" id="L213">			pendingCreate = null;</span>
+<span class="fc" id="L212">			m.addLifeEvent(pendingCreate);</span>
+<span class="fc" id="L213">			pendingCreate = null;</span>
 		}
 <span class="fc" id="L215">		return CommandExecutionResult.ok();</span>
 	}
@@ -225,12 +225,12 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 
 	public void addNote(Note n, boolean tryMerge) {
 		// this.lastEventWithDeactivate = null;
-<span class="pc bpc" id="L228" title="3 of 4 branches missed.">		if (tryMerge &amp;&amp; events.size() &gt; 0) {</span>
-<span class="nc" id="L229">			final Event last = events.get(events.size() - 1);</span>
-<span class="nc bnc" id="L230" title="All 2 branches missed.">			if (last instanceof Note) {</span>
-<span class="nc" id="L231">				final Notes notes = new Notes((Note) last, n);</span>
-<span class="nc" id="L232">				events.set(events.size() - 1, notes);</span>
-<span class="nc" id="L233">				return;</span>
+<span class="pc bpc" id="L228" title="1 of 4 branches missed.">		if (tryMerge &amp;&amp; events.size() &gt; 0) {</span>
+<span class="fc" id="L229">			final Event last = events.get(events.size() - 1);</span>
+<span class="pc bpc" id="L230" title="1 of 2 branches missed.">			if (last instanceof Note) {</span>
+<span class="fc" id="L231">				final Notes notes = new Notes((Note) last, n);</span>
+<span class="fc" id="L232">				events.set(events.size() - 1, notes);</span>
+<span class="fc" id="L233">				return;</span>
 			}
 <span class="nc bnc" id="L235" title="All 2 branches missed.">			if (last instanceof Notes) {</span>
 <span class="nc" id="L236">				((Notes) last).add(n);</span>
@@ -281,10 +281,10 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 	private Delay lastDelay;
 
 	public void delay(Display strings) {
-<span class="nc" id="L284">		final Delay delay = new Delay(strings, getSkinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L285">		events.add(delay);</span>
-<span class="nc" id="L286">		lastDelay = delay;</span>
-<span class="nc" id="L287">	}</span>
+<span class="fc" id="L284">		final Delay delay = new Delay(strings, getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L285">		events.add(delay);</span>
+<span class="fc" id="L286">		lastDelay = delay;</span>
+<span class="fc" id="L287">	}</span>
 
 	public List&lt;Event&gt; events() {
 <span class="fc" id="L290">		return Collections.unmodifiableList(events);</span>
@@ -366,9 +366,9 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 <span class="fc" id="L366">		final LifeEvent lifeEvent = new LifeEvent(p, lifeEventType, new Fashion(backcolor, linecolor),</span>
 <span class="fc" id="L367">				getSkinParam().getCurrentStyleBuilder());</span>
 <span class="fc" id="L368">		events.add(lifeEvent);</span>
-<span class="pc bpc" id="L369" title="1 of 2 branches missed.">		if (lifeEventType == LifeEventType.CREATE) {</span>
-<span class="nc" id="L370">			pendingCreate = lifeEvent;</span>
-<span class="nc" id="L371">			return null;</span>
+<span class="fc bfc" id="L369" title="All 2 branches covered.">		if (lifeEventType == LifeEventType.CREATE) {</span>
+<span class="fc" id="L370">			pendingCreate = lifeEvent;</span>
+<span class="fc" id="L371">			return null;</span>
 		}
 <span class="fc bfc" id="L373" title="All 2 branches covered.">		if (lastEventWithDeactivate == null) {</span>
 <span class="pc bpc" id="L374" title="1 of 2 branches missed.">			if (lifeEventType == LifeEventType.ACTIVATE) {</span>
@@ -579,8 +579,8 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 	}
 
 	public void addReference(Reference ref) {
-<span class="nc" id="L582">		events.add(ref);</span>
-<span class="nc" id="L583">	}</span>
+<span class="fc" id="L582">		events.add(ref);</span>
+<span class="fc" id="L583">	}</span>
 
 	@Override
 	public boolean isIncomplete() {

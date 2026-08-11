@@ -138,17 +138,17 @@ import net.sourceforge.plantuml.style.ISkinParam;
 <span class="fc bfc" id="L138" title="All 2 branches covered.">		} else if (ev instanceof Note) {</span>
 <span class="fc" id="L139">			final Note note = (Note) ev;</span>
 <span class="fc" id="L140">			LivingSpace livingSpace1 = livingSpaces.get(note.getParticipant());</span>
-<span class="pc bpc" id="L141" title="1 of 2 branches missed.">			LivingSpace livingSpace2 = note.getParticipant2() == null ? null : livingSpaces.get(note.getParticipant2());</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">			LivingSpace livingSpace2 = note.getParticipant2() == null ? null : livingSpaces.get(note.getParticipant2());</span>
 <span class="pc bpc" id="L142" title="3 of 4 branches missed.">			if (livingSpace1 == null &amp;&amp; livingSpace2 == null) {</span>
 <span class="nc" id="L143">				livingSpace1 = tileArguments.getFirstLivingSpace();</span>
 <span class="nc" id="L144">				livingSpace2 = tileArguments.getLastLivingSpace();</span>
 			}
 <span class="fc" id="L146">			tiles.add(new NoteTile(tileArguments.getStringBounder(), livingSpace1, livingSpace2, note, skin, skinParam,</span>
 					currentY));
-<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		} else if (ev instanceof Notes) {</span>
-<span class="nc" id="L149">			final Notes notes = (Notes) ev;</span>
-<span class="nc" id="L150">			tiles.add(new NotesTile(tileArguments.getStringBounder(), livingSpaces, notes, skin, skinParam, currentY));</span>
-<span class="pc bfc" id="L151" title="All 2 branches covered.">		} else if (ev instanceof Divider) {</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">		} else if (ev instanceof Notes) {</span>
+<span class="fc" id="L149">			final Notes notes = (Notes) ev;</span>
+<span class="fc" id="L150">			tiles.add(new NotesTile(tileArguments.getStringBounder(), livingSpaces, notes, skin, skinParam, currentY));</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">		} else if (ev instanceof Divider) {</span>
 <span class="fc" id="L152">			final Divider divider = (Divider) ev;</span>
 <span class="fc" id="L153">			tiles.add(new DividerTile(divider, tileArguments, currentY));</span>
 <span class="fc bfc" id="L154" title="All 2 branches covered.">		} else if (ev instanceof GroupingStart) {</span>
@@ -171,12 +171,12 @@ import net.sourceforge.plantuml.style.ISkinParam;
 <span class="pc bpc" id="L171" title="1 of 4 branches missed.">		} else if (ev instanceof GroupingLeaf &amp;&amp; ((GroupingLeaf) ev).getType() == GroupingType.ELSE) {</span>
 <span class="fc" id="L172">			final GroupingLeaf anElse = (GroupingLeaf) ev;</span>
 <span class="fc" id="L173">			tiles.add(new ElseTile(anElse, skin, skinParam, parent, currentY));</span>
-<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		} else if (ev instanceof Reference) {</span>
-<span class="nc" id="L175">			final Reference ref = (Reference) ev;</span>
-<span class="nc" id="L176">			tiles.add(new ReferenceTile(ref, tileArguments.withBackColor(ref), currentY));</span>
-<span class="pc bpc" id="L177" title="1 of 2 branches missed.">		} else if (ev instanceof Delay) {</span>
-<span class="nc" id="L178">			final Delay delay = (Delay) ev;</span>
-<span class="nc" id="L179">			tiles.add(new DelayTile(delay, tileArguments, currentY));</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">		} else if (ev instanceof Reference) {</span>
+<span class="fc" id="L175">			final Reference ref = (Reference) ev;</span>
+<span class="fc" id="L176">			tiles.add(new ReferenceTile(ref, tileArguments.withBackColor(ref), currentY));</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">		} else if (ev instanceof Delay) {</span>
+<span class="fc" id="L178">			final Delay delay = (Delay) ev;</span>
+<span class="fc" id="L179">			tiles.add(new DelayTile(delay, tileArguments, currentY));</span>
 <span class="pc bpc" id="L180" title="1 of 2 branches missed.">		} else if (ev instanceof HSpace) {</span>
 <span class="nc" id="L181">			final HSpace hspace = (HSpace) ev;</span>
 <span class="nc" id="L182">			tiles.add(new HSpaceTile(hspace, tileArguments, currentY));</span>

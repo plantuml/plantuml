@@ -121,10 +121,10 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate,
 
 	@Override
 	public final Warning addNote(Note note) {
-<span class="nc" id="L124">		this.noteOnMessages.add(note);</span>
-<span class="nc bnc" id="L125" title="All 4 branches missed.">		if (note.getPosition() != NotePosition.LEFT &amp;&amp; note.getPosition() != NotePosition.RIGHT)</span>
+<span class="fc" id="L124">		this.noteOnMessages.add(note);</span>
+<span class="pc bpc" id="L125" title="2 of 4 branches missed.">		if (note.getPosition() != NotePosition.LEFT &amp;&amp; note.getPosition() != NotePosition.RIGHT)</span>
 <span class="nc" id="L126">			return new Warning(&quot;This position is ignored: &quot; + note.getPosition());</span>
-<span class="nc" id="L127">		return null;</span>
+<span class="fc" id="L127">		return null;</span>
 	}
 
 	public final List&lt;Note&gt; getNoteOnMessages() {
