@@ -218,6 +218,15 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 		return message.getArrowConfiguration().isReverseDefine();
 	}
 
+	// Exposed so CommunicationTileSelfNoteLeft/Right can re-run the same
+	// "does this participant's own box clear the tile's actual footprint" check
+	// ensureOwnBoxClearsLoop() does above, but against THEIR OWN getMinX()/
+	// getMaxX() (which additionally includes the attached note) rather than this
+	// inner tile's -- see the wrapper classes' own ensureOwnBoxClearsNote().
+	LivingSpace getLivingSpace1() {
+		return livingSpace1;
+	}
+
 	private LivingSpace getPrevious() {
 		LivingSpace previous = null;
 		for (Iterator<LivingSpace> it = livingSpaces.values().iterator(); it.hasNext();) {

@@ -1,0 +1,12 @@
+---
+output: svg
+expected-description: (1 participants)
+---
+@startuml
+box "Box A"
+  participant a
+endbox
+
+a -> a : msg
+note over a: a very very very very very long note over the participant
+@enduml

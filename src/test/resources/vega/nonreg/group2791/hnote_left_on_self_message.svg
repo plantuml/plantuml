@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="165px" preserveAspectRatio="none" style="width:311px;height:165px;background:#FFFFFF;" version="1.1" viewBox="0 0 311 165" width="311px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#DDD" height="139" style="stroke:#181818;stroke-width:0.5;" width="298.381" x="6" y="11"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="31.119" x="139.631" y="21.111">Box A</text>
+    <g>
+      <title>a</title>
+      <rect fill="#000" fill-opacity="0" height="58" width="8" x="246.881" y="57"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="250.381" x2="250.381" y1="57" y2="115"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="239.488" y="28"/>
+    <text fill="#000" font-size="14" x="246.488" y="45.889">a</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="239.488" y="115"/>
+    <text fill="#000" font-size="14" x="246.488" y="132.889">a</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="250.381" x2="292.381" y1="84" y2="84"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="292.381" x2="292.381" y1="84" y2="97"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="251.381" x2="292.381" y1="97" y2="97"/>
+    <polygon fill="#181818" points="261.381,93,251.381,97,261.381,101,257.381,97" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="24.538" x="257.381" y="79.111">msg</text>
+    <path d="M15,70 L15,93 L245,93 L245,80 L235,70 L15,70" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M235,70 L235,80 L245,80 L235,70" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="209.381" x="21" y="85.111">a very very very very long hnote text here</text>
+  </g>
+</svg>

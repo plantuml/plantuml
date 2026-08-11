@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="198px" preserveAspectRatio="none" style="width:335px;height:198px;background:#FFFFFF;" version="1.1" viewBox="0 0 335 198" width="335px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#DDD" height="172" style="stroke:#181818;stroke-width:0.5;" width="322.075" x="6" y="11"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="31.119" x="151.478" y="21.111">Box A</text>
+    <g>
+      <title>a</title>
+      <rect fill="#000" fill-opacity="0" height="91" width="8" x="163.537" y="57"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="167.037" x2="167.037" y1="57" y2="148"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="156.144" y="28"/>
+    <text fill="#000" font-size="14" x="163.144" y="45.889">a</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="156.144" y="148"/>
+    <text fill="#000" font-size="14" x="163.144" y="165.889">a</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="167.037" x2="209.037" y1="84" y2="84"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="209.037" x2="209.037" y1="84" y2="97"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="168.037" x2="209.037" y1="97" y2="97"/>
+    <polygon fill="#181818" points="178.037,93,168.037,97,178.037,101,174.037,97" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="24.538" x="174.037" y="79.111">msg</text>
+    <path d="M15,110 L15,133 L319,133 L319,120 L309,110 L15,110" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M309,110 L309,120 L319,120 L309,110" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="283.075" x="21" y="125.111">a very very very very very long note over the participant</text>
+  </g>
+</svg>

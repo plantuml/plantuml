@@ -174,9 +174,41 @@ public class NoteTile extends AbstractTile implements Tile {
 	}
 
 	public void addConstraints() {
-		// final Component comp = getComponent(stringBounder);
-		// final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		// final double width = dim.getWidth();
+		ensureOwnBoxClearsNote();
+	}
+
+	// See CommunicationTileSelf.ensureOwnBoxClearsLoop() (issue #2791): a `box
+	// "..." ... endbox` grouping draws its rectangle purely from its first/last
+	// participant's LivingSpace marginBefore/marginAfter (Doll.getPosA()/
+	// getPosE()), never from any tile's own footprint. A standalone
+	// "note left of"/"note right of"/"note over" can reach further than the
+	// participant(s) it is attached to -- exactly the same shape of overflow
+	// as a self-message loop, just for a note instead of a loop. Grow the
+	// relevant LivingSpace's own margin to cover it; harmless when the
+	// participant(s) here are not actually a box's first/last member (or are
+	// in no box at all), since that margin is then never read (see
+	// LivingSpace.getPosA()/getPosE(), read only by Doll).
+	//
+	// The formula self-selects by position: for NotePosition.LEFT, getMinX()
+	// already equals getX() (no leftward reach past livingSpace1.getPosB()
+	// unless the note itself is wider than the gap), and getMaxX() collapses
+	// to livingSpace1.getPosC(), which never exceeds getPosD() -- so the
+	// "wrong side" of the pair is always a no-op (overflow <= 0) without
+	// needing to branch on note.getPosition() here.
+	private void ensureOwnBoxClearsNote() {
+		final StringBounder stringBounder = getStringBounder();
+
+		final double overflowLeft = livingSpace1.getPosB(stringBounder).getCurrentValue()
+				- getMinX().getCurrentValue();
+		if (overflowLeft > 0)
+			livingSpace1.ensureMarginBefore(overflowLeft);
+
+		final LivingSpace rightAnchor = note.getPosition() == NotePosition.OVER_SEVERAL ? livingSpace2
+				: livingSpace1;
+		final double overflowRight = getMaxX().getCurrentValue()
+				- rightAnchor.getPosD(stringBounder).getCurrentValue();
+		if (overflowRight > 0)
+			rightAnchor.ensureMarginAfter(overflowRight);
 	}
 
 	// The right edges this note is built on, broken back down into Reals that are

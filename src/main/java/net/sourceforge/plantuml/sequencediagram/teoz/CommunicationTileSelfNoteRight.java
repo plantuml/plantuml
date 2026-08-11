@@ -133,6 +133,22 @@ public class CommunicationTileSelfNoteRight extends AbstractTile {
 
 	public void addConstraints() {
 		tile.addConstraints();
+		ensureOwnBoxClearsNote();
+	}
+
+	// See CommunicationTileSelfNoteLeft.ensureOwnBoxClearsNote() (mirrored on
+	// the other side) and CommunicationTileSelf.ensureOwnBoxClearsLoop(), which
+	// both this and that method mirror: the inner tile's own addConstraints()
+	// only reserves margin against its own bare-loop getMaxX(), not this
+	// wrapper's getMaxX() which additionally includes the attached "note
+	// right"'s width (see getMaxX() below).
+	private void ensureOwnBoxClearsNote() {
+		final StringBounder stringBounder = getStringBounder();
+		final LivingSpace livingSpace1 = tile.getLivingSpace1();
+		final double overflowRight = getMaxX().getCurrentValue()
+				- livingSpace1.getPosD(stringBounder).getCurrentValue();
+		if (overflowRight > 0)
+			livingSpace1.ensureMarginAfter(overflowRight);
 	}
 
 	public Real getMinX() {

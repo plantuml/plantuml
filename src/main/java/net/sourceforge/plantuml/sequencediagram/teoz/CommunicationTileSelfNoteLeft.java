@@ -135,6 +135,27 @@ public class CommunicationTileSelfNoteLeft extends AbstractTile {
 
 	public void addConstraints() {
 		tile.addConstraints();
+		ensureOwnBoxClearsNote();
+	}
+
+	// See CommunicationTileSelf.ensureOwnBoxClearsLoop(), which this mirrors:
+	// that method already grows the box's LivingSpace margin to cover the bare
+	// self-message loop, but it only ever reads the INNER tile's own
+	// getMinX() -- it has no idea a "note left" was attached right after this
+	// self-message and pushed the actual left edge further out (see
+	// getNotePosition() above, which starts from tile.getMinX() and subtracts
+	// the note's own width). Re-run the same check here, against THIS
+	// wrapper's getMinX(), which does include the note. Same fixed-offset
+	// reasoning applies: getMinX() is, at its core, a fixed pixel delta from
+	// livingSpace1's posB, so reading its current value during constraint
+	// registration is safe.
+	private void ensureOwnBoxClearsNote() {
+		final StringBounder stringBounder = getStringBounder();
+		final LivingSpace livingSpace1 = tile.getLivingSpace1();
+		final double overflowLeft = livingSpace1.getPosB(stringBounder).getCurrentValue()
+				- getMinX().getCurrentValue();
+		if (overflowLeft > 0)
+			livingSpace1.ensureMarginBefore(overflowLeft);
 	}
 
 	public Real getMinX() {
