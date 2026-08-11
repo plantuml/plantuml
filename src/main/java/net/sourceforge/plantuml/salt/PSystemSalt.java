@@ -181,6 +181,11 @@ public class PSystemSalt extends TitledDiagram {
 		cpx.add(new ElementFactoryPyramid(source, dictionary));
 		cpx.add(new ElementFactoryScroll(source, dictionary));
 		cpx.add(new ElementFactoryBorder(source, dictionary));
+		// A tree table ("{T#...}") must be a top-level candidate too, not only
+		// something reachable once already inside a Pyramid/Scroll/Border body -
+		// otherwise a bare tree table needs a useless extra wrapping "{ ... }"
+		// to render at all (see issue #2730).
+		cpx.add(new ElementFactoryTree(source, dictionary));
 
 		for (AbstractElementFactoryComplex f : cpx)
 			addSimpleFactory(f, source, dictionary);

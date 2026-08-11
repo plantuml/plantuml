@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="70px" preserveAspectRatio="none" style="width:298px;height:70px;background:#FFFFFF;" version="1.1" viewBox="0 0 298 70" width="298px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="32.025" x="7" y="16.333">Name</text>
+    <text fill="#000" font-size="12" textLength="19.275" x="74.7" y="16.333">text</text>
+    <line style="stroke:#000;stroke-width:1;" x1="72.7" x2="107.7" y1="19" y2="19"/>
+    <line style="stroke:#000;stroke-width:1;" x1="72.7" x2="72.7" y1="16" y2="18"/>
+    <line style="stroke:#000;stroke-width:1;" x1="107.7" x2="107.7" y1="16" y2="18"/>
+    <text fill="#000" font-size="12" textLength="51.975" x="7" y="32.333">Modifiers:</text>
+    <text fill="#000" font-size="12" textLength="31.425" x="92.7" y="33.333">public</text>
+    <ellipse cx="79.7" cy="30" fill="none" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;"/>
+    <ellipse cx="79.7" cy="30" fill="#000" rx="2" ry="2" style="stroke:#000;stroke-width:1.5;"/>
+    <text fill="#000" font-size="12" textLength="36" x="146.125" y="33.333">default</text>
+    <ellipse cx="133.125" cy="30" fill="none" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;"/>
+    <text fill="#000" font-size="12" textLength="62.7" x="7" y="48.333">Superclass:</text>
+    <text fill="#000" font-size="12" textLength="86.025" x="75.7" y="49.333">java.lang.Object</text>
+    <line style="stroke:#000;stroke-width:1;" x1="73.7" x2="204.7" y1="52" y2="52"/>
+    <line style="stroke:#000;stroke-width:1;" x1="73.7" x2="73.7" y1="49" y2="51"/>
+    <line style="stroke:#000;stroke-width:1;" x1="204.7" x2="204.7" y1="49" y2="51"/>
+    <rect fill="#EEE" height="16" rx="5" ry="5" style="stroke:#000;stroke-width:2.5;" width="76" x="211.2" y="42.5"/>
+    <text fill="#000" font-size="12" textLength="49.95" x="224.225" y="53.833">Browse...</text>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="70.7" y1="6" y2="6"/>
+    <line style="stroke:#000;stroke-width:1;" x1="70.7" x2="291.7" y1="22" y2="22"/>
+    <line style="stroke:#000;stroke-width:1;" x1="70.7" x2="291.7" y1="6" y2="6"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="70.7" y1="63" y2="63"/>
+    <line style="stroke:#000;stroke-width:1;" x1="70.7" x2="291.7" y1="63" y2="63"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="70.7" y1="38" y2="38"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="70.7" y1="22" y2="22"/>
+    <line style="stroke:#000;stroke-width:1;" x1="70.7" x2="291.7" y1="38" y2="38"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="6" y2="22"/>
+    <line style="stroke:#000;stroke-width:1;" x1="291.7" x2="291.7" y1="38" y2="63"/>
+    <line style="stroke:#000;stroke-width:1;" x1="70.7" x2="70.7" y1="22" y2="38"/>
+    <line style="stroke:#000;stroke-width:1;" x1="291.7" x2="291.7" y1="22" y2="38"/>
+    <line style="stroke:#000;stroke-width:1;" x1="70.7" x2="70.7" y1="6" y2="22"/>
+    <line style="stroke:#000;stroke-width:1;" x1="291.7" x2="291.7" y1="6" y2="22"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="38" y2="63"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="22" y2="38"/>
+    <line style="stroke:#000;stroke-width:1;" x1="70.7" x2="70.7" y1="38" y2="63"/>
+  </g>
+</svg>

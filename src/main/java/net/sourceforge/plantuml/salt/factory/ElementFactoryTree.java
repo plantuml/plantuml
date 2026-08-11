@@ -66,10 +66,23 @@ public class ElementFactoryTree extends AbstractElementFactoryComplex {
 		final ElementTree result = new ElementTree(font, getDictionary(), strategy);
 
 		boolean takeMe = true;
-		while (getDataSource().peek(0).getElement().equals("}") == false) {
+		// A row may contain its own nested "{...}" group (e.g. a set of
+		// alternatives like "{ (X) public | () default }"). That group's
+		// closing "}" must not be mistaken for the closing "}" of this tree
+		// table itself, or everything after it in the source gets silently
+		// dropped (see issue #2730: this is what made internal groups break
+		// tree tables, and what made a root-level tree table lose its last
+		// rows entirely once it no longer needed an external wrapper).
+		int depth = 0;
+		while (depth > 0 || getDataSource().peek(0).getElement().equals("}") == false) {
 			final Terminated<String> t = getDataSource().next();
 			final Terminator terminator = t.getTerminator();
 			final String s = t.getElement();
+			if (s.equals("}")) {
+				depth--;
+			} else if (s.startsWith("{")) {
+				depth++;
+			}
 			if (takeMe) {
 				result.addEntry(s);
 			} else {
@@ -86,15 +99,24 @@ public class ElementFactoryTree extends AbstractElementFactoryComplex {
 		final String text = getDataSource().peek(0).getElement();
 		if (text.equals("{")) {
 			final String text1 = getDataSource().peek(1).getElement();
-			if (text1.equals("T")) {
-				return true;
-			}
-			if (text1.length() == 2 && text1.startsWith("T")) {
-				final char c = text1.charAt(1);
-				return TableStrategy.fromChar(c) != null;
+			return isTreeMarker(text1);
+		}
+		return false;
+	}
 
-			}
-			return false;
+	// Whether text1 is a tree-table marker ("T" or "T" followed by a valid
+	// TableStrategy character, e.g. "T#"). Shared with ElementFactoryPyramid
+	// so both agree on what counts as a tree table header instead of relying
+	// on two independently maintained checks (see issue #2730: Pyramid used
+	// to only exclude the bare "T" case, so it would wrongly claim a top-level
+	// "{T#..." block before ElementFactoryTree ever saw it).
+	static boolean isTreeMarker(String text1) {
+		if (text1.equals("T")) {
+			return true;
+		}
+		if (text1.length() == 2 && text1.startsWith("T")) {
+			final char c = text1.charAt(1);
+			return TableStrategy.fromChar(c) != null;
 		}
 		return false;
 	}

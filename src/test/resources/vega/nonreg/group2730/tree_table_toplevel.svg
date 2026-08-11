@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="47px" preserveAspectRatio="none" style="width:298px;height:47px;background:#FFFFFF;" version="1.1" viewBox="0 0 298 47" width="298px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="32.025" x="5" y="14.333">Name</text>
+    <text fill="#000" font-size="12" textLength="27.825" x="77.7" y="14.333">"text"</text>
+    <text fill="#000" font-size="12" textLength="51.975" x="5" y="26.333">Modifiers:</text>
+    <text fill="#000" font-size="12" x="77.7" y="26.333">{</text>
+    <text fill="#000" font-size="12" textLength="47.4" x="115.525" y="26.333">(X) public</text>
+    <text fill="#000" font-size="12" textLength="43.95" x="220.1" y="26.333">() default</text>
+    <text fill="#000" font-size="12" x="286.65" y="26.333">}</text>
+    <text fill="#000" font-size="12" textLength="62.7" x="5" y="38.333">Superclass:</text>
+    <text fill="#000" font-size="12" x="77.7" y="38.333">{</text>
+    <text fill="#000" font-size="12" textLength="94.575" x="115.525" y="38.333">"java.lang.Object"</text>
+    <text fill="#000" font-size="12" textLength="56.55" x="220.1" y="38.333">[Browse...]</text>
+    <text fill="#000" font-size="12" x="286.65" y="38.333">}</text>
+    <line style="stroke:#888;stroke-width:1;" x1="5" x2="295.625" y1="5" y2="5"/>
+    <line style="stroke:#888;stroke-width:1;" x1="5" x2="295.625" y1="17" y2="17"/>
+    <line style="stroke:#888;stroke-width:1;" x1="5" x2="295.625" y1="29" y2="29"/>
+    <line style="stroke:#888;stroke-width:1;" x1="5" x2="295.625" y1="41" y2="41"/>
+    <line style="stroke:#888;stroke-width:1;" x1="5" x2="5" y1="5" y2="41"/>
+    <line style="stroke:#888;stroke-width:1;" x1="72.7" x2="72.7" y1="5" y2="41"/>
+    <line style="stroke:#888;stroke-width:1;" x1="110.525" x2="110.525" y1="5" y2="41"/>
+    <line style="stroke:#888;stroke-width:1;" x1="215.1" x2="215.1" y1="5" y2="41"/>
+    <line style="stroke:#888;stroke-width:1;" x1="281.65" x2="281.65" y1="5" y2="41"/>
+    <line style="stroke:#888;stroke-width:1;" x1="295.625" x2="295.625" y1="5" y2="41"/>
+  </g>
+</svg>

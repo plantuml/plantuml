@@ -1,0 +1,11 @@
+---
+output: svg
+expected-description: (Salt)
+---
+@startsalt
+{T#
+Name | "text"
+Modifiers: | { (X) public | () default }
+Superclass: | { "java.lang.Object" | [Browse...] }
+}
+@endsalt
