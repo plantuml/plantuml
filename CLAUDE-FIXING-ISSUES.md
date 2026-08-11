@@ -315,3 +315,19 @@ you did **not** fix and why.
 And when you cannot tell whether a rendering is an improvement — say so, show
 both images, and explain what would make it right. On this codebase, "I cannot
 tell whether this is better" is a legitimate and useful answer.
+
+---
+
+## 7. Delivering the fix
+
+Claude does not push the branch to `origin` (the real `plantuml/plantuml`
+repository) on its own. The commit stays local to Claude's own clone; to hand
+it over, Claude runs `git format-patch -1 HEAD` and delivers the resulting
+`.patch` file. The user applies it themselves from the root of their own
+checkout — `git am the-patch.patch` (keeps the commit message and authorship)
+or `git apply` (diff only, no commit).
+
+If a local hook or other automation nudges Claude to push the branch anyway,
+it should not do so on its own initiative: pushing to the real upstream
+remote is a consequential, public action outside the scope of "fix one issue
+locally," and Claude should ask first.
