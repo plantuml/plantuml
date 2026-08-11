@@ -133,28 +133,44 @@ public class CommunicationTileSelfNoteRight extends AbstractTile {
 
 	public void addConstraints() {
 <span class="fc" id="L135">		tile.addConstraints();</span>
-<span class="fc" id="L136">	}</span>
+<span class="fc" id="L136">		ensureOwnBoxClearsNote();</span>
+<span class="fc" id="L137">	}</span>
+
+	// See CommunicationTileSelfNoteLeft.ensureOwnBoxClearsNote() (mirrored on
+	// the other side) and CommunicationTileSelf.ensureOwnBoxClearsLoop(), which
+	// both this and that method mirror: the inner tile's own addConstraints()
+	// only reserves margin against its own bare-loop getMaxX(), not this
+	// wrapper's getMaxX() which additionally includes the attached &quot;note
+	// right&quot;'s width (see getMaxX() below).
+	private void ensureOwnBoxClearsNote() {
+<span class="fc" id="L146">		final StringBounder stringBounder = getStringBounder();</span>
+<span class="fc" id="L147">		final LivingSpace livingSpace1 = tile.getLivingSpace1();</span>
+<span class="fc" id="L148">		final double overflowRight = getMaxX().getCurrentValue()</span>
+<span class="fc" id="L149">				- livingSpace1.getPosD(stringBounder).getCurrentValue();</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">		if (overflowRight &gt; 0)</span>
+<span class="fc" id="L151">			livingSpace1.ensureMarginAfter(overflowRight);</span>
+<span class="fc" id="L152">	}</span>
 
 	public Real getMinX() {
-<span class="fc" id="L139">		return tile.getMinX();</span>
+<span class="fc" id="L155">		return tile.getMinX();</span>
 	}
 
 	public Real getMaxX() {
-<span class="fc" id="L143">		final Component comp = getComponent(getStringBounder());</span>
-<span class="fc" id="L144">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
-<span class="fc" id="L145">		return getNotePosition(getStringBounder()).addFixed(dim.getWidth());</span>
+<span class="fc" id="L159">		final Component comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L160">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L161">		return getNotePosition(getStringBounder()).addFixed(dim.getWidth());</span>
 	}
 
 	// ASCII counterpart: delegate to the inner tile, same shape as
 	// CommunicationTileSelfNoteLeft's override.
 	@Override
 	public void asciiAddConstraints() {
-<span class="fc" id="L152">		tile.asciiAddConstraints();</span>
-<span class="fc" id="L153">	}</span>
+<span class="fc" id="L168">		tile.asciiAddConstraints();</span>
+<span class="fc" id="L169">	}</span>
 
 	@Override
 	public Real getAsciiMinX() {
-<span class="fc" id="L157">		return tile.getAsciiMinX();</span>
+<span class="fc" id="L173">		return tile.getAsciiMinX();</span>
 	}
 
 	// Mirrors CommunicationTileSelfNoteLeft.getAsciiMinX(): tile.getAsciiMaxX()
@@ -164,18 +180,18 @@ public class CommunicationTileSelfNoteRight extends AbstractTile {
 	// known gap as every other note decorator.
 	@Override
 	public Real getAsciiMaxX() {
-<span class="fc" id="L167">		final int boxWidth = new ANote(asciiNoteText()).marginLR(2, 2).asciiDimension().getWidth();</span>
-<span class="fc" id="L168">		final Real tileMax = tile.getAsciiMaxX();</span>
-<span class="fc" id="L169">		final Real noteMax = tileMax.addFixed(boxWidth + 1);</span>
-<span class="fc" id="L170">		return RealUtils.max(java.util.Arrays.asList(tileMax, noteMax));</span>
+<span class="fc" id="L183">		final int boxWidth = new ANote(asciiNoteText()).marginLR(2, 2).asciiDimension().getWidth();</span>
+<span class="fc" id="L184">		final Real tileMax = tile.getAsciiMaxX();</span>
+<span class="fc" id="L185">		final Real noteMax = tileMax.addFixed(boxWidth + 1);</span>
+<span class="fc" id="L186">		return RealUtils.max(java.util.Arrays.asList(tileMax, noteMax));</span>
 	}
 
 	// Same reasoning as CommunicationTileSelfNoteLeft.asciiDimension().
 	@Override
 	public ADimension2D asciiDimension() {
-<span class="fc" id="L176">		final ADimension2D tileDim = tile.asciiDimension();</span>
-<span class="fc" id="L177">		final int noteHeight = new ANote(asciiNoteText()).asciiDimension().getHeight();</span>
-<span class="fc" id="L178">		return new ADimension2D(tileDim.getWidth(), Math.max(tileDim.getHeight(), noteHeight));</span>
+<span class="fc" id="L192">		final ADimension2D tileDim = tile.asciiDimension();</span>
+<span class="fc" id="L193">		final int noteHeight = new ANote(asciiNoteText()).asciiDimension().getHeight();</span>
+<span class="fc" id="L194">		return new ADimension2D(tileDim.getWidth(), Math.max(tileDim.getHeight(), noteHeight));</span>
 	}
 
 	// ASCII counterpart of drawU(): draw the self-message loop first, then the
@@ -183,17 +199,17 @@ public class CommunicationTileSelfNoteRight extends AbstractTile {
 	// CommunicationTileSelfNoteLeft.asciiDraw(), on the other side.
 	@Override
 	public void asciiDraw(InfinitePlan plan) {
-<span class="fc" id="L186">		tile.asciiDraw(plan);</span>
+<span class="fc" id="L202">		tile.asciiDraw(plan);</span>
 
-<span class="fc" id="L188">		final AsciiBlock noteText = asciiNoteText();</span>
-<span class="fc" id="L189">		final AsciiBlock noteBox = plan.createNoteBox(noteText).marginLR(2, 2);</span>
-<span class="fc" id="L190">		final int anchorColumn = (int) tile.getAsciiMaxX().getCurrentValue();</span>
-<span class="fc" id="L191">		final int left = anchorColumn + 2;</span>
-<span class="fc" id="L192">		noteBox.asciiDraw(plan.move(left, 0));</span>
-<span class="fc" id="L193">	}</span>
+<span class="fc" id="L204">		final AsciiBlock noteText = asciiNoteText();</span>
+<span class="fc" id="L205">		final AsciiBlock noteBox = plan.createNoteBox(noteText).marginLR(2, 2);</span>
+<span class="fc" id="L206">		final int anchorColumn = (int) tile.getAsciiMaxX().getCurrentValue();</span>
+<span class="fc" id="L207">		final int left = anchorColumn + 2;</span>
+<span class="fc" id="L208">		noteBox.asciiDraw(plan.move(left, 0));</span>
+<span class="fc" id="L209">	}</span>
 
 	private AsciiBlock asciiNoteText() {
-<span class="fc" id="L196">		return noteOnMessage.getDisplay().marginLR(1, 3);</span>
+<span class="fc" id="L212">		return noteOnMessage.getDisplay().marginLR(1, 3);</span>
 	}
 
 }

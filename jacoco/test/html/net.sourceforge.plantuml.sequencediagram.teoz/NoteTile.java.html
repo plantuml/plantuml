@@ -174,10 +174,42 @@ public class NoteTile extends AbstractTile implements Tile {
 	}
 
 	public void addConstraints() {
-		// final Component comp = getComponent(stringBounder);
-		// final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		// final double width = dim.getWidth();
-<span class="fc" id="L180">	}</span>
+<span class="fc" id="L177">		ensureOwnBoxClearsNote();</span>
+<span class="fc" id="L178">	}</span>
+
+	// See CommunicationTileSelf.ensureOwnBoxClearsLoop() (issue #2791): a `box
+	// &quot;...&quot; ... endbox` grouping draws its rectangle purely from its first/last
+	// participant's LivingSpace marginBefore/marginAfter (Doll.getPosA()/
+	// getPosE()), never from any tile's own footprint. A standalone
+	// &quot;note left of&quot;/&quot;note right of&quot;/&quot;note over&quot; can reach further than the
+	// participant(s) it is attached to -- exactly the same shape of overflow
+	// as a self-message loop, just for a note instead of a loop. Grow the
+	// relevant LivingSpace's own margin to cover it; harmless when the
+	// participant(s) here are not actually a box's first/last member (or are
+	// in no box at all), since that margin is then never read (see
+	// LivingSpace.getPosA()/getPosE(), read only by Doll).
+	//
+	// The formula self-selects by position: for NotePosition.LEFT, getMinX()
+	// already equals getX() (no leftward reach past livingSpace1.getPosB()
+	// unless the note itself is wider than the gap), and getMaxX() collapses
+	// to livingSpace1.getPosC(), which never exceeds getPosD() -- so the
+	// &quot;wrong side&quot; of the pair is always a no-op (overflow &lt;= 0) without
+	// needing to branch on note.getPosition() here.
+	private void ensureOwnBoxClearsNote() {
+<span class="fc" id="L199">		final StringBounder stringBounder = getStringBounder();</span>
+
+<span class="fc" id="L201">		final double overflowLeft = livingSpace1.getPosB(stringBounder).getCurrentValue()</span>
+<span class="fc" id="L202">				- getMinX().getCurrentValue();</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">		if (overflowLeft &gt; 0)</span>
+<span class="fc" id="L204">			livingSpace1.ensureMarginBefore(overflowLeft);</span>
+
+<span class="fc bfc" id="L206" title="All 2 branches covered.">		final LivingSpace rightAnchor = note.getPosition() == NotePosition.OVER_SEVERAL ? livingSpace2</span>
+<span class="fc" id="L207">				: livingSpace1;</span>
+<span class="fc" id="L208">		final double overflowRight = getMaxX().getCurrentValue()</span>
+<span class="fc" id="L209">				- rightAnchor.getPosD(stringBounder).getCurrentValue();</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">		if (overflowRight &gt; 0)</span>
+<span class="fc" id="L211">			rightAnchor.ensureMarginAfter(overflowRight);</span>
+<span class="fc" id="L212">	}</span>
 
 	// The right edges this note is built on, broken back down into Reals that are
 	// each safe to hand to Real.ensureBiggerThan() -- i.e. plain delta chains,
@@ -199,47 +231,47 @@ public class NoteTile extends AbstractTile implements Tile {
 	// push -- the harmless direction: a little too much room rather than a
 	// participant back under the frame.
 	LivingSpace getLeftAnchor() {
-<span class="fc" id="L202">		return livingSpace1;</span>
+<span class="fc" id="L234">		return livingSpace1;</span>
 	}
 
 	double getLeftOverhang() {
-<span class="fc" id="L206">		final NotePosition position = note.getPosition();</span>
-<span class="fc bfc" id="L207" title="All 2 branches covered.">		if (position == NotePosition.LEFT)</span>
-<span class="fc" id="L208">			return getUsedWidth(getStringBounder());</span>
+<span class="fc" id="L238">		final NotePosition position = note.getPosition();</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">		if (position == NotePosition.LEFT)</span>
+<span class="fc" id="L240">			return getUsedWidth(getStringBounder());</span>
 
-<span class="pc bpc" id="L210" title="1 of 2 branches missed.">		if (position == NotePosition.OVER)</span>
-<span class="fc" id="L211">			return getUsedWidth(getStringBounder()) / 2;</span>
+<span class="pc bpc" id="L242" title="1 of 2 branches missed.">		if (position == NotePosition.OVER)</span>
+<span class="fc" id="L243">			return getUsedWidth(getStringBounder()) / 2;</span>
 
-<span class="nc" id="L213">		return 0;</span>
+<span class="nc" id="L245">		return 0;</span>
 	}
 
 	List&lt;Real&gt; getStableMaxX() {
-<span class="fc" id="L217">		final List&lt;Real&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L218">		result.add(getX(getStringBounder()).addFixed(getUsedWidth(getStringBounder())));</span>
-<span class="fc bfc" id="L219" title="All 2 branches covered.">		if (note.getPosition() == NotePosition.OVER_SEVERAL)</span>
-<span class="fc" id="L220">			result.add(livingSpace2.getPosD(getStringBounder()));</span>
+<span class="fc" id="L249">		final List&lt;Real&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L250">		result.add(getX(getStringBounder()).addFixed(getUsedWidth(getStringBounder())));</span>
+<span class="fc bfc" id="L251" title="All 2 branches covered.">		if (note.getPosition() == NotePosition.OVER_SEVERAL)</span>
+<span class="fc" id="L252">			result.add(livingSpace2.getPosD(getStringBounder()));</span>
 
-<span class="fc" id="L222">		return result;</span>
+<span class="fc" id="L254">		return result;</span>
 	}
 
 	@Override
 	public Real getMinX() {
-<span class="fc" id="L227">		final Real result = getX(getStringBounder());</span>
-<span class="fc bfc" id="L228" title="All 2 branches covered.">		if (note.getPosition() == NotePosition.OVER_SEVERAL) {</span>
-<span class="fc" id="L229">			final Real x1 = livingSpace1.getPosB(getStringBounder());</span>
-<span class="fc" id="L230">			return RealUtils.min(result, x1);</span>
+<span class="fc" id="L259">		final Real result = getX(getStringBounder());</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">		if (note.getPosition() == NotePosition.OVER_SEVERAL) {</span>
+<span class="fc" id="L261">			final Real x1 = livingSpace1.getPosB(getStringBounder());</span>
+<span class="fc" id="L262">			return RealUtils.min(result, x1);</span>
 		}
-<span class="fc" id="L232">		return result;</span>
+<span class="fc" id="L264">		return result;</span>
 	}
 
 	@Override
 	public Real getMaxX() {
-<span class="fc" id="L237">		final Real result = getX(getStringBounder()).addFixed(getUsedWidth(getStringBounder()));</span>
-<span class="fc bfc" id="L238" title="All 2 branches covered.">		if (note.getPosition() == NotePosition.OVER_SEVERAL) {</span>
-<span class="fc" id="L239">			final Real x2 = livingSpace2.getPosD(getStringBounder());</span>
-<span class="fc" id="L240">			return RealUtils.max(result, x2);</span>
+<span class="fc" id="L269">		final Real result = getX(getStringBounder()).addFixed(getUsedWidth(getStringBounder()));</span>
+<span class="fc bfc" id="L270" title="All 2 branches covered.">		if (note.getPosition() == NotePosition.OVER_SEVERAL) {</span>
+<span class="fc" id="L271">			final Real x2 = livingSpace2.getPosD(getStringBounder());</span>
+<span class="fc" id="L272">			return RealUtils.max(result, x2);</span>
 		}
-<span class="fc" id="L242">		return result;</span>
+<span class="fc" id="L274">		return result;</span>
 	}
 
 }

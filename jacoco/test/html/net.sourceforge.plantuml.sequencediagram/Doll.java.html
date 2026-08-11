@@ -157,8 +157,8 @@ public class Doll implements WithStyle {
 
 	private Real getPosAA(StringBounder stringBounder) {
 <span class="fc" id="L159">		final LivingSpace previous = tileArguments.getLivingSpaces().previous(getFirstLivingSpace());</span>
-<span class="pc bpc" id="L160" title="1 of 2 branches missed.">		if (previous == null)</span>
-<span class="nc" id="L161">			return tileArguments.getXOrigin();</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		if (previous == null)</span>
+<span class="fc" id="L161">			return tileArguments.getXOrigin();</span>
 
 <span class="fc" id="L163">		return previous.getPosD(stringBounder);</span>
 	}

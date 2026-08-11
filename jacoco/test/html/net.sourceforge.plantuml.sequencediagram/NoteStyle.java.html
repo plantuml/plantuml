@@ -44,8 +44,8 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 <span class="fc" id="L44">	NORMAL, HEXAGONAL, BOX;</span>
 
 	public static NoteStyle getNoteStyle(String s) {
-<span class="pc bpc" id="L47" title="1 of 2 branches missed.">		if (s.equalsIgnoreCase(&quot;hnote&quot;))</span>
-<span class="nc" id="L48">			return NoteStyle.HEXAGONAL;</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">		if (s.equalsIgnoreCase(&quot;hnote&quot;))</span>
+<span class="fc" id="L48">			return NoteStyle.HEXAGONAL;</span>
 
 <span class="pc bpc" id="L50" title="1 of 2 branches missed.">		if (s.equalsIgnoreCase(&quot;rnote&quot;))</span>
 <span class="nc" id="L51">			return NoteStyle.BOX;</span>
@@ -64,8 +64,8 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 	}
 
 	public StyleSignatureBasic getDefaultStyleDefinition() {
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (this == NoteStyle.HEXAGONAL)</span>
-<span class="nc" id="L68">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.note, SName.hnote);</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">		if (this == NoteStyle.HEXAGONAL)</span>
+<span class="fc" id="L68">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.note, SName.hnote);</span>
 
 <span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (this == NoteStyle.BOX)</span>
 <span class="nc" id="L71">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.note, SName.rnote);</span>
