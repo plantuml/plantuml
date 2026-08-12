@@ -15,7 +15,7 @@ junit-platform-launcher = "6.1.2"
 adarshr-test-logger = "4.0.0"
 xmlunit-core        = "2.13.0"
 junit-pioneer       = "2.3.0"
-teavm               = "0.14.1"
+teavm               = "0.15.0"
 sonarqube           = "7.3.1.8318"
 openpdf             = "3.0.5"
 
