@@ -54,16 +54,16 @@ public class PSystemSaltFactory extends PSystemCommandFactory {
 
 	@Override
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
-<span class="nc" id="L57">		CommonCommands.addCommonCommands2(cmds);</span>
-<span class="nc" id="L58">		CommonCommands.addCommonScaleCommands(cmds);</span>
-<span class="nc" id="L59">		CommonCommands.addTitleCommands(cmds);</span>
-<span class="nc" id="L60">		cmds.add(new CommandAnything());</span>
-<span class="nc" id="L61">	}</span>
+<span class="fc" id="L57">		CommonCommands.addCommonCommands2(cmds);</span>
+<span class="fc" id="L58">		CommonCommands.addCommonScaleCommands(cmds);</span>
+<span class="fc" id="L59">		CommonCommands.addTitleCommands(cmds);</span>
+<span class="fc" id="L60">		cmds.add(new CommandAnything());</span>
+<span class="fc" id="L61">	}</span>
 
 	@Override
 	public PSystemSalt createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
 			PreprocessingArtifact preprocessing) {
-<span class="nc" id="L66">		return new PSystemSalt(source, preprocessing);</span>
+<span class="fc" id="L66">		return new PSystemSalt(source, preprocessing);</span>
 	}
 
 }

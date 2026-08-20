@@ -54,42 +54,42 @@ abstract class AbstractElementText extends AbstractElement {
 	private final FontConfiguration config;
 	private final int charLength;
 
-<span class="nc" id="L57">	public AbstractElementText(String text, UFont font, boolean manageLength, ISkinSimple spriteContainer) {</span>
-<span class="nc" id="L58">		config = blackBlueTrue(font);</span>
-<span class="nc bnc" id="L59" title="All 2 branches missed.">		if (manageLength) {</span>
-<span class="nc" id="L60">			this.charLength = getCharNumber(text);</span>
-<span class="nc" id="L61">			text = StringUtils.trin(text);</span>
+<span class="fc" id="L57">	public AbstractElementText(String text, UFont font, boolean manageLength, ISkinSimple spriteContainer) {</span>
+<span class="fc" id="L58">		config = blackBlueTrue(font);</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		if (manageLength) {</span>
+<span class="fc" id="L60">			this.charLength = getCharNumber(text);</span>
+<span class="fc" id="L61">			text = StringUtils.trin(text);</span>
 		} else {
 <span class="nc" id="L63">			this.charLength = 0;</span>
 		}
-<span class="nc" id="L65">		this.block = Display.create(text).create(config, HorizontalAlignment.LEFT, spriteContainer);</span>
-<span class="nc" id="L66">	}</span>
+<span class="fc" id="L65">		this.block = Display.create(text).create(config, HorizontalAlignment.LEFT, spriteContainer);</span>
+<span class="fc" id="L66">	}</span>
 
 	private int getCharNumber(String text) {
-<span class="nc" id="L69">		text = text.replaceAll(&quot;&lt;&amp;[-\\w]+&gt;&quot;, &quot;00&quot;);</span>
-<span class="nc" id="L70">		text = Splitter.purgeAllTag(text);</span>
-<span class="nc" id="L71">		return text.length();</span>
+<span class="fc" id="L69">		text = text.replaceAll(&quot;&lt;&amp;[-\\w]+&gt;&quot;, &quot;00&quot;);</span>
+<span class="fc" id="L70">		text = Splitter.purgeAllTag(text);</span>
+<span class="fc" id="L71">		return text.length();</span>
 	}
 
 	protected void drawText(UGraphic ug, double x, double y) {
-<span class="nc" id="L75">		block.drawU(ug.apply(new UTranslate(x, y)));</span>
-<span class="nc" id="L76">	}</span>
+<span class="fc" id="L75">		block.drawU(ug.apply(new UTranslate(x, y)));</span>
+<span class="fc" id="L76">	}</span>
 
 	protected XDimension2D getPureTextDimension(StringBounder stringBounder) {
-<span class="nc" id="L79">		return block.calculateDimension(stringBounder);</span>
+<span class="fc" id="L79">		return block.calculateDimension(stringBounder);</span>
 	}
 
 	protected XDimension2D getTextDimensionAt(StringBounder stringBounder, double x) {
-<span class="nc" id="L83">		final XDimension2D result = block.calculateDimension(stringBounder);</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (charLength == 0) {</span>
+<span class="fc" id="L83">		final XDimension2D result = block.calculateDimension(stringBounder);</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (charLength == 0) {</span>
 <span class="nc" id="L85">			return result;</span>
 		}
-<span class="nc" id="L87">		final double dimSpace = getSingleSpace(stringBounder);</span>
+<span class="fc" id="L87">		final double dimSpace = getSingleSpace(stringBounder);</span>
 		// final double endx = x + result.getWidth();
 		// final double mod = endx % CHAR_SIZE;
 		// final double delta = charLength * CHAR_SIZE - mod;
 		// return Dimension2DDouble.delta(result, delta, 0);
-<span class="nc" id="L92">		return new XDimension2D(Math.max(result.getWidth(), charLength * dimSpace), result.getHeight());</span>
+<span class="fc" id="L92">		return new XDimension2D(Math.max(result.getWidth(), charLength * dimSpace), result.getHeight());</span>
 	}
 
 	private double getSingleSpace(StringBounder stringBounder) {
@@ -105,7 +105,7 @@ abstract class AbstractElementText extends AbstractElement {
 		// }
 		// }
 		// return max;
-<span class="nc" id="L108">		return 8;</span>
+<span class="fc" id="L108">		return 8;</span>
 	}
 
 	protected final FontConfiguration getConfig() {

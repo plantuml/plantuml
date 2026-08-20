@@ -48,55 +48,91 @@ import net.sourceforge.plantuml.salt.element.TableStrategy;
 public class ElementFactoryTree extends AbstractElementFactoryComplex {
 
 	public ElementFactoryTree(DataSource dataSource, SaltDictionary dictionary) {
-<span class="nc" id="L51">		super(dataSource, dictionary);</span>
-<span class="nc" id="L52">	}</span>
+<span class="fc" id="L51">		super(dataSource, dictionary);</span>
+<span class="fc" id="L52">	}</span>
 
 	public Terminated&lt;Element&gt; create() {
-<span class="nc bnc" id="L55" title="All 2 branches missed.">		if (ready() == false) {</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">		if (ready() == false) {</span>
 <span class="nc" id="L56">			throw new IllegalStateException();</span>
 		}
-<span class="nc" id="L58">		final String header = getDataSource().next().getElement();</span>
-<span class="nc" id="L59">		final String textT = getDataSource().next().getElement();</span>
-<span class="nc" id="L60">		TableStrategy strategy = TableStrategy.DRAW_NONE;</span>
-<span class="nc bnc" id="L61" title="All 2 branches missed.">		if (textT.length() == 2) {</span>
-<span class="nc" id="L62">			strategy = TableStrategy.fromChar(textT.charAt(1));</span>
+<span class="fc" id="L58">		final String header = getDataSource().next().getElement();</span>
+<span class="fc" id="L59">		final String textT = getDataSource().next().getElement();</span>
+<span class="fc" id="L60">		TableStrategy strategy = TableStrategy.DRAW_NONE;</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">		if (textT.length() == 2) {</span>
+<span class="fc" id="L62">			strategy = TableStrategy.fromChar(textT.charAt(1));</span>
 		}
 
-<span class="nc" id="L65">		final UFont font = UFontFactory.byDefault(12);</span>
-<span class="nc" id="L66">		final ElementTree result = new ElementTree(font, getDictionary(), strategy);</span>
+<span class="fc" id="L65">		final UFont font = UFontFactory.byDefault(12);</span>
+<span class="fc" id="L66">		final ElementTree result = new ElementTree(font, getDictionary(), strategy);</span>
 
-<span class="nc" id="L68">		boolean takeMe = true;</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">		while (getDataSource().peek(0).getElement().equals(&quot;}&quot;) == false) {</span>
-<span class="nc" id="L70">			final Terminated&lt;String&gt; t = getDataSource().next();</span>
-<span class="nc" id="L71">			final Terminator terminator = t.getTerminator();</span>
-<span class="nc" id="L72">			final String s = t.getElement();</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">			if (takeMe) {</span>
-<span class="nc" id="L74">				result.addEntry(s);</span>
-			} else {
-<span class="nc" id="L76">				result.addCellToEntry(s);</span>
-			}
-<span class="nc bnc" id="L78" title="All 2 branches missed.">			takeMe = terminator == Terminator.NEWLINE;</span>
-
-<span class="nc" id="L80">		}</span>
-<span class="nc" id="L81">		final Terminated&lt;String&gt; next = getDataSource().next();</span>
-<span class="nc" id="L82">		return new Terminated&lt;Element&gt;(result, next.getTerminator());</span>
+<span class="fc" id="L68">		boolean takeMe = true;</span>
+		// A row may contain its own nested &quot;{...}&quot; group (e.g. a set of
+		// alternatives like &quot;{ (X) public | () default }&quot;). That group's
+		// closing &quot;}&quot; must not be mistaken for the closing &quot;}&quot; of this tree
+		// table itself, or everything after it in the source gets silently
+		// dropped (see issue #2730: this is what made internal groups break
+		// tree tables, and what made a root-level tree table lose its last
+		// rows entirely once it no longer needed an external wrapper). Once
+		// &quot;other&quot; cells are routed through getNextElement() below, a nested
+		// group is consumed as a single call, so this is mostly a safety net
+		// for the raw, single-token first cell.
+<span class="fc" id="L79">		int depth = 0;</span>
+<span class="pc bpc" id="L80" title="1 of 4 branches missed.">		while (depth &gt; 0 || getDataSource().peek(0).getElement().equals(&quot;}&quot;) == false) {</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">			if (takeMe) {</span>
+				// The first cell of a row is the tree label: plain text,
+				// with support for a leading &quot;+&quot; run indicating the nesting
+				// level. It is read as a single raw token (not dispatched
+				// through getNextElement()) precisely so that &quot;+&quot; prefix
+				// stays available to ElementTree#addEntry.
+<span class="fc" id="L87">				final Terminated&lt;String&gt; t = getDataSource().next();</span>
+<span class="fc" id="L88">				final String s = t.getElement();</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">				if (s.equals(&quot;}&quot;)) {</span>
+<span class="nc" id="L90">					depth--;</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">				} else if (s.startsWith(&quot;{&quot;)) {</span>
+<span class="nc" id="L92">					depth++;</span>
+				}
+<span class="fc" id="L94">				result.addEntry(s);</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">				takeMe = t.getTerminator() == Terminator.NEWLINE;</span>
+<span class="fc" id="L96">			} else {</span>
+				// Every other cell is dispatched exactly like a regular
+				// table cell (getNextElement() also tries Pyramid/Border/
+				// Scroll, wired in as siblings by PSystemSalt), so a radio
+				// button, a button, a text field or a nested &quot;{...}&quot; group
+				// of alternatives renders as the real widget instead of its
+				// raw source text (issue #2730, point 2).
+<span class="fc" id="L103">				final Terminated&lt;Element&gt; next = getNextElement();</span>
+<span class="fc" id="L104">				result.addCellToEntry(next.getElement());</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">				takeMe = next.getTerminator() == Terminator.NEWLINE;</span>
+<span class="fc" id="L106">			}</span>
+		}
+<span class="fc" id="L108">		final Terminated&lt;String&gt; next = getDataSource().next();</span>
+<span class="fc" id="L109">		return new Terminated&lt;Element&gt;(result, next.getTerminator());</span>
 	}
 
 	public boolean ready() {
-<span class="nc" id="L86">		final String text = getDataSource().peek(0).getElement();</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (text.equals(&quot;{&quot;)) {</span>
-<span class="nc" id="L88">			final String text1 = getDataSource().peek(1).getElement();</span>
-<span class="nc bnc" id="L89" title="All 2 branches missed.">			if (text1.equals(&quot;T&quot;)) {</span>
-<span class="nc" id="L90">				return true;</span>
-			}
-<span class="nc bnc" id="L92" title="All 4 branches missed.">			if (text1.length() == 2 &amp;&amp; text1.startsWith(&quot;T&quot;)) {</span>
-<span class="nc" id="L93">				final char c = text1.charAt(1);</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">				return TableStrategy.fromChar(c) != null;</span>
-
-			}
-<span class="nc" id="L97">			return false;</span>
+<span class="fc" id="L113">		final String text = getDataSource().peek(0).getElement();</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		if (text.equals(&quot;{&quot;)) {</span>
+<span class="fc" id="L115">			final String text1 = getDataSource().peek(1).getElement();</span>
+<span class="fc" id="L116">			return isTreeMarker(text1);</span>
 		}
-<span class="nc" id="L99">		return false;</span>
+<span class="fc" id="L118">		return false;</span>
+	}
+
+	// Whether text1 is a tree-table marker (&quot;T&quot; or &quot;T&quot; followed by a valid
+	// TableStrategy character, e.g. &quot;T#&quot;). Shared with ElementFactoryPyramid
+	// so both agree on what counts as a tree table header instead of relying
+	// on two independently maintained checks (see issue #2730: Pyramid used
+	// to only exclude the bare &quot;T&quot; case, so it would wrongly claim a top-level
+	// &quot;{T#...&quot; block before ElementFactoryTree ever saw it).
+	static boolean isTreeMarker(String text1) {
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (text1.equals(&quot;T&quot;)) {</span>
+<span class="nc" id="L129">			return true;</span>
+		}
+<span class="fc bfc" id="L131" title="All 4 branches covered.">		if (text1.length() == 2 &amp;&amp; text1.startsWith(&quot;T&quot;)) {</span>
+<span class="fc" id="L132">			final char c = text1.charAt(1);</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">			return TableStrategy.fromChar(c) != null;</span>
+		}
+<span class="fc" id="L135">		return false;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

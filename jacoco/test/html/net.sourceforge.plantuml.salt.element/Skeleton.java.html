@@ -43,18 +43,18 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 
-<span class="nc" id="L46">public class Skeleton {</span>
+<span class="fc" id="L46">public class Skeleton {</span>
 
-<span class="nc" id="L48">	private final List&lt;Entry&gt; entries = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L48">	private final List&lt;Entry&gt; entries = new ArrayList&lt;&gt;();</span>
 
 	static class Entry {
 		private final double xpos;
 		private final double ypos;
 
-<span class="nc" id="L54">		public Entry(double x, double y) {</span>
-<span class="nc" id="L55">			this.xpos = x;</span>
-<span class="nc" id="L56">			this.ypos = y;</span>
-<span class="nc" id="L57">		}</span>
+<span class="fc" id="L54">		public Entry(double x, double y) {</span>
+<span class="fc" id="L55">			this.xpos = x;</span>
+<span class="fc" id="L56">			this.ypos = y;</span>
+<span class="fc" id="L57">		}</span>
 
 		public void drawRectangle(UGraphic ug) {
 <span class="nc" id="L60">			ug.apply(new UTranslate(xpos, ypos)).draw(URectangle.build(2, 2));</span>
@@ -62,27 +62,27 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 	}
 
 	public void add(double x, double y) {
-<span class="nc" id="L65">		entries.add(new Entry(x, y));</span>
-<span class="nc" id="L66">	}</span>
+<span class="fc" id="L65">		entries.add(new Entry(x, y));</span>
+<span class="fc" id="L66">	}</span>
 
 	public void draw(UGraphic ug, double x, double y) {
-<span class="nc bnc" id="L69" title="All 2 branches missed.">		for (int i = 0; i &lt; entries.size(); i++) {</span>
-<span class="nc" id="L70">			final Entry en = entries.get(i);</span>
-<span class="nc bnc" id="L71" title="All 4 branches missed.">			if (i + 1 &lt; entries.size() &amp;&amp; entries.get(i + 1).xpos &gt; en.xpos) {</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">		for (int i = 0; i &lt; entries.size(); i++) {</span>
+<span class="fc" id="L70">			final Entry en = entries.get(i);</span>
+<span class="pc bpc" id="L71" title="1 of 4 branches missed.">			if (i + 1 &lt; entries.size() &amp;&amp; entries.get(i + 1).xpos &gt; en.xpos) {</span>
 <span class="nc" id="L72">				en.drawRectangle(ug);</span>
 			}
-<span class="nc" id="L74">			Entry parent = null;</span>
-<span class="nc bnc" id="L75" title="All 2 branches missed.">			for (int j = 0; j &lt; i; j++) {</span>
-<span class="nc" id="L76">				final Entry en0 = entries.get(j);</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">				if (en0.xpos &lt; en.xpos) {</span>
+<span class="fc" id="L74">			Entry parent = null;</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">			for (int j = 0; j &lt; i; j++) {</span>
+<span class="fc" id="L76">				final Entry en0 = entries.get(j);</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">				if (en0.xpos &lt; en.xpos) {</span>
 <span class="nc" id="L78">					parent = en0;</span>
 				}
 			}
-<span class="nc bnc" id="L81" title="All 2 branches missed.">			if (parent != null) {</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">			if (parent != null) {</span>
 <span class="nc" id="L82">				drawChild(ug, parent, en);</span>
 			}
 		}
-<span class="nc" id="L85">	}</span>
+<span class="fc" id="L85">	}</span>
 
 	private void drawChild(UGraphic ug, Entry parent, Entry child) {
 <span class="nc" id="L88">		final double dy = child.ypos - parent.ypos - 2;</span>

@@ -46,31 +46,31 @@ import net.sourceforge.plantuml.style.ISkinSimple;
 
 public class ElementButton extends AbstractElementText implements Element {
 
-<span class="nc" id="L49">	private final double stroke = 2.5;</span>
-<span class="nc" id="L50">	private final double marginX = 2;</span>
-<span class="nc" id="L51">	private final double marginY = 2;</span>
+<span class="fc" id="L49">	private final double stroke = 2.5;</span>
+<span class="fc" id="L50">	private final double marginX = 2;</span>
+<span class="fc" id="L51">	private final double marginY = 2;</span>
 
 	public ElementButton(String text, UFont font, ISkinSimple spriteContainer) {
-<span class="nc" id="L54">		super(text, font, true, spriteContainer);</span>
-<span class="nc" id="L55">	}</span>
+<span class="fc" id="L54">		super(text, font, true, spriteContainer);</span>
+<span class="fc" id="L55">	}</span>
 
 	public XDimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
-<span class="nc" id="L58">		XDimension2D dim = getTextDimensionAt(stringBounder, x + stroke + marginX);</span>
-<span class="nc" id="L59">		dim = dim.delta(2 * marginX, 2 * marginY);</span>
-<span class="nc" id="L60">		return dim.delta(2 * stroke);</span>
+<span class="fc" id="L58">		XDimension2D dim = getTextDimensionAt(stringBounder, x + stroke + marginX);</span>
+<span class="fc" id="L59">		dim = dim.delta(2 * marginX, 2 * marginY);</span>
+<span class="fc" id="L60">		return dim.delta(2 * stroke);</span>
 	}
 
 	public void drawU(UGraphic ug, int zIndex, XDimension2D dimToUse) {
-<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (zIndex != 0)</span>
-<span class="nc" id="L65">			return;</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (zIndex != 0)</span>
+<span class="fc" id="L65">			return;</span>
 
-<span class="nc" id="L67">		final XDimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);</span>
-<span class="nc" id="L68">		ug = ug.apply(UStroke.withThickness(stroke));</span>
-<span class="nc" id="L69">		ug = ug.apply(getColorEE().bg()).apply(getBlack());</span>
-<span class="nc" id="L70">		ug.apply(new UTranslate(stroke, stroke))</span>
-<span class="nc" id="L71">				.draw(URectangle.build(dim.getWidth() - 2 * stroke, dim.getHeight() - 2 * stroke).rounded(10));</span>
-<span class="nc" id="L72">		final XDimension2D dimPureText = getPureTextDimension(ug.getStringBounder());</span>
-<span class="nc" id="L73">		drawText(ug, (dim.getWidth() - dimPureText.getWidth()) / 2, stroke + marginY);</span>
-<span class="nc" id="L74">	}</span>
+<span class="fc" id="L67">		final XDimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);</span>
+<span class="fc" id="L68">		ug = ug.apply(UStroke.withThickness(stroke));</span>
+<span class="fc" id="L69">		ug = ug.apply(getColorEE().bg()).apply(getBlack());</span>
+<span class="fc" id="L70">		ug.apply(new UTranslate(stroke, stroke))</span>
+<span class="fc" id="L71">				.draw(URectangle.build(dim.getWidth() - 2 * stroke, dim.getHeight() - 2 * stroke).rounded(10));</span>
+<span class="fc" id="L72">		final XDimension2D dimPureText = getPureTextDimension(ug.getStringBounder());</span>
+<span class="fc" id="L73">		drawText(ug, (dim.getWidth() - dimPureText.getWidth()) / 2, stroke + marginY);</span>
+<span class="fc" id="L74">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

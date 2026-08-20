@@ -47,45 +47,45 @@ public class Grid2 {
 	private final List&lt;Double&gt; colsStart;
 	private final TableStrategy strategy;
 
-<span class="nc" id="L50">	public Grid2(List&lt;Double&gt; rowsStart, List&lt;Double&gt; colsStart, TableStrategy strategy) {</span>
-<span class="nc" id="L51">		this.rowsStart = rowsStart;</span>
-<span class="nc" id="L52">		this.colsStart = colsStart;</span>
-<span class="nc" id="L53">		this.strategy = strategy;</span>
-<span class="nc" id="L54">	}</span>
+<span class="fc" id="L50">	public Grid2(List&lt;Double&gt; rowsStart, List&lt;Double&gt; colsStart, TableStrategy strategy) {</span>
+<span class="fc" id="L51">		this.rowsStart = rowsStart;</span>
+<span class="fc" id="L52">		this.colsStart = colsStart;</span>
+<span class="fc" id="L53">		this.strategy = strategy;</span>
+<span class="fc" id="L54">	}</span>
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L57">		final double xmin = colsStart.get(0);</span>
-<span class="nc" id="L58">		final double xmax = colsStart.get(colsStart.size() - 1);</span>
-<span class="nc" id="L59">		final double ymin = rowsStart.get(0);</span>
-<span class="nc" id="L60">		final double ymax = rowsStart.get(rowsStart.size() - 1);</span>
-<span class="nc bnc" id="L61" title="All 4 branches missed.">		if (strategy == TableStrategy.DRAW_OUTSIDE || strategy == TableStrategy.DRAW_OUTSIDE_WITH_TITLE) {</span>
+<span class="fc" id="L57">		final double xmin = colsStart.get(0);</span>
+<span class="fc" id="L58">		final double xmax = colsStart.get(colsStart.size() - 1);</span>
+<span class="fc" id="L59">		final double ymin = rowsStart.get(0);</span>
+<span class="fc" id="L60">		final double ymax = rowsStart.get(rowsStart.size() - 1);</span>
+<span class="pc bpc" id="L61" title="2 of 4 branches missed.">		if (strategy == TableStrategy.DRAW_OUTSIDE || strategy == TableStrategy.DRAW_OUTSIDE_WITH_TITLE) {</span>
 <span class="nc" id="L62">			ug.apply(new UTranslate(xmin, ymin)).draw(ULine.hline(xmax - xmin));</span>
 <span class="nc" id="L63">			ug.apply(new UTranslate(xmin, ymax)).draw(ULine.hline(xmax - xmin));</span>
 <span class="nc" id="L64">			ug.apply(new UTranslate(xmin, ymin)).draw(ULine.vline(ymax - ymin));</span>
 <span class="nc" id="L65">			ug.apply(new UTranslate(xmax, ymin)).draw(ULine.vline(ymax - ymin));</span>
 		}
-<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (drawHorizontal()) {</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">			for (Double y : rowsStart) {</span>
-<span class="nc" id="L69">				ug.apply(new UTranslate(xmin, y)).draw(ULine.hline(xmax - xmin));</span>
-<span class="nc" id="L70">			}</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (drawHorizontal()) {</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">			for (Double y : rowsStart) {</span>
+<span class="fc" id="L69">				ug.apply(new UTranslate(xmin, y)).draw(ULine.hline(xmax - xmin));</span>
+<span class="fc" id="L70">			}</span>
 		}
-<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (drawVertical()) {</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">			for (Double x : colsStart) {</span>
-<span class="nc" id="L74">				ug.apply(new UTranslate(x, ymin)).draw(ULine.vline(ymax - ymin));</span>
-<span class="nc" id="L75">			}</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (drawVertical()) {</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">			for (Double x : colsStart) {</span>
+<span class="fc" id="L74">				ug.apply(new UTranslate(x, ymin)).draw(ULine.vline(ymax - ymin));</span>
+<span class="fc" id="L75">			}</span>
 		}
-<span class="nc" id="L77">	}</span>
+<span class="fc" id="L77">	}</span>
 
 	private boolean drawHorizontal() {
-<span class="nc bnc" id="L80" title="All 4 branches missed.">		if (strategy == TableStrategy.DRAW_HORIZONTAL || strategy == TableStrategy.DRAW_ALL) {</span>
-<span class="nc" id="L81">			return true;</span>
+<span class="pc bpc" id="L80" title="2 of 4 branches missed.">		if (strategy == TableStrategy.DRAW_HORIZONTAL || strategy == TableStrategy.DRAW_ALL) {</span>
+<span class="fc" id="L81">			return true;</span>
 		}
 <span class="nc" id="L83">		return false;</span>
 	}
 
 	private boolean drawVertical() {
-<span class="nc bnc" id="L87" title="All 4 branches missed.">		if (strategy == TableStrategy.DRAW_VERTICAL || strategy == TableStrategy.DRAW_ALL) {</span>
-<span class="nc" id="L88">			return true;</span>
+<span class="pc bpc" id="L87" title="2 of 4 branches missed.">		if (strategy == TableStrategy.DRAW_VERTICAL || strategy == TableStrategy.DRAW_ALL) {</span>
+<span class="fc" id="L88">			return true;</span>
 		}
 <span class="nc" id="L90">		return false;</span>
 	}

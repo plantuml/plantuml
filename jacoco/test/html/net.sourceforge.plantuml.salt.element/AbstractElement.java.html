@@ -42,14 +42,14 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.skin.Pragma;
 
-<span class="nc" id="L45">public abstract class AbstractElement implements Element {</span>
+<span class="fc" id="L45">public abstract class AbstractElement implements Element {</span>
 
 	final protected HColor getBlack() {
-<span class="nc" id="L48">		return HColors.BLACK.withDark(HColors.WHITE);</span>
+<span class="fc" id="L48">		return HColors.BLACK.withDark(HColors.WHITE);</span>
 	}
 
 	final protected HColor getColor88() {
-<span class="nc" id="L52">		return buildColor(&quot;#8&quot;, &quot;#8&quot;);</span>
+<span class="fc" id="L52">		return buildColor(&quot;#8&quot;, &quot;#8&quot;);</span>
 	}
 
 	final protected HColor getColorAA() {
@@ -65,21 +65,21 @@ import net.sourceforge.plantuml.skin.Pragma;
 	}
 
 	final protected HColor getColorEE() {
-<span class="nc" id="L68">		return buildColor(&quot;#E&quot;, &quot;#2&quot;);</span>
+<span class="fc" id="L68">		return buildColor(&quot;#E&quot;, &quot;#2&quot;);</span>
 	}
 
 	final protected HColor getWhite() {
-<span class="nc" id="L72">		return HColors.WHITE.withDark(HColors.BLACK);</span>
+<span class="fc" id="L72">		return HColors.WHITE.withDark(HColors.BLACK);</span>
 	}
 
 	private HColor buildColor(String color1, String color2) {
-<span class="nc" id="L76">		final HColor tmp1 = HColorSet.instance().getColorOrWhite(color1);</span>
-<span class="nc" id="L77">		final HColor tmp2 = HColorSet.instance().getColorOrWhite(color2);</span>
-<span class="nc" id="L78">		return tmp1.withDark(tmp2);</span>
+<span class="fc" id="L76">		final HColor tmp1 = HColorSet.instance().getColorOrWhite(color1);</span>
+<span class="fc" id="L77">		final HColor tmp2 = HColorSet.instance().getColorOrWhite(color2);</span>
+<span class="fc" id="L78">		return tmp1.withDark(tmp2);</span>
 	}
 
 	final protected FontConfiguration blackBlueTrue(UFont font) {
-<span class="nc" id="L82">		return FontConfiguration.blackBlueTrue(font);</span>
+<span class="fc" id="L82">		return FontConfiguration.blackBlueTrue(font);</span>
 	}
 	
 	final protected Pragma getPragma() {

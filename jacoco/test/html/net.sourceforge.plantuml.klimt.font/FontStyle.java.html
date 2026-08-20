@@ -86,26 +86,26 @@ import java.util.Collection;
 	}
 
 	public String getRegexActivationPattern() {
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (this == PLAIN)</span>
-<span class="nc" id="L90">			return &quot;\\&lt;[pP][lL][aA][iI][nN]\\&gt;&quot;;</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (this == PLAIN)</span>
+<span class="fc" id="L90">			return &quot;\\&lt;[pP][lL][aA][iI][nN]\\&gt;&quot;;</span>
 
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (this == ITALIC)</span>
-<span class="nc" id="L93">			return &quot;\\&lt;[iI]\\&gt;&quot;;</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (this == ITALIC)</span>
+<span class="fc" id="L93">			return &quot;\\&lt;[iI]\\&gt;&quot;;</span>
 
-<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (this == BOLD)</span>
-<span class="nc" id="L96">			return &quot;\\&lt;[bB]\\&gt;&quot;;</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">		if (this == BOLD)</span>
+<span class="fc" id="L96">			return &quot;\\&lt;[bB]\\&gt;&quot;;</span>
 
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (this == UNDERLINE)</span>
-<span class="nc" id="L99">			return &quot;\\&lt;[uU](?::(#[0-9a-fA-F]{6}|\\w+))?\\&gt;&quot;;</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">		if (this == UNDERLINE)</span>
+<span class="fc" id="L99">			return &quot;\\&lt;[uU](?::(#[0-9a-fA-F]{6}|\\w+))?\\&gt;&quot;;</span>
 
-<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (this == WAVE)</span>
-<span class="nc" id="L102">			return &quot;\\&lt;[wW](?::(#[0-9a-fA-F]{6}|\\w+))?\\&gt;&quot;;</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		if (this == WAVE)</span>
+<span class="fc" id="L102">			return &quot;\\&lt;[wW](?::(#[0-9a-fA-F]{6}|\\w+))?\\&gt;&quot;;</span>
 
-<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (this == BACKCOLOR)</span>
-<span class="nc" id="L105">			return &quot;\\&lt;[bB][aA][cC][kK](?::(#?\\w+(?:[-\\\\|/]#?\\w+)?))?\\&gt;&quot;;</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		if (this == BACKCOLOR)</span>
+<span class="fc" id="L105">			return &quot;\\&lt;[bB][aA][cC][kK](?::(#?\\w+(?:[-\\\\|/]#?\\w+)?))?\\&gt;&quot;;</span>
 
-<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (this == STRIKE)</span>
-<span class="nc" id="L108">			return &quot;&lt;【strike┇STRIKE┇s┇S┇del┇DEL】〇?〘:〶$XC=【#〇{6}「0〜9a〜fA〜F」┇〇+〴w】〙&gt;&quot;;</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (this == STRIKE)</span>
+<span class="fc" id="L108">			return &quot;&lt;【strike┇STRIKE┇s┇S┇del┇DEL】〇?〘:〶$XC=【#〇{6}「0〜9a〜fA〜F」┇〇+〴w】〙&gt;&quot;;</span>
 
 <span class="nc" id="L110">		return null;</span>
 	}
@@ -164,26 +164,26 @@ import java.util.Collection;
 	}
 
 	public String getRegexDeactivationPattern() {
-<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (this == PLAIN)</span>
-<span class="nc" id="L168">			return &quot;\\&lt;/[pP][lL][aA][iI][nN]\\&gt;&quot;;</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">		if (this == PLAIN)</span>
+<span class="fc" id="L168">			return &quot;\\&lt;/[pP][lL][aA][iI][nN]\\&gt;&quot;;</span>
 
-<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (this == ITALIC)</span>
-<span class="nc" id="L171">			return &quot;\\&lt;/[iI]\\&gt;&quot;;</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		if (this == ITALIC)</span>
+<span class="fc" id="L171">			return &quot;\\&lt;/[iI]\\&gt;&quot;;</span>
 
-<span class="nc bnc" id="L173" title="All 2 branches missed.">		if (this == BOLD)</span>
-<span class="nc" id="L174">			return &quot;\\&lt;/[bB]\\&gt;&quot;;</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">		if (this == BOLD)</span>
+<span class="fc" id="L174">			return &quot;\\&lt;/[bB]\\&gt;&quot;;</span>
 
-<span class="nc bnc" id="L176" title="All 2 branches missed.">		if (this == UNDERLINE)</span>
-<span class="nc" id="L177">			return &quot;\\&lt;/[uU]\\&gt;&quot;;</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">		if (this == UNDERLINE)</span>
+<span class="fc" id="L177">			return &quot;\\&lt;/[uU]\\&gt;&quot;;</span>
 
-<span class="nc bnc" id="L179" title="All 2 branches missed.">		if (this == WAVE)</span>
-<span class="nc" id="L180">			return &quot;\\&lt;/[wW]\\&gt;&quot;;</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">		if (this == WAVE)</span>
+<span class="fc" id="L180">			return &quot;\\&lt;/[wW]\\&gt;&quot;;</span>
 
-<span class="nc bnc" id="L182" title="All 2 branches missed.">		if (this == BACKCOLOR)</span>
-<span class="nc" id="L183">			return &quot;\\&lt;/[bB][aA][cC][kK]\\&gt;&quot;;</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">		if (this == BACKCOLOR)</span>
+<span class="fc" id="L183">			return &quot;\\&lt;/[bB][aA][cC][kK]\\&gt;&quot;;</span>
 
-<span class="nc bnc" id="L185" title="All 2 branches missed.">		if (this == STRIKE)</span>
-<span class="nc" id="L186">			return &quot;\\&lt;/(?:s|S|strike|STRIKE|del|DEL)\\&gt;&quot;;</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">		if (this == STRIKE)</span>
+<span class="fc" id="L186">			return &quot;\\&lt;/(?:s|S|strike|STRIKE|del|DEL)\\&gt;&quot;;</span>
 
 <span class="nc" id="L188">		return null;</span>
 	}

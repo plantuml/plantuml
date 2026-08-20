@@ -42,11 +42,11 @@ import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.element.ElementBorder;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
-<span class="nc" id="L45">public class ElementFactoryBorder extends AbstractElementFactoryComplex {</span>
+<span class="fc" id="L45">public class ElementFactoryBorder extends AbstractElementFactoryComplex {</span>
 
 	public ElementFactoryBorder(DataSource dataSource, SaltDictionary dictionary) {
-<span class="nc" id="L48">		super(dataSource, dictionary);</span>
-<span class="nc" id="L49">	}</span>
+<span class="fc" id="L48">		super(dataSource, dictionary);</span>
+<span class="fc" id="L49">	}</span>
 
 	public Terminated&lt;Element&gt; create() {
 <span class="nc bnc" id="L52" title="All 2 branches missed.">		if (ready() == false) {</span>
@@ -90,13 +90,13 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	public boolean ready() {
-<span class="nc" id="L93">		final String text = getDataSource().peek(0).getElement();</span>
-<span class="nc bnc" id="L94" title="All 10 branches missed.">		if (text.equals(&quot;{&quot;) || text.equals(&quot;{+&quot;) || text.equals(&quot;{#&quot;) || text.equals(&quot;{!&quot;) || text.equals(&quot;{-&quot;)) {</span>
-<span class="nc" id="L95">			final String text1 = getDataSource().peek(1).getElement();</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">			if (text1.matches(&quot;[NSEW]=&quot;)) {</span>
+<span class="fc" id="L93">		final String text = getDataSource().peek(0).getElement();</span>
+<span class="pc bpc" id="L94" title="9 of 10 branches missed.">		if (text.equals(&quot;{&quot;) || text.equals(&quot;{+&quot;) || text.equals(&quot;{#&quot;) || text.equals(&quot;{!&quot;) || text.equals(&quot;{-&quot;)) {</span>
+<span class="fc" id="L95">			final String text1 = getDataSource().peek(1).getElement();</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">			if (text1.matches(&quot;[NSEW]=&quot;)) {</span>
 <span class="nc" id="L97">				return true;</span>
 			}
-<span class="nc" id="L99">			return false;</span>
+<span class="fc" id="L99">			return false;</span>
 		}
 <span class="nc" id="L101">		return false;</span>
 	}

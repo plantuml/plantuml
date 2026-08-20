@@ -48,13 +48,13 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandAnything extends SingleLineCommand2&lt;PSystemSalt&gt; {
 
 	public CommandAnything() {
-<span class="nc" id="L51">		super(false, getRegexConcat());</span>
-<span class="nc" id="L52">	}</span>
+<span class="fc" id="L51">		super(false, getRegexConcat());</span>
+<span class="fc" id="L52">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L55">		return RegexConcat.build(CommandAnything.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L55">		return RegexConcat.build(CommandAnything.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;ALL&quot;, &quot;(.*)&quot;), //
-<span class="nc" id="L57">				RegexLeaf.end());</span>
+<span class="fc" id="L57">				RegexLeaf.end());</span>
 	}
 
 	@Override
@@ -66,11 +66,11 @@ public class CommandAnything extends SingleLineCommand2&lt;PSystemSalt&gt; {
 	@Override
 	protected CommandExecutionResult executeArg(PSystemSalt diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L69">		final String s = arg.get(&quot;ALL&quot;, 0);</span>
-<span class="nc bnc" id="L70" title="All 4 branches missed.">		if (diagram.size() == 0 &amp;&amp; s.trim().equals(&quot;salt&quot;))</span>
+<span class="fc" id="L69">		final String s = arg.get(&quot;ALL&quot;, 0);</span>
+<span class="pc bpc" id="L70" title="1 of 4 branches missed.">		if (diagram.size() == 0 &amp;&amp; s.trim().equals(&quot;salt&quot;))</span>
 <span class="nc" id="L71">			return CommandExecutionResult.error(&quot;This is not needed anymore.&quot;);</span>
-<span class="nc" id="L72">		diagram.add(s);</span>
-<span class="nc" id="L73">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L72">		diagram.add(s);</span>
+<span class="fc" id="L73">		return CommandExecutionResult.ok();</span>
 	}
 
 }

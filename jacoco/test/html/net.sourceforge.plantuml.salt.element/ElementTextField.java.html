@@ -46,26 +46,26 @@ import net.sourceforge.plantuml.style.ISkinSimple;
 public class ElementTextField extends AbstractElementText implements Element {
 
 	public ElementTextField(String text, UFont font, ISkinSimple spriteContainer) {
-<span class="nc" id="L49">		super(text, font, true, spriteContainer);</span>
-<span class="nc" id="L50">	}</span>
+<span class="fc" id="L49">		super(text, font, true, spriteContainer);</span>
+<span class="fc" id="L50">	}</span>
 
 	public XDimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
-<span class="nc" id="L53">		final XDimension2D dim = getTextDimensionAt(stringBounder, x);</span>
-<span class="nc" id="L54">		return dim.delta(6, 2);</span>
+<span class="fc" id="L53">		final XDimension2D dim = getTextDimensionAt(stringBounder, x);</span>
+<span class="fc" id="L54">		return dim.delta(6, 2);</span>
 	}
 
 	public void drawU(UGraphic ug, int zIndex, XDimension2D dimToUse) {
-<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (zIndex != 0) {</span>
-<span class="nc" id="L59">			return;</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		if (zIndex != 0) {</span>
+<span class="fc" id="L59">			return;</span>
 		}
-<span class="nc" id="L61">		drawText(ug, 3, 0);</span>
-<span class="nc" id="L62">		final XDimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);</span>
-<span class="nc" id="L63">		final XDimension2D textDim = getTextDimensionAt(ug.getStringBounder(), 0);</span>
-<span class="nc" id="L64">		ug.apply(new UTranslate(1, textDim.getHeight())).draw(ULine.hline(dim.getWidth() - 3));</span>
-<span class="nc" id="L65">		final double y3 = textDim.getHeight() - 3;</span>
-<span class="nc" id="L66">		ug.apply(new UTranslate(1, y3)).draw(ULine.vline(2));</span>
-<span class="nc" id="L67">		ug.apply(new UTranslate(3 + textDim.getWidth() + 1, y3)).draw(ULine.vline(2));</span>
-<span class="nc" id="L68">	}</span>
+<span class="fc" id="L61">		drawText(ug, 3, 0);</span>
+<span class="fc" id="L62">		final XDimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);</span>
+<span class="fc" id="L63">		final XDimension2D textDim = getTextDimensionAt(ug.getStringBounder(), 0);</span>
+<span class="fc" id="L64">		ug.apply(new UTranslate(1, textDim.getHeight())).draw(ULine.hline(dim.getWidth() - 3));</span>
+<span class="fc" id="L65">		final double y3 = textDim.getHeight() - 3;</span>
+<span class="fc" id="L66">		ug.apply(new UTranslate(1, y3)).draw(ULine.vline(2));</span>
+<span class="fc" id="L67">		ug.apply(new UTranslate(3 + textDim.getWidth() + 1, y3)).draw(ULine.vline(2));</span>
+<span class="fc" id="L68">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

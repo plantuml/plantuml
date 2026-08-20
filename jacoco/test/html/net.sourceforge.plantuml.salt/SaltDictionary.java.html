@@ -61,14 +61,14 @@ import net.sourceforge.plantuml.text.Guillemet;
 
 public class SaltDictionary implements SpriteContainer, ISkinSimple {
 
-<span class="nc" id="L64">	private final Map&lt;String, Element&gt; data = new HashMap&lt;String, Element&gt;();</span>
+<span class="fc" id="L64">	private final Map&lt;String, Element&gt; data = new HashMap&lt;String, Element&gt;();</span>
 	private final ConfigurationStore&lt;OptionKey&gt; option;
 	private final PathSystem pathSystem;
 
-<span class="nc" id="L68">	public SaltDictionary(PathSystem pathSystem, ConfigurationStore&lt;OptionKey&gt; option) {</span>
-<span class="nc" id="L69">		this.pathSystem = pathSystem;</span>
-<span class="nc" id="L70">		this.option = option;</span>
-<span class="nc" id="L71">	}</span>
+<span class="fc" id="L68">	public SaltDictionary(PathSystem pathSystem, ConfigurationStore&lt;OptionKey&gt; option) {</span>
+<span class="fc" id="L69">		this.pathSystem = pathSystem;</span>
+<span class="fc" id="L70">		this.option = option;</span>
+<span class="fc" id="L71">	}</span>
 
 	public void put(String name, Element element) {
 <span class="nc" id="L74">		data.put(name, element);</span>
@@ -86,17 +86,17 @@ public class SaltDictionary implements SpriteContainer, ISkinSimple {
 
 	@Override
 	public String getValue(String key) {
-<span class="nc" id="L89">		return null;</span>
+<span class="fc" id="L89">		return null;</span>
 	}
 
 	@Override
 	public ClockwiseTopRightBottomLeft getPadding() {
-<span class="nc" id="L94">		return ClockwiseTopRightBottomLeft.none();</span>
+<span class="fc" id="L94">		return ClockwiseTopRightBottomLeft.none();</span>
 	}
 
 	@Override
 	public Guillemet guillemet() {
-<span class="nc" id="L99">		return Guillemet.GUILLEMET;</span>
+<span class="fc" id="L99">		return Guillemet.GUILLEMET;</span>
 	}
 
 	@Override
@@ -119,7 +119,7 @@ public class SaltDictionary implements SpriteContainer, ISkinSimple {
 <span class="nc" id="L119">		return 96;</span>
 	}
 
-<span class="nc" id="L122">	private final Map&lt;String, Sprite&gt; sprites = new HashMap&lt;String, Sprite&gt;();</span>
+<span class="fc" id="L122">	private final Map&lt;String, Sprite&gt; sprites = new HashMap&lt;String, Sprite&gt;();</span>
 
 	public void addSprite(String name, Sprite sprite) {
 <span class="nc" id="L125">		sprites.put(name, sprite);</span>
@@ -154,12 +154,12 @@ public class SaltDictionary implements SpriteContainer, ISkinSimple {
 	@Override
 	public SheetBuilder sheet(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			CreoleMode creoleMode, FontConfiguration stereo) {
-<span class="nc" id="L157">		return new CreoleParser(fontConfiguration, horizontalAlignment, this, creoleMode, stereo);</span>
+<span class="fc" id="L157">		return new CreoleParser(fontConfiguration, horizontalAlignment, this, creoleMode, stereo);</span>
 	}
 
 	@Override
 	public Pragma getPragma() {
-<span class="nc" id="L162">		return Pragma.createEmpty();</span>
+<span class="fc" id="L162">		return Pragma.createEmpty();</span>
 	}
 
 	@Override
