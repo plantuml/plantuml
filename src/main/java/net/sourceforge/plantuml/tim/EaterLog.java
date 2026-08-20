@@ -50,7 +50,7 @@ public class EaterLog extends Eater {
 		skipSpaces();
 		final String logData = context.applyFunctionsAndVariables(memory,
 				new StringLocated(this.eatAllToEnd(), getLineLocation()));
-		Log.info(() -> "[Log] " + logData);
+		Log.userLog(() -> "[Log] " + logData);
 	}
 
 }

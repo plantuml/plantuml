@@ -1,0 +1,13 @@
+---
+output: svg
+verbose: true
+expected-description: (2 entities)
+expected-stderr:
+  contains:
+    - "[MemGlobal] $x = hello"
+---
+@startuml
+!$x = "hello"
+!dump_memory
+[*] -> test
+@enduml

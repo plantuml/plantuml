@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="78px" preserveAspectRatio="none" style="width:110px;height:78px;background:#FFFFFF;" version="1.1" viewBox="0 0 110 78" width="110px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name=".start." data-source-line="3" id="ent0001">
+      <ellipse cx="16" cy="35" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="test" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="44" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="44" x2="94" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="22.488" x="57.756" y="27.889">test</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="43.677,37,34.677,33,38.677,37,34.677,41,43.677,37" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M26.352,37 C32.127,37 32.902,37 38.677,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

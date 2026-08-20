@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (2 entities)
+expected-stderr:
+  contains:
+    - "[Log] WTF!?"
+  not-contains:
+    - "Mo) "
+---
+@startuml
+!log WTF!?
+[*] -> test
+@enduml

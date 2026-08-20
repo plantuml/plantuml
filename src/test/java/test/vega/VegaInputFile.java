@@ -1,12 +1,16 @@
 package test.vega;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -22,6 +26,8 @@ import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
+import net.sourceforge.plantuml.cli.GlobalConfig;
+import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -82,6 +88,7 @@ public class VegaInputFile {
 	private Class<?> diagramClass;
 	private Throwable rootCause;
 	private String description;
+	private String lastStderr = "";
 
 	static public VegaInputFile parse(Path path) throws IOException {
 		final List<String> allLines = Files.readAllLines(path);
@@ -292,6 +299,72 @@ public class VegaInputFile {
 		return new SFile(parent.toString());
 	}
 
+	/**
+	 * Parses and renders the diagram while capturing everything written to
+	 * {@link System#err} during the call, so that tests can assert on console
+	 * output (e.g. {@code !log}) via {@code expected-stderr} in the YAML header.
+	 *
+	 * <p>
+	 * The {@link SourceStringReader} is deliberately constructed <em>inside</em>
+	 * this method, under the redirected {@code System.err} : its constructor
+	 * eagerly parses the source (running the TIM preprocessor, so {@code !log}
+	 * and friends already fire there), so building it before redirecting would
+	 * let that first pass leak onto the real console, uncaptured.
+	 *
+	 * <p>
+	 * When the YAML header sets {@code verbose: true}, {@link GlobalConfigKey#VERBOSE}
+	 * is temporarily forced to {@code true} for the duration of this single
+	 * render, then restored, so that {@code -verbose}-gated output
+	 * (like {@code !dump_memory}) can also be pinned.
+	 */
+	private DiagramDescription renderCapturingStderr(String source, ByteArrayOutputStream baos, int imageIndex,
+			FileFormatOption fileFormatOption, boolean verbose) throws IOException {
+		final PrintStream originalErr = System.err;
+		final Object previousVerbose = GlobalConfig.getInstance().value(GlobalConfigKey.VERBOSE);
+		final ByteArrayOutputStream errCapture = new ByteArrayOutputStream();
+		try {
+			if (verbose)
+				GlobalConfig.getInstance().put(GlobalConfigKey.VERBOSE, true);
+			System.setErr(newPrintStream(errCapture));
+			final SourceStringReader ssrForFormat = new SourceStringReader(source, getCurrentDir());
+			return ssrForFormat.outputImage(baos, imageIndex, fileFormatOption);
+		} finally {
+			System.setErr(originalErr);
+			if (verbose)
+				GlobalConfig.getInstance().put(GlobalConfigKey.VERBOSE, previousVerbose);
+			this.lastStderr = normalizeLineEndings(new String(errCapture.toByteArray(), UTF_8));
+		}
+	}
+
+	private static PrintStream newPrintStream(ByteArrayOutputStream target) {
+		try {
+			return new PrintStream(target, true, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			throw new IllegalStateException(e);
+		}
+	}
+
+	private String normalizeLineEndings(String s) {
+		return s.replace("\r\n", "\n").replace("\r", "\n");
+	}
+
+	/**
+	 * Checks the {@code expected-stderr} (or {@code expected-stderr-N} for
+	 * multi-image diagrams) YAML block against the stderr output captured by the
+	 * last {@link #renderCapturingStderr} call. Mirrors the {@code contains} /
+	 * {@code not-contains} shape used by {@code expected-debug}.
+	 */
+	private void checkStderrExpectations(int nbImages, int imageIndex) {
+		final String yamlKey = nbImages == 1 ? "expected-stderr" : "expected-stderr-" + (imageIndex + 1);
+		final String label = path + " [image " + (imageIndex + 1) + "]";
+
+		for (final String needle : getYamlSubList(yamlKey, "contains"))
+			assertTrue(lastStderr.contains(needle), "stderr should contain '" + needle + "' for " + label);
+
+		for (final String needle : getYamlSubList(yamlKey, "not-contains"))
+			assertFalse(lastStderr.contains(needle), "stderr should not contain '" + needle + "' for " + label);
+	}
+
 	private void doRunSingleFile() throws IOException {
 		assertFalse(getPumlSource().isEmpty(), "PlantUML source in " + path);
 
@@ -307,16 +380,18 @@ public class VegaInputFile {
 
 		final int nbImages = ssr.getBlocks().get(0).getDiagram().getNbImages();
 		final List<Path> generatedFiles = new ArrayList<>();
+		final boolean verbose = "true".equals(this.getYamlString("verbose"));
 
 		for (final FileFormat fileFormat : fileFormats) {
 			for (int imageIndex = 0; imageIndex < nbImages; imageIndex++) {
-				final SourceStringReader ssrForFormat = new SourceStringReader(source, getCurrentDir());
 				final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				FileFormatOption fileFormatOption = new FileFormatOption(fileFormat);
 				final String decimal = getYamlString("decimal");
 				if (decimal != null)
 					fileFormatOption = fileFormatOption.withDecimal(Integer.parseInt(decimal.trim()));
-				final DiagramDescription description = ssrForFormat.outputImage(baos, imageIndex, fileFormatOption);
+				final DiagramDescription description = renderCapturingStderr(source, baos, imageIndex,
+						fileFormatOption, verbose);
+				checkStderrExpectations(nbImages, imageIndex);
 
 				this.description = description.getDescription();
 

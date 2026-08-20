@@ -1,0 +1,15 @@
+---
+output: svg
+expected-description: (2 participants)
+expected-stderr:
+  contains:
+    - "[Log] first"
+    - "[Log] second"
+  not-contains:
+    - "Mo) "
+---
+@startuml
+!log first
+Alice -> Bob : hello
+!log second
+@enduml

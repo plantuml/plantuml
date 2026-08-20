@@ -1,0 +1,17 @@
+---
+output: svg
+verbose: true
+expected-description: (2 entities)
+expected-stderr:
+  contains:
+    - "[Log] WTF!?"
+  not-contains:
+    # Even with -verbose (which does print other internal timing/memory
+    # diagnostics through Log.info), the !log message itself must stay on its
+    # own clean line, not wrapped by Log.info's "(...) NN Mo - " prefix.
+    - "Mo - [Log] WTF!?"
+---
+@startuml
+!log WTF!?
+[*] -> test
+@enduml

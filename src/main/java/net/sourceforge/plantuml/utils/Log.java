@@ -111,6 +111,28 @@ public abstract class Log {
 		}
 	}
 
+	/**
+	 * Prints a message that the user explicitly asked for (typically via the
+	 * {@code !log} preprocessor directive), as opposed to internal debug/info
+	 * messages handled by {@link #info(Supplier)}.
+	 *
+	 * <p>
+	 * Unlike {@link #info(Supplier)}, this is not gated behind
+	 * {@link GlobalConfigKey#VERBOSE} : the user asked for this specific output,
+	 * so it must always be printed, regardless of the {@code -verbose} flag.
+	 *
+	 * <p>
+	 * Unlike {@link #info(Supplier)}, the message is printed as-is, without the
+	 * timing/memory diagnostic prefix added by {@link #format(String)} : this is
+	 * user-facing output, not an internal diagnostic.
+	 */
+	public synchronized static void userLog(Supplier<String> msgSupplier) {
+		if (!TeaVM.isTeaVM()) {
+			ProgressBar.clear();
+		}
+		System.err.println(msgSupplier.get());
+	}
+
 	public synchronized static void error(String s) {
 		if (!TeaVM.isTeaVM()) {
 			ProgressBar.clear();

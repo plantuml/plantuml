@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (2 entities)
+expected-stderr:
+  contains:
+    - "[Log] Value is hello"
+  not-contains:
+    - "Mo) "
+---
+@startuml
+!$x = "hello"
+!log Value is $x
+[*] -> test
+@enduml
