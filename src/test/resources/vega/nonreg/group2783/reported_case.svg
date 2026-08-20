@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="192px" preserveAspectRatio="none" style="width:263px;height:192px;background:#FFFFFF;" version="1.1" viewBox="0 0 263 192" width="263px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Plain-->
+    <g class="cluster" data-qualified-name="Plain" data-source-line="17" id="ent0003">
+      <path d="M26.5,12 L111.5,12 A12.5,12.5 0 0 1 124,24.5 L124,31 L14,31 L14,24.5 A12.5,12.5 0 0 1 26.5,12" fill="#F5DEB3"/>
+      <path d="M14,31 L124,31 L124,80.5 A12.5,12.5 0 0 1 111.5,93 L26.5,93 A12.5,12.5 0 0 1 14,80.5 L14,31" fill="#F5DEB3"/>
+      <rect fill="none" height="81" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="110" x="14" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="124" y1="31" y2="31"/>
+      <text fill="#000" font-size="14" textLength="66.938" x="35.531" y="22.889">Composite</text>
+    </g>
+    <!--cluster Styled-->
+    <g class="cluster" data-qualified-name="Styled" data-source-line="23" id="ent0005">
+      <path d="M152.5,12 L237.5,12 A12.5,12.5 0 0 1 250,24.5 L250,31 L140,31 L140,24.5 A12.5,12.5 0 0 1 152.5,12" fill="#F5DEB3"/>
+      <rect fill="none" height="81" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="110" x="140" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="140" x2="250" y1="31" y2="31"/>
+      <text fill="#000" font-size="14" textLength="66.938" x="161.531" y="22.889">Composite</text>
+    </g>
+    <rect fill="#F1F1F1" height="40" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="58.213" x="11" y="136"/>
+    <text fill="#000" font-size="14" textLength="48.213" x="16" y="159.889">Target1</text>
+    <rect fill="#F1F1F1" height="40" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="58.213" x="137" y="136"/>
+    <text fill="#000" font-size="14" textLength="48.213" x="142" y="159.889">Target2</text>
+    <g class="start_entity" data-qualified-name="Plain.PlainChild" data-source-line="18" id="ent0004">
+      <ellipse cx="40" cy="63" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="start_entity" data-qualified-name="Styled.StyledChild" data-source-line="24" id="ent0006">
+      <ellipse cx="166" cy="63" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0004" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="50.048,71.888,57.16,78.702,54.752,73.583,59.871,71.175,50.048,71.888" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M50.048,58.112 C58.771,54.969 68,57.266 68,65 C68,72.734 63.476,76.725 54.752,73.583" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="36.887" x="70" y="68.611">Check</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0001" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="40,135.707,44,126.707,40,130.707,36,126.707,40,135.707" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M40,77.272 C40,91.959 40,112.866 40,130.707" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="21.694" x="42" y="113.111">Exit</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0006" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="176.048,71.888,183.16,78.702,180.752,73.583,185.871,71.175,176.048,71.888" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M176.048,58.112 C184.771,54.969 194,57.266 194,65 C194,72.734 189.476,76.725 180.752,73.583" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="36.887" x="196" y="68.611">Check</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0002" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="166,135.707,170,126.707,166,130.707,162,126.707,166,135.707" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M166,77.272 C166,91.959 166,112.866 166,130.707" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="21.694" x="168" y="113.111">Exit</text>
+    </g>
+  </g>
+</svg>

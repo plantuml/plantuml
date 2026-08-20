@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+hide empty description
+
+<style>
+.customStyle {
+  state {
+    BackgroundColor Wheat
+  }
+}
+</style>
+
+state "Outer" as Outer <<customStyle>> {
+  state "Inner" as Inner <<customStyle>> {
+    state Leaf1
+  }
+  Inner --> Leaf1
+}
+@enduml

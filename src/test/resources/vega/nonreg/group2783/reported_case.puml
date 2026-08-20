@@ -1,0 +1,32 @@
+---
+output: svg
+---
+@startuml
+hide empty description
+
+<style>
+.customStyle {
+  state {
+    BackgroundColor Wheat
+    body {
+      BackgroundColor transparent
+    }
+  }
+}
+</style>
+
+state Target1
+state Target2
+
+state "Composite" as Plain #Wheat {
+  state PlainChild <<start>>
+  PlainChild -> PlainChild : Check
+  PlainChild --> Target1 : Exit
+}
+
+state "Composite" as Styled <<customStyle>> {
+  state StyledChild <<start>>
+  StyledChild -> StyledChild : Check
+  StyledChild --> Target2 : Exit
+}
+@enduml

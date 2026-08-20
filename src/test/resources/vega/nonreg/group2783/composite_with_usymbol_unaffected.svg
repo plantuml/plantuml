@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="178px" preserveAspectRatio="none" style="width:97px;height:178px;background:#FFFFFF;" version="1.1" viewBox="0 0 97 178" width="97px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="C" data-source-line="2" id="ent0001">
+      <path d="M18.5,72 L68.5,72 A12.5,12.5 0 0 1 81,84.5 L81,96 L6,96 L6,84.5 A12.5,12.5 0 0 1 18.5,72" fill="#F1F1F1"/>
+      <rect fill="none" height="90" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="6" y="72"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="81" y1="96" y2="96"/>
+      <text fill="#000" font-size="14" textLength="43.663" x="21.669" y="87.889">Choice</text>
+      <rect fill="#F1F1F1" height="40" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="12" y="107"/>
+      <text fill="#000" font-size="14" textLength="31.85" x="21.075" y="130.889">Inner</text>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="5" id="ent0003">
+      <ellipse cx="43.5" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="43.5,71.683,47.5,62.683,43.5,66.683,39.5,62.683,43.5,71.683" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M43.5,36.158 C43.5,45.176 43.5,53.496 43.5,66.683" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

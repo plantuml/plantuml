@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -185,7 +186,16 @@ public final class ClusterHeader {
 		if (stereotype == null)
 			return TextBlockUtils.empty(0, 0);
 
+		// A composite state without a USymbol (i.e. not a pseudo-state like <<choice>> or
+		// <<start>>) is painted by Cluster.drawUState(), which only draws the title and never
+		// this stereotype block -- the stereotype there is purely a style-class selector, the
+		// same way a leaf state's stereotype never renders as text (see EntityImageState).
+		// Reserving height/width for a block that is never painted leaves a blank gap above the
+		// title (issue #2783), so keep the two in sync by not measuring it here either.
 		final ISkinParam skinParam = g.getSkinParam();
+		if (skinParam.getDiagramType() == DiagramType.STATE && g.getUSymbol() == null)
+			return TextBlockUtils.empty(0, 0);
+
 		final TextBlock tmp = stereotype.getSprite(skinParam);
 		if (tmp != null)
 			return tmp;

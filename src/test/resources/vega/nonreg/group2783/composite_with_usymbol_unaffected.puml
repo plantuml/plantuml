@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+hide empty description
+state "Choice" as C <<choice>> {
+  state Inner
+}
+[*] --> C
+@enduml
