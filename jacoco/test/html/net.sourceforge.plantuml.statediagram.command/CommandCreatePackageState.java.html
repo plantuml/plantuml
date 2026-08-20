@@ -169,11 +169,11 @@ public class CommandCreatePackageState extends SingleLineCommand2&lt;StateDiagra
 <span class="fc" id="L169">		final String display = getNotNull(arg, &quot;DISPLAY1&quot;, &quot;DISPLAY2&quot;);</span>
 
 <span class="fc" id="L171">		diagram.gotoGroup(location, quark,</span>
-<span class="pc bpc" id="L172" title="1 of 2 branches missed.">				Display.getWithNewlines(diagram.getPragma(), display == null ? quark.getName() : display),</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">				Display.getWithNewlines(diagram.getPragma(), display == null ? quark.getName() : display),</span>
 				GroupType.STATE);
 <span class="fc" id="L174">		final Entity p = diagram.getCurrentGroup();</span>
-<span class="pc bpc" id="L175" title="1 of 2 branches missed.">		if (display != null)</span>
-<span class="nc" id="L176">			p.setDisplay(Display.getWithNewlines(diagram.getPragma(), display));</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">		if (display != null)</span>
+<span class="fc" id="L176">			p.setDisplay(Display.getWithNewlines(diagram.getPragma(), display));</span>
 
 <span class="fc" id="L178">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
 <span class="fc" id="L179">		p.setStereotype(stereogroup.buildStereotype());</span>

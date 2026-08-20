@@ -48,40 +48,40 @@ public class EntityImageStateEmptyDescription extends EntityImageStateCommon {
 	final private static int MIN_HEIGHT = 40;
 
 	public EntityImageStateEmptyDescription(Entity entity) {
-<span class="nc" id="L51">		super(entity);</span>
+<span class="fc" id="L51">		super(entity);</span>
 
-<span class="nc" id="L53">	}</span>
+<span class="fc" id="L53">	}</span>
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="nc" id="L57">		final XDimension2D dim = name.calculateDimension(stringBounder);</span>
-<span class="nc" id="L58">		final XDimension2D result = dim.delta(MARGIN * 2);</span>
-<span class="nc" id="L59">		return result.atLeast(MIN_WIDTH, MIN_HEIGHT);</span>
+<span class="fc" id="L57">		final XDimension2D dim = name.calculateDimension(stringBounder);</span>
+<span class="fc" id="L58">		final XDimension2D result = dim.delta(MARGIN * 2);</span>
+<span class="fc" id="L59">		return result.atLeast(MIN_WIDTH, MIN_HEIGHT);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (url != null)</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (url != null)</span>
 <span class="nc" id="L64">			ug.startUrl(url);</span>
 
-<span class="nc" id="L66">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L67">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
-<span class="nc" id="L68">		final XDimension2D dimHeader = name.calculateDimension(stringBounder);</span>
+<span class="fc" id="L66">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L67">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
+<span class="fc" id="L68">		final XDimension2D dimHeader = name.calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L70">		final UStroke stroke = getStyleState().getStroke(lineConfig.getColors());</span>
+<span class="fc" id="L70">		final UStroke stroke = getStyleState().getStroke(lineConfig.getColors());</span>
 
-<span class="nc" id="L72">		ug = applyColor(ug, getStyleStateDescription());</span>
-<span class="nc" id="L73">		ug = ug.apply(stroke);</span>
+<span class="fc" id="L72">		ug = applyColor(ug, getStyleStateDescription());</span>
+<span class="fc" id="L73">		ug = ug.apply(stroke);</span>
 
-<span class="nc" id="L75">		ug.draw(getShape(dimTotal));</span>
+<span class="fc" id="L75">		ug.draw(getShape(dimTotal));</span>
 
-<span class="nc" id="L77">		final double xDesc = (dimTotal.getWidth() - dimHeader.getWidth()) / 2;</span>
-<span class="nc" id="L78">		final double yDesc = (dimTotal.getHeight() - dimHeader.getHeight()) / 2;</span>
-<span class="nc" id="L79">		name.drawU(ug.apply(new UTranslate(xDesc, yDesc)));</span>
+<span class="fc" id="L77">		final double xDesc = (dimTotal.getWidth() - dimHeader.getWidth()) / 2;</span>
+<span class="fc" id="L78">		final double yDesc = (dimTotal.getHeight() - dimHeader.getHeight()) / 2;</span>
+<span class="fc" id="L79">		name.drawU(ug.apply(new UTranslate(xDesc, yDesc)));</span>
 
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (url != null)</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (url != null)</span>
 <span class="nc" id="L82">			ug.closeUrl();</span>
 
-<span class="nc" id="L84">	}</span>
+<span class="fc" id="L84">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

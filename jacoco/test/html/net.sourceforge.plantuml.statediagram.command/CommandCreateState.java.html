@@ -184,7 +184,7 @@ public class CommandCreateState extends SingleLineCommand2&lt;StateDiagram&gt; {
 
 <span class="fc" id="L185">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
 <span class="fc" id="L186">		LeafType type = stereogroup.getLeafType();</span>
-<span class="pc bpc" id="L187" title="1 of 2 branches missed.">		if (type == null)</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">		if (type == null)</span>
 <span class="fc" id="L188">			type = LeafType.STATE;</span>
 <span class="pc bpc" id="L189" title="1 of 2 branches missed.">		if (diagram.checkConcurrentStateOk(quark) == false)</span>
 <span class="nc" id="L190">			return CommandExecutionResult.error(&quot;The state &quot; + quark.getName()</span>

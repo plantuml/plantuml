@@ -460,7 +460,7 @@ public class Cluster implements Moveable {
 <span class="fc" id="L460">		HColor northBackcolor = group.getColors().getColor(ColorType.BACK);</span>
 <span class="fc" id="L461">		HColor centerBackColor = northBackcolor;</span>
 <span class="fc" id="L462">		HColor southBackcolor = northBackcolor;</span>
-<span class="pc bpc" id="L463" title="1 of 2 branches missed.">		if (northBackcolor == null) {</span>
+<span class="fc bfc" id="L463" title="All 2 branches covered.">		if (northBackcolor == null) {</span>
 <span class="fc" id="L464">			northBackcolor = EntityImageStateCommon.STYLE.addSName(SName.name).withTOBECHANGED(group.getStereotype())</span>
 <span class="fc" id="L465">					.getMergedStyle(styleBuilder).value(PName.BackGroundColor).asColor(colorSet);</span>
 <span class="fc" id="L466">			centerBackColor = EntityImageStateCommon.STYLE.addSName(SName.description)</span>
@@ -502,7 +502,7 @@ public class Cluster implements Moveable {
 <span class="nc" id="L502">					rectangleArea.getMinY() + nameHeight + IEntityImage.MARGIN / 2.0)));</span>
 
 <span class="fc" id="L504">		final Stereotype stereotype = group.getStereotype();</span>
-<span class="pc bpc" id="L505" title="3 of 4 branches missed.">		final boolean withSymbol = stereotype != null &amp;&amp; stereotype.isWithOOSymbol();</span>
+<span class="pc bpc" id="L505" title="1 of 4 branches missed.">		final boolean withSymbol = stereotype != null &amp;&amp; stereotype.isWithOOSymbol();</span>
 <span class="pc bpc" id="L506" title="1 of 2 branches missed.">		if (withSymbol)</span>
 <span class="nc" id="L507">			EntityImageState.drawSymbol(ug.apply(borderColor), rectangleArea.getMaxX(), rectangleArea.getMaxY());</span>
 

@@ -79,9 +79,9 @@ public class CommandHideEmptyDescription extends SingleLineCommand2&lt;TitledDia
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L82">		final boolean hide = arg.get(&quot;HIDE&quot;, 0).equalsIgnoreCase(&quot;hide&quot;);</span>
-<span class="nc" id="L83">		diagram.setHideEmptyDescription(hide);</span>
-<span class="nc" id="L84">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L82">		final boolean hide = arg.get(&quot;HIDE&quot;, 0).equalsIgnoreCase(&quot;hide&quot;);</span>
+<span class="fc" id="L83">		diagram.setHideEmptyDescription(hide);</span>
+<span class="fc" id="L84">		return CommandExecutionResult.ok();</span>
 	}
 
 }

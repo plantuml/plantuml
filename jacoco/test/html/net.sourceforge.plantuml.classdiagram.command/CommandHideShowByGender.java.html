@@ -150,14 +150,14 @@ public class CommandHideShowByGender extends SingleLineCommand2&lt;TitledDiagram
 <span class="fc bfc" id="L150" title="All 2 branches covered.">		if (diagram instanceof AbstractClassOrObjectDiagram)</span>
 <span class="fc" id="L151">			return executeClassDiagram((AbstractClassOrObjectDiagram) diagram, arg);</span>
 
-<span class="pc bpc" id="L153" title="1 of 2 branches missed.">		if (diagram instanceof DescriptionDiagram)</span>
-<span class="nc" id="L154">			return executeDescriptionDiagram((DescriptionDiagram) diagram, arg);</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		if (diagram instanceof DescriptionDiagram)</span>
+<span class="fc" id="L154">			return executeDescriptionDiagram((DescriptionDiagram) diagram, arg);</span>
 
-<span class="pc bpc" id="L156" title="1 of 2 branches missed.">		if (diagram instanceof SequenceDiagram)</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">		if (diagram instanceof SequenceDiagram)</span>
 <span class="fc" id="L157">			return executeSequenceDiagram((SequenceDiagram) diagram, arg);</span>
 
 		// Just ignored
-<span class="nc" id="L160">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L160">		return CommandExecutionResult.ok();</span>
 	}
 
 	private CommandExecutionResult executeSequenceDiagram(SequenceDiagram diagram, RegexResult arg) {
@@ -167,11 +167,11 @@ public class CommandHideShowByGender extends SingleLineCommand2&lt;TitledDiagram
 	}
 
 	private CommandExecutionResult executeDescriptionDiagram(DescriptionDiagram diagram, RegexResult arg) {
-<span class="nc" id="L170">		final EntityPortion portion = getEntityPortion(arg.get(&quot;PORTION&quot;, 0));</span>
+<span class="fc" id="L170">		final EntityPortion portion = getEntityPortion(arg.get(&quot;PORTION&quot;, 0));</span>
 		final EntityGender gender;
-<span class="nc" id="L172">		final String arg1 = arg.get(&quot;GENDER&quot;, 0);</span>
-<span class="nc bnc" id="L173" title="All 2 branches missed.">		if (arg1 == null)</span>
-<span class="nc" id="L174">			gender = EntityGenderUtils.all();</span>
+<span class="fc" id="L172">		final String arg1 = arg.get(&quot;GENDER&quot;, 0);</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">		if (arg1 == null)</span>
+<span class="fc" id="L174">			gender = EntityGenderUtils.all();</span>
 <span class="nc bnc" id="L175" title="All 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;class&quot;))</span>
 <span class="nc" id="L176">			gender = EntityGenderUtils.byEntityType(LeafType.CLASS);</span>
 <span class="nc bnc" id="L177" title="All 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;object&quot;))</span>
@@ -208,8 +208,8 @@ public class CommandHideShowByGender extends SingleLineCommand2&lt;TitledDiagram
 <span class="nc" id="L208">			gender = EntityGenderUtils.byEntityAlone(entity);</span>
 		}
 
-<span class="nc" id="L211">		diagram.hideOrShow(gender, portion, arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;show&quot;));</span>
-<span class="nc" id="L212">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L211">		diagram.hideOrShow(gender, portion, arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;show&quot;));</span>
+<span class="fc" id="L212">		return CommandExecutionResult.ok();</span>
 	}
 
 	private CommandExecutionResult executeClassDiagram(AbstractClassOrObjectDiagram diagram, RegexResult arg) {

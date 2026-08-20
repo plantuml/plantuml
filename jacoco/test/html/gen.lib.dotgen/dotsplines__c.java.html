@@ -623,14 +623,14 @@ try {
 	    int b, sizey, r;
 <span class="fc" id="L624">	    n = agtail(e0);</span>
 <span class="fc" id="L625">	    r = ND_rank(n);</span>
-<span class="pc bpc" id="L626" title="1 of 2 branches missed.">	    if (r == GD_maxrank(g)) {</span>
+<span class="fc bfc" id="L626" title="All 2 branches covered.">	    if (r == GD_maxrank(g)) {</span>
 <span class="pc bpc" id="L627" title="1 of 2 branches missed.">		if (r &gt; 0)</span>
 <span class="nc" id="L628">		    sizey = (int) (ND_coord(GD_rank(g).get__(r-1).v.get_(0)).y - ND_coord(n).y);</span>
 		else
 <span class="fc" id="L630">		    sizey = (int) ND_ht(n);</span>
 	    }
-<span class="nc bnc" id="L632" title="All 2 branches missed.">	    else if (r == GD_minrank(g)) {</span>
-<span class="nc" id="L633">		sizey = (int)(ND_coord(n).y - ND_coord(GD_rank(g).get__(r+1).v.get_(0)).y);</span>
+<span class="pc bpc" id="L632" title="1 of 2 branches missed.">	    else if (r == GD_minrank(g)) {</span>
+<span class="fc" id="L633">		sizey = (int)(ND_coord(n).y - ND_coord(GD_rank(g).get__(r+1).v.get_(0)).y);</span>
 	    }
 	    else {
 <span class="nc" id="L636">		int upy = (int) (ND_coord(GD_rank(g).get__(r-1).v.get_(0)).y - ND_coord(n).y);</span>
@@ -2273,12 +2273,12 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;cl_vninside&quot;, key=&quot;65uvkv1mextaah5m997ibe3qs&quot;, definition=&quot;static int cl_vninside(graph_t * cl, node_t * n)&quot;)
 public static boolean cl_vninside(ST_Agraph_s cl, ST_Agnode_s n) {
-<span class="nc" id="L2276">ENTERING(&quot;65uvkv1mextaah5m997ibe3qs&quot;,&quot;cl_vninside&quot;);</span>
+<span class="fc" id="L2276">ENTERING(&quot;65uvkv1mextaah5m997ibe3qs&quot;,&quot;cl_vninside&quot;);</span>
 try {
-<span class="nc bnc" id="L2278" title="All 2 branches missed.">    return (BETWEEN(GD_bb(cl).LL.x, (double)(ND_coord(n).x), GD_bb(cl).UR.x) &amp;&amp;</span>
-<span class="nc bnc" id="L2279" title="All 2 branches missed.">	    BETWEEN(GD_bb(cl).LL.y, (double)(ND_coord(n).y), GD_bb(cl).UR.y));</span>
+<span class="pc bpc" id="L2278" title="1 of 2 branches missed.">    return (BETWEEN(GD_bb(cl).LL.x, (double)(ND_coord(n).x), GD_bb(cl).UR.x) &amp;&amp;</span>
+<span class="pc bpc" id="L2279" title="1 of 2 branches missed.">	    BETWEEN(GD_bb(cl).LL.y, (double)(ND_coord(n).y), GD_bb(cl).UR.y));</span>
 } finally {
-<span class="nc" id="L2281">LEAVING(&quot;65uvkv1mextaah5m997ibe3qs&quot;,&quot;cl_vninside&quot;);</span>
+<span class="fc" id="L2281">LEAVING(&quot;65uvkv1mextaah5m997ibe3qs&quot;,&quot;cl_vninside&quot;);</span>
 }
 }
 
@@ -2308,8 +2308,8 @@ try {
 <span class="fc" id="L2308">	    rv = cl;</span>
     } else {
 <span class="fc" id="L2310">	orig = ED_to_orig(ND_out(adj).list.get_(0));</span>
-<span class="pc bpc" id="L2311" title="1 of 2 branches missed.">	cl = ( ND_clust(agtail(orig)) == g ? null:ND_clust(agtail(orig)));</span>
-<span class="pc bpc" id="L2312" title="7 of 8 branches missed.">	if (cl!=null &amp;&amp; (cl != tcl) &amp;&amp; (cl != hcl) &amp;&amp; cl_vninside(cl, adj))</span>
+<span class="fc bfc" id="L2311" title="All 2 branches covered.">	cl = ( ND_clust(agtail(orig)) == g ? null:ND_clust(agtail(orig)));</span>
+<span class="pc bpc" id="L2312" title="3 of 8 branches missed.">	if (cl!=null &amp;&amp; (cl != tcl) &amp;&amp; (cl != hcl) &amp;&amp; cl_vninside(cl, adj))</span>
 <span class="nc" id="L2313">	    rv = cl;</span>
 	else {
 <span class="pc bpc" id="L2315" title="1 of 2 branches missed.">	    cl = ( ND_clust(aghead(orig)) == g ? null:ND_clust(aghead(orig)));</span>
@@ -2347,8 +2347,8 @@ try {
     /* give this node all the available space up to its neighbors */
 <span class="fc" id="L2348">    b = (double)(ND_coord(vn).x - ND_lw(vn) - FUDGE);</span>
 <span class="fc bfc" id="L2349" title="All 2 branches covered.">    if ((left = neighbor(g, vn, ie, oe, -1))!=null) {</span>
-<span class="pc bpc" id="L2350" title="1 of 2 branches missed.">	if ((left_cl = cl_bound(g, vn, left))!=null)</span>
-<span class="nc" id="L2351">	    nb = GD_bb(left_cl).UR.x + (double)(sp.Splinesep);</span>
+<span class="fc bfc" id="L2350" title="All 2 branches covered.">	if ((left_cl = cl_bound(g, vn, left))!=null)</span>
+<span class="fc" id="L2351">	    nb = GD_bb(left_cl).UR.x + (double)(sp.Splinesep);</span>
 	else {
 <span class="fc" id="L2353">	    nb = (double)(ND_coord(left).x + ND_mval(left));</span>
 <span class="fc bfc" id="L2354" title="All 2 branches covered.">	    if (ND_node_type(left) == NORMAL)</span>

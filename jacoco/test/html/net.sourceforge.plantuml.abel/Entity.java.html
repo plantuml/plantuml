@@ -341,10 +341,10 @@ import net.sourceforge.plantuml.utils.Position;
 <span class="nc" id="L341">			return EntityPosition.NORMAL;</span>
 
 <span class="fc" id="L343">		final Stereotype stereotype = getStereotype();</span>
-<span class="pc bpc" id="L344" title="1 of 2 branches missed.">		if (stereotype == null)</span>
+<span class="fc bfc" id="L344" title="All 2 branches covered.">		if (stereotype == null)</span>
 <span class="fc" id="L345">			return EntityPosition.NORMAL;</span>
 
-<span class="nc" id="L347">		return EntityPosition.fromStereotype(stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));</span>
+<span class="fc" id="L347">		return EntityPosition.fromStereotype(stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));</span>
 
 	}
 

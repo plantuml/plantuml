@@ -132,8 +132,8 @@ import net.sourceforge.plantuml.text.Guillemet;
 <span class="nc" id="L132">				final Cluster stateParent = bibliotekon.getCluster(leaf.getParentContainer());</span>
 <span class="nc" id="L133">				return new EntityImageStateBorder(leaf, stateParent, bibliotekon);</span>
 			}
-<span class="pc bpc" id="L135" title="3 of 4 branches missed.">			if (isHideEmptyDescriptionForState &amp;&amp; leaf.getBodier().getRawBody().size() == 0)</span>
-<span class="nc" id="L136">				return new EntityImageStateEmptyDescription(leaf);</span>
+<span class="pc bpc" id="L135" title="1 of 4 branches missed.">			if (isHideEmptyDescriptionForState &amp;&amp; leaf.getBodier().getRawBody().size() == 0)</span>
+<span class="fc" id="L136">				return new EntityImageStateEmptyDescription(leaf);</span>
 
 <span class="pc bpc" id="L138" title="1 of 2 branches missed.">			if (leaf.getStereotype() != null</span>
 <span class="nc bnc" id="L139" title="All 2 branches missed.">					&amp;&amp; &quot;&lt;&lt;sdlreceive&gt;&gt;&quot;.equals(leaf.getStereotype().getLabel(Guillemet.DOUBLE_COMPARATOR)))</span>

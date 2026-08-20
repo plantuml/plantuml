@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -64,147 +65,156 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public final class ClusterHeader {
 
-<span class="fc" id="L67">	private int titleAndAttributeWidth = 0;</span>
-<span class="fc" id="L68">	private int titleAndAttributeHeight = 0;</span>
+<span class="fc" id="L68">	private int titleAndAttributeWidth = 0;</span>
+<span class="fc" id="L69">	private int titleAndAttributeHeight = 0;</span>
 	private final TextBlock title;
 	private final TextBlock stereo;
 	private final Entity g;
 
-<span class="fc" id="L73">	public ClusterHeader(Entity g, PortionShower portionShower, StringBounder stringBounder) {</span>
+<span class="fc" id="L74">	public ClusterHeader(Entity g, PortionShower portionShower, StringBounder stringBounder) {</span>
 
-<span class="fc" id="L75">		final ISkinParam skinParam = g.getSkinParam();</span>
+<span class="fc" id="L76">		final ISkinParam skinParam = g.getSkinParam();</span>
 
-<span class="fc" id="L77">		this.g = g;</span>
-<span class="fc" id="L78">		this.title = getTitleBlock();</span>
-<span class="fc" id="L79">		this.stereo = getStereoBlock(portionShower);</span>
-<span class="fc" id="L80">		final TextBlock stereoAndTitle = TextBlockUtils.mergeTB(stereo, title, getTitleHorizontalAlignment());</span>
-<span class="fc" id="L81">		final XDimension2D dimLabel = stereoAndTitle.calculateDimension(stringBounder);</span>
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (dimLabel.getWidth() &gt; 0) {</span>
-<span class="fc" id="L83">			final XDimension2D dimAttribute = g.getStateDescription(skinParam).calculateDimension(stringBounder);</span>
-<span class="fc" id="L84">			final double attributeHeight = dimAttribute.getHeight();</span>
-<span class="fc" id="L85">			final double attributeWidth = dimAttribute.getWidth();</span>
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">			final double marginForFields = attributeHeight &gt; 0 ? IEntityImage.MARGIN : 0;</span>
-<span class="fc" id="L87">			final USymbol uSymbol = g.getUSymbol();</span>
-<span class="fc bfc" id="L88" title="All 2 branches covered.">			final int suppHeightBecauseOfShape = uSymbol == null ? 0 : uSymbol.suppHeightBecauseOfShape();</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">			final int suppWidthBecauseOfShape = uSymbol == null ? 0 : uSymbol.suppWidthBecauseOfShape();</span>
+<span class="fc" id="L78">		this.g = g;</span>
+<span class="fc" id="L79">		this.title = getTitleBlock();</span>
+<span class="fc" id="L80">		this.stereo = getStereoBlock(portionShower);</span>
+<span class="fc" id="L81">		final TextBlock stereoAndTitle = TextBlockUtils.mergeTB(stereo, title, getTitleHorizontalAlignment());</span>
+<span class="fc" id="L82">		final XDimension2D dimLabel = stereoAndTitle.calculateDimension(stringBounder);</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (dimLabel.getWidth() &gt; 0) {</span>
+<span class="fc" id="L84">			final XDimension2D dimAttribute = g.getStateDescription(skinParam).calculateDimension(stringBounder);</span>
+<span class="fc" id="L85">			final double attributeHeight = dimAttribute.getHeight();</span>
+<span class="fc" id="L86">			final double attributeWidth = dimAttribute.getWidth();</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">			final double marginForFields = attributeHeight &gt; 0 ? IEntityImage.MARGIN : 0;</span>
+<span class="fc" id="L88">			final USymbol uSymbol = g.getUSymbol();</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">			final int suppHeightBecauseOfShape = uSymbol == null ? 0 : uSymbol.suppHeightBecauseOfShape();</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">			final int suppWidthBecauseOfShape = uSymbol == null ? 0 : uSymbol.suppWidthBecauseOfShape();</span>
 
-<span class="fc" id="L91">			this.titleAndAttributeWidth = (int) Math.max(dimLabel.getWidth(), attributeWidth) + suppWidthBecauseOfShape;</span>
-<span class="fc" id="L92">			this.titleAndAttributeHeight = (int) (dimLabel.getHeight() + attributeHeight + marginForFields</span>
+<span class="fc" id="L92">			this.titleAndAttributeWidth = (int) Math.max(dimLabel.getWidth(), attributeWidth) + suppWidthBecauseOfShape;</span>
+<span class="fc" id="L93">			this.titleAndAttributeHeight = (int) (dimLabel.getHeight() + attributeHeight + marginForFields</span>
 					+ suppHeightBecauseOfShape);
 		}
 
-<span class="fc" id="L96">	}</span>
+<span class="fc" id="L97">	}</span>
 
 	public final int getTitleAndAttributeWidth() {
-<span class="fc" id="L99">		return titleAndAttributeWidth;</span>
+<span class="fc" id="L100">		return titleAndAttributeWidth;</span>
 	}
 
 	public final int getTitleAndAttributeHeight() {
-<span class="fc" id="L103">		return titleAndAttributeHeight;</span>
+<span class="fc" id="L104">		return titleAndAttributeHeight;</span>
 	}
 
 	public final TextBlock getTitle() {
-<span class="fc" id="L107">		return title;</span>
+<span class="fc" id="L108">		return title;</span>
 	}
 
 	public final TextBlock getStereo() {
-<span class="fc" id="L111">		return stereo;</span>
+<span class="fc" id="L112">		return stereo;</span>
 	}
 
 	private TextBlock getTitleBlock() {
-<span class="fc" id="L115">		final Display label = g.getDisplay();</span>
-<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (label == null)</span>
-<span class="nc" id="L117">			return TextBlockUtils.empty(0, 0);</span>
+<span class="fc" id="L116">		final Display label = g.getDisplay();</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		if (label == null)</span>
+<span class="nc" id="L118">			return TextBlockUtils.empty(0, 0);</span>
 
-<span class="fc" id="L119">		final Style style = getStyle();</span>
+<span class="fc" id="L120">		final Style style = getStyle();</span>
 
-<span class="fc" id="L121">		final FontConfiguration fontConfiguration = style.getFontConfiguration(g.getSkinParam().getIHtmlColorSet(),</span>
-<span class="fc" id="L122">				g.getColors());</span>
+<span class="fc" id="L122">		final FontConfiguration fontConfiguration = style.getFontConfiguration(g.getSkinParam().getIHtmlColorSet(),</span>
+<span class="fc" id="L123">				g.getColors());</span>
 
-<span class="fc" id="L124">		final HorizontalAlignment alignment = style.getHorizontalAlignment();</span>
+<span class="fc" id="L125">		final HorizontalAlignment alignment = style.getHorizontalAlignment();</span>
 		// final HorizontalAlignment alignment = getTitleHorizontalAlignment();
 		// final HorizontalAlignment alignment = HorizontalAlignment.CENTER;
-<span class="fc" id="L127">		TextBlock result = label.create(fontConfiguration, alignment, g.getSkinParam());</span>
+<span class="fc" id="L128">		TextBlock result = label.create(fontConfiguration, alignment, g.getSkinParam());</span>
 
-<span class="fc" id="L129">		final VisibilityModifier modifier = g.getVisibilityModifier();</span>
-<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		if (modifier != null) {</span>
-<span class="nc" id="L131">			final Rose rose = new Rose();</span>
-<span class="nc" id="L132">			final HColor back = rose.getHtmlColor(g.getSkinParam(), modifier.getBackground());</span>
-<span class="nc" id="L133">			final HColor fore = rose.getHtmlColor(g.getSkinParam(), modifier.getForeground());</span>
-<span class="nc" id="L134">			final TextBlock uBlock = TextBlockUtils.withMargin(</span>
-<span class="nc" id="L135">					modifier.getUBlock(g.getSkinParam().classAttributeIconSize(), fore, back, false), 0, 0, 4, 0);</span>
+<span class="fc" id="L130">		final VisibilityModifier modifier = g.getVisibilityModifier();</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		if (modifier != null) {</span>
+<span class="nc" id="L132">			final Rose rose = new Rose();</span>
+<span class="nc" id="L133">			final HColor back = rose.getHtmlColor(g.getSkinParam(), modifier.getBackground());</span>
+<span class="nc" id="L134">			final HColor fore = rose.getHtmlColor(g.getSkinParam(), modifier.getForeground());</span>
+<span class="nc" id="L135">			final TextBlock uBlock = TextBlockUtils.withMargin(</span>
+<span class="nc" id="L136">					modifier.getUBlock(g.getSkinParam().classAttributeIconSize(), fore, back, false), 0, 0, 4, 0);</span>
 
-<span class="nc" id="L137">			result = TextBlockUtils.mergeLR(uBlock, result, VerticalAlignment.CENTER);</span>
+<span class="nc" id="L138">			result = TextBlockUtils.mergeLR(uBlock, result, VerticalAlignment.CENTER);</span>
 		}
 
-<span class="fc" id="L140">		return result;</span>
+<span class="fc" id="L141">		return result;</span>
 	}
 
 	private Style getStyle() {
-<span class="fc" id="L144">		final StyleSignatureBasic signature = getSignature();</span>
-<span class="fc" id="L145">		return signature //</span>
-<span class="fc" id="L146">				.withTOBECHANGED(g.getStereotype()) //</span>
-<span class="fc" id="L147">				.with(g.getStereostyles()) //</span>
-<span class="fc" id="L148">				.getMergedStyle(g.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L145">		final StyleSignatureBasic signature = getSignature();</span>
+<span class="fc" id="L146">		return signature //</span>
+<span class="fc" id="L147">				.withTOBECHANGED(g.getStereotype()) //</span>
+<span class="fc" id="L148">				.with(g.getStereostyles()) //</span>
+<span class="fc" id="L149">				.getMergedStyle(g.getSkinParam().getCurrentStyleBuilder());</span>
 	}
 
 	private StyleSignatureBasic getSignature() {
-<span class="fc" id="L152">		final SName sname = g.getSkinParam().getDiagramType().getStyleName();</span>
+<span class="fc" id="L153">		final SName sname = g.getSkinParam().getDiagramType().getStyleName();</span>
 		final StyleSignatureBasic signature;
-<span class="fc" id="L154">		final USymbol uSymbol = g.getUSymbol();</span>
-<span class="fc bfc" id="L155" title="All 2 branches covered.">		if (g.getGroupType() == GroupType.STATE)</span>
-<span class="fc" id="L156">			signature = StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.name);</span>
-<span class="fc bfc" id="L157" title="All 2 branches covered.">		else if (uSymbol != null)</span>
-<span class="fc" id="L158">			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, uSymbol.getSNames(), SName.composite,</span>
+<span class="fc" id="L155">		final USymbol uSymbol = g.getUSymbol();</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">		if (g.getGroupType() == GroupType.STATE)</span>
+<span class="fc" id="L157">			signature = StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.name);</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">		else if (uSymbol != null)</span>
+<span class="fc" id="L159">			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, uSymbol.getSNames(), SName.composite,</span>
 					SName.title);
-<span class="pc bpc" id="L160" title="1 of 2 branches missed.">		else if (g.getGroupType() == GroupType.PACKAGE)</span>
-<span class="fc" id="L161">			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, SName.package_, SName.title);</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		else if (g.getGroupType() == GroupType.PACKAGE)</span>
+<span class="fc" id="L162">			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, SName.package_, SName.title);</span>
 		else
-<span class="nc" id="L163">			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, SName.composite, SName.title);</span>
-<span class="fc" id="L164">		return signature;</span>
+<span class="nc" id="L164">			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, SName.composite, SName.title);</span>
+<span class="fc" id="L165">		return signature;</span>
 	}
 
 	public HorizontalAlignment getTitleHorizontalAlignment() {
-<span class="fc" id="L168">		return getStyle().getHorizontalAlignment();</span>
+<span class="fc" id="L169">		return getStyle().getHorizontalAlignment();</span>
 	}
 
 	private TextBlock getStereoBlock(PortionShower portionShower) {
-<span class="fc" id="L172">		final TextBlock stereo = getStereoBlockWithoutLegend(portionShower);</span>
-<span class="fc" id="L173">		final DisplayPositioned legend = g.getLegend();</span>
-<span class="pc bpc" id="L174" title="3 of 4 branches missed.">		if (legend == null || legend.isNull())</span>
-<span class="fc" id="L175">			return stereo;</span>
+<span class="fc" id="L173">		final TextBlock stereo = getStereoBlockWithoutLegend(portionShower);</span>
+<span class="fc" id="L174">		final DisplayPositioned legend = g.getLegend();</span>
+<span class="pc bpc" id="L175" title="3 of 4 branches missed.">		if (legend == null || legend.isNull())</span>
+<span class="fc" id="L176">			return stereo;</span>
 
-<span class="nc" id="L177">		final TextBlock legendBlock = EntityImageLegend.create(legend.getDisplay(), g.getSkinParam());</span>
-<span class="nc" id="L178">		return DecorateEntityImage.add(null, legendBlock, stereo, legend.getHorizontalAlignment(),</span>
-<span class="nc" id="L179">				legend.getVerticalAlignment());</span>
+<span class="nc" id="L178">		final TextBlock legendBlock = EntityImageLegend.create(legend.getDisplay(), g.getSkinParam());</span>
+<span class="nc" id="L179">		return DecorateEntityImage.add(null, legendBlock, stereo, legend.getHorizontalAlignment(),</span>
+<span class="nc" id="L180">				legend.getVerticalAlignment());</span>
 	}
 
 	private TextBlock getStereoBlockWithoutLegend(PortionShower portionShower) {
-<span class="fc" id="L183">		final Stereotype stereotype = g.getStereotype();</span>
+<span class="fc" id="L184">		final Stereotype stereotype = g.getStereotype();</span>
 		// final DisplayPositionned legend = g.getLegend();
-<span class="fc bfc" id="L185" title="All 2 branches covered.">		if (stereotype == null)</span>
-<span class="fc" id="L186">			return TextBlockUtils.empty(0, 0);</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">		if (stereotype == null)</span>
+<span class="fc" id="L187">			return TextBlockUtils.empty(0, 0);</span>
 
-<span class="fc" id="L188">		final ISkinParam skinParam = g.getSkinParam();</span>
-<span class="fc" id="L189">		final TextBlock tmp = stereotype.getSprite(skinParam);</span>
-<span class="fc bfc" id="L190" title="All 2 branches covered.">		if (tmp != null)</span>
-<span class="fc" id="L191">			return tmp;</span>
+		// A composite state without a USymbol (i.e. not a pseudo-state like &lt;&lt;choice&gt;&gt; or
+		// &lt;&lt;start&gt;&gt;) is painted by Cluster.drawUState(), which only draws the title and never
+		// this stereotype block -- the stereotype there is purely a style-class selector, the
+		// same way a leaf state's stereotype never renders as text (see EntityImageState).
+		// Reserving height/width for a block that is never painted leaves a blank gap above the
+		// title (issue #2783), so keep the two in sync by not measuring it here either.
+<span class="fc" id="L195">		final ISkinParam skinParam = g.getSkinParam();</span>
+<span class="pc bpc" id="L196" title="1 of 4 branches missed.">		if (skinParam.getDiagramType() == DiagramType.STATE &amp;&amp; g.getUSymbol() == null)</span>
+<span class="fc" id="L197">			return TextBlockUtils.empty(0, 0);</span>
 
-<span class="fc" id="L193">		final List&lt;String&gt; stereos = stereotype.getLabels(skinParam.guillemet());</span>
-<span class="pc bpc" id="L194" title="1 of 2 branches missed.">		if (stereos == null)</span>
-<span class="nc" id="L195">			return TextBlockUtils.empty(0, 0);</span>
+<span class="fc" id="L199">		final TextBlock tmp = stereotype.getSprite(skinParam);</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">		if (tmp != null)</span>
+<span class="fc" id="L201">			return tmp;</span>
 
-<span class="fc" id="L197">		final List&lt;String&gt; visibleStereotypes = portionShower.getVisibleStereotypeLabels(g);</span>
-<span class="pc bpc" id="L198" title="1 of 4 branches missed.">		if (visibleStereotypes == null || visibleStereotypes.isEmpty())</span>
-<span class="fc" id="L199">			return TextBlockUtils.empty(0, 0);</span>
+<span class="fc" id="L203">		final List&lt;String&gt; stereos = stereotype.getLabels(skinParam.guillemet());</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">		if (stereos == null)</span>
+<span class="nc" id="L205">			return TextBlockUtils.empty(0, 0);</span>
 
-<span class="fc" id="L201">		final Style style = Cluster</span>
-<span class="fc" id="L202">				.getDefaultStyleDefinition(skinParam.getDiagramType().getStyleName(), g.getUSymbol(), g.getGroupType())</span>
-<span class="fc" id="L203">				.forStereotypeItself(g.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L207">		final List&lt;String&gt; visibleStereotypes = portionShower.getVisibleStereotypeLabels(g);</span>
+<span class="pc bpc" id="L208" title="1 of 4 branches missed.">		if (visibleStereotypes == null || visibleStereotypes.isEmpty())</span>
+<span class="fc" id="L209">			return TextBlockUtils.empty(0, 0);</span>
 
-<span class="fc" id="L205">		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
-<span class="fc" id="L206">		final HorizontalAlignment horizontalAlignment = getTitleHorizontalAlignment();</span>
-<span class="fc" id="L207">		return Display.create(visibleStereotypes).create(fontConfiguration, horizontalAlignment, skinParam);</span>
+<span class="fc" id="L211">		final Style style = Cluster</span>
+<span class="fc" id="L212">				.getDefaultStyleDefinition(skinParam.getDiagramType().getStyleName(), g.getUSymbol(), g.getGroupType())</span>
+<span class="fc" id="L213">				.forStereotypeItself(g.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+
+<span class="fc" id="L215">		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L216">		final HorizontalAlignment horizontalAlignment = getTitleHorizontalAlignment();</span>
+<span class="fc" id="L217">		return Display.create(visibleStereotypes).create(fontConfiguration, horizontalAlignment, skinParam);</span>
 
 	}
 

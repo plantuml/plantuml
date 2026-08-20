@@ -112,14 +112,14 @@ public class Stereogroup {
 <span class="fc bfc" id="L112" title="All 2 branches covered.">		if (labels.size() == 0)</span>
 <span class="fc" id="L113">			return null;</span>
 
-<span class="pc bpc" id="L115" title="6 of 7 branches missed.">		switch (labels.get(0).toLowerCase()) {</span>
+<span class="pc bpc" id="L115" title="5 of 7 branches missed.">		switch (labels.get(0).toLowerCase()) {</span>
 		case &quot;choice&quot;:
 <span class="nc" id="L117">			return LeafType.STATE_CHOICE;</span>
 		case &quot;fork&quot;:
 		case &quot;join&quot;:
 <span class="nc" id="L120">			return LeafType.STATE_FORK_JOIN;</span>
 		case &quot;start&quot;:
-<span class="nc" id="L122">			return LeafType.CIRCLE_START;</span>
+<span class="fc" id="L122">			return LeafType.CIRCLE_START;</span>
 		case &quot;end&quot;:
 <span class="nc" id="L124">			return LeafType.CIRCLE_END;</span>
 		case &quot;history&quot;:

@@ -426,13 +426,13 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="pc bpc" id="L426" title="1 of 2 branches missed.">			if (tail.contains(getStartPoint())) {</span>
 <span class="fc" id="L427">				final DotPath result = new DotPath();</span>
 <span class="fc" id="L428">				int idx = 0;</span>
-<span class="pc bpc" id="L429" title="2 of 4 branches missed.">				while (idx + 1 &lt; this.beziers.size() &amp;&amp; tail.contains(this.beziers.get(idx).getP2())) {</span>
+<span class="pc bpc" id="L429" title="1 of 4 branches missed.">				while (idx + 1 &lt; this.beziers.size() &amp;&amp; tail.contains(this.beziers.get(idx).getP2())) {</span>
 <span class="nc bnc" id="L430" title="All 2 branches missed.">					if (tail.contains(this.beziers.get(idx).getP1()) == false)</span>
 <span class="nc" id="L431">						throw new IllegalStateException();</span>
 
 <span class="nc" id="L433">					idx++;</span>
 				}
-<span class="pc bpc" id="L435" title="1 of 2 branches missed.">				if (tail.contains(this.beziers.get(idx).getP2())) {</span>
+<span class="fc bfc" id="L435" title="All 2 branches covered.">				if (tail.contains(this.beziers.get(idx).getP2())) {</span>
 					// System.err.println(&quot;strange1&quot;);
 				} else {
 <span class="pc bpc" id="L438" title="2 of 4 branches missed.">					if (TeaVM.a()) assert tail.contains(this.beziers.get(idx).getP1());</span>

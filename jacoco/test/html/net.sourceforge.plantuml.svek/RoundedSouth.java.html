@@ -63,26 +63,26 @@ public final class RoundedSouth implements UDrawable {
 <span class="fc" id="L63">	}</span>
 
 	public void drawU(UGraphic ug) {
-<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (backColor.isTransparent())</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">		if (backColor.isTransparent())</span>
 <span class="fc" id="L67">			return;</span>
 
 		final UShape header;
-<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (rounded == 0) {</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (rounded == 0) {</span>
 <span class="nc" id="L71">			header = URectangle.build(width, height);</span>
 		} else {
-<span class="nc" id="L73">			final UPath path = UPath.none();</span>
-<span class="nc" id="L74">			path.moveTo(0, 0);</span>
-<span class="nc" id="L75">			path.lineTo(width, 0);</span>
-<span class="nc" id="L76">			path.lineTo(width, height - rounded / 2);</span>
-<span class="nc" id="L77">			path.arcTo(rounded / 2, rounded / 2, 0, 0, 1, width - rounded / 2, height);</span>
-<span class="nc" id="L78">			path.lineTo(rounded / 2, height);</span>
-<span class="nc" id="L79">			path.arcTo(rounded / 2, rounded / 2, 0, 0, 1, 0, height - rounded / 2);</span>
-<span class="nc" id="L80">			path.lineTo(0, 0);</span>
-<span class="nc" id="L81">			path.closePath();</span>
-<span class="nc" id="L82">			header = path;</span>
+<span class="fc" id="L73">			final UPath path = UPath.none();</span>
+<span class="fc" id="L74">			path.moveTo(0, 0);</span>
+<span class="fc" id="L75">			path.lineTo(width, 0);</span>
+<span class="fc" id="L76">			path.lineTo(width, height - rounded / 2);</span>
+<span class="fc" id="L77">			path.arcTo(rounded / 2, rounded / 2, 0, 0, 1, width - rounded / 2, height);</span>
+<span class="fc" id="L78">			path.lineTo(rounded / 2, height);</span>
+<span class="fc" id="L79">			path.arcTo(rounded / 2, rounded / 2, 0, 0, 1, 0, height - rounded / 2);</span>
+<span class="fc" id="L80">			path.lineTo(0, 0);</span>
+<span class="fc" id="L81">			path.closePath();</span>
+<span class="fc" id="L82">			header = path;</span>
 		}
-<span class="nc" id="L84">		ug.apply(UStroke.simple()).apply(backColor).apply(backColor.bg()).draw(header);</span>
+<span class="fc" id="L84">		ug.apply(UStroke.simple()).apply(backColor).apply(backColor.bg()).draw(header);</span>
 
-<span class="nc" id="L86">	}</span>
+<span class="fc" id="L86">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

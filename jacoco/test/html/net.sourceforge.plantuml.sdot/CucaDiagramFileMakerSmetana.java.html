@@ -155,9 +155,9 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 <span class="fc" id="L155">			return diagram.getChildrenGroups(parent);</span>
 
 <span class="fc" id="L157">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		for (Entity g : diagram.getChildrenGroups(parent))</span>
-<span class="nc bnc" id="L159" title="All 2 branches missed.">			if (g.getGroupType() != GroupType.CONCURRENT_STATE)</span>
-<span class="nc" id="L160">				result.add(g);</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">		for (Entity g : diagram.getChildrenGroups(parent))</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">			if (g.getGroupType() != GroupType.CONCURRENT_STATE)</span>
+<span class="fc" id="L160">				result.add(g);</span>
 
 <span class="fc" id="L162">		return result;</span>
 	}
