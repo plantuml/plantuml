@@ -43,4 +43,22 @@ class RunFlagPipenostderrTest extends AbstractCliTest {
 
 	}
 
+	// https://github.com/plantuml/plantuml/issues/2820
+	// The documented/historical spelling is "-pipeNoStderr" (camelCase). CLI flag
+	// matching must stay case-insensitive like every other flag, or the option is
+	// silently ignored and the full error image leaks onto stdout instead of being
+	// replaced by the plain-text description.
+	@StdIo({ "foo" })
+	@Test
+	void test3_mixedCaseFlag(StdOut out, StdErr err) throws Exception {
+		assertExit(ExitStatus.ERROR_200_SOME_DIAGRAMS_HAVE_ERROR, () -> {
+			Run.main(new String[] { "-pipe", "-svg", "-pipeNoStderr" });
+		});
+		assertFalse(err.capturedString().contains("Syntax Error?"));
+		assertFalse(out.capturedString().contains("<svg"), "no error image should be written to stdout");
+
+		assertLineSplitContains(out.capturedString(), "ERROR", "1", "Syntax Error? (Assumed diagram type: sequence)");
+
+	}
+
 }

@@ -55,4 +55,20 @@ class RunFlagPipeTest extends AbstractCliTest {
 
 	}
 
+	// https://github.com/plantuml/plantuml/issues/2820
+	// "-TSVG" (non-canonical case) must still be recognized as the SVG format flag,
+	// exactly like "-tsvg". Before the fix this flag was silently dropped and the
+	// diagram fell back to the default PNG format instead of erroring out.
+	@StdIo({ "@startuml", "Alice->Bob: hello", "@enduml" })
+	@Test
+	void test4_mixedCaseFormatFlag(StdOut out) throws Exception {
+		Run.main(new String[] { "-pipe", "-TSVG" });
+
+		assertTrue(out.capturedString().contains("<svg"));
+		assertTrue(out.capturedString().contains("Alice"));
+		assertTrue(out.capturedString().contains("Bob"));
+		assertTrue(out.capturedString().contains("hello"));
+		assertTrue(out.capturedString().contains("</svg>"));
+	}
+
 }

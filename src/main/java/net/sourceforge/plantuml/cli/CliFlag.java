@@ -380,7 +380,15 @@ public enum CliFlag {
 	}
 
 	boolean match(String tmp) {
-		if (type == Arity.UNARY_INLINE_KEY_OR_KEY_VALUE || type == Arity.UNARY_OPTIONAL_COLON) {
+		if (type == Arity.UNARY_INLINE_KEY_OR_KEY_VALUE) {
+			// -D, -I, -P, -S: single-letter flags immediately followed by a
+			// user-provided, case-sensitive key (-DFoo=1, -Ipath, -Pname, -Sname).
+			// Pre-CliFlag this was matched with a case-sensitive String#startsWith
+			// (see Option.java before 15fa06c1f), and that must stay case-sensitive:
+			// making it case-insensitive would let e.g. "-svg" be swallowed by "-S"
+			// (skinparam) instead of reaching "-tsvg"/"-svg" (T_SVG) further down the
+			// flag list, silently corrupting unrelated flags that start with the same
+			// letter in a different case.
 			for (String alias : aliases)
 				if (tmp.startsWith(alias))
 					return true;
@@ -388,11 +396,27 @@ public enum CliFlag {
 			return tmp.startsWith(flag);
 		}
 
+		if (type == Arity.UNARY_OPTIONAL_COLON) {
+			// --http-server/-picoweb, --ftp-server/-ftp, -stdrpt[:N]: whole-word prefix
+			// flags with an optional ":value" suffix. Pre-CliFlag these were matched via
+			// StringUtils.goLowerCase(s).startsWith(...) or equalsIgnoreCase, i.e.
+			// case-insensitively; being whole words (not single letters) there is no
+			// collision risk in doing the same here.
+			for (String alias : aliases)
+				if (tmp.regionMatches(true, 0, alias, 0, alias.length()))
+					return true;
+
+			return tmp.regionMatches(true, 0, flag, 0, flag.length());
+		}
+
+		// Every other flag is matched as a whole token. Historically (pre-CliFlag)
+		// every flag was matched with equalsIgnoreCase, so e.g. "-pipeNoStderr" and
+		// "-TSVG" were accepted; restore that case-insensitivity (see issue #2820).
 		for (String alias : aliases)
-			if (tmp.equals(alias))
+			if (tmp.equalsIgnoreCase(alias))
 				return true;
 
-		return tmp.equals(flag);
+		return tmp.equalsIgnoreCase(flag);
 	}
 
 	public String getFlagDoc() {

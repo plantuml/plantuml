@@ -83,6 +83,12 @@ public class Pipe {
 
 	public void managePipe(ExitStatus exitStatus) throws IOException {
 		final boolean noStdErr = option.isTrue(CliFlag.PIPENOSTDERR);
+		// https://github.com/plantuml/plantuml/issues/2820
+		// --no-error-image (alias -noerror) was only ever wired to the file-based
+		// rendering path (see Run.java / SourceFileReaderAbstract): it never suppressed
+		// the error image in -pipe mode, making it a silent no-op there. -pipeNoStderr
+		// already implies suppressing the error image, so fold both into one flag.
+		final boolean noErrorImage = noStdErr || option.isTrue(CliFlag.NO_ERROR_IMAGE);
 
 		for (String source = readFirstDiagram(); source != null; source = readSubsequentDiagram()) {
 			final Defines defines = option.getDefaultDefines();
@@ -100,21 +106,27 @@ public class Pipe {
 			else if (option.isTrue(CliFlag.PIPEMAP))
 				createPipeMapForDiagram(sourceStringReader, exitStatus);
 			else
-				generateDiagram(sourceStringReader, exitStatus, noStdErr);
+				generateDiagram(sourceStringReader, exitStatus, noStdErr, noErrorImage);
 
 			ps.flush();
 		}
 	}
 
-	private void generateDiagram(SourceStringReader sourceStringReader, ExitStatus exitStatus, boolean noStdErr)
-			throws IOException {
-		final OutputStream os = noStdErr ? new ByteArrayOutputStream() : ps;
+	private void generateDiagram(SourceStringReader sourceStringReader, ExitStatus exitStatus, boolean noStdErr,
+			boolean noErrorImage) throws IOException {
+		// Either flag requires buffering the image first, so that it can be dropped
+		// instead of streamed straight to stdout once we know the diagram is an error.
+		final boolean buffer = noStdErr || noErrorImage;
+		final OutputStream os = buffer ? new ByteArrayOutputStream() : ps;
 		final DiagramDescription result = sourceStringReader.outputImage(os, option.getImageIndex(),
 				option.getFileFormatOption());
 
+		// Only -pipeNoStderr reroutes the per-diagram info line away from stderr: that
+		// is specifically what its name promises, and --no-error-image alone makes no
+		// claim about stderr, so it must not change where this goes.
 		printInfo(noStdErr ? ps : System.err, sourceStringReader);
 		if (result == null || "(error)".equalsIgnoreCase(result.getDescription()) == false) {
-			if (noStdErr) {
+			if (buffer) {
 				final ByteArrayOutputStream baos = (ByteArrayOutputStream) os;
 				baos.close();
 				ps.write(baos.toByteArray());
