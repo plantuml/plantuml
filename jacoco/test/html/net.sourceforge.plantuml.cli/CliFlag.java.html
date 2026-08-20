@@ -380,91 +380,115 @@ import net.sourceforge.plantuml.swing.ClipboardLoop;
 	}
 
 	boolean match(String tmp) {
-<span class="fc bfc" id="L383" title="All 4 branches covered.">		if (type == Arity.UNARY_INLINE_KEY_OR_KEY_VALUE || type == Arity.UNARY_OPTIONAL_COLON) {</span>
-<span class="fc bfc" id="L384" title="All 2 branches covered.">			for (String alias : aliases)</span>
-<span class="fc bfc" id="L385" title="All 2 branches covered.">				if (tmp.startsWith(alias))</span>
-<span class="fc" id="L386">					return true;</span>
+<span class="fc bfc" id="L383" title="All 2 branches covered.">		if (type == Arity.UNARY_INLINE_KEY_OR_KEY_VALUE) {</span>
+			// -D, -I, -P, -S: single-letter flags immediately followed by a
+			// user-provided, case-sensitive key (-DFoo=1, -Ipath, -Pname, -Sname).
+			// Pre-CliFlag this was matched with a case-sensitive String#startsWith
+			// (see Option.java before 15fa06c1f), and that must stay case-sensitive:
+			// making it case-insensitive would let e.g. &quot;-svg&quot; be swallowed by &quot;-S&quot;
+			// (skinparam) instead of reaching &quot;-tsvg&quot;/&quot;-svg&quot; (T_SVG) further down the
+			// flag list, silently corrupting unrelated flags that start with the same
+			// letter in a different case.
+<span class="pc bpc" id="L392" title="1 of 2 branches missed.">			for (String alias : aliases)</span>
+<span class="nc bnc" id="L393" title="All 2 branches missed.">				if (tmp.startsWith(alias))</span>
+<span class="nc" id="L394">					return true;</span>
 
-<span class="fc" id="L388">			return tmp.startsWith(flag);</span>
+<span class="fc" id="L396">			return tmp.startsWith(flag);</span>
 		}
 
-<span class="fc bfc" id="L391" title="All 2 branches covered.">		for (String alias : aliases)</span>
-<span class="fc bfc" id="L392" title="All 2 branches covered.">			if (tmp.equals(alias))</span>
-<span class="fc" id="L393">				return true;</span>
+<span class="fc bfc" id="L399" title="All 2 branches covered.">		if (type == Arity.UNARY_OPTIONAL_COLON) {</span>
+			// --http-server/-picoweb, --ftp-server/-ftp, -stdrpt[:N]: whole-word prefix
+			// flags with an optional &quot;:value&quot; suffix. Pre-CliFlag these were matched via
+			// StringUtils.goLowerCase(s).startsWith(...) or equalsIgnoreCase, i.e.
+			// case-insensitively; being whole words (not single letters) there is no
+			// collision risk in doing the same here.
+<span class="fc bfc" id="L405" title="All 2 branches covered.">			for (String alias : aliases)</span>
+<span class="fc bfc" id="L406" title="All 2 branches covered.">				if (tmp.regionMatches(true, 0, alias, 0, alias.length()))</span>
+<span class="fc" id="L407">					return true;</span>
 
-<span class="fc" id="L395">		return tmp.equals(flag);</span>
+<span class="fc" id="L409">			return tmp.regionMatches(true, 0, flag, 0, flag.length());</span>
+		}
+
+		// Every other flag is matched as a whole token. Historically (pre-CliFlag)
+		// every flag was matched with equalsIgnoreCase, so e.g. &quot;-pipeNoStderr&quot; and
+		// &quot;-TSVG&quot; were accepted; restore that case-insensitivity (see issue #2820).
+<span class="fc bfc" id="L415" title="All 2 branches covered.">		for (String alias : aliases)</span>
+<span class="fc bfc" id="L416" title="All 2 branches covered.">			if (tmp.equalsIgnoreCase(alias))</span>
+<span class="fc" id="L417">				return true;</span>
+
+<span class="fc" id="L419">		return tmp.equalsIgnoreCase(flag);</span>
 	}
 
 	public String getFlagDoc() {
 		try {
-<span class="fc" id="L400">			final CliFlagDoc annotation = CliFlag.class.getField(this.name()).getAnnotation(CliFlagDoc.class);</span>
-<span class="pc bpc" id="L401" title="1 of 4 branches missed.">			if (annotation != null &amp;&amp; !annotation.value().isEmpty())</span>
-<span class="fc" id="L402">				return annotation.value();</span>
+<span class="fc" id="L424">			final CliFlagDoc annotation = CliFlag.class.getField(this.name()).getAnnotation(CliFlagDoc.class);</span>
+<span class="pc bpc" id="L425" title="1 of 4 branches missed.">			if (annotation != null &amp;&amp; !annotation.value().isEmpty())</span>
+<span class="fc" id="L426">				return annotation.value();</span>
 
-<span class="nc" id="L404">		} catch (NoSuchFieldException e) {</span>
+<span class="nc" id="L428">		} catch (NoSuchFieldException e) {</span>
 			// Should never happen for enum constants
-<span class="fc" id="L406">		}</span>
-<span class="fc" id="L407">		return null;</span>
+<span class="fc" id="L430">		}</span>
+<span class="fc" id="L431">		return null;</span>
 	}
 
 	public String getNewgroup() {
 		try {
-<span class="fc" id="L412">			final CliFlagDoc annotation = CliFlag.class.getField(this.name()).getAnnotation(CliFlagDoc.class);</span>
-<span class="pc bpc" id="L413" title="1 of 4 branches missed.">			if (annotation != null &amp;&amp; !annotation.value().isEmpty())</span>
-<span class="fc" id="L414">				return annotation.newGroup();</span>
+<span class="fc" id="L436">			final CliFlagDoc annotation = CliFlag.class.getField(this.name()).getAnnotation(CliFlagDoc.class);</span>
+<span class="pc bpc" id="L437" title="1 of 4 branches missed.">			if (annotation != null &amp;&amp; !annotation.value().isEmpty())</span>
+<span class="fc" id="L438">				return annotation.newGroup();</span>
 
-<span class="nc" id="L416">		} catch (NoSuchFieldException e) {</span>
+<span class="nc" id="L440">		} catch (NoSuchFieldException e) {</span>
 			// Should never happen for enum constants
-<span class="fc" id="L418">		}</span>
-<span class="fc" id="L419">		return &quot;&quot;;</span>
+<span class="fc" id="L442">		}</span>
+<span class="fc" id="L443">		return &quot;&quot;;</span>
 	}
 
 	public String getUsage() {
 		try {
-<span class="fc" id="L424">			final CliFlagDoc annotation = CliFlag.class.getField(this.name()).getAnnotation(CliFlagDoc.class);</span>
-<span class="pc bpc" id="L425" title="1 of 4 branches missed.">			if (annotation != null &amp;&amp; !annotation.usage().isEmpty()) {</span>
-<span class="fc" id="L426">				final String usage = annotation.usage();</span>
-<span class="fc bfc" id="L427" title="All 2 branches covered.">				if (usage.startsWith(&quot;--&quot;))</span>
-<span class="fc" id="L428">					return &quot;     &quot; + usage;</span>
-<span class="fc" id="L429">				return &quot; &quot; + usage;</span>
+<span class="fc" id="L448">			final CliFlagDoc annotation = CliFlag.class.getField(this.name()).getAnnotation(CliFlagDoc.class);</span>
+<span class="pc bpc" id="L449" title="1 of 4 branches missed.">			if (annotation != null &amp;&amp; !annotation.usage().isEmpty()) {</span>
+<span class="fc" id="L450">				final String usage = annotation.usage();</span>
+<span class="fc bfc" id="L451" title="All 2 branches covered.">				if (usage.startsWith(&quot;--&quot;))</span>
+<span class="fc" id="L452">					return &quot;     &quot; + usage;</span>
+<span class="fc" id="L453">				return &quot; &quot; + usage;</span>
 			}
 
-<span class="nc" id="L432">		} catch (NoSuchFieldException e) {</span>
+<span class="nc" id="L456">		} catch (NoSuchFieldException e) {</span>
 			// Should never happen for enum constants
-<span class="fc" id="L434">		}</span>
-<span class="fc bfc" id="L435" title="All 2 branches covered.">		for (String alias : aliases)</span>
-<span class="fc bfc" id="L436" title="All 2 branches covered.">			if (alias.length() == 2)</span>
-<span class="fc" id="L437">				return &quot; &quot; + alias + &quot;, &quot; + getFlag();</span>
+<span class="fc" id="L458">		}</span>
+<span class="fc bfc" id="L459" title="All 2 branches covered.">		for (String alias : aliases)</span>
+<span class="fc bfc" id="L460" title="All 2 branches covered.">			if (alias.length() == 2)</span>
+<span class="fc" id="L461">				return &quot; &quot; + alias + &quot;, &quot; + getFlag();</span>
 
-<span class="fc" id="L439">		return &quot;     &quot; + getFlag();</span>
+<span class="fc" id="L463">		return &quot;     &quot; + getFlag();</span>
 	}
 
 	public int getFlagLevel() {
 		try {
-<span class="fc" id="L444">			final CliFlagDoc annotation = CliFlag.class.getField(this.name()).getAnnotation(CliFlagDoc.class);</span>
-<span class="fc bfc" id="L445" title="All 2 branches covered.">			if (annotation != null)</span>
-<span class="fc" id="L446">				return annotation.level();</span>
+<span class="fc" id="L468">			final CliFlagDoc annotation = CliFlag.class.getField(this.name()).getAnnotation(CliFlagDoc.class);</span>
+<span class="fc bfc" id="L469" title="All 2 branches covered.">			if (annotation != null)</span>
+<span class="fc" id="L470">				return annotation.level();</span>
 
-<span class="nc" id="L448">		} catch (NoSuchFieldException e) {</span>
+<span class="nc" id="L472">		} catch (NoSuchFieldException e) {</span>
 			// Should never happen for enum constants
-<span class="fc" id="L450">		}</span>
-<span class="fc" id="L451">		return -1;</span>
+<span class="fc" id="L474">		}</span>
+<span class="fc" id="L475">		return -1;</span>
 	}
 
 	public String getDefaultValue() {
 		try {
-<span class="fc" id="L456">			final CliDefaultValue annotation = CliFlag.class.getField(this.name()).getAnnotation(CliDefaultValue.class);</span>
-<span class="pc bpc" id="L457" title="1 of 4 branches missed.">			if (annotation != null &amp;&amp; !annotation.value().isEmpty())</span>
-<span class="fc" id="L458">				return annotation.value();</span>
+<span class="fc" id="L480">			final CliDefaultValue annotation = CliFlag.class.getField(this.name()).getAnnotation(CliDefaultValue.class);</span>
+<span class="pc bpc" id="L481" title="1 of 4 branches missed.">			if (annotation != null &amp;&amp; !annotation.value().isEmpty())</span>
+<span class="fc" id="L482">				return annotation.value();</span>
 
-<span class="nc" id="L460">		} catch (NoSuchFieldException e) {</span>
+<span class="nc" id="L484">		} catch (NoSuchFieldException e) {</span>
 			// Should never happen for enum constants
-<span class="fc" id="L462">		}</span>
-<span class="fc" id="L463">		return null;</span>
+<span class="fc" id="L486">		}</span>
+<span class="fc" id="L487">		return null;</span>
 	}
 
 	public Object getFoo() {
-<span class="fc" id="L467">		return foo;</span>
+<span class="fc" id="L491">		return foo;</span>
 	}
 
 }
