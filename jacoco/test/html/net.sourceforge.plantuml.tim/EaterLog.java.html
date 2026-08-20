@@ -40,18 +40,18 @@ import net.sourceforge.plantuml.utils.Log;
 public class EaterLog extends Eater {
 
 	public EaterLog(StringLocated s) {
-<span class="nc" id="L43">		super(s);</span>
-<span class="nc" id="L44">	}</span>
+<span class="fc" id="L43">		super(s);</span>
+<span class="fc" id="L44">	}</span>
 
 	@Override
 	public void analyze(TContext context, TMemory memory) throws EaterException {
-<span class="nc" id="L48">		skipSpaces();</span>
-<span class="nc" id="L49">		checkAndEatChar(&quot;!log&quot;);</span>
-<span class="nc" id="L50">		skipSpaces();</span>
-<span class="nc" id="L51">		final String logData = context.applyFunctionsAndVariables(memory,</span>
-<span class="nc" id="L52">				new StringLocated(this.eatAllToEnd(), getLineLocation()));</span>
-<span class="nc" id="L53">		Log.info(() -&gt; &quot;[Log] &quot; + logData);</span>
-<span class="nc" id="L54">	}</span>
+<span class="fc" id="L48">		skipSpaces();</span>
+<span class="fc" id="L49">		checkAndEatChar(&quot;!log&quot;);</span>
+<span class="fc" id="L50">		skipSpaces();</span>
+<span class="fc" id="L51">		final String logData = context.applyFunctionsAndVariables(memory,</span>
+<span class="fc" id="L52">				new StringLocated(this.eatAllToEnd(), getLineLocation()));</span>
+<span class="fc" id="L53">		Log.userLog(() -&gt; &quot;[Log] &quot; + logData);</span>
+<span class="fc" id="L54">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

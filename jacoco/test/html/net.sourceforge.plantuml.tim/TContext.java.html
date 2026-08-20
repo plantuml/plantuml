@@ -407,9 +407,9 @@ public class TContext {
 <span class="nc" id="L407">			this.executeImport(memory, s);</span>
 <span class="nc" id="L408">			return null;</span>
 		}
-<span class="pc bpc" id="L410" title="1 of 2 branches missed.">		if (type == TLineType.DUMP_MEMORY) {</span>
-<span class="nc" id="L411">			this.executeDumpMemory(memory, s.getTrimmed());</span>
-<span class="nc" id="L412">			return null;</span>
+<span class="fc bfc" id="L410" title="All 2 branches covered.">		if (type == TLineType.DUMP_MEMORY) {</span>
+<span class="fc" id="L411">			this.executeDumpMemory(memory, s.getTrimmed());</span>
+<span class="fc" id="L412">			return null;</span>
 <span class="pc bpc" id="L413" title="1 of 2 branches missed.">		} else if (type == TLineType.ASSERT) {</span>
 <span class="nc" id="L414">			this.executeAssert(memory, s.getTrimmed());</span>
 <span class="nc" id="L415">			return null;</span>
@@ -419,10 +419,10 @@ public class TContext {
 <span class="pc bpc" id="L419" title="1 of 2 branches missed.">		} else if (type == TLineType.UNDEF) {</span>
 <span class="nc" id="L420">			this.executeUndef(memory, s);</span>
 <span class="nc" id="L421">			return null;</span>
-<span class="pc bpc" id="L422" title="1 of 4 branches missed.">		} else if (ftype != TFunctionType.RETURN_FUNCTION &amp;&amp; type == TLineType.PLAIN) {</span>
+<span class="fc bfc" id="L422" title="All 4 branches covered.">		} else if (ftype != TFunctionType.RETURN_FUNCTION &amp;&amp; type == TLineType.PLAIN) {</span>
 <span class="fc" id="L423">			this.addPlain(memory, s);</span>
 <span class="fc" id="L424">			return null;</span>
-<span class="pc bpc" id="L425" title="1 of 4 branches missed.">		} else if (ftype == TFunctionType.RETURN_FUNCTION &amp;&amp; type == TLineType.RETURN) {</span>
+<span class="fc bfc" id="L425" title="All 4 branches covered.">		} else if (ftype == TFunctionType.RETURN_FUNCTION &amp;&amp; type == TLineType.RETURN) {</span>
 <span class="pc bpc" id="L426" title="1 of 2 branches missed.">			if (modeSpecial) {</span>
 <span class="fc" id="L427">				final EaterReturn eaterReturn = new EaterReturn(s);</span>
 <span class="fc" id="L428">				eaterReturn.analyze(this, memory);</span>
@@ -431,18 +431,18 @@ public class TContext {
 			}
 			// Actually, ignore because we are in a if
 <span class="nc" id="L433">			return null;</span>
-<span class="pc bpc" id="L434" title="2 of 4 branches missed.">		} else if (ftype == TFunctionType.RETURN_FUNCTION &amp;&amp; type == TLineType.PLAIN) {</span>
+<span class="pc bpc" id="L434" title="1 of 4 branches missed.">		} else if (ftype == TFunctionType.RETURN_FUNCTION &amp;&amp; type == TLineType.PLAIN) {</span>
 <span class="fc" id="L435">			this.simulatePlain(memory, s);</span>
 <span class="fc" id="L436">			return null;</span>
-<span class="nc bnc" id="L437" title="All 2 branches missed.">		} else if (type == TLineType.AFFECTATION_DEFINE) {</span>
+<span class="pc bpc" id="L437" title="1 of 2 branches missed.">		} else if (type == TLineType.AFFECTATION_DEFINE) {</span>
 <span class="nc" id="L438">			this.executeAffectationDefine(memory, s);</span>
 <span class="nc" id="L439">			return null;</span>
-<span class="nc bnc" id="L440" title="All 4 branches missed.">		} else if (ftype == null &amp;&amp; type == TLineType.END_FUNCTION) {</span>
+<span class="pc bpc" id="L440" title="2 of 4 branches missed.">		} else if (ftype == null &amp;&amp; type == TLineType.END_FUNCTION) {</span>
 <span class="nc" id="L441">			CommandExecutionResult.error(&quot;error endfunc&quot;);</span>
 <span class="nc" id="L442">			return null;</span>
-<span class="nc bnc" id="L443" title="All 2 branches missed.">		} else if (type == TLineType.LOG) {</span>
-<span class="nc" id="L444">			this.executeLog(memory, s);</span>
-<span class="nc" id="L445">			return null;</span>
+<span class="pc bpc" id="L443" title="1 of 2 branches missed.">		} else if (type == TLineType.LOG) {</span>
+<span class="fc" id="L444">			this.executeLog(memory, s);</span>
+<span class="fc" id="L445">			return null;</span>
 <span class="nc bnc" id="L446" title="All 2 branches missed.">		} else if (ONLY_WHITESPACE_NON_EMPTY.matcher(s.getString()).matches()) {</span>
 <span class="nc" id="L447">			return null;</span>
 		} else {
@@ -480,9 +480,9 @@ public class TContext {
 <span class="nc" id="L480">	}</span>
 
 	private void executeDumpMemory(TMemory memory, StringLocated s) throws EaterException {
-<span class="nc" id="L483">		final EaterDumpMemory condition = new EaterDumpMemory(s);</span>
-<span class="nc" id="L484">		condition.analyze(this, memory);</span>
-<span class="nc" id="L485">	}</span>
+<span class="fc" id="L483">		final EaterDumpMemory condition = new EaterDumpMemory(s);</span>
+<span class="fc" id="L484">		condition.analyze(this, memory);</span>
+<span class="fc" id="L485">	}</span>
 
 	private void executeAssert(TMemory memory, StringLocated s) throws EaterException {
 <span class="nc" id="L488">		final EaterAssert condition = new EaterAssert(s);</span>
@@ -622,9 +622,9 @@ public class TContext {
 	}
 
 	private void executeLog(TMemory memory, StringLocated s) throws EaterException {
-<span class="nc" id="L625">		final EaterLog log = new EaterLog(s.getTrimmed());</span>
-<span class="nc" id="L626">		log.analyze(this, memory);</span>
-<span class="nc" id="L627">	}</span>
+<span class="fc" id="L625">		final EaterLog log = new EaterLog(s.getTrimmed());</span>
+<span class="fc" id="L626">		log.analyze(this, memory);</span>
+<span class="fc" id="L627">	}</span>
 
 //	public FileWithSuffix getFileWithSuffix(String from, String realName) throws IOException {
 //		throw new IOException(&quot;to be finished&quot;);

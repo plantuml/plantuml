@@ -39,19 +39,19 @@ import net.sourceforge.plantuml.text.StringLocated;
 public class EaterDumpMemory extends Eater {
 
 	public EaterDumpMemory(StringLocated s) {
-<span class="nc" id="L42">		super(s);</span>
-<span class="nc" id="L43">	}</span>
+<span class="fc" id="L42">		super(s);</span>
+<span class="fc" id="L43">	}</span>
 
 	@Override
 	public void analyze(TContext context, TMemory memory) throws EaterException {
-<span class="nc" id="L47">		skipSpaces();</span>
-<span class="nc" id="L48">		checkAndEatChar(&quot;!dump_memory&quot;);</span>
-<span class="nc" id="L49">		skipSpaces();</span>
-<span class="nc" id="L50">		final String remain = this.eatAllToEnd();</span>
-<span class="nc" id="L51">		memory.dumpDebug(remain);</span>
+<span class="fc" id="L47">		skipSpaces();</span>
+<span class="fc" id="L48">		checkAndEatChar(&quot;!dump_memory&quot;);</span>
+<span class="fc" id="L49">		skipSpaces();</span>
+<span class="fc" id="L50">		final String remain = this.eatAllToEnd();</span>
+<span class="fc" id="L51">		memory.dumpDebug(remain);</span>
 		// final String logData = context.applyFunctionsAndVariables(memory, remain);
 		// Log.error(logData);
-<span class="nc" id="L54">	}</span>
+<span class="fc" id="L54">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
