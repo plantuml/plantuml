@@ -37,6 +37,14 @@ return ok
 			<div id="out"></div>
 			<div id="status"></div>
 			<div class="controls">
+				<button id="share" type="button" title="Copy shareable link" aria-label="Copy shareable link">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<circle cx="18" cy="5" r="3"/>
+						<circle cx="6" cy="12" r="3"/>
+						<circle cx="18" cy="19" r="3"/>
+						<path d="M8.59 10.51l6.83-3.98M8.59 13.49l6.83 3.98"/>
+					</svg>
+				</button>
 				<button id="theme" type="button" title="Toggle dark mode">
 					<svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 						<circle cx="12" cy="12" r="4"/>
@@ -69,7 +77,9 @@ return ok
 			</div>
 		</div>
 	</main>
+	<div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
+	<script src="vendor/fflate-0.8.2.min.js"></script>
 	<script src="viz-global.js"></script>
 	<script type="module" src="main.js"></script>
 </body>

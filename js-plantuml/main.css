@@ -149,6 +149,36 @@ main {
 	outline: 1px solid color-mix(in srgb, var(--accent) 30%, #ef7373);
 }
 
+.toast {
+	position: fixed;
+	left: 50%;
+	top: 1rem;
+	z-index: 300;
+	padding: 0.55rem 0.9rem;
+	border-radius: 0.5rem;
+	background: var(--fg);
+	color: var(--bg);
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+	font-size: 0.875rem;
+	opacity: 0;
+	visibility: hidden;
+	transform: translate(-50%, 0.5rem);
+	transition: opacity 150ms ease, transform 150ms ease, visibility 0s linear 150ms;
+	pointer-events: none;
+}
+
+.toast.visible {
+	opacity: 1;
+	visibility: visible;
+	transform: translate(-50%, 0);
+	transition-delay: 0s;
+}
+
+.toast.error {
+	background: #b42318;
+	color: #fff;
+}
+
 /* Theme toggle: show sun in dark mode, moon in light mode */
 #theme .icon-sun {
 	display: none;
