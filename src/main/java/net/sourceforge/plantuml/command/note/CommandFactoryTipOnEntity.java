@@ -229,7 +229,6 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 
 			diagram.addLink(link);
 		}
-		tips.putTip(member, display);
 
 		Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
 
@@ -240,10 +239,14 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 			colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), ColorParam.noteBackground,
 					ColorParam.noteBorder);
 		}
-		if (stereotypeString != null)
-			tips.setStereotype(stereotype);
 
-		tips.setColors(colors);
+		// Several "note ... of Class::member" on the same side of the same
+		// class share one Entity (see the identTip lookup above), so the
+		// color/stereotype of THIS tip must travel with its own member entry
+		// rather than be stamped on that shared Entity: doing the latter
+		// makes the last tip parsed override the color of every earlier tip
+		// on the same side of the same class (issue #2814).
+		tips.putTip(member, display, colors, stereotype);
 
 		return CommandExecutionResult.ok();
 	}

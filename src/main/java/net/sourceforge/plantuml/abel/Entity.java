@@ -131,7 +131,7 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 	private VisibilityModifier visibility;
 	private Neighborhood neighborhood;
 	private Colors colors = Colors.empty();
-	private final Map<String, Display> tips = new LinkedHashMap<String, Display>();
+	private final Map<String, Tip> tips = new LinkedHashMap<String, Tip>();
 
 	//
 	public void addNote(Display note, Position position, Colors colors) {
@@ -508,11 +508,11 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 		return neighborhood;
 	}
 
-	public void putTip(String member, Display display) {
-		tips.put(member, display);
+	public void putTip(String member, Display display, Colors colors, Stereotype stereotype) {
+		tips.put(member, new Tip(display, colors, stereotype));
 	}
 
-	public Map<String, Display> getTips() {
+	public Map<String, Tip> getTips() {
 		return Collections.unmodifiableMap(tips);
 	}
 

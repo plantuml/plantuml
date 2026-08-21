@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+' The shared internal "tips" entity is keyed by class+position only, so
+' it does not matter whether the members being noted are fields or
+' methods: both share it, and both must keep their own color.
+class E {
+  int field1
+  doThing()
+}
+note right of E::field1 #yellow
+  field note yellow
+end note
+note right of E::doThing #lightblue
+  method note lightblue
+end note
+@enduml

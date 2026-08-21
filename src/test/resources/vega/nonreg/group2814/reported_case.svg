@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="107px" preserveAspectRatio="none" style="width:337px;height:107px;background:#FFFFFF;" version="1.1" viewBox="0 0 337 107" width="337px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class AttributeNoteTest-->
+    <g class="entity" data-qualified-name="AttributeNoteTest" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="140.85" x="6" y="13.5"/>
+      <ellipse cx="21" cy="29.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="34.5">C</text>
+      <text fill="#000" font-size="14" textLength="108.85" x="35" y="33.389">AttributeNoteTest</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="145.85" y1="45.5" y2="45.5"/>
+      <text fill="#000" font-size="14" textLength="53.813" x="12" y="60.389">int yellow</text>
+      <text fill="#000" font-size="14" textLength="67.025" x="12" y="74.389">int lightblue</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="145.85" y1="81.5" y2="81.5"/>
+    </g>
+    <path d="M165.5,12 L165.5,26 L65.813,56.5 L165.5,34 L165.5,48 A0,0 0 0 0 165.5,48 L321.7,48 A0,0 0 0 0 321.7,48 L321.7,22 L311.7,12 L165.5,12 A0,0 0 0 0 165.5,12" fill="#FF0" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M311.7,12 L311.7,22 L321.7,22 L311.7,12" fill="#FF0" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="65.975" x="171.5" y="27.111">Hello yellow</text>
+    <text fill="#000" font-size="13" textLength="135.2" x="171.5" y="40.111">(but it is actually lightblue)</text>
+    <path d="M165.5,58 L165.5,65.5 L79.025,70.5 L165.5,73.5 L165.5,81 A0,0 0 0 0 165.5,81 L264.744,81 A0,0 0 0 0 264.744,81 L264.744,68 L254.744,58 L165.5,58 A0,0 0 0 0 165.5,58" fill="#ADD8E6" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M254.744,58 L254.744,68 L264.744,68 L254.744,58" fill="#ADD8E6" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="78.244" x="171.5" y="73.111">Hello lightblue</text>
+  </g>
+</svg>

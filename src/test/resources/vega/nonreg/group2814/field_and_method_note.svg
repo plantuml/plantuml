@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="104px" preserveAspectRatio="none" style="width:250px;height:104px;background:#FFFFFF;" version="1.1" viewBox="0 0 250 104" width="250px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class E-->
+    <g class="entity" data-qualified-name="E" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="71.938" x="6" y="12"/>
+      <ellipse cx="34.759" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="29.759" y="33">C</text>
+      <text fill="#000" font-size="14" x="51.816" y="31.889">E</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="76.938" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="48.3" x="12" y="58.889">int field1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="76.938" y1="66" y2="66"/>
+      <text fill="#000" font-size="14" textLength="59.938" x="12" y="80.889">doThing()</text>
+    </g>
+    <path d="M96,17 L96,24.5 L60.3,55 L96,32.5 L96,40 A0,0 0 0 0 96,40 L202.394,40 A0,0 0 0 0 202.394,40 L202.394,27 L192.394,17 L96,17 A0,0 0 0 0 96,17" fill="#FF0" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M192.394,17 L192.394,27 L202.394,27 L192.394,17" fill="#FF0" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="85.394" x="102" y="32.111">field note yellow</text>
+    <path d="M96,50 L96,57.5 L71.938,77 L96,65.5 L96,73 A0,0 0 0 0 96,73 L234.081,73 A0,0 0 0 0 234.081,73 L234.081,60 L224.081,50 L96,50 A0,0 0 0 0 96,50" fill="#ADD8E6" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M224.081,50 L224.081,60 L234.081,60 L224.081,50" fill="#ADD8E6" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="117.081" x="102" y="65.111">method note lightblue</text>
+  </g>
+</svg>

@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+' Same bug as reported_case.puml, but with the colors declared in the
+' opposite order: the fix must not simply make "the first note win"
+' instead of "the last note wins" -- each note must keep its own color
+' regardless of parsing order.
+class B {
+  int lightblue
+  int yellow
+}
+note right of B::lightblue #lightblue
+  Hello lightblue
+end note
+note right of B::yellow #yellow
+  Hello yellow
+end note
+@enduml

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="76px" preserveAspectRatio="none" style="width:396px;height:76px;background:#FFFFFF;" version="1.1" viewBox="0 0 396 76" width="396px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class C-->
+    <g class="entity" data-qualified-name="C" data-source-line="7" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.15" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" x="35" y="31.889">C</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="47.15" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="47.15" y1="52" y2="52"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="9" id="ent0003">
+      <path d="M66,24 L66,32 L48.152,36 L66,40 L66,47 A0,0 0 0 0 66,47 L178.163,47 A0,0 0 0 0 178.163,47 L178.163,34 L168.163,24 L66,24 A0,0 0 0 0 66,24" fill="#FF0" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M168.163,24 L168.163,34 L178.163,34 L168.163,24" fill="#FF0" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="91.163" x="72" y="39.111">yellow class note</text>
+    </g>
+    <!--class D-->
+    <g class="entity" data-qualified-name="D" data-source-line="11" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.15" x="196" y="12"/>
+      <ellipse cx="211" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="206" y="33">C</text>
+      <text fill="#000" font-size="14" x="225" y="31.889">D</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="197" x2="237.15" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="197" x2="237.15" y1="52" y2="52"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN6" data-source-line="13" id="ent0007">
+      <path d="M256,24 L256,32 L238.305,36 L256,40 L256,47 A0,0 0 0 0 256,47 L380.431,47 A0,0 0 0 0 380.431,47 L380.431,34 L370.431,24 L256,24 A0,0 0 0 0 256,24" fill="#ADD8E6" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M370.431,24 L370.431,34 L380.431,34 L370.431,24" fill="#ADD8E6" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="103.431" x="262" y="39.111">lightblue class note</text>
+    </g>
+  </g>
+</svg>

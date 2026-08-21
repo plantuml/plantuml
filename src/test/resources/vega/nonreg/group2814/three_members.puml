@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+' Beyond the two-note case from the issue: with three members and three
+' colors, all three must stay distinct, not just the first/last pair.
+class F {
+  int red
+  int green
+  int blue
+}
+note right of F::red #red
+  red note
+end note
+note right of F::green #green
+  green note
+end note
+note right of F::blue #blue
+  blue note
+end note
+@enduml

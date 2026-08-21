@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+' Not part of the bug (these already worked before the fix): plain
+' "note ... of Class" notes attached to a whole class, rather than to
+' one of its members, take a different code path (Entity.addNote /
+' CucaNote) and were never affected by the shared-"tips"-entity issue.
+' Pinned here as a regression guard so a future change to the member-tip
+' code cannot accidentally break this adjacent, already-correct feature.
+class C
+note right of C #yellow
+  yellow class note
+end note
+class D
+note right of D #lightblue
+  lightblue class note
+end note
+@enduml

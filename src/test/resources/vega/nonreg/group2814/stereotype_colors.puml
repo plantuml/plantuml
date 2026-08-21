@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+' Same root cause as the explicit "#color" case, but reached through a
+' stereotype-driven skinparam instead: the two notes must resolve their
+' background colors from their own stereotype, not from whichever note
+' was parsed last on the same side of the same class.
+skinparam noteBackgroundColor<<yellowNote>> yellow
+skinparam noteBackgroundColor<<blueNote>> lightblue
+
+class G {
+  int m1
+  int m2
+}
+note right of G::m1 <<yellowNote>>
+  m1 note, should be yellow
+end note
+note right of G::m2 <<blueNote>>
+  m2 note, should be blue
+end note
+@enduml

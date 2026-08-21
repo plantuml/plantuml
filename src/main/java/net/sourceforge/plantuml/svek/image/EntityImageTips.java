@@ -38,12 +38,12 @@ package net.sourceforge.plantuml.svek.image;
 import java.util.Map;
 
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.Tip;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.drawing.UGraphicStencil;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -67,32 +68,42 @@ import net.sourceforge.plantuml.utils.Position;
 
 public class EntityImageTips extends AbstractEntityImage {
 
-	private final HColor noteBackgroundColor;
-	private final HColor borderColor;
-
 	private final Bibliotekon bibliotekon;
-	private final Style style;
 
 	private final double ySpacing = 10;
 
 	public EntityImageTips(Entity entity, Bibliotekon bibliotekon) {
 		super(entity);
 		this.bibliotekon = bibliotekon;
+	}
 
-		style = getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
-		if (entity.getColors().getColor(ColorType.BACK) == null)
-			this.noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
-		else
-			this.noteBackgroundColor = entity.getColors().getColor(ColorType.BACK);
+	// Several "note ... of Class::member" tips on the same side of the same
+	// class are grouped into this single Entity (one per member, see
+	// Entity#getTips), but each tip keeps its own Colors/Stereotype: the
+	// style, background and border below must therefore be resolved per
+	// Tip -- never once for the whole Entity -- otherwise the last tip
+	// parsed silently recolors every earlier tip on the same side of the
+	// same class (issue #2814).
+	private Style getStyleFor(Tip tip) {
+		return getStyleSignatureFor(tip.getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+	}
 
-		this.borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
+	private StyleSignature getStyleSignatureFor(Stereotype stereotype) {
+		return StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), SName.note)
+				.withTOBECHANGED(stereotype);
+	}
 
+	private HColor getNoteBackgroundColor(Tip tip, Style style) {
+		final HColor fromTip = tip.getColors().getColor(ColorType.BACK);
+		if (fromTip == null)
+			return style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
+
+		return fromTip;
 	}
 
 	@Override
 	public StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), SName.note)
-				.withTOBECHANGED(getStereo());
+		return getStyleSignatureFor(getStereo());
 	}
 
 	private Position getPosition() {
@@ -110,9 +121,9 @@ public class EntityImageTips extends AbstractEntityImage {
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
 		double width = 0;
 		double height = 0;
-		for (Map.Entry<String, Display> ent : getEntity().getTips().entrySet()) {
-			final Display display = ent.getValue();
-			final XDimension2D dim = getOpale(display).calculateDimension(stringBounder);
+		for (Map.Entry<String, Tip> ent : getEntity().getTips().entrySet()) {
+			final Tip tip = ent.getValue();
+			final XDimension2D dim = getOpale(tip).calculateDimension(stringBounder);
 			height += dim.getHeight();
 			height += ySpacing;
 			width = Math.max(width, dim.getWidth());
@@ -142,8 +153,8 @@ public class EntityImageTips extends AbstractEntityImage {
 		Direction direction = position.reverseDirection();
 		final XPoint2D positionMe = nodeMe.getPosition();
 		double height = 0;
-		for (Map.Entry<String, Display> ent : getEntity().getTips().entrySet()) {
-			final Display display = ent.getValue();
+		for (Map.Entry<String, Tip> ent : getEntity().getTips().entrySet()) {
+			final Tip tip = ent.getValue();
 			final String member = ent.getKey();
 			final CharSequence bestMatch = nodeOther.getBestMatch(member);
 			if (bestMatch == null)
@@ -153,7 +164,7 @@ public class EntityImageTips extends AbstractEntityImage {
 			if (memberPosition == null)
 				return;
 
-			final Opale opale = getOpale(display);
+			final Opale opale = getOpale(tip);
 			final XDimension2D dim = opale.calculateDimension(stringBounder);
 			final XPoint2D pp1 = new XPoint2D(0, dim.getHeight() / 2);
 			double x = positionOther.getX() - positionMe.getX();
@@ -176,14 +187,18 @@ public class EntityImageTips extends AbstractEntityImage {
 
 	}
 
-	private Opale getOpale(final Display display) {
+	private Opale getOpale(final Tip tip) {
+
+		final Style style = getStyleFor(tip);
+		final HColor noteBackgroundColor = getNoteBackgroundColor(tip, style);
+		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 
 		final double shadowing = style.getShadowing();
 		final FontConfiguration fc = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 		final UStroke stroke = style.getStroke();
 
-		final TextBlock textBlock = BodyFactory.create3(display, getSkinParam(), HorizontalAlignment.LEFT, fc,
-				style.wrapWidth(), style);
+		final TextBlock textBlock = BodyFactory.create3(tip.getDisplay(), getSkinParam(), HorizontalAlignment.LEFT,
+				fc, style.wrapWidth(), style);
 		return new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true, stroke);
 	}
 

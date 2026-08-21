@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+class AttributeNoteTest {
+  int yellow
+  int lightblue
+}
+note right of AttributeNoteTest::yellow #yellow
+  Hello yellow
+  (but it is actually lightblue)
+end note
+note right of AttributeNoteTest::lightblue #lightblue
+  Hello lightblue
+end note
+@enduml

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="104px" preserveAspectRatio="none" style="width:243px;height:104px;background:#FFFFFF;" version="1.1" viewBox="0 0 243 104" width="243px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class G-->
+    <g class="entity" data-qualified-name="G" data-source-line="8" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="46.213" x="6" y="12"/>
+      <ellipse cx="22.513" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="17.513" y="33">C</text>
+      <text fill="#000" font-size="14" x="36.849" y="31.889">G</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="51.213" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="34.213" x="12" y="58.889">int m1</text>
+      <text fill="#000" font-size="14" textLength="34.213" x="12" y="72.889">int m2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="51.213" y1="80" y2="80"/>
+    </g>
+    <path d="M70.5,17 L70.5,24.5 L46.213,55 L70.5,32.5 L70.5,40 A0,0 0 0 0 70.5,40 L227.431,40 A0,0 0 0 0 227.431,40 L227.431,27 L217.431,17 L70.5,17 A0,0 0 0 0 70.5,17" fill="#FF0" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M217.431,17 L217.431,27 L227.431,27 L217.431,17" fill="#FF0" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="135.931" x="76.5" y="32.111">m1 note, should be yellow</text>
+    <path d="M70.5,50 L70.5,57.5 L46.213,69 L70.5,65.5 L70.5,73 A0,0 0 0 0 70.5,73 L215.813,73 A0,0 0 0 0 215.813,73 L215.813,60 L205.813,50 L70.5,50 A0,0 0 0 0 70.5,50" fill="#ADD8E6" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M205.813,50 L205.813,60 L215.813,60 L205.813,50" fill="#ADD8E6" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="124.313" x="76.5" y="65.111">m2 note, should be blue</text>
+  </g>
+</svg>

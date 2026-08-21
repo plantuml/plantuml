@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="127px" preserveAspectRatio="none" style="width:183px;height:127px;background:#FFFFFF;" version="1.1" viewBox="0 0 183 127" width="183px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class F-->
+    <g class="entity" data-qualified-name="F" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="62.575" x="6" y="16.5"/>
+      <ellipse cx="30.9" cy="32.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="25.9" y="37.5">C</text>
+      <text fill="#000" font-size="14" x="47.1" y="36.389">F</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="67.575" y1="48.5" y2="48.5"/>
+      <text fill="#000" font-size="14" textLength="35" x="12" y="63.389">int red</text>
+      <text fill="#000" font-size="14" textLength="50.575" x="12" y="77.389">int green</text>
+      <text fill="#000" font-size="14" textLength="41.3" x="12" y="91.389">int blue</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="67.575" y1="98.5" y2="98.5"/>
+    </g>
+    <path d="M87.5,12 L87.5,19.5 L47,59.5 L87.5,27.5 L87.5,35 A0,0 0 0 0 87.5,35 L152.538,35 A0,0 0 0 0 152.538,35 L152.538,22 L142.538,12 L87.5,12 A0,0 0 0 0 87.5,12" fill="#F00" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M142.538,12 L142.538,22 L152.538,22 L142.538,12" fill="#F00" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="44.037" x="93.5" y="27.111">red note</text>
+    <path d="M87.5,45 L87.5,52.5 L62.575,73.5 L87.5,60.5 L87.5,68 A0,0 0 0 0 87.5,68 L167,68 A0,0 0 0 0 167,68 L167,55 L157,45 L87.5,45 A0,0 0 0 0 87.5,45" fill="#008000" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M157,45 L157,55 L167,55 L157,45" fill="#008000" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="58.5" x="93.5" y="60.111">green note</text>
+    <path d="M87.5,78 L87.5,85.5 L53.3,87.5 L87.5,93.5 L87.5,101 A0,0 0 0 0 87.5,101 L158.388,101 A0,0 0 0 0 158.388,101 L158.388,88 L148.388,78 L87.5,78 A0,0 0 0 0 87.5,78" fill="#00F" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M148.388,78 L148.388,88 L158.388,88 L148.388,78" fill="#00F" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="49.887" x="93.5" y="93.111">blue note</text>
+  </g>
+</svg>

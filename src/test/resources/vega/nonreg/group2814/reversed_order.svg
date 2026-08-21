@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="104px" preserveAspectRatio="none" style="width:218px;height:104px;background:#FFFFFF;" version="1.1" viewBox="0 0 218 104" width="218px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class B-->
+    <g class="entity" data-qualified-name="B" data-source-line="5" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="79.025" x="6" y="12"/>
+      <ellipse cx="37.948" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="32.948" y="33">C</text>
+      <text fill="#000" font-size="14" x="55.714" y="31.889">B</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="84.025" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="67.025" x="12" y="58.889">int lightblue</text>
+      <text fill="#000" font-size="14" textLength="53.813" x="12" y="72.889">int yellow</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="84.025" y1="80" y2="80"/>
+    </g>
+    <path d="M103,17 L103,24.5 L79.025,55 L103,32.5 L103,40 A0,0 0 0 0 103,40 L202.244,40 A0,0 0 0 0 202.244,40 L202.244,27 L192.244,17 L103,17 A0,0 0 0 0 103,17" fill="#ADD8E6" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M192.244,17 L192.244,27 L202.244,27 L192.244,17" fill="#ADD8E6" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="78.244" x="109" y="32.111">Hello lightblue</text>
+    <path d="M103,50 L103,57.5 L65.813,69 L103,65.5 L103,73 A0,0 0 0 0 103,73 L189.975,73 A0,0 0 0 0 189.975,73 L189.975,60 L179.975,50 L103,50 A0,0 0 0 0 103,50" fill="#FF0" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M179.975,50 L179.975,60 L189.975,60 L179.975,50" fill="#FF0" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="65.975" x="109" y="65.111">Hello yellow</text>
+  </g>
+</svg>
