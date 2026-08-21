@@ -2151,12 +2151,12 @@
 
         <Package name="net.sourceforge.plantuml.abel">
             <Stats>
-                <TotalClasses>30</TotalClasses>
-                <ConcreteClasses>22</ConcreteClasses>
+                <TotalClasses>31</TotalClasses>
+                <ConcreteClasses>23</ConcreteClasses>
                 <AbstractClasses>8</AbstractClasses>
                 <Ca>31</Ca>
                 <Ce>18</Ce>
-                <A>0.27</A>
+                <A>0.26</A>
                 <I>0.37</I>
                 <D>0.37</D>
                 <V>1</V>
@@ -2252,6 +2252,9 @@
                 </Class>
                 <Class sourceFile="NoteLinkStrategy.java">
                     net.sourceforge.plantuml.abel.NoteLinkStrategy
+                </Class>
+                <Class sourceFile="Tip.java">
+                    net.sourceforge.plantuml.abel.Tip
                 </Class>
                 <Class sourceFile="Together.java">
                     net.sourceforge.plantuml.abel.Together

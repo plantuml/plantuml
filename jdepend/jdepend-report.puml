@@ -386,7 +386,7 @@ Total Classes: 37
 "net.sourceforge.plantuml" --> "net.sourceforge.plantuml.utils"
 
 class "net.sourceforge.plantuml.abel" %lighten("red", 63) {
-Total Classes: 30
+Total Classes: 31
 }
 "net.sourceforge.plantuml.abel" --> "java.lang"
 "net.sourceforge.plantuml.abel" --> "java.util"

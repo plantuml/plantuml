@@ -340,10 +340,10 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 		final Link link;
 
 <span class="fc" id="L342">		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).goDashed();</span>
-<span class="pc bpc" id="L343" title="1 of 2 branches missed.">		if (position == Position.RIGHT) {</span>
-<span class="nc" id="L344">			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, note, type,</span>
-<span class="nc" id="L345">					LinkArg.noDisplay(1));</span>
-<span class="nc" id="L346">			link.setHorizontalSolitary(true);</span>
+<span class="fc bfc" id="L343" title="All 2 branches covered.">		if (position == Position.RIGHT) {</span>
+<span class="fc" id="L344">			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, note, type,</span>
+<span class="fc" id="L345">					LinkArg.noDisplay(1));</span>
+<span class="fc" id="L346">			link.setHorizontalSolitary(true);</span>
 <span class="fc bfc" id="L347" title="All 2 branches covered.">		} else if (position == Position.LEFT) {</span>
 <span class="fc" id="L348">			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), note, cl1, type,</span>
 <span class="fc" id="L349">					LinkArg.noDisplay(1));</span>

@@ -398,16 +398,16 @@ public class SkinParam implements ISkinParam {
 
 	@Override
 	public Colors getColors(ColorParam param, Stereotype stereotype) throws NoSuchColorException {
-<span class="nc bnc" id="L401" title="All 2 branches missed.">		if (stereotype != null) {</span>
-<span class="nc" id="L402">			checkStereotype(stereotype);</span>
-<span class="nc" id="L403">			final String value2 = getValue(param.name() + &quot;color&quot; + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));</span>
-<span class="nc bnc" id="L404" title="All 2 branches missed.">			if (value2 != null)</span>
-<span class="nc" id="L405">				return new Colors(value2, getIHtmlColorSet(), param.getColorType());</span>
+<span class="pc bpc" id="L401" title="1 of 2 branches missed.">		if (stereotype != null) {</span>
+<span class="fc" id="L402">			checkStereotype(stereotype);</span>
+<span class="fc" id="L403">			final String value2 = getValue(param.name() + &quot;color&quot; + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));</span>
+<span class="fc bfc" id="L404" title="All 2 branches covered.">			if (value2 != null)</span>
+<span class="fc" id="L405">				return new Colors(value2, getIHtmlColorSet(), param.getColorType());</span>
 
 		}
-<span class="nc" id="L408">		final String value = getValue(getParamName(param, false));</span>
-<span class="nc bnc" id="L409" title="All 2 branches missed.">		if (value == null)</span>
-<span class="nc" id="L410">			return Colors.empty();</span>
+<span class="fc" id="L408">		final String value = getValue(getParamName(param, false));</span>
+<span class="pc bpc" id="L409" title="1 of 2 branches missed.">		if (value == null)</span>
+<span class="fc" id="L410">			return Colors.empty();</span>
 
 <span class="nc" id="L412">		return new Colors(value, getIHtmlColorSet(), param.getColorType());</span>
 	}

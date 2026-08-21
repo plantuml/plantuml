@@ -347,8 +347,8 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 <span class="fc bfc" id="L347" title="All 2 branches covered.">		for (Link link : diagram.getLinks()) {</span>
 <span class="pc bpc" id="L348" title="1 of 2 branches missed.">			if (link.isInvis())</span>
 <span class="nc" id="L349">				continue;</span>
-<span class="pc bpc" id="L350" title="1 of 2 branches missed.">			if (link.contains(ent) == false)</span>
-<span class="nc" id="L351">				continue;</span>
+<span class="fc bfc" id="L350" title="All 2 branches covered.">			if (link.contains(ent) == false)</span>
+<span class="fc" id="L351">				continue;</span>
 
 <span class="pc bpc" id="L353" title="1 of 2 branches missed.">			if (single != null)</span>
 <span class="nc" id="L354">				return null;</span>
@@ -539,12 +539,12 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 <span class="fc" id="L539">					((EntityImageNote) node.getImage()).setOpaleLink(link, node, other, smetanaPathes);</span>
 <span class="fc" id="L540">					link.setOpale(true);</span>
 				}
-<span class="pc bpc" id="L542" title="1 of 2 branches missed.">			} else if (isOpalisable(link.getEntity2())) {</span>
-<span class="nc" id="L543">				final SvekNode node = getBibliotekon().getNode(link.getEntity2());</span>
-<span class="nc" id="L544">				final SvekNode other = getBibliotekon().getNode(link.getEntity1());</span>
-<span class="nc bnc" id="L545" title="All 2 branches missed.">				if (other != null) {</span>
-<span class="nc" id="L546">					((EntityImageNote) node.getImage()).setOpaleLink(link, node, other, smetanaPathes);</span>
-<span class="nc" id="L547">					link.setOpale(true);</span>
+<span class="fc bfc" id="L542" title="All 2 branches covered.">			} else if (isOpalisable(link.getEntity2())) {</span>
+<span class="fc" id="L543">				final SvekNode node = getBibliotekon().getNode(link.getEntity2());</span>
+<span class="fc" id="L544">				final SvekNode other = getBibliotekon().getNode(link.getEntity1());</span>
+<span class="pc bpc" id="L545" title="1 of 2 branches missed.">				if (other != null) {</span>
+<span class="fc" id="L546">					((EntityImageNote) node.getImage()).setOpaleLink(link, node, other, smetanaPathes);</span>
+<span class="fc" id="L547">					link.setOpale(true);</span>
 				}
 			}
 <span class="fc" id="L550">		}</span>

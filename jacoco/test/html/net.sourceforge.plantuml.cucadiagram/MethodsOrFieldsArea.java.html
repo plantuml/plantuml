@@ -286,11 +286,11 @@ public class MethodsOrFieldsArea extends TextBlockMemoized implements WithPorts 
 			@Override
 			public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
 				// InnerStrategy
-<span class="nc bnc" id="L289" title="All 2 branches missed.">				if (display.toString().equals(member.toString())) {</span>
-<span class="nc" id="L290">					final XDimension2D dim = calculateDimension(stringBounder);</span>
-<span class="nc" id="L291">					return new XRectangle2D(0, 0, dim.getWidth(), dim.getHeight());</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">				if (display.toString().equals(member.toString())) {</span>
+<span class="fc" id="L290">					final XDimension2D dim = calculateDimension(stringBounder);</span>
+<span class="fc" id="L291">					return new XRectangle2D(0, 0, dim.getWidth(), dim.getHeight());</span>
 				}
-<span class="nc" id="L293">				return null;</span>
+<span class="fc" id="L293">				return null;</span>
 			}
 
 			public MagneticBorder getMagneticBorder() {
@@ -333,7 +333,7 @@ public class MethodsOrFieldsArea extends TextBlockMemoized implements WithPorts 
 
 		@Override
 		public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
-<span class="nc" id="L336">			return block.getInnerPosition(member, stringBounder);</span>
+<span class="fc" id="L336">			return block.getInnerPosition(member, stringBounder);</span>
 		}
 
 	}
@@ -380,16 +380,16 @@ public class MethodsOrFieldsArea extends TextBlockMemoized implements WithPorts 
 
 	@Override
 	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
-<span class="nc" id="L383">		final ULayoutGroup group = getLayout(stringBounder);</span>
-<span class="nc" id="L384">		final XDimension2D dim = calculateDimension(stringBounder);</span>
-<span class="nc" id="L385">		final XRectangle2D result = group.getInnerPosition(member, dim.getWidth(), dim.getHeight(), stringBounder);</span>
-<span class="nc bnc" id="L386" title="All 4 branches missed.">		if (result != null &amp;&amp; hasSmallIcon()) {</span>
+<span class="fc" id="L383">		final ULayoutGroup group = getLayout(stringBounder);</span>
+<span class="fc" id="L384">		final XDimension2D dim = calculateDimension(stringBounder);</span>
+<span class="fc" id="L385">		final XRectangle2D result = group.getInnerPosition(member, dim.getWidth(), dim.getHeight(), stringBounder);</span>
+<span class="pc bpc" id="L386" title="1 of 4 branches missed.">		if (result != null &amp;&amp; hasSmallIcon()) {</span>
 			// Extend the inner position to include the visibility modifier on its left
 <span class="nc" id="L388">			final double smallIcon = skinParam.getCircledCharacterRadius() + 3;</span>
 <span class="nc" id="L389">			return new XRectangle2D(result.getMinX() - smallIcon, result.getMinY(), result.getWidth() + smallIcon,</span>
 <span class="nc" id="L390">					result.getHeight());</span>
 		}
-<span class="nc" id="L392">		return result;</span>
+<span class="fc" id="L392">		return result;</span>
 	}
 
 	private ULayoutGroup getLayout(final StringBounder stringBounder) {

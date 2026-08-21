@@ -129,13 +129,13 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 	@Override
 	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
-<span class="nc" id="L132">		final XRectangle2D result = body.getInnerPosition(member, stringBounder);</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (result == null)</span>
+<span class="fc" id="L132">		final XRectangle2D result = body.getInnerPosition(member, stringBounder);</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (result == null)</span>
 <span class="nc" id="L134">			return result;</span>
 
-<span class="nc" id="L136">		final XDimension2D dimHeader = header.calculateDimension(stringBounder);</span>
-<span class="nc" id="L137">		final UTranslate translate = UTranslate.dy(dimHeader.getHeight());</span>
-<span class="nc" id="L138">		return translate.apply(result);</span>
+<span class="fc" id="L136">		final XDimension2D dimHeader = header.calculateDimension(stringBounder);</span>
+<span class="fc" id="L137">		final UTranslate translate = UTranslate.dy(dimHeader.getHeight());</span>
+<span class="fc" id="L138">		return translate.apply(result);</span>
 	}
 
 	final public void drawU(UGraphic ug) {

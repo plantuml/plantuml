@@ -131,7 +131,7 @@ import net.sourceforge.plantuml.utils.Position;
 	private VisibilityModifier visibility;
 	private Neighborhood neighborhood;
 <span class="fc" id="L133">	private Colors colors = Colors.empty();</span>
-<span class="fc" id="L134">	private final Map&lt;String, Display&gt; tips = new LinkedHashMap&lt;String, Display&gt;();</span>
+<span class="fc" id="L134">	private final Map&lt;String, Tip&gt; tips = new LinkedHashMap&lt;String, Tip&gt;();</span>
 
 	//
 	public void addNote(Display note, Position position, Colors colors) {
@@ -508,12 +508,12 @@ import net.sourceforge.plantuml.utils.Position;
 <span class="fc" id="L508">		return neighborhood;</span>
 	}
 
-	public void putTip(String member, Display display) {
-<span class="nc" id="L512">		tips.put(member, display);</span>
-<span class="nc" id="L513">	}</span>
+	public void putTip(String member, Display display, Colors colors, Stereotype stereotype) {
+<span class="fc" id="L512">		tips.put(member, new Tip(display, colors, stereotype));</span>
+<span class="fc" id="L513">	}</span>
 
-	public Map&lt;String, Display&gt; getTips() {
-<span class="nc" id="L516">		return Collections.unmodifiableMap(tips);</span>
+	public Map&lt;String, Tip&gt; getTips() {
+<span class="fc" id="L516">		return Collections.unmodifiableMap(tips);</span>
 	}
 
 	public Colors getColors() {
@@ -768,7 +768,7 @@ import net.sourceforge.plantuml.utils.Position;
 	}
 
 	public final CharSequence getBestMatch(CharSequence candidate) {
-<span class="nc" id="L771">		return bodier.getBestMatch(candidate);</span>
+<span class="fc" id="L771">		return bodier.getBestMatch(candidate);</span>
 
 	}
 

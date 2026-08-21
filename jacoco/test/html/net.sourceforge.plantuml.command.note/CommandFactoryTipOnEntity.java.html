@@ -121,7 +121,7 @@ import net.sourceforge.plantuml.utils.Position;
 	}
 
 	private static ColorParser color() {
-<span class="nc" id="L124">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="fc" id="L124">		return ColorParser.simpleColor(ColorType.BACK);</span>
 	}
 
 	public Command&lt;AbstractEntityDiagram&gt; createSingleLine() {
@@ -129,7 +129,7 @@ import net.sourceforge.plantuml.utils.Position;
 	}
 
 <span class="fc" id="L131">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
-<span class="nc" id="L132">			() -&gt; Pattern2.cmpile(&quot;^[%s]*(end[%s]?note)$&quot;));</span>
+<span class="fc" id="L132">			() -&gt; Pattern2.cmpile(&quot;^[%s]*(end[%s]?note)$&quot;));</span>
 
 <span class="fc" id="L134">	private final static Lazy&lt;Pattern2&gt; END_WITH_BRACKET = new Lazy&lt;&gt;(</span>
 <span class="nc" id="L135">			() -&gt; Pattern2.cmpile(&quot;^(\\})$&quot;));</span>
@@ -178,19 +178,19 @@ import net.sourceforge.plantuml.utils.Position;
 			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines,
 					ParserPass currentPass) throws NoSuchColorException {
 				// StringUtils.trim(lines, false);
-<span class="nc" id="L181">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="nc" id="L182">				lines = lines.subExtract(1, 1).expandsNewline(false);</span>
-<span class="nc" id="L183">				lines = lines.removeEmptyColumns();</span>
-<span class="nc" id="L184">				final Display display = lines.toDisplay();</span>
+<span class="fc" id="L181">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="fc" id="L182">				lines = lines.subExtract(1, 1).expandsNewline(false);</span>
+<span class="fc" id="L183">				lines = lines.removeEmptyColumns();</span>
+<span class="fc" id="L184">				final Display display = lines.toDisplay();</span>
 
-<span class="nc" id="L186">				Url url = null;</span>
-<span class="nc bnc" id="L187" title="All 2 branches missed.">				if (line0.get(UrlBuilder.URL_KEY, 0) != null) {</span>
+<span class="fc" id="L186">				Url url = null;</span>
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">				if (line0.get(UrlBuilder.URL_KEY, 0) != null) {</span>
 <span class="nc" id="L188">					final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue(&quot;topurl&quot;),</span>
 							UrlMode.STRICT);
 <span class="nc" id="L190">					url = urlBuilder.getUrl(line0.get(UrlBuilder.URL_KEY, 0));</span>
 				}
 
-<span class="nc" id="L193">				return executeInternal(lines.getLocation(), line0, system, url, display);</span>
+<span class="fc" id="L193">				return executeInternal(lines.getLocation(), line0, system, url, display);</span>
 			}
 		};
 	}
@@ -198,54 +198,57 @@ import net.sourceforge.plantuml.utils.Position;
 	private CommandExecutionResult executeInternal(LineLocation location, RegexResult line0,
 			AbstractEntityDiagram diagram, Url url, Display display) throws NoSuchColorException {
 
-<span class="nc" id="L201">		final String pos = line0.get(&quot;POSITION&quot;, 0);</span>
+<span class="fc" id="L201">		final String pos = line0.get(&quot;POSITION&quot;, 0);</span>
 
-<span class="nc" id="L203">		final String idShort = line0.get(&quot;CODE&quot;, 0);</span>
-<span class="nc" id="L204">		final String member = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get(&quot;CODE&quot;, 1));</span>
+<span class="fc" id="L203">		final String idShort = line0.get(&quot;CODE&quot;, 0);</span>
+<span class="fc" id="L204">		final String member = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get(&quot;CODE&quot;, 1));</span>
 
-<span class="nc" id="L206">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, idShort);</span>
-<span class="nc" id="L207">		final Entity cl1 = quark.getData();</span>
-<span class="nc bnc" id="L208" title="All 2 branches missed.">		if (cl1 == null)</span>
+<span class="fc" id="L206">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, idShort);</span>
+<span class="fc" id="L207">		final Entity cl1 = quark.getData();</span>
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		if (cl1 == null)</span>
 <span class="nc" id="L209">			return CommandExecutionResult.error(&quot;Nothing to note to&quot;);</span>
 
-<span class="nc" id="L211">		final Position position = Position.valueOf(StringUtils.goUpperCase(pos))</span>
-<span class="nc" id="L212">				.withRankdir(diagram.getSkinParam().getRankdir());</span>
+<span class="fc" id="L211">		final Position position = Position.valueOf(StringUtils.goUpperCase(pos))</span>
+<span class="fc" id="L212">				.withRankdir(diagram.getSkinParam().getRankdir());</span>
 
-<span class="nc" id="L214">		final String tmp = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort + &quot;$$$&quot; + position.name());</span>
-<span class="nc" id="L215">		final Quark&lt;Entity&gt; identTip = diagram.quarkInContext(true, tmp);</span>
-<span class="nc" id="L216">		Entity tips = identTip.getData();</span>
+<span class="fc" id="L214">		final String tmp = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort + &quot;$$$&quot; + position.name());</span>
+<span class="fc" id="L215">		final Quark&lt;Entity&gt; identTip = diagram.quarkInContext(true, tmp);</span>
+<span class="fc" id="L216">		Entity tips = identTip.getData();</span>
 
-<span class="nc bnc" id="L218" title="All 2 branches missed.">		if (tips == null) {</span>
-<span class="nc" id="L219">			tips = diagram.reallyCreateLeaf(location, identTip, Display.getWithNewlines(diagram.getPragma(), &quot;&quot;),</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">		if (tips == null) {</span>
+<span class="fc" id="L219">			tips = diagram.reallyCreateLeaf(location, identTip, Display.getWithNewlines(diagram.getPragma(), &quot;&quot;),</span>
 					LeafType.TIPS, null);
-<span class="nc" id="L221">			final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();</span>
+<span class="fc" id="L221">			final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();</span>
 			final Link link;
-<span class="nc bnc" id="L223" title="All 2 branches missed.">			if (position == Position.RIGHT)</span>
-<span class="nc" id="L224">				link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, tips, type,</span>
-<span class="nc" id="L225">						LinkArg.noDisplay(1));</span>
+<span class="pc bpc" id="L223" title="1 of 2 branches missed.">			if (position == Position.RIGHT)</span>
+<span class="fc" id="L224">				link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, tips, type,</span>
+<span class="fc" id="L225">						LinkArg.noDisplay(1));</span>
 			else
 <span class="nc" id="L227">				link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), tips, cl1, type,</span>
 <span class="nc" id="L228">						LinkArg.noDisplay(1));</span>
 
-<span class="nc" id="L230">			diagram.addLink(link);</span>
+<span class="fc" id="L230">			diagram.addLink(link);</span>
 		}
-<span class="nc" id="L232">		tips.putTip(member, display);</span>
 
-<span class="nc" id="L234">		Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L233">		Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());</span>
 
-<span class="nc" id="L236">		final String stereotypeString = line0.get(&quot;STEREO&quot;, 0);</span>
-<span class="nc" id="L237">		Stereotype stereotype = null;</span>
-<span class="nc bnc" id="L238" title="All 2 branches missed.">		if (stereotypeString != null) {</span>
-<span class="nc" id="L239">			stereotype = Stereotype.build(stereotypeString);</span>
-<span class="nc" id="L240">			colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), ColorParam.noteBackground,</span>
+<span class="fc" id="L235">		final String stereotypeString = line0.get(&quot;STEREO&quot;, 0);</span>
+<span class="fc" id="L236">		Stereotype stereotype = null;</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">		if (stereotypeString != null) {</span>
+<span class="fc" id="L238">			stereotype = Stereotype.build(stereotypeString);</span>
+<span class="fc" id="L239">			colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), ColorParam.noteBackground,</span>
 					ColorParam.noteBorder);
 		}
-<span class="nc bnc" id="L243" title="All 2 branches missed.">		if (stereotypeString != null)</span>
-<span class="nc" id="L244">			tips.setStereotype(stereotype);</span>
 
-<span class="nc" id="L246">		tips.setColors(colors);</span>
+		// Several &quot;note ... of Class::member&quot; on the same side of the same
+		// class share one Entity (see the identTip lookup above), so the
+		// color/stereotype of THIS tip must travel with its own member entry
+		// rather than be stamped on that shared Entity: doing the latter
+		// makes the last tip parsed override the color of every earlier tip
+		// on the same side of the same class (issue #2814).
+<span class="fc" id="L249">		tips.putTip(member, display, colors, stereotype);</span>
 
-<span class="nc" id="L248">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L251">		return CommandExecutionResult.ok();</span>
 	}
 
 }

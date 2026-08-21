@@ -119,15 +119,15 @@ public class TextBlockVertical extends TextBlockMemoized implements WithPorts {
 
 	@Override
 	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
-<span class="nc" id="L122">		double y = 0;</span>
-<span class="nc bnc" id="L123" title="All 2 branches missed.">		for (TextBlock block : blocks) {</span>
-<span class="nc" id="L124">			final XDimension2D dimb = block.calculateDimension(stringBounder);</span>
-<span class="nc" id="L125">			final XRectangle2D result = block.getInnerPosition(member, stringBounder);</span>
-<span class="nc bnc" id="L126" title="All 2 branches missed.">			if (result != null) {</span>
-<span class="nc" id="L127">				return UTranslate.dy(y).apply(result);</span>
+<span class="fc" id="L122">		double y = 0;</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		for (TextBlock block : blocks) {</span>
+<span class="fc" id="L124">			final XDimension2D dimb = block.calculateDimension(stringBounder);</span>
+<span class="fc" id="L125">			final XRectangle2D result = block.getInnerPosition(member, stringBounder);</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">			if (result != null) {</span>
+<span class="fc" id="L127">				return UTranslate.dy(y).apply(result);</span>
 			}
-<span class="nc" id="L129">			y += dimb.getHeight();</span>
-<span class="nc" id="L130">		}</span>
+<span class="fc" id="L129">			y += dimb.getHeight();</span>
+<span class="fc" id="L130">		}</span>
 <span class="nc" id="L131">		return null;</span>
 	}
 

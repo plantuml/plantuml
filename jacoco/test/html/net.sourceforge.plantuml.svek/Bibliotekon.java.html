@@ -201,11 +201,11 @@ public class Bibliotekon {
 	}
 
 	public Entity getOnlyOther(Entity entity) {
-<span class="nc bnc" id="L204" title="All 2 branches missed.">		for (Link link : links)</span>
-<span class="nc bnc" id="L205" title="All 2 branches missed.">			if (link.contains(entity)) {</span>
-<span class="nc" id="L206">				final Entity other = link.getOther(entity);</span>
-<span class="nc bnc" id="L207" title="All 2 branches missed.">				if (other != null)</span>
-<span class="nc" id="L208">					return other;</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">		for (Link link : links)</span>
+<span class="pc bpc" id="L205" title="1 of 2 branches missed.">			if (link.contains(entity)) {</span>
+<span class="fc" id="L206">				final Entity other = link.getOther(entity);</span>
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">				if (other != null)</span>
+<span class="fc" id="L208">					return other;</span>
 
 			}
 <span class="nc" id="L211">		return null;</span>

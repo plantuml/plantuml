@@ -67,21 +67,21 @@ public class ULayoutGroup {
 
 	public XRectangle2D getInnerPosition(CharSequence member, double width, double height,
 			StringBounder stringBounder) {
-<span class="nc" id="L70">		final Set&lt;Entry&lt;TextBlock, XPoint2D&gt;&gt; all = placementStrategy.getPositions(width, height).entrySet();</span>
-<span class="nc" id="L71">		return tryOne(all, member, stringBounder);</span>
+<span class="fc" id="L70">		final Set&lt;Entry&lt;TextBlock, XPoint2D&gt;&gt; all = placementStrategy.getPositions(width, height).entrySet();</span>
+<span class="fc" id="L71">		return tryOne(all, member, stringBounder);</span>
 	}
 
 	private XRectangle2D tryOne(final Set&lt;Entry&lt;TextBlock, XPoint2D&gt;&gt; all, CharSequence member,
 			StringBounder stringBounder) {
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		for (Map.Entry&lt;TextBlock, XPoint2D&gt; ent : all) {</span>
-<span class="nc" id="L77">			final TextBlock block = ent.getKey();</span>
-<span class="nc" id="L78">			final XRectangle2D result = block.getInnerPosition(member, stringBounder);</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">			if (result != null) {</span>
-<span class="nc" id="L80">				final UTranslate translate = UTranslate.point(ent.getValue());</span>
-<span class="nc" id="L81">				return translate.apply(result);</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		for (Map.Entry&lt;TextBlock, XPoint2D&gt; ent : all) {</span>
+<span class="fc" id="L77">			final TextBlock block = ent.getKey();</span>
+<span class="fc" id="L78">			final XRectangle2D result = block.getInnerPosition(member, stringBounder);</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">			if (result != null) {</span>
+<span class="fc" id="L80">				final UTranslate translate = UTranslate.point(ent.getValue());</span>
+<span class="fc" id="L81">				return translate.apply(result);</span>
 			}
-<span class="nc" id="L83">		}</span>
-<span class="nc" id="L84">		return null;</span>
+<span class="fc" id="L83">		}</span>
+<span class="fc" id="L84">		return null;</span>
 	}
 
 }

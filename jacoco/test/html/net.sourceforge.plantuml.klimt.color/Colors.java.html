@@ -152,12 +152,12 @@ public class Colors {
 	}
 
 	private Colors add(ColorType colorType, Colors other) {
-<span class="nc" id="L155">		final Colors result = copy();</span>
-<span class="nc" id="L156">		result.map.putAll(other.map);</span>
-<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (other.lineStyle != null)</span>
+<span class="fc" id="L155">		final Colors result = copy();</span>
+<span class="fc" id="L156">		result.map.putAll(other.map);</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">		if (other.lineStyle != null)</span>
 <span class="nc" id="L158">			result.lineStyle = other.lineStyle;</span>
 
-<span class="nc" id="L160">		return result;</span>
+<span class="fc" id="L160">		return result;</span>
 	}
 
 	public final LinkStyle getLineStyle() {
@@ -187,24 +187,24 @@ public class Colors {
 
 	public Colors applyStereotype(Stereotype stereotype, ISkinParam skinParam, ColorParam param)
 			throws NoSuchColorException {
-<span class="nc" id="L190">		Objects.requireNonNull(stereotype);</span>
-<span class="nc" id="L191">		final ColorType colorType = Objects.requireNonNull(Objects.requireNonNull(param).getColorType());</span>
-<span class="nc bnc" id="L192" title="All 2 branches missed.">		if (getColor(colorType) != null)</span>
+<span class="fc" id="L190">		Objects.requireNonNull(stereotype);</span>
+<span class="fc" id="L191">		final ColorType colorType = Objects.requireNonNull(Objects.requireNonNull(param).getColorType());</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">		if (getColor(colorType) != null)</span>
 <span class="nc" id="L193">			return this;</span>
 
-<span class="nc" id="L195">		final Colors colors = skinParam.getColors(param, stereotype);</span>
-<span class="nc" id="L196">		return add(colorType, colors);</span>
+<span class="fc" id="L195">		final Colors colors = skinParam.getColors(param, stereotype);</span>
+<span class="fc" id="L196">		return add(colorType, colors);</span>
 	}
 
 	public Colors applyStereotypeForNote(Stereotype stereotype, ISkinParam skinParam, ColorParam... params)
 			throws NoSuchColorException {
-<span class="nc" id="L201">		Objects.requireNonNull(stereotype);</span>
-<span class="nc" id="L202">		Colors result = this;</span>
-<span class="nc bnc" id="L203" title="All 2 branches missed.">		for (ColorParam param : Objects.requireNonNull(params))</span>
-<span class="nc" id="L204">			result = result.applyStereotype(stereotype, skinParam, param);</span>
+<span class="fc" id="L201">		Objects.requireNonNull(stereotype);</span>
+<span class="fc" id="L202">		Colors result = this;</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">		for (ColorParam param : Objects.requireNonNull(params))</span>
+<span class="fc" id="L204">			result = result.applyStereotype(stereotype, skinParam, param);</span>
 
-<span class="nc" id="L206">		result.shadowing = skinParam.shadowingForNote(stereotype);</span>
-<span class="nc" id="L207">		return result;</span>
+<span class="fc" id="L206">		result.shadowing = skinParam.shadowingForNote(stereotype);</span>
+<span class="fc" id="L207">		return result;</span>
 	}
 
 	public Boolean getShadowing() {

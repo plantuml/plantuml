@@ -88,12 +88,12 @@ class TextBlockMarged implements TextBlock, WithPorts {
 
 	@Override
 	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
-<span class="nc" id="L91">		final XRectangle2D parent = textBlock.getInnerPosition(member, stringBounder);</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (parent == null)</span>
-<span class="nc" id="L93">			return null;</span>
+<span class="fc" id="L91">		final XRectangle2D parent = textBlock.getInnerPosition(member, stringBounder);</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (parent == null)</span>
+<span class="fc" id="L93">			return null;</span>
 
-<span class="nc" id="L95">		final UTranslate translate = new UTranslate(left, top);</span>
-<span class="nc" id="L96">		return translate.apply(parent);</span>
+<span class="fc" id="L95">		final UTranslate translate = new UTranslate(left, top);</span>
+<span class="fc" id="L96">		return translate.apply(parent);</span>
 	}
 
 	@Override

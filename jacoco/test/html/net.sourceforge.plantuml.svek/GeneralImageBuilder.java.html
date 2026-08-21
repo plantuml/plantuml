@@ -216,8 +216,8 @@ import net.sourceforge.plantuml.text.Guillemet;
 <span class="pc bpc" id="L216" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.DEEP_HISTORY)</span>
 <span class="nc" id="L217">			return new EntityImageDeepHistory(leaf);</span>
 
-<span class="pc bpc" id="L219" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.TIPS)</span>
-<span class="nc" id="L220">			return new EntityImageTips(leaf, bibliotekon);</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.TIPS)</span>
+<span class="fc" id="L220">			return new EntityImageTips(leaf, bibliotekon);</span>
 
 <span class="fc bfc" id="L222" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.CHEN_ENTITY)</span>
 <span class="fc" id="L223">			return new EntityImageChenEntity(leaf);</span>

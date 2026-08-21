@@ -799,8 +799,8 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 <span class="fc bfc" id="L799" title="All 2 branches covered.">		for (Link link : this.getLinks()) {</span>
 <span class="pc bpc" id="L800" title="1 of 2 branches missed.">			if (link.getType().isInvisible())</span>
 <span class="nc" id="L801">				continue;</span>
-<span class="pc bpc" id="L802" title="1 of 2 branches missed.">			if (link.contains(note) == false)</span>
-<span class="nc" id="L803">				continue;</span>
+<span class="fc bfc" id="L802" title="All 2 branches covered.">			if (link.contains(note) == false)</span>
+<span class="fc" id="L803">				continue;</span>
 <span class="pc bpc" id="L804" title="1 of 2 branches missed.">			if (other != null)</span>
 <span class="nc" id="L805">				return null;</span>
 <span class="fc" id="L806">			other = link.getOther(note);</span>
