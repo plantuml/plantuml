@@ -97,6 +97,10 @@ main {
 	z-index: 0;
 }
 
+#out svg {
+	zoom: var(--preview-zoom, 1);
+}
+
 #status {
 	position: absolute;
 	left: 0;
@@ -119,7 +123,18 @@ main {
 	z-index: 1; /* so it renders on top of #out */
 }
 
-.controls button {
+.zoom-controls {
+	position: absolute;
+	right: 0;
+	bottom: 1rem;
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+	z-index: 1;
+}
+
+.controls button,
+.zoom-controls button {
 	border: none;
 	padding: 0.5rem;
 	background-color: var(--surface);
@@ -128,18 +143,48 @@ main {
 	cursor: pointer;
 }
 
-.controls button svg {
+.controls button svg,
+.zoom-controls button svg {
 	width: 1rem;
 	height: 1rem;
 	display: block;
 }
 
-.controls button:hover {
+.controls button:hover,
+.zoom-controls button:hover {
 	outline: 1px solid color-mix(in srgb, var(--accent) 30%, var(--surface));
 }
 
-.controls button:focus {
+.controls button:focus,
+.zoom-controls button:focus {
 	outline: 1px solid var(--accent);
+}
+
+.zoom-controls button:disabled {
+	cursor: default;
+	opacity: 0.45;
+}
+
+.zoom-controls button.active {
+	outline: 1px solid var(--accent);
+}
+
+.zoom-controls .zoom-level {
+	min-width: 3.25rem;
+	border-radius: 1rem;
+	font-size: 0.75rem;
+	line-height: 1rem;
+}
+
+.pan-ready,
+.pan-ready * {
+	cursor: grab !important;
+}
+
+.panning,
+.panning * {
+	cursor: grabbing !important;
+	user-select: none;
 }
 
 .controls button.success {
