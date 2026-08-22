@@ -10,7 +10,7 @@ RUN wget \
   "https://github.com/plantuml/plantuml/releases/download/${PLANTUML_VERSION}/plantuml-${PLANTUML_VERSION#?}.jar" \
   -O /opt/plantuml.jar
 
-FROM eclipse-temurin:17-jre-jammy
+FROM eclipse-temurin:21-jre-jammy
 
 ENV LANG=en_US.UTF-8
 
