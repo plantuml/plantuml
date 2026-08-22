@@ -1,19 +1,12 @@
 import { render } from "./plantuml.js";
-import { decodePlantUml, encodePlantUml } from "./plantuml-codec.js";
 
 const editor = document.getElementById("editor");
-const defaultSource = editor.value;
-const HASH_DEBOUNCE_MS = 300;
 let dark = false;
-let hashDebounceTimer = null;
-let toastTimer = null;
 
-restoreEditorFromHash();
 renderer();
 resize();
 controls();
 contextMenu();
-urlSharing();
 
 function renderer() {
 	const loading = document.getElementById("loading");
@@ -32,99 +25,6 @@ function renderer() {
 function renderNow() {
 	const lines = editor.value.split(/\r\n|\r|\n/);
 	render(lines, "out", {dark: dark});
-}
-
-function restoreEditorFromHash(useDefaultWhenEmpty = false) {
-	const fragment = window.location.hash.slice(1);
-	if (!fragment) {
-		if (useDefaultWhenEmpty) {
-			editor.value = defaultSource;
-		}
-		return true;
-	}
-
-	try {
-		editor.value = decodePlantUml(fragment);
-		return true;
-	} catch (err) {
-		console.warn("Could not decode the PlantUML URL fragment:", err);
-		return false;
-	}
-}
-
-function replaceHashFromEditor() {
-	clearTimeout(hashDebounceTimer);
-	const fragment = editor.value ? `#${encodePlantUml(editor.value)}` : "";
-	const url = `${window.location.pathname}${window.location.search}${fragment}`;
-	window.history.replaceState(window.history.state, "", url);
-}
-
-function urlSharing() {
-	editor.addEventListener("input", () => {
-		clearTimeout(hashDebounceTimer);
-		hashDebounceTimer = setTimeout(replaceHashFromEditor, HASH_DEBOUNCE_MS);
-	});
-
-	window.addEventListener("hashchange", () => {
-		clearTimeout(hashDebounceTimer);
-		if (restoreEditorFromHash(true)) {
-			renderNow();
-		}
-	});
-
-	const share = document.getElementById("share");
-	share.addEventListener("click", () => {
-		replaceHashFromEditor();
-		copyText(window.location.href).then(
-			() => {
-				showControlResult(share, "success", 300);
-				showToast("Copied");
-			},
-			reason => {
-				console.error("Copy shareable link failed:", reason);
-				showControlResult(share, "error", 3000);
-				showToast("Copy failed", true);
-			}
-		);
-	});
-}
-
-function showControlResult(button, result, duration) {
-	button.classList.add(result);
-	setTimeout(() => button.classList.remove(result), duration);
-}
-
-function showToast(message, isError = false) {
-	const toast = document.getElementById("toast");
-	clearTimeout(toastTimer);
-	toast.textContent = message;
-	toast.classList.toggle("error", isError);
-	toast.classList.add("visible");
-	toastTimer = setTimeout(() => toast.classList.remove("visible"), 1600);
-}
-
-async function copyText(content) {
-	try {
-		if (navigator.clipboard?.writeText) {
-			await navigator.clipboard.writeText(content);
-			return;
-		}
-	} catch (err) {
-		console.warn("Clipboard API unavailable; using selection fallback:", err);
-	}
-
-	const textarea = document.createElement("textarea");
-	textarea.value = content;
-	textarea.setAttribute("readonly", "");
-	textarea.style.position = "fixed";
-	textarea.style.opacity = "0";
-	document.body.appendChild(textarea);
-	textarea.select();
-	const copied = document.execCommand("copy");
-	textarea.remove();
-	if (!copied) {
-		throw new Error("The browser denied clipboard access");
-	}
 }
 
 function resize() {
@@ -153,7 +53,7 @@ function controls() {
 	const copy = document.getElementById("copy");
 	copy.addEventListener("click", () => {
 		const content = getContent();
-		copyText(content).then(
+		navigator.clipboard.writeText(content).then(
 			() => {
 				copy.classList.add("success");
 				setTimeout(() => (copy.classList.remove("success")), 300);
