@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import net.atmp.CucaDiagram;
@@ -21,8 +23,30 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
  * <p>These tests call {@link CucaDiagramFileMakerElk#getTextBlock} directly so that
  * a {@link NullPointerException} from {@code EntityImagePort.upPosition()} propagates
  * without being swallowed by the higher-level error handling in PlantUML's export pipeline.</p>
+ *
+ * <p>ELK itself ({@code org.eclipse.elk.*}) is an optional runtime dependency: PlantUML compiles
+ * against its own reflective proxy ({@link net.sourceforge.plantuml.elk.proxy}) so the project
+ * builds without ELK on the classpath (see {@link CucaDiagramFileMakerElk}'s header comment), and
+ * only needs the real ELK jars present when a diagram actually asks for {@code !pragma layout elk}.
+ * On a build that does not pull it in (e.g. an Ant/non-Maven build), these tests are skipped rather
+ * than failed, since a {@code ClassNotFoundException} there would not be this test's regression.</p>
  */
 class ElkPortTest {
+
+	@BeforeEach
+	void requireElkOnClasspath() {
+		Assumptions.assumeTrue(isElkAvailable(),
+				"ELK (org.eclipse.elk.graph.util.ElkGraphUtil) is not on the classpath - skipping ELK-dependent test");
+	}
+
+	private static boolean isElkAvailable() {
+		try {
+			Class.forName("org.eclipse.elk.graph.util.ElkGraphUtil");
+			return true;
+		} catch (ClassNotFoundException e) {
+			return false;
+		}
+	}
 
 	@Test
 	void testPortWithElkDoesNotThrowNPE() {
