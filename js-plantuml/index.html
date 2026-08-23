@@ -28,24 +28,6 @@ return ok
 		<div id="resize"></div>
 
 		<div class="preview">
-			<div class="zoom-controls" role="group" aria-label="Diagram zoom">
-				<button id="zoom-out" type="button" title="Zoom out" aria-label="Zoom out">
-					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M5 12h14"/>
-					</svg>
-				</button>
-				<button id="zoom-reset" class="zoom-level" type="button" title="Reset zoom; use the platform key and wheel over the diagram to zoom">100%</button>
-				<button id="zoom-in" type="button" title="Zoom in" aria-label="Zoom in">
-					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M12 5v14M5 12h14"/>
-					</svg>
-				</button>
-				<button id="pan-tool" type="button" title="Pan tool; drag or hold the platform key while dragging" aria-label="Pan tool" aria-pressed="false">
-					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M18 11V6a2 2 0 0 0-4 0v5M14 10V4a2 2 0 0 0-4 0v7M10 10V6a2 2 0 0 0-4 0v8M6 13l-1.2-1.2a2 2 0 0 0-2.8 2.8l5.2 5.2A4 4 0 0 0 10 21h4a6 6 0 0 0 6-6V8a2 2 0 0 0-4 0v3"/>
-					</svg>
-				</button>
-			</div>
 			<div id="loading">
 				<span class="loading-dot"></span>
 				<span class="loading-dot"></span>
@@ -55,6 +37,14 @@ return ok
 			<div id="out"></div>
 			<div id="status"></div>
 			<div class="controls">
+				<button id="share" type="button" title="Copy shareable link" aria-label="Copy shareable link">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<circle cx="18" cy="5" r="3"/>
+						<circle cx="6" cy="12" r="3"/>
+						<circle cx="18" cy="19" r="3"/>
+						<path d="M8.59 10.51l6.83-3.98M8.59 13.49l6.83 3.98"/>
+					</svg>
+				</button>
 				<button id="theme" type="button" title="Toggle dark mode">
 					<svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 						<circle cx="12" cy="12" r="4"/>
@@ -87,7 +77,9 @@ return ok
 			</div>
 		</div>
 	</main>
+	<div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
+	<script src="vendor/fflate-0.8.2.min.js"></script>
 	<script src="viz-global.js"></script>
 	<script type="module" src="main.js"></script>
 </body>

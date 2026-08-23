@@ -97,10 +97,6 @@ main {
 	z-index: 0;
 }
 
-#out svg {
-	zoom: var(--preview-zoom, 1);
-}
-
 #status {
 	position: absolute;
 	left: 0;
@@ -123,18 +119,7 @@ main {
 	z-index: 1; /* so it renders on top of #out */
 }
 
-.zoom-controls {
-	position: absolute;
-	right: 0;
-	bottom: 1rem;
-	display: flex;
-	align-items: center;
-	gap: 0.25rem;
-	z-index: 1;
-}
-
-.controls button,
-.zoom-controls button {
+.controls button {
 	border: none;
 	padding: 0.5rem;
 	background-color: var(--surface);
@@ -143,48 +128,18 @@ main {
 	cursor: pointer;
 }
 
-.controls button svg,
-.zoom-controls button svg {
+.controls button svg {
 	width: 1rem;
 	height: 1rem;
 	display: block;
 }
 
-.controls button:hover,
-.zoom-controls button:hover {
+.controls button:hover {
 	outline: 1px solid color-mix(in srgb, var(--accent) 30%, var(--surface));
 }
 
-.controls button:focus,
-.zoom-controls button:focus {
+.controls button:focus {
 	outline: 1px solid var(--accent);
-}
-
-.zoom-controls button:disabled {
-	cursor: default;
-	opacity: 0.45;
-}
-
-.zoom-controls button.active {
-	outline: 1px solid var(--accent);
-}
-
-.zoom-controls .zoom-level {
-	min-width: 3.25rem;
-	border-radius: 1rem;
-	font-size: 0.75rem;
-	line-height: 1rem;
-}
-
-.pan-ready,
-.pan-ready * {
-	cursor: grab !important;
-}
-
-.panning,
-.panning * {
-	cursor: grabbing !important;
-	user-select: none;
 }
 
 .controls button.success {
@@ -192,6 +147,36 @@ main {
 }
 .controls button.error {
 	outline: 1px solid color-mix(in srgb, var(--accent) 30%, #ef7373);
+}
+
+.toast {
+	position: fixed;
+	left: 50%;
+	top: 1rem;
+	z-index: 300;
+	padding: 0.55rem 0.9rem;
+	border-radius: 0.5rem;
+	background: var(--fg);
+	color: var(--bg);
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+	font-size: 0.875rem;
+	opacity: 0;
+	visibility: hidden;
+	transform: translate(-50%, 0.5rem);
+	transition: opacity 150ms ease, transform 150ms ease, visibility 0s linear 150ms;
+	pointer-events: none;
+}
+
+.toast.visible {
+	opacity: 1;
+	visibility: visible;
+	transform: translate(-50%, 0);
+	transition-delay: 0s;
+}
+
+.toast.error {
+	background: #b42318;
+	color: #fff;
 }
 
 /* Theme toggle: show sun in dark mode, moon in light mode */
