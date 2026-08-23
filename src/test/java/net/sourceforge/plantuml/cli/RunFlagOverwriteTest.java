@@ -2,6 +2,7 @@ package net.sourceforge.plantuml.cli;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -72,6 +73,17 @@ class RunFlagOverwriteTest extends AbstractCliTest {
 		assertFalse(containsHello2(ofileSvg));
 
 		ofileSvg.toFile().setWritable(false);
+
+		// Some environments don't honor the read-only bit at all - a sandbox
+		// running as root, notably, since root bypasses the usual file
+		// permission checks on Linux. Files.isWritable() reports the OS's own
+		// answer right after setWritable(false), so this catches root and any
+		// other environment where the bit is ignored, without hardcoding a
+		// check for "root" specifically. Skip rather than fail: this test
+		// can't exercise what it's about here, but still runs for real on any
+		// runner where permissions are actually enforced.
+		assumeTrue(Files.isWritable(ofileSvg) == false,
+				"the read-only bit isn't enforced in this environment (e.g. running as root) - skipping");
 
 		alice_bob_hello2();
 		runSvg();

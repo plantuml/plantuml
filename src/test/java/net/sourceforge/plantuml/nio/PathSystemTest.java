@@ -95,18 +95,23 @@ class PathSystemTest {
 	@DisplayName("https path returns an html page with a <title>")
 	void https_path_contains_title() throws Exception {
 		final PathSystem cut = PathSystem.fetch();
+		final InputFile in = cut.getInputFile("https://plantuml.com");
 
-		// try to open the URL via the PathSystem branch; skip if offline
-		InputFile in;
+		// getInputFile() above never touches the network for an http(s) path -
+		// it only parses the URL and wraps it in an InputFileUrl (see
+		// PathSystem.getInputFile()). The connection is opened lazily, here, by
+		// newInputStream() - so this is the call that actually needs guarding
+		// to skip on an offline environment, the same way InputFileUrlTest
+		// guards its own equivalent call.
+		InputStream raw;
 		try {
-			in = cut.getInputFile("https://plantuml.com");
+			raw = in.newInputStream();
 		} catch (IOException e) {
 			assumeTrue(false, "network unavailable, skipping test: " + e.getMessage());
 			return; // safeguard; assumeTrue already aborts
 		}
 
-		try (InputStream raw = in.newInputStream(); InputStream is = new BufferedInputStream(raw)) {
-
+		try (InputStream is = new BufferedInputStream(raw)) {
 			final String html = readUtf8Limited(is, 256 * 1024); // read at most 256 KB
 			assertNotNull(html, "html content should not be null");
 			assertTrue(html.toLowerCase(Locale.ROOT).contains("<title"), "expected the html to contain a <title> tag");
