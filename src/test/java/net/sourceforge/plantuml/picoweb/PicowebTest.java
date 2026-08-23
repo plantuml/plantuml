@@ -37,6 +37,8 @@ import org.junit.jupiter.api.parallel.ResourceLock;
 import org.junitpioneer.jupiter.StdErr;
 import org.junitpioneer.jupiter.StdIo;
 
+import net.sourceforge.plantuml.cli.GlobalConfig;
+import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonObject;
@@ -80,6 +82,16 @@ class PicowebTest {
 	@AfterEach
 	void stopServer() throws Exception {
 		GraphvizRuntimeEnvironment.getInstance().setDotExecutable(null);
+
+		// Defensive: a /render request with no "options" reaches CliParser.parse()
+		// with a zero-length array, which CliOptions' zero-arg branch reads as "no
+		// CLI arguments at all" and reacts to by requesting the graphical UI
+		// (GlobalConfigKey.GUI is a process-wide singleton, never reset on its
+		// own). PicoWebServer.handleRenderRequest() now pads that array before it
+		// ever reaches CliParser, so this should no longer trigger - but it costs
+		// nothing to make sure this class never leaves that singleton flipped for
+		// whatever test runs after it in the same JVM.
+		GlobalConfig.getInstance().put(GlobalConfigKey.GUI, false);
 
 		serverSocket.close();
 		executor.shutdownNow();

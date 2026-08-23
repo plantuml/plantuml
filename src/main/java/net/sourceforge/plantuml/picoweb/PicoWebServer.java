@@ -272,7 +272,18 @@ public class PicoWebServer implements Runnable {
 
 	public void handleRenderRequest(RenderRequest renderRequest, BufferedOutputStream out) throws Exception {
 
-		final CliOptions option = CliParser.parse(renderRequest.getOptions());
+		// A zero-length array is not "no options": CliOptions' own zero-arg
+		// constructor reads it as "this is a bare `java -jar plantuml.jar`
+		// invocation with nothing after it" and reacts by asking to launch the
+		// graphical UI (GlobalConfigKey.GUI) - a convenience meant for a human
+		// at a terminal, not for an HTTP render request that simply has nothing
+		// extra to configure. RenderRequest.fromJson() returns exactly that
+		// empty array whenever the JSON body omits "options", which is the
+		// common case. Padding with an inert, already-default flag keeps that
+		// unrelated branch from ever firing here.
+		final String[] requestOptions = renderRequest.getOptions();
+		final String[] options = requestOptions.length == 0 ? new String[] { "--charset", "UTF-8" } : requestOptions;
+		final CliOptions option = CliParser.parse(options);
 
 		final String source = renderRequest.getSource().startsWith("@start") ? renderRequest.getSource()
 				: "@startuml\n" + renderRequest.getSource() + "\n@enduml";
