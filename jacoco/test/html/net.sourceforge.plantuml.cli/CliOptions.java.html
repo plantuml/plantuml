@@ -91,8 +91,8 @@ public class CliOptions {
 <span class="fc" id="L91">	}</span>
 
 <span class="fc" id="L93">	CliOptions(String... arg) throws InterruptedException, IOException, CliParsingException {</span>
-<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (arg.length == 0)</span>
-<span class="fc" id="L95">			GlobalConfig.getInstance().put(GlobalConfigKey.GUI, true);</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (arg.length == 0)</span>
+<span class="nc" id="L95">			GlobalConfig.getInstance().put(GlobalConfigKey.GUI, true);</span>
 
 <span class="fc" id="L97">		initInclude(GraphvizUtils.getenvDefaultConfigFilename());</span>
 
@@ -326,7 +326,7 @@ public class CliOptions {
 	}
 
 	public final boolean isFailfastOrFailfast2() {
-<span class="pc bpc" id="L329" title="1 of 4 branches missed.">		return isTrue(CliFlag.FAIL_FAST) || isTrue(CliFlag.FAIL_FAST2);</span>
+<span class="pc bpc" id="L329" title="3 of 4 branches missed.">		return isTrue(CliFlag.FAIL_FAST) || isTrue(CliFlag.FAIL_FAST2);</span>
 	}
 
 	public final int getImageIndex() {
