@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="296px" preserveAspectRatio="none" style="width:210px;height:296px;background:#FFFFFF;" version="1.1" viewBox="0 0 210 296" width="210px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>App</title>
+      <rect fill="#000" fill-opacity="0" height="127" width="8" x="25.969" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="29.469" x2="29.469" y1="84" y2="211"/>
+    </g>
+    <g>
+      <title>OEM</title>
+      <rect fill="#000" fill-opacity="0" height="127" width="8" x="121.269" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="124.769" x2="124.769" y1="84" y2="211"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="13" style="stroke:#181818;stroke-width:1;" width="10" x="119.769" y="152"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="5" style="stroke:#181818;stroke-width:1;" width="10" x="119.769" y="201"/>
+    </g>
+    <g>
+      <title>OEM2</title>
+      <rect fill="#000" fill-opacity="0" height="127" width="8" x="173.013" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="176.513" x2="176.513" y1="84" y2="211"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="5" style="stroke:#181818;stroke-width:1;" width="10" x="171.513" y="201"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="10" y="55"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="17" y="72.889">App</text>
+    <text fill="#000" font-size="14" textLength="31.85" x="105.844" y="80.889">OEM</text>
+    <ellipse cx="124.769" cy="18.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M124.769,26.5 L124.769,53.5 M111.769,34.5 L137.769,34.5 M124.769,53.5 L111.769,68.5 M124.769,53.5 L137.769,68.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="39.638" x="153.694" y="80.889">OEM2</text>
+    <ellipse cx="176.513" cy="18.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M176.513,26.5 L176.513,53.5 M163.513,34.5 L189.513,34.5 M176.513,53.5 L163.513,68.5 M176.513,53.5 L189.513,68.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="10" y="211"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="17" y="228.889">App</text>
+    <text fill="#000" font-size="14" textLength="31.85" x="105.844" y="221.889">OEM</text>
+    <ellipse cx="124.769" cy="233.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M124.769,241.5 L124.769,268.5 M111.769,249.5 L137.769,249.5 M124.769,268.5 L111.769,283.5 M124.769,268.5 L137.769,283.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="39.638" x="153.694" y="221.889">OEM2</text>
+    <ellipse cx="176.513" cy="233.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M176.513,241.5 L176.513,268.5 M163.513,249.5 L189.513,249.5 M176.513,268.5 L163.513,283.5 M176.513,268.5 L189.513,283.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#EEE" height="3" style="stroke:#EEE;stroke-width:1;" width="189.331" x="10" y="111.5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="199.331" y1="111.5" y2="111.5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="199.331" y1="114.5" y2="114.5"/>
+    <rect fill="#EEE" height="21" style="stroke:#000;stroke-width:2;" width="69.656" x="69.838" y="102"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="55.656" x="75.838" y="116.111">Process A</text>
+    <polygon fill="#181818" points="107.769,148,117.769,152,107.769,156,111.769,152" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="29.469" x2="113.769" y1="152" y2="152"/>
+    <text fill="#000" font-size="13" textLength="66.3" x="36.469" y="147.111">Inform OEM</text>
+    <rect fill="#EEE" height="3" style="stroke:#EEE;stroke-width:1;" width="189.331" x="10" y="179.5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="199.331" y1="179.5" y2="179.5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="199.331" y1="182.5" y2="182.5"/>
+    <rect fill="#EEE" height="21" style="stroke:#000;stroke-width:2;" width="69.656" x="69.838" y="170"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="55.656" x="75.838" y="184.111">Process B</text>
+  </g>
+</svg>

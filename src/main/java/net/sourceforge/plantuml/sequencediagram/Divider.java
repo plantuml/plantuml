@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
 
-public class Divider extends AbstractEvent implements Event, WithStyle {
+public class Divider extends AbstractEvent implements Event, WithStyle, EventWithDeactivate {
 
 	private final Display text;
 
@@ -67,6 +67,37 @@ public class Divider extends AbstractEvent implements Event, WithStyle {
 
 	public boolean dealWith(Participant someone) {
 		return false;
+	}
+
+	// A divider (== ... ==) closes off whatever message preceded it, exactly like
+	// the end of an alt/opt/loop block does for a GroupingLeaf. Without this,
+	// SequenceDiagram.lastEventWithDeactivate keeps pointing at the last message
+	// that was sent *before* the divider, so a bare activate/deactivate/destroy
+	// placed right after the divider (with no message of its own) wrongly tries
+	// to reattach to that stale message instead of becoming its own event. When
+	// the participant matches and already carries a decoration from before the
+	// divider, that reattachment fails outright with a spurious
+	// "Activate/Deactivate already done" error (the exact case in
+	// https://github.com/plantuml/plantuml/issues/2729). When it doesn't collide
+	// -- e.g. a bare "destroy" reusing a message several sections back -- it can
+	// silently attach in the wrong place instead of erroring.
+	//
+	// dealWith() staying false (like GroupingLeaf's) makes such a bare
+	// activate/deactivate/destroy become a standalone, unattached LifeEvent
+	// instead, positioned by its own place in the event timeline -- i.e. right
+	// after this divider, which is where it belongs.
+	private double posYendLevel;
+
+	public void setPosYendLevel(double posYendLevel) {
+		this.posYendLevel = posYendLevel;
+	}
+
+	public double getPosYendLevel() {
+		return posYendLevel;
+	}
+
+	public boolean addLifeEvent(LifeEvent lifeEvent) {
+		return true;
 	}
 
 }

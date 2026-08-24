@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="323px" preserveAspectRatio="none" style="width:186px;height:323px;background:#FFFFFF;" version="1.1" viewBox="0 0 186 323" width="186px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>App</title>
+      <rect fill="#000" fill-opacity="0" height="154" width="8" x="25.969" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="29.469" x2="29.469" y1="84" y2="238"/>
+    </g>
+    <g>
+      <title>OEM</title>
+      <rect fill="#000" fill-opacity="0" height="154" width="8" x="153.119" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="156.619" x2="156.619" y1="84" y2="238"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="13" style="stroke:#181818;stroke-width:1;" width="10" x="151.619" y="152"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="13" style="stroke:#181818;stroke-width:1;" width="10" x="151.619" y="220"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="10" y="55"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="17" y="72.889">App</text>
+    <text fill="#000" font-size="14" textLength="31.85" x="137.694" y="80.889">OEM</text>
+    <ellipse cx="156.619" cy="18.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M156.619,26.5 L156.619,53.5 M143.619,34.5 L169.619,34.5 M156.619,53.5 L143.619,68.5 M156.619,53.5 L169.619,68.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="10" y="238"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="17" y="255.889">App</text>
+    <text fill="#000" font-size="14" textLength="31.85" x="137.694" y="248.889">OEM</text>
+    <ellipse cx="156.619" cy="260.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M156.619,268.5 L156.619,295.5 M143.619,276.5 L169.619,276.5 M156.619,295.5 L143.619,310.5 M156.619,295.5 L169.619,310.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#EEE" height="3" style="stroke:#EEE;stroke-width:1;" width="165.544" x="10" y="111.5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="175.544" y1="111.5" y2="111.5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="175.544" y1="114.5" y2="114.5"/>
+    <rect fill="#EEE" height="21" style="stroke:#000;stroke-width:2;" width="69.656" x="57.944" y="102"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="55.656" x="63.944" y="116.111">Process A</text>
+    <polygon fill="#181818" points="139.619,148,149.619,152,139.619,156,143.619,152" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="29.469" x2="145.619" y1="152" y2="152"/>
+    <text fill="#000" font-size="13" textLength="66.3" x="36.469" y="147.111">Inform OEM</text>
+    <rect fill="#EEE" height="3" style="stroke:#EEE;stroke-width:1;" width="165.544" x="10" y="179.5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="175.544" y1="179.5" y2="179.5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="175.544" y1="182.5" y2="182.5"/>
+    <rect fill="#EEE" height="21" style="stroke:#000;stroke-width:2;" width="69.656" x="57.944" y="170"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="55.656" x="63.944" y="184.111">Process B</text>
+    <polygon fill="#181818" points="139.619,216,149.619,220,139.619,224,143.619,220" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="29.469" x2="145.619" y1="220" y2="220"/>
+    <text fill="#000" font-size="13" textLength="98.15" x="36.469" y="215.111">Inform OEM again</text>
+  </g>
+</svg>

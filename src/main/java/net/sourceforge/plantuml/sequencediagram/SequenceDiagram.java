@@ -267,7 +267,12 @@ public class SequenceDiagram extends TitledDiagram {
 	}
 
 	public void divider(Display strings) {
-		events.add(new Divider(strings, getSkinParam().getCurrentStyleBuilder()));
+		final Divider divider = new Divider(strings, getSkinParam().getCurrentStyleBuilder());
+		events.add(divider);
+		// See Divider.dealWith() for why this matters: without it, a bare
+		// activate/deactivate right after this divider would anchor itself to
+		// whatever message preceded the divider instead of to the divider itself.
+		lastEventWithDeactivate = divider;
 	}
 
 	public void hspace() {

@@ -1,0 +1,17 @@
+---
+output: svg
+expected-description: (2 participants)
+---
+@startuml
+participant "App" as App
+actor "OEM" as OEM
+
+== Process A ==
+activate OEM
+deactivate OEM
+
+== Process B ==
+App -> OEM: Inform OEM
+activate OEM
+deactivate OEM
+@enduml
