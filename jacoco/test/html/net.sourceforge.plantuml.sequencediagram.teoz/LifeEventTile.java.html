@@ -101,38 +101,38 @@ public class LifeEventTile extends AbstractTile {
 	}
 
 	private StyleSignature getStyleSignature() {
-<span class="nc" id="L104">		return ComponentType.DESTROY.getStyleSignature();</span>
+<span class="fc" id="L104">		return ComponentType.DESTROY.getStyleSignature();</span>
 	}
 
     private Style[] getUsedStyle() {
-<span class="nc" id="L108">        final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="nc" id="L109">		return new Style[] { style };</span>
+<span class="fc" id="L108">        final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L109">		return new Style[] { style };</span>
     }	
 
 	public void drawU(UGraphic ug) {
 		// Self-translate prologue: absolute gauge position
 <span class="fc" id="L114">		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));</span>
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (isDestroyWithoutMessage()) {</span>
-<span class="nc" id="L116">			final Component cross = skin.createComponent(getUsedStyle(), ComponentType.DESTROY, null, skinParam,</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		if (isDestroyWithoutMessage()) {</span>
+<span class="fc" id="L116">			final Component cross = skin.createComponent(getUsedStyle(), ComponentType.DESTROY, null, skinParam,</span>
 					null);
-<span class="nc" id="L118">			final XDimension2D dimCross = cross.getPreferredDimension(ug.getStringBounder());</span>
-<span class="nc" id="L119">			final double x = livingSpace.getPosC(ug.getStringBounder()).getCurrentValue();</span>
-<span class="nc" id="L120">			cross.drawU(ug.apply(UTranslate.dx(x - dimCross.getWidth() / 2)), null, (Context2D) ug);</span>
+<span class="fc" id="L118">			final XDimension2D dimCross = cross.getPreferredDimension(ug.getStringBounder());</span>
+<span class="fc" id="L119">			final double x = livingSpace.getPosC(ug.getStringBounder()).getCurrentValue();</span>
+<span class="fc" id="L120">			cross.drawU(ug.apply(UTranslate.dx(x - dimCross.getWidth() / 2)), null, (Context2D) ug);</span>
 		}
 <span class="fc" id="L122">	}</span>
 
 	public boolean isDestroyWithoutMessage() {
-<span class="pc bpc" id="L125" title="1 of 4 branches missed.">		return lifeEvent.getMessage() == null &amp;&amp; lifeEvent.getType() == LifeEventType.DESTROY;</span>
+<span class="fc bfc" id="L125" title="All 4 branches covered.">		return lifeEvent.getMessage() == null &amp;&amp; lifeEvent.getType() == LifeEventType.DESTROY;</span>
 	}
 
 	public double getPreferredHeight() {
 //		if (lifeEvent.isActivate()) {
 //			return 20;
 //		}
-<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if (isDestroyWithoutMessage()) {</span>
-<span class="nc" id="L133">			final Component cross = skin.createComponent(getUsedStyle(), ComponentType.DESTROY, null, skinParam, null);</span>
-<span class="nc" id="L134">			final XDimension2D dimCross = cross.getPreferredDimension(getStringBounder());</span>
-<span class="nc" id="L135">			return dimCross.getHeight();</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		if (isDestroyWithoutMessage()) {</span>
+<span class="fc" id="L133">			final Component cross = skin.createComponent(getUsedStyle(), ComponentType.DESTROY, null, skinParam, null);</span>
+<span class="fc" id="L134">			final XDimension2D dimCross = cross.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L135">			return dimCross.getHeight();</span>
 		}
 <span class="fc" id="L137">		return 0;</span>
 	}

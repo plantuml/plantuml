@@ -94,12 +94,12 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="Event.html" title="interface in net.sourceforge.plantuml.sequencediagram">Event</a></code>, <code><a href="../style/Styleable.html" title="interface in net.sourceforge.plantuml.style">Styleable</a></code>, <code><a href="../style/WithStyle.html" title="interface in net.sourceforge.plantuml.style">WithStyle</a></code></dd>
+<dd><code><a href="Event.html" title="interface in net.sourceforge.plantuml.sequencediagram">Event</a></code>, <code><a href="EventWithDeactivate.html" title="interface in net.sourceforge.plantuml.sequencediagram">EventWithDeactivate</a></code>, <code><a href="../style/Styleable.html" title="interface in net.sourceforge.plantuml.style">Styleable</a></code>, <code><a href="../style/WithStyle.html" title="interface in net.sourceforge.plantuml.style">WithStyle</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">Divider</span>
 <span class="extends-implements">extends <a href="AbstractEvent.html" title="class in net.sourceforge.plantuml.sequencediagram">AbstractEvent</a>
-implements <a href="Event.html" title="interface in net.sourceforge.plantuml.sequencediagram">Event</a>, <a href="../style/WithStyle.html" title="interface in net.sourceforge.plantuml.style">WithStyle</a></span></div>
+implements <a href="Event.html" title="interface in net.sourceforge.plantuml.sequencediagram">Event</a>, <a href="../style/WithStyle.html" title="interface in net.sourceforge.plantuml.style">WithStyle</a>, <a href="EventWithDeactivate.html" title="interface in net.sourceforge.plantuml.sequencediagram">EventWithDeactivate</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -129,7 +129,13 @@ implements <a href="Event.html" title="interface in net.sourceforge.plantuml.seq
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dealWith(net.sourceforge.plantuml.sequencediagram.Participant)" class="member-name-link">dealWith</a><wbr>(<a href="Participant.html" title="class in net.sourceforge.plantuml.sequencediagram">Participant</a>&nbsp;someone)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addLifeEvent(net.sourceforge.plantuml.sequencediagram.LifeEvent)" class="member-name-link">addLifeEvent</a><wbr>(<a href="LifeEvent.html" title="class in net.sourceforge.plantuml.sequencediagram">LifeEvent</a>&nbsp;lifeEvent)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dealWith(net.sourceforge.plantuml.sequencediagram.Participant)" class="member-name-link">dealWith</a><wbr>(<a href="Participant.html" title="class in net.sourceforge.plantuml.sequencediagram">Participant</a>&nbsp;someone)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPosYendLevel()" class="member-name-link">getPosYendLevel</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../style/StyleSignature.html" title="interface in net.sourceforge.plantuml.style">StyleSignature</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStyleSignature()" class="member-name-link">getStyleSignature</a>()</code></div>
@@ -140,6 +146,9 @@ implements <a href="Event.html" title="interface in net.sourceforge.plantuml.seq
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a>[]</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getUsedStyles()" class="member-name-link">getUsedStyles</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPosYendLevel(double)" class="member-name-link">setPosYendLevel</a><wbr>(double&nbsp;posYendLevel)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -211,6 +220,36 @@ implements <a href="Event.html" title="interface in net.sourceforge.plantuml.seq
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Event.html#dealWith(net.sourceforge.plantuml.sequencediagram.Participant)">dealWith</a></code>&nbsp;in interface&nbsp;<code><a href="Event.html" title="interface in net.sourceforge.plantuml.sequencediagram">Event</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setPosYendLevel(double)">
+<h3>setPosYendLevel</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPosYendLevel</span><wbr><span class="parameters">(double&nbsp;posYendLevel)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="EventWithDeactivate.html#setPosYendLevel(double)">setPosYendLevel</a></code>&nbsp;in interface&nbsp;<code><a href="EventWithDeactivate.html" title="interface in net.sourceforge.plantuml.sequencediagram">EventWithDeactivate</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getPosYendLevel()">
+<h3>getPosYendLevel</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getPosYendLevel</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="EventWithDeactivate.html#getPosYendLevel()">getPosYendLevel</a></code>&nbsp;in interface&nbsp;<code><a href="EventWithDeactivate.html" title="interface in net.sourceforge.plantuml.sequencediagram">EventWithDeactivate</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="addLifeEvent(net.sourceforge.plantuml.sequencediagram.LifeEvent)">
+<h3>addLifeEvent</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">addLifeEvent</span><wbr><span class="parameters">(<a href="LifeEvent.html" title="class in net.sourceforge.plantuml.sequencediagram">LifeEvent</a>&nbsp;lifeEvent)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="EventWithDeactivate.html#addLifeEvent(net.sourceforge.plantuml.sequencediagram.LifeEvent)">addLifeEvent</a></code>&nbsp;in interface&nbsp;<code><a href="EventWithDeactivate.html" title="interface in net.sourceforge.plantuml.sequencediagram">EventWithDeactivate</a></code></dd>
 </dl>
 </section>
 </li>

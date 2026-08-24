@@ -264,8 +264,8 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="fc bfc" id="L264" title="All 2 branches covered.">			else if (event instanceof LifeEvent) { // &amp;&amp; event.dealWith(p)) {</span>
 <span class="fc" id="L265">				LifeEvent le = (LifeEvent) event;</span>
 <span class="fc bfc" id="L266" title="All 2 branches covered.">				if (le.dealWith(p)) {</span>
-<span class="pc bpc" id="L267" title="2 of 4 branches missed.">					if (le.getMessage() == null || !(le.getMessage().isParallelWith(lastMessage))) {</span>
-<span class="nc" id="L268">						position = potentialPosition;</span>
+<span class="pc bpc" id="L267" title="1 of 4 branches missed.">					if (le.getMessage() == null || !(le.getMessage().isParallelWith(lastMessage))) {</span>
+<span class="fc" id="L268">						position = potentialPosition;</span>
 <span class="pc bpc" id="L269" title="1 of 8 branches missed.">					} else if ((le.isActivate() &amp;&amp; seenDeactivate) || (le.isDeactivate() &amp;&amp; seenActivate)) {</span>
 <span class="fc" id="L270">						position = potentialPosition;</span>
 					}

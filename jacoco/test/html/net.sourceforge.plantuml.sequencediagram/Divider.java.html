@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
 
-public class Divider extends AbstractEvent implements Event, WithStyle {
+public class Divider extends AbstractEvent implements Event, WithStyle, EventWithDeactivate {
 
 	private final Display text;
 
@@ -66,7 +66,38 @@ public class Divider extends AbstractEvent implements Event, WithStyle {
 	}
 
 	public boolean dealWith(Participant someone) {
-<span class="nc" id="L69">		return false;</span>
+<span class="fc" id="L69">		return false;</span>
+	}
+
+	// A divider (== ... ==) closes off whatever message preceded it, exactly like
+	// the end of an alt/opt/loop block does for a GroupingLeaf. Without this,
+	// SequenceDiagram.lastEventWithDeactivate keeps pointing at the last message
+	// that was sent *before* the divider, so a bare activate/deactivate/destroy
+	// placed right after the divider (with no message of its own) wrongly tries
+	// to reattach to that stale message instead of becoming its own event. When
+	// the participant matches and already carries a decoration from before the
+	// divider, that reattachment fails outright with a spurious
+	// &quot;Activate/Deactivate already done&quot; error (the exact case in
+	// https://github.com/plantuml/plantuml/issues/2729). When it doesn't collide
+	// -- e.g. a bare &quot;destroy&quot; reusing a message several sections back -- it can
+	// silently attach in the wrong place instead of erroring.
+	//
+	// dealWith() staying false (like GroupingLeaf's) makes such a bare
+	// activate/deactivate/destroy become a standalone, unattached LifeEvent
+	// instead, positioned by its own place in the event timeline -- i.e. right
+	// after this divider, which is where it belongs.
+	private double posYendLevel;
+
+	public void setPosYendLevel(double posYendLevel) {
+<span class="nc" id="L92">		this.posYendLevel = posYendLevel;</span>
+<span class="nc" id="L93">	}</span>
+
+	public double getPosYendLevel() {
+<span class="nc" id="L96">		return posYendLevel;</span>
+	}
+
+	public boolean addLifeEvent(LifeEvent lifeEvent) {
+<span class="nc" id="L100">		return true;</span>
 	}
 
 }
