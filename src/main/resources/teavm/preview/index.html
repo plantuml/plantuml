@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<title>PlantUML Live Preview</title>
+	<link rel="icon" href="../favicon.svg" type="image/svg+xml"/>
+	<link rel="stylesheet" href="main.css"/>
+</head>
+<body>
+	<div id="preview">
+		<div class="zoom-controls" role="group" aria-label="Diagram zoom">
+			<button id="zoom-out" type="button" title="Zoom out" aria-label="Zoom out">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<path d="M5 12h14"/>
+				</svg>
+			</button>
+			<button id="zoom-reset" class="zoom-level" type="button" title="Reset zoom; use the platform key and wheel over the diagram to zoom">100%</button>
+			<button id="zoom-in" type="button" title="Zoom in" aria-label="Zoom in">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<path d="M12 5v14M5 12h14"/>
+				</svg>
+			</button>
+			<button id="pan-tool" type="button" title="Pan tool; drag or hold the platform key while dragging" aria-label="Pan tool" aria-pressed="false">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<path d="M18 11V6a2 2 0 0 0-4 0v5M14 10V4a2 2 0 0 0-4 0v7M10 10V6a2 2 0 0 0-4 0v8M6 13l-1.2-1.2a2 2 0 0 0-2.8 2.8l5.2 5.2A4 4 0 0 0 10 21h4a6 6 0 0 0 6-6V8a2 2 0 0 0-4 0v3"/>
+				</svg>
+			</button>
+		</div>
+		<div id="stage">
+			<div id="loading" role="status">Rendering diagram…</div>
+			<div id="out"></div>
+			<img id="png-output" alt="" hidden/>
+			<div id="error" role="alert" hidden></div>
+			<div id="status" hidden></div>
+		</div>
+	</div>
+
+	<script src="../vendor/fflate-0.8.2.min.js"></script>
+	<script src="../viz-global.js"></script>
+	<script type="module" src="main.js"></script>
+</body>
+</html>
