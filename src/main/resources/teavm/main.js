@@ -8,6 +8,10 @@ const HASH_DEBOUNCE_MS = 300;
 let dark = false;
 let hashDebounceTimer = null;
 let toastTimer = null;
+const livePreviews = {
+	svg: {format: "SVG", previewWindow: null, button: null, ready: false},
+	png: {format: "PNG", previewWindow: null, button: null, ready: false}
+};
 
 restoreEditorFromHash();
 renderer();
@@ -44,6 +48,7 @@ function renderer() {
 function renderNow() {
 	const lines = editor.value.split(/\r\n|\r|\n/);
 	render(lines, "out", {dark: dark});
+	updateLivePreviews();
 }
 
 function restoreEditorFromHash(useDefaultWhenEmpty = false) {
@@ -137,6 +142,89 @@ async function copyText(content) {
 	if (!copied) {
 		throw new Error("The browser denied clipboard access");
 	}
+}
+
+function isLivePreviewOpen(state) {
+	if (state.previewWindow == null) {
+		return false;
+	}
+	if (state.previewWindow.closed) {
+		releaseLivePreview(state);
+		return false;
+	}
+	return true;
+}
+
+function releaseLivePreview(state) {
+	state.button?.classList.remove("active");
+	state.button = null;
+	state.ready = false;
+	state.previewWindow = null;
+}
+
+function getLivePreviewUrl(state) {
+	const url = new URL("preview/", window.location.href);
+	url.searchParams.set("format", state.format.toLowerCase());
+	url.searchParams.set("theme", dark ? "dark" : "light");
+	if (editor.value) {
+		url.hash = encodePlantUml(editor.value);
+	}
+	return url;
+}
+
+function updateLivePreviewLocation(state) {
+	if (!isLivePreviewOpen(state) || !state.ready) {
+		return;
+	}
+	try {
+		const url = getLivePreviewUrl(state);
+		if (state.previewWindow.location.href !== url.href) {
+			state.previewWindow.history.replaceState(null, "", url);
+			state.previewWindow.dispatchEvent(new state.previewWindow.Event("hashchange"));
+		}
+	} catch (err) {
+		console.warn(`Stopped updating live ${state.format} preview:`, err);
+		releaseLivePreview(state);
+	}
+}
+
+function openLivePreview(kind, button) {
+	const state = livePreviews[kind];
+	if (isLivePreviewOpen(state)) {
+		state.previewWindow.focus();
+		updateLivePreviewLocation(state);
+		return;
+	}
+
+	const previewWindow = window.open(getLivePreviewUrl(state), "_blank");
+	if (previewWindow == null) {
+		showControlResult(button, "error", 3000);
+		showToast("Popup blocked", true);
+		return;
+	}
+
+	state.previewWindow = previewWindow;
+	state.button = button;
+	state.ready = false;
+	button.classList.add("active");
+	previewWindow.addEventListener("load", () => {
+		if (state.previewWindow !== previewWindow) {
+			return;
+		}
+		state.ready = true;
+		previewWindow.addEventListener("pagehide", () => {
+			if (state.previewWindow === previewWindow) {
+				releaseLivePreview(state);
+			}
+		}, {once: true});
+		updateLivePreviewLocation(state);
+	}, {once: true});
+	previewWindow.focus();
+}
+
+function updateLivePreviews() {
+	updateLivePreviewLocation(livePreviews.svg);
+	updateLivePreviewLocation(livePreviews.png);
 }
 
 function resize() {
@@ -241,6 +329,12 @@ function controls() {
 		}
 	});
 
+	const openSvg = document.getElementById("open-svg");
+	openSvg.addEventListener("click", () => openLivePreview("svg", openSvg));
+
+	const openPng = document.getElementById("open-png");
+	openPng.addEventListener("click", () => openLivePreview("png", openPng));
+
 	const theme = document.getElementById("theme");
 	theme.addEventListener("click", () => {
 		dark = !dark;
@@ -328,8 +422,10 @@ function contextMenu() {
 		// real action, error handling and visual feedback live in one
 		// place (the click handlers installed by controls()).
 		const ENTRIES = [
-			{ label: "Copy as bitmap", buttonId: "copy-bitmap" },
-			{ label: "Copy as SVG",    buttonId: "copy"        }
+			{ label: "Copy as bitmap",       buttonId: "copy-bitmap" },
+			{ label: "Copy as SVG",          buttonId: "copy"        },
+			{ label: "Open live PNG preview", buttonId: "open-png"    },
+			{ label: "Open live SVG preview", buttonId: "open-svg"    }
 		];
 		for (const entry of ENTRIES) {
 			const li = document.createElement("li");

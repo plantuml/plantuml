@@ -1,0 +1,134 @@
+:root {
+	color-scheme: light;
+	--bg: light-dark(#fff, #1e1e2e);
+	--fg: light-dark(#000, #cdd6f4);
+	--surface: light-dark(#faeff9, #30303e);
+	--accent: light-dark(#d3bae3, #89b4fa);
+	--muted: light-dark(#6c7086, #9ca0b0);
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	overflow: hidden;
+	background: var(--bg);
+	color: var(--fg);
+}
+
+#preview {
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+}
+
+#stage {
+	width: max-content;
+	min-width: 100%;
+	height: max-content;
+	min-height: 100%;
+	display: grid;
+	place-items: center;
+}
+
+#stage > * {
+	grid-area: 1 / 1;
+}
+
+#out svg,
+#png-output {
+	display: block;
+	max-width: 100vw;
+	max-height: 100vh;
+	object-fit: contain;
+	zoom: var(--preview-zoom, 1);
+}
+
+[hidden] {
+	display: none !important;
+}
+
+#out.png-source {
+	position: fixed;
+	left: -100000px;
+	top: 0;
+}
+
+.zoom-controls {
+	position: fixed;
+	right: 0.75rem;
+	bottom: 0.75rem;
+	z-index: 10;
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+}
+
+.zoom-controls button {
+	border: none;
+	padding: 0.5rem;
+	background-color: var(--surface);
+	color: var(--fg);
+	border-radius: 50%;
+	cursor: pointer;
+}
+
+.zoom-controls button svg {
+	display: block;
+	width: 1rem;
+	height: 1rem;
+}
+
+.zoom-controls button:hover {
+	outline: 1px solid color-mix(in srgb, var(--accent) 30%, var(--surface));
+}
+
+.zoom-controls button:focus {
+	outline: 1px solid var(--accent);
+}
+
+.zoom-controls button:disabled {
+	cursor: default;
+	opacity: 0.45;
+}
+
+.zoom-controls button.active {
+	outline: 1px solid var(--accent);
+}
+
+.zoom-controls .zoom-level {
+	min-width: 3.25rem;
+	border-radius: 1rem;
+	font-size: 0.75rem;
+	line-height: 1rem;
+}
+
+.pan-ready,
+.pan-ready * {
+	cursor: grab !important;
+}
+
+.panning,
+.panning * {
+	cursor: grabbing !important;
+	user-select: none;
+}
+
+#loading,
+#error {
+	font: 0.875rem sans-serif;
+	color: var(--muted);
+}
+
+#error {
+	padding: 1rem;
+	color: #b42318;
+}

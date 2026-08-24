@@ -794,7 +794,7 @@ tasks.register<Zip>("teavmZip") {
 	
 	// Use lazy evaluation to ensure files are read after teavm task completes
 	from(teavmJsOutputDir) {
-		include("*.js", "*.html", "*.css", "*.svg", "*.ico", "vendor/**")
+		include("*.js", "*.html", "*.css", "*.svg", "*.ico", "preview/**", "vendor/**")
 	}
 	
 	destinationDirectory.set(layout.buildDirectory.dir("libs"))
