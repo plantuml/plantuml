@@ -1,5 +1,6 @@
 import { render } from "./plantuml.js";
 import { decodePlantUml, encodePlantUml } from "./plantuml-codec.js";
+import { createZoomController } from "./zoom.js";
 
 const editor = document.getElementById("editor");
 const defaultSource = editor.value;
@@ -14,6 +15,17 @@ resize();
 controls();
 contextMenu();
 urlSharing();
+zoomControls();
+
+function zoomControls() {
+	createZoomController({
+		viewport: document.getElementById("out"),
+		zoomOut: document.getElementById("zoom-out"),
+		zoomReset: document.getElementById("zoom-reset"),
+		zoomIn: document.getElementById("zoom-in"),
+		panToggle: document.getElementById("pan-tool")
+	});
+}
 
 function renderer() {
 	const loading = document.getElementById("loading");
