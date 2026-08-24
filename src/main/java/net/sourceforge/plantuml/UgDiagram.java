@@ -90,6 +90,9 @@ public abstract class UgDiagram extends AbstractDiagram {
 
 		final long now = System.currentTimeMillis();
 		try {
+			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SIMULATE_RENDER_CRASH_FOR_TESTS))
+				throw new IllegalStateException(
+						"Simulated rendering crash (GlobalConfigKey.SIMULATE_RENDER_CRASH_FOR_TESTS) - for unit tests only");
 			return getExporter(index, fileFormatOption).exportTo(os);
 		} catch (Throwable e) {
 			Logme.error(e);

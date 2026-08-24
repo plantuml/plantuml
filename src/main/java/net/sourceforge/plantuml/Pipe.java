@@ -121,6 +121,16 @@ public class Pipe {
 		final DiagramDescription result = sourceStringReader.outputImage(os, option.getImageIndex(),
 				option.getFileFormatOption());
 
+		// A diagram can parse fine and still fail to render (GraphViz/dot crashing,
+		// timing out, or returning something PlantUML cannot use): that failure is
+		// caught in UgDiagram.exportDiagram(), which writes a "crash" image instead of
+		// the real diagram and tags it with a non-OK status. -pipe is the exact use case
+		// from the original report (PlantUML driven from another process), so it must
+		// not exit 0 just because *something* got written to stdout.
+		if (result != null && result.getImageData() != null
+				&& ExitStatus.isErrorStatus(result.getImageData().getStatus()))
+			exitStatus.goesHasErrors();
+
 		// Only -pipeNoStderr reroutes the per-diagram info line away from stderr: that
 		// is specifically what its name promises, and --no-error-image alone makes no
 		// claim about stderr, so it must not change where this goes.

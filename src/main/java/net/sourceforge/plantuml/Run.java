@@ -362,6 +362,17 @@ public class Run {
 		for (BlockUml s : sourceFileReader.getBlocks())
 			rpt.printInfo(System.err, s.getDiagram());
 
+		// A diagram can parse fine (no PSystemError/PSystemUnsupported, so
+		// updateStatus() above saw nothing wrong) and still fail to render: GraphViz/dot
+		// can crash, time out, or return something PlantUML cannot use. That failure is
+		// caught in UgDiagram.exportDiagram(), which produces a "crash" image and tags
+		// it with a non-OK status (see FileImageData/ImageDataSimple.error) - but until
+		// now nothing looked at that status here, so the process exited 0 even though a
+		// crash image had just been written to disk instead of the real diagram.
+		for (GeneratedImage image : result)
+			if (ExitStatus.isErrorStatus(image.getStatus()))
+				exitStatus.goesHasErrors();
+
 		if (result.size() != 0)
 			for (GeneratedImage image : result) {
 				final int lineError = image.lineErrorRaw();

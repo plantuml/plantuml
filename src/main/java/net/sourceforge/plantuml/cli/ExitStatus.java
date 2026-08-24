@@ -46,6 +46,17 @@ public class ExitStatus {
 		return String.format("  %-4d %s", code, description);
 	}
 
+	/**
+	 * Whether an {@code ImageData}/{@code GeneratedImage} status means that the
+	 * corresponding diagram failed to render (for example GraphViz/dot crashed, timed
+	 * out, or returned something PlantUML could not use). Mirrors the convention already
+	 * used by {@code PicoWebServer.httpReturnCode}: 0 (the default, never explicitly set)
+	 * and 200 both mean success, anything else (400, 503, ...) is an error.
+	 */
+	public static boolean isErrorStatus(int status) {
+		return status != 0 && status != 200;
+	}
+
 	public static void printExitCodes() {
 		final String[] all = {
 			formatExitCode(OK, "Success"),

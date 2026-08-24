@@ -46,7 +46,13 @@ public enum GlobalConfigKey {
 	ENABLE_STATS(defaultForStats()), //
 	SILENTLY_COMPLETELY_IGNORE_ERRORS(Boolean.FALSE), //
 	FILE_SEPARATOR("_"), //
-	TIMEOUT_MS(30_000L);// 30 seconds
+	TIMEOUT_MS(30_000L), // 30 seconds
+	// Not a real feature: flipped on by unit tests to make diagram export throw,
+	// exactly as it would if GraphViz/dot terminated but produced something PlantUML
+	// could not use (a crash, a timeout, garbage output, ...). This lets tests exercise
+	// the crash-handling and exit-code logic in UgDiagram/Run/Pipe without depending on
+	// an actual (broken) dot executable. Must never be set outside test code.
+	SIMULATE_RENDER_CRASH_FOR_TESTS(Boolean.FALSE);
 
 	private final Object defaultValue;
 
