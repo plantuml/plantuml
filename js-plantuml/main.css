@@ -194,6 +194,10 @@ main {
 	outline: 1px solid color-mix(in srgb, var(--accent) 30%, #ef7373);
 }
 
+.controls button.active {
+	outline: 1px solid var(--accent);
+}
+
 .toast {
 	position: fixed;
 	left: 50%;
