@@ -46,25 +46,31 @@ package net.sourceforge.plantuml.cli;
 <span class="fc" id="L46">	ENABLE_STATS(defaultForStats()), //</span>
 <span class="fc" id="L47">	SILENTLY_COMPLETELY_IGNORE_ERRORS(Boolean.FALSE), //</span>
 <span class="fc" id="L48">	FILE_SEPARATOR(&quot;_&quot;), //</span>
-<span class="fc" id="L49">	TIMEOUT_MS(30_000L);// 30 seconds</span>
+<span class="fc" id="L49">	TIMEOUT_MS(30_000L), // 30 seconds</span>
+	// Not a real feature: flipped on by unit tests to make diagram export throw,
+	// exactly as it would if GraphViz/dot terminated but produced something PlantUML
+	// could not use (a crash, a timeout, garbage output, ...). This lets tests exercise
+	// the crash-handling and exit-code logic in UgDiagram/Run/Pipe without depending on
+	// an actual (broken) dot executable. Must never be set outside test code.
+<span class="fc" id="L55">	SIMULATE_RENDER_CRASH_FOR_TESTS(Boolean.FALSE);</span>
 
 	private final Object defaultValue;
 
-<span class="fc" id="L53">	GlobalConfigKey(Object defaultValue) {</span>
-<span class="fc" id="L54">		this.defaultValue = defaultValue;</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L59">	GlobalConfigKey(Object defaultValue) {</span>
+<span class="fc" id="L60">		this.defaultValue = defaultValue;</span>
+<span class="fc" id="L61">	}</span>
 
 	public Object getDefaultValue() {
-<span class="fc" id="L58">		return defaultValue;</span>
+<span class="fc" id="L64">		return defaultValue;</span>
 	}
 	
 	
 	private static boolean defaultForStats() {
-<span class="pc bpc" id="L63" title="2 of 4 branches missed.">		return isTrue(System.getProperty(&quot;PLANTUML_STATS&quot;)) || isTrue(System.getenv(&quot;PLANTUML_STATS&quot;));</span>
+<span class="pc bpc" id="L69" title="2 of 4 branches missed.">		return isTrue(System.getProperty(&quot;PLANTUML_STATS&quot;)) || isTrue(System.getenv(&quot;PLANTUML_STATS&quot;));</span>
 	}
 
 	private static boolean isTrue(final String value) {
-<span class="pc bpc" id="L67" title="2 of 4 branches missed.">		return &quot;on&quot;.equalsIgnoreCase(value) || &quot;true&quot;.equalsIgnoreCase(value);</span>
+<span class="pc bpc" id="L73" title="2 of 4 branches missed.">		return &quot;on&quot;.equalsIgnoreCase(value) || &quot;true&quot;.equalsIgnoreCase(value);</span>
 	}
 
 

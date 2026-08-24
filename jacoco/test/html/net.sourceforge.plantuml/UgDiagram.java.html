@@ -90,72 +90,75 @@ public abstract class UgDiagram extends AbstractDiagram {
 
 <span class="fc" id="L91">		final long now = System.currentTimeMillis();</span>
 		try {
-<span class="fc" id="L93">			return getExporter(index, fileFormatOption).exportTo(os);</span>
-<span class="fc" id="L94">		} catch (Throwable e) {</span>
-<span class="fc" id="L95">			Logme.error(e);</span>
-<span class="fc" id="L96">			final CrashReportHandler report = new CrashReportHandler(e, getMetadata(), getFlashData());</span>
-<span class="fc" id="L97">			report.anErrorHasOccurred(e, getFlashData());</span>
-<span class="fc" id="L98">			report.addProperties();</span>
-<span class="fc" id="L99">			report.addEmptyLine();</span>
-<span class="fc" id="L100">			report.youShouldSendThisDiagram();</span>
-<span class="fc" id="L101">			report.addEmptyLine();</span>
-<span class="fc" id="L102">			report.exportDiagramError(fileFormatOption, seed(), os);</span>
-<span class="fc" id="L103">			return ImageDataSimple.error(e);</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.SIMULATE_RENDER_CRASH_FOR_TESTS))</span>
+<span class="fc" id="L94">				throw new IllegalStateException(</span>
+						&quot;Simulated rendering crash (GlobalConfigKey.SIMULATE_RENDER_CRASH_FOR_TESTS) - for unit tests only&quot;);
+<span class="fc" id="L96">			return getExporter(index, fileFormatOption).exportTo(os);</span>
+<span class="fc" id="L97">		} catch (Throwable e) {</span>
+<span class="fc" id="L98">			Logme.error(e);</span>
+<span class="fc" id="L99">			final CrashReportHandler report = new CrashReportHandler(e, getMetadata(), getFlashData());</span>
+<span class="fc" id="L100">			report.anErrorHasOccurred(e, getFlashData());</span>
+<span class="fc" id="L101">			report.addProperties();</span>
+<span class="fc" id="L102">			report.addEmptyLine();</span>
+<span class="fc" id="L103">			report.youShouldSendThisDiagram();</span>
+<span class="fc" id="L104">			report.addEmptyLine();</span>
+<span class="fc" id="L105">			report.exportDiagramError(fileFormatOption, seed(), os);</span>
+<span class="fc" id="L106">			return ImageDataSimple.error(e);</span>
 		} finally {
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">			if (!TeaVM.isTeaVM()) {</span>
-<span class="fc bfc" id="L106" title="All 2 branches covered.">				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENABLE_STATS))</span>
-<span class="fc" id="L107">					StatsUtilsIncrement.onceMoreGenerate(System.currentTimeMillis() - now, getClass(),</span>
-<span class="fc" id="L108">							fileFormatOption.getFileFormat());</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">			if (!TeaVM.isTeaVM()) {</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENABLE_STATS))</span>
+<span class="fc" id="L110">					StatsUtilsIncrement.onceMoreGenerate(System.currentTimeMillis() - now, getClass(),</span>
+<span class="fc" id="L111">							fileFormatOption.getFileFormat());</span>
 
 			}
 		}
 	}
 
 	public boolean isHandwritten() {
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (getPreprocessingArtifact().getOption().isTrue(OptionKey.HANDWRITTEN))</span>
-<span class="nc" id="L116">			return true;</span>
-<span class="fc" id="L117">		return false;</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (getPreprocessingArtifact().getOption().isTrue(OptionKey.HANDWRITTEN))</span>
+<span class="nc" id="L119">			return true;</span>
+<span class="fc" id="L120">		return false;</span>
 	}
 
 	protected TextBlockExporter getExporter(int index, FileFormatOption fileFormatOption) throws Exception {
-<span class="fc" id="L121">		TextBlock result = getTextBlock(index, fileFormatOption);</span>
+<span class="fc" id="L124">		TextBlock result = getTextBlock(index, fileFormatOption);</span>
 
-<span class="fc" id="L123">		final int status = computeStatus(result);</span>
+<span class="fc" id="L126">		final int status = computeStatus(result);</span>
 
-<span class="fc" id="L125">		result = addChrome(index, result);</span>
+<span class="fc" id="L128">		result = addChrome(index, result);</span>
 
-<span class="fc" id="L127">		final HColor backColor = calculateBackColor();</span>
-<span class="fc bfc" id="L128" title="All 2 branches covered.">		if (backColor != null)</span>
-<span class="fc" id="L129">			result = TextBlockUtils.addBackcolor(result, backColor);</span>
+<span class="fc" id="L130">		final HColor backColor = calculateBackColor();</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		if (backColor != null)</span>
+<span class="fc" id="L132">			result = TextBlockUtils.addBackcolor(result, backColor);</span>
 
-<span class="fc" id="L131">		final ColorMapper mutedMapper = muteColorMapper(fileFormatOption.getColorMapper());</span>
-<span class="fc" id="L132">		final FileFormatOption effectiveFormat = fileFormatOption.withColorMapper(mutedMapper);</span>
+<span class="fc" id="L134">		final ColorMapper mutedMapper = muteColorMapper(fileFormatOption.getColorMapper());</span>
+<span class="fc" id="L135">		final FileFormatOption effectiveFormat = fileFormatOption.withColorMapper(mutedMapper);</span>
 
-<span class="fc" id="L134">		final TextBlockExporter.Builder builder = TextBlockExporter.builder(result, effectiveFormat, isHandwritten());</span>
-<span class="fc bfc" id="L135" title="All 2 branches covered.">		if (this instanceof TitledDiagram)</span>
-<span class="fc" id="L136">			builder.styled((TitledDiagram) this);</span>
+<span class="fc" id="L137">		final TextBlockExporter.Builder builder = TextBlockExporter.builder(result, effectiveFormat, isHandwritten());</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">		if (this instanceof TitledDiagram)</span>
+<span class="fc" id="L139">			builder.styled((TitledDiagram) this);</span>
 		else
-<span class="fc" id="L138">			builder.scale(getScale()) //</span>
-<span class="pc bpc" id="L139" title="1 of 2 branches missed.">					.metadata(fileFormatOption.isWithMetadata() ? getMetadata() : null) //</span>
-<span class="fc" id="L140">					.seed(seed()) //</span>
-<span class="fc" id="L141">					.warningOrError(getWarningOrError()) //</span>
-<span class="fc" id="L142">					.margin(getDefaultMargins());</span>
+<span class="fc" id="L141">			builder.scale(getScale()) //</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">					.metadata(fileFormatOption.isWithMetadata() ? getMetadata() : null) //</span>
+<span class="fc" id="L143">					.seed(seed()) //</span>
+<span class="fc" id="L144">					.warningOrError(getWarningOrError()) //</span>
+<span class="fc" id="L145">					.margin(getDefaultMargins());</span>
 
-<span class="fc" id="L144">		builder.status(status);</span>
+<span class="fc" id="L147">		builder.status(status);</span>
 
-<span class="fc" id="L146">		return builder.build();</span>
+<span class="fc" id="L149">		return builder.build();</span>
 	}
 
 	private int computeStatus(TextBlock textBlock) {
-<span class="fc bfc" id="L150" title="All 2 branches covered.">		if (this instanceof PSystemUnsupported)</span>
-<span class="fc" id="L151">			return FileImageData.ERROR;</span>
-<span class="fc bfc" id="L152" title="All 2 branches covered.">		if (this instanceof PSystemError)</span>
-<span class="fc" id="L153">			return FileImageData.ERROR;</span>
-<span class="pc bpc" id="L154" title="1 of 2 branches missed.">		if (textBlock instanceof GraphvizCrash)</span>
-<span class="nc" id="L155">			return FileImageData.CRASH;</span>
-<span class="pc bpc" id="L156" title="1 of 4 branches missed.">		if (textBlock instanceof IEntityImage &amp;&amp; ((IEntityImage) textBlock).isCrash())</span>
-<span class="nc" id="L157">			return FileImageData.CRASH;</span>
-<span class="fc" id="L158">		return 0;</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		if (this instanceof PSystemUnsupported)</span>
+<span class="fc" id="L154">			return FileImageData.ERROR;</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">		if (this instanceof PSystemError)</span>
+<span class="fc" id="L156">			return FileImageData.ERROR;</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">		if (textBlock instanceof GraphvizCrash)</span>
+<span class="nc" id="L158">			return FileImageData.CRASH;</span>
+<span class="pc bpc" id="L159" title="1 of 4 branches missed.">		if (textBlock instanceof IEntityImage &amp;&amp; ((IEntityImage) textBlock).isCrash())</span>
+<span class="nc" id="L160">			return FileImageData.CRASH;</span>
+<span class="fc" id="L161">		return 0;</span>
 	}
 
 }

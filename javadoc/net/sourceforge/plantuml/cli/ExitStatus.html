@@ -149,12 +149,19 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ExitStatus.html" title="class in net.sourceforge.plantuml.cli">ExitStatus</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#init()" class="member-name-link">init</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#noDiagramFound()" class="member-name-link">noDiagramFound</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#printExitCodes()" class="member-name-link">printExitCodes</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isErrorStatus(int)" class="member-name-link">isErrorStatus</a><wbr>(int&nbsp;status)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Whether an <code>ImageData</code>/<code>GeneratedImage</code> status means that the
+ corresponding diagram failed to render (for example GraphViz/dot crashed, timed
+ out, or returned something PlantUML could not use).</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#noDiagramFound()" class="member-name-link">noDiagramFound</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#printExitCodes()" class="member-name-link">printExitCodes</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -236,6 +243,17 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="isErrorStatus(int)">
+<h3>isErrorStatus</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isErrorStatus</span><wbr><span class="parameters">(int&nbsp;status)</span></div>
+<div class="block">Whether an <code>ImageData</code>/<code>GeneratedImage</code> status means that the
+ corresponding diagram failed to render (for example GraphViz/dot crashed, timed
+ out, or returned something PlantUML could not use). Mirrors the convention already
+ used by <code>PicoWebServer.httpReturnCode</code>: 0 (the default, never explicitly set)
+ and 200 both mean success, anything else (400, 503, ...) is an error.</div>
+</section>
+</li>
 <li>
 <section class="detail" id="printExitCodes()">
 <h3>printExitCodes</h3>

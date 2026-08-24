@@ -46,16 +46,27 @@ public class ExitStatus {
 <span class="fc" id="L46">		return String.format(&quot;  %-4d %s&quot;, code, description);</span>
 	}
 
+	/**
+	 * Whether an {@code ImageData}/{@code GeneratedImage} status means that the
+	 * corresponding diagram failed to render (for example GraphViz/dot crashed, timed
+	 * out, or returned something PlantUML could not use). Mirrors the convention already
+	 * used by {@code PicoWebServer.httpReturnCode}: 0 (the default, never explicitly set)
+	 * and 200 both mean success, anything else (400, 503, ...) is an error.
+	 */
+	public static boolean isErrorStatus(int status) {
+<span class="fc bfc" id="L57" title="All 4 branches covered.">		return status != 0 &amp;&amp; status != 200;</span>
+	}
+
 	public static void printExitCodes() {
-<span class="fc" id="L50">		final String[] all = {</span>
-<span class="fc" id="L51">			formatExitCode(OK, &quot;Success&quot;),</span>
-<span class="fc" id="L52">			formatExitCode(ERROR_50_NO_FILE_FOUND, &quot;No file found&quot;),</span>
-<span class="fc" id="L53">			formatExitCode(ERROR_100_NO_DIAGRAM_FOUND, &quot;No diagram found in file(s)&quot;),</span>
-<span class="fc" id="L54">			formatExitCode(ERROR_200_SOME_DIAGRAMS_HAVE_ERROR, &quot;Some diagrams have syntax errors&quot;)</span>
+<span class="fc" id="L61">		final String[] all = {</span>
+<span class="fc" id="L62">			formatExitCode(OK, &quot;Success&quot;),</span>
+<span class="fc" id="L63">			formatExitCode(ERROR_50_NO_FILE_FOUND, &quot;No file found&quot;),</span>
+<span class="fc" id="L64">			formatExitCode(ERROR_100_NO_DIAGRAM_FOUND, &quot;No diagram found in file(s)&quot;),</span>
+<span class="fc" id="L65">			formatExitCode(ERROR_200_SOME_DIAGRAMS_HAVE_ERROR, &quot;Some diagrams have syntax errors&quot;)</span>
 		};
-<span class="fc bfc" id="L56" title="All 2 branches covered.">		for (String line : all)</span>
-<span class="fc" id="L57">			System.out.println(line);</span>
-<span class="fc" id="L58">	}</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">		for (String line : all)</span>
+<span class="fc" id="L68">			System.out.println(line);</span>
+<span class="fc" id="L69">	}</span>
 
 	private volatile boolean hasFiles;
 	private volatile boolean hasErrors;
@@ -65,48 +76,48 @@ public class ExitStatus {
 	}
 
 	public static ExitStatus init() {
-<span class="fc" id="L68">		return new ExitStatus();</span>
+<span class="fc" id="L79">		return new ExitStatus();</span>
 	}
 
 	public void goesHasFiles() {
-<span class="fc" id="L72">		hasFiles = true;</span>
-<span class="fc" id="L73">	}</span>
+<span class="fc" id="L83">		hasFiles = true;</span>
+<span class="fc" id="L84">	}</span>
 
 	public void goesHasBlocks() {
-<span class="fc" id="L76">		hasBlocks = true;</span>
-<span class="fc" id="L77">	}</span>
+<span class="fc" id="L87">		hasBlocks = true;</span>
+<span class="fc" id="L88">	}</span>
 
 	public void goesHasErrors() {
-<span class="fc" id="L80">		hasErrors = true;</span>
-<span class="fc" id="L81">	}</span>
+<span class="fc" id="L91">		hasErrors = true;</span>
+<span class="fc" id="L92">	}</span>
 
 	public boolean hasErrors() {
-<span class="fc" id="L84">		return hasErrors;</span>
+<span class="fc" id="L95">		return hasErrors;</span>
 	}
 
 	public boolean noDiagramFound() {
-<span class="fc bfc" id="L88" title="All 2 branches covered.">		return hasBlocks == false;</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		return hasBlocks == false;</span>
 	}
 
 	private int getExitCode() {
-<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (hasErrors)</span>
-<span class="fc" id="L93">			return ERROR_200_SOME_DIAGRAMS_HAVE_ERROR;</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (hasErrors)</span>
+<span class="fc" id="L104">			return ERROR_200_SOME_DIAGRAMS_HAVE_ERROR;</span>
 
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (hasFiles == false)</span>
-<span class="nc" id="L96">			return ERROR_50_NO_FILE_FOUND;</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (hasFiles == false)</span>
+<span class="nc" id="L107">			return ERROR_50_NO_FILE_FOUND;</span>
 
-<span class="fc bfc" id="L98" title="All 2 branches covered.">		if (hasBlocks == false)</span>
-<span class="fc" id="L99">			return ERROR_100_NO_DIAGRAM_FOUND;</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (hasBlocks == false)</span>
+<span class="fc" id="L110">			return ERROR_100_NO_DIAGRAM_FOUND;</span>
 
-<span class="fc" id="L101">		return OK;</span>
+<span class="fc" id="L112">		return OK;</span>
 	}
 
 	public void eventuallyExit() {
-<span class="fc" id="L105">		final int code = getExitCode();</span>
-<span class="fc bfc" id="L106" title="All 2 branches covered.">		if (code != ExitStatus.OK)</span>
-<span class="nc" id="L107">			Exit.exit(code);</span>
+<span class="fc" id="L116">		final int code = getExitCode();</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">		if (code != ExitStatus.OK)</span>
+<span class="nc" id="L118">			Exit.exit(code);</span>
 		
-<span class="fc" id="L109">	}</span>
+<span class="fc" id="L120">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
