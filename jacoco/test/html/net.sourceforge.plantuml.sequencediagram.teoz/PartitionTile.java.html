@@ -52,70 +52,109 @@ import net.sourceforge.plantuml.sequencediagram.GroupingStart;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 
 public class PartitionTile extends GroupingTile {
 
+	// Vertical breathing room above (and below) the title text. Without it the
+	// title sits flush against the frame's top border -- issue #2679 (&quot;title
+	// spacing/padding ... right now it looks like it's one pixel from the top
+	// border&quot;). A plain `group` does not have this problem because its title
+	// lives in a separate pentagon-shaped header row, sized from the title's
+	// own height (see ComponentRoseGroupingHeader); a partition has no such
+	// header row -- its title is drawn directly over the frame -- so the gap
+	// has to be reserved and applied here explicitly.
+	private static final double TITLE_VPAD = 4;
+
 	public PartitionTile(Iterator&lt;Event&gt; it, GroupingStart start, TileArguments tileArgumentsBackColorChanged,
 			TileArguments tileArgumentsOriginal, YGauge currentY) {
 
-<span class="fc" id="L63">		super(it, start, tileArgumentsBackColorChanged, tileArgumentsOriginal, currentY);</span>
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L74">		super(it, start, tileArgumentsBackColorChanged, tileArgumentsOriginal, currentY);</span>
+<span class="fc" id="L75">	}</span>
+
+	// The title, as a TextBlock, built from the SAME style (groupHeader) used
+	// for a plain group's tab text -- so `GroupHeaderFontColor` and friends
+	// affect a partition's title exactly as they do a group's. Shared between
+	// getPreferredDimension() (which must reserve enough room for it) and
+	// drawU() (which draws it), so the two can never disagree on its size.
+	private TextBlock titleBlock() {
+<span class="fc" id="L83">		final Style styleHeader = getGroupingStart().getUsedStyles()[1];</span>
+<span class="fc" id="L84">		final Display display = Display.create(getGroupingStart().getComment());</span>
+<span class="fc" id="L85">		return display.create(styleHeader.getFontConfiguration(getSkinParam().getIHtmlColorSet()),</span>
+<span class="fc" id="L86">				HorizontalAlignment.LEFT, getSkinParam());</span>
+	}
 
 	@Override
 	protected Component getComponent(StringBounder stringBounder) {
 
-<span class="fc" id="L69">		return new Component() {</span>
+<span class="fc" id="L92">		return new Component() {</span>
 
 			@Override
 			public StyleSignature getStyleSignature() {
-<span class="nc" id="L73">				throw new UnsupportedOperationException();</span>
+<span class="nc" id="L96">				throw new UnsupportedOperationException();</span>
 			}
 
 			@Override
 			public Style[] getUsedStyles() {
-<span class="nc" id="L78">				throw new UnsupportedOperationException();</span>
+<span class="nc" id="L101">				throw new UnsupportedOperationException();</span>
 			}
 
 			@Override
 			public double getPreferredWidth(StringBounder stringBounder) {
-<span class="nc" id="L83">				throw new UnsupportedOperationException();</span>
+<span class="nc" id="L106">				throw new UnsupportedOperationException();</span>
 			}
 
 			@Override
 			public double getPreferredHeight(StringBounder stringBounder) {
-<span class="nc" id="L88">				throw new UnsupportedOperationException();</span>
+<span class="nc" id="L111">				throw new UnsupportedOperationException();</span>
 			}
 
 			@Override
 			public XDimension2D getPreferredDimension(StringBounder stringBounder) {
-<span class="fc" id="L93">				return new XDimension2D(10, 10);</span>
+				// Was hardcoded to (10, 10), regardless of the actual title: too small
+				// for a bigger font (the title could overlap the first message) and,
+				// more visibly, leaving no room to apply TITLE_VPAD below. Reserving
+				// the title's real height plus the padding on both sides fixes both.
+<span class="fc" id="L120">				final XDimension2D titleDim = titleBlock().calculateDimension(stringBounder);</span>
+<span class="fc" id="L121">				return new XDimension2D(titleDim.getWidth(), titleDim.getHeight() + 2 * TITLE_VPAD);</span>
 			}
 
 			@Override
 			public void drawU(UGraphic ug, Area area, Context2D context) {
-<span class="fc" id="L98">				final Style style = getGroupingStart().getUsedStyles()[1];</span>
-<span class="fc" id="L99">				final Display display = Display.create(getGroupingStart().getComment());</span>
-<span class="fc" id="L100">				final TextBlock title = display.create(style.getFontConfiguration(getSkinParam().getIHtmlColorSet()),</span>
-<span class="fc" id="L101">						HorizontalAlignment.LEFT, getSkinParam());</span>
-<span class="fc" id="L102">				final double border1 = getBorder1();</span>
-<span class="fc" id="L103">				final double delta = (getWidth() - title.calculateDimension(stringBounder).getWidth()) / 2;</span>
+				// The frame's border/stroke reads from getUsedStyles()[0] (&quot;group&quot;),
+				// exactly like GroupingTile's own outer rectangle does (see its
+				// drawInternalU()/symbolContext) -- NOT [1] (&quot;groupHeader&quot;) as before.
+				// That mismatch was silently dropping `GroupBorderThickness`: per
+				// FromSkinparamToStyle, that skinparam converts to LineThickness on
+				// &quot;group&quot; only, never on &quot;groupHeader&quot;, so a partition's border
+				// thickness could not be changed at all while a plain group's could.
+				// LineColor is unaffected by this switch: it converts to BOTH &quot;group&quot;
+				// and &quot;groupHeader&quot; identically.
+<span class="fc" id="L135">				final Style styleFrame = getGroupingStart().getUsedStyles()[0];</span>
+<span class="fc" id="L136">				final TextBlock title = titleBlock();</span>
+<span class="fc" id="L137">				final double border1 = getBorder1();</span>
+<span class="fc" id="L138">				final double delta = (getWidth() - title.calculateDimension(stringBounder).getWidth()) / 2;</span>
 
-<span class="fc" id="L105">				title.drawU(ug.apply(UTranslate.dx(border1 + delta)));</span>
+<span class="fc" id="L140">				title.drawU(ug.apply(new UTranslate(border1 + delta, TITLE_VPAD)));</span>
 
-<span class="fc" id="L107">				final URectangle rect = URectangle.build(area.getDimensionToUse());</span>
+				// RoundCorner previously had no effect at all on a partition's frame
+				// (unlike a group's, whose header tab and, via the fix in
+				// drawCompBackground() below, whose background both honour it).
+<span class="fc" id="L145">				final double round = styleFrame.value(PName.RoundCorner).asDouble();</span>
+<span class="fc" id="L146">				final URectangle rect = URectangle.build(area.getDimensionToUse()).rounded(round);</span>
 
-<span class="fc" id="L109">				ug = style.applyStrokeAndLineColor(ug, getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L110">				ug.apply(UTranslate.dx(border1)).draw(rect);</span>
+<span class="fc" id="L148">				ug = styleFrame.applyStrokeAndLineColor(ug, getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L149">				ug.apply(UTranslate.dx(border1)).draw(rect);</span>
 
-<span class="fc" id="L112">			}</span>
+<span class="fc" id="L151">			}</span>
 		};
 	}
 
 	@Override
 	protected Area getArea(final StringBounder stringBounder) {
-<span class="fc" id="L118">		return Area.create(getWidth(), getTotalHeight(stringBounder));</span>
+<span class="fc" id="L157">		return Area.create(getWidth(), getTotalHeight(stringBounder));</span>
 	}
 
 	// ===================== ASCII =====================
@@ -132,7 +171,7 @@ public class PartitionTile extends GroupingTile {
 	// at all for a narrow frame — which is why the title was missing entirely.
 	@Override
 	protected String asciiTitle() {
-<span class="fc" id="L135">		return getGroupingStart().getComment();</span>
+<span class="fc" id="L174">		return getGroupingStart().getComment();</span>
 	}
 
 	// A partition's frame is a plain rectangle with its title centered on the
@@ -141,7 +180,7 @@ public class PartitionTile extends GroupingTile {
 	// which draws only the title text and the rectangle, no tab shape at all.
 	@Override
 	protected boolean asciiFrameHasTab() {
-<span class="fc" id="L144">		return false;</span>
+<span class="fc" id="L183">		return false;</span>
 	}
 
 	// Pixel getWidth()/getArea() make a partition span the whole diagram
@@ -155,16 +194,16 @@ public class PartitionTile extends GroupingTile {
 	// sit outside the frame in the pixel rendering.
 	@Override
 	protected int[] asciiFrameColumns() {
-<span class="fc" id="L158">		int left = Integer.MAX_VALUE;</span>
-<span class="fc" id="L159">		int right = Integer.MIN_VALUE;</span>
-<span class="fc bfc" id="L160" title="All 2 branches covered.">		for (LivingSpace ls : getTileArguments().getLivingSpaces().values()) {</span>
+<span class="fc" id="L197">		int left = Integer.MAX_VALUE;</span>
+<span class="fc" id="L198">		int right = Integer.MIN_VALUE;</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">		for (LivingSpace ls : getTileArguments().getLivingSpaces().values()) {</span>
 			// posB is the box's left column, posD its exclusive right edge, so
 			// posD - 1 is the box's last visible column.
-<span class="fc" id="L163">			left = Math.min(left, (int) ls.getAsciiPosB().getCurrentValue());</span>
-<span class="fc" id="L164">			right = Math.max(right, (int) ls.getAsciiPosD().getCurrentValue() - 1);</span>
-<span class="fc" id="L165">		}</span>
-<span class="fc" id="L166">		left -= ASCII_FRAME_MARGIN;</span>
-<span class="fc" id="L167">		right += ASCII_FRAME_MARGIN;</span>
+<span class="fc" id="L202">			left = Math.min(left, (int) ls.getAsciiPosB().getCurrentValue());</span>
+<span class="fc" id="L203">			right = Math.max(right, (int) ls.getAsciiPosD().getCurrentValue() - 1);</span>
+<span class="fc" id="L204">		}</span>
+<span class="fc" id="L205">		left -= ASCII_FRAME_MARGIN;</span>
+<span class="fc" id="L206">		right += ASCII_FRAME_MARGIN;</span>
 
 		// A &quot;note left&quot;/&quot;note right&quot; attached to a message inside the partition
 		// must land *inside* the frame, matching the pixel rendering (both images
@@ -174,39 +213,44 @@ public class PartitionTile extends GroupingTile {
 		// note's width via CommunicationTileNoteLeft/Right's own overrides, so
 		// merging them in here widens the full-diagram span above whenever a note
 		// reaches further than the participants alone do.
-<span class="fc" id="L177">		final Real childMin = getAsciiMinX();</span>
-<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if (childMin != null)</span>
-<span class="fc" id="L179">			left = Math.min(left, (int) childMin.getCurrentValue());</span>
+<span class="fc" id="L216">		final Real childMin = getAsciiMinX();</span>
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">		if (childMin != null)</span>
+<span class="fc" id="L218">			left = Math.min(left, (int) childMin.getCurrentValue());</span>
 
-<span class="fc" id="L181">		final Real childMax = getAsciiMaxX();</span>
-<span class="pc bpc" id="L182" title="1 of 2 branches missed.">		if (childMax != null)</span>
-<span class="fc" id="L183">			right = Math.max(right, (int) childMax.getCurrentValue());</span>
+<span class="fc" id="L220">		final Real childMax = getAsciiMaxX();</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		if (childMax != null)</span>
+<span class="fc" id="L222">			right = Math.max(right, (int) childMax.getCurrentValue());</span>
 
-<span class="fc" id="L185">		return new int[] { left, right };</span>
+<span class="fc" id="L224">		return new int[] { left, right };</span>
 	}
 
 	private double getWidth() {
-<span class="fc" id="L189">		return getBorder2() - getBorder1();</span>
+<span class="fc" id="L228">		return getBorder2() - getBorder1();</span>
 	}
 
 	private double getBorder2() {
-<span class="fc" id="L193">		return getTileArguments().getBorder2();</span>
+<span class="fc" id="L232">		return getTileArguments().getBorder2();</span>
 	}
 
 	private double getBorder1() {
-<span class="fc" id="L197">		return getTileArguments().getBorder1();</span>
+<span class="fc" id="L236">		return getTileArguments().getBorder1();</span>
 	}
 
 	@Override
 	protected double minCurrentValueForDrawing() {
-<span class="fc" id="L202">		return 0;</span>
+<span class="fc" id="L241">		return 0;</span>
 	}
 
 	@Override
 	protected void drawCompBackground(UGraphic ug, Area area, final HColor back, final double round) {
-<span class="fc" id="L207">		final URectangle rect = URectangle.build(area.getDimensionToUse());</span>
-<span class="fc" id="L208">		ug.apply(UTranslate.dx(getBorder1())).apply(back.bg()).draw(rect);</span>
-<span class="fc" id="L209">	}</span>
+		// `round` used to be silently ignored here (unlike GroupingTile's own
+		// background fill, which threads it through to its Blotter bands): a
+		// partition's background stayed square-cornered even when RoundCorner
+		// was set, while its border (see getComponent() above) was square
+		// regardless. Both now honour the same value.
+<span class="fc" id="L251">		final URectangle rect = URectangle.build(area.getDimensionToUse()).rounded(round);</span>
+<span class="fc" id="L252">		ug.apply(UTranslate.dx(getBorder1())).apply(back.bg()).draw(rect);</span>
+<span class="fc" id="L253">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
