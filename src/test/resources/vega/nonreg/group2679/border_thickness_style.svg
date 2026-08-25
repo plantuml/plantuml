@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="333px" preserveAspectRatio="none" style="width:169px;height:333px;background:#FFFFFF;" version="1.1" viewBox="0 0 169 333" width="169px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="none" height="52" style="stroke:#F00;stroke-width:6;" width="136.806" x="13" y="96"/>
+    <rect fill="none" height="58" style="stroke:none;" width="148.806" x="10" y="166"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="88.806" x="40" y="180.111">Setup (partition)</text>
+    <rect fill="none" height="58" style="stroke:#F00;stroke-width:6;" width="148.806" x="10" y="166"/>
+    <g>
+      <title>User</title>
+      <rect fill="#000" fill-opacity="0" height="164" width="8" x="25.5" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="29" x2="29" y1="84" y2="248"/>
+    </g>
+    <g>
+      <title>System</title>
+      <rect fill="#000" fill-opacity="0" height="164" width="8" x="83.606" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="87.106" x2="87.106" y1="84" y2="248"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="29.575" x="11.213" y="80.889">User</text>
+    <ellipse cx="29" cy="18.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M29,26.5 L29,53.5 M16,34.5 L42,34.5 M29,53.5 L16,68.5 M29,53.5 L42,68.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="60.637" x="56.787" y="55"/>
+    <text fill="#000" font-size="14" textLength="46.637" x="63.787" y="72.889">System</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="11.213" y="258.889">User</text>
+    <ellipse cx="29" cy="270.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M29,278.5 L29,305.5 M16,286.5 L42,286.5 M29,305.5 L16,320.5 M29,305.5 L42,320.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="60.637" x="56.787" y="248"/>
+    <text fill="#000" font-size="14" textLength="46.637" x="63.787" y="265.889">System</text>
+    <path d="M13,96 L133.806,96 L133.806,101 L123.806,111 L13,111 L13,96" fill="#EEE" style="stroke:#F00;stroke-width:1.5;"/>
+    <rect fill="none" height="52" style="stroke:#F00;stroke-width:6;" width="136.806" x="13" y="96"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="75.806" x="28" y="107.111">Setup (group)</text>
+    <polygon fill="#181818" points="75.106,136,85.106,140,75.106,144,79.106,140" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="29" x2="81.106" y1="140" y2="140"/>
+    <text fill="#000" font-size="13" textLength="25.269" x="36" y="135.111">init()</text>
+    <text fill="#000" font-size="13" font-weight="700" textLength="88.806" x="40" y="180.111">Setup (partition)</text>
+    <rect fill="none" height="58" style="stroke:#F00;stroke-width:6;" width="148.806" x="10" y="166"/>
+    <polygon fill="#181818" points="75.106,212,85.106,216,75.106,220,79.106,216" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="29" x2="81.106" y1="216" y2="216"/>
+    <text fill="#000" font-size="13" textLength="25.269" x="36" y="211.111">init()</text>
+  </g>
+</svg>

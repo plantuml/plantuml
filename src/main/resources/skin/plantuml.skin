@@ -128,6 +128,16 @@ sequenceDiagram {
 	  FontStyle bold
 	}
 
+	partition {
+	  BackGroundColor transparent
+	  LineColor black
+	  LineThickness 1.5
+	  header {
+	    FontSize 13
+	    FontStyle bold
+	  }
+	}
+
 	lifeLine {
 	  LineStyle 5
 	}

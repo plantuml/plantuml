@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="290px" preserveAspectRatio="none" style="width:128px;height:290px;background:#FFFFFF;" version="1.1" viewBox="0 0 128 290" width="128px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="none" height="85" style="stroke:none;" width="107.425" x="10" y="96"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="33.963" x="46.731" y="110.111">Setup</text>
+    <rect fill="none" height="85" style="stroke:#000;stroke-width:1.5;" width="107.425" x="10" y="96"/>
+    <g>
+      <title>User</title>
+      <rect fill="#000" fill-opacity="0" height="121" width="8" x="25.5" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="29" x2="29" y1="84" y2="205"/>
+    </g>
+    <g>
+      <title>System</title>
+      <rect fill="#000" fill-opacity="0" height="121" width="8" x="83.606" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="87.106" x2="87.106" y1="84" y2="205"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="29.575" x="11.213" y="80.889">User</text>
+    <ellipse cx="29" cy="18.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M29,26.5 L29,53.5 M16,34.5 L42,34.5 M29,53.5 L16,68.5 M29,53.5 L42,68.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="60.637" x="56.787" y="55"/>
+    <text fill="#000" font-size="14" textLength="46.637" x="63.787" y="72.889">System</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="11.213" y="215.889">User</text>
+    <ellipse cx="29" cy="227.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M29,235.5 L29,262.5 M16,243.5 L42,243.5 M29,262.5 L16,277.5 M29,262.5 L42,277.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="60.637" x="56.787" y="205"/>
+    <text fill="#000" font-size="14" textLength="46.637" x="63.787" y="222.889">System</text>
+    <text fill="#000" font-size="13" font-weight="700" textLength="33.963" x="46.731" y="110.111">Setup</text>
+    <rect fill="none" height="85" style="stroke:#000;stroke-width:1.5;" width="107.425" x="10" y="96"/>
+    <polygon fill="#181818" points="75.106,142,85.106,146,75.106,150,79.106,146" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="29" x2="81.106" y1="146" y2="146"/>
+    <text fill="#000" font-size="13" textLength="25.269" x="36" y="141.111">init()</text>
+    <polygon fill="#181818" points="40,169,30,173,40,177,36,173" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="34" x2="86.106" y1="173" y2="173"/>
+    <text fill="#000" font-size="13" textLength="13.731" x="46" y="168.111">ok</text>
+  </g>
+</svg>

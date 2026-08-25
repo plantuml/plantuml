@@ -1,0 +1,39 @@
+---
+output: svg
+---
+@startuml
+' issue #2679: GroupBorderThickness only ever converted to LineThickness on
+' the "group" style (see FromSkinparamToStyle), never on "groupHeader". A
+' partition read its border stroke from "groupHeader", so this skinparam
+' had no visible effect on a partition's border even though it worked for
+' a plain group's.
+'
+' Now that "partition" is its own dedicated style selector (decoupled from
+' "group" per #2679's resolution), the legacy skinparam -- which only ever
+' bridged to "group"/"groupHeader" -- has no bridge to "partition" at all.
+' Styling a partition's border now goes exclusively through <style>. Pins
+' that route works, and that the legacy skinparam correctly leaves the
+' partition's border alone (only the plain group is affected by it).
+skinparam sequence {
+    GroupBorderColor #FF0000
+    GroupBorderThickness 6
+}
+<style>
+sequenceDiagram {
+  partition {
+    LineColor #FF0000
+    LineThickness 6
+  }
+}
+</style>
+actor User
+participant System
+
+group Setup (group)
+User -> System : init()
+end
+
+partition Setup (partition)
+User -> System : init()
+end
+@enduml

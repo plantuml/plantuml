@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+' issue #2679: RoundCorner had no effect at all on a partition (border and
+' background were both always drawn as a plain square-cornered rectangle).
+' Pins the fix: both the border and the background fill are now rounded,
+' using the new dedicated "partition" style selector (see #2679's own
+' resolution: partition is no longer aliased to "group").
+<style>
+sequenceDiagram {
+  partition {
+    RoundCorner 20
+  }
+}
+</style>
+actor User
+participant System
+
+partition Setup
+User -> System : init()
+end
+@enduml

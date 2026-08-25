@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+' issue #2679: a partition's title used to be drawn flush against the
+' frame's top border (no vertical padding at all), unlike a plain group
+' whose title sits in its own pentagon header row. Pins the fix: the
+' title now has visible clearance from the border.
+actor User
+participant System
+
+partition Setup
+User -> System : init()
+System --> User : ok
+end
+@enduml

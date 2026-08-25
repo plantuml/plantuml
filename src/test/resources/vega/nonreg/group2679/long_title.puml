@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+' issue #2679 (side effect of the same root cause): PartitionTile's
+' getPreferredDimension() used to return a hardcoded (10, 10), regardless
+' of the title's real size, so a title wider than the partition's content
+' was never accounted for when the enclosing frame's width was computed --
+' the title spilled out past both edges of the frame. Pins the fix: the
+' frame now widens to fit a title wider than its content.
+actor A
+participant B
+
+partition "A very very very long partition title that is wider than its content"
+A -> B : hi
+end
+@enduml

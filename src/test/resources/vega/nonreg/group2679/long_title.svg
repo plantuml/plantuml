@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="263px" preserveAspectRatio="none" style="width:374px;height:263px;background:#FFFFFF;" version="1.1" viewBox="0 0 374 263" width="374px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="none" height="58" style="stroke:none;" width="353.65" x="10" y="96"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="325.65" x="24" y="110.111">"A very very very long partition title that is wider than its content"</text>
+    <rect fill="none" height="58" style="stroke:#000;stroke-width:1.5;" width="353.65" x="10" y="96"/>
+    <g>
+      <title>A</title>
+      <rect fill="#000" fill-opacity="0" height="94" width="8" x="25.5" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="29" x2="29" y1="84" y2="178"/>
+    </g>
+    <g>
+      <title>B</title>
+      <rect fill="#000" fill-opacity="0" height="94" width="8" x="60.681" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="64.181" x2="64.181" y1="84" y2="178"/>
+    </g>
+    <text fill="#000" font-size="14" x="21.319" y="80.889">A</text>
+    <ellipse cx="29" cy="18.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M29,26.5 L29,53.5 M16,34.5 L42,34.5 M29,53.5 L16,68.5 M29,53.5 L42,68.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="52.5" y="55"/>
+    <text fill="#000" font-size="14" x="59.5" y="72.889">B</text>
+    <text fill="#000" font-size="14" x="21.319" y="188.889">A</text>
+    <ellipse cx="29" cy="200.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M29,208.5 L29,235.5 M16,216.5 L42,216.5 M29,235.5 L16,250.5 M29,235.5 L42,250.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="52.5" y="178"/>
+    <text fill="#000" font-size="14" x="59.5" y="195.889">B</text>
+    <text fill="#000" font-size="13" font-weight="700" textLength="325.65" x="24" y="110.111">"A very very very long partition title that is wider than its content"</text>
+    <rect fill="none" height="58" style="stroke:#000;stroke-width:1.5;" width="353.65" x="10" y="96"/>
+    <polygon fill="#181818" points="52.181,142,62.181,146,52.181,150,56.181,146" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="29" x2="58.181" y1="146" y2="146"/>
+    <text fill="#000" font-size="13" textLength="10.156" x="36" y="141.111">hi</text>
+  </g>
+</svg>

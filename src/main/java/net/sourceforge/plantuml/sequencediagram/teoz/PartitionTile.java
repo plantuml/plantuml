@@ -52,15 +52,38 @@ import net.sourceforge.plantuml.sequencediagram.GroupingStart;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 
 public class PartitionTile extends GroupingTile {
 
+	// Vertical breathing room above (and below) the title text. Without it the
+	// title sits flush against the frame's top border -- issue #2679 ("title
+	// spacing/padding ... right now it looks like it's one pixel from the top
+	// border"). A plain `group` does not have this problem because its title
+	// lives in a separate pentagon-shaped header row, sized from the title's
+	// own height (see ComponentRoseGroupingHeader); a partition has no such
+	// header row -- its title is drawn directly over the frame -- so the gap
+	// has to be reserved and applied here explicitly.
+	private static final double TITLE_VPAD = 4;
+
 	public PartitionTile(Iterator<Event> it, GroupingStart start, TileArguments tileArgumentsBackColorChanged,
 			TileArguments tileArgumentsOriginal, YGauge currentY) {
 
 		super(it, start, tileArgumentsBackColorChanged, tileArgumentsOriginal, currentY);
+	}
+
+	// The title, as a TextBlock, built from the SAME style (groupHeader) used
+	// for a plain group's tab text -- so `GroupHeaderFontColor` and friends
+	// affect a partition's title exactly as they do a group's. Shared between
+	// getPreferredDimension() (which must reserve enough room for it) and
+	// drawU() (which draws it), so the two can never disagree on its size.
+	private TextBlock titleBlock() {
+		final Style styleHeader = getGroupingStart().getUsedStyles()[1];
+		final Display display = Display.create(getGroupingStart().getComment());
+		return display.create(styleHeader.getFontConfiguration(getSkinParam().getIHtmlColorSet()),
+				HorizontalAlignment.LEFT, getSkinParam());
 	}
 
 	@Override
@@ -90,23 +113,39 @@ public class PartitionTile extends GroupingTile {
 
 			@Override
 			public XDimension2D getPreferredDimension(StringBounder stringBounder) {
-				return new XDimension2D(10, 10);
+				// Was hardcoded to (10, 10), regardless of the actual title: too small
+				// for a bigger font (the title could overlap the first message) and,
+				// more visibly, leaving no room to apply TITLE_VPAD below. Reserving
+				// the title's real height plus the padding on both sides fixes both.
+				final XDimension2D titleDim = titleBlock().calculateDimension(stringBounder);
+				return new XDimension2D(titleDim.getWidth(), titleDim.getHeight() + 2 * TITLE_VPAD);
 			}
 
 			@Override
 			public void drawU(UGraphic ug, Area area, Context2D context) {
-				final Style style = getGroupingStart().getUsedStyles()[1];
-				final Display display = Display.create(getGroupingStart().getComment());
-				final TextBlock title = display.create(style.getFontConfiguration(getSkinParam().getIHtmlColorSet()),
-						HorizontalAlignment.LEFT, getSkinParam());
+				// The frame's border/stroke reads from getUsedStyles()[0] ("group"),
+				// exactly like GroupingTile's own outer rectangle does (see its
+				// drawInternalU()/symbolContext) -- NOT [1] ("groupHeader") as before.
+				// That mismatch was silently dropping `GroupBorderThickness`: per
+				// FromSkinparamToStyle, that skinparam converts to LineThickness on
+				// "group" only, never on "groupHeader", so a partition's border
+				// thickness could not be changed at all while a plain group's could.
+				// LineColor is unaffected by this switch: it converts to BOTH "group"
+				// and "groupHeader" identically.
+				final Style styleFrame = getGroupingStart().getUsedStyles()[0];
+				final TextBlock title = titleBlock();
 				final double border1 = getBorder1();
 				final double delta = (getWidth() - title.calculateDimension(stringBounder).getWidth()) / 2;
 
-				title.drawU(ug.apply(UTranslate.dx(border1 + delta)));
+				title.drawU(ug.apply(new UTranslate(border1 + delta, TITLE_VPAD)));
 
-				final URectangle rect = URectangle.build(area.getDimensionToUse());
+				// RoundCorner previously had no effect at all on a partition's frame
+				// (unlike a group's, whose header tab and, via the fix in
+				// drawCompBackground() below, whose background both honour it).
+				final double round = styleFrame.value(PName.RoundCorner).asDouble();
+				final URectangle rect = URectangle.build(area.getDimensionToUse()).rounded(round);
 
-				ug = style.applyStrokeAndLineColor(ug, getSkinParam().getIHtmlColorSet());
+				ug = styleFrame.applyStrokeAndLineColor(ug, getSkinParam().getIHtmlColorSet());
 				ug.apply(UTranslate.dx(border1)).draw(rect);
 
 			}
@@ -204,7 +243,12 @@ public class PartitionTile extends GroupingTile {
 
 	@Override
 	protected void drawCompBackground(UGraphic ug, Area area, final HColor back, final double round) {
-		final URectangle rect = URectangle.build(area.getDimensionToUse());
+		// `round` used to be silently ignored here (unlike GroupingTile's own
+		// background fill, which threads it through to its Blotter bands): a
+		// partition's background stayed square-cornered even when RoundCorner
+		// was set, while its border (see getComponent() above) was square
+		// regardless. Both now honour the same value.
+		final URectangle rect = URectangle.build(area.getDimensionToUse()).rounded(round);
 		ug.apply(UTranslate.dx(getBorder1())).apply(back.bg()).draw(rect);
 	}
 
