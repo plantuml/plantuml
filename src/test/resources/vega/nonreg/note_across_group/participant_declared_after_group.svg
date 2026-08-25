@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="227px" preserveAspectRatio="none" style="width:188px;height:227px;background:#FFFFFF;" version="1.1" viewBox="0 0 188 227" width="188px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="none" height="85" style="stroke:#000;stroke-width:1.5;" width="155.3" x="13" y="51"/>
+    <g>
+      <title>User</title>
+      <rect fill="#000" fill-opacity="0" height="148" width="8" x="47.287" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="50.787" x2="50.787" y1="39" y2="187"/>
+    </g>
+    <g>
+      <title>WF</title>
+      <rect fill="#000" fill-opacity="0" height="148" width="8" x="103.056" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="106.556" x2="106.556" y1="39" y2="187"/>
+    </g>
+    <g>
+      <title>I</title>
+      <rect fill="#000" fill-opacity="0" height="148" width="8" x="139.875" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="143.375" x2="143.375" y1="39" y2="187"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="43.575" x="29" y="10"/>
+    <text fill="#000" font-size="14" textLength="29.575" x="36" y="27.889">User</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="35.787" x="88.663" y="10"/>
+    <text fill="#000" font-size="14" textLength="21.787" x="95.663" y="27.889">WF</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="17.85" x="134.45" y="10"/>
+    <text fill="#000" font-size="14" x="141.45" y="27.889">I</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="43.575" x="29" y="187"/>
+    <text fill="#000" font-size="14" textLength="29.575" x="36" y="204.889">User</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="35.787" x="88.663" y="187"/>
+    <text fill="#000" font-size="14" textLength="21.787" x="95.663" y="204.889">WF</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="17.85" x="134.45" y="187"/>
+    <text fill="#000" font-size="14" x="141.45" y="204.889">I</text>
+    <path d="M13,51 L71.731,51 L71.731,56 L61.731,66 L13,66 L13,51" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="85" style="stroke:#000;stroke-width:1.5;" width="155.3" x="13" y="51"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="13.731" x="28" y="62.111">alt</text>
+    <path d="M40.431,81 L40.431,104 L153.431,104 L153.431,91 L143.431,81 L40.431,81" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M143.431,81 L143.431,91 L153.431,91 L143.431,81" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="32.5" x="76.331" y="96.111">note1</text>
+    <polygon fill="#181818" points="61.787,124,51.787,128,61.787,132,57.787,128" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="55.787" x2="105.556" y1="128" y2="128"/>
+    <text fill="#000" font-size="13" textLength="31.769" x="67.788" y="123.111">msg1</text>
+    <polygon fill="#181818" points="61.787,165,51.787,169,61.787,173,57.787,169" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="55.787" x2="142.375" y1="169" y2="169"/>
+    <text fill="#000" font-size="13" textLength="31.769" x="67.788" y="164.111">msg2</text>
+  </g>
+</svg>

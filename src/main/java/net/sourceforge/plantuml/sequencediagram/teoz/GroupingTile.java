@@ -550,6 +550,31 @@ public class GroupingTile extends AbstractTile {
 			touched.add(livingSpace);
 	}
 
+	// `note across` builds its Note with both participants null (see
+	// FactorySequenceNoteAcrossCommand): TileBuilder resolves that null/null
+	// pair to tileArguments.getFirstLivingSpace()/getLastLivingSpace(), i.e.
+	// the very first and last LivingSpace of the WHOLE diagram, not to
+	// anything getParticipant()/getParticipant2() can report here. Falling
+	// through to addTouched() for each (a no-op on null) would leave such a
+	// note untouched, which is exactly the cycle the comment above warns
+	// about: the note's own getStableMaxX() still reports the diagram's last
+	// LivingSpace as one of its right edges (OVER_SEVERAL), so
+	// ensureClearsFrameOf() would derive the next participant's push from a
+	// Real rooted in that same participant's own position. Marking every
+	// LivingSpace touched matches what the note actually spans and makes
+	// rightmostOf() land on the diagram's true last participant, after which
+	// there is nothing left to push.
+	private static void addNoteTouched(Set<LivingSpace> touched, LivingSpaces livingSpaces, Note note) {
+		if (note.getParticipant() == null && note.getParticipant2() == null) {
+			for (LivingSpace ls : livingSpaces.values())
+				touched.add(ls);
+			return;
+		}
+
+		addTouched(touched, livingSpaces, note.getParticipant());
+		addTouched(touched, livingSpaces, note.getParticipant2());
+	}
+
 	private static LivingSpace rightmostOf(LivingSpaces livingSpaces, Set<LivingSpace> touched) {
 		LivingSpace rightmost = null;
 		for (LivingSpace candidate : livingSpaces.values())
@@ -585,13 +610,10 @@ public class GroupingTile extends AbstractTile {
 				// one after the group, and ensureClearsFrameOf() would push its own
 				// posA past a Real derived from its own posC -- a cycle the solver
 				// reports as `IllegalStateException: Infinite Loop?`.
-				addTouched(touched, livingSpaces, ((Note) ev).getParticipant());
-				addTouched(touched, livingSpaces, ((Note) ev).getParticipant2());
+				addNoteTouched(touched, livingSpaces, (Note) ev);
 			} else if (ev instanceof Notes) {
-				for (Note note : (Notes) ev) {
-					addTouched(touched, livingSpaces, note.getParticipant());
-					addTouched(touched, livingSpaces, note.getParticipant2());
-				}
+				for (Note note : (Notes) ev)
+					addNoteTouched(touched, livingSpaces, note);
 			} else if (ev instanceof Reference) {
 				// Same reasoning as a note, and the same cycle if it is left out:
 				// `ref over b, c` inside a group must make c a participant OF the

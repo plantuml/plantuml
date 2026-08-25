@@ -1,0 +1,16 @@
+---
+output: svg
+expected-description: (3 participants)
+---
+@startuml
+participant User as user
+participant WF as wf
+participant I as i
+
+alt
+  alt
+  note across: note1
+  wf -> user: msg1
+  end
+end
+@enduml
