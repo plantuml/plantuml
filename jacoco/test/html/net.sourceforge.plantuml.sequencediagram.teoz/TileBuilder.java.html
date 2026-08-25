@@ -139,9 +139,9 @@ import net.sourceforge.plantuml.style.ISkinParam;
 <span class="fc" id="L139">			final Note note = (Note) ev;</span>
 <span class="fc" id="L140">			LivingSpace livingSpace1 = livingSpaces.get(note.getParticipant());</span>
 <span class="fc bfc" id="L141" title="All 2 branches covered.">			LivingSpace livingSpace2 = note.getParticipant2() == null ? null : livingSpaces.get(note.getParticipant2());</span>
-<span class="pc bpc" id="L142" title="3 of 4 branches missed.">			if (livingSpace1 == null &amp;&amp; livingSpace2 == null) {</span>
-<span class="nc" id="L143">				livingSpace1 = tileArguments.getFirstLivingSpace();</span>
-<span class="nc" id="L144">				livingSpace2 = tileArguments.getLastLivingSpace();</span>
+<span class="pc bpc" id="L142" title="1 of 4 branches missed.">			if (livingSpace1 == null &amp;&amp; livingSpace2 == null) {</span>
+<span class="fc" id="L143">				livingSpace1 = tileArguments.getFirstLivingSpace();</span>
+<span class="fc" id="L144">				livingSpace2 = tileArguments.getLastLivingSpace();</span>
 			}
 <span class="fc" id="L146">			tiles.add(new NoteTile(tileArguments.getStringBounder(), livingSpace1, livingSpace2, note, skin, skinParam,</span>
 					currentY));

@@ -111,8 +111,8 @@ final public class ComponentRoseNote extends AbstractTextualComponent implements
 <span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (diffX &lt; 0) {</span>
 <span class="nc" id="L112">			throw new IllegalArgumentException();</span>
 		}
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (area.getDimensionToUse().getWidth() &gt; getPreferredWidth(stringBounder)) {</span>
-<span class="nc" id="L115">			x2 = (int) (area.getDimensionToUse().getWidth() - 2 * getPaddingX());</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		if (area.getDimensionToUse().getWidth() &gt; getPreferredWidth(stringBounder)) {</span>
+<span class="fc" id="L115">			x2 = (int) (area.getDimensionToUse().getWidth() - 2 * getPaddingX());</span>
 		}
 
 <span class="fc" id="L118">		final UPath polygon = Opale.getPolygonNormal(x2, textHeight, roundCorner);</span>
