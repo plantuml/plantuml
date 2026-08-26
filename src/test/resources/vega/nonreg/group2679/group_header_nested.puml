@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+' issue #2679 (follow-up): a group's header/tab can now also be styled via
+' the new nested "group { header {...} } }" selector, matching the syntax
+' agreed for "partition { header {...} } }". Pins that this new route works
+' on its own, with no legacy "groupHeader" rule present.
+<style>
+sequenceDiagram {
+  group {
+    header {
+      FontColor red
+      BackGroundColor lightgreen
+    }
+  }
+}
+</style>
+participant A
+participant B
+
+group Setup
+A -> B: hello
+end
+@enduml

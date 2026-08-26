@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+' issue #2679 (follow-up): "reference" gets the same nested header selector
+' as "group" and "partition", alongside its own pre-existing legacy flat
+' "referenceHeader".
+<style>
+sequenceDiagram {
+  reference {
+    header {
+      FontColor red
+      BackGroundColor lightgreen
+    }
+  }
+}
+</style>
+participant A
+participant B
+
+ref over A, B: My Reference
+A -> B: hello
+@enduml

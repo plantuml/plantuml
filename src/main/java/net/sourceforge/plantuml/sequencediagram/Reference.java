@@ -42,6 +42,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -70,6 +71,31 @@ public class Reference extends AbstractEvent implements EventWithNote {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.referenceHeader);
 	}
 
+	// The nested counterpart of the legacy flat "referenceHeader" above, added
+	// for consistency with the dedicated "partition { header {...} }" selector
+	// (#2679): `sequenceDiagram { reference { header {...} } }`. Kept as a
+	// plain override layered on top of the flat style (see
+	// computeStyleHeader()) rather than a replacement, so every existing
+	// diagram styling `referenceHeader` directly keeps working unchanged: only
+	// diagrams that opt into the new nested form are affected.
+	private StyleSignatureBasic getNestedHeaderStyleDefinition() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.reference, SName.header);
+	}
+
+	private Style computeStyleHeader(StyleBuilder styleBuilder) {
+		final Style flat = getHeaderStyleDefinition().getMergedStyle(styleBuilder);
+		// "style" (this.style, already assigned above in the constructor) is the
+		// plain "reference" style -- the exact ancestor "nested" cascades from,
+		// so mergeNestedChildOver() can isolate what header{} itself actually
+		// sets (see Style.mergeNestedChildOver()'s javadoc for why this
+		// filtering is needed at all).
+		final Style nested = getNestedHeaderStyleDefinition().getMergedStyle(styleBuilder);
+		if (flat == null)
+			return nested;
+
+		return flat.mergeNestedChildOver(nested, style, MergeStrategy.OVERWRITE_EXISTING_VALUE);
+	}
+
 	public Style[] getUsedStyles() {
 		return new Style[] { style, styleHeader == null ? styleHeader
 				: styleHeader.eventuallyOverride(PName.BackGroundColor, backColorElement) };
@@ -83,7 +109,7 @@ public class Reference extends AbstractEvent implements EventWithNote {
 		this.backColorGeneral = backColorGeneral;
 		this.backColorElement = backColorElement;
 		this.style = getDefaultStyleDefinition().getMergedStyle(styleBuilder);
-		this.styleHeader = getHeaderStyleDefinition().getMergedStyle(styleBuilder);
+		this.styleHeader = computeStyleHeader(styleBuilder);
 	}
 
 	static private List<Participant> uniq(List<Participant> all) {

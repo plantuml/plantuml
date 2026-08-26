@@ -134,6 +134,44 @@ public class Style {
 		return new Style(this.signature.mergeWith(other.getSignature()), both);
 	}
 
+	/**
+	 * Layers a nested child selector's style (e.g. "group.header") on top of
+	 * this legacy/sibling style (e.g. flat "groupHeader"), WITHOUT letting
+	 * properties that "nested" only carries because they cascaded down from
+	 * its own parent selector (e.g. plain "group") overwrite this style's own
+	 * values.
+	 *
+	 * <p>
+	 * A style resolved for a nested signature such as [.., group, header]
+	 * inherits, via the normal style cascade, every rule that already applies
+	 * to its parent [.., group] -- that parent's own resolved style is exactly
+	 * that same cascade minus the (possibly absent) rule declared at the
+	 * nested path itself. So for any property the user never actually set
+	 * inside a "header { }" block, "nested"'s value is guaranteed identical to
+	 * "nestedParent"'s -- only a property genuinely declared at the nested
+	 * level can differ. Filtering on that difference isolates exactly the
+	 * header-specific overrides before merging them onto this style, so a
+	 * property this style already defines independently (like a legacy
+	 * "groupHeader" border thickness) is left alone unless "header {}" itself
+	 * says otherwise.
+	 */
+	public Style mergeNestedChildOver(Style nested, Style nestedParent, MergeStrategy strategy) {
+		if (nested == null)
+			return this;
+
+		final EnumMap<PName, Value> divergentOnly = new EnumMap<PName, Value>(PName.class);
+		for (Entry<PName, Value> ent : nested.map.entrySet()) {
+			final Value ancestorValue = nestedParent == null ? null : nestedParent.map.get(ent.getKey());
+			if (ancestorValue == null || ancestorValue.asString().equals(ent.getValue().asString()) == false)
+				divergentOnly.put(ent.getKey(), ent.getValue());
+		}
+
+		if (divergentOnly.isEmpty())
+			return this;
+
+		return this.mergeWith(new Style(nested.signature, divergentOnly), strategy);
+	}
+
 	public Style eventuallyOverride(PName param, HColor color) {
 		if (color == null)
 			return this;

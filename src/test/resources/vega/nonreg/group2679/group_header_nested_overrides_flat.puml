@@ -1,0 +1,31 @@
+---
+output: svg
+---
+@startuml
+' issue #2679 (follow-up): when both the legacy flat "groupHeader" and the
+' new nested "group { header {...} } }" set a property, the nested one wins
+' -- but only for the properties it actually sets. Here the nested rule only
+' overrides FontColor; FontSize and BackGroundColor must still come from the
+' flat rule, proving this is a per-property override, not an all-or-nothing
+' replacement.
+<style>
+sequenceDiagram {
+  groupHeader {
+    FontColor blue
+    BackGroundColor lightyellow
+    FontSize 20
+  }
+  group {
+    header {
+      FontColor red
+    }
+  }
+}
+</style>
+participant A
+participant B
+
+group Setup
+A -> B: hello
+end
+@enduml

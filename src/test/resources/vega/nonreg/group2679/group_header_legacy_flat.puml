@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+' issue #2679 (follow-up): styling a group's header/tab via the legacy flat
+' "groupHeader" selector must keep working unchanged once the new nested
+' "group { header {...} } }" form exists alongside it -- this is the
+' backward-compatibility half of that change.
+<style>
+sequenceDiagram {
+  groupHeader {
+    FontColor blue
+    BackGroundColor lightyellow
+  }
+}
+</style>
+participant A
+participant B
+
+group Setup
+A -> B: hello
+end
+@enduml
