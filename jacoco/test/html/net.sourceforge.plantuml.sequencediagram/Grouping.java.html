@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.sequencediagram;
 
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -56,45 +57,72 @@ public abstract class Grouping extends AbstractEvent implements Event, WithStyle
 	final private Style styleHeader;
 
 	final public StyleSignatureBasic getStyleSignature() {
-<span class="fc bfc" id="L59" title="All 2 branches covered.">		if (type == GroupingType.START_PARTITION)</span>
-<span class="fc" id="L60">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.partition);</span>
-<span class="fc" id="L61">		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.group);</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">		if (type == GroupingType.START_PARTITION)</span>
+<span class="fc" id="L61">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.partition);</span>
+<span class="fc" id="L62">		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.group);</span>
 	}
 
 	final private StyleSignatureBasic getHeaderStyleDefinition() {
-<span class="fc bfc" id="L65" title="All 2 branches covered.">		if (type == GroupingType.START_PARTITION)</span>
-<span class="fc" id="L66">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.partition, SName.header);</span>
-<span class="fc" id="L67">		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.groupHeader);</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">		if (type == GroupingType.START_PARTITION)</span>
+<span class="fc" id="L67">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.partition, SName.header);</span>
+<span class="fc" id="L68">		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.groupHeader);</span>
+	}
+
+	// The nested counterpart of the legacy flat &quot;groupHeader&quot; above, added for
+	// consistency with the dedicated &quot;partition { header {...} }&quot; selector
+	// (#2679): `sequenceDiagram { group { header {...} } }`. Not meaningful for
+	// a partition, which already has its own nested header signature via
+	// getHeaderStyleDefinition(). Kept as a plain override layered on top of
+	// the flat style (see computeStyleHeader()) rather than a replacement, so
+	// every existing diagram styling `groupHeader` directly keeps working
+	// unchanged: only diagrams that opt into the new nested form are affected.
+	final private StyleSignatureBasic getNestedHeaderStyleDefinition() {
+<span class="fc" id="L80">		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.group, SName.header);</span>
+	}
+
+	private Style computeStyleHeader(StyleBuilder styleBuilder) {
+<span class="fc" id="L84">		final Style flat = getHeaderStyleDefinition().getMergedStyle(styleBuilder);</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (type == GroupingType.START_PARTITION)</span>
+<span class="fc" id="L86">			return flat;</span>
+
+		// &quot;style&quot; (this.style, already assigned above in the constructor) is the
+		// plain &quot;group&quot; style -- the exact ancestor &quot;nested&quot; cascades from, so
+		// mergeNestedChildOver() can isolate what header{} itself actually sets.
+<span class="fc" id="L91">		final Style nested = getNestedHeaderStyleDefinition().getMergedStyle(styleBuilder);</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (flat == null)</span>
+<span class="nc" id="L93">			return nested;</span>
+
+<span class="fc" id="L95">		return flat.mergeNestedChildOver(nested, style, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
 	}
 
 	public Style[] getUsedStyles() {
-<span class="fc" id="L71">		return new Style[] {</span>
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">				style == null ? null : style.eventuallyOverride(PName.BackGroundColor, getBackColorGeneral()),</span>
-<span class="pc bpc" id="L73" title="1 of 2 branches missed.">				styleHeader == null ? null : styleHeader.eventuallyOverride(PName.BackGroundColor, backColorElement) };</span>
+<span class="fc" id="L99">		return new Style[] {</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">				style == null ? null : style.eventuallyOverride(PName.BackGroundColor, getBackColorGeneral()),</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">				styleHeader == null ? null : styleHeader.eventuallyOverride(PName.BackGroundColor, backColorElement) };</span>
 	}
 
 	public Grouping(String title, String comment, GroupingType type, HColor backColorElement,
-<span class="fc" id="L77">			StyleBuilder styleBuilder) {</span>
-<span class="fc" id="L78">		this.title = title;</span>
+<span class="fc" id="L105">			StyleBuilder styleBuilder) {</span>
+<span class="fc" id="L106">		this.title = title;</span>
 		// this.styleBuilder = styleBuilder;
-<span class="fc" id="L80">		this.comment = comment;</span>
-<span class="fc" id="L81">		this.type = type;</span>
-<span class="fc" id="L82">		this.backColorElement = backColorElement;</span>
-<span class="fc" id="L83">		this.style = getStyleSignature().getMergedStyle(styleBuilder);</span>
-<span class="fc" id="L84">		this.styleHeader = getHeaderStyleDefinition().getMergedStyle(styleBuilder);</span>
-<span class="fc" id="L85">	}</span>
+<span class="fc" id="L108">		this.comment = comment;</span>
+<span class="fc" id="L109">		this.type = type;</span>
+<span class="fc" id="L110">		this.backColorElement = backColorElement;</span>
+<span class="fc" id="L111">		this.style = getStyleSignature().getMergedStyle(styleBuilder);</span>
+<span class="fc" id="L112">		this.styleHeader = computeStyleHeader(styleBuilder);</span>
+<span class="fc" id="L113">	}</span>
 
 	@Override
 	public final String toString() {
-<span class="nc" id="L89">		return super.toString() + &quot; &quot; + type + &quot; &quot; + title;</span>
+<span class="nc" id="L117">		return super.toString() + &quot; &quot; + type + &quot; &quot; + title;</span>
 	}
 
 	final public String getTitle() {
-<span class="fc" id="L93">		return title;</span>
+<span class="fc" id="L121">		return title;</span>
 	}
 
 	final public GroupingType getType() {
-<span class="fc" id="L97">		return type;</span>
+<span class="fc" id="L125">		return type;</span>
 	}
 
 	public abstract int getLevel();
@@ -102,11 +130,11 @@ public abstract class Grouping extends AbstractEvent implements Event, WithStyle
 	public abstract HColor getBackColorGeneral();
 
 	final public String getComment() {
-<span class="fc" id="L105">		return comment;</span>
+<span class="fc" id="L133">		return comment;</span>
 	}
 
 	public final HColor getBackColorElement() {
-<span class="fc" id="L109">		return backColorElement;</span>
+<span class="fc" id="L137">		return backColorElement;</span>
 	}
 
 	public abstract boolean isParallel();
