@@ -60,7 +60,10 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
  * </pre>
  *
  * Both functions accept an optional {@code options} object as the last
- * argument, e.g. {@code { dark: true }} to enable dark-mode rendering.
+ * argument, e.g. {@code { dark: true }} to enable dark-mode rendering, or
+ * {@code { maxSvgSize: 9999 } } to raise the maximum SVG width/height (in
+ * pixels) beyond the default of {@value #DEFAULT_MAX_SVG_SIZE}. Passing
+ * {@code { maxSvgSize: 0 } } disables the size check entirely.
  *
  * <h2>Architecture: JavaScript-driven paradigm</h2>
  *
@@ -151,8 +154,14 @@ public class PlantUMLBrowser {
 
 	private static final StringBounder STRING_BOUNDER = new StringBounderTeaVM();
 
-	/** Maximum width or height (in pixels) before refusing to render. */
-	private static final int MAX_SVG_SIZE = 4096;
+	/**
+	 * Default maximum width or height (in pixels) before refusing to render.
+	 * Callers may override this per-call via the {@code maxSvgSize} rendering
+	 * option; a value of {@code 0} disables the check entirely. SVG output has
+	 * no raster memory cost, so this default exists only as a sane guard rail,
+	 * not a hard technical ceiling.
+	 */
+	private static final int DEFAULT_MAX_SVG_SIZE = 8192;
 
 	// =========================================================================
 	// Worker thread synchronization
@@ -197,6 +206,13 @@ public class PlantUMLBrowser {
 
 	/** Whether the pending request should use dark mode rendering. */
 	private static volatile boolean pendingDarkMode;
+
+	/**
+	 * Maximum width/height (in pixels) allowed for the pending request, resolved
+	 * from the {@code maxSvgSize} option ({@link #DEFAULT_MAX_SVG_SIZE} when
+	 * absent). A value {@code <= 0} means "no limit".
+	 */
+	private static volatile int pendingMaxSvgSize = DEFAULT_MAX_SVG_SIZE;
 
 	// =========================================================================
 	// Lazy worker initialization
@@ -260,7 +276,9 @@ public class PlantUMLBrowser {
 	 * @param elementId the {@code id} of the HTML element where the SVG should be
 	 *                  rendered
 	 * @param options   optional JS object with rendering options (e.g. {@code {
-	 *                  dark: true }}); may be {@code null}
+	 *                  dark: true, maxSvgSize: 8192 }}); may be {@code null}.
+	 *                  {@code maxSvgSize} overrides {@link #DEFAULT_MAX_SVG_SIZE};
+	 *                  {@code 0} disables the size check.
 	 */
 	@JSExport
 	public static void render(String[] lines, String elementId, JSObject options) {
@@ -271,6 +289,7 @@ public class PlantUMLBrowser {
 			pendingOnSuccess = null;
 			pendingOnError = null;
 			pendingDarkMode = isDark(options);
+			pendingMaxSvgSize = resolveMaxSvgSize(options);
 			LOCK.notify();
 		}
 	}
@@ -289,7 +308,9 @@ public class PlantUMLBrowser {
 	 * @param onSuccess callback invoked with the SVG string when rendering succeeds
 	 * @param onError   callback invoked with an error message when rendering fails
 	 * @param options   optional JS object with rendering options (e.g. {@code {
-	 *                  dark: true }}); may be {@code null}
+	 *                  dark: true, maxSvgSize: 8192 }}); may be {@code null}.
+	 *                  {@code maxSvgSize} overrides {@link #DEFAULT_MAX_SVG_SIZE};
+	 *                  {@code 0} disables the size check.
 	 */
 	@JSExport
 	public static void renderToString(String[] lines, StringCallback onSuccess, StringCallback onError,
@@ -301,6 +322,7 @@ public class PlantUMLBrowser {
 			pendingOnSuccess = onSuccess;
 			pendingOnError = onError;
 			pendingDarkMode = isDark(options);
+			pendingMaxSvgSize = resolveMaxSvgSize(options);
 			LOCK.notify();
 		}
 	}
@@ -316,6 +338,25 @@ public class PlantUMLBrowser {
 	 */
 	@JSBody(params = "opts", script = "return (opts && opts.dark === true);")
 	private static native boolean isDark(JSObject opts);
+
+	/**
+	 * Extracts the {@code maxSvgSize} numeric property from a JavaScript options
+	 * object. Returns {@code -1} as a sentinel when the object is null/undefined
+	 * or the property is absent/not a number, meaning "use the default".
+	 */
+	@JSBody(params = "opts", script = "return (opts && typeof opts.maxSvgSize === 'number') ? opts.maxSvgSize : -1;")
+	private static native int extractMaxSvgSize(JSObject opts);
+
+	/**
+	 * Resolves the effective max-SVG-size limit from the {@code options} object:
+	 * the caller-supplied {@code maxSvgSize} when present, otherwise
+	 * {@link #DEFAULT_MAX_SVG_SIZE}. A resolved value {@code <= 0} means
+	 * "no limit".
+	 */
+	private static int resolveMaxSvgSize(JSObject opts) {
+		final int value = extractMaxSvgSize(opts);
+		return value < 0 ? DEFAULT_MAX_SVG_SIZE : value;
+	}
 
 	// =========================================================================
 	// Worker thread
@@ -345,6 +386,7 @@ public class PlantUMLBrowser {
 			StringCallback onSuccess;
 			StringCallback onError;
 			boolean darkMode;
+			int maxSvgSize;
 
 			synchronized (LOCK) {
 				while (pendingLines == null) {
@@ -361,19 +403,21 @@ public class PlantUMLBrowser {
 				onSuccess = pendingOnSuccess;
 				onError = pendingOnError;
 				darkMode = pendingDarkMode;
+				maxSvgSize = pendingMaxSvgSize;
 				pendingLines = null;
 				pendingElementId = null;
 				pendingOnSuccess = null;
 				pendingOnError = null;
 				pendingDarkMode = false;
+				pendingMaxSvgSize = DEFAULT_MAX_SVG_SIZE;
 			}
 
 			// Perform rendering OUTSIDE the synchronized block so new requests
 			// can be queued while we're rendering.
 			if (onSuccess != null)
-				doRenderToString(lines, onSuccess, onError, darkMode);
+				doRenderToString(lines, onSuccess, onError, darkMode, maxSvgSize);
 			else
-				doRender(lines, elementId, darkMode);
+				doRender(lines, elementId, darkMode, maxSvgSize);
 		}
 	}
 
@@ -382,7 +426,7 @@ public class PlantUMLBrowser {
 	// =========================================================================
 
 	/** Parses and renders PlantUML source lines to an SVG graphics context. */
-	private static SvgGraphicsTeaVM buildSvg(String[] lines, boolean darkMode) throws Exception {
+	private static SvgGraphicsTeaVM buildSvg(String[] lines, boolean darkMode, int maxSvgSize) throws Exception {
 		final ColorMapper colorMapper = darkMode ? ColorMapper.TEAVM_DARK : ColorMapper.TEAVM_LIGHT;
 
 		final Diagram diagram = PSystemBuilder2.getInstance().createDiagram(lines);
@@ -418,9 +462,9 @@ public class PlantUMLBrowser {
 
 		final XDimension2D dim = tb.calculateDimension(STRING_BOUNDER);
 
-		if (dim.getWidth() > MAX_SVG_SIZE || dim.getHeight() > MAX_SVG_SIZE)
+		if (maxSvgSize > 0 && (dim.getWidth() > maxSvgSize || dim.getHeight() > maxSvgSize))
 			throw new RuntimeException("Diagram too large for browser rendering: " + (int) dim.getWidth() + "x"
-					+ (int) dim.getHeight() + " (max " + MAX_SVG_SIZE + ")");
+					+ (int) dim.getHeight() + " (max " + maxSvgSize + "; override via the maxSvgSize option, or set it to 0 to disable this check)");
 
 		final double scaleFactor = scale == null ? 1.0 : scale.getScale(dim.getWidth(), dim.getHeight());
 		svg.updateSvgSize(dim.getWidth(), dim.getHeight(), scaleFactor);
@@ -434,14 +478,14 @@ public class PlantUMLBrowser {
 		return svg;
 	}
 
-	private static void doRender(String[] lines, String elementId, boolean darkMode) {
+	private static void doRender(String[] lines, String elementId, boolean darkMode, int maxSvgSize) {
 		final HTMLElement out = HTMLDocument.current().getElementById(elementId);
 		if (out == null)
 			return;
 
 		try {
 			BrowserLog.reset();
-			final SvgGraphicsTeaVM svg = buildSvg(lines, darkMode);
+			final SvgGraphicsTeaVM svg = buildSvg(lines, darkMode, maxSvgSize);
 			removeAllChildren(out);
 			appendSvgElement(out, svg.getSvgRoot());
 		} catch (Exception e) {
@@ -451,9 +495,9 @@ public class PlantUMLBrowser {
 	}
 
 	private static void doRenderToString(String[] lines, StringCallback onSuccess, StringCallback onError,
-			boolean darkMode) {
+			boolean darkMode, int maxSvgSize) {
 		try {
-			onSuccess.call(serializeSvg(buildSvg(lines, darkMode).getSvgRoot()));
+			onSuccess.call(serializeSvg(buildSvg(lines, darkMode, maxSvgSize).getSvgRoot()));
 		} catch (Exception e) {
 			onError.call(String.valueOf(e));
 		}
