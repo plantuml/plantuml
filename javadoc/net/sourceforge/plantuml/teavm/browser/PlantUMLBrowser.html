@@ -123,7 +123,10 @@ loadScripts(document, 'script');</script>
  </pre>
 
  Both functions accept an optional <code>options</code> object as the last
- argument, e.g. <code>{ dark: true }</code> to enable dark-mode rendering.
+ argument, e.g. <code>{ dark: true }</code> to enable dark-mode rendering, or
+ <code>{ maxSvgSize: 9999 } </code> to raise the maximum SVG width/height (in
+ pixels) beyond the default of 8192. Passing
+ <code>{ maxSvgSize: 0 } </code> disables the size check entirely.
 
  <h2 id="architecture-javascript-driven-paradigm-heading">Architecture: JavaScript-driven paradigm</h2>
 
@@ -336,7 +339,9 @@ loadScripts(document, 'script');</script>
 <dd><code>elementId</code> - the <code>id</code> of the HTML element where the SVG should be
                   rendered</dd>
 <dd><code>options</code> - optional JS object with rendering options (e.g. <code>{
-                  dark: true }</code>); may be <code>null</code></dd>
+                  dark: true, maxSvgSize: 8192 }</code>); may be <code>null</code>.
+                  <code>maxSvgSize</code> overrides <code>DEFAULT_MAX_SVG_SIZE</code>;
+                  <code>0</code> disables the size check.</dd>
 </dl>
 </section>
 </li>
@@ -361,7 +366,9 @@ loadScripts(document, 'script');</script>
 <dd><code>onSuccess</code> - callback invoked with the SVG string when rendering succeeds</dd>
 <dd><code>onError</code> - callback invoked with an error message when rendering fails</dd>
 <dd><code>options</code> - optional JS object with rendering options (e.g. <code>{
-                  dark: true }</code>); may be <code>null</code></dd>
+                  dark: true, maxSvgSize: 8192 }</code>); may be <code>null</code>.
+                  <code>maxSvgSize</code> overrides <code>DEFAULT_MAX_SVG_SIZE</code>;
+                  <code>0</code> disables the size check.</dd>
 </dl>
 </section>
 </li>
