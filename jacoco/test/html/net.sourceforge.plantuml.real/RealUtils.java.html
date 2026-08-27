@@ -37,33 +37,45 @@ package net.sourceforge.plantuml.real;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.function.DoubleSupplier;
 
-<span class="nc" id="L41">public class RealUtils {</span>
+<span class="nc" id="L42">public class RealUtils {</span>
 
 	public static RealOrigin createOrigin() {
-<span class="fc" id="L44">		final RealLine line = new RealLine();</span>
-<span class="fc" id="L45">		final RealImpl result = new RealImpl(&quot;O&quot;, line, 0);</span>
-<span class="fc" id="L46">		return result;</span>
+<span class="fc" id="L45">		final RealLine line = new RealLine();</span>
+<span class="fc" id="L46">		final RealImpl result = new RealImpl(&quot;O&quot;, line, 0);</span>
+<span class="fc" id="L47">		return result;</span>
+	}
+
+	// Like base.addFixed(...), except the offset is supplied lazily and can
+	// still change after this call returns: it is re-read every time the
+	// resulting Real's value is resolved (including through further
+	// addFixed()/ensureBiggerThan() chaining). Use this instead of
+	// addFixed() when the offset comes from a mutable field that may not
+	// have reached its final value yet at the moment this is called -- see
+	// RealDeltaLive for the full reasoning.
+	public static Real withLiveOffset(Real base, DoubleSupplier offset) {
+<span class="fc" id="L58">		return new RealDeltaLive(base, offset);</span>
 	}
 
 	public static Real middle(Real r1, Real r2) {
-<span class="fc" id="L50">		return new RealMiddle2((RealMoveable) r1, (RealMoveable) r2);</span>
+<span class="fc" id="L62">		return new RealMiddle2((RealMoveable) r1, (RealMoveable) r2);</span>
 	}
 
 	public static Real max(Real... reals) {
-<span class="fc" id="L54">		return new RealMax(Arrays.asList(reals));</span>
+<span class="fc" id="L66">		return new RealMax(Arrays.asList(reals));</span>
 	}
 
 	public static Real max(Collection&lt;Real&gt; reals) {
-<span class="fc" id="L58">		return new RealMax(reals);</span>
+<span class="fc" id="L70">		return new RealMax(reals);</span>
 	}
 
 	public static Real min(Real... reals) {
-<span class="fc" id="L62">		return new RealMin(Arrays.asList(reals));</span>
+<span class="fc" id="L74">		return new RealMin(Arrays.asList(reals));</span>
 	}
 
 	public static Real min(Collection&lt;Real&gt; reals) {
-<span class="fc" id="L66">		return new RealMin(reals);</span>
+<span class="fc" id="L78">		return new RealMin(reals);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -196,6 +196,10 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>static <a href="../Real.html" title="interface in net.sourceforge.plantuml.real">Real</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">RealUtils.</span><code><a href="../RealUtils.html#min(net.sourceforge.plantuml.real.Real...)" class="member-name-link">min</a><wbr>(<a href="../Real.html" title="interface in net.sourceforge.plantuml.real">Real</a>...&nbsp;reals)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../Real.html" title="interface in net.sourceforge.plantuml.real">Real</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">RealUtils.</span><code><a href="../RealUtils.html#withLiveOffset(net.sourceforge.plantuml.real.Real,java.util.function.DoubleSupplier)" class="member-name-link">withLiveOffset</a><wbr>(<a href="../Real.html" title="interface in net.sourceforge.plantuml.real">Real</a>&nbsp;base,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/DoubleSupplier.html" title="class or interface in java.util.function" class="external-link">DoubleSupplier</a>&nbsp;offset)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">net.sourceforge.plantuml.real</a> with parameters of type <a href="../Real.html" title="interface in net.sourceforge.plantuml.real">Real</a></span></div>
 <div class="summary-table three-column-summary">
@@ -215,6 +219,10 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>static <a href="../Real.html" title="interface in net.sourceforge.plantuml.real">Real</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">RealUtils.</span><code><a href="../RealUtils.html#min(net.sourceforge.plantuml.real.Real...)" class="member-name-link">min</a><wbr>(<a href="../Real.html" title="interface in net.sourceforge.plantuml.real">Real</a>...&nbsp;reals)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="../Real.html" title="interface in net.sourceforge.plantuml.real">Real</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">RealUtils.</span><code><a href="../RealUtils.html#withLiveOffset(net.sourceforge.plantuml.real.Real,java.util.function.DoubleSupplier)" class="member-name-link">withLiveOffset</a><wbr>(<a href="../Real.html" title="interface in net.sourceforge.plantuml.real">Real</a>&nbsp;base,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/DoubleSupplier.html" title="class or interface in java.util.function" class="external-link">DoubleSupplier</a>&nbsp;offset)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Method parameters in <a href="../package-summary.html">net.sourceforge.plantuml.real</a> with type arguments of type <a href="../Real.html" title="interface in net.sourceforge.plantuml.real">Real</a></span></div>
 <div class="summary-table three-column-summary">
@@ -484,19 +492,25 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color"><span class="type-name-label">LivingSpace.</span><code><a href="../../sequencediagram/teoz/LivingSpace.html#getPosA(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getPosA</a><wbr>(<a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../Real.html" title="interface in net.sourceforge.plantuml.real">Real</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">LivingSpace.</span><code><a href="../../sequencediagram/teoz/LivingSpace.html#getPosB(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getPosB</a><wbr>(<a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LivingSpace.</span><code><a href="../../sequencediagram/teoz/LivingSpace.html#getPosALive(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getPosALive</a><wbr>(<a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../Real.html" title="interface in net.sourceforge.plantuml.real">Real</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">LivingSpace.</span><code><a href="../../sequencediagram/teoz/LivingSpace.html#getPosC(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getPosC</a><wbr>(<a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">LivingSpace.</span><code><a href="../../sequencediagram/teoz/LivingSpace.html#getPosB(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getPosB</a><wbr>(<a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../Real.html" title="interface in net.sourceforge.plantuml.real">Real</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">LivingSpace.</span><code><a href="../../sequencediagram/teoz/LivingSpace.html#getPosC2(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getPosC2</a><wbr>(<a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LivingSpace.</span><code><a href="../../sequencediagram/teoz/LivingSpace.html#getPosC(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getPosC</a><wbr>(<a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../Real.html" title="interface in net.sourceforge.plantuml.real">Real</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">LivingSpace.</span><code><a href="../../sequencediagram/teoz/LivingSpace.html#getPosD(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getPosD</a><wbr>(<a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">LivingSpace.</span><code><a href="../../sequencediagram/teoz/LivingSpace.html#getPosC2(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getPosC2</a><wbr>(<a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../Real.html" title="interface in net.sourceforge.plantuml.real">Real</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">LivingSpace.</span><code><a href="../../sequencediagram/teoz/LivingSpace.html#getPosE(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getPosE</a><wbr>(<a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LivingSpace.</span><code><a href="../../sequencediagram/teoz/LivingSpace.html#getPosD(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getPosD</a><wbr>(<a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../Real.html" title="interface in net.sourceforge.plantuml.real">Real</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">LivingSpace.</span><code><a href="../../sequencediagram/teoz/LivingSpace.html#getPosE(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getPosE</a><wbr>(<a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../Real.html" title="interface in net.sourceforge.plantuml.real">Real</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LivingSpace.</span><code><a href="../../sequencediagram/teoz/LivingSpace.html#getPosELive(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getPosELive</a><wbr>(<a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>final <a href="../Real.html" title="interface in net.sourceforge.plantuml.real">Real</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">TileArguments.</span><code><a href="../../sequencediagram/teoz/TileArguments.html#getXOrigin()" class="member-name-link">getXOrigin</a>()</code></div>

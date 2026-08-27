@@ -143,108 +143,141 @@ public class Doll implements WithStyle {
 <span class="fc" id="L143">		return getFirstLivingSpace().getPosA(stringBounder);</span>
 	}
 
+	// Live counterpart of getPosA(), used only by addNeighborConstraintBefore()
+	// -- see the comment on LivingSpace.getPosALive()/getPosELive() for why.
+	private Real getPosALive(StringBounder stringBounder) {
+<span class="fc" id="L149">		return getFirstLivingSpace().getPosALive(stringBounder);</span>
+	}
+
 	private Real getPosB(StringBounder stringBounder) {
-<span class="fc" id="L147">		return getFirstLivingSpace().getPosB(stringBounder);</span>
+<span class="fc" id="L153">		return getFirstLivingSpace().getPosB(stringBounder);</span>
 	}
 
 	private Real getPosD(StringBounder stringBounder) {
-<span class="fc" id="L151">		return getLastLivingSpace().getPosD(stringBounder);</span>
+<span class="fc" id="L157">		return getLastLivingSpace().getPosD(stringBounder);</span>
 	}
 
 	private Real getPosE(StringBounder stringBounder) {
-<span class="fc" id="L155">		return getLastLivingSpace().getPosE(stringBounder);</span>
+<span class="fc" id="L161">		return getLastLivingSpace().getPosE(stringBounder);</span>
+	}
+
+	// Live counterpart of getPosE(), used only by addConstraintAfter() -- see
+	// the comment on LivingSpace.getPosALive()/getPosELive() for why.
+	private Real getPosELive(StringBounder stringBounder) {
+<span class="fc" id="L167">		return getLastLivingSpace().getPosELive(stringBounder);</span>
 	}
 
 	private Real getPosAA(StringBounder stringBounder) {
-<span class="fc" id="L159">		final LivingSpace previous = tileArguments.getLivingSpaces().previous(getFirstLivingSpace());</span>
-<span class="fc bfc" id="L160" title="All 2 branches covered.">		if (previous == null)</span>
-<span class="fc" id="L161">			return tileArguments.getXOrigin();</span>
+<span class="fc" id="L171">		final LivingSpace previous = tileArguments.getLivingSpaces().previous(getFirstLivingSpace());</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">		if (previous == null)</span>
+<span class="fc" id="L173">			return tileArguments.getXOrigin();</span>
 
-<span class="fc" id="L163">		return previous.getPosD(stringBounder);</span>
+<span class="fc" id="L175">		return previous.getPosD(stringBounder);</span>
 	}
 
 	private LivingSpace getFirstLivingSpace() {
-<span class="fc" id="L167">		return tileArguments.getLivingSpace(getFirst2TOBEPRIVATE());</span>
+<span class="fc" id="L179">		return tileArguments.getLivingSpace(getFirst2TOBEPRIVATE());</span>
 	}
 
 	private LivingSpace getLastLivingSpace() {
-<span class="fc" id="L171">		return tileArguments.getLivingSpace(getLast2TOBEPRIVATE());</span>
+<span class="fc" id="L183">		return tileArguments.getLivingSpace(getLast2TOBEPRIVATE());</span>
 	}
 
 	public boolean contains(Participant p) {
-<span class="nc" id="L175">		return participants.contains(p);</span>
+<span class="nc" id="L187">		return participants.contains(p);</span>
 	}
 
 	public void addParticipant(Participant p) {
-<span class="fc" id="L179">		participants.add(Objects.requireNonNull(p));</span>
-<span class="fc" id="L180">	}</span>
+<span class="fc" id="L191">		participants.add(Objects.requireNonNull(p));</span>
+<span class="fc" id="L192">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L184">		return &quot;Doll:&quot; + englober.getTitle().toString() + &quot; &quot; + participants;</span>
+<span class="nc" id="L196">		return &quot;Doll:&quot; + englober.getTitle().toString() + &quot; &quot; + participants;</span>
 	}
 
 	private double getTitleWidth() {
-<span class="fc" id="L188">		return getComponent().getPreferredWidth(tileArguments.getStringBounder());</span>
+<span class="fc" id="L200">		return getComponent().getPreferredWidth(tileArguments.getStringBounder());</span>
 	}
 
 	public void drawMe(UGraphic ug, double height, Context2D context, Doll group) {
-<span class="fc" id="L192">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L193">		final double x1 = getPosA(stringBounder).getCurrentValue() - 4;</span>
-<span class="fc" id="L194">		final double x2 = getPosE(stringBounder).getCurrentValue() + 4;</span>
+<span class="fc" id="L204">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L205">		final double x1 = getPosA(stringBounder).getCurrentValue() - 4;</span>
+<span class="fc" id="L206">		final double x2 = getPosE(stringBounder).getCurrentValue() + 4;</span>
 
-<span class="pc bpc" id="L196" title="1 of 2 branches missed.">		for (Doll current = group; current != null; current = current.getParent()) {</span>
-<span class="nc" id="L197">			final double titlePreferredHeight = current.getTitlePreferredHeight();</span>
-<span class="nc" id="L198">			ug = ug.apply(UTranslate.dy(titlePreferredHeight));</span>
-<span class="nc" id="L199">			height -= titlePreferredHeight;</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">		for (Doll current = group; current != null; current = current.getParent()) {</span>
+<span class="fc" id="L209">			final double titlePreferredHeight = current.getTitlePreferredHeight();</span>
+<span class="fc" id="L210">			ug = ug.apply(UTranslate.dy(titlePreferredHeight));</span>
+<span class="fc" id="L211">			height -= titlePreferredHeight;</span>
 		}
 
-<span class="fc" id="L202">		final XDimension2D dim = new XDimension2D(x2 - x1, height);</span>
-<span class="fc" id="L203">		getComponent().drawU(ug.apply(new UTranslate(x1, 1)), new Area(dim), context);</span>
-<span class="fc" id="L204">	}</span>
+<span class="fc" id="L214">		final XDimension2D dim = new XDimension2D(x2 - x1, height);</span>
+<span class="fc" id="L215">		getComponent().drawU(ug.apply(new UTranslate(x1, 1)), new Area(dim), context);</span>
+<span class="fc" id="L216">	}</span>
 
 	public Doll getParent() {
-<span class="fc" id="L207">		final ParticipantEnglober parent = getParticipantEnglober().getParent();</span>
-<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		if (parent == null)</span>
-<span class="fc" id="L209">			return null;</span>
-<span class="nc" id="L210">		return alls.get(parent);</span>
+<span class="fc" id="L219">		final ParticipantEnglober parent = getParticipantEnglober().getParent();</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">		if (parent == null)</span>
+<span class="fc" id="L221">			return null;</span>
+<span class="fc" id="L222">		return alls.get(parent);</span>
 	}
 
 	public void addInternalConstraints(StringBounder stringBounder) {
-<span class="fc" id="L214">		final double titleWidth = getTitleWidth();</span>
-<span class="fc" id="L215">		final double x1 = getPosB(stringBounder).getCurrentValue();</span>
-<span class="fc" id="L216">		final double x2 = getPosD(stringBounder).getCurrentValue();</span>
-<span class="fc" id="L217">		final double actualWidth = x2 - x1;</span>
-<span class="fc" id="L218">		final double marginX = (titleWidth + 10 - actualWidth) / 2;</span>
-<span class="pc bpc" id="L219" title="1 of 2 branches missed.">		if (marginX &gt; 0) {</span>
-<span class="fc" id="L220">			getFirstLivingSpace().ensureMarginBefore(marginX);</span>
-<span class="fc" id="L221">			getLastLivingSpace().ensureMarginAfter(marginX);</span>
+<span class="fc" id="L226">		final double titleWidth = getTitleWidth();</span>
+<span class="fc" id="L227">		final double x1 = getPosB(stringBounder).getCurrentValue();</span>
+<span class="fc" id="L228">		final double x2 = getPosD(stringBounder).getCurrentValue();</span>
+<span class="fc" id="L229">		final double actualWidth = x2 - x1;</span>
+<span class="fc" id="L230">		final double marginX = (titleWidth + 10 - actualWidth) / 2;</span>
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">		if (marginX &gt; 0) {</span>
+<span class="fc" id="L232">			getFirstLivingSpace().ensureMarginBefore(marginX);</span>
+<span class="fc" id="L233">			getLastLivingSpace().ensureMarginAfter(marginX);</span>
 		}
-<span class="fc" id="L223">		final ClockwiseTopRightBottomLeft padding = padding();</span>
-<span class="fc" id="L224">		getPosA(stringBounder).ensureBiggerThan(getPosAA(stringBounder).addFixed(10 + padding.getLeft()));</span>
+<span class="fc" id="L235">	}</span>
 
-<span class="fc" id="L226">	}</span>
+	// Added for issue #2791: makes sure this box's frame clears the previous
+	// participant (or another box ending right before it), instead of
+	// overlapping it whenever a self-message loop or a left-hand note grows
+	// this box's own leading edge (getPosA()) past its bare posB.
+	//
+	// Uses getPosALive() (not getPosA()) so this can safely run in the same
+	// early pass as everything else in Dolls.addConstraints(): the
+	// constraint it registers here is still checked, by RealLine.compile(),
+	// against this box's FINAL marginBefore, however early it is registered
+	// -- see the comment on LivingSpace.getPosALive()/getPosELive().
+	// getPosAA() itself never needs to be live: it resolves to either
+	// xorigin or the previous participant's bare posD, neither of which is
+	// margin-adjusted.
+	public void addNeighborConstraintBefore(StringBounder stringBounder) {
+<span class="fc" id="L251">		final ClockwiseTopRightBottomLeft padding = padding();</span>
+<span class="fc" id="L252">		getPosALive(stringBounder).ensureBiggerThan(getPosAA(stringBounder).addFixed(10 + padding.getLeft()));</span>
+<span class="fc" id="L253">	}</span>
 
+	// Symmetric counterpart of addNeighborConstraintBefore() above: makes
+	// sure the following participant clears this box's own trailing edge
+	// (getPosE()). Both sides need to be live here: this box's own
+	// getPosELive(), and the next participant's getPosALive() too, in case
+	// that neighbour is itself the first member of another box whose own
+	// margin hasn't finished growing yet either.
 	public void addConstraintAfter(StringBounder stringBounder) {
-<span class="fc" id="L229">		final LivingSpace next = tileArguments.getLivingSpaces().next(getLastLivingSpace());</span>
-<span class="pc bpc" id="L230" title="1 of 2 branches missed.">		if (next == null)</span>
-<span class="fc" id="L231">			return;</span>
+<span class="fc" id="L262">		final LivingSpace next = tileArguments.getLivingSpaces().next(getLastLivingSpace());</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">		if (next == null)</span>
+<span class="fc" id="L264">			return;</span>
 
-<span class="nc" id="L233">		final ClockwiseTopRightBottomLeft padding = padding();</span>
-<span class="nc" id="L234">		next.getPosA(stringBounder)</span>
-<span class="nc" id="L235">				.ensureBiggerThan(getPosE(stringBounder).addFixed(20 + padding.getLeft() + padding.getRight()));</span>
-<span class="nc" id="L236">	}</span>
+<span class="fc" id="L266">		final ClockwiseTopRightBottomLeft padding = padding();</span>
+<span class="fc" id="L267">		next.getPosALive(stringBounder)</span>
+<span class="fc" id="L268">				.ensureBiggerThan(getPosELive(stringBounder).addFixed(20 + padding.getLeft() + padding.getRight()));</span>
+<span class="fc" id="L269">	}</span>
 
 	private ClockwiseTopRightBottomLeft padding() {
-<span class="fc" id="L239">		return tileArguments.getSkinParam().getPaddingTOBEREMOVED(PaddingParam.BOX);</span>
+<span class="fc" id="L272">		return tileArguments.getSkinParam().getPaddingTOBEREMOVED(PaddingParam.BOX);</span>
 	}
 
 	public Real getMinX(StringBounder stringBounder) {
-<span class="fc" id="L243">		return getPosA(stringBounder);</span>
+<span class="fc" id="L276">		return getPosA(stringBounder);</span>
 	}
 
 	public Real getMaxX(StringBounder stringBounder) {
-<span class="fc" id="L247">		return getPosE(stringBounder).addFixed(10);</span>
+<span class="fc" id="L280">		return getPosE(stringBounder).addFixed(10);</span>
 	}
 
 }

@@ -143,9 +143,9 @@ public abstract class CommandParticipant extends SingleLineCommand2&lt;SequenceD
 	final protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
 <span class="fc" id="L145">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
-<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		if (diagram.participantsContainsKey(code)) {</span>
-<span class="nc" id="L147">			diagram.putParticipantInLast(code);</span>
-<span class="nc" id="L148">			return CommandExecutionResult.ok();</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">		if (diagram.participantsContainsKey(code)) {</span>
+<span class="fc" id="L147">			diagram.putParticipantInLast(code);</span>
+<span class="fc" id="L148">			return CommandExecutionResult.ok();</span>
 		}
 
 <span class="fc" id="L151">		Display strings = Display.NULL;</span>

@@ -194,7 +194,7 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 	}
 
 	public boolean participantsContainsKey(String code) {
-<span class="pc bpc" id="L197" title="1 of 2 branches missed.">		return participantsget(code) != null;</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">		return participantsget(code) != null;</span>
 	}
 
 	public CommandExecutionResult addMessage(AbstractMessage m) {
@@ -500,10 +500,10 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 	private ParticipantEnglober participantEnglober;
 
 	public void boxStart(Display comment, HColor color, Stereotype stereotype) {
-<span class="pc bpc" id="L503" title="1 of 2 branches missed.">		if (participantEnglober == null)</span>
+<span class="fc bfc" id="L503" title="All 2 branches covered.">		if (participantEnglober == null)</span>
 <span class="fc" id="L504">			this.participantEnglober = ParticipantEnglober.build(comment, color, stereotype);</span>
 		else
-<span class="nc" id="L506">			this.participantEnglober = participantEnglober.newChild(comment, color, stereotype);</span>
+<span class="fc" id="L506">			this.participantEnglober = participantEnglober.newChild(comment, color, stereotype);</span>
 
 <span class="fc" id="L508">	}</span>
 
@@ -546,13 +546,13 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 	}
 
 	public void putParticipantInLast(String code) {
-<span class="nc" id="L549">		final Participant p = Objects.requireNonNull(participantsget(code), code);</span>
-<span class="nc" id="L550">		final boolean ok = participantsList.remove(p);</span>
-<span class="nc bnc" id="L551" title="All 2 branches missed.">		if (TeaVM.a())</span>
-<span class="nc bnc" id="L552" title="All 2 branches missed.">			assert ok;</span>
-<span class="nc" id="L553">		addWithOrder(p);</span>
-<span class="nc" id="L554">		participantEnglobers2.put(p, participantEnglober);</span>
-<span class="nc" id="L555">	}</span>
+<span class="fc" id="L549">		final Participant p = Objects.requireNonNull(participantsget(code), code);</span>
+<span class="fc" id="L550">		final boolean ok = participantsList.remove(p);</span>
+<span class="pc bpc" id="L551" title="1 of 2 branches missed.">		if (TeaVM.a())</span>
+<span class="pc bpc" id="L552" title="1 of 2 branches missed.">			assert ok;</span>
+<span class="fc" id="L553">		addWithOrder(p);</span>
+<span class="fc" id="L554">		participantEnglobers2.put(p, participantEnglober);</span>
+<span class="fc" id="L555">	}</span>
 
 	public ParticipantEnglober getEnglober(Participant p) {
 <span class="fc" id="L558">		return participantEnglobers2.get(p);</span>

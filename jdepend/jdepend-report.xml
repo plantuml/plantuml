@@ -13489,10 +13489,10 @@
                 <ConcreteClasses>4</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
                 <Ca>4</Ca>
-                <Ce>3</Ce>
+                <Ce>4</Ce>
                 <A>0.5</A>
-                <I>0.43</I>
-                <D>0.07</D>
+                <I>0.5</I>
+                <D>0</D>
                 <V>1</V>
             </Stats>
 
@@ -13529,6 +13529,7 @@
             <DependsUpon>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
+                <Package>java.util.function</Package>
                 <Package>net.sourceforge.plantuml.teavm</Package>
             </DependsUpon>
 
