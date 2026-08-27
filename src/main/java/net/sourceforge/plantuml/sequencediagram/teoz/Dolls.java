@@ -91,9 +91,20 @@ public class Dolls {
 		return result;
 	}
 
+	// Registers every Doll's constraints: the title-width margins, plus the
+	// "does this box's frame clear its previous/next neighbour" checks
+	// (issue #2791). All of these can run in a single early pass -- before
+	// PlayingSpace is built, same as before -- because the neighbour-
+	// clearing checks now use LivingSpace.getPosALive()/getPosELive(),
+	// which resolve their margin live instead of baking a stale snapshot;
+	// see the comment on those methods for the full story, including why a
+	// separate later pass was tried first and reverted.
 	public void addConstraints(StringBounder stringBounder) {
 		for (Doll doll : alls.values())
 			doll.addInternalConstraints(stringBounder);
+
+		for (Doll doll : alls.values())
+			doll.addNeighborConstraintBefore(stringBounder);
 
 		for (Doll doll : alls.values())
 			doll.addConstraintAfter(stringBounder);

@@ -1,24 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="165px" preserveAspectRatio="none" style="width:442px;height:165px;background:#FFFFFF;" version="1.1" viewBox="0 0 442 165" width="442px" zoomAndPan="magnify">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="165px" preserveAspectRatio="none" style="width:452px;height:165px;background:#FFFFFF;" version="1.1" viewBox="0 0 452 165" width="452px" zoomAndPan="magnify">
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
-    <rect fill="#DDD" height="139" style="stroke:#181818;stroke-width:0.5;" width="419.441" x="6" y="11"/>
-    <text fill="#000" font-size="13" font-weight="700" textLength="31.119" x="200.161" y="21.111">Box A</text>
+    <rect fill="#DDD" height="139" style="stroke:#181818;stroke-width:0.5;" width="419.441" x="16" y="11"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="31.119" x="210.161" y="21.111">Box A</text>
     <g>
       <title>a</title>
-      <rect fill="#000" fill-opacity="0" height="58" width="8" x="394.381" y="57"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="397.881" x2="397.881" y1="57" y2="115"/>
+      <rect fill="#000" fill-opacity="0" height="58" width="8" x="404.381" y="57"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="407.881" x2="407.881" y1="57" y2="115"/>
     </g>
-    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="386.987" y="28"/>
-    <text fill="#000" font-size="14" x="393.987" y="45.889">a</text>
-    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="386.987" y="115"/>
-    <text fill="#000" font-size="14" x="393.987" y="132.889">a</text>
-    <line style="stroke:#181818;stroke-width:1;" x1="355.881" x2="396.881" y1="84" y2="84"/>
-    <line style="stroke:#181818;stroke-width:1;" x1="355.881" x2="355.881" y1="84" y2="97"/>
-    <line style="stroke:#181818;stroke-width:1;" x1="355.881" x2="395.881" y1="97" y2="97"/>
-    <polygon fill="#181818" points="385.881,93,395.881,97,385.881,101,389.881,97" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-    <text fill="#000" font-size="13" textLength="24.538" x="354.881" y="79.111">msg</text>
-    <path d="M15,70 L15,93 L342,93 L342,80 L332,70 L15,70" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
-    <path d="M332,70 L332,80 L342,80 L332,70" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
-    <text fill="#000" font-size="13" textLength="306.881" x="21" y="85.111">a very very very very long note attached to the self message</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="396.987" y="28"/>
+    <text fill="#000" font-size="14" x="403.987" y="45.889">a</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="396.987" y="115"/>
+    <text fill="#000" font-size="14" x="403.987" y="132.889">a</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="365.881" x2="406.881" y1="84" y2="84"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="365.881" x2="365.881" y1="84" y2="97"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="365.881" x2="405.881" y1="97" y2="97"/>
+    <polygon fill="#181818" points="395.881,93,405.881,97,395.881,101,399.881,97" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="24.538" x="364.881" y="79.111">msg</text>
+    <path d="M25,70 L25,93 L352,93 L352,80 L342,70 L25,70" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M342,70 L342,80 L352,80 L342,70" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="306.881" x="31" y="85.111">a very very very very long note attached to the self message</text>
   </g>
 </svg>

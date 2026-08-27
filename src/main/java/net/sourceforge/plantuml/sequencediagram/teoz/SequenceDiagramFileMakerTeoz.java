@@ -102,7 +102,13 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		this.dolls = new Dolls(tileArguments);
 		// The dolls constraints must be set before the PlayingSpace is built:
 		// PlayingSpace captures dolls.getMinX()/getMaxX(), which freeze the
-		// margins (see LivingSpace.getPosA/getPosE) needed for the box titles
+		// margins (see LivingSpace.getPosA/getPosE) needed for the box titles.
+		// This includes the box's neighbour-clearing checks (issue #2791):
+		// those used to need a later pass so they could see each participant's
+		// final self-message margin, but they now use
+		// LivingSpace.getPosALive()/getPosELive(), which resolve that margin
+		// live, so registering the constraint here, early, is enough -- see
+		// the comment on those methods.
 		this.dolls.addConstraints(stringBounder);
 		final PlayingSpace mainTile = new PlayingSpace(diagram, dolls, tileArguments);
 		this.livingSpaces.addConstraints(stringBounder);

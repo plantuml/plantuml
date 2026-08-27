@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.real;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.function.DoubleSupplier;
 
 public class RealUtils {
 
@@ -44,6 +45,17 @@ public class RealUtils {
 		final RealLine line = new RealLine();
 		final RealImpl result = new RealImpl("O", line, 0);
 		return result;
+	}
+
+	// Like base.addFixed(...), except the offset is supplied lazily and can
+	// still change after this call returns: it is re-read every time the
+	// resulting Real's value is resolved (including through further
+	// addFixed()/ensureBiggerThan() chaining). Use this instead of
+	// addFixed() when the offset comes from a mutable field that may not
+	// have reached its final value yet at the moment this is called -- see
+	// RealDeltaLive for the full reasoning.
+	public static Real withLiveOffset(Real base, DoubleSupplier offset) {
+		return new RealDeltaLive(base, offset);
 	}
 
 	public static Real middle(Real r1, Real r2) {

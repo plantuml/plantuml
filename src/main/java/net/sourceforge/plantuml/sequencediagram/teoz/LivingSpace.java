@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.ParticipantEnglober;
@@ -295,6 +296,54 @@ public class LivingSpace {
 
 	public Real getPosE(StringBounder stringBounder) {
 		return getPosD(stringBounder).addFixed(marginAfter);
+	}
+
+	// Live counterparts of getPosA()/getPosE() above, for the one caller that
+	// actually needs them: Doll's neighbour-clearing checks (issue #2791).
+	//
+	// getPosA()/getPosE() bake the CURRENT value of the mutable
+	// marginBefore/marginAfter field as a plain Java literal into the
+	// returned Real, at the moment they are CALLED -- not a live reference
+	// to the field. That is fine for every caller that already runs late
+	// enough to see the final margin (Doll.drawMe(), which draws the box
+	// from a fresh call right before painting), or that has always run
+	// early and is unaffected by this fix's scope (LivingSpaces.
+	// addConstraints()'s plain participant spacing, Doll.getMinX()/getMaxX()
+	// feeding PlayingSpace's own canvas-size capture, GroupingTile's frame-
+	// clearing check) -- changing THEIR timing or values is outside what
+	// #2791 was ever about, and doing so anyway ballooned an unrelated set
+	// of existing references across the whole test suite the first time
+	// this was tried.
+	//
+	// Doll's neighbour-clearing checks are different: they must see the
+	// FINAL margin (grown by mainTile.addConstraints() from a self-message
+	// loop or box-edge note) to constrain the actually-drawn edge, but they
+	// also need to run early -- registered in the very same
+	// Dolls.addConstraints() pass as everything else -- because running
+	// them in a separate later pass (see the removed
+	// Dolls.addLateConstraints()) perturbs the shared RealLine's
+	// PositiveForce evaluation order and can trigger a premature,
+	// permanently-wrong read of an unrelated RealMin/RealMax elsewhere in
+	// the graph (GroupingTile's own frame bounds), visible as a misplaced
+	// loop/box frame whenever a box is combined with a parallel (&)
+	// construct.
+	//
+	// getPosALive()/getPosELive() resolve that: unlike addFixed(), they
+	// read the margin lazily, at getCurrentValue() time. Every
+	// getCurrentValue() call anywhere in this codebase happens only
+	// during/after RealLine.compile() (see AbstractReal/RealImpl), which
+	// itself only runs once, strictly AFTER every ensureMarginBefore()/
+	// ensureMarginAfter() call has already executed -- so by construction
+	// the margin they read is always the final one, regardless of when
+	// they were called or when their constraint was registered. Confined
+	// to just this one call site, that keeps every other Real in the graph
+	// -- and every other existing reference -- exactly as it already was.
+	public Real getPosALive(StringBounder stringBounder) {
+		return RealUtils.withLiveOffset(getPosB(stringBounder), () -> -marginBefore);
+	}
+
+	public Real getPosELive(StringBounder stringBounder) {
+		return RealUtils.withLiveOffset(getPosD(stringBounder), () -> marginAfter);
 	}
 
 	// ---------------------------------------------------------------------

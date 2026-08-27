@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="179px" preserveAspectRatio="none" style="width:474px;height:179px;background:#FFFFFF;" version="1.1" viewBox="0 0 474 179" width="474px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#DDD" height="153" style="stroke:#181818;stroke-width:0.5;" width="419.441" x="37.788" y="11"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="31.119" x="231.948" y="21.111">Box A</text>
+    <g>
+      <title>b</title>
+      <rect fill="#000" fill-opacity="0" height="72" width="8" x="17.394" y="57"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="20.894" x2="20.894" y1="57" y2="129"/>
+    </g>
+    <g>
+      <title>a</title>
+      <rect fill="#000" fill-opacity="0" height="72" width="8" x="426.169" y="57"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="429.669" x2="429.669" y1="57" y2="129"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="10" y="28"/>
+    <text fill="#000" font-size="14" x="17" y="45.889">b</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="418.775" y="28"/>
+    <text fill="#000" font-size="14" x="425.775" y="45.889">a</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="10" y="129"/>
+    <text fill="#000" font-size="14" x="17" y="146.889">b</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="418.775" y="129"/>
+    <text fill="#000" font-size="14" x="425.775" y="146.889">a</text>
+    <polygon fill="#181818" points="417.669,67,427.669,71,417.669,75,421.669,71" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="20.894" x2="423.669" y1="71" y2="71"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="387.669" x2="428.669" y1="98" y2="98"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="387.669" x2="387.669" y1="98" y2="111"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="387.669" x2="427.669" y1="111" y2="111"/>
+    <polygon fill="#181818" points="417.669,107,427.669,111,417.669,115,421.669,111" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="24.538" x="386.669" y="93.111">msg</text>
+    <path d="M46.788,84 L46.788,107 L373.788,107 L373.788,94 L363.788,84 L46.788,84" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M363.788,84 L363.788,94 L373.788,94 L363.788,84" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="306.881" x="52.788" y="99.111">a very very very very long note attached to the self message</text>
+  </g>
+</svg>

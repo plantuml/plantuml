@@ -143,6 +143,12 @@ public class Doll implements WithStyle {
 		return getFirstLivingSpace().getPosA(stringBounder);
 	}
 
+	// Live counterpart of getPosA(), used only by addNeighborConstraintBefore()
+	// -- see the comment on LivingSpace.getPosALive()/getPosELive() for why.
+	private Real getPosALive(StringBounder stringBounder) {
+		return getFirstLivingSpace().getPosALive(stringBounder);
+	}
+
 	private Real getPosB(StringBounder stringBounder) {
 		return getFirstLivingSpace().getPosB(stringBounder);
 	}
@@ -153,6 +159,12 @@ public class Doll implements WithStyle {
 
 	private Real getPosE(StringBounder stringBounder) {
 		return getLastLivingSpace().getPosE(stringBounder);
+	}
+
+	// Live counterpart of getPosE(), used only by addConstraintAfter() -- see
+	// the comment on LivingSpace.getPosALive()/getPosELive() for why.
+	private Real getPosELive(StringBounder stringBounder) {
+		return getLastLivingSpace().getPosELive(stringBounder);
 	}
 
 	private Real getPosAA(StringBounder stringBounder) {
@@ -220,19 +232,40 @@ public class Doll implements WithStyle {
 			getFirstLivingSpace().ensureMarginBefore(marginX);
 			getLastLivingSpace().ensureMarginAfter(marginX);
 		}
-		final ClockwiseTopRightBottomLeft padding = padding();
-		getPosA(stringBounder).ensureBiggerThan(getPosAA(stringBounder).addFixed(10 + padding.getLeft()));
-
 	}
 
+	// Added for issue #2791: makes sure this box's frame clears the previous
+	// participant (or another box ending right before it), instead of
+	// overlapping it whenever a self-message loop or a left-hand note grows
+	// this box's own leading edge (getPosA()) past its bare posB.
+	//
+	// Uses getPosALive() (not getPosA()) so this can safely run in the same
+	// early pass as everything else in Dolls.addConstraints(): the
+	// constraint it registers here is still checked, by RealLine.compile(),
+	// against this box's FINAL marginBefore, however early it is registered
+	// -- see the comment on LivingSpace.getPosALive()/getPosELive().
+	// getPosAA() itself never needs to be live: it resolves to either
+	// xorigin or the previous participant's bare posD, neither of which is
+	// margin-adjusted.
+	public void addNeighborConstraintBefore(StringBounder stringBounder) {
+		final ClockwiseTopRightBottomLeft padding = padding();
+		getPosALive(stringBounder).ensureBiggerThan(getPosAA(stringBounder).addFixed(10 + padding.getLeft()));
+	}
+
+	// Symmetric counterpart of addNeighborConstraintBefore() above: makes
+	// sure the following participant clears this box's own trailing edge
+	// (getPosE()). Both sides need to be live here: this box's own
+	// getPosELive(), and the next participant's getPosALive() too, in case
+	// that neighbour is itself the first member of another box whose own
+	// margin hasn't finished growing yet either.
 	public void addConstraintAfter(StringBounder stringBounder) {
 		final LivingSpace next = tileArguments.getLivingSpaces().next(getLastLivingSpace());
 		if (next == null)
 			return;
 
 		final ClockwiseTopRightBottomLeft padding = padding();
-		next.getPosA(stringBounder)
-				.ensureBiggerThan(getPosE(stringBounder).addFixed(20 + padding.getLeft() + padding.getRight()));
+		next.getPosALive(stringBounder)
+				.ensureBiggerThan(getPosELive(stringBounder).addFixed(20 + padding.getLeft() + padding.getRight()));
 	}
 
 	private ClockwiseTopRightBottomLeft padding() {
