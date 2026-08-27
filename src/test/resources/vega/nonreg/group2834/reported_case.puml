@@ -1,0 +1,34 @@
+---
+output: svg
+---
+@startuml
+' plantuml/plantuml#2834: sequence diagram rendering regression in the JS
+' (TeaVM) build, sized similarly to the diagrams in the performance report
+' (tens of alternating arrows). This is a pure performance/regression pin:
+' the SVG output must stay byte-identical before and after the fix to
+' RealMax's recursion guard and the real package's constructor stack
+' captures -- only the cost of producing it should change.
+!pragma teoz true
+participant Alice
+participant Bob
+Alice -> Bob : message 0
+Bob -> Alice : message 1
+Alice -> Bob : message 2
+Bob -> Alice : message 3
+Alice -> Bob : message 4
+Bob -> Alice : message 5
+Alice -> Bob : message 6
+Bob -> Alice : message 7
+Alice -> Bob : message 8
+Bob -> Alice : message 9
+Alice -> Bob : message 10
+Bob -> Alice : message 11
+Alice -> Bob : message 12
+Bob -> Alice : message 13
+Alice -> Bob : message 14
+Bob -> Alice : message 15
+Alice -> Bob : message 16
+Bob -> Alice : message 17
+Alice -> Bob : message 18
+Bob -> Alice : message 19
+@enduml

@@ -41,13 +41,12 @@ import java.util.Objects;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
-import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class StringBounderTeaVM implements StringBounder {
 	// ::remove file when JAVA8
 
-	private static final int MAX_CACHE_SIZE = 8192;
+	private static final int MAX_CACHE_SIZE = 8192 * 2;
 
 	private static final class CacheKey {
 		private final UFont font;
@@ -79,6 +78,24 @@ public class StringBounderTeaVM implements StringBounder {
 	private static final Map<CacheKey, XDimension2D> cache = new LinkedHashMap<>(16, 0.75f, true) {
 		@Override
 		protected boolean removeEldestEntry(Map.Entry<CacheKey, XDimension2D> eldest) {
+			return size() > MAX_CACHE_SIZE;
+		}
+	};
+
+	// getDescent() returns fontBoundingBoxDescent, a metric of the font itself
+	// (see the comment in getDescent() below) rather than of the specific glyphs
+	// being measured, so it is just as cacheable per (font, text) as
+	// calculateDimension() above -- yet unlike calculateDimension() it was never
+	// cached, so every call re-created a canvas and re-ran ctx.measureText() on
+	// the full text (see SvgGraphicsTeaVM.getDetailedTextMetrics()) purely to
+	// read back a value that had already been computed for the same font/text
+	// pair. Measured on a 200-message sequence diagram (plantuml/plantuml#2834):
+	// getDescent() was called 604 times for only 202 distinct (font, text)
+	// pairs, i.e. two out of every three calls were pure repetition that this
+	// cache now avoids.
+	private static final Map<CacheKey, Double> descentCache = new LinkedHashMap<>(16, 0.75f, true) {
+		@Override
+		protected boolean removeEldestEntry(Map.Entry<CacheKey, Double> eldest) {
 			return size() > MAX_CACHE_SIZE;
 		}
 	};
@@ -119,10 +136,17 @@ public class StringBounderTeaVM implements StringBounder {
 	}
 
 	@Override
-	public double getDescent(UFont font, String text) {
+	public double getDescent(UFont f, String text) {
 		if (text == null || text.isEmpty())
 			return 0;
 
+		final UFont font = (UFont) f;
+		final CacheKey key = new CacheKey(font, text);
+
+		return descentCache.computeIfAbsent(key, k -> getDescentSlow(font, text));
+	}
+
+	private double getDescentSlow(UFont font, String text) {
 		final String fontFamily = font.getFamily(null, null);
 		final int fontSize = font.getSize();
 		final String fontWeight = font.getFontFace().isBold() ? "bold" : "normal";

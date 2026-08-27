@@ -37,27 +37,27 @@ package net.sourceforge.plantuml.real;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import net.sourceforge.plantuml.log.Logme;
-
 abstract class RealMoveable extends AbstractReal implements Real {
 
 	public static final AtomicInteger CPT = new AtomicInteger();
 	private final int cpt = CPT.getAndIncrement();
 	private final String name;
-	private final Throwable creationPoint;
+	private final RealDebug creationPoint;
 
 	RealMoveable(RealLine line, String name) {
 		super(line);
 		this.name = name;
-		this.creationPoint = new Throwable();
-		this.creationPoint.fillInStackTrace();
+		// See RealDebug: this constructor runs once per tile along the Y gauge
+		// chain, potentially thousands of times for a large diagram, so the
+		// stack trace capture used only for debugging is opt-in.
+		this.creationPoint = RealDebug.create();
+	}
+	
+	final public void printCreationStackTrace() {
+		RealDebug.printCreationStackTrace(creationPoint);
 	}
 
 	abstract void move(double delta);
-
-	final public void printCreationStackTrace() {
-		Logme.error(creationPoint);
-	}
 
 	final public Real addFixed(double delta) {
 		return new RealDelta(this, delta);

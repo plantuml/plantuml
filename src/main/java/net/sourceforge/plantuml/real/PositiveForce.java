@@ -35,15 +35,13 @@
  */
 package net.sourceforge.plantuml.real;
 
-import net.sourceforge.plantuml.log.Logme;
-
 class PositiveForce {
 
 	private final Real fixedPoint;
 	private final RealMoveable movingPoint;
 	private final double minimunDistance;
 	private final boolean trace = false;
-	private final Throwable creationPoint;
+	private final RealDebug creationPoint;
 
 	public PositiveForce(Real fixedPoint, RealMoveable movingPoint, double minimunDistance) {
 		if (fixedPoint == movingPoint) {
@@ -52,8 +50,10 @@ class PositiveForce {
 		this.fixedPoint = fixedPoint;
 		this.movingPoint = movingPoint;
 		this.minimunDistance = minimunDistance;
-		this.creationPoint = new Throwable();
-		this.creationPoint.fillInStackTrace();
+		// See RealDebug: one PositiveForce is created per layout constraint, so
+		// this stack trace capture (used only for the diagnostic below when a
+		// force conflicts with an already-faulty Real) is opt-in.
+		this.creationPoint = RealDebug.create();
 	}
 
 	@Override
@@ -72,7 +72,7 @@ class PositiveForce {
 		} catch (IllegalStateException e) {
 			System.err.println("Pb with force " + this);
 			System.err.println("This force has been created here:");
-			Logme.error(creationPoint);
+			RealDebug.printCreationStackTrace(creationPoint);
 			System.err.println("The fixed point has been created here: " + fixedPoint);
 			fixedPoint.printCreationStackTrace();
 			throw e;

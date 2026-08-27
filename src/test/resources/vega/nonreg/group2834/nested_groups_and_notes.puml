@@ -1,0 +1,37 @@
+---
+output: svg
+---
+@startuml
+' plantuml/plantuml#2834: broader coverage than reported_case.puml -- groups,
+' notes and activation bars all add their own RealMax/RealMin/PositiveForce
+' constraints on top of plain arrows, so this pins that those code paths are
+' unaffected by the recursion-guard and creationPoint changes too.
+!pragma teoz true
+participant Alice
+participant Bob
+participant Carol
+
+activate Alice
+Alice -> Bob : request
+activate Bob
+note right of Bob
+  a note wide enough to
+  push the lifeline gauge
+end note
+
+alt success
+  Bob -> Carol : forward
+  activate Carol
+  Carol --> Bob : ack
+  deactivate Carol
+else failure
+  Bob --> Alice : error
+end
+
+loop retry
+  Bob -> Alice : ping
+end
+
+deactivate Bob
+deactivate Alice
+@enduml
