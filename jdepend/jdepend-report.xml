@@ -12143,7 +12143,7 @@
                 <TotalClasses>2</TotalClasses>
                 <ConcreteClasses>2</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>26</Ca>
+                <Ca>27</Ca>
                 <Ce>4</Ce>
                 <A>0</A>
                 <I>0.13</I>
@@ -12185,6 +12185,7 @@
                 <Package>net.sourceforge.plantuml.klimt.drawing.g2d</Package>
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
                 <Package>net.sourceforge.plantuml.math</Package>
+                <Package>net.sourceforge.plantuml.real</Package>
                 <Package>net.sourceforge.plantuml.security</Package>
                 <Package>net.sourceforge.plantuml.security.authentication.oauth</Package>
                 <Package>net.sourceforge.plantuml.swing</Package>
@@ -13485,13 +13486,13 @@
 
         <Package name="net.sourceforge.plantuml.real">
             <Stats>
-                <TotalClasses>8</TotalClasses>
-                <ConcreteClasses>4</ConcreteClasses>
+                <TotalClasses>10</TotalClasses>
+                <ConcreteClasses>6</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
                 <Ca>4</Ca>
-                <Ce>4</Ce>
-                <A>0.5</A>
-                <I>0.5</I>
+                <Ce>6</Ce>
+                <A>0.4</A>
+                <I>0.6</I>
                 <D>0</D>
                 <V>1</V>
             </Stats>
@@ -13512,11 +13513,17 @@
             </AbstractClasses>
 
             <ConcreteClasses>
+                <Class sourceFile="RealDebug.java">
+                    net.sourceforge.plantuml.real.RealDebug
+                </Class>
                 <Class sourceFile="RealLine.java">
                     net.sourceforge.plantuml.real.RealLine$MaxAbsolute
                 </Class>
                 <Class sourceFile="RealLine.java">
                     net.sourceforge.plantuml.real.RealLine$MinAbsolute
+                </Class>
+                <Class sourceFile="RealMax.java">
+                    net.sourceforge.plantuml.real.RealMax$1
                 </Class>
                 <Class sourceFile="RealMiddle2.java">
                     net.sourceforge.plantuml.real.RealMiddle2
@@ -13527,9 +13534,11 @@
             </ConcreteClasses>
 
             <DependsUpon>
+                <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
                 <Package>java.util.function</Package>
+                <Package>net.sourceforge.plantuml.log</Package>
                 <Package>net.sourceforge.plantuml.teavm</Package>
             </DependsUpon>
 
@@ -16762,8 +16771,8 @@
 
         <Package name="net.sourceforge.plantuml.teavm">
             <Stats>
-                <TotalClasses>19</TotalClasses>
-                <ConcreteClasses>18</ConcreteClasses>
+                <TotalClasses>20</TotalClasses>
+                <ConcreteClasses>19</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>43</Ca>
                 <Ce>14</Ce>
@@ -16818,6 +16827,9 @@
                 </Class>
                 <Class sourceFile="StringBounderTeaVM.java">
                     net.sourceforge.plantuml.teavm.StringBounderTeaVM$1
+                </Class>
+                <Class sourceFile="StringBounderTeaVM.java">
+                    net.sourceforge.plantuml.teavm.StringBounderTeaVM$2
                 </Class>
                 <Class sourceFile="StringBounderTeaVM.java">
                     net.sourceforge.plantuml.teavm.StringBounderTeaVM$CacheKey

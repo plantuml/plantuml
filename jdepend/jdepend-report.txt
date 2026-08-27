@@ -8295,7 +8295,7 @@ Stats:
     Concrete Classes: 2
     Abstract Classes: 0
 
-    Ca: 26
+    Ca: 27
     Ce: 4
 
     A: 0
@@ -8329,6 +8329,7 @@ Used By:
     net.sourceforge.plantuml.klimt.drawing.g2d
     net.sourceforge.plantuml.klimt.sprite
     net.sourceforge.plantuml.math
+    net.sourceforge.plantuml.real
     net.sourceforge.plantuml.security
     net.sourceforge.plantuml.security.authentication.oauth
     net.sourceforge.plantuml.swing
@@ -9331,15 +9332,15 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 8
-    Concrete Classes: 4
+    Total Classes: 10
+    Concrete Classes: 6
     Abstract Classes: 4
 
     Ca: 4
-    Ce: 4
+    Ce: 6
 
-    A: 0.5
-    I: 0.5
+    A: 0.4
+    I: 0.6
     D: 0
 
 Abstract Classes:
@@ -9349,15 +9350,19 @@ Abstract Classes:
     net.sourceforge.plantuml.real.RealOrigin
 
 Concrete Classes:
+    net.sourceforge.plantuml.real.RealDebug
     net.sourceforge.plantuml.real.RealLine$MaxAbsolute
     net.sourceforge.plantuml.real.RealLine$MinAbsolute
+    net.sourceforge.plantuml.real.RealMax$1
     net.sourceforge.plantuml.real.RealMiddle2
     net.sourceforge.plantuml.real.RealUtils
 
 Depends Upon:
+    java.io
     java.lang
     java.util
     java.util.function
+    net.sourceforge.plantuml.log
     net.sourceforge.plantuml.teavm
 
 Used By:
@@ -11414,8 +11419,8 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 19
-    Concrete Classes: 18
+    Total Classes: 20
+    Concrete Classes: 19
     Abstract Classes: 1
 
     Ca: 43
@@ -11442,6 +11447,7 @@ Concrete Classes:
     net.sourceforge.plantuml.teavm.DriverTextTeaVM$ExtraLines
     net.sourceforge.plantuml.teavm.EmbeddedResources
     net.sourceforge.plantuml.teavm.StringBounderTeaVM$1
+    net.sourceforge.plantuml.teavm.StringBounderTeaVM$2
     net.sourceforge.plantuml.teavm.StringBounderTeaVM$CacheKey
     net.sourceforge.plantuml.teavm.TeaVM
     net.sourceforge.plantuml.teavm.TeaVMElementAdapter
@@ -15064,7 +15070,7 @@ java.awt.event,0,0,1,0,0,0,1,1
 java.awt.font,0,0,3,0,0,0,1,1
 java.awt.geom,0,0,6,0,0,0,1,1
 java.awt.image,0,0,13,0,0,0,1,1
-java.io,0,0,76,0,0,0,1,1
+java.io,0,0,77,0,0,0,1,1
 java.lang,0,0,232,0,0,0,1,1
 java.lang.annotation,0,0,5,0,0,0,1,1
 java.lang.reflect,0,0,4,0,0,0,1,1
@@ -15225,7 +15231,7 @@ net.sourceforge.plantuml.klimt.geom,34,6,92,9,0.18,0.09,0.73,1
 net.sourceforge.plantuml.klimt.shape,41,3,86,16,0.07,0.16,0.77,1
 net.sourceforge.plantuml.klimt.sprite,21,2,12,26,0.1,0.68,0.22,1
 net.sourceforge.plantuml.licensing,7,0,0,5,0,1,0,1
-net.sourceforge.plantuml.log,2,0,26,4,0,0.13,0.87,1
+net.sourceforge.plantuml.log,2,0,27,4,0,0.13,0.87,1
 net.sourceforge.plantuml.math,13,1,3,18,0.08,0.86,0.07,1
 net.sourceforge.plantuml.mcp,3,0,0,9,0,1,0,1
 net.sourceforge.plantuml.mda,2,0,1,4,0,0.8,0.2,1
@@ -15248,7 +15254,7 @@ net.sourceforge.plantuml.png.quantx,7,0,0,4,0,1,0,1
 net.sourceforge.plantuml.posimo,5,2,1,10,0.4,0.91,0.31,1
 net.sourceforge.plantuml.preproc,17,3,60,15,0.18,0.2,0.62,1
 net.sourceforge.plantuml.preproc2,10,1,3,8,0.1,0.73,0.17,1
-net.sourceforge.plantuml.real,8,4,4,4,0.5,0.5,0,1
+net.sourceforge.plantuml.real,10,4,4,6,0.4,0.6,0,1
 net.sourceforge.plantuml.regex,9,2,37,6,0.22,0.14,0.64,1
 net.sourceforge.plantuml.regexdiagram,5,0,0,13,0,1,0,1
 net.sourceforge.plantuml.salt,8,1,2,21,0.12,0.91,0.04,1
@@ -15281,7 +15287,7 @@ net.sourceforge.plantuml.svek.image,37,2,13,23,0.05,0.64,0.31,1
 net.sourceforge.plantuml.svg.parser,11,1,0,13,0.09,1,0.09,1
 net.sourceforge.plantuml.swing,36,0,0,15,0,1,0,1
 net.sourceforge.plantuml.syntax,2,0,0,9,0,1,0,1
-net.sourceforge.plantuml.teavm,19,1,43,14,0.05,0.25,0.7,1
+net.sourceforge.plantuml.teavm,20,1,43,14,0.05,0.25,0.7,1
 net.sourceforge.plantuml.teavm.browser,3,3,1,2,1,0.67,0.67,1
 net.sourceforge.plantuml.teavm.headless,3,1,0,2,0.33,1,0.33,1
 net.sourceforge.plantuml.telnet,1,0,0,2,0,1,0,1

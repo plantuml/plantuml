@@ -39,69 +39,97 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.plantuml.log.Logme;
-
 class RealMax extends AbstractReal implements Real {
 
-<span class="fc" id="L46">	private final List&lt;Real&gt; all = new ArrayList&lt;&gt;();</span>
-	private final Throwable creationPoint;
+	// Guard against a cyclic dependency graph (a RealMax that ends up, through
+	// some chain of delegation, depending on its own current value) without
+	// paying for a stack trace capture on every evaluation. Recursion here
+	// means getCurrentValueInternal() being re-entered on the same thread
+	// before an outer call has returned, so a thread-local counter of &quot;how
+	// many RealMax evaluations are currently on this thread's call stack&quot; is
+	// an exact, cheap substitute for inspecting the real stack depth.
+	//
+	// This used to be `new Throwable().fillInStackTrace().length &gt; 1000`,
+	// re-checked on every element of every RealMax on the diagram (thousands
+	// of captures for a large sequence diagram). That is affordable on the
+	// JVM, where fillInStackTrace() is a fast native call, but not on targets
+	// compiled through TeaVM: walking a native JavaScript stack is far more
+	// expensive there, and got worse still once sequence diagram Y positioning
+	// switched to real call recursion instead of a shallow state machine
+	// (commit d087fc0), which is what turned this guard into a measurable
+	// slowdown (plantuml/plantuml#2834).
+	private static final int MAX_RECURSION_DEPTH = 1000;
+<span class="fc" id="L62">	private static final ThreadLocal&lt;int[]&gt; RECURSION_DEPTH = new ThreadLocal&lt;int[]&gt;() {</span>
+		@Override
+		protected int[] initialValue() {
+<span class="fc" id="L65">			return new int[1];</span>
+		}
+	};
+
+<span class="fc" id="L69">	private final List&lt;Real&gt; all = new ArrayList&lt;&gt;();</span>
+	private final RealDebug creationPoint;
 
 	RealMax(Collection&lt;Real&gt; reals) {
-<span class="fc" id="L50">		super(line(reals));</span>
-<span class="fc" id="L51">		this.all.addAll(reals);</span>
-<span class="fc" id="L52">		this.creationPoint = new Throwable();</span>
-<span class="fc" id="L53">		this.creationPoint.fillInStackTrace();</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L73">		super(line(reals));</span>
+<span class="fc" id="L74">		this.all.addAll(reals);</span>
+		// See RealDebug: capturing a stack trace here is only useful to print
+		// where a faulty RealMax was created if the recursion guard below ever
+		// fires, so it is opt-in rather than paid by every RealMax instance.
+<span class="fc" id="L78">		this.creationPoint = RealDebug.create();</span>
+<span class="fc" id="L79">	}</span>
 
 	static RealLine line(Collection&lt;Real&gt; reals) {
-<span class="fc" id="L57">		return ((AbstractReal) reals.iterator().next()).getLine();</span>
+<span class="fc" id="L82">		return ((AbstractReal) reals.iterator().next()).getLine();</span>
 	}
 
 	public String getName() {
-<span class="nc" id="L61">		return &quot;max &quot; + all.size();</span>
+<span class="fc" id="L86">		return &quot;max &quot; + all.size();</span>
 	}
 
-<span class="fc" id="L64">	private double cache = Double.MAX_VALUE;</span>
+<span class="fc" id="L89">	private double cache = Double.MAX_VALUE;</span>
 
 	@Override
 	double getCurrentValueInternal() {
-<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (cache != Double.MAX_VALUE)</span>
-<span class="fc" id="L69">			return cache;</span>
-<span class="fc" id="L70">		double result = all.get(0).getCurrentValue();</span>
-<span class="fc bfc" id="L71" title="All 2 branches covered.">		for (int i = 1; i &lt; all.size(); i++) {</span>
-<span class="fc" id="L72">			Throwable t = new Throwable();</span>
-<span class="fc" id="L73">			t.fillInStackTrace();</span>
-<span class="fc" id="L74">			final int stackLength = t.getStackTrace().length;</span>
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">			if (stackLength &gt; 1000) {</span>
-<span class="nc" id="L76">				System.err.println(&quot;The faulty RealMax &quot; + getName());</span>
-<span class="nc" id="L77">				System.err.println(&quot;has been created here:&quot;);</span>
-<span class="nc" id="L78">				printCreationStackTrace();</span>
-<span class="nc" id="L79">				throw new IllegalStateException(&quot;Infinite recursion?&quot;);</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		if (cache != Double.MAX_VALUE)</span>
+<span class="fc" id="L94">			return cache;</span>
+<span class="fc" id="L95">		final int[] depth = RECURSION_DEPTH.get();</span>
+<span class="fc" id="L96">		depth[0]++;</span>
+		try {
+<span class="fc bfc" id="L98" title="All 2 branches covered.">			if (depth[0] &gt; MAX_RECURSION_DEPTH) {</span>
+<span class="fc" id="L99">				System.err.println(&quot;The faulty RealMax &quot; + getName());</span>
+<span class="fc" id="L100">				System.err.println(&quot;has been created here:&quot;);</span>
+<span class="fc" id="L101">				printCreationStackTrace();</span>
+<span class="fc" id="L102">				throw new IllegalStateException(&quot;Infinite recursion?&quot;);</span>
 			}
-<span class="fc" id="L81">			final double v = all.get(i).getCurrentValue();</span>
-<span class="fc bfc" id="L82" title="All 2 branches covered.">			if (v &gt; result)</span>
-<span class="fc" id="L83">				result = v;</span>
+<span class="fc" id="L104">			double result = all.get(0).getCurrentValue();</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">			for (int i = 1; i &lt; all.size(); i++) {</span>
+<span class="fc" id="L106">				final double v = all.get(i).getCurrentValue();</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">				if (v &gt; result)</span>
+<span class="fc" id="L108">					result = v;</span>
 
+			}
+<span class="fc" id="L111">			cache = result;</span>
+<span class="fc" id="L112">			return result;</span>
+		} finally {
+<span class="fc" id="L114">			depth[0]--;</span>
 		}
-<span class="fc" id="L86">		cache = result;</span>
-<span class="fc" id="L87">		return result;</span>
 	}
 
 	public Real addFixed(double delta) {
-<span class="fc" id="L91">		return new RealDelta(this, delta);</span>
+<span class="fc" id="L119">		return new RealDelta(this, delta);</span>
 	}
 
 	public Real addAtLeast(double delta) {
-<span class="nc" id="L95">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L123">		throw new UnsupportedOperationException();</span>
 	}
 
 	public void ensureBiggerThan(Real other) {
-<span class="nc" id="L99">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L127">		throw new UnsupportedOperationException();</span>
 	}
 
 	public void printCreationStackTrace() {
-<span class="nc" id="L103">		Logme.error(creationPoint);</span>
-<span class="nc" id="L104">	}</span>
+<span class="fc" id="L131">		RealDebug.printCreationStackTrace(creationPoint);</span>
+<span class="fc" id="L132">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

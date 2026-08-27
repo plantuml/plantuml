@@ -2667,11 +2667,13 @@ Total Classes: 10
 "net.sourceforge.plantuml.preproc2" --> "net.sourceforge.plantuml.utils"
 
 class "net.sourceforge.plantuml.real" %lighten("red", 100) {
-Total Classes: 8
+Total Classes: 10
 }
+"net.sourceforge.plantuml.real" --> "java.io"
 "net.sourceforge.plantuml.real" --> "java.lang"
 "net.sourceforge.plantuml.real" --> "java.util"
 "net.sourceforge.plantuml.real" --> "java.util.function"
+"net.sourceforge.plantuml.real" --> "net.sourceforge.plantuml.log"
 "net.sourceforge.plantuml.real" --> "net.sourceforge.plantuml.teavm"
 
 class "net.sourceforge.plantuml.regex" %lighten("red", 36) {
@@ -3223,7 +3225,7 @@ Total Classes: 2
 "net.sourceforge.plantuml.syntax" --> "net.sourceforge.plantuml.utils"
 
 class "net.sourceforge.plantuml.teavm" %lighten("red", 30) {
-Total Classes: 19
+Total Classes: 20
 }
 "net.sourceforge.plantuml.teavm" --> "java.io"
 "net.sourceforge.plantuml.teavm" --> "java.lang"
