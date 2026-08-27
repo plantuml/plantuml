@@ -37,6 +37,8 @@ package net.sourceforge.plantuml.asciiverse;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -115,8 +117,19 @@ public final class InfinitePlan {
 	// would misalign the output: a line that never drew left of 0 would start
 	// one column further right than a neighboring line that did. If no line
 	// ever went negative, this is 0, exactly the historical behavior.
-	public void exportTxt(OutputStream os) {
-		final PrintStream ps = SecurityUtils.createPrintStream(os);
+	// Explicit UTF-8, not SecurityUtils.createPrintStream(os)'s platform-default
+	// charset: this output is nothing but the Unicode box-drawing characters
+	// getHLineChar()/getVLineChar()/etc. choose (see the character-set comment
+	// below) plus plain ASCII, so on any non-UTF-8-default platform (notably
+	// most server JVMs, which default to a locale/POSIX charset with -Dfile.
+	// encoding unset) every box-drawing character silently became '?' -- see
+	// SequenceDiagram/GanttDiagram/WBSDiagram.exportTxt(), all three already
+	// `throws IOException`, so the checked UnsupportedEncodingException here
+	// propagates through them unchanged; UTF-8 is a guaranteed-available
+	// charset per the JLS, so this exception is not actually reachable, only
+	// declared.
+	public void exportTxt(OutputStream os) throws UnsupportedEncodingException {
+		final PrintStream ps = SecurityUtils.createPrintStream(os, false, StandardCharsets.UTF_8);
 		int startingPosition = 0;
 		for (InfiniteString line : plan)
 			startingPosition = Math.min(startingPosition, line.getLeftmostPosition());
