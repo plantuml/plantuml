@@ -39,50 +39,71 @@ git fetch --deepen 500
 git log -L <start>,<end>:<file>
 ```
 
-**clide**, the semantic navigator this file leans on (§3):
+**clide**, the semantic navigator this file leans on (§3), has two separate
+parts — a Java **daemon** that does the work and a Python **client** that talks
+to it. Read `clide/CLAUDE.md` once; it is kept current and the short version
+below can drift. Getting the split right the first time avoids the two mistakes
+that used to cost a round trip each: piping commands into `java -jar clide.jar`
+directly (that invocation *is* the daemon — it never behaves as a one-shot
+client, and blocks in the foreground instead of answering anything), and
+opening a second client before the first one finished with its own command.
 
 ```bash
 git clone --depth 1 https://github.com/plantuml/clide
-cd clide && ant                      # produces clide.jar
+cd clide && ant                      # produces clide.jar — never gradlew here either
 ```
 
-Never use `gradlew` for either — it downloads its distribution from a domain the
-sandbox cannot reach, so it always fails here. Never run clide from its compiled
-classes either: `clide.jar` carries resources (jdtls, the JUnit jars it lends the
-target project) that a classes-based run silently lacks, and the symptom appears
-in the *opened project* as a broken classpath rather than as an error about
-clide. `clide/CLAUDE.md` explains it.
+Never use `gradlew` for either repository — it downloads its distribution from
+a domain the sandbox cannot reach, so it always fails here. Never run clide
+from its compiled classes either: `clide.jar` carries resources (jdtls, the
+JUnit jars it lends the target project) that a classes-based run silently
+lacks, and the symptom appears in the *opened project* as a broken classpath
+rather than as an error about clide.
 
-Then open the PlantUML project with clide, once. The first launch builds it (a
-minute or so on this codebase); later ones take a quarter of a second:
+**Step 1 — start the daemon, once, in the background.** `java -jar clide.jar
+<project>` runs in the foreground and blocks; nothing backgrounds it
+automatically, so do that explicitly and wait for its readiness line before
+sending anything:
 
 ```bash
-java -jar ../clide/clide.jar .
+nohup java -jar /path/to/clide/clide.jar /path/to/plantuml > /tmp/clide-daemon.log 2>&1 &
+until grep -q "^Daemon ready on port" /tmp/clide-daemon.log 2>/dev/null; do sleep 1; done
+cat /tmp/clide-daemon.log     # first launch builds the project - a minute or so; later ones are instant
 ```
 
-A daemon stays up per project. Sending commands is line-oriented — **one token
-per line**, keyword first, then one line per parameter, `exit` last. This wrapper
-pays for itself immediately:
+One daemon per project, reused for the whole session: start it once, leave it
+running, and every later command in this file talks to that same daemon. A
+client that finds none running fails with a message naming this exact command
+— that is the fix, not a retry of the client.
+
+**Step 2 — connect a client and send commands.** `clide.py` is the *only*
+client — there is no Java client to fall back to. It is line-oriented, **one
+token per line**: keyword first, then one line per parameter, `exit` last.
+This wrapper pays for itself immediately:
 
 ```bash
 cat > /tmp/c.sh <<'EOF'
 #!/bin/bash
-cd /path/to/plantuml
-{ cat; echo exit; } | java -jar /path/to/clide/clide.jar . 2>/dev/null
+{ cat; echo exit; } | python3 /path/to/clide/clide.py /path/to/plantuml 2>/dev/null
 EOF
 chmod +x /tmp/c.sh
 printf 'find_symbol\nSomeClassName\n' | /tmp/c.sh
 ```
 
-Writing `find_symbol SomeClassName` on one line fails with `UNKNOWN_KEYWORD`:
-the whole line was looked up as a keyword. `help` lists every command with its
-arity; `man <keyword>` details one.
+Start with `printf 'help\nexit\n' | /tmp/c.sh` once, right after wiring up the
+wrapper — it lists every command with its exact arity in one call, which is
+worth doing before reaching for `search_regex` or a remembered command name
+that may have gained or lost a parameter. `man <keyword>` then details one
+command at a time.
 
-Each invocation of the wrapper pays a fixed cost - the JVM starting, connecting
-to the daemon, and tearing back down - on top of whatever the command itself
-does; on this project, measured against a warm daemon, that floor is roughly a
-tenth of a second, and even a `rebuild` that finds nothing changed only adds a
-few hundred milliseconds to it. It is paid once per invocation, not once per
+Writing `find_symbol SomeClassName` on one line fails with `UNKNOWN_KEYWORD`:
+the whole line was looked up as a keyword.
+
+Each invocation of the wrapper pays a fixed cost — the Python interpreter
+starting and connecting to the already-running daemon, nothing more, since
+there is no JVM to start on this side — on top of whatever the command itself
+does; measured against a warm daemon, that floor is closer to 40ms than the
+~150ms a JVM client would add. It is paid once per invocation, not once per
 command, so piping in several commands before `exit` amortizes it instead of
 paying it again for each one:
 
@@ -93,7 +114,12 @@ printf 'rebuild\nerrors\nfind_symbol\nSomeUnrelatedClassName\n' | /tmp/c.sh
 This only pays off when every command's parameters are already known up front:
 stdin is delivered whole, with nothing read back in between, so a command that
 needs a position printed by the one before it - `find_symbol` feeding
-`list_members`, above - still has to be its own invocation.
+`list_members`, above - still has to be its own invocation. Two short-lived
+invocations back to back are fine — each is its own client, connecting,
+finishing its own commands, and disconnecting with `exit` before the next one
+starts — there is no need to keep one client open across separate wrapper
+calls, and no daemon-side state is lost between them (transactions and open
+files live in the daemon, not in the client).
 
 ---
 
@@ -188,10 +214,14 @@ printf 'rebuild\nerrors\n' | /tmp/c.sh
   jdtls: 0 error(s), 1300 warning(s) in 584 file(s)
 ```
 
-Ten seconds against a real compiler, before `ant` and before any test. One
-wrinkle here: `rebuild` may report `Project 'plantuml (2)' is missing required
-source folder` — that is a known clide artefact on this repository, not your
-code. `ant` is the authority when in doubt.
+Ten seconds against a real compiler, before `ant` and before any test. Note
+that this is no longer a mandatory step before every query: clide now notices
+files you edited outside of it on its own and resynchronizes jdtls before
+answering any `find_*`/`hover`/`list_members`/`run_test` — so the routine
+"edit, then `rebuild`, then ask" loop is gone; ask directly, and reach for an
+explicit `rebuild` only when you want fresh diagnostics for their own sake or a
+full clean recompile (9-12s on this codebase, whether or not anything actually
+changed). `ant` is the authority when in doubt.
 
 **Transactions** — snapshot before you start editing, so an experiment is one
 command away from being undone:
@@ -210,8 +240,9 @@ history is still one messy work-in-progress. `restore_file` undoes a single file
 without closing the transaction.
 
 **Scripting** — when the answer needs a loop over many symbols
-(`clide --lua audit.lua .`), results come back as tables rather than text to
-parse. Reach for it when you would otherwise spend one round trip per item.
+(`python3 clide.py --lua audit.lua .`, against the same running daemon),
+results come back as tables rather than text to parse. Reach for it when you
+would otherwise spend one round trip per item.
 
 **Running tests through clide** is possible (`run_test`, `run_tests`) but on this
 repository the JUnit console runner from `CLAUDE.md` is more predictable, because
