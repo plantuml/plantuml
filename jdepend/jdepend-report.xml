@@ -4245,10 +4245,10 @@
                 <ConcreteClasses>10</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>5</Ca>
-                <Ce>10</Ce>
+                <Ce>11</Ce>
                 <A>0.09</A>
-                <I>0.67</I>
-                <D>0.24</D>
+                <I>0.69</I>
+                <D>0.22</D>
                 <V>1</V>
             </Stats>
 
@@ -4294,6 +4294,7 @@
             <DependsUpon>
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
+                <Package>java.nio.charset</Package>
                 <Package>java.util</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.asciiart</Package>

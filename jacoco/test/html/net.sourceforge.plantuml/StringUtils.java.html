@@ -461,7 +461,7 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="fc" id="L461">			char c = s.charAt(i);</span>
 <span class="fc bfc" id="L462" title="All 8 branches covered.">			if ((c &gt;= 'a' &amp;&amp; c &lt;= 'm') || (c &gt;= 'A' &amp;&amp; c &lt;= 'M'))</span>
 <span class="fc" id="L463">				c += 13;</span>
-<span class="pc bpc" id="L464" title="2 of 8 branches missed.">			else if ((c &gt;= 'n' &amp;&amp; c &lt;= 'z') || (c &gt;= 'N' &amp;&amp; c &lt;= 'Z'))</span>
+<span class="pc bpc" id="L464" title="1 of 8 branches missed.">			else if ((c &gt;= 'n' &amp;&amp; c &lt;= 'z') || (c &gt;= 'N' &amp;&amp; c &lt;= 'Z'))</span>
 <span class="fc" id="L465">				c -= 13;</span>
 <span class="pc bpc" id="L466" title="1 of 2 branches missed.">			else if (c &gt; 126)</span>
 <span class="nc" id="L467">				throw new IllegalArgumentException(s);</span>

@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import net.sourceforge.plantuml.asciiverse.ADimension2D;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.real.Real;
@@ -49,66 +51,114 @@ public class NewpageTile extends AbstractTile {
 	// Small vertical space before and after the dashed separator
 	private static final double MARGINY = 10;
 
+	// Same widening as GroupingTile.ASCII_FRAME_MARGIN, kept as its own
+	// constant rather than reused across classes: a newpage separator has no
+	// frame to be a margin &quot;around&quot;, it just happens to want the same 2-cell
+	// breathing room past the outermost participant box so the dashed line
+	// reads as a full-width divider rather than stopping flush on the boxes.
+	private static final int ASCII_MARGIN = 2;
+
 	private final Newpage newpage;
 	private final TileArguments tileArguments;
 	private final YGauge yGauge;
 
 	@Override
 	public double getContactPointRelative() {
-<span class="nc" id="L58">		return 0;</span>
+<span class="nc" id="L67">		return 0;</span>
 	}
 
 	public NewpageTile(Newpage newpage, TileArguments tileArguments, YGauge currentY) {
-<span class="fc" id="L62">		super(tileArguments.getStringBounder(), currentY);</span>
-<span class="fc" id="L63">		this.newpage = newpage;</span>
-<span class="fc" id="L64">		this.tileArguments = tileArguments;</span>
-<span class="fc" id="L65">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
-<span class="fc" id="L66">	}</span>
+<span class="fc" id="L71">		super(tileArguments.getStringBounder(), currentY);</span>
+<span class="fc" id="L72">		this.newpage = newpage;</span>
+<span class="fc" id="L73">		this.tileArguments = tileArguments;</span>
+<span class="fc" id="L74">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
+<span class="fc" id="L75">	}</span>
 
 	@Override
 	public YGauge getYGauge() {
-<span class="fc" id="L70">		return yGauge;</span>
+<span class="fc" id="L79">		return yGauge;</span>
 	}
 
 	private Component getComponent() {
-<span class="fc" id="L74">		return tileArguments.getSkin().createComponentNewPage(newpage.getUsedStyles(), tileArguments.getSkinParam());</span>
+<span class="fc" id="L83">		return tileArguments.getSkin().createComponentNewPage(newpage.getUsedStyles(), tileArguments.getSkinParam());</span>
 	}
 
 	public void drawU(UGraphic ug) {
 		// Like in Puma, the dashed separator is displayed at the bottom of the
 		// page ending here and at the top of the page starting here: the pages
 		// slightly overlap in PlayingSpaceWithParticipants
-<span class="fc bfc" id="L81" title="All 2 branches covered.">		if (((Context2D) ug).isBackground())</span>
-<span class="fc" id="L82">			return;</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">		if (((Context2D) ug).isBackground())</span>
+<span class="fc" id="L91">			return;</span>
 
 		// Self-translate prologue: absolute gauge position
-<span class="fc" id="L85">		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));</span>
+<span class="fc" id="L94">		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));</span>
 
-<span class="fc" id="L87">		final Component comp = getComponent();</span>
-<span class="fc" id="L88">		final Area area = Area.create(tileArguments.getBorder2() - tileArguments.getBorder1()</span>
-<span class="fc" id="L89">				- tileArguments.getXOrigin().getCurrentValue(), comp.getPreferredHeight(getStringBounder()));</span>
-<span class="fc" id="L90">		ug = ug.apply(new UTranslate(tileArguments.getBorder1(), MARGINY));</span>
-<span class="fc" id="L91">		comp.drawU(ug, area, (Context2D) ug);</span>
-<span class="fc" id="L92">	}</span>
+<span class="fc" id="L96">		final Component comp = getComponent();</span>
+<span class="fc" id="L97">		final Area area = Area.create(tileArguments.getBorder2() - tileArguments.getBorder1()</span>
+<span class="fc" id="L98">				- tileArguments.getXOrigin().getCurrentValue(), comp.getPreferredHeight(getStringBounder()));</span>
+<span class="fc" id="L99">		ug = ug.apply(new UTranslate(tileArguments.getBorder1(), MARGINY));</span>
+<span class="fc" id="L100">		comp.drawU(ug, area, (Context2D) ug);</span>
+<span class="fc" id="L101">	}</span>
 
 	public double getPreferredHeight() {
-<span class="fc" id="L95">		return getComponent().getPreferredHeight(getStringBounder()) + 2 * MARGINY;</span>
+<span class="fc" id="L104">		return getComponent().getPreferredHeight(getStringBounder()) + 2 * MARGINY;</span>
 	}
 
 	public void addConstraints() {
-<span class="fc" id="L99">	}</span>
+<span class="fc" id="L108">	}</span>
 
 	public Real getMinX() {
-<span class="fc" id="L102">		return tileArguments.getXOrigin();</span>
+<span class="fc" id="L111">		return tileArguments.getXOrigin();</span>
 	}
 
 	public Real getMaxX() {
-<span class="fc" id="L106">		return tileArguments.getXOrigin();</span>
+<span class="fc" id="L115">		return tileArguments.getXOrigin();</span>
 	}
 
 	public Event getEvent() {
-<span class="fc" id="L110">		return newpage;</span>
+<span class="fc" id="L119">		return newpage;</span>
 	}
+
+	// ASCII counterpart of drawU()'s full-width dashed separator (drawn there
+	// across tileArguments.getBorder1()..getBorder2()). Unlike GroupingTile,
+	// this tile is never nested inside a frame that could impose its own
+	// column span, so there is only one case, not a fallback: always spans
+	// every participant of the diagram, the same &quot;no children of its own&quot;
+	// convention GroupingTile.asciiFrameColumns() falls back to when a group
+	// is empty (see its own comment for why posB..posD-1, not the life
+	// columns, is the diagram's edge convention).
+	private int[] asciiColumns() {
+<span class="fc" id="L131">		int lo = Integer.MAX_VALUE;</span>
+<span class="fc" id="L132">		int hi = Integer.MIN_VALUE;</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		for (LivingSpace ls : tileArguments.getLivingSpaces().values()) {</span>
+<span class="fc" id="L134">			lo = Math.min(lo, (int) ls.getAsciiPosB().getCurrentValue());</span>
+<span class="fc" id="L135">			hi = Math.max(hi, (int) ls.getAsciiPosD().getCurrentValue() - 1);</span>
+<span class="fc" id="L136">		}</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (lo == Integer.MAX_VALUE)</span>
+<span class="nc" id="L138">			return new int[] { 0, 0 };</span>
+
+<span class="fc" id="L140">		return new int[] { lo - ASCII_MARGIN, hi + ASCII_MARGIN };</span>
+	}
+
+	@Override
+	public ADimension2D asciiDimension() {
+<span class="fc" id="L145">		final int[] cols = asciiColumns();</span>
+<span class="fc" id="L146">		return new ADimension2D(cols[1] - cols[0] + 1, 1);</span>
+	}
+
+	// Single dashed row spanning the resolved columns -- dotted like the
+	// pixel version's dashed separator (see MARGINY's comment above and
+	// drawU()), reusing InfinitePlan.drawHLine()'s own dash/dotted logic
+	// rather than picking a character here, so this stays correct for both
+	// ATXT and UTXT with no branch in this class (same reasoning as
+	// AElseSeparator.asciiDraw()).
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+<span class="fc" id="L157">		final int[] cols = asciiColumns();</span>
+<span class="fc" id="L158">		final int width = cols[1] - cols[0] + 1;</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (width &gt; 0)</span>
+<span class="fc" id="L160">			plan.move(cols[0], 0).drawHLine(0, width - 1, 0, true);</span>
+<span class="fc" id="L161">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

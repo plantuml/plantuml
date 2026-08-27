@@ -732,11 +732,12 @@ Total Classes: 23
 "net.sourceforge.plantuml.asciiart" --> "net.sourceforge.plantuml.skin.rose"
 "net.sourceforge.plantuml.asciiart" --> "net.sourceforge.plantuml.style"
 
-class "net.sourceforge.plantuml.asciiverse" %lighten("red", 76) {
+class "net.sourceforge.plantuml.asciiverse" %lighten("red", 78) {
 Total Classes: 11
 }
 "net.sourceforge.plantuml.asciiverse" --> "java.io"
 "net.sourceforge.plantuml.asciiverse" --> "java.lang"
+"net.sourceforge.plantuml.asciiverse" --> "java.nio.charset"
 "net.sourceforge.plantuml.asciiverse" --> "java.util"
 "net.sourceforge.plantuml.asciiverse" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.asciiverse" --> "net.sourceforge.plantuml.asciiart"

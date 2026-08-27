@@ -2685,11 +2685,11 @@ Stats:
     Abstract Classes: 1
 
     Ca: 5
-    Ce: 10
+    Ce: 11
 
     A: 0.09
-    I: 0.67
-    D: 0.24
+    I: 0.69
+    D: 0.22
 
 Abstract Classes:
     net.sourceforge.plantuml.asciiverse.AsciiBlock
@@ -2709,6 +2709,7 @@ Concrete Classes:
 Depends Upon:
     java.io
     java.lang
+    java.nio.charset
     java.util
     net.sourceforge.plantuml
     net.sourceforge.plantuml.asciiart
@@ -15077,7 +15078,7 @@ java.lang.reflect,0,0,4,0,0,0,1,1
 java.math,0,0,6,0,0,0,1,1
 java.net,0,0,5,0,0,0,1,1
 java.nio,0,0,1,0,0,0,1,1
-java.nio.charset,0,0,19,0,0,0,1,1
+java.nio.charset,0,0,20,0,0,0,1,1
 java.nio.file,0,0,3,0,0,0,1,1
 java.security,0,0,3,0,0,0,1,1
 java.security.spec,0,0,2,0,0,0,1,1
@@ -15134,7 +15135,7 @@ net.sourceforge.plantuml.argon2.blake2,13,5,1,5,0.38,0.83,0.22,1
 net.sourceforge.plantuml.argon2.exception,2,0,1,1,0,0.5,0.5,1
 net.sourceforge.plantuml.argon2.model,4,0,3,3,0,0.5,0.5,1
 net.sourceforge.plantuml.asciiart,23,3,3,14,0.13,0.82,0.05,1
-net.sourceforge.plantuml.asciiverse,11,1,5,10,0.09,0.67,0.24,1
+net.sourceforge.plantuml.asciiverse,11,1,5,11,0.09,0.69,0.22,1
 net.sourceforge.plantuml.board,7,0,0,18,0,1,0,1
 net.sourceforge.plantuml.bpm,32,7,0,18,0.22,1,0.22,1
 net.sourceforge.plantuml.braille,11,0,2,11,0,0.85,0.15,1
