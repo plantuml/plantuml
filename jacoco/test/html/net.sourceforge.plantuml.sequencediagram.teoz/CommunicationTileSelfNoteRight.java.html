@@ -161,16 +161,32 @@ public class CommunicationTileSelfNoteRight extends AbstractTile {
 <span class="fc" id="L161">		return getNotePosition(getStringBounder()).addFixed(dim.getWidth());</span>
 	}
 
+	// Mirrors getMaxX() above, but anchored on the inner loop's getDrawnMaxX()
+	// (its actual drawn extent, see CommunicationTileSelf) instead of
+	// getMaxX() (the wider layout reservation) -- the note's own width is
+	// exact either way, so only the anchor changes.
+	@Override
+	public Real getDrawnMinX() {
+<span class="fc" id="L170">		return tile.getDrawnMinX();</span>
+	}
+
+	@Override
+	public Real getDrawnMaxX() {
+<span class="fc" id="L175">		final Component comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L176">		final double width = comp.getPreferredDimension(getStringBounder()).getWidth();</span>
+<span class="fc" id="L177">		return tile.getDrawnMaxX().addFixed(width);</span>
+	}
+
 	// ASCII counterpart: delegate to the inner tile, same shape as
 	// CommunicationTileSelfNoteLeft's override.
 	@Override
 	public void asciiAddConstraints() {
-<span class="fc" id="L168">		tile.asciiAddConstraints();</span>
-<span class="fc" id="L169">	}</span>
+<span class="fc" id="L184">		tile.asciiAddConstraints();</span>
+<span class="fc" id="L185">	}</span>
 
 	@Override
 	public Real getAsciiMinX() {
-<span class="fc" id="L173">		return tile.getAsciiMinX();</span>
+<span class="fc" id="L189">		return tile.getAsciiMinX();</span>
 	}
 
 	// Mirrors CommunicationTileSelfNoteLeft.getAsciiMinX(): tile.getAsciiMaxX()
@@ -180,18 +196,18 @@ public class CommunicationTileSelfNoteRight extends AbstractTile {
 	// known gap as every other note decorator.
 	@Override
 	public Real getAsciiMaxX() {
-<span class="fc" id="L183">		final int boxWidth = new ANote(asciiNoteText()).marginLR(2, 2).asciiDimension().getWidth();</span>
-<span class="fc" id="L184">		final Real tileMax = tile.getAsciiMaxX();</span>
-<span class="fc" id="L185">		final Real noteMax = tileMax.addFixed(boxWidth + 1);</span>
-<span class="fc" id="L186">		return RealUtils.max(java.util.Arrays.asList(tileMax, noteMax));</span>
+<span class="fc" id="L199">		final int boxWidth = new ANote(asciiNoteText()).marginLR(2, 2).asciiDimension().getWidth();</span>
+<span class="fc" id="L200">		final Real tileMax = tile.getAsciiMaxX();</span>
+<span class="fc" id="L201">		final Real noteMax = tileMax.addFixed(boxWidth + 1);</span>
+<span class="fc" id="L202">		return RealUtils.max(java.util.Arrays.asList(tileMax, noteMax));</span>
 	}
 
 	// Same reasoning as CommunicationTileSelfNoteLeft.asciiDimension().
 	@Override
 	public ADimension2D asciiDimension() {
-<span class="fc" id="L192">		final ADimension2D tileDim = tile.asciiDimension();</span>
-<span class="fc" id="L193">		final int noteHeight = new ANote(asciiNoteText()).asciiDimension().getHeight();</span>
-<span class="fc" id="L194">		return new ADimension2D(tileDim.getWidth(), Math.max(tileDim.getHeight(), noteHeight));</span>
+<span class="fc" id="L208">		final ADimension2D tileDim = tile.asciiDimension();</span>
+<span class="fc" id="L209">		final int noteHeight = new ANote(asciiNoteText()).asciiDimension().getHeight();</span>
+<span class="fc" id="L210">		return new ADimension2D(tileDim.getWidth(), Math.max(tileDim.getHeight(), noteHeight));</span>
 	}
 
 	// ASCII counterpart of drawU(): draw the self-message loop first, then the
@@ -199,17 +215,17 @@ public class CommunicationTileSelfNoteRight extends AbstractTile {
 	// CommunicationTileSelfNoteLeft.asciiDraw(), on the other side.
 	@Override
 	public void asciiDraw(InfinitePlan plan) {
-<span class="fc" id="L202">		tile.asciiDraw(plan);</span>
+<span class="fc" id="L218">		tile.asciiDraw(plan);</span>
 
-<span class="fc" id="L204">		final AsciiBlock noteText = asciiNoteText();</span>
-<span class="fc" id="L205">		final AsciiBlock noteBox = plan.createNoteBox(noteText).marginLR(2, 2);</span>
-<span class="fc" id="L206">		final int anchorColumn = (int) tile.getAsciiMaxX().getCurrentValue();</span>
-<span class="fc" id="L207">		final int left = anchorColumn + 2;</span>
-<span class="fc" id="L208">		noteBox.asciiDraw(plan.move(left, 0));</span>
-<span class="fc" id="L209">	}</span>
+<span class="fc" id="L220">		final AsciiBlock noteText = asciiNoteText();</span>
+<span class="fc" id="L221">		final AsciiBlock noteBox = plan.createNoteBox(noteText).marginLR(2, 2);</span>
+<span class="fc" id="L222">		final int anchorColumn = (int) tile.getAsciiMaxX().getCurrentValue();</span>
+<span class="fc" id="L223">		final int left = anchorColumn + 2;</span>
+<span class="fc" id="L224">		noteBox.asciiDraw(plan.move(left, 0));</span>
+<span class="fc" id="L225">	}</span>
 
 	private AsciiBlock asciiNoteText() {
-<span class="fc" id="L212">		return noteOnMessage.getDisplay().marginLR(1, 3);</span>
+<span class="fc" id="L228">		return noteOnMessage.getDisplay().marginLR(1, 3);</span>
 	}
 
 }

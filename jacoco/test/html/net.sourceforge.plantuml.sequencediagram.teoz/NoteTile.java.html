@@ -254,24 +254,39 @@ public class NoteTile extends AbstractTile implements Tile {
 <span class="fc" id="L254">		return result;</span>
 	}
 
+	// Left-side mirror of getStableMaxX(): the left edges this note is built
+	// on, each safe to hand to Real.ensureBiggerThan() for the same reason --
+	// getMinX() itself composes a RealUtils.min() under OVER_SEVERAL, which
+	// caches its resolved value the first time it is read (see the note on
+	// GroupingTile.ensureFollowingParticipantClearsFrame()), so that case is
+	// split back into its two plain halves here too.
+	List&lt;Real&gt; getStableMinX() {
+<span class="fc" id="L264">		final List&lt;Real&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L265">		result.add(getX(getStringBounder()));</span>
+<span class="fc bfc" id="L266" title="All 2 branches covered.">		if (note.getPosition() == NotePosition.OVER_SEVERAL)</span>
+<span class="fc" id="L267">			result.add(livingSpace1.getPosB(getStringBounder()));</span>
+
+<span class="fc" id="L269">		return result;</span>
+	}
+
 	@Override
 	public Real getMinX() {
-<span class="fc" id="L259">		final Real result = getX(getStringBounder());</span>
-<span class="fc bfc" id="L260" title="All 2 branches covered.">		if (note.getPosition() == NotePosition.OVER_SEVERAL) {</span>
-<span class="fc" id="L261">			final Real x1 = livingSpace1.getPosB(getStringBounder());</span>
-<span class="fc" id="L262">			return RealUtils.min(result, x1);</span>
+<span class="fc" id="L274">		final Real result = getX(getStringBounder());</span>
+<span class="fc bfc" id="L275" title="All 2 branches covered.">		if (note.getPosition() == NotePosition.OVER_SEVERAL) {</span>
+<span class="fc" id="L276">			final Real x1 = livingSpace1.getPosB(getStringBounder());</span>
+<span class="fc" id="L277">			return RealUtils.min(result, x1);</span>
 		}
-<span class="fc" id="L264">		return result;</span>
+<span class="fc" id="L279">		return result;</span>
 	}
 
 	@Override
 	public Real getMaxX() {
-<span class="fc" id="L269">		final Real result = getX(getStringBounder()).addFixed(getUsedWidth(getStringBounder()));</span>
-<span class="fc bfc" id="L270" title="All 2 branches covered.">		if (note.getPosition() == NotePosition.OVER_SEVERAL) {</span>
-<span class="fc" id="L271">			final Real x2 = livingSpace2.getPosD(getStringBounder());</span>
-<span class="fc" id="L272">			return RealUtils.max(result, x2);</span>
+<span class="fc" id="L284">		final Real result = getX(getStringBounder()).addFixed(getUsedWidth(getStringBounder()));</span>
+<span class="fc bfc" id="L285" title="All 2 branches covered.">		if (note.getPosition() == NotePosition.OVER_SEVERAL) {</span>
+<span class="fc" id="L286">			final Real x2 = livingSpace2.getPosD(getStringBounder());</span>
+<span class="fc" id="L287">			return RealUtils.max(result, x2);</span>
 		}
-<span class="fc" id="L274">		return result;</span>
+<span class="fc" id="L289">		return result;</span>
 	}
 
 }

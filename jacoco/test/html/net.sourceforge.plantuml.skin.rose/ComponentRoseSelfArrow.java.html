@@ -327,8 +327,32 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 <span class="fc" id="L327">		return Math.max(getTextWidth(stringBounder), arrowWidth+5);</span>
 	}
 
+	// How far this loop's actual ink reaches from the lifeline -- narrower
+	// than getPreferredWidth() whenever the message carries no label, or a
+	// short one. getPreferredWidth() floors at `arrowWidth+5` (50) purely to
+	// give the arrow itself (drawn `xRight` = `arrowWidth-3` = 42 wide,
+	// flush against the far end of whatever width it is given -- the
+	// &quot;prefTextWidth - xRight&quot; translate drawLeftSide() uses throughout
+	// cancels prefTextWidth out of the arrow's own absolute position, so
+	// shrinking the reservation down to this method's return value cannot
+	// clip it) a little more than its own 42px, and that slack is blank:
+	// nothing is ever painted into it. The label, drawn separately starting
+	// getOldPaddingX1() (7) in from the SAME end the arrow is flush against
+	// the other end of, can reach past that slack on its own if it is long
+	// enough -- accounted for here (not by falling back to
+	// getPreferredWidth(), which would reintroduce the floor's own slack on
+	// TOP of a long label's genuine need) so a caller sizing itself around
+	// this loop's ink never comes up short. 0 pure text width (no label) is
+	// read as literally nothing drawn there, not &quot;7px of padding worth
+	// keeping&quot; -- padding around an empty label paints nothing either.
+	public double getDrawnWidth(StringBounder stringBounder) {
+<span class="fc" id="L349">		final double pureTextWidth = getPureTextWidth(stringBounder);</span>
+<span class="fc bfc" id="L350" title="All 2 branches covered.">		final double labelReach = pureTextWidth == 0 ? 0 : getOldPaddingX1() + pureTextWidth;</span>
+<span class="fc" id="L351">		return Math.max(xRight, labelReach);</span>
+	}
+
 	public double getPosArrow(StringBounder stringBounder) {
-<span class="nc" id="L331">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L355">		throw new UnsupportedOperationException();</span>
 	}
 
 }
