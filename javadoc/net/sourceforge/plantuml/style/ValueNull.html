@@ -150,11 +150,14 @@ implements <a href="Value.html" title="interface in net.sourceforge.plantuml.sty
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#asHorizontalAlignment()" class="member-name-link">asHorizontalAlignment</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#asInt(boolean)" class="member-name-link">asInt</a><wbr>(boolean&nbsp;minusOneIfError)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#asInt()" class="member-name-link">asInt</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#asString()" class="member-name-link">asString</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#asIntButMinusOneIfError()" class="member-name-link">asIntButMinusOneIfError</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#asString()" class="member-name-link">asString</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -193,14 +196,26 @@ implements <a href="Value.html" title="interface in net.sourceforge.plantuml.sty
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="asInt(boolean)">
+<section class="detail" id="asInt()">
 <h3>asInt</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">asInt</span><wbr><span class="parameters">(boolean&nbsp;minusOneIfError)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">asInt</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Value.html#asInt(boolean)">asInt</a></code>&nbsp;in interface&nbsp;<code><a href="Value.html" title="interface in net.sourceforge.plantuml.style">Value</a></code></dd>
+<dd><code><a href="Value.html#asInt()">asInt</a></code>&nbsp;in interface&nbsp;<code><a href="Value.html" title="interface in net.sourceforge.plantuml.style">Value</a></code></dd>
 <dt>Overrides:</dt>
-<dd><code><a href="ValueAbstract.html#asInt(boolean)">asInt</a></code>&nbsp;in class&nbsp;<code><a href="ValueAbstract.html" title="class in net.sourceforge.plantuml.style">ValueAbstract</a></code></dd>
+<dd><code><a href="ValueAbstract.html#asInt()">asInt</a></code>&nbsp;in class&nbsp;<code><a href="ValueAbstract.html" title="class in net.sourceforge.plantuml.style">ValueAbstract</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="asIntButMinusOneIfError()">
+<h3>asIntButMinusOneIfError</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">asIntButMinusOneIfError</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Value.html#asIntButMinusOneIfError()">asIntButMinusOneIfError</a></code>&nbsp;in interface&nbsp;<code><a href="Value.html" title="interface in net.sourceforge.plantuml.style">Value</a></code></dd>
+<dt>Overrides:</dt>
+<dd><code><a href="ValueAbstract.html#asIntButMinusOneIfError()">asIntButMinusOneIfError</a></code>&nbsp;in class&nbsp;<code><a href="ValueAbstract.html" title="class in net.sourceforge.plantuml.style">ValueAbstract</a></code></dd>
 </dl>
 </section>
 </li>

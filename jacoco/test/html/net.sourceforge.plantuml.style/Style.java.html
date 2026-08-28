@@ -240,7 +240,7 @@ public class Style {
 	 */
 	public UFont getUFont() {
 <span class="fc" id="L242">		final String fontName = value(PName.FontName).asString();</span>
-<span class="fc" id="L243">		int size = value(PName.FontSize).asInt(true);</span>
+<span class="fc" id="L243">		int size = value(PName.FontSize).asIntButMinusOneIfError();</span>
 <span class="pc bpc" id="L244" title="1 of 2 branches missed.">		if (size == -1)</span>
 <span class="nc" id="L245">			size = 14;</span>
 
@@ -361,7 +361,7 @@ public class Style {
 <span class="fc" id="L361">		final HColor backgroundColor = this.value(PName.BackGroundColor).asColor(set);</span>
 <span class="fc" id="L362">		final HColor lineColor = this.value(PName.LineColor).asColor(set);</span>
 <span class="fc" id="L363">		final UStroke stroke = this.getStroke();</span>
-<span class="fc" id="L364">		final int cornersize = this.value(PName.RoundCorner).asInt(false);</span>
+<span class="fc" id="L364">		final int cornersize = this.value(PName.RoundCorner).asInt();</span>
 <span class="fc" id="L365">		final ClockwiseTopRightBottomLeft margin = this.getMargin();</span>
 <span class="fc" id="L366">		final ClockwiseTopRightBottomLeft padding = this.getPadding();</span>
 <span class="fc" id="L367">		final TextBlock result = TextBlockUtils.bordered(textBlock, stroke, lineColor, backgroundColor, cornersize,</span>

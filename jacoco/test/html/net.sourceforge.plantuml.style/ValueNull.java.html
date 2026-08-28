@@ -49,43 +49,48 @@ public class ValueNull extends ValueAbstract implements Value {
 	}
 
 	@Override
-	public int asInt(boolean minusOneIfError) {
-<span class="fc" id="L53">		return 0;</span>
+	public int asInt() {
+<span class="nc" id="L53">		return 0;</span>
 	}
 
 	@Override
-	public double asDouble() {
+	public int asIntButMinusOneIfError() {
 <span class="fc" id="L58">		return 0;</span>
 	}
 
 	@Override
+	public double asDouble() {
+<span class="fc" id="L63">		return 0;</span>
+	}
+
+	@Override
 	public double asDoubleDefaultTo(double defaultValue) {
-<span class="nc" id="L63">		return defaultValue;</span>
+<span class="nc" id="L68">		return defaultValue;</span>
 	}
 
 	@Override
 	public boolean asBoolean() {
-<span class="nc" id="L68">		return false;</span>
+<span class="nc" id="L73">		return false;</span>
 	}
 
 	@Override
 	public String asString() {
-<span class="fc" id="L73">		return &quot;&quot;;</span>
+<span class="fc" id="L78">		return &quot;&quot;;</span>
 	}
 
 	@Override
 	public UFontFace asFontFace() {
-<span class="fc" id="L78">		return UFontFace.normal();</span>
+<span class="fc" id="L83">		return UFontFace.normal();</span>
 	}
 
 	@Override
 	public HColor asColor(HColorSet set) {
-<span class="nc" id="L83">		return HColors.BLACK;</span>
+<span class="nc" id="L88">		return HColors.BLACK;</span>
 	}
 
 	@Override
 	public HorizontalAlignment asHorizontalAlignment() {
-<span class="nc" id="L88">		return HorizontalAlignment.LEFT;</span>
+<span class="nc" id="L93">		return HorizontalAlignment.LEFT;</span>
 	}
 
 }

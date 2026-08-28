@@ -76,7 +76,7 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 <span class="fc" id="L76">		super(styleHeader, LineBreakStrategy.NONE, ClockwiseTopRightBottomLeft.topRightBottomLeft(1, 30, 1, 15),</span>
 <span class="fc" id="L77">				skinParam, strings.get(0));</span>
 
-<span class="fc" id="L79">		this.roundCorner = style.value(PName.RoundCorner).asInt(false);</span>
+<span class="fc" id="L79">		this.roundCorner = style.value(PName.RoundCorner).asInt();</span>
 <span class="pc bpc" id="L80" title="1 of 2 branches missed.">		this.background = teoz ? HColors.transparent() : style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());</span>
 <span class="fc" id="L81">		this.symbolContext = style.getSymbolContext(getIHtmlColorSet());</span>
 <span class="fc" id="L82">		this.symbolContextCorner = styleHeader.getSymbolContext(getIHtmlColorSet());</span>

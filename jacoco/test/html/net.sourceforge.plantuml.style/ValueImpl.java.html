@@ -108,81 +108,103 @@ public class ValueImpl implements Value {
 <span class="fc" id="L108">		return result;</span>
 	}
 
+	@Override
 	public boolean asBoolean() {
-<span class="nc" id="L112">		return &quot;true&quot;.equalsIgnoreCase(value.getValue1());</span>
+<span class="nc" id="L113">		return &quot;true&quot;.equalsIgnoreCase(value.getValue1());</span>
 	}
 
-	public int asInt(boolean minusOneIfError) {
-<span class="fc" id="L116">		final String s = extractDigits(value.getValue1());</span>
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		if (s.length() == 0)</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">			return minusOneIfError ? -1 : 0;</span>
-<span class="fc" id="L119">		return Integer.parseInt(s);</span>
-	}
+<span class="fc" id="L116">	private int asIntCache = Integer.MIN_VALUE;</span>
+<span class="fc" id="L117">	private int asIntButMinusOneIfErrorCache = Integer.MIN_VALUE;</span>
+<span class="fc" id="L118">	private double asDoubleCache = Double.MIN_VALUE;</span>
 
-	private String extractDigits(String s) {
-<span class="fc" id="L123">		final StringBuilder sb = new StringBuilder(s.length());</span>
-<span class="fc bfc" id="L124" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
-<span class="fc" id="L125">			final char c = s.charAt(i);</span>
-<span class="pc bpc" id="L126" title="2 of 4 branches missed.">			if (c &gt;= '0' &amp;&amp; c &lt;= '9')</span>
-<span class="fc" id="L127">				sb.append(c);</span>
-
+	@Override
+	public int asInt() {
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (asIntCache == Integer.MIN_VALUE) {</span>
+<span class="fc" id="L123">			final String s = extractDigits();</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">			if (s.length() == 0)</span>
+<span class="nc" id="L125">				asIntCache = 0;</span>
+			else
+<span class="fc" id="L127">				asIntCache = Integer.parseInt(s);</span>
 		}
-<span class="fc" id="L130">		return sb.toString();</span>
+<span class="fc" id="L129">		return asIntCache;</span>
 	}
 
-	private String extractDigitsAndDot(String s) {
-<span class="fc" id="L134">		final StringBuilder sb = new StringBuilder(s.length());</span>
-<span class="fc bfc" id="L135" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
-<span class="fc" id="L136">			final char c = s.charAt(i);</span>
-<span class="pc bpc" id="L137" title="2 of 6 branches missed.">			if (c &gt;= '0' &amp;&amp; c &lt;= '9' || c == '.')</span>
-<span class="fc" id="L138">				sb.append(c);</span>
-
+	@Override
+	public int asIntButMinusOneIfError() {
+<span class="fc bfc" id="L134" title="All 2 branches covered.">		if (asIntButMinusOneIfErrorCache == Integer.MIN_VALUE) {</span>
+<span class="fc" id="L135">			final String s = extractDigits();</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">			if (s.length() == 0)</span>
+<span class="nc" id="L137">				asIntButMinusOneIfErrorCache = -1;</span>
+			else
+<span class="fc" id="L139">				asIntButMinusOneIfErrorCache = Integer.parseInt(s);</span>
 		}
-<span class="fc" id="L141">		return sb.toString();</span>
+<span class="fc" id="L141">		return asIntButMinusOneIfErrorCache;</span>
 	}
+
+	private String extractDigits() {
+<span class="fc" id="L145">		final String s = value.getValue1();</span>
+<span class="fc" id="L146">		final StringBuilder sb = new StringBuilder(s.length());</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L148">			final char c = s.charAt(i);</span>
+<span class="pc bpc" id="L149" title="2 of 4 branches missed.">			if (c &gt;= '0' &amp;&amp; c &lt;= '9')</span>
+<span class="fc" id="L150">				sb.append(c);</span>
+		}
+<span class="fc" id="L152">		return sb.toString();</span>
+	}
+
 
 	public double asDouble() {
-<span class="fc" id="L145">		final String s = extractDigitsAndDot(value.getValue1());</span>
-<span class="fc" id="L146">		return Double.parseDouble(s);</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">		if (asDoubleCache == Double.MIN_VALUE) {</span>
+<span class="fc" id="L158">			final String s = value.getValue1();</span>
+<span class="fc" id="L159">			final StringBuilder sb = new StringBuilder(s.length());</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">			for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L161">				final char c = s.charAt(i);</span>
+<span class="pc bpc" id="L162" title="2 of 6 branches missed.">				if (c &gt;= '0' &amp;&amp; c &lt;= '9' || c == '.')</span>
+<span class="fc" id="L163">					sb.append(c);</span>
+
+			}
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">			if (sb.length() == 0)</span>
+<span class="nc" id="L167">				asDoubleCache = Double.NaN;</span>
+			else
+<span class="fc" id="L169">				asDoubleCache = Double.parseDouble(sb.toString());</span>
+		}
+<span class="fc" id="L171">		return asDoubleCache;</span>
 	}
 
 	public double asDoubleDefaultTo(double defaultValue) {
-<span class="fc" id="L150">		final String s = extractDigitsAndDot(value.getValue1());</span>
-<span class="pc bpc" id="L151" title="1 of 2 branches missed.">		if (s.length() &gt; 0)</span>
-			try {
-<span class="fc" id="L153">				return Double.parseDouble(s);</span>
-<span class="nc" id="L154">			} catch (NumberFormatException e) {</span>
-			}
-<span class="nc" id="L156">		return defaultValue;</span>
+<span class="fc" id="L175">		final double s = asDouble();</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">		if (s == Double.NaN)</span>
+<span class="nc" id="L177">			return defaultValue;</span>
+<span class="fc" id="L178">		return s;</span>
 	}
 
 	public UFontFace asFontFace() {
-<span class="fc" id="L160">		final String raw = value.getValue1();</span>
-<span class="pc bpc" id="L161" title="1 of 4 branches missed.">		if (raw == null || raw.isEmpty())</span>
-<span class="fc" id="L162">			return UFontFace.normal();</span>
+<span class="fc" id="L182">		final String raw = value.getValue1();</span>
+<span class="pc bpc" id="L183" title="1 of 4 branches missed.">		if (raw == null || raw.isEmpty())</span>
+<span class="fc" id="L184">			return UFontFace.normal();</span>
 
-<span class="fc" id="L164">		final String s = raw.trim().toLowerCase();</span>
-<span class="fc bfc" id="L165" title="All 2 branches covered.">		if (&quot;bold&quot;.equals(s))</span>
-<span class="fc" id="L166">			return UFontFace.bold();</span>
-<span class="fc bfc" id="L167" title="All 2 branches covered.">		if (&quot;italic&quot;.equals(s))</span>
-<span class="fc" id="L168">			return UFontFace.italic();</span>
-<span class="fc bfc" id="L169" title="All 4 branches covered.">		if (&quot;plain&quot;.equals(s) || &quot;normal&quot;.equals(s))</span>
-<span class="fc" id="L170">			return UFontFace.normal();</span>
+<span class="fc" id="L186">		final String s = raw.trim().toLowerCase();</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">		if (&quot;bold&quot;.equals(s))</span>
+<span class="fc" id="L188">			return UFontFace.bold();</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">		if (&quot;italic&quot;.equals(s))</span>
+<span class="fc" id="L190">			return UFontFace.italic();</span>
+<span class="fc bfc" id="L191" title="All 4 branches covered.">		if (&quot;plain&quot;.equals(s) || &quot;normal&quot;.equals(s))</span>
+<span class="fc" id="L192">			return UFontFace.normal();</span>
 
 		// Try parsing as a CSS numeric weight (100-900)
-<span class="fc" id="L173">		final UFontFace fromCss = UFontFace.fromCssWeight(s);</span>
-<span class="fc bfc" id="L174" title="All 2 branches covered.">		if (fromCss != null)</span>
-<span class="fc" id="L175">			return fromCss;</span>
+<span class="fc" id="L195">		final UFontFace fromCss = UFontFace.fromCssWeight(s);</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">		if (fromCss != null)</span>
+<span class="fc" id="L197">			return fromCss;</span>
 
-<span class="fc" id="L177">		return UFontFace.normal();</span>
+<span class="fc" id="L199">		return UFontFace.normal();</span>
 	}
 
 	public HorizontalAlignment asHorizontalAlignment() {
-<span class="fc" id="L181">		return HorizontalAlignment.fromString(asString());</span>
+<span class="fc" id="L203">		return HorizontalAlignment.fromString(asString());</span>
 	}
 
 	public int getPriority() {
-<span class="fc" id="L185">		return value.getPriority();</span>
+<span class="fc" id="L207">		return value.getPriority();</span>
 	}
 
 }
