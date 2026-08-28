@@ -108,52 +108,74 @@ public class ValueImpl implements Value {
 		return result;
 	}
 
+	@Override
 	public boolean asBoolean() {
 		return "true".equalsIgnoreCase(value.getValue1());
 	}
 
-	public int asInt(boolean minusOneIfError) {
-		final String s = extractDigits(value.getValue1());
-		if (s.length() == 0)
-			return minusOneIfError ? -1 : 0;
-		return Integer.parseInt(s);
+	private int asIntCache = Integer.MIN_VALUE;
+	private int asIntButMinusOneIfErrorCache = Integer.MIN_VALUE;
+	private double asDoubleCache = Double.MIN_VALUE;
+
+	@Override
+	public int asInt() {
+		if (asIntCache == Integer.MIN_VALUE) {
+			final String s = extractDigits();
+			if (s.length() == 0)
+				asIntCache = 0;
+			else
+				asIntCache = Integer.parseInt(s);
+		}
+		return asIntCache;
 	}
 
-	private String extractDigits(String s) {
+	@Override
+	public int asIntButMinusOneIfError() {
+		if (asIntButMinusOneIfErrorCache == Integer.MIN_VALUE) {
+			final String s = extractDigits();
+			if (s.length() == 0)
+				asIntButMinusOneIfErrorCache = -1;
+			else
+				asIntButMinusOneIfErrorCache = Integer.parseInt(s);
+		}
+		return asIntButMinusOneIfErrorCache;
+	}
+
+	private String extractDigits() {
+		final String s = value.getValue1();
 		final StringBuilder sb = new StringBuilder(s.length());
 		for (int i = 0; i < s.length(); i++) {
 			final char c = s.charAt(i);
 			if (c >= '0' && c <= '9')
 				sb.append(c);
-
 		}
 		return sb.toString();
 	}
 
-	private String extractDigitsAndDot(String s) {
-		final StringBuilder sb = new StringBuilder(s.length());
-		for (int i = 0; i < s.length(); i++) {
-			final char c = s.charAt(i);
-			if (c >= '0' && c <= '9' || c == '.')
-				sb.append(c);
-
-		}
-		return sb.toString();
-	}
 
 	public double asDouble() {
-		final String s = extractDigitsAndDot(value.getValue1());
-		return Double.parseDouble(s);
+		if (asDoubleCache == Double.MIN_VALUE) {
+			final String s = value.getValue1();
+			final StringBuilder sb = new StringBuilder(s.length());
+			for (int i = 0; i < s.length(); i++) {
+				final char c = s.charAt(i);
+				if (c >= '0' && c <= '9' || c == '.')
+					sb.append(c);
+
+			}
+			if (sb.length() == 0)
+				asDoubleCache = Double.NaN;
+			else
+				asDoubleCache = Double.parseDouble(sb.toString());
+		}
+		return asDoubleCache;
 	}
 
 	public double asDoubleDefaultTo(double defaultValue) {
-		final String s = extractDigitsAndDot(value.getValue1());
-		if (s.length() > 0)
-			try {
-				return Double.parseDouble(s);
-			} catch (NumberFormatException e) {
-			}
-		return defaultValue;
+		final double s = asDouble();
+		if (s == Double.NaN)
+			return defaultValue;
+		return s;
 	}
 
 	public UFontFace asFontFace() {

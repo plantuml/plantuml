@@ -76,7 +76,7 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 		super(styleHeader, LineBreakStrategy.NONE, ClockwiseTopRightBottomLeft.topRightBottomLeft(1, 30, 1, 15),
 				skinParam, strings.get(0));
 
-		this.roundCorner = style.value(PName.RoundCorner).asInt(false);
+		this.roundCorner = style.value(PName.RoundCorner).asInt();
 		this.background = teoz ? HColors.transparent() : style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 		this.symbolContext = style.getSymbolContext(getIHtmlColorSet());
 		this.symbolContextCorner = styleHeader.getSymbolContext(getIHtmlColorSet());

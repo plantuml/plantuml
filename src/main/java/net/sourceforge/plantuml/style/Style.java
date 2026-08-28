@@ -240,7 +240,7 @@ public class Style {
 	 */
 	public UFont getUFont() {
 		final String fontName = value(PName.FontName).asString();
-		int size = value(PName.FontSize).asInt(true);
+		int size = value(PName.FontSize).asIntButMinusOneIfError();
 		if (size == -1)
 			size = 14;
 
@@ -361,7 +361,7 @@ public class Style {
 		final HColor backgroundColor = this.value(PName.BackGroundColor).asColor(set);
 		final HColor lineColor = this.value(PName.LineColor).asColor(set);
 		final UStroke stroke = this.getStroke();
-		final int cornersize = this.value(PName.RoundCorner).asInt(false);
+		final int cornersize = this.value(PName.RoundCorner).asInt();
 		final ClockwiseTopRightBottomLeft margin = this.getMargin();
 		final ClockwiseTopRightBottomLeft padding = this.getPadding();
 		final TextBlock result = TextBlockUtils.bordered(textBlock, stroke, lineColor, backgroundColor, cornersize,

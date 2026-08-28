@@ -49,7 +49,12 @@ public class ValueNull extends ValueAbstract implements Value {
 	}
 
 	@Override
-	public int asInt(boolean minusOneIfError) {
+	public int asInt() {
+		return 0;
+	}
+
+	@Override
+	public int asIntButMinusOneIfError() {
 		return 0;
 	}
 

@@ -46,7 +46,9 @@ public interface Value {
 
 	public HColor asColor(HColorSet set);
 
-	public int asInt(boolean minusOneIfError);
+	public int asInt();
+
+	public int asIntButMinusOneIfError();
 
 	public double asDouble();
 	

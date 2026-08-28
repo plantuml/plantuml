@@ -50,9 +50,14 @@ public abstract class ValueAbstract implements Value {
 		throw new UnsupportedOperationException("Class=" + getClass());
 	}
 
-	public int asInt(boolean minusOneIfError) {
+	public int asInt() {
 		throw new UnsupportedOperationException("Class=" + getClass());
 	}
+	
+	public int asIntButMinusOneIfError() {
+		throw new UnsupportedOperationException("Class=" + getClass());
+	}
+
 
 	public double asDouble() {
 		throw new UnsupportedOperationException("Class=" + getClass());
