@@ -202,8 +202,14 @@ public class GroupingTile extends AbstractTile {
 			if (ev instanceof HSpace)
 				continue;
 
-			min2.add(tile.getMinX().addFixed(-MARGINX));
-			final Real m = tile.getMaxX();
+			// getDrawnMinX()/getDrawnMaxX() default to getMinX()/getMaxX() for every
+			// tile except a self-message loop (and its two note-wrapping siblings),
+			// where they report the loop's actual drawn extent instead of the wider
+			// layout reservation getMinX()/getMaxX() keep (see Tile.getDrawnMinX()) --
+			// the frame has no reason to inherit blank, never-painted-into space as
+			// part of its own size (issue #2788, "too much space of the group").
+			min2.add(tile.getDrawnMinX().addFixed(-MARGINX));
+			final Real m = tile.getDrawnMaxX();
 			// max2.add(m == tileArgumentsOriginal.getOmega() ? m : m.addFixed(MARGINX));
 			max2.add(m.addFixed(MARGINX));
 		}
@@ -363,6 +369,7 @@ public class GroupingTile extends AbstractTile {
 			tile.addConstraints();
 
 		ensureFollowingParticipantClearsFrame();
+		ensurePrecedingParticipantClearsFrame();
 	}
 
 	// A child tile only reserves room for ITS OWN footprint against its
@@ -432,6 +439,84 @@ public class GroupingTile extends AbstractTile {
 		ensureClearsFrameOf(this, nextPosA, frameMargin, livingSpaces);
 	}
 
+	// Mirror of ensureFollowingParticipantClearsFrame(), for the LEFT edge: a
+	// participant declared right BEFORE the group, but never itself used inside
+	// it, can end up placed UNDER the group's frame the same way -- typically
+	// the group's first-touched participant opens on a reverse self-message
+	// (`a<-a`) or carries a `note left`, either of which reaches further left
+	// than its own lifeline (issue #2788, "participant x should be outside the
+	// group").
+	//
+	// Unlike the follow-frame side, the participant that needs to MOVE here is
+	// `leftmost` itself (the group's own edge, not something outside it) -- so
+	// this pushes each contributing tile's own getMinX() directly, rather than
+	// leftmost's posC: leftmost.getPosC() is exactly what a self-message/note
+	// anchored on `leftmost` measures its own reach FROM, so constraining
+	// leftmost.getPosC() against a bound built from that same tile would
+	// constrain it against a Real derived from itself -- a vacuous force, not a
+	// real constraint (posC cancels out of both sides, leaving nothing for the
+	// solver to actually adjust). A tile's own getMinX(), by contrast, is safe
+	// to push directly: it depends on ITS OWN anchor LivingSpace (`leftmost`
+	// when the tile is a self-message or an unanchored note, but not
+	// necessarily -- a `note left of b` inside the group is anchored on `b`,
+	// not `leftmost`, and still needs the same clearance from `previous`), and
+	// `previous`'s own posC is a completely independent Real, so there is
+	// nothing circular about constraining one against the other.
+	private void ensurePrecedingParticipantClearsFrame() {
+		final LivingSpaces livingSpaces = tileArguments.getLivingSpaces();
+		final Set<LivingSpace> touched = new HashSet<>();
+		collectTouchedLivingSpaces(tiles, livingSpaces, touched);
+
+		final LivingSpace leftmost = leftmostOf(livingSpaces, touched);
+		if (leftmost == null)
+			return;
+
+		final LivingSpace previous = livingSpaces.previous(leftmost);
+		if (previous == null)
+			return;
+
+		final Real previousPosC = previous.getPosC(getStringBounder());
+		final double frameMargin = MARGINX + EXTERNAL_MARGINX2;
+
+		// Baseline: leftmost's own lifeline, plus the frame's margin -- the
+		// mirror of ensureFollowingParticipantClearsFrame()'s own baseline.
+		leftmost.getPosC(getStringBounder()).ensureBiggerThan(previousPosC.addFixed(frameMargin));
+
+		// Everything else that can widen the frame past that baseline: a
+		// reverse self-message loop, a left-hand note (wherever in the group
+		// it is anchored), and the same list again for every nested group
+		// (issue #2788, `group` inside `group`).
+		ensureClearsFrameOfLeft(this, previousPosC, frameMargin);
+	}
+
+	// Pushes `previousPosC.addFixed(margin)` as a lower bound onto every left
+	// edge `group`'s own frame is built on -- the left-side mirror of
+	// ensureClearsFrameOf(), with the same per-level margin growth for nested
+	// groups (each inner frame sits MARGINX + EXTERNAL_MARGINX2 further out
+	// than whatever it wraps, and that stacks once per nesting level).
+	//
+	// Pushes each tile's own stableMinX() directly rather than routing through
+	// leftmost's posC (see ensurePrecedingParticipantClearsFrame()'s own
+	// comment on why that would be circular) -- which also makes this simpler
+	// than the follow-frame side: no separate title-clearing pass is needed
+	// (a group's title only ever stretches max2, never min2 -- see the
+	// constructor -- so it cannot push the LEFT edge), and no LivingSpace
+	// identity check is needed either (a contributor anchored on any
+	// participant, not just `leftmost`, is pushed against `previous` the same
+	// way, correctly covering e.g. a `note left of b` inside the group).
+	private void ensureClearsFrameOfLeft(GroupingTile group, Real previousPosC, double margin) {
+		for (Tile tile : group.tiles) {
+			if (tile instanceof GroupingTile) {
+				final GroupingTile nested = (GroupingTile) tile;
+				final double notes = nested.getNotesWidth(getStringBounder(), NotePosition.LEFT);
+				ensureClearsFrameOfLeft(nested, previousPosC, margin + MARGINX + EXTERNAL_MARGINX2 + notes);
+				continue;
+			}
+			for (Real minX : stableMinX(tile))
+				minX.ensureBiggerThan(previousPosC.addFixed(margin));
+		}
+	}
+
 	// The contributors to `max2`/`min2` (see the constructor) that this method is
 	// allowed to replay, and the ONE reason the list is a whitelist rather than a
 	// plain `tile.getMaxX()` on everything: see the RealMax caching trap described
@@ -460,7 +545,46 @@ public class GroupingTile extends AbstractTile {
 				|| tile instanceof LifeEventTile //
 				|| tile instanceof ReferenceTile //
 				|| tile instanceof DividerTile)
-			return Collections.singletonList(tile.getMaxX());
+			// getDrawnMaxX(): the loop's actual drawn extent for the two
+			// self-message entries above (see Tile.getDrawnMinX()/getDrawnMaxX()),
+			// identically getMaxX() for the other three (no override, so the
+			// push is unchanged for them).
+			return Collections.singletonList(tile.getDrawnMaxX());
+
+		return Collections.emptyList();
+	}
+
+	// Left-side mirror of stableMaxX(), same whitelist reasoning, same safety
+	// requirement (a plain delta chain over LivingSpace positions, confirmed by
+	// inspection), just the LEFT-reaching counterpart of each note/self-message
+	// wrapper: CommunicationTileNoteLeft/CommunicationTileSelfNoteLeft instead
+	// of their *NoteRight siblings. LifeEventTile/ReferenceTile carry no
+	// left/right asymmetry (both measured from a specific participant's own
+	// posB/posC/posD), so they are reused as-is.
+	//
+	// DividerTile is deliberately absent here, UNLIKE on the right side: its
+	// getMaxX() reaches from `xorigin` (the whole diagram's own left edge, not
+	// any participant here) rightward by the divider's drawn width -- safe to
+	// use as a lower bound on `nextPosA`, since `xorigin` is an independent
+	// root nothing here pushes on. Its getMinX(), by contrast, IS `xorigin`
+	// itself: `previous`'s own posC is ultimately measured FROM xorigin (every
+	// LivingSpace chains back to it), so constraining xorigin to be bigger
+	// than something built from previous's position points the dependency
+	// backwards -- confirmed live: it throws the solver's own
+	// `IllegalStateException: Infinite Loop?`. A `==divider==` inside a group
+	// therefore still isn't guaranteed clear of a preceding participant; same
+	// class of known, unfixable gap as DelayTile on the other side.
+	private static List<Real> stableMinX(Tile tile) {
+		if (tile instanceof NoteTile)
+			return ((NoteTile) tile).getStableMinX();
+
+		if (tile instanceof CommunicationTileSelf //
+				|| tile instanceof CommunicationTileNoteLeft //
+				|| tile instanceof CommunicationTileSelfNoteLeft //
+				|| tile instanceof LifeEventTile //
+				|| tile instanceof ReferenceTile)
+			// getDrawnMinX(): see the matching comment in stableMaxX() above.
+			return Collections.singletonList(tile.getDrawnMinX());
 
 		return Collections.emptyList();
 	}
@@ -582,6 +706,14 @@ public class GroupingTile extends AbstractTile {
 				rightmost = candidate;
 
 		return rightmost;
+	}
+
+	private static LivingSpace leftmostOf(LivingSpaces livingSpaces, Set<LivingSpace> touched) {
+		for (LivingSpace candidate : livingSpaces.values())
+			if (touched.contains(candidate))
+				return candidate;
+
+		return null;
 	}
 
 	// Walks this group's tiles (and any nested groups) to find every

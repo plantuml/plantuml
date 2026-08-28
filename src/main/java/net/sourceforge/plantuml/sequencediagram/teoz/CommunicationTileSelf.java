@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.skin.rose.ComponentRoseSelfArrow;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.utils.Log;
@@ -272,6 +273,36 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 	private double getCompWidth() {
 		final Component comp = getComponent(getStringBounder());
 		return comp.getPreferredDimension(getStringBounder()).getWidth();
+	}
+
+	// Tile.getDrawnMinX()/getDrawnMaxX() overrides: same shape as
+	// getMinX()/getMaxX() above, but built on getDrawnWidth() (the loop's
+	// actual ink, see ComponentRoseSelfArrow) instead of getCompWidth() (the
+	// wider layout reservation getMinX()/getMaxX() intentionally keep using,
+	// since participant spacing is not this issue's concern -- only a group
+	// sizing its own frame around this tile is). Only the end the arrow
+	// actually draws INTO changes; the other end (already exactly posC/posC2,
+	// no reservation slack to begin with) is reused as-is.
+	@Override
+	public Real getDrawnMinX() {
+		if (isReverseDefine()) {
+			double liveDeltaWidthAdjustment = livingSpace1.getLevelAt(this,
+					EventsHistoryMode.IGNORE_FUTURE_ACTIVATE) > 0 ? CommunicationTile.LIVE_DELTA_SIZE : 0.0;
+			return livingSpace1.getPosC(getStringBounder()).addFixed(-getDrawnWidth() - liveDeltaWidthAdjustment);
+		}
+		return getMinX();
+	}
+
+	@Override
+	public Real getDrawnMaxX() {
+		if (isReverseDefine())
+			return getMaxX();
+		return livingSpace1.getPosC2(getStringBounder()).addFixed(getDrawnWidth());
+	}
+
+	private double getDrawnWidth() {
+		final ArrowComponent comp = getComponent(getStringBounder());
+		return ((ComponentRoseSelfArrow) comp).getDrawnWidth(getStringBounder());
 	}
 
 	// ---------------------------------------------------------------------

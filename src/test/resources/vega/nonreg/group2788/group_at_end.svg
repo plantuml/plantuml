@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="207px" preserveAspectRatio="none" style="width:170px;height:207px;background:#FFFFFF;" version="1.1" viewBox="0 0 170 207" width="170px" zoomAndPan="magnify">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="207px" preserveAspectRatio="none" style="width:169px;height:207px;background:#FFFFFF;" version="1.1" viewBox="0 0 169 207" width="169px" zoomAndPan="magnify">
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
-    <rect fill="none" height="65" style="stroke:#000;stroke-width:1.5;" width="82" x="68.075" y="78"/>
+    <rect fill="none" height="65" style="stroke:#000;stroke-width:1.5;" width="81.881" x="68.075" y="78"/>
     <g>
       <title>a</title>
       <rect fill="#000" fill-opacity="0" height="128" width="8" x="17.394" y="39"/>
@@ -33,7 +33,7 @@
     <line style="stroke:#181818;stroke-width:1;" x1="20.894" x2="46.681" y1="66" y2="66"/>
     <text fill="#000" font-size="13" x="27.894" y="61.111">1</text>
     <path d="M68.075,78 L133.956,78 L133.956,83 L123.956,93 L68.075,93 L68.075,78" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
-    <rect fill="none" height="65" style="stroke:#000;stroke-width:1.5;" width="82" x="68.075" y="78"/>
+    <rect fill="none" height="65" style="stroke:#000;stroke-width:1.5;" width="81.881" x="68.075" y="78"/>
     <text fill="#000" font-size="13" font-weight="700" textLength="20.881" x="83.075" y="89.111">test</text>
     <line style="stroke:#181818;stroke-width:1;" x1="84.075" x2="126.075" y1="122" y2="122"/>
     <line style="stroke:#181818;stroke-width:1;" x1="126.075" x2="126.075" y1="122" y2="135"/>

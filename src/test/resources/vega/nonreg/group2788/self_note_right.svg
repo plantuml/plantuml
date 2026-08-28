@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="287px" preserveAspectRatio="none" style="width:442px;height:287px;background:#FFFFFF;" version="1.1" viewBox="0 0 442 287" width="442px" zoomAndPan="magnify">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="287px" preserveAspectRatio="none" style="width:434px;height:287px;background:#FFFFFF;" version="1.1" viewBox="0 0 434 287" width="434px" zoomAndPan="magnify">
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
-    <rect fill="none" height="92" style="stroke:#000;stroke-width:1.5;" width="306.913" x="54.5" y="91"/>
+    <rect fill="none" height="92" style="stroke:#000;stroke-width:1.5;" width="298.913" x="54.5" y="91"/>
     <g>
       <title>x</title>
       <rect fill="#000" fill-opacity="0" height="208" width="8" x="17" y="39"/>
@@ -24,8 +24,8 @@
     </g>
     <g>
       <title>d</title>
-      <rect fill="#000" fill-opacity="0" height="208" width="8" x="377.806" y="39"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="381.306" x2="381.306" y1="39" y2="247"/>
+      <rect fill="#000" fill-opacity="0" height="208" width="8" x="369.806" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="373.306" x2="373.306" y1="39" y2="247"/>
     </g>
     <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21" x="10" y="10"/>
     <text fill="#000" font-size="14" x="17" y="27.889">x</text>
@@ -35,8 +35,8 @@
     <text fill="#000" font-size="14" x="98.394" y="27.889">b</text>
     <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21" x="123.181" y="10"/>
     <text fill="#000" font-size="14" x="130.181" y="27.889">c</text>
-    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="370.413" y="10"/>
-    <text fill="#000" font-size="14" x="377.413" y="27.889">d</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="362.413" y="10"/>
+    <text fill="#000" font-size="14" x="369.413" y="27.889">d</text>
     <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21" x="10" y="247"/>
     <text fill="#000" font-size="14" x="17" y="264.889">x</text>
     <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="59.606" y="247"/>
@@ -45,15 +45,15 @@
     <text fill="#000" font-size="14" x="98.394" y="264.889">b</text>
     <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21" x="123.181" y="247"/>
     <text fill="#000" font-size="14" x="130.181" y="264.889">c</text>
-    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="370.413" y="247"/>
-    <text fill="#000" font-size="14" x="377.413" y="264.889">d</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="362.413" y="247"/>
+    <text fill="#000" font-size="14" x="369.413" y="264.889">d</text>
     <line style="stroke:#181818;stroke-width:1;" x1="20.5" x2="62.5" y1="66" y2="66"/>
     <line style="stroke:#181818;stroke-width:1;" x1="62.5" x2="62.5" y1="66" y2="79"/>
     <line style="stroke:#181818;stroke-width:1;" x1="21.5" x2="62.5" y1="79" y2="79"/>
     <polygon fill="#181818" points="31.5,75,21.5,79,31.5,83,27.5,79" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
     <text fill="#000" font-size="13" textLength="25.188" x="27.5" y="61.111">start</text>
     <path d="M54.5,91 L120.381,91 L120.381,96 L110.381,106 L54.5,106 L54.5,91" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
-    <rect fill="none" height="92" style="stroke:#000;stroke-width:1.5;" width="306.913" x="54.5" y="91"/>
+    <rect fill="none" height="92" style="stroke:#000;stroke-width:1.5;" width="298.913" x="54.5" y="91"/>
     <text fill="#000" font-size="13" font-weight="700" textLength="20.881" x="69.5" y="102.111">test</text>
     <polygon fill="#181818" points="90.288,131,100.288,135,90.288,139,94.288,135" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
     <line style="stroke:#181818;stroke-width:1;" x1="70.5" x2="96.288" y1="135" y2="135"/>
@@ -66,10 +66,10 @@
     <path d="M188.681,148 L188.681,171 L339.681,171 L339.681,158 L329.681,148 L188.681,148" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
     <path d="M329.681,148 L329.681,158 L339.681,158 L329.681,148" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
     <text fill="#000" font-size="13" textLength="130.731" x="194.681" y="163.111">note on the self message</text>
-    <line style="stroke:#181818;stroke-width:1;" x1="381.306" x2="423.306" y1="216" y2="216"/>
-    <line style="stroke:#181818;stroke-width:1;" x1="423.306" x2="423.306" y1="216" y2="229"/>
-    <line style="stroke:#181818;stroke-width:1;" x1="382.306" x2="423.306" y1="229" y2="229"/>
-    <polygon fill="#181818" points="392.306,225,382.306,229,392.306,233,388.306,229" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-    <text fill="#000" font-size="13" textLength="24.538" x="388.306" y="211.111">next</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="373.306" x2="415.306" y1="216" y2="216"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="415.306" x2="415.306" y1="216" y2="229"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="374.306" x2="415.306" y1="229" y2="229"/>
+    <polygon fill="#181818" points="384.306,225,374.306,229,384.306,233,380.306,229" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="24.538" x="380.306" y="211.111">next</text>
   </g>
 </svg>

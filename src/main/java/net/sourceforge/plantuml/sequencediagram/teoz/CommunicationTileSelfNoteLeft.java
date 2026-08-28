@@ -166,6 +166,22 @@ public class CommunicationTileSelfNoteLeft extends AbstractTile {
 		return tile.getMaxX();
 	}
 
+	// Mirrors getMinX() above, but anchored on the inner loop's getDrawnMinX()
+	// (its actual drawn extent, see CommunicationTileSelf) instead of
+	// getMinX() (the wider layout reservation) -- the note's own width is
+	// exact either way, so only the anchor changes.
+	@Override
+	public Real getDrawnMinX() {
+		final Component comp = getComponent(getStringBounder());
+		final double width = comp.getPreferredDimension(getStringBounder()).getWidth();
+		return tile.getDrawnMinX().addFixed(-width);
+	}
+
+	@Override
+	public Real getDrawnMaxX() {
+		return tile.getDrawnMaxX();
+	}
+
 	// ASCII counterpart: delegate the message's own constraint to the inner
 	// tile, exactly like addConstraints() above delegates to
 	// tile.addConstraints(). Same shape as CommunicationTileNoteLeft's

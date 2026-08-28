@@ -1,5 +1,5 @@
 DPI: 96
-dimension: [ 534.0504 ; 262.0000 ]
+dimension: [ 520.0504 ; 262.0000 ]
 scaleFactor: 1.0000
 seed: 5321479853935526814
 svgLinkTarget: _top
@@ -7,8 +7,8 @@ hoverPathColorRGB: null
 preserveAspectRatio: none
 
 RECTANGLE:
-  pt1: [ 236.9320 ; 51.0000 ]
-  pt2: [ 515.0504 ; 116.0000 ]
+  pt1: [ 229.9320 ; 51.0000 ]
+  pt2: [ 501.0504 ; 116.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.5
@@ -18,7 +18,7 @@ RECTANGLE:
 
 RECTANGLE:
   pt1: [ 13.0000 ; 134.0000 ]
-  pt2: [ 268.9320 ; 199.0000 ]
+  pt2: [ 261.9320 ; 199.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.5
@@ -27,8 +27,8 @@ RECTANGLE:
   backcolor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 249.4320 ; 39.0000 ]
-  pt2: [ 257.4320 ; 223.0000 ]
+  pt1: [ 242.4320 ; 39.0000 ]
+  pt2: [ 250.4320 ; 223.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -37,15 +37,15 @@ RECTANGLE:
   backcolor: NULL_COLOR
 
 LINE:
-  pt1: [ 252.9320 ; 39.0000 ]
-  pt2: [ 252.9320 ; 223.0000 ]
+  pt1: [ 245.9320 ; 39.0000 ]
+  pt2: [ 245.9320 ; 223.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 RECTANGLE:
-  pt1: [ 239.2405 ; 10.0000 ]
-  pt2: [ 266.6234 ; 38.0000 ]
+  pt1: [ 232.2405 ; 10.0000 ]
+  pt2: [ 259.6234 ; 38.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -55,15 +55,15 @@ RECTANGLE:
 
 TEXT:
   text: a
-  position: [ 246.2405 ; 27.8889 ]
+  position: [ 239.2405 ; 27.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 239.2405 ; 223.0000 ]
-  pt2: [ 266.6234 ; 251.0000 ]
+  pt1: [ 232.2405 ; 223.0000 ]
+  pt2: [ 259.6234 ; 251.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -73,7 +73,7 @@ RECTANGLE:
 
 TEXT:
   text: a
-  position: [ 246.2405 ; 240.8889 ]
+  position: [ 239.2405 ; 240.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
@@ -98,8 +98,8 @@ PATH:
   backcolor: ffeeeeee
 
 RECTANGLE:
-  pt1: [ 236.9320 ; 51.0000 ]
-  pt2: [ 515.0504 ; 116.0000 ]
+  pt1: [ 229.9320 ; 51.0000 ]
+  pt2: [ 501.0504 ; 116.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.5
@@ -109,39 +109,39 @@ RECTANGLE:
 
 TEXT:
   text: group
-  position: [ 251.9320 ; 62.1111 ]
+  position: [ 244.9320 ; 62.1111 ]
   orientation: 0
   font: SansSerif.bold/13 [BOLD]
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 252.9320 ; 95.0000 ]
-  pt2: [ 294.9320 ; 95.0000 ]
+  pt1: [ 245.9320 ; 95.0000 ]
+  pt2: [ 287.9320 ; 95.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 294.9320 ; 95.0000 ]
-  pt2: [ 294.9320 ; 108.0000 ]
+  pt1: [ 287.9320 ; 95.0000 ]
+  pt2: [ 287.9320 ; 108.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 253.9320 ; 108.0000 ]
-  pt2: [ 294.9320 ; 108.0000 ]
+  pt1: [ 246.9320 ; 108.0000 ]
+  pt2: [ 287.9320 ; 108.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 263.9320 ; 104.0000 ]
-   - [ 253.9320 ; 108.0000 ]
-   - [ 263.9320 ; 112.0000 ]
-   - [ 259.9320 ; 108.0000 ]
+   - [ 256.9320 ; 104.0000 ]
+   - [ 246.9320 ; 108.0000 ]
+   - [ 256.9320 ; 112.0000 ]
+   - [ 252.9320 ; 108.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -149,7 +149,7 @@ POLYGON:
 
 TEXT:
   text: This works fine
-  position: [ 259.9320 ; 90.1111 ]
+  position: [ 252.9320 ; 90.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -175,7 +175,7 @@ PATH:
 
 RECTANGLE:
   pt1: [ 13.0000 ; 134.0000 ]
-  pt2: [ 268.9320 ; 199.0000 ]
+  pt2: [ 261.9320 ; 199.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.5
@@ -192,32 +192,32 @@ TEXT:
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 210.9320 ; 178.0000 ]
-  pt2: [ 251.9320 ; 178.0000 ]
+  pt1: [ 203.9320 ; 178.0000 ]
+  pt2: [ 244.9320 ; 178.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.9320 ; 178.0000 ]
-  pt2: [ 210.9320 ; 191.0000 ]
+  pt1: [ 203.9320 ; 178.0000 ]
+  pt2: [ 203.9320 ; 191.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.9320 ; 191.0000 ]
-  pt2: [ 250.9320 ; 191.0000 ]
+  pt1: [ 203.9320 ; 191.0000 ]
+  pt2: [ 243.9320 ; 191.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 240.9320 ; 187.0000 ]
-   - [ 250.9320 ; 191.0000 ]
-   - [ 240.9320 ; 195.0000 ]
-   - [ 244.9320 ; 191.0000 ]
+   - [ 233.9320 ; 187.0000 ]
+   - [ 243.9320 ; 191.0000 ]
+   - [ 233.9320 ; 195.0000 ]
+   - [ 237.9320 ; 191.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -225,7 +225,7 @@ POLYGON:
 
 TEXT:
   text: This [now works]
-  position: [ 36.0000 ; 173.1111 ]
+  position: [ 29.0000 ; 173.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000

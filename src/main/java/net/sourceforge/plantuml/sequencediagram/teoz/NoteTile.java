@@ -254,6 +254,21 @@ public class NoteTile extends AbstractTile implements Tile {
 		return result;
 	}
 
+	// Left-side mirror of getStableMaxX(): the left edges this note is built
+	// on, each safe to hand to Real.ensureBiggerThan() for the same reason --
+	// getMinX() itself composes a RealUtils.min() under OVER_SEVERAL, which
+	// caches its resolved value the first time it is read (see the note on
+	// GroupingTile.ensureFollowingParticipantClearsFrame()), so that case is
+	// split back into its two plain halves here too.
+	List<Real> getStableMinX() {
+		final List<Real> result = new ArrayList<>();
+		result.add(getX(getStringBounder()));
+		if (note.getPosition() == NotePosition.OVER_SEVERAL)
+			result.add(livingSpace1.getPosB(getStringBounder()));
+
+		return result;
+	}
+
 	@Override
 	public Real getMinX() {
 		final Real result = getX(getStringBounder());
