@@ -1,0 +1,141 @@
+name: perf-bench
+
+# Non-blocking render-performance benchmark for the browser (TeaVM) engine.
+# Builds the requested ref, renders a fixed corpus in headless Chromium, and compares against a
+# reference engine rendered back-to-back in the same browser instance (ratios cancel per-runner
+# host speed). Results go to the step summary; full per-rep data goes to a 1-day artifact.
+# Nothing here gates anything.
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Commit/branch/tag to benchmark (empty = the branch this workflow is dispatched on)"
+        default: ""
+      compare:
+        description: "Comparison engine: empty = npm pin from perf-bench/reference.json, npm:<version>, or any git ref (built from source)"
+        default: ""
+      reps:
+        description: "Renders per diagram per block"
+        default: "6"
+      corpus:
+        description: "Only diagrams whose path contains this string"
+        default: ""
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: perf-bench
+  cancel-in-progress: false
+
+jobs:
+  bench:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      # The harness always comes from the branch the workflow runs on, so old commits can be
+      # benchmarked with the current harness.
+      - name: Checkout harness
+        uses: actions/checkout@v7
+
+      - name: Checkout target
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.ref || github.sha }}
+          path: target
+
+      - name: Checkout comparison ref (git mode)
+        if: inputs.compare != '' && !startsWith(inputs.compare, 'npm:')
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.compare }}
+          path: reference-src
+
+      - name: Set up JDK 21 (Temurin)
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6.3.0
+
+      - name: Build target engine
+        run: |
+          cd target
+          ./gradlew :plantuml-mit:npmPackage -Pci --no-daemon
+          test -f plantuml-mit/build/npm-plantuml/plantuml.js
+
+      - name: Build comparison engine (git mode)
+        if: inputs.compare != '' && !startsWith(inputs.compare, 'npm:')
+        run: |
+          cd reference-src
+          ./gradlew :plantuml-mit:npmPackage -Pci --no-daemon
+          test -f plantuml-mit/build/npm-plantuml/plantuml.js
+          echo "COMPARE_DIR=reference-src/plantuml-mit/build/npm-plantuml" >> "$GITHUB_ENV"
+          echo "COMPARE_LABEL=git ${{ inputs.compare }} ($(git rev-parse --short HEAD))" >> "$GITHUB_ENV"
+
+      - name: Fetch comparison engine (npm mode)
+        if: inputs.compare == '' || startsWith(inputs.compare, 'npm:')
+        run: |
+          COMPARE='${{ inputs.compare }}'
+          if [ -z "$COMPARE" ]; then
+            PIN=$(node -p "JSON.parse(require('fs').readFileSync('perf-bench/reference.json','utf8')).npm")
+            COMPARE="npm:${PIN##*@}"
+          fi
+          VER="${COMPARE#npm:}"
+          echo "Comparison: @plantuml/core@$VER"
+          mkdir -p reference-npm && cd reference-npm
+          npm pack "@plantuml/core@$VER"
+          tar -xzf plantuml-core-*.tgz
+          test -f package/plantuml.js
+          echo "COMPARE_DIR=reference-npm/package" >> "$GITHUB_ENV"
+          echo "COMPARE_LABEL=npm @plantuml/core@$VER" >> "$GITHUB_ENV"
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: perf-bench/package-lock.json
+
+      - name: Install Playwright
+        run: |
+          cd perf-bench
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Run benchmark
+        run: |
+          node perf-bench/bench.js \
+            target=target/plantuml-mit/build/npm-plantuml \
+            reference="$COMPARE_DIR" \
+            --reps '${{ inputs.reps || 6 }}' \
+            --corpus '${{ inputs.corpus }}' \
+            --out results
+
+      - name: Write step summary
+        if: always()
+        run: |
+          {
+            echo "## perf-bench"
+            echo ""
+            echo "target: \`$(git -C target rev-parse --short HEAD)\` (${{ inputs.ref || github.ref_name }})"
+            echo "reference: $COMPARE_LABEL"
+            echo ""
+            cat results/summary.md 2>/dev/null || echo "no results produced"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload detailed results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: perf-bench-results
+          path: results/
+          retention-days: 1
+          if-no-files-found: warn

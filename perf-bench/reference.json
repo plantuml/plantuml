@@ -1,0 +1,4 @@
+{
+  "comment": "Default comparison engine for the perf-bench workflow. Must be a version that supports the maxSvgSize render option (>= 1.2026.8), otherwise tall corpus diagrams truncate and their ratios are meaningless. Bump deliberately at each release; the bump commit documents the accepted performance level.",
+  "npm": "@plantuml/core@1.2026.7"
+}

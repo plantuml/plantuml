@@ -1,0 +1,28 @@
+@startuml
+participant "Test" as T
+participant "Api" as A
+database "Db" as D
+T -> A: op-2-0
+A -> D: query 2.0
+D --> A: rows
+A --> T: ok
+T -> A: op-2-1
+A -> D: query 2.1
+D --> A: rows
+A --> T: ok
+T -> A: op-2-2
+A -> D: query 2.2
+D --> A: rows
+note right of A
+{ "d": 2, "i": 2 }
+end note
+A --> T: ok
+T -> A: op-2-3
+A -> D: query 2.3
+D --> A: rows
+A --> T: ok
+T -> A: op-2-4
+A -> D: query 2.4
+D --> A: rows
+A --> T: ok
+@enduml
