@@ -121,9 +121,9 @@ class BundledSkinTest2 {
 
 	@Test
 	void bundledSkinLoads() throws Exception {
-		final StyleBuilder builder = StyleLoader2.loadSkin("/skin/plantuml.skin");
-		System.err.println("builder=" + builder);
-		assertNotNull(builder);
+		final Object skin = StyleLoader2.loadSkin("/skin/plantuml.skin");
+		System.err.println("builder=" +skin);
+		assertNotNull(skin);
 		// assertNotNull(builder.getMergedStyle(StyleSignatureBasic.of(SName.root)));
 	}
 
