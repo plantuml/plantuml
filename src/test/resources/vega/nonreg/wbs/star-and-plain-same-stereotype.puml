@@ -1,0 +1,33 @@
+---
+output: svg
+---
+@startwbs
+<style>
+wbsDiagram {
+  node {
+    Padding 5
+    Margin 15
+    BackGroundColor white
+  }
+
+  .europeStyle * {
+	  node {
+	    FontColor red
+	  }
+  }
+
+  .europeStyle {
+	  node {
+	    FontSize 20
+	  }
+  }
+
+}
+</style>
+
+* World
+** Europe <<europeStyle>>
+*** England
+*** Germany
+*** Spain
+@endwbs

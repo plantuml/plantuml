@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+:foo1; <<FontColor:red;BackGroundColor:blue;>>
+:foo2;
+@enduml

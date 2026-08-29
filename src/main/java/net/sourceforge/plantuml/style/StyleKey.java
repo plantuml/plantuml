@@ -121,6 +121,7 @@ public class StyleKey {
 
 	@Override
 	public int hashCode() {
+		// Thread.dumpStack();
 		int result = cachedHashCode;
 		if (result == 0) {
 			result = Objects.hash(snames, isStared, level);

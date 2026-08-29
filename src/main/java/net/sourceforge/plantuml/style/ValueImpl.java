@@ -59,6 +59,19 @@ public class ValueImpl implements Value {
 		return new ValueImpl(new DarkString(Objects.requireNonNull(value), null, priority));
 	}
 
+	/**
+	 * A value that may already carry both a light and a dark half at an explicit priority --
+	 * unlike {@link #regular} and {@link #dark}, which always create a one-sided value from a
+	 * counter. Used when converting an already-resolved
+	 * {@code net.sourceforge.plantuml.style.parser2.PrioritizedValue} (light and dark already
+	 * folded together by {@code MergedStyleNode#mergeRule}) back into this legacy representation,
+	 * so that fold is not redone here. Either {@code light} or {@code dark} (never both) may be
+	 * null.
+	 */
+	public static ValueImpl of(String light, String dark, int priority) {
+		return new ValueImpl(new DarkString(light, dark, priority));
+	}
+
 	public Value mergeWith(Value other) {
 		if (other == null)
 			return this;
@@ -207,4 +220,4 @@ public class ValueImpl implements Value {
 		return value.getPriority();
 	}
 
-}
+}

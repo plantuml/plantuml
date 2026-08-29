@@ -49,8 +49,11 @@ import java.util.concurrent.ConcurrentMap;
 
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.security.SFile;
-import net.sourceforge.plantuml.style.parser.StyleParser;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
+import net.sourceforge.plantuml.style.parser2.MergedStyleNode;
+import net.sourceforge.plantuml.style.parser2.MergedStyleSheet;
+import net.sourceforge.plantuml.style.parser2.RawStyleParser;
+import net.sourceforge.plantuml.style.parser2.RawStyleSheet;
 import net.sourceforge.plantuml.teavm.EmbeddedResources;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -86,6 +89,35 @@ public final class StyleLoader {
 		}
 	}
 
+	/**
+	 * Parses a fragment of .skin/{@code <style>} text into flat legacy {@link Style} objects,
+	 * assigning each property an increasing priority via {@code counter} -- the direct
+	 * replacement for {@code new net.sourceforge.plantuml.style.parser.StyleParser(counter).parse(lines)},
+	 * now going through the {@code parser2} tokenizer ({@link RawStyleParser}) instead of the
+	 * legacy hand-written one. {@code counter} is almost always the {@link StyleBuilder} the
+	 * result will be loaded or muted into, exactly as before: continuing its counter is what
+	 * guarantees an overlay's declarations always outrank whatever that builder already holds.
+	 *
+	 * <p>
+	 * Parsing itself (tokenizing, comma-list handling, {@code @media} detection, {@code
+	 * var(--name)} substitution) is {@link RawStyleParser}'s job; {@link MergedStyleNode} then
+	 * merges duplicate selectors and folds a dark declaration into its light counterpart, exactly
+	 * as a whole {@link MergedStyleSheet} would -- only into a throwaway, one-shot tree here
+	 * (this call's {@code counter} is external and not carried across calls, so there is no
+	 * sheet identity worth keeping around afterwards) -- before {@link LegacyStyleFlattener}
+	 * turns it back into the flat shape every caller of this method still expects.
+	 */
+	public static Collection<Style> parseStyleText(BlocLines lines, AutomaticCounter counter)
+			throws StyleParsingException {
+		if (lines.size() == 0)
+			return Collections.emptyList();
+
+		final RawStyleSheet raw = RawStyleParser.parse(lines);
+		final MergedStyleNode root = MergedStyleNode.newTopLevelContainer();
+		MergedStyleSheet.mergeInto(root, raw, counter);
+		return LegacyStyleFlattener.flatten(root);
+	}
+
 	private static StyleBuilder loadSkinSlow(String filename) throws IOException, StyleParsingException {
 		final StyleBuilder styleBuilder = new StyleBuilder();
 
@@ -95,7 +127,7 @@ public final class StyleLoader {
 			throw new NoStyleAvailableException();
 		}
 		final BlocLines lines2 = BlocLines.load(internalIs, new LineLocationImpl(filename, null));
-		final Collection<Style> styles = new StyleParser(styleBuilder).parse(lines2);
+		final Collection<Style> styles = parseStyleText(lines2, styleBuilder);
 		// A file that parses without any error but that defines no style at all is not
 		// a style sheet: this happens with legacy skinparam files, where every line is
 		// silently ignored because the key is unknown. Accepting it here would give an
@@ -185,4 +217,4 @@ public final class StyleLoader {
 		return result;
 	}
 
-}
+}
