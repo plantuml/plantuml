@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+<style>
+activityDiagram {
+  arrow  {
+    LineColor green
+    FontColor blue
+    LineThickness 2
+}
+</style>
+:foo1;
+-> normal arrow with text;
+fork
+  :fork1;
+fork again
+  -> txt label;
+  :fork2;
+  -> txt label;
+fork again
+  -> fork arrow with text\nmissing arrow label;
+end fork
+:foo5;
+@enduml

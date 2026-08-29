@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class PartitionTile extends GroupingTile {
 
@@ -92,7 +92,7 @@ public class PartitionTile extends GroupingTile {
 		return new Component() {
 
 			@Override
-			public StyleSignature getStyleSignature() {
+			public StyleQuery getStyleQuery() {
 				throw new UnsupportedOperationException();
 			}
 

@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorType;
@@ -52,7 +54,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class Highlight {
 
@@ -70,12 +72,12 @@ public class Highlight {
 		this.skinParam = skinParam;
 	}
 
-	private StyleSignatureBasic getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.highlight);
+	private StyleQuery getStyleSignature() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.timingDiagram, SName.highlight));
 	}
 
 	private Style getStyle() {
-		return getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(getStyleSignature());
 
 	}
 

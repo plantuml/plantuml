@@ -39,8 +39,8 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class Divider extends AbstractEvent implements Event, WithStyle, EventWithDeactivate {
 
@@ -48,8 +48,9 @@ public class Divider extends AbstractEvent implements Event, WithStyle, EventWit
 
 	final private Style style;
 
-	public StyleSignature getStyleSignature() {
-		return ComponentType.DIVIDER.getStyleSignature();
+	@Override
+	public StyleQuery getStyleQuery() {
+		return ComponentType.DIVIDER.getStyleQuery();
 	}
 
 	public Style[] getUsedStyles() {
@@ -58,7 +59,7 @@ public class Divider extends AbstractEvent implements Event, WithStyle, EventWit
 
 	public Divider(Display text, StyleBuilder styleBuilder) {
 		this.text = text;
-		this.style = getStyleSignature().getMergedStyle(styleBuilder);
+		this.style = styleBuilder.getMergedStyle(getStyleQuery());
 	}
 
 	public final Display getText() {

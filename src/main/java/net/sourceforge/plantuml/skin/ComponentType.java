@@ -35,11 +35,12 @@
  */
 package net.sourceforge.plantuml.skin;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.sequencediagram.LifeEventType;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.Styleable;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public enum ComponentType implements Styleable {
 
@@ -71,43 +72,40 @@ public enum ComponentType implements Styleable {
 	public boolean isArrow() {
 		return this == ARROW;
 	}
-
-	public StyleSignature getStyleSignature() {
+	
+	@Override
+	public StyleQuery getStyleQuery() {
 		if (this == PARTICIPANT_HEAD || this == PARTICIPANT_TAIL)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.participant);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.participant));
 
 		if (this == PARTICIPANT_LINE /*|| this == CONTINUE_LINE*/)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine));
 
 		if (this == ACTIVATION_BOX_CLOSE_CLOSE || this == ACTIVATION_BOX_CLOSE_OPEN || this == ACTIVATION_BOX_OPEN_CLOSE
 				|| this == ACTIVATION_BOX_OPEN_OPEN)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.activationBox);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.activationBox));
 
 		if (this == DESTROY)
-			return LifeEventType.DESTROY.getStyleSignature();
+			return LifeEventType.DESTROY.getStyleQuery();
 
 		if (this == DIVIDER)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.separator);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.separator));
 
 		if (this == ENGLOBER)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.box);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.box));
 
 		if (this == NEWPAGE)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.newpage);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.newpage));
 
 		if (this == NOTE)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.note);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.note));
 
 		if (this == DELAY_TEXT)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.delay);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.delay));
 
 		if (this == DELAY_LINE)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.delay);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.delay));
 
-//		if (this == REFERENCE) {
-//			return StyleSignature.of(SName.root, SName.element,
-//					SName.sequenceDiagram, SName.reference);
-//		}
 		throw new UnsupportedOperationException(toString());
 	}
 }

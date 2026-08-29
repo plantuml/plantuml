@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.svek;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -54,8 +55,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public final class SvekResult implements IEntityImage {
 
@@ -73,8 +73,8 @@ public final class SvekResult implements IEntityImage {
 			if (cluster.getGroup().isPacked() == false)
 				cluster.drawU(ug);
 
-		final Style style2 = getDefaultStyleDefinition(null)
-				.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
+		final Style style2 = dotData.getSkinParam().getCurrentStyleBuilder()
+				.getMergedStyle(getDefaultStyleDefinition(null));
 
 		final HColor borderColor = HColors
 				.noGradient(style2.value(PName.LineColor).asColor(dotData.getSkinParam().getIHtmlColorSet()));
@@ -108,17 +108,17 @@ public final class SvekResult implements IEntityImage {
 			node.fixOverlap();
 	}
 
-	private StyleSignature getDefaultStyleDefinition(Stereotype stereotype) {
-		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element,
-				dotData.geDiagramType().getStyleName(), SName.arrow);
+	private StyleQuery getDefaultStyleDefinition(Stereotype stereotype) {
+		StyleQuery result = StyleQuery
+				.of(Arrays.asList(SName.root, SName.element, dotData.geDiagramType().getStyleName(), SName.arrow));
 
 		return result.withTOBECHANGED(stereotype);
 	}
 
 	// Duplicate SvekResult / GeneralImageBuilder
 	public HColor getBackcolor() {
-		final Style style = StyleSignatureBasic.of(SName.root, SName.document)
-				.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
+		final Style style = dotData.getSkinParam().getCurrentStyleBuilder()
+				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.document)));
 		return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
 	}
 

@@ -37,6 +37,8 @@
  */
 package net.sourceforge.plantuml.svek;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.abel.DisplayPositioned;
@@ -61,7 +63,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public final class ClusterHeader {
 
@@ -142,26 +144,29 @@ public final class ClusterHeader {
 	}
 
 	private Style getStyle() {
-		final StyleSignatureBasic signature = getSignature();
-		return signature //
+		final StyleQuery signature = getSignature();
+		return g.getSkinParam().getCurrentStyleBuilder().getMergedStyle(signature //
 				.withTOBECHANGED(g.getStereotype()) //
-				.with(g.getStereostyles()) //
-				.getMergedStyle(g.getSkinParam().getCurrentStyleBuilder());
+				.with(g.getStereostyles()));
 	}
 
-	private StyleSignatureBasic getSignature() {
+	private StyleQuery getSignature() {
 		final SName sname = g.getSkinParam().getDiagramType().getStyleName();
-		final StyleSignatureBasic signature;
+		final StyleQuery signature;
 		final USymbol uSymbol = g.getUSymbol();
 		if (g.getGroupType() == GroupType.STATE)
-			signature = StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.name);
-		else if (uSymbol != null)
-			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, uSymbol.getSNames(), SName.composite,
-					SName.title);
-		else if (g.getGroupType() == GroupType.PACKAGE)
-			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, SName.package_, SName.title);
+			signature = StyleQuery
+					.of(Arrays.asList(SName.root, SName.element, SName.stateDiagram, SName.state, SName.name));
+		else if (uSymbol != null) {
+			final List<SName> names = new ArrayList<SName>(Arrays.asList(SName.root, SName.element, sname));
+			names.addAll(Arrays.asList(uSymbol.getSNames()));
+			names.add(SName.composite);
+			names.add(SName.title);
+			signature = StyleQuery.of(names);
+		} else if (g.getGroupType() == GroupType.PACKAGE)
+			signature = StyleQuery.of(Arrays.asList(SName.root, SName.element, sname, SName.package_, SName.title));
 		else
-			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, SName.composite, SName.title);
+			signature = StyleQuery.of(Arrays.asList(SName.root, SName.element, sname, SName.composite, SName.title));
 		return signature;
 	}
 
@@ -208,9 +213,11 @@ public final class ClusterHeader {
 		if (visibleStereotypes == null || visibleStereotypes.isEmpty())
 			return TextBlockUtils.empty(0, 0);
 
-		final Style style = Cluster
-				.getDefaultStyleDefinition(skinParam.getDiagramType().getStyleName(), g.getUSymbol(), g.getGroupType())
-				.forStereotypeItself(g.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder()
+				.getMergedStyle(Cluster
+						.getDefaultStyleDefinition(skinParam.getDiagramType().getStyleName(), g.getUSymbol(),
+								g.getGroupType())
+						.forStereotypeItself(g.getStereotype()));
 
 		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 		final HorizontalAlignment horizontalAlignment = getTitleHorizontalAlignment();

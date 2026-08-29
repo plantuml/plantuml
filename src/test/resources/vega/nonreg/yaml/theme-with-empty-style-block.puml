@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startyaml
+!theme amiga
+<style>
+</style>
+  -
+    name: Mark McGwire
+    hr:   65
+    avg:  0.278
+  -
+    name: Sammy Sosa
+    hr:   63
+    avg:  0.288
+
+@endyaml

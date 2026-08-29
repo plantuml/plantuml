@@ -59,8 +59,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.url.Url;
@@ -95,19 +94,18 @@ public class EntityImageChenRelationship extends AbstractEntityImage {
 	}
 
 	@Override
-	public StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.chenEerDiagram, SName.chenRelationship);
+	public StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chenEerDiagram, SName.chenRelationship));
 	}
 
 	private Style getStyle(Entity group, ISkinParam skinParam) {
-		return getStyleSignature().withTOBECHANGED(group.getStereotype())
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(getStyleQuery().withTOBECHANGED(group.getStereotype()));
 	}
 
 	private static Style getStyleTitle(Entity group, ISkinParam skinParam) {
-		return StyleSignatureBasic
-				.of(SName.root, SName.element, SName.chenEerDiagram, SName.chenRelationship, SName.title)
-				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQuery.of(
+				Arrays.asList(SName.root, SName.element, SName.chenEerDiagram, SName.chenRelationship, SName.title))
+				.withTOBECHANGED(group.getStereotype()));
 	}
 
 	@Override

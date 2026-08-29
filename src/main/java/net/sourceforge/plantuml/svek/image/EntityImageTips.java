@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import net.sourceforge.plantuml.abel.Entity;
@@ -57,8 +58,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -85,11 +85,11 @@ public class EntityImageTips extends AbstractEntityImage {
 	// parsed silently recolors every earlier tip on the same side of the
 	// same class (issue #2814).
 	private Style getStyleFor(Tip tip) {
-		return getStyleSignatureFor(tip.getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQueryFor(tip.getStereotype()));
 	}
 
-	private StyleSignature getStyleSignatureFor(Stereotype stereotype) {
-		return StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), SName.note)
+	private StyleQuery getStyleQueryFor(Stereotype stereotype) {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, getStyleName(), SName.note))
 				.withTOBECHANGED(stereotype);
 	}
 
@@ -102,8 +102,8 @@ public class EntityImageTips extends AbstractEntityImage {
 	}
 
 	@Override
-	public StyleSignature getStyleSignature() {
-		return getStyleSignatureFor(getStereo());
+	public StyleQuery getStyleQuery() {
+		return getStyleQueryFor(getStereo());
 	}
 
 	private Position getPosition() {

@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.klimt.Shadowable;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -47,8 +49,7 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 
@@ -59,8 +60,8 @@ public class EntityImageSynchroBar extends AbstractEntityImage {
 	}
 
 	@Override
-	public StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activityBar);
+	public StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activityBar));
 	}
 
 	@Override
@@ -75,8 +76,8 @@ public class EntityImageSynchroBar extends AbstractEntityImage {
 		final XDimension2D dim = calculateDimension(ug.getStringBounder());
 		final Shadowable rect = URectangle.build(dim.getWidth(), dim.getHeight());
 
-		final Style style = getStyleSignature().withTOBECHANGED(getEntity().getStereotype())
-				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		final Style style = getSkinParam().getCurrentStyleBuilder()
+				.getMergedStyle(getStyleQuery().withTOBECHANGED(getEntity().getStereotype()));
 		final HColor color = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 		final double shadowing = style.getShadowing();
 

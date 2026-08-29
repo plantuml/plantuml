@@ -58,26 +58,29 @@ import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class Style {
 
-	private final Map<PName, Value> map;
-	private final StyleSignatureBasic signature;
+	public static final String STAR = "*";
 
-	public Style(StyleSignatureBasic signature, Map<PName, Value> map) {
+	private final Map<PName, Value> map;
+	private final StyleQuery query;
+
+	public Style(StyleQuery query, Map<PName, Value> map) {
 		this.map = map;
-		this.signature = signature;
+		this.query = query;
 	}
 
-	public Style deltaPriority(int delta) {
-		if (signature.isStarred() == false)
+	public Style withAncestorRank(int rank) {
+		if (query.getLevelConstraint().isStar() == false)
 			throw new UnsupportedOperationException();
 
 		final EnumMap<PName, Value> copy = new EnumMap<PName, Value>(PName.class);
 		for (Entry<PName, Value> ent : this.map.entrySet())
-			copy.put(ent.getKey(), ((ValueImpl) ent.getValue()).addPriority(delta));
+			copy.put(ent.getKey(), ((ValueImpl) ent.getValue()).withAncestorRank(rank));
 
-		return new Style(this.signature, copy);
+		return new Style(this.query, copy);
 
 	}
 
@@ -85,7 +88,7 @@ public class Style {
 		if (map.size() == 0)
 			return;
 
-		System.err.println(signature + " {");
+		System.err.println(query + " {");
 		for (Entry<PName, Value> ent : map.entrySet())
 			System.err.println("  " + ent.getKey() + ": " + ent.getValue().asString());
 
@@ -95,7 +98,7 @@ public class Style {
 
 	@Override
 	public String toString() {
-		return signature + " " + map;
+		return query + " " + map;
 	}
 
 	public Value value(PName name) {
@@ -125,13 +128,13 @@ public class Style {
 		final EnumMap<PName, Value> both = new EnumMap<PName, Value>(this.map);
 		for (Entry<PName, Value> ent : other.map.entrySet()) {
 			final Value previous = this.map.get(ent.getKey());
-			if (previous != null && previous.getPriority() > StyleLoader.DELTA_PRIORITY_FOR_STEREOTYPE
+			if (previous != null && previous.getSpecificity().hasStereotype()
 					&& strategy == MergeStrategy.KEEP_EXISTING_VALUE_OF_STEREOTYPE)
 				continue;
 			final PName key = ent.getKey();
 			both.put(key, ((ValueImpl) ent.getValue()).mergeWith(previous));
 		}
-		return new Style(this.signature.mergeWith(other.getSignature()), both);
+		return new Style(this.query.mergeWith(other.getQuery()), both);
 	}
 
 	/**
@@ -169,7 +172,7 @@ public class Style {
 		if (divergentOnly.isEmpty())
 			return this;
 
-		return this.mergeWith(new Style(nested.signature, divergentOnly), strategy);
+		return this.mergeWith(new Style(nested.query, divergentOnly), strategy);
 	}
 
 	public Style eventuallyOverride(PName param, HColor color) {
@@ -178,8 +181,8 @@ public class Style {
 
 		final EnumMap<PName, Value> result = new EnumMap<PName, Value>(this.map);
 		final Value old = result.get(param);
-		result.put(param, new ValueColor(color, old.getPriority()));
-		return new Style(this.signature, result);
+		result.put(param, new ValueColor(color, old.getSpecificity()));
+		return new Style(this.query, result);
 	}
 
 	public Style eventuallyOverride(PName param, double value) {
@@ -188,8 +191,8 @@ public class Style {
 
 	public Style eventuallyOverride(PName param, String value) {
 		final EnumMap<PName, Value> result = new EnumMap<PName, Value>(this.map);
-		result.put(param, ValueImpl.regular(value, Integer.MAX_VALUE));
-		return new Style(this.signature, result);
+		result.put(param, ValueImpl.regular(value, Specificity.forcedOverride()));
+		return new Style(this.query, result);
 	}
 
 	public Style eventuallyOverride(Colors colors) {
@@ -222,8 +225,8 @@ public class Style {
 		return result;
 	}
 
-	public StyleSignatureBasic getSignature() {
-		return signature;
+	public StyleQuery getQuery() {
+		return query;
 	}
 
 	/**
@@ -385,4 +388,4 @@ public class Style {
 
 	}
 
-}
+}

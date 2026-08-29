@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -71,7 +72,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.url.Url;
 
 public class VCompactFactory implements FtileFactory {
@@ -93,44 +94,44 @@ public class VCompactFactory implements FtileFactory {
 		this.stringBounder = stringBounder;
 	}
 
-	private StyleSignatureBasic getSignatureCircleEnd() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.end);
+	private StyleQuery getSignatureCircleEnd() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.end));
 	}
 
-	private StyleSignatureBasic getSignatureCircleStop() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.stop);
+	private StyleQuery getSignatureCircleStop() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.stop));
 	}
 
-	private StyleSignatureBasic getSignatureCircleSpot() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.spot);
+	private StyleQuery getSignatureCircleSpot() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.spot));
 	}
 
-	private StyleSignatureBasic getSignatureCircleStart() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.start);
+	private StyleQuery getSignatureCircleStart() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.start));
 	}
 
 	@Override
 	public Ftile start(Swimlane swimlane, Colors colors) {
-		final Style style = getSignatureCircleStart().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getSignatureCircleStart());
 		return new FtileCircleStart(skinParam(), swimlane, style, colors);
 	}
 
 	@Override
 	public Ftile stop(Swimlane swimlane, Colors colors) {
-		final Style style = getSignatureCircleStop().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getSignatureCircleStop());
 		return new FtileCircleStop(skinParam(), swimlane, style, colors);
 	}
 
 	@Override
 	public Ftile spot(Swimlane swimlane, String spot, HColor color) {
 		final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);
-		final Style style = getSignatureCircleSpot().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getSignatureCircleSpot());
 		return new FtileCircleSpot(skinParam(), swimlane, spot, font, color, style);
 	}
 
 	@Override
 	public Ftile end(Swimlane swimlane, Colors colors) {
-		final Style style = getSignatureCircleEnd().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getSignatureCircleEnd());
 		return new FtileCircleEndCross(skinParam(), swimlane, style, colors);
 	}
 

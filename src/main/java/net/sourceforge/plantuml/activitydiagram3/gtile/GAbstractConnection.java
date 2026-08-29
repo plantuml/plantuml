@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public abstract class GAbstractConnection implements GConnection {
 
@@ -86,8 +86,8 @@ public abstract class GAbstractConnection implements GConnection {
 		throw new UnsupportedOperationException();
 	}
 
-	private final StyleSignatureBasic getDefaultStyleDefinitionArrow() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	private final StyleQuery getDefaultStyleDefinitionArrow() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
 	}
 
 	protected ISkinParam skinParam() {
@@ -97,7 +97,7 @@ public abstract class GAbstractConnection implements GConnection {
 	// DUPLICATE 4561
 	final protected Rainbow getInLinkRenderingColor() {
 		final ISkinParam skinParam = gpoint1.getGtile().skinParam();
-		final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionArrow());
 		final Rainbow color = Rainbow.build(style, skinParam.getIHtmlColorSet());
 //		final LinkRendering linkRendering = tile.getInLinkRendering();
 //		if (linkRendering == null) {

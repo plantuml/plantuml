@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.chart;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +58,7 @@ import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class ChartRenderer {
 
@@ -156,7 +157,7 @@ public class ChartRenderer {
 		final StringBounder stringBounder = ug.getStringBounder();
 
 		// Get style and colors
-		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getStyleSignature());
 		final HColor lineColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final HColor fontColor = style.value(PName.FontColor).asColor(skinParam.getIHtmlColorSet());
 
@@ -241,8 +242,8 @@ public class ChartRenderer {
 	private void drawYAxis(UGraphic ug, double height, double width, ChartAxis axis, boolean leftSide, HColor lineColor,
 			HColor fontColor) {
 		// Get axis-specific style
-		final Style axisStyle = getAxisStyleSignature(false)
-			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style axisStyle = skinParam.getCurrentStyleBuilder()
+			.getMergedStyle(getAxisStyleSignature(false));
 
 		// Extract styled properties
 		final HColor styledLineColor = axisStyle.value(PName.LineColor)
@@ -259,8 +260,8 @@ public class ChartRenderer {
 		ug.draw(ULine.vline(height));
 
 		// Get grid style
-		final Style gridStyle = getGridStyleSignature()
-			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style gridStyle = skinParam.getCurrentStyleBuilder()
+			.getMergedStyle(getGridStyleSignature());
 
 		// Extract grid properties
 		HColor gridColor = gridStyle.value(PName.LineColor)
@@ -460,8 +461,8 @@ public class ChartRenderer {
 		}
 
 		// Get axis-specific style
-		final Style axisStyle = getAxisStyleSignature(true)
-			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style axisStyle = skinParam.getCurrentStyleBuilder()
+			.getMergedStyle(getAxisStyleSignature(true));
 
 		// Extract styled properties
 		final HColor styledLineColor = axisStyle.value(PName.LineColor)
@@ -483,8 +484,8 @@ public class ChartRenderer {
 			final double categoryWidth = width / xAxisLabels.size();
 
 		// Get grid style
-		final Style gridStyle = getGridStyleSignature()
-			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style gridStyle = skinParam.getCurrentStyleBuilder()
+			.getMergedStyle(getGridStyleSignature());
 
 		// Extract grid properties
 		HColor gridColor = gridStyle.value(PName.LineColor)
@@ -709,8 +710,8 @@ public class ChartRenderer {
 			return; // Only draw grids for coordinate-pair mode
 
 		// Get grid style
-		final Style gridStyle = getGridStyleSignature()
-			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style gridStyle = skinParam.getCurrentStyleBuilder()
+			.getMergedStyle(getGridStyleSignature());
 
 		// Extract grid properties
 		HColor gridColor = gridStyle.value(PName.LineColor)
@@ -863,7 +864,7 @@ public class ChartRenderer {
 						seriesStyle = getScatterStyle(s);
 						break;
 					default:
-						seriesStyle = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
+						seriesStyle = skinParam.getCurrentStyleBuilder().getMergedStyle(getStyleSignature());
 				}
 
 				// Extract series color - priority: explicit color > style color > default color
@@ -948,25 +949,25 @@ public class ChartRenderer {
 		}
 	}
 
-	private StyleSignatureBasic getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram);
+	private StyleQuery getStyleSignature() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram));
 	}
 
-	private StyleSignatureBasic getBarStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.bar);
+	private StyleQuery getBarStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.bar));
 	}
 
 	private Style getBarStyle(ChartSeries series) {
-		StyleSignatureBasic signature = getBarStyleSignature();
+		StyleQuery query = getBarStyleQuery();
 		if (series.getStereotype() != null) {
 			// Use withTOBECHANGED for element-level stereotype styling
-			Style style = signature.withTOBECHANGED(series.getStereotype())
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			Style style = skinParam.getCurrentStyleBuilder()
+					.getMergedStyle(query.withTOBECHANGED(series.getStereotype()));
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., .primary)
 			// This matches the pattern used by sequence diagrams
-			Style stereoStyle = signature.forStereotypeItself(series.getStereotype())
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			Style stereoStyle = skinParam.getCurrentStyleBuilder()
+					.getMergedStyle(query.forStereotypeItself(series.getStereotype()));
 
 			// Merge with stereo style overwriting existing values
 			if (style != null)
@@ -974,23 +975,23 @@ public class ChartRenderer {
 
 			return stereoStyle;
 		}
-		return signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);
 	}
 
-	private StyleSignatureBasic getLineStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.line);
+	private StyleQuery getLineStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.line));
 	}
 
 	private Style getLineStyle(ChartSeries series) {
-		StyleSignatureBasic signature = getLineStyleSignature();
+		StyleQuery query = getLineStyleQuery();
 		if (series.getStereotype() != null) {
 			// Use withTOBECHANGED for element-level stereotype styling
-			Style style = signature.withTOBECHANGED(series.getStereotype())
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			Style style = skinParam.getCurrentStyleBuilder()
+					.getMergedStyle(query.withTOBECHANGED(series.getStereotype()));
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., line.target)
-			Style stereoStyle = signature.forStereotypeItself(series.getStereotype())
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			Style stereoStyle = skinParam.getCurrentStyleBuilder()
+					.getMergedStyle(query.forStereotypeItself(series.getStereotype()));
 
 			// Merge with stereo style overwriting existing values
 			if (style != null)
@@ -998,23 +999,23 @@ public class ChartRenderer {
 
 			return stereoStyle;
 		}
-		return signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);
 	}
 
-	private StyleSignatureBasic getAreaStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.area);
+	private StyleQuery getAreaStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.area));
 	}
 
 	private Style getAreaStyle(ChartSeries series) {
-		StyleSignatureBasic signature = getAreaStyleSignature();
+		StyleQuery query = getAreaStyleQuery();
 		if (series.getStereotype() != null) {
 			// Use withTOBECHANGED for element-level stereotype styling
-			Style style = signature.withTOBECHANGED(series.getStereotype())
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			Style style = skinParam.getCurrentStyleBuilder()
+					.getMergedStyle(query.withTOBECHANGED(series.getStereotype()));
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., area.highlight)
-			Style stereoStyle = signature.forStereotypeItself(series.getStereotype())
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			Style stereoStyle = skinParam.getCurrentStyleBuilder()
+					.getMergedStyle(query.forStereotypeItself(series.getStereotype()));
 
 			// Merge with stereo style overwriting existing values
 			if (style != null)
@@ -1022,7 +1023,7 @@ public class ChartRenderer {
 
 			return stereoStyle;
 		}
-		return signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);
 	}
 
 	private String formatAxisValue(double value) {
@@ -1034,20 +1035,20 @@ public class ChartRenderer {
 		return String.format("%.1f", value);
 	}
 
-	private StyleSignatureBasic getScatterStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.scatter);
+	private StyleQuery getScatterStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.scatter));
 	}
 
 	private Style getScatterStyle(ChartSeries series) {
-		StyleSignatureBasic signature = getScatterStyleSignature();
+		StyleQuery query = getScatterStyleQuery();
 		if (series.getStereotype() != null) {
 			// Use withTOBECHANGED for element-level stereotype styling
-			Style style = signature.withTOBECHANGED(series.getStereotype())
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			Style style = skinParam.getCurrentStyleBuilder()
+					.getMergedStyle(query.withTOBECHANGED(series.getStereotype()));
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., scatter.highlight)
-			Style stereoStyle = signature.forStereotypeItself(series.getStereotype())
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			Style stereoStyle = skinParam.getCurrentStyleBuilder()
+					.getMergedStyle(query.forStereotypeItself(series.getStereotype()));
 
 			// Merge with stereo style overwriting existing values
 			if (style != null)
@@ -1055,24 +1056,24 @@ public class ChartRenderer {
 
 			return stereoStyle;
 		}
-		return signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);
 	}
 
-	private StyleSignatureBasic getAxisStyleSignature(boolean horizontal) {
+	private StyleQuery getAxisStyleSignature(boolean horizontal) {
 		SName axisType = horizontal ? SName.hAxis : SName.vAxis;
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.axis, axisType);
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.axis, axisType));
 	}
 
-	private StyleSignatureBasic getGridStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.grid);
+	private StyleQuery getGridStyleSignature() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.grid));
 	}
 
-	private StyleSignatureBasic getLegendStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.legend);
+	private StyleQuery getLegendStyleSignature() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.legend));
 	}
 
-	private StyleSignatureBasic getAnnotationStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.annotation);
+	private StyleQuery getAnnotationStyleSignature() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.annotation));
 	}
 
 	private XDimension2D calculateLegendDimension(StringBounder stringBounder) {
@@ -1080,8 +1081,8 @@ public class ChartRenderer {
 			return new XDimension2D(0, 0);
 
 		// Get legend style
-		final Style legendStyle = getLegendStyleSignature()
-			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style legendStyle = skinParam.getCurrentStyleBuilder()
+			.getMergedStyle(getLegendStyleSignature());
 
 		// Extract legend font configuration
 		final FontConfiguration fontConfig = legendStyle.getFontConfiguration(skinParam.getIHtmlColorSet());
@@ -1117,8 +1118,8 @@ public class ChartRenderer {
 			return;
 
 		// Get legend style
-		final Style legendStyle = getLegendStyleSignature()
-			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style legendStyle = skinParam.getCurrentStyleBuilder()
+			.getMergedStyle(getLegendStyleSignature());
 
 		// Extract legend properties
 		final FontConfiguration fontConfig = legendStyle.getFontConfiguration(skinParam.getIHtmlColorSet());
@@ -1279,8 +1280,8 @@ public class ChartRenderer {
 			return;
 
 		// Get annotation style
-		final Style annotationStyle = getAnnotationStyleSignature()
-			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style annotationStyle = skinParam.getCurrentStyleBuilder()
+			.getMergedStyle(getAnnotationStyleSignature());
 
 		// Extract annotation properties
 		final FontConfiguration fontConfig = annotationStyle.getFontConfiguration(skinParam.getIHtmlColorSet());

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.svek;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -59,13 +60,13 @@ import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.descdiagram.command.StringWithArrow;
 import net.sourceforge.plantuml.dot.DotSplines;
 import net.sourceforge.plantuml.dot.GraphvizVersion;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorType;
-import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -102,8 +103,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.extremity.Extremity;
 import net.sourceforge.plantuml.svek.extremity.ExtremityArrow;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
@@ -286,8 +286,8 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		} else {
 			final HorizontalAlignment alignment = getMessageTextAlignment(diagramType(), skinParam);
 			final boolean hasSeveralGuideLines = link.getLabel().hasSeveralGuideLines();
-			final Style arrowStyle = getDefaultStyleDefinition(link.getStereotype())
-					.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			final Style arrowStyle = skinParam.getCurrentStyleBuilder()
+					.getMergedStyle(getDefaultStyleDefinition(link.getStereotype()));
 			final LineBreakStrategy styleWidth = arrowStyle.wrapWidth();
 			final LineBreakStrategy wrapWidth = styleWidth.getMaxWidth() > 0
 					? styleWidth
@@ -814,9 +814,9 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 
 	}
 
-	private StyleSignature getDefaultStyleDefinition(Stereotype stereotype) {
-		final StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, diagramType().getStyleName(),
-				SName.arrow);
+	private StyleQuery getDefaultStyleDefinition(Stereotype stereotype) {
+		final StyleQuery result = StyleQuery
+				.of(Arrays.asList(SName.root, SName.element, diagramType().getStyleName(), SName.arrow));
 
 		return result.withTOBECHANGED(stereotype);
 	}
@@ -872,7 +872,7 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		y += dy;
 
 		final StyleBuilder currentStyleBuilder = this.getCurrentStyleBuilder();
-		final Style styleLine = getDefaultStyleDefinition(this.getStereotype()).getMergedStyle(currentStyleBuilder);
+		final Style styleLine = currentStyleBuilder.getMergedStyle(getDefaultStyleDefinition(this.getStereotype()));
 		final UStroke suggestedStroke = styleLine.getStroke();
 		final Rainbow rainbow = Rainbow.build(styleLine, this.skinParam.getIHtmlColorSet());
 

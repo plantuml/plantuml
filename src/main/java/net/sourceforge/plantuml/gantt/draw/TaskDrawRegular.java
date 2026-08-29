@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.gantt.draw;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.TreeSet;
 
@@ -70,8 +71,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class TaskDrawRegular extends AbstractTaskDraw {
 
@@ -110,7 +110,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final XDimension2D dim = title.calculateDimension(stringBounder);
 
-		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());
+		final Style style = getStyleBuilder().getMergedStyle(getStyleQuery());
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
 		final ClockwiseTopRightBottomLeft padding = style.getPadding();
 
@@ -184,8 +184,8 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 	}
 
 	@Override
-	StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.task)
+	StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.task))
 				.withTOBECHANGED(getTask().getStereotype());
 	}
 
@@ -257,7 +257,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 			throw new IllegalArgumentException();
 
 		if (arrowType == GArrowType.OUTGOING) {
-			final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());
+			final Style style = getStyleBuilder().getMergedStyle(getStyleQuery());
 			final ClockwiseTopRightBottomLeft margin = style.getMargin();
 			if (side == GSide.LEFT)
 				x += margin.getLeft();
@@ -270,7 +270,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 
 	public void drawShape(UGraphic ug) {
 		ug = applyColors(ug);
-		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());
+		final Style style = getStyleBuilder().getMergedStyle(getStyleQuery());
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
 
 		final double startPos = timeScale.getPosition(start) + margin.getLeft();
@@ -293,8 +293,9 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 			off.add(new Segment(x1, x2));
 		}
 
-		final HColor backUndone = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.undone)
-				.getMergedStyle(getStyleBuilder()).value(PName.BackGroundColor).asColor(getColorSet());
+		final HColor backUndone = getStyleBuilder()
+				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.undone)))
+				.value(PName.BackGroundColor).asColor(getColorSet());
 
 		final RectangleTask rectangleTask = new RectangleTask(startPos, endPos, round, getCompletion(), off);
 
