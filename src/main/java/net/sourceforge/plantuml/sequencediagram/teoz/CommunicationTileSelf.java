@@ -95,12 +95,18 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 		return yGauge;
 	}
 
+	// The component only depends on the tile's fixed data, not on the string
+	// bounder, but it was rebuilt on every call from every layout phase
+	private ArrowComponent cachedComponent;
+
 	private ArrowComponent getComponent(StringBounder stringBounder) {
-		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
-		arrowConfiguration = arrowConfiguration.self();
-		final ArrowComponent comp = skin.createComponentArrow(message.getUsedStyles(), arrowConfiguration, skinParam,
-				message.getLabelNumbered());
-		return comp;
+		if (cachedComponent == null) {
+			ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
+			arrowConfiguration = arrowConfiguration.self();
+			cachedComponent = skin.createComponentArrow(message.getUsedStyles(), arrowConfiguration, skinParam,
+					message.getLabelNumbered());
+		}
+		return cachedComponent;
 	}
 
 	@Override
