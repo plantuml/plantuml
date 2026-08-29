@@ -410,6 +410,28 @@ public class SvgGraphicsTeaVM {
 	private String format(double value) {
 		if (value == (int) value)
 			return String.valueOf((int) value);
+		// Same output as String.format("%.2f", value) without the Formatter
+		// machinery (locale lookup, DecimalFormatSymbols clone, digit analysis),
+		// which is expensive when called for every coordinate. %.2f rounds the
+		// value half up at two decimals; scaling by 100 reproduces that exactly
+		// unless the scaled value lands within floating point error of a .5
+		// rounding boundary, where we fall back to the original code path.
+		final double abs = Math.abs(value);
+		final double scaled = abs * 100.0;
+		if (scaled < 1e11) {
+			final double floor = Math.floor(scaled);
+			final double frac = scaled - floor;
+			if (frac < 0.4999 || frac > 0.5001) {
+				final long cents = (long) floor + (frac > 0.5 ? 1 : 0);
+				final StringBuilder sb = new StringBuilder(16);
+				if (value < 0)
+					sb.append('-');
+				sb.append(cents / 100).append('.');
+				final int c = (int) (cents % 100);
+				sb.append((char) ('0' + c / 10)).append((char) ('0' + c % 10));
+				return sb.toString();
+			}
+		}
 		return String.format("%.2f", value).replace(',', '.');
 	}
 
