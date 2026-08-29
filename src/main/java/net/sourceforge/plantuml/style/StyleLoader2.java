@@ -37,12 +37,12 @@ package net.sourceforge.plantuml.style;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
 
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.security.SFile;
-import net.sourceforge.plantuml.style.parser.StyleParser;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
+import net.sourceforge.plantuml.style.parser2.RawStyleParser;
+import net.sourceforge.plantuml.style.parser2.RawStyleSheet;
 import net.sourceforge.plantuml.teavm.EmbeddedResources;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -55,7 +55,14 @@ public final class StyleLoader2 {
 	private StyleLoader2() {
 	}
 
-	public static Object loadSkin(String filename) throws IOException, StyleParsingException {
+	/**
+	 * Parses a .skin file into its literal, unmerged {@link RawStyleSheet}.
+	 *
+	 * This is parsing only: no cascade, no merging of duplicate selectors, no expansion of
+	 * comma-separated selector lists. Building the actual in-memory, queryable style model
+	 * on top of this is a later step.
+	 */
+	public static RawStyleSheet loadSkin(String filename) throws IOException, StyleParsingException {
 
 		final InputStream internalIs = getInputStreamForStyle(filename);
 		if (internalIs == null) {
@@ -63,10 +70,9 @@ public final class StyleLoader2 {
 			throw new NoStyleAvailableException();
 		}
 		final BlocLines lines2 = BlocLines.load(internalIs, new LineLocationImpl(filename, null));
-		System.err.println("size=" + lines2.size());
-		// Working in progress
+		Log.info(() -> "size=" + lines2.size());
 
-		return null;
+		return RawStyleParser.parse(lines2);
 	}
 
 	public static InputStream getInputStreamForStyle(String filename) throws IOException {
@@ -91,7 +97,9 @@ public final class StyleLoader2 {
 				is = localFile.openFile();
 			} else {
 				Log.info(() -> "File not found : " + localFile2.getPrintablePath());
-				final String res = "/skin/" + filename;
+				// filename may be given bare ("plantuml.skin") or already prefixed
+				// ("/skin/plantuml.skin"): do not double the "/skin/" in the latter case.
+				final String res = filename.startsWith("/skin/") ? filename : "/skin/" + filename;
 				is = StyleLoader2.class.getResourceAsStream(res);
 				if (is != null)
 					Log.info(() -> "... but " + filename + " found inside the .jar");
@@ -102,4 +110,4 @@ public final class StyleLoader2 {
 	}
 
 
-}
+}
