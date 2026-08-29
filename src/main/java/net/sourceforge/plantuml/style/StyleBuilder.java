@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -46,12 +46,18 @@ import net.sourceforge.plantuml.utils.Log;
 
 public class StyleBuilder implements AutomaticCounter {
 
-	private final StyleStorage storage = new StyleStorage();
+	// The trie-backed replacement for the old, plain-linear-scan StyleStorage -- see
+	// StyleIndex's own documentation for why: resolving a style is by far the hottest path
+	// through this class (once per diagram element, not once per file), so this is the part
+	// that actually had to change; how styles are parsed into Style objects in the first
+	// place (loadInternal/muteStyle's callers) is untouched.
+	private StyleIndex index = StyleIndex.empty();
 	private final Set<StyleSignatureBasic> printedForLog;
 	private int counter;
 
 	public void printMe() {
-		storage.printMe();
+		for (Style style : index.getAllStyles())
+			style.printMe();
 	}
 
 	private StyleBuilder(Set<StyleSignatureBasic> printedForLog) {
@@ -64,7 +70,7 @@ public class StyleBuilder implements AutomaticCounter {
 
 	public StyleBuilder cloneMe() {
 		final StyleBuilder result = new StyleBuilder();
-		result.storage.putAll(storage);
+		result.index = this.index;
 		result.counter = this.counter;
 		return result;
 
@@ -76,7 +82,16 @@ public class StyleBuilder implements AutomaticCounter {
 
 		name = name.toLowerCase();
 		final StyleSignatureBasic signature = StyleSignatureBasic.createStereotype(name);
-		final Style result = storage.get(signature);
+
+		// An exact-signature lookup, not a cascade: only a bare ".name { ... }" declared with
+		// no SName scoping at all can ever match. Several such declarations (repeated in the
+		// file) are folded together here rather than pre-merged at load time, since this index
+		// no longer deduplicates by exact signature as it is populated -- see StyleIndex.
+		Style result = null;
+		for (Style style : index.getAllStyles())
+			if (style.getSignature().equals(signature))
+				result = result == null ? style : result.mergeWith(style, MergeStrategy.OVERWRITE_EXISTING_VALUE);
+
 		if (result == null)
 			return new Style(signature, new EnumMap<PName, Value>(PName.class));
 
@@ -86,20 +101,7 @@ public class StyleBuilder implements AutomaticCounter {
 	public StyleBuilder muteStyle(Collection<Style> modifiedStyles) {
 		final StyleBuilder result = new StyleBuilder(this.printedForLog);
 		result.counter = this.counter;
-		result.storage.putAll(storage);
-
-		for (Style modifiedStyle : modifiedStyles) {
-			final StyleSignatureBasic signature = modifiedStyle.getSignature();
-
-			final Style orig = result.storage.get(signature);
-			if (orig == null) {
-				result.storage.put(modifiedStyle);
-			} else {
-				final Style tmp = orig.mergeWith(modifiedStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE);
-				result.storage.put(tmp);
-			}
-
-		}
+		result.index = this.index.withMuted(modifiedStyles);
 		return result;
 	}
 
@@ -107,13 +109,7 @@ public class StyleBuilder implements AutomaticCounter {
 		if (signature.isStarred())
 			throw new IllegalArgumentException();
 
-		final Style orig = this.storage.get(signature);
-		if (orig == null) {
-			this.storage.put(newStyle);
-		} else {
-			final Style tmp = orig.mergeWith(newStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE);
-			this.storage.put(tmp);
-		}
+		this.index = this.index.withLoaded(newStyle);
 	}
 
 	@Override
@@ -133,7 +129,14 @@ public class StyleBuilder implements AutomaticCounter {
 		if (added)
 			Log.info(() -> "Using style " + signature);
 
-		return storage.computeMergedStyle(signature);
+		Style mergedStyle = null;
+		for (Style style : index.findMatching(signature)) {
+			if (mergedStyle == null)
+				mergedStyle = style;
+			else
+				mergedStyle = mergedStyle.mergeWith(style, MergeStrategy.OVERWRITE_EXISTING_VALUE);
+		}
+		return mergedStyle;
 	}
 
 	public Style getMergedStyleSpecial(StyleSignatureBasic signature, int deltaPriority) {
@@ -142,10 +145,8 @@ public class StyleBuilder implements AutomaticCounter {
 			Log.info(() -> "Using style " + signature);
 
 		Style mergedStyle = null;
-		for (Style style : storage.getStyles()) {
+		for (Style style : index.findMatching(signature)) {
 			final StyleSignatureBasic key = style.getSignature();
-			if (key.matchAll(signature) == false)
-				continue;
 
 			Style tmp = style;
 			if (key.isStarred())

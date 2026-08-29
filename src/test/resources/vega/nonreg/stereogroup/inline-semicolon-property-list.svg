@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="120px" preserveAspectRatio="none" style="width:79px;height:120px;background:#FFFFFF;" version="1.1" viewBox="0 0 79 120" width="79px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#00F" height="32" rx="12.5" ry="12.5" style="stroke:#000;stroke-width:0.5;" width="43.325" x="16" y="16"/>
+    <text fill="#F00" font-size="12" textLength="23.325" x="26" y="35.333">foo1</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="43.325" x="16" y="68"/>
+    <text fill="#000" font-size="12" textLength="23.325" x="26" y="87.333">foo2</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="37.663" x2="37.663" y1="48" y2="68"/>
+    <polygon fill="#181818" points="33.663,58,37.663,68,41.663,58,37.663,62" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

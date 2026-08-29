@@ -98,7 +98,6 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleLoader;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
-import net.sourceforge.plantuml.style.parser.StyleParser;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
@@ -241,7 +240,7 @@ public class SkinParam implements ISkinParam {
 			final StyleBuilder styleBuilder = this.getCurrentStyleBuilder();
 			try {
 				final BlocLines lines = BlocLines.load(internalIs, null);
-				this.muteStyle(new StyleParser(styleBuilder).parse(lines));
+				this.muteStyle(StyleLoader.parseStyleText(lines, styleBuilder));
 
 			} catch (StyleParsingException e) {
 				Logme.error(e);

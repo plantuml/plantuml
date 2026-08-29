@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="180px" preserveAspectRatio="none" style="width:579px;height:180px;background:#FFFFFF;" version="1.1" viewBox="0 0 579 180" width="579px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFF" height="144" rx="5" ry="5" style="stroke:#FFF;stroke-width:1.5;" width="151.863" x="10" y="19"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="59.85" x="15" y="31.889">firstName</text>
+    <text fill="#000" font-size="14" textLength="30.362" x="120.725" y="31.889">John</text>
+    <line style="stroke:#000;stroke-width:1;" x1="115.725" x2="115.725" y1="19" y2="37"/>
+    <rect fill="#F00" height="18" rx="2" ry="2" style="stroke:#F00;stroke-width:1;" width="149.863" x="11.5" y="37"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="161.863" y1="37" y2="37"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="59.15" x="15" y="49.889">lastName</text>
+    <text fill="#000" font-size="14" textLength="35.788" x="120.725" y="49.889">Smith</text>
+    <line style="stroke:#000;stroke-width:1;" x1="115.725" x2="115.725" y1="37" y2="55"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="161.863" y1="55" y2="55"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="40.6" x="15" y="67.889">isAlive</text>
+    <text fill="#000" font-size="14" textLength="36.138" x="120.725" y="67.889">☑ true</text>
+    <line style="stroke:#000;stroke-width:1;" x1="115.725" x2="115.725" y1="55" y2="73"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="161.863" y1="73" y2="73"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="15" y="85.889">age</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="120.725" y="85.889">27</text>
+    <line style="stroke:#000;stroke-width:1;" x1="115.725" x2="115.725" y1="73" y2="91"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="161.863" y1="91" y2="91"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="49.788" x="15" y="103.889">address</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="120.725" y="103.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="115.725" x2="115.725" y1="91" y2="109"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="161.863" y1="109" y2="109"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="95.725" x="15" y="121.889">phoneNumbers</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="120.725" y="121.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="115.725" x2="115.725" y1="109" y2="127"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="161.863" y1="127" y2="127"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="49.087" x="15" y="139.889">children</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="120.725" y="139.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="115.725" x2="115.725" y1="127" y2="145"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="161.863" y1="145" y2="145"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="15" y="157.889">spouse</text>
+    <text fill="#000" font-size="14" x="120.725" y="157.889">␀</text>
+    <line style="stroke:#000;stroke-width:1;" x1="115.725" x2="115.725" y1="145" y2="163"/>
+    <rect fill="none" height="144" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="151.863" x="10" y="19"/>
+    <rect fill="#FFF" height="72" rx="5" ry="5" style="stroke:#FFF;stroke-width:1.5;" width="182.488" x="199" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="86.275" x="204" y="22.889">streetAddress</text>
+    <text fill="#000" font-size="14" textLength="76.213" x="300.275" y="22.889">21 2nd Street</text>
+    <line style="stroke:#000;stroke-width:1;" x1="295.275" x2="295.275" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="199" x2="381.488" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="21" x="204" y="40.889">city</text>
+    <text fill="#000" font-size="14" textLength="56.875" x="300.275" y="40.889">New York</text>
+    <line style="stroke:#000;stroke-width:1;" x1="295.275" x2="295.275" y1="28" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="199" x2="381.488" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="30.275" x="204" y="58.889">state</text>
+    <text fill="#000" font-size="14" textLength="19.512" x="300.275" y="58.889">NY</text>
+    <line style="stroke:#000;stroke-width:1;" x1="295.275" x2="295.275" y1="46" y2="64"/>
+    <line style="stroke:#000;stroke-width:1;" x1="199" x2="381.488" y1="64" y2="64"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="70.875" x="204" y="76.889">postalCode</text>
+    <text fill="#000" font-size="14" textLength="74.725" x="300.275" y="76.889">10021-3100</text>
+    <line style="stroke:#000;stroke-width:1;" x1="295.275" x2="295.275" y1="64" y2="82"/>
+    <rect fill="none" height="72" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="182.488" x="199" y="10"/>
+    <rect fill="#FFF" height="36" rx="5" ry="5" style="stroke:#FFF;stroke-width:1.5;" width="10" x="285" y="100"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="290" y="112.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="285" x2="295" y1="118" y2="118"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="290" y="130.889">   </text>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="285" y="100"/>
+    <rect fill="#FFF" height="36" rx="5" ry="5" style="stroke:#FFF;stroke-width:1.5;" width="149.938" x="418" y="73"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="26.425" x="423" y="85.889">type</text>
+    <text fill="#000" font-size="14" textLength="35" x="480.425" y="85.889">home</text>
+    <line style="stroke:#000;stroke-width:1;" x1="475.425" x2="475.425" y1="73" y2="91"/>
+    <line style="stroke:#000;stroke-width:1;" x1="418" x2="567.938" y1="91" y2="91"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="47.425" x="423" y="103.889">number</text>
+    <text fill="#000" font-size="14" textLength="82.513" x="480.425" y="103.889">212 555-1234</text>
+    <line style="stroke:#000;stroke-width:1;" x1="475.425" x2="475.425" y1="91" y2="109"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="149.938" x="418" y="73"/>
+    <rect fill="#FFF" height="36" rx="5" ry="5" style="stroke:#FFF;stroke-width:1.5;" width="149.938" x="418" y="127"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="26.425" x="423" y="139.889">type</text>
+    <text fill="#000" font-size="14" textLength="33.425" x="480.425" y="139.889">office</text>
+    <line style="stroke:#000;stroke-width:1;" x1="475.425" x2="475.425" y1="127" y2="145"/>
+    <line style="stroke:#000;stroke-width:1;" x1="418" x2="567.938" y1="145" y2="145"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="47.425" x="423" y="157.889">number</text>
+    <text fill="#000" font-size="14" textLength="82.513" x="480.425" y="157.889">646 555-4567</text>
+    <line style="stroke:#000;stroke-width:1;" x1="475.425" x2="475.425" y1="145" y2="163"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="149.938" x="418" y="127"/>
+    <rect fill="#FFF" height="15" rx="5" ry="5" style="stroke:#FFF;stroke-width:1.5;" width="30" x="282" y="154.5"/>
+    <rect fill="none" height="15" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="30" x="282" y="154.5"/>
+    <path d="M150,100 L163,100 C173.573,100 191.97,93.538 211.511,85.085" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M212.737,87.864 L213.596,84.165 L210.285,82.305 L218.46,82.019 L212.737,87.864" fill="#000"/>
+    <ellipse cx="150" cy="100" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M283.5,109 L296.5,109 C333.987,109 375.338,105.695 410.357,101.917" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M410.703,105.05 L412.707,101.657 L410.012,98.784 L418.19,101.053 L410.703,105.05" fill="#000"/>
+    <ellipse cx="283.5" cy="109" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M283.5,127 L296.5,127 C333.987,127 375.338,130.305 410.357,134.083" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M410.012,137.216 L412.707,134.343 L410.703,130.95 L418.19,134.947 L410.012,137.216" fill="#000"/>
+    <ellipse cx="283.5" cy="127" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M150,118 L163,118 C205.079,118 255.032,118 277.501,118" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M277.501,121.052 L279.79,118 L277.501,114.948 L285.13,118 L277.501,121.052" fill="#000"/>
+    <ellipse cx="150" cy="118" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M150,136 L163,136 C179.492,136 182.888,141.476 199,145 C225.574,150.812 256.804,156.408 274.76,159.508" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M274.236,162.576 L277.061,159.901 L275.285,156.44 L282.431,160.819 L274.236,162.576" fill="#000"/>
+    <ellipse cx="150" cy="136" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

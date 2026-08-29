@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="271px" preserveAspectRatio="none" style="width:292px;height:271px;background:#FFFFFF;" version="1.1" viewBox="0 0 292 271" width="292px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="43.325" x="112.803" y="16"/>
+    <text fill="#000" font-size="12" textLength="23.325" x="122.803" y="35.333">foo1</text>
+    <rect fill="#555" height="6" rx="2.5" ry="2.5" style="stroke:#555;stroke-width:1;" width="256.931" x="16" y="87.444"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="46.625" x="28" y="130.889"/>
+    <text fill="#000" font-size="12" textLength="26.625" x="38" y="150.222">fork1</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="46.625" x="84.625" y="130.889"/>
+    <text fill="#000" font-size="12" textLength="26.625" x="94.625" y="150.222">fork2</text>
+    <rect fill="#555" height="6" rx="2.5" ry="2.5" style="stroke:#555;stroke-width:1;" width="256.931" x="16" y="193.889"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="43.325" x="112.803" y="219.889"/>
+    <text fill="#000" font-size="12" textLength="23.325" x="122.803" y="239.222">foo5</text>
+    <line style="stroke:#008000;stroke-width:2;" x1="51.313" x2="51.313" y1="93.444" y2="130.889"/>
+    <polygon fill="#008000" points="47.313,120.889,51.313,130.889,55.313,120.889,51.313,124.889" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#008000;stroke-width:2;" x1="107.938" x2="107.938" y1="93.444" y2="130.889"/>
+    <polygon fill="#008000" points="103.938,120.889,107.938,130.889,111.938,120.889,107.938,124.889" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#00F" font-size="11" textLength="34.856" x="111.938" y="112.944">txt label</text>
+    <line style="stroke:#008000;stroke-width:2;" x1="170.794" x2="170.794" y1="93.444" y2="193.889"/>
+    <polygon fill="#008000" points="166.794,183.889,170.794,193.889,174.794,183.889,170.794,187.889" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#00F" font-size="11" textLength="83.05" x="174.794" y="138.944">fork arrow with text</text>
+    <text fill="#00F" font-size="11" textLength="88.138" x="174.794" y="149.944">missing arrow label</text>
+    <line style="stroke:#008000;stroke-width:2;" x1="51.313" x2="51.313" y1="162.889" y2="193.889"/>
+    <polygon fill="#008000" points="47.313,183.889,51.313,193.889,55.313,183.889,51.313,187.889" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#008000;stroke-width:2;" x1="107.938" x2="107.938" y1="162.889" y2="193.889"/>
+    <polygon fill="#008000" points="103.938,183.889,107.938,193.889,111.938,183.889,107.938,187.889" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#00F" font-size="11" textLength="34.856" x="111.938" y="181.444">txt label</text>
+    <line style="stroke:#008000;stroke-width:2;" x1="134.466" x2="134.466" y1="48" y2="87.444"/>
+    <polygon fill="#008000" points="130.466,77.444,134.466,87.444,138.466,77.444,134.466,81.444" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#00F" font-size="11" textLength="98.381" x="138.466" y="67.5">normal arrow with text</text>
+    <line style="stroke:#008000;stroke-width:2;" x1="134.466" x2="134.466" y1="199.889" y2="219.889"/>
+    <polygon fill="#008000" points="130.466,209.889,134.466,219.889,138.466,209.889,134.466,213.889" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

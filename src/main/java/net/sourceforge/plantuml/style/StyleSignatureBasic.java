@@ -44,6 +44,8 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.stereo.Stereostyles;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.parser2.LevelConstraint;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.url.Url;
 
@@ -55,6 +57,14 @@ public class StyleSignatureBasic implements StyleSignature {
 	public static StyleSignatureBasic createStereotype(String s) {
 		return empty().addStereotype(s);
 	}
+	
+	
+	public StyleQuery toQuery() {
+		final StyleKey key = getKey();
+		return StyleQuery.of(key.snames, getStereotypes(), LevelConstraint.of(key.level, key.isStared));
+	}
+
+
 
 	@Override
 	public String toString() {
@@ -175,6 +185,7 @@ public class StyleSignatureBasic implements StyleSignature {
 
 	@Override
 	public int hashCode() {
+		// Thread.dumpStack();
 		int result = cachedHashCode;
 		if (result == 0) {
 			result = Objects.hash(key, stereotypes);
