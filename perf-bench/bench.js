@@ -5,7 +5,7 @@
 //   engine spec     name=path   path is a directory containing plantuml.js (viz-global.js served
 //                               too when present) or a path to the engine .js file itself
 //   --reps N        renders per diagram per block (default 6; rep 0 of each block is cold, discarded)
-//   --blocks N      interleaved blocks (default 2; block order alternates A,B / B,A to cancel drift)
+//   --blocks N      passes over the corpus (default 2); engines alternate per rep within a diagram
 //   --corpus S      only diagrams whose relative path contains S
 //   --maxsvg N      maxSvgSize render option passed to every engine (default 98304; engines that
 //                   predate the option ignore it and may truncate tall output, which is detected
@@ -133,11 +133,14 @@ function iqr(v) { const s = [...v].sort((a, b) => a - b); return s.length ? [s[M
   const sources = {};
   for (const f of files) sources[f] = fs.readFileSync(path.join(corpusDir, f), 'utf8').replace(/\r\n/g, '\n').split('\n');
 
+  // Engines alternate per rep (T,R then R,T) so paired samples are adjacent in time: linear AND
+  // convex drift over the session (JIT tiering, thermal) hits both engines equally and cancels in
+  // the ratio. Engine-level blocks measured a consistent +5..10% bias on an A/A run; this removed it.
   for (let block = 0; block < opt.blocks; block++) {
-    const order = block % 2 === 0 ? engines : [...engines].reverse();
-    for (const e of order) {
-      for (const f of files) {
-        for (let rep = 0; rep < opt.reps; rep++) {
+    for (const f of files) {
+      for (let rep = 0; rep < opt.reps; rep++) {
+        const order = (rep + block) % 2 === 0 ? engines : [...engines].reverse();
+        for (const e of order) {
           const r = await renderOnce(pages[e.name], sources[f]);
           reps.push({ engine: e.name, diagram: f, block, rep, ...r });
         }

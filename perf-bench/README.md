@@ -12,8 +12,8 @@ measurement by an unknown per-run factor. Repetition inside a run cannot average
 Rendering the reference engine in the same browser instance and reporting the target/reference
 ratio cancels the factor: the ratio means the same thing on a fast runner and a slow one.
 Within-run jitter is handled separately: several reps per diagram, the first (cold) rep of each
-block discarded, engines run in mirrored block order (target, reference, then reference, target)
-to cancel drift, and medians pooled over all warm reps.
+pass discarded, engines alternated per rep within each diagram so paired samples are adjacent in
+time (session warm-up and drift hit both engines equally), and medians pooled over all warm reps.
 
 ## Running it
 
