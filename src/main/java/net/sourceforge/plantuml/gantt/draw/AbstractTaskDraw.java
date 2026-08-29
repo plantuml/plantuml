@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.gantt.draw;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.gantt.core.GSide;
 import net.sourceforge.plantuml.gantt.core.Task;
 import net.sourceforge.plantuml.gantt.data.TaskDrawRegistryData;
@@ -63,8 +65,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.url.Url;
 
@@ -114,21 +115,21 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 
 	}
 
-	abstract StyleSignature getStyleSignature();
+	abstract StyleQuery getStyleQuery();
 
-	private StyleSignatureBasic getStyleSignatureUnstarted() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.task, SName.unstarted);
+	private StyleQuery getStyleSignatureUnstarted() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.task, SName.unstarted));
 	}
 
 	final protected HColor getLineColor() {
-		final HColor unstarted = getStyleSignatureUnstarted().getMergedStyle(styleBuilder).value(PName.LineColor)
+		final HColor unstarted = styleBuilder.getMergedStyle(getStyleSignatureUnstarted()).value(PName.LineColor)
 				.asColor(getColorSet());
 		final HColor regular = getStyle().value(PName.LineColor).asColor(getColorSet());
 		return HColors.unlinear(unstarted, regular, completion);
 	}
 
 	final protected HColor getBackgroundColor() {
-		final HColor unstarted = getStyleSignatureUnstarted().getMergedStyle(styleBuilder).value(PName.BackGroundColor)
+		final HColor unstarted = styleBuilder.getMergedStyle(getStyleSignatureUnstarted()).value(PName.BackGroundColor)
 				.asColor(getColorSet());
 		final HColor regular = getStyle().value(PName.BackGroundColor).asColor(getColorSet());
 		return HColors.unlinear(unstarted, regular, completion);
@@ -139,11 +140,11 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	}
 
 	final protected Style getStyle() {
-		return getStyleSignature().getMergedStyle(styleBuilder);
+		return styleBuilder.getMergedStyle(getStyleQuery());
 	}
 
 	final public double getTitleWidth(StringBounder stringBounder) {
-		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());
+		final Style style = getStyleBuilder().getMergedStyle(getStyleQuery());
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
 		return margin.getLeft() + getTitle().calculateDimension(stringBounder).getWidth() + margin.getRight();
 	}
@@ -213,8 +214,9 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	}
 
 	protected Opale getOpaleNote() {
-		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.note)
-				.withTOBECHANGED(noteStereotype).getMergedStyle(getStyleBuilder());
+		final Style style = getStyleBuilder().getMergedStyle(StyleQuery
+				.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.note))
+				.withTOBECHANGED(noteStereotype));
 
 		final FontConfiguration fc = style.getFontConfiguration(getColorSet());
 

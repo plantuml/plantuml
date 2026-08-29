@@ -35,9 +35,10 @@
  */
 package net.sourceforge.plantuml.style;
 
-public interface Styleable {
-    // ::remove file when __HAXE__
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
-	public StyleSignature getStyleSignature();
+public interface Styleable {
+
+	public StyleQuery getStyleQuery();
 
 }

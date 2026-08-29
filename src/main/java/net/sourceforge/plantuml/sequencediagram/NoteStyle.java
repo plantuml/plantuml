@@ -35,9 +35,11 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public enum NoteStyle {
 
@@ -63,13 +65,17 @@ public enum NoteStyle {
 		return ComponentType.NOTE;
 	}
 
-	public StyleSignatureBasic getDefaultStyleDefinition() {
+	public StyleQuery getStyleQuery() {
 		if (this == NoteStyle.HEXAGONAL)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.note, SName.hnote);
+			return StyleQuery
+					.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.note, SName.hnote));
 
 		if (this == NoteStyle.BOX)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.note, SName.rnote);
+			return StyleQuery
+					.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.note, SName.rnote));
 
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.note);
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.note));
+
 	}
+
 }

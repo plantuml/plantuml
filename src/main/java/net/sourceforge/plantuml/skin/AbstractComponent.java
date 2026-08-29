@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public abstract class AbstractComponent implements Component {
 
@@ -58,7 +58,8 @@ public abstract class AbstractComponent implements Component {
 		throw new UnsupportedOperationException();
 	}
 
-	public StyleSignatureBasic getStyleSignature() {
+	@Override
+	public StyleQuery getStyleQuery() {
 		throw new UnsupportedOperationException();
 	}
 

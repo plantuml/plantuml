@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -39,12 +39,12 @@ public class DarkString {
 
 	private final String value1;
 	private final String value2;
-	private final int priority;
+	private final Specificity specificity;
 
-	public DarkString(String value1, String value2, int priority) {
+	public DarkString(String value1, String value2, Specificity specificity) {
 		this.value1 = value1;
 		this.value2 = value2;
-		this.priority = priority;
+		this.specificity = specificity;
 	}
 
 	public DarkString mergeWith(DarkString other) {
@@ -52,39 +52,31 @@ public class DarkString {
 			return this;
 
 		if ((this.value2 == null && other.value2 == null) || this.value1 == null && other.value1 == null) {
-			if (isBigger(this.priority, other.priority))
+			if (this.specificity.isBiggerThan(other.specificity))
 				return this;
 			return other;
 		}
 		if (this.value2 == null && other.value1 == null)
-			return new DarkString(this.value1, other.value2, this.priority);
+			return new DarkString(this.value1, other.value2, this.specificity);
 		if (other.value2 == null && this.value1 == null)
-			return new DarkString(other.value1, this.value2, other.priority);
+			return new DarkString(other.value1, this.value2, other.specificity);
 
-		if (isBigger(this.priority, other.priority))
+		if (this.specificity.isBiggerThan(other.specificity))
 			return this;
 		return other;
-
-//		System.err.println("this =" + this);
-//		System.err.println("other=" + other);
-//		throw new UnsupportedOperationException();
 	}
 
-	private static boolean isBigger(int a, int b) {
-//		if (a > StyleLoader.DELTA_PRIORITY_FOR_STEREOTYPE)
-//			a = StyleLoader.DELTA_PRIORITY_FOR_STEREOTYPE;
-//		if (b > StyleLoader.DELTA_PRIORITY_FOR_STEREOTYPE)
-//			b = StyleLoader.DELTA_PRIORITY_FOR_STEREOTYPE;
-		return a > b;
+	public DarkString withAncestorRank(int rank) {
+		return new DarkString(value1, value2, specificity.withAncestorRank(rank));
 	}
 
-	public DarkString addPriority(int delta) {
-		return new DarkString(value1, value2, delta + priority);
+	public DarkString withStereotypeCount(int count) {
+		return new DarkString(value1, value2, specificity.withStereotypeCount(count));
 	}
 
 	@Override
 	public String toString() {
-		return value1 + "/" + value2 + " (" + priority + ")";
+		return value1 + "/" + value2 + " (" + specificity + ")";
 	}
 
 	public final String getValue1() {
@@ -95,8 +87,8 @@ public class DarkString {
 		return value2;
 	}
 
-	public final int getPriority() {
-		return priority;
+	public final Specificity getSpecificity() {
+		return specificity;
 	}
 
 }

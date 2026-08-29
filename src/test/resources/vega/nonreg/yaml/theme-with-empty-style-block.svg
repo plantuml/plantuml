@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="YAML" height="138px" preserveAspectRatio="none" style="width:204px;height:138px;background:#0B58A8;" version="1.1" viewBox="0 0 204 138" width="204px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#0B58A8" height="138" style="stroke:none;" width="204" x="0" y="0"/>
+    <rect fill="#0B58A8" height="36" rx="5" ry="5" style="stroke:#0B58A8;stroke-width:1;" width="10" x="5" y="50"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="11.55" x="10" y="62.889">   </text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="5" x2="15" y1="68" y2="68"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="11.55" x="10" y="80.889">   </text>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#FFF;stroke-width:1;" width="10" x="5" y="50"/>
+    <rect fill="#0B58A8" height="54" rx="5" ry="5" style="stroke:#0B58A8;stroke-width:1;" width="141.275" x="52" y="5"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" font-weight="700" textLength="35" x="57" y="17.889">name</text>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="31.063" x="102" y="17.889">Mark</text>
+    <text fill="#FFF" font-family="Verdana" font-size="14" x="133.063" y="17.889"> </text>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="55.213" x="133.063" y="17.889">McGwire</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="97" x2="97" y1="5" y2="23"/>
+    <line style="stroke:#FFF;stroke-width:1;" x1="52" x2="193.275" y1="23" y2="23"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" font-weight="700" textLength="12.425" x="57" y="35.889">hr</text>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="15.575" x="102" y="35.889">65</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="97" x2="97" y1="23" y2="41"/>
+    <line style="stroke:#FFF;stroke-width:1;" x1="52" x2="193.275" y1="41" y2="41"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" font-weight="700" textLength="22.575" x="57" y="53.889">avg</text>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="35" x="102" y="53.889">0.278</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="97" x2="97" y1="41" y2="59"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#FFF;stroke-width:1;" width="141.275" x="52" y="5"/>
+    <rect fill="#0B58A8" height="54" rx="5" ry="5" style="stroke:#0B58A8;stroke-width:1;" width="134.363" x="55.5" y="77"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" font-weight="700" textLength="35" x="60.5" y="89.889">name</text>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="47.425" x="105.5" y="89.889">Sammy</text>
+    <text fill="#FFF" font-family="Verdana" font-size="14" x="152.925" y="89.889"> </text>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="31.938" x="152.925" y="89.889">Sosa</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="100.5" x2="100.5" y1="77" y2="95"/>
+    <line style="stroke:#FFF;stroke-width:1;" x1="55.5" x2="189.863" y1="95" y2="95"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" font-weight="700" textLength="12.425" x="60.5" y="107.889">hr</text>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="15.575" x="105.5" y="107.889">63</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="100.5" x2="100.5" y1="95" y2="113"/>
+    <line style="stroke:#FFF;stroke-width:1;" x1="55.5" x2="189.863" y1="113" y2="113"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" font-weight="700" textLength="22.575" x="60.5" y="125.889">avg</text>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="35" x="105.5" y="125.889">0.288</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="100.5" x2="100.5" y1="113" y2="131"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#FFF;stroke-width:1;" width="134.363" x="55.5" y="77"/>
+    <path d="M3,59 L16,59 C25.534,59 35.405,57.962 45.114,56.292" fill="none" style="stroke:#FFF;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M45.671,59.246 L47.33,55.874 L44.557,53.338 L52.499,54.899 L45.671,59.246" fill="#FFF"/>
+    <ellipse cx="3" cy="59" fill="#FFF" rx="3" ry="3" style="stroke:#FFF;stroke-width:1;"/>
+    <path d="M3,77 L16,77 C26.646,77 37.714,78.295 48.506,80.317" fill="none" style="stroke:#FFF;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M47.903,83.285 L50.732,80.77 L49.11,77.35 L55.926,81.827 L47.903,83.285" fill="#FFF"/>
+    <ellipse cx="3" cy="77" fill="#FFF" rx="3" ry="3" style="stroke:#FFF;stroke-width:1;"/>
+  </g>
+</svg>

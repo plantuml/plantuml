@@ -38,15 +38,16 @@ package net.sourceforge.plantuml.sequencediagram;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class Newpage extends AbstractEvent implements Event, WithStyle {
 
 	final private Style style;
 
-	public StyleSignature getStyleSignature() {
-		return ComponentType.NEWPAGE.getStyleSignature();
+	@Override
+	public StyleQuery getStyleQuery() {
+		return ComponentType.NEWPAGE.getStyleQuery();
 	}
 
 	public Style[] getUsedStyles() {
@@ -54,7 +55,7 @@ public class Newpage extends AbstractEvent implements Event, WithStyle {
 	}
 
 	public Newpage(StyleBuilder styleBuilder) {
-		this.style = getStyleSignature().getMergedStyle(styleBuilder);
+		this.style = styleBuilder.getMergedStyle(getStyleQuery());
 	}
 
 	public boolean dealWith(Participant someone) {

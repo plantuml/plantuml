@@ -35,9 +35,11 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.Styleable;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public enum ParticipantType implements Styleable {
 	PARTICIPANT, //
@@ -51,31 +53,32 @@ public enum ParticipantType implements Styleable {
 
 	private ParticipantType() {
 	}
-
-	public StyleSignatureBasic getStyleSignature() {
+	
+	@Override
+	public StyleQuery getStyleQuery() {
 		if (this == PARTICIPANT)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.participant);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.participant));
 
 		if (this == ACTOR)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.actor);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.actor));
 
 		if (this == BOUNDARY)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.boundary);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.boundary));
 
 		if (this == CONTROL)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.control);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.control));
 
 		if (this == ENTITY)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.entity);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.entity));
 
 		if (this == QUEUE)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.queue);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.queue));
 
 		if (this == DATABASE)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.database);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.database));
 
 		if (this == COLLECTIONS)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.collections);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.collections));
 
 		return null;
 	}

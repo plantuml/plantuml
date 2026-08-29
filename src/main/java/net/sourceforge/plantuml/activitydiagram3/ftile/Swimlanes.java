@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -87,8 +88,8 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.Styleable;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.MathUtils;
@@ -123,8 +124,9 @@ public class Swimlanes implements TextBlock, Styleable {
 		return Collections.unmodifiableList(swimlanesSpecial);
 	}
 
-	public StyleSignatureBasic getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.swimlane);
+	@Override
+	public StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.swimlane));
 	}
 
 	public Swimlanes(ISkinParam skinParam, Pragma pragma) {
@@ -134,7 +136,7 @@ public class Swimlanes implements TextBlock, Styleable {
 
 	protected Style getStyle() {
 		if (style == null)
-			this.style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
+			this.style = skinParam.getCurrentStyleBuilder().getMergedStyle(getStyleQuery());
 
 		return style;
 	}
@@ -245,7 +247,7 @@ public class Swimlanes implements TextBlock, Styleable {
 
 			TextBlock full = root.createFtile(getFtileFactory(ug.getStringBounder()));
 			final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(
-					StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.goto_));
+					StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.goto_)));
 			final HColor gotoColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 			final boolean isDebug = Boolean.parseBoolean(skinParam.options().getValue(OptionKey.DEBUG));
 
@@ -267,7 +269,7 @@ public class Swimlanes implements TextBlock, Styleable {
 		TextBlock full = root.createGtile(skinParam, ug.getStringBounder());
 
 		final Style style = skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.goto_));
+				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.goto_)));
 		final HColor gotoColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final boolean isDebug = true;
 

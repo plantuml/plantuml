@@ -51,7 +51,6 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
-import net.sourceforge.plantuml.style.parser.StyleParser;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -122,7 +121,7 @@ public class CommandStyleImport extends SingleLineCommand2<TitledDiagram> {
 				return CommandExecutionResult.error("Cannot read: " + path);
 
 			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();
-			diagram.getSkinParam().muteStyle(new StyleParser(styleBuilder).parse(lines));
+			diagram.getSkinParam().muteStyle(StyleLoader.parseStyleText(lines, styleBuilder));
 
 		} catch (MalformedURLException e) {
 			return CommandExecutionResult.error("Invalid URL to style definition: " + e.getMessage());

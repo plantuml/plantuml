@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="244px" preserveAspectRatio="none" style="width:147px;height:244px;background:#FFFFFF;" version="1.1" viewBox="0 0 147 244" width="147px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:1.5;" x1="57.25" x2="57.25" y1="62" y2="82"/>
+    <rect fill="#FFF" height="30" style="stroke:#181818;stroke-width:1.5;" width="74.5" x="20" y="82"/>
+    <text fill="#F00" font-size="20" textLength="64.5" x="25" y="102.556">Europe</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="57.25" x2="67.25" y1="138" y2="138"/>
+    <rect fill="#FFF" height="22" style="stroke:#181818;stroke-width:1.5;" width="54.1" x="67.25" y="127"/>
+    <text fill="#F00" font-size="12" textLength="44.1" x="72.25" y="141.333">England</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="57.25" x2="67.25" y1="175" y2="175"/>
+    <rect fill="#FFF" height="22" style="stroke:#181818;stroke-width:1.5;" width="59.275" x="67.25" y="164"/>
+    <text fill="#F00" font-size="12" textLength="49.275" x="72.25" y="178.333">Germany</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="57.25" x2="67.25" y1="212" y2="212"/>
+    <rect fill="#FFF" height="22" style="stroke:#181818;stroke-width:1.5;" width="40.75" x="67.25" y="201"/>
+    <text fill="#F00" font-size="12" textLength="30.75" x="72.25" y="215.333">Spain</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="57.25" x2="57.25" y1="112" y2="212"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="57.25" x2="73.263" y1="62" y2="62"/>
+    <rect fill="#FFF" height="22" style="stroke:#181818;stroke-width:1.5;" width="41.35" x="52.588" y="20"/>
+    <text fill="#000" font-size="12" textLength="31.35" x="57.588" y="34.333">World</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="73.263" x2="73.263" y1="42" y2="62"/>
+  </g>
+</svg>

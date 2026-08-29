@@ -97,9 +97,8 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleLoader;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
-import net.sourceforge.plantuml.style.parser.StyleParser;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
@@ -241,7 +240,7 @@ public class SkinParam implements ISkinParam {
 			final StyleBuilder styleBuilder = this.getCurrentStyleBuilder();
 			try {
 				final BlocLines lines = BlocLines.load(internalIs, null);
-				this.muteStyle(new StyleParser(styleBuilder).parse(lines));
+				this.muteStyle(StyleLoader.parseStyleText(lines, styleBuilder));
 
 			} catch (StyleParsingException e) {
 				Logme.error(e);
@@ -316,7 +315,7 @@ public class SkinParam implements ISkinParam {
 		if (result != null)
 			return result;
 
-		final Style style = getCurrentStyleBuilder().getMergedStyle(StyleSignatureBasic.of(SName.root, SName.document));
+		final Style style = getCurrentStyleBuilder().getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.document)));
 		return style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 	}
 

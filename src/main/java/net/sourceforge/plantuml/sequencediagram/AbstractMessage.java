@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.sequencediagram;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
@@ -48,9 +49,8 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.WithStyle;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.warning.Warning;
@@ -65,15 +65,16 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	}
 
 	final public Style[] getUsedStyles() {
-		Style style = getStyleSignature().getMergedStyle(styleBuilder);
+		Style style = styleBuilder.getMergedStyle(getStyleQuery());
 		if (style != null && arrowConfiguration.getColor() != null)
 			style = style.eventuallyOverride(PName.LineColor, arrowConfiguration.getColor());
 
 		return new Style[] { style };
 	}
 
-	public StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.arrow)
+	@Override
+	public StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.arrow))
 				.withTOBECHANGED(stereotype);
 	}
 
