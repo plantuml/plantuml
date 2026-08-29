@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
+import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.abel.Entity;
@@ -64,8 +65,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.HeaderLayout;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -76,8 +76,8 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 	final private HeaderLayout headerLayout;
 
 	@Override
-	public StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header);
+	public StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header));
 	}
 
 	public EntityImageClassHeader(Entity entity, PortionShower portionShower) {
@@ -90,10 +90,9 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 		final boolean displayGenericWithOldFashion = getSkinParam().displayGenericWithOldFashion();
 		final String generic = displayGenericWithOldFashion ? null : entity.getGeneric();
 
-		final Style styleHeader = getStyleSignature() //
+		final Style styleHeader = getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery() //
 				.withTOBECHANGED(stereotype) //
-				.with(entity.getStereostyles()) //
-				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+				.with(entity.getStereostyles()));
 
 		FontConfiguration fontConfigurationName = FontConfiguration.create(getSkinParam(), styleHeader,
 				entity.getColors());
@@ -135,11 +134,10 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 		if (generic == null) {
 			genericBlock = null;
 		} else {
-			final Style styleGeneric = StyleSignatureBasic
-					.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.generic) //
+			final Style styleGeneric = getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery
+					.of(Arrays.asList(SName.root, SName.element, SName.classDiagram, SName.class_, SName.generic)) //
 					.withTOBECHANGED(stereotype) //
-					.with(entity.getStereostyles()) //
-					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+					.with(entity.getStereostyles()));
 
 			genericBlock = Display.getWithNewlines(getSkinParam().getPragma(), generic).create(
 					FontConfiguration.create(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),
@@ -172,7 +170,7 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 
 		final LeafType leafType = entity.getLeafType();
 
-		final Style style = spotStyleSignature(leafType).getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(spotStyleSignature(leafType));
 		final HColor spotBorder = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final HColor spotBackColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 
@@ -194,34 +192,34 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 				spotBorder, fontColor);
 	}
 
-	private StyleSignatureBasic spotStyleSignature(LeafType leafType) {
+	private StyleQuery spotStyleSignature(LeafType leafType) {
 		switch (leafType) {
 		case ANNOTATION:
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotAnnotation);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotAnnotation));
 		case ABSTRACT_CLASS:
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotAbstractClass);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotAbstractClass));
 		case CLASS:
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotClass);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotClass));
 		case INTERFACE:
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotInterface);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotInterface));
 		case ENUM:
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotEnum);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotEnum));
 		case ENTITY:
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotEntity);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotEntity));
 		case PROTOCOL:
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotProtocol);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotProtocol));
 		case STRUCT:
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotStruct);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotStruct));
 		case EXCEPTION:
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotException);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotException));
 		case METACLASS:
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotMetaClass);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotMetaClass));
 		case STEREOTYPE:
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotStereotype);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotStereotype));
 		case DATACLASS:
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotDataClass);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotDataClass));
 		case RECORD:
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotRecord);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotRecord));
 		}
 		throw new IllegalStateException();
 	}

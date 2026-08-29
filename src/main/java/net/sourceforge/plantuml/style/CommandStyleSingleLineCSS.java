@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.skin.SkinParam;
-import net.sourceforge.plantuml.style.parser.StyleParser;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -82,7 +81,7 @@ public class CommandStyleSingleLineCSS extends SingleLineCommand2<TitledDiagram>
 		final String line = arg.get("STYLE", 0);
 		try {
 			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();
-			diagram.getSkinParam().muteStyle(new StyleParser(styleBuilder).parse(BlocLines.singleString(line)));
+			diagram.getSkinParam().muteStyle(StyleLoader.parseStyleText(BlocLines.singleString(line), styleBuilder));
 
 			((SkinParam) diagram.getSkinParam()).applyPendingStyleMigration();
 			return CommandExecutionResult.ok();

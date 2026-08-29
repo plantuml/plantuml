@@ -16,7 +16,7 @@ import net.sourceforge.plantuml.klimt.font.UFontFace;
 class ValueImplFontFaceTest {
 
 	private static ValueImpl value(String s) {
-		return ValueImpl.regular(s, 0);
+		return ValueImpl.regular(s, Specificity.atOrder(0));
 	}
 
 	// -----------------------------------------------------------------------

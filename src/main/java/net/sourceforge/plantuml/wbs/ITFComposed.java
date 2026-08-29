@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.mindmap.IdeaShape;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.utils.Direction;
 
 class ITFComposed extends WBSTextBlock implements ITF {
@@ -219,8 +220,8 @@ class ITFComposed extends WBSTextBlock implements ITF {
 	}
 
 	private HColor getLinkColor() {
-		final Style styleArrow = getIdea().getStyle().getSignature().withTOBECHANGED(getIdea().getStereotype())
-				.getMergedStyle(getIdea().getStyleBuilder());
+		final StyleQuery query = getIdea().getStyle().getQuery().withTOBECHANGED(getIdea().getStereotype());
+		final Style styleArrow = getIdea().getStyleBuilder().getMergedStyle(query);
 		return styleArrow.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 	}
 

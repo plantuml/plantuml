@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.gantt.draw;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.gantt.LabelStrategy;
 import net.sourceforge.plantuml.gantt.core.GArrowType;
 import net.sourceforge.plantuml.gantt.core.GSide;
@@ -60,8 +62,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class TaskDrawGroup extends AbstractTaskDraw {
 
@@ -97,7 +98,7 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final XDimension2D dim = title.calculateDimension(stringBounder);
 
-		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());
+		final Style style = getStyleBuilder().getMergedStyle(getStyleQuery());
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
 		final ClockwiseTopRightBottomLeft padding = style.getPadding();
 
@@ -140,8 +141,8 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 	}
 
 	@Override
-	StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.task);
+	StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.task));
 	}
 
 	public void drawU(UGraphic ug) {
@@ -195,7 +196,7 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 	}
 
 	private void drawShape(UGraphic ug) {
-		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());
+		final Style style = getStyleBuilder().getMergedStyle(getStyleQuery());
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
 
 		final double startPos = timeScale.getPosition(start) + margin.getLeft();

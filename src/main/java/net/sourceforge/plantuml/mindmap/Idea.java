@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.mindmap;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -48,7 +49,7 @@ import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.wbs.WElement;
 
 class Idea {
@@ -63,53 +64,62 @@ class Idea {
 	private final Stereotype stereotype;
 
 	@DuplicateCode(reference = "WElement")
-	private StyleSignatureBasic getDefaultStyleDefinitionNode(int level) {
+	private StyleQuery getDefaultStyleDefinitionNode(int level) {
 		if (level == 0)
 			if (shape == IdeaShape.NONE)
-				return StyleSignatureBasic
-						.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode, SName.boxless)
-						.addStereotype(stereotype).addLevel(level);
+				return StyleQuery
+						.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode,
+								SName.boxless))
+						.withTOBECHANGED(stereotype).addLevel(level);
 			else
-				return StyleSignatureBasic
-						.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode)
-						.addStereotype(stereotype).addLevel(level);
+				return StyleQuery
+						.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode))
+						.withTOBECHANGED(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE && children.size() == 0)
-			return StyleSignatureBasic
-					.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode, SName.boxless)
-					.addStereotype(stereotype).addLevel(level);
+			return StyleQuery
+					.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode,
+							SName.boxless))
+					.withTOBECHANGED(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.boxless)
-					.addStereotype(stereotype).addLevel(level);
+			return StyleQuery
+					.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.boxless))
+					.withTOBECHANGED(stereotype).addLevel(level);
 
 		if (children.size() == 0)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode)
-					.addStereotype(stereotype).addLevel(level);
+			return StyleQuery
+					.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode))
+					.withTOBECHANGED(stereotype).addLevel(level);
 
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node)
-				.addStereotype(stereotype).addLevel(level);
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.node))
+				.withTOBECHANGED(stereotype).addLevel(level);
 	}
 
-	private static final int STEP_BY_PARENT = WElement.STEP_BY_PARENT;
-
+	/**
+	 * Resolves this element's style, cascading down from ancestors' starred ("{@code * }")
+	 * declarations. A nearer ancestor's matching declaration always beats a farther ancestor's --
+	 * see {@link net.sourceforge.plantuml.style.Specificity}'s own javadoc for why each cascade
+	 * step is simply one strictly-decreasing rank (0 at this element's own level) rather than a
+	 * magnitude-multiplied constant.
+	 */
 	public Style getStyle() {
-		int deltaPriority = STEP_BY_PARENT * 1000;
-		Style result = styleBuilder.getMergedStyleSpecial(getDefaultStyleDefinitionNode(level), deltaPriority);
+		int ancestorRank = 0;
+		Style result = styleBuilder.getMergedStyleSpecial(getDefaultStyleDefinitionNode(level), ancestorRank);
 		for (Idea up = parent; up != null; up = up.parent) {
-			final StyleSignatureBasic ss = up.getDefaultStyleDefinitionNode(level).addStar();
-			deltaPriority -= STEP_BY_PARENT;
-			final Style styleParent = styleBuilder.getMergedStyleSpecial(ss, deltaPriority);
+			final StyleQuery ss = up.getDefaultStyleDefinitionNode(level).addStar();
+			ancestorRank--;
+			final Style styleParent = styleBuilder.getMergedStyleSpecial(ss, ancestorRank);
 			result = result.mergeWith(styleParent, MergeStrategy.OVERWRITE_EXISTING_VALUE);
 		}
 		return result;
 	}
 
 	public Style getStyleArrow() {
-		final StyleSignatureBasic defaultStyleDefinitionArrow = StyleSignatureBasic
-				.of(SName.root, SName.element, SName.mindmapDiagram, SName.arrow).addStereotype(stereotype)
-				.addLevel(level);
-		return defaultStyleDefinitionArrow.getMergedStyle(styleBuilder);
+		final StyleQuery defaultStyleDefinitionArrow = StyleQuery
+				.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.arrow))
+				.withTOBECHANGED(stereotype).addLevel(level);
+		return styleBuilder.getMergedStyle(defaultStyleDefinitionArrow);
 	}
 
 	public static Idea createIdeaSimple(StyleBuilder styleBuilder, HColor backColor, Display label, IdeaShape shape,

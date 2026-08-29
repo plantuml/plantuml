@@ -37,6 +37,7 @@
 package net.sourceforge.plantuml.svek;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
@@ -88,7 +89,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
 import net.sourceforge.plantuml.svek.image.EntityImageStateCommon;
@@ -283,16 +284,22 @@ public class Cluster implements Moveable {
 		this.xyNoteBottom = pos;
 	}
 
-	static public StyleSignatureBasic getDefaultStyleDefinition(SName diagramStyleName, USymbol symbol,
+	static public StyleQuery getDefaultStyleDefinition(SName diagramStyleName, USymbol symbol,
 			GroupType groupType) {
 		if (diagramStyleName == SName.stateDiagram)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.group);
-		if (symbol != null)
-			return StyleSignatureBasic.of(SName.root, SName.element, diagramStyleName, SName.group, symbol.getSNames());
+			return StyleQuery
+					.of(Arrays.asList(SName.root, SName.element, SName.stateDiagram, SName.state, SName.group));
+		if (symbol != null) {
+			final List<SName> names = new ArrayList<>(
+					Arrays.asList(SName.root, SName.element, diagramStyleName, SName.group));
+			names.addAll(Arrays.asList(symbol.getSNames()));
+			return StyleQuery.of(names);
+		}
 		if (groupType == GroupType.PACKAGE)
-			return StyleSignatureBasic.of(SName.root, SName.element, diagramStyleName, SName.package_, SName.group);
+			return StyleQuery
+					.of(Arrays.asList(SName.root, SName.element, diagramStyleName, SName.package_, SName.group));
 
-		return StyleSignatureBasic.of(SName.root, SName.element, diagramStyleName, SName.group);
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, diagramStyleName, SName.group));
 	}
 
 	public void drawU(UGraphic ug) {
@@ -385,8 +392,8 @@ public class Cluster implements Moveable {
 	private Style getStyle() {
 		final DiagramType diagramType = diagram.getDiagramType();
 		final USymbol uSymbol = group.getUSymbol() == null ? USymbols.PACKAGE : group.getUSymbol();
-		final Style style = getDefaultStyleDefinition(diagramType.getStyleName(), uSymbol, group.getGroupType())
-				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinition(
+				diagramType.getStyleName(), uSymbol, group.getGroupType()).withTOBECHANGED(group.getStereotype()));
 		return style;
 	}
 
@@ -461,13 +468,16 @@ public class Cluster implements Moveable {
 		HColor centerBackColor = northBackcolor;
 		HColor southBackcolor = northBackcolor;
 		if (northBackcolor == null) {
-			northBackcolor = EntityImageStateCommon.STYLE.addSName(SName.name).withTOBECHANGED(group.getStereotype())
-					.getMergedStyle(styleBuilder).value(PName.BackGroundColor).asColor(colorSet);
-			centerBackColor = EntityImageStateCommon.STYLE.addSName(SName.description)
-					.withTOBECHANGED(group.getStereotype()).getMergedStyle(styleBuilder).value(PName.BackGroundColor)
-					.asColor(colorSet);
-			southBackcolor = EntityImageStateCommon.STYLE.addSName(SName.body).withTOBECHANGED(group.getStereotype())
-					.getMergedStyle(styleBuilder).value(PName.BackGroundColor).asColor(colorSet);
+			northBackcolor = styleBuilder
+					.getMergedStyle(
+							EntityImageStateCommon.STYLE.addSName(SName.name).withTOBECHANGED(group.getStereotype()))
+					.value(PName.BackGroundColor).asColor(colorSet);
+			centerBackColor = styleBuilder.getMergedStyle(EntityImageStateCommon.STYLE.addSName(SName.description)
+					.withTOBECHANGED(group.getStereotype())).value(PName.BackGroundColor).asColor(colorSet);
+			southBackcolor = styleBuilder
+					.getMergedStyle(
+							EntityImageStateCommon.STYLE.addSName(SName.body).withTOBECHANGED(group.getStereotype()))
+					.value(PName.BackGroundColor).asColor(colorSet);
 		}
 
 		final TextBlock attribute = ((Entity) group).getStateDescription(skinParam);
@@ -701,7 +711,7 @@ public class Cluster implements Moveable {
 	public static HColor getBackColor(HColor backColor, Stereotype stereotype, SName styleName, USymbol symbol,
 			StyleBuilder styleBuilder, HColorSet colorSet, GroupType groupType) {
 
-		final Style style = getDefaultStyleDefinition(styleName, symbol, groupType).getMergedStyle(styleBuilder);
+		final Style style = styleBuilder.getMergedStyle(getDefaultStyleDefinition(styleName, symbol, groupType));
 		if (backColor == null)
 			backColor = style.value(PName.BackGroundColor).asColor(colorSet);
 
@@ -735,8 +745,8 @@ public class Cluster implements Moveable {
 
 		final DiagramType diagramType = DiagramType.CLASS;
 
-		final Style style = getDefaultStyleDefinition(diagramType.getStyleName(), uSymbol, group.getGroupType())
-				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinition(
+				diagramType.getStyleName(), uSymbol, group.getGroupType()).withTOBECHANGED(group.getStereotype()));
 
 		final UStroke stroke = getStrokeInternal(group, style);
 

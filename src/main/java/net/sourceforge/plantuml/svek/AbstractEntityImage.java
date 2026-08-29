@@ -44,11 +44,11 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockMemoized;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public abstract class AbstractEntityImage extends TextBlockMemoized implements IEntityImage {
 
-	public StyleSignature getStyleSignature() {
+	public StyleQuery getStyleQuery() {
 		throw new UnsupportedOperationException("wip");
 	}
 

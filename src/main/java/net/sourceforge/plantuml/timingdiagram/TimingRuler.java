@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.timingdiagram;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Map;
@@ -58,7 +59,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class TimingRuler {
 
@@ -184,13 +185,13 @@ public class TimingRuler {
 	}
 
 	private Style getStyleTimegrid() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.timegrid)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(
+				StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.timingDiagram, SName.timegrid)));
 	}
 
 	private Style getStyleTimeline() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.timeline)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(
+				StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.timingDiagram, SName.timeline)));
 	}
 
 	private TextBlock getTimeTextBlock(long time) {

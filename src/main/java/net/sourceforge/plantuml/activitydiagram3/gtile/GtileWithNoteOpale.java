@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
+import java.util.Arrays;
 import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
@@ -61,8 +62,8 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.Styleable;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.image.Opale;
 
 public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Styleable {
@@ -80,8 +81,9 @@ public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Stylea
 	private final XDimension2D dimNote;
 	private final XDimension2D dimTile;
 
-	public StyleSignatureBasic getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.note);
+	@Override
+	public StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.note));
 	}
 
 	@Override
@@ -105,7 +107,7 @@ public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Stylea
 		if (note.getType() == NoteType.FLOATING_NOTE)
 			withLink = false;
 
-		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder())
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getStyleQuery())
 				.eventuallyOverride(note.getColors());
 		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 		final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());

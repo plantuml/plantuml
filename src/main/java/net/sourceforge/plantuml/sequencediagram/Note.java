@@ -42,8 +42,8 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.WithStyle;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.url.Url;
 
 final public class Note extends AbstractEvent implements Event, SpecificBackcolorable, WithStyle {
@@ -68,15 +68,16 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 	private Url url;
 	private Stereotype stereotype;
 
-	public StyleSignatureBasic getStyleSignature() {
-		return noteStyle.getDefaultStyleDefinition();
+	@Override
+	public StyleQuery getStyleQuery() {
+		return noteStyle.getStyleQuery();
 	}
 
 	public Style[] getUsedStyles() {
-		StyleSignatureBasic styleSignature = getStyleSignature();
+		StyleQuery styleQuery = getStyleQuery();
 		if (stereotype != null)
-			styleSignature = styleSignature.mergeWith(stereotype.getStyles(styleBuilder));
-		final Style style = styleSignature.getMergedStyle(styleBuilder).eventuallyOverride(colors);
+			styleQuery = styleQuery.mergeWith(stereotype.getStyles(styleBuilder));
+		final Style style = styleBuilder.getMergedStyle(styleQuery).eventuallyOverride(colors);
 
 		return new Style[] { style };
 	}

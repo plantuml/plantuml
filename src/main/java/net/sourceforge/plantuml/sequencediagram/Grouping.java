@@ -35,14 +35,16 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.WithStyle;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public abstract class Grouping extends AbstractEvent implements Event, WithStyle {
 
@@ -56,16 +58,18 @@ public abstract class Grouping extends AbstractEvent implements Event, WithStyle
 	final private Style style;
 	final private Style styleHeader;
 
-	final public StyleSignatureBasic getStyleSignature() {
+	@Override
+	public StyleQuery getStyleQuery() {
 		if (type == GroupingType.START_PARTITION)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.partition);
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.group);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.partition));
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.group));
 	}
 
-	final private StyleSignatureBasic getHeaderStyleDefinition() {
+	final private StyleQuery getHeaderStyleDefinition() {
 		if (type == GroupingType.START_PARTITION)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.partition, SName.header);
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.groupHeader);
+			return StyleQuery
+					.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.partition, SName.header));
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.groupHeader));
 	}
 
 	// The nested counterpart of the legacy flat "groupHeader" above, added for
@@ -76,19 +80,20 @@ public abstract class Grouping extends AbstractEvent implements Event, WithStyle
 	// the flat style (see computeStyleHeader()) rather than a replacement, so
 	// every existing diagram styling `groupHeader` directly keeps working
 	// unchanged: only diagrams that opt into the new nested form are affected.
-	final private StyleSignatureBasic getNestedHeaderStyleDefinition() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.group, SName.header);
+	final private StyleQuery getNestedHeaderStyleDefinition() {
+		return StyleQuery
+				.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.group, SName.header));
 	}
 
 	private Style computeStyleHeader(StyleBuilder styleBuilder) {
-		final Style flat = getHeaderStyleDefinition().getMergedStyle(styleBuilder);
+		final Style flat = styleBuilder.getMergedStyle(getHeaderStyleDefinition());
 		if (type == GroupingType.START_PARTITION)
 			return flat;
 
 		// "style" (this.style, already assigned above in the constructor) is the
 		// plain "group" style -- the exact ancestor "nested" cascades from, so
 		// mergeNestedChildOver() can isolate what header{} itself actually sets.
-		final Style nested = getNestedHeaderStyleDefinition().getMergedStyle(styleBuilder);
+		final Style nested = styleBuilder.getMergedStyle(getNestedHeaderStyleDefinition());
 		if (flat == null)
 			return nested;
 
@@ -108,7 +113,7 @@ public abstract class Grouping extends AbstractEvent implements Event, WithStyle
 		this.comment = comment;
 		this.type = type;
 		this.backColorElement = backColorElement;
-		this.style = getStyleSignature().getMergedStyle(styleBuilder);
+		this.style = styleBuilder.getMergedStyle(getStyleQuery());
 		this.styleHeader = computeStyleHeader(styleBuilder);
 	}
 
