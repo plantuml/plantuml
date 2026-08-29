@@ -37,14 +37,10 @@ package net.sourceforge.plantuml.style;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -54,16 +50,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
-
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.SourceStringReader;
-import net.sourceforge.plantuml.style.parser.StyleParsingException;
 
 /**
  * Guards the .skin files bundled inside the jar.
@@ -134,7 +121,7 @@ class BundledSkinTest2 {
 
 	@Test
 	void bundledSkinLoads() throws Exception {
-		final StyleBuilder builder = StyleLoader.loadSkin("/skin/plantuml.skin");
+		final StyleBuilder builder = StyleLoader2.loadSkin("/skin/plantuml.skin");
 		System.err.println("builder=" + builder);
 		assertNotNull(builder);
 		// assertNotNull(builder.getMergedStyle(StyleSignatureBasic.of(SName.root)));
