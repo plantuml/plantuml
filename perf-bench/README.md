@@ -20,10 +20,10 @@ to cancel drift, and medians pooled over all warm reps.
 From the Actions tab, dispatch `perf-bench`:
 
 - `ref` benchmarks any commit, branch or tag (empty = the branch you dispatch on).
-- `compare` picks the reference engine: empty uses the npm pin from `reference.json`;
-  `npm:<version>` uses that published package; anything else is treated as a git ref and built
-  from source, which turns the run into a head-to-head comparison of two builds (useful to
-  find the commit that changed performance).
+- `compare` picks the reference engine: empty uses the pin from `reference.json`;
+  `npm:<version>` uses that published package; anything else (optionally prefixed `git:`) is
+  treated as a git ref and built from source, which turns the run into a head-to-head comparison
+  of two builds (useful to find the commit that changed performance).
 - The step summary shows, per diagram: median warm ms with interquartile range for both engines,
   the ratio, a verdict against `expected-bands.json`, and the SHA-256 of the rendered svg element
   (in git-vs-git mode a hash mismatch means the change altered output, not just speed).
@@ -35,9 +35,10 @@ Locally: `npm ci && node bench.js target=<npm-plantuml dir> reference=<dir> --re
 ## Maintaining it
 
 - `reference.json` pins the default comparison. Bump it at each release; the bump commit
-  documents the accepted performance level. The pin must support the `maxSvgSize` render option
-  (1.2026.8 or later); older engines truncate the tall corpus diagrams, which the summary marks
-  and excludes from band verdicts.
+  documents the accepted performance level. The pin must support the `maxSvgSize` render option;
+  npm releases up to 1.2026.7 refuse the tall corpus diagrams ("Diagram too large"), which the
+  summary reports as size-limited rows without ratios, so until 1.2026.8 is published the pin is
+  a fixed master commit built from source.
 - `expected-bands.json` holds the expected ratio and tolerance per diagram. Rows outside band are
   flagged in the summary but never fail anything. Update it deliberately when a change or a
   reference bump legitimately moves the numbers.

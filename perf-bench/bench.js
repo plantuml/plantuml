@@ -185,7 +185,8 @@ function iqr(v) { const s = [...v].sort((a, b) => a - b); return s.length ? [s[M
   lines.push('|---|---|' + (hasRef ? '---|---|---|' : '') + '---|');
   for (const row of rows) {
     const t = agg[row].target, r = hasRef ? agg[row].reference : null;
-    const fmt = x => x.err ? 'ERROR' : (x.medianMs === null ? '-' : `${x.medianMs}${x.iqr[0] !== null ? ` (${x.iqr[0]}-${x.iqr[1]})` : ''}${x.truncated ? ' (truncated)' : ''}`);
+    const fmt = x => x.err ? (x.err.includes('too large') ? 'size-limited (no maxSvgSize)' : 'ERROR')
+      : (x.medianMs === null ? '-' : `${x.medianMs}${x.iqr[0] !== null ? ` (${x.iqr[0]}-${x.iqr[1]})` : ''}${x.truncated ? ' (truncated)' : ''}`);
     let ratio = '', band = '', output = '';
     if (hasRef && !t.err && !r.err && t.medianMs && r.medianMs) {
       const q = t.medianMs / r.medianMs;

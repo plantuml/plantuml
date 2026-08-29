@@ -49,13 +49,6 @@ jobs:
           ref: ${{ inputs.ref || github.sha }}
           path: target
 
-      - name: Checkout comparison ref (git mode)
-        if: inputs.compare != '' && !startsWith(inputs.compare, 'npm:')
-        uses: actions/checkout@v7
-        with:
-          ref: ${{ inputs.compare }}
-          path: reference-src
-
       - name: Set up JDK 21 (Temurin)
         uses: actions/setup-java@v6
         with:
@@ -71,31 +64,34 @@ jobs:
           ./gradlew :plantuml-mit:npmPackage -Pci --no-daemon
           test -f plantuml-mit/build/npm-plantuml/plantuml.js
 
-      - name: Build comparison engine (git mode)
-        if: inputs.compare != '' && !startsWith(inputs.compare, 'npm:')
-        run: |
-          cd reference-src
-          ./gradlew :plantuml-mit:npmPackage -Pci --no-daemon
-          test -f plantuml-mit/build/npm-plantuml/plantuml.js
-          echo "COMPARE_DIR=reference-src/plantuml-mit/build/npm-plantuml" >> "$GITHUB_ENV"
-          echo "COMPARE_LABEL=git ${{ inputs.compare }} ($(git rev-parse --short HEAD))" >> "$GITHUB_ENV"
-
-      - name: Fetch comparison engine (npm mode)
-        if: inputs.compare == '' || startsWith(inputs.compare, 'npm:')
+      - name: Resolve and build comparison engine
         run: |
           COMPARE='${{ inputs.compare }}'
           if [ -z "$COMPARE" ]; then
-            PIN=$(node -p "JSON.parse(require('fs').readFileSync('perf-bench/reference.json','utf8')).npm")
-            COMPARE="npm:${PIN##*@}"
+            COMPARE=$(node -p "JSON.parse(require('fs').readFileSync('perf-bench/reference.json','utf8')).pin")
+            echo "Using pin from perf-bench/reference.json: $COMPARE"
           fi
-          VER="${COMPARE#npm:}"
-          echo "Comparison: @plantuml/core@$VER"
-          mkdir -p reference-npm && cd reference-npm
-          npm pack "@plantuml/core@$VER"
-          tar -xzf plantuml-core-*.tgz
-          test -f package/plantuml.js
-          echo "COMPARE_DIR=reference-npm/package" >> "$GITHUB_ENV"
-          echo "COMPARE_LABEL=npm @plantuml/core@$VER" >> "$GITHUB_ENV"
+          if [[ "$COMPARE" == npm:* ]]; then
+            VER="${COMPARE#npm:}"
+            VER="${VER##*@}"
+            echo "Comparison: @plantuml/core@$VER"
+            mkdir -p reference-npm && cd reference-npm
+            npm pack "@plantuml/core@$VER"
+            tar -xzf plantuml-core-*.tgz
+            test -f package/plantuml.js
+            echo "COMPARE_DIR=reference-npm/package" >> "$GITHUB_ENV"
+            echo "COMPARE_LABEL=npm @plantuml/core@$VER" >> "$GITHUB_ENV"
+          else
+            REF="${COMPARE#git:}"
+            echo "Comparison: git $REF (built from source)"
+            git -C target fetch --depth 1 origin "$REF" && REF_SHA=$(git -C target rev-parse FETCH_HEAD) || REF_SHA=$(git -C target rev-parse "$REF")
+            git -C target worktree add --detach ../reference-src "$REF_SHA"
+            cd reference-src
+            ./gradlew :plantuml-mit:npmPackage -Pci --no-daemon
+            test -f plantuml-mit/build/npm-plantuml/plantuml.js
+            echo "COMPARE_DIR=reference-src/plantuml-mit/build/npm-plantuml" >> "$GITHUB_ENV"
+            echo "COMPARE_LABEL=git $REF (${REF_SHA:0:9})" >> "$GITHUB_ENV"
+          fi
 
       - name: Set up Node
         uses: actions/setup-node@v6
