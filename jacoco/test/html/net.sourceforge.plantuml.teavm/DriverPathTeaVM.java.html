@@ -98,7 +98,24 @@ public class DriverPathTeaVM implements UDriver&lt;UPath, SvgGraphicsTeaVM&gt; {
 <span class="nc bnc" id="L98" title="All 2 branches missed.">		if (value == (int) value)</span>
 <span class="nc" id="L99">			return String.valueOf((int) value);</span>
 
-<span class="nc" id="L101">		return String.format(&quot;%.2f&quot;, value).replace(',', '.');</span>
+		// Same fast path as SvgGraphicsTeaVM.format, see the comment there
+<span class="nc" id="L102">		final double abs = Math.abs(value);</span>
+<span class="nc" id="L103">		final double scaled = abs * 100.0;</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (scaled &lt; 1e11) {</span>
+<span class="nc" id="L105">			final double floor = Math.floor(scaled);</span>
+<span class="nc" id="L106">			final double frac = scaled - floor;</span>
+<span class="nc bnc" id="L107" title="All 4 branches missed.">			if (frac &lt; 0.4999 || frac &gt; 0.5001) {</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">				final long cents = (long) floor + (frac &gt; 0.5 ? 1 : 0);</span>
+<span class="nc" id="L109">				final StringBuilder sb = new StringBuilder(16);</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">				if (value &lt; 0)</span>
+<span class="nc" id="L111">					sb.append('-');</span>
+<span class="nc" id="L112">				sb.append(cents / 100).append('.');</span>
+<span class="nc" id="L113">				final int c = (int) (cents % 100);</span>
+<span class="nc" id="L114">				sb.append((char) ('0' + c / 10)).append((char) ('0' + c % 10));</span>
+<span class="nc" id="L115">				return sb.toString();</span>
+			}
+		}
+<span class="nc" id="L118">		return String.format(&quot;%.2f&quot;, value).replace(',', '.');</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -102,18 +102,30 @@ public class XColor {
 <span class="fc" id="L102">		return &quot;[r=&quot; + red + &quot;,g=&quot; + green + &quot;,b=&quot; + blue + &quot;,a=&quot; + alpha + &quot;]&quot;;</span>
 	}
 
+<span class="fc" id="L105">	private static final char[] HEX = &quot;0123456789ABCDEF&quot;.toCharArray();</span>
+
+	private static void appendHex2(StringBuilder sb, int v) {
+<span class="fc" id="L108">		sb.append(HEX[(v &gt;&gt; 4) &amp; 0xF]).append(HEX[v &amp; 0xF]);</span>
+<span class="fc" id="L109">	}</span>
+
 	public String toSvg() {
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (alpha == 0)</span>
-<span class="nc" id="L107">			return &quot;#00000000&quot;;</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (alpha == 0)</span>
+<span class="nc" id="L113">			return &quot;#00000000&quot;;</span>
 
-<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (alpha == 255)</span>
-<span class="fc" id="L110">			return String.format(&quot;#%02X%02X%02X&quot;, red, green, blue);</span>
-
-<span class="fc" id="L112">		return String.format(&quot;#%02X%02X%02X%02X&quot;, red, green, blue, alpha);</span>
+		// Same output as String.format(&quot;#%02X..&quot;) without the Formatter
+		// machinery, which shows up in profiles when called per drawn element
+<span class="fc" id="L117">		final StringBuilder sb = new StringBuilder(9);</span>
+<span class="fc" id="L118">		sb.append('#');</span>
+<span class="fc" id="L119">		appendHex2(sb, red);</span>
+<span class="fc" id="L120">		appendHex2(sb, green);</span>
+<span class="fc" id="L121">		appendHex2(sb, blue);</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (alpha != 255)</span>
+<span class="fc" id="L123">			appendHex2(sb, alpha);</span>
+<span class="fc" id="L124">		return sb.toString();</span>
 	}
 
 	public static String toHexRGBColor(int rgb) {
-<span class="fc" id="L116">		return String.format(&quot;#%06X&quot;, rgb &amp; 0xFFFFFF);</span>
+<span class="fc" id="L128">		return String.format(&quot;#%06X&quot;, rgb &amp; 0xFFFFFF);</span>
 	}
 
 }
