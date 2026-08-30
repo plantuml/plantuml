@@ -13,11 +13,12 @@ jobs:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Set environment variable
         run: echo "GPL_ONLY=true" >> $GITHUB_ENV
-      - name: Set up JDK 17
+      - name: Set up Java JDK 
         uses: actions/setup-java@v6
         with:
-          java-version: 17
-          distribution: 'zulu' # Alternative distribution options are available
+          java-version: 21
+          distribution: temurin
+          cache: gradle
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6.3.0
       - name: Cache SonarQube packages
