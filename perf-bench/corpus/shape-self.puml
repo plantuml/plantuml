@@ -1,0 +1,204 @@
+@startuml
+participant "A" as A
+participant "B" as B
+A -> A: local step 0
+A -> B: sync 0
+A -> A: local step 1
+B -> B: check 1
+A -> A: local step 2
+A -> A: local step 3
+A -> B: sync 3
+A -> A: local step 4
+B -> B: check 4
+A -> A: local step 5
+A -> A: local step 6
+A -> B: sync 6
+A -> A: local step 7
+B -> B: check 7
+A -> A: local step 8
+A -> A: local step 9
+A -> B: sync 9
+A -> A: local step 10
+B -> B: check 10
+A -> A: local step 11
+A -> A: local step 12
+A -> B: sync 12
+A -> A: local step 13
+B -> B: check 13
+A -> A: local step 14
+A -> A: local step 15
+A -> B: sync 15
+A -> A: local step 16
+B -> B: check 16
+A -> A: local step 17
+A -> A: local step 18
+A -> B: sync 18
+A -> A: local step 19
+B -> B: check 19
+A -> A: local step 20
+A -> A: local step 21
+A -> B: sync 21
+A -> A: local step 22
+B -> B: check 22
+A -> A: local step 23
+A -> A: local step 24
+A -> B: sync 24
+A -> A: local step 25
+B -> B: check 25
+A -> A: local step 26
+A -> A: local step 27
+A -> B: sync 27
+A -> A: local step 28
+B -> B: check 28
+A -> A: local step 29
+A -> A: local step 30
+A -> B: sync 30
+A -> A: local step 31
+B -> B: check 31
+A -> A: local step 32
+A -> A: local step 33
+A -> B: sync 33
+A -> A: local step 34
+B -> B: check 34
+A -> A: local step 35
+A -> A: local step 36
+A -> B: sync 36
+A -> A: local step 37
+B -> B: check 37
+A -> A: local step 38
+A -> A: local step 39
+A -> B: sync 39
+A -> A: local step 40
+B -> B: check 40
+A -> A: local step 41
+A -> A: local step 42
+A -> B: sync 42
+A -> A: local step 43
+B -> B: check 43
+A -> A: local step 44
+A -> A: local step 45
+A -> B: sync 45
+A -> A: local step 46
+B -> B: check 46
+A -> A: local step 47
+A -> A: local step 48
+A -> B: sync 48
+A -> A: local step 49
+B -> B: check 49
+A -> A: local step 50
+A -> A: local step 51
+A -> B: sync 51
+A -> A: local step 52
+B -> B: check 52
+A -> A: local step 53
+A -> A: local step 54
+A -> B: sync 54
+A -> A: local step 55
+B -> B: check 55
+A -> A: local step 56
+A -> A: local step 57
+A -> B: sync 57
+A -> A: local step 58
+B -> B: check 58
+A -> A: local step 59
+A -> A: local step 60
+A -> B: sync 60
+A -> A: local step 61
+B -> B: check 61
+A -> A: local step 62
+A -> A: local step 63
+A -> B: sync 63
+A -> A: local step 64
+B -> B: check 64
+A -> A: local step 65
+A -> A: local step 66
+A -> B: sync 66
+A -> A: local step 67
+B -> B: check 67
+A -> A: local step 68
+A -> A: local step 69
+A -> B: sync 69
+A -> A: local step 70
+B -> B: check 70
+A -> A: local step 71
+A -> A: local step 72
+A -> B: sync 72
+A -> A: local step 73
+B -> B: check 73
+A -> A: local step 74
+A -> A: local step 75
+A -> B: sync 75
+A -> A: local step 76
+B -> B: check 76
+A -> A: local step 77
+A -> A: local step 78
+A -> B: sync 78
+A -> A: local step 79
+B -> B: check 79
+A -> A: local step 80
+A -> A: local step 81
+A -> B: sync 81
+A -> A: local step 82
+B -> B: check 82
+A -> A: local step 83
+A -> A: local step 84
+A -> B: sync 84
+A -> A: local step 85
+B -> B: check 85
+A -> A: local step 86
+A -> A: local step 87
+A -> B: sync 87
+A -> A: local step 88
+B -> B: check 88
+A -> A: local step 89
+A -> A: local step 90
+A -> B: sync 90
+A -> A: local step 91
+B -> B: check 91
+A -> A: local step 92
+A -> A: local step 93
+A -> B: sync 93
+A -> A: local step 94
+B -> B: check 94
+A -> A: local step 95
+A -> A: local step 96
+A -> B: sync 96
+A -> A: local step 97
+B -> B: check 97
+A -> A: local step 98
+A -> A: local step 99
+A -> B: sync 99
+A -> A: local step 100
+B -> B: check 100
+A -> A: local step 101
+A -> A: local step 102
+A -> B: sync 102
+A -> A: local step 103
+B -> B: check 103
+A -> A: local step 104
+A -> A: local step 105
+A -> B: sync 105
+A -> A: local step 106
+B -> B: check 106
+A -> A: local step 107
+A -> A: local step 108
+A -> B: sync 108
+A -> A: local step 109
+B -> B: check 109
+A -> A: local step 110
+A -> A: local step 111
+A -> B: sync 111
+A -> A: local step 112
+B -> B: check 112
+A -> A: local step 113
+A -> A: local step 114
+A -> B: sync 114
+A -> A: local step 115
+B -> B: check 115
+A -> A: local step 116
+A -> A: local step 117
+A -> B: sync 117
+A -> A: local step 118
+B -> B: check 118
+A -> A: local step 119
+@enduml

@@ -915,8 +915,22 @@ public class SkinParam implements ISkinParam {
 		return null;
 	}
 
+	private final Map<String, UStroke> cacheThickness = new HashMap<>();
+
 	@Override
 	public UStroke getThickness(LineParam param, Stereotype stereotype) {
+		// Called for every drawn element; the key building, parsing and
+		// LinkStyle churn below showed up in profiles, same idea as cacheKeyValue
+		final String key = stereotype == null ? param.name()
+				: param.name() + '\0' + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR);
+		if (cacheThickness.containsKey(key))
+			return cacheThickness.get(key);
+		final UStroke result = getThicknessSlow(param, stereotype);
+		cacheThickness.put(key, result);
+		return result;
+	}
+
+	private UStroke getThicknessSlow(LineParam param, Stereotype stereotype) {
 		LinkStyle style = null;
 		if (stereotype != null) {
 			checkStereotype(stereotype);

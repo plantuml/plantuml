@@ -1,10 +1,11 @@
 
 import java.util.jar.JarFile
+import java.util.Properties
 
 println("Running build.gradle.kts")
 println(project.version)
 
-val javacRelease = (project.findProperty("javacRelease") ?: "17") as String
+val javacRelease = (project.findProperty("javacRelease") ?: "21") as String
 
 plugins {
 	java
@@ -29,10 +30,7 @@ dependencies {
   testImplementation(libs.junit.jupiter)
   testRuntimeOnly(libs.junit.platform.launcher)
 
-	testImplementation(libs.assertj.core)
 	testImplementation(libs.xmlunit.core)
-	testImplementation(libs.mockito.core)
-	testImplementation(libs.mockito.junit.jupiter)
 	testImplementation(libs.junit.pioneer)
 	implementation(libs.jlatexmath)
   implementation(libs.elk.core)
@@ -56,7 +54,7 @@ repositories {
 teavm {
 	js {
 		mainClass.set("net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser")
-		entryPointName.set("plantumlLoad")
+		moduleType.set(org.teavm.gradle.api.JSModuleType.ES2015)
 		obfuscated.set(true)
 		optimization.set(org.teavm.gradle.api.OptimizationLevel.BALANCED)
 	}
@@ -220,13 +218,20 @@ tasks.jacocoTestReport {
 // CompilationInfo - Git commit & timestamp injection
 // ============================================
 
+val gitPropertiesFile = tasks.named<com.gorylenko.GenerateGitPropertiesTask>("generateGitProperties")
+	.flatMap { it.output }
+
 gitProperties {
 	dateFormat = "yyyy-MM-dd'T'HH:mm:ssX"
 }
 
+tasks.withType<Jar>().configureEach {
+	dependsOn("generateGitProperties")
+}
+
 tasks.named("generateGitProperties") {
 	doLast {
-		val propsFile = layout.buildDirectory.file("resources/main/git.properties").get().asFile
+		val propsFile = gitPropertiesFile.get().asFile
 		if (propsFile.exists()) {
       println("::group::[Git Properties]")
 			println("----- git.properties -----")
@@ -239,6 +244,79 @@ tasks.named("generateGitProperties") {
 			println("git.properties not found")
       println("::warning file=git.properties,title=File not found::")
 		}
+	}
+}
+
+// `patchCompilationInfo` injects build metadata (version, git commit id, compile timestamp)
+// directly into src/main/java/.../CompilationInfo.java.
+//
+// IMPORTANT: this task is intentionally NOT wired as a dependency of `compileJava`,
+// `jar` or any other build task. It must be invoked EXPLICITLY (typically from CI,
+// before `gradle build` / `gradle teavm`).
+//
+// Rationale: keeping the main source set pointing to plain `src/main/java` (no
+// generated/filtered copy) avoids a lot of IDE-side problems for contributors.
+// As a side effect, local builds produce a jar in which `CompilationInfo` keeps
+// its placeholder values ("$version$", "$git.commit.id$", 0L). This is fine for
+// dev builds; official artifacts are built by GitHub Actions, which calls
+// `patchCompilationInfo` first.
+//
+// The task modifies a tracked source file in place. After running it, the working
+// tree contains uncommitted changes -- this is expected in CI (ephemeral runner),
+// but if you ever need to run it locally, remember to `git restore` the file
+// afterwards, or use `-PpatchCompilationInfo` workflows carefully.
+val patchCompilationInfo by tasks.registering {
+	group = "build"
+	description = "Patches src/main/java/.../CompilationInfo.java in place with version, git commit id and compile timestamp. NOT wired automatically -- call explicitly (typically from CI)."
+
+	dependsOn("generateGitProperties")
+
+	doLast {
+		// 1) Read git.properties
+		val propsFile = gitPropertiesFile.get().asFile
+		val props = Properties().apply { propsFile.inputStream().use { load(it) } }
+		val commitId = props.getProperty("git.commit.id.abbrev")
+			?: error("git.commit.id.abbrev not found in ${propsFile.absolutePath}")
+
+		// 2) Compute compile timestamp (epoch millis)
+		val compileTs = System.currentTimeMillis().toString()
+
+		// 3) Locate the target file directly in src/main/java
+		val targetFile = file("src/main/java/net/sourceforge/plantuml/version/CompilationInfo.java")
+		if (!targetFile.exists()) {
+			error("Target file not found: ${targetFile.absolutePath}")
+		}
+
+		// 4) Get project version
+		val projectVersion = project.version.toString()
+
+		// 5) Ant replace in place
+		ant.withGroovyBuilder {
+			// version replacement
+			"replace"(
+				"file" to targetFile.absolutePath,
+				"token" to "\$version\$",
+				"value" to projectVersion
+			)
+
+			// commit token replacement
+			"replace"(
+				"file" to targetFile.absolutePath,
+				"token" to "\$git.commit.id\$",
+				"value" to commitId
+			)
+
+			// timestamp replacement
+			"replace"(
+				"file" to targetFile.absolutePath,
+				"token" to "COMPILE_TIMESTAMP = 000L",
+				"value" to "COMPILE_TIMESTAMP = ${compileTs}L"
+			)
+		}
+
+		println("Patched version into ${targetFile.name}: $projectVersion")
+		println("Patched git.commit.id into ${targetFile.name}: $commitId")
+		println("Patched compile timestamp into ${targetFile.name}: $compileTs")
 	}
 }
 

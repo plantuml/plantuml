@@ -102,14 +102,26 @@ public class XColor {
 		return "[r=" + red + ",g=" + green + ",b=" + blue + ",a=" + alpha + "]";
 	}
 
+	private static final char[] HEX = "0123456789ABCDEF".toCharArray();
+
+	private static void appendHex2(StringBuilder sb, int v) {
+		sb.append(HEX[(v >> 4) & 0xF]).append(HEX[v & 0xF]);
+	}
+
 	public String toSvg() {
 		if (alpha == 0)
 			return "#00000000";
 
-		if (alpha == 255)
-			return String.format("#%02X%02X%02X", red, green, blue);
-
-		return String.format("#%02X%02X%02X%02X", red, green, blue, alpha);
+		// Same output as String.format("#%02X..") without the Formatter
+		// machinery, which shows up in profiles when called per drawn element
+		final StringBuilder sb = new StringBuilder(9);
+		sb.append('#');
+		appendHex2(sb, red);
+		appendHex2(sb, green);
+		appendHex2(sb, blue);
+		if (alpha != 255)
+			appendHex2(sb, alpha);
+		return sb.toString();
 	}
 
 	public static String toHexRGBColor(int rgb) {

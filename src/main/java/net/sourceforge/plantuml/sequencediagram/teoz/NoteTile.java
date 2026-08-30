@@ -102,10 +102,16 @@ public class NoteTile extends AbstractTile implements Tile {
 		return yGauge;
 	}
 
+	// The component only depends on the tile's fixed data, not on the string
+	// bounder, but it was rebuilt on every call from every layout phase
+	private Component cachedComponent;
+
 	private Component getComponent(StringBounder stringBounder) {
-		final Component comp = skin.createComponentNote(note.getUsedStyles(), getNoteComponentType(note.getNoteStyle()),
-				note.getSkinParamBackcolored(skinParam), note.getDisplay(), note.getColors(), note.getPosition());
-		return comp;
+		if (cachedComponent == null)
+			cachedComponent = skin.createComponentNote(note.getUsedStyles(),
+					getNoteComponentType(note.getNoteStyle()), note.getSkinParamBackcolored(skinParam),
+					note.getDisplay(), note.getColors(), note.getPosition());
+		return cachedComponent;
 	}
 
 	protected static ComponentType getNoteComponentType(NoteStyle noteStyle) {

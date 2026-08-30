@@ -1,0 +1,326 @@
+@startuml
+participant "A" as A
+participant "B" as B
+participant "C" as C
+participant "D" as D
+A -> B: left 0
+& C -> D: right 0
+B --> A: ack 0
+& D --> C: ack 0
+A -> B: left 1
+& C -> D: right 1
+B --> A: ack 1
+& D --> C: ack 1
+A -> B: left 2
+& C -> D: right 2
+B --> A: ack 2
+& D --> C: ack 2
+A -> B: left 3
+& C -> D: right 3
+B --> A: ack 3
+& D --> C: ack 3
+A -> B: left 4
+& C -> D: right 4
+B --> A: ack 4
+& D --> C: ack 4
+A -> B: left 5
+& C -> D: right 5
+B --> A: ack 5
+& D --> C: ack 5
+A -> B: left 6
+& C -> D: right 6
+B --> A: ack 6
+& D --> C: ack 6
+A -> B: left 7
+& C -> D: right 7
+B --> A: ack 7
+& D --> C: ack 7
+A -> B: left 8
+& C -> D: right 8
+B --> A: ack 8
+& D --> C: ack 8
+A -> B: left 9
+& C -> D: right 9
+B --> A: ack 9
+& D --> C: ack 9
+A -> B: left 10
+& C -> D: right 10
+B --> A: ack 10
+& D --> C: ack 10
+A -> B: left 11
+& C -> D: right 11
+B --> A: ack 11
+& D --> C: ack 11
+A -> B: left 12
+& C -> D: right 12
+B --> A: ack 12
+& D --> C: ack 12
+A -> B: left 13
+& C -> D: right 13
+B --> A: ack 13
+& D --> C: ack 13
+A -> B: left 14
+& C -> D: right 14
+B --> A: ack 14
+& D --> C: ack 14
+A -> B: left 15
+& C -> D: right 15
+B --> A: ack 15
+& D --> C: ack 15
+A -> B: left 16
+& C -> D: right 16
+B --> A: ack 16
+& D --> C: ack 16
+A -> B: left 17
+& C -> D: right 17
+B --> A: ack 17
+& D --> C: ack 17
+A -> B: left 18
+& C -> D: right 18
+B --> A: ack 18
+& D --> C: ack 18
+A -> B: left 19
+& C -> D: right 19
+B --> A: ack 19
+& D --> C: ack 19
+A -> B: left 20
+& C -> D: right 20
+B --> A: ack 20
+& D --> C: ack 20
+A -> B: left 21
+& C -> D: right 21
+B --> A: ack 21
+& D --> C: ack 21
+A -> B: left 22
+& C -> D: right 22
+B --> A: ack 22
+& D --> C: ack 22
+A -> B: left 23
+& C -> D: right 23
+B --> A: ack 23
+& D --> C: ack 23
+A -> B: left 24
+& C -> D: right 24
+B --> A: ack 24
+& D --> C: ack 24
+A -> B: left 25
+& C -> D: right 25
+B --> A: ack 25
+& D --> C: ack 25
+A -> B: left 26
+& C -> D: right 26
+B --> A: ack 26
+& D --> C: ack 26
+A -> B: left 27
+& C -> D: right 27
+B --> A: ack 27
+& D --> C: ack 27
+A -> B: left 28
+& C -> D: right 28
+B --> A: ack 28
+& D --> C: ack 28
+A -> B: left 29
+& C -> D: right 29
+B --> A: ack 29
+& D --> C: ack 29
+A -> B: left 30
+& C -> D: right 30
+B --> A: ack 30
+& D --> C: ack 30
+A -> B: left 31
+& C -> D: right 31
+B --> A: ack 31
+& D --> C: ack 31
+A -> B: left 32
+& C -> D: right 32
+B --> A: ack 32
+& D --> C: ack 32
+A -> B: left 33
+& C -> D: right 33
+B --> A: ack 33
+& D --> C: ack 33
+A -> B: left 34
+& C -> D: right 34
+B --> A: ack 34
+& D --> C: ack 34
+A -> B: left 35
+& C -> D: right 35
+B --> A: ack 35
+& D --> C: ack 35
+A -> B: left 36
+& C -> D: right 36
+B --> A: ack 36
+& D --> C: ack 36
+A -> B: left 37
+& C -> D: right 37
+B --> A: ack 37
+& D --> C: ack 37
+A -> B: left 38
+& C -> D: right 38
+B --> A: ack 38
+& D --> C: ack 38
+A -> B: left 39
+& C -> D: right 39
+B --> A: ack 39
+& D --> C: ack 39
+A -> B: left 40
+& C -> D: right 40
+B --> A: ack 40
+& D --> C: ack 40
+A -> B: left 41
+& C -> D: right 41
+B --> A: ack 41
+& D --> C: ack 41
+A -> B: left 42
+& C -> D: right 42
+B --> A: ack 42
+& D --> C: ack 42
+A -> B: left 43
+& C -> D: right 43
+B --> A: ack 43
+& D --> C: ack 43
+A -> B: left 44
+& C -> D: right 44
+B --> A: ack 44
+& D --> C: ack 44
+A -> B: left 45
+& C -> D: right 45
+B --> A: ack 45
+& D --> C: ack 45
+A -> B: left 46
+& C -> D: right 46
+B --> A: ack 46
+& D --> C: ack 46
+A -> B: left 47
+& C -> D: right 47
+B --> A: ack 47
+& D --> C: ack 47
+A -> B: left 48
+& C -> D: right 48
+B --> A: ack 48
+& D --> C: ack 48
+A -> B: left 49
+& C -> D: right 49
+B --> A: ack 49
+& D --> C: ack 49
+A -> B: left 50
+& C -> D: right 50
+B --> A: ack 50
+& D --> C: ack 50
+A -> B: left 51
+& C -> D: right 51
+B --> A: ack 51
+& D --> C: ack 51
+A -> B: left 52
+& C -> D: right 52
+B --> A: ack 52
+& D --> C: ack 52
+A -> B: left 53
+& C -> D: right 53
+B --> A: ack 53
+& D --> C: ack 53
+A -> B: left 54
+& C -> D: right 54
+B --> A: ack 54
+& D --> C: ack 54
+A -> B: left 55
+& C -> D: right 55
+B --> A: ack 55
+& D --> C: ack 55
+A -> B: left 56
+& C -> D: right 56
+B --> A: ack 56
+& D --> C: ack 56
+A -> B: left 57
+& C -> D: right 57
+B --> A: ack 57
+& D --> C: ack 57
+A -> B: left 58
+& C -> D: right 58
+B --> A: ack 58
+& D --> C: ack 58
+A -> B: left 59
+& C -> D: right 59
+B --> A: ack 59
+& D --> C: ack 59
+A -> B: left 60
+& C -> D: right 60
+B --> A: ack 60
+& D --> C: ack 60
+A -> B: left 61
+& C -> D: right 61
+B --> A: ack 61
+& D --> C: ack 61
+A -> B: left 62
+& C -> D: right 62
+B --> A: ack 62
+& D --> C: ack 62
+A -> B: left 63
+& C -> D: right 63
+B --> A: ack 63
+& D --> C: ack 63
+A -> B: left 64
+& C -> D: right 64
+B --> A: ack 64
+& D --> C: ack 64
+A -> B: left 65
+& C -> D: right 65
+B --> A: ack 65
+& D --> C: ack 65
+A -> B: left 66
+& C -> D: right 66
+B --> A: ack 66
+& D --> C: ack 66
+A -> B: left 67
+& C -> D: right 67
+B --> A: ack 67
+& D --> C: ack 67
+A -> B: left 68
+& C -> D: right 68
+B --> A: ack 68
+& D --> C: ack 68
+A -> B: left 69
+& C -> D: right 69
+B --> A: ack 69
+& D --> C: ack 69
+A -> B: left 70
+& C -> D: right 70
+B --> A: ack 70
+& D --> C: ack 70
+A -> B: left 71
+& C -> D: right 71
+B --> A: ack 71
+& D --> C: ack 71
+A -> B: left 72
+& C -> D: right 72
+B --> A: ack 72
+& D --> C: ack 72
+A -> B: left 73
+& C -> D: right 73
+B --> A: ack 73
+& D --> C: ack 73
+A -> B: left 74
+& C -> D: right 74
+B --> A: ack 74
+& D --> C: ack 74
+A -> B: left 75
+& C -> D: right 75
+B --> A: ack 75
+& D --> C: ack 75
+A -> B: left 76
+& C -> D: right 76
+B --> A: ack 76
+& D --> C: ack 76
+A -> B: left 77
+& C -> D: right 77
+B --> A: ack 77
+& D --> C: ack 77
+A -> B: left 78
+& C -> D: right 78
+B --> A: ack 78
+& D --> C: ack 78
+A -> B: left 79
+& C -> D: right 79
+B --> A: ack 79
+& D --> C: ack 79
+@enduml

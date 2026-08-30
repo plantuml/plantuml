@@ -143,15 +143,27 @@ public class CommunicationTile extends AbstractCommunicationTile {
 		return result.getThickness();
 	}
 
+	// The component only depends on the tile's fixed data and on isReverse(),
+	// but it was rebuilt on every call, from every layout phase (buildOne,
+	// addConstraints, getPreferredHeight, onGaugeResolved, drawU, getMaxX).
+	// isReverse() reads the Real solver's current values so it may change
+	// between phases: memoize one component per orientation.
+	private final ArrowComponent[] cachedComponent = new ArrowComponent[2];
+
 	private ArrowComponent getComponent(StringBounder stringBounder) {
-		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
-		if (isReverse(stringBounder))
-			arrowConfiguration = arrowConfiguration.reverse();
+		final boolean reverse = isReverse(stringBounder);
+		final int idx = reverse ? 1 : 0;
+		if (cachedComponent[idx] == null) {
+			ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
+			if (reverse)
+				arrowConfiguration = arrowConfiguration.reverse();
 
-		arrowConfiguration = arrowConfiguration.withThickness(getArrowThickness());
+			arrowConfiguration = arrowConfiguration.withThickness(getArrowThickness());
 
-		return skin.createComponentArrow(message.getUsedStyles(), arrowConfiguration, skinParam,
-				message.getLabelNumbered());
+			cachedComponent[idx] = skin.createComponentArrow(message.getUsedStyles(), arrowConfiguration, skinParam,
+					message.getLabelNumbered());
+		}
+		return cachedComponent[idx];
 	}
 
 	private ArrowComponent getComponentMulticast(StringBounder stringBounder, boolean reverse) {

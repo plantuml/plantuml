@@ -135,6 +135,8 @@ For a live example of client-side rendering, see the [JavaScript PlantUML Demo](
 
 PlantUML is an open-source project, and we welcome contributions of all kinds. Whether you're helping us fix bugs, improve the docs, or spread the word, we appreciate your support. See our [contributing guide](CONTRIBUTING.md) for more information on how to get started.
 
+The language guide on [plantuml.com](https://plantuml.com) is updated through [alphadoc](http://alphadoc.plantuml.com/). Edit a page there (pick a language and wiki syntax), save, and maintainers publish it after review. Details are in [CONTRIBUTING.md](CONTRIBUTING.md#updating-the-plantuml-guide-alphadoc).
+
 For comprehensive and detailed documentation on using PlantUML, refer to the [official Javadoc, available here](https://plantuml.github.io/plantuml/javadoc). Please note that this documentation is a work in progress and may not be complete. 
 
 ## 🧑‍🤝‍🧑 Support and Community

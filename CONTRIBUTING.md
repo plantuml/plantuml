@@ -152,6 +152,22 @@ git push
   > 2) A description that can explain in detail the essence of the changes.
 
 ### Improving The Documentation
+
+The PlantUML language guide on [plantuml.com](https://plantuml.com) is edited on [alphadoc](http://alphadoc.plantuml.com/), not in this GitHub repository.
+
+#### Updating the PlantUML guide (alphadoc)
+
+1. Open [alphadoc](http://alphadoc.plantuml.com/toc/markdown/en), or pick another wiki syntax from the [TOC](http://alphadoc.plantuml.com/toc/).
+2. Select your language and your preferred edition syntax (Markdown, AsciiDoc, or DokuWiki).
+3. Open a topic, edit it, and save. No account is required.
+4. Maintainers review the change (alphadoc has no login, so this keeps spam out). After that it is published to [plantuml.com](https://plantuml.com), usually within a few days.
+
+A short walkthrough is also on the [FAQ](https://plantuml.com/faq) ("How to become a translator of PlantUML guide or just to improve the current guide?") and on [A begin for this wiki](http://alphadoc.plantuml.com/doc/markdown/en/a_begin_for_this_wiki).
+
+#### Docs in this repository
+
+Build, test, security, and similar project docs live under `docs/` here.
+
 #### What can be improved
   - Updating outdated sections
   - Enhancing explanations and examples
