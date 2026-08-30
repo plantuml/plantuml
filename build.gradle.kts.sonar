@@ -5,7 +5,7 @@ import java.util.Properties
 println("Running build.gradle.kts")
 println(project.version)
 
-val javacRelease = (project.findProperty("javacRelease") ?: "17") as String
+val javacRelease = (project.findProperty("javacRelease") ?: "21") as String
 
 plugins {
 	java
