@@ -14,6 +14,7 @@ junit-jupiter       = "6.1.2"
 junit-platform-launcher = "6.1.2"
 adarshr-test-logger = "4.0.0"
 xmlunit-core        = "2.12.0"
+xtext-xbase         = "2.36.0"
 junit-pioneer       = "2.3.0"
 teavm               = "0.14.1"
 sonarqube           = "7.3.1.8318"
@@ -25,6 +26,7 @@ ant                         = { module = "org.apache.ant:ant", version.ref = "an
 elk-core                    = { module = "org.eclipse.elk:org.eclipse.elk.core", version.ref = "elk" }
 elk-alg-layered             = { module = "org.eclipse.elk:org.eclipse.elk.alg.layered", version.ref = "elk" }
 elk-alg-mrtree              = { module = "org.eclipse.elk:org.eclipse.elk.alg.mrtree", version.ref = "elk" }
+xtext-xbase-lib             = { module = "org.eclipse.xtext:org.eclipse.xtext.xbase.lib", version.ref = "xtext-xbase" }
 jdepend                     = { module = "jdepend:jdepend", version.ref = "jdepend" }
 jlatexmath                  = { module = "org.scilab.forge:jlatexmath", version.ref = "jlatexmath" }
 junit-jupiter               = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }
