@@ -94,14 +94,20 @@ public class CommunicationExoTile extends AbstractTile {
 		return getComponent(getStringBounder()).getYPoint(getStringBounder());
 	}
 
-	private ArrowComponent getComponent(StringBounder stringBounder) {
-		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
-		if (message.getType().getDirection() == -1)
-			arrowConfiguration = arrowConfiguration.reverse();
+	// The component only depends on the tile's fixed data, not on the string
+	// bounder, but it was rebuilt on every call from every layout phase
+	private ArrowComponent cachedComponent;
 
-		final ArrowComponent comp = skin.createComponentArrow(message.getUsedStyles(), arrowConfiguration, skinParam,
-				message.getLabelNumbered());
-		return comp;
+	private ArrowComponent getComponent(StringBounder stringBounder) {
+		if (cachedComponent == null) {
+			ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
+			if (message.getType().getDirection() == -1)
+				arrowConfiguration = arrowConfiguration.reverse();
+
+			cachedComponent = skin.createComponentArrow(message.getUsedStyles(), arrowConfiguration, skinParam,
+					message.getLabelNumbered());
+		}
+		return cachedComponent;
 	}
 
 	public void drawU(UGraphic ug) {
