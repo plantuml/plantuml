@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="128px" preserveAspectRatio="none" style="width:205px;height:128px;background:#FFFFFF;" version="1.1" viewBox="0 0 205 128" width="205px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class annotation-->
+    <g class="entity" data-qualified-name="annotation" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="97.363" x="59.5" y="80"/>
+      <ellipse cx="74.5" cy="96" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="69.5" y="101">C</text>
+      <text fill="#000" font-size="14" textLength="65.363" x="88.5" y="99.889">annotation</text>
+    </g>
+    <!--class dog-->
+    <g class="entity" data-qualified-name="dog" data-source-line="5" id="ent0002">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="55.363" x="134.5" y="12"/>
+      <ellipse cx="149.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="144.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="23.363" x="163.5" y="31.889">dog</text>
+    </g>
+    <!--class chases-->
+    <g class="entity" data-qualified-name="chases" data-source-line="6" id="ent0003">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76.363" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="44.363" x="35" y="31.889">chases</text>
+    </g>
+    <ellipse cx="102" cy="18" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:1;"/>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0006" data-link-type="association" id="lnk7">
+      <path d="M82.5,28 C88.211,28 93.922,28 99.633,28" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0002" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="134.338,28,125.338,24,129.338,28,125.338,32,134.338,28" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M116.016,28 C122.123,28 123.23,28 129.338,28" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0001" data-link-type="association" id="lnk9">
+      <path d="M108,40.196 C108,51.082 108,67.698 108,79.781" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

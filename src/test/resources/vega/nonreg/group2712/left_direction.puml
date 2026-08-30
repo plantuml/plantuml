@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+hide empty members
+
+class annotation
+class dog
+class chases
+
+chases -left-> dog
+(chases, dog) . annotation
+@enduml
