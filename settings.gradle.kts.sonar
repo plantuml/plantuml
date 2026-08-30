@@ -1,0 +1,12 @@
+// https://docs.gradle.org/current/javadoc/org/gradle/api/initialization/Settings.html
+
+rootProject.name = "plantuml"
+val version: String by settings
+
+println("Running settings.gradle.kts.sonar")
+println("Version is " + version)
+
+// Check Java version
+val javaVersion = JavaVersion.current()
+println("Current Java version is " + javaVersion)
+
