@@ -1,0 +1,2708 @@
+@startuml
+skinparam responseMessageBelowArrow true
+participant "Test" as T
+participant "Example.Api" as A
+database "OrdersDb" as D
+participant "External" as X
+T -> A: GET /orders/0?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 0
+D --> A: 1 row (id=0)
+note right of A
+{ "id": 0, "customer": "cust-0", "total": 0.00 }
+end note
+A -> X: POST /audit/0
+X --> A: 202 Accepted
+A --> T: 200 OK (0 ms)
+T -> A: GET /orders/1?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 1
+D --> A: 1 row (id=1)
+A --> T: 200 OK (7 ms)
+T -> A: GET /orders/2?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 2
+D --> A: 1 row (id=2)
+A --> T: 200 OK (14 ms)
+T -> A: GET /orders/3?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 3
+D --> A: 1 row (id=3)
+note right of A
+{ "id": 3, "customer": "cust-3", "total": 10.50 }
+end note
+A --> T: 200 OK (21 ms)
+T -> A: GET /orders/4?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 4
+D --> A: 1 row (id=4)
+A --> T: 200 OK (28 ms)
+T -> A: GET /orders/5?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 5
+D --> A: 1 row (id=5)
+A -> X: POST /audit/5
+X --> A: 202 Accepted
+A --> T: 200 OK (35 ms)
+T -> A: GET /orders/6?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 6
+D --> A: 1 row (id=6)
+note right of A
+{ "id": 6, "customer": "cust-6", "total": 21.00 }
+end note
+A --> T: 200 OK (2 ms)
+T -> A: GET /orders/7?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 7
+D --> A: 1 row (id=7)
+A --> T: 200 OK (9 ms)
+T -> A: GET /orders/8?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 8
+D --> A: 1 row (id=8)
+A --> T: 200 OK (16 ms)
+T -> A: GET /orders/9?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 9
+D --> A: 1 row (id=9)
+note right of A
+{ "id": 9, "customer": "cust-9", "total": 31.50 }
+end note
+A --> T: 200 OK (23 ms)
+T -> A: GET /orders/10?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 10
+D --> A: 1 row (id=10)
+A -> X: POST /audit/10
+X --> A: 202 Accepted
+A --> T: 200 OK (30 ms)
+T -> A: GET /orders/11?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 11
+D --> A: 1 row (id=11)
+A --> T: 200 OK (37 ms)
+T -> A: GET /orders/12?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 12
+D --> A: 1 row (id=12)
+note right of A
+{ "id": 12, "customer": "cust-12", "total": 42.00 }
+end note
+A --> T: 200 OK (4 ms)
+T -> A: GET /orders/13?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 13
+D --> A: 1 row (id=13)
+A --> T: 200 OK (11 ms)
+T -> A: GET /orders/14?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 14
+D --> A: 1 row (id=14)
+A --> T: 200 OK (18 ms)
+T -> A: GET /orders/15?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 15
+D --> A: 1 row (id=15)
+note right of A
+{ "id": 15, "customer": "cust-15", "total": 52.50 }
+end note
+A -> X: POST /audit/15
+X --> A: 202 Accepted
+A --> T: 200 OK (25 ms)
+T -> A: GET /orders/16?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 16
+D --> A: 1 row (id=16)
+A --> T: 200 OK (32 ms)
+T -> A: GET /orders/17?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 17
+D --> A: 1 row (id=17)
+A --> T: 200 OK (39 ms)
+T -> A: GET /orders/18?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 18
+D --> A: 1 row (id=18)
+note right of A
+{ "id": 18, "customer": "cust-18", "total": 63.00 }
+end note
+A --> T: 200 OK (6 ms)
+T -> A: GET /orders/19?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 19
+D --> A: 1 row (id=19)
+A --> T: 200 OK (13 ms)
+T -> A: GET /orders/20?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 20
+D --> A: 1 row (id=20)
+A -> X: POST /audit/20
+X --> A: 202 Accepted
+A --> T: 200 OK (20 ms)
+T -> A: GET /orders/21?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 21
+D --> A: 1 row (id=21)
+note right of A
+{ "id": 21, "customer": "cust-21", "total": 73.50 }
+end note
+A --> T: 200 OK (27 ms)
+T -> A: GET /orders/22?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 22
+D --> A: 1 row (id=22)
+A --> T: 200 OK (34 ms)
+T -> A: GET /orders/23?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 23
+D --> A: 1 row (id=23)
+A --> T: 200 OK (1 ms)
+T -> A: GET /orders/24?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 24
+D --> A: 1 row (id=24)
+note right of A
+{ "id": 24, "customer": "cust-24", "total": 84.00 }
+end note
+A --> T: 200 OK (8 ms)
+T -> A: GET /orders/25?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 25
+D --> A: 1 row (id=25)
+A -> X: POST /audit/25
+X --> A: 202 Accepted
+A --> T: 200 OK (15 ms)
+T -> A: GET /orders/26?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 26
+D --> A: 1 row (id=26)
+A --> T: 200 OK (22 ms)
+T -> A: GET /orders/27?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 27
+D --> A: 1 row (id=27)
+note right of A
+{ "id": 27, "customer": "cust-27", "total": 94.50 }
+end note
+A --> T: 200 OK (29 ms)
+T -> A: GET /orders/28?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 28
+D --> A: 1 row (id=28)
+A --> T: 200 OK (36 ms)
+T -> A: GET /orders/29?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 29
+D --> A: 1 row (id=29)
+A --> T: 200 OK (3 ms)
+T -> A: GET /orders/30?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 30
+D --> A: 1 row (id=30)
+note right of A
+{ "id": 30, "customer": "cust-30", "total": 105.00 }
+end note
+A -> X: POST /audit/30
+X --> A: 202 Accepted
+A --> T: 200 OK (10 ms)
+T -> A: GET /orders/31?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 31
+D --> A: 1 row (id=31)
+A --> T: 200 OK (17 ms)
+T -> A: GET /orders/32?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 32
+D --> A: 1 row (id=32)
+A --> T: 200 OK (24 ms)
+T -> A: GET /orders/33?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 33
+D --> A: 1 row (id=33)
+note right of A
+{ "id": 33, "customer": "cust-33", "total": 115.50 }
+end note
+A --> T: 200 OK (31 ms)
+T -> A: GET /orders/34?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 34
+D --> A: 1 row (id=34)
+A --> T: 200 OK (38 ms)
+T -> A: GET /orders/35?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 35
+D --> A: 1 row (id=35)
+A -> X: POST /audit/35
+X --> A: 202 Accepted
+A --> T: 200 OK (5 ms)
+T -> A: GET /orders/36?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 36
+D --> A: 1 row (id=36)
+note right of A
+{ "id": 36, "customer": "cust-36", "total": 126.00 }
+end note
+A --> T: 200 OK (12 ms)
+T -> A: GET /orders/37?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 37
+D --> A: 1 row (id=37)
+A --> T: 200 OK (19 ms)
+T -> A: GET /orders/38?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 38
+D --> A: 1 row (id=38)
+A --> T: 200 OK (26 ms)
+T -> A: GET /orders/39?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 39
+D --> A: 1 row (id=39)
+note right of A
+{ "id": 39, "customer": "cust-39", "total": 136.50 }
+end note
+A --> T: 200 OK (33 ms)
+T -> A: GET /orders/40?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 40
+D --> A: 1 row (id=40)
+A -> X: POST /audit/40
+X --> A: 202 Accepted
+A --> T: 200 OK (0 ms)
+T -> A: GET /orders/41?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 41
+D --> A: 1 row (id=41)
+A --> T: 200 OK (7 ms)
+T -> A: GET /orders/42?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 42
+D --> A: 1 row (id=42)
+note right of A
+{ "id": 42, "customer": "cust-42", "total": 147.00 }
+end note
+A --> T: 200 OK (14 ms)
+T -> A: GET /orders/43?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 43
+D --> A: 1 row (id=43)
+A --> T: 200 OK (21 ms)
+T -> A: GET /orders/44?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 44
+D --> A: 1 row (id=44)
+A --> T: 200 OK (28 ms)
+T -> A: GET /orders/45?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 45
+D --> A: 1 row (id=45)
+note right of A
+{ "id": 45, "customer": "cust-45", "total": 157.50 }
+end note
+A -> X: POST /audit/45
+X --> A: 202 Accepted
+A --> T: 200 OK (35 ms)
+T -> A: GET /orders/46?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 46
+D --> A: 1 row (id=46)
+A --> T: 200 OK (2 ms)
+T -> A: GET /orders/47?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 47
+D --> A: 1 row (id=47)
+A --> T: 200 OK (9 ms)
+T -> A: GET /orders/48?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 48
+D --> A: 1 row (id=48)
+note right of A
+{ "id": 48, "customer": "cust-48", "total": 168.00 }
+end note
+A --> T: 200 OK (16 ms)
+T -> A: GET /orders/49?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 49
+D --> A: 1 row (id=49)
+A --> T: 200 OK (23 ms)
+T -> A: GET /orders/50?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 50
+D --> A: 1 row (id=50)
+A -> X: POST /audit/50
+X --> A: 202 Accepted
+A --> T: 200 OK (30 ms)
+T -> A: GET /orders/51?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 51
+D --> A: 1 row (id=51)
+note right of A
+{ "id": 51, "customer": "cust-51", "total": 178.50 }
+end note
+A --> T: 200 OK (37 ms)
+T -> A: GET /orders/52?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 52
+D --> A: 1 row (id=52)
+A --> T: 200 OK (4 ms)
+T -> A: GET /orders/53?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 53
+D --> A: 1 row (id=53)
+A --> T: 200 OK (11 ms)
+T -> A: GET /orders/54?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 54
+D --> A: 1 row (id=54)
+note right of A
+{ "id": 54, "customer": "cust-54", "total": 189.00 }
+end note
+A --> T: 200 OK (18 ms)
+T -> A: GET /orders/55?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 55
+D --> A: 1 row (id=55)
+A -> X: POST /audit/55
+X --> A: 202 Accepted
+A --> T: 200 OK (25 ms)
+T -> A: GET /orders/56?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 56
+D --> A: 1 row (id=56)
+A --> T: 200 OK (32 ms)
+T -> A: GET /orders/57?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 57
+D --> A: 1 row (id=57)
+note right of A
+{ "id": 57, "customer": "cust-57", "total": 199.50 }
+end note
+A --> T: 200 OK (39 ms)
+T -> A: GET /orders/58?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 58
+D --> A: 1 row (id=58)
+A --> T: 200 OK (6 ms)
+T -> A: GET /orders/59?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 59
+D --> A: 1 row (id=59)
+A --> T: 200 OK (13 ms)
+T -> A: GET /orders/60?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 60
+D --> A: 1 row (id=60)
+note right of A
+{ "id": 60, "customer": "cust-60", "total": 210.00 }
+end note
+A -> X: POST /audit/60
+X --> A: 202 Accepted
+A --> T: 200 OK (20 ms)
+T -> A: GET /orders/61?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 61
+D --> A: 1 row (id=61)
+A --> T: 200 OK (27 ms)
+T -> A: GET /orders/62?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 62
+D --> A: 1 row (id=62)
+A --> T: 200 OK (34 ms)
+T -> A: GET /orders/63?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 63
+D --> A: 1 row (id=63)
+note right of A
+{ "id": 63, "customer": "cust-63", "total": 220.50 }
+end note
+A --> T: 200 OK (1 ms)
+T -> A: GET /orders/64?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 64
+D --> A: 1 row (id=64)
+A --> T: 200 OK (8 ms)
+T -> A: GET /orders/65?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 65
+D --> A: 1 row (id=65)
+A -> X: POST /audit/65
+X --> A: 202 Accepted
+A --> T: 200 OK (15 ms)
+T -> A: GET /orders/66?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 66
+D --> A: 1 row (id=66)
+note right of A
+{ "id": 66, "customer": "cust-66", "total": 231.00 }
+end note
+A --> T: 200 OK (22 ms)
+T -> A: GET /orders/67?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 67
+D --> A: 1 row (id=67)
+A --> T: 200 OK (29 ms)
+T -> A: GET /orders/68?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 68
+D --> A: 1 row (id=68)
+A --> T: 200 OK (36 ms)
+T -> A: GET /orders/69?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 69
+D --> A: 1 row (id=69)
+note right of A
+{ "id": 69, "customer": "cust-69", "total": 241.50 }
+end note
+A --> T: 200 OK (3 ms)
+T -> A: GET /orders/70?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 70
+D --> A: 1 row (id=70)
+A -> X: POST /audit/70
+X --> A: 202 Accepted
+A --> T: 200 OK (10 ms)
+T -> A: GET /orders/71?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 71
+D --> A: 1 row (id=71)
+A --> T: 200 OK (17 ms)
+T -> A: GET /orders/72?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 72
+D --> A: 1 row (id=72)
+note right of A
+{ "id": 72, "customer": "cust-72", "total": 252.00 }
+end note
+A --> T: 200 OK (24 ms)
+T -> A: GET /orders/73?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 73
+D --> A: 1 row (id=73)
+A --> T: 200 OK (31 ms)
+T -> A: GET /orders/74?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 74
+D --> A: 1 row (id=74)
+A --> T: 200 OK (38 ms)
+T -> A: GET /orders/75?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 75
+D --> A: 1 row (id=75)
+note right of A
+{ "id": 75, "customer": "cust-75", "total": 262.50 }
+end note
+A -> X: POST /audit/75
+X --> A: 202 Accepted
+A --> T: 200 OK (5 ms)
+T -> A: GET /orders/76?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 76
+D --> A: 1 row (id=76)
+A --> T: 200 OK (12 ms)
+T -> A: GET /orders/77?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 77
+D --> A: 1 row (id=77)
+A --> T: 200 OK (19 ms)
+T -> A: GET /orders/78?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 78
+D --> A: 1 row (id=78)
+note right of A
+{ "id": 78, "customer": "cust-78", "total": 273.00 }
+end note
+A --> T: 200 OK (26 ms)
+T -> A: GET /orders/79?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 79
+D --> A: 1 row (id=79)
+A --> T: 200 OK (33 ms)
+T -> A: GET /orders/80?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 80
+D --> A: 1 row (id=80)
+A -> X: POST /audit/80
+X --> A: 202 Accepted
+A --> T: 200 OK (0 ms)
+T -> A: GET /orders/81?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 81
+D --> A: 1 row (id=81)
+note right of A
+{ "id": 81, "customer": "cust-81", "total": 283.50 }
+end note
+A --> T: 200 OK (7 ms)
+T -> A: GET /orders/82?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 82
+D --> A: 1 row (id=82)
+A --> T: 200 OK (14 ms)
+T -> A: GET /orders/83?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 83
+D --> A: 1 row (id=83)
+A --> T: 200 OK (21 ms)
+T -> A: GET /orders/84?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 84
+D --> A: 1 row (id=84)
+note right of A
+{ "id": 84, "customer": "cust-84", "total": 294.00 }
+end note
+A --> T: 200 OK (28 ms)
+T -> A: GET /orders/85?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 85
+D --> A: 1 row (id=85)
+A -> X: POST /audit/85
+X --> A: 202 Accepted
+A --> T: 200 OK (35 ms)
+T -> A: GET /orders/86?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 86
+D --> A: 1 row (id=86)
+A --> T: 200 OK (2 ms)
+T -> A: GET /orders/87?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 87
+D --> A: 1 row (id=87)
+note right of A
+{ "id": 87, "customer": "cust-87", "total": 304.50 }
+end note
+A --> T: 200 OK (9 ms)
+T -> A: GET /orders/88?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 88
+D --> A: 1 row (id=88)
+A --> T: 200 OK (16 ms)
+T -> A: GET /orders/89?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 89
+D --> A: 1 row (id=89)
+A --> T: 200 OK (23 ms)
+T -> A: GET /orders/90?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 90
+D --> A: 1 row (id=90)
+note right of A
+{ "id": 90, "customer": "cust-90", "total": 315.00 }
+end note
+A -> X: POST /audit/90
+X --> A: 202 Accepted
+A --> T: 200 OK (30 ms)
+T -> A: GET /orders/91?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 91
+D --> A: 1 row (id=91)
+A --> T: 200 OK (37 ms)
+T -> A: GET /orders/92?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 92
+D --> A: 1 row (id=92)
+A --> T: 200 OK (4 ms)
+T -> A: GET /orders/93?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 93
+D --> A: 1 row (id=93)
+note right of A
+{ "id": 93, "customer": "cust-93", "total": 325.50 }
+end note
+A --> T: 200 OK (11 ms)
+T -> A: GET /orders/94?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 94
+D --> A: 1 row (id=94)
+A --> T: 200 OK (18 ms)
+T -> A: GET /orders/95?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 95
+D --> A: 1 row (id=95)
+A -> X: POST /audit/95
+X --> A: 202 Accepted
+A --> T: 200 OK (25 ms)
+T -> A: GET /orders/96?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 96
+D --> A: 1 row (id=96)
+note right of A
+{ "id": 96, "customer": "cust-96", "total": 336.00 }
+end note
+A --> T: 200 OK (32 ms)
+T -> A: GET /orders/97?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 97
+D --> A: 1 row (id=97)
+A --> T: 200 OK (39 ms)
+T -> A: GET /orders/98?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 98
+D --> A: 1 row (id=98)
+A --> T: 200 OK (6 ms)
+T -> A: GET /orders/99?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 99
+D --> A: 1 row (id=99)
+note right of A
+{ "id": 99, "customer": "cust-99", "total": 346.50 }
+end note
+A --> T: 200 OK (13 ms)
+T -> A: GET /orders/100?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 100
+D --> A: 1 row (id=100)
+A -> X: POST /audit/100
+X --> A: 202 Accepted
+A --> T: 200 OK (20 ms)
+T -> A: GET /orders/101?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 101
+D --> A: 1 row (id=101)
+A --> T: 200 OK (27 ms)
+T -> A: GET /orders/102?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 102
+D --> A: 1 row (id=102)
+note right of A
+{ "id": 102, "customer": "cust-102", "total": 357.00 }
+end note
+A --> T: 200 OK (34 ms)
+T -> A: GET /orders/103?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 103
+D --> A: 1 row (id=103)
+A --> T: 200 OK (1 ms)
+T -> A: GET /orders/104?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 104
+D --> A: 1 row (id=104)
+A --> T: 200 OK (8 ms)
+T -> A: GET /orders/105?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 105
+D --> A: 1 row (id=105)
+note right of A
+{ "id": 105, "customer": "cust-105", "total": 367.50 }
+end note
+A -> X: POST /audit/105
+X --> A: 202 Accepted
+A --> T: 200 OK (15 ms)
+T -> A: GET /orders/106?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 106
+D --> A: 1 row (id=106)
+A --> T: 200 OK (22 ms)
+T -> A: GET /orders/107?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 107
+D --> A: 1 row (id=107)
+A --> T: 200 OK (29 ms)
+T -> A: GET /orders/108?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 108
+D --> A: 1 row (id=108)
+note right of A
+{ "id": 108, "customer": "cust-108", "total": 378.00 }
+end note
+A --> T: 200 OK (36 ms)
+T -> A: GET /orders/109?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 109
+D --> A: 1 row (id=109)
+A --> T: 200 OK (3 ms)
+T -> A: GET /orders/110?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 110
+D --> A: 1 row (id=110)
+A -> X: POST /audit/110
+X --> A: 202 Accepted
+A --> T: 200 OK (10 ms)
+T -> A: GET /orders/111?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 111
+D --> A: 1 row (id=111)
+note right of A
+{ "id": 111, "customer": "cust-111", "total": 388.50 }
+end note
+A --> T: 200 OK (17 ms)
+T -> A: GET /orders/112?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 112
+D --> A: 1 row (id=112)
+A --> T: 200 OK (24 ms)
+T -> A: GET /orders/113?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 113
+D --> A: 1 row (id=113)
+A --> T: 200 OK (31 ms)
+T -> A: GET /orders/114?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 114
+D --> A: 1 row (id=114)
+note right of A
+{ "id": 114, "customer": "cust-114", "total": 399.00 }
+end note
+A --> T: 200 OK (38 ms)
+T -> A: GET /orders/115?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 115
+D --> A: 1 row (id=115)
+A -> X: POST /audit/115
+X --> A: 202 Accepted
+A --> T: 200 OK (5 ms)
+T -> A: GET /orders/116?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 116
+D --> A: 1 row (id=116)
+A --> T: 200 OK (12 ms)
+T -> A: GET /orders/117?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 117
+D --> A: 1 row (id=117)
+note right of A
+{ "id": 117, "customer": "cust-117", "total": 409.50 }
+end note
+A --> T: 200 OK (19 ms)
+T -> A: GET /orders/118?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 118
+D --> A: 1 row (id=118)
+A --> T: 200 OK (26 ms)
+T -> A: GET /orders/119?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 119
+D --> A: 1 row (id=119)
+A --> T: 200 OK (33 ms)
+T -> A: GET /orders/120?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 120
+D --> A: 1 row (id=120)
+note right of A
+{ "id": 120, "customer": "cust-120", "total": 420.00 }
+end note
+A -> X: POST /audit/120
+X --> A: 202 Accepted
+A --> T: 200 OK (0 ms)
+T -> A: GET /orders/121?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 121
+D --> A: 1 row (id=121)
+A --> T: 200 OK (7 ms)
+T -> A: GET /orders/122?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 122
+D --> A: 1 row (id=122)
+A --> T: 200 OK (14 ms)
+T -> A: GET /orders/123?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 123
+D --> A: 1 row (id=123)
+note right of A
+{ "id": 123, "customer": "cust-123", "total": 430.50 }
+end note
+A --> T: 200 OK (21 ms)
+T -> A: GET /orders/124?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 124
+D --> A: 1 row (id=124)
+A --> T: 200 OK (28 ms)
+T -> A: GET /orders/125?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 125
+D --> A: 1 row (id=125)
+A -> X: POST /audit/125
+X --> A: 202 Accepted
+A --> T: 200 OK (35 ms)
+T -> A: GET /orders/126?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 126
+D --> A: 1 row (id=126)
+note right of A
+{ "id": 126, "customer": "cust-126", "total": 441.00 }
+end note
+A --> T: 200 OK (2 ms)
+T -> A: GET /orders/127?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 127
+D --> A: 1 row (id=127)
+A --> T: 200 OK (9 ms)
+T -> A: GET /orders/128?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 128
+D --> A: 1 row (id=128)
+A --> T: 200 OK (16 ms)
+T -> A: GET /orders/129?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 129
+D --> A: 1 row (id=129)
+note right of A
+{ "id": 129, "customer": "cust-129", "total": 451.50 }
+end note
+A --> T: 200 OK (23 ms)
+T -> A: GET /orders/130?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 130
+D --> A: 1 row (id=130)
+A -> X: POST /audit/130
+X --> A: 202 Accepted
+A --> T: 200 OK (30 ms)
+T -> A: GET /orders/131?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 131
+D --> A: 1 row (id=131)
+A --> T: 200 OK (37 ms)
+T -> A: GET /orders/132?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 132
+D --> A: 1 row (id=132)
+note right of A
+{ "id": 132, "customer": "cust-132", "total": 462.00 }
+end note
+A --> T: 200 OK (4 ms)
+T -> A: GET /orders/133?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 133
+D --> A: 1 row (id=133)
+A --> T: 200 OK (11 ms)
+T -> A: GET /orders/134?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 134
+D --> A: 1 row (id=134)
+A --> T: 200 OK (18 ms)
+T -> A: GET /orders/135?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 135
+D --> A: 1 row (id=135)
+note right of A
+{ "id": 135, "customer": "cust-135", "total": 472.50 }
+end note
+A -> X: POST /audit/135
+X --> A: 202 Accepted
+A --> T: 200 OK (25 ms)
+T -> A: GET /orders/136?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 136
+D --> A: 1 row (id=136)
+A --> T: 200 OK (32 ms)
+T -> A: GET /orders/137?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 137
+D --> A: 1 row (id=137)
+A --> T: 200 OK (39 ms)
+T -> A: GET /orders/138?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 138
+D --> A: 1 row (id=138)
+note right of A
+{ "id": 138, "customer": "cust-138", "total": 483.00 }
+end note
+A --> T: 200 OK (6 ms)
+T -> A: GET /orders/139?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 139
+D --> A: 1 row (id=139)
+A --> T: 200 OK (13 ms)
+T -> A: GET /orders/140?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 140
+D --> A: 1 row (id=140)
+A -> X: POST /audit/140
+X --> A: 202 Accepted
+A --> T: 200 OK (20 ms)
+T -> A: GET /orders/141?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 141
+D --> A: 1 row (id=141)
+note right of A
+{ "id": 141, "customer": "cust-141", "total": 493.50 }
+end note
+A --> T: 200 OK (27 ms)
+T -> A: GET /orders/142?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 142
+D --> A: 1 row (id=142)
+A --> T: 200 OK (34 ms)
+T -> A: GET /orders/143?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 143
+D --> A: 1 row (id=143)
+A --> T: 200 OK (1 ms)
+T -> A: GET /orders/144?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 144
+D --> A: 1 row (id=144)
+note right of A
+{ "id": 144, "customer": "cust-144", "total": 504.00 }
+end note
+A --> T: 200 OK (8 ms)
+T -> A: GET /orders/145?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 145
+D --> A: 1 row (id=145)
+A -> X: POST /audit/145
+X --> A: 202 Accepted
+A --> T: 200 OK (15 ms)
+T -> A: GET /orders/146?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 146
+D --> A: 1 row (id=146)
+A --> T: 200 OK (22 ms)
+T -> A: GET /orders/147?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 147
+D --> A: 1 row (id=147)
+note right of A
+{ "id": 147, "customer": "cust-147", "total": 514.50 }
+end note
+A --> T: 200 OK (29 ms)
+T -> A: GET /orders/148?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 148
+D --> A: 1 row (id=148)
+A --> T: 200 OK (36 ms)
+T -> A: GET /orders/149?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 149
+D --> A: 1 row (id=149)
+A --> T: 200 OK (3 ms)
+T -> A: GET /orders/150?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 150
+D --> A: 1 row (id=150)
+note right of A
+{ "id": 150, "customer": "cust-150", "total": 525.00 }
+end note
+A -> X: POST /audit/150
+X --> A: 202 Accepted
+A --> T: 200 OK (10 ms)
+T -> A: GET /orders/151?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 151
+D --> A: 1 row (id=151)
+A --> T: 200 OK (17 ms)
+T -> A: GET /orders/152?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 152
+D --> A: 1 row (id=152)
+A --> T: 200 OK (24 ms)
+T -> A: GET /orders/153?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 153
+D --> A: 1 row (id=153)
+note right of A
+{ "id": 153, "customer": "cust-153", "total": 535.50 }
+end note
+A --> T: 200 OK (31 ms)
+T -> A: GET /orders/154?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 154
+D --> A: 1 row (id=154)
+A --> T: 200 OK (38 ms)
+T -> A: GET /orders/155?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 155
+D --> A: 1 row (id=155)
+A -> X: POST /audit/155
+X --> A: 202 Accepted
+A --> T: 200 OK (5 ms)
+T -> A: GET /orders/156?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 156
+D --> A: 1 row (id=156)
+note right of A
+{ "id": 156, "customer": "cust-156", "total": 546.00 }
+end note
+A --> T: 200 OK (12 ms)
+T -> A: GET /orders/157?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 157
+D --> A: 1 row (id=157)
+A --> T: 200 OK (19 ms)
+T -> A: GET /orders/158?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 158
+D --> A: 1 row (id=158)
+A --> T: 200 OK (26 ms)
+T -> A: GET /orders/159?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 159
+D --> A: 1 row (id=159)
+note right of A
+{ "id": 159, "customer": "cust-159", "total": 556.50 }
+end note
+A --> T: 200 OK (33 ms)
+T -> A: GET /orders/160?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 160
+D --> A: 1 row (id=160)
+A -> X: POST /audit/160
+X --> A: 202 Accepted
+A --> T: 200 OK (0 ms)
+T -> A: GET /orders/161?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 161
+D --> A: 1 row (id=161)
+A --> T: 200 OK (7 ms)
+T -> A: GET /orders/162?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 162
+D --> A: 1 row (id=162)
+note right of A
+{ "id": 162, "customer": "cust-162", "total": 567.00 }
+end note
+A --> T: 200 OK (14 ms)
+T -> A: GET /orders/163?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 163
+D --> A: 1 row (id=163)
+A --> T: 200 OK (21 ms)
+T -> A: GET /orders/164?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 164
+D --> A: 1 row (id=164)
+A --> T: 200 OK (28 ms)
+T -> A: GET /orders/165?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 165
+D --> A: 1 row (id=165)
+note right of A
+{ "id": 165, "customer": "cust-165", "total": 577.50 }
+end note
+A -> X: POST /audit/165
+X --> A: 202 Accepted
+A --> T: 200 OK (35 ms)
+T -> A: GET /orders/166?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 166
+D --> A: 1 row (id=166)
+A --> T: 200 OK (2 ms)
+T -> A: GET /orders/167?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 167
+D --> A: 1 row (id=167)
+A --> T: 200 OK (9 ms)
+T -> A: GET /orders/168?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 168
+D --> A: 1 row (id=168)
+note right of A
+{ "id": 168, "customer": "cust-168", "total": 588.00 }
+end note
+A --> T: 200 OK (16 ms)
+T -> A: GET /orders/169?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 169
+D --> A: 1 row (id=169)
+A --> T: 200 OK (23 ms)
+T -> A: GET /orders/170?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 170
+D --> A: 1 row (id=170)
+A -> X: POST /audit/170
+X --> A: 202 Accepted
+A --> T: 200 OK (30 ms)
+T -> A: GET /orders/171?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 171
+D --> A: 1 row (id=171)
+note right of A
+{ "id": 171, "customer": "cust-171", "total": 598.50 }
+end note
+A --> T: 200 OK (37 ms)
+T -> A: GET /orders/172?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 172
+D --> A: 1 row (id=172)
+A --> T: 200 OK (4 ms)
+T -> A: GET /orders/173?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 173
+D --> A: 1 row (id=173)
+A --> T: 200 OK (11 ms)
+T -> A: GET /orders/174?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 174
+D --> A: 1 row (id=174)
+note right of A
+{ "id": 174, "customer": "cust-174", "total": 609.00 }
+end note
+A --> T: 200 OK (18 ms)
+T -> A: GET /orders/175?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 175
+D --> A: 1 row (id=175)
+A -> X: POST /audit/175
+X --> A: 202 Accepted
+A --> T: 200 OK (25 ms)
+T -> A: GET /orders/176?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 176
+D --> A: 1 row (id=176)
+A --> T: 200 OK (32 ms)
+T -> A: GET /orders/177?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 177
+D --> A: 1 row (id=177)
+note right of A
+{ "id": 177, "customer": "cust-177", "total": 619.50 }
+end note
+A --> T: 200 OK (39 ms)
+T -> A: GET /orders/178?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 178
+D --> A: 1 row (id=178)
+A --> T: 200 OK (6 ms)
+T -> A: GET /orders/179?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 179
+D --> A: 1 row (id=179)
+A --> T: 200 OK (13 ms)
+T -> A: GET /orders/180?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 180
+D --> A: 1 row (id=180)
+note right of A
+{ "id": 180, "customer": "cust-180", "total": 630.00 }
+end note
+A -> X: POST /audit/180
+X --> A: 202 Accepted
+A --> T: 200 OK (20 ms)
+T -> A: GET /orders/181?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 181
+D --> A: 1 row (id=181)
+A --> T: 200 OK (27 ms)
+T -> A: GET /orders/182?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 182
+D --> A: 1 row (id=182)
+A --> T: 200 OK (34 ms)
+T -> A: GET /orders/183?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 183
+D --> A: 1 row (id=183)
+note right of A
+{ "id": 183, "customer": "cust-183", "total": 640.50 }
+end note
+A --> T: 200 OK (1 ms)
+T -> A: GET /orders/184?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 184
+D --> A: 1 row (id=184)
+A --> T: 200 OK (8 ms)
+T -> A: GET /orders/185?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 185
+D --> A: 1 row (id=185)
+A -> X: POST /audit/185
+X --> A: 202 Accepted
+A --> T: 200 OK (15 ms)
+T -> A: GET /orders/186?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 186
+D --> A: 1 row (id=186)
+note right of A
+{ "id": 186, "customer": "cust-186", "total": 651.00 }
+end note
+A --> T: 200 OK (22 ms)
+T -> A: GET /orders/187?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 187
+D --> A: 1 row (id=187)
+A --> T: 200 OK (29 ms)
+T -> A: GET /orders/188?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 188
+D --> A: 1 row (id=188)
+A --> T: 200 OK (36 ms)
+T -> A: GET /orders/189?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 189
+D --> A: 1 row (id=189)
+note right of A
+{ "id": 189, "customer": "cust-189", "total": 661.50 }
+end note
+A --> T: 200 OK (3 ms)
+T -> A: GET /orders/190?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 190
+D --> A: 1 row (id=190)
+A -> X: POST /audit/190
+X --> A: 202 Accepted
+A --> T: 200 OK (10 ms)
+T -> A: GET /orders/191?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 191
+D --> A: 1 row (id=191)
+A --> T: 200 OK (17 ms)
+T -> A: GET /orders/192?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 192
+D --> A: 1 row (id=192)
+note right of A
+{ "id": 192, "customer": "cust-192", "total": 672.00 }
+end note
+A --> T: 200 OK (24 ms)
+T -> A: GET /orders/193?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 193
+D --> A: 1 row (id=193)
+A --> T: 200 OK (31 ms)
+T -> A: GET /orders/194?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 194
+D --> A: 1 row (id=194)
+A --> T: 200 OK (38 ms)
+T -> A: GET /orders/195?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 195
+D --> A: 1 row (id=195)
+note right of A
+{ "id": 195, "customer": "cust-195", "total": 682.50 }
+end note
+A -> X: POST /audit/195
+X --> A: 202 Accepted
+A --> T: 200 OK (5 ms)
+T -> A: GET /orders/196?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 196
+D --> A: 1 row (id=196)
+A --> T: 200 OK (12 ms)
+T -> A: GET /orders/197?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 197
+D --> A: 1 row (id=197)
+A --> T: 200 OK (19 ms)
+T -> A: GET /orders/198?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 198
+D --> A: 1 row (id=198)
+note right of A
+{ "id": 198, "customer": "cust-198", "total": 693.00 }
+end note
+A --> T: 200 OK (26 ms)
+T -> A: GET /orders/199?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 199
+D --> A: 1 row (id=199)
+A --> T: 200 OK (33 ms)
+T -> A: GET /orders/200?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 200
+D --> A: 1 row (id=200)
+A -> X: POST /audit/200
+X --> A: 202 Accepted
+A --> T: 200 OK (0 ms)
+T -> A: GET /orders/201?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 201
+D --> A: 1 row (id=201)
+note right of A
+{ "id": 201, "customer": "cust-201", "total": 703.50 }
+end note
+A --> T: 200 OK (7 ms)
+T -> A: GET /orders/202?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 202
+D --> A: 1 row (id=202)
+A --> T: 200 OK (14 ms)
+T -> A: GET /orders/203?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 203
+D --> A: 1 row (id=203)
+A --> T: 200 OK (21 ms)
+T -> A: GET /orders/204?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 204
+D --> A: 1 row (id=204)
+note right of A
+{ "id": 204, "customer": "cust-204", "total": 714.00 }
+end note
+A --> T: 200 OK (28 ms)
+T -> A: GET /orders/205?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 205
+D --> A: 1 row (id=205)
+A -> X: POST /audit/205
+X --> A: 202 Accepted
+A --> T: 200 OK (35 ms)
+T -> A: GET /orders/206?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 206
+D --> A: 1 row (id=206)
+A --> T: 200 OK (2 ms)
+T -> A: GET /orders/207?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 207
+D --> A: 1 row (id=207)
+note right of A
+{ "id": 207, "customer": "cust-207", "total": 724.50 }
+end note
+A --> T: 200 OK (9 ms)
+T -> A: GET /orders/208?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 208
+D --> A: 1 row (id=208)
+A --> T: 200 OK (16 ms)
+T -> A: GET /orders/209?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 209
+D --> A: 1 row (id=209)
+A --> T: 200 OK (23 ms)
+T -> A: GET /orders/210?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 210
+D --> A: 1 row (id=210)
+note right of A
+{ "id": 210, "customer": "cust-210", "total": 735.00 }
+end note
+A -> X: POST /audit/210
+X --> A: 202 Accepted
+A --> T: 200 OK (30 ms)
+T -> A: GET /orders/211?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 211
+D --> A: 1 row (id=211)
+A --> T: 200 OK (37 ms)
+T -> A: GET /orders/212?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 212
+D --> A: 1 row (id=212)
+A --> T: 200 OK (4 ms)
+T -> A: GET /orders/213?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 213
+D --> A: 1 row (id=213)
+note right of A
+{ "id": 213, "customer": "cust-213", "total": 745.50 }
+end note
+A --> T: 200 OK (11 ms)
+T -> A: GET /orders/214?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 214
+D --> A: 1 row (id=214)
+A --> T: 200 OK (18 ms)
+T -> A: GET /orders/215?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 215
+D --> A: 1 row (id=215)
+A -> X: POST /audit/215
+X --> A: 202 Accepted
+A --> T: 200 OK (25 ms)
+T -> A: GET /orders/216?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 216
+D --> A: 1 row (id=216)
+note right of A
+{ "id": 216, "customer": "cust-216", "total": 756.00 }
+end note
+A --> T: 200 OK (32 ms)
+T -> A: GET /orders/217?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 217
+D --> A: 1 row (id=217)
+A --> T: 200 OK (39 ms)
+T -> A: GET /orders/218?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 218
+D --> A: 1 row (id=218)
+A --> T: 200 OK (6 ms)
+T -> A: GET /orders/219?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 219
+D --> A: 1 row (id=219)
+note right of A
+{ "id": 219, "customer": "cust-219", "total": 766.50 }
+end note
+A --> T: 200 OK (13 ms)
+T -> A: GET /orders/220?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 220
+D --> A: 1 row (id=220)
+A -> X: POST /audit/220
+X --> A: 202 Accepted
+A --> T: 200 OK (20 ms)
+T -> A: GET /orders/221?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 221
+D --> A: 1 row (id=221)
+A --> T: 200 OK (27 ms)
+T -> A: GET /orders/222?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 222
+D --> A: 1 row (id=222)
+note right of A
+{ "id": 222, "customer": "cust-222", "total": 777.00 }
+end note
+A --> T: 200 OK (34 ms)
+T -> A: GET /orders/223?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 223
+D --> A: 1 row (id=223)
+A --> T: 200 OK (1 ms)
+T -> A: GET /orders/224?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 224
+D --> A: 1 row (id=224)
+A --> T: 200 OK (8 ms)
+T -> A: GET /orders/225?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 225
+D --> A: 1 row (id=225)
+note right of A
+{ "id": 225, "customer": "cust-225", "total": 787.50 }
+end note
+A -> X: POST /audit/225
+X --> A: 202 Accepted
+A --> T: 200 OK (15 ms)
+T -> A: GET /orders/226?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 226
+D --> A: 1 row (id=226)
+A --> T: 200 OK (22 ms)
+T -> A: GET /orders/227?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 227
+D --> A: 1 row (id=227)
+A --> T: 200 OK (29 ms)
+T -> A: GET /orders/228?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 228
+D --> A: 1 row (id=228)
+note right of A
+{ "id": 228, "customer": "cust-228", "total": 798.00 }
+end note
+A --> T: 200 OK (36 ms)
+T -> A: GET /orders/229?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 229
+D --> A: 1 row (id=229)
+A --> T: 200 OK (3 ms)
+T -> A: GET /orders/230?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 230
+D --> A: 1 row (id=230)
+A -> X: POST /audit/230
+X --> A: 202 Accepted
+A --> T: 200 OK (10 ms)
+T -> A: GET /orders/231?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 231
+D --> A: 1 row (id=231)
+note right of A
+{ "id": 231, "customer": "cust-231", "total": 808.50 }
+end note
+A --> T: 200 OK (17 ms)
+T -> A: GET /orders/232?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 232
+D --> A: 1 row (id=232)
+A --> T: 200 OK (24 ms)
+T -> A: GET /orders/233?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 233
+D --> A: 1 row (id=233)
+A --> T: 200 OK (31 ms)
+T -> A: GET /orders/234?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 234
+D --> A: 1 row (id=234)
+note right of A
+{ "id": 234, "customer": "cust-234", "total": 819.00 }
+end note
+A --> T: 200 OK (38 ms)
+T -> A: GET /orders/235?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 235
+D --> A: 1 row (id=235)
+A -> X: POST /audit/235
+X --> A: 202 Accepted
+A --> T: 200 OK (5 ms)
+T -> A: GET /orders/236?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 236
+D --> A: 1 row (id=236)
+A --> T: 200 OK (12 ms)
+T -> A: GET /orders/237?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 237
+D --> A: 1 row (id=237)
+note right of A
+{ "id": 237, "customer": "cust-237", "total": 829.50 }
+end note
+A --> T: 200 OK (19 ms)
+T -> A: GET /orders/238?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 238
+D --> A: 1 row (id=238)
+A --> T: 200 OK (26 ms)
+T -> A: GET /orders/239?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 239
+D --> A: 1 row (id=239)
+A --> T: 200 OK (33 ms)
+T -> A: GET /orders/240?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 240
+D --> A: 1 row (id=240)
+note right of A
+{ "id": 240, "customer": "cust-240", "total": 840.00 }
+end note
+A -> X: POST /audit/240
+X --> A: 202 Accepted
+A --> T: 200 OK (0 ms)
+T -> A: GET /orders/241?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 241
+D --> A: 1 row (id=241)
+A --> T: 200 OK (7 ms)
+T -> A: GET /orders/242?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 242
+D --> A: 1 row (id=242)
+A --> T: 200 OK (14 ms)
+T -> A: GET /orders/243?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 243
+D --> A: 1 row (id=243)
+note right of A
+{ "id": 243, "customer": "cust-243", "total": 850.50 }
+end note
+A --> T: 200 OK (21 ms)
+T -> A: GET /orders/244?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 244
+D --> A: 1 row (id=244)
+A --> T: 200 OK (28 ms)
+T -> A: GET /orders/245?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 245
+D --> A: 1 row (id=245)
+A -> X: POST /audit/245
+X --> A: 202 Accepted
+A --> T: 200 OK (35 ms)
+T -> A: GET /orders/246?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 246
+D --> A: 1 row (id=246)
+note right of A
+{ "id": 246, "customer": "cust-246", "total": 861.00 }
+end note
+A --> T: 200 OK (2 ms)
+T -> A: GET /orders/247?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 247
+D --> A: 1 row (id=247)
+A --> T: 200 OK (9 ms)
+T -> A: GET /orders/248?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 248
+D --> A: 1 row (id=248)
+A --> T: 200 OK (16 ms)
+T -> A: GET /orders/249?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 249
+D --> A: 1 row (id=249)
+note right of A
+{ "id": 249, "customer": "cust-249", "total": 871.50 }
+end note
+A --> T: 200 OK (23 ms)
+T -> A: GET /orders/250?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 250
+D --> A: 1 row (id=250)
+A -> X: POST /audit/250
+X --> A: 202 Accepted
+A --> T: 200 OK (30 ms)
+T -> A: GET /orders/251?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 251
+D --> A: 1 row (id=251)
+A --> T: 200 OK (37 ms)
+T -> A: GET /orders/252?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 252
+D --> A: 1 row (id=252)
+note right of A
+{ "id": 252, "customer": "cust-252", "total": 882.00 }
+end note
+A --> T: 200 OK (4 ms)
+T -> A: GET /orders/253?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 253
+D --> A: 1 row (id=253)
+A --> T: 200 OK (11 ms)
+T -> A: GET /orders/254?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 254
+D --> A: 1 row (id=254)
+A --> T: 200 OK (18 ms)
+T -> A: GET /orders/255?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 255
+D --> A: 1 row (id=255)
+note right of A
+{ "id": 255, "customer": "cust-255", "total": 892.50 }
+end note
+A -> X: POST /audit/255
+X --> A: 202 Accepted
+A --> T: 200 OK (25 ms)
+T -> A: GET /orders/256?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 256
+D --> A: 1 row (id=256)
+A --> T: 200 OK (32 ms)
+T -> A: GET /orders/257?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 257
+D --> A: 1 row (id=257)
+A --> T: 200 OK (39 ms)
+T -> A: GET /orders/258?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 258
+D --> A: 1 row (id=258)
+note right of A
+{ "id": 258, "customer": "cust-258", "total": 903.00 }
+end note
+A --> T: 200 OK (6 ms)
+T -> A: GET /orders/259?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 259
+D --> A: 1 row (id=259)
+A --> T: 200 OK (13 ms)
+T -> A: GET /orders/260?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 260
+D --> A: 1 row (id=260)
+A -> X: POST /audit/260
+X --> A: 202 Accepted
+A --> T: 200 OK (20 ms)
+T -> A: GET /orders/261?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 261
+D --> A: 1 row (id=261)
+note right of A
+{ "id": 261, "customer": "cust-261", "total": 913.50 }
+end note
+A --> T: 200 OK (27 ms)
+T -> A: GET /orders/262?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 262
+D --> A: 1 row (id=262)
+A --> T: 200 OK (34 ms)
+T -> A: GET /orders/263?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 263
+D --> A: 1 row (id=263)
+A --> T: 200 OK (1 ms)
+T -> A: GET /orders/264?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 264
+D --> A: 1 row (id=264)
+note right of A
+{ "id": 264, "customer": "cust-264", "total": 924.00 }
+end note
+A --> T: 200 OK (8 ms)
+T -> A: GET /orders/265?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 265
+D --> A: 1 row (id=265)
+A -> X: POST /audit/265
+X --> A: 202 Accepted
+A --> T: 200 OK (15 ms)
+T -> A: GET /orders/266?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 266
+D --> A: 1 row (id=266)
+A --> T: 200 OK (22 ms)
+T -> A: GET /orders/267?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 267
+D --> A: 1 row (id=267)
+note right of A
+{ "id": 267, "customer": "cust-267", "total": 934.50 }
+end note
+A --> T: 200 OK (29 ms)
+T -> A: GET /orders/268?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 268
+D --> A: 1 row (id=268)
+A --> T: 200 OK (36 ms)
+T -> A: GET /orders/269?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 269
+D --> A: 1 row (id=269)
+A --> T: 200 OK (3 ms)
+T -> A: GET /orders/270?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 270
+D --> A: 1 row (id=270)
+note right of A
+{ "id": 270, "customer": "cust-270", "total": 945.00 }
+end note
+A -> X: POST /audit/270
+X --> A: 202 Accepted
+A --> T: 200 OK (10 ms)
+T -> A: GET /orders/271?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 271
+D --> A: 1 row (id=271)
+A --> T: 200 OK (17 ms)
+T -> A: GET /orders/272?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 272
+D --> A: 1 row (id=272)
+A --> T: 200 OK (24 ms)
+T -> A: GET /orders/273?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 273
+D --> A: 1 row (id=273)
+note right of A
+{ "id": 273, "customer": "cust-273", "total": 955.50 }
+end note
+A --> T: 200 OK (31 ms)
+T -> A: GET /orders/274?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 274
+D --> A: 1 row (id=274)
+A --> T: 200 OK (38 ms)
+T -> A: GET /orders/275?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 275
+D --> A: 1 row (id=275)
+A -> X: POST /audit/275
+X --> A: 202 Accepted
+A --> T: 200 OK (5 ms)
+T -> A: GET /orders/276?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 276
+D --> A: 1 row (id=276)
+note right of A
+{ "id": 276, "customer": "cust-276", "total": 966.00 }
+end note
+A --> T: 200 OK (12 ms)
+T -> A: GET /orders/277?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 277
+D --> A: 1 row (id=277)
+A --> T: 200 OK (19 ms)
+T -> A: GET /orders/278?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 278
+D --> A: 1 row (id=278)
+A --> T: 200 OK (26 ms)
+T -> A: GET /orders/279?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 279
+D --> A: 1 row (id=279)
+note right of A
+{ "id": 279, "customer": "cust-279", "total": 976.50 }
+end note
+A --> T: 200 OK (33 ms)
+T -> A: GET /orders/280?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 280
+D --> A: 1 row (id=280)
+A -> X: POST /audit/280
+X --> A: 202 Accepted
+A --> T: 200 OK (0 ms)
+T -> A: GET /orders/281?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 281
+D --> A: 1 row (id=281)
+A --> T: 200 OK (7 ms)
+T -> A: GET /orders/282?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 282
+D --> A: 1 row (id=282)
+note right of A
+{ "id": 282, "customer": "cust-282", "total": 987.00 }
+end note
+A --> T: 200 OK (14 ms)
+T -> A: GET /orders/283?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 283
+D --> A: 1 row (id=283)
+A --> T: 200 OK (21 ms)
+T -> A: GET /orders/284?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 284
+D --> A: 1 row (id=284)
+A --> T: 200 OK (28 ms)
+T -> A: GET /orders/285?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 285
+D --> A: 1 row (id=285)
+note right of A
+{ "id": 285, "customer": "cust-285", "total": 997.50 }
+end note
+A -> X: POST /audit/285
+X --> A: 202 Accepted
+A --> T: 200 OK (35 ms)
+T -> A: GET /orders/286?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 286
+D --> A: 1 row (id=286)
+A --> T: 200 OK (2 ms)
+T -> A: GET /orders/287?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 287
+D --> A: 1 row (id=287)
+A --> T: 200 OK (9 ms)
+T -> A: GET /orders/288?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 288
+D --> A: 1 row (id=288)
+note right of A
+{ "id": 288, "customer": "cust-288", "total": 1008.00 }
+end note
+A --> T: 200 OK (16 ms)
+T -> A: GET /orders/289?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 289
+D --> A: 1 row (id=289)
+A --> T: 200 OK (23 ms)
+T -> A: GET /orders/290?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 290
+D --> A: 1 row (id=290)
+A -> X: POST /audit/290
+X --> A: 202 Accepted
+A --> T: 200 OK (30 ms)
+T -> A: GET /orders/291?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 291
+D --> A: 1 row (id=291)
+note right of A
+{ "id": 291, "customer": "cust-291", "total": 1018.50 }
+end note
+A --> T: 200 OK (37 ms)
+T -> A: GET /orders/292?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 292
+D --> A: 1 row (id=292)
+A --> T: 200 OK (4 ms)
+T -> A: GET /orders/293?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 293
+D --> A: 1 row (id=293)
+A --> T: 200 OK (11 ms)
+T -> A: GET /orders/294?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 294
+D --> A: 1 row (id=294)
+note right of A
+{ "id": 294, "customer": "cust-294", "total": 1029.00 }
+end note
+A --> T: 200 OK (18 ms)
+T -> A: GET /orders/295?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 295
+D --> A: 1 row (id=295)
+A -> X: POST /audit/295
+X --> A: 202 Accepted
+A --> T: 200 OK (25 ms)
+T -> A: GET /orders/296?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 296
+D --> A: 1 row (id=296)
+A --> T: 200 OK (32 ms)
+T -> A: GET /orders/297?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 297
+D --> A: 1 row (id=297)
+note right of A
+{ "id": 297, "customer": "cust-297", "total": 1039.50 }
+end note
+A --> T: 200 OK (39 ms)
+T -> A: GET /orders/298?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 298
+D --> A: 1 row (id=298)
+A --> T: 200 OK (6 ms)
+T -> A: GET /orders/299?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 299
+D --> A: 1 row (id=299)
+A --> T: 200 OK (13 ms)
+T -> A: GET /orders/300?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 300
+D --> A: 1 row (id=300)
+note right of A
+{ "id": 300, "customer": "cust-300", "total": 1050.00 }
+end note
+A -> X: POST /audit/300
+X --> A: 202 Accepted
+A --> T: 200 OK (20 ms)
+T -> A: GET /orders/301?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 301
+D --> A: 1 row (id=301)
+A --> T: 200 OK (27 ms)
+T -> A: GET /orders/302?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 302
+D --> A: 1 row (id=302)
+A --> T: 200 OK (34 ms)
+T -> A: GET /orders/303?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 303
+D --> A: 1 row (id=303)
+note right of A
+{ "id": 303, "customer": "cust-303", "total": 1060.50 }
+end note
+A --> T: 200 OK (1 ms)
+T -> A: GET /orders/304?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 304
+D --> A: 1 row (id=304)
+A --> T: 200 OK (8 ms)
+T -> A: GET /orders/305?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 305
+D --> A: 1 row (id=305)
+A -> X: POST /audit/305
+X --> A: 202 Accepted
+A --> T: 200 OK (15 ms)
+T -> A: GET /orders/306?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 306
+D --> A: 1 row (id=306)
+note right of A
+{ "id": 306, "customer": "cust-306", "total": 1071.00 }
+end note
+A --> T: 200 OK (22 ms)
+T -> A: GET /orders/307?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 307
+D --> A: 1 row (id=307)
+A --> T: 200 OK (29 ms)
+T -> A: GET /orders/308?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 308
+D --> A: 1 row (id=308)
+A --> T: 200 OK (36 ms)
+T -> A: GET /orders/309?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 309
+D --> A: 1 row (id=309)
+note right of A
+{ "id": 309, "customer": "cust-309", "total": 1081.50 }
+end note
+A --> T: 200 OK (3 ms)
+T -> A: GET /orders/310?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 310
+D --> A: 1 row (id=310)
+A -> X: POST /audit/310
+X --> A: 202 Accepted
+A --> T: 200 OK (10 ms)
+T -> A: GET /orders/311?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 311
+D --> A: 1 row (id=311)
+A --> T: 200 OK (17 ms)
+T -> A: GET /orders/312?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 312
+D --> A: 1 row (id=312)
+note right of A
+{ "id": 312, "customer": "cust-312", "total": 1092.00 }
+end note
+A --> T: 200 OK (24 ms)
+T -> A: GET /orders/313?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 313
+D --> A: 1 row (id=313)
+A --> T: 200 OK (31 ms)
+T -> A: GET /orders/314?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 314
+D --> A: 1 row (id=314)
+A --> T: 200 OK (38 ms)
+T -> A: GET /orders/315?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 315
+D --> A: 1 row (id=315)
+note right of A
+{ "id": 315, "customer": "cust-315", "total": 1102.50 }
+end note
+A -> X: POST /audit/315
+X --> A: 202 Accepted
+A --> T: 200 OK (5 ms)
+T -> A: GET /orders/316?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 316
+D --> A: 1 row (id=316)
+A --> T: 200 OK (12 ms)
+T -> A: GET /orders/317?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 317
+D --> A: 1 row (id=317)
+A --> T: 200 OK (19 ms)
+T -> A: GET /orders/318?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 318
+D --> A: 1 row (id=318)
+note right of A
+{ "id": 318, "customer": "cust-318", "total": 1113.00 }
+end note
+A --> T: 200 OK (26 ms)
+T -> A: GET /orders/319?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 319
+D --> A: 1 row (id=319)
+A --> T: 200 OK (33 ms)
+T -> A: GET /orders/320?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 320
+D --> A: 1 row (id=320)
+A -> X: POST /audit/320
+X --> A: 202 Accepted
+A --> T: 200 OK (0 ms)
+T -> A: GET /orders/321?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 321
+D --> A: 1 row (id=321)
+note right of A
+{ "id": 321, "customer": "cust-321", "total": 1123.50 }
+end note
+A --> T: 200 OK (7 ms)
+T -> A: GET /orders/322?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 322
+D --> A: 1 row (id=322)
+A --> T: 200 OK (14 ms)
+T -> A: GET /orders/323?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 323
+D --> A: 1 row (id=323)
+A --> T: 200 OK (21 ms)
+T -> A: GET /orders/324?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 324
+D --> A: 1 row (id=324)
+note right of A
+{ "id": 324, "customer": "cust-324", "total": 1134.00 }
+end note
+A --> T: 200 OK (28 ms)
+T -> A: GET /orders/325?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 325
+D --> A: 1 row (id=325)
+A -> X: POST /audit/325
+X --> A: 202 Accepted
+A --> T: 200 OK (35 ms)
+T -> A: GET /orders/326?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 326
+D --> A: 1 row (id=326)
+A --> T: 200 OK (2 ms)
+T -> A: GET /orders/327?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 327
+D --> A: 1 row (id=327)
+note right of A
+{ "id": 327, "customer": "cust-327", "total": 1144.50 }
+end note
+A --> T: 200 OK (9 ms)
+T -> A: GET /orders/328?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 328
+D --> A: 1 row (id=328)
+A --> T: 200 OK (16 ms)
+T -> A: GET /orders/329?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 329
+D --> A: 1 row (id=329)
+A --> T: 200 OK (23 ms)
+T -> A: GET /orders/330?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 330
+D --> A: 1 row (id=330)
+note right of A
+{ "id": 330, "customer": "cust-330", "total": 1155.00 }
+end note
+A -> X: POST /audit/330
+X --> A: 202 Accepted
+A --> T: 200 OK (30 ms)
+T -> A: GET /orders/331?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 331
+D --> A: 1 row (id=331)
+A --> T: 200 OK (37 ms)
+T -> A: GET /orders/332?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 332
+D --> A: 1 row (id=332)
+A --> T: 200 OK (4 ms)
+T -> A: GET /orders/333?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 333
+D --> A: 1 row (id=333)
+note right of A
+{ "id": 333, "customer": "cust-333", "total": 1165.50 }
+end note
+A --> T: 200 OK (11 ms)
+T -> A: GET /orders/334?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 334
+D --> A: 1 row (id=334)
+A --> T: 200 OK (18 ms)
+T -> A: GET /orders/335?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 335
+D --> A: 1 row (id=335)
+A -> X: POST /audit/335
+X --> A: 202 Accepted
+A --> T: 200 OK (25 ms)
+T -> A: GET /orders/336?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 336
+D --> A: 1 row (id=336)
+note right of A
+{ "id": 336, "customer": "cust-336", "total": 1176.00 }
+end note
+A --> T: 200 OK (32 ms)
+T -> A: GET /orders/337?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 337
+D --> A: 1 row (id=337)
+A --> T: 200 OK (39 ms)
+T -> A: GET /orders/338?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 338
+D --> A: 1 row (id=338)
+A --> T: 200 OK (6 ms)
+T -> A: GET /orders/339?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 339
+D --> A: 1 row (id=339)
+note right of A
+{ "id": 339, "customer": "cust-339", "total": 1186.50 }
+end note
+A --> T: 200 OK (13 ms)
+T -> A: GET /orders/340?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 340
+D --> A: 1 row (id=340)
+A -> X: POST /audit/340
+X --> A: 202 Accepted
+A --> T: 200 OK (20 ms)
+T -> A: GET /orders/341?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 341
+D --> A: 1 row (id=341)
+A --> T: 200 OK (27 ms)
+T -> A: GET /orders/342?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 342
+D --> A: 1 row (id=342)
+note right of A
+{ "id": 342, "customer": "cust-342", "total": 1197.00 }
+end note
+A --> T: 200 OK (34 ms)
+T -> A: GET /orders/343?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 343
+D --> A: 1 row (id=343)
+A --> T: 200 OK (1 ms)
+T -> A: GET /orders/344?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 344
+D --> A: 1 row (id=344)
+A --> T: 200 OK (8 ms)
+T -> A: GET /orders/345?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 345
+D --> A: 1 row (id=345)
+note right of A
+{ "id": 345, "customer": "cust-345", "total": 1207.50 }
+end note
+A -> X: POST /audit/345
+X --> A: 202 Accepted
+A --> T: 200 OK (15 ms)
+T -> A: GET /orders/346?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 346
+D --> A: 1 row (id=346)
+A --> T: 200 OK (22 ms)
+T -> A: GET /orders/347?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 347
+D --> A: 1 row (id=347)
+A --> T: 200 OK (29 ms)
+T -> A: GET /orders/348?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 348
+D --> A: 1 row (id=348)
+note right of A
+{ "id": 348, "customer": "cust-348", "total": 1218.00 }
+end note
+A --> T: 200 OK (36 ms)
+T -> A: GET /orders/349?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 349
+D --> A: 1 row (id=349)
+A --> T: 200 OK (3 ms)
+T -> A: GET /orders/350?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 350
+D --> A: 1 row (id=350)
+A -> X: POST /audit/350
+X --> A: 202 Accepted
+A --> T: 200 OK (10 ms)
+T -> A: GET /orders/351?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 351
+D --> A: 1 row (id=351)
+note right of A
+{ "id": 351, "customer": "cust-351", "total": 1228.50 }
+end note
+A --> T: 200 OK (17 ms)
+T -> A: GET /orders/352?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 352
+D --> A: 1 row (id=352)
+A --> T: 200 OK (24 ms)
+T -> A: GET /orders/353?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 353
+D --> A: 1 row (id=353)
+A --> T: 200 OK (31 ms)
+T -> A: GET /orders/354?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 354
+D --> A: 1 row (id=354)
+note right of A
+{ "id": 354, "customer": "cust-354", "total": 1239.00 }
+end note
+A --> T: 200 OK (38 ms)
+T -> A: GET /orders/355?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 355
+D --> A: 1 row (id=355)
+A -> X: POST /audit/355
+X --> A: 202 Accepted
+A --> T: 200 OK (5 ms)
+T -> A: GET /orders/356?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 356
+D --> A: 1 row (id=356)
+A --> T: 200 OK (12 ms)
+T -> A: GET /orders/357?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 357
+D --> A: 1 row (id=357)
+note right of A
+{ "id": 357, "customer": "cust-357", "total": 1249.50 }
+end note
+A --> T: 200 OK (19 ms)
+T -> A: GET /orders/358?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 358
+D --> A: 1 row (id=358)
+A --> T: 200 OK (26 ms)
+T -> A: GET /orders/359?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 359
+D --> A: 1 row (id=359)
+A --> T: 200 OK (33 ms)
+T -> A: GET /orders/360?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 360
+D --> A: 1 row (id=360)
+note right of A
+{ "id": 360, "customer": "cust-360", "total": 1260.00 }
+end note
+A -> X: POST /audit/360
+X --> A: 202 Accepted
+A --> T: 200 OK (0 ms)
+T -> A: GET /orders/361?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 361
+D --> A: 1 row (id=361)
+A --> T: 200 OK (7 ms)
+T -> A: GET /orders/362?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 362
+D --> A: 1 row (id=362)
+A --> T: 200 OK (14 ms)
+T -> A: GET /orders/363?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 363
+D --> A: 1 row (id=363)
+note right of A
+{ "id": 363, "customer": "cust-363", "total": 1270.50 }
+end note
+A --> T: 200 OK (21 ms)
+T -> A: GET /orders/364?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 364
+D --> A: 1 row (id=364)
+A --> T: 200 OK (28 ms)
+T -> A: GET /orders/365?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 365
+D --> A: 1 row (id=365)
+A -> X: POST /audit/365
+X --> A: 202 Accepted
+A --> T: 200 OK (35 ms)
+T -> A: GET /orders/366?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 366
+D --> A: 1 row (id=366)
+note right of A
+{ "id": 366, "customer": "cust-366", "total": 1281.00 }
+end note
+A --> T: 200 OK (2 ms)
+T -> A: GET /orders/367?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 367
+D --> A: 1 row (id=367)
+A --> T: 200 OK (9 ms)
+T -> A: GET /orders/368?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 368
+D --> A: 1 row (id=368)
+A --> T: 200 OK (16 ms)
+T -> A: GET /orders/369?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 369
+D --> A: 1 row (id=369)
+note right of A
+{ "id": 369, "customer": "cust-369", "total": 1291.50 }
+end note
+A --> T: 200 OK (23 ms)
+T -> A: GET /orders/370?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 370
+D --> A: 1 row (id=370)
+A -> X: POST /audit/370
+X --> A: 202 Accepted
+A --> T: 200 OK (30 ms)
+T -> A: GET /orders/371?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 371
+D --> A: 1 row (id=371)
+A --> T: 200 OK (37 ms)
+T -> A: GET /orders/372?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 372
+D --> A: 1 row (id=372)
+note right of A
+{ "id": 372, "customer": "cust-372", "total": 1302.00 }
+end note
+A --> T: 200 OK (4 ms)
+T -> A: GET /orders/373?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 373
+D --> A: 1 row (id=373)
+A --> T: 200 OK (11 ms)
+T -> A: GET /orders/374?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 374
+D --> A: 1 row (id=374)
+A --> T: 200 OK (18 ms)
+T -> A: GET /orders/375?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 375
+D --> A: 1 row (id=375)
+note right of A
+{ "id": 375, "customer": "cust-375", "total": 1312.50 }
+end note
+A -> X: POST /audit/375
+X --> A: 202 Accepted
+A --> T: 200 OK (25 ms)
+T -> A: GET /orders/376?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 376
+D --> A: 1 row (id=376)
+A --> T: 200 OK (32 ms)
+T -> A: GET /orders/377?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 377
+D --> A: 1 row (id=377)
+A --> T: 200 OK (39 ms)
+T -> A: GET /orders/378?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 378
+D --> A: 1 row (id=378)
+note right of A
+{ "id": 378, "customer": "cust-378", "total": 1323.00 }
+end note
+A --> T: 200 OK (6 ms)
+T -> A: GET /orders/379?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 379
+D --> A: 1 row (id=379)
+A --> T: 200 OK (13 ms)
+T -> A: GET /orders/380?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 380
+D --> A: 1 row (id=380)
+A -> X: POST /audit/380
+X --> A: 202 Accepted
+A --> T: 200 OK (20 ms)
+T -> A: GET /orders/381?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 381
+D --> A: 1 row (id=381)
+note right of A
+{ "id": 381, "customer": "cust-381", "total": 1333.50 }
+end note
+A --> T: 200 OK (27 ms)
+T -> A: GET /orders/382?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 382
+D --> A: 1 row (id=382)
+A --> T: 200 OK (34 ms)
+T -> A: GET /orders/383?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 383
+D --> A: 1 row (id=383)
+A --> T: 200 OK (1 ms)
+T -> A: GET /orders/384?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 384
+D --> A: 1 row (id=384)
+note right of A
+{ "id": 384, "customer": "cust-384", "total": 1344.00 }
+end note
+A --> T: 200 OK (8 ms)
+T -> A: GET /orders/385?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 385
+D --> A: 1 row (id=385)
+A -> X: POST /audit/385
+X --> A: 202 Accepted
+A --> T: 200 OK (15 ms)
+T -> A: GET /orders/386?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 386
+D --> A: 1 row (id=386)
+A --> T: 200 OK (22 ms)
+T -> A: GET /orders/387?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 387
+D --> A: 1 row (id=387)
+note right of A
+{ "id": 387, "customer": "cust-387", "total": 1354.50 }
+end note
+A --> T: 200 OK (29 ms)
+T -> A: GET /orders/388?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 388
+D --> A: 1 row (id=388)
+A --> T: 200 OK (36 ms)
+T -> A: GET /orders/389?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 389
+D --> A: 1 row (id=389)
+A --> T: 200 OK (3 ms)
+T -> A: GET /orders/390?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 390
+D --> A: 1 row (id=390)
+note right of A
+{ "id": 390, "customer": "cust-390", "total": 1365.00 }
+end note
+A -> X: POST /audit/390
+X --> A: 202 Accepted
+A --> T: 200 OK (10 ms)
+T -> A: GET /orders/391?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 391
+D --> A: 1 row (id=391)
+A --> T: 200 OK (17 ms)
+T -> A: GET /orders/392?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 392
+D --> A: 1 row (id=392)
+A --> T: 200 OK (24 ms)
+T -> A: GET /orders/393?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 393
+D --> A: 1 row (id=393)
+note right of A
+{ "id": 393, "customer": "cust-393", "total": 1375.50 }
+end note
+A --> T: 200 OK (31 ms)
+T -> A: GET /orders/394?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 394
+D --> A: 1 row (id=394)
+A --> T: 200 OK (38 ms)
+T -> A: GET /orders/395?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 395
+D --> A: 1 row (id=395)
+A -> X: POST /audit/395
+X --> A: 202 Accepted
+A --> T: 200 OK (5 ms)
+T -> A: GET /orders/396?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 396
+D --> A: 1 row (id=396)
+note right of A
+{ "id": 396, "customer": "cust-396", "total": 1386.00 }
+end note
+A --> T: 200 OK (12 ms)
+T -> A: GET /orders/397?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 397
+D --> A: 1 row (id=397)
+A --> T: 200 OK (19 ms)
+T -> A: GET /orders/398?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 398
+D --> A: 1 row (id=398)
+A --> T: 200 OK (26 ms)
+T -> A: GET /orders/399?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 399
+D --> A: 1 row (id=399)
+note right of A
+{ "id": 399, "customer": "cust-399", "total": 1396.50 }
+end note
+A --> T: 200 OK (33 ms)
+T -> A: GET /orders/400?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 400
+D --> A: 1 row (id=400)
+A -> X: POST /audit/400
+X --> A: 202 Accepted
+A --> T: 200 OK (0 ms)
+T -> A: GET /orders/401?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 401
+D --> A: 1 row (id=401)
+A --> T: 200 OK (7 ms)
+T -> A: GET /orders/402?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 402
+D --> A: 1 row (id=402)
+note right of A
+{ "id": 402, "customer": "cust-402", "total": 1407.00 }
+end note
+A --> T: 200 OK (14 ms)
+T -> A: GET /orders/403?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 403
+D --> A: 1 row (id=403)
+A --> T: 200 OK (21 ms)
+T -> A: GET /orders/404?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 404
+D --> A: 1 row (id=404)
+A --> T: 200 OK (28 ms)
+T -> A: GET /orders/405?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 405
+D --> A: 1 row (id=405)
+note right of A
+{ "id": 405, "customer": "cust-405", "total": 1417.50 }
+end note
+A -> X: POST /audit/405
+X --> A: 202 Accepted
+A --> T: 200 OK (35 ms)
+T -> A: GET /orders/406?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 406
+D --> A: 1 row (id=406)
+A --> T: 200 OK (2 ms)
+T -> A: GET /orders/407?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 407
+D --> A: 1 row (id=407)
+A --> T: 200 OK (9 ms)
+T -> A: GET /orders/408?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 408
+D --> A: 1 row (id=408)
+note right of A
+{ "id": 408, "customer": "cust-408", "total": 1428.00 }
+end note
+A --> T: 200 OK (16 ms)
+T -> A: GET /orders/409?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 409
+D --> A: 1 row (id=409)
+A --> T: 200 OK (23 ms)
+T -> A: GET /orders/410?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 410
+D --> A: 1 row (id=410)
+A -> X: POST /audit/410
+X --> A: 202 Accepted
+A --> T: 200 OK (30 ms)
+T -> A: GET /orders/411?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 411
+D --> A: 1 row (id=411)
+note right of A
+{ "id": 411, "customer": "cust-411", "total": 1438.50 }
+end note
+A --> T: 200 OK (37 ms)
+T -> A: GET /orders/412?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 412
+D --> A: 1 row (id=412)
+A --> T: 200 OK (4 ms)
+T -> A: GET /orders/413?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 413
+D --> A: 1 row (id=413)
+A --> T: 200 OK (11 ms)
+T -> A: GET /orders/414?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 414
+D --> A: 1 row (id=414)
+note right of A
+{ "id": 414, "customer": "cust-414", "total": 1449.00 }
+end note
+A --> T: 200 OK (18 ms)
+T -> A: GET /orders/415?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 415
+D --> A: 1 row (id=415)
+A -> X: POST /audit/415
+X --> A: 202 Accepted
+A --> T: 200 OK (25 ms)
+T -> A: GET /orders/416?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 416
+D --> A: 1 row (id=416)
+A --> T: 200 OK (32 ms)
+T -> A: GET /orders/417?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 417
+D --> A: 1 row (id=417)
+note right of A
+{ "id": 417, "customer": "cust-417", "total": 1459.50 }
+end note
+A --> T: 200 OK (39 ms)
+T -> A: GET /orders/418?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 418
+D --> A: 1 row (id=418)
+A --> T: 200 OK (6 ms)
+T -> A: GET /orders/419?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 419
+D --> A: 1 row (id=419)
+A --> T: 200 OK (13 ms)
+T -> A: GET /orders/420?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 420
+D --> A: 1 row (id=420)
+note right of A
+{ "id": 420, "customer": "cust-420", "total": 1470.00 }
+end note
+A -> X: POST /audit/420
+X --> A: 202 Accepted
+A --> T: 200 OK (20 ms)
+T -> A: GET /orders/421?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 421
+D --> A: 1 row (id=421)
+A --> T: 200 OK (27 ms)
+T -> A: GET /orders/422?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 422
+D --> A: 1 row (id=422)
+A --> T: 200 OK (34 ms)
+T -> A: GET /orders/423?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 423
+D --> A: 1 row (id=423)
+note right of A
+{ "id": 423, "customer": "cust-423", "total": 1480.50 }
+end note
+A --> T: 200 OK (1 ms)
+T -> A: GET /orders/424?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 424
+D --> A: 1 row (id=424)
+A --> T: 200 OK (8 ms)
+T -> A: GET /orders/425?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 425
+D --> A: 1 row (id=425)
+A -> X: POST /audit/425
+X --> A: 202 Accepted
+A --> T: 200 OK (15 ms)
+T -> A: GET /orders/426?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 426
+D --> A: 1 row (id=426)
+note right of A
+{ "id": 426, "customer": "cust-426", "total": 1491.00 }
+end note
+A --> T: 200 OK (22 ms)
+T -> A: GET /orders/427?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 427
+D --> A: 1 row (id=427)
+A --> T: 200 OK (29 ms)
+T -> A: GET /orders/428?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 428
+D --> A: 1 row (id=428)
+A --> T: 200 OK (36 ms)
+T -> A: GET /orders/429?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 429
+D --> A: 1 row (id=429)
+note right of A
+{ "id": 429, "customer": "cust-429", "total": 1501.50 }
+end note
+A --> T: 200 OK (3 ms)
+T -> A: GET /orders/430?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 430
+D --> A: 1 row (id=430)
+A -> X: POST /audit/430
+X --> A: 202 Accepted
+A --> T: 200 OK (10 ms)
+T -> A: GET /orders/431?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 431
+D --> A: 1 row (id=431)
+A --> T: 200 OK (17 ms)
+T -> A: GET /orders/432?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 432
+D --> A: 1 row (id=432)
+note right of A
+{ "id": 432, "customer": "cust-432", "total": 1512.00 }
+end note
+A --> T: 200 OK (24 ms)
+T -> A: GET /orders/433?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 433
+D --> A: 1 row (id=433)
+A --> T: 200 OK (31 ms)
+T -> A: GET /orders/434?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 434
+D --> A: 1 row (id=434)
+A --> T: 200 OK (38 ms)
+T -> A: GET /orders/435?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 435
+D --> A: 1 row (id=435)
+note right of A
+{ "id": 435, "customer": "cust-435", "total": 1522.50 }
+end note
+A -> X: POST /audit/435
+X --> A: 202 Accepted
+A --> T: 200 OK (5 ms)
+T -> A: GET /orders/436?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 436
+D --> A: 1 row (id=436)
+A --> T: 200 OK (12 ms)
+T -> A: GET /orders/437?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 437
+D --> A: 1 row (id=437)
+A --> T: 200 OK (19 ms)
+T -> A: GET /orders/438?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 438
+D --> A: 1 row (id=438)
+note right of A
+{ "id": 438, "customer": "cust-438", "total": 1533.00 }
+end note
+A --> T: 200 OK (26 ms)
+T -> A: GET /orders/439?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 439
+D --> A: 1 row (id=439)
+A --> T: 200 OK (33 ms)
+T -> A: GET /orders/440?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 440
+D --> A: 1 row (id=440)
+A -> X: POST /audit/440
+X --> A: 202 Accepted
+A --> T: 200 OK (0 ms)
+T -> A: GET /orders/441?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 441
+D --> A: 1 row (id=441)
+note right of A
+{ "id": 441, "customer": "cust-441", "total": 1543.50 }
+end note
+A --> T: 200 OK (7 ms)
+T -> A: GET /orders/442?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 442
+D --> A: 1 row (id=442)
+A --> T: 200 OK (14 ms)
+T -> A: GET /orders/443?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 443
+D --> A: 1 row (id=443)
+A --> T: 200 OK (21 ms)
+T -> A: GET /orders/444?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 444
+D --> A: 1 row (id=444)
+note right of A
+{ "id": 444, "customer": "cust-444", "total": 1554.00 }
+end note
+A --> T: 200 OK (28 ms)
+T -> A: GET /orders/445?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 445
+D --> A: 1 row (id=445)
+A -> X: POST /audit/445
+X --> A: 202 Accepted
+A --> T: 200 OK (35 ms)
+T -> A: GET /orders/446?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 446
+D --> A: 1 row (id=446)
+A --> T: 200 OK (2 ms)
+T -> A: GET /orders/447?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 447
+D --> A: 1 row (id=447)
+note right of A
+{ "id": 447, "customer": "cust-447", "total": 1564.50 }
+end note
+A --> T: 200 OK (9 ms)
+T -> A: GET /orders/448?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 448
+D --> A: 1 row (id=448)
+A --> T: 200 OK (16 ms)
+T -> A: GET /orders/449?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 449
+D --> A: 1 row (id=449)
+A --> T: 200 OK (23 ms)
+T -> A: GET /orders/450?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 450
+D --> A: 1 row (id=450)
+note right of A
+{ "id": 450, "customer": "cust-450", "total": 1575.00 }
+end note
+A -> X: POST /audit/450
+X --> A: 202 Accepted
+A --> T: 200 OK (30 ms)
+T -> A: GET /orders/451?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 451
+D --> A: 1 row (id=451)
+A --> T: 200 OK (37 ms)
+T -> A: GET /orders/452?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 452
+D --> A: 1 row (id=452)
+A --> T: 200 OK (4 ms)
+T -> A: GET /orders/453?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 453
+D --> A: 1 row (id=453)
+note right of A
+{ "id": 453, "customer": "cust-453", "total": 1585.50 }
+end note
+A --> T: 200 OK (11 ms)
+T -> A: GET /orders/454?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 454
+D --> A: 1 row (id=454)
+A --> T: 200 OK (18 ms)
+T -> A: GET /orders/455?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 455
+D --> A: 1 row (id=455)
+A -> X: POST /audit/455
+X --> A: 202 Accepted
+A --> T: 200 OK (25 ms)
+T -> A: GET /orders/456?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 456
+D --> A: 1 row (id=456)
+note right of A
+{ "id": 456, "customer": "cust-456", "total": 1596.00 }
+end note
+A --> T: 200 OK (32 ms)
+T -> A: GET /orders/457?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 457
+D --> A: 1 row (id=457)
+A --> T: 200 OK (39 ms)
+T -> A: GET /orders/458?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 458
+D --> A: 1 row (id=458)
+A --> T: 200 OK (6 ms)
+T -> A: GET /orders/459?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 459
+D --> A: 1 row (id=459)
+note right of A
+{ "id": 459, "customer": "cust-459", "total": 1606.50 }
+end note
+A --> T: 200 OK (13 ms)
+T -> A: GET /orders/460?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 460
+D --> A: 1 row (id=460)
+A -> X: POST /audit/460
+X --> A: 202 Accepted
+A --> T: 200 OK (20 ms)
+T -> A: GET /orders/461?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 461
+D --> A: 1 row (id=461)
+A --> T: 200 OK (27 ms)
+T -> A: GET /orders/462?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 462
+D --> A: 1 row (id=462)
+note right of A
+{ "id": 462, "customer": "cust-462", "total": 1617.00 }
+end note
+A --> T: 200 OK (34 ms)
+T -> A: GET /orders/463?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 463
+D --> A: 1 row (id=463)
+A --> T: 200 OK (1 ms)
+T -> A: GET /orders/464?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 464
+D --> A: 1 row (id=464)
+A --> T: 200 OK (8 ms)
+T -> A: GET /orders/465?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 465
+D --> A: 1 row (id=465)
+note right of A
+{ "id": 465, "customer": "cust-465", "total": 1627.50 }
+end note
+A -> X: POST /audit/465
+X --> A: 202 Accepted
+A --> T: 200 OK (15 ms)
+T -> A: GET /orders/466?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 466
+D --> A: 1 row (id=466)
+A --> T: 200 OK (22 ms)
+T -> A: GET /orders/467?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 467
+D --> A: 1 row (id=467)
+A --> T: 200 OK (29 ms)
+T -> A: GET /orders/468?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 468
+D --> A: 1 row (id=468)
+note right of A
+{ "id": 468, "customer": "cust-468", "total": 1638.00 }
+end note
+A --> T: 200 OK (36 ms)
+T -> A: GET /orders/469?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 469
+D --> A: 1 row (id=469)
+A --> T: 200 OK (3 ms)
+T -> A: GET /orders/470?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 470
+D --> A: 1 row (id=470)
+A -> X: POST /audit/470
+X --> A: 202 Accepted
+A --> T: 200 OK (10 ms)
+T -> A: GET /orders/471?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 471
+D --> A: 1 row (id=471)
+note right of A
+{ "id": 471, "customer": "cust-471", "total": 1648.50 }
+end note
+A --> T: 200 OK (17 ms)
+T -> A: GET /orders/472?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 472
+D --> A: 1 row (id=472)
+A --> T: 200 OK (24 ms)
+T -> A: GET /orders/473?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 473
+D --> A: 1 row (id=473)
+A --> T: 200 OK (31 ms)
+T -> A: GET /orders/474?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 474
+D --> A: 1 row (id=474)
+note right of A
+{ "id": 474, "customer": "cust-474", "total": 1659.00 }
+end note
+A --> T: 200 OK (38 ms)
+T -> A: GET /orders/475?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 475
+D --> A: 1 row (id=475)
+A -> X: POST /audit/475
+X --> A: 202 Accepted
+A --> T: 200 OK (5 ms)
+T -> A: GET /orders/476?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 476
+D --> A: 1 row (id=476)
+A --> T: 200 OK (12 ms)
+T -> A: GET /orders/477?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 477
+D --> A: 1 row (id=477)
+note right of A
+{ "id": 477, "customer": "cust-477", "total": 1669.50 }
+end note
+A --> T: 200 OK (19 ms)
+T -> A: GET /orders/478?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 478
+D --> A: 1 row (id=478)
+A --> T: 200 OK (26 ms)
+T -> A: GET /orders/479?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 479
+D --> A: 1 row (id=479)
+A --> T: 200 OK (33 ms)
+T -> A: GET /orders/480?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 480
+D --> A: 1 row (id=480)
+note right of A
+{ "id": 480, "customer": "cust-480", "total": 1680.00 }
+end note
+A -> X: POST /audit/480
+X --> A: 202 Accepted
+A --> T: 200 OK (0 ms)
+T -> A: GET /orders/481?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 481
+D --> A: 1 row (id=481)
+A --> T: 200 OK (7 ms)
+T -> A: GET /orders/482?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 482
+D --> A: 1 row (id=482)
+A --> T: 200 OK (14 ms)
+T -> A: GET /orders/483?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 483
+D --> A: 1 row (id=483)
+note right of A
+{ "id": 483, "customer": "cust-483", "total": 1690.50 }
+end note
+A --> T: 200 OK (21 ms)
+T -> A: GET /orders/484?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 484
+D --> A: 1 row (id=484)
+A --> T: 200 OK (28 ms)
+T -> A: GET /orders/485?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 485
+D --> A: 1 row (id=485)
+A -> X: POST /audit/485
+X --> A: 202 Accepted
+A --> T: 200 OK (35 ms)
+T -> A: GET /orders/486?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 486
+D --> A: 1 row (id=486)
+note right of A
+{ "id": 486, "customer": "cust-486", "total": 1701.00 }
+end note
+A --> T: 200 OK (2 ms)
+T -> A: GET /orders/487?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 487
+D --> A: 1 row (id=487)
+A --> T: 200 OK (9 ms)
+T -> A: GET /orders/488?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 488
+D --> A: 1 row (id=488)
+A --> T: 200 OK (16 ms)
+T -> A: GET /orders/489?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 489
+D --> A: 1 row (id=489)
+note right of A
+{ "id": 489, "customer": "cust-489", "total": 1711.50 }
+end note
+A --> T: 200 OK (23 ms)
+T -> A: GET /orders/490?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 490
+D --> A: 1 row (id=490)
+A -> X: POST /audit/490
+X --> A: 202 Accepted
+A --> T: 200 OK (30 ms)
+T -> A: GET /orders/491?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 491
+D --> A: 1 row (id=491)
+A --> T: 200 OK (37 ms)
+T -> A: GET /orders/492?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 492
+D --> A: 1 row (id=492)
+note right of A
+{ "id": 492, "customer": "cust-492", "total": 1722.00 }
+end note
+A --> T: 200 OK (4 ms)
+T -> A: GET /orders/493?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 493
+D --> A: 1 row (id=493)
+A --> T: 200 OK (11 ms)
+T -> A: GET /orders/494?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 494
+D --> A: 1 row (id=494)
+A --> T: 200 OK (18 ms)
+T -> A: GET /orders/495?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 495
+D --> A: 1 row (id=495)
+note right of A
+{ "id": 495, "customer": "cust-495", "total": 1732.50 }
+end note
+A -> X: POST /audit/495
+X --> A: 202 Accepted
+A --> T: 200 OK (25 ms)
+T -> A: GET /orders/496?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 496
+D --> A: 1 row (id=496)
+A --> T: 200 OK (32 ms)
+T -> A: GET /orders/497?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 497
+D --> A: 1 row (id=497)
+A --> T: 200 OK (39 ms)
+T -> A: GET /orders/498?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 498
+D --> A: 1 row (id=498)
+note right of A
+{ "id": 498, "customer": "cust-498", "total": 1743.00 }
+end note
+A --> T: 200 OK (6 ms)
+T -> A: GET /orders/499?include=lines
+A -> D: SELECT o.id, o.total FROM orders o WHERE o.id = 499
+D --> A: 1 row (id=499)
+A --> T: 200 OK (13 ms)
+@enduml

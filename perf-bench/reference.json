@@ -1,0 +1,5 @@
+{
+  "comment-1": "Default comparison engine for the perf-bench workflow. Formats: npm:<version> (fetched from npm, fast) or git:<ref> (built from source).",
+  "comment-2": "The reference must support the maxSvgSize render option or it refuses the tall corpus diagrams. npm releases up to and including 1.2026.7 do NOT support it (they throw 'Diagram too large ... (max 4096)'), so until 1.2026.8 is published the pin is a fixed master commit built from source. Switch to npm:<version> at the first release with maxSvgSize and bump deliberately at each release after that; the bump commit documents the accepted performance level.",
+  "pin": "git:4ce99a4733df22c41c7cba3935ac7eaee9b5fbe6"
+}

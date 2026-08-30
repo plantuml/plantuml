@@ -1,0 +1,257 @@
+@startuml
+participant "Test" as T
+participant "Api" as A
+database "Db" as D
+alt case 0
+T -> A: outer 0
+opt config 0
+A -> D: q1-0
+loop retry
+D --> A: rows 0
+alt found
+A -> D: q2-0
+opt cached
+D --> A: hit 0
+A --> T: 200 (0)
+end
+else missing
+A --> T: 404 (0)
+end
+end
+end
+else skip 0
+T -> A: fallback 0
+A --> T: 204
+end
+alt case 1
+T -> A: outer 1
+opt config 1
+A -> D: q1-1
+loop retry
+D --> A: rows 1
+alt found
+A -> D: q2-1
+opt cached
+D --> A: hit 1
+A --> T: 200 (1)
+end
+else missing
+A --> T: 404 (1)
+end
+end
+end
+else skip 1
+T -> A: fallback 1
+A --> T: 204
+end
+alt case 2
+T -> A: outer 2
+opt config 2
+A -> D: q1-2
+loop retry
+D --> A: rows 2
+alt found
+A -> D: q2-2
+opt cached
+D --> A: hit 2
+A --> T: 200 (2)
+end
+else missing
+A --> T: 404 (2)
+end
+end
+end
+else skip 2
+T -> A: fallback 2
+A --> T: 204
+end
+alt case 3
+T -> A: outer 3
+opt config 3
+A -> D: q1-3
+loop retry
+D --> A: rows 3
+alt found
+A -> D: q2-3
+opt cached
+D --> A: hit 3
+A --> T: 200 (3)
+end
+else missing
+A --> T: 404 (3)
+end
+end
+end
+else skip 3
+T -> A: fallback 3
+A --> T: 204
+end
+alt case 4
+T -> A: outer 4
+opt config 4
+A -> D: q1-4
+loop retry
+D --> A: rows 4
+alt found
+A -> D: q2-4
+opt cached
+D --> A: hit 4
+A --> T: 200 (4)
+end
+else missing
+A --> T: 404 (4)
+end
+end
+end
+else skip 4
+T -> A: fallback 4
+A --> T: 204
+end
+alt case 5
+T -> A: outer 5
+opt config 5
+A -> D: q1-5
+loop retry
+D --> A: rows 5
+alt found
+A -> D: q2-5
+opt cached
+D --> A: hit 5
+A --> T: 200 (5)
+end
+else missing
+A --> T: 404 (5)
+end
+end
+end
+else skip 5
+T -> A: fallback 5
+A --> T: 204
+end
+alt case 6
+T -> A: outer 6
+opt config 6
+A -> D: q1-6
+loop retry
+D --> A: rows 6
+alt found
+A -> D: q2-6
+opt cached
+D --> A: hit 6
+A --> T: 200 (6)
+end
+else missing
+A --> T: 404 (6)
+end
+end
+end
+else skip 6
+T -> A: fallback 6
+A --> T: 204
+end
+alt case 7
+T -> A: outer 7
+opt config 7
+A -> D: q1-7
+loop retry
+D --> A: rows 7
+alt found
+A -> D: q2-7
+opt cached
+D --> A: hit 7
+A --> T: 200 (7)
+end
+else missing
+A --> T: 404 (7)
+end
+end
+end
+else skip 7
+T -> A: fallback 7
+A --> T: 204
+end
+alt case 8
+T -> A: outer 8
+opt config 8
+A -> D: q1-8
+loop retry
+D --> A: rows 8
+alt found
+A -> D: q2-8
+opt cached
+D --> A: hit 8
+A --> T: 200 (8)
+end
+else missing
+A --> T: 404 (8)
+end
+end
+end
+else skip 8
+T -> A: fallback 8
+A --> T: 204
+end
+alt case 9
+T -> A: outer 9
+opt config 9
+A -> D: q1-9
+loop retry
+D --> A: rows 9
+alt found
+A -> D: q2-9
+opt cached
+D --> A: hit 9
+A --> T: 200 (9)
+end
+else missing
+A --> T: 404 (9)
+end
+end
+end
+else skip 9
+T -> A: fallback 9
+A --> T: 204
+end
+alt case 10
+T -> A: outer 10
+opt config 10
+A -> D: q1-10
+loop retry
+D --> A: rows 10
+alt found
+A -> D: q2-10
+opt cached
+D --> A: hit 10
+A --> T: 200 (10)
+end
+else missing
+A --> T: 404 (10)
+end
+end
+end
+else skip 10
+T -> A: fallback 10
+A --> T: 204
+end
+alt case 11
+T -> A: outer 11
+opt config 11
+A -> D: q1-11
+loop retry
+D --> A: rows 11
+alt found
+A -> D: q2-11
+opt cached
+D --> A: hit 11
+A --> T: 200 (11)
+end
+else missing
+A --> T: 404 (11)
+end
+end
+end
+else skip 11
+T -> A: fallback 11
+A --> T: 204
+end
+@enduml

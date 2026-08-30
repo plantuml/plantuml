@@ -1,0 +1,243 @@
+@startuml
+participant "Main" as M
+create participant "Worker0" as W0
+M -> W0: spawn 0
+W0 --> M: ready 0
+M -> W0: task 0
+W0 --> M: result 0
+destroy W0
+create participant "Worker1" as W1
+M -> W1: spawn 1
+W1 --> M: ready 1
+M -> W1: task 1
+W1 --> M: result 1
+destroy W1
+create participant "Worker2" as W2
+M -> W2: spawn 2
+W2 --> M: ready 2
+M -> W2: task 2
+W2 --> M: result 2
+destroy W2
+create participant "Worker3" as W3
+M -> W3: spawn 3
+W3 --> M: ready 3
+M -> W3: task 3
+W3 --> M: result 3
+destroy W3
+create participant "Worker4" as W4
+M -> W4: spawn 4
+W4 --> M: ready 4
+M -> W4: task 4
+W4 --> M: result 4
+destroy W4
+create participant "Worker5" as W5
+M -> W5: spawn 5
+W5 --> M: ready 5
+M -> W5: task 5
+W5 --> M: result 5
+destroy W5
+create participant "Worker6" as W6
+M -> W6: spawn 6
+W6 --> M: ready 6
+M -> W6: task 6
+W6 --> M: result 6
+destroy W6
+create participant "Worker7" as W7
+M -> W7: spawn 7
+W7 --> M: ready 7
+M -> W7: task 7
+W7 --> M: result 7
+destroy W7
+create participant "Worker8" as W8
+M -> W8: spawn 8
+W8 --> M: ready 8
+M -> W8: task 8
+W8 --> M: result 8
+destroy W8
+create participant "Worker9" as W9
+M -> W9: spawn 9
+W9 --> M: ready 9
+M -> W9: task 9
+W9 --> M: result 9
+destroy W9
+create participant "Worker10" as W10
+M -> W10: spawn 10
+W10 --> M: ready 10
+M -> W10: task 10
+W10 --> M: result 10
+destroy W10
+create participant "Worker11" as W11
+M -> W11: spawn 11
+W11 --> M: ready 11
+M -> W11: task 11
+W11 --> M: result 11
+destroy W11
+create participant "Worker12" as W12
+M -> W12: spawn 12
+W12 --> M: ready 12
+M -> W12: task 12
+W12 --> M: result 12
+destroy W12
+create participant "Worker13" as W13
+M -> W13: spawn 13
+W13 --> M: ready 13
+M -> W13: task 13
+W13 --> M: result 13
+destroy W13
+create participant "Worker14" as W14
+M -> W14: spawn 14
+W14 --> M: ready 14
+M -> W14: task 14
+W14 --> M: result 14
+destroy W14
+create participant "Worker15" as W15
+M -> W15: spawn 15
+W15 --> M: ready 15
+M -> W15: task 15
+W15 --> M: result 15
+destroy W15
+create participant "Worker16" as W16
+M -> W16: spawn 16
+W16 --> M: ready 16
+M -> W16: task 16
+W16 --> M: result 16
+destroy W16
+create participant "Worker17" as W17
+M -> W17: spawn 17
+W17 --> M: ready 17
+M -> W17: task 17
+W17 --> M: result 17
+destroy W17
+create participant "Worker18" as W18
+M -> W18: spawn 18
+W18 --> M: ready 18
+M -> W18: task 18
+W18 --> M: result 18
+destroy W18
+create participant "Worker19" as W19
+M -> W19: spawn 19
+W19 --> M: ready 19
+M -> W19: task 19
+W19 --> M: result 19
+destroy W19
+create participant "Worker20" as W20
+M -> W20: spawn 20
+W20 --> M: ready 20
+M -> W20: task 20
+W20 --> M: result 20
+destroy W20
+create participant "Worker21" as W21
+M -> W21: spawn 21
+W21 --> M: ready 21
+M -> W21: task 21
+W21 --> M: result 21
+destroy W21
+create participant "Worker22" as W22
+M -> W22: spawn 22
+W22 --> M: ready 22
+M -> W22: task 22
+W22 --> M: result 22
+destroy W22
+create participant "Worker23" as W23
+M -> W23: spawn 23
+W23 --> M: ready 23
+M -> W23: task 23
+W23 --> M: result 23
+destroy W23
+create participant "Worker24" as W24
+M -> W24: spawn 24
+W24 --> M: ready 24
+M -> W24: task 24
+W24 --> M: result 24
+destroy W24
+create participant "Worker25" as W25
+M -> W25: spawn 25
+W25 --> M: ready 25
+M -> W25: task 25
+W25 --> M: result 25
+destroy W25
+create participant "Worker26" as W26
+M -> W26: spawn 26
+W26 --> M: ready 26
+M -> W26: task 26
+W26 --> M: result 26
+destroy W26
+create participant "Worker27" as W27
+M -> W27: spawn 27
+W27 --> M: ready 27
+M -> W27: task 27
+W27 --> M: result 27
+destroy W27
+create participant "Worker28" as W28
+M -> W28: spawn 28
+W28 --> M: ready 28
+M -> W28: task 28
+W28 --> M: result 28
+destroy W28
+create participant "Worker29" as W29
+M -> W29: spawn 29
+W29 --> M: ready 29
+M -> W29: task 29
+W29 --> M: result 29
+destroy W29
+create participant "Worker30" as W30
+M -> W30: spawn 30
+W30 --> M: ready 30
+M -> W30: task 30
+W30 --> M: result 30
+destroy W30
+create participant "Worker31" as W31
+M -> W31: spawn 31
+W31 --> M: ready 31
+M -> W31: task 31
+W31 --> M: result 31
+destroy W31
+create participant "Worker32" as W32
+M -> W32: spawn 32
+W32 --> M: ready 32
+M -> W32: task 32
+W32 --> M: result 32
+destroy W32
+create participant "Worker33" as W33
+M -> W33: spawn 33
+W33 --> M: ready 33
+M -> W33: task 33
+W33 --> M: result 33
+destroy W33
+create participant "Worker34" as W34
+M -> W34: spawn 34
+W34 --> M: ready 34
+M -> W34: task 34
+W34 --> M: result 34
+destroy W34
+create participant "Worker35" as W35
+M -> W35: spawn 35
+W35 --> M: ready 35
+M -> W35: task 35
+W35 --> M: result 35
+destroy W35
+create participant "Worker36" as W36
+M -> W36: spawn 36
+W36 --> M: ready 36
+M -> W36: task 36
+W36 --> M: result 36
+destroy W36
+create participant "Worker37" as W37
+M -> W37: spawn 37
+W37 --> M: ready 37
+M -> W37: task 37
+W37 --> M: result 37
+destroy W37
+create participant "Worker38" as W38
+M -> W38: spawn 38
+W38 --> M: ready 38
+M -> W38: task 38
+W38 --> M: result 38
+destroy W38
+create participant "Worker39" as W39
+M -> W39: spawn 39
+W39 --> M: ready 39
+M -> W39: task 39
+W39 --> M: result 39
+destroy W39
+@enduml

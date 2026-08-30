@@ -1,0 +1,845 @@
+@startuml
+participant "T" as T
+participant "A" as A
+participant "B" as B
+T -> A: req 0
+activate A
+A -> B: inner 0
+activate B
+B --> A: done 0
+deactivate B
+A --> T: resp 0
+deactivate A
+T -> A: nested 0
+activate A
+A -> A: recurse 0
+activate A
+A --> A: pop 0
+deactivate A
+A --> T: out 0
+deactivate A
+T -> A: req 1
+activate A
+A -> B: inner 1
+activate B
+B --> A: done 1
+deactivate B
+A --> T: resp 1
+deactivate A
+T -> A: req 2
+activate A
+A -> B: inner 2
+activate B
+B --> A: done 2
+deactivate B
+A --> T: resp 2
+deactivate A
+T -> A: req 3
+activate A
+A -> B: inner 3
+activate B
+B --> A: done 3
+deactivate B
+A --> T: resp 3
+deactivate A
+T -> A: req 4
+activate A
+A -> B: inner 4
+activate B
+B --> A: done 4
+deactivate B
+A --> T: resp 4
+deactivate A
+T -> A: req 5
+activate A
+A -> B: inner 5
+activate B
+B --> A: done 5
+deactivate B
+A --> T: resp 5
+deactivate A
+T -> A: req 6
+activate A
+A -> B: inner 6
+activate B
+B --> A: done 6
+deactivate B
+A --> T: resp 6
+deactivate A
+T -> A: nested 6
+activate A
+A -> A: recurse 6
+activate A
+A --> A: pop 6
+deactivate A
+A --> T: out 6
+deactivate A
+T -> A: req 7
+activate A
+A -> B: inner 7
+activate B
+B --> A: done 7
+deactivate B
+A --> T: resp 7
+deactivate A
+T -> A: req 8
+activate A
+A -> B: inner 8
+activate B
+B --> A: done 8
+deactivate B
+A --> T: resp 8
+deactivate A
+T -> A: req 9
+activate A
+A -> B: inner 9
+activate B
+B --> A: done 9
+deactivate B
+A --> T: resp 9
+deactivate A
+T -> A: req 10
+activate A
+A -> B: inner 10
+activate B
+B --> A: done 10
+deactivate B
+A --> T: resp 10
+deactivate A
+T -> A: req 11
+activate A
+A -> B: inner 11
+activate B
+B --> A: done 11
+deactivate B
+A --> T: resp 11
+deactivate A
+T -> A: req 12
+activate A
+A -> B: inner 12
+activate B
+B --> A: done 12
+deactivate B
+A --> T: resp 12
+deactivate A
+T -> A: nested 12
+activate A
+A -> A: recurse 12
+activate A
+A --> A: pop 12
+deactivate A
+A --> T: out 12
+deactivate A
+T -> A: req 13
+activate A
+A -> B: inner 13
+activate B
+B --> A: done 13
+deactivate B
+A --> T: resp 13
+deactivate A
+T -> A: req 14
+activate A
+A -> B: inner 14
+activate B
+B --> A: done 14
+deactivate B
+A --> T: resp 14
+deactivate A
+T -> A: req 15
+activate A
+A -> B: inner 15
+activate B
+B --> A: done 15
+deactivate B
+A --> T: resp 15
+deactivate A
+T -> A: req 16
+activate A
+A -> B: inner 16
+activate B
+B --> A: done 16
+deactivate B
+A --> T: resp 16
+deactivate A
+T -> A: req 17
+activate A
+A -> B: inner 17
+activate B
+B --> A: done 17
+deactivate B
+A --> T: resp 17
+deactivate A
+T -> A: req 18
+activate A
+A -> B: inner 18
+activate B
+B --> A: done 18
+deactivate B
+A --> T: resp 18
+deactivate A
+T -> A: nested 18
+activate A
+A -> A: recurse 18
+activate A
+A --> A: pop 18
+deactivate A
+A --> T: out 18
+deactivate A
+T -> A: req 19
+activate A
+A -> B: inner 19
+activate B
+B --> A: done 19
+deactivate B
+A --> T: resp 19
+deactivate A
+T -> A: req 20
+activate A
+A -> B: inner 20
+activate B
+B --> A: done 20
+deactivate B
+A --> T: resp 20
+deactivate A
+T -> A: req 21
+activate A
+A -> B: inner 21
+activate B
+B --> A: done 21
+deactivate B
+A --> T: resp 21
+deactivate A
+T -> A: req 22
+activate A
+A -> B: inner 22
+activate B
+B --> A: done 22
+deactivate B
+A --> T: resp 22
+deactivate A
+T -> A: req 23
+activate A
+A -> B: inner 23
+activate B
+B --> A: done 23
+deactivate B
+A --> T: resp 23
+deactivate A
+T -> A: req 24
+activate A
+A -> B: inner 24
+activate B
+B --> A: done 24
+deactivate B
+A --> T: resp 24
+deactivate A
+T -> A: nested 24
+activate A
+A -> A: recurse 24
+activate A
+A --> A: pop 24
+deactivate A
+A --> T: out 24
+deactivate A
+T -> A: req 25
+activate A
+A -> B: inner 25
+activate B
+B --> A: done 25
+deactivate B
+A --> T: resp 25
+deactivate A
+T -> A: req 26
+activate A
+A -> B: inner 26
+activate B
+B --> A: done 26
+deactivate B
+A --> T: resp 26
+deactivate A
+T -> A: req 27
+activate A
+A -> B: inner 27
+activate B
+B --> A: done 27
+deactivate B
+A --> T: resp 27
+deactivate A
+T -> A: req 28
+activate A
+A -> B: inner 28
+activate B
+B --> A: done 28
+deactivate B
+A --> T: resp 28
+deactivate A
+T -> A: req 29
+activate A
+A -> B: inner 29
+activate B
+B --> A: done 29
+deactivate B
+A --> T: resp 29
+deactivate A
+T -> A: req 30
+activate A
+A -> B: inner 30
+activate B
+B --> A: done 30
+deactivate B
+A --> T: resp 30
+deactivate A
+T -> A: nested 30
+activate A
+A -> A: recurse 30
+activate A
+A --> A: pop 30
+deactivate A
+A --> T: out 30
+deactivate A
+T -> A: req 31
+activate A
+A -> B: inner 31
+activate B
+B --> A: done 31
+deactivate B
+A --> T: resp 31
+deactivate A
+T -> A: req 32
+activate A
+A -> B: inner 32
+activate B
+B --> A: done 32
+deactivate B
+A --> T: resp 32
+deactivate A
+T -> A: req 33
+activate A
+A -> B: inner 33
+activate B
+B --> A: done 33
+deactivate B
+A --> T: resp 33
+deactivate A
+T -> A: req 34
+activate A
+A -> B: inner 34
+activate B
+B --> A: done 34
+deactivate B
+A --> T: resp 34
+deactivate A
+T -> A: req 35
+activate A
+A -> B: inner 35
+activate B
+B --> A: done 35
+deactivate B
+A --> T: resp 35
+deactivate A
+T -> A: req 36
+activate A
+A -> B: inner 36
+activate B
+B --> A: done 36
+deactivate B
+A --> T: resp 36
+deactivate A
+T -> A: nested 36
+activate A
+A -> A: recurse 36
+activate A
+A --> A: pop 36
+deactivate A
+A --> T: out 36
+deactivate A
+T -> A: req 37
+activate A
+A -> B: inner 37
+activate B
+B --> A: done 37
+deactivate B
+A --> T: resp 37
+deactivate A
+T -> A: req 38
+activate A
+A -> B: inner 38
+activate B
+B --> A: done 38
+deactivate B
+A --> T: resp 38
+deactivate A
+T -> A: req 39
+activate A
+A -> B: inner 39
+activate B
+B --> A: done 39
+deactivate B
+A --> T: resp 39
+deactivate A
+T -> A: req 40
+activate A
+A -> B: inner 40
+activate B
+B --> A: done 40
+deactivate B
+A --> T: resp 40
+deactivate A
+T -> A: req 41
+activate A
+A -> B: inner 41
+activate B
+B --> A: done 41
+deactivate B
+A --> T: resp 41
+deactivate A
+T -> A: req 42
+activate A
+A -> B: inner 42
+activate B
+B --> A: done 42
+deactivate B
+A --> T: resp 42
+deactivate A
+T -> A: nested 42
+activate A
+A -> A: recurse 42
+activate A
+A --> A: pop 42
+deactivate A
+A --> T: out 42
+deactivate A
+T -> A: req 43
+activate A
+A -> B: inner 43
+activate B
+B --> A: done 43
+deactivate B
+A --> T: resp 43
+deactivate A
+T -> A: req 44
+activate A
+A -> B: inner 44
+activate B
+B --> A: done 44
+deactivate B
+A --> T: resp 44
+deactivate A
+T -> A: req 45
+activate A
+A -> B: inner 45
+activate B
+B --> A: done 45
+deactivate B
+A --> T: resp 45
+deactivate A
+T -> A: req 46
+activate A
+A -> B: inner 46
+activate B
+B --> A: done 46
+deactivate B
+A --> T: resp 46
+deactivate A
+T -> A: req 47
+activate A
+A -> B: inner 47
+activate B
+B --> A: done 47
+deactivate B
+A --> T: resp 47
+deactivate A
+T -> A: req 48
+activate A
+A -> B: inner 48
+activate B
+B --> A: done 48
+deactivate B
+A --> T: resp 48
+deactivate A
+T -> A: nested 48
+activate A
+A -> A: recurse 48
+activate A
+A --> A: pop 48
+deactivate A
+A --> T: out 48
+deactivate A
+T -> A: req 49
+activate A
+A -> B: inner 49
+activate B
+B --> A: done 49
+deactivate B
+A --> T: resp 49
+deactivate A
+T -> A: req 50
+activate A
+A -> B: inner 50
+activate B
+B --> A: done 50
+deactivate B
+A --> T: resp 50
+deactivate A
+T -> A: req 51
+activate A
+A -> B: inner 51
+activate B
+B --> A: done 51
+deactivate B
+A --> T: resp 51
+deactivate A
+T -> A: req 52
+activate A
+A -> B: inner 52
+activate B
+B --> A: done 52
+deactivate B
+A --> T: resp 52
+deactivate A
+T -> A: req 53
+activate A
+A -> B: inner 53
+activate B
+B --> A: done 53
+deactivate B
+A --> T: resp 53
+deactivate A
+T -> A: req 54
+activate A
+A -> B: inner 54
+activate B
+B --> A: done 54
+deactivate B
+A --> T: resp 54
+deactivate A
+T -> A: nested 54
+activate A
+A -> A: recurse 54
+activate A
+A --> A: pop 54
+deactivate A
+A --> T: out 54
+deactivate A
+T -> A: req 55
+activate A
+A -> B: inner 55
+activate B
+B --> A: done 55
+deactivate B
+A --> T: resp 55
+deactivate A
+T -> A: req 56
+activate A
+A -> B: inner 56
+activate B
+B --> A: done 56
+deactivate B
+A --> T: resp 56
+deactivate A
+T -> A: req 57
+activate A
+A -> B: inner 57
+activate B
+B --> A: done 57
+deactivate B
+A --> T: resp 57
+deactivate A
+T -> A: req 58
+activate A
+A -> B: inner 58
+activate B
+B --> A: done 58
+deactivate B
+A --> T: resp 58
+deactivate A
+T -> A: req 59
+activate A
+A -> B: inner 59
+activate B
+B --> A: done 59
+deactivate B
+A --> T: resp 59
+deactivate A
+T -> A: req 60
+activate A
+A -> B: inner 60
+activate B
+B --> A: done 60
+deactivate B
+A --> T: resp 60
+deactivate A
+T -> A: nested 60
+activate A
+A -> A: recurse 60
+activate A
+A --> A: pop 60
+deactivate A
+A --> T: out 60
+deactivate A
+T -> A: req 61
+activate A
+A -> B: inner 61
+activate B
+B --> A: done 61
+deactivate B
+A --> T: resp 61
+deactivate A
+T -> A: req 62
+activate A
+A -> B: inner 62
+activate B
+B --> A: done 62
+deactivate B
+A --> T: resp 62
+deactivate A
+T -> A: req 63
+activate A
+A -> B: inner 63
+activate B
+B --> A: done 63
+deactivate B
+A --> T: resp 63
+deactivate A
+T -> A: req 64
+activate A
+A -> B: inner 64
+activate B
+B --> A: done 64
+deactivate B
+A --> T: resp 64
+deactivate A
+T -> A: req 65
+activate A
+A -> B: inner 65
+activate B
+B --> A: done 65
+deactivate B
+A --> T: resp 65
+deactivate A
+T -> A: req 66
+activate A
+A -> B: inner 66
+activate B
+B --> A: done 66
+deactivate B
+A --> T: resp 66
+deactivate A
+T -> A: nested 66
+activate A
+A -> A: recurse 66
+activate A
+A --> A: pop 66
+deactivate A
+A --> T: out 66
+deactivate A
+T -> A: req 67
+activate A
+A -> B: inner 67
+activate B
+B --> A: done 67
+deactivate B
+A --> T: resp 67
+deactivate A
+T -> A: req 68
+activate A
+A -> B: inner 68
+activate B
+B --> A: done 68
+deactivate B
+A --> T: resp 68
+deactivate A
+T -> A: req 69
+activate A
+A -> B: inner 69
+activate B
+B --> A: done 69
+deactivate B
+A --> T: resp 69
+deactivate A
+T -> A: req 70
+activate A
+A -> B: inner 70
+activate B
+B --> A: done 70
+deactivate B
+A --> T: resp 70
+deactivate A
+T -> A: req 71
+activate A
+A -> B: inner 71
+activate B
+B --> A: done 71
+deactivate B
+A --> T: resp 71
+deactivate A
+T -> A: req 72
+activate A
+A -> B: inner 72
+activate B
+B --> A: done 72
+deactivate B
+A --> T: resp 72
+deactivate A
+T -> A: nested 72
+activate A
+A -> A: recurse 72
+activate A
+A --> A: pop 72
+deactivate A
+A --> T: out 72
+deactivate A
+T -> A: req 73
+activate A
+A -> B: inner 73
+activate B
+B --> A: done 73
+deactivate B
+A --> T: resp 73
+deactivate A
+T -> A: req 74
+activate A
+A -> B: inner 74
+activate B
+B --> A: done 74
+deactivate B
+A --> T: resp 74
+deactivate A
+T -> A: req 75
+activate A
+A -> B: inner 75
+activate B
+B --> A: done 75
+deactivate B
+A --> T: resp 75
+deactivate A
+T -> A: req 76
+activate A
+A -> B: inner 76
+activate B
+B --> A: done 76
+deactivate B
+A --> T: resp 76
+deactivate A
+T -> A: req 77
+activate A
+A -> B: inner 77
+activate B
+B --> A: done 77
+deactivate B
+A --> T: resp 77
+deactivate A
+T -> A: req 78
+activate A
+A -> B: inner 78
+activate B
+B --> A: done 78
+deactivate B
+A --> T: resp 78
+deactivate A
+T -> A: nested 78
+activate A
+A -> A: recurse 78
+activate A
+A --> A: pop 78
+deactivate A
+A --> T: out 78
+deactivate A
+T -> A: req 79
+activate A
+A -> B: inner 79
+activate B
+B --> A: done 79
+deactivate B
+A --> T: resp 79
+deactivate A
+T -> A: req 80
+activate A
+A -> B: inner 80
+activate B
+B --> A: done 80
+deactivate B
+A --> T: resp 80
+deactivate A
+T -> A: req 81
+activate A
+A -> B: inner 81
+activate B
+B --> A: done 81
+deactivate B
+A --> T: resp 81
+deactivate A
+T -> A: req 82
+activate A
+A -> B: inner 82
+activate B
+B --> A: done 82
+deactivate B
+A --> T: resp 82
+deactivate A
+T -> A: req 83
+activate A
+A -> B: inner 83
+activate B
+B --> A: done 83
+deactivate B
+A --> T: resp 83
+deactivate A
+T -> A: req 84
+activate A
+A -> B: inner 84
+activate B
+B --> A: done 84
+deactivate B
+A --> T: resp 84
+deactivate A
+T -> A: nested 84
+activate A
+A -> A: recurse 84
+activate A
+A --> A: pop 84
+deactivate A
+A --> T: out 84
+deactivate A
+T -> A: req 85
+activate A
+A -> B: inner 85
+activate B
+B --> A: done 85
+deactivate B
+A --> T: resp 85
+deactivate A
+T -> A: req 86
+activate A
+A -> B: inner 86
+activate B
+B --> A: done 86
+deactivate B
+A --> T: resp 86
+deactivate A
+T -> A: req 87
+activate A
+A -> B: inner 87
+activate B
+B --> A: done 87
+deactivate B
+A --> T: resp 87
+deactivate A
+T -> A: req 88
+activate A
+A -> B: inner 88
+activate B
+B --> A: done 88
+deactivate B
+A --> T: resp 88
+deactivate A
+T -> A: req 89
+activate A
+A -> B: inner 89
+activate B
+B --> A: done 89
+deactivate B
+A --> T: resp 89
+deactivate A
+@enduml
