@@ -98,6 +98,23 @@ public class DriverPathTeaVM implements UDriver<UPath, SvgGraphicsTeaVM> {
 		if (value == (int) value)
 			return String.valueOf((int) value);
 
+		// Same fast path as SvgGraphicsTeaVM.format, see the comment there
+		final double abs = Math.abs(value);
+		final double scaled = abs * 100.0;
+		if (scaled < 1e11) {
+			final double floor = Math.floor(scaled);
+			final double frac = scaled - floor;
+			if (frac < 0.4999 || frac > 0.5001) {
+				final long cents = (long) floor + (frac > 0.5 ? 1 : 0);
+				final StringBuilder sb = new StringBuilder(16);
+				if (value < 0)
+					sb.append('-');
+				sb.append(cents / 100).append('.');
+				final int c = (int) (cents % 100);
+				sb.append((char) ('0' + c / 10)).append((char) ('0' + c % 10));
+				return sb.toString();
+			}
+		}
 		return String.format("%.2f", value).replace(',', '.');
 	}
 }
