@@ -149,6 +149,36 @@ const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
   check('dark mode control renders', !isErrorImage(dark));
   expectNoBackground('dark mode control paints no background', dark);
 
+  // 8. Dark mode only suppresses the default: an author's explicit color has no paired
+  //    dark value and must paint unchanged.
+  expectBackground('dark mode keeps an explicit background',
+    await render(diagram('skinparam backgroundColor #0B58A8'), { dark: true }), '#0B58A8');
+
+  // 9. scale changes the root size but not the viewBox convention; the background must
+  //    still cover the whole viewBox (expectBackground asserts exactly that).
+  expectBackground('scale 2 keeps the background covering the viewBox',
+    await render(diagram('scale 2', 'skinparam backgroundColor #0B58A8')), '#0B58A8');
+
+  // 10. The fix lives in the shared buildSvg path, not in the sequence renderer;
+  //     pin one diagram type with its own layouter and one that goes through graphviz.
+  expectBackground('activity diagram paints a theme background',
+    await render(['@startuml', '!theme amiga', 'start', ':do the thing;', 'stop', '@enduml']), '#0B58A8');
+  expectBackground('class diagram paints the background',
+    await render(['@startuml', 'skinparam backgroundColor #0B58A8', 'class Foo', 'class Bar', 'Foo -> Bar', '@enduml']),
+    '#0B58A8');
+
+  // 11. A skinparam after !theme overrides the theme background, like the Java build
+  //     (verified against the jar: background:#114411).
+  expectBackground('skinparam after !theme overrides the theme background',
+    await render(diagram('!theme amiga', 'skinparam backgroundColor #114411')), '#114411');
+
+  // 12. A gradient background degrades to its first color under TeaVM (HColorGradient
+  //     resolves to color1 there; the Java build renders a real gradient). Pinned so the
+  //     degradation stays a degradation and never becomes an error.
+  const gradient = await render(diagram('skinparam backgroundColor #0B58A8-#004488'));
+  check('gradient background renders', !isErrorImage(gradient));
+  expectBackground('gradient background degrades to its first color', gradient, '#0B58A8');
+
   await browser.close();
   server.close();
 
