@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.elk.core)
     implementation(libs.elk.alg.layered)
     implementation(libs.elk.alg.mrtree)
+    implementation(libs.xtext.xbase.lib)
 	implementation(libs.openpdf)
 
 	// JDepend for package metrics
