@@ -112,7 +112,25 @@ public class ThemeUtils {
 		Log.info(() -> "Loading theme " + name + " from " + THEMES_JS);
 		String content = TeaVmScriptLoader.getTheme(name);
 		if (content == null) {
-			TeaVmScriptLoader.loadOnceSync(THEMES_JS);
+			try {
+				TeaVmScriptLoader.loadOnceSync(THEMES_JS);
+			} catch (RuntimeException fetchFailed) {
+				// hasThemes() decides below; a failed fetch and a fetch that did not
+				// define the map are the same situation.
+			}
+			if (!TeaVmScriptLoader.hasThemes()) {
+				// themes.js is not deployed where the page can fetch it. The diagram is
+				// published content viewed by someone who cannot fix that, so it keeps
+				// rendering unthemed, exactly as it did when !theme was ignored; the
+				// missing file is reported on the console, where the page author looks.
+				// An unknown name in a loaded themes.js stays an error (null, below),
+				// like the desktop build.
+				TeaVmScriptLoader.consoleWarn("PlantUML: " + THEMES_JS + " could not be loaded, so '!theme " + name
+						+ "' was ignored. Serve " + THEMES_JS + " next to the page"
+						+ " or register globalThis.PLANTUML_THEMES (importing " + THEMES_JS
+						+ " as a module does this).");
+				return new Theme(ReadLineReader.create(new byte[0], "<missing " + THEMES_JS + ">"));
+			}
 			content = TeaVmScriptLoader.getTheme(name);
 		}
 		if (content == null)

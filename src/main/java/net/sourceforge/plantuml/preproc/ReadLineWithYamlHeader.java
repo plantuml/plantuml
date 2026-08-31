@@ -67,7 +67,7 @@ public class ReadLineWithYamlHeader implements ReadLine {
 		if (yamlHeader == null) {
 			// At this point, "line" is the very first line of the file
 			yamlHeader = new ArrayList<String>();
-			if (isSeparator(line)) {
+			if (line != null && isSeparator(line)) {
 				do {
 					line = source.readLine();
 					if (line == null || isSeparator(line))
