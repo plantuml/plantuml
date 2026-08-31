@@ -39,6 +39,15 @@ background style on the svg element plus a rectangle covering the whole viewBox,
 skips are pinned too: transparent and the default white paint nothing, in dark mode as
 well. Run the same way with `node check-background.js target=...`.
 
+## check-viz-missing.js
+
+Checks how the engine behaves when `viz-global.js` is not loaded. Diagram types that lay out
+through Graphviz (class, component, deployment, state, usecase) must produce a visible crash
+report naming Viz instead of throwing an unhandled exception and leaving the target element
+empty, and diagram types with native layout (sequence, activity) must keep rendering normally.
+A control page with `viz-global.js` loaded pins that the normal path is unchanged. Run the same
+way with `node check-viz-missing.js target=...`.
+
 ## Running it
 
 ```
