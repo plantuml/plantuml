@@ -82,12 +82,14 @@ const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
 
   async function newRenderer({ blockThemesJs = false, preregister = false } = {}) {
     const page = await browser.newPage();
+    const consoleMessages = [];
+    page.on('console', m => consoleMessages.push({ type: m.type(), text: m.text() }));
     if (blockThemesJs) await page.route('**/themes.js', r => r.abort());
     if (preregister)
       await page.addInitScript(`globalThis.PLANTUML_THEMES = ${JSON.stringify(THEMES)};`);
     await page.goto(`http://127.0.0.1:${port}/index.html`, { waitUntil: 'load' });
     await page.waitForFunction('window.__ready && window.__render', null, { timeout: 120000 });
-    return async lines => {
+    const renderOnPage = async lines => {
       const r = await page.evaluate(async ({ lines }) => {
         const out = document.getElementById('out'); out.innerHTML = '';
         const done = new Promise(res => {
@@ -105,6 +107,8 @@ const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
       if (r.err || !r.svg) throw new Error('render produced no svg: ' + r.err);
       return r.svg;
     };
+    renderOnPage.consoleMessages = consoleMessages;
+    return renderOnPage;
   }
 
   const render = await newRenderer();
@@ -181,11 +185,22 @@ const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
     amigaPre.includes('#0B58A8') && hash(amigaPre) === hash(amiga),
     'did not match the themes.js-loaded rendering of the same theme');
 
-  // 10. Without themes.js and without pre-registration the directive must fail loudly.
+  // 10. Without themes.js and without pre-registration the theme cannot apply. The diagram
+  //     is published content viewed by someone who cannot fix the deployment, so it must
+  //     keep rendering, unthemed, exactly as it did when !theme was ignored; the missing
+  //     file is reported as a console warning, which is where the page author looks. An
+  //     unknown theme name with themes.js present stays an error (checked above): only
+  //     the missing-file case degrades.
   const noThemes = await newRenderer({ blockThemesJs: true });
   const amigaMissing = await noThemes(diagram('!theme amiga'));
-  check('missing themes.js reports an error rather than rendering unthemed',
-    isErrorImage(amigaMissing), 'silently rendered the unthemed diagram');
+  check('missing themes.js still renders the diagram, unthemed',
+    !isErrorImage(amigaMissing) && hash(amigaMissing) === controlHash,
+    isErrorImage(amigaMissing)
+      ? 'rendered an error image, which would break published pages that upgrade the engine without deploying themes.js'
+      : 'rendered something other than the plain unthemed diagram');
+  check('missing themes.js warns on the console',
+    noThemes.consoleMessages.some(m => m.type === 'warning' && m.text.includes('themes.js')),
+    'no console warning mentions themes.js, so the page author gets no signal');
 
   await browser.close();
   server.close();
