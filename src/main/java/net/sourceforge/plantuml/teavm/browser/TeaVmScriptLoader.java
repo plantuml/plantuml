@@ -59,6 +59,22 @@ public final class TeaVmScriptLoader {
 	public static native JSObject getRaw_PLANTUML_STDLIB(String namespace, String path);
 
 	/**
+	 * Retrieves the raw text of a bundled theme, as published by themes.js into
+	 * the PLANTUML_THEMES map.
+	 * <p>
+	 * Reads from the global object rather than from window, so that a host which
+	 * pre-populates PLANTUML_THEMES (on globalThis) can use themes inside a Web
+	 * Worker, where there is no document to append a script tag to, or in a
+	 * non-browser JS runtime.
+	 * @param name the theme name (e.g. "amiga")
+	 * @return the whole .puml theme file as a string, or null if not present
+	 */
+	@JSBody(params = "name", script = "var g = (typeof globalThis !== 'undefined') ? globalThis"
+			+ " : ((typeof self !== 'undefined') ? self : this);"
+			+ "var t = g && g.PLANTUML_THEMES;" + "return (t && t[name]) ? t[name] : null;")
+	public static native String getTheme(String name);
+
+	/**
 	 * 
 	 * @param namespace
 	 * @param path

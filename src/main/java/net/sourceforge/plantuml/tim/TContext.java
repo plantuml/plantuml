@@ -723,37 +723,35 @@ public class TContext {
 	}
 
 	private void executeTheme(TMemory memory, StringLocated s) throws EaterException {
-		if (!TeaVM.isTeaVM()) {
-			final EaterTheme eater = new EaterTheme(s.getTrimmed(), pathSystem);
-			eater.analyze(this, memory);
-			final Theme theme = eater.getTheme();
-			if (theme == null)
-				throw new EaterException("No such theme " + eater.getName(), s);
+		final EaterTheme eater = new EaterTheme(s.getTrimmed(), pathSystem);
+		eater.analyze(this, memory);
+		final Theme theme = eater.getTheme();
+		if (theme == null)
+			throw new EaterException("No such theme " + eater.getName(), s);
 
-			final PathSystem saveImportedFiles = this.pathSystem;
-			this.pathSystem = eater.getNewImportedFiles();
+		final PathSystem saveImportedFiles = this.pathSystem;
+		this.pathSystem = eater.getNewImportedFiles();
 
+		try {
+			final List<StringLocated> body = new ArrayList<>();
+			do {
+				final StringLocated sl = theme.readLine();
+				if (sl == null) {
+					executeLines(memory, body, null, false);
+					return;
+				}
+				body.add(sl);
+			} while (true);
+		} catch (IOException e) {
+			Logme.error(e);
+			throw new EaterException("Error reading theme " + e, s);
+		} finally {
+			this.themeMetadata = theme.getMetadata();
+			this.pathSystem = saveImportedFiles;
 			try {
-				final List<StringLocated> body = new ArrayList<>();
-				do {
-					final StringLocated sl = theme.readLine();
-					if (sl == null) {
-						executeLines(memory, body, null, false);
-						return;
-					}
-					body.add(sl);
-				} while (true);
+				theme.close();
 			} catch (IOException e) {
 				Logme.error(e);
-				throw new EaterException("Error reading theme " + e, s);
-			} finally {
-				this.themeMetadata = theme.getMetadata();
-				this.pathSystem = saveImportedFiles;
-				try {
-					theme.close();
-				} catch (IOException e) {
-					Logme.error(e);
-				}
 			}
 		}
 	}
