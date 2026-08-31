@@ -256,10 +256,8 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			else
 				removeLink(existingLink);
 
-			final Entity entity1real = existingLink.isInverted() ? existingLink.getEntity2()
-					: existingLink.getEntity1();
-			final Entity entity2real = existingLink.isInverted() ? existingLink.getEntity1()
-					: existingLink.getEntity2();
+			final Entity entity1real = existingLink.getEntity1();
+			final Entity entity2real = existingLink.getEntity2();
 
 			entity1ToPoint = new Link(location, AbstractClassOrObjectDiagram.this,
 					getSkinParam().getCurrentStyleBuilder(), entity1real, point, existingLink.getType().getPart2(),
