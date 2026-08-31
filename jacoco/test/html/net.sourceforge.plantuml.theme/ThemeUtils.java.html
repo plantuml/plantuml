@@ -56,11 +56,14 @@ import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.teavm.TeaVM;
+// ::comment when JAVA8
+import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
+// ::done
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.utils.Log;
 
-<span class="nc" id="L63">public class ThemeUtils {</span>
+<span class="nc" id="L66">public class ThemeUtils {</span>
 
 	private static final String THEME_FILE_PREFIX = &quot;puml-theme-&quot;;
 
@@ -68,97 +71,153 @@ import net.sourceforge.plantuml.utils.Log;
 
 	private static final String THEME_PATH = &quot;themes&quot;;
 
+	// ::comment when JAVA8
+	private static final String THEMES_JS = &quot;themes.js&quot;;
+	// ::done
+
 	public static Theme loadTheme(PathSystem pathSystem, String name, String from, StringLocated location)
 			throws IOException, EaterException {
-<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (from == null)</span>
-<span class="fc" id="L74">			return loadBundledOrLocalTheme(pathSystem, name);</span>
+		// ::comment when JAVA8
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+			// The browser build has no classpath, no filesystem and no synchronous URL
+			// fetch, so only the bundled themes (shipped in themes.js) resolve here.
+			// Any &quot;from&quot; variant returns null, which the caller reports as a regular
+			// &quot;Cannot load theme&quot; error instead of silently ignoring the directive.
+<span class="nc bnc" id="L86" title="All 2 branches missed.">			return from == null ? loadJsTheme(name) : null;</span>
+		// ::done
 
-<span class="nc bnc" id="L76" title="All 4 branches missed.">		if (from.startsWith(&quot;&lt;&quot;) &amp;&amp; from.endsWith(&quot;&gt;&quot;))</span>
-<span class="nc" id="L77">			return loadStdlibTheme(name, from);</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (from == null)</span>
+<span class="fc" id="L90">			return loadBundledOrLocalTheme(pathSystem, name);</span>
 
-<span class="nc bnc" id="L79" title="All 4 branches missed.">		if (from.startsWith(&quot;http://&quot;) || from.startsWith(&quot;https://&quot;))</span>
-<span class="nc" id="L80">			return loadHttpTheme(name, from, location);</span>
+<span class="nc bnc" id="L92" title="All 4 branches missed.">		if (from.startsWith(&quot;&lt;&quot;) &amp;&amp; from.endsWith(&quot;&gt;&quot;))</span>
+<span class="nc" id="L93">			return loadStdlibTheme(name, from);</span>
 
-<span class="nc" id="L82">		return loadFileTheme(pathSystem, name, from);</span>
+<span class="nc bnc" id="L95" title="All 4 branches missed.">		if (from.startsWith(&quot;http://&quot;) || from.startsWith(&quot;https://&quot;))</span>
+<span class="nc" id="L96">			return loadHttpTheme(name, from, location);</span>
+
+<span class="nc" id="L98">		return loadFileTheme(pathSystem, name, from);</span>
 	}
+
+	// ::comment when JAVA8
+	/**
+	 * Loads a bundled theme in the browser build, from the PLANTUML_THEMES map
+	 * published by themes.js.
+	 * &lt;p&gt;
+	 * The map is consulted before the script is fetched, so that a host which has
+	 * registered the themes itself (for instance inside a Web Worker, where
+	 * TeaVmScriptLoader has no document to append a script tag to) does not need
+	 * themes.js to be reachable.
+	 */
+	private static Theme loadJsTheme(String name) {
+<span class="nc" id="L112">		Log.info(() -&gt; &quot;Loading theme &quot; + name + &quot; from &quot; + THEMES_JS);</span>
+<span class="nc" id="L113">		String content = TeaVmScriptLoader.getTheme(name);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (content == null) {</span>
+			try {
+<span class="nc" id="L116">				TeaVmScriptLoader.loadOnceSync(THEMES_JS);</span>
+<span class="nc" id="L117">			} catch (RuntimeException fetchFailed) {</span>
+				// hasThemes() decides below; a failed fetch and a fetch that did not
+				// define the map are the same situation.
+<span class="nc" id="L120">			}</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">			if (!TeaVmScriptLoader.hasThemes()) {</span>
+				// themes.js is not deployed where the page can fetch it. The diagram is
+				// published content viewed by someone who cannot fix that, so it keeps
+				// rendering unthemed, exactly as it did when !theme was ignored; the
+				// missing file is reported on the console, where the page author looks.
+				// An unknown name in a loaded themes.js stays an error (null, below),
+				// like the desktop build.
+<span class="nc" id="L128">				TeaVmScriptLoader.consoleWarn(&quot;PlantUML: &quot; + THEMES_JS + &quot; could not be loaded, so '!theme &quot; + name</span>
+						+ &quot;' was ignored. Serve &quot; + THEMES_JS + &quot; next to the page&quot;
+						+ &quot; or register globalThis.PLANTUML_THEMES (importing &quot; + THEMES_JS
+						+ &quot; as a module does this).&quot;);
+<span class="nc" id="L132">				return new Theme(ReadLineReader.create(new byte[0], &quot;&lt;missing &quot; + THEMES_JS + &quot;&gt;&quot;));</span>
+			}
+<span class="nc" id="L134">			content = TeaVmScriptLoader.getTheme(name);</span>
+		}
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (content == null)</span>
+<span class="nc" id="L137">			return null;</span>
+
+<span class="nc" id="L139">		final String description = &quot;&lt;&quot; + THEMES_JS + &quot;:&quot; + name + &quot;&gt;&quot;;</span>
+<span class="nc" id="L140">		return new Theme(ReadLineReader.create(content.getBytes(UTF_8), description));</span>
+	}
+	// ::done
 
 	private static Theme loadBundledOrLocalTheme(PathSystem pathSystem, String name) throws IOException {
 		// First, try bundled themes
-<span class="pc" id="L87">		Log.info(() -&gt; &quot;Loading theme &quot; + name);</span>
-<span class="fc" id="L88">		final String res = &quot;/&quot; + THEME_PATH + &quot;/&quot; + getFilename(name);</span>
-<span class="fc" id="L89">		final InputStream is = Stdlib.class.getResourceAsStream(res);</span>
-<span class="fc bfc" id="L90" title="All 2 branches covered.">		if (is != null) {</span>
-<span class="fc" id="L91">			final String description = &quot;&lt;&quot; + res + &quot;&gt;&quot;;</span>
-<span class="fc" id="L92">			return new Theme(ReadLineReader.create(new InputStreamReader(is), description));</span>
+<span class="pc" id="L146">		Log.info(() -&gt; &quot;Loading theme &quot; + name);</span>
+<span class="fc" id="L147">		final String res = &quot;/&quot; + THEME_PATH + &quot;/&quot; + getFilename(name);</span>
+<span class="fc" id="L148">		final InputStream is = Stdlib.class.getResourceAsStream(res);</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">		if (is != null) {</span>
+<span class="fc" id="L150">			final String description = &quot;&lt;&quot; + res + &quot;&gt;&quot;;</span>
+<span class="fc" id="L151">			return new Theme(ReadLineReader.create(new InputStreamReader(is), description));</span>
 		}
 
 		// Then try local file
-<span class="fc" id="L96">		final InputFile localFile = pathSystem.getInputFile(getFilename(name));</span>
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		if (localFile != null) {</span>
-<span class="nc" id="L98">			final Reader br = localFile.getReader(UTF_8);</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">			if (br != null)</span>
-<span class="nc" id="L100">				return new Theme(ReadLineReader.create(br, &quot;theme &quot; + name));</span>
+<span class="fc" id="L155">		final InputFile localFile = pathSystem.getInputFile(getFilename(name));</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">		if (localFile != null) {</span>
+<span class="nc" id="L157">			final Reader br = localFile.getReader(UTF_8);</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">			if (br != null)</span>
+<span class="nc" id="L159">				return new Theme(ReadLineReader.create(br, &quot;theme &quot; + name));</span>
 
 		}
 
-<span class="fc" id="L104">		return null;</span>
+<span class="fc" id="L163">		return null;</span>
 	}
 
 	private static Theme loadStdlibTheme(String name, String from) {
-<span class="nc" id="L108">		final String realFrom = from.substring(1, from.length() - 1);</span>
-<span class="nc" id="L109">		final String res = realFrom + &quot;/&quot; + getFilename(name);</span>
-<span class="nc" id="L110">		final byte[] content = Stdlib.getPumlResource(res);</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (content == null)</span>
-<span class="nc" id="L112">			return null;</span>
+<span class="nc" id="L167">		final String realFrom = from.substring(1, from.length() - 1);</span>
+<span class="nc" id="L168">		final String res = realFrom + &quot;/&quot; + getFilename(name);</span>
+<span class="nc" id="L169">		final byte[] content = Stdlib.getPumlResource(res);</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (content == null)</span>
+<span class="nc" id="L171">			return null;</span>
 
-<span class="nc" id="L114">		final String description = name + &quot; from &quot; + from;</span>
-<span class="nc" id="L115">		return new Theme(ReadLineReader.create(content, description));</span>
+<span class="nc" id="L173">		final String description = name + &quot; from &quot; + from;</span>
+<span class="nc" id="L174">		return new Theme(ReadLineReader.create(content, description));</span>
 	}
 
 	private static Theme loadHttpTheme(String name, String from, StringLocated location)
 			throws UnsupportedEncodingException, EaterException {
-<span class="nc" id="L120">		final SURL url = SURL.create(getFullPath(from, name));</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (url == null)</span>
-<span class="nc" id="L122">			throw new EaterException(&quot;Cannot open URL&quot;, location);</span>
+<span class="nc" id="L179">		final SURL url = SURL.create(getFullPath(from, name));</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">		if (url == null)</span>
+<span class="nc" id="L181">			throw new EaterException(&quot;Cannot open URL&quot;, location);</span>
 
-<span class="nc" id="L124">		return new Theme(PreprocessorUtils.getReaderInclude(url, location, UTF_8));</span>
+<span class="nc" id="L183">		return new Theme(PreprocessorUtils.getReaderInclude(url, location, UTF_8));</span>
 	}
 
 	private static String getFullPath(String from, String filename) {
-<span class="nc" id="L128">		final StringBuilder sb = new StringBuilder(from);</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (from.endsWith(&quot;/&quot;) == false)</span>
-<span class="nc" id="L130">			sb.append(&quot;/&quot;);</span>
+<span class="nc" id="L187">		final StringBuilder sb = new StringBuilder(from);</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">		if (from.endsWith(&quot;/&quot;) == false)</span>
+<span class="nc" id="L189">			sb.append(&quot;/&quot;);</span>
 
-<span class="nc" id="L132">		return sb + getFilename(filename);</span>
+<span class="nc" id="L191">		return sb + getFilename(filename);</span>
 	}
 
 	private static Theme loadFileTheme(PathSystem pathSystem, String name, String from) throws IOException {
-<span class="nc" id="L136">		final InputFile file = pathSystem.getInputFile(getFullPath(from, name));</span>
-<span class="nc" id="L137">		final InputStream is = file.newInputStream();</span>
-<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (is == null)</span>
-<span class="nc" id="L139">			return null;</span>
+<span class="nc" id="L195">		final InputFile file = pathSystem.getInputFile(getFullPath(from, name));</span>
+<span class="nc" id="L196">		final InputStream is = file.newInputStream();</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">		if (is == null)</span>
+<span class="nc" id="L198">			return null;</span>
 
-<span class="nc" id="L141">		final String description = name + &quot; from &quot; + from;</span>
-<span class="nc" id="L142">		return new Theme(ReadLineReader.create(new InputStreamReader(is), description));</span>
+<span class="nc" id="L200">		final String description = name + &quot; from &quot; + from;</span>
+<span class="nc" id="L201">		return new Theme(ReadLineReader.create(new InputStreamReader(is), description));</span>
 	}
 
 	public static List&lt;String&gt; getAllThemeNames() throws IOException {
-<span class="fc" id="L146">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
-<span class="nc" id="L148">			result.addAll(new ThemeList().getAll());</span>
+<span class="fc" id="L205">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L206" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
+<span class="nc" id="L207">			result.addAll(new ThemeList().getAll());</span>
 		} else {
-<span class="fc" id="L150">			final Collection&lt;String&gt; filenames = Objects.requireNonNull(ResourcesUtils.getJarFile(THEME_PATH, false));</span>
-<span class="fc bfc" id="L151" title="All 2 branches covered.">			for (String f : filenames)</span>
-<span class="pc bpc" id="L152" title="2 of 4 branches missed.">				if (f.startsWith(THEME_FILE_PREFIX) &amp;&amp; f.endsWith(THEME_FILE_SUFFIX))</span>
-<span class="fc" id="L153">					result.add(f.substring(THEME_FILE_PREFIX.length(), f.length() - THEME_FILE_SUFFIX.length()));</span>
+<span class="fc" id="L209">			final Collection&lt;String&gt; filenames = Objects.requireNonNull(ResourcesUtils.getJarFile(THEME_PATH, false));</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">			for (String f : filenames)</span>
+<span class="pc bpc" id="L211" title="2 of 4 branches missed.">				if (f.startsWith(THEME_FILE_PREFIX) &amp;&amp; f.endsWith(THEME_FILE_SUFFIX))</span>
+<span class="fc" id="L212">					result.add(f.substring(THEME_FILE_PREFIX.length(), f.length() - THEME_FILE_SUFFIX.length()));</span>
 		}
 
-<span class="fc" id="L156">		Collections.sort(result);</span>
-<span class="fc" id="L157">		return result;</span>
+<span class="fc" id="L215">		Collections.sort(result);</span>
+<span class="fc" id="L216">		return result;</span>
 	}
 
 	public static String getFilename(String filename) {
-<span class="fc" id="L161">		return THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;</span>
+<span class="fc" id="L220">		return THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;</span>
 	}
 
 }

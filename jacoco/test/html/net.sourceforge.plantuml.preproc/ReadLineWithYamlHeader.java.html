@@ -67,7 +67,7 @@ public class ReadLineWithYamlHeader implements ReadLine {
 <span class="fc bfc" id="L67" title="All 2 branches covered.">		if (yamlHeader == null) {</span>
 			// At this point, &quot;line&quot; is the very first line of the file
 <span class="fc" id="L69">			yamlHeader = new ArrayList&lt;String&gt;();</span>
-<span class="fc bfc" id="L70" title="All 2 branches covered.">			if (isSeparator(line)) {</span>
+<span class="fc bfc" id="L70" title="All 4 branches covered.">			if (line != null &amp;&amp; isSeparator(line)) {</span>
 				do {
 <span class="fc" id="L72">					line = source.readLine();</span>
 <span class="pc bpc" id="L73" title="1 of 4 branches missed.">					if (line == null || isSeparator(line))</span>
