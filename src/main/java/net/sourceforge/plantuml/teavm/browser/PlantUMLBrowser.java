@@ -440,6 +440,28 @@ public class PlantUMLBrowser {
 		TextBlock tb = ugDiagram.getTextBlock(0, fileFormat);
 
 		HColor tbBackcolor = tb.getBackcolor();
+		if (tbBackcolor == null && diagram instanceof TitledDiagram) {
+			// The document background (where skinparam backgroundColor and a theme
+			// background land) does not surface on the TextBlock; read it from the
+			// merged root.document style, exactly like ImageBuilder.styled() does
+			// for the Java build.
+			//
+			// Only divert for a background that should actually be painted.
+			// The color is judged in its plain (light mapped) form so the decision
+			// is the same in both modes: transparent never paints, and the skin
+			// default of white must keep painting nothing, in dark mode too, where
+			// the skin pairs white with a dark value but the page has always
+			// supplied its own backdrop. Falling through also keeps the historic
+			// WHITE/BLACK fallback below as the contrast reference for automatic
+			// colors.
+			final HColor documentBackground = ((TitledDiagram) diagram).calculateBackColor();
+			if (documentBackground != null) {
+				final String plainColor = documentBackground.toSvg(ColorMapper.TEAVM_LIGHT);
+				if ("#00000000".equals(plainColor) == false && "#FFFFFF".equals(plainColor) == false)
+					tbBackcolor = documentBackground;
+			}
+		}
+
 		final SvgGraphicsTeaVM svg;
 
 		if (tbBackcolor == null) {
