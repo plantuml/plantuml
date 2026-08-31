@@ -56,6 +56,9 @@ import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.teavm.TeaVM;
+// ::comment when JAVA8
+import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
+// ::done
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.utils.Log;
@@ -68,8 +71,21 @@ public class ThemeUtils {
 
 	private static final String THEME_PATH = "themes";
 
+	// ::comment when JAVA8
+	private static final String THEMES_JS = "themes.js";
+	// ::done
+
 	public static Theme loadTheme(PathSystem pathSystem, String name, String from, StringLocated location)
 			throws IOException, EaterException {
+		// ::comment when JAVA8
+		if (TeaVM.isTeaVM())
+			// The browser build has no classpath, no filesystem and no synchronous URL
+			// fetch, so only the bundled themes (shipped in themes.js) resolve here.
+			// Any "from" variant returns null, which the caller reports as a regular
+			// "Cannot load theme" error instead of silently ignoring the directive.
+			return from == null ? loadJsTheme(name) : null;
+		// ::done
+
 		if (from == null)
 			return loadBundledOrLocalTheme(pathSystem, name);
 
@@ -81,6 +97,49 @@ public class ThemeUtils {
 
 		return loadFileTheme(pathSystem, name, from);
 	}
+
+	// ::comment when JAVA8
+	/**
+	 * Loads a bundled theme in the browser build, from the PLANTUML_THEMES map
+	 * published by themes.js.
+	 * <p>
+	 * The map is consulted before the script is fetched, so that a host which has
+	 * registered the themes itself (for instance inside a Web Worker, where
+	 * TeaVmScriptLoader has no document to append a script tag to) does not need
+	 * themes.js to be reachable.
+	 */
+	private static Theme loadJsTheme(String name) {
+		Log.info(() -> "Loading theme " + name + " from " + THEMES_JS);
+		String content = TeaVmScriptLoader.getTheme(name);
+		if (content == null) {
+			try {
+				TeaVmScriptLoader.loadOnceSync(THEMES_JS);
+			} catch (RuntimeException fetchFailed) {
+				// hasThemes() decides below; a failed fetch and a fetch that did not
+				// define the map are the same situation.
+			}
+			if (!TeaVmScriptLoader.hasThemes()) {
+				// themes.js is not deployed where the page can fetch it. The diagram is
+				// published content viewed by someone who cannot fix that, so it keeps
+				// rendering unthemed, exactly as it did when !theme was ignored; the
+				// missing file is reported on the console, where the page author looks.
+				// An unknown name in a loaded themes.js stays an error (null, below),
+				// like the desktop build.
+				TeaVmScriptLoader.consoleWarn("PlantUML: " + THEMES_JS + " could not be loaded, so '!theme " + name
+						+ "' was ignored. Serve " + THEMES_JS + " next to the page"
+						+ " or register globalThis.PLANTUML_THEMES (importing " + THEMES_JS
+						+ " as a module does this).");
+				return new Theme(ReadLineReader.create(new byte[0], "<missing " + THEMES_JS + ">"));
+			}
+			content = TeaVmScriptLoader.getTheme(name);
+		}
+		if (content == null)
+			return null;
+
+		final String description = "<" + THEMES_JS + ":" + name + ">";
+		return new Theme(ReadLineReader.create(content.getBytes(UTF_8), description));
+	}
+	// ::done
 
 	private static Theme loadBundledOrLocalTheme(PathSystem pathSystem, String name) throws IOException {
 		// First, try bundled themes

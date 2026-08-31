@@ -276,6 +276,7 @@ tasks.register("npmPackage") {
 			"viz-global.js",
 			"emoji.js",
 			"openiconic.js",
+			"themes.js",
 			"main.js",
 			"main.css",
 			"favicon.svg",
@@ -322,6 +323,7 @@ tasks.register("npmPackage") {
 			    "./viz-global.js": "./viz-global.js",
 			    "./emoji.js": "./emoji.js",
 			    "./openiconic.js": "./openiconic.js",
+			    "./themes.js": "./themes.js",
 			    "./package.json": "./package.json"
 			  },
 			  "files": [
@@ -329,6 +331,7 @@ tasks.register("npmPackage") {
 			    "viz-global.js",
 			    "emoji.js",
 			    "openiconic.js",
+			    "themes.js",
 			    "main.js",
 			    "main.css",
 			    "favicon.svg",
@@ -419,6 +422,11 @@ tasks.register("npmPackage") {
 
 			- `plantuml.js` -- the engine
 			- `viz-global.js` -- Graphviz / Viz.js layout engine (required)
+			- `themes.js` -- the bundled `!theme` definitions, fetched on demand from the
+			  same directory as the page; serve it next to the engine, or register
+			  `globalThis.PLANTUML_THEMES` yourself, e.g. inside a Web Worker. Without it,
+			  `!theme` renders the diagram unthemed and warns on the console; an unknown
+			  theme name in a loaded themes.js still reports "Cannot load theme"
 			- demo pages: `index.html` (playground), `index-basic.html`,
 			  `index-basic-dark.html`, `index-collection.html`, and two GitHub
 			  integration proofs of concept

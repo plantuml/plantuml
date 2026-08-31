@@ -1,0 +1,8 @@
+{
+  "name": "plantuml-browser-test",
+  "private": true,
+  "description": "Functional browser checks for the PlantUML browser (TeaVM) engine",
+  "dependencies": {
+    "playwright": "1.62.1"
+  }
+}
