@@ -1,0 +1,68 @@
+name: browser-test
+
+# Functional checks for the browser (TeaVM) engine: builds the MIT npm package and asserts
+# behaviour in headless Chromium. Unlike perf-bench this one fails the build when a check fails.
+# To stop spending CI minutes on it, delete this file; browser-test/README.md documents how to
+# run the same checks locally in one command.
+
+on:
+  push:
+    branches: [ master ]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: browser-test-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  themes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up JDK 21 (Temurin)
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6.3.0
+
+      - name: Build engine
+        run: |
+          ./gradlew :plantuml-mit:npmPackage -Pci --no-daemon
+          test -f plantuml-mit/build/npm-plantuml/plantuml.js
+          test -f plantuml-mit/build/npm-plantuml/themes.js
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: browser-test/package-lock.json
+
+      - name: Install Playwright
+        run: |
+          cd browser-test
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Check themes
+        run: node browser-test/check-themes.js target=plantuml-mit/build/npm-plantuml
