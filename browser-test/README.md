@@ -31,6 +31,14 @@ There are no golden files. The expected rendering for a theme is derived from th
 text, read out of the `themes.js` being tested, so adding or editing a theme needs no fixture
 update.
 
+## check-background.js
+
+Checks that the document background is painted the way the Java build paints it: a
+background style on the svg element plus a rectangle covering the whole viewBox, for
+`skinparam backgroundColor`, the `<style>` document form, and themes. The deliberate
+skips are pinned too: transparent and the default white paint nothing, in dark mode as
+well. Run the same way with `node check-background.js target=...`.
+
 ## Running it
 
 ```

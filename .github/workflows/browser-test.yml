@@ -66,3 +66,6 @@ jobs:
 
       - name: Check themes
         run: node browser-test/check-themes.js target=plantuml-mit/build/npm-plantuml
+
+      - name: Check background
+        run: node browser-test/check-background.js target=plantuml-mit/build/npm-plantuml
