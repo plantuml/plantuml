@@ -192,8 +192,8 @@ import net.sourceforge.plantuml.text.Guillemet;
 <span class="pc bpc" id="L192" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.ARC_CIRCLE)</span>
 <span class="nc" id="L193">			return new EntityImageArcCircle(leaf);</span>
 
-<span class="pc bpc" id="L195" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.POINT_FOR_ASSOCIATION)</span>
-<span class="nc" id="L196">			return new EntityImageAssociationPoint(leaf);</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.POINT_FOR_ASSOCIATION)</span>
+<span class="fc" id="L196">			return new EntityImageAssociationPoint(leaf);</span>
 
 <span class="pc bpc" id="L198" title="1 of 2 branches missed.">		if (leaf.isGroup())</span>
 <span class="nc" id="L199">			return new EntityImageGroup(leaf);</span>

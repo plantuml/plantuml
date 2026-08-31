@@ -295,11 +295,11 @@ final public class CommandLinkClass extends SingleLineCommand2&lt;AbstractClassO
 			RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
 <span class="fc" id="L296">		String ent1String = diagram.cleanId(arg.get(&quot;ENT1&quot;, 0));</span>
 <span class="fc" id="L297">		String ent2String = diagram.cleanId(arg.get(&quot;ENT2&quot;, 0));</span>
-<span class="pc bpc" id="L298" title="3 of 4 branches missed.">		if (ent1String == null &amp;&amp; ent2String == null)</span>
+<span class="pc bpc" id="L298" title="1 of 4 branches missed.">		if (ent1String == null &amp;&amp; ent2String == null)</span>
 <span class="nc" id="L299">			return executeArgSpecial3(location, diagram, arg);</span>
 
-<span class="pc bpc" id="L301" title="1 of 2 branches missed.">		if (ent1String == null)</span>
-<span class="nc" id="L302">			return executeArgSpecial1(location, diagram, arg);</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">		if (ent1String == null)</span>
+<span class="fc" id="L302">			return executeArgSpecial1(location, diagram, arg);</span>
 
 <span class="pc bpc" id="L304" title="1 of 2 branches missed.">		if (ent2String == null)</span>
 <span class="nc" id="L305">			return executeArgSpecial2(location, diagram, arg);</span>
@@ -387,37 +387,37 @@ final public class CommandLinkClass extends SingleLineCommand2&lt;AbstractClassO
 
 	private CommandExecutionResult executeArgSpecial1(LineLocation location, AbstractClassOrObjectDiagram diagram,
 			RegexResult arg) {
-<span class="nc" id="L390">		final String name1A = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;COUPLE1&quot;, 0));</span>
-<span class="nc" id="L391">		final String name1B = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;COUPLE1&quot;, 1));</span>
+<span class="fc" id="L390">		final String name1A = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;COUPLE1&quot;, 0));</span>
+<span class="fc" id="L391">		final String name1B = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;COUPLE1&quot;, 1));</span>
 
-<span class="nc" id="L393">		final Quark&lt;Entity&gt; quark1A = diagram.quarkInContext(true, name1A);</span>
-<span class="nc" id="L394">		final Quark&lt;Entity&gt; quark1B = diagram.quarkInContext(true, name1B);</span>
+<span class="fc" id="L393">		final Quark&lt;Entity&gt; quark1A = diagram.quarkInContext(true, name1A);</span>
+<span class="fc" id="L394">		final Quark&lt;Entity&gt; quark1B = diagram.quarkInContext(true, name1B);</span>
 
-<span class="nc bnc" id="L396" title="All 4 branches missed.">		if (quark1A.getData() != null == false)</span>
+<span class="pc bpc" id="L396" title="2 of 4 branches missed.">		if (quark1A.getData() != null == false)</span>
 <span class="nc" id="L397">			return CommandExecutionResult.error(&quot;No class &quot; + name1A);</span>
 
-<span class="nc bnc" id="L399" title="All 4 branches missed.">		if (quark1B.getData() != null == false)</span>
+<span class="pc bpc" id="L399" title="2 of 4 branches missed.">		if (quark1B.getData() != null == false)</span>
 <span class="nc" id="L400">			return CommandExecutionResult.error(&quot;No class &quot; + name1B);</span>
 
-<span class="nc" id="L402">		final Entity cl1A = quark1A.getData();</span>
-<span class="nc" id="L403">		final Entity cl1B = quark1B.getData();</span>
+<span class="fc" id="L402">		final Entity cl1A = quark1A.getData();</span>
+<span class="fc" id="L403">		final Entity cl1B = quark1B.getData();</span>
 
-<span class="nc" id="L405">		final String id2 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;ENT2&quot;, 0), &quot;\&quot;&quot;);</span>
-<span class="nc" id="L406">		final Quark&lt;Entity&gt; ent2 = diagram.quarkInContext(true, id2);</span>
+<span class="fc" id="L405">		final String id2 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;ENT2&quot;, 0), &quot;\&quot;&quot;);</span>
+<span class="fc" id="L406">		final Quark&lt;Entity&gt; ent2 = diagram.quarkInContext(true, id2);</span>
 
-<span class="nc" id="L408">		Entity cl2 = ent2.getData();</span>
-<span class="nc bnc" id="L409" title="All 2 branches missed.">		if (cl2 == null)</span>
+<span class="fc" id="L408">		Entity cl2 = ent2.getData();</span>
+<span class="pc bpc" id="L409" title="1 of 2 branches missed.">		if (cl2 == null)</span>
 <span class="nc" id="L410">			cl2 = diagram.reallyCreateLeaf(location, ent2, Display.getWithNewlines(diagram.getPragma(), ent2.getName()),</span>
 					LeafType.CLASS, null);
 
-<span class="nc" id="L413">		final LinkType linkType = getLinkType(arg);</span>
-<span class="nc" id="L414">		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL_LINK&quot;, 0));</span>
+<span class="fc" id="L413">		final LinkType linkType = getLinkType(arg);</span>
+<span class="fc" id="L414">		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL_LINK&quot;, 0));</span>
 
-<span class="nc" id="L416">		final boolean result = diagram.associationClass(location, 1, cl1A, cl1B, cl2, linkType, label);</span>
-<span class="nc bnc" id="L417" title="All 2 branches missed.">		if (result == false)</span>
+<span class="fc" id="L416">		final boolean result = diagram.associationClass(location, 1, cl1A, cl1B, cl2, linkType, label);</span>
+<span class="pc bpc" id="L417" title="1 of 2 branches missed.">		if (result == false)</span>
 <span class="nc" id="L418">			return CommandExecutionResult.error(&quot;Cannot have more than 2 assocications&quot;);</span>
 
-<span class="nc" id="L420">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L420">		return CommandExecutionResult.ok();</span>
 	}
 
 	private CommandExecutionResult executeArgSpecial2(LineLocation location, AbstractClassOrObjectDiagram diagram,

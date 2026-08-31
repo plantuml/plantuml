@@ -162,12 +162,12 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 
 	public String getLabeldistance() {
 		// Default in dot 1.0
-<span class="nc" id="L165">		return getLinkArg().getLabeldistance();</span>
+<span class="fc" id="L165">		return getLinkArg().getLabeldistance();</span>
 	}
 
 	public String getLabelangle() {
 		// Default in dot -25
-<span class="nc" id="L170">		return getLinkArg().getLabelangle();</span>
+<span class="fc" id="L170">		return getLinkArg().getLabelangle();</span>
 	}
 
 	public String getUid() {
@@ -186,11 +186,11 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 <span class="nc" id="L186">	}</span>
 
 	public boolean isBetween(Entity cl1, Entity cl2) {
-<span class="nc bnc" id="L189" title="All 4 branches missed.">		if (cl1 == this.cl1 &amp;&amp; cl2 == this.cl2)</span>
-<span class="nc" id="L190">			return true;</span>
+<span class="pc bpc" id="L189" title="1 of 4 branches missed.">		if (cl1 == this.cl1 &amp;&amp; cl2 == this.cl2)</span>
+<span class="fc" id="L190">			return true;</span>
 
-<span class="nc bnc" id="L192" title="All 4 branches missed.">		if (cl1 == this.cl2 &amp;&amp; cl2 == this.cl1)</span>
-<span class="nc" id="L193">			return true;</span>
+<span class="pc bpc" id="L192" title="2 of 4 branches missed.">		if (cl1 == this.cl2 &amp;&amp; cl2 == this.cl1)</span>
+<span class="fc" id="L193">			return true;</span>
 
 <span class="nc" id="L195">		return false;</span>
 	}
@@ -334,9 +334,9 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 <span class="nc" id="L334">	}</span>
 
 	public final void addNoteFrom(Link other, NoteLinkStrategy strategy) {
-<span class="nc bnc" id="L337" title="All 2 branches missed.">		if (other.note != null)</span>
+<span class="pc bpc" id="L337" title="1 of 2 branches missed.">		if (other.note != null)</span>
 <span class="nc" id="L338">			this.note = other.note.withStrategy(strategy);</span>
-<span class="nc" id="L339">	}</span>
+<span class="fc" id="L339">	}</span>
 
 	public boolean isAutoLinkOfAGroup() {
 <span class="nc bnc" id="L342" title="All 2 branches missed.">		if (getEntity1().isGroup() == false)</span>

@@ -85,11 +85,11 @@ import net.sourceforge.plantuml.utils.LineLocation;
 	}
 
 	private Link foundLink(Entity entity1, Entity entity2) {
-<span class="nc" id="L88">		final List&lt;Link&gt; links = getLinks();</span>
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		for (int i = links.size() - 1; i &gt;= 0; i--) {</span>
-<span class="nc" id="L90">			final Link l = links.get(i);</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">			if (l.isBetween(entity1, entity2))</span>
-<span class="nc" id="L92">				return l;</span>
+<span class="fc" id="L88">		final List&lt;Link&gt; links = getLinks();</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		for (int i = links.size() - 1; i &gt;= 0; i--) {</span>
+<span class="fc" id="L90">			final Link l = links.get(i);</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">			if (l.isBetween(entity1, entity2))</span>
+<span class="fc" id="L92">				return l;</span>
 
 		}
 <span class="nc" id="L95">		return null;</span>
@@ -177,15 +177,15 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 	public boolean associationClass(LineLocation location, int mode, Entity entity1, Entity entity2, Entity associed,
 			LinkType linkType, Display label) {
-<span class="nc" id="L180">		final List&lt;Association&gt; same = getExistingAssociatedPoints(entity1, entity2);</span>
-<span class="nc bnc" id="L181" title="All 2 branches missed.">		if (same.size() &gt; 1) {</span>
+<span class="fc" id="L180">		final List&lt;Association&gt; same = getExistingAssociatedPoints(entity1, entity2);</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">		if (same.size() &gt; 1) {</span>
 <span class="nc" id="L182">			return false;</span>
-<span class="nc bnc" id="L183" title="All 2 branches missed.">		} else if (same.size() == 0) {</span>
-<span class="nc" id="L184">			final Association association = new Association(location, mode, entity1, entity2, associed);</span>
-<span class="nc" id="L185">			association.createNew(location, mode, linkType, label);</span>
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">		} else if (same.size() == 0) {</span>
+<span class="fc" id="L184">			final Association association = new Association(location, mode, entity1, entity2, associed);</span>
+<span class="fc" id="L185">			association.createNew(location, mode, linkType, label);</span>
 
-<span class="nc" id="L187">			this.associations.add(association);</span>
-<span class="nc" id="L188">			return true;</span>
+<span class="fc" id="L187">			this.associations.add(association);</span>
+<span class="fc" id="L188">			return true;</span>
 		}
 <span class="nc bnc" id="L190" title="All 2 branches missed.">		if (TeaVM.a())</span>
 <span class="nc bnc" id="L191" title="All 2 branches missed.">			assert same.size() == 1;</span>
@@ -197,12 +197,12 @@ import net.sourceforge.plantuml.utils.LineLocation;
 	}
 
 	private List&lt;Association&gt; getExistingAssociatedPoints(final Entity entity1, final Entity entity2) {
-<span class="nc" id="L200">		final List&lt;Association&gt; same = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L201" title="All 2 branches missed.">		for (Association existing : associations)</span>
+<span class="fc" id="L200">		final List&lt;Association&gt; same = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">		for (Association existing : associations)</span>
 <span class="nc bnc" id="L202" title="All 2 branches missed.">			if (existing.sameCouple(entity1, entity2))</span>
 <span class="nc" id="L203">				same.add(existing);</span>
 
-<span class="nc" id="L205">		return same;</span>
+<span class="fc" id="L205">		return same;</span>
 	}
 
 	class Association {
@@ -219,20 +219,20 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 		private Association other;
 
-<span class="nc" id="L222">		public Association(LineLocation location, int mode, Entity entity1, Entity entity2, Entity associed) {</span>
-<span class="nc" id="L223">			this.entity1 = entity1;</span>
-<span class="nc" id="L224">			this.entity2 = entity2;</span>
-<span class="nc" id="L225">			this.associed = associed;</span>
-<span class="nc" id="L226">			final String idShort = AbstractClassOrObjectDiagram.this.getUniqueSequence(&quot;apoint&quot;);</span>
+<span class="fc" id="L222">		public Association(LineLocation location, int mode, Entity entity1, Entity entity2, Entity associed) {</span>
+<span class="fc" id="L223">			this.entity1 = entity1;</span>
+<span class="fc" id="L224">			this.entity2 = entity2;</span>
+<span class="fc" id="L225">			this.associed = associed;</span>
+<span class="fc" id="L226">			final String idShort = AbstractClassOrObjectDiagram.this.getUniqueSequence(&quot;apoint&quot;);</span>
 			final Quark&lt;Entity&gt; quark;
-<span class="nc bnc" id="L228" title="All 2 branches missed.">			if (entity1.getQuark().getParent() == entity2.getQuark().getParent())</span>
-<span class="nc" id="L229">				quark = entity1.getQuark().getParent().child(idShort);</span>
+<span class="pc bpc" id="L228" title="1 of 2 branches missed.">			if (entity1.getQuark().getParent() == entity2.getQuark().getParent())</span>
+<span class="fc" id="L229">				quark = entity1.getQuark().getParent().child(idShort);</span>
 			else
 <span class="nc" id="L231">				quark = quarkInContext(true, cleanId(idShort));</span>
-<span class="nc" id="L232">			point = reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), &quot;&quot;),</span>
+<span class="fc" id="L232">			point = reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), &quot;&quot;),</span>
 					LeafType.POINT_FOR_ASSOCIATION, null);
 
-<span class="nc" id="L235">		}</span>
+<span class="fc" id="L235">		}</span>
 
 		public Association createSecondAssociation(LineLocation location, int mode2, Entity associed2, Display label) {
 <span class="nc" id="L238">			final Association result = new Association(location, mode2, entity1, entity2, associed2);</span>
@@ -248,121 +248,119 @@ import net.sourceforge.plantuml.utils.LineLocation;
 		}
 
 		void createNew(LineLocation location, int mode, LinkType linkType, Display label) {
-<span class="nc" id="L251">			existingLink = foundLink(entity1, entity2);</span>
-<span class="nc bnc" id="L252" title="All 2 branches missed.">			if (existingLink == null)</span>
+<span class="fc" id="L251">			existingLink = foundLink(entity1, entity2);</span>
+<span class="pc bpc" id="L252" title="1 of 2 branches missed.">			if (existingLink == null)</span>
 <span class="nc" id="L253">				existingLink = new Link(location, AbstractClassOrObjectDiagram.this,</span>
 <span class="nc" id="L254">						getSkinParam().getCurrentStyleBuilder(), entity1, entity2,</span>
 <span class="nc" id="L255">						new LinkType(LinkDecor.NONE, LinkDecor.NONE), LinkArg.noDisplay(2));</span>
 			else
-<span class="nc" id="L257">				removeLink(existingLink);</span>
+<span class="fc" id="L257">				removeLink(existingLink);</span>
 
-<span class="nc bnc" id="L259" title="All 2 branches missed.">			final Entity entity1real = existingLink.isInverted() ? existingLink.getEntity2()</span>
-<span class="nc" id="L260">					: existingLink.getEntity1();</span>
-<span class="nc bnc" id="L261" title="All 2 branches missed.">			final Entity entity2real = existingLink.isInverted() ? existingLink.getEntity1()</span>
-<span class="nc" id="L262">					: existingLink.getEntity2();</span>
+<span class="fc" id="L259">			final Entity entity1real = existingLink.getEntity1();</span>
+<span class="fc" id="L260">			final Entity entity2real = existingLink.getEntity2();</span>
 
-<span class="nc" id="L264">			entity1ToPoint = new Link(location, AbstractClassOrObjectDiagram.this,</span>
-<span class="nc" id="L265">					getSkinParam().getCurrentStyleBuilder(), entity1real, point, existingLink.getType().getPart2(),</span>
-<span class="nc" id="L266">					LinkArg.build(existingLink.getLabel(), existingLink.getLength())</span>
-<span class="nc" id="L267">							.withQuantifier(existingLink.getQuantifier1(), null)</span>
-<span class="nc" id="L268">							.withDistanceAngle(existingLink.getLabeldistance(), existingLink.getLabelangle()));</span>
-<span class="nc" id="L269">			entity1ToPoint.setLinkArrow(existingLink.getLinkArrow());</span>
-<span class="nc" id="L270">			pointToEntity2 = new Link(location, AbstractClassOrObjectDiagram.this,</span>
-<span class="nc" id="L271">					getSkinParam().getCurrentStyleBuilder(), point, entity2real, existingLink.getType().getPart1(),</span>
-<span class="nc" id="L272">					LinkArg.noDisplay(existingLink.getLength()).withQuantifier(null, existingLink.getQuantifier2())</span>
-<span class="nc" id="L273">							.withDistanceAngle(existingLink.getLabeldistance(), existingLink.getLabelangle()));</span>
+<span class="fc" id="L262">			entity1ToPoint = new Link(location, AbstractClassOrObjectDiagram.this,</span>
+<span class="fc" id="L263">					getSkinParam().getCurrentStyleBuilder(), entity1real, point, existingLink.getType().getPart2(),</span>
+<span class="fc" id="L264">					LinkArg.build(existingLink.getLabel(), existingLink.getLength())</span>
+<span class="fc" id="L265">							.withQuantifier(existingLink.getQuantifier1(), null)</span>
+<span class="fc" id="L266">							.withDistanceAngle(existingLink.getLabeldistance(), existingLink.getLabelangle()));</span>
+<span class="fc" id="L267">			entity1ToPoint.setLinkArrow(existingLink.getLinkArrow());</span>
+<span class="fc" id="L268">			pointToEntity2 = new Link(location, AbstractClassOrObjectDiagram.this,</span>
+<span class="fc" id="L269">					getSkinParam().getCurrentStyleBuilder(), point, entity2real, existingLink.getType().getPart1(),</span>
+<span class="fc" id="L270">					LinkArg.noDisplay(existingLink.getLength()).withQuantifier(null, existingLink.getQuantifier2())</span>
+<span class="fc" id="L271">							.withDistanceAngle(existingLink.getLabeldistance(), existingLink.getLabelangle()));</span>
 
-<span class="nc" id="L275">			int length = 1;</span>
-<span class="nc bnc" id="L276" title="All 4 branches missed.">			if (existingLink.getLength() == 1 &amp;&amp; entity1 != entity2)</span>
-<span class="nc" id="L277">				length = 2;</span>
+<span class="fc" id="L273">			int length = 1;</span>
+<span class="pc bpc" id="L274" title="1 of 4 branches missed.">			if (existingLink.getLength() == 1 &amp;&amp; entity1 != entity2)</span>
+<span class="fc" id="L275">				length = 2;</span>
 
-<span class="nc bnc" id="L279" title="All 4 branches missed.">			if (existingLink.getLength() == 2 &amp;&amp; entity1 == entity2)</span>
-<span class="nc" id="L280">				length = 2;</span>
+<span class="pc bpc" id="L277" title="1 of 4 branches missed.">			if (existingLink.getLength() == 2 &amp;&amp; entity1 == entity2)</span>
+<span class="nc" id="L278">				length = 2;</span>
 
-<span class="nc bnc" id="L282" title="All 2 branches missed.">			if (length == 1) {</span>
-<span class="nc" id="L283">				entity1ToPoint.addNoteFrom(existingLink, NoteLinkStrategy.NORMAL);</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">			if (length == 1) {</span>
+<span class="fc" id="L281">				entity1ToPoint.addNoteFrom(existingLink, NoteLinkStrategy.NORMAL);</span>
 			} else {
-<span class="nc" id="L285">				entity1ToPoint.addNoteFrom(existingLink, NoteLinkStrategy.HALF_PRINTED_FULL);</span>
-<span class="nc" id="L286">				pointToEntity2.addNoteFrom(existingLink, NoteLinkStrategy.HALF_NOT_PRINTED);</span>
+<span class="fc" id="L283">				entity1ToPoint.addNoteFrom(existingLink, NoteLinkStrategy.HALF_PRINTED_FULL);</span>
+<span class="fc" id="L284">				pointToEntity2.addNoteFrom(existingLink, NoteLinkStrategy.HALF_NOT_PRINTED);</span>
 			}
-<span class="nc" id="L288">			addLink(entity1ToPoint);</span>
-<span class="nc" id="L289">			addLink(pointToEntity2);</span>
+<span class="fc" id="L286">			addLink(entity1ToPoint);</span>
+<span class="fc" id="L287">			addLink(pointToEntity2);</span>
 
-<span class="nc bnc" id="L291" title="All 2 branches missed.">			if (mode == 1)</span>
-<span class="nc" id="L292">				pointToAssocied = new Link(location, AbstractClassOrObjectDiagram.this,</span>
-<span class="nc" id="L293">						getSkinParam().getCurrentStyleBuilder(), point, associed, linkType,</span>
-<span class="nc" id="L294">						LinkArg.build(label, length));</span>
+<span class="pc bpc" id="L289" title="1 of 2 branches missed.">			if (mode == 1)</span>
+<span class="fc" id="L290">				pointToAssocied = new Link(location, AbstractClassOrObjectDiagram.this,</span>
+<span class="fc" id="L291">						getSkinParam().getCurrentStyleBuilder(), point, associed, linkType,</span>
+<span class="fc" id="L292">						LinkArg.build(label, length));</span>
 			else
-<span class="nc" id="L296">				pointToAssocied = new Link(location, AbstractClassOrObjectDiagram.this,</span>
-<span class="nc" id="L297">						getSkinParam().getCurrentStyleBuilder(), associed, point, linkType,</span>
-<span class="nc" id="L298">						LinkArg.build(label, length));</span>
+<span class="nc" id="L294">				pointToAssocied = new Link(location, AbstractClassOrObjectDiagram.this,</span>
+<span class="nc" id="L295">						getSkinParam().getCurrentStyleBuilder(), associed, point, linkType,</span>
+<span class="nc" id="L296">						LinkArg.build(label, length));</span>
 
-<span class="nc" id="L300">			addLink(pointToAssocied);</span>
-<span class="nc" id="L301">		}</span>
+<span class="fc" id="L298">			addLink(pointToAssocied);</span>
+<span class="fc" id="L299">		}</span>
 
 		void createInSecond(LineLocation location, LinkType linkType, Display label) {
-<span class="nc" id="L304">			existingLink = foundLink(entity1, entity2);</span>
-<span class="nc bnc" id="L305" title="All 2 branches missed.">			if (existingLink == null)</span>
-<span class="nc" id="L306">				existingLink = new Link(location, AbstractClassOrObjectDiagram.this,</span>
-<span class="nc" id="L307">						getSkinParam().getCurrentStyleBuilder(), entity1, entity2,</span>
-<span class="nc" id="L308">						new LinkType(LinkDecor.NONE, LinkDecor.NONE), LinkArg.noDisplay(2));</span>
+<span class="nc" id="L302">			existingLink = foundLink(entity1, entity2);</span>
+<span class="nc bnc" id="L303" title="All 2 branches missed.">			if (existingLink == null)</span>
+<span class="nc" id="L304">				existingLink = new Link(location, AbstractClassOrObjectDiagram.this,</span>
+<span class="nc" id="L305">						getSkinParam().getCurrentStyleBuilder(), entity1, entity2,</span>
+<span class="nc" id="L306">						new LinkType(LinkDecor.NONE, LinkDecor.NONE), LinkArg.noDisplay(2));</span>
 			else
-<span class="nc" id="L310">				removeLink(existingLink);</span>
+<span class="nc" id="L308">				removeLink(existingLink);</span>
 
-<span class="nc" id="L312">			entity1ToPoint = new Link(location, AbstractClassOrObjectDiagram.this,</span>
-<span class="nc" id="L313">					getSkinParam().getCurrentStyleBuilder(), entity1, point, existingLink.getType().getPart2(),</span>
-<span class="nc" id="L314">					LinkArg.build(existingLink.getLabel(), 2).withQuantifier(existingLink.getQuantifier1(), null)</span>
-<span class="nc" id="L315">							.withDistanceAngle(existingLink.getLabeldistance(), existingLink.getLabelangle()));</span>
-<span class="nc" id="L316">			pointToEntity2 = new Link(location, AbstractClassOrObjectDiagram.this,</span>
-<span class="nc" id="L317">					getSkinParam().getCurrentStyleBuilder(), point, entity2, existingLink.getType().getPart1(),</span>
-<span class="nc" id="L318">					LinkArg.noDisplay(2).withQuantifier(null, existingLink.getQuantifier2())</span>
-<span class="nc" id="L319">							.withDistanceAngle(existingLink.getLabeldistance(), existingLink.getLabelangle()));</span>
+<span class="nc" id="L310">			entity1ToPoint = new Link(location, AbstractClassOrObjectDiagram.this,</span>
+<span class="nc" id="L311">					getSkinParam().getCurrentStyleBuilder(), entity1, point, existingLink.getType().getPart2(),</span>
+<span class="nc" id="L312">					LinkArg.build(existingLink.getLabel(), 2).withQuantifier(existingLink.getQuantifier1(), null)</span>
+<span class="nc" id="L313">							.withDistanceAngle(existingLink.getLabeldistance(), existingLink.getLabelangle()));</span>
+<span class="nc" id="L314">			pointToEntity2 = new Link(location, AbstractClassOrObjectDiagram.this,</span>
+<span class="nc" id="L315">					getSkinParam().getCurrentStyleBuilder(), point, entity2, existingLink.getType().getPart1(),</span>
+<span class="nc" id="L316">					LinkArg.noDisplay(2).withQuantifier(null, existingLink.getQuantifier2())</span>
+<span class="nc" id="L317">							.withDistanceAngle(existingLink.getLabeldistance(), existingLink.getLabelangle()));</span>
 			// entity1ToPoint = new Link(entity1, point, existingLink.getType(),
 			// null, 2);
 			// pointToEntity2 = new Link(point, entity2, existingLink.getType(),
 			// null, 2);
-<span class="nc" id="L324">			addLink(entity1ToPoint);</span>
-<span class="nc" id="L325">			addLink(pointToEntity2);</span>
-<span class="nc bnc" id="L326" title="All 2 branches missed.">			if (other.pointToAssocied.getEntity1().getLeafType() == LeafType.POINT_FOR_ASSOCIATION) {</span>
-<span class="nc" id="L327">				removeLink(other.pointToAssocied);</span>
-<span class="nc" id="L328">				other.pointToAssocied = other.pointToAssocied.getInv();</span>
-<span class="nc" id="L329">				addLink(other.pointToAssocied);</span>
+<span class="nc" id="L322">			addLink(entity1ToPoint);</span>
+<span class="nc" id="L323">			addLink(pointToEntity2);</span>
+<span class="nc bnc" id="L324" title="All 2 branches missed.">			if (other.pointToAssocied.getEntity1().getLeafType() == LeafType.POINT_FOR_ASSOCIATION) {</span>
+<span class="nc" id="L325">				removeLink(other.pointToAssocied);</span>
+<span class="nc" id="L326">				other.pointToAssocied = other.pointToAssocied.getInv();</span>
+<span class="nc" id="L327">				addLink(other.pointToAssocied);</span>
 			}
-<span class="nc" id="L331">			pointToAssocied = new Link(location, AbstractClassOrObjectDiagram.this,</span>
-<span class="nc" id="L332">					getSkinParam().getCurrentStyleBuilder(), point, associed, linkType, LinkArg.build(label, 1));</span>
-<span class="nc" id="L333">			addLink(pointToAssocied);</span>
+<span class="nc" id="L329">			pointToAssocied = new Link(location, AbstractClassOrObjectDiagram.this,</span>
+<span class="nc" id="L330">					getSkinParam().getCurrentStyleBuilder(), point, associed, linkType, LinkArg.build(label, 1));</span>
+<span class="nc" id="L331">			addLink(pointToAssocied);</span>
 
-<span class="nc" id="L335">			final Link lnode = new Link(location, AbstractClassOrObjectDiagram.this,</span>
-<span class="nc" id="L336">					getSkinParam().getCurrentStyleBuilder(), other.point, this.point,</span>
-<span class="nc" id="L337">					new LinkType(LinkDecor.NONE, LinkDecor.NONE), LinkArg.noDisplay(1));</span>
-<span class="nc" id="L338">			lnode.setInvis(true);</span>
-<span class="nc" id="L339">			addLink(lnode);</span>
+<span class="nc" id="L333">			final Link lnode = new Link(location, AbstractClassOrObjectDiagram.this,</span>
+<span class="nc" id="L334">					getSkinParam().getCurrentStyleBuilder(), other.point, this.point,</span>
+<span class="nc" id="L335">					new LinkType(LinkDecor.NONE, LinkDecor.NONE), LinkArg.noDisplay(1));</span>
+<span class="nc" id="L336">			lnode.setInvis(true);</span>
+<span class="nc" id="L337">			addLink(lnode);</span>
 
-<span class="nc" id="L341">		}</span>
+<span class="nc" id="L339">		}</span>
 
 		boolean sameCouple(Entity entity1, Entity entity2) {
-<span class="nc bnc" id="L344" title="All 4 branches missed.">			if (this.entity1 == entity1 &amp;&amp; this.entity2 == entity2)</span>
-<span class="nc" id="L345">				return true;</span>
+<span class="nc bnc" id="L342" title="All 4 branches missed.">			if (this.entity1 == entity1 &amp;&amp; this.entity2 == entity2)</span>
+<span class="nc" id="L343">				return true;</span>
 
-<span class="nc bnc" id="L347" title="All 4 branches missed.">			if (this.entity1 == entity2 &amp;&amp; this.entity2 == entity1)</span>
-<span class="nc" id="L348">				return true;</span>
+<span class="nc bnc" id="L345" title="All 4 branches missed.">			if (this.entity1 == entity2 &amp;&amp; this.entity2 == entity1)</span>
+<span class="nc" id="L346">				return true;</span>
 
-<span class="nc" id="L350">			return false;</span>
+<span class="nc" id="L348">			return false;</span>
 		}
 	}
 
 	@Override
 	public void setLegend(DisplayPositioned legend) {
 
-<span class="fc" id="L357">		final Entity currentGroup = this.getCurrentGroup();</span>
+<span class="fc" id="L355">		final Entity currentGroup = this.getCurrentGroup();</span>
 
-<span class="pc bpc" id="L359" title="1 of 2 branches missed.">		if (currentGroup.isRoot()) {</span>
-<span class="fc" id="L360">			super.setLegend(legend);</span>
-<span class="fc" id="L361">			return;</span>
+<span class="pc bpc" id="L357" title="1 of 2 branches missed.">		if (currentGroup.isRoot()) {</span>
+<span class="fc" id="L358">			super.setLegend(legend);</span>
+<span class="fc" id="L359">			return;</span>
 		}
 
-<span class="nc" id="L364">		currentGroup.setLegend(legend);</span>
-<span class="nc" id="L365">	}</span>
+<span class="nc" id="L362">		currentGroup.setLegend(legend);</span>
+<span class="nc" id="L363">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

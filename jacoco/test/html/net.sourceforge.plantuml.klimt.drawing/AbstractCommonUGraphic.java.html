@@ -122,8 +122,8 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 <span class="fc" id="L122">			copy.backColor = ((UBackground) change).getBackColor();</span>
 <span class="fc bfc" id="L123" title="All 2 branches covered.">		} else if (change instanceof HColor) {</span>
 <span class="fc" id="L124">			copy.color = (HColor) change;</span>
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		} else if (change instanceof CopyForegroundColorToBackgroundColor) {</span>
-<span class="nc" id="L126">			copy.backColor = this.color;</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		} else if (change instanceof CopyForegroundColorToBackgroundColor) {</span>
+<span class="fc" id="L126">			copy.backColor = this.color;</span>
 		}
 <span class="fc" id="L128">		return copy;</span>
 	}
