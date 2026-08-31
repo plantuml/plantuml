@@ -440,6 +440,9 @@ public class PlantUMLBrowser {
 		TextBlock tb = ugDiagram.getTextBlock(0, fileFormat);
 
 		HColor tbBackcolor = tb.getBackcolor();
+		if (tbBackcolor == null && diagram instanceof TitledDiagram)
+			tbBackcolor = getPaintableDocumentBackground((TitledDiagram) diagram);
+
 		final SvgGraphicsTeaVM svg;
 
 		if (tbBackcolor == null) {
@@ -476,6 +479,34 @@ public class PlantUMLBrowser {
 		svg.addCommentMetadata(String.join("\n", lines));
 
 		return svg;
+	}
+
+	/**
+	 * Returns the document background of the diagram when it should be painted,
+	 * or null to keep the historic behaviour of painting nothing.
+	 * <p>
+	 * The document background is where both {@code skinparam backgroundColor} and
+	 * a theme background land; it never surfaces on the TextBlock, so it is read
+	 * from the merged root.document style, exactly like {@code ImageBuilder.styled()}
+	 * does for the Java build.
+	 * <p>
+	 * The color is judged in its plain (light mapped) form so the decision is the
+	 * same in both modes: transparent never paints, and the skin default of white
+	 * must keep painting nothing, in dark mode too, where the skin pairs white
+	 * with a dark value but the page has always supplied its own backdrop.
+	 * Returning null also keeps the historic WHITE/BLACK fallback in
+	 * {@code buildSvg} as the contrast reference for automatic colors.
+	 */
+	private static HColor getPaintableDocumentBackground(TitledDiagram diagram) {
+		final HColor documentBackground = diagram.calculateBackColor();
+		if (documentBackground == null)
+			return null;
+
+		final String plainColor = documentBackground.toSvg(ColorMapper.TEAVM_LIGHT);
+		if ("#00000000".equals(plainColor) || "#FFFFFF".equals(plainColor))
+			return null;
+
+		return documentBackground;
 	}
 
 	private static void doRender(String[] lines, String elementId, boolean darkMode, int maxSvgSize) {
