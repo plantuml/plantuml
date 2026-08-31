@@ -210,25 +210,25 @@ public class LiveBoxes {
 	}
 
 	private boolean isNextEventADestroy(Event event) {
-		for (Iterator<Event> it = events.iterator(); it.hasNext();) {
-			final Event current = it.next();
-			if (event != current)
-				continue;
-
-			if (current instanceof Message) {
-				// Several life events may follow the message (for example a
-				// deactivate then a destroy): the destroy is not always the
-				// first one
-				Event next = nextButSkippingNotes(it);
-				while (next instanceof LifeEvent) {
-					final LifeEvent le = (LifeEvent) next;
-					if (le.isDestroy(p))
-						return true;
-
-					next = nextButSkippingNotes(it);
-				}
-			}
+		// Scanning the list from the start to locate the event made getStairs
+		// quadratic in the number of events; the eventInfo index finds it in O(1)
+		// and the short local walk below is unchanged.
+		ensureLevelCache();
+		final int[] info = eventInfo.get(event);
+		if (info == null || event instanceof Message == false)
 			return false;
+
+		// Several life events may follow the message (for example a
+		// deactivate then a destroy): the destroy is not always the
+		// first one
+		for (int k = info[0] + 1; k < events.size(); k++) {
+			final Event next = events.get(k);
+			if (next instanceof Note)
+				continue;
+			if (next instanceof LifeEvent == false)
+				return false;
+			if (((LifeEvent) next).isDestroy(p))
+				return true;
 		}
 		return false;
 	}
@@ -240,22 +240,21 @@ public class LiveBoxes {
 				return le.getSpecificColors();
 
 		}
-		for (Iterator<Event> it = events.iterator(); it.hasNext();) {
-			final Event current = it.next();
-			if (event != current)
-				continue;
-
-			if (current instanceof Message || current instanceof MessageExo) {
-				Event next = nextButSkippingNotes(it);
-				while (next instanceof LifeEvent && ((LifeEvent) next).getMessage() == current) {
-					final LifeEvent le = (LifeEvent) next;
-					if (le.isActivate() && le.getParticipant() == p)
-						return le.getSpecificColors();
-
-					next = nextButSkippingNotes(it);
-				}
-			}
+		// Same O(1) lookup as isNextEventADestroy instead of a full list scan.
+		ensureLevelCache();
+		final int[] info = eventInfo.get(event);
+		if (info == null || (event instanceof Message == false && event instanceof MessageExo == false))
 			return null;
+
+		for (int k = info[0] + 1; k < events.size(); k++) {
+			final Event next = events.get(k);
+			if (next instanceof Note)
+				continue;
+			if (next instanceof LifeEvent == false || ((LifeEvent) next).getMessage() != event)
+				return null;
+			final LifeEvent le = (LifeEvent) next;
+			if (le.isActivate() && le.getParticipant() == p)
+				return le.getSpecificColors();
 		}
 		return null;
 	}
