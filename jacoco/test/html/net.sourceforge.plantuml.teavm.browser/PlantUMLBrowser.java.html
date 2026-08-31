@@ -440,68 +440,99 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
 <span class="nc" id="L440">		TextBlock tb = ugDiagram.getTextBlock(0, fileFormat);</span>
 
 <span class="nc" id="L442">		HColor tbBackcolor = tb.getBackcolor();</span>
+<span class="nc bnc" id="L443" title="All 4 branches missed.">		if (tbBackcolor == null &amp;&amp; diagram instanceof TitledDiagram)</span>
+<span class="nc" id="L444">			tbBackcolor = getPaintableDocumentBackground((TitledDiagram) diagram);</span>
+
 		final SvgGraphicsTeaVM svg;
 
-<span class="nc bnc" id="L445" title="All 2 branches missed.">		if (tbBackcolor == null) {</span>
-<span class="nc" id="L446">			svg = new SvgGraphicsTeaVM();</span>
-<span class="nc bnc" id="L447" title="All 2 branches missed.">			tbBackcolor = darkMode ? HColors.BLACK : HColors.WHITE;</span>
+<span class="nc bnc" id="L448" title="All 2 branches missed.">		if (tbBackcolor == null) {</span>
+<span class="nc" id="L449">			svg = new SvgGraphicsTeaVM();</span>
+<span class="nc bnc" id="L450" title="All 2 branches missed.">			tbBackcolor = darkMode ? HColors.BLACK : HColors.WHITE;</span>
 		} else {
-<span class="nc" id="L449">			svg = new SvgGraphicsTeaVM(tbBackcolor.toSvg(colorMapper));</span>
+<span class="nc" id="L452">			svg = new SvgGraphicsTeaVM(tbBackcolor.toSvg(colorMapper));</span>
 		}
 
-<span class="nc" id="L452">		UGraphic ug = UGraphicTeaVM.build(tbBackcolor, colorMapper, STRING_BOUNDER, svg);</span>
+<span class="nc" id="L455">		UGraphic ug = UGraphicTeaVM.build(tbBackcolor, colorMapper, STRING_BOUNDER, svg);</span>
 
-<span class="nc bnc" id="L454" title="All 2 branches missed.">		if (diagram instanceof TitledDiagram)</span>
-<span class="nc" id="L455">			tb = DiagramChromeFactory.create(tb, (TitledDiagram) ugDiagram,</span>
-<span class="nc" id="L456">					((TitledDiagram) ugDiagram).getSkinParam(), ugDiagram.getWarnings(), ((TitledDiagram) diagram).getTitle());</span>
+<span class="nc bnc" id="L457" title="All 2 branches missed.">		if (diagram instanceof TitledDiagram)</span>
+<span class="nc" id="L458">			tb = DiagramChromeFactory.create(tb, (TitledDiagram) ugDiagram,</span>
+<span class="nc" id="L459">					((TitledDiagram) ugDiagram).getSkinParam(), ugDiagram.getWarnings(), ((TitledDiagram) diagram).getTitle());</span>
 
-<span class="nc bnc" id="L458" title="All 2 branches missed.">		if (ugDiagram.isHandwritten())</span>
-<span class="nc" id="L459">			ug = new UGraphicHandwritten(ug);</span>
+<span class="nc bnc" id="L461" title="All 2 branches missed.">		if (ugDiagram.isHandwritten())</span>
+<span class="nc" id="L462">			ug = new UGraphicHandwritten(ug);</span>
 
-<span class="nc" id="L461">		tb.drawU(ug);</span>
+<span class="nc" id="L464">		tb.drawU(ug);</span>
 
-<span class="nc" id="L463">		final XDimension2D dim = tb.calculateDimension(STRING_BOUNDER);</span>
+<span class="nc" id="L466">		final XDimension2D dim = tb.calculateDimension(STRING_BOUNDER);</span>
 
-<span class="nc bnc" id="L465" title="All 6 branches missed.">		if (maxSvgSize &gt; 0 &amp;&amp; (dim.getWidth() &gt; maxSvgSize || dim.getHeight() &gt; maxSvgSize))</span>
-<span class="nc" id="L466">			throw new RuntimeException(&quot;Diagram too large for browser rendering: &quot; + (int) dim.getWidth() + &quot;x&quot;</span>
-<span class="nc" id="L467">					+ (int) dim.getHeight() + &quot; (max &quot; + maxSvgSize + &quot;; override via the maxSvgSize option, or set it to 0 to disable this check)&quot;);</span>
+<span class="nc bnc" id="L468" title="All 6 branches missed.">		if (maxSvgSize &gt; 0 &amp;&amp; (dim.getWidth() &gt; maxSvgSize || dim.getHeight() &gt; maxSvgSize))</span>
+<span class="nc" id="L469">			throw new RuntimeException(&quot;Diagram too large for browser rendering: &quot; + (int) dim.getWidth() + &quot;x&quot;</span>
+<span class="nc" id="L470">					+ (int) dim.getHeight() + &quot; (max &quot; + maxSvgSize + &quot;; override via the maxSvgSize option, or set it to 0 to disable this check)&quot;);</span>
 
-<span class="nc bnc" id="L469" title="All 2 branches missed.">		final double scaleFactor = scale == null ? 1.0 : scale.getScale(dim.getWidth(), dim.getHeight());</span>
-<span class="nc" id="L470">		svg.updateSvgSize(dim.getWidth(), dim.getHeight(), scaleFactor);</span>
+<span class="nc bnc" id="L472" title="All 2 branches missed.">		final double scaleFactor = scale == null ? 1.0 : scale.getScale(dim.getWidth(), dim.getHeight());</span>
+<span class="nc" id="L473">		svg.updateSvgSize(dim.getWidth(), dim.getHeight(), scaleFactor);</span>
 
 		// Embed the PlantUML source as a plantuml-src processing instruction, so the
 		// generated SVG can be re-imported/edited later, just like the SVGs produced
 		// by the classic Java backend and editor.plantuml.com.
 		// https://github.com/plantuml/plantuml/issues/2761
-<span class="nc" id="L476">		svg.addCommentMetadata(String.join(&quot;\n&quot;, lines));</span>
+<span class="nc" id="L479">		svg.addCommentMetadata(String.join(&quot;\n&quot;, lines));</span>
 
-<span class="nc" id="L478">		return svg;</span>
+<span class="nc" id="L481">		return svg;</span>
+	}
+
+	/**
+	 * Returns the document background of the diagram when it should be painted,
+	 * or null to keep the historic behaviour of painting nothing.
+	 * &lt;p&gt;
+	 * The document background is where both {@code skinparam backgroundColor} and
+	 * a theme background land; it never surfaces on the TextBlock, so it is read
+	 * from the merged root.document style, exactly like {@code ImageBuilder.styled()}
+	 * does for the Java build.
+	 * &lt;p&gt;
+	 * The color is judged in its plain (light mapped) form so the decision is the
+	 * same in both modes: transparent never paints, and the skin default of white
+	 * must keep painting nothing, in dark mode too, where the skin pairs white
+	 * with a dark value but the page has always supplied its own backdrop.
+	 * Returning null also keeps the historic WHITE/BLACK fallback in
+	 * {@code buildSvg} as the contrast reference for automatic colors.
+	 */
+	private static HColor getPaintableDocumentBackground(TitledDiagram diagram) {
+<span class="nc" id="L501">		final HColor documentBackground = diagram.calculateBackColor();</span>
+<span class="nc bnc" id="L502" title="All 2 branches missed.">		if (documentBackground == null)</span>
+<span class="nc" id="L503">			return null;</span>
+
+<span class="nc" id="L505">		final String plainColor = documentBackground.toSvg(ColorMapper.TEAVM_LIGHT);</span>
+<span class="nc bnc" id="L506" title="All 4 branches missed.">		if (&quot;#00000000&quot;.equals(plainColor) || &quot;#FFFFFF&quot;.equals(plainColor))</span>
+<span class="nc" id="L507">			return null;</span>
+
+<span class="nc" id="L509">		return documentBackground;</span>
 	}
 
 	private static void doRender(String[] lines, String elementId, boolean darkMode, int maxSvgSize) {
-<span class="nc" id="L482">		final HTMLElement out = HTMLDocument.current().getElementById(elementId);</span>
-<span class="nc bnc" id="L483" title="All 2 branches missed.">		if (out == null)</span>
-<span class="nc" id="L484">			return;</span>
+<span class="nc" id="L513">		final HTMLElement out = HTMLDocument.current().getElementById(elementId);</span>
+<span class="nc bnc" id="L514" title="All 2 branches missed.">		if (out == null)</span>
+<span class="nc" id="L515">			return;</span>
 
 		try {
-<span class="nc" id="L487">			BrowserLog.reset();</span>
-<span class="nc" id="L488">			final SvgGraphicsTeaVM svg = buildSvg(lines, darkMode, maxSvgSize);</span>
-<span class="nc" id="L489">			removeAllChildren(out);</span>
-<span class="nc" id="L490">			appendSvgElement(out, svg.getSvgRoot());</span>
-<span class="nc" id="L491">		} catch (Exception e) {</span>
-<span class="nc" id="L492">			out.setTextContent(String.valueOf(e));</span>
-<span class="nc" id="L493">		}</span>
-<span class="nc" id="L494">		BrowserLog.jsStatusDuration();</span>
-<span class="nc" id="L495">	}</span>
+<span class="nc" id="L518">			BrowserLog.reset();</span>
+<span class="nc" id="L519">			final SvgGraphicsTeaVM svg = buildSvg(lines, darkMode, maxSvgSize);</span>
+<span class="nc" id="L520">			removeAllChildren(out);</span>
+<span class="nc" id="L521">			appendSvgElement(out, svg.getSvgRoot());</span>
+<span class="nc" id="L522">		} catch (Exception e) {</span>
+<span class="nc" id="L523">			out.setTextContent(String.valueOf(e));</span>
+<span class="nc" id="L524">		}</span>
+<span class="nc" id="L525">		BrowserLog.jsStatusDuration();</span>
+<span class="nc" id="L526">	}</span>
 
 	private static void doRenderToString(String[] lines, StringCallback onSuccess, StringCallback onError,
 			boolean darkMode, int maxSvgSize) {
 		try {
-<span class="nc" id="L500">			onSuccess.call(serializeSvg(buildSvg(lines, darkMode, maxSvgSize).getSvgRoot()));</span>
-<span class="nc" id="L501">		} catch (Exception e) {</span>
-<span class="nc" id="L502">			onError.call(String.valueOf(e));</span>
-<span class="nc" id="L503">		}</span>
-<span class="nc" id="L504">	}</span>
+<span class="nc" id="L531">			onSuccess.call(serializeSvg(buildSvg(lines, darkMode, maxSvgSize).getSvgRoot()));</span>
+<span class="nc" id="L532">		} catch (Exception e) {</span>
+<span class="nc" id="L533">			onError.call(String.valueOf(e));</span>
+<span class="nc" id="L534">		}</span>
+<span class="nc" id="L535">	}</span>
 
 	// =========================================================================
 	// JavaScript interop utilities
