@@ -80,7 +80,11 @@ import org.teavm.jso.JSObject;
 	 * JavaScript bridge that calls Viz.instance() and renders the DOT source.
 	 * Uses Viz.js API: Viz.instance().then(viz =&gt; viz.renderString(dot, options))
 	 */
-	@JSBody(params = { &quot;dotSource&quot;, &quot;onSuccess&quot;, &quot;onError&quot; }, script = 
+	@JSBody(params = { &quot;dotSource&quot;, &quot;onSuccess&quot;, &quot;onError&quot; }, script =
+		&quot;if (typeof Viz === 'undefined' || !Viz || typeof Viz.instance !== 'function') {&quot; +
+		&quot;  onError('Viz is not loaded: this diagram type needs the Graphviz layout engine (viz-global.js). Load viz-global.js before rendering.');&quot; +
+		&quot;  return;&quot; +
+		&quot;}&quot; +
 		&quot;Viz.instance().then(function(viz) {&quot; +
 		&quot;  try {&quot; +
 		&quot;    var svg = viz.renderString(dotSource, { format: 'svg', engine: 'dot' });&quot; +
@@ -107,13 +111,17 @@ import org.teavm.jso.JSObject;
 	 * Internal implementation for engine-specific rendering.
 	 */
 	private static void renderDotToSvg(String dotSource, String engine, AsyncCallback&lt;String&gt; callback) {
-<span class="nc" id="L110">		renderDotToSvgWithEngineAsync(dotSource, engine, result -&gt; callback.complete(result), error -&gt; callback.error(new RuntimeException(error)));</span>
-<span class="nc" id="L111">	}</span>
+<span class="nc" id="L114">		renderDotToSvgWithEngineAsync(dotSource, engine, result -&gt; callback.complete(result), error -&gt; callback.error(new RuntimeException(error)));</span>
+<span class="nc" id="L115">	}</span>
 
 	/**
 	 * JavaScript bridge for engine-specific rendering.
 	 */
-	@JSBody(params = { &quot;dotSource&quot;, &quot;engine&quot;, &quot;onSuccess&quot;, &quot;onError&quot; }, script = 
+	@JSBody(params = { &quot;dotSource&quot;, &quot;engine&quot;, &quot;onSuccess&quot;, &quot;onError&quot; }, script =
+		&quot;if (typeof Viz === 'undefined' || !Viz || typeof Viz.instance !== 'function') {&quot; +
+		&quot;  onError('Viz is not loaded: this diagram type needs the Graphviz layout engine (viz-global.js). Load viz-global.js before rendering.');&quot; +
+		&quot;  return;&quot; +
+		&quot;}&quot; +
 		&quot;Viz.instance().then(function(viz) {&quot; +
 		&quot;  try {&quot; +
 		&quot;    var svg = viz.renderString(dotSource, { format: 'svg', engine: engine });&quot; +
