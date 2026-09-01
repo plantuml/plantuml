@@ -72,3 +72,6 @@ jobs:
 
       - name: Check smetana layout
         run: node browser-test/check-smetana.js target=plantuml-mit/build/npm-plantuml
+
+      - name: Check viz missing
+        run: node browser-test/check-viz-missing.js target=plantuml-mit/build/npm-plantuml
