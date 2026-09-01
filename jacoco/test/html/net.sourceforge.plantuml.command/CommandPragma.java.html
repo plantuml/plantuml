@@ -110,27 +110,30 @@ public class CommandPragma extends SingleLineCommand2&lt;TitledDiagram&gt; {
 <span class="nc" id="L110">			}</span>
 		} else {
 <span class="fc" id="L112">			system.getPragma().define(name, value);</span>
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">			if (!TeaVM.isTeaVM()) {</span>
-<span class="pc bpc" id="L114" title="3 of 4 branches missed.">				if (name.equalsIgnoreCase(&quot;graphviz_dot&quot;) &amp;&amp; value.equalsIgnoreCase(&quot;jdot&quot;))</span>
-<span class="nc" id="L115">					return CommandExecutionResult.error(</span>
+
+			// Honored in every build: the browser (TeaVM) build uses it to lay out
+			// class/component/deployment/state/usecase diagrams without viz-global.js.
+<span class="fc bfc" id="L116" title="All 4 branches covered.">			if (name.equalsIgnoreCase(&quot;layout&quot;) &amp;&amp; value.equalsIgnoreCase(&quot;smetana&quot;))</span>
+<span class="fc" id="L117">				system.setUseSmetana(true);</span>
+
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">			if (!TeaVM.isTeaVM()) {</span>
+<span class="pc bpc" id="L120" title="3 of 4 branches missed.">				if (name.equalsIgnoreCase(&quot;graphviz_dot&quot;) &amp;&amp; value.equalsIgnoreCase(&quot;jdot&quot;))</span>
+<span class="nc" id="L121">					return CommandExecutionResult.error(</span>
 							&quot;This directive has been renamed to '!pragma layout smetana'. Please update your diagram.&quot;);
 
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">				if (name.equalsIgnoreCase(&quot;graphviz_dot&quot;))</span>
-<span class="nc" id="L119">					return CommandExecutionResult.error(&quot;This directive has been renamed to '!pragma layout &quot; + value</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">				if (name.equalsIgnoreCase(&quot;graphviz_dot&quot;))</span>
+<span class="nc" id="L125">					return CommandExecutionResult.error(&quot;This directive has been renamed to '!pragma layout &quot; + value</span>
 							+ &quot;'. Please update your diagram.&quot;);
 
-<span class="fc bfc" id="L122" title="All 4 branches covered.">				if (name.equalsIgnoreCase(&quot;layout&quot;) &amp;&amp; value.equalsIgnoreCase(&quot;smetana&quot;))</span>
-<span class="fc" id="L123">					system.setUseSmetana(true);</span>
+<span class="fc bfc" id="L128" title="All 4 branches covered.">				if (name.equalsIgnoreCase(&quot;layout&quot;) &amp;&amp; value.equalsIgnoreCase(&quot;elk&quot;))</span>
+<span class="fc" id="L129">					system.setUseElk(true);</span>
 
-<span class="fc bfc" id="L125" title="All 4 branches covered.">				if (name.equalsIgnoreCase(&quot;layout&quot;) &amp;&amp; value.equalsIgnoreCase(&quot;elk&quot;))</span>
-<span class="fc" id="L126">					system.setUseElk(true);</span>
-
-<span class="pc bpc" id="L128" title="1 of 4 branches missed.">				if (name.equalsIgnoreCase(&quot;layout&quot;) &amp;&amp; value.equalsIgnoreCase(GraphvizRuntimeEnvironment.VIZJS))</span>
-<span class="nc" id="L129">					system.getSkinParam().setUseVizJs(true);</span>
+<span class="pc bpc" id="L131" title="1 of 4 branches missed.">				if (name.equalsIgnoreCase(&quot;layout&quot;) &amp;&amp; value.equalsIgnoreCase(GraphvizRuntimeEnvironment.VIZJS))</span>
+<span class="nc" id="L132">					system.getSkinParam().setUseVizJs(true);</span>
 			}
 
 		}
-<span class="fc" id="L133">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L136">		return CommandExecutionResult.ok();</span>
 	}
 
 }
