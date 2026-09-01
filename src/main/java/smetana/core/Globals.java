@@ -92,6 +92,10 @@ import h.ST_triangle_t;
 
 final public class Globals {
 
+	// Scratch search template for edge__c.agsubrep (a Globals is used by one
+	// render at a time; dtsearch only reads the template during the call).
+	public final h.ST_Agsubnode_s agsubrepScratch = new h.ST_Agsubnode_s();
+
 	public static Globals open() {
 		return new Globals();
 	}

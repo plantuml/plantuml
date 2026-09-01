@@ -554,6 +554,11 @@ private static Object _DTOBJ(ST_dtlink_s root, FieldOffset lk) {
 
 
 private static Object _DTKEY(__ptr__ obj, FieldOffset ky) {
+	// Zero offset means the object itself is the key (every struct's
+	// getTheField returns this for sign 0); skips a virtual dispatch on
+	// the hottest dictionary path.
+	if (ky == null || ky.getSign() == 0)
+		return obj;
 	return obj.getTheField(ky);
 }
 

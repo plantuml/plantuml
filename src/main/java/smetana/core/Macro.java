@@ -1666,6 +1666,10 @@ final public class Macro {
 	public static __ptr__ _DTKEY(__ptr__ o, FieldOffset ky, int sz) {
 		// return (__ptr__) (sz < 0 ? ((__ptr__)o).addVirtualBytes(ky) :
 		// ((__ptr__)o).addVirtualBytes(ky));
+		// Zero offset means the object itself is the key (every struct's
+		// getTheField returns this for sign 0).
+		if (ky == null || ky.getSign() == 0)
+			return o;
 		return (__ptr__) o.getTheField(ky);
 	}
 
