@@ -962,7 +962,7 @@ try {
 	// hand-reconstruction) whether the reachability comes from a genuine node
 	// adjacency cycle or merely from the same-rank ordering edge between two
 	// label vnodes on rank -1.
-	if (canReachInAuxGraph(zz, agtail(e0), aghead(e0), "guard1 label=" + safeName(zz, lu)) == false)
+	if (canReachInAuxGraph(zz, agtail(e0), aghead(e0), smetana.core.debug.SmetanaDebug.TRACE_ON ? "guard1 label=" + safeName(zz, lu) : null) == false)
 	    make_aux_edge(aghead(e0), agtail(e0), m1,
 		ED_weight(e));
 	else {
@@ -971,7 +971,7 @@ try {
 		    + " -> " + safeName(zz, agtail(e0)) + " (would close a cycle in the X aux graph)");
 	}
 	m1 = m0 + ((int)(ND_rw(agtail(e1)) + ND_lw(aghead(e1))));
-	if (canReachInAuxGraph(zz, aghead(e1), agtail(e1), "guard2 label=" + safeName(zz, lu)) == false)
+	if (canReachInAuxGraph(zz, aghead(e1), agtail(e1), smetana.core.debug.SmetanaDebug.TRACE_ON ? "guard2 label=" + safeName(zz, lu) : null) == false)
 	    make_aux_edge(agtail(e1), aghead(e1), m1,
 		ED_weight(e));
 	else {
@@ -2204,6 +2204,8 @@ LEAVING("daz786541idcxnywckcbncazb","contain_nodes");
  * of them, making them impossible to tell apart. Safe to leave in place.
  */
 private static void dumpAuxEdges(Globals zz, ST_Agraph_s g, String phase) {
+    if (!smetana.core.debug.SmetanaDebug.TRACE_ON)
+	return;
     final IdentityHashMap<ST_Agnode_s, String> labels = new IdentityHashMap<ST_Agnode_s, String>();
     collectClusterBoundaryLabels(zz, g, labels);
     if (false) SMETANA_TRACE("position__c", "----- rank array contents " + phase + " -----");

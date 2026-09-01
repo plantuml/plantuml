@@ -328,7 +328,8 @@ try {
     // after this cluster's own mincross pass, before nested expansions -- this
     // is the exact moment the relative order of this cluster's sub-clusters is
     // decided (they are still skeletons here, orderable at CL_CROSS penalty).
-    dumpSkeletonOrder(zz, g, "inside mincross_clust(" + smetana.core.debug.SmetanaDebug.safeName(zz, g) + ") after own mincross_");
+    if (smetana.core.debug.SmetanaDebug.TRACE_ON)
+        dumpSkeletonOrder(zz, g, "inside mincross_clust(" + smetana.core.debug.SmetanaDebug.safeName(zz, g) + ") after own mincross_");
     
     for (c = 1; c <= GD_n_cluster(g); c++)
 	nc += mincross_clust(zz, g, GD_clust(g).get_(c), doBalance);
@@ -663,7 +664,8 @@ try {
 	if (false) SMETANA_TRACE("mincross__c", "mincross_(" + smetana.core.debug.SmetanaDebug.safeName(zz, g)
 		+ "): cur_cross=" + cur_cross + " > best_cross=" + best_cross
 		+ " -> calling restore_best; order BEFORE restore:");
-	dumpSkeletonOrder(zz, g, "before restore_best(" + smetana.core.debug.SmetanaDebug.safeName(zz, g) + ")");
+	if (smetana.core.debug.SmetanaDebug.TRACE_ON)
+	    dumpSkeletonOrder(zz, g, "before restore_best(" + smetana.core.debug.SmetanaDebug.safeName(zz, g) + ")");
 	restore_best(zz, g);
     }
     if (best_cross > 0) {
@@ -673,7 +675,8 @@ try {
 	// after the final transpose(g, FALSE) + ncross recompute, so we can
 	// tell whether a SIDE-SWAP present after restore_best gets fixed,
 	// left alone, or reintroduced by this last local-transposition pass.
-	dumpSkeletonOrder(zz, g, "after final transpose in mincross_(" + smetana.core.debug.SmetanaDebug.safeName(zz, g) + ")");
+	if (smetana.core.debug.SmetanaDebug.TRACE_ON)
+	    dumpSkeletonOrder(zz, g, "after final transpose in mincross_(" + smetana.core.debug.SmetanaDebug.safeName(zz, g) + ")");
     }
     // [DEBUG-cluster-layout] Test_7 (SMETANA.md): final crossing count of this
     // mincross_ call. If a skeleton-chain x skeleton-chain crossing (cost
@@ -736,7 +739,8 @@ try {
     // restore_best" dump logged by the caller, and against the snapshot-time
     // dump logged inside save_best when this snapshot was taken.
     if (false) SMETANA_TRACE("mincross__c", "restore_best(" + smetana.core.debug.SmetanaDebug.safeName(zz, g) + "): order AFTER restore:");
-    dumpSkeletonOrder(zz, g, "after restore_best(" + smetana.core.debug.SmetanaDebug.safeName(zz, g) + ")");
+    if (smetana.core.debug.SmetanaDebug.TRACE_ON)
+        dumpSkeletonOrder(zz, g, "after restore_best(" + smetana.core.debug.SmetanaDebug.safeName(zz, g) + ")");
 } finally {
 LEAVING("520049zkz9mafaeklgvm6s8e5","restore_best");
 }
@@ -767,7 +771,8 @@ try {
     // "best" snapshot at the moment it's recorded, before any later
     // (possibly worse) iterations run.
     if (false) SMETANA_TRACE("mincross__c", "save_best(" + smetana.core.debug.SmetanaDebug.safeName(zz, g) + "): snapshot taken");
-    dumpSkeletonOrder(zz, g, "inside save_best(" + smetana.core.debug.SmetanaDebug.safeName(zz, g) + ")");
+    if (smetana.core.debug.SmetanaDebug.TRACE_ON)
+        dumpSkeletonOrder(zz, g, "inside save_best(" + smetana.core.debug.SmetanaDebug.safeName(zz, g) + ")");
 } finally {
 LEAVING("8uyqc48j0oul206l3np85wj9p","save_best");
 }
@@ -2110,6 +2115,8 @@ private static int leftPosOfCluster(ST_Agraph_s c, int r) {
 }
 
 public static void dumpSkeletonOrder(Globals zz, ST_Agraph_s g, String phase) {
+    if (!smetana.core.debug.SmetanaDebug.TRACE_ON)
+	return;
     for (int i = 1; i <= GD_n_cluster(g); i++) {
 	final ST_Agraph_s c = GD_clust(g).get_(i);
 	final StringBuilder sb = new StringBuilder();

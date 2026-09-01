@@ -1131,6 +1131,8 @@ LEAVING("cgqr48qol9p8bsqjnryo5z5x9","dfs_range");
  * upstream Graphviz; safe to leave in place.
  */
 private static void dumpNegativeSlackEdges(Globals zz, String phase) {
+    if (!smetana.core.debug.SmetanaDebug.TRACE_ON)
+	return;
     int total = 0, bad = 0;
     for (ST_Agnode_s n = GD_nlist(zz.G_ns); n != null; n = ND_next(n)) {
 	for (int i = 0; ND_out(n).list.get_(i) != null; i++) {
