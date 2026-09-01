@@ -516,6 +516,11 @@ public static CFunction agedgeidcmpf = new CFunctionAbstract("agedgeidcmpf") {
 	
 	public Object exe(Globals zz, Object... args) {
 		return agedgeidcmpf((ST_dt_s)args[0], (ST_Agedge_s)args[1], (ST_Agedge_s)args[2], (ST_dtdisc_s)args[3]);
+	}
+
+	@Override
+	public int exeCmpInt(Globals zz, Object a0, Object a1, Object a2, Object a3) {
+		return agedgeidcmpf((ST_dt_s)a0, (ST_Agedge_s)a1, (ST_Agedge_s)a2, (ST_dtdisc_s)a3);
 	}};
 	
 
@@ -547,6 +552,11 @@ public static CFunction agedgeseqcmpf = new CFunctionAbstract("agedgeseqcmpf") {
 	
 	public Object exe(Globals zz, Object... args) {
 		return agedgeseqcmpf((ST_dt_s)args[0], (ST_Agedge_s)args[1], (ST_Agedge_s)args[2], (ST_dtdisc_s)args[3]);
+	}
+
+	@Override
+	public int exeCmpInt(Globals zz, Object a0, Object a1, Object a2, Object a3) {
+		return agedgeseqcmpf((ST_dt_s)a0, (ST_Agedge_s)a1, (ST_Agedge_s)a2, (ST_dtdisc_s)a3);
 	}};
 	
 

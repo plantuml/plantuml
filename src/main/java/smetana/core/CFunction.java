@@ -40,6 +40,16 @@ public interface CFunction extends __ptr__ {
 	
 	public Object exe(Globals zz, Object... args);
 
+	// Fast path for dictionary comparators: no Object[] varargs allocation and
+	// no boxed Integer return on the dtsearch hot path. Non-comparators keep
+	// the boxing fallback from CFunctionAbstract.
+	public int exeCmpInt(Globals zz, Object a0, Object a1, Object a2, Object a3);
+
+	// Fast path for dictionary search functions: no Object[] varargs
+	// allocation and no boxing of the DT_* type flag on every dtsearch/
+	// dtinsert/dtnext call. Overridden by dttree__c.dttree.
+	public Object exeSearch(Globals zz, Object a0, Object a1, int type);
+
 	public String getName();
 
 

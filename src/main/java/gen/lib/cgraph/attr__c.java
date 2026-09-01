@@ -327,8 +327,8 @@ try {
 	    sz = 4;
 	rec.str = new ArrayList<CString>(); for (int i=0; i<sz; i++) rec.str.add(null);
 	/* doesn't call agxset() so no obj-modified callbacks occur */
-	for (sym = (ST_Agsym_s) ((__ptr__)datadict.searchf.exe(zz, datadict,null,0000200)); sym!=null;
-	     sym = (ST_Agsym_s) ((__ptr__)datadict.searchf.exe(zz, datadict,sym,0000010)))
+	for (sym = (ST_Agsym_s) ((__ptr__)datadict.searchf.exeSearch(zz, datadict,null,0000200)); sym!=null;
+	     sym = (ST_Agsym_s) ((__ptr__)datadict.searchf.exeSearch(zz, datadict,sym,0000010)))
 	    rec.str.set(sym.id, agstrdup(zz, agraphof(obj), sym.defval));
     } else {
     }
@@ -633,7 +633,7 @@ try {
 	    lsym.defval = agstrdup(zz, g, value);
 	} else {
 	    lsym = agnewsym(zz, g, sym.name, value, sym.id, hdr.tag.objtype);
-	    dict.searchf.exe(zz, dict, lsym, 0000001);
+	    dict.searchf.exeSearch(zz, dict, lsym, 0000001);
 	}
     }
     agmethod_upd(g, obj, sym);

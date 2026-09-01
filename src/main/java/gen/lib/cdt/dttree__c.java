@@ -103,6 +103,11 @@ public static CFunction dttree = new CFunctionAbstract("dttree") {
 	
 	public Object exe(Globals zz, Object... args) {
 		return dttree(zz, (ST_dt_s)args[0], (__ptr__)args[1], (Integer)args[2]);
+	}
+
+	@Override
+	public Object exeSearch(Globals zz, Object a0, Object a1, int type) {
+		return dttree(zz, (ST_dt_s)a0, (__ptr__)a1, type);
 	}};
 
 @Reviewed(when = "11/11/2020")
@@ -535,7 +540,7 @@ private static int _DTCMP(Globals zz, ST_dt_s dt, Object k1, Object k2, ST_dtdis
 			}
 			throw new UnsupportedOperationException("memcmp(key,k,sz))");
 		}
-		return (Integer) cmpf.exe(zz, dt, k1, k2, dc);
+		return cmpf.exeCmpInt(zz, dt, k1, k2, dc);
 	}
 
 

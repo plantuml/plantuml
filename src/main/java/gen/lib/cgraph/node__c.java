@@ -181,8 +181,8 @@ try {
     if (g == agroot(g)) sn = (ST_Agsubnode_s) n.mainsub;
     else sn = (ST_Agsubnode_s) ((__ptr__)agalloc(g, new size_t(ZType.ST_Agsubnode_s))).castTo(ST_Agsubnode_s.class);
     sn.node = n;
-    g.n_id.searchf.exe(zz, g.n_id,sn,0000001);
-    g.n_seq.searchf.exe(zz, g.n_seq,sn,0000001);
+    g.n_id.searchf.exeSearch(zz, g.n_id,sn,0000001);
+    g.n_seq.searchf.exeSearch(zz, g.n_seq,sn,0000001);
 } finally {
 LEAVING("4m26dpgaiw44hcleugjy71eus","installnode");
 }
@@ -329,6 +329,11 @@ public static CFunction agsubnodeidcmpf = new CFunctionAbstract("agsubnodeidcmpf
 	
 	public Object exe(Globals zz, Object... args) {
 		return agsubnodeidcmpf((ST_dt_s)args[0], (__ptr__)args[1], (__ptr__)args[2], (ST_dtdisc_s)args[3]);
+	}
+
+	@Override
+	public int exeCmpInt(Globals zz, Object a0, Object a1, Object a2, Object a3) {
+		return agsubnodeidcmpf((ST_dt_s)a0, (__ptr__)a1, (__ptr__)a2, (ST_dtdisc_s)a3);
 	}};
 
 @Reviewed(when = "13/11/2020")
@@ -353,6 +358,11 @@ public static CFunction agsubnodeseqcmpf = new CFunctionAbstract("agsubnodeseqcm
 	
 	public Object exe(Globals zz, Object... args) {
 		return agsubnodeseqcmpf((ST_dt_s)args[0], (__ptr__)args[1], (__ptr__)args[2], (ST_dtdisc_s)args[3]);
+	}
+
+	@Override
+	public int exeCmpInt(Globals zz, Object a0, Object a1, Object a2, Object a3) {
+		return agsubnodeseqcmpf((ST_dt_s)a0, (__ptr__)a1, (__ptr__)a2, (ST_dtdisc_s)a3);
 	}};
 	
 @Reviewed(when = "13/11/2020")
