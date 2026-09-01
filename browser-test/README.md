@@ -51,11 +51,13 @@ pragma must not touch WebAssembly even though the bridge is available. Run the s
 
 ## check-viz-missing.js
 
-Checks how the engine behaves when `viz-global.js` is not loaded. Diagram types that lay out
-through Graphviz (class, component, deployment, state, usecase) must produce a visible crash
-report naming Viz instead of throwing an unhandled exception and leaving the target element
-empty, and diagram types with native layout (sequence, activity) must keep rendering normally.
-A control page with `viz-global.js` loaded pins that the normal path is unchanged. Run the same
+Checks how the engine behaves when `viz-global.js` is missing or broken. With viz absent,
+Graphviz-family diagram types fall back to the Smetana layout engine and render normally
+(check-viz-fallback.js pins the details), and native-layout types (sequence, activity) keep
+rendering as always. With a Viz that is present but broken (its `instance()` rejects, the shape
+of a failed load), the render must produce a visible crash report naming Viz instead of throwing
+an unhandled exception and leaving the target element empty. A control page with a working
+`viz-global.js` pins that the normal path is unchanged. Run the same
 way with `node check-viz-missing.js target=...`.
 
 ## Running it
@@ -72,3 +74,15 @@ target=package`.
 
 Running it against an engine built before themes were wired up fails 8 of the 12 checks, with
 every bundled theme reported as leaving the drawing unchanged.
+
+## check-viz-fallback.js
+
+Checks that a page which loads only the engine, with no viz-global.js and no
+pragma, still renders every Graphviz-family diagram type: the engine falls
+back to the Smetana layout engine, uses no WebAssembly, and logs a one-time
+console note. A diagram carrying the pragma renders with no note at all (the
+pragma short-circuits the probe), and a partially loaded Viz (the global
+exists but instance() is not a function) falls back the same way as an absent
+one. A control page with viz-global.js pins that the default path is
+unchanged (the Graphviz bridge is still used, and no note is logged).
+`node check-viz-fallback.js target=...`.
