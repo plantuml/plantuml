@@ -39,6 +39,16 @@ background style on the svg element plus a rectangle covering the whole viewBox,
 skips are pinned too: transparent and the default white paint nothing, in dark mode as
 well. Run the same way with `node check-background.js target=...`.
 
+## check-smetana.js
+
+Checks that `!pragma layout smetana` works in the browser. On a page without `viz-global.js`,
+each Graphviz-family diagram type (class, component, deployment, state, usecase) declaring the
+pragma must render a real SVG with zero WebAssembly involvement, observed through a hook on
+`WebAssembly.instantiate`. On a control page with `viz-global.js`, the same diagram without the
+pragma must still go through the Graphviz bridge (the default path is unchanged), and with the
+pragma must not touch WebAssembly even though the bridge is available. Run the same way with
+`node check-smetana.js target=...`.
+
 ## check-viz-missing.js
 
 Checks how the engine behaves when `viz-global.js` is not loaded. Diagram types that lay out
