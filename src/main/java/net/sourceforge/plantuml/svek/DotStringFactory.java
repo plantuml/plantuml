@@ -284,8 +284,15 @@ public final class DotStringFactory implements Moveable {
 		String dotString = createDotString(stringBounder, dotMode, dotOptions);
 
 		if (TeaVM.isTeaVM()) {
+			// Surface layout-engine failures (e.g. viz-global.js not loaded) as an
+			// IOException so GraphvizImageBuilder turns them into a crash report
+			// image instead of an uncaught exception escaping the render call.
 			// ::revert when JAVA8
-			return net.sourceforge.plantuml.teavm.GraphVizjsTeaVMEngine.renderDotToSvg(dotString);
+			try {
+				return net.sourceforge.plantuml.teavm.GraphVizjsTeaVMEngine.renderDotToSvg(dotString);
+			} catch (RuntimeException e) {
+				throw new IOException(e.getMessage(), e);
+			}
 			// return null;
 			// ::done
 		} else {

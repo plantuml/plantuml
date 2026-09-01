@@ -69,3 +69,6 @@ jobs:
 
       - name: Check background
         run: node browser-test/check-background.js target=plantuml-mit/build/npm-plantuml
+
+      - name: Check viz missing
+        run: node browser-test/check-viz-missing.js target=plantuml-mit/build/npm-plantuml
