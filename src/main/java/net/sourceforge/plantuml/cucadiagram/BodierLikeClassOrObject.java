@@ -99,8 +99,13 @@ public class BodierLikeClassOrObject extends BodierAbstract {
 		return false;
 	}
 
+	// Compiled once: String.replaceAll would recompile this regex for every
+	// member line of every class or object.
+	private static final java.util.regex.Pattern URL_PATTERN = java.util.regex.Pattern
+			.compile(UrlBuilder.getRegexp());
+
 	private boolean isMethod(CharSequence s) {
-		final String purged = s.toString().replaceAll(UrlBuilder.getRegexp(), "");
+		final String purged = URL_PATTERN.matcher(s.toString()).replaceAll("");
 		if (purged.contains("{method}"))
 			return true;
 
