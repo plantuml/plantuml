@@ -69,13 +69,13 @@ public class Style {
 		this.signature = signature;
 	}
 
-	public Style deltaPriority(int delta) {
+	public Style withAncestorRank(int rank) {
 		if (signature.isStarred() == false)
 			throw new UnsupportedOperationException();
 
 		final EnumMap<PName, Value> copy = new EnumMap<PName, Value>(PName.class);
 		for (Entry<PName, Value> ent : this.map.entrySet())
-			copy.put(ent.getKey(), ((ValueImpl) ent.getValue()).addPriority(delta));
+			copy.put(ent.getKey(), ((ValueImpl) ent.getValue()).withAncestorRank(rank));
 
 		return new Style(this.signature, copy);
 
@@ -125,7 +125,7 @@ public class Style {
 		final EnumMap<PName, Value> both = new EnumMap<PName, Value>(this.map);
 		for (Entry<PName, Value> ent : other.map.entrySet()) {
 			final Value previous = this.map.get(ent.getKey());
-			if (previous != null && previous.getPriority() > StyleLoader.DELTA_PRIORITY_FOR_STEREOTYPE
+			if (previous != null && previous.getSpecificity().hasStereotype()
 					&& strategy == MergeStrategy.KEEP_EXISTING_VALUE_OF_STEREOTYPE)
 				continue;
 			final PName key = ent.getKey();
@@ -178,7 +178,7 @@ public class Style {
 
 		final EnumMap<PName, Value> result = new EnumMap<PName, Value>(this.map);
 		final Value old = result.get(param);
-		result.put(param, new ValueColor(color, old.getPriority()));
+		result.put(param, new ValueColor(color, old.getSpecificity()));
 		return new Style(this.signature, result);
 	}
 
@@ -188,7 +188,7 @@ public class Style {
 
 	public Style eventuallyOverride(PName param, String value) {
 		final EnumMap<PName, Value> result = new EnumMap<PName, Value>(this.map);
-		result.put(param, ValueImpl.regular(value, Integer.MAX_VALUE));
+		result.put(param, ValueImpl.regular(value, Specificity.forcedOverride()));
 		return new Style(this.signature, result);
 	}
 
@@ -385,4 +385,4 @@ public class Style {
 
 	}
 
-}
+}

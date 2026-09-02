@@ -125,6 +125,16 @@ public class StyleSignatureBasic implements StyleSignature {
 		return new StyleSignatureBasic(key, result);
 	}
 
+	/**
+	 * This same signature, additionally requiring every one of {@code stereo}'s labels at once --
+	 * e.g. an element tagged both {@code <<foo>>} and {@code <<bar>>} resolves against a single
+	 * signature requiring both "foo" and "bar", exactly like a CSS selector requiring several
+	 * classes at once ({@code .foo.bar}). Because {@link Specificity}'s stereotype-count tier
+	 * counts requirements rather than flatly boosting a boolean, a declaration naming more
+	 * stereotypes always outranks one naming fewer, whichever file order they were declared in --
+	 * so folding every label into one signature here, instead of resolving each separately and
+	 * picking a winner (the old {@code StyleSignatures} composite's job), is now enough on its own.
+	 */
 	@Override
 	public StyleSignature withTOBECHANGED(Stereotype stereo) {
 		if (stereo == null || stereo.getStyleNames().size() == 0)
@@ -134,9 +144,9 @@ public class StyleSignatureBasic implements StyleSignature {
 		if (labels.size() == 0)
 			return this;
 
-		final StyleSignatures result = new StyleSignatures();
+		StyleSignatureBasic result = this;
 		for (String name : labels)
-			result.add(this.addStereotype(name));
+			result = result.addStereotype(name);
 
 		return result;
 	}
@@ -149,9 +159,9 @@ public class StyleSignatureBasic implements StyleSignature {
 		if (labels.size() == 0)
 			return this;
 
-		final StyleSignatures result = new StyleSignatures();
+		StyleSignatureBasic result = this.addSName(SName.stereotype);
 		for (String name : labels)
-			result.add(this.addStereotype(name).addSName(SName.stereotype));
+			result = result.addStereotype(name);
 
 		return result;
 
@@ -320,4 +330,4 @@ public class StyleSignatureBasic implements StyleSignature {
 		return stereotypes;
 	}
 
-}
+}

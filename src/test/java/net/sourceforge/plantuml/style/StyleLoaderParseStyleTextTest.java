@@ -82,14 +82,13 @@ class StyleLoaderParseStyleTextTest {
 	}
 
 	@Test
-	void aStereotypeSelectorsPropertiesAreBoostedByTheStereotypePriorityDelta() throws Exception {
+	void aStereotypeSelectorsPropertiesCarryTheirStereotypeCount() throws Exception {
 		final String text = "class {\n  .myStereo {\n    FontColor red\n  }\n}\n";
 
 		final Style style = theOneStyle(
 				StyleLoader.parseStyleText(BlocLines.getWithNewlines(text), new AutomaticCounterBasic()));
 
-		final int expectedPriority = 1 + StyleLoader.DELTA_PRIORITY_FOR_STEREOTYPE;
-		assertEquals("red/null (" + expectedPriority + ")", style.value(PName.FontColor).toString());
+		assertEquals("red/null (1,stereo=1)", style.value(PName.FontColor).toString());
 	}
 
 	@Test
@@ -104,8 +103,7 @@ class StyleLoaderParseStyleTextTest {
 				StyleLoader.parseStyleText(BlocLines.getWithNewlines(text), new AutomaticCounterBasic()));
 
 		assertEquals(EnumSet.noneOf(SName.class), style.getSignature().getKey().snames);
-		final int expectedPriority = 1 + StyleLoader.DELTA_PRIORITY_FOR_STEREOTYPE;
-		assertEquals("green/null (" + expectedPriority + ")", style.value(PName.FontColor).toString());
+		assertEquals("green/null (1,stereo=1)", style.value(PName.FontColor).toString());
 	}
 
 	@Test
@@ -172,7 +170,7 @@ class StyleLoaderParseStyleTextTest {
 		};
 		final String[] expected = { //
 				"[root]  [] {FontColor=black/white (1)}", //
-				"[class_]  [mystereo] {FontColor=red/null (1001)}", //
+				"[class_]  [mystereo] {FontColor=red/null (1,stereo=1)}", //
 				"[node, wbsDiagram]  2 (*) [] {FontColor=blue/null (1)}", //
 				"[mindmapDiagram, node]  [] {RoundCorner=25/null (1)}", //
 		};

@@ -61,9 +61,9 @@ import net.sourceforge.plantuml.style.parser2.RawSelector;
  * {@code StyleAtomTrie#compileNode} does not need to reproduce (nothing downstream of it reads
  * signatures) matter here and are handled explicitly:
  * <ul>
- * <li>a stereotype-scoped node's properties get the same
- * {@link StyleLoader#DELTA_PRIORITY_FOR_STEREOTYPE} priority boost the legacy
- * {@code net.sourceforge.plantuml.style.parser.Context#toStyles} applied via
+ * <li>a stereotype-scoped node's properties carry their {@link Specificity} stereotype count
+ * (how many stereotypes {@code pathSoFar} requires), exactly like the legacy
+ * {@code net.sourceforge.plantuml.style.parser.Context#toStyles} used to apply via
  * {@code StyleLoader#addPriorityForStereotype} -- without it, a stereotype rule could lose to a
  * later plain one it must always outrank;</li>
  * <li>an unrecognized selector word (neither a known {@link SName}, a {@code .stereotype}, nor a
@@ -88,7 +88,7 @@ final class LegacyStyleFlattener {
 
 	private static void flattenNode(MergedStyleNode node, StyleSignatureBasic pathSoFar, List<Style> result) {
 		if (node.getProperties().isEmpty() == false)
-			result.add(new Style(pathSoFar, toValueMap(node.getProperties(), pathSoFar.isWithDot())));
+			result.add(new Style(pathSoFar, toValueMap(node.getProperties(), pathSoFar.getStereotypes().size())));
 
 		// A selector declared once plain and once starred (e.g. ".europeStyle {...}" alongside
 		// ".europeStyle * {...}") lives in two separate MergedStyleNode child slots, never one --
@@ -134,13 +134,12 @@ final class LegacyStyleFlattener {
 		}
 	}
 
-	private static Map<PName, Value> toValueMap(Map<PName, PrioritizedValue> properties, boolean boostForStereotype) {
+	private static Map<PName, Value> toValueMap(Map<PName, PrioritizedValue> properties, int stereotypeCount) {
 		final Map<PName, Value> result = new EnumMap<PName, Value>(PName.class);
 		for (Map.Entry<PName, PrioritizedValue> ent : properties.entrySet()) {
 			final PrioritizedValue pv = ent.getValue();
-			final int priority = boostForStereotype ? pv.getPriority() + StyleLoader.DELTA_PRIORITY_FOR_STEREOTYPE
-					: pv.getPriority();
-			result.put(ent.getKey(), ValueImpl.of(pv.getLight(), pv.getDark(), priority));
+			final Specificity specificity = Specificity.atOrder(pv.getPriority()).withStereotypeCount(stereotypeCount);
+			result.put(ent.getKey(), ValueImpl.of(pv.getLight(), pv.getDark(), specificity));
 		}
 		return result;
 	}

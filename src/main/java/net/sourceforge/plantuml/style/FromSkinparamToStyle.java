@@ -398,8 +398,9 @@ public class FromSkinparamToStyle {
 		map.put(propertyName, value);
 		StyleSignatureBasic sig = StyleSignatureBasic.of(styleNames);
 		if (stereo != null) {
-			map = StyleLoader.addPriorityForStereotype(map);
-			for (String s : stereo.split("\\&"))
+			final String[] names = stereo.split("\\&");
+			map = StyleLoader.addStereotypeCount(map, names.length);
+			for (String s : names)
 				sig = sig.addStereotype(s);
 		}
 
