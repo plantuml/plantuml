@@ -1131,14 +1131,16 @@ try {
  * upstream Graphviz; safe to leave in place.
  */
 private static void dumpNegativeSlackEdges(Globals zz, String phase) {
-<span class="nc" id="L1134">    int total = 0, bad = 0;</span>
-<span class="nc bnc" id="L1135" title="All 2 branches missed.">    for (ST_Agnode_s n = GD_nlist(zz.G_ns); n != null; n = ND_next(n)) {</span>
-<span class="nc bnc" id="L1136" title="All 2 branches missed.">	for (int i = 0; ND_out(n).list.get_(i) != null; i++) {</span>
-<span class="nc" id="L1137">	    final ST_Agedge_s e = (ST_Agedge_s) ND_out(n).list.get_(i);</span>
-<span class="nc" id="L1138">	    total++;</span>
-<span class="nc" id="L1139">	    final int slack = SLACK(e);</span>
-<span class="nc bnc" id="L1140" title="All 2 branches missed.">	    if (slack &lt; 0) {</span>
-<span class="nc" id="L1141">		bad++;</span>
+    if (!smetana.core.debug.SmetanaDebug.TRACE_ON)
+<span class="nc" id="L1135">	return;</span>
+    int total = 0, bad = 0;
+    for (ST_Agnode_s n = GD_nlist(zz.G_ns); n != null; n = ND_next(n)) {
+	for (int i = 0; ND_out(n).list.get_(i) != null; i++) {
+	    final ST_Agedge_s e = (ST_Agedge_s) ND_out(n).list.get_(i);
+	    total++;
+	    final int slack = SLACK(e);
+	    if (slack &lt; 0) {
+		bad++;
 		if (false) SMETANA_TRACE(&quot;ns__c&quot;, &quot;ns NEGATIVE SLACK &quot; + phase + &quot;: &quot;
 			+ safeName(zz, agtail(e)) + &quot;(rank=&quot; + ND_rank(agtail(e)) + &quot;)&quot;
 			+ &quot; -&gt; &quot; + safeName(zz, aghead(e)) + &quot;(rank=&quot; + ND_rank(aghead(e)) + &quot;)&quot;
@@ -1148,7 +1150,7 @@ private static void dumpNegativeSlackEdges(Globals zz, String phase) {
 	}
     }
     if (false) SMETANA_TRACE(&quot;ns__c&quot;, &quot;ns dumpNegativeSlackEdges &quot; + phase + &quot;: &quot; + bad + &quot;/&quot; + total + &quot; edges have negative slack&quot;);
-<span class="nc" id="L1151">}</span>
+}
 
 /*
  * [FIX-cluster-layout] Not present in upstream Graphviz. Detects the exact
@@ -1164,24 +1166,24 @@ private static void dumpNegativeSlackEdges(Globals zz, String phase) {
  * rank() returns, so it can detect and react to this specific situation.
  */
 public static boolean hasNegativeSlackEdges(Globals zz) {
-<span class="fc bfc" id="L1167" title="All 2 branches covered.">    for (ST_Agnode_s n = GD_nlist(zz.G_ns); n != null; n = ND_next(n)) {</span>
-<span class="fc bfc" id="L1168" title="All 2 branches covered.">	for (int i = 0; ND_out(n).list.get_(i) != null; i++) {</span>
-<span class="fc" id="L1169">	    final ST_Agedge_s e = (ST_Agedge_s) ND_out(n).list.get_(i);</span>
-<span class="pc bpc" id="L1170" title="1 of 2 branches missed.">	    if (SLACK(e) &lt; 0)</span>
-<span class="nc" id="L1171">		return true;</span>
+<span class="fc bfc" id="L1169" title="All 2 branches covered.">    for (ST_Agnode_s n = GD_nlist(zz.G_ns); n != null; n = ND_next(n)) {</span>
+<span class="fc bfc" id="L1170" title="All 2 branches covered.">	for (int i = 0; ND_out(n).list.get_(i) != null; i++) {</span>
+<span class="fc" id="L1171">	    final ST_Agedge_s e = (ST_Agedge_s) ND_out(n).list.get_(i);</span>
+<span class="pc bpc" id="L1172" title="1 of 2 branches missed.">	    if (SLACK(e) &lt; 0)</span>
+<span class="nc" id="L1173">		return true;</span>
 	}
     }
-<span class="fc" id="L1174">    return false;</span>
+<span class="fc" id="L1176">    return false;</span>
 }
 
 private static String dumpInTails(Globals zz, ST_Agnode_s v) {
-<span class="nc" id="L1178">    final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L1179" title="All 2 branches missed.">    for (int i = 0; ND_in(v).list.get_(i) != null; i++) {</span>
-<span class="nc" id="L1180">	final ST_Agedge_s e = (ST_Agedge_s) ND_in(v).list.get_(i);</span>
-<span class="nc bnc" id="L1181" title="All 2 branches missed.">	if (i &gt; 0) sb.append(&quot;, &quot;);</span>
-<span class="nc" id="L1182">	sb.append(safeName(zz, agtail(e))).append(&quot;(minlen=&quot;).append(ED_minlen(e)).append(&quot;)&quot;);</span>
+<span class="nc" id="L1180">    final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L1181" title="All 2 branches missed.">    for (int i = 0; ND_in(v).list.get_(i) != null; i++) {</span>
+<span class="nc" id="L1182">	final ST_Agedge_s e = (ST_Agedge_s) ND_in(v).list.get_(i);</span>
+<span class="nc bnc" id="L1183" title="All 2 branches missed.">	if (i &gt; 0) sb.append(&quot;, &quot;);</span>
+<span class="nc" id="L1184">	sb.append(safeName(zz, agtail(e))).append(&quot;(minlen=&quot;).append(ED_minlen(e)).append(&quot;)&quot;);</span>
     }
-<span class="nc" id="L1184">    return sb.toString();</span>
+<span class="nc" id="L1186">    return sb.toString();</span>
 }
 
 

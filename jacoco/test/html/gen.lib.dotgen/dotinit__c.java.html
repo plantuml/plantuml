@@ -607,20 +607,22 @@ private static void dumpLayoutState(Globals zz, ST_Agraph_s g, String phase) {
 <span class="nc" id="L607">}</span>
 
 private static void dumpClusters(Globals zz, ST_Agraph_s g, String indent) {
-<span class="nc bnc" id="L610" title="All 2 branches missed.">    for (int c = 1; c &lt;= GD_n_cluster(g); c++) {</span>
-<span class="nc" id="L611">	final ST_Agraph_s clust = GD_clust(g).get_(c);</span>
+    if (!smetana.core.debug.SmetanaDebug.TRACE_ON)
+<span class="nc" id="L611">	return;</span>
+    for (int c = 1; c &lt;= GD_n_cluster(g); c++) {
+	final ST_Agraph_s clust = GD_clust(g).get_(c);
 	if (false) SMETANA_TRACE(&quot;dotinit__c&quot;, indent + &quot;cluster &quot; + safeName(zz, clust)
 		+ &quot; minrank=&quot; + GD_minrank(clust)
 		+ &quot; maxrank=&quot; + GD_maxrank(clust)
 		+ &quot; bb=[&quot; + GD_bb(clust).LL.x + &quot;,&quot; + GD_bb(clust).LL.y
 		+ &quot; -&gt; &quot; + GD_bb(clust).UR.x + &quot;,&quot; + GD_bb(clust).UR.y + &quot;]&quot;);
-<span class="nc bnc" id="L617" title="All 2 branches missed.">	if (GD_rank(clust) == null) {</span>
+	if (GD_rank(clust) == null) {
 	    if (false) SMETANA_TRACE(&quot;dotinit__c&quot;, indent + &quot;  (GD_rank not allocated yet at this phase)&quot;);
 	} else {
-<span class="nc bnc" id="L620" title="All 2 branches missed.">	    for (int r = GD_minrank(clust); r &lt;= GD_maxrank(clust); r++) {</span>
-<span class="nc" id="L621">		final int n = GD_rank(clust).get__(r).n;</span>
-<span class="nc bnc" id="L622" title="All 2 branches missed.">		final ST_Agnode_s first = n &gt; 0 ? (ST_Agnode_s) GD_rank(clust).get__(r).v.get_(0) : null;</span>
-<span class="nc bnc" id="L623" title="All 2 branches missed.">		final ST_Agnode_s last = n &gt; 0 ? (ST_Agnode_s) GD_rank(clust).get__(r).v.get_(n - 1) : null;</span>
+	    for (int r = GD_minrank(clust); r &lt;= GD_maxrank(clust); r++) {
+		final int n = GD_rank(clust).get__(r).n;
+		final ST_Agnode_s first = n &gt; 0 ? (ST_Agnode_s) GD_rank(clust).get__(r).v.get_(0) : null;
+		final ST_Agnode_s last = n &gt; 0 ? (ST_Agnode_s) GD_rank(clust).get__(r).v.get_(n - 1) : null;
 		if (false) SMETANA_TRACE(&quot;dotinit__c&quot;, indent + &quot;  local rank &quot; + r + &quot;: n=&quot; + n
 			+ &quot; v[0]=&quot; + (first == null ? &quot;-&quot; : safeName(zz, first))
 			+ &quot; v[n-1]=&quot; + (last == null ? &quot;-&quot; : safeName(zz, last)));
@@ -628,7 +630,7 @@ private static void dumpClusters(Globals zz, ST_Agraph_s g, String indent) {
 	}
 	// dumpClusters(zz, clust, indent + &quot;  &quot;);
     }
-<span class="nc" id="L631">}</span>
+}
 
 /*
  * [DEBUG-cluster-layout] Ad-hoc check added to investigate zdev.Test_7 (see
@@ -647,62 +649,62 @@ private static void dumpClusters(Globals zz, ST_Agraph_s g, String indent) {
  * pure TRACE, no side effect, safe to leave in place.
  */
 public static void checkClusterContiguity(Globals zz, ST_Agraph_s g, String phase) {
-<span class="pc bpc" id="L650" title="1 of 2 branches missed.">    if (GD_rank(g) == null) {</span>
+<span class="pc bpc" id="L652" title="1 of 2 branches missed.">    if (GD_rank(g) == null) {</span>
 	if (false) SMETANA_TRACE(&quot;dotinit__c&quot;, &quot;checkClusterContiguity &quot; + phase + &quot;: GD_rank(root) not allocated, skipping&quot;);
-<span class="nc" id="L652">	return;</span>
+<span class="nc" id="L654">	return;</span>
     }
-<span class="fc" id="L654">    final java.util.List&lt;ST_Agraph_s&gt; clusters = new java.util.ArrayList&lt;ST_Agraph_s&gt;();</span>
-<span class="fc" id="L655">    collectClustersRec(g, clusters);</span>
-<span class="fc" id="L656">    final java.util.Set&lt;Integer&gt; dumpedRanks = new java.util.HashSet&lt;Integer&gt;();</span>
-<span class="fc" id="L657">    int violations = 0;</span>
-<span class="fc bfc" id="L658" title="All 2 branches covered.">    for (ST_Agraph_s clust : clusters) {</span>
+<span class="fc" id="L656">    final java.util.List&lt;ST_Agraph_s&gt; clusters = new java.util.ArrayList&lt;ST_Agraph_s&gt;();</span>
+<span class="fc" id="L657">    collectClustersRec(g, clusters);</span>
+<span class="fc" id="L658">    final java.util.Set&lt;Integer&gt; dumpedRanks = new java.util.HashSet&lt;Integer&gt;();</span>
+<span class="fc" id="L659">    int violations = 0;</span>
+<span class="fc bfc" id="L660" title="All 2 branches covered.">    for (ST_Agraph_s clust : clusters) {</span>
 	// Membership set: the cluster itself plus all its nested sub-clusters,
 	// so a node of a sub-cluster also counts as &quot;inside&quot; the enclosing one.
-<span class="fc" id="L661">	final java.util.Set&lt;ST_Agraph_s&gt; members = java.util.Collections</span>
-<span class="fc" id="L662">		.newSetFromMap(new java.util.IdentityHashMap&lt;ST_Agraph_s, Boolean&gt;());</span>
-<span class="fc" id="L663">	collectSelfAndDescendants(clust, members);</span>
-<span class="fc bfc" id="L664" title="All 2 branches covered.">	for (int r = GD_minrank(clust); r &lt;= GD_maxrank(clust); r++) {</span>
-<span class="pc bpc" id="L665" title="2 of 4 branches missed.">	    if (r &lt; GD_minrank(g) || r &gt; GD_maxrank(g)) {</span>
-<span class="nc" id="L666">		continue;</span>
+<span class="fc" id="L663">	final java.util.Set&lt;ST_Agraph_s&gt; members = java.util.Collections</span>
+<span class="fc" id="L664">		.newSetFromMap(new java.util.IdentityHashMap&lt;ST_Agraph_s, Boolean&gt;());</span>
+<span class="fc" id="L665">	collectSelfAndDescendants(clust, members);</span>
+<span class="fc bfc" id="L666" title="All 2 branches covered.">	for (int r = GD_minrank(clust); r &lt;= GD_maxrank(clust); r++) {</span>
+<span class="pc bpc" id="L667" title="2 of 4 branches missed.">	    if (r &lt; GD_minrank(g) || r &gt; GD_maxrank(g)) {</span>
+<span class="nc" id="L668">		continue;</span>
 	    }
-<span class="fc" id="L668">	    final ST_rank_t rr = GD_rank(g).get__(r);</span>
-<span class="fc" id="L669">	    int segments = 0;</span>
-<span class="fc" id="L670">	    boolean inSegment = false;</span>
-<span class="fc" id="L671">	    final StringBuilder pattern = new StringBuilder();</span>
-<span class="fc bfc" id="L672" title="All 2 branches covered.">	    for (int i = 0; i &lt; rr.n; i++) {</span>
-<span class="fc" id="L673">		final ST_Agnode_s v = (ST_Agnode_s) rr.v.get_(i);</span>
-<span class="pc bpc" id="L674" title="1 of 2 branches missed.">		final ST_Agraph_s nc = v == null ? null : ND_clust(v);</span>
-<span class="pc bpc" id="L675" title="1 of 4 branches missed.">		final boolean member = nc != null &amp;&amp; members.contains(nc);</span>
-<span class="fc bfc" id="L676" title="All 2 branches covered.">		pattern.append(member ? 'X' : '.');</span>
-<span class="fc bfc" id="L677" title="All 4 branches covered.">		if (member &amp;&amp; inSegment == false) {</span>
-<span class="fc" id="L678">		    segments++;</span>
-<span class="fc" id="L679">		    inSegment = true;</span>
-<span class="fc bfc" id="L680" title="All 2 branches covered.">		} else if (member == false) {</span>
-<span class="fc" id="L681">		    inSegment = false;</span>
+<span class="fc" id="L670">	    final ST_rank_t rr = GD_rank(g).get__(r);</span>
+<span class="fc" id="L671">	    int segments = 0;</span>
+<span class="fc" id="L672">	    boolean inSegment = false;</span>
+<span class="fc" id="L673">	    final StringBuilder pattern = new StringBuilder();</span>
+<span class="fc bfc" id="L674" title="All 2 branches covered.">	    for (int i = 0; i &lt; rr.n; i++) {</span>
+<span class="fc" id="L675">		final ST_Agnode_s v = (ST_Agnode_s) rr.v.get_(i);</span>
+<span class="pc bpc" id="L676" title="1 of 2 branches missed.">		final ST_Agraph_s nc = v == null ? null : ND_clust(v);</span>
+<span class="pc bpc" id="L677" title="1 of 4 branches missed.">		final boolean member = nc != null &amp;&amp; members.contains(nc);</span>
+<span class="fc bfc" id="L678" title="All 2 branches covered.">		pattern.append(member ? 'X' : '.');</span>
+<span class="fc bfc" id="L679" title="All 4 branches covered.">		if (member &amp;&amp; inSegment == false) {</span>
+<span class="fc" id="L680">		    segments++;</span>
+<span class="fc" id="L681">		    inSegment = true;</span>
+<span class="fc bfc" id="L682" title="All 2 branches covered.">		} else if (member == false) {</span>
+<span class="fc" id="L683">		    inSegment = false;</span>
 		}
 	    }
-<span class="pc bpc" id="L684" title="1 of 2 branches missed.">	    if (segments &gt; 1) {</span>
-<span class="nc" id="L685">		violations++;</span>
+<span class="pc bpc" id="L686" title="1 of 2 branches missed.">	    if (segments &gt; 1) {</span>
+<span class="nc" id="L687">		violations++;</span>
 		if (false) SMETANA_TRACE(&quot;dotinit__c&quot;, &quot;checkClusterContiguity &quot; + phase + &quot;: VIOLATION cluster &quot; + safeName(zz, clust)
 			+ &quot; rank &quot; + r + &quot; split into &quot; + segments + &quot; segments, pattern=&quot; + pattern
 			+ &quot; (X=member incl. sub-clusters, .=non-member)&quot;);
-<span class="nc bnc" id="L689" title="All 2 branches missed.">		if (dumpedRanks.contains(r) == false) {</span>
-<span class="nc" id="L690">		    dumpedRanks.add(r);</span>
-<span class="nc bnc" id="L691" title="All 2 branches missed.">		    for (int i = 0; i &lt; rr.n; i++) {</span>
-<span class="nc" id="L692">			final ST_Agnode_s v = (ST_Agnode_s) rr.v.get_(i);</span>
-<span class="nc bnc" id="L693" title="All 2 branches missed.">			final ST_Agraph_s nc = v == null ? null : ND_clust(v);</span>
+<span class="nc bnc" id="L691" title="All 2 branches missed.">		if (dumpedRanks.contains(r) == false) {</span>
+<span class="nc" id="L692">		    dumpedRanks.add(r);</span>
+<span class="nc bnc" id="L693" title="All 2 branches missed.">		    for (int i = 0; i &lt; rr.n; i++) {</span>
+<span class="nc" id="L694">			final ST_Agnode_s v = (ST_Agnode_s) rr.v.get_(i);</span>
+<span class="nc bnc" id="L695" title="All 2 branches missed.">			final ST_Agraph_s nc = v == null ? null : ND_clust(v);</span>
 			if (false) SMETANA_TRACE(&quot;dotinit__c&quot;, &quot;    rank &quot; + r + &quot; v[&quot; + i + &quot;]=&quot; + safeName(zz, v)
 				+ &quot; clust=&quot; + (nc == null ? &quot;-&quot; : safeName(zz, nc)));
 		    }
 		}
 	    }
 	}
-<span class="fc" id="L700">    }</span>
+<span class="fc" id="L702">    }</span>
     if (false) SMETANA_TRACE(&quot;dotinit__c&quot;, &quot;checkClusterContiguity &quot; + phase + &quot;: &quot; + violations
 	    + &quot; violation(s) over &quot; + clusters.size() + &quot; cluster(s)&quot;
 	    + (violations &gt; 0 ? &quot;  &lt;&lt;&lt;&lt; cluster order is NOT contiguous, X constraints will be cyclic&quot; : &quot;&quot;));
-<span class="fc" id="L704">    checkSiblingClusterOrder(zz, g, g, phase);</span>
-<span class="fc" id="L705">}</span>
+<span class="fc" id="L706">    checkSiblingClusterOrder(zz, g, g, phase);</span>
+<span class="fc" id="L707">}</span>
 
 /*
  * [DEBUG-cluster-layout] Second invariant check, added after the first Test_7
@@ -716,51 +718,51 @@ public static void checkClusterContiguity(Globals zz, ST_Agraph_s g, String phas
  * left of bbb4 on ranks 16 and 18. Recursive over nesting levels.
  */
 private static void checkSiblingClusterOrder(Globals zz, ST_Agraph_s root, ST_Agraph_s g, String phase) {
-<span class="fc bfc" id="L719" title="All 2 branches covered.">    for (int i = 1; i &lt;= GD_n_cluster(g); i++) {</span>
-<span class="fc" id="L720">	checkSiblingClusterOrder(zz, root, GD_clust(g).get_(i), phase);</span>
+<span class="fc bfc" id="L721" title="All 2 branches covered.">    for (int i = 1; i &lt;= GD_n_cluster(g); i++) {</span>
+<span class="fc" id="L722">	checkSiblingClusterOrder(zz, root, GD_clust(g).get_(i), phase);</span>
     }
-<span class="fc bfc" id="L722" title="All 2 branches covered.">    for (int i = 1; i &lt;= GD_n_cluster(g); i++) {</span>
-<span class="fc bfc" id="L723" title="All 2 branches covered.">	for (int j = i + 1; j &lt;= GD_n_cluster(g); j++) {</span>
-<span class="fc" id="L724">	    final ST_Agraph_s c1 = GD_clust(g).get_(i);</span>
-<span class="fc" id="L725">	    final ST_Agraph_s c2 = GD_clust(g).get_(j);</span>
-<span class="pc bpc" id="L726" title="1 of 4 branches missed.">	    if (GD_minrank(c1) &gt; GD_maxrank(c2) || GD_minrank(c2) &gt; GD_maxrank(c1)) {</span>
-<span class="fc" id="L727">		continue;</span>
+<span class="fc bfc" id="L724" title="All 2 branches covered.">    for (int i = 1; i &lt;= GD_n_cluster(g); i++) {</span>
+<span class="fc bfc" id="L725" title="All 2 branches covered.">	for (int j = i + 1; j &lt;= GD_n_cluster(g); j++) {</span>
+<span class="fc" id="L726">	    final ST_Agraph_s c1 = GD_clust(g).get_(i);</span>
+<span class="fc" id="L727">	    final ST_Agraph_s c2 = GD_clust(g).get_(j);</span>
+<span class="pc bpc" id="L728" title="1 of 4 branches missed.">	    if (GD_minrank(c1) &gt; GD_maxrank(c2) || GD_minrank(c2) &gt; GD_maxrank(c1)) {</span>
+<span class="fc" id="L729">		continue;</span>
 	    }
-<span class="fc" id="L729">	    final java.util.Set&lt;ST_Agraph_s&gt; m1 = java.util.Collections</span>
-<span class="fc" id="L730">		    .newSetFromMap(new java.util.IdentityHashMap&lt;ST_Agraph_s, Boolean&gt;());</span>
-<span class="fc" id="L731">	    collectSelfAndDescendants(c1, m1);</span>
-<span class="fc" id="L732">	    final java.util.Set&lt;ST_Agraph_s&gt; m2 = java.util.Collections</span>
-<span class="fc" id="L733">		    .newSetFromMap(new java.util.IdentityHashMap&lt;ST_Agraph_s, Boolean&gt;());</span>
-<span class="fc" id="L734">	    collectSelfAndDescendants(c2, m2);</span>
-<span class="fc" id="L735">	    final int lo = Math.max(Math.max(GD_minrank(c1), GD_minrank(c2)), GD_minrank(root));</span>
-<span class="fc" id="L736">	    final int hi = Math.min(Math.min(GD_maxrank(c1), GD_maxrank(c2)), GD_maxrank(root));</span>
-<span class="fc" id="L737">	    int firstSide = 0; // +1 = c1 left of c2, -1 = c2 left of c1</span>
-<span class="fc" id="L738">	    int firstSideRank = 0;</span>
-<span class="fc bfc" id="L739" title="All 2 branches covered.">	    for (int r = lo; r &lt;= hi; r++) {</span>
-<span class="fc" id="L740">		final ST_rank_t rr = GD_rank(root).get__(r);</span>
-<span class="fc" id="L741">		int min1 = -1;</span>
-<span class="fc" id="L742">		int min2 = -1;</span>
-<span class="fc bfc" id="L743" title="All 2 branches covered.">		for (int k = 0; k &lt; rr.n; k++) {</span>
-<span class="fc" id="L744">		    final ST_Agnode_s v = (ST_Agnode_s) rr.v.get_(k);</span>
-<span class="pc bpc" id="L745" title="1 of 2 branches missed.">		    final ST_Agraph_s nc = v == null ? null : ND_clust(v);</span>
-<span class="pc bpc" id="L746" title="1 of 2 branches missed.">		    if (nc == null) {</span>
-<span class="nc" id="L747">			continue;</span>
+<span class="fc" id="L731">	    final java.util.Set&lt;ST_Agraph_s&gt; m1 = java.util.Collections</span>
+<span class="fc" id="L732">		    .newSetFromMap(new java.util.IdentityHashMap&lt;ST_Agraph_s, Boolean&gt;());</span>
+<span class="fc" id="L733">	    collectSelfAndDescendants(c1, m1);</span>
+<span class="fc" id="L734">	    final java.util.Set&lt;ST_Agraph_s&gt; m2 = java.util.Collections</span>
+<span class="fc" id="L735">		    .newSetFromMap(new java.util.IdentityHashMap&lt;ST_Agraph_s, Boolean&gt;());</span>
+<span class="fc" id="L736">	    collectSelfAndDescendants(c2, m2);</span>
+<span class="fc" id="L737">	    final int lo = Math.max(Math.max(GD_minrank(c1), GD_minrank(c2)), GD_minrank(root));</span>
+<span class="fc" id="L738">	    final int hi = Math.min(Math.min(GD_maxrank(c1), GD_maxrank(c2)), GD_maxrank(root));</span>
+<span class="fc" id="L739">	    int firstSide = 0; // +1 = c1 left of c2, -1 = c2 left of c1</span>
+<span class="fc" id="L740">	    int firstSideRank = 0;</span>
+<span class="fc bfc" id="L741" title="All 2 branches covered.">	    for (int r = lo; r &lt;= hi; r++) {</span>
+<span class="fc" id="L742">		final ST_rank_t rr = GD_rank(root).get__(r);</span>
+<span class="fc" id="L743">		int min1 = -1;</span>
+<span class="fc" id="L744">		int min2 = -1;</span>
+<span class="fc bfc" id="L745" title="All 2 branches covered.">		for (int k = 0; k &lt; rr.n; k++) {</span>
+<span class="fc" id="L746">		    final ST_Agnode_s v = (ST_Agnode_s) rr.v.get_(k);</span>
+<span class="pc bpc" id="L747" title="1 of 2 branches missed.">		    final ST_Agraph_s nc = v == null ? null : ND_clust(v);</span>
+<span class="pc bpc" id="L748" title="1 of 2 branches missed.">		    if (nc == null) {</span>
+<span class="nc" id="L749">			continue;</span>
 		    }
-<span class="fc bfc" id="L749" title="All 4 branches covered.">		    if (min1 &lt; 0 &amp;&amp; m1.contains(nc)) {</span>
-<span class="fc" id="L750">			min1 = k;</span>
+<span class="fc bfc" id="L751" title="All 4 branches covered.">		    if (min1 &lt; 0 &amp;&amp; m1.contains(nc)) {</span>
+<span class="fc" id="L752">			min1 = k;</span>
 		    }
-<span class="fc bfc" id="L752" title="All 4 branches covered.">		    if (min2 &lt; 0 &amp;&amp; m2.contains(nc)) {</span>
-<span class="fc" id="L753">			min2 = k;</span>
+<span class="fc bfc" id="L754" title="All 4 branches covered.">		    if (min2 &lt; 0 &amp;&amp; m2.contains(nc)) {</span>
+<span class="fc" id="L755">			min2 = k;</span>
 		    }
 		}
-<span class="pc bpc" id="L756" title="2 of 4 branches missed.">		if (min1 &lt; 0 || min2 &lt; 0) {</span>
-<span class="nc" id="L757">		    continue; // one of the two has no member on this rank</span>
+<span class="pc bpc" id="L758" title="2 of 4 branches missed.">		if (min1 &lt; 0 || min2 &lt; 0) {</span>
+<span class="nc" id="L759">		    continue; // one of the two has no member on this rank</span>
 		}
-<span class="pc bpc" id="L759" title="1 of 2 branches missed.">		final int side = min1 &lt; min2 ? 1 : -1;</span>
-<span class="pc bpc" id="L760" title="1 of 2 branches missed.">		if (firstSide == 0) {</span>
-<span class="fc" id="L761">		    firstSide = side;</span>
-<span class="fc" id="L762">		    firstSideRank = r;</span>
-<span class="nc bnc" id="L763" title="All 2 branches missed.">		} else if (side != firstSide) {</span>
+<span class="pc bpc" id="L761" title="1 of 2 branches missed.">		final int side = min1 &lt; min2 ? 1 : -1;</span>
+<span class="pc bpc" id="L762" title="1 of 2 branches missed.">		if (firstSide == 0) {</span>
+<span class="fc" id="L763">		    firstSide = side;</span>
+<span class="fc" id="L764">		    firstSideRank = r;</span>
+<span class="nc bnc" id="L765" title="All 2 branches missed.">		} else if (side != firstSide) {</span>
 		    if (false) SMETANA_TRACE(&quot;dotinit__c&quot;, &quot;checkSiblingClusterOrder &quot; + phase + &quot;: SIDE-SWAP between &quot;
 			    + safeName(zz, c1) + &quot; and &quot; + safeName(zz, c2)
 			    + &quot; -- rank &quot; + firstSideRank + &quot; has &quot; + (firstSide &gt; 0 ? &quot;c1&quot; : &quot;c2&quot;)
@@ -771,22 +773,22 @@ private static void checkSiblingClusterOrder(Globals zz, ST_Agraph_s root, ST_Ag
 	    }
 	}
     }
-<span class="fc" id="L774">}</span>
+<span class="fc" id="L776">}</span>
 
 private static void collectClustersRec(ST_Agraph_s g, java.util.List&lt;ST_Agraph_s&gt; out) {
-<span class="fc bfc" id="L777" title="All 2 branches covered.">    for (int c = 1; c &lt;= GD_n_cluster(g); c++) {</span>
-<span class="fc" id="L778">	final ST_Agraph_s clust = GD_clust(g).get_(c);</span>
-<span class="fc" id="L779">	out.add(clust);</span>
-<span class="fc" id="L780">	collectClustersRec(clust, out);</span>
+<span class="fc bfc" id="L779" title="All 2 branches covered.">    for (int c = 1; c &lt;= GD_n_cluster(g); c++) {</span>
+<span class="fc" id="L780">	final ST_Agraph_s clust = GD_clust(g).get_(c);</span>
+<span class="fc" id="L781">	out.add(clust);</span>
+<span class="fc" id="L782">	collectClustersRec(clust, out);</span>
     }
-<span class="fc" id="L782">}</span>
+<span class="fc" id="L784">}</span>
 
 private static void collectSelfAndDescendants(ST_Agraph_s clust, java.util.Set&lt;ST_Agraph_s&gt; out) {
-<span class="fc" id="L785">    out.add(clust);</span>
-<span class="fc bfc" id="L786" title="All 2 branches covered.">    for (int c = 1; c &lt;= GD_n_cluster(clust); c++) {</span>
-<span class="fc" id="L787">	collectSelfAndDescendants(GD_clust(clust).get_(c), out);</span>
+<span class="fc" id="L787">    out.add(clust);</span>
+<span class="fc bfc" id="L788" title="All 2 branches covered.">    for (int c = 1; c &lt;= GD_n_cluster(clust); c++) {</span>
+<span class="fc" id="L789">	collectSelfAndDescendants(GD_clust(clust).get_(c), out);</span>
     }
-<span class="fc" id="L789">}</span>
+<span class="fc" id="L791">}</span>
 
 
 }

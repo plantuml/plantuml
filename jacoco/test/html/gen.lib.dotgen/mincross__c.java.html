@@ -328,15 +328,16 @@ try {
     // after this cluster's own mincross pass, before nested expansions -- this
     // is the exact moment the relative order of this cluster's sub-clusters is
     // decided (they are still skeletons here, orderable at CL_CROSS penalty).
-<span class="fc" id="L331">    dumpSkeletonOrder(zz, g, &quot;inside mincross_clust(&quot; + smetana.core.debug.SmetanaDebug.safeName(zz, g) + &quot;) after own mincross_&quot;);</span>
+    if (smetana.core.debug.SmetanaDebug.TRACE_ON)
+        dumpSkeletonOrder(zz, g, &quot;inside mincross_clust(&quot; + smetana.core.debug.SmetanaDebug.safeName(zz, g) + &quot;) after own mincross_&quot;);
     
-<span class="fc bfc" id="L333" title="All 2 branches covered.">    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
-<span class="fc" id="L334">	nc += mincross_clust(zz, g, GD_clust(g).get_(c), doBalance);</span>
+<span class="fc bfc" id="L334" title="All 2 branches covered.">    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
+<span class="fc" id="L335">	nc += mincross_clust(zz, g, GD_clust(g).get_(c), doBalance);</span>
     
-<span class="fc" id="L336">    save_vlist(g);</span>
-<span class="fc" id="L337">    return nc;</span>
+<span class="fc" id="L337">    save_vlist(g);</span>
+<span class="fc" id="L338">    return nc;</span>
 } finally {
-<span class="fc" id="L339">LEAVING(&quot;crwc5qe7fmrpgcqh1a80toyvo&quot;,&quot;mincross_clust&quot;);</span>
+<span class="fc" id="L340">LEAVING(&quot;crwc5qe7fmrpgcqh1a80toyvo&quot;,&quot;mincross_clust&quot;);</span>
 }
 }
 
@@ -348,41 +349,41 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;left2right&quot;, key=&quot;657v773m21j5w3g3v94o7464t&quot;, definition=&quot;static int left2right(graph_t * g, node_t * v, node_t * w)&quot;)
 public static boolean left2right(Globals zz, ST_Agraph_s g, ST_Agnode_s v, ST_Agnode_s w) {
-<span class="fc" id="L351">ENTERING(&quot;657v773m21j5w3g3v94o7464t&quot;,&quot;left2right&quot;);</span>
+<span class="fc" id="L352">ENTERING(&quot;657v773m21j5w3g3v94o7464t&quot;,&quot;left2right&quot;);</span>
 try {
 	ST_adjmatrix_t M;
-<span class="fc" id="L354">    boolean rv=false;</span>
+<span class="fc" id="L355">    boolean rv=false;</span>
     /* CLUSTER indicates orig nodes of clusters, and vnodes of skeletons */
-<span class="pc bpc" id="L356" title="1 of 2 branches missed.">    if (zz.ReMincross == false) {</span>
-<span class="pc bpc" id="L357" title="5 of 6 branches missed.">	if ((ND_clust(v) != ND_clust(w)) &amp;&amp; (ND_clust(v)!=null) &amp;&amp; (ND_clust(w)!=null)) {</span>
+<span class="pc bpc" id="L357" title="1 of 2 branches missed.">    if (zz.ReMincross == false) {</span>
+<span class="pc bpc" id="L358" title="5 of 6 branches missed.">	if ((ND_clust(v) != ND_clust(w)) &amp;&amp; (ND_clust(v)!=null) &amp;&amp; (ND_clust(w)!=null)) {</span>
 	    /* the following allows cluster skeletons to be swapped */
-<span class="nc bnc" id="L359" title="All 2 branches missed.">	    if ((ND_ranktype(v) == 7)</span>
-<span class="nc bnc" id="L360" title="All 2 branches missed.">		&amp;&amp; (ND_node_type(v) == 1))</span>
-<span class="nc" id="L361">		return false;</span>
-<span class="nc bnc" id="L362" title="All 2 branches missed.">	    if ((ND_ranktype(w) == 7)</span>
-<span class="nc bnc" id="L363" title="All 2 branches missed.">		&amp;&amp; (ND_node_type(w) == 1))</span>
-<span class="nc" id="L364">		return false;</span>
-<span class="nc" id="L365">	    return true;</span>
+<span class="nc bnc" id="L360" title="All 2 branches missed.">	    if ((ND_ranktype(v) == 7)</span>
+<span class="nc bnc" id="L361" title="All 2 branches missed.">		&amp;&amp; (ND_node_type(v) == 1))</span>
+<span class="nc" id="L362">		return false;</span>
+<span class="nc bnc" id="L363" title="All 2 branches missed.">	    if ((ND_ranktype(w) == 7)</span>
+<span class="nc bnc" id="L364" title="All 2 branches missed.">		&amp;&amp; (ND_node_type(w) == 1))</span>
+<span class="nc" id="L365">		return false;</span>
+<span class="nc" id="L366">	    return true;</span>
 	    /*return ((ND_ranktype(v) != CLUSTER) &amp;&amp; (ND_ranktype(w) != CLUSTER)); */
 	}
     } else {
-<span class="nc bnc" id="L369" title="All 2 branches missed."> 	if ((ND_clust(v) != ND_clust(w)))</span>
-<span class="nc" id="L370">		return true;</span>
+<span class="nc bnc" id="L370" title="All 2 branches missed."> 	if ((ND_clust(v) != ND_clust(w)))</span>
+<span class="nc" id="L371">		return true;</span>
     }
-<span class="fc" id="L372">    M = GD_rank(g).get__(ND_rank(v)).flat;</span>
-<span class="pc bpc" id="L373" title="1 of 2 branches missed.">    if (M == null)</span>
-<span class="fc" id="L374">	rv = false;</span>
+<span class="fc" id="L373">    M = GD_rank(g).get__(ND_rank(v)).flat;</span>
+<span class="pc bpc" id="L374" title="1 of 2 branches missed.">    if (M == null)</span>
+<span class="fc" id="L375">	rv = false;</span>
     else {
-<span class="nc bnc" id="L376" title="All 2 branches missed.">	if (GD_flip(g)) {</span>
-<span class="nc" id="L377">	    ST_Agnode_s t = v;</span>
-<span class="nc" id="L378">	    v = w;</span>
-<span class="nc" id="L379">	    w = t;</span>
+<span class="nc bnc" id="L377" title="All 2 branches missed.">	if (GD_flip(g)) {</span>
+<span class="nc" id="L378">	    ST_Agnode_s t = v;</span>
+<span class="nc" id="L379">	    v = w;</span>
+<span class="nc" id="L380">	    w = t;</span>
 	}
-<span class="nc bnc" id="L381" title="All 2 branches missed.">	rv = M.data[ND_low(v)][ND_low(w)]!=0;</span>
+<span class="nc bnc" id="L382" title="All 2 branches missed.">	rv = M.data[ND_low(v)][ND_low(w)]!=0;</span>
     }
-<span class="fc" id="L383">    return rv;</span>
+<span class="fc" id="L384">    return rv;</span>
 } finally {
-<span class="fc" id="L385">LEAVING(&quot;657v773m21j5w3g3v94o7464t&quot;,&quot;left2right&quot;);</span>
+<span class="fc" id="L386">LEAVING(&quot;657v773m21j5w3g3v94o7464t&quot;,&quot;left2right&quot;);</span>
 }
 }
 
@@ -394,25 +395,25 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;in_cross&quot;, key=&quot;daknncpjy7g5peiicolbmh55i&quot;, definition=&quot;static int in_cross(node_t * v, node_t * w)&quot;)
 public static int in_cross(ST_Agnode_s v, ST_Agnode_s w) {
-<span class="fc" id="L397">ENTERING(&quot;daknncpjy7g5peiicolbmh55i&quot;,&quot;in_cross&quot;);</span>
+<span class="fc" id="L398">ENTERING(&quot;daknncpjy7g5peiicolbmh55i&quot;,&quot;in_cross&quot;);</span>
 try {
-<span class="fc" id="L399">    CArrayOfStar&lt;ST_Agedge_s&gt; e2_ = ND_in(w).list;</span>
-<span class="fc" id="L400">    int inv, cross = 0, t;</span>
-<span class="fc bfc" id="L401" title="All 2 branches covered.">    for (int ie2 = 0; e2_.get_(ie2)!=null; ie2++) {</span>
-<span class="fc" id="L402">	int cnt = ED_xpenalty(e2_.get_(ie2));		</span>
-<span class="fc" id="L403">	inv = ND_order((agtail(e2_.get_(ie2))));</span>
-<span class="fc" id="L404">    CArrayOfStar&lt;ST_Agedge_s&gt; e1_ = ND_in(v).list;</span>
-<span class="fc bfc" id="L405" title="All 2 branches covered.">	for (int ie1 = 0; e1_.get_(ie1)!=null; ie1++) {</span>
-<span class="fc" id="L406">	    t = ND_order(agtail(e1_.get_(ie1))) - inv;</span>
-<span class="fc bfc" id="L407" title="All 4 branches covered.">	    if ((t &gt; 0)</span>
+<span class="fc" id="L400">    CArrayOfStar&lt;ST_Agedge_s&gt; e2_ = ND_in(w).list;</span>
+<span class="fc" id="L401">    int inv, cross = 0, t;</span>
+<span class="fc bfc" id="L402" title="All 2 branches covered.">    for (int ie2 = 0; e2_.get_(ie2)!=null; ie2++) {</span>
+<span class="fc" id="L403">	int cnt = ED_xpenalty(e2_.get_(ie2));		</span>
+<span class="fc" id="L404">	inv = ND_order((agtail(e2_.get_(ie2))));</span>
+<span class="fc" id="L405">    CArrayOfStar&lt;ST_Agedge_s&gt; e1_ = ND_in(v).list;</span>
+<span class="fc bfc" id="L406" title="All 2 branches covered.">	for (int ie1 = 0; e1_.get_(ie1)!=null; ie1++) {</span>
+<span class="fc" id="L407">	    t = ND_order(agtail(e1_.get_(ie1))) - inv;</span>
+<span class="fc bfc" id="L408" title="All 4 branches covered.">	    if ((t &gt; 0)</span>
 		|| ((t == 0)
-<span class="pc bpc" id="L409" title="1 of 2 branches missed.">		    &amp;&amp; (  ED_tail_port(e1_.get_(ie1)).p.x &gt; ED_tail_port(e2_.get_(ie2)).p.x)))</span>
-<span class="fc" id="L410">		cross += ED_xpenalty(e1_.get_(ie1)) * cnt;</span>
+<span class="pc bpc" id="L410" title="1 of 2 branches missed.">		    &amp;&amp; (  ED_tail_port(e1_.get_(ie1)).p.x &gt; ED_tail_port(e2_.get_(ie2)).p.x)))</span>
+<span class="fc" id="L411">		cross += ED_xpenalty(e1_.get_(ie1)) * cnt;</span>
 	}
     }
-<span class="fc" id="L413">    return cross;</span>
+<span class="fc" id="L414">    return cross;</span>
 } finally {
-<span class="fc" id="L415">LEAVING(&quot;daknncpjy7g5peiicolbmh55i&quot;,&quot;in_cross&quot;);</span>
+<span class="fc" id="L416">LEAVING(&quot;daknncpjy7g5peiicolbmh55i&quot;,&quot;in_cross&quot;);</span>
 }
 }
 
@@ -424,25 +425,25 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;out_cross&quot;, key=&quot;b7mf74np8ewrgzwd5u0o8fqod&quot;, definition=&quot;static int out_cross(node_t * v, node_t * w)&quot;)
 public static int out_cross(ST_Agnode_s v, ST_Agnode_s w) {
-<span class="fc" id="L427">ENTERING(&quot;b7mf74np8ewrgzwd5u0o8fqod&quot;,&quot;out_cross&quot;);</span>
+<span class="fc" id="L428">ENTERING(&quot;b7mf74np8ewrgzwd5u0o8fqod&quot;,&quot;out_cross&quot;);</span>
 try {
-<span class="fc" id="L429"> 	CArrayOfStar&lt;ST_Agedge_s&gt; e2_ = ND_out(w).list;</span>
-<span class="fc" id="L430">    int inv, cross = 0, t;</span>
-<span class="fc bfc" id="L431" title="All 2 branches covered.">    for (int ie2 = 0; e2_.get_(ie2)!=null; ie2++) {</span>
-<span class="fc" id="L432">	int cnt = ED_xpenalty(e2_.get_(ie2));</span>
-<span class="fc" id="L433">	inv = ND_order(aghead(e2_.get_(ie2)));</span>
-<span class="fc" id="L434">    CArrayOfStar&lt;ST_Agedge_s&gt; e1_ = ND_out(v).list;</span>
-<span class="fc bfc" id="L435" title="All 2 branches covered.">	for (int ie1 = 0; e1_.get_(ie1)!=null; ie1++) {</span>
-<span class="fc" id="L436">	    t = ND_order(aghead(e1_.get_(ie1))) - inv;</span>
-<span class="fc bfc" id="L437" title="All 4 branches covered.">	    if ((t &gt; 0)</span>
+<span class="fc" id="L430"> 	CArrayOfStar&lt;ST_Agedge_s&gt; e2_ = ND_out(w).list;</span>
+<span class="fc" id="L431">    int inv, cross = 0, t;</span>
+<span class="fc bfc" id="L432" title="All 2 branches covered.">    for (int ie2 = 0; e2_.get_(ie2)!=null; ie2++) {</span>
+<span class="fc" id="L433">	int cnt = ED_xpenalty(e2_.get_(ie2));</span>
+<span class="fc" id="L434">	inv = ND_order(aghead(e2_.get_(ie2)));</span>
+<span class="fc" id="L435">    CArrayOfStar&lt;ST_Agedge_s&gt; e1_ = ND_out(v).list;</span>
+<span class="fc bfc" id="L436" title="All 2 branches covered.">	for (int ie1 = 0; e1_.get_(ie1)!=null; ie1++) {</span>
+<span class="fc" id="L437">	    t = ND_order(aghead(e1_.get_(ie1))) - inv;</span>
+<span class="fc bfc" id="L438" title="All 4 branches covered.">	    if ((t &gt; 0)</span>
 		|| ((t == 0)
-<span class="pc bpc" id="L439" title="1 of 2 branches missed.">		    &amp;&amp; ((ED_head_port(e1_.get_(ie1))).p.x) &gt; (ED_head_port(e2_.get_(ie2))).p.x))</span>
-<span class="fc" id="L440">		cross += ((ED_xpenalty(e1_.get_(ie1))) * cnt);</span>
+<span class="pc bpc" id="L440" title="1 of 2 branches missed.">		    &amp;&amp; ((ED_head_port(e1_.get_(ie1))).p.x) &gt; (ED_head_port(e2_.get_(ie2))).p.x))</span>
+<span class="fc" id="L441">		cross += ((ED_xpenalty(e1_.get_(ie1))) * cnt);</span>
 	}
     }
-<span class="fc" id="L443">    return cross;</span>
+<span class="fc" id="L444">    return cross;</span>
 } finally {
-<span class="fc" id="L445">LEAVING(&quot;b7mf74np8ewrgzwd5u0o8fqod&quot;,&quot;out_cross&quot;);</span>
+<span class="fc" id="L446">LEAVING(&quot;b7mf74np8ewrgzwd5u0o8fqod&quot;,&quot;out_cross&quot;);</span>
 }
 }
 
@@ -454,21 +455,21 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;exchange&quot;, key=&quot;ba4tbr57wips1dzpgxzx3b6ja&quot;, definition=&quot;static void exchange(node_t * v, node_t * w)&quot;)
 public static void exchange(Globals zz, ST_Agnode_s v, ST_Agnode_s w) {
-<span class="fc" id="L457">ENTERING(&quot;ba4tbr57wips1dzpgxzx3b6ja&quot;,&quot;exchange&quot;);</span>
+<span class="fc" id="L458">ENTERING(&quot;ba4tbr57wips1dzpgxzx3b6ja&quot;,&quot;exchange&quot;);</span>
 try {
     int vi, wi, r;
     
-<span class="fc" id="L461">    r = ND_rank(v);</span>
-<span class="fc" id="L462">    vi = ND_order(v);</span>
-<span class="fc" id="L463">    wi = ND_order(w);</span>
-<span class="fc" id="L464">    ND_order(v, wi);</span>
-<span class="fc" id="L465">    GD_rank(zz.Root).get__(r).v.set_(wi, v);</span>
-<span class="fc" id="L466">    ND_order(w, vi);</span>
-<span class="fc" id="L467">    GD_rank(zz.Root).get__(r).v.set_(vi, w);</span>
+<span class="fc" id="L462">    r = ND_rank(v);</span>
+<span class="fc" id="L463">    vi = ND_order(v);</span>
+<span class="fc" id="L464">    wi = ND_order(w);</span>
+<span class="fc" id="L465">    ND_order(v, wi);</span>
+<span class="fc" id="L466">    GD_rank(zz.Root).get__(r).v.set_(wi, v);</span>
+<span class="fc" id="L467">    ND_order(w, vi);</span>
+<span class="fc" id="L468">    GD_rank(zz.Root).get__(r).v.set_(vi, w);</span>
 } finally {
-<span class="fc" id="L469">LEAVING(&quot;ba4tbr57wips1dzpgxzx3b6ja&quot;,&quot;exchange&quot;);</span>
+<span class="fc" id="L470">LEAVING(&quot;ba4tbr57wips1dzpgxzx3b6ja&quot;,&quot;exchange&quot;);</span>
 }
-<span class="fc" id="L471">}</span>
+<span class="fc" id="L472">}</span>
 
 
 
@@ -479,38 +480,38 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;balance&quot;, key=&quot;72rj5xs4qh00oh2yi1h5qaadu&quot;, definition=&quot;static int balance(graph_t * g)&quot;)
 public static Object balance(Object... arg_) {
-<span class="nc" id="L482">UNSUPPORTED(&quot;4223t6rekw3qd8eksvz9kjcqh&quot;); // static int balance(graph_t * g)</span>
-<span class="nc" id="L483">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
-<span class="nc" id="L484">UNSUPPORTED(&quot;970giwpms1ljmt0px5djlqs0z&quot;); //     int i, c0, c1, rv;</span>
-<span class="nc" id="L485">UNSUPPORTED(&quot;8xqnhjfdqnlwlyld1ep6hpnmb&quot;); //     node_t *v, *w;</span>
-<span class="nc" id="L486">UNSUPPORTED(&quot;p6jnh7nvcpnl3zbz636pskbs&quot;); //     int r;</span>
-<span class="nc" id="L487">UNSUPPORTED(&quot;yy0fwjrmxw3jbi85mvwrka7f&quot;); //     rv = 0;</span>
-<span class="nc" id="L488">UNSUPPORTED(&quot;9ey19t6tw2srzaedeng4sq96z&quot;); //     for (r = GD_maxrank(g); r &gt;= GD_minrank(g); r--) {</span>
-<span class="nc" id="L489">UNSUPPORTED(&quot;2nlemgjbnd1ygry42bcbuwo9y&quot;); // 	GD_rank(g)[r].candidate = 0;</span>
-<span class="nc" id="L490">UNSUPPORTED(&quot;91gzxbmcoy5xbvf8nlhmlj4eh&quot;); // 	for (i = 0; i &lt; GD_rank(g)[r].n - 1; i++) {</span>
-<span class="nc" id="L491">UNSUPPORTED(&quot;5ekdr3i8niy7x2ohi7ftgmjke&quot;); // 	    v = GD_rank(g)[r].v[i];</span>
-<span class="nc" id="L492">UNSUPPORTED(&quot;efwyjm6j3e7byt6z83lrhgd1r&quot;); // 	    w = GD_rank(g)[r].v[i + 1];</span>
-<span class="nc" id="L493">UNSUPPORTED(&quot;8ey6umhtefcrb61ncgis82hw6&quot;); // 	    assert(ND_order(v) &lt; ND_order(w));</span>
-<span class="nc" id="L494">UNSUPPORTED(&quot;ddkyq74d5rjfcofczt4hmkxsj&quot;); // 	    if (left2right(g, v, w))</span>
-<span class="nc" id="L495">UNSUPPORTED(&quot;6hyelvzskqfqa07xtgjtvg2is&quot;); // 		continue;</span>
-<span class="nc" id="L496">UNSUPPORTED(&quot;cdpfb5fmlhe0831jf96pjp9s0&quot;); // 	    c0 = c1 = 0;</span>
-<span class="nc" id="L497">UNSUPPORTED(&quot;3l676z6ajeugxvie4r957jap3&quot;); // 	    if (r &gt; 0) {</span>
-<span class="nc" id="L498">UNSUPPORTED(&quot;ennnd5cl9xhh55j2bni58iuxv&quot;); // 		c0 += in_cross(v, w);</span>
-<span class="nc" id="L499">UNSUPPORTED(&quot;bk4dl2r7nw7j8xvkpg7g7x0z9&quot;); // 		c1 += in_cross(w, v);</span>
-<span class="nc" id="L500">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
-<span class="nc" id="L501">UNSUPPORTED(&quot;f0ordylgf44hx2l90eof067yo&quot;); // 	    if (GD_rank(g)[r + 1].n &gt; 0) {</span>
-<span class="nc" id="L502">UNSUPPORTED(&quot;d945airzpo5xbu0fz68ylmgql&quot;); // 		c0 += out_cross(v, w);</span>
-<span class="nc" id="L503">UNSUPPORTED(&quot;e6ez0uwca50uwo7i7i4vak4f2&quot;); // 		c1 += out_cross(w, v);</span>
-<span class="nc" id="L504">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
-<span class="nc" id="L505">UNSUPPORTED(&quot;884yfwkgyw57w5ivpfrggmq15&quot;); // 	    if (c1 &lt;= c0) {</span>
-<span class="nc" id="L506">UNSUPPORTED(&quot;c2sevxb1gtyc2olq8akmvs40u&quot;); // 		balanceNodes(g, r, v, w);</span>
-<span class="nc" id="L507">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
-<span class="nc" id="L508">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
-<span class="nc" id="L509">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
-<span class="nc" id="L510">UNSUPPORTED(&quot;v7vqc9l7ge2bfdwnw11z7rzi&quot;); //     return rv;</span>
-<span class="nc" id="L511">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+<span class="nc" id="L483">UNSUPPORTED(&quot;4223t6rekw3qd8eksvz9kjcqh&quot;); // static int balance(graph_t * g)</span>
+<span class="nc" id="L484">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L485">UNSUPPORTED(&quot;970giwpms1ljmt0px5djlqs0z&quot;); //     int i, c0, c1, rv;</span>
+<span class="nc" id="L486">UNSUPPORTED(&quot;8xqnhjfdqnlwlyld1ep6hpnmb&quot;); //     node_t *v, *w;</span>
+<span class="nc" id="L487">UNSUPPORTED(&quot;p6jnh7nvcpnl3zbz636pskbs&quot;); //     int r;</span>
+<span class="nc" id="L488">UNSUPPORTED(&quot;yy0fwjrmxw3jbi85mvwrka7f&quot;); //     rv = 0;</span>
+<span class="nc" id="L489">UNSUPPORTED(&quot;9ey19t6tw2srzaedeng4sq96z&quot;); //     for (r = GD_maxrank(g); r &gt;= GD_minrank(g); r--) {</span>
+<span class="nc" id="L490">UNSUPPORTED(&quot;2nlemgjbnd1ygry42bcbuwo9y&quot;); // 	GD_rank(g)[r].candidate = 0;</span>
+<span class="nc" id="L491">UNSUPPORTED(&quot;91gzxbmcoy5xbvf8nlhmlj4eh&quot;); // 	for (i = 0; i &lt; GD_rank(g)[r].n - 1; i++) {</span>
+<span class="nc" id="L492">UNSUPPORTED(&quot;5ekdr3i8niy7x2ohi7ftgmjke&quot;); // 	    v = GD_rank(g)[r].v[i];</span>
+<span class="nc" id="L493">UNSUPPORTED(&quot;efwyjm6j3e7byt6z83lrhgd1r&quot;); // 	    w = GD_rank(g)[r].v[i + 1];</span>
+<span class="nc" id="L494">UNSUPPORTED(&quot;8ey6umhtefcrb61ncgis82hw6&quot;); // 	    assert(ND_order(v) &lt; ND_order(w));</span>
+<span class="nc" id="L495">UNSUPPORTED(&quot;ddkyq74d5rjfcofczt4hmkxsj&quot;); // 	    if (left2right(g, v, w))</span>
+<span class="nc" id="L496">UNSUPPORTED(&quot;6hyelvzskqfqa07xtgjtvg2is&quot;); // 		continue;</span>
+<span class="nc" id="L497">UNSUPPORTED(&quot;cdpfb5fmlhe0831jf96pjp9s0&quot;); // 	    c0 = c1 = 0;</span>
+<span class="nc" id="L498">UNSUPPORTED(&quot;3l676z6ajeugxvie4r957jap3&quot;); // 	    if (r &gt; 0) {</span>
+<span class="nc" id="L499">UNSUPPORTED(&quot;ennnd5cl9xhh55j2bni58iuxv&quot;); // 		c0 += in_cross(v, w);</span>
+<span class="nc" id="L500">UNSUPPORTED(&quot;bk4dl2r7nw7j8xvkpg7g7x0z9&quot;); // 		c1 += in_cross(w, v);</span>
+<span class="nc" id="L501">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L502">UNSUPPORTED(&quot;f0ordylgf44hx2l90eof067yo&quot;); // 	    if (GD_rank(g)[r + 1].n &gt; 0) {</span>
+<span class="nc" id="L503">UNSUPPORTED(&quot;d945airzpo5xbu0fz68ylmgql&quot;); // 		c0 += out_cross(v, w);</span>
+<span class="nc" id="L504">UNSUPPORTED(&quot;e6ez0uwca50uwo7i7i4vak4f2&quot;); // 		c1 += out_cross(w, v);</span>
+<span class="nc" id="L505">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L506">UNSUPPORTED(&quot;884yfwkgyw57w5ivpfrggmq15&quot;); // 	    if (c1 &lt;= c0) {</span>
+<span class="nc" id="L507">UNSUPPORTED(&quot;c2sevxb1gtyc2olq8akmvs40u&quot;); // 		balanceNodes(g, r, v, w);</span>
+<span class="nc" id="L508">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L509">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L510">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L511">UNSUPPORTED(&quot;v7vqc9l7ge2bfdwnw11z7rzi&quot;); //     return rv;</span>
+<span class="nc" id="L512">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
 
-<span class="nc" id="L513">throw new UnsupportedOperationException();</span>
+<span class="nc" id="L514">throw new UnsupportedOperationException();</span>
 }
 
 
@@ -521,53 +522,53 @@ public static Object balance(Object... arg_) {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;transpose_step&quot;, key=&quot;bxwzx4m9ejausu58u7abr6fm0&quot;, definition=&quot;static int transpose_step(graph_t * g, int r, int reverse)&quot;)
 public static int transpose_step(Globals zz, ST_Agraph_s g, int r, boolean reverse) {
-<span class="fc" id="L524">ENTERING(&quot;bxwzx4m9ejausu58u7abr6fm0&quot;,&quot;transpose_step&quot;);</span>
+<span class="fc" id="L525">ENTERING(&quot;bxwzx4m9ejausu58u7abr6fm0&quot;,&quot;transpose_step&quot;);</span>
 try {
     int i, c0, c1, rv;
     ST_Agnode_s v, w;
-<span class="fc" id="L528">    rv = 0;</span>
-<span class="fc" id="L529">    GD_rank(g).get__(r).candidate= false;</span>
-<span class="fc bfc" id="L530" title="All 2 branches covered.">    for (i = 0; i &lt; GD_rank(g).get__(r).n - 1; i++) {</span>
-<span class="fc" id="L531">	v = GD_rank(g).get__(r).v.get_(i);</span>
-<span class="fc" id="L532">	w = GD_rank(g).get__(r).v.get_(i + 1);</span>
+<span class="fc" id="L529">    rv = 0;</span>
+<span class="fc" id="L530">    GD_rank(g).get__(r).candidate= false;</span>
+<span class="fc bfc" id="L531" title="All 2 branches covered.">    for (i = 0; i &lt; GD_rank(g).get__(r).n - 1; i++) {</span>
+<span class="fc" id="L532">	v = GD_rank(g).get__(r).v.get_(i);</span>
+<span class="fc" id="L533">	w = GD_rank(g).get__(r).v.get_(i + 1);</span>
 	//assert(ND_order(v) &lt; ND_order(w));
-<span class="pc bpc" id="L534" title="1 of 2 branches missed.">	if (left2right(zz, g, v, w))</span>
-<span class="nc" id="L535">	    continue;</span>
-<span class="fc" id="L536">	c0 = c1 = 0;</span>
-<span class="fc bfc" id="L537" title="All 2 branches covered.">	if (r &gt; 0) {</span>
-<span class="fc" id="L538">	    c0 += in_cross(v, w);</span>
-<span class="fc" id="L539">	    c1 += in_cross(w, v);</span>
+<span class="pc bpc" id="L535" title="1 of 2 branches missed.">	if (left2right(zz, g, v, w))</span>
+<span class="nc" id="L536">	    continue;</span>
+<span class="fc" id="L537">	c0 = c1 = 0;</span>
+<span class="fc bfc" id="L538" title="All 2 branches covered.">	if (r &gt; 0) {</span>
+<span class="fc" id="L539">	    c0 += in_cross(v, w);</span>
+<span class="fc" id="L540">	    c1 += in_cross(w, v);</span>
 	}
-<span class="fc bfc" id="L541" title="All 2 branches covered.">	if (GD_rank(g).get__(r + 1).n &gt; 0) {</span>
-<span class="fc" id="L542">	    c0 += out_cross(v, w);</span>
-<span class="fc" id="L543">	    c1 += out_cross(w, v);</span>
+<span class="fc bfc" id="L542" title="All 2 branches covered.">	if (GD_rank(g).get__(r + 1).n &gt; 0) {</span>
+<span class="fc" id="L543">	    c0 += out_cross(v, w);</span>
+<span class="fc" id="L544">	    c1 += out_cross(w, v);</span>
 	}
-<span class="fc bfc" id="L545" title="All 8 branches covered.">	if ((c1 &lt; c0) || ((c0 &gt; 0) &amp;&amp; reverse &amp;&amp; (c1 == c0))) {</span>
+<span class="fc bfc" id="L546" title="All 8 branches covered.">	if ((c1 &lt; c0) || ((c0 &gt; 0) &amp;&amp; reverse &amp;&amp; (c1 == c0))) {</span>
 	    // [DEBUG-cluster-layout] Test_7 (SMETANA.md): watch skeleton-vnode
 	    // exchanges (rare, decisive for sibling-cluster side consistency).
-<span class="pc bpc" id="L548" title="3 of 4 branches missed.">	    if (ND_ranktype(v) == 7 &amp;&amp; ND_ranktype(w) == 7) {</span>
+<span class="pc bpc" id="L549" title="3 of 4 branches missed.">	    if (ND_ranktype(v) == 7 &amp;&amp; ND_ranktype(w) == 7) {</span>
 		if (false) SMETANA_TRACE(&quot;mincross__c&quot;, &quot;transpose_step: EXCHANGING skeleton vnodes rank=&quot; + r
 			+ &quot; v.clust=&quot; + smetana.core.debug.SmetanaDebug.safeName(zz, ND_clust(v))
 			+ &quot; w.clust=&quot; + smetana.core.debug.SmetanaDebug.safeName(zz, ND_clust(w))
 			+ &quot; c0=&quot; + c0 + &quot; c1=&quot; + c1 + &quot; reverse=&quot; + reverse);
 	    }
-<span class="fc" id="L554">	    exchange(zz, v, w);</span>
-<span class="fc" id="L555">	    rv += (c0 - c1);</span>
-<span class="fc" id="L556">	    GD_rank(zz.Root).get__(r).valid= 0;</span>
-<span class="fc" id="L557">	    GD_rank(g).get__(r).candidate= true;</span>
-<span class="pc bpc" id="L558" title="1 of 2 branches missed.">	    if (r &gt; GD_minrank(g)) {</span>
-<span class="fc" id="L559">		GD_rank(zz.Root).get__(r - 1).valid= 0;</span>
-<span class="fc" id="L560">		GD_rank(g).get__(r - 1).candidate= true;</span>
+<span class="fc" id="L555">	    exchange(zz, v, w);</span>
+<span class="fc" id="L556">	    rv += (c0 - c1);</span>
+<span class="fc" id="L557">	    GD_rank(zz.Root).get__(r).valid= 0;</span>
+<span class="fc" id="L558">	    GD_rank(g).get__(r).candidate= true;</span>
+<span class="pc bpc" id="L559" title="1 of 2 branches missed.">	    if (r &gt; GD_minrank(g)) {</span>
+<span class="fc" id="L560">		GD_rank(zz.Root).get__(r - 1).valid= 0;</span>
+<span class="fc" id="L561">		GD_rank(g).get__(r - 1).candidate= true;</span>
 	    }
-<span class="pc bpc" id="L562" title="1 of 2 branches missed.">	    if (r &lt; GD_maxrank(g)) {</span>
-<span class="fc" id="L563">		GD_rank(zz.Root).get__(r + 1).valid= 0;</span>
-<span class="fc" id="L564">		GD_rank(g).get__(r + 1).candidate= true;</span>
+<span class="pc bpc" id="L563" title="1 of 2 branches missed.">	    if (r &lt; GD_maxrank(g)) {</span>
+<span class="fc" id="L564">		GD_rank(zz.Root).get__(r + 1).valid= 0;</span>
+<span class="fc" id="L565">		GD_rank(g).get__(r + 1).candidate= true;</span>
 	    }
 	}
     }
-<span class="fc" id="L568">    return rv;</span>
+<span class="fc" id="L569">    return rv;</span>
 } finally {
-<span class="fc" id="L570">LEAVING(&quot;bxwzx4m9ejausu58u7abr6fm0&quot;,&quot;transpose_step&quot;);</span>
+<span class="fc" id="L571">LEAVING(&quot;bxwzx4m9ejausu58u7abr6fm0&quot;,&quot;transpose_step&quot;);</span>
 }
 }
 
@@ -579,24 +580,24 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;transpose&quot;, key=&quot;2i22bxgg5y7v5c5d40k5zppky&quot;, definition=&quot;static void transpose(graph_t * g, int reverse)&quot;)
 public static void transpose(Globals zz, ST_Agraph_s g, boolean reverse) {
-<span class="fc" id="L582">ENTERING(&quot;2i22bxgg5y7v5c5d40k5zppky&quot;,&quot;transpose&quot;);</span>
+<span class="fc" id="L583">ENTERING(&quot;2i22bxgg5y7v5c5d40k5zppky&quot;,&quot;transpose&quot;);</span>
 try {
     int r, delta;
-<span class="fc bfc" id="L585" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++)</span>
-<span class="fc" id="L586">	GD_rank(g).get__(r).candidate= true;</span>
+<span class="fc bfc" id="L586" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++)</span>
+<span class="fc" id="L587">	GD_rank(g).get__(r).candidate= true;</span>
     do {
-<span class="fc" id="L588">	delta = 0;</span>
-<span class="fc bfc" id="L589" title="All 2 branches covered.">	for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
-<span class="fc bfc" id="L590" title="All 2 branches covered.">	    if (GD_rank(g).get__(r).candidate) {</span>
-<span class="fc" id="L591">		delta += transpose_step(zz, g, r, reverse);</span>
+<span class="fc" id="L589">	delta = 0;</span>
+<span class="fc bfc" id="L590" title="All 2 branches covered.">	for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
+<span class="fc bfc" id="L591" title="All 2 branches covered.">	    if (GD_rank(g).get__(r).candidate) {</span>
+<span class="fc" id="L592">		delta += transpose_step(zz, g, r, reverse);</span>
 	    }
 	}
 	/*} while (delta &gt; ncross(g)*(1.0 - Convergence)); */
-<span class="fc bfc" id="L595" title="All 2 branches covered.">    } while (delta &gt;= 1);</span>
+<span class="fc bfc" id="L596" title="All 2 branches covered.">    } while (delta &gt;= 1);</span>
 } finally {
-<span class="fc" id="L597">LEAVING(&quot;2i22bxgg5y7v5c5d40k5zppky&quot;,&quot;transpose&quot;);</span>
+<span class="fc" id="L598">LEAVING(&quot;2i22bxgg5y7v5c5d40k5zppky&quot;,&quot;transpose&quot;);</span>
 }
-<span class="fc" id="L599">}</span>
+<span class="fc" id="L600">}</span>
 
 
 
@@ -604,58 +605,58 @@ try {
 @Reviewed(when = &quot;15/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;mincross&quot;, key=&quot;7lrk2rxqnwwdau8cx85oqkpmv&quot;, definition=&quot;static int mincross(graph_t * g, int startpass, int endpass, int doBalance)&quot;)
 public static int mincross_(Globals zz, ST_Agraph_s g, int startpass, int endpass, boolean doBalance) {
-<span class="fc" id="L607">ENTERING(&quot;7lrk2rxqnwwdau8cx85oqkpmv&quot;,&quot;mincross_&quot;);</span>
+<span class="fc" id="L608">ENTERING(&quot;7lrk2rxqnwwdau8cx85oqkpmv&quot;,&quot;mincross_&quot;);</span>
 try {
-<span class="fc" id="L609">    int maxthispass=0, iter, trying, pass;</span>
+<span class="fc" id="L610">    int maxthispass=0, iter, trying, pass;</span>
     int cur_cross, best_cross;
     
-<span class="fc bfc" id="L612" title="All 2 branches covered.">    if (startpass &gt; 1) {</span>
-<span class="fc" id="L613">	cur_cross = best_cross = ncross(zz, g);</span>
-<span class="fc" id="L614">	save_best(zz, g);</span>
+<span class="fc bfc" id="L613" title="All 2 branches covered.">    if (startpass &gt; 1) {</span>
+<span class="fc" id="L614">	cur_cross = best_cross = ncross(zz, g);</span>
+<span class="fc" id="L615">	save_best(zz, g);</span>
     } else
-<span class="fc" id="L616">	cur_cross = best_cross = INT_MAX;</span>
-<span class="fc bfc" id="L617" title="All 2 branches covered.">    for (pass = startpass; pass &lt;= endpass; pass++) {</span>
-<span class="fc bfc" id="L618" title="All 2 branches covered.">	if (pass &lt;= 1) {</span>
-<span class="fc" id="L619">	    maxthispass = Math.min(4, zz.MaxIter);</span>
-<span class="pc bpc" id="L620" title="1 of 2 branches missed.">	    if (g == dot_root(g))</span>
-<span class="fc" id="L621">		build_ranks(zz, g, pass);</span>
-<span class="fc bfc" id="L622" title="All 2 branches covered.">	    if (pass == 0)</span>
-<span class="fc" id="L623">		flat_breakcycles(zz, g);</span>
-<span class="fc" id="L624">	    flat_reorder(zz, g);</span>
+<span class="fc" id="L617">	cur_cross = best_cross = INT_MAX;</span>
+<span class="fc bfc" id="L618" title="All 2 branches covered.">    for (pass = startpass; pass &lt;= endpass; pass++) {</span>
+<span class="fc bfc" id="L619" title="All 2 branches covered.">	if (pass &lt;= 1) {</span>
+<span class="fc" id="L620">	    maxthispass = Math.min(4, zz.MaxIter);</span>
+<span class="pc bpc" id="L621" title="1 of 2 branches missed.">	    if (g == dot_root(g))</span>
+<span class="fc" id="L622">		build_ranks(zz, g, pass);</span>
+<span class="fc bfc" id="L623" title="All 2 branches covered.">	    if (pass == 0)</span>
+<span class="fc" id="L624">		flat_breakcycles(zz, g);</span>
+<span class="fc" id="L625">	    flat_reorder(zz, g);</span>
 	    
-<span class="fc bfc" id="L626" title="All 2 branches covered.">	    if ((cur_cross = ncross(zz, g)) &lt;= best_cross) {</span>
-<span class="fc" id="L627">		save_best(zz, g);</span>
-<span class="fc" id="L628">		best_cross = cur_cross;</span>
+<span class="fc bfc" id="L627" title="All 2 branches covered.">	    if ((cur_cross = ncross(zz, g)) &lt;= best_cross) {</span>
+<span class="fc" id="L628">		save_best(zz, g);</span>
+<span class="fc" id="L629">		best_cross = cur_cross;</span>
 	    }
-<span class="fc" id="L630">	    trying = 0;</span>
+<span class="fc" id="L631">	    trying = 0;</span>
 	} else {
-<span class="fc" id="L632">	    maxthispass = zz.MaxIter;</span>
-<span class="pc bpc" id="L633" title="1 of 2 branches missed.">	    if (cur_cross &gt; best_cross)</span>
-<span class="nc" id="L634">		restore_best(zz, g);</span>
-<span class="fc" id="L635">	    cur_cross = best_cross;</span>
+<span class="fc" id="L633">	    maxthispass = zz.MaxIter;</span>
+<span class="pc bpc" id="L634" title="1 of 2 branches missed.">	    if (cur_cross &gt; best_cross)</span>
+<span class="nc" id="L635">		restore_best(zz, g);</span>
+<span class="fc" id="L636">	    cur_cross = best_cross;</span>
 	}
-<span class="fc" id="L637">	trying = 0;</span>
-<span class="fc bfc" id="L638" title="All 2 branches covered.">	for (iter = 0; iter &lt; maxthispass; iter++) {</span>
+<span class="fc" id="L638">	trying = 0;</span>
+<span class="fc bfc" id="L639" title="All 2 branches covered.">	for (iter = 0; iter &lt; maxthispass; iter++) {</span>
 	    // [DEBUG-cluster-layout] Test_7 (SMETANA.md): this is upstream's
 	    if (false) SMETANA_TRACE(&quot;mincross__c&quot;, &quot;mincross_(&quot; + smetana.core.debug.SmetanaDebug.safeName(zz, g)
 		    + &quot;): pass &quot; + pass + &quot; iter &quot; + iter + &quot; trying &quot; + trying
 		    + &quot; cur_cross &quot; + cur_cross + &quot; best_cross &quot; + best_cross);
-<span class="fc bfc" id="L643" title="All 2 branches covered.">	    if (trying++ &gt;= zz.MinQuit)</span>
-<span class="fc" id="L644">		break;</span>
-<span class="fc bfc" id="L645" title="All 2 branches covered.">	    if (cur_cross == 0)</span>
-<span class="fc" id="L646">		break;</span>
-<span class="fc" id="L647">	    mincross_step(zz, g, iter);</span>
-<span class="fc bfc" id="L648" title="All 2 branches covered.">	    if ((cur_cross = ncross(zz, g)) &lt;= best_cross) {</span>
-<span class="fc" id="L649">		save_best(zz, g);</span>
-<span class="fc bfc" id="L650" title="All 2 branches covered.">		if (cur_cross &lt; zz.Convergence * best_cross)</span>
-<span class="fc" id="L651">		    trying = 0;</span>
-<span class="fc" id="L652">		best_cross = cur_cross;</span>
+<span class="fc bfc" id="L644" title="All 2 branches covered.">	    if (trying++ &gt;= zz.MinQuit)</span>
+<span class="fc" id="L645">		break;</span>
+<span class="fc bfc" id="L646" title="All 2 branches covered.">	    if (cur_cross == 0)</span>
+<span class="fc" id="L647">		break;</span>
+<span class="fc" id="L648">	    mincross_step(zz, g, iter);</span>
+<span class="fc bfc" id="L649" title="All 2 branches covered.">	    if ((cur_cross = ncross(zz, g)) &lt;= best_cross) {</span>
+<span class="fc" id="L650">		save_best(zz, g);</span>
+<span class="fc bfc" id="L651" title="All 2 branches covered.">		if (cur_cross &lt; zz.Convergence * best_cross)</span>
+<span class="fc" id="L652">		    trying = 0;</span>
+<span class="fc" id="L653">		best_cross = cur_cross;</span>
 	    }
 	}
-<span class="fc bfc" id="L655" title="All 2 branches covered.">	if (cur_cross == 0)</span>
-<span class="fc" id="L656">	    break;</span>
+<span class="fc bfc" id="L656" title="All 2 branches covered.">	if (cur_cross == 0)</span>
+<span class="fc" id="L657">	    break;</span>
     }
-<span class="fc bfc" id="L658" title="All 2 branches covered.">    if (cur_cross &gt; best_cross) {</span>
+<span class="fc bfc" id="L659" title="All 2 branches covered.">    if (cur_cross &gt; best_cross) {</span>
 	// [DEBUG-cluster-layout] Test_7 (SMETANA.md): dump the order that's
 	// ABOUT to be thrown away (cur_cross, worse than best_cross) right
 	// before restore_best overwrites it, so the restored order can be
@@ -663,17 +664,19 @@ try {
 	if (false) SMETANA_TRACE(&quot;mincross__c&quot;, &quot;mincross_(&quot; + smetana.core.debug.SmetanaDebug.safeName(zz, g)
 		+ &quot;): cur_cross=&quot; + cur_cross + &quot; &gt; best_cross=&quot; + best_cross
 		+ &quot; -&gt; calling restore_best; order BEFORE restore:&quot;);
-<span class="fc" id="L666">	dumpSkeletonOrder(zz, g, &quot;before restore_best(&quot; + smetana.core.debug.SmetanaDebug.safeName(zz, g) + &quot;)&quot;);</span>
-<span class="fc" id="L667">	restore_best(zz, g);</span>
+	if (smetana.core.debug.SmetanaDebug.TRACE_ON)
+	    dumpSkeletonOrder(zz, g, &quot;before restore_best(&quot; + smetana.core.debug.SmetanaDebug.safeName(zz, g) + &quot;)&quot;);
+<span class="fc" id="L669">	restore_best(zz, g);</span>
     }
-<span class="fc bfc" id="L669" title="All 2 branches covered.">    if (best_cross &gt; 0) {</span>
-<span class="fc" id="L670">	transpose(zz, g, false);</span>
-<span class="fc" id="L671">	best_cross = ncross(zz, g);</span>
+<span class="fc bfc" id="L671" title="All 2 branches covered.">    if (best_cross &gt; 0) {</span>
+<span class="fc" id="L672">	transpose(zz, g, false);</span>
+<span class="fc" id="L673">	best_cross = ncross(zz, g);</span>
 	// [DEBUG-cluster-layout] Test_7 (SMETANA.md): dump the order right
 	// after the final transpose(g, FALSE) + ncross recompute, so we can
 	// tell whether a SIDE-SWAP present after restore_best gets fixed,
 	// left alone, or reintroduced by this last local-transposition pass.
-<span class="fc" id="L676">	dumpSkeletonOrder(zz, g, &quot;after final transpose in mincross_(&quot; + smetana.core.debug.SmetanaDebug.safeName(zz, g) + &quot;)&quot;);</span>
+	if (smetana.core.debug.SmetanaDebug.TRACE_ON)
+	    dumpSkeletonOrder(zz, g, &quot;after final transpose in mincross_(&quot; + smetana.core.debug.SmetanaDebug.safeName(zz, g) + &quot;)&quot;);
     }
     // [DEBUG-cluster-layout] Test_7 (SMETANA.md): final crossing count of this
     // mincross_ call. If a skeleton-chain x skeleton-chain crossing (cost
@@ -683,14 +686,14 @@ try {
     // INVISIBLE to rcross -- a counting/structure problem.
     if (false) SMETANA_TRACE(&quot;mincross__c&quot;, &quot;mincross_(&quot; + smetana.core.debug.SmetanaDebug.safeName(zz, g)
 	    + &quot;): DONE best_cross=&quot; + best_cross);
-<span class="pc bpc" id="L686" title="1 of 2 branches missed.">    if (doBalance) {</span>
-<span class="nc bnc" id="L687" title="All 2 branches missed.">	for (iter = 0; iter &lt; maxthispass; iter++)</span>
-<span class="nc" id="L688">	    balance(g);</span>
+<span class="pc bpc" id="L689" title="1 of 2 branches missed.">    if (doBalance) {</span>
+<span class="nc bnc" id="L690" title="All 2 branches missed.">	for (iter = 0; iter &lt; maxthispass; iter++)</span>
+<span class="nc" id="L691">	    balance(g);</span>
     }
     
-<span class="fc" id="L691">    return best_cross;</span>
+<span class="fc" id="L694">    return best_cross;</span>
 } finally {
-<span class="fc" id="L693">LEAVING(&quot;7lrk2rxqnwwdau8cx85oqkpmv&quot;,&quot;mincross_&quot;);</span>
+<span class="fc" id="L696">LEAVING(&quot;7lrk2rxqnwwdau8cx85oqkpmv&quot;,&quot;mincross_&quot;);</span>
 }
 }
 
@@ -700,7 +703,7 @@ try {
 @Reviewed(when = &quot;15/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;restore_best&quot;, key=&quot;520049zkz9mafaeklgvm6s8e5&quot;, definition=&quot;static void restore_best(graph_t * g)&quot;)
 public static void restore_best(Globals zz, ST_Agraph_s g) {
-<span class="fc" id="L703">ENTERING(&quot;520049zkz9mafaeklgvm6s8e5&quot;,&quot;restore_best&quot;);</span>
+<span class="fc" id="L706">ENTERING(&quot;520049zkz9mafaeklgvm6s8e5&quot;,&quot;restore_best&quot;);</span>
 try {
     int r, i;
     
@@ -718,16 +721,16 @@ try {
     // instead is equivalent in intent (every node whose order matters for g's
     // own ncross()/transpose() calls is reachable this way) and is immune to
     // which graph's GD_nlist a node currently happens to be linked into.
-<span class="fc bfc" id="L721" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
-<span class="fc bfc" id="L722" title="All 2 branches covered.">	for (i = 0; i &lt; GD_rank(g).get__(r).n; i++) {</span>
-<span class="fc" id="L723">	    ST_Agnode_s n = GD_rank(g).get__(r).v.get_(i);</span>
-<span class="fc" id="L724">	    ND_order(n, (int)ND_coord(n).x);</span>
+<span class="fc bfc" id="L724" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
+<span class="fc bfc" id="L725" title="All 2 branches covered.">	for (i = 0; i &lt; GD_rank(g).get__(r).n; i++) {</span>
+<span class="fc" id="L726">	    ST_Agnode_s n = GD_rank(g).get__(r).v.get_(i);</span>
+<span class="fc" id="L727">	    ND_order(n, (int)ND_coord(n).x);</span>
 	}
     }
-<span class="fc bfc" id="L727" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
-<span class="fc" id="L728">	GD_rank(zz.Root).get__(r).valid= 0;</span>
-<span class="fc" id="L729">    qsort(zz, GD_rank(g).get__(r).v,</span>
-<span class="fc" id="L730">    	    GD_rank(g).get__(r).n,</span>
+<span class="fc bfc" id="L730" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
+<span class="fc" id="L731">	GD_rank(zz.Root).get__(r).valid= 0;</span>
+<span class="fc" id="L732">    qsort(zz, GD_rank(g).get__(r).v,</span>
+<span class="fc" id="L733">    	    GD_rank(g).get__(r).n,</span>
     	    mincross__c.nodeposcmpf);
     }
     // [DEBUG-cluster-layout] Test_7 (SMETANA.md): dump the order right after
@@ -736,11 +739,12 @@ try {
     // restore_best&quot; dump logged by the caller, and against the snapshot-time
     // dump logged inside save_best when this snapshot was taken.
     if (false) SMETANA_TRACE(&quot;mincross__c&quot;, &quot;restore_best(&quot; + smetana.core.debug.SmetanaDebug.safeName(zz, g) + &quot;): order AFTER restore:&quot;);
-<span class="fc" id="L739">    dumpSkeletonOrder(zz, g, &quot;after restore_best(&quot; + smetana.core.debug.SmetanaDebug.safeName(zz, g) + &quot;)&quot;);</span>
+    if (smetana.core.debug.SmetanaDebug.TRACE_ON)
+        dumpSkeletonOrder(zz, g, &quot;after restore_best(&quot; + smetana.core.debug.SmetanaDebug.safeName(zz, g) + &quot;)&quot;);
 } finally {
-<span class="fc" id="L741">LEAVING(&quot;520049zkz9mafaeklgvm6s8e5&quot;,&quot;restore_best&quot;);</span>
+<span class="fc" id="L745">LEAVING(&quot;520049zkz9mafaeklgvm6s8e5&quot;,&quot;restore_best&quot;);</span>
 }
-<span class="fc" id="L743">}</span>
+<span class="fc" id="L747">}</span>
 
 
 
@@ -748,17 +752,17 @@ try {
 @Reviewed(when = &quot;15/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;save_best&quot;, key=&quot;8uyqc48j0oul206l3np85wj9p&quot;, definition=&quot;static void save_best(graph_t * g)&quot;)
 public static void save_best(Globals zz, ST_Agraph_s g) {
-<span class="fc" id="L751">ENTERING(&quot;8uyqc48j0oul206l3np85wj9p&quot;,&quot;save_best&quot;);</span>
+<span class="fc" id="L755">ENTERING(&quot;8uyqc48j0oul206l3np85wj9p&quot;,&quot;save_best&quot;);</span>
 try {
     // Arnaud/Claude 2026-07-08 (SMETANA.md, Test_7 root cause): see the note
     // in restore_best() -- walking GD_rank(g)[r].v[] instead of GD_nlist(g),
     // for the same reason (GD_nlist(g) is empty for an already-expanded
     // cluster, since merge_ranks() relocated every node to GD_nlist(root)).
     int r, i;
-<span class="fc bfc" id="L758" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
-<span class="fc bfc" id="L759" title="All 2 branches covered.">	for (i = 0; i &lt; GD_rank(g).get__(r).n; i++) {</span>
-<span class="fc" id="L760">	    ST_Agnode_s n = GD_rank(g).get__(r).v.get_(i);</span>
-<span class="fc" id="L761">	    (ND_coord(n)).x = ND_order(n);</span>
+<span class="fc bfc" id="L762" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
+<span class="fc bfc" id="L763" title="All 2 branches covered.">	for (i = 0; i &lt; GD_rank(g).get__(r).n; i++) {</span>
+<span class="fc" id="L764">	    ST_Agnode_s n = GD_rank(g).get__(r).v.get_(i);</span>
+<span class="fc" id="L765">	    (ND_coord(n)).x = ND_order(n);</span>
 	}
     }
     // [DEBUG-cluster-layout] Test_7 (SMETANA.md): snapshot just taken -- dump
@@ -767,11 +771,12 @@ try {
     // &quot;best&quot; snapshot at the moment it's recorded, before any later
     // (possibly worse) iterations run.
     if (false) SMETANA_TRACE(&quot;mincross__c&quot;, &quot;save_best(&quot; + smetana.core.debug.SmetanaDebug.safeName(zz, g) + &quot;): snapshot taken&quot;);
-<span class="fc" id="L770">    dumpSkeletonOrder(zz, g, &quot;inside save_best(&quot; + smetana.core.debug.SmetanaDebug.safeName(zz, g) + &quot;)&quot;);</span>
+    if (smetana.core.debug.SmetanaDebug.TRACE_ON)
+        dumpSkeletonOrder(zz, g, &quot;inside save_best(&quot; + smetana.core.debug.SmetanaDebug.safeName(zz, g) + &quot;)&quot;);
 } finally {
-<span class="fc" id="L772">LEAVING(&quot;8uyqc48j0oul206l3np85wj9p&quot;,&quot;save_best&quot;);</span>
+<span class="fc" id="L777">LEAVING(&quot;8uyqc48j0oul206l3np85wj9p&quot;,&quot;save_best&quot;);</span>
 }
-<span class="fc" id="L774">}</span>
+<span class="fc" id="L779">}</span>
 
 
 
@@ -780,32 +785,32 @@ try {
 @Reviewed(when = &quot;15/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;merge_components&quot;, key=&quot;6d08fwi4dsk6ikk5d0gy6rq2h&quot;, definition=&quot;static void merge_components(graph_t * g)&quot;)
 public static void merge_components(Globals zz, ST_Agraph_s g) {
-<span class="fc" id="L783">ENTERING(&quot;6d08fwi4dsk6ikk5d0gy6rq2h&quot;,&quot;merge_components&quot;);</span>
+<span class="fc" id="L788">ENTERING(&quot;6d08fwi4dsk6ikk5d0gy6rq2h&quot;,&quot;merge_components&quot;);</span>
 try {
     int c;
     ST_Agnode_s u, v;
     
-<span class="fc bfc" id="L788" title="All 2 branches covered.">    if (GD_comp(g).size &lt;= 1)</span>
-<span class="fc" id="L789">	return;</span>
-<span class="fc" id="L790">    u = null;</span>
-<span class="fc bfc" id="L791" title="All 2 branches covered.">    for (c = 0; c &lt; GD_comp(g).size; c++) {</span>
-<span class="fc" id="L792">    v = (ST_Agnode_s) GD_comp(g).list.get_(c);</span>
-<span class="fc bfc" id="L793" title="All 2 branches covered.">	if (u!=null)</span>
-<span class="fc" id="L794">	    ND_next(u, v);</span>
-<span class="fc" id="L795">	ND_prev(v, u);</span>
-<span class="fc bfc" id="L796" title="All 2 branches covered.">	while (ND_next(v)!=null) {</span>
-<span class="fc" id="L797">	    v = ND_next(v);</span>
+<span class="fc bfc" id="L793" title="All 2 branches covered.">    if (GD_comp(g).size &lt;= 1)</span>
+<span class="fc" id="L794">	return;</span>
+<span class="fc" id="L795">    u = null;</span>
+<span class="fc bfc" id="L796" title="All 2 branches covered.">    for (c = 0; c &lt; GD_comp(g).size; c++) {</span>
+<span class="fc" id="L797">    v = (ST_Agnode_s) GD_comp(g).list.get_(c);</span>
+<span class="fc bfc" id="L798" title="All 2 branches covered.">	if (u!=null)</span>
+<span class="fc" id="L799">	    ND_next(u, v);</span>
+<span class="fc" id="L800">	ND_prev(v, u);</span>
+<span class="fc bfc" id="L801" title="All 2 branches covered.">	while (ND_next(v)!=null) {</span>
+<span class="fc" id="L802">	    v = ND_next(v);</span>
 	}
-<span class="fc" id="L799">	u = v;</span>
+<span class="fc" id="L804">	u = v;</span>
     }
-<span class="fc" id="L801">    GD_comp(g).size = 1;</span>
-<span class="fc" id="L802">    GD_nlist(g, GD_comp(g).list.get_(0));</span>
-<span class="fc" id="L803">    GD_minrank(g, zz.GlobalMinRank);</span>
-<span class="fc" id="L804">    GD_maxrank(g, zz.GlobalMaxRank);</span>
+<span class="fc" id="L806">    GD_comp(g).size = 1;</span>
+<span class="fc" id="L807">    GD_nlist(g, GD_comp(g).list.get_(0));</span>
+<span class="fc" id="L808">    GD_minrank(g, zz.GlobalMinRank);</span>
+<span class="fc" id="L809">    GD_maxrank(g, zz.GlobalMaxRank);</span>
 } finally {
-<span class="fc" id="L806">LEAVING(&quot;6d08fwi4dsk6ikk5d0gy6rq2h&quot;,&quot;merge_components&quot;);</span>
+<span class="fc" id="L811">LEAVING(&quot;6d08fwi4dsk6ikk5d0gy6rq2h&quot;,&quot;merge_components&quot;);</span>
 }
-<span class="fc" id="L808">}</span>
+<span class="fc" id="L813">}</span>
 
 
 
@@ -814,35 +819,35 @@ try {
 @Reviewed(when = &quot;15/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;merge2&quot;, key=&quot;91vebcdl3q3y0uyxef0iw71n9&quot;, definition=&quot;static void merge2(graph_t * g)&quot;)
 public static void merge2(Globals zz, ST_Agraph_s g) {
-<span class="fc" id="L817">ENTERING(&quot;91vebcdl3q3y0uyxef0iw71n9&quot;,&quot;merge2&quot;);</span>
+<span class="fc" id="L822">ENTERING(&quot;91vebcdl3q3y0uyxef0iw71n9&quot;,&quot;merge2&quot;);</span>
 try {
     int i, r;
     ST_Agnode_s v;
     
     /* merge the components and rank limits */
-<span class="fc" id="L823">    merge_components(zz, g);</span>
+<span class="fc" id="L828">    merge_components(zz, g);</span>
     
     /* install complete ranks */
-<span class="fc bfc" id="L826" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
-<span class="fc" id="L827">	GD_rank(g).get__(r).n = GD_rank(g).get__(r).an;</span>
-<span class="fc" id="L828">	GD_rank(g).get__(r).v = GD_rank(g).get__(r).av;</span>
-<span class="fc bfc" id="L829" title="All 2 branches covered.">	for (i = 0; i &lt; GD_rank(g).get__(r).n; i++) {</span>
-<span class="fc" id="L830">	    v = GD_rank(g).get__(r).v.get_(i);</span>
-<span class="fc bfc" id="L831" title="All 2 branches covered.">	    if (v == null) {</span>
+<span class="fc bfc" id="L831" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
+<span class="fc" id="L832">	GD_rank(g).get__(r).n = GD_rank(g).get__(r).an;</span>
+<span class="fc" id="L833">	GD_rank(g).get__(r).v = GD_rank(g).get__(r).av;</span>
+<span class="fc bfc" id="L834" title="All 2 branches covered.">	for (i = 0; i &lt; GD_rank(g).get__(r).n; i++) {</span>
+<span class="fc" id="L835">	    v = GD_rank(g).get__(r).v.get_(i);</span>
+<span class="fc bfc" id="L836" title="All 2 branches covered.">	    if (v == null) {</span>
 		/*if (Verbose)
 		    fprintf(stderr,
 			    &quot;merge2: graph %s, rank %d has only %d &lt; %d nodes\n&quot;,
 			    agnameof(g), r, i, GD_rank(g)[r].n);*/
-<span class="fc" id="L836">		GD_rank(g).get__(r).n = i;</span>
-<span class="fc" id="L837">		break;</span>
+<span class="fc" id="L841">		GD_rank(g).get__(r).n = i;</span>
+<span class="fc" id="L842">		break;</span>
 	    }
-<span class="fc" id="L839">	    ND_order(v, i);</span>
+<span class="fc" id="L844">	    ND_order(v, i);</span>
 	}
     }
 } finally {
-<span class="fc" id="L843">LEAVING(&quot;91vebcdl3q3y0uyxef0iw71n9&quot;,&quot;merge2&quot;);</span>
+<span class="fc" id="L848">LEAVING(&quot;91vebcdl3q3y0uyxef0iw71n9&quot;,&quot;merge2&quot;);</span>
 }
-<span class="fc" id="L845">}</span>
+<span class="fc" id="L850">}</span>
 
 
 
@@ -850,48 +855,48 @@ try {
 @Reviewed(when = &quot;15/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;cleanup2&quot;, key=&quot;3cwiyyk1d1jkoo9iqwb5bge4x&quot;, definition=&quot;static void cleanup2(graph_t * g, int nc)&quot;)
 public static void cleanup2(Globals zz, ST_Agraph_s g, int nc) {
-<span class="fc" id="L853">ENTERING(&quot;3cwiyyk1d1jkoo9iqwb5bge4x&quot;,&quot;cleanup2&quot;);</span>
+<span class="fc" id="L858">ENTERING(&quot;3cwiyyk1d1jkoo9iqwb5bge4x&quot;,&quot;cleanup2&quot;);</span>
 try {
     int i, j, r, c;
     ST_Agnode_s v;
     ST_Agedge_s e;
     
-<span class="pc bpc" id="L859" title="1 of 2 branches missed.">    if (zz.TI_list!=null) {</span>
-<span class="fc" id="L860">	Memory.free(zz.TI_list);</span>
-<span class="fc" id="L861">	zz.TI_list = null;</span>
+<span class="pc bpc" id="L864" title="1 of 2 branches missed.">    if (zz.TI_list!=null) {</span>
+<span class="fc" id="L865">	Memory.free(zz.TI_list);</span>
+<span class="fc" id="L866">	zz.TI_list = null;</span>
     }
-<span class="pc bpc" id="L863" title="1 of 2 branches missed.">    if (zz.TE_list!=null) {</span>
-<span class="fc" id="L864">	Memory.free(zz.TE_list);</span>
-<span class="fc" id="L865">	zz.TE_list = null;</span>
+<span class="pc bpc" id="L868" title="1 of 2 branches missed.">    if (zz.TE_list!=null) {</span>
+<span class="fc" id="L869">	Memory.free(zz.TE_list);</span>
+<span class="fc" id="L870">	zz.TE_list = null;</span>
     }
     /* fix vlists of clusters */
-<span class="fc bfc" id="L868" title="All 2 branches covered.">    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
-<span class="fc" id="L869">	rec_reset_vlists(zz, GD_clust(g).get_(c));</span>
+<span class="fc bfc" id="L873" title="All 2 branches covered.">    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
+<span class="fc" id="L874">	rec_reset_vlists(zz, GD_clust(g).get_(c));</span>
     
     /* remove node temporary edges for ordering nodes */
-<span class="fc bfc" id="L872" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
-<span class="fc bfc" id="L873" title="All 2 branches covered.">	for (i = 0; i &lt; GD_rank(g).get__(r).n; i++) {</span>
-<span class="fc" id="L874">	    v = GD_rank(g).get__(r).v.get_(i);</span>
-<span class="fc" id="L875">	    ND_order(v, i);</span>
-<span class="fc bfc" id="L876" title="All 2 branches covered.">	    if (ND_flat_out(v).list!=null) {</span>
-<span class="fc bfc" id="L877" title="All 2 branches covered.">		for (j = 0; (e = (ST_Agedge_s) ND_flat_out(v).list.get_(j))!=null; j++)</span>
-<span class="pc bpc" id="L878" title="1 of 2 branches missed.">		    if (ED_edge_type(e) == FLATORDER) {</span>
-<span class="nc" id="L879">			delete_flat_edge(e);</span>
-<span class="nc" id="L880">			Memory.free(e.base.data);</span>
-<span class="nc" id="L881">			Memory.free(e);</span>
-<span class="nc" id="L882">			j--;</span>
+<span class="fc bfc" id="L877" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
+<span class="fc bfc" id="L878" title="All 2 branches covered.">	for (i = 0; i &lt; GD_rank(g).get__(r).n; i++) {</span>
+<span class="fc" id="L879">	    v = GD_rank(g).get__(r).v.get_(i);</span>
+<span class="fc" id="L880">	    ND_order(v, i);</span>
+<span class="fc bfc" id="L881" title="All 2 branches covered.">	    if (ND_flat_out(v).list!=null) {</span>
+<span class="fc bfc" id="L882" title="All 2 branches covered.">		for (j = 0; (e = (ST_Agedge_s) ND_flat_out(v).list.get_(j))!=null; j++)</span>
+<span class="pc bpc" id="L883" title="1 of 2 branches missed.">		    if (ED_edge_type(e) == FLATORDER) {</span>
+<span class="nc" id="L884">			delete_flat_edge(e);</span>
+<span class="nc" id="L885">			Memory.free(e.base.data);</span>
+<span class="nc" id="L886">			Memory.free(e);</span>
+<span class="nc" id="L887">			j--;</span>
 		    }
 	    }
 	}
-<span class="fc" id="L886">	free_matrix(GD_rank(g).get__(r).flat);</span>
+<span class="fc" id="L891">	free_matrix(GD_rank(g).get__(r).flat);</span>
     }
     /*if (Verbose)
 	fprintf(stderr, &quot;mincross %s: %d crossings, %.2f secs.\n&quot;,
 		agnameof(g), nc, elapsed_sec());*/
 } finally {
-<span class="fc" id="L892">LEAVING(&quot;3cwiyyk1d1jkoo9iqwb5bge4x&quot;,&quot;cleanup2&quot;);</span>
+<span class="fc" id="L897">LEAVING(&quot;3cwiyyk1d1jkoo9iqwb5bge4x&quot;,&quot;cleanup2&quot;);</span>
 }
-<span class="fc" id="L894">}</span>
+<span class="fc" id="L899">}</span>
 
 
 
@@ -899,21 +904,21 @@ try {
 @Reviewed(when = &quot;15/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;&quot;, key=&quot;arax68kzcf86dr2xu0gp962gq&quot;, definition=&quot;static node_t *neighbor(node_t * v, int dir)&quot;)
 public static ST_Agnode_s neighbor(Globals zz, ST_Agnode_s v, int dir) {
-<span class="fc" id="L902">ENTERING(&quot;arax68kzcf86dr2xu0gp962gq&quot;,&quot;neighbor&quot;);</span>
+<span class="fc" id="L907">ENTERING(&quot;arax68kzcf86dr2xu0gp962gq&quot;,&quot;neighbor&quot;);</span>
 try {
     ST_Agnode_s rv;
     
-<span class="fc" id="L906">    rv = null;</span>
-<span class="pc bpc" id="L907" title="1 of 2 branches missed.">assert(v!=null);</span>
-<span class="fc bfc" id="L908" title="All 2 branches covered.">    if (dir &lt; 0) {</span>
-<span class="fc bfc" id="L909" title="All 2 branches covered.">	if (ND_order(v) &gt; 0)</span>
-<span class="fc" id="L910">	    rv = GD_rank(zz.Root).get__(ND_rank(v)).v.get_(ND_order(v) - 1);</span>
+<span class="fc" id="L911">    rv = null;</span>
+<span class="pc bpc" id="L912" title="1 of 2 branches missed.">assert(v!=null);</span>
+<span class="fc bfc" id="L913" title="All 2 branches covered.">    if (dir &lt; 0) {</span>
+<span class="fc bfc" id="L914" title="All 2 branches covered.">	if (ND_order(v) &gt; 0)</span>
+<span class="fc" id="L915">	    rv = GD_rank(zz.Root).get__(ND_rank(v)).v.get_(ND_order(v) - 1);</span>
     } else
-<span class="fc" id="L912">	rv = GD_rank(zz.Root).get__(ND_rank(v)).v.get_(ND_order(v) + 1);</span>
-<span class="pc bpc" id="L913" title="1 of 4 branches missed.">assert((rv == null) || (ND_order(rv)-ND_order(v))*dir &gt; 0);</span>
-<span class="fc" id="L914">    return rv;</span>
+<span class="fc" id="L917">	rv = GD_rank(zz.Root).get__(ND_rank(v)).v.get_(ND_order(v) + 1);</span>
+<span class="pc bpc" id="L918" title="1 of 4 branches missed.">assert((rv == null) || (ND_order(rv)-ND_order(v))*dir &gt; 0);</span>
+<span class="fc" id="L919">    return rv;</span>
 } finally {
-<span class="fc" id="L916">LEAVING(&quot;arax68kzcf86dr2xu0gp962gq&quot;,&quot;neighbor&quot;);</span>
+<span class="fc" id="L921">LEAVING(&quot;arax68kzcf86dr2xu0gp962gq&quot;,&quot;neighbor&quot;);</span>
 }
 }
 
@@ -923,11 +928,11 @@ try {
 @Reviewed(when = &quot;15/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;is_a_normal_node_of&quot;, key=&quot;1waqm8z71hi389dt1wqh0bmhr&quot;, definition=&quot;static int is_a_normal_node_of(graph_t * g, node_t * v)&quot;)
 public static boolean is_a_normal_node_of(Globals zz, ST_Agraph_s g, ST_Agnode_s v) {
-<span class="fc" id="L926">ENTERING(&quot;1waqm8z71hi389dt1wqh0bmhr&quot;,&quot;is_a_normal_node_of&quot;);</span>
+<span class="fc" id="L931">ENTERING(&quot;1waqm8z71hi389dt1wqh0bmhr&quot;,&quot;is_a_normal_node_of&quot;);</span>
 try {
-<span class="pc bpc" id="L928" title="1 of 4 branches missed.">    return ((ND_node_type(v) == NORMAL) &amp;&amp; agcontains(zz, g, v));</span>
+<span class="pc bpc" id="L933" title="1 of 4 branches missed.">    return ((ND_node_type(v) == NORMAL) &amp;&amp; agcontains(zz, g, v));</span>
 } finally {
-<span class="fc" id="L930">LEAVING(&quot;1waqm8z71hi389dt1wqh0bmhr&quot;,&quot;is_a_normal_node_of&quot;);</span>
+<span class="fc" id="L935">LEAVING(&quot;1waqm8z71hi389dt1wqh0bmhr&quot;,&quot;is_a_normal_node_of&quot;);</span>
 }
 }
 
@@ -937,19 +942,19 @@ try {
 @Reviewed(when = &quot;15/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;is_a_vnode_of_an_edge_of&quot;, key=&quot;9f8atyi1unmleplge3rijdt4s&quot;, definition=&quot;static int is_a_vnode_of_an_edge_of(graph_t * g, node_t * v)&quot;)
 public static boolean is_a_vnode_of_an_edge_of(Globals zz, ST_Agraph_s g, ST_Agnode_s v) {
-<span class="fc" id="L940">ENTERING(&quot;9f8atyi1unmleplge3rijdt4s&quot;,&quot;is_a_vnode_of_an_edge_of&quot;);</span>
+<span class="fc" id="L945">ENTERING(&quot;9f8atyi1unmleplge3rijdt4s&quot;,&quot;is_a_vnode_of_an_edge_of&quot;);</span>
 try {
-<span class="pc bpc" id="L942" title="1 of 2 branches missed.">    if ((ND_node_type(v) == VIRTUAL)</span>
-<span class="nc bnc" id="L943" title="All 4 branches missed.">	&amp;&amp; (ND_in(v).size == 1) &amp;&amp; (ND_out(v).size == 1)) {</span>
-<span class="nc" id="L944">	ST_Agedge_s e = (ST_Agedge_s) ND_out(v).list.get_(0);</span>
-<span class="nc bnc" id="L945" title="All 2 branches missed.">	while (ED_edge_type(e) != NORMAL)</span>
-<span class="nc" id="L946">	    e = ED_to_orig(e);</span>
-<span class="nc bnc" id="L947" title="All 2 branches missed.">	if (agcontains(zz, g, e))</span>
-<span class="nc" id="L948">	    return true;</span>
+<span class="pc bpc" id="L947" title="1 of 2 branches missed.">    if ((ND_node_type(v) == VIRTUAL)</span>
+<span class="nc bnc" id="L948" title="All 4 branches missed.">	&amp;&amp; (ND_in(v).size == 1) &amp;&amp; (ND_out(v).size == 1)) {</span>
+<span class="nc" id="L949">	ST_Agedge_s e = (ST_Agedge_s) ND_out(v).list.get_(0);</span>
+<span class="nc bnc" id="L950" title="All 2 branches missed.">	while (ED_edge_type(e) != NORMAL)</span>
+<span class="nc" id="L951">	    e = ED_to_orig(e);</span>
+<span class="nc bnc" id="L952" title="All 2 branches missed.">	if (agcontains(zz, g, e))</span>
+<span class="nc" id="L953">	    return true;</span>
     }
-<span class="fc" id="L950">    return false;</span>
+<span class="fc" id="L955">    return false;</span>
 } finally {
-<span class="fc" id="L952">LEAVING(&quot;9f8atyi1unmleplge3rijdt4s&quot;,&quot;is_a_vnode_of_an_edge_of&quot;);</span>
+<span class="fc" id="L957">LEAVING(&quot;9f8atyi1unmleplge3rijdt4s&quot;,&quot;is_a_vnode_of_an_edge_of&quot;);</span>
 }
 }
 
@@ -959,11 +964,11 @@ try {
 @Reviewed(when = &quot;15/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;inside_cluster&quot;, key=&quot;eo7ulc8vwmoaig0j479yapve2&quot;, definition=&quot;static int inside_cluster(graph_t * g, node_t * v)&quot;)
 public static boolean inside_cluster(Globals zz, ST_Agraph_s g, ST_Agnode_s v) {
-<span class="fc" id="L962">ENTERING(&quot;eo7ulc8vwmoaig0j479yapve2&quot;,&quot;inside_cluster&quot;);</span>
+<span class="fc" id="L967">ENTERING(&quot;eo7ulc8vwmoaig0j479yapve2&quot;,&quot;inside_cluster&quot;);</span>
 try {
-<span class="fc" id="L964">    return (is_a_normal_node_of(zz, g, v) | is_a_vnode_of_an_edge_of(zz, g, v));</span>
+<span class="fc" id="L969">    return (is_a_normal_node_of(zz, g, v) | is_a_vnode_of_an_edge_of(zz, g, v));</span>
 } finally {
-<span class="fc" id="L966">LEAVING(&quot;eo7ulc8vwmoaig0j479yapve2&quot;,&quot;inside_cluster&quot;);</span>
+<span class="fc" id="L971">LEAVING(&quot;eo7ulc8vwmoaig0j479yapve2&quot;,&quot;inside_cluster&quot;);</span>
 }
 }
 
@@ -973,20 +978,20 @@ try {
 @Reviewed(when = &quot;15/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;&quot;, key=&quot;8xkmkt4r6gfqj8gk0mokszoz0&quot;, definition=&quot;static node_t *furthestnode(graph_t * g, node_t * v, int dir)&quot;)
 public static ST_Agnode_s furthestnode(Globals zz, ST_Agraph_s g, ST_Agnode_s v, int dir) {
-<span class="fc" id="L976">ENTERING(&quot;8xkmkt4r6gfqj8gk0mokszoz0&quot;,&quot;furthestnode&quot;);</span>
+<span class="fc" id="L981">ENTERING(&quot;8xkmkt4r6gfqj8gk0mokszoz0&quot;,&quot;furthestnode&quot;);</span>
 try {
     ST_Agnode_s u, rv;
     
-<span class="fc" id="L980">    rv = u = v;</span>
-<span class="fc bfc" id="L981" title="All 2 branches covered.">    while ((u = neighbor(zz, u, dir))!=null) {</span>
-<span class="fc bfc" id="L982" title="All 2 branches covered.">	if (is_a_normal_node_of(zz, g, u))</span>
-<span class="fc" id="L983">	    rv = u;</span>
-<span class="pc bpc" id="L984" title="1 of 2 branches missed.">	else if (is_a_vnode_of_an_edge_of(zz, g, u))</span>
-<span class="nc" id="L985">	    rv = u;</span>
+<span class="fc" id="L985">    rv = u = v;</span>
+<span class="fc bfc" id="L986" title="All 2 branches covered.">    while ((u = neighbor(zz, u, dir))!=null) {</span>
+<span class="fc bfc" id="L987" title="All 2 branches covered.">	if (is_a_normal_node_of(zz, g, u))</span>
+<span class="fc" id="L988">	    rv = u;</span>
+<span class="pc bpc" id="L989" title="1 of 2 branches missed.">	else if (is_a_vnode_of_an_edge_of(zz, g, u))</span>
+<span class="nc" id="L990">	    rv = u;</span>
     }
-<span class="fc" id="L987">    return rv;</span>
+<span class="fc" id="L992">    return rv;</span>
 } finally {
-<span class="fc" id="L989">LEAVING(&quot;8xkmkt4r6gfqj8gk0mokszoz0&quot;,&quot;furthestnode&quot;);</span>
+<span class="fc" id="L994">LEAVING(&quot;8xkmkt4r6gfqj8gk0mokszoz0&quot;,&quot;furthestnode&quot;);</span>
 }
 }
 
@@ -996,18 +1001,18 @@ try {
 @Reviewed(when = &quot;15/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;save_vlist&quot;, key=&quot;bwmu2hkwud40601oq5vgo2f1h&quot;, definition=&quot;void save_vlist(graph_t * g)&quot;)
 public static void save_vlist(ST_Agraph_s g) {
-<span class="fc" id="L999">ENTERING(&quot;bwmu2hkwud40601oq5vgo2f1h&quot;,&quot;save_vlist&quot;);</span>
+<span class="fc" id="L1004">ENTERING(&quot;bwmu2hkwud40601oq5vgo2f1h&quot;,&quot;save_vlist&quot;);</span>
 try {
     int r;
     
-<span class="fc bfc" id="L1003" title="All 2 branches covered.">    if (GD_rankleader(g)!=null)</span>
-<span class="fc bfc" id="L1004" title="All 2 branches covered.">	for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
-<span class="fc" id="L1005">	    GD_rankleader(g).set_(r, GD_rank(g).get__(r).v.get_(0));</span>
+<span class="fc bfc" id="L1008" title="All 2 branches covered.">    if (GD_rankleader(g)!=null)</span>
+<span class="fc bfc" id="L1009" title="All 2 branches covered.">	for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
+<span class="fc" id="L1010">	    GD_rankleader(g).set_(r, GD_rank(g).get__(r).v.get_(0));</span>
 	}
 } finally {
-<span class="fc" id="L1008">LEAVING(&quot;bwmu2hkwud40601oq5vgo2f1h&quot;,&quot;save_vlist&quot;);</span>
+<span class="fc" id="L1013">LEAVING(&quot;bwmu2hkwud40601oq5vgo2f1h&quot;,&quot;save_vlist&quot;);</span>
 }
-<span class="fc" id="L1010">}</span>
+<span class="fc" id="L1015">}</span>
 
 
 
@@ -1015,17 +1020,17 @@ try {
 @Reviewed(when = &quot;15/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;rec_save_vlists&quot;, key=&quot;hwdxg97sefkuyd25x2q4pgzg&quot;, definition=&quot;void rec_save_vlists(graph_t * g)&quot;)
 public static void rec_save_vlists(ST_Agraph_s g) {
-<span class="fc" id="L1018">ENTERING(&quot;hwdxg97sefkuyd25x2q4pgzg&quot;,&quot;rec_save_vlists&quot;);</span>
+<span class="fc" id="L1023">ENTERING(&quot;hwdxg97sefkuyd25x2q4pgzg&quot;,&quot;rec_save_vlists&quot;);</span>
 try {
     int c;
     
-<span class="fc" id="L1022">    save_vlist(g);</span>
-<span class="fc bfc" id="L1023" title="All 2 branches covered.">    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
-<span class="fc" id="L1024">	rec_save_vlists(GD_clust(g).get_(c));</span>
+<span class="fc" id="L1027">    save_vlist(g);</span>
+<span class="fc bfc" id="L1028" title="All 2 branches covered.">    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
+<span class="fc" id="L1029">	rec_save_vlists(GD_clust(g).get_(c));</span>
 } finally {
-<span class="fc" id="L1026">LEAVING(&quot;hwdxg97sefkuyd25x2q4pgzg&quot;,&quot;rec_save_vlists&quot;);</span>
+<span class="fc" id="L1031">LEAVING(&quot;hwdxg97sefkuyd25x2q4pgzg&quot;,&quot;rec_save_vlists&quot;);</span>
 }
-<span class="fc" id="L1028">}</span>
+<span class="fc" id="L1033">}</span>
 
 
 
@@ -1033,28 +1038,28 @@ try {
 @Reviewed(when = &quot;15/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;rec_reset_vlists&quot;, key=&quot;f3b4wat4uxn5oil720i5mwq4v&quot;, definition=&quot;void rec_reset_vlists(graph_t * g)&quot;)
 public static void rec_reset_vlists(Globals zz, ST_Agraph_s g) {
-<span class="fc" id="L1036">ENTERING(&quot;f3b4wat4uxn5oil720i5mwq4v&quot;,&quot;rec_reset_vlists&quot;);</span>
+<span class="fc" id="L1041">ENTERING(&quot;f3b4wat4uxn5oil720i5mwq4v&quot;,&quot;rec_reset_vlists&quot;);</span>
 try {
     int r, c;
     ST_Agnode_s u, v, w;
     
     /* fix vlists of sub-clusters */
-<span class="fc bfc" id="L1042" title="All 2 branches covered.">    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
-<span class="fc" id="L1043">	rec_reset_vlists(zz, GD_clust(g).get_(c));</span>
+<span class="fc bfc" id="L1047" title="All 2 branches covered.">    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
+<span class="fc" id="L1048">	rec_reset_vlists(zz, GD_clust(g).get_(c));</span>
     
-<span class="pc bpc" id="L1045" title="1 of 2 branches missed.">    if (GD_rankleader(g)!=null)</span>
-<span class="fc bfc" id="L1046" title="All 2 branches covered.">	for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
-<span class="fc" id="L1047">	    v = GD_rankleader(g).get_(r);</span>
-<span class="fc" id="L1048">	    u = furthestnode(zz, g, v, -1);</span>
-<span class="fc" id="L1049">	    w = furthestnode(zz, g, v, 1);</span>
-<span class="fc" id="L1050">	    GD_rankleader(g).set_(r, u);</span>
-<span class="fc" id="L1051">	    GD_rank(g).get__(r).v = GD_rank(dot_root(g)).get__(r).v.plus_(ND_order(u));</span>
-<span class="fc" id="L1052">	    GD_rank(g).get__(r).n = ND_order(w) - ND_order(u) + 1;</span>
+<span class="pc bpc" id="L1050" title="1 of 2 branches missed.">    if (GD_rankleader(g)!=null)</span>
+<span class="fc bfc" id="L1051" title="All 2 branches covered.">	for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
+<span class="fc" id="L1052">	    v = GD_rankleader(g).get_(r);</span>
+<span class="fc" id="L1053">	    u = furthestnode(zz, g, v, -1);</span>
+<span class="fc" id="L1054">	    w = furthestnode(zz, g, v, 1);</span>
+<span class="fc" id="L1055">	    GD_rankleader(g).set_(r, u);</span>
+<span class="fc" id="L1056">	    GD_rank(g).get__(r).v = GD_rank(dot_root(g)).get__(r).v.plus_(ND_order(u));</span>
+<span class="fc" id="L1057">	    GD_rank(g).get__(r).n = ND_order(w) - ND_order(u) + 1;</span>
 	}
 } finally {
-<span class="fc" id="L1055">LEAVING(&quot;f3b4wat4uxn5oil720i5mwq4v&quot;,&quot;rec_reset_vlists&quot;);</span>
+<span class="fc" id="L1060">LEAVING(&quot;f3b4wat4uxn5oil720i5mwq4v&quot;,&quot;rec_reset_vlists&quot;);</span>
 }
-<span class="fc" id="L1057">}</span>
+<span class="fc" id="L1062">}</span>
 
 
 
@@ -1064,48 +1069,48 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;realFillRanks&quot;, key=&quot;pv0rbbdopo4hmkbl5916qys1&quot;, definition=&quot;static Agraph_t* realFillRanks (Agraph_t* g, int rnks[], int rnks_sz, Agraph_t* sg)&quot;)
 public static ST_Agraph_s realFillRanks(ST_Agraph_s g, int[] rnks, int rnks_sz, ST_Agraph_s sg) {
-<span class="nc" id="L1067">ENTERING(&quot;pv0rbbdopo4hmkbl5916qys1&quot;,&quot;realFillRanks&quot;);</span>
+<span class="nc" id="L1072">ENTERING(&quot;pv0rbbdopo4hmkbl5916qys1&quot;,&quot;realFillRanks&quot;);</span>
 try {
-<span class="nc" id="L1069"> UNSUPPORTED(&quot;2o2sf6xi2aumo5k0vglp4ik2y&quot;); // static Agraph_t*</span>
-<span class="nc" id="L1070">UNSUPPORTED(&quot;3pmsfb0uhqmy5u141c932dtn1&quot;); // realFillRanks (Agraph_t* g, int rnks[], int rnks_sz, Agraph_t* sg)</span>
-<span class="nc" id="L1071">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
-<span class="nc" id="L1072">UNSUPPORTED(&quot;apiu3v3f9zs9yrq8e25nd2rti&quot;); //     int i, c;</span>
-<span class="nc" id="L1073">UNSUPPORTED(&quot;6yramhpyls8c6kexupyqip8oq&quot;); //     Agedge_t* e;</span>
-<span class="nc" id="L1074">UNSUPPORTED(&quot;ci2zh69w6nhi0q816i1ixuy9k&quot;); //     Agnode_t* n;</span>
-<span class="nc" id="L1075">UNSUPPORTED(&quot;7z5fb6iyowsosn1hiz7opeoc6&quot;); //     for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
-<span class="nc" id="L1076">UNSUPPORTED(&quot;wqxqmv4he79njsw6r7sludv&quot;); // 	sg = realFillRanks (GD_clust(g)[c], rnks, rnks_sz, sg);</span>
-<span class="nc" id="L1077">UNSUPPORTED(&quot;8htor72y55gsejjdeh0e8gdrs&quot;); //     if (dot_root(g) == g)</span>
-<span class="nc" id="L1078">UNSUPPORTED(&quot;bjae04ek2s3o50399zti5a1jh&quot;); // 	return sg;</span>
-<span class="nc" id="L1079">UNSUPPORTED(&quot;bqfhaopbxlwv8h4zfae1lhx6s&quot;); //     memset (rnks, 0, sizeof(int)*rnks_sz);</span>
-<span class="nc" id="L1080">UNSUPPORTED(&quot;7wq24g054kmx3aw25vk5ksj4&quot;); //     for (n = agfstnode(g); n; n = agnxtnode(g,n)) {</span>
-<span class="nc" id="L1081">UNSUPPORTED(&quot;do7v5atqor4gnpwgo18ibgjha&quot;); // 	rnks[ND_rank(n)] = 1;</span>
-<span class="nc" id="L1082">UNSUPPORTED(&quot;9fo44dng5uojukw2kj0z8vvdu&quot;); // 	for (e = agfstout(g,n); e; e = agnxtout(g,e)) {</span>
-<span class="nc" id="L1083">UNSUPPORTED(&quot;emlgvc6yzuboae72y6vxpn8z7&quot;); // 	    for (i = ND_rank(n)+1; i &lt;= ND_rank(aghead(e)); i++) </span>
-<span class="nc" id="L1084">UNSUPPORTED(&quot;d3fd9x50ix980jjw3old2jrcr&quot;); // 		rnks[i] = 1;</span>
-<span class="nc" id="L1085">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
-<span class="nc" id="L1086">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
-<span class="nc" id="L1087">UNSUPPORTED(&quot;7gfo0rr0un3w2026kt6ipknty&quot;); //     for (i = GD_minrank(g); i &lt;= GD_maxrank(g); i++) {</span>
-<span class="nc" id="L1088">UNSUPPORTED(&quot;6mjvdb94lywg8d7ui6873f18p&quot;); // 	if (rnks[i] == 0) {</span>
-<span class="nc" id="L1089">UNSUPPORTED(&quot;8g0zxrf8w2zly4wln02j3lbnb&quot;); // 	    if (!sg) {</span>
-<span class="nc" id="L1090">UNSUPPORTED(&quot;eqx93butvb7swnxbz9j29winp&quot;); // 		sg = agsubg (dot_root(g), &quot;_new_rank&quot;, 1);</span>
-<span class="nc" id="L1091">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
-<span class="nc" id="L1092">UNSUPPORTED(&quot;9h7suegjozc071a939rh9apw1&quot;); // 	    n = agnode (sg, NULL, 1);</span>
-<span class="nc" id="L1093">UNSUPPORTED(&quot;8kclviftszfxkowsmlqq31u8&quot;); // 	    agbindrec(n, &quot;Agnodeinfo_t&quot;, sizeof(Agnodeinfo_t), NOT(0));</span>
-<span class="nc" id="L1094">UNSUPPORTED(&quot;8wiry1vcdwy6bzdp98nmxss7c&quot;); // 	    ND_rank(n) = i;</span>
-<span class="nc" id="L1095">UNSUPPORTED(&quot;dy16sxtk3jj6127wavfcdx4yw&quot;); // 	    ND_lw(n) = ND_rw(n) = 0.5;</span>
-<span class="nc" id="L1096">UNSUPPORTED(&quot;6jr3li9af4sp0uxnpnoe8dqh8&quot;); // 	    ND_ht(n) = 1;</span>
-<span class="nc" id="L1097">UNSUPPORTED(&quot;c47fetnb62mx46qzuk9ag3qmu&quot;); // 	    ND_UF_size(n) = 1;</span>
-<span class="nc" id="L1098">UNSUPPORTED(&quot;899cyghezv8oxs0iomu58zncj&quot;); // 	    alloc_elist(4, ND_in(n));</span>
-<span class="nc" id="L1099">UNSUPPORTED(&quot;btfqtg58rqwdh7o4cc0gbaaai&quot;); // 	    alloc_elist(4, ND_out(n));</span>
-<span class="nc" id="L1100">UNSUPPORTED(&quot;9zap4z819hsiogrgmekh15f00&quot;); // 	    agsubnode (g, n, 1);</span>
-<span class="nc" id="L1101">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
-<span class="nc" id="L1102">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
-<span class="nc" id="L1103">UNSUPPORTED(&quot;1jw141gg4omv8r72xcbl5ln0o&quot;); //     return sg;</span>
-<span class="nc" id="L1104">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+<span class="nc" id="L1074"> UNSUPPORTED(&quot;2o2sf6xi2aumo5k0vglp4ik2y&quot;); // static Agraph_t*</span>
+<span class="nc" id="L1075">UNSUPPORTED(&quot;3pmsfb0uhqmy5u141c932dtn1&quot;); // realFillRanks (Agraph_t* g, int rnks[], int rnks_sz, Agraph_t* sg)</span>
+<span class="nc" id="L1076">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L1077">UNSUPPORTED(&quot;apiu3v3f9zs9yrq8e25nd2rti&quot;); //     int i, c;</span>
+<span class="nc" id="L1078">UNSUPPORTED(&quot;6yramhpyls8c6kexupyqip8oq&quot;); //     Agedge_t* e;</span>
+<span class="nc" id="L1079">UNSUPPORTED(&quot;ci2zh69w6nhi0q816i1ixuy9k&quot;); //     Agnode_t* n;</span>
+<span class="nc" id="L1080">UNSUPPORTED(&quot;7z5fb6iyowsosn1hiz7opeoc6&quot;); //     for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
+<span class="nc" id="L1081">UNSUPPORTED(&quot;wqxqmv4he79njsw6r7sludv&quot;); // 	sg = realFillRanks (GD_clust(g)[c], rnks, rnks_sz, sg);</span>
+<span class="nc" id="L1082">UNSUPPORTED(&quot;8htor72y55gsejjdeh0e8gdrs&quot;); //     if (dot_root(g) == g)</span>
+<span class="nc" id="L1083">UNSUPPORTED(&quot;bjae04ek2s3o50399zti5a1jh&quot;); // 	return sg;</span>
+<span class="nc" id="L1084">UNSUPPORTED(&quot;bqfhaopbxlwv8h4zfae1lhx6s&quot;); //     memset (rnks, 0, sizeof(int)*rnks_sz);</span>
+<span class="nc" id="L1085">UNSUPPORTED(&quot;7wq24g054kmx3aw25vk5ksj4&quot;); //     for (n = agfstnode(g); n; n = agnxtnode(g,n)) {</span>
+<span class="nc" id="L1086">UNSUPPORTED(&quot;do7v5atqor4gnpwgo18ibgjha&quot;); // 	rnks[ND_rank(n)] = 1;</span>
+<span class="nc" id="L1087">UNSUPPORTED(&quot;9fo44dng5uojukw2kj0z8vvdu&quot;); // 	for (e = agfstout(g,n); e; e = agnxtout(g,e)) {</span>
+<span class="nc" id="L1088">UNSUPPORTED(&quot;emlgvc6yzuboae72y6vxpn8z7&quot;); // 	    for (i = ND_rank(n)+1; i &lt;= ND_rank(aghead(e)); i++) </span>
+<span class="nc" id="L1089">UNSUPPORTED(&quot;d3fd9x50ix980jjw3old2jrcr&quot;); // 		rnks[i] = 1;</span>
+<span class="nc" id="L1090">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L1091">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1092">UNSUPPORTED(&quot;7gfo0rr0un3w2026kt6ipknty&quot;); //     for (i = GD_minrank(g); i &lt;= GD_maxrank(g); i++) {</span>
+<span class="nc" id="L1093">UNSUPPORTED(&quot;6mjvdb94lywg8d7ui6873f18p&quot;); // 	if (rnks[i] == 0) {</span>
+<span class="nc" id="L1094">UNSUPPORTED(&quot;8g0zxrf8w2zly4wln02j3lbnb&quot;); // 	    if (!sg) {</span>
+<span class="nc" id="L1095">UNSUPPORTED(&quot;eqx93butvb7swnxbz9j29winp&quot;); // 		sg = agsubg (dot_root(g), &quot;_new_rank&quot;, 1);</span>
+<span class="nc" id="L1096">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L1097">UNSUPPORTED(&quot;9h7suegjozc071a939rh9apw1&quot;); // 	    n = agnode (sg, NULL, 1);</span>
+<span class="nc" id="L1098">UNSUPPORTED(&quot;8kclviftszfxkowsmlqq31u8&quot;); // 	    agbindrec(n, &quot;Agnodeinfo_t&quot;, sizeof(Agnodeinfo_t), NOT(0));</span>
+<span class="nc" id="L1099">UNSUPPORTED(&quot;8wiry1vcdwy6bzdp98nmxss7c&quot;); // 	    ND_rank(n) = i;</span>
+<span class="nc" id="L1100">UNSUPPORTED(&quot;dy16sxtk3jj6127wavfcdx4yw&quot;); // 	    ND_lw(n) = ND_rw(n) = 0.5;</span>
+<span class="nc" id="L1101">UNSUPPORTED(&quot;6jr3li9af4sp0uxnpnoe8dqh8&quot;); // 	    ND_ht(n) = 1;</span>
+<span class="nc" id="L1102">UNSUPPORTED(&quot;c47fetnb62mx46qzuk9ag3qmu&quot;); // 	    ND_UF_size(n) = 1;</span>
+<span class="nc" id="L1103">UNSUPPORTED(&quot;899cyghezv8oxs0iomu58zncj&quot;); // 	    alloc_elist(4, ND_in(n));</span>
+<span class="nc" id="L1104">UNSUPPORTED(&quot;btfqtg58rqwdh7o4cc0gbaaai&quot;); // 	    alloc_elist(4, ND_out(n));</span>
+<span class="nc" id="L1105">UNSUPPORTED(&quot;9zap4z819hsiogrgmekh15f00&quot;); // 	    agsubnode (g, n, 1);</span>
+<span class="nc" id="L1106">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L1107">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L1108">UNSUPPORTED(&quot;1jw141gg4omv8r72xcbl5ln0o&quot;); //     return sg;</span>
+<span class="nc" id="L1109">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
 
-<span class="nc" id="L1106">throw new UnsupportedOperationException();</span>
+<span class="nc" id="L1111">throw new UnsupportedOperationException();</span>
 } finally {
-<span class="nc" id="L1108">LEAVING(&quot;pv0rbbdopo4hmkbl5916qys1&quot;,&quot;realFillRanks&quot;);</span>
+<span class="nc" id="L1113">LEAVING(&quot;pv0rbbdopo4hmkbl5916qys1&quot;,&quot;realFillRanks&quot;);</span>
 }
 }
 
@@ -1117,17 +1122,17 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;fillRanks&quot;, key=&quot;1qy9bupreg1pax62owznr98k&quot;, definition=&quot;static void fillRanks (Agraph_t* g)&quot;)
 public static void fillRanks(ST_Agraph_s g) {
-<span class="nc" id="L1120">ENTERING(&quot;1qy9bupreg1pax62owznr98k&quot;,&quot;fillRanks&quot;);</span>
+<span class="nc" id="L1125">ENTERING(&quot;1qy9bupreg1pax62owznr98k&quot;,&quot;fillRanks&quot;);</span>
 try {
     ST_Agraph_s sg;
-<span class="nc" id="L1123">    int rnks_sz = GD_maxrank(g) + 2;</span>
-<span class="nc" id="L1124">    int[] rnks = new int[rnks_sz];</span>
-<span class="nc" id="L1125">    sg = realFillRanks (g, rnks, rnks_sz, null);</span>
-<span class="nc" id="L1126">    Memory.free (rnks);</span>
+<span class="nc" id="L1128">    int rnks_sz = GD_maxrank(g) + 2;</span>
+<span class="nc" id="L1129">    int[] rnks = new int[rnks_sz];</span>
+<span class="nc" id="L1130">    sg = realFillRanks (g, rnks, rnks_sz, null);</span>
+<span class="nc" id="L1131">    Memory.free (rnks);</span>
 } finally {
-<span class="nc" id="L1128">LEAVING(&quot;1qy9bupreg1pax62owznr98k&quot;,&quot;fillRanks&quot;);</span>
+<span class="nc" id="L1133">LEAVING(&quot;1qy9bupreg1pax62owznr98k&quot;,&quot;fillRanks&quot;);</span>
 }
-<span class="nc" id="L1130">}</span>
+<span class="nc" id="L1135">}</span>
 
 
 
@@ -1136,33 +1141,33 @@ try {
 @Difficult
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;init_mincross&quot;, key=&quot;7fy4chyk12o7bgp1rv3h27yl3&quot;, definition=&quot;static void init_mincross(graph_t * g)&quot;)
 public static void init_mincross(Globals zz, ST_Agraph_s g) {
-<span class="fc" id="L1139">ENTERING(&quot;7fy4chyk12o7bgp1rv3h27yl3&quot;,&quot;init_mincross&quot;);</span>
+<span class="fc" id="L1144">ENTERING(&quot;7fy4chyk12o7bgp1rv3h27yl3&quot;,&quot;init_mincross&quot;);</span>
 try {
     int size;
     //if (Verbose)
 	//start_timer();
     
-<span class="fc" id="L1145">    zz.ReMincross = false;</span>
-<span class="fc" id="L1146">    zz.Root = g;</span>
+<span class="fc" id="L1150">    zz.ReMincross = false;</span>
+<span class="fc" id="L1151">    zz.Root = g;</span>
     /* alloc +1 for the null terminator usage in do_ordering() */
     /* also, the +1 avoids attempts to alloc 0 sizes, something
        that efence complains about */
-<span class="fc" id="L1150">    size = agnedges(zz, dot_root(g)) + 1;</span>
-<span class="fc" id="L1151">    zz.TE_list = CArrayOfStar.&lt;ST_Agedge_s&gt;ALLOC(size, ZType.ST_Agedge_s);</span>
-<span class="fc" id="L1152">    zz.TI_list = new int[size];</span>
-<span class="fc" id="L1153">    mincross_options(zz, g);</span>
-<span class="pc bpc" id="L1154" title="1 of 2 branches missed.">    if ((GD_flags(g) &amp; NEW_RANK)!=0)</span>
-<span class="nc" id="L1155">	fillRanks (g);</span>
-<span class="fc" id="L1156">    class2(zz, g);</span>
-<span class="fc" id="L1157">    decompose(zz, g, 1);</span>
-<span class="fc" id="L1158">    allocate_ranks(zz, g);</span>
-<span class="fc" id="L1159">    ordered_edges(zz, g);</span>
-<span class="fc" id="L1160">    zz.GlobalMinRank = GD_minrank(g);</span>
-<span class="fc" id="L1161">    zz.GlobalMaxRank = GD_maxrank(g);</span>
+<span class="fc" id="L1155">    size = agnedges(zz, dot_root(g)) + 1;</span>
+<span class="fc" id="L1156">    zz.TE_list = CArrayOfStar.&lt;ST_Agedge_s&gt;ALLOC(size, ZType.ST_Agedge_s);</span>
+<span class="fc" id="L1157">    zz.TI_list = new int[size];</span>
+<span class="fc" id="L1158">    mincross_options(zz, g);</span>
+<span class="pc bpc" id="L1159" title="1 of 2 branches missed.">    if ((GD_flags(g) &amp; NEW_RANK)!=0)</span>
+<span class="nc" id="L1160">	fillRanks (g);</span>
+<span class="fc" id="L1161">    class2(zz, g);</span>
+<span class="fc" id="L1162">    decompose(zz, g, 1);</span>
+<span class="fc" id="L1163">    allocate_ranks(zz, g);</span>
+<span class="fc" id="L1164">    ordered_edges(zz, g);</span>
+<span class="fc" id="L1165">    zz.GlobalMinRank = GD_minrank(g);</span>
+<span class="fc" id="L1166">    zz.GlobalMaxRank = GD_maxrank(g);</span>
 } finally {
-<span class="fc" id="L1163">LEAVING(&quot;7fy4chyk12o7bgp1rv3h27yl3&quot;,&quot;init_mincross&quot;);</span>
+<span class="fc" id="L1168">LEAVING(&quot;7fy4chyk12o7bgp1rv3h27yl3&quot;,&quot;init_mincross&quot;);</span>
 }
-<span class="fc" id="L1165">}</span>
+<span class="fc" id="L1170">}</span>
 
 
 
@@ -1172,37 +1177,37 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;flat_rev&quot;, key=&quot;6fprrp93vmz0jn3l4ro0iropp&quot;, definition=&quot;void flat_rev(Agraph_t * g, Agedge_t * e)&quot;)
 public static void flat_rev(ST_Agraph_s g, ST_Agedge_s e) {
-<span class="nc" id="L1175">ENTERING(&quot;6fprrp93vmz0jn3l4ro0iropp&quot;,&quot;flat_rev&quot;);</span>
+<span class="nc" id="L1180">ENTERING(&quot;6fprrp93vmz0jn3l4ro0iropp&quot;,&quot;flat_rev&quot;);</span>
 try {
     int j;
     ST_Agedge_s rev;
-<span class="nc bnc" id="L1179" title="All 2 branches missed.">    if (((ND_flat_out(aghead(e)).list))==null)</span>
-<span class="nc" id="L1180">	rev = null;</span>
+<span class="nc bnc" id="L1184" title="All 2 branches missed.">    if (((ND_flat_out(aghead(e)).list))==null)</span>
+<span class="nc" id="L1185">	rev = null;</span>
     else
-<span class="nc bnc" id="L1182" title="All 2 branches missed.">	for (j = 0; (rev = (ST_Agedge_s) ND_flat_out(aghead(e)).list.get_(j))!=null; j++)</span>
-<span class="nc bnc" id="L1183" title="All 2 branches missed.">	    if (aghead(rev) == agtail(e))</span>
-<span class="nc" id="L1184">		break;</span>
-<span class="nc bnc" id="L1185" title="All 2 branches missed.">    if (rev!=null) {</span>
-<span class="nc" id="L1186">	merge_oneway(e, rev);</span>
-<span class="nc bnc" id="L1187" title="All 2 branches missed.">	if (ED_to_virt(e) == null)</span>
-<span class="nc" id="L1188">	    ED_to_virt(e, rev);</span>
-<span class="nc bnc" id="L1189" title="All 2 branches missed.">	if ((ED_edge_type(rev) == 4)</span>
-<span class="nc bnc" id="L1190" title="All 2 branches missed.">	    &amp;&amp; (ED_to_orig(rev) == null))</span>
-<span class="nc" id="L1191">	    ED_to_orig(rev, e);</span>
-<span class="nc" id="L1192">	elist_append(e, ND_other(agtail(e)));</span>
+<span class="nc bnc" id="L1187" title="All 2 branches missed.">	for (j = 0; (rev = (ST_Agedge_s) ND_flat_out(aghead(e)).list.get_(j))!=null; j++)</span>
+<span class="nc bnc" id="L1188" title="All 2 branches missed.">	    if (aghead(rev) == agtail(e))</span>
+<span class="nc" id="L1189">		break;</span>
+<span class="nc bnc" id="L1190" title="All 2 branches missed.">    if (rev!=null) {</span>
+<span class="nc" id="L1191">	merge_oneway(e, rev);</span>
+<span class="nc bnc" id="L1192" title="All 2 branches missed.">	if (ED_to_virt(e) == null)</span>
+<span class="nc" id="L1193">	    ED_to_virt(e, rev);</span>
+<span class="nc bnc" id="L1194" title="All 2 branches missed.">	if ((ED_edge_type(rev) == 4)</span>
+<span class="nc bnc" id="L1195" title="All 2 branches missed.">	    &amp;&amp; (ED_to_orig(rev) == null))</span>
+<span class="nc" id="L1196">	    ED_to_orig(rev, e);</span>
+<span class="nc" id="L1197">	elist_append(e, ND_other(agtail(e)));</span>
     } else {
-<span class="nc" id="L1194">	rev = new_virtual_edge(aghead(e), agtail(e), e);</span>
-<span class="nc bnc" id="L1195" title="All 2 branches missed.">	if (ED_edge_type(e) == 4)</span>
-<span class="nc" id="L1196">	    ED_edge_type(rev, 4);</span>
+<span class="nc" id="L1199">	rev = new_virtual_edge(aghead(e), agtail(e), e);</span>
+<span class="nc bnc" id="L1200" title="All 2 branches missed.">	if (ED_edge_type(e) == 4)</span>
+<span class="nc" id="L1201">	    ED_edge_type(rev, 4);</span>
 	else
-<span class="nc" id="L1198">	    ED_edge_type(rev, 3);</span>
-<span class="nc" id="L1199">	ED_label(rev, ED_label(e));</span>
-<span class="nc" id="L1200">	flat_edge(g, rev);</span>
+<span class="nc" id="L1203">	    ED_edge_type(rev, 3);</span>
+<span class="nc" id="L1204">	ED_label(rev, ED_label(e));</span>
+<span class="nc" id="L1205">	flat_edge(g, rev);</span>
     }
 } finally {
-<span class="nc" id="L1203">LEAVING(&quot;6fprrp93vmz0jn3l4ro0iropp&quot;,&quot;flat_rev&quot;);</span>
+<span class="nc" id="L1208">LEAVING(&quot;6fprrp93vmz0jn3l4ro0iropp&quot;,&quot;flat_rev&quot;);</span>
 }
-<span class="nc" id="L1205">}</span>
+<span class="nc" id="L1210">}</span>
 
 
 
@@ -1211,45 +1216,45 @@ try {
 @Difficult
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;flat_search&quot;, key=&quot;63ol0ch6cgln1nvl5oiz6n1v0&quot;, definition=&quot;static void flat_search(graph_t * g, node_t * v)&quot;)
 public static void flat_search(Globals zz, ST_Agraph_s g, ST_Agnode_s v) {
-<span class="fc" id="L1214">ENTERING(&quot;63ol0ch6cgln1nvl5oiz6n1v0&quot;,&quot;flat_search&quot;);</span>
+<span class="fc" id="L1219">ENTERING(&quot;63ol0ch6cgln1nvl5oiz6n1v0&quot;,&quot;flat_search&quot;);</span>
 try {
     int i;
     boolean hascl;
     ST_Agedge_s e;
-<span class="fc" id="L1219">    ST_adjmatrix_t M = GD_rank(g).get__(ND_rank(v)).flat;</span>
+<span class="fc" id="L1224">    ST_adjmatrix_t M = GD_rank(g).get__(ND_rank(v)).flat;</span>
     
-<span class="fc" id="L1221">    ND_mark(v, true);</span>
-<span class="fc" id="L1222">    ND_onstack(v, true);</span>
-<span class="fc bfc" id="L1223" title="All 2 branches covered.">    hascl = (GD_n_cluster(dot_root(g)) &gt; 0);</span>
-<span class="pc bpc" id="L1224" title="1 of 2 branches missed.">    if (ND_flat_out(v).list!=null)</span>
-<span class="fc bfc" id="L1225" title="All 2 branches covered.">	for (i = 0; (e = (ST_Agedge_s) ND_flat_out(v).list.get_(i))!=null; i++) {</span>
-<span class="fc bfc" id="L1226" title="All 2 branches covered.">	    if (hascl</span>
-<span class="pc bpc" id="L1227" title="1 of 4 branches missed.">		&amp;&amp; !(agcontains(zz, g, agtail(e)) &amp;&amp; agcontains(zz, g, aghead(e))))</span>
-<span class="fc" id="L1228">		continue;</span>
-<span class="pc bpc" id="L1229" title="1 of 2 branches missed.">	    if (ED_weight(e) == 0)</span>
-<span class="nc" id="L1230">		continue;</span>
-<span class="pc bpc" id="L1231" title="1 of 2 branches missed.">	    if (ND_onstack(aghead(e)) == true) {</span>
-<span class="nc bnc" id="L1232" title="All 2 branches missed.">		assert(ND_low(aghead(e)) &lt; M.nrows);</span>
-<span class="nc bnc" id="L1233" title="All 2 branches missed.">		assert(ND_low(agtail(e)) &lt; M.ncols);</span>
-<span class="nc" id="L1234">		M.data[ND_low(aghead(e))][ND_low(agtail(e))]=1;</span>
-<span class="nc" id="L1235">		delete_flat_edge(e);</span>
-<span class="nc" id="L1236">		i--;</span>
-<span class="nc bnc" id="L1237" title="All 2 branches missed.">		if (ED_edge_type(e) == FLATORDER)</span>
-<span class="nc" id="L1238">		    continue;</span>
-<span class="nc" id="L1239">		flat_rev(g, e);</span>
+<span class="fc" id="L1226">    ND_mark(v, true);</span>
+<span class="fc" id="L1227">    ND_onstack(v, true);</span>
+<span class="fc bfc" id="L1228" title="All 2 branches covered.">    hascl = (GD_n_cluster(dot_root(g)) &gt; 0);</span>
+<span class="pc bpc" id="L1229" title="1 of 2 branches missed.">    if (ND_flat_out(v).list!=null)</span>
+<span class="fc bfc" id="L1230" title="All 2 branches covered.">	for (i = 0; (e = (ST_Agedge_s) ND_flat_out(v).list.get_(i))!=null; i++) {</span>
+<span class="fc bfc" id="L1231" title="All 2 branches covered.">	    if (hascl</span>
+<span class="pc bpc" id="L1232" title="1 of 4 branches missed.">		&amp;&amp; !(agcontains(zz, g, agtail(e)) &amp;&amp; agcontains(zz, g, aghead(e))))</span>
+<span class="fc" id="L1233">		continue;</span>
+<span class="pc bpc" id="L1234" title="1 of 2 branches missed.">	    if (ED_weight(e) == 0)</span>
+<span class="nc" id="L1235">		continue;</span>
+<span class="pc bpc" id="L1236" title="1 of 2 branches missed.">	    if (ND_onstack(aghead(e)) == true) {</span>
+<span class="nc bnc" id="L1237" title="All 2 branches missed.">		assert(ND_low(aghead(e)) &lt; M.nrows);</span>
+<span class="nc bnc" id="L1238" title="All 2 branches missed.">		assert(ND_low(agtail(e)) &lt; M.ncols);</span>
+<span class="nc" id="L1239">		M.data[ND_low(aghead(e))][ND_low(agtail(e))]=1;</span>
+<span class="nc" id="L1240">		delete_flat_edge(e);</span>
+<span class="nc" id="L1241">		i--;</span>
+<span class="nc bnc" id="L1242" title="All 2 branches missed.">		if (ED_edge_type(e) == FLATORDER)</span>
+<span class="nc" id="L1243">		    continue;</span>
+<span class="nc" id="L1244">		flat_rev(g, e);</span>
 	    } else {
-<span class="pc bpc" id="L1241" title="1 of 2 branches missed.">		assert(ND_low(aghead(e)) &lt; M.nrows);</span>
-<span class="pc bpc" id="L1242" title="1 of 2 branches missed.">		assert(ND_low(agtail(e)) &lt; M.ncols);</span>
-<span class="fc" id="L1243">		M.data[ND_low(agtail(e))][ND_low(aghead(e))]=1;</span>
-<span class="fc bfc" id="L1244" title="All 2 branches covered.">		if (ND_mark(aghead(e)) == 0)</span>
-<span class="fc" id="L1245">		    flat_search(zz, g, aghead(e));</span>
+<span class="pc bpc" id="L1246" title="1 of 2 branches missed.">		assert(ND_low(aghead(e)) &lt; M.nrows);</span>
+<span class="pc bpc" id="L1247" title="1 of 2 branches missed.">		assert(ND_low(agtail(e)) &lt; M.ncols);</span>
+<span class="fc" id="L1248">		M.data[ND_low(agtail(e))][ND_low(aghead(e))]=1;</span>
+<span class="fc bfc" id="L1249" title="All 2 branches covered.">		if (ND_mark(aghead(e)) == 0)</span>
+<span class="fc" id="L1250">		    flat_search(zz, g, aghead(e));</span>
 	    }
 	}
-<span class="fc" id="L1248">    ND_onstack(v, 0);</span>
+<span class="fc" id="L1253">    ND_onstack(v, 0);</span>
 } finally {
-<span class="fc" id="L1250">LEAVING(&quot;63ol0ch6cgln1nvl5oiz6n1v0&quot;,&quot;flat_search&quot;);</span>
+<span class="fc" id="L1255">LEAVING(&quot;63ol0ch6cgln1nvl5oiz6n1v0&quot;,&quot;flat_search&quot;);</span>
 }
-<span class="fc" id="L1252">}</span>
+<span class="fc" id="L1257">}</span>
 
 
 
@@ -1258,35 +1263,35 @@ try {
 @Difficult
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;flat_breakcycles&quot;, key=&quot;3v5h7z4vqivibvpt913lg8at0&quot;, definition=&quot;static void flat_breakcycles(graph_t * g)&quot;)
 public static void flat_breakcycles(Globals zz, ST_Agraph_s g) {
-<span class="fc" id="L1261">ENTERING(&quot;3v5h7z4vqivibvpt913lg8at0&quot;,&quot;flat_breakcycles&quot;);</span>
+<span class="fc" id="L1266">ENTERING(&quot;3v5h7z4vqivibvpt913lg8at0&quot;,&quot;flat_breakcycles&quot;);</span>
 try {
     int i, r, flat;
     ST_Agnode_s v;
     
-<span class="fc bfc" id="L1266" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
-<span class="fc" id="L1267">	flat = 0;</span>
-<span class="fc bfc" id="L1268" title="All 2 branches covered.">	for (i = 0; i &lt; GD_rank(g).get__(r).n; i++) {</span>
-<span class="fc" id="L1269">	    v = GD_rank(g).get__(r).v.get_(i);</span>
-<span class="fc" id="L1270">	    ND_mark(v, 0); ND_onstack(v, 0);</span>
-<span class="fc" id="L1271">	    flatindex(v, i);</span>
-<span class="fc bfc" id="L1272" title="All 4 branches covered.">	    if ((ND_flat_out(v).size &gt; 0) &amp;&amp; (flat == 0)) {</span>
-<span class="fc" id="L1273">		GD_rank(g).get__(r).flat =</span>
-<span class="fc" id="L1274">		    new_matrix(GD_rank(g).get__(r).n, GD_rank(g).get__(r).n);</span>
-<span class="fc" id="L1275">		flat = 1;</span>
+<span class="fc bfc" id="L1271" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
+<span class="fc" id="L1272">	flat = 0;</span>
+<span class="fc bfc" id="L1273" title="All 2 branches covered.">	for (i = 0; i &lt; GD_rank(g).get__(r).n; i++) {</span>
+<span class="fc" id="L1274">	    v = GD_rank(g).get__(r).v.get_(i);</span>
+<span class="fc" id="L1275">	    ND_mark(v, 0); ND_onstack(v, 0);</span>
+<span class="fc" id="L1276">	    flatindex(v, i);</span>
+<span class="fc bfc" id="L1277" title="All 4 branches covered.">	    if ((ND_flat_out(v).size &gt; 0) &amp;&amp; (flat == 0)) {</span>
+<span class="fc" id="L1278">		GD_rank(g).get__(r).flat =</span>
+<span class="fc" id="L1279">		    new_matrix(GD_rank(g).get__(r).n, GD_rank(g).get__(r).n);</span>
+<span class="fc" id="L1280">		flat = 1;</span>
 	    }
 	}
-<span class="fc bfc" id="L1278" title="All 2 branches covered.">	if (flat!=0) {</span>
-<span class="fc bfc" id="L1279" title="All 2 branches covered.">	    for (i = 0; i &lt; GD_rank(g).get__(r).n; i++) {</span>
-<span class="fc" id="L1280">		v = GD_rank(g).get__(r).v.get_(i);</span>
-<span class="fc bfc" id="L1281" title="All 2 branches covered.">		if (ND_mark(v) == 0)</span>
-<span class="fc" id="L1282">		    flat_search(zz, g, v);</span>
+<span class="fc bfc" id="L1283" title="All 2 branches covered.">	if (flat!=0) {</span>
+<span class="fc bfc" id="L1284" title="All 2 branches covered.">	    for (i = 0; i &lt; GD_rank(g).get__(r).n; i++) {</span>
+<span class="fc" id="L1285">		v = GD_rank(g).get__(r).v.get_(i);</span>
+<span class="fc bfc" id="L1286" title="All 2 branches covered.">		if (ND_mark(v) == 0)</span>
+<span class="fc" id="L1287">		    flat_search(zz, g, v);</span>
 	    }
 	}
     }
 } finally {
-<span class="fc" id="L1287">LEAVING(&quot;3v5h7z4vqivibvpt913lg8at0&quot;,&quot;flat_breakcycles&quot;);</span>
+<span class="fc" id="L1292">LEAVING(&quot;3v5h7z4vqivibvpt913lg8at0&quot;,&quot;flat_breakcycles&quot;);</span>
 }
-<span class="fc" id="L1289">}</span>
+<span class="fc" id="L1294">}</span>
 
 
 
@@ -1298,42 +1303,42 @@ try {
 @Reviewed(when = &quot;15/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;allocate_ranks&quot;, key=&quot;d5vb6jiw8mhkaa8gjwn4eqfyn&quot;, definition=&quot;void allocate_ranks(graph_t * g)&quot;)
 public static void allocate_ranks(Globals zz, ST_Agraph_s g) {
-<span class="fc" id="L1301">ENTERING(&quot;d5vb6jiw8mhkaa8gjwn4eqfyn&quot;,&quot;allocate_ranks&quot;);</span>
+<span class="fc" id="L1306">ENTERING(&quot;d5vb6jiw8mhkaa8gjwn4eqfyn&quot;,&quot;allocate_ranks&quot;);</span>
 try {
     int r, low, high;
     int cn[];
     ST_Agnode_s n;
     ST_Agedge_s e;
     
-<span class="fc" id="L1308">	cn = new int[GD_maxrank(g) + 2];</span>
+<span class="fc" id="L1313">	cn = new int[GD_maxrank(g) + 2];</span>
 	/* must be 0 based, not GD_minrank */
-<span class="fc bfc" id="L1310" title="All 2 branches covered.">    for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n)) {</span>
-<span class="fc" id="L1311">   	cn[ND_rank(n)]++;</span>
-<span class="fc bfc" id="L1312" title="All 2 branches covered.">	for (e = agfstout(zz, g, n); e!=null; e = agnxtout(zz, g, e)) {</span>
-<span class="fc" id="L1313">	    low = ND_rank(agtail(e));</span>
-<span class="fc" id="L1314">	    high = ND_rank(aghead(e));</span>
-<span class="pc bpc" id="L1315" title="1 of 2 branches missed.">	    if (low &gt; high) {</span>
-<span class="nc" id="L1316">		int t = low;</span>
-<span class="nc" id="L1317">		low = high;</span>
-<span class="nc" id="L1318">		high = t;</span>
+<span class="fc bfc" id="L1315" title="All 2 branches covered.">    for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n)) {</span>
+<span class="fc" id="L1316">   	cn[ND_rank(n)]++;</span>
+<span class="fc bfc" id="L1317" title="All 2 branches covered.">	for (e = agfstout(zz, g, n); e!=null; e = agnxtout(zz, g, e)) {</span>
+<span class="fc" id="L1318">	    low = ND_rank(agtail(e));</span>
+<span class="fc" id="L1319">	    high = ND_rank(aghead(e));</span>
+<span class="pc bpc" id="L1320" title="1 of 2 branches missed.">	    if (low &gt; high) {</span>
+<span class="nc" id="L1321">		int t = low;</span>
+<span class="nc" id="L1322">		low = high;</span>
+<span class="nc" id="L1323">		high = t;</span>
 	    }
-<span class="fc bfc" id="L1320" title="All 2 branches covered.">	    for (r = low + 1; r &lt; high; r++)</span>
-<span class="fc" id="L1321">			cn[r]++;</span>
+<span class="fc bfc" id="L1325" title="All 2 branches covered.">	    for (r = low + 1; r &lt; high; r++)</span>
+<span class="fc" id="L1326">			cn[r]++;</span>
 	}
     }
-<span class="fc" id="L1324">    GD_rank(g, CArray.&lt;ST_rank_t&gt;ALLOC__(GD_maxrank(g) + 2, ZType.ST_rank_t));</span>
-<span class="fc bfc" id="L1325" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
-<span class="fc" id="L1326">	GD_rank(g).get__(r).n = cn[r];</span>
-<span class="fc" id="L1327">	GD_rank(g).get__(r).an = cn[r];</span>
-<span class="fc" id="L1328">	CArrayOfStar&lt;ST_Agnode_s&gt; tmp = CArrayOfStar.&lt;ST_Agnode_s&gt;ALLOC(cn[r] + 1, ZType.ST_Agnode_s);</span>
-<span class="fc" id="L1329">	GD_rank(g).get__(r).v = tmp;</span>
-<span class="fc" id="L1330">	GD_rank(g).get__(r).av = tmp;</span>
+<span class="fc" id="L1329">    GD_rank(g, CArray.&lt;ST_rank_t&gt;ALLOC__(GD_maxrank(g) + 2, ZType.ST_rank_t));</span>
+<span class="fc bfc" id="L1330" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
+<span class="fc" id="L1331">	GD_rank(g).get__(r).n = cn[r];</span>
+<span class="fc" id="L1332">	GD_rank(g).get__(r).an = cn[r];</span>
+<span class="fc" id="L1333">	CArrayOfStar&lt;ST_Agnode_s&gt; tmp = CArrayOfStar.&lt;ST_Agnode_s&gt;ALLOC(cn[r] + 1, ZType.ST_Agnode_s);</span>
+<span class="fc" id="L1334">	GD_rank(g).get__(r).v = tmp;</span>
+<span class="fc" id="L1335">	GD_rank(g).get__(r).av = tmp;</span>
     }
-<span class="fc" id="L1332">    Memory.free(cn);</span>
+<span class="fc" id="L1337">    Memory.free(cn);</span>
 } finally {
-<span class="fc" id="L1334">LEAVING(&quot;d5vb6jiw8mhkaa8gjwn4eqfyn&quot;,&quot;allocate_ranks&quot;);</span>
+<span class="fc" id="L1339">LEAVING(&quot;d5vb6jiw8mhkaa8gjwn4eqfyn&quot;,&quot;allocate_ranks&quot;);</span>
 }
-<span class="fc" id="L1336">}</span>
+<span class="fc" id="L1341">}</span>
 
 
 
@@ -1342,42 +1347,42 @@ try {
 @Reviewed(when = &quot;15/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;install_in_rank&quot;, key=&quot;3lxoqxhiri9fgt20zc5jz3aa5&quot;, definition=&quot;void install_in_rank(graph_t * g, node_t * n)&quot;)
 public static void install_in_rank(Globals zz, ST_Agraph_s g, ST_Agnode_s n) {
-<span class="fc" id="L1345">ENTERING(&quot;3lxoqxhiri9fgt20zc5jz3aa5&quot;,&quot;install_in_rank&quot;);</span>
+<span class="fc" id="L1350">ENTERING(&quot;3lxoqxhiri9fgt20zc5jz3aa5&quot;,&quot;install_in_rank&quot;);</span>
 try {
     int i, r;
     
-<span class="fc" id="L1349">    r = ND_rank(n);</span>
-<span class="fc" id="L1350">    i = GD_rank(g).get__(r).n;</span>
-<span class="pc bpc" id="L1351" title="1 of 2 branches missed.">    if (GD_rank(g).get__(r).an &lt;= 0) {</span>
-<span class="nc" id="L1352">	UNSUPPORTED(&quot;8qk1xhvvb994zhv9aq10k4v12&quot;); // 	agerr(AGERR, &quot;install_in_rank, line %d: %s %s rank %d i = %d an = 0\n&quot;,</span>
-<span class="nc" id="L1353">	UNSUPPORTED(&quot;53h8d82ax23hys2k21hjswp72&quot;); // 	      1034, agnameof(g), agnameof(n), r, i);</span>
-<span class="nc" id="L1354">	return;</span>
+<span class="fc" id="L1354">    r = ND_rank(n);</span>
+<span class="fc" id="L1355">    i = GD_rank(g).get__(r).n;</span>
+<span class="pc bpc" id="L1356" title="1 of 2 branches missed.">    if (GD_rank(g).get__(r).an &lt;= 0) {</span>
+<span class="nc" id="L1357">	UNSUPPORTED(&quot;8qk1xhvvb994zhv9aq10k4v12&quot;); // 	agerr(AGERR, &quot;install_in_rank, line %d: %s %s rank %d i = %d an = 0\n&quot;,</span>
+<span class="nc" id="L1358">	UNSUPPORTED(&quot;53h8d82ax23hys2k21hjswp72&quot;); // 	      1034, agnameof(g), agnameof(n), r, i);</span>
+<span class="nc" id="L1359">	return;</span>
     }
     
-<span class="fc" id="L1357">    GD_rank(g).get__(r).v.set_(i, n);</span>
-<span class="fc" id="L1358">    ND_order(n, i);</span>
-<span class="fc" id="L1359">    GD_rank(g).get__(r).n++;</span>
-<span class="pc bpc" id="L1360" title="1 of 2 branches missed.">    assert(GD_rank(g).get__(r).n &lt;= GD_rank(g).get__(r).an);</span>
-<span class="pc bpc" id="L1361" title="1 of 2 branches missed.">    if (ND_order(n) &gt; GD_rank(zz.Root).get__(r).an) {</span>
-<span class="nc" id="L1362">	UNSUPPORTED(&quot;399szcw1txekt1xssyw7s2x07&quot;); // 	agerr(AGERR, &quot;install_in_rank, line %d: ND_order(%s) [%d] &gt; GD_rank(Root)[%d].an [%d]\n&quot;,</span>
-<span class="nc" id="L1363">	UNSUPPORTED(&quot;9puojrmsk6vb1qc0jtr8ge4g8&quot;); // 	      1052, agnameof(n), ND_order(n), r, GD_rank(Root)[r].an);</span>
-<span class="nc" id="L1364">	return;</span>
-    }
-<span class="pc bpc" id="L1366" title="2 of 4 branches missed.">    if ((r &lt; GD_minrank(g)) || (r &gt; GD_maxrank(g))) {</span>
-<span class="nc" id="L1367">	UNSUPPORTED(&quot;7o1thnqda767wqpe2lh9mj03t&quot;); // 	agerr(AGERR, &quot;install_in_rank, line %d: rank %d not in rank range [%d,%d]\n&quot;,</span>
-<span class="nc" id="L1368">	UNSUPPORTED(&quot;d2ugluzf7bmj7osicgitgy3sr&quot;); // 	      1057, r, GD_minrank(g), GD_maxrank(g));</span>
+<span class="fc" id="L1362">    GD_rank(g).get__(r).v.set_(i, n);</span>
+<span class="fc" id="L1363">    ND_order(n, i);</span>
+<span class="fc" id="L1364">    GD_rank(g).get__(r).n++;</span>
+<span class="pc bpc" id="L1365" title="1 of 2 branches missed.">    assert(GD_rank(g).get__(r).n &lt;= GD_rank(g).get__(r).an);</span>
+<span class="pc bpc" id="L1366" title="1 of 2 branches missed.">    if (ND_order(n) &gt; GD_rank(zz.Root).get__(r).an) {</span>
+<span class="nc" id="L1367">	UNSUPPORTED(&quot;399szcw1txekt1xssyw7s2x07&quot;); // 	agerr(AGERR, &quot;install_in_rank, line %d: ND_order(%s) [%d] &gt; GD_rank(Root)[%d].an [%d]\n&quot;,</span>
+<span class="nc" id="L1368">	UNSUPPORTED(&quot;9puojrmsk6vb1qc0jtr8ge4g8&quot;); // 	      1052, agnameof(n), ND_order(n), r, GD_rank(Root)[r].an);</span>
 <span class="nc" id="L1369">	return;</span>
     }
-<span class="pc bpc" id="L1371" title="1 of 2 branches missed.">    if (GD_rank(g).get__(r).v.plus_(ND_order(n)).comparePointer_(</span>
-<span class="fc" id="L1372">	GD_rank(g).get__(r).av.plus_(GD_rank(zz.Root).get__(r).an))&gt;0) {</span>
-<span class="nc" id="L1373">	UNSUPPORTED(&quot;3eb32nc5czs5auwzz5p5mtl04&quot;); // 	agerr(AGERR, &quot;install_in_rank, line %d: GD_rank(g)[%d].v + ND_order(%s) [%d] &gt; GD_rank(g)[%d].av + GD_rank(Root)[%d].an [%d]\n&quot;,</span>
-<span class="nc" id="L1374">	UNSUPPORTED(&quot;3qe3qpw5h6vse39xs1ca9sjmo&quot;); // 	      1062, r, agnameof(n),GD_rank(g)[r].v + ND_order(n), r, r, GD_rank(g)[r].av+GD_rank(Root)[r].an);</span>
-<span class="nc" id="L1375">	return;</span>
+<span class="pc bpc" id="L1371" title="2 of 4 branches missed.">    if ((r &lt; GD_minrank(g)) || (r &gt; GD_maxrank(g))) {</span>
+<span class="nc" id="L1372">	UNSUPPORTED(&quot;7o1thnqda767wqpe2lh9mj03t&quot;); // 	agerr(AGERR, &quot;install_in_rank, line %d: rank %d not in rank range [%d,%d]\n&quot;,</span>
+<span class="nc" id="L1373">	UNSUPPORTED(&quot;d2ugluzf7bmj7osicgitgy3sr&quot;); // 	      1057, r, GD_minrank(g), GD_maxrank(g));</span>
+<span class="nc" id="L1374">	return;</span>
+    }
+<span class="pc bpc" id="L1376" title="1 of 2 branches missed.">    if (GD_rank(g).get__(r).v.plus_(ND_order(n)).comparePointer_(</span>
+<span class="fc" id="L1377">	GD_rank(g).get__(r).av.plus_(GD_rank(zz.Root).get__(r).an))&gt;0) {</span>
+<span class="nc" id="L1378">	UNSUPPORTED(&quot;3eb32nc5czs5auwzz5p5mtl04&quot;); // 	agerr(AGERR, &quot;install_in_rank, line %d: GD_rank(g)[%d].v + ND_order(%s) [%d] &gt; GD_rank(g)[%d].av + GD_rank(Root)[%d].an [%d]\n&quot;,</span>
+<span class="nc" id="L1379">	UNSUPPORTED(&quot;3qe3qpw5h6vse39xs1ca9sjmo&quot;); // 	      1062, r, agnameof(n),GD_rank(g)[r].v + ND_order(n), r, r, GD_rank(g)[r].av+GD_rank(Root)[r].an);</span>
+<span class="nc" id="L1380">	return;</span>
     }
 } finally {
-<span class="fc" id="L1378">LEAVING(&quot;3lxoqxhiri9fgt20zc5jz3aa5&quot;,&quot;install_in_rank&quot;);</span>
+<span class="fc" id="L1383">LEAVING(&quot;3lxoqxhiri9fgt20zc5jz3aa5&quot;,&quot;install_in_rank&quot;);</span>
 }
-<span class="fc" id="L1380">}</span>
+<span class="fc" id="L1385">}</span>
 
 
 
@@ -1390,59 +1395,59 @@ try {
 @Difficult
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;build_ranks&quot;, key=&quot;7t49bz6lfcbd9v63ds2x3518z&quot;, definition=&quot;void build_ranks(graph_t * g, int pass)&quot;)
 public static void build_ranks(Globals zz, ST_Agraph_s g, int pass) {
-<span class="fc" id="L1393">ENTERING(&quot;7t49bz6lfcbd9v63ds2x3518z&quot;,&quot;build_ranks&quot;);</span>
+<span class="fc" id="L1398">ENTERING(&quot;7t49bz6lfcbd9v63ds2x3518z&quot;,&quot;build_ranks&quot;);</span>
 try {
     int i, j;
-<span class="fc" id="L1396">    ST_Agnode_s n, n0 = null;</span>
+<span class="fc" id="L1401">    ST_Agnode_s n, n0 = null;</span>
     CArrayOfStar&lt;ST_Agedge_s&gt; otheredges;
     ST_nodequeue q;
     
-<span class="fc" id="L1400">    q = new_queue(GD_n_nodes(g));</span>
-<span class="fc bfc" id="L1401" title="All 2 branches covered.">    for (n = GD_nlist(g); n!=null; n = ND_next(n))</span>
-<span class="fc" id="L1402">	ND_mark(n, 0);</span>
+<span class="fc" id="L1405">    q = new_queue(GD_n_nodes(g));</span>
+<span class="fc bfc" id="L1406" title="All 2 branches covered.">    for (n = GD_nlist(g); n!=null; n = ND_next(n))</span>
+<span class="fc" id="L1407">	ND_mark(n, 0);</span>
     
-<span class="fc bfc" id="L1404" title="All 2 branches covered.">    for (i = GD_minrank(g); i &lt;= GD_maxrank(g); i++)</span>
-<span class="fc" id="L1405">	GD_rank(g).get__(i).n = 0;</span>
+<span class="fc bfc" id="L1409" title="All 2 branches covered.">    for (i = GD_minrank(g); i &lt;= GD_maxrank(g); i++)</span>
+<span class="fc" id="L1410">	GD_rank(g).get__(i).n = 0;</span>
     
-<span class="fc bfc" id="L1407" title="All 2 branches covered.">    for (n = GD_nlist(g); n!=null; n = ND_next(n)) {</span>
-<span class="fc bfc" id="L1408" title="All 2 branches covered.">	otheredges = ((pass == 0) ? ND_in(n).list : ND_out(n).list);</span>
-<span class="fc bfc" id="L1409" title="All 2 branches covered.">	if (otheredges.get_(0)!= null)</span>
-<span class="fc" id="L1410">	    continue;</span>
-<span class="pc bpc" id="L1411" title="1 of 2 branches missed.">	if (ND_mark(n) == 0) {</span>
-<span class="fc" id="L1412">	    ND_mark(n,  1);</span>
-<span class="fc" id="L1413">	    enqueue(q, n);</span>
-<span class="fc bfc" id="L1414" title="All 2 branches covered.">	    while ((n0 = dequeue(q))!=null) {</span>
-<span class="fc bfc" id="L1415" title="All 2 branches covered.">		if (ND_ranktype(n0) != CLUSTER) {</span>
-<span class="fc" id="L1416">		    install_in_rank(zz, g, n0);</span>
-<span class="fc" id="L1417">		    enqueue_neighbors(q, n0, pass);</span>
+<span class="fc bfc" id="L1412" title="All 2 branches covered.">    for (n = GD_nlist(g); n!=null; n = ND_next(n)) {</span>
+<span class="fc bfc" id="L1413" title="All 2 branches covered.">	otheredges = ((pass == 0) ? ND_in(n).list : ND_out(n).list);</span>
+<span class="fc bfc" id="L1414" title="All 2 branches covered.">	if (otheredges.get_(0)!= null)</span>
+<span class="fc" id="L1415">	    continue;</span>
+<span class="pc bpc" id="L1416" title="1 of 2 branches missed.">	if (ND_mark(n) == 0) {</span>
+<span class="fc" id="L1417">	    ND_mark(n,  1);</span>
+<span class="fc" id="L1418">	    enqueue(q, n);</span>
+<span class="fc bfc" id="L1419" title="All 2 branches covered.">	    while ((n0 = dequeue(q))!=null) {</span>
+<span class="fc bfc" id="L1420" title="All 2 branches covered.">		if (ND_ranktype(n0) != CLUSTER) {</span>
+<span class="fc" id="L1421">		    install_in_rank(zz, g, n0);</span>
+<span class="fc" id="L1422">		    enqueue_neighbors(q, n0, pass);</span>
 		} else {
-<span class="fc" id="L1419">		    install_cluster(zz, g, n0, pass, q);</span>
+<span class="fc" id="L1424">		    install_cluster(zz, g, n0, pass, q);</span>
 		}
 	    }
 	}
     }
-<span class="pc bpc" id="L1424" title="1 of 2 branches missed.">    if (dequeue(q)!=null)</span>
-<span class="nc" id="L1425">    UNSUPPORTED(&quot;1b3hbd5artrq77i58q2o9kgz3&quot;); // 	agerr(AGERR, &quot;surprise\n&quot;);</span>
-<span class="fc bfc" id="L1426" title="All 2 branches covered.">    for (i = GD_minrank(g); i &lt;= GD_maxrank(g); i++) {</span>
-<span class="fc" id="L1427">	GD_rank(zz.Root).get__(i).valid = 0;</span>
-<span class="pc bpc" id="L1428" title="1 of 4 branches missed.">	if (GD_flip(g) &amp;&amp; (GD_rank(g).get__(i).n &gt; 0)) {</span>
+<span class="pc bpc" id="L1429" title="1 of 2 branches missed.">    if (dequeue(q)!=null)</span>
+<span class="nc" id="L1430">    UNSUPPORTED(&quot;1b3hbd5artrq77i58q2o9kgz3&quot;); // 	agerr(AGERR, &quot;surprise\n&quot;);</span>
+<span class="fc bfc" id="L1431" title="All 2 branches covered.">    for (i = GD_minrank(g); i &lt;= GD_maxrank(g); i++) {</span>
+<span class="fc" id="L1432">	GD_rank(zz.Root).get__(i).valid = 0;</span>
+<span class="pc bpc" id="L1433" title="1 of 4 branches missed.">	if (GD_flip(g) &amp;&amp; (GD_rank(g).get__(i).n &gt; 0)) {</span>
 	    int nn, ndiv2;
-<span class="fc" id="L1430">	    CArrayOfStar&lt;ST_Agnode_s&gt; vlist = GD_rank(g).get__(i).v;</span>
-<span class="fc" id="L1431">	    nn = GD_rank(g).get__(i).n - 1;</span>
-<span class="fc" id="L1432">	    ndiv2 = nn / 2;</span>
-<span class="fc bfc" id="L1433" title="All 2 branches covered.">	    for (j = 0; j &lt;= ndiv2; j++)</span>
-<span class="fc" id="L1434">		exchange(zz, vlist.get_(j), vlist.get_(nn - j));</span>
+<span class="fc" id="L1435">	    CArrayOfStar&lt;ST_Agnode_s&gt; vlist = GD_rank(g).get__(i).v;</span>
+<span class="fc" id="L1436">	    nn = GD_rank(g).get__(i).n - 1;</span>
+<span class="fc" id="L1437">	    ndiv2 = nn / 2;</span>
+<span class="fc bfc" id="L1438" title="All 2 branches covered.">	    for (j = 0; j &lt;= ndiv2; j++)</span>
+<span class="fc" id="L1439">		exchange(zz, vlist.get_(j), vlist.get_(nn - j));</span>
 	}
     }
     
     
-<span class="fc bfc" id="L1439" title="All 4 branches covered.">    if (g == dot_root(g) &amp;&amp; ncross(zz, g) &gt; 0)</span>
-<span class="fc" id="L1440">	transpose(zz, g, false);</span>
-<span class="fc" id="L1441">    free_queue(q);</span>
+<span class="fc bfc" id="L1444" title="All 4 branches covered.">    if (g == dot_root(g) &amp;&amp; ncross(zz, g) &gt; 0)</span>
+<span class="fc" id="L1445">	transpose(zz, g, false);</span>
+<span class="fc" id="L1446">    free_queue(q);</span>
 } finally {
-<span class="fc" id="L1443">LEAVING(&quot;7t49bz6lfcbd9v63ds2x3518z&quot;,&quot;build_ranks&quot;);</span>
+<span class="fc" id="L1448">LEAVING(&quot;7t49bz6lfcbd9v63ds2x3518z&quot;,&quot;build_ranks&quot;);</span>
 }
-<span class="fc" id="L1445">}</span>
+<span class="fc" id="L1450">}</span>
 
 
 
@@ -1450,32 +1455,32 @@ try {
 @Reviewed(when = &quot;15/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;enqueue_neighbors&quot;, key=&quot;bmjlneqxex6a9silzkkidkx6s&quot;, definition=&quot;void enqueue_neighbors(nodequeue * q, node_t * n0, int pass)&quot;)
 public static void enqueue_neighbors(ST_nodequeue q, ST_Agnode_s n0, int pass) {
-<span class="fc" id="L1453">ENTERING(&quot;bmjlneqxex6a9silzkkidkx6s&quot;,&quot;enqueue_neighbors&quot;);</span>
+<span class="fc" id="L1458">ENTERING(&quot;bmjlneqxex6a9silzkkidkx6s&quot;,&quot;enqueue_neighbors&quot;);</span>
 try {
     int i;
     ST_Agedge_s e;
     
-<span class="fc bfc" id="L1458" title="All 2 branches covered.">    if (pass == 0) {</span>
-<span class="fc bfc" id="L1459" title="All 2 branches covered.">	for (i = 0; i &lt; ND_out(n0).size; i++) {</span>
-<span class="fc" id="L1460">	    e = (ST_Agedge_s) ND_out(n0).list.get_(i);</span>
-<span class="fc bfc" id="L1461" title="All 2 branches covered.">	    if ((ND_mark(aghead(e))) == 0) {</span>
-<span class="fc" id="L1462">		ND_mark(aghead(e), 1);</span>
-<span class="fc" id="L1463">		enqueue(q, aghead(e));</span>
+<span class="fc bfc" id="L1463" title="All 2 branches covered.">    if (pass == 0) {</span>
+<span class="fc bfc" id="L1464" title="All 2 branches covered.">	for (i = 0; i &lt; ND_out(n0).size; i++) {</span>
+<span class="fc" id="L1465">	    e = (ST_Agedge_s) ND_out(n0).list.get_(i);</span>
+<span class="fc bfc" id="L1466" title="All 2 branches covered.">	    if ((ND_mark(aghead(e))) == 0) {</span>
+<span class="fc" id="L1467">		ND_mark(aghead(e), 1);</span>
+<span class="fc" id="L1468">		enqueue(q, aghead(e));</span>
 	    }
 	}
     } else {
-<span class="fc bfc" id="L1467" title="All 2 branches covered.">	for (i = 0; i &lt; ND_in(n0).size; i++) {</span>
-<span class="fc" id="L1468">	    e = (ST_Agedge_s) ND_in(n0).list.get_(i);</span>
-<span class="fc bfc" id="L1469" title="All 2 branches covered.">	    if (((ND_mark(agtail(e)))) == 0) {</span>
-<span class="fc" id="L1470">		ND_mark(agtail(e), 1);</span>
-<span class="fc" id="L1471">		enqueue(q, agtail(e));</span>
+<span class="fc bfc" id="L1472" title="All 2 branches covered.">	for (i = 0; i &lt; ND_in(n0).size; i++) {</span>
+<span class="fc" id="L1473">	    e = (ST_Agedge_s) ND_in(n0).list.get_(i);</span>
+<span class="fc bfc" id="L1474" title="All 2 branches covered.">	    if (((ND_mark(agtail(e)))) == 0) {</span>
+<span class="fc" id="L1475">		ND_mark(agtail(e), 1);</span>
+<span class="fc" id="L1476">		enqueue(q, agtail(e));</span>
 	    }
 	}
     }
 } finally {
-<span class="fc" id="L1476">LEAVING(&quot;bmjlneqxex6a9silzkkidkx6s&quot;,&quot;enqueue_neighbors&quot;);</span>
+<span class="fc" id="L1481">LEAVING(&quot;bmjlneqxex6a9silzkkidkx6s&quot;,&quot;enqueue_neighbors&quot;);</span>
 }
-<span class="fc" id="L1478">}</span>
+<span class="fc" id="L1483">}</span>
 
 
 
@@ -1483,14 +1488,14 @@ try {
 @Reviewed(when = &quot;15/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;constraining_flat_edge&quot;, key=&quot;c8nqj0v20api63pikohsbx92u&quot;, definition=&quot;static int constraining_flat_edge(Agraph_t *g, Agnode_t *v, Agedge_t *e)&quot;)
 public static boolean constraining_flat_edge(Globals zz, ST_Agraph_s g, ST_Agnode_s v, ST_Agedge_s e) {
-<span class="fc" id="L1486">ENTERING(&quot;c8nqj0v20api63pikohsbx92u&quot;,&quot;constraining_flat_edge&quot;);</span>
+<span class="fc" id="L1491">ENTERING(&quot;c8nqj0v20api63pikohsbx92u&quot;,&quot;constraining_flat_edge&quot;);</span>
 try {
-<span class="pc bpc" id="L1488" title="1 of 2 branches missed.">	if (ED_weight(e) == 0) return false;</span>
-<span class="pc bpc" id="L1489" title="1 of 2 branches missed.">	if (!inside_cluster(zz, g,agtail(e))) return false;</span>
-<span class="pc bpc" id="L1490" title="1 of 2 branches missed.">	if (!inside_cluster(zz, g,aghead(e))) return false;</span>
-<span class="fc" id="L1491">	return true;</span>
+<span class="pc bpc" id="L1493" title="1 of 2 branches missed.">	if (ED_weight(e) == 0) return false;</span>
+<span class="pc bpc" id="L1494" title="1 of 2 branches missed.">	if (!inside_cluster(zz, g,agtail(e))) return false;</span>
+<span class="pc bpc" id="L1495" title="1 of 2 branches missed.">	if (!inside_cluster(zz, g,aghead(e))) return false;</span>
+<span class="fc" id="L1496">	return true;</span>
 } finally {
-<span class="fc" id="L1493">LEAVING(&quot;c8nqj0v20api63pikohsbx92u&quot;,&quot;constraining_flat_edge&quot;);</span>
+<span class="fc" id="L1498">LEAVING(&quot;c8nqj0v20api63pikohsbx92u&quot;,&quot;constraining_flat_edge&quot;);</span>
 }
 }
 
@@ -1503,24 +1508,24 @@ try {
 @Reviewed(when = &quot;15/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;postorder&quot;, key=&quot;46to0pkk188af2dlkik2ab7e3&quot;, definition=&quot;static int postorder(graph_t * g, node_t * v, node_t ** list, int r)&quot;)
 public static int postorder(Globals zz, ST_Agraph_s g, ST_Agnode_s v, CArrayOfStar&lt;ST_Agnode_s&gt; list, int r) {
-<span class="fc" id="L1506">ENTERING(&quot;46to0pkk188af2dlkik2ab7e3&quot;,&quot;postorder&quot;);</span>
+<span class="fc" id="L1511">ENTERING(&quot;46to0pkk188af2dlkik2ab7e3&quot;,&quot;postorder&quot;);</span>
 try {
     ST_Agedge_s e;
-<span class="fc" id="L1509">    int i, cnt = 0;</span>
+<span class="fc" id="L1514">    int i, cnt = 0;</span>
     
-<span class="fc" id="L1511">    ND_mark(v, true);</span>
-<span class="fc bfc" id="L1512" title="All 2 branches covered.">    if (ND_flat_out(v).size &gt; 0) {</span>
-<span class="fc bfc" id="L1513" title="All 2 branches covered.">	for (i = 0; (e = (ST_Agedge_s) ND_flat_out(v).list.get_(i))!=null; i++) {</span>
-<span class="pc bpc" id="L1514" title="1 of 2 branches missed.">	    if (!constraining_flat_edge(zz, g,v,e)) continue;</span>
-<span class="pc bpc" id="L1515" title="1 of 2 branches missed.">	    if ((ND_mark(aghead(e))) == 0)</span>
-<span class="fc" id="L1516">		cnt += postorder(zz, g, aghead(e), list.plus_(cnt), r);</span>
+<span class="fc" id="L1516">    ND_mark(v, true);</span>
+<span class="fc bfc" id="L1517" title="All 2 branches covered.">    if (ND_flat_out(v).size &gt; 0) {</span>
+<span class="fc bfc" id="L1518" title="All 2 branches covered.">	for (i = 0; (e = (ST_Agedge_s) ND_flat_out(v).list.get_(i))!=null; i++) {</span>
+<span class="pc bpc" id="L1519" title="1 of 2 branches missed.">	    if (!constraining_flat_edge(zz, g,v,e)) continue;</span>
+<span class="pc bpc" id="L1520" title="1 of 2 branches missed.">	    if ((ND_mark(aghead(e))) == 0)</span>
+<span class="fc" id="L1521">		cnt += postorder(zz, g, aghead(e), list.plus_(cnt), r);</span>
 	}
     }
-<span class="pc bpc" id="L1519" title="1 of 2 branches missed.">    assert(ND_rank(v) == r);</span>
-<span class="fc" id="L1520">    list.set_(cnt++, v);</span>
-<span class="fc" id="L1521">    return cnt;</span>
+<span class="pc bpc" id="L1524" title="1 of 2 branches missed.">    assert(ND_rank(v) == r);</span>
+<span class="fc" id="L1525">    list.set_(cnt++, v);</span>
+<span class="fc" id="L1526">    return cnt;</span>
 } finally {
-<span class="fc" id="L1523">LEAVING(&quot;46to0pkk188af2dlkik2ab7e3&quot;,&quot;postorder&quot;);</span>
+<span class="fc" id="L1528">LEAVING(&quot;46to0pkk188af2dlkik2ab7e3&quot;,&quot;postorder&quot;);</span>
 }
 }
 
@@ -1531,78 +1536,78 @@ try {
 @Difficult
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;flat_reorder&quot;, key=&quot;zuxoswju917kyl08a5f0gtp6&quot;, definition=&quot;static void flat_reorder(graph_t * g)&quot;)
 public static void flat_reorder(Globals zz, ST_Agraph_s g) {
-<span class="fc" id="L1534">ENTERING(&quot;zuxoswju917kyl08a5f0gtp6&quot;,&quot;flat_reorder&quot;);</span>
+<span class="fc" id="L1539">ENTERING(&quot;zuxoswju917kyl08a5f0gtp6&quot;,&quot;flat_reorder&quot;);</span>
 try {
     int i, j, r, pos, n_search, local_in_cnt, local_out_cnt, base_order;
     ST_Agnode_s v, t;
     CArrayOfStar&lt;ST_Agnode_s&gt; left, right;
-<span class="fc" id="L1539">    CArrayOfStar&lt;ST_Agnode_s&gt; temprank = null;</span>
+<span class="fc" id="L1544">    CArrayOfStar&lt;ST_Agnode_s&gt; temprank = null;</span>
     ST_Agedge_s flat_e, e;
     
-<span class="fc bfc" id="L1542" title="All 2 branches covered.">    if (GD_has_flat_edges(g) == 0)</span>
-<span class="fc" id="L1543">	return;</span>
-<span class="fc bfc" id="L1544" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
-<span class="fc bfc" id="L1545" title="All 2 branches covered.">	if (GD_rank(g).get__(r).n == 0) continue;</span>
-<span class="fc" id="L1546">	base_order = ND_order(GD_rank(g).get__(r).v.get_(0));</span>
-<span class="fc bfc" id="L1547" title="All 2 branches covered.">	for (i = 0; i &lt; GD_rank(g).get__(r).n; i++)</span>
-<span class="fc" id="L1548">	    ND_mark(GD_rank(g).get__(r).v.get_(i), 0);</span>
-<span class="fc" id="L1549">	temprank = CArrayOfStar.&lt;ST_Agnode_s&gt;REALLOC(i + 1, temprank, ZType.ST_Agnode_s);</span>
-<span class="fc" id="L1550">	pos = 0;</span>
+<span class="fc bfc" id="L1547" title="All 2 branches covered.">    if (GD_has_flat_edges(g) == 0)</span>
+<span class="fc" id="L1548">	return;</span>
+<span class="fc bfc" id="L1549" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
+<span class="fc bfc" id="L1550" title="All 2 branches covered.">	if (GD_rank(g).get__(r).n == 0) continue;</span>
+<span class="fc" id="L1551">	base_order = ND_order(GD_rank(g).get__(r).v.get_(0));</span>
+<span class="fc bfc" id="L1552" title="All 2 branches covered.">	for (i = 0; i &lt; GD_rank(g).get__(r).n; i++)</span>
+<span class="fc" id="L1553">	    ND_mark(GD_rank(g).get__(r).v.get_(i), 0);</span>
+<span class="fc" id="L1554">	temprank = CArrayOfStar.&lt;ST_Agnode_s&gt;REALLOC(i + 1, temprank, ZType.ST_Agnode_s);</span>
+<span class="fc" id="L1555">	pos = 0;</span>
 	
 	/* construct reverse topological sort order in temprank */
-<span class="fc bfc" id="L1553" title="All 2 branches covered.">	for (i = 0; i &lt; GD_rank(g).get__(r).n; i++) {</span>
-<span class="pc bpc" id="L1554" title="1 of 2 branches missed.">	    if (GD_flip(g)) v = (ST_Agnode_s) GD_rank(g).get__(r).v.get_(i);</span>
-<span class="fc" id="L1555">	    else v = GD_rank(g).get__(r).v.get_(GD_rank(g).get__(r).n - i - 1);</span>
+<span class="fc bfc" id="L1558" title="All 2 branches covered.">	for (i = 0; i &lt; GD_rank(g).get__(r).n; i++) {</span>
+<span class="pc bpc" id="L1559" title="1 of 2 branches missed.">	    if (GD_flip(g)) v = (ST_Agnode_s) GD_rank(g).get__(r).v.get_(i);</span>
+<span class="fc" id="L1560">	    else v = GD_rank(g).get__(r).v.get_(GD_rank(g).get__(r).n - i - 1);</span>
 	    
-<span class="fc" id="L1557">	    local_in_cnt = local_out_cnt = 0;</span>
-<span class="fc bfc" id="L1558" title="All 2 branches covered.">	    for (j = 0; j &lt; ND_flat_in(v).size; j++) {</span>
-<span class="fc" id="L1559">		flat_e = (ST_Agedge_s) ND_flat_in(v).list.get_(j);</span>
-<span class="pc bpc" id="L1560" title="1 of 2 branches missed.">		if (constraining_flat_edge(zz, g,v,flat_e)) local_in_cnt++;</span>
+<span class="fc" id="L1562">	    local_in_cnt = local_out_cnt = 0;</span>
+<span class="fc bfc" id="L1563" title="All 2 branches covered.">	    for (j = 0; j &lt; ND_flat_in(v).size; j++) {</span>
+<span class="fc" id="L1564">		flat_e = (ST_Agedge_s) ND_flat_in(v).list.get_(j);</span>
+<span class="pc bpc" id="L1565" title="1 of 2 branches missed.">		if (constraining_flat_edge(zz, g,v,flat_e)) local_in_cnt++;</span>
 	    }
-<span class="fc bfc" id="L1562" title="All 2 branches covered.">	    for (j = 0; j &lt; ND_flat_out(v).size; j++) {</span>
-<span class="fc" id="L1563">		flat_e = (ST_Agedge_s) ND_flat_out(v).list.get_(j);</span>
-<span class="pc bpc" id="L1564" title="1 of 2 branches missed.">		if (constraining_flat_edge(zz, g,v,flat_e)) local_out_cnt++;</span>
+<span class="fc bfc" id="L1567" title="All 2 branches covered.">	    for (j = 0; j &lt; ND_flat_out(v).size; j++) {</span>
+<span class="fc" id="L1568">		flat_e = (ST_Agedge_s) ND_flat_out(v).list.get_(j);</span>
+<span class="pc bpc" id="L1569" title="1 of 2 branches missed.">		if (constraining_flat_edge(zz, g,v,flat_e)) local_out_cnt++;</span>
 	    }
-<span class="fc bfc" id="L1566" title="All 4 branches covered.">	    if ((local_in_cnt == 0) &amp;&amp; (local_out_cnt == 0))</span>
-<span class="fc" id="L1567">		temprank.set_(pos++, v);</span>
+<span class="fc bfc" id="L1571" title="All 4 branches covered.">	    if ((local_in_cnt == 0) &amp;&amp; (local_out_cnt == 0))</span>
+<span class="fc" id="L1572">		temprank.set_(pos++, v);</span>
 	    else {
-<span class="fc bfc" id="L1569" title="All 4 branches covered.">		if ((ND_mark(v) == 0) &amp;&amp; (local_in_cnt == 0)) {</span>
-<span class="fc" id="L1570">		    left = temprank.plus_(pos);</span>
-<span class="fc" id="L1571">		    n_search = postorder(zz, g, v, left, r);</span>
-<span class="fc" id="L1572">		    pos += n_search;</span>
+<span class="fc bfc" id="L1574" title="All 4 branches covered.">		if ((ND_mark(v) == 0) &amp;&amp; (local_in_cnt == 0)) {</span>
+<span class="fc" id="L1575">		    left = temprank.plus_(pos);</span>
+<span class="fc" id="L1576">		    n_search = postorder(zz, g, v, left, r);</span>
+<span class="fc" id="L1577">		    pos += n_search;</span>
 		}
 	    }
 	}
 	
-<span class="pc bpc" id="L1577" title="1 of 2 branches missed.">	if (pos!=0) {</span>
-<span class="pc bpc" id="L1578" title="1 of 2 branches missed.">	    if (GD_flip(g) == false) {</span>
-<span class="fc" id="L1579">		left = temprank;</span>
-<span class="fc" id="L1580">		right = temprank.plus_(pos - 1);</span>
-<span class="fc bfc" id="L1581" title="All 2 branches covered.">		while (left.comparePointer_(right) &lt; 0) {</span>
-<span class="fc" id="L1582">		    t = left.get_(0);</span>
-<span class="fc" id="L1583">		    left.set_(0, right.get_(0));</span>
-<span class="fc" id="L1584">		    right.set_(0, t);</span>
-<span class="fc" id="L1585">		    left = left.plus_(1);</span>
-<span class="fc" id="L1586">		    right = right.plus_(-1);</span>
+<span class="pc bpc" id="L1582" title="1 of 2 branches missed.">	if (pos!=0) {</span>
+<span class="pc bpc" id="L1583" title="1 of 2 branches missed.">	    if (GD_flip(g) == false) {</span>
+<span class="fc" id="L1584">		left = temprank;</span>
+<span class="fc" id="L1585">		right = temprank.plus_(pos - 1);</span>
+<span class="fc bfc" id="L1586" title="All 2 branches covered.">		while (left.comparePointer_(right) &lt; 0) {</span>
+<span class="fc" id="L1587">		    t = left.get_(0);</span>
+<span class="fc" id="L1588">		    left.set_(0, right.get_(0));</span>
+<span class="fc" id="L1589">		    right.set_(0, t);</span>
+<span class="fc" id="L1590">		    left = left.plus_(1);</span>
+<span class="fc" id="L1591">		    right = right.plus_(-1);</span>
 		}
 	    }
-<span class="fc bfc" id="L1589" title="All 2 branches covered.">	    for (i = 0; i &lt; GD_rank(g).get__(r).n; i++) {</span>
-<span class="fc" id="L1590">		v = temprank.get_(i);</span>
-<span class="fc" id="L1591">		GD_rank(g).get__(r).v.set_(i, v);</span>
-<span class="fc" id="L1592">		ND_order(v, i + base_order);</span>
+<span class="fc bfc" id="L1594" title="All 2 branches covered.">	    for (i = 0; i &lt; GD_rank(g).get__(r).n; i++) {</span>
+<span class="fc" id="L1595">		v = temprank.get_(i);</span>
+<span class="fc" id="L1596">		GD_rank(g).get__(r).v.set_(i, v);</span>
+<span class="fc" id="L1597">		ND_order(v, i + base_order);</span>
 	    }
 	    
 	    /* nonconstraint flat edges must be made LR */
-<span class="fc bfc" id="L1596" title="All 2 branches covered.">	    for (i = 0; i &lt; GD_rank(g).get__(r).n; i++) {</span>
-<span class="fc" id="L1597">		v = GD_rank(g).get__(r).v.get_(i);</span>
-<span class="fc bfc" id="L1598" title="All 2 branches covered.">		if (ND_flat_out(v).list!=null) {</span>
-<span class="fc bfc" id="L1599" title="All 2 branches covered.">		    for (j = 0; (e = (ST_Agedge_s) ND_flat_out(v).list.get_(j))!=null; j++) {</span>
-<span class="pc bpc" id="L1600" title="2 of 4 branches missed.">			if ( ((GD_flip(g) == false) &amp;&amp; (ND_order(aghead(e)) &lt; ND_order(agtail(e)))) ||</span>
-<span class="pc bpc" id="L1601" title="3 of 4 branches missed.">				 ( (GD_flip(g)) &amp;&amp; (ND_order(aghead(e)) &gt; ND_order(agtail(e)) ))) {</span>
-<span class="nc bnc" id="L1602" title="All 2 branches missed.">			    assert(constraining_flat_edge(zz, g,v,e) == false);</span>
-<span class="nc" id="L1603">			    delete_flat_edge(e);</span>
-<span class="nc" id="L1604">			    j--;</span>
-<span class="nc" id="L1605">			    flat_rev(g, e);</span>
+<span class="fc bfc" id="L1601" title="All 2 branches covered.">	    for (i = 0; i &lt; GD_rank(g).get__(r).n; i++) {</span>
+<span class="fc" id="L1602">		v = GD_rank(g).get__(r).v.get_(i);</span>
+<span class="fc bfc" id="L1603" title="All 2 branches covered.">		if (ND_flat_out(v).list!=null) {</span>
+<span class="fc bfc" id="L1604" title="All 2 branches covered.">		    for (j = 0; (e = (ST_Agedge_s) ND_flat_out(v).list.get_(j))!=null; j++) {</span>
+<span class="pc bpc" id="L1605" title="2 of 4 branches missed.">			if ( ((GD_flip(g) == false) &amp;&amp; (ND_order(aghead(e)) &lt; ND_order(agtail(e)))) ||</span>
+<span class="pc bpc" id="L1606" title="3 of 4 branches missed.">				 ( (GD_flip(g)) &amp;&amp; (ND_order(aghead(e)) &gt; ND_order(agtail(e)) ))) {</span>
+<span class="nc bnc" id="L1607" title="All 2 branches missed.">			    assert(constraining_flat_edge(zz, g,v,e) == false);</span>
+<span class="nc" id="L1608">			    delete_flat_edge(e);</span>
+<span class="nc" id="L1609">			    j--;</span>
+<span class="nc" id="L1610">			    flat_rev(g, e);</span>
 			}
 		    }
 		}
@@ -1610,14 +1615,14 @@ try {
 	    /* postprocess to restore intended order */
 	}
 	/* else do no harm! */
-<span class="fc" id="L1613">	GD_rank(zz.Root).get__(r).valid = 0;</span>
+<span class="fc" id="L1618">	GD_rank(zz.Root).get__(r).valid = 0;</span>
     }
-<span class="pc bpc" id="L1615" title="1 of 2 branches missed.">    if (temprank!=null)</span>
-<span class="fc" id="L1616">	Memory.free(temprank);</span>
+<span class="pc bpc" id="L1620" title="1 of 2 branches missed.">    if (temprank!=null)</span>
+<span class="fc" id="L1621">	Memory.free(temprank);</span>
 } finally {
-<span class="fc" id="L1618">LEAVING(&quot;zuxoswju917kyl08a5f0gtp6&quot;,&quot;flat_reorder&quot;);</span>
+<span class="fc" id="L1623">LEAVING(&quot;zuxoswju917kyl08a5f0gtp6&quot;,&quot;flat_reorder&quot;);</span>
 }
-<span class="fc" id="L1620">}</span>
+<span class="fc" id="L1625">}</span>
 
 
 
@@ -1625,60 +1630,60 @@ try {
 @Reviewed(when = &quot;16/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;reorder&quot;, key=&quot;inv6wazjcnh4xkzzphsdcmg4&quot;, definition=&quot;static void reorder(graph_t * g, int r, int reverse, int hasfixed)&quot;)
 public static void reorder(Globals zz, ST_Agraph_s g, int r, boolean reverse, boolean hasfixed) {
-<span class="fc" id="L1628">ENTERING(&quot;inv6wazjcnh4xkzzphsdcmg4&quot;,&quot;reorder&quot;);</span>
+<span class="fc" id="L1633">ENTERING(&quot;inv6wazjcnh4xkzzphsdcmg4&quot;,&quot;reorder&quot;);</span>
 try {
-<span class="fc" id="L1630">    boolean changed = false;</span>
+<span class="fc" id="L1635">    boolean changed = false;</span>
     int nelt;
     boolean muststay, sawclust;
-<span class="fc" id="L1633">    CArrayOfStar&lt;ST_Agnode_s&gt; vlist = GD_rank(g).get__(r).v;</span>
-<span class="fc" id="L1634">    CArrayOfStar&lt;ST_Agnode_s&gt; lp, rp=null, ep = vlist.plus_(GD_rank(g).get__(r).n);</span>
+<span class="fc" id="L1638">    CArrayOfStar&lt;ST_Agnode_s&gt; vlist = GD_rank(g).get__(r).v;</span>
+<span class="fc" id="L1639">    CArrayOfStar&lt;ST_Agnode_s&gt; lp, rp=null, ep = vlist.plus_(GD_rank(g).get__(r).n);</span>
     
-<span class="fc bfc" id="L1636" title="All 2 branches covered.">    for (nelt = GD_rank(g).get__(r).n - 1; nelt &gt;= 0; nelt--) {</span>
-<span class="fc" id="L1637">	lp = vlist;</span>
-<span class="pc bpc" id="L1638" title="1 of 2 branches missed.">	while (lp.comparePointer_(ep)&lt;0) {</span>
+<span class="fc bfc" id="L1641" title="All 2 branches covered.">    for (nelt = GD_rank(g).get__(r).n - 1; nelt &gt;= 0; nelt--) {</span>
+<span class="fc" id="L1642">	lp = vlist;</span>
+<span class="pc bpc" id="L1643" title="1 of 2 branches missed.">	while (lp.comparePointer_(ep)&lt;0) {</span>
 	    /* find leftmost node that can be compared */
-<span class="fc bfc" id="L1640" title="All 4 branches covered.">	    while ((lp.comparePointer_(ep) &lt; 0) &amp;&amp; (ND_mval(lp.get_(0)) &lt; 0))</span>
-<span class="fc" id="L1641">		lp = lp.plus_(1);</span>
-<span class="fc bfc" id="L1642" title="All 2 branches covered.">	    if (lp.comparePointer_(ep) &gt;= 0)</span>
-<span class="fc" id="L1643">		break;</span>
+<span class="fc bfc" id="L1645" title="All 4 branches covered.">	    while ((lp.comparePointer_(ep) &lt; 0) &amp;&amp; (ND_mval(lp.get_(0)) &lt; 0))</span>
+<span class="fc" id="L1646">		lp = lp.plus_(1);</span>
+<span class="fc bfc" id="L1647" title="All 2 branches covered.">	    if (lp.comparePointer_(ep) &gt;= 0)</span>
+<span class="fc" id="L1648">		break;</span>
 	    /* find the node that can be compared */
-<span class="fc" id="L1645">	    sawclust = muststay = false;</span>
-<span class="fc bfc" id="L1646" title="All 2 branches covered.">	    for (rp = lp.plus_(1); rp.comparePointer_(ep) &lt; 0; rp=rp.plus_(1)) {</span>
-<span class="pc bpc" id="L1647" title="3 of 4 branches missed.">		if (sawclust &amp;&amp; ND_clust(rp.get_(0))!=null)</span>
-<span class="nc" id="L1648">		    continue;	/* ### */</span>
-<span class="pc bpc" id="L1649" title="1 of 2 branches missed.">		if (left2right(zz, g, lp.get_(0), rp.get_(0))) {</span>
-<span class="nc" id="L1650">		    muststay = true;</span>
-<span class="nc" id="L1651">		    break;</span>
+<span class="fc" id="L1650">	    sawclust = muststay = false;</span>
+<span class="fc bfc" id="L1651" title="All 2 branches covered.">	    for (rp = lp.plus_(1); rp.comparePointer_(ep) &lt; 0; rp=rp.plus_(1)) {</span>
+<span class="pc bpc" id="L1652" title="3 of 4 branches missed.">		if (sawclust &amp;&amp; ND_clust(rp.get_(0))!=null)</span>
+<span class="nc" id="L1653">		    continue;	/* ### */</span>
+<span class="pc bpc" id="L1654" title="1 of 2 branches missed.">		if (left2right(zz, g, lp.get_(0), rp.get_(0))) {</span>
+<span class="nc" id="L1655">		    muststay = true;</span>
+<span class="nc" id="L1656">		    break;</span>
 		}
-<span class="fc bfc" id="L1653" title="All 2 branches covered.">		if (ND_mval(rp.get_(0)) &gt;= 0)</span>
-<span class="fc" id="L1654">		    break;</span>
-<span class="pc bpc" id="L1655" title="1 of 2 branches missed.">		if (ND_clust(rp.get_(0))!=null)</span>
-<span class="nc" id="L1656">		    sawclust = true;	/* ### */</span>
+<span class="fc bfc" id="L1658" title="All 2 branches covered.">		if (ND_mval(rp.get_(0)) &gt;= 0)</span>
+<span class="fc" id="L1659">		    break;</span>
+<span class="pc bpc" id="L1660" title="1 of 2 branches missed.">		if (ND_clust(rp.get_(0))!=null)</span>
+<span class="nc" id="L1661">		    sawclust = true;	/* ### */</span>
 	    }
-<span class="fc bfc" id="L1658" title="All 2 branches covered.">	    if (rp.comparePointer_(ep) &gt;= 0)</span>
-<span class="fc" id="L1659">		break;</span>
-<span class="pc bpc" id="L1660" title="1 of 2 branches missed.">	    if (muststay == false) {</span>
-<span class="fc" id="L1661">		int p1 = (int) (ND_mval(lp.get_(0)));</span>
-<span class="fc" id="L1662">		int p2 = (int) (ND_mval(rp.get_(0)));</span>
-<span class="fc bfc" id="L1663" title="All 6 branches covered.">		if ((p1 &gt; p2) || ((p1 == p2) &amp;&amp; (reverse))) {</span>
-<span class="fc" id="L1664">		    exchange(zz, lp.get_(0), rp.get_(0));</span>
-<span class="fc" id="L1665">		    changed=true;</span>
+<span class="fc bfc" id="L1663" title="All 2 branches covered.">	    if (rp.comparePointer_(ep) &gt;= 0)</span>
+<span class="fc" id="L1664">		break;</span>
+<span class="pc bpc" id="L1665" title="1 of 2 branches missed.">	    if (muststay == false) {</span>
+<span class="fc" id="L1666">		int p1 = (int) (ND_mval(lp.get_(0)));</span>
+<span class="fc" id="L1667">		int p2 = (int) (ND_mval(rp.get_(0)));</span>
+<span class="fc bfc" id="L1668" title="All 6 branches covered.">		if ((p1 &gt; p2) || ((p1 == p2) &amp;&amp; (reverse))) {</span>
+<span class="fc" id="L1669">		    exchange(zz, lp.get_(0), rp.get_(0));</span>
+<span class="fc" id="L1670">		    changed=true;</span>
 		}
 	    }
-<span class="fc" id="L1668">	    lp = rp;</span>
+<span class="fc" id="L1673">	    lp = rp;</span>
 	}
-<span class="pc bpc" id="L1670" title="1 of 4 branches missed.">	if ((hasfixed == false) &amp;&amp; (reverse == false))</span>
-<span class="fc" id="L1671">	    ep = ep.plus_(-1);</span>
+<span class="pc bpc" id="L1675" title="1 of 4 branches missed.">	if ((hasfixed == false) &amp;&amp; (reverse == false))</span>
+<span class="fc" id="L1676">	    ep = ep.plus_(-1);</span>
     }
-<span class="fc bfc" id="L1673" title="All 2 branches covered.">    if (changed) {</span>
-<span class="fc" id="L1674">	GD_rank(zz.Root).get__(r).valid= 0;</span>
-<span class="fc bfc" id="L1675" title="All 2 branches covered.">	if (r &gt; 0)</span>
-<span class="fc" id="L1676">	    GD_rank(zz.Root).get__(r - 1).valid= 0;</span>
+<span class="fc bfc" id="L1678" title="All 2 branches covered.">    if (changed) {</span>
+<span class="fc" id="L1679">	GD_rank(zz.Root).get__(r).valid= 0;</span>
+<span class="fc bfc" id="L1680" title="All 2 branches covered.">	if (r &gt; 0)</span>
+<span class="fc" id="L1681">	    GD_rank(zz.Root).get__(r - 1).valid= 0;</span>
     }
 } finally {
-<span class="fc" id="L1679">LEAVING(&quot;inv6wazjcnh4xkzzphsdcmg4&quot;,&quot;reorder&quot;);</span>
+<span class="fc" id="L1684">LEAVING(&quot;inv6wazjcnh4xkzzphsdcmg4&quot;,&quot;reorder&quot;);</span>
 }
-<span class="fc" id="L1681">}</span>
+<span class="fc" id="L1686">}</span>
 
 
 
@@ -1688,45 +1693,45 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;mincross_step&quot;, key=&quot;14t80owwvm7io4ou6czb9ba9&quot;, definition=&quot;static void mincross_step(graph_t * g, int pass)&quot;)
 public static void mincross_step(Globals zz, ST_Agraph_s g, int pass) {
-<span class="fc" id="L1691">ENTERING(&quot;14t80owwvm7io4ou6czb9ba9&quot;,&quot;mincross_step&quot;);</span>
+<span class="fc" id="L1696">ENTERING(&quot;14t80owwvm7io4ou6czb9ba9&quot;,&quot;mincross_step&quot;);</span>
 try {
     int r, other, first, last, dir;
     boolean hasfixed, reverse;
-<span class="fc bfc" id="L1695" title="All 2 branches covered.">    if ((pass % 4) &lt; 2)</span>
-<span class="fc" id="L1696">	reverse = true;</span>
+<span class="fc bfc" id="L1700" title="All 2 branches covered.">    if ((pass % 4) &lt; 2)</span>
+<span class="fc" id="L1701">	reverse = true;</span>
     else
-<span class="fc" id="L1698">	reverse = false;</span>
-<span class="fc bfc" id="L1699" title="All 2 branches covered.">    if ((pass % 2)!=0) {</span>
-<span class="fc" id="L1700">	r = GD_maxrank(g) - 1;</span>
-<span class="fc" id="L1701">	dir = -1;</span>
+<span class="fc" id="L1703">	reverse = false;</span>
+<span class="fc bfc" id="L1704" title="All 2 branches covered.">    if ((pass % 2)!=0) {</span>
+<span class="fc" id="L1705">	r = GD_maxrank(g) - 1;</span>
+<span class="fc" id="L1706">	dir = -1;</span>
     } /* up pass */
     else {
-<span class="fc" id="L1704">	r = 1;</span>
-<span class="fc" id="L1705">	dir = 1;</span>
+<span class="fc" id="L1709">	r = 1;</span>
+<span class="fc" id="L1710">	dir = 1;</span>
     }				/* down pass */
-<span class="fc bfc" id="L1707" title="All 2 branches covered.">    if (pass % 2 == 0) {	/* down pass */</span>
-<span class="fc" id="L1708">	first = GD_minrank(g) + 1;</span>
-<span class="pc bpc" id="L1709" title="1 of 2 branches missed.">	if (GD_minrank(g) &gt; GD_minrank(zz.Root))</span>
-<span class="nc" id="L1710">	    first--;</span>
-<span class="fc" id="L1711">	last = GD_maxrank(g);</span>
-<span class="fc" id="L1712">	dir = 1;</span>
+<span class="fc bfc" id="L1712" title="All 2 branches covered.">    if (pass % 2 == 0) {	/* down pass */</span>
+<span class="fc" id="L1713">	first = GD_minrank(g) + 1;</span>
+<span class="pc bpc" id="L1714" title="1 of 2 branches missed.">	if (GD_minrank(g) &gt; GD_minrank(zz.Root))</span>
+<span class="nc" id="L1715">	    first--;</span>
+<span class="fc" id="L1716">	last = GD_maxrank(g);</span>
+<span class="fc" id="L1717">	dir = 1;</span>
     } else {			/* up pass */
-<span class="fc" id="L1714">	first = GD_maxrank(g) - 1;</span>
-<span class="fc" id="L1715">	last = GD_minrank(g);</span>
-<span class="pc bpc" id="L1716" title="1 of 2 branches missed.">	if (GD_maxrank(g) &lt; GD_maxrank(zz.Root))</span>
-<span class="nc" id="L1717">	    first++;</span>
-<span class="fc" id="L1718">	dir = -1;</span>
+<span class="fc" id="L1719">	first = GD_maxrank(g) - 1;</span>
+<span class="fc" id="L1720">	last = GD_minrank(g);</span>
+<span class="pc bpc" id="L1721" title="1 of 2 branches missed.">	if (GD_maxrank(g) &lt; GD_maxrank(zz.Root))</span>
+<span class="nc" id="L1722">	    first++;</span>
+<span class="fc" id="L1723">	dir = -1;</span>
     }
-<span class="fc bfc" id="L1720" title="All 2 branches covered.">    for (r = first; r != last + dir; r += dir) {</span>
-<span class="fc" id="L1721">	other = r - dir;</span>
-<span class="fc" id="L1722">	hasfixed = medians(zz, g, r, other);</span>
-<span class="fc" id="L1723">	reorder(zz, g, r, reverse, hasfixed);</span>
+<span class="fc bfc" id="L1725" title="All 2 branches covered.">    for (r = first; r != last + dir; r += dir) {</span>
+<span class="fc" id="L1726">	other = r - dir;</span>
+<span class="fc" id="L1727">	hasfixed = medians(zz, g, r, other);</span>
+<span class="fc" id="L1728">	reorder(zz, g, r, reverse, hasfixed);</span>
     }
-<span class="fc bfc" id="L1725" title="All 2 branches covered.">    transpose(zz, g, !reverse);</span>
+<span class="fc bfc" id="L1730" title="All 2 branches covered.">    transpose(zz, g, !reverse);</span>
 } finally {
-<span class="fc" id="L1727">LEAVING(&quot;14t80owwvm7io4ou6czb9ba9&quot;,&quot;mincross_step&quot;);</span>
+<span class="fc" id="L1732">LEAVING(&quot;14t80owwvm7io4ou6czb9ba9&quot;,&quot;mincross_step&quot;);</span>
 }
-<span class="fc" id="L1729">}</span>
+<span class="fc" id="L1734">}</span>
 
 
 
@@ -1736,35 +1741,35 @@ try {
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;local_cross&quot;, key=&quot;aq18oa4k4grixvfjx7r2qnl6r&quot;, definition=&quot;static int local_cross(elist l, int dir)&quot;)
 public static int local_cross(final ST_elist l, int dir) {
 // WARNING!! STRUCT
-<span class="fc" id="L1739">return local_cross_w_(l.copy(), dir);</span>
+<span class="fc" id="L1744">return local_cross_w_(l.copy(), dir);</span>
 }
 private static int local_cross_w_(final ST_elist l, int dir) {
-<span class="fc" id="L1742">ENTERING(&quot;aq18oa4k4grixvfjx7r2qnl6r&quot;,&quot;local_cross&quot;);</span>
+<span class="fc" id="L1747">ENTERING(&quot;aq18oa4k4grixvfjx7r2qnl6r&quot;,&quot;local_cross&quot;);</span>
 try {
     int i, j;
-<span class="fc" id="L1745">    boolean is_out = false;</span>
-<span class="fc" id="L1746">    int cross = 0;</span>
+<span class="fc" id="L1750">    boolean is_out = false;</span>
+<span class="fc" id="L1751">    int cross = 0;</span>
     ST_Agedge_s e, f;
-<span class="pc bpc" id="L1748" title="1 of 2 branches missed.">    if (dir &gt; 0)</span>
-<span class="fc" id="L1749">	is_out = true;</span>
+<span class="pc bpc" id="L1753" title="1 of 2 branches missed.">    if (dir &gt; 0)</span>
+<span class="fc" id="L1754">	is_out = true;</span>
     else
-<span class="nc" id="L1751">	is_out = false;</span>
-<span class="fc bfc" id="L1752" title="All 2 branches covered.">    for (i = 0; (e = l.list.get_(i))!=null; i++) {</span>
-<span class="pc bpc" id="L1753" title="1 of 2 branches missed.">	if (is_out)</span>
-<span class="fc bfc" id="L1754" title="All 2 branches covered.">	    for (j = i + 1; (f = l.list.get_(j))!=null; j++) {</span>
-<span class="fc" id="L1755">		if ((ND_order(aghead(f)) - ND_order(aghead(e)))</span>
-<span class="pc bpc" id="L1756" title="1 of 2 branches missed.">			 * (ED_tail_port(f).p.x - ED_tail_port(e).p.x) &lt; 0)</span>
-<span class="nc" id="L1757">UNSUPPORTED(&quot;bw8rwv11yqzss88pad7ljil8a&quot;); // 		    cross += ED_xpenalty(e) * ED_xpenalty(f);</span>
-	} else
-<span class="nc bnc" id="L1759" title="All 2 branches missed.">	    for (j = i + 1; (f = l.list.get_(j))!=null; j++) {</span>
-<span class="nc" id="L1760">UNSUPPORTED(&quot;bza83c6rmihrkzyllwf0jm4tn&quot;); // 		if ((ND_order(agtail(f)) - ND_order(agtail(e)))</span>
-<span class="nc" id="L1761">UNSUPPORTED(&quot;csrxg0y1azmvde7t833lm13sp&quot;); // 			* (ED_head_port(f).p.x - ED_head_port(e).p.x) &lt; 0)</span>
+<span class="nc" id="L1756">	is_out = false;</span>
+<span class="fc bfc" id="L1757" title="All 2 branches covered.">    for (i = 0; (e = l.list.get_(i))!=null; i++) {</span>
+<span class="pc bpc" id="L1758" title="1 of 2 branches missed.">	if (is_out)</span>
+<span class="fc bfc" id="L1759" title="All 2 branches covered.">	    for (j = i + 1; (f = l.list.get_(j))!=null; j++) {</span>
+<span class="fc" id="L1760">		if ((ND_order(aghead(f)) - ND_order(aghead(e)))</span>
+<span class="pc bpc" id="L1761" title="1 of 2 branches missed.">			 * (ED_tail_port(f).p.x - ED_tail_port(e).p.x) &lt; 0)</span>
 <span class="nc" id="L1762">UNSUPPORTED(&quot;bw8rwv11yqzss88pad7ljil8a&quot;); // 		    cross += ED_xpenalty(e) * ED_xpenalty(f);</span>
+	} else
+<span class="nc bnc" id="L1764" title="All 2 branches missed.">	    for (j = i + 1; (f = l.list.get_(j))!=null; j++) {</span>
+<span class="nc" id="L1765">UNSUPPORTED(&quot;bza83c6rmihrkzyllwf0jm4tn&quot;); // 		if ((ND_order(agtail(f)) - ND_order(agtail(e)))</span>
+<span class="nc" id="L1766">UNSUPPORTED(&quot;csrxg0y1azmvde7t833lm13sp&quot;); // 			* (ED_head_port(f).p.x - ED_head_port(e).p.x) &lt; 0)</span>
+<span class="nc" id="L1767">UNSUPPORTED(&quot;bw8rwv11yqzss88pad7ljil8a&quot;); // 		    cross += ED_xpenalty(e) * ED_xpenalty(f);</span>
 	    }
     }
-<span class="fc" id="L1765">    return cross;</span>
+<span class="fc" id="L1770">    return cross;</span>
 } finally {
-<span class="fc" id="L1767">LEAVING(&quot;aq18oa4k4grixvfjx7r2qnl6r&quot;,&quot;local_cross&quot;);</span>
+<span class="fc" id="L1772">LEAVING(&quot;aq18oa4k4grixvfjx7r2qnl6r&quot;,&quot;local_cross&quot;);</span>
 }
 }
 
@@ -1778,52 +1783,52 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;rcross&quot;, key=&quot;bk5nklhfqgg0uwkv7tv6dn8r2&quot;, definition=&quot;static int rcross(graph_t * g, int r)&quot;)
 public static int rcross(Globals zz, ST_Agraph_s g, int r) {
-<span class="fc" id="L1781">ENTERING(&quot;bk5nklhfqgg0uwkv7tv6dn8r2&quot;,&quot;rcross&quot;);</span>
+<span class="fc" id="L1786">ENTERING(&quot;bk5nklhfqgg0uwkv7tv6dn8r2&quot;,&quot;rcross&quot;);</span>
 try {
     int top, bot, cross, max, i, k;
     ST_Agnode_s v;
     CArrayOfStar&lt;ST_Agnode_s&gt; rtop;
     
-<span class="fc" id="L1787">    cross = 0;</span>
-<span class="fc" id="L1788">    max = 0;</span>
-<span class="fc" id="L1789">    rtop = GD_rank(g).get__(r).v;</span>
+<span class="fc" id="L1792">    cross = 0;</span>
+<span class="fc" id="L1793">    max = 0;</span>
+<span class="fc" id="L1794">    rtop = GD_rank(g).get__(r).v;</span>
     
-<span class="fc bfc" id="L1791" title="All 2 branches covered.">    if (zz.C &lt;= GD_rank(zz.Root).get__(r + 1).n) {</span>
-<span class="fc" id="L1792">	zz.C = GD_rank(zz.Root).get__(r + 1).n + 1;</span>
-<span class="fc" id="L1793">	zz.Count = ALLOC_INT(zz.C, zz.Count);</span>
+<span class="fc bfc" id="L1796" title="All 2 branches covered.">    if (zz.C &lt;= GD_rank(zz.Root).get__(r + 1).n) {</span>
+<span class="fc" id="L1797">	zz.C = GD_rank(zz.Root).get__(r + 1).n + 1;</span>
+<span class="fc" id="L1798">	zz.Count = ALLOC_INT(zz.C, zz.Count);</span>
     }
     
-<span class="fc bfc" id="L1796" title="All 2 branches covered.">    for (i = 0; i &lt; GD_rank(g).get__(r + 1).n; i++)</span>
-<span class="fc" id="L1797">    	zz.Count[i] = 0;</span>
+<span class="fc bfc" id="L1801" title="All 2 branches covered.">    for (i = 0; i &lt; GD_rank(g).get__(r + 1).n; i++)</span>
+<span class="fc" id="L1802">    	zz.Count[i] = 0;</span>
     
-<span class="fc bfc" id="L1799" title="All 2 branches covered.">    for (top = 0; top &lt; GD_rank(g).get__(r).n; top++) {</span>
+<span class="fc bfc" id="L1804" title="All 2 branches covered.">    for (top = 0; top &lt; GD_rank(g).get__(r).n; top++) {</span>
 	ST_Agedge_s e;
-<span class="fc bfc" id="L1801" title="All 2 branches covered.">	if (max &gt; 0) {</span>
-<span class="fc bfc" id="L1802" title="All 2 branches covered.">	    for (i = 0; (e = (ST_Agedge_s) ND_out(rtop.get_(top)).list.get_(i))!=null; i++) {</span>
-<span class="fc bfc" id="L1803" title="All 2 branches covered.">		for (k = ND_order(aghead(e)) + 1; k &lt;= max; k++)</span>
-<span class="fc" id="L1804">		    cross += zz.Count[k] * ED_xpenalty(e);</span>
+<span class="fc bfc" id="L1806" title="All 2 branches covered.">	if (max &gt; 0) {</span>
+<span class="fc bfc" id="L1807" title="All 2 branches covered.">	    for (i = 0; (e = (ST_Agedge_s) ND_out(rtop.get_(top)).list.get_(i))!=null; i++) {</span>
+<span class="fc bfc" id="L1808" title="All 2 branches covered.">		for (k = ND_order(aghead(e)) + 1; k &lt;= max; k++)</span>
+<span class="fc" id="L1809">		    cross += zz.Count[k] * ED_xpenalty(e);</span>
 	    }
 	}
-<span class="fc bfc" id="L1807" title="All 2 branches covered.">	for (i = 0; (e = (ST_Agedge_s) ND_out(rtop.get_(top)).list.get_(i))!=null; i++) {</span>
-<span class="fc" id="L1808">	    int inv = ND_order(aghead(e));</span>
-<span class="fc bfc" id="L1809" title="All 2 branches covered.">	    if (inv &gt; max)</span>
-<span class="fc" id="L1810">		max = inv;</span>
-<span class="fc" id="L1811">	    zz.Count[inv] += ED_xpenalty(e);</span>
+<span class="fc bfc" id="L1812" title="All 2 branches covered.">	for (i = 0; (e = (ST_Agedge_s) ND_out(rtop.get_(top)).list.get_(i))!=null; i++) {</span>
+<span class="fc" id="L1813">	    int inv = ND_order(aghead(e));</span>
+<span class="fc bfc" id="L1814" title="All 2 branches covered.">	    if (inv &gt; max)</span>
+<span class="fc" id="L1815">		max = inv;</span>
+<span class="fc" id="L1816">	    zz.Count[inv] += ED_xpenalty(e);</span>
 	}
     }
-<span class="fc bfc" id="L1814" title="All 2 branches covered.">    for (top = 0; top &lt; GD_rank(g).get__(r).n; top++) {</span>
-<span class="fc" id="L1815">	v = (ST_Agnode_s) GD_rank(g).get__(r).v.get_(top);</span>
-<span class="fc bfc" id="L1816" title="All 2 branches covered.">	if (ND_has_port(v))</span>
-<span class="fc" id="L1817">	    cross += local_cross(ND_out(v), 1);</span>
+<span class="fc bfc" id="L1819" title="All 2 branches covered.">    for (top = 0; top &lt; GD_rank(g).get__(r).n; top++) {</span>
+<span class="fc" id="L1820">	v = (ST_Agnode_s) GD_rank(g).get__(r).v.get_(top);</span>
+<span class="fc bfc" id="L1821" title="All 2 branches covered.">	if (ND_has_port(v))</span>
+<span class="fc" id="L1822">	    cross += local_cross(ND_out(v), 1);</span>
     }
-<span class="fc bfc" id="L1819" title="All 2 branches covered.">    for (bot = 0; bot &lt; GD_rank(g).get__(r + 1).n; bot++) {</span>
-<span class="fc" id="L1820">	v = (ST_Agnode_s) GD_rank(g).get__(r + 1).v.get_(bot);</span>
-<span class="pc bpc" id="L1821" title="1 of 2 branches missed.">	if (ND_has_port(v))</span>
-<span class="nc" id="L1822">	    cross += local_cross(ND_in(v), -1);</span>
+<span class="fc bfc" id="L1824" title="All 2 branches covered.">    for (bot = 0; bot &lt; GD_rank(g).get__(r + 1).n; bot++) {</span>
+<span class="fc" id="L1825">	v = (ST_Agnode_s) GD_rank(g).get__(r + 1).v.get_(bot);</span>
+<span class="pc bpc" id="L1826" title="1 of 2 branches missed.">	if (ND_has_port(v))</span>
+<span class="nc" id="L1827">	    cross += local_cross(ND_in(v), -1);</span>
     }
-<span class="fc" id="L1824">    return cross;</span>
+<span class="fc" id="L1829">    return cross;</span>
 } finally {
-<span class="fc" id="L1826">LEAVING(&quot;bk5nklhfqgg0uwkv7tv6dn8r2&quot;,&quot;rcross&quot;);</span>
+<span class="fc" id="L1831">LEAVING(&quot;bk5nklhfqgg0uwkv7tv6dn8r2&quot;,&quot;rcross&quot;);</span>
 }
 }
 
@@ -1833,45 +1838,45 @@ try {
 @Reviewed(when = &quot;15/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;ncross&quot;, key=&quot;dbjmz2tnii2pn9sxg26ap6w5r&quot;, definition=&quot;int ncross(graph_t * g)&quot;)
 public static int ncross(Globals zz, ST_Agraph_s g) {
-<span class="fc" id="L1836">ENTERING(&quot;dbjmz2tnii2pn9sxg26ap6w5r&quot;,&quot;ncross&quot;);</span>
+<span class="fc" id="L1841">ENTERING(&quot;dbjmz2tnii2pn9sxg26ap6w5r&quot;,&quot;ncross&quot;);</span>
 try {
     int r, count, nc;
     
-<span class="fc" id="L1840">    g = zz.Root;</span>
-<span class="fc" id="L1841">    count = 0;</span>
-<span class="fc bfc" id="L1842" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt; GD_maxrank(g); r++) {</span>
-<span class="fc bfc" id="L1843" title="All 2 branches covered.">	if (GD_rank(g).get__(r).valid!=0)</span>
-<span class="fc" id="L1844">	    count += GD_rank(g).get__(r).cache_nc;</span>
+<span class="fc" id="L1845">    g = zz.Root;</span>
+<span class="fc" id="L1846">    count = 0;</span>
+<span class="fc bfc" id="L1847" title="All 2 branches covered.">    for (r = GD_minrank(g); r &lt; GD_maxrank(g); r++) {</span>
+<span class="fc bfc" id="L1848" title="All 2 branches covered.">	if (GD_rank(g).get__(r).valid!=0)</span>
+<span class="fc" id="L1849">	    count += GD_rank(g).get__(r).cache_nc;</span>
 	else {
-<span class="fc" id="L1846">	    nc = rcross(zz, g, r);</span>
-<span class="fc" id="L1847">	    GD_rank(g).get__(r).cache_nc = nc;</span>
-<span class="fc" id="L1848">	    count += nc;</span>
-<span class="fc" id="L1849">	    GD_rank(g).get__(r).valid = 1;</span>
+<span class="fc" id="L1851">	    nc = rcross(zz, g, r);</span>
+<span class="fc" id="L1852">	    GD_rank(g).get__(r).cache_nc = nc;</span>
+<span class="fc" id="L1853">	    count += nc;</span>
+<span class="fc" id="L1854">	    GD_rank(g).get__(r).valid = 1;</span>
 	}
     }
-<span class="fc" id="L1852">    return count;</span>
+<span class="fc" id="L1857">    return count;</span>
 } finally {
-<span class="fc" id="L1854">LEAVING(&quot;dbjmz2tnii2pn9sxg26ap6w5r&quot;,&quot;ncross&quot;);</span>
+<span class="fc" id="L1859">LEAVING(&quot;dbjmz2tnii2pn9sxg26ap6w5r&quot;,&quot;ncross&quot;);</span>
 }
 }
 
 
 
 
-<span class="fc" id="L1861">public static CFunction ordercmpf = new CFunctionAbstract(&quot;ordercmpf&quot;) {</span>
+<span class="fc" id="L1866">public static CFunction ordercmpf = new CFunctionAbstract(&quot;ordercmpf&quot;) {</span>
 	
 	public Object exe(Globals zz, Object... args) {
-<span class="fc" id="L1864">		return ordercmpf((Integer)args[0], (Integer)args[1]);</span>
+<span class="fc" id="L1869">		return ordercmpf((Integer)args[0], (Integer)args[1]);</span>
 	}};
 
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;ordercmpf&quot;, key=&quot;8wrsq8a2vooekcm3cdtv5x3ke&quot;, definition=&quot;static int ordercmpf(int *i0, int *i1)&quot;)
 public static int ordercmpf(Integer i0, Integer i1) {
-<span class="fc" id="L1870">ENTERING(&quot;8wrsq8a2vooekcm3cdtv5x3ke&quot;,&quot;ordercmpf&quot;);</span>
+<span class="fc" id="L1875">ENTERING(&quot;8wrsq8a2vooekcm3cdtv5x3ke&quot;,&quot;ordercmpf&quot;);</span>
 try {
-<span class="fc" id="L1872">    return (i0) - (i1);</span>
+<span class="fc" id="L1877">    return (i0) - (i1);</span>
 } finally {
-<span class="fc" id="L1874">LEAVING(&quot;8wrsq8a2vooekcm3cdtv5x3ke&quot;,&quot;ordercmpf&quot;);</span>
+<span class="fc" id="L1879">LEAVING(&quot;8wrsq8a2vooekcm3cdtv5x3ke&quot;,&quot;ordercmpf&quot;);</span>
 }
 }
 
@@ -1883,36 +1888,36 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;flat_mval&quot;, key=&quot;7397kynkpqf2m1jkpmi8pgf0n&quot;, definition=&quot;static int flat_mval(node_t * n)&quot;)
 public static boolean flat_mval(ST_Agnode_s n) {
-<span class="nc" id="L1886">ENTERING(&quot;7397kynkpqf2m1jkpmi8pgf0n&quot;,&quot;flat_mval&quot;);</span>
+<span class="nc" id="L1891">ENTERING(&quot;7397kynkpqf2m1jkpmi8pgf0n&quot;,&quot;flat_mval&quot;);</span>
 try {
     int i;
     ST_Agedge_s e;
     CArrayOfStar&lt;ST_Agedge_s&gt; fl;
     ST_Agnode_s nn;
-<span class="nc bnc" id="L1892" title="All 2 branches missed.">    if (ND_flat_in(n).size &gt; 0) {</span>
-<span class="nc" id="L1893">	fl = ND_flat_in(n).list;</span>
-<span class="nc" id="L1894">	nn = agtail(fl.get_(0));</span>
-<span class="nc bnc" id="L1895" title="All 2 branches missed.">	for (i = 1; (e = fl.get_(i))!=null; i++)</span>
-<span class="nc bnc" id="L1896" title="All 2 branches missed.">	    if (ND_order(agtail(e)) &gt; ND_order(nn))</span>
-<span class="nc" id="L1897">		nn = agtail(e);</span>
-<span class="nc bnc" id="L1898" title="All 2 branches missed.">	if (ND_mval(nn) &gt;= 0) {</span>
-<span class="nc" id="L1899">	    ND_mval(n, ND_mval(nn) + 1);</span>
-<span class="nc" id="L1900">	    return false;</span>
+<span class="nc bnc" id="L1897" title="All 2 branches missed.">    if (ND_flat_in(n).size &gt; 0) {</span>
+<span class="nc" id="L1898">	fl = ND_flat_in(n).list;</span>
+<span class="nc" id="L1899">	nn = agtail(fl.get_(0));</span>
+<span class="nc bnc" id="L1900" title="All 2 branches missed.">	for (i = 1; (e = fl.get_(i))!=null; i++)</span>
+<span class="nc bnc" id="L1901" title="All 2 branches missed.">	    if (ND_order(agtail(e)) &gt; ND_order(nn))</span>
+<span class="nc" id="L1902">		nn = agtail(e);</span>
+<span class="nc bnc" id="L1903" title="All 2 branches missed.">	if (ND_mval(nn) &gt;= 0) {</span>
+<span class="nc" id="L1904">	    ND_mval(n, ND_mval(nn) + 1);</span>
+<span class="nc" id="L1905">	    return false;</span>
 	}
-<span class="nc bnc" id="L1902" title="All 2 branches missed.">    } else if (ND_flat_out(n).size &gt; 0) {</span>
-<span class="nc" id="L1903">	fl = ND_flat_out(n).list;</span>
-<span class="nc" id="L1904">	nn = aghead(fl.get_(0));</span>
-<span class="nc bnc" id="L1905" title="All 2 branches missed.">	for (i = 1; (e = fl.get_(i))!=null; i++)</span>
-<span class="nc bnc" id="L1906" title="All 2 branches missed.">	    if (ND_order(aghead(e)) &lt; ND_order(nn))</span>
-<span class="nc" id="L1907">		nn = aghead(e);</span>
-<span class="nc bnc" id="L1908" title="All 2 branches missed.">	if (ND_mval(nn) &gt; 0) {</span>
-<span class="nc" id="L1909">	    ND_mval(n, ND_mval(nn) - 1);</span>
-<span class="nc" id="L1910">	    return false;</span>
+<span class="nc bnc" id="L1907" title="All 2 branches missed.">    } else if (ND_flat_out(n).size &gt; 0) {</span>
+<span class="nc" id="L1908">	fl = ND_flat_out(n).list;</span>
+<span class="nc" id="L1909">	nn = aghead(fl.get_(0));</span>
+<span class="nc bnc" id="L1910" title="All 2 branches missed.">	for (i = 1; (e = fl.get_(i))!=null; i++)</span>
+<span class="nc bnc" id="L1911" title="All 2 branches missed.">	    if (ND_order(aghead(e)) &lt; ND_order(nn))</span>
+<span class="nc" id="L1912">		nn = aghead(e);</span>
+<span class="nc bnc" id="L1913" title="All 2 branches missed.">	if (ND_mval(nn) &gt; 0) {</span>
+<span class="nc" id="L1914">	    ND_mval(n, ND_mval(nn) - 1);</span>
+<span class="nc" id="L1915">	    return false;</span>
 	}
     }
-<span class="nc" id="L1913">    return true;</span>
+<span class="nc" id="L1918">    return true;</span>
 } finally {
-<span class="nc" id="L1915">LEAVING(&quot;7397kynkpqf2m1jkpmi8pgf0n&quot;,&quot;flat_mval&quot;);</span>
+<span class="nc" id="L1920">LEAVING(&quot;7397kynkpqf2m1jkpmi8pgf0n&quot;,&quot;flat_mval&quot;);</span>
 }
 }
 
@@ -1924,87 +1929,87 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;medians&quot;, key=&quot;azvdpixwwxspl31wp7f4k4fmh&quot;, definition=&quot;static boolean medians(graph_t * g, int r0, int r1)&quot;)
 public static boolean medians(Globals zz, ST_Agraph_s g, int r0, int r1) {
-<span class="fc" id="L1927">ENTERING(&quot;azvdpixwwxspl31wp7f4k4fmh&quot;,&quot;medians&quot;);</span>
+<span class="fc" id="L1932">ENTERING(&quot;azvdpixwwxspl31wp7f4k4fmh&quot;,&quot;medians&quot;);</span>
 try {
     int i, j, j0, lm, rm, lspan, rspan;
     int[] list;
     ST_Agnode_s n;
     CArrayOfStar&lt;ST_Agnode_s&gt; v;
     ST_Agedge_s e;
-<span class="fc" id="L1934">    boolean hasfixed = false;</span>
-<span class="fc" id="L1935">    list = zz.TI_list;</span>
-<span class="fc" id="L1936">    v = GD_rank(g).get__(r0).v;</span>
-<span class="fc bfc" id="L1937" title="All 2 branches covered.">    for (i = 0; i &lt; GD_rank(g).get__(r0).n; i++) {</span>
-<span class="fc" id="L1938">	n = v.get_(i);</span>
-<span class="fc" id="L1939">	j = 0;</span>
-<span class="fc bfc" id="L1940" title="All 2 branches covered.">	if (r1 &gt; r0)</span>
-<span class="fc bfc" id="L1941" title="All 2 branches covered.">	    for (j0 = 0; (e = ND_out(n).list.get_(j0))!=null; j0++) {</span>
-<span class="pc bpc" id="L1942" title="1 of 2 branches missed.">		if (ED_xpenalty(e) &gt; 0)</span>
-<span class="fc" id="L1943">			list[j++] = ((256 * ND_order(aghead(e)) + (ED_head_port(e)).order));</span>
+<span class="fc" id="L1939">    boolean hasfixed = false;</span>
+<span class="fc" id="L1940">    list = zz.TI_list;</span>
+<span class="fc" id="L1941">    v = GD_rank(g).get__(r0).v;</span>
+<span class="fc bfc" id="L1942" title="All 2 branches covered.">    for (i = 0; i &lt; GD_rank(g).get__(r0).n; i++) {</span>
+<span class="fc" id="L1943">	n = v.get_(i);</span>
+<span class="fc" id="L1944">	j = 0;</span>
+<span class="fc bfc" id="L1945" title="All 2 branches covered.">	if (r1 &gt; r0)</span>
+<span class="fc bfc" id="L1946" title="All 2 branches covered.">	    for (j0 = 0; (e = ND_out(n).list.get_(j0))!=null; j0++) {</span>
+<span class="pc bpc" id="L1947" title="1 of 2 branches missed.">		if (ED_xpenalty(e) &gt; 0)</span>
+<span class="fc" id="L1948">			list[j++] = ((256 * ND_order(aghead(e)) + (ED_head_port(e)).order));</span>
 	} else
-<span class="fc bfc" id="L1945" title="All 2 branches covered.">	    for (j0 = 0; (e = ND_in(n).list.get_(j0))!=null; j0++) {</span>
-<span class="pc bpc" id="L1946" title="1 of 2 branches missed.">		if (ED_xpenalty(e) &gt; 0)</span>
-<span class="fc" id="L1947">			list[j++] = ((256 * ND_order(agtail(e)) + (ED_tail_port(e)).order));</span>
+<span class="fc bfc" id="L1950" title="All 2 branches covered.">	    for (j0 = 0; (e = ND_in(n).list.get_(j0))!=null; j0++) {</span>
+<span class="pc bpc" id="L1951" title="1 of 2 branches missed.">		if (ED_xpenalty(e) &gt; 0)</span>
+<span class="fc" id="L1952">			list[j++] = ((256 * ND_order(agtail(e)) + (ED_tail_port(e)).order));</span>
 	    }
-<span class="fc bfc" id="L1949" title="All 4 branches covered.">	switch (j) {</span>
+<span class="fc bfc" id="L1954" title="All 4 branches covered.">	switch (j) {</span>
 	case 0:
-<span class="fc" id="L1951">	    ND_mval(n, -1);</span>
-<span class="fc" id="L1952">	    break;</span>
+<span class="fc" id="L1956">	    ND_mval(n, -1);</span>
+<span class="fc" id="L1957">	    break;</span>
 	case 1:
-<span class="fc" id="L1954">	    ND_mval(n, list[0]);</span>
-<span class="fc" id="L1955">	    break;</span>
+<span class="fc" id="L1959">	    ND_mval(n, list[0]);</span>
+<span class="fc" id="L1960">	    break;</span>
 	case 2:
-<span class="fc" id="L1957">	    ND_mval(n, (list[0] + list[1]) / 2);</span>
-<span class="fc" id="L1958">	    break;</span>
+<span class="fc" id="L1962">	    ND_mval(n, (list[0] + list[1]) / 2);</span>
+<span class="fc" id="L1963">	    break;</span>
 	default:
-<span class="fc" id="L1960">	    qsortInt(zz, list,</span>
+<span class="fc" id="L1965">	    qsortInt(zz, list,</span>
 	    	    j,
 	    	    mincross__c.ordercmpf);
-<span class="fc bfc" id="L1963" title="All 2 branches covered.">	    if (j % 2!=0)</span>
-<span class="fc" id="L1964">		ND_mval(n, list[j / 2]);</span>
+<span class="fc bfc" id="L1968" title="All 2 branches covered.">	    if (j % 2!=0)</span>
+<span class="fc" id="L1969">		ND_mval(n, list[j / 2]);</span>
 	    else {
 		/* weighted median */
-<span class="fc" id="L1967">		rm = j / 2;</span>
-<span class="fc" id="L1968">		lm = rm - 1;</span>
-<span class="fc" id="L1969">		rspan = list[j - 1] - list[rm];</span>
-<span class="fc" id="L1970">		lspan = list[lm] - list[0];</span>
-<span class="fc bfc" id="L1971" title="All 2 branches covered.">		if (lspan == rspan)</span>
-<span class="fc" id="L1972">		    ND_mval(n, (list[lm] + list[rm]) / 2);</span>
+<span class="fc" id="L1972">		rm = j / 2;</span>
+<span class="fc" id="L1973">		lm = rm - 1;</span>
+<span class="fc" id="L1974">		rspan = list[j - 1] - list[rm];</span>
+<span class="fc" id="L1975">		lspan = list[lm] - list[0];</span>
+<span class="fc bfc" id="L1976" title="All 2 branches covered.">		if (lspan == rspan)</span>
+<span class="fc" id="L1977">		    ND_mval(n, (list[lm] + list[rm]) / 2);</span>
 		else {
-<span class="fc" id="L1974">		    int w = list[lm] * rspan + list[rm] * lspan;</span>
-<span class="fc" id="L1975">		    ND_mval(n, w / (lspan + rspan));</span>
+<span class="fc" id="L1979">		    int w = list[lm] * rspan + list[rm] * lspan;</span>
+<span class="fc" id="L1980">		    ND_mval(n, w / (lspan + rspan));</span>
 		}
 	    }
 	}
     }
-<span class="fc bfc" id="L1980" title="All 2 branches covered.">    for (i = 0; i &lt; GD_rank(g).get__(r0).n; i++) {</span>
-<span class="fc" id="L1981">	n = (ST_Agnode_s) v.get_(i);</span>
-<span class="pc bpc" id="L1982" title="1 of 4 branches missed.">	if ((ND_out(n).size == 0) &amp;&amp; (ND_in(n).size == 0))</span>
-<span class="nc" id="L1983">	    hasfixed |= flat_mval(n);</span>
+<span class="fc bfc" id="L1985" title="All 2 branches covered.">    for (i = 0; i &lt; GD_rank(g).get__(r0).n; i++) {</span>
+<span class="fc" id="L1986">	n = (ST_Agnode_s) v.get_(i);</span>
+<span class="pc bpc" id="L1987" title="1 of 4 branches missed.">	if ((ND_out(n).size == 0) &amp;&amp; (ND_in(n).size == 0))</span>
+<span class="nc" id="L1988">	    hasfixed |= flat_mval(n);</span>
     }
-<span class="fc" id="L1985">    return hasfixed;</span>
+<span class="fc" id="L1990">    return hasfixed;</span>
 } finally {
-<span class="fc" id="L1987">LEAVING(&quot;azvdpixwwxspl31wp7f4k4fmh&quot;,&quot;medians&quot;);</span>
+<span class="fc" id="L1992">LEAVING(&quot;azvdpixwwxspl31wp7f4k4fmh&quot;,&quot;medians&quot;);</span>
 }
 }
 
 
 
 
-<span class="fc" id="L1994">public static CFunction nodeposcmpf = new CFunctionAbstract(&quot;nodeposcmpf&quot;) {</span>
+<span class="fc" id="L1999">public static CFunction nodeposcmpf = new CFunctionAbstract(&quot;nodeposcmpf&quot;) {</span>
 	
 	public Object exe(Globals zz, Object... args) {
-<span class="fc" id="L1997">		return nodeposcmpf((CArrayOfStar&lt;ST_Agnode_s&gt;)args[0], (CArrayOfStar&lt;ST_Agnode_s&gt;)args[1]);</span>
+<span class="fc" id="L2002">		return nodeposcmpf((CArrayOfStar&lt;ST_Agnode_s&gt;)args[0], (CArrayOfStar&lt;ST_Agnode_s&gt;)args[1]);</span>
 	}};
 
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;nodeposcmpf&quot;, key=&quot;2vdhpcykq508ma83aif8sxcbd&quot;, definition=&quot;static int nodeposcmpf(node_t ** n0, node_t ** n1)&quot;)
 public static Object nodeposcmpf(CArrayOfStar&lt;ST_Agnode_s&gt; n0, CArrayOfStar&lt;ST_Agnode_s&gt; n1) {
-<span class="fc" id="L2003">ENTERING(&quot;2vdhpcykq508ma83aif8sxcbd&quot;,&quot;nodeposcmpf&quot;);</span>
+<span class="fc" id="L2008">ENTERING(&quot;2vdhpcykq508ma83aif8sxcbd&quot;,&quot;nodeposcmpf&quot;);</span>
 try {
-<span class="fc" id="L2005">    return (ND_order(n0.get_(0)) - ND_order(n1.get_(0)));</span>
+<span class="fc" id="L2010">    return (ND_order(n0.get_(0)) - ND_order(n1.get_(0)));</span>
 } finally {
-<span class="fc" id="L2007">LEAVING(&quot;2vdhpcykq508ma83aif8sxcbd&quot;,&quot;nodeposcmpf&quot;);</span>
+<span class="fc" id="L2012">LEAVING(&quot;2vdhpcykq508ma83aif8sxcbd&quot;,&quot;nodeposcmpf&quot;);</span>
 }
 }
 
@@ -2012,7 +2017,7 @@ try {
 
 //1 40as9opn4mzq4gp4nkmp4dj8w
 // static int table[3][3] = 
-<span class="fc" id="L2015">private static int table[][] = new int[][]{</span>
+<span class="fc" id="L2020">private static int table[][] = new int[][]{</span>
     /* ordinary */ {1, 1, 1},
     /* singleton */ {1, 2, 2},
     /* virtual */ {1, 2, 4}
@@ -2025,15 +2030,15 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;endpoint_class&quot;, key=&quot;7j638prioxd97f74v1v4adbsf&quot;, definition=&quot;static int endpoint_class(node_t * n)&quot;)
 public static int endpoint_class(ST_Agnode_s n) {
-<span class="fc" id="L2028">ENTERING(&quot;7j638prioxd97f74v1v4adbsf&quot;,&quot;endpoint_class&quot;);</span>
+<span class="fc" id="L2033">ENTERING(&quot;7j638prioxd97f74v1v4adbsf&quot;,&quot;endpoint_class&quot;);</span>
 try {
-<span class="fc bfc" id="L2030" title="All 2 branches covered.">    if (ND_node_type(n) == 1)</span>
-<span class="fc" id="L2031">	return 2;</span>
-<span class="fc bfc" id="L2032" title="All 2 branches covered.">    if (ND_weight_class(n) &lt;= 1)</span>
-<span class="fc" id="L2033">	return 1;</span>
-<span class="fc" id="L2034">    return 0;</span>
+<span class="fc bfc" id="L2035" title="All 2 branches covered.">    if (ND_node_type(n) == 1)</span>
+<span class="fc" id="L2036">	return 2;</span>
+<span class="fc bfc" id="L2037" title="All 2 branches covered.">    if (ND_weight_class(n) &lt;= 1)</span>
+<span class="fc" id="L2038">	return 1;</span>
+<span class="fc" id="L2039">    return 0;</span>
 } finally {
-<span class="fc" id="L2036">LEAVING(&quot;7j638prioxd97f74v1v4adbsf&quot;,&quot;endpoint_class&quot;);</span>
+<span class="fc" id="L2041">LEAVING(&quot;7j638prioxd97f74v1v4adbsf&quot;,&quot;endpoint_class&quot;);</span>
 }
 }
 
@@ -2045,15 +2050,15 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;virtual_weight&quot;, key=&quot;es57bn7ga4wc9tqtcixpn0451&quot;, definition=&quot;void virtual_weight(edge_t * e)&quot;)
 public static void virtual_weight(ST_Agedge_s e) {
-<span class="fc" id="L2048">ENTERING(&quot;es57bn7ga4wc9tqtcixpn0451&quot;,&quot;virtual_weight&quot;);</span>
+<span class="fc" id="L2053">ENTERING(&quot;es57bn7ga4wc9tqtcixpn0451&quot;,&quot;virtual_weight&quot;);</span>
 try {
     int t;
-<span class="fc" id="L2051">    t = table[endpoint_class(agtail(e))][endpoint_class(aghead(e))];</span>
-<span class="fc" id="L2052">    ED_weight(e, ED_weight(e) * t);</span>
+<span class="fc" id="L2056">    t = table[endpoint_class(agtail(e))][endpoint_class(aghead(e))];</span>
+<span class="fc" id="L2057">    ED_weight(e, ED_weight(e) * t);</span>
 } finally {
-<span class="fc" id="L2054">LEAVING(&quot;es57bn7ga4wc9tqtcixpn0451&quot;,&quot;virtual_weight&quot;);</span>
+<span class="fc" id="L2059">LEAVING(&quot;es57bn7ga4wc9tqtcixpn0451&quot;,&quot;virtual_weight&quot;);</span>
 }
-<span class="fc" id="L2056">}</span>
+<span class="fc" id="L2061">}</span>
 
 
 
@@ -2061,25 +2066,25 @@ try {
 @Reviewed(when = &quot;14/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/mincross.c&quot;, name=&quot;mincross_options&quot;, key=&quot;7ru09oqbudpeofsthzveig2m2&quot;, definition=&quot;static void mincross_options(graph_t * g)&quot;)
 public static void mincross_options(Globals zz, ST_Agraph_s g) {
-<span class="fc" id="L2064">ENTERING(&quot;7ru09oqbudpeofsthzveig2m2&quot;,&quot;mincross_options&quot;);</span>
+<span class="fc" id="L2069">ENTERING(&quot;7ru09oqbudpeofsthzveig2m2&quot;,&quot;mincross_options&quot;);</span>
 try {
     CString p;
     double f;
     
     /* set default values */
-<span class="fc" id="L2070">    zz.MinQuit = 8;</span>
-<span class="fc" id="L2071">    zz.MaxIter = 24;</span>
-<span class="fc" id="L2072">    zz.Convergence = .995;</span>
+<span class="fc" id="L2075">    zz.MinQuit = 8;</span>
+<span class="fc" id="L2076">    zz.MaxIter = 24;</span>
+<span class="fc" id="L2077">    zz.Convergence = .995;</span>
     
-<span class="fc" id="L2074">    p = agget(zz, g, new CString(&quot;mclimit&quot;));</span>
-<span class="pc bpc" id="L2075" title="3 of 4 branches missed.">    if (p!=null &amp;&amp; ((f = atof(p)) &gt; 0.0)) {</span>
-<span class="nc" id="L2076">UNSUPPORTED(&quot;4iu53eiz077u6joqgwawca8ya&quot;); // 	MinQuit = ((1)&gt;(MinQuit * f)?(1):(MinQuit * f));</span>
-<span class="nc" id="L2077">UNSUPPORTED(&quot;38po81l36cibw6jc3qlsscpcu&quot;); // 	MaxIter = ((1)&gt;(MaxIter * f)?(1):(MaxIter * f));</span>
+<span class="fc" id="L2079">    p = agget(zz, g, new CString(&quot;mclimit&quot;));</span>
+<span class="pc bpc" id="L2080" title="3 of 4 branches missed.">    if (p!=null &amp;&amp; ((f = atof(p)) &gt; 0.0)) {</span>
+<span class="nc" id="L2081">UNSUPPORTED(&quot;4iu53eiz077u6joqgwawca8ya&quot;); // 	MinQuit = ((1)&gt;(MinQuit * f)?(1):(MinQuit * f));</span>
+<span class="nc" id="L2082">UNSUPPORTED(&quot;38po81l36cibw6jc3qlsscpcu&quot;); // 	MaxIter = ((1)&gt;(MaxIter * f)?(1):(MaxIter * f));</span>
     }   
 } finally {
-<span class="fc" id="L2080">LEAVING(&quot;7ru09oqbudpeofsthzveig2m2&quot;,&quot;mincross_options&quot;);</span>
+<span class="fc" id="L2085">LEAVING(&quot;7ru09oqbudpeofsthzveig2m2&quot;,&quot;mincross_options&quot;);</span>
 }
-<span class="fc" id="L2082">}</span>
+<span class="fc" id="L2087">}</span>
 
 
 /*
@@ -2099,50 +2104,52 @@ try {
  * effect, not in upstream Graphviz.
  */
 private static int leftPosOfCluster(ST_Agraph_s c, int r) {
-<span class="pc bpc" id="L2102" title="1 of 4 branches missed.">    if (GD_rankleader(c) != null &amp;&amp; GD_rankleader(c).get_(r) != null) {</span>
-<span class="fc" id="L2103">	return ND_order(GD_rankleader(c).get_(r));</span>
+<span class="nc bnc" id="L2107" title="All 4 branches missed.">    if (GD_rankleader(c) != null &amp;&amp; GD_rankleader(c).get_(r) != null) {</span>
+<span class="nc" id="L2108">	return ND_order(GD_rankleader(c).get_(r));</span>
     }
-<span class="pc bpc" id="L2105" title="7 of 8 branches missed.">    if (GD_rank(c) != null &amp;&amp; r &gt;= GD_minrank(c) &amp;&amp; r &lt;= GD_maxrank(c) &amp;&amp; GD_rank(c).get__(r).n &gt; 0</span>
-<span class="nc bnc" id="L2106" title="All 2 branches missed.">	    &amp;&amp; GD_rank(c).get__(r).v.get_(0) != null) {</span>
-<span class="nc" id="L2107">	return ND_order(GD_rank(c).get__(r).v.get_(0));</span>
+<span class="nc bnc" id="L2110" title="All 8 branches missed.">    if (GD_rank(c) != null &amp;&amp; r &gt;= GD_minrank(c) &amp;&amp; r &lt;= GD_maxrank(c) &amp;&amp; GD_rank(c).get__(r).n &gt; 0</span>
+<span class="nc bnc" id="L2111" title="All 2 branches missed.">	    &amp;&amp; GD_rank(c).get__(r).v.get_(0) != null) {</span>
+<span class="nc" id="L2112">	return ND_order(GD_rank(c).get__(r).v.get_(0));</span>
     }
-<span class="fc" id="L2109">    return -1;</span>
+<span class="nc" id="L2114">    return -1;</span>
 }
 
 public static void dumpSkeletonOrder(Globals zz, ST_Agraph_s g, String phase) {
-<span class="fc bfc" id="L2113" title="All 2 branches covered.">    for (int i = 1; i &lt;= GD_n_cluster(g); i++) {</span>
-<span class="fc" id="L2114">	final ST_Agraph_s c = GD_clust(g).get_(i);</span>
-<span class="fc" id="L2115">	final StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L2116" title="All 2 branches covered.">	for (int r = GD_minrank(c); r &lt;= GD_maxrank(c); r++) {</span>
-<span class="fc" id="L2117">	    sb.append(&quot; r&quot;).append(r).append(&quot;:&quot;).append(leftPosOfCluster(c, r));</span>
+    if (!smetana.core.debug.SmetanaDebug.TRACE_ON)
+<span class="fc" id="L2119">	return;</span>
+    for (int i = 1; i &lt;= GD_n_cluster(g); i++) {
+	final ST_Agraph_s c = GD_clust(g).get_(i);
+	final StringBuilder sb = new StringBuilder();
+	for (int r = GD_minrank(c); r &lt;= GD_maxrank(c); r++) {
+	    sb.append(&quot; r&quot;).append(r).append(&quot;:&quot;).append(leftPosOfCluster(c, r));
 	}
 	if (false) SMETANA_TRACE(&quot;mincross__c&quot;, &quot;dumpSkeletonOrder &quot; + phase + &quot;: cluster &quot;
 		+ smetana.core.debug.SmetanaDebug.safeName(zz, c)
 		+ &quot; span=[&quot; + GD_minrank(c) + &quot;,&quot; + GD_maxrank(c) + &quot;] leftpos:&quot; + sb);
-<span class="fc" id="L2122">	dumpSkeletonOrder(zz, c, phase);</span>
+	dumpSkeletonOrder(zz, c, phase);
     }
-<span class="fc bfc" id="L2124" title="All 2 branches covered.">    for (int i = 1; i &lt;= GD_n_cluster(g); i++) {</span>
-<span class="fc bfc" id="L2125" title="All 2 branches covered.">	for (int j = i + 1; j &lt;= GD_n_cluster(g); j++) {</span>
-<span class="fc" id="L2126">	    final ST_Agraph_s c1 = GD_clust(g).get_(i);</span>
-<span class="fc" id="L2127">	    final ST_Agraph_s c2 = GD_clust(g).get_(j);</span>
-<span class="pc bpc" id="L2128" title="1 of 4 branches missed.">	    if (GD_minrank(c1) &gt; GD_maxrank(c2) || GD_minrank(c2) &gt; GD_maxrank(c1)) {</span>
-<span class="fc" id="L2129">		continue;</span>
+    for (int i = 1; i &lt;= GD_n_cluster(g); i++) {
+	for (int j = i + 1; j &lt;= GD_n_cluster(g); j++) {
+	    final ST_Agraph_s c1 = GD_clust(g).get_(i);
+	    final ST_Agraph_s c2 = GD_clust(g).get_(j);
+	    if (GD_minrank(c1) &gt; GD_maxrank(c2) || GD_minrank(c2) &gt; GD_maxrank(c1)) {
+		continue;
 	    }
-<span class="fc" id="L2131">	    final int lo = Math.max(GD_minrank(c1), GD_minrank(c2));</span>
-<span class="fc" id="L2132">	    final int hi = Math.min(GD_maxrank(c1), GD_maxrank(c2));</span>
-<span class="fc" id="L2133">	    int firstSide = 0;</span>
-<span class="fc" id="L2134">	    int firstSideRank = 0;</span>
-<span class="fc bfc" id="L2135" title="All 2 branches covered.">	    for (int r = lo; r &lt;= hi; r++) {</span>
-<span class="fc" id="L2136">		final int p1 = leftPosOfCluster(c1, r);</span>
-<span class="fc" id="L2137">		final int p2 = leftPosOfCluster(c2, r);</span>
-<span class="pc bpc" id="L2138" title="2 of 4 branches missed.">		if (p1 &lt; 0 || p2 &lt; 0) {</span>
-<span class="nc" id="L2139">		    continue;</span>
+	    final int lo = Math.max(GD_minrank(c1), GD_minrank(c2));
+	    final int hi = Math.min(GD_maxrank(c1), GD_maxrank(c2));
+	    int firstSide = 0;
+	    int firstSideRank = 0;
+	    for (int r = lo; r &lt;= hi; r++) {
+		final int p1 = leftPosOfCluster(c1, r);
+		final int p2 = leftPosOfCluster(c2, r);
+		if (p1 &lt; 0 || p2 &lt; 0) {
+		    continue;
 		}
-<span class="fc bfc" id="L2141" title="All 2 branches covered.">		final int side = p1 &lt; p2 ? 1 : -1;</span>
-<span class="pc bpc" id="L2142" title="1 of 2 branches missed.">		if (firstSide == 0) {</span>
-<span class="fc" id="L2143">		    firstSide = side;</span>
-<span class="fc" id="L2144">		    firstSideRank = r;</span>
-<span class="nc bnc" id="L2145" title="All 2 branches missed.">		} else if (side != firstSide) {</span>
+		final int side = p1 &lt; p2 ? 1 : -1;
+		if (firstSide == 0) {
+		    firstSide = side;
+		    firstSideRank = r;
+		} else if (side != firstSide) {
 		    if (false) SMETANA_TRACE(&quot;mincross__c&quot;, &quot;dumpSkeletonOrder &quot; + phase
 			    + &quot;: SIDE-SWAP between &quot; + smetana.core.debug.SmetanaDebug.safeName(zz, c1)
 			    + &quot; and &quot; + smetana.core.debug.SmetanaDebug.safeName(zz, c2)
@@ -2152,7 +2159,7 @@ public static void dumpSkeletonOrder(Globals zz, ST_Agraph_s g, String phase) {
 	    }
 	}
     }
-<span class="fc" id="L2155">}</span>
+}
 
 
 }

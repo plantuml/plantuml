@@ -45,8 +45,14 @@ import h.ST_Agobj_s;
 import smetana.core.Globals;
 
 <span class="nc" id="L47">public final class SmetanaDebug {</span>
+
+	// Compile-time switch for the trace scaffolding below and its call sites.
+	// When false, javac drops the guarded code entirely, so the release build
+	// carries no cost for it (label building via safeName() is expensive: it
+	// throws and catches an exception for every virtual node).
+	static public final boolean TRACE_ON = false;
 	// ::remove folder when __HAXE__
-<span class="fc" id="L49">	static private final Map&lt;String, String&gt; methods = new LinkedHashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L55">	static private final Map&lt;String, String&gt; methods = new LinkedHashMap&lt;String, String&gt;();</span>
 
 	static private java.io.PrintWriter traceWriter;
 
@@ -57,15 +63,15 @@ import smetana.core.Globals;
 	// content survives even if the test crashes.
 	static public synchronized void SMETANA_TRACE(String fileName, String s) {
 		try {
-<span class="nc bnc" id="L60" title="All 2 branches missed.">			if (traceWriter == null) {</span>
-<span class="nc" id="L61">				traceWriter = new java.io.PrintWriter(new java.io.FileWriter(&quot;smetana.txt&quot;, false));</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">			if (traceWriter == null) {</span>
+<span class="nc" id="L67">				traceWriter = new java.io.PrintWriter(new java.io.FileWriter(&quot;smetana.txt&quot;, false));</span>
 			}
-<span class="nc" id="L63">			traceWriter.println(&quot;[&quot; + fileName + &quot;]&quot; + s.replace(&quot;\0&quot;, &quot;&quot;));</span>
-<span class="nc" id="L64">			traceWriter.flush();</span>
-<span class="nc" id="L65">		} catch (IOException e) {</span>
-<span class="nc" id="L66">			e.printStackTrace();</span>
-<span class="nc" id="L67">		}</span>
-<span class="nc" id="L68">	}</span>
+<span class="nc" id="L69">			traceWriter.println(&quot;[&quot; + fileName + &quot;]&quot; + s.replace(&quot;\0&quot;, &quot;&quot;));</span>
+<span class="nc" id="L70">			traceWriter.flush();</span>
+<span class="nc" id="L71">		} catch (IOException e) {</span>
+<span class="nc" id="L72">			e.printStackTrace();</span>
+<span class="nc" id="L73">		}</span>
+<span class="nc" id="L74">	}</span>
 
 	// [DEBUG-2735] Safe replacement for agnameof() in debug traces.
 	// Some nodes (e.g. fastgr__c.virtual_node()) are built with `new ST_Agnode_s()`
@@ -78,38 +84,38 @@ import smetana.core.Globals;
 	// placeholder instead of crashing the whole test.
 	static public String safeName(Globals zz, Object obj) {
 		try {
-<span class="fc" id="L81">			Object name = id__c.agnameof(zz, (ST_Agobj_s) obj);</span>
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">			return name == null ? (&quot;&lt;anon:&quot; + System.identityHashCode(obj) + &quot;&gt;&quot;) : name.toString();</span>
-<span class="fc" id="L83">		} catch (Throwable t) {</span>
-<span class="fc" id="L84">			return &quot;&lt;unnamed:&quot; + System.identityHashCode(obj) + &quot; (&quot; + t.getClass().getSimpleName() + &quot;)&gt;&quot;;</span>
+<span class="nc" id="L87">			Object name = id__c.agnameof(zz, (ST_Agobj_s) obj);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">			return name == null ? (&quot;&lt;anon:&quot; + System.identityHashCode(obj) + &quot;&gt;&quot;) : name.toString();</span>
+<span class="nc" id="L89">		} catch (Throwable t) {</span>
+<span class="nc" id="L90">			return &quot;&lt;unnamed:&quot; + System.identityHashCode(obj) + &quot; (&quot; + t.getClass().getSimpleName() + &quot;)&gt;&quot;;</span>
 		}
 	}
 
 	static public void LOG(String s) {
 
-<span class="fc" id="L90">	}</span>
+<span class="fc" id="L96">	}</span>
 
 	static public void ENTERING(String signature, String methodName) {
 //		if (methods.containsKey(methodName) == false)
 //			methods.put(methodName, methodName);
-<span class="fc" id="L95">	}</span>
+<span class="fc" id="L101">	}</span>
 
 	static public void LIST_METHODS() {
-<span class="nc" id="L98">		int i = 0;</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		for (String s : methods.keySet()) {</span>
-<span class="nc" id="L100">			System.err.println(&quot;i=&quot; + i + &quot; &quot; + s);</span>
-<span class="nc" id="L101">			i++;</span>
-<span class="nc" id="L102">		}</span>
-<span class="nc" id="L103">	}</span>
+<span class="nc" id="L104">		int i = 0;</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		for (String s : methods.keySet()) {</span>
+<span class="nc" id="L106">			System.err.println(&quot;i=&quot; + i + &quot; &quot; + s);</span>
+<span class="nc" id="L107">			i++;</span>
+<span class="nc" id="L108">		}</span>
+<span class="nc" id="L109">	}</span>
 
 	static public void LEAVING(String signature, String methodName) {
-<span class="fc" id="L106">	}</span>
+<span class="fc" id="L112">	}</span>
 
 	public static void reset() {
-<span class="fc" id="L109">	}</span>
+<span class="fc" id="L115">	}</span>
 
 	public static void printMe() {
-<span class="fc" id="L112">	}</span>
+<span class="fc" id="L118">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

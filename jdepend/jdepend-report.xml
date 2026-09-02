@@ -251,8 +251,8 @@
 
         <Package name="gen.lib.cdt">
             <Stats>
-                <TotalClasses>18</TotalClasses>
-                <ConcreteClasses>18</ConcreteClasses>
+                <TotalClasses>12</TotalClasses>
+                <ConcreteClasses>12</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>3</Ca>
                 <Ce>4</Ce>
@@ -295,24 +295,6 @@
                 </Class>
                 <Class sourceFile="dttree__c.java">
                     gen.lib.cdt.dttree__c$1
-                </Class>
-                <Class sourceFile="dttree__c.java">
-                    gen.lib.cdt.dttree__c$do_search
-                </Class>
-                <Class sourceFile="dttree__c.java">
-                    gen.lib.cdt.dttree__c$dt_delete
-                </Class>
-                <Class sourceFile="dttree__c.java">
-                    gen.lib.cdt.dttree__c$dt_insert
-                </Class>
-                <Class sourceFile="dttree__c.java">
-                    gen.lib.cdt.dttree__c$dt_next
-                </Class>
-                <Class sourceFile="dttree__c.java">
-                    gen.lib.cdt.dttree__c$has_root
-                </Class>
-                <Class sourceFile="dttree__c.java">
-                    gen.lib.cdt.dttree__c$no_root
                 </Class>
                 <Class sourceFile="dtview__c.java">
                     gen.lib.cdt.dtview__c

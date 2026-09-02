@@ -30,7 +30,7 @@ Total Classes: 9
 "gen.annotation" --> "java.lang.annotation"
 
 class "gen.lib.cdt" %lighten("red", 57) {
-Total Classes: 18
+Total Classes: 12
 }
 "gen.lib.cdt" --> "h"
 "gen.lib.cdt" --> "java.lang"

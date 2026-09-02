@@ -962,7 +962,7 @@ try {
 	// hand-reconstruction) whether the reachability comes from a genuine node
 	// adjacency cycle or merely from the same-rank ordering edge between two
 	// label vnodes on rank -1.
-<span class="nc bnc" id="L965" title="All 2 branches missed.">	if (canReachInAuxGraph(zz, agtail(e0), aghead(e0), &quot;guard1 label=&quot; + safeName(zz, lu)) == false)</span>
+<span class="nc bnc" id="L965" title="All 2 branches missed.">	if (canReachInAuxGraph(zz, agtail(e0), aghead(e0), smetana.core.debug.SmetanaDebug.TRACE_ON ? &quot;guard1 label=&quot; + safeName(zz, lu) : null) == false)</span>
 <span class="nc" id="L966">	    make_aux_edge(aghead(e0), agtail(e0), m1,</span>
 <span class="nc" id="L967">		ED_weight(e));</span>
 	else {
@@ -971,7 +971,7 @@ try {
 		    + &quot; -&gt; &quot; + safeName(zz, agtail(e0)) + &quot; (would close a cycle in the X aux graph)&quot;);
 	}
 <span class="nc" id="L973">	m1 = m0 + ((int)(ND_rw(agtail(e1)) + ND_lw(aghead(e1))));</span>
-<span class="nc bnc" id="L974" title="All 2 branches missed.">	if (canReachInAuxGraph(zz, aghead(e1), agtail(e1), &quot;guard2 label=&quot; + safeName(zz, lu)) == false)</span>
+<span class="nc bnc" id="L974" title="All 2 branches missed.">	if (canReachInAuxGraph(zz, aghead(e1), agtail(e1), smetana.core.debug.SmetanaDebug.TRACE_ON ? &quot;guard2 label=&quot; + safeName(zz, lu) : null) == false)</span>
 <span class="nc" id="L975">	    make_aux_edge(agtail(e1), aghead(e1), m1,</span>
 <span class="nc" id="L976">		ED_weight(e));</span>
 	else {
@@ -2204,40 +2204,42 @@ try {
  * of them, making them impossible to tell apart. Safe to leave in place.
  */
 private static void dumpAuxEdges(Globals zz, ST_Agraph_s g, String phase) {
-<span class="fc" id="L2207">    final IdentityHashMap&lt;ST_Agnode_s, String&gt; labels = new IdentityHashMap&lt;ST_Agnode_s, String&gt;();</span>
-<span class="fc" id="L2208">    collectClusterBoundaryLabels(zz, g, labels);</span>
+    if (!smetana.core.debug.SmetanaDebug.TRACE_ON)
+<span class="fc" id="L2208">	return;</span>
+    final IdentityHashMap&lt;ST_Agnode_s, String&gt; labels = new IdentityHashMap&lt;ST_Agnode_s, String&gt;();
+    collectClusterBoundaryLabels(zz, g, labels);
     if (false) SMETANA_TRACE(&quot;position__c&quot;, &quot;----- rank array contents &quot; + phase + &quot; -----&quot;);
-<span class="fc bfc" id="L2210" title="All 2 branches covered.">    for (int r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {</span>
+    for (int r = GD_minrank(g); r &lt;= GD_maxrank(g); r++) {
 	if (false) SMETANA_TRACE(&quot;position__c&quot;, &quot;  rank &quot; + r + &quot; (n=&quot; + GD_rank(g).get__(r).n + &quot;):&quot;);
-<span class="fc bfc" id="L2212" title="All 2 branches covered.">	for (int i = 0; i &lt; GD_rank(g).get__(r).n; i++) {</span>
-<span class="fc" id="L2213">	    final ST_Agnode_s v = (ST_Agnode_s) GD_rank(g).get__(r).v.get_(i);</span>
-<span class="pc bpc" id="L2214" title="2 of 4 branches missed.">	    final String label = v == null ? &quot;null&quot; : (labels.containsKey(v) ? labels.get(v) : safeName(zz, v));</span>
+	for (int i = 0; i &lt; GD_rank(g).get__(r).n; i++) {
+	    final ST_Agnode_s v = (ST_Agnode_s) GD_rank(g).get__(r).v.get_(i);
+	    final String label = v == null ? &quot;null&quot; : (labels.containsKey(v) ? labels.get(v) : safeName(zz, v));
 	    if (false) SMETANA_TRACE(&quot;position__c&quot;, &quot;    v[&quot; + i + &quot;] = &quot; + label + (v == null ? &quot;&quot; : &quot; (ND_order=&quot; + ND_order(v) + &quot;)&quot;));
 	}
     }
     if (false) SMETANA_TRACE(&quot;position__c&quot;, &quot;----- aux edges &quot; + phase + &quot; -----&quot;);
-<span class="fc bfc" id="L2219" title="All 2 branches covered.">    for (ST_Agnode_s n = GD_nlist(g); n != null; n = ND_next(n)) {</span>
-<span class="fc bfc" id="L2220" title="All 2 branches covered.">	final String nlabel = labels.containsKey(n) ? labels.get(n) : safeName(zz, n);</span>
-<span class="fc bfc" id="L2221" title="All 2 branches covered.">	for (int i = 0; ND_out(n).list.get_(i) != null; i++) {</span>
-<span class="fc" id="L2222">	    final ST_Agedge_s e = (ST_Agedge_s) ND_out(n).list.get_(i);</span>
-<span class="fc" id="L2223">	    final ST_Agnode_s head = aghead(e);</span>
-<span class="fc bfc" id="L2224" title="All 2 branches covered.">	    final String hlabel = labels.containsKey(head) ? labels.get(head) : safeName(zz, head);</span>
+    for (ST_Agnode_s n = GD_nlist(g); n != null; n = ND_next(n)) {
+	final String nlabel = labels.containsKey(n) ? labels.get(n) : safeName(zz, n);
+	for (int i = 0; ND_out(n).list.get_(i) != null; i++) {
+	    final ST_Agedge_s e = (ST_Agedge_s) ND_out(n).list.get_(i);
+	    final ST_Agnode_s head = aghead(e);
+	    final String hlabel = labels.containsKey(head) ? labels.get(head) : safeName(zz, head);
 	    if (false) SMETANA_TRACE(&quot;position__c&quot;, &quot;  &quot; + nlabel + &quot; -&gt; &quot; + hlabel + &quot; minlen=&quot; + ED_minlen(e) + &quot; weight=&quot; + ED_weight(e));
 	}
     }
-<span class="fc" id="L2228">}</span>
+}
 
 private static void collectClusterBoundaryLabels(Globals zz, ST_Agraph_s g, IdentityHashMap&lt;ST_Agnode_s, String&gt; labels) {
-<span class="fc bfc" id="L2231" title="All 2 branches covered.">    for (int c = 1; c &lt;= GD_n_cluster(g); c++) {</span>
-<span class="fc" id="L2232">	final ST_Agraph_s clust = GD_clust(g).get_(c);</span>
-<span class="fc" id="L2233">	final String name = safeName(zz, clust);</span>
-<span class="pc bpc" id="L2234" title="1 of 2 branches missed.">	if (GD_ln(clust) != null)</span>
-<span class="fc" id="L2235">	    labels.put(GD_ln(clust), &quot;ln(&quot; + name + &quot;)&quot;);</span>
-<span class="pc bpc" id="L2236" title="1 of 2 branches missed.">	if (GD_rn(clust) != null)</span>
-<span class="fc" id="L2237">	    labels.put(GD_rn(clust), &quot;rn(&quot; + name + &quot;)&quot;);</span>
-<span class="fc" id="L2238">	collectClusterBoundaryLabels(zz, clust, labels);</span>
+<span class="nc bnc" id="L2233" title="All 2 branches missed.">    for (int c = 1; c &lt;= GD_n_cluster(g); c++) {</span>
+<span class="nc" id="L2234">	final ST_Agraph_s clust = GD_clust(g).get_(c);</span>
+<span class="nc" id="L2235">	final String name = safeName(zz, clust);</span>
+<span class="nc bnc" id="L2236" title="All 2 branches missed.">	if (GD_ln(clust) != null)</span>
+<span class="nc" id="L2237">	    labels.put(GD_ln(clust), &quot;ln(&quot; + name + &quot;)&quot;);</span>
+<span class="nc bnc" id="L2238" title="All 2 branches missed.">	if (GD_rn(clust) != null)</span>
+<span class="nc" id="L2239">	    labels.put(GD_rn(clust), &quot;rn(&quot; + name + &quot;)&quot;);</span>
+<span class="nc" id="L2240">	collectClusterBoundaryLabels(zz, clust, labels);</span>
     }
-<span class="fc" id="L2240">}</span>
+<span class="nc" id="L2242">}</span>
 
 
 }

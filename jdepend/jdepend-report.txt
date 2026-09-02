@@ -152,8 +152,8 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 18
-    Concrete Classes: 18
+    Total Classes: 12
+    Concrete Classes: 12
     Abstract Classes: 0
 
     Ca: 3
@@ -176,12 +176,6 @@ Concrete Classes:
     gen.lib.cdt.dtsize__c
     gen.lib.cdt.dttree__c
     gen.lib.cdt.dttree__c$1
-    gen.lib.cdt.dttree__c$do_search
-    gen.lib.cdt.dttree__c$dt_delete
-    gen.lib.cdt.dttree__c$dt_insert
-    gen.lib.cdt.dttree__c$dt_next
-    gen.lib.cdt.dttree__c$has_root
-    gen.lib.cdt.dttree__c$no_root
     gen.lib.cdt.dtview__c
     gen.lib.cdt.dtview__c$1
 
@@ -15055,7 +15049,7 @@ Name, Class Count, Abstract Class Count, Ca, Ce, A, I, D, V:
 com.plantuml.ubrex,29,4,10,4,0.14,0.29,0.58,1
 com.plantuml.ubrex.builder,9,1,9,3,0.11,0.25,0.64,1
 gen.annotation,9,9,0,2,1,1,1,1
-gen.lib.cdt,18,0,3,4,0,0.57,0.43,1
+gen.lib.cdt,12,0,3,4,0,0.57,0.43,1
 gen.lib.cgraph,37,0,5,6,0,0.55,0.45,1
 gen.lib.common,32,0,3,7,0,0.7,0.3,1
 gen.lib.dotgen,20,0,2,8,0,0.8,0.2,1
