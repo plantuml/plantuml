@@ -51,8 +51,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import h.ST_Agedge_s;
 import h.ST_Agnode_s;
@@ -502,7 +500,13 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		return result;
 	}
 
-	private static final Lock lock = new ReentrantLock();
+	// A plain monitor rather than a ReentrantLock: the smetana port keeps its
+	// state in Globals, so layout runs are serialized process-wide. No fairness
+	// or interruptibility is used, so synchronized is equivalent on the JVM, and
+	// unlike java.util.concurrent.locks it is available in the TeaVM classlib,
+	// which the browser build needs now that "!pragma layout smetana" reaches
+	// this class there.
+	private static final Object lock = new Object();
 
 	@Override
 	public TextBlock getTextBlock(List<String> dotStrings, FileFormatOption fileFormatOption)
@@ -549,16 +553,13 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			}
 		}
 
-		lock.lock();
-		try {
+		synchronized (lock) {
 			final Globals zz = Globals.open();
 			try {
 				return getTextBlockInternal(stringBounder, zz);
 			} finally {
 				Globals.close();
 			}
-		} finally {
-			lock.unlock();
 		}
 	}
 

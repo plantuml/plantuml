@@ -29,7 +29,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  themes:
+  checks:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -69,3 +69,12 @@ jobs:
 
       - name: Check background
         run: node browser-test/check-background.js target=plantuml-mit/build/npm-plantuml
+
+      - name: Check smetana layout
+        run: node browser-test/check-smetana.js target=plantuml-mit/build/npm-plantuml
+
+      - name: Check viz missing
+        run: node browser-test/check-viz-missing.js target=plantuml-mit/build/npm-plantuml
+
+      - name: Add Gradle title to Summary
+        run: echo "## Gradle" >> $GITHUB_STEP_SUMMARY
