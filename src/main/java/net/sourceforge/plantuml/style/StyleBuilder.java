@@ -38,9 +38,7 @@ package net.sourceforge.plantuml.style;
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.LinkedHashSet;
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import net.sourceforge.plantuml.utils.Log;
 
@@ -117,26 +115,17 @@ public class StyleBuilder implements AutomaticCounter {
 		return ++counter;
 	}
 
-	private final Map<StyleSignatureBasic, Style> mergedStyleCache = new ConcurrentHashMap<>();
-
 	public Style getMergedStyle(StyleSignatureBasic signature) {
-		// return computeMergedStyle(signature);
-		return mergedStyleCache.computeIfAbsent(signature, sig -> computeMergedStyle(sig));
-	}
-
-	private Style computeMergedStyle(StyleSignatureBasic signature) {
 		boolean added = this.printedForLog.add(signature);
 		if (added)
 			Log.info(() -> "Using style " + signature);
 
-		Style mergedStyle = null;
-		for (Style style : index.findMatching(signature)) {
-			if (mergedStyle == null)
-				mergedStyle = style;
-			else
-				mergedStyle = mergedStyle.mergeWith(style, MergeStrategy.OVERWRITE_EXISTING_VALUE);
-		}
-		return mergedStyle;
+		// The actual computation -- and its memoization -- now live on the (immutable, often
+		// shared-across-diagrams) StyleIndex itself; see StyleIndex#getMergedStyle's javadoc.
+		// printedForLog stays here since it is deliberately per-builder (one diagram's log
+		// should not suppress the very same "Using style ..." line for the next diagram just
+		// because they share an index).
+		return index.getMergedStyle(signature);
 	}
 
 	public Style getMergedStyleSpecial(StyleSignatureBasic signature, int deltaPriority) {

@@ -39,8 +39,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-import net.sourceforge.plantuml.style.parser2.LevelConstraint;
 import net.sourceforge.plantuml.style.parser2.StyleAtomTrie;
 import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
@@ -62,15 +63,26 @@ import net.sourceforge.plantuml.style.parser2.StyleQuery;
  * and reused across diagrams (see {@code StyleLoader#loadSkin}) never has a later diagram's own
  * {@code <style>} override leak back into the shared, cached instance it was cloned from.
  *
- * No result of {@link #findMatching(StyleSignatureBasic)} is cached here: repeated identical
- * queries are still resolved from scratch every time (memoizing that is future work, layered on
- * top by the caller -- see {@link StyleBuilder}'s own {@code mergedStyleCache}).
+ * {@link #getMergedStyle(StyleSignatureBasic)}'s result IS memoized here, per signature -- and
+ * deliberately at this level rather than in {@link StyleBuilder}: {@code StyleLoader#loadSkin}
+ * hands out a fresh {@link StyleBuilder} (via {@code cloneMe()}) for every diagram that shares a
+ * given {@code .skin} file, but every one of those clones keeps pointing at the very same
+ * {@code StyleIndex} instance as long as neither has muted or loaded anything into it -- the
+ * overwhelmingly common case, since most diagrams carry no embedded {@code <style>} override at
+ * all. Caching here means every diagram sharing an unmuted skin also shares already-resolved
+ * signatures, instead of every diagram separately paying the first-resolution cost for the same
+ * answer. Correctness falls out for free from immutability: {@link #withLoaded(Style)} and
+ * {@link #withMuted(Collection)} both return a brand new instance -- with its own, empty cache --
+ * so a diagram that mutates its copy can never see a stale entry, and can never poison the
+ * shared one either.
  */
 public final class StyleIndex {
 
 	private static final StyleIndex EMPTY = new StyleIndex(Collections.<Style> emptyList());
 
 	private final List<Style> allStyles;
+
+	private final Map<StyleSignatureBasic, Style> mergedStyleCache = new ConcurrentHashMap<StyleSignatureBasic, Style>();
 
 	// Lazily (re)built from allStyles on first query after a with...() call produced this
 	// index, then reused for every later query -- a style sheet is loaded once but queried
@@ -159,13 +171,35 @@ public final class StyleIndex {
 		}
 		return result;
 	}
-
 	/**
 	 * Every loaded style whose signature is a subset of {@code query}'s (per
 	 * {@link StyleSignatureBasic#matchAll}), in the order they were loaded or muted in.
 	 */
 	public List<Style> findMatching(StyleSignatureBasic query) {
 		return trie().findMatching(query.toQuery());
+	}
+
+	/**
+	 * Every style matching {@code signature} (see {@link #findMatching(StyleSignatureBasic)}),
+	 * folded together into one {@link Style} in match order using
+	 * {@link MergeStrategy#OVERWRITE_EXISTING_VALUE} -- {@link StyleBuilder#getMergedStyle}'s
+	 * actual computation, moved here so its result can be memoized once per index instance
+	 * rather than once per {@link StyleBuilder} clone (see this class's own javadoc for why that
+	 * distinction is what makes the caching worth having across diagrams sharing a skin).
+	 */
+	public Style getMergedStyle(StyleSignatureBasic signature) {
+		return mergedStyleCache.computeIfAbsent(signature, sig -> computeMergedStyle(sig));
+	}
+
+	private Style computeMergedStyle(StyleSignatureBasic signature) {
+		Style mergedStyle = null;
+		for (Style style : findMatching(signature)) {
+			if (mergedStyle == null)
+				mergedStyle = style;
+			else
+				mergedStyle = mergedStyle.mergeWith(style, MergeStrategy.OVERWRITE_EXISTING_VALUE);
+		}
+		return mergedStyle;
 	}
 
 	/** Every style ever loaded or muted into this index, in that same order. */
