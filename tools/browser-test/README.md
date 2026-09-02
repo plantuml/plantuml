@@ -64,8 +64,8 @@ way with `node check-viz-missing.js target=...`.
 
 ```
 gradlew :plantuml-mit:npmPackage -Pci
-cd browser-test && npm ci && npx playwright install --with-deps chromium
-node check-themes.js target=../plantuml-mit/build/npm-plantuml
+cd tools/browser-test && npm ci && npx playwright install --with-deps chromium
+node check-themes.js target=../../plantuml-mit/build/npm-plantuml
 ```
 
 `target` also accepts a path to the engine `.js` itself, and any directory holding a published
