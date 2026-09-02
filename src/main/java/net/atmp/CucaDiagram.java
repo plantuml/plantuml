@@ -466,9 +466,13 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 
 		if (TeaVM.isTeaVM())
 			// In the browser build, "!pragma layout smetana" selects the pure-Java
-			// layout engine; the default remains the Graphviz bridge (viz-global.js).
+			// layout engine; with viz-global.js loaded, the default remains the
+			// Graphviz bridge. When viz-global.js is NOT loaded, the diagram falls
+			// back to Smetana instead of failing, mirroring the dotIsAvailable()
+			// fallback of the JVM branch below (the pragma short-circuits, so the
+			// probe and its one-time console note only run on the default path).
 			// ::revert when JAVA8
-			maker = this.isUseSmetana() ? new CucaDiagramFileMakerSmetana(this) : new CucaDiagramFileMakerTeaVM(this);
+			maker = (this.isUseSmetana() || net.sourceforge.plantuml.teavm.GraphVizjsTeaVMEngine.vizMissingFallback()) ? new CucaDiagramFileMakerSmetana(this) : new CucaDiagramFileMakerTeaVM(this);
 		// maker = new CucaDiagramFileMakerSmetana(this);
 		// ::done
 		else if (this.isUseElk())

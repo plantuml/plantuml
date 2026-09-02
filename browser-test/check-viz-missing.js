@@ -1,23 +1,27 @@
 'use strict';
-// Functional check for how the browser (TeaVM) engine behaves when viz-global.js
-// is not loaded.
+// Functional check for how the browser (TeaVM) engine behaves when the
+// Graphviz bridge (viz-global.js) is missing or broken.
 //
 // usage: node check-viz-missing.js target=<dir-or-js>
 //   target   a directory containing plantuml.js (viz-global.js is served from there
 //            too for the control page), or a path to the engine .js file itself
 //
-// Diagram types that lay out through Graphviz (class, component, deployment, state,
-// usecase) call Viz.instance() from a JSBody script. Without the guard this check
-// pins, a missing Viz global threw a synchronous ReferenceError before the async
-// callback was wired up, the exception escaped the render call as an unhandled
-// TeaVM $jsException, and the target element stayed empty: no output, no message,
-// an error only in the console.
+// The contract checked here has two halves:
 //
-// The contract checked here: with viz-global.js absent, a Graphviz-family diagram
-// must produce a visible crash report that names Viz, must not leave the target
-// empty, and must not throw an unhandled page error. Diagram types with native
-// layout (sequence, activity) must keep rendering normally without viz-global.js.
-// A control page with viz-global.js loaded pins that the normal path is unchanged.
+// - viz-global.js ABSENT: Graphviz-family diagrams fall back to the Smetana
+//   layout engine and render normally (check-viz-fallback.js pins the details
+//   of that path; here one render per family type is enough). Diagram types
+//   with native layout (sequence, activity) keep rendering as they always did.
+//
+// - viz-global.js PRESENT BUT BROKEN (a Viz whose instance() rejects, the
+//   shape of a failed or partial load): the render must produce a visible
+//   crash report that names Viz, must not leave the target empty, and must
+//   not throw an unhandled page error. This exercises the error path that
+//   used to be reachable with viz merely absent: an unhandled exception
+//   escaping the render call with nothing drawn at all.
+//
+// A control page with a working viz-global.js pins that the normal path is
+// unchanged.
 const path = require('path'), http = require('http'), fs = require('fs');
 const pw = require(process.env.BENCH_PW || 'playwright');
 
@@ -36,10 +40,14 @@ if (!fs.existsSync(path.join(dir, 'viz-global.js'))) {
   process.exit(2);
 }
 
-// Two pages from one server: /index.html loads only the engine, /index-viz.html
-// also loads viz-global.js the way the npm package demo pages do.
-const pageHtml = withViz => `<!doctype html><html><head></head><body><div id="out"></div>
-${withViz ? '<script src="/viz-global.js"></script>' : ''}
+// Three pages from one server: /index.html loads only the engine,
+// /index-broken.html defines a Viz whose instance() rejects, and
+// /index-viz.html loads the real viz-global.js the way the demo pages do.
+const brokenStub = `<script>
+window.Viz = { instance: function () { return Promise.reject(new Error('Viz failed to initialize (simulated)')); } };
+</script>`;
+const pageHtml = mode => `<!doctype html><html><head></head><body><div id="out"></div>
+${mode === 'viz' ? '<script src="/viz-global.js"></script>' : mode === 'broken' ? brokenStub : ''}
 <script type="module">
 import {render} from '/${file}';
 window.__render=(lines,id)=>render(lines,id,{maxSvgSize:98304});
@@ -48,8 +56,9 @@ window.__ready=1;
 
 const server = http.createServer((req, res) => {
   const u = decodeURIComponent(req.url.split('?')[0]);
-  if (u === '/index.html') { res.setHeader('content-type', 'text/html'); return res.end(pageHtml(false)); }
-  if (u === '/index-viz.html') { res.setHeader('content-type', 'text/html'); return res.end(pageHtml(true)); }
+  if (u === '/index.html') { res.setHeader('content-type', 'text/html'); return res.end(pageHtml('bare')); }
+  if (u === '/index-broken.html') { res.setHeader('content-type', 'text/html'); return res.end(pageHtml('broken')); }
+  if (u === '/index-viz.html') { res.setHeader('content-type', 'text/html'); return res.end(pageHtml('viz')); }
   const p = path.join(dir, u);
   if (p.startsWith(dir) && fs.existsSync(p) && fs.statSync(p).isFile()) {
     res.setHeader('content-type', 'application/javascript');
@@ -58,6 +67,9 @@ const server = http.createServer((req, res) => {
   }
   res.statusCode = 404; res.end();
 });
+
+// The PlantUML error image is green on black; a laid-out diagram never is.
+const isErrorImage = svg => svg.includes('#33FF02') && svg.includes('#FF0000');
 
 let failures = 0;
 function check(label, ok, detail) {
@@ -69,7 +81,7 @@ const CLASS = ['@startuml', 'class Car {', '  +drive(): void', '}', 'class Engin
 const COMPONENT = ['@startuml', '[Web UI] --> [API Gateway]', '[API Gateway] --> [Orders]', '@enduml'];
 // A composite state is a distinct failure path: state diagrams run
 // CucaDiagramSimplifierState before the dot text is even produced, so the inner
-// layout can hit the missing engine earlier than the top-level one.
+// layout can hit the broken engine earlier than the top-level one.
 const STATE = ['@startuml', '[*] --> Working', 'state Working {', '  [*] --> Fetching', '  Fetching --> Parsing : done', '}', 'Working --> [*]', '@enduml'];
 const SEQUENCE = ['@startuml', 'Alice -> Bob: hello', 'Bob --> Alice: hi', '@enduml'];
 const ACTIVITY = ['@startuml', 'start', ':Receive order;', ':Charge card;', 'stop', '@enduml'];
@@ -88,7 +100,8 @@ async function renderOn(page, lines) {
     try { window.__render(lines, 'out'); } catch (e) { thrown = String(e && e.message || e); }
     if (!thrown) await Promise.race([done, new Promise(r => setTimeout(r, 30000))]);
     const svg = out.querySelector('svg');
-    return { thrown, svg: svg ? svg.outerHTML : null, text: out.textContent || '' };
+    return { thrown, svg: svg ? svg.outerHTML : null, text: out.textContent || '',
+      shapes: svg ? svg.querySelectorAll('path,polygon,line,rect,ellipse').length : 0 };
   }, { lines });
 }
 
@@ -97,7 +110,7 @@ async function renderOn(page, lines) {
   const port = server.address().port;
   const browser = await pw.chromium.launch({ headless: true });
 
-  // Page 1: engine only, viz-global.js not loaded.
+  // Page 1: engine only, viz-global.js not loaded at all.
   const bare = await browser.newPage();
   const bareErrors = [];
   bare.on('pageerror', e => bareErrors.push(String(e.message).split('\n')[0]));
@@ -112,15 +125,32 @@ async function renderOn(page, lines) {
 
   for (const [label, lines] of [['class', CLASS], ['component', COMPONENT], ['composite state', STATE]]) {
     const r = await renderOn(bare, lines);
-    const output = r.svg || r.text;
-    check(`${label} diagram without viz-global.js produces output`, !r.thrown && !!output && output.trim().length > 0,
-      r.thrown || 'target element left empty');
-    check(`${label} diagram output names Viz`, !!output && /viz/i.test(output),
-      'output does not mention the missing engine: ' + String(output).slice(0, 160));
+    const ok = !r.thrown && !!r.svg && !isErrorImage(r.svg) && r.shapes > 0;
+    check(`${label} diagram without viz-global.js falls back to smetana`, ok,
+      r.thrown || (!r.svg ? 'no svg: ' + r.text.slice(0, 120)
+        : isErrorImage(r.svg) ? 'crash report instead of a fallback render'
+        : 'svg but no drawn content (shapes=' + r.shapes + ')'));
   }
   check('no unhandled page errors on the viz-less page', bareErrors.length === 0, bareErrors.join(' | '));
 
-  // Page 2 (control): viz-global.js loaded, the normal path must be unchanged.
+  // Page 2: a Viz that is present but broken (instance() rejects).
+  const broken = await browser.newPage();
+  const brokenErrors = [];
+  broken.on('pageerror', e => brokenErrors.push(String(e.message).split('\n')[0]));
+  await broken.goto(`http://127.0.0.1:${port}/index-broken.html`, { waitUntil: 'load' });
+  await broken.waitForFunction('window.__ready && window.__render', null, { timeout: 120000, polling: 200 });
+
+  for (const [label, lines] of [['class', CLASS], ['component', COMPONENT], ['composite state', STATE]]) {
+    const r = await renderOn(broken, lines);
+    const output = r.svg || r.text;
+    check(`${label} diagram with a broken Viz produces output`, !r.thrown && !!output && output.trim().length > 0,
+      r.thrown || 'target element left empty');
+    check(`${label} diagram output names Viz`, !!output && /viz/i.test(output),
+      'output does not mention the failed engine: ' + String(output).slice(0, 160));
+  }
+  check('no unhandled page errors on the broken-viz page', brokenErrors.length === 0, brokenErrors.join(' | '));
+
+  // Page 3 (control): viz-global.js loaded, the normal path must be unchanged.
   const ctrl = await browser.newPage();
   const ctrlErrors = [];
   ctrl.on('pageerror', e => ctrlErrors.push(String(e.message).split('\n')[0]));
@@ -129,7 +159,7 @@ async function renderOn(page, lines) {
 
   for (const [label, lines] of [['class', CLASS], ['component', COMPONENT]]) {
     const r = await renderOn(ctrl, lines);
-    const ok = !r.thrown && !!r.svg && !/viz is not loaded/i.test(r.svg);
+    const ok = !r.thrown && !!r.svg && !/viz is not loaded/i.test(r.svg) && !isErrorImage(r.svg);
     check(`control: ${label} diagram still renders with viz-global.js`, ok,
       r.thrown || (r.svg ? 'crash text in output' : 'no svg produced: ' + r.text.slice(0, 120)));
   }
