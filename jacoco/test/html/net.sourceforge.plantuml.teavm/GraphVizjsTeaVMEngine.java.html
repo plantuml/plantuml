@@ -65,6 +65,19 @@ import org.teavm.jso.JSObject;
 	 * @param dotSource the graph description in DOT format
 	 * @return the rendered SVG as a string
 	 */
+	/**
+	 * True when the Viz.js bridge (viz-global.js) is NOT loaded on the page,
+	 * so the caller should fall back to the Smetana layout engine. Logs a
+	 * one-time console note the first time the fallback is taken.
+	 */
+	@JSBody(script = &quot;var missing = typeof Viz === 'undefined' || !Viz || typeof Viz.instance !== 'function';&quot; +
+			&quot;if (missing &amp;&amp; !window.__plantumlSmetanaFallbackNoted) {&quot; +
+			&quot;  window.__plantumlSmetanaFallbackNoted = true;&quot; +
+			&quot;  console.info('PlantUML: viz-global.js is not loaded, falling back to the Smetana layout engine');&quot; +
+			&quot;}&quot; +
+			&quot;return missing;&quot;)
+	public static native boolean vizMissingFallback();
+
 	@Async
 	public static native String renderDotToSvg(String dotSource);
 
@@ -73,8 +86,8 @@ import org.teavm.jso.JSObject;
 	 * Sets up the JavaScript Promise handling and calls the callback when complete.
 	 */
 	private static void renderDotToSvg(String dotSource, AsyncCallback&lt;String&gt; callback) {
-<span class="nc" id="L76">		renderDotToSvgAsync(dotSource, result -&gt; callback.complete(result), error -&gt; callback.error(new RuntimeException(error)));</span>
-<span class="nc" id="L77">	}</span>
+<span class="nc" id="L89">		renderDotToSvgAsync(dotSource, result -&gt; callback.complete(result), error -&gt; callback.error(new RuntimeException(error)));</span>
+<span class="nc" id="L90">	}</span>
 
 	/**
 	 * JavaScript bridge that calls Viz.instance() and renders the DOT source.
@@ -111,8 +124,8 @@ import org.teavm.jso.JSObject;
 	 * Internal implementation for engine-specific rendering.
 	 */
 	private static void renderDotToSvg(String dotSource, String engine, AsyncCallback&lt;String&gt; callback) {
-<span class="nc" id="L114">		renderDotToSvgWithEngineAsync(dotSource, engine, result -&gt; callback.complete(result), error -&gt; callback.error(new RuntimeException(error)));</span>
-<span class="nc" id="L115">	}</span>
+<span class="nc" id="L127">		renderDotToSvgWithEngineAsync(dotSource, engine, result -&gt; callback.complete(result), error -&gt; callback.error(new RuntimeException(error)));</span>
+<span class="nc" id="L128">	}</span>
 
 	/**
 	 * JavaScript bridge for engine-specific rendering.
