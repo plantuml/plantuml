@@ -97,13 +97,13 @@ try {
 	
 	/* these operations only happen at the top level */
 <span class="fc bfc" id="L99" title="All 2 branches covered.">	if ((type&amp;(DT_INSERT|DT_DELETE|DT_CLEAR|DT_RENEW))!=0)</span>
-<span class="fc" id="L100">		return (__ptr__) dt.meth.searchf.exe(zz, dt, obj, type);</span>
+<span class="fc" id="L100">		return (__ptr__) dt.meth.searchf.exeSearch(zz, dt, obj, type);</span>
 	
 	
 <span class="pc bpc" id="L103" title="1 of 6 branches missed.">	if(((type&amp;(DT_MATCH|DT_SEARCH))!=0) || /* order sets first/last done below */</span>
 	   (((type&amp;(DT_FIRST|DT_LAST))!=0) &amp;&amp; (dt.meth.type&amp;(DT_OBAG|DT_OSET)) == 0 ) )
 <span class="fc bfc" id="L105" title="All 2 branches covered.">	{	for(d = dt; d!=null; d = d.view)</span>
-<span class="fc bfc" id="L106" title="All 2 branches covered.">			if((o = (__ptr__) d.meth.searchf.exe(zz, d,obj,type))!=null )</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">			if((o = (__ptr__) d.meth.searchf.exeSearch(zz, d,obj,type))!=null )</span>
 <span class="fc" id="L107">				break;</span>
 <span class="fc" id="L108">		dt.walk = d;</span>
 <span class="fc" id="L109">		return o;</span>
@@ -117,7 +117,7 @@ try {
 	
 <span class="fc" id="L118">		n = nk = null; p = null;</span>
 <span class="fc bfc" id="L119" title="All 2 branches covered.">		for(d = dt; d!=null; d = d.view)</span>
-<span class="fc bfc" id="L120" title="All 2 branches covered.">		{	if((o = (__ptr__) d.meth.searchf.exe(zz, d, obj, type) ) == null)</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		{	if((o = (__ptr__) d.meth.searchf.exeSearch(zz, d, obj, type) ) == null)</span>
 <span class="fc" id="L121">				continue;</span>
 <span class="fc" id="L122">			ky = d.disc.key;</span>
 <span class="fc" id="L123">			sz = d.disc.size;</span>

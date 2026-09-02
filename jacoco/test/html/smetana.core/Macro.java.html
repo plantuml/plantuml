@@ -1407,23 +1407,23 @@ import smetana.core.debug.SmetanaDebug;
 	public static final int LAYOUT_USES_RANKDIR = (1 &lt;&lt; 0);
 
 	public static void dtinsert(Globals zz, ST_dt_s d, Object o) {
-<span class="fc" id="L1410">		d.searchf.exe(zz, d, o, DT_INSERT);</span>
+<span class="fc" id="L1410">		d.searchf.exeSearch(zz, d, o, DT_INSERT);</span>
 <span class="fc" id="L1411">	}</span>
 
 	public static Object dtsearch(Globals zz, ST_dt_s d, Object o) {
-<span class="fc" id="L1414">		return d.searchf.exe(zz, d, o, DT_SEARCH);</span>
+<span class="fc" id="L1414">		return d.searchf.exeSearch(zz, d, o, DT_SEARCH);</span>
 	}
 
 	public static Object dtfirst(Globals zz, ST_dt_s d) {
-<span class="fc" id="L1418">		return d.searchf.exe(zz, d, null, DT_FIRST);</span>
+<span class="fc" id="L1418">		return d.searchf.exeSearch(zz, d, null, DT_FIRST);</span>
 	}
 
 	public static Object dtnext(Globals zz, ST_dt_s d, Object o) {
-<span class="fc" id="L1422">		return d.searchf.exe(zz, d, o, DT_NEXT);</span>
+<span class="fc" id="L1422">		return d.searchf.exeSearch(zz, d, o, DT_NEXT);</span>
 	}
 
 	public static Object dtdelete(Globals zz, ST_dt_s d, Object o) {
-<span class="fc" id="L1426">		return d.searchf.exe(zz, d, o, DT_DELETE);</span>
+<span class="fc" id="L1426">		return d.searchf.exeSearch(zz, d, o, DT_DELETE);</span>
 	}
 
 //	#define dtlink(d,e)	(((Dtlink_t*)(e))-&gt;right)
@@ -1666,28 +1666,32 @@ import smetana.core.debug.SmetanaDebug;
 	public static __ptr__ _DTKEY(__ptr__ o, FieldOffset ky, int sz) {
 		// return (__ptr__) (sz &lt; 0 ? ((__ptr__)o).addVirtualBytes(ky) :
 		// ((__ptr__)o).addVirtualBytes(ky));
-<span class="fc" id="L1669">		return (__ptr__) o.getTheField(ky);</span>
+		// Zero offset means the object itself is the key (every struct's
+		// getTheField returns this for sign 0).
+<span class="pc bpc" id="L1671" title="2 of 4 branches missed.">		if (ky == null || ky.getSign() == 0)</span>
+<span class="nc" id="L1672">			return o;</span>
+<span class="fc" id="L1673">		return (__ptr__) o.getTheField(ky);</span>
 	}
 
 	public static int _DTCMP(Globals zz, ST_dt_s dt, __ptr__ k1, __ptr__ k2, final ST_dtdisc_s dc, CFunction cmpf,
 			int sz) {
-<span class="pc bpc" id="L1674" title="1 of 2 branches missed.">		return cmpf != null ? (Integer) ((CFunction) cmpf).exe(zz, dt, k1, k2, dc)</span>
-<span class="pc bpc" id="L1675" title="1 of 2 branches missed.">				: (sz &lt;= 0 ? strcmp((CString) k1, (CString) k2) : UNSUPPORTED_INT(&quot;memcmp(ok,nk,sz)&quot;));</span>
+<span class="pc bpc" id="L1678" title="1 of 2 branches missed.">		return cmpf != null ? cmpf.exeCmpInt(zz, dt, k1, k2, dc)</span>
+<span class="pc bpc" id="L1679" title="1 of 2 branches missed.">				: (sz &lt;= 0 ? strcmp((CString) k1, (CString) k2) : UNSUPPORTED_INT(&quot;memcmp(ok,nk,sz)&quot;));</span>
 	}
 
 	public static final int SEARCHSIZE = 30;
 
 	public static ST_Agedge_s agfindedge(Globals zz, ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h) {
-<span class="nc" id="L1681">		return agedge(zz, g, t, h, null, false);</span>
+<span class="nc" id="L1685">		return agedge(zz, g, t, h, null, false);</span>
 	}
 
 	public static int flatindex(ST_Agnode_s v) {
-<span class="nc" id="L1685">		return ND_low(v);</span>
+<span class="nc" id="L1689">		return ND_low(v);</span>
 	}
 
 	public static void flatindex(ST_Agnode_s v, int data) {
-<span class="fc" id="L1689">		ND_low(v, data);</span>
-<span class="fc" id="L1690">	}</span>
+<span class="fc" id="L1693">		ND_low(v, data);</span>
+<span class="fc" id="L1694">	}</span>
 
 	public static final int NODECARD = 64;
 	public static final int SMALLBUF = 128;
@@ -1697,21 +1701,21 @@ import smetana.core.debug.SmetanaDebug;
 
 	public static ST_subtree_t ND_subtree(ST_Agnode_s n) {
 		// return (ST_subtree_t) ((ST_Agnodeinfo_t)AGDATA(n)).par;
-<span class="nc" id="L1700">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L1704">		throw new UnsupportedOperationException();</span>
 	}
 
 	public static void ND_subtree_set(ST_Agnode_s n, ST_subtree_t value) {
 		// ((ST_Agnodeinfo_t)AGDATA(n)).par = value;
-<span class="nc" id="L1705">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L1709">		throw new UnsupportedOperationException();</span>
 	}
 
 	// #define streq(a,b) (*(a)==*(b)&amp;&amp;!strcmp(a,b))
 	public static boolean streq(CString a, CString b) {
-<span class="pc bpc" id="L1710" title="2 of 4 branches missed.">		return a.charAt(0) == b.charAt(0) &amp;&amp; strcmp(a, b) == 0;</span>
+<span class="pc bpc" id="L1714" title="2 of 4 branches missed.">		return a.charAt(0) == b.charAt(0) &amp;&amp; strcmp(a, b) == 0;</span>
 	}
 
 	public static boolean streq(CString a, String b) {
-<span class="fc" id="L1714">		return streq(a, new CString(b));</span>
+<span class="fc" id="L1718">		return streq(a, new CString(b));</span>
 	}
 
 	public static final int ARR_NONE = 0;

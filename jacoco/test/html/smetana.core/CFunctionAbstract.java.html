@@ -48,5 +48,13 @@ public abstract class CFunctionAbstract extends UnsupportedC implements CFunctio
 <span class="fc" id="L48">		return name;</span>
 	}
 
+	public int exeCmpInt(Globals zz, Object a0, Object a1, Object a2, Object a3) {
+<span class="fc" id="L52">		return (Integer) exe(zz, a0, a1, a2, a3);</span>
+	}
+
+	public Object exeSearch(Globals zz, Object a0, Object a1, int type) {
+<span class="fc" id="L56">		return exe(zz, a0, a1, type);</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

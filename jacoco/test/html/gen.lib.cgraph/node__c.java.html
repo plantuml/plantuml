@@ -181,8 +181,8 @@ try {
 <span class="fc bfc" id="L181" title="All 2 branches covered.">    if (g == agroot(g)) sn = (ST_Agsubnode_s) n.mainsub;</span>
 <span class="fc" id="L182">    else sn = (ST_Agsubnode_s) ((__ptr__)agalloc(g, new size_t(ZType.ST_Agsubnode_s))).castTo(ST_Agsubnode_s.class);</span>
 <span class="fc" id="L183">    sn.node = n;</span>
-<span class="fc" id="L184">    g.n_id.searchf.exe(zz, g.n_id,sn,0000001);</span>
-<span class="fc" id="L185">    g.n_seq.searchf.exe(zz, g.n_seq,sn,0000001);</span>
+<span class="fc" id="L184">    g.n_id.searchf.exeSearch(zz, g.n_id,sn,0000001);</span>
+<span class="fc" id="L185">    g.n_seq.searchf.exeSearch(zz, g.n_seq,sn,0000001);</span>
 } finally {
 <span class="fc" id="L187">LEAVING(&quot;4m26dpgaiw44hcleugjy71eus&quot;,&quot;installnode&quot;);</span>
 }
@@ -328,68 +328,78 @@ try {
 <span class="fc" id="L328">public static CFunction agsubnodeidcmpf = new CFunctionAbstract(&quot;agsubnodeidcmpf&quot;) {</span>
 	
 	public Object exe(Globals zz, Object... args) {
-<span class="fc" id="L331">		return agsubnodeidcmpf((ST_dt_s)args[0], (__ptr__)args[1], (__ptr__)args[2], (ST_dtdisc_s)args[3]);</span>
+<span class="nc" id="L331">		return agsubnodeidcmpf((ST_dt_s)args[0], (__ptr__)args[1], (__ptr__)args[2], (ST_dtdisc_s)args[3]);</span>
+	}
+
+	@Override
+	public int exeCmpInt(Globals zz, Object a0, Object a1, Object a2, Object a3) {
+<span class="fc" id="L336">		return agsubnodeidcmpf((ST_dt_s)a0, (__ptr__)a1, (__ptr__)a2, (ST_dtdisc_s)a3);</span>
 	}};
 
 @Reviewed(when = &quot;13/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/node.c&quot;, name=&quot;agsubnodeidcmpf&quot;, key=&quot;awwiazixy9c76hvyxlkvvb3vo&quot;, definition=&quot;int agsubnodeidcmpf(Dict_t * d, void *arg0, void *arg1, Dtdisc_t * disc)&quot;)
 public static int agsubnodeidcmpf(ST_dt_s d, __ptr__ arg0, __ptr__ arg1, ST_dtdisc_s disc) {
-<span class="fc" id="L337">ENTERING(&quot;awwiazixy9c76hvyxlkvvb3vo&quot;,&quot;agsubnodeidcmpf&quot;);</span>
+<span class="fc" id="L342">ENTERING(&quot;awwiazixy9c76hvyxlkvvb3vo&quot;,&quot;agsubnodeidcmpf&quot;);</span>
 try {
     int	v;
     ST_Agsubnode_s sn0, sn1;
-<span class="fc" id="L341">    sn0 = (ST_Agsubnode_s) arg0.castTo(ST_Agsubnode_s.class);</span>
-<span class="fc" id="L342">    sn1 = (ST_Agsubnode_s) arg1.castTo(ST_Agsubnode_s.class);</span>
-<span class="fc" id="L343">    v = (sn0.node.tag.id - sn1.node.tag.id);</span>
-<span class="fc bfc" id="L344" title="All 4 branches covered.">    return ((v==0)?0:(v&lt;0?-1:1));</span>
+<span class="fc" id="L346">    sn0 = (ST_Agsubnode_s) arg0.castTo(ST_Agsubnode_s.class);</span>
+<span class="fc" id="L347">    sn1 = (ST_Agsubnode_s) arg1.castTo(ST_Agsubnode_s.class);</span>
+<span class="fc" id="L348">    v = (sn0.node.tag.id - sn1.node.tag.id);</span>
+<span class="fc bfc" id="L349" title="All 4 branches covered.">    return ((v==0)?0:(v&lt;0?-1:1));</span>
 } finally {
-<span class="fc" id="L346">LEAVING(&quot;awwiazixy9c76hvyxlkvvb3vo&quot;,&quot;agsubnodeidcmpf&quot;);</span>
+<span class="fc" id="L351">LEAVING(&quot;awwiazixy9c76hvyxlkvvb3vo&quot;,&quot;agsubnodeidcmpf&quot;);</span>
 }
 }
 
 
 
-<span class="fc" id="L352">public static CFunction agsubnodeseqcmpf = new CFunctionAbstract(&quot;agsubnodeseqcmpf&quot;) {</span>
+<span class="fc" id="L357">public static CFunction agsubnodeseqcmpf = new CFunctionAbstract(&quot;agsubnodeseqcmpf&quot;) {</span>
 	
 	public Object exe(Globals zz, Object... args) {
-<span class="fc" id="L355">		return agsubnodeseqcmpf((ST_dt_s)args[0], (__ptr__)args[1], (__ptr__)args[2], (ST_dtdisc_s)args[3]);</span>
+<span class="nc" id="L360">		return agsubnodeseqcmpf((ST_dt_s)args[0], (__ptr__)args[1], (__ptr__)args[2], (ST_dtdisc_s)args[3]);</span>
+	}
+
+	@Override
+	public int exeCmpInt(Globals zz, Object a0, Object a1, Object a2, Object a3) {
+<span class="fc" id="L365">		return agsubnodeseqcmpf((ST_dt_s)a0, (__ptr__)a1, (__ptr__)a2, (ST_dtdisc_s)a3);</span>
 	}};
 	
 @Reviewed(when = &quot;13/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/node.c&quot;, name=&quot;agsubnodeseqcmpf&quot;, key=&quot;41fjseux0nxzpr0aq7igym9ux&quot;, definition=&quot;int agsubnodeseqcmpf(Dict_t * d, void *arg0, void *arg1, Dtdisc_t * disc)&quot;)
 public static int agsubnodeseqcmpf(ST_dt_s d, __ptr__ arg0, __ptr__ arg1, ST_dtdisc_s disc) {
-<span class="fc" id="L361">ENTERING(&quot;41fjseux0nxzpr0aq7igym9ux&quot;,&quot;agsubnodeseqcmpf&quot;);</span>
+<span class="fc" id="L371">ENTERING(&quot;41fjseux0nxzpr0aq7igym9ux&quot;,&quot;agsubnodeseqcmpf&quot;);</span>
 try {
 	ST_Agsubnode_s sn0, sn1;
     int	v;
-<span class="fc" id="L365">    sn0 = (ST_Agsubnode_s) arg0.castTo(ST_Agsubnode_s.class);</span>
-<span class="fc" id="L366">    sn1 = (ST_Agsubnode_s) arg1.castTo(ST_Agsubnode_s.class);</span>
-<span class="fc" id="L367">    v = (sn0.node.tag.seq - sn1.node.tag.seq);</span>
-<span class="fc bfc" id="L368" title="All 4 branches covered.">    return ((v==0)?0:(v&lt;0?-1:1));</span>
+<span class="fc" id="L375">    sn0 = (ST_Agsubnode_s) arg0.castTo(ST_Agsubnode_s.class);</span>
+<span class="fc" id="L376">    sn1 = (ST_Agsubnode_s) arg1.castTo(ST_Agsubnode_s.class);</span>
+<span class="fc" id="L377">    v = (sn0.node.tag.seq - sn1.node.tag.seq);</span>
+<span class="fc bfc" id="L378" title="All 4 branches covered.">    return ((v==0)?0:(v&lt;0?-1:1));</span>
 } finally {
-<span class="fc" id="L370">LEAVING(&quot;41fjseux0nxzpr0aq7igym9ux&quot;,&quot;agsubnodeseqcmpf&quot;);</span>
+<span class="fc" id="L380">LEAVING(&quot;41fjseux0nxzpr0aq7igym9ux&quot;,&quot;agsubnodeseqcmpf&quot;);</span>
 }
 }
 
 
 
 
-<span class="fc" id="L377">public static CFunction free_subnode = new CFunctionAbstract(&quot;free_subnode&quot;) {</span>
+<span class="fc" id="L387">public static CFunction free_subnode = new CFunctionAbstract(&quot;free_subnode&quot;) {</span>
 	
 	public Object exe(Globals zz, Object... args) {
-<span class="nc" id="L380">		return free_subnode(args);</span>
+<span class="nc" id="L390">		return free_subnode(args);</span>
 	}};
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/node.c&quot;, name=&quot;free_subnode&quot;, key=&quot;a7tb3b1kvq6ykrxzhbaduvg9r&quot;, definition=&quot;static void free_subnode (Dt_t* d, Agsubnode_t* sn, Dtdisc_t * disc)&quot;)
 public static Object free_subnode(Object... arg_) {
-<span class="nc" id="L385">UNSUPPORTED(&quot;e2z2o5ybnr5tgpkt8ty7hwan1&quot;); // static void</span>
-<span class="nc" id="L386">UNSUPPORTED(&quot;9e4h6d4hxsvsnaiuubzlmccsm&quot;); // free_subnode (Dt_t* d, Agsubnode_t* sn, Dtdisc_t * disc)</span>
-<span class="nc" id="L387">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
-<span class="nc" id="L388">UNSUPPORTED(&quot;eiac02o593gy0a55vv1w8mkmi&quot;); //    if (!AGSNMAIN(sn)) </span>
-<span class="nc" id="L389">UNSUPPORTED(&quot;263bmzd9ilyyeb9w34squ7iw8&quot;); // 	agfree (sn-&gt;node-&gt;root, sn);</span>
-<span class="nc" id="L390">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+<span class="nc" id="L395">UNSUPPORTED(&quot;e2z2o5ybnr5tgpkt8ty7hwan1&quot;); // static void</span>
+<span class="nc" id="L396">UNSUPPORTED(&quot;9e4h6d4hxsvsnaiuubzlmccsm&quot;); // free_subnode (Dt_t* d, Agsubnode_t* sn, Dtdisc_t * disc)</span>
+<span class="nc" id="L397">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L398">UNSUPPORTED(&quot;eiac02o593gy0a55vv1w8mkmi&quot;); //    if (!AGSNMAIN(sn)) </span>
+<span class="nc" id="L399">UNSUPPORTED(&quot;263bmzd9ilyyeb9w34squ7iw8&quot;); // 	agfree (sn-&gt;node-&gt;root, sn);</span>
+<span class="nc" id="L400">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
 
-<span class="nc" id="L392">throw new UnsupportedOperationException();</span>
+<span class="nc" id="L402">throw new UnsupportedOperationException();</span>
 }
 
 

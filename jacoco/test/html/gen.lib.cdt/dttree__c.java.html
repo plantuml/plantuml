@@ -101,77 +101,82 @@ import smetana.core.size_t;
 <span class="fc" id="L101">public static CFunction dttree = new CFunctionAbstract(&quot;dttree&quot;) {</span>
 	
 	public Object exe(Globals zz, Object... args) {
-<span class="fc" id="L104">		return dttree(zz, (ST_dt_s)args[0], (__ptr__)args[1], (Integer)args[2]);</span>
+<span class="nc" id="L104">		return dttree(zz, (ST_dt_s)args[0], (__ptr__)args[1], (Integer)args[2]);</span>
+	}
+
+	@Override
+	public Object exeSearch(Globals zz, Object a0, Object a1, int type) {
+<span class="fc" id="L109">		return dttree(zz, (ST_dt_s)a0, (__ptr__)a1, type);</span>
 	}};
 
 @Reviewed(when = &quot;11/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/cdt/dttree.c&quot;, name=&quot;dttree&quot;, key=&quot;abqfzg1d1vkzk51225tcdlik5&quot;, definition=&quot;static void* dttree(Dt_t* dt, void* obj, int type)&quot;)
 public static Object dttree(Globals zz, ST_dt_s dt, __ptr__ obj, int type) {
-<span class="fc" id="L110">ENTERING(&quot;abqfzg1d1vkzk51225tcdlik5&quot;,&quot;dttree&quot;);</span>
+<span class="fc" id="L115">ENTERING(&quot;abqfzg1d1vkzk51225tcdlik5&quot;,&quot;dttree&quot;);</span>
 try {
 	ST_dtlink_s	root, t;
 	int		cmp, sz; FieldOffset lk, ky;
-<span class="fc" id="L114">	ST_dtlink_s	l, r, me=null;</span>
-<span class="fc" id="L115">	final ST_dtlink_s link = new ST_dtlink_s();</span>
-<span class="fc" id="L116">	Object		o, k, key = null;</span>
+<span class="fc" id="L119">	ST_dtlink_s	l, r, me=null;</span>
+<span class="fc" id="L120">	final ST_dtlink_s link = new ST_dtlink_s();</span>
+<span class="fc" id="L121">	Object		o, k, key = null;</span>
 	int		n, minp; //, turn[(sizeof(size_t)*8 - 2)];
 	CFunction	cmpf;
 	ST_dtdisc_s	disc;
 	
-<span class="fc" id="L121">	UNFLATTEN(dt);</span>
-<span class="fc" id="L122">	disc = dt.disc; ky = disc.key;</span>
-<span class="fc" id="L123">	sz = disc.size;</span>
-<span class="fc" id="L124">	lk = disc.link;</span>
-<span class="fc" id="L125">	cmpf = disc.comparf;</span>
-<span class="fc" id="L126">	dt.type &amp;= ~DT_FOUND;</span>
+<span class="fc" id="L126">	UNFLATTEN(dt);</span>
+<span class="fc" id="L127">	disc = dt.disc; ky = disc.key;</span>
+<span class="fc" id="L128">	sz = disc.size;</span>
+<span class="fc" id="L129">	lk = disc.link;</span>
+<span class="fc" id="L130">	cmpf = disc.comparf;</span>
+<span class="fc" id="L131">	dt.type &amp;= ~DT_FOUND;</span>
 	
-<span class="fc" id="L128">	root = dt.data.here;</span>
-<span class="fc bfc" id="L129" title="All 2 branches covered.">	if((obj) == null)</span>
-<span class="pc bpc" id="L130" title="1 of 4 branches missed.">	{	if((root) == null || (type&amp;(DT_CLEAR|DT_FIRST|DT_LAST)) == 0 )</span>
-<span class="fc" id="L131">			return null;</span>
+<span class="fc" id="L133">	root = dt.data.here;</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">	if((obj) == null)</span>
+<span class="pc bpc" id="L135" title="1 of 4 branches missed.">	{	if((root) == null || (type&amp;(DT_CLEAR|DT_FIRST|DT_LAST)) == 0 )</span>
+<span class="fc" id="L136">			return null;</span>
 	
-<span class="fc bfc" id="L133" title="All 2 branches covered.">		if((type&amp;DT_CLEAR)!=0) /* delete all objects */</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">		if((type&amp;DT_CLEAR)!=0) /* delete all objects */</span>
 		{
-<span class="pc bpc" id="L135" title="2 of 4 branches missed.">			if(disc.freef!=null || disc.link.getSign() &lt; 0) {</span>
+<span class="pc bpc" id="L140" title="2 of 4 branches missed.">			if(disc.freef!=null || disc.link.getSign() &lt; 0) {</span>
 				do {
-<span class="fc bfc" id="L137" title="All 2 branches covered.">					while((t = root._left)!=null )</span>
-<span class="fc" id="L138">						{ rrotate(root, t); root = t; }</span>
-<span class="fc" id="L139">					t = root.right;</span>
-<span class="pc bpc" id="L140" title="1 of 2 branches missed.">					if(disc.freef!=null)</span>
-<span class="nc" id="L141">						throw new UnsupportedOperationException();</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">					while((t = root._left)!=null )</span>
+<span class="fc" id="L143">						{ rrotate(root, t); root = t; }</span>
+<span class="fc" id="L144">					t = root.right;</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">					if(disc.freef!=null)</span>
+<span class="nc" id="L146">						throw new UnsupportedOperationException();</span>
 //						(*disc-&gt;freef)(dt,(lk &lt; 0 ? ((Dthold_t*)(root))-&gt;obj : (void*)((char*)(root) - lk) ),disc);
-<span class="pc bpc" id="L143" title="1 of 2 branches missed.">					if(disc.link.getSign() &lt; 0)</span>
-<span class="fc" id="L144">						dt.memoryf.exe(zz, dt, root, null, disc);</span>
-<span class="fc bfc" id="L145" title="All 2 branches covered.">				} while((root = t)!=null );</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">					if(disc.link.getSign() &lt; 0)</span>
+<span class="fc" id="L149">						dt.memoryf.exe(zz, dt, root, null, disc);</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">				} while((root = t)!=null );</span>
 			}
-<span class="fc" id="L147">			dt.data.size = 0;</span>
-<span class="fc" id="L148">			dt.data.here = null;</span>
-<span class="fc" id="L149">			return null;</span>
+<span class="fc" id="L152">			dt.data.size = 0;</span>
+<span class="fc" id="L153">			dt.data.here = null;</span>
+<span class="fc" id="L154">			return null;</span>
 		}
 		else /* computing largest/smallest element */
-<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		{	if((type&amp;DT_LAST)!=0)</span>
-<span class="nc bnc" id="L153" title="All 2 branches missed.">			{	while((t = root.right)!=null ) {</span>
-<span class="nc" id="L154">				lrotate(root, t);</span>
-<span class="nc" id="L155">				root = t;</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">		{	if((type&amp;DT_LAST)!=0)</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">			{	while((t = root.right)!=null ) {</span>
+<span class="nc" id="L159">				lrotate(root, t);</span>
+<span class="nc" id="L160">				root = t;</span>
 				}
 			}
 			else /* type&amp;DT_FIRST */
-<span class="fc bfc" id="L159" title="All 2 branches covered.">			{	while((t = root._left)!=null ) {</span>
-<span class="fc" id="L160">					rrotate(root, t);</span>
-<span class="fc" id="L161">					root = t;</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">			{	while((t = root._left)!=null ) {</span>
+<span class="fc" id="L165">					rrotate(root, t);</span>
+<span class="fc" id="L166">					root = t;</span>
 				}
 			}
-<span class="fc" id="L164">			dt.data.here = root;</span>
-<span class="fc" id="L165">			return _DTOBJ(root, lk);</span>
+<span class="fc" id="L169">			dt.data.here = root;</span>
+<span class="fc" id="L170">			return _DTOBJ(root, lk);</span>
 		}
 	}
 	/* note that link.right is LEFT tree and link.left is RIGHT tree */
-<span class="fc" id="L169">	l = r = link;</span>
+<span class="fc" id="L174">	l = r = link;</span>
 	/* allow apps to delete an object &quot;actually&quot; in the dictionary */
-<span class="fc" id="L171">	int outcome = 0; // 1 = has_root, 2 = no_root</span>
+<span class="fc" id="L176">	int outcome = 0; // 1 = has_root, 2 = no_root</span>
 	hasNoRoot: {
-<span class="pc bpc" id="L173" title="1 of 4 branches missed.">	if(dt.meth.type == DT_OBAG &amp;&amp; ((type&amp;(DT_DELETE|DT_DETACH))!=0) ) {</span>
-<span class="nc" id="L174">		throw new UnsupportedOperationException();</span>
+<span class="pc bpc" id="L178" title="1 of 4 branches missed.">	if(dt.meth.type == DT_OBAG &amp;&amp; ((type&amp;(DT_DELETE|DT_DETACH))!=0) ) {</span>
+<span class="nc" id="L179">		throw new UnsupportedOperationException();</span>
 //	{	key = (void*)(sz &lt; 0 ? *((char**)((char*)(obj)+ky)) : ((char*)(obj)+ky));
 //		for(o = (*(((Dt_t*)(dt))-&gt;searchf))((dt),(void*)(obj),0000004); o; o = (*(((Dt_t*)(dt))-&gt;searchf))((dt),(void*)(o),0000010) )
 //		{	k = (void*)(sz &lt; 0 ? *((char**)((char*)(o)+ky)) : ((char*)(o)+ky));
@@ -185,27 +190,27 @@ try {
 //			}
 //		}
 	}
-<span class="fc" id="L188">	boolean doSearch = false;</span>
-<span class="fc bfc" id="L189" title="All 2 branches covered.">	if(((type&amp;(DT_MATCH|DT_SEARCH|DT_INSERT|DT_ATTACH))!=0))</span>
-<span class="pc bpc" id="L190" title="1 of 2 branches missed.">		{	key = ((type&amp;DT_MATCH)!=0) ? obj : _DTKEY(obj, ky);</span>
-<span class="fc bfc" id="L191" title="All 2 branches covered.">		if(root!=null)</span>
-<span class="fc" id="L192">			doSearch = true;</span>
+<span class="fc" id="L193">	boolean doSearch = false;</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">	if(((type&amp;(DT_MATCH|DT_SEARCH|DT_INSERT|DT_ATTACH))!=0))</span>
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">		{	key = ((type&amp;DT_MATCH)!=0) ? obj : _DTKEY(obj, ky);</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">		if(root!=null)</span>
+<span class="fc" id="L197">			doSearch = true;</span>
 	}
-<span class="pc bpc" id="L194" title="1 of 2 branches missed.">	else if((type&amp;DT_RENEW)!=0) {</span>
-<span class="nc" id="L195">		throw new UnsupportedOperationException();</span>
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">	else if((type&amp;DT_RENEW)!=0) {</span>
+<span class="nc" id="L200">		throw new UnsupportedOperationException();</span>
 //	{	me = (Dtlink_t*)obj;
 //		obj = (lk &lt; 0 ? ((Dthold_t*)(me))-&gt;obj : (void*)((char*)(me) - lk) );
 //		key = (void*)(sz &lt; 0 ? *((char**)((char*)(obj)+ky)) : ((char*)(obj)+ky));
 //		if(root)
 //			goto do_search;
 	}
-<span class="fc bfc" id="L202" title="All 4 branches covered.">	else if(root!=null &amp;&amp; (_DTOBJ(root, lk) != obj))</span>
-<span class="fc" id="L203">	{	key = _DTKEY(obj, ky);</span>
-<span class="fc" id="L204">		doSearch = true;</span>
+<span class="fc bfc" id="L207" title="All 4 branches covered.">	else if(root!=null &amp;&amp; (_DTOBJ(root, lk) != obj))</span>
+<span class="fc" id="L208">	{	key = _DTKEY(obj, ky);</span>
+<span class="fc" id="L209">		doSearch = true;</span>
 	}
-<span class="fc bfc" id="L206" title="All 2 branches covered.">	if (doSearch) {</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">	if (doSearch) {</span>
 //		do_search:
-<span class="pc bpc" id="L208" title="3 of 6 branches missed.">		if(dt.meth.type == DT_OSET &amp;&amp;</span>
+<span class="pc bpc" id="L213" title="3 of 6 branches missed.">		if(dt.meth.type == DT_OSET &amp;&amp;</span>
 		   (minp = dt.data.minp) != 0 &amp;&amp; (type&amp;(DT_MATCH|DT_SEARCH))!=0)
 		{	/* simple search, note that minp should be even */
 //			for(t = root, n = 0; n &lt; minp; ++n)
@@ -247,98 +252,98 @@ try {
 //					}
 //				}
 //			}
-<span class="nc" id="L250">			throw new UnsupportedOperationException(&quot;do_search1&quot;);</span>
+<span class="nc" id="L255">			throw new UnsupportedOperationException(&quot;do_search1&quot;);</span>
 		}
 		
 		
 		
 		while(true) {
-<span class="fc" id="L256">			k = _DTOBJ(root, lk); k = _DTKEY((__ptr__) k,ky);</span>
-<span class="fc bfc" id="L257" title="All 2 branches covered.">			if((cmp = _DTCMP(zz, dt, key, k, disc, cmpf, sz)) == 0)</span>
-<span class="fc" id="L258">				break;</span>
-<span class="fc bfc" id="L259" title="All 2 branches covered.">			else if(cmp &lt; 0)</span>
-<span class="fc bfc" id="L260" title="All 2 branches covered.">			{	if((t = root._left)!=null )</span>
-<span class="fc" id="L261">				{ k = _DTOBJ(t, lk); k = _DTKEY((__ptr__) k,ky);</span>
-<span class="fc bfc" id="L262" title="All 2 branches covered.">				if((cmp = _DTCMP(zz, dt, key, k, disc, cmpf, sz)) &lt; 0)</span>
-<span class="fc" id="L263">					{	rrotate(root, t);</span>
-<span class="fc" id="L264">						r = rlink____warning(r, t);</span>
-<span class="fc bfc" id="L265" title="All 2 branches covered.">						if((root = t._left) == null )</span>
-<span class="fc" id="L266">							break;</span>
+<span class="fc" id="L261">			k = _DTOBJ(root, lk); k = _DTKEY((__ptr__) k,ky);</span>
+<span class="fc bfc" id="L262" title="All 2 branches covered.">			if((cmp = _DTCMP(zz, dt, key, k, disc, cmpf, sz)) == 0)</span>
+<span class="fc" id="L263">				break;</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">			else if(cmp &lt; 0)</span>
+<span class="fc bfc" id="L265" title="All 2 branches covered.">			{	if((t = root._left)!=null )</span>
+<span class="fc" id="L266">				{ k = _DTOBJ(t, lk); k = _DTKEY((__ptr__) k,ky);</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">				if((cmp = _DTCMP(zz, dt, key, k, disc, cmpf, sz)) &lt; 0)</span>
+<span class="fc" id="L268">					{	rrotate(root, t);</span>
+<span class="fc" id="L269">						r = rlink____warning(r, t);</span>
+<span class="fc bfc" id="L270" title="All 2 branches covered.">						if((root = t._left) == null )</span>
+<span class="fc" id="L271">							break;</span>
 					}
-<span class="fc bfc" id="L268" title="All 2 branches covered.">					else if(cmp == 0)</span>
-<span class="fc" id="L269">					{	r = rlink____warning(r, root);</span>
-<span class="fc" id="L270">						root = t;</span>
-<span class="fc" id="L271">						break;</span>
+<span class="fc bfc" id="L273" title="All 2 branches covered.">					else if(cmp == 0)</span>
+<span class="fc" id="L274">					{	r = rlink____warning(r, root);</span>
+<span class="fc" id="L275">						root = t;</span>
+<span class="fc" id="L276">						break;</span>
 					}
 					else /* if(cmp &gt; 0) */
-<span class="fc" id="L274">					{	l = llink____warning(l, t);</span>
-<span class="fc" id="L275">						r = rlink____warning(r, root);</span>
-<span class="fc bfc" id="L276" title="All 2 branches covered.">						if((root = t.right) == null )</span>
-<span class="fc" id="L277">							break;</span>
+<span class="fc" id="L279">					{	l = llink____warning(l, t);</span>
+<span class="fc" id="L280">						r = rlink____warning(r, root);</span>
+<span class="fc bfc" id="L281" title="All 2 branches covered.">						if((root = t.right) == null )</span>
+<span class="fc" id="L282">							break;</span>
 					}
 				}
 				else
-<span class="fc" id="L281">				{   r = rlink____warning(r, root);</span>
-<span class="fc" id="L282">					root = null;</span>
-<span class="fc" id="L283">					break;</span>
+<span class="fc" id="L286">				{   r = rlink____warning(r, root);</span>
+<span class="fc" id="L287">					root = null;</span>
+<span class="fc" id="L288">					break;</span>
 				}
 			}
 			else /* if(cmp &gt; 0) */
-<span class="fc bfc" id="L287" title="All 2 branches covered.">			{	if ((t = root.right)!=null )</span>
-<span class="fc" id="L288">				{   k = _DTOBJ(t, lk); k = _DTKEY((__ptr__) k, ky);</span>
-<span class="fc bfc" id="L289" title="All 2 branches covered.">					if((cmp = _DTCMP(zz, dt, key, k, disc, cmpf, sz)) &gt; 0)</span>
-<span class="fc" id="L290">					{   lrotate(root, t);</span>
-<span class="fc" id="L291">						l = llink____warning(l, t);</span>
-<span class="fc bfc" id="L292" title="All 2 branches covered.">						if((root = t.right ) == null)</span>
-<span class="fc" id="L293">							break;</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">			{	if ((t = root.right)!=null )</span>
+<span class="fc" id="L293">				{   k = _DTOBJ(t, lk); k = _DTKEY((__ptr__) k, ky);</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">					if((cmp = _DTCMP(zz, dt, key, k, disc, cmpf, sz)) &gt; 0)</span>
+<span class="fc" id="L295">					{   lrotate(root, t);</span>
+<span class="fc" id="L296">						l = llink____warning(l, t);</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">						if((root = t.right ) == null)</span>
+<span class="fc" id="L298">							break;</span>
 					}
-<span class="fc bfc" id="L295" title="All 2 branches covered.">					else if(cmp == 0)</span>
-<span class="fc" id="L296">					{	l = llink____warning(l, root);</span>
-<span class="fc" id="L297">						root = t;</span>
-<span class="fc" id="L298">						break;</span>
+<span class="fc bfc" id="L300" title="All 2 branches covered.">					else if(cmp == 0)</span>
+<span class="fc" id="L301">					{	l = llink____warning(l, root);</span>
+<span class="fc" id="L302">						root = t;</span>
+<span class="fc" id="L303">						break;</span>
 					}
 					else /* if(cmp &lt; 0) */
-<span class="fc" id="L301">					{	r = rlink____warning(r, t);</span>
-<span class="fc" id="L302">						l = llink____warning(l, root);</span>
-<span class="fc bfc" id="L303" title="All 2 branches covered.">						if((root = t._left ) == null)</span>
-<span class="fc" id="L304">							break;</span>
+<span class="fc" id="L306">					{	r = rlink____warning(r, t);</span>
+<span class="fc" id="L307">						l = llink____warning(l, root);</span>
+<span class="fc bfc" id="L308" title="All 2 branches covered.">						if((root = t._left ) == null)</span>
+<span class="fc" id="L309">							break;</span>
 					}
 				}
 				else
-<span class="fc" id="L308">				{	l = llink____warning(l, root);</span>
-<span class="fc" id="L309">					root = null;</span>
-<span class="fc" id="L310">					break;</span>
+<span class="fc" id="L313">				{	l = llink____warning(l, root);</span>
+<span class="fc" id="L314">					root = null;</span>
+<span class="fc" id="L315">					break;</span>
 				}
 			}
 		}
 	}
-<span class="fc bfc" id="L315" title="All 2 branches covered.">	if(root!=null)</span>
+<span class="fc bfc" id="L320" title="All 2 branches covered.">	if(root!=null)</span>
 	{	/* found it, now isolate it */
-<span class="fc" id="L317">		dt.type |= DT_FOUND;</span>
-<span class="fc" id="L318">		l.right = root._left;</span>
-<span class="fc" id="L319">		r._left = root.right;</span>
+<span class="fc" id="L322">		dt.type |= DT_FOUND;</span>
+<span class="fc" id="L323">		l.right = root._left;</span>
+<span class="fc" id="L324">		r._left = root.right;</span>
 		
-<span class="fc bfc" id="L321" title="All 2 branches covered.">		if((type&amp;(DT_SEARCH|DT_MATCH))!=0)</span>
+<span class="fc bfc" id="L326" title="All 2 branches covered.">		if((type&amp;(DT_SEARCH|DT_MATCH))!=0)</span>
 		{ /*has_root:*/
-<span class="fc" id="L323">		{ outcome = 1; break hasNoRoot; }</span>
+<span class="fc" id="L328">		{ outcome = 1; break hasNoRoot; }</span>
 		}
-<span class="fc bfc" id="L325" title="All 2 branches covered.">		else if((type&amp;DT_NEXT)!=0)</span>
-<span class="fc" id="L326">		{	root._left = link.right;</span>
-<span class="fc" id="L327">			root.right = null;</span>
-<span class="fc" id="L328">			link.right = root;</span>
+<span class="fc bfc" id="L330" title="All 2 branches covered.">		else if((type&amp;DT_NEXT)!=0)</span>
+<span class="fc" id="L331">		{	root._left = link.right;</span>
+<span class="fc" id="L332">			root.right = null;</span>
+<span class="fc" id="L333">			link.right = root;</span>
 		//dt_next:
-<span class="fc bfc" id="L330" title="All 2 branches covered.">			if((root = link._left)!=null )	</span>
-<span class="fc bfc" id="L331" title="All 2 branches covered.">			{	while((t = root._left)!=null ) {</span>
-<span class="fc" id="L332">					rrotate(root, t);</span>
-<span class="fc" id="L333">					root = t;</span>
+<span class="fc bfc" id="L335" title="All 2 branches covered.">			if((root = link._left)!=null )	</span>
+<span class="fc bfc" id="L336" title="All 2 branches covered.">			{	while((t = root._left)!=null ) {</span>
+<span class="fc" id="L337">					rrotate(root, t);</span>
+<span class="fc" id="L338">					root = t;</span>
 				}
-<span class="fc" id="L335">				link._left = root.right;</span>
-<span class="fc" id="L336">				{ outcome = 1; break hasNoRoot; }</span>
+<span class="fc" id="L340">				link._left = root.right;</span>
+<span class="fc" id="L341">				{ outcome = 1; break hasNoRoot; }</span>
 			}
-<span class="fc" id="L338">			else	{ outcome = 2; break hasNoRoot; }</span>
+<span class="fc" id="L343">			else	{ outcome = 2; break hasNoRoot; }</span>
 		}
-<span class="pc bpc" id="L340" title="1 of 2 branches missed.">		else if((type&amp;DT_PREV)!=0) {</span>
-<span class="nc" id="L341">		throw new UnsupportedOperationException();</span>
+<span class="pc bpc" id="L345" title="1 of 2 branches missed.">		else if((type&amp;DT_PREV)!=0) {</span>
+<span class="nc" id="L346">		throw new UnsupportedOperationException();</span>
 //		{	root-&gt;right = link.hl._left;
 //			root-&gt;hl._left = ((Dtlink_t*)0);
 //			link.hl._left = root;
@@ -351,54 +356,54 @@ try {
 //			}
 //			else	goto no_root;
 		}
-<span class="pc bpc" id="L354" title="1 of 2 branches missed.">		else if((type&amp;(DT_DELETE|DT_DETACH))!=0) {</span>
+<span class="pc bpc" id="L359" title="1 of 2 branches missed.">		else if((type&amp;(DT_DELETE|DT_DETACH))!=0) {</span>
 //		{	/* taking an object out of the dictionary */
 //		dt_delete:
-<span class="fc" id="L357">			obj = (__ptr__) _DTOBJ(root,lk);</span>
+<span class="fc" id="L362">			obj = (__ptr__) _DTOBJ(root,lk);</span>
 			//if(disc.freef!=null &amp;&amp; (type&amp;DT_DELETE)!=0)
 			//UNSUPPORTED(&quot;(*disc-&gt;freef)(dt,obj,disc);&quot;);
 			//if(disc.link.getSign() &lt; 0);
 			//dt.memoryf.exe(dt, root, null, disc);
-<span class="pc bpc" id="L362" title="1 of 2 branches missed.">			if((dt.data.size -= 1) &lt; 0)</span>
-<span class="nc" id="L363">			UNSUPPORTED(&quot;//				dt-&gt;data-&gt;size = -1;&quot;);</span>
-<span class="fc" id="L364">			{ outcome = 2; break hasNoRoot; }</span>
+<span class="pc bpc" id="L367" title="1 of 2 branches missed.">			if((dt.data.size -= 1) &lt; 0)</span>
+<span class="nc" id="L368">			UNSUPPORTED(&quot;//				dt-&gt;data-&gt;size = -1;&quot;);</span>
+<span class="fc" id="L369">			{ outcome = 2; break hasNoRoot; }</span>
 		}
-<span class="nc bnc" id="L366" title="All 2 branches missed.">		else if((type&amp;(DT_INSERT|DT_ATTACH))!=0)</span>
-<span class="nc bnc" id="L367" title="All 2 branches missed.">		{	if((dt.meth.type&amp;DT_OSET)!=0)</span>
-<span class="nc" id="L368">				{ outcome = 1; break hasNoRoot; }</span>
+<span class="nc bnc" id="L371" title="All 2 branches missed.">		else if((type&amp;(DT_INSERT|DT_ATTACH))!=0)</span>
+<span class="nc bnc" id="L372" title="All 2 branches missed.">		{	if((dt.meth.type&amp;DT_OSET)!=0)</span>
+<span class="nc" id="L373">				{ outcome = 1; break hasNoRoot; }</span>
 			else
-<span class="nc" id="L370">			{   root._left = null;</span>
-<span class="nc" id="L371">				root.right = link._left;</span>
-<span class="nc" id="L372">				link._left = root;</span>
+<span class="nc" id="L375">			{   root._left = null;</span>
+<span class="nc" id="L376">				root.right = link._left;</span>
+<span class="nc" id="L377">				link._left = root;</span>
 				 /*dt_insert: DUPLICATION*/
-<span class="nc bnc" id="L374" title="All 4 branches missed.">				if(disc.makef!=null &amp;&amp; (type&amp;DT_INSERT)!=0)</span>
-<span class="nc" id="L375">					obj = (__ptr__) disc.makef.exe(zz, dt,obj,disc);</span>
-<span class="nc bnc" id="L376" title="All 2 branches missed.">				if(obj!=null)</span>
+<span class="nc bnc" id="L379" title="All 4 branches missed.">				if(disc.makef!=null &amp;&amp; (type&amp;DT_INSERT)!=0)</span>
+<span class="nc" id="L380">					obj = (__ptr__) disc.makef.exe(zz, dt,obj,disc);</span>
+<span class="nc bnc" id="L381" title="All 2 branches missed.">				if(obj!=null)</span>
 				{
-<span class="nc bnc" id="L378" title="All 2 branches missed.">					if(lk.getSign() &gt;= 0)</span>
-<span class="nc" id="L379">						root = _DTLNK(obj, lk);</span>
+<span class="nc bnc" id="L383" title="All 2 branches missed.">					if(lk.getSign() &gt;= 0)</span>
+<span class="nc" id="L384">						root = _DTLNK(obj, lk);</span>
 					else
 					{
-<span class="nc" id="L382">						root = (ST_dtlink_s)(((ST_dthold_s)dt.memoryf.exe(zz, </span>
-<span class="nc" id="L383">								dt,null,new size_t(ZType.ST_dthold_s),disc)).castTo(ST_dtlink_s.class));</span>
-<span class="nc bnc" id="L384" title="All 2 branches missed.">						if(root!=null)</span>
-<span class="nc" id="L385">							((ST_dthold_s)root).obj = obj;</span>
-<span class="nc bnc" id="L386" title="All 6 branches missed.">						else if(disc.makef!=null &amp;&amp; disc.freef!=null &amp;&amp;</span>
+<span class="nc" id="L387">						root = (ST_dtlink_s)(((ST_dthold_s)dt.memoryf.exe(zz, </span>
+<span class="nc" id="L388">								dt,null,new size_t(ZType.ST_dthold_s),disc)).castTo(ST_dtlink_s.class));</span>
+<span class="nc bnc" id="L389" title="All 2 branches missed.">						if(root!=null)</span>
+<span class="nc" id="L390">							((ST_dthold_s)root).obj = obj;</span>
+<span class="nc bnc" id="L391" title="All 6 branches missed.">						else if(disc.makef!=null &amp;&amp; disc.freef!=null &amp;&amp;</span>
 							((type&amp;DT_INSERT))!=0)
-<span class="nc" id="L388">							UNSUPPORTED(&quot;(*disc-&gt;freef)(dt,obj,disc);&quot;);</span>
+<span class="nc" id="L393">							UNSUPPORTED(&quot;(*disc-&gt;freef)(dt,obj,disc);&quot;);</span>
 					}
 				}
-<span class="nc bnc" id="L391" title="All 2 branches missed.">				if(root!=null)</span>
-<span class="nc bnc" id="L392" title="All 2 branches missed.">				{	if(dt.data.size &gt;= 0)</span>
-<span class="nc" id="L393">						dt.data.size += 1;</span>
-<span class="nc" id="L394">				{ outcome = 1; break hasNoRoot; }</span>
+<span class="nc bnc" id="L396" title="All 2 branches missed.">				if(root!=null)</span>
+<span class="nc bnc" id="L397" title="All 2 branches missed.">				{	if(dt.data.size &gt;= 0)</span>
+<span class="nc" id="L398">						dt.data.size += 1;</span>
+<span class="nc" id="L399">				{ outcome = 1; break hasNoRoot; }</span>
 				}
-<span class="nc" id="L396">				else	throw new UnsupportedOperationException(&quot;goto no_root&quot;);</span>
+<span class="nc" id="L401">				else	throw new UnsupportedOperationException(&quot;goto no_root&quot;);</span>
 			}
 		}
-<span class="nc bnc" id="L399" title="All 2 branches missed.">		else if((type&amp;DT_RENEW)!=0) /* a duplicate */</span>
+<span class="nc bnc" id="L404" title="All 2 branches missed.">		else if((type&amp;DT_RENEW)!=0) /* a duplicate */</span>
 		{
-<span class="nc" id="L401">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L406">		throw new UnsupportedOperationException();</span>
 //		{	if(dt-&gt;meth-&gt;type&amp;0000004)
 //			{	if(disc-&gt;freef)
 //					(*disc-&gt;freef)(dt,obj,disc);
@@ -416,74 +421,74 @@ try {
 	}
 	else
 	{	/* not found, finish up LEFT and RIGHT trees */
-<span class="fc" id="L419">		r._left = null;</span>
-<span class="fc" id="L420">		l.right = null;</span>
+<span class="fc" id="L424">		r._left = null;</span>
+<span class="fc" id="L425">		l.right = null;</span>
 		
-<span class="fc bfc" id="L422" title="All 2 branches covered.">		if((type&amp;DT_NEXT)!=0)</span>
+<span class="fc bfc" id="L427" title="All 2 branches covered.">		if((type&amp;DT_NEXT)!=0)</span>
 		{
 		    //goto dt_next:
-<span class="pc bpc" id="L425" title="1 of 2 branches missed.">			if((root = link._left)!=null )	</span>
-<span class="nc bnc" id="L426" title="All 2 branches missed.">			{	while((t = root._left)!=null ) {</span>
-<span class="nc" id="L427">					rrotate(root, t);</span>
-<span class="nc" id="L428">					root = t;</span>
+<span class="pc bpc" id="L430" title="1 of 2 branches missed.">			if((root = link._left)!=null )	</span>
+<span class="nc bnc" id="L431" title="All 2 branches missed.">			{	while((t = root._left)!=null ) {</span>
+<span class="nc" id="L432">					rrotate(root, t);</span>
+<span class="nc" id="L433">					root = t;</span>
 				}
-<span class="nc" id="L430">				link._left = root.right;</span>
-<span class="nc" id="L431">				{ outcome = 1; break hasNoRoot; }</span>
+<span class="nc" id="L435">				link._left = root.right;</span>
+<span class="nc" id="L436">				{ outcome = 1; break hasNoRoot; }</span>
 			}
-<span class="fc" id="L433">			else	{ outcome = 2; break hasNoRoot; }</span>
+<span class="fc" id="L438">			else	{ outcome = 2; break hasNoRoot; }</span>
 		
 		}
-<span class="pc bpc" id="L436" title="1 of 2 branches missed.">		else if((type&amp;DT_PREV)!=0)</span>
-<span class="nc" id="L437">			throw new UnsupportedOperationException(&quot;goto dt_prev&quot;);</span>
-<span class="fc bfc" id="L438" title="All 2 branches covered.">		else if((type&amp;(DT_SEARCH|DT_MATCH))!=0)</span>
+<span class="pc bpc" id="L441" title="1 of 2 branches missed.">		else if((type&amp;DT_PREV)!=0)</span>
+<span class="nc" id="L442">			throw new UnsupportedOperationException(&quot;goto dt_prev&quot;);</span>
+<span class="fc bfc" id="L443" title="All 2 branches covered.">		else if((type&amp;(DT_SEARCH|DT_MATCH))!=0)</span>
 		{
-<span class="fc" id="L440">			{ outcome = 2; break hasNoRoot; }</span>
+<span class="fc" id="L445">			{ outcome = 2; break hasNoRoot; }</span>
 		}
-<span class="pc bpc" id="L442" title="1 of 2 branches missed.">		else if((type&amp;(DT_INSERT|DT_ATTACH))!=0)</span>
+<span class="pc bpc" id="L447" title="1 of 2 branches missed.">		else if((type&amp;(DT_INSERT|DT_ATTACH))!=0)</span>
 		{ /*dt_insert: DUPLICATION*/
-<span class="pc bpc" id="L444" title="3 of 4 branches missed.">			if(disc.makef!=null &amp;&amp; (type&amp;DT_INSERT)!=0)</span>
-<span class="nc" id="L445">				obj = (__ptr__) disc.makef.exe(zz, dt,obj,disc);</span>
-<span class="pc bpc" id="L446" title="1 of 2 branches missed.">			if(obj!=null)</span>
+<span class="pc bpc" id="L449" title="3 of 4 branches missed.">			if(disc.makef!=null &amp;&amp; (type&amp;DT_INSERT)!=0)</span>
+<span class="nc" id="L450">				obj = (__ptr__) disc.makef.exe(zz, dt,obj,disc);</span>
+<span class="pc bpc" id="L451" title="1 of 2 branches missed.">			if(obj!=null)</span>
 			{
-<span class="fc bfc" id="L448" title="All 2 branches covered.">				if(lk.getSign() &gt;= 0)</span>
-<span class="fc" id="L449">					root = _DTLNK(obj, lk);</span>
+<span class="fc bfc" id="L453" title="All 2 branches covered.">				if(lk.getSign() &gt;= 0)</span>
+<span class="fc" id="L454">					root = _DTLNK(obj, lk);</span>
 				else
 				{
-<span class="fc" id="L452">					root = (ST_dtlink_s)(((ST_dthold_s)dt.memoryf.exe(zz, </span>
-<span class="fc" id="L453">						dt, null, new size_t(ZType.ST_dthold_s),disc)).castTo(ST_dtlink_s.class));</span>
-<span class="pc bpc" id="L454" title="1 of 2 branches missed.">					if(root!=null)</span>
-<span class="fc" id="L455">						((ST_dthold_s)root).obj = obj;</span>
-<span class="nc bnc" id="L456" title="All 6 branches missed.">					else if(disc.makef!=null &amp;&amp; disc.freef!=null &amp;&amp;</span>
+<span class="fc" id="L457">					root = (ST_dtlink_s)(((ST_dthold_s)dt.memoryf.exe(zz, </span>
+<span class="fc" id="L458">						dt, null, new size_t(ZType.ST_dthold_s),disc)).castTo(ST_dtlink_s.class));</span>
+<span class="pc bpc" id="L459" title="1 of 2 branches missed.">					if(root!=null)</span>
+<span class="fc" id="L460">						((ST_dthold_s)root).obj = obj;</span>
+<span class="nc bnc" id="L461" title="All 6 branches missed.">					else if(disc.makef!=null &amp;&amp; disc.freef!=null &amp;&amp;</span>
 						((type&amp;DT_INSERT))!=0)
-<span class="nc" id="L458">						UNSUPPORTED(&quot;(*disc-&gt;freef)(dt,obj,disc);&quot;);</span>
+<span class="nc" id="L463">						UNSUPPORTED(&quot;(*disc-&gt;freef)(dt,obj,disc);&quot;);</span>
 				}
 			}
-<span class="pc bpc" id="L461" title="1 of 2 branches missed.">			if(root!=null)</span>
-<span class="fc bfc" id="L462" title="All 2 branches covered.">			{	if(dt.data.size &gt;= 0)</span>
-<span class="fc" id="L463">					dt.data.size += 1;</span>
-<span class="fc" id="L464">			{ outcome = 1; break hasNoRoot; }</span>
+<span class="pc bpc" id="L466" title="1 of 2 branches missed.">			if(root!=null)</span>
+<span class="fc bfc" id="L467" title="All 2 branches covered.">			{	if(dt.data.size &gt;= 0)</span>
+<span class="fc" id="L468">					dt.data.size += 1;</span>
+<span class="fc" id="L469">			{ outcome = 1; break hasNoRoot; }</span>
 			}
-<span class="nc" id="L466">			else	throw new UnsupportedOperationException(&quot;goto no_root&quot;);</span>
+<span class="nc" id="L471">			else	throw new UnsupportedOperationException(&quot;goto no_root&quot;);</span>
 		}
-<span class="nc bnc" id="L468" title="All 2 branches missed.">		else if((type&amp;DT_RENEW)!=0)</span>
-<span class="nc" id="L469">		{	root = me;</span>
-<span class="nc" id="L470">			dt.data.size += 1;</span>
-<span class="nc" id="L471">			throw new UnsupportedOperationException(&quot;goto has_root&quot;);</span>
+<span class="nc bnc" id="L473" title="All 2 branches missed.">		else if((type&amp;DT_RENEW)!=0)</span>
+<span class="nc" id="L474">		{	root = me;</span>
+<span class="nc" id="L475">			dt.data.size += 1;</span>
+<span class="nc" id="L476">			throw new UnsupportedOperationException(&quot;goto has_root&quot;);</span>
 		}
 		else /*if(type&amp;DT_DELETE)*/
-<span class="nc" id="L474">		{	obj = null;</span>
-<span class="nc" id="L475">		throw new UnsupportedOperationException(&quot;goto no_root&quot;);</span>
+<span class="nc" id="L479">		{	obj = null;</span>
+<span class="nc" id="L480">		throw new UnsupportedOperationException(&quot;goto no_root&quot;);</span>
 		}
 		// throw new UnsupportedOperationException();
 	}
 //	return ((void*)0);
 	}
-<span class="fc bfc" id="L481" title="All 2 branches covered.">	if (outcome == 1) {</span>
-<span class="fc" id="L482">		root._left = link.right;</span>
-<span class="fc" id="L483">		root.right = link._left;</span>
-<span class="pc bpc" id="L484" title="1 of 4 branches missed.">		if((dt.meth.type&amp;DT_OBAG)!=0 &amp;&amp; (type&amp;(DT_SEARCH|DT_MATCH))!=0 )</span>
+<span class="fc bfc" id="L486" title="All 2 branches covered.">	if (outcome == 1) {</span>
+<span class="fc" id="L487">		root._left = link.right;</span>
+<span class="fc" id="L488">		root.right = link._left;</span>
+<span class="pc bpc" id="L489" title="1 of 4 branches missed.">		if((dt.meth.type&amp;DT_OBAG)!=0 &amp;&amp; (type&amp;(DT_SEARCH|DT_MATCH))!=0 )</span>
 		{	//key = (lk &lt; 0 ? ((Dthold_t*)(root))-&gt;obj : (void*)((char*)(root) - lk) ); key = (void*)(sz &lt; 0 ? *((char**)((char*)(key)+ky)) : ((char*)(key)+ky));
-<span class="nc" id="L486">			throw new UnsupportedOperationException();</span>
+<span class="nc" id="L491">			throw new UnsupportedOperationException();</span>
 //			while((t = root-&gt;hl._left) )
 //			{	/* find max of left subtree */
 //				while((r = t-&gt;right) )
@@ -496,18 +501,18 @@ try {
 //				(((root)-&gt;hl._left = (t)-&gt;right, (t)-&gt;right = (root)), (root) = (t));
 //			}
 		}
-<span class="fc" id="L499">		dt.data.here = root;</span>
-<span class="fc" id="L500">		return _DTOBJ(root, lk);</span>
-<span class="pc bpc" id="L501" title="1 of 2 branches missed.">	} else if (outcome == 2) {</span>
-<span class="fc bfc" id="L502" title="All 2 branches covered.">			while((t = r._left)!=null)</span>
-<span class="fc" id="L503">				r = t;</span>
-<span class="fc" id="L504">			r._left = link.right;</span>
-<span class="fc" id="L505">			dt.data.here = link._left;</span>
-<span class="fc bfc" id="L506" title="All 2 branches covered.">			return (type&amp;DT_DELETE)!=0 ? obj : null;</span>
+<span class="fc" id="L504">		dt.data.here = root;</span>
+<span class="fc" id="L505">		return _DTOBJ(root, lk);</span>
+<span class="pc bpc" id="L506" title="1 of 2 branches missed.">	} else if (outcome == 2) {</span>
+<span class="fc bfc" id="L507" title="All 2 branches covered.">			while((t = r._left)!=null)</span>
+<span class="fc" id="L508">				r = t;</span>
+<span class="fc" id="L509">			r._left = link.right;</span>
+<span class="fc" id="L510">			dt.data.here = link._left;</span>
+<span class="fc bfc" id="L511" title="All 2 branches covered.">			return (type&amp;DT_DELETE)!=0 ? obj : null;</span>
 	}
-<span class="nc" id="L508">throw new UnsupportedOperationException();</span>
+<span class="nc" id="L513">throw new UnsupportedOperationException();</span>
 } finally {
-<span class="fc" id="L510">LEAVING(&quot;abqfzg1d1vkzk51225tcdlik5&quot;,&quot;dttree&quot;);</span>
+<span class="fc" id="L515">LEAVING(&quot;abqfzg1d1vkzk51225tcdlik5&quot;,&quot;dttree&quot;);</span>
 }
 }
 
@@ -521,42 +526,47 @@ try {
 
 //#define _DTLNK(o,lk)	((Dtlink_t*)((char*)(o) + lk) )
 private static ST_dtlink_s _DTLNK(__ptr__ o, FieldOffset lk) {
-<span class="fc" id="L524">		final __ptr__ tmp1 = (__ptr__) o.getTheField(lk);</span>
-<span class="fc" id="L525">		final __ptr__ tmp2 = tmp1.castTo(ST_dtlink_s.class);</span>
-<span class="fc" id="L526">		return (ST_dtlink_s) tmp2;</span>
+<span class="fc" id="L529">		final __ptr__ tmp1 = (__ptr__) o.getTheField(lk);</span>
+<span class="fc" id="L530">		final __ptr__ tmp2 = tmp1.castTo(ST_dtlink_s.class);</span>
+<span class="fc" id="L531">		return (ST_dtlink_s) tmp2;</span>
 	}
 
 //#define _DTCMP(dt,k1,k2,dc,cmpf,sz) \
 //(cmpf ? (*cmpf)(dt,k1,k2,dc) : \
 // (sz &lt;= 0 ? strcmp(k1,k2) : memcmp(k1,k2,sz)) )
 private static int _DTCMP(Globals zz, ST_dt_s dt, Object k1, Object k2, ST_dtdisc_s dc, CFunction cmpf, int sz) {
-<span class="fc bfc" id="L533" title="All 2 branches covered.">		if (cmpf == null) {</span>
-<span class="pc bpc" id="L534" title="1 of 2 branches missed.">			if (sz &lt;= 0) {</span>
-<span class="fc" id="L535">				return strcmp((CString) k1, (CString) k2);</span>
+<span class="fc bfc" id="L538" title="All 2 branches covered.">		if (cmpf == null) {</span>
+<span class="pc bpc" id="L539" title="1 of 2 branches missed.">			if (sz &lt;= 0) {</span>
+<span class="fc" id="L540">				return strcmp((CString) k1, (CString) k2);</span>
 			}
-<span class="nc" id="L537">			throw new UnsupportedOperationException(&quot;memcmp(key,k,sz))&quot;);</span>
+<span class="nc" id="L542">			throw new UnsupportedOperationException(&quot;memcmp(key,k,sz))&quot;);</span>
 		}
-<span class="fc" id="L539">		return (Integer) cmpf.exe(zz, dt, k1, k2, dc);</span>
+<span class="fc" id="L544">		return cmpf.exeCmpInt(zz, dt, k1, k2, dc);</span>
 	}
 
 
 //#define _DTOBJ(e,lk)	(lk &lt; 0 ? ((Dthold_t*)(e))-&gt;obj : (Void_t*)((char*)(e) - lk) )
 private static Object _DTOBJ(ST_dtlink_s root, FieldOffset lk) {
-<span class="fc bfc" id="L545" title="All 2 branches covered.">	if (lk.getSign() &lt; 0) {</span>
-<span class="fc" id="L546">		return ((ST_dthold_s)root).obj;</span>
+<span class="fc bfc" id="L550" title="All 2 branches covered.">	if (lk.getSign() &lt; 0) {</span>
+<span class="fc" id="L551">		return ((ST_dthold_s)root).obj;</span>
 	}
-<span class="fc" id="L548">	return root.getTheField(lk.negative());</span>
+<span class="fc" id="L553">	return root.getTheField(lk.negative());</span>
 }
 
 
 private static Object _DTKEY(__ptr__ obj, FieldOffset ky) {
-<span class="fc" id="L553">	return obj.getTheField(ky);</span>
+	// Zero offset means the object itself is the key (every struct's
+	// getTheField returns this for sign 0); skips a virtual dispatch on
+	// the hottest dictionary path.
+<span class="pc bpc" id="L561" title="1 of 4 branches missed.">	if (ky == null || ky.getSign() == 0)</span>
+<span class="fc" id="L562">		return obj;</span>
+<span class="fc" id="L563">	return obj.getTheField(ky);</span>
 }
 
 
 private static void UNFLATTEN(ST_dt_s dt) {
-<span class="pc bpc" id="L558" title="1 of 2 branches missed.">	if ((dt.data.type &amp; DT_FLATTEN) !=0) { dtrestore(dt, null); }</span>
-<span class="fc" id="L559">}</span>
+<span class="pc bpc" id="L568" title="1 of 2 branches missed.">	if ((dt.data.type &amp; DT_FLATTEN) !=0) { dtrestore(dt, null); }</span>
+<span class="fc" id="L569">}</span>
 
 
 

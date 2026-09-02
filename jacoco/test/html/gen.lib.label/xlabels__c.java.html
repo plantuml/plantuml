@@ -755,7 +755,7 @@ try {
 		   (hp.d.rect.boundary[3] - hp.d.rect.boundary[1]) / 2;
 		  
 <span class="fc" id="L757">		  hp.key = hd_hil_s_from_xy(pi, order);</span>
-<span class="pc bpc" id="L758" title="1 of 2 branches missed.">		  if ((xlp.hdx.searchf.exe(zz, xlp.hdx, hp, 0000001)) == null)</span>
+<span class="pc bpc" id="L758" title="1 of 2 branches missed.">		  if ((xlp.hdx.searchf.exeSearch(zz, xlp.hdx, hp, 0000001)) == null)</span>
 			  
 <span class="nc" id="L760"> 	    return -1;</span>
      }
@@ -805,8 +805,8 @@ public static int xlspdxload(Globals zz, ST_XLabels_t xlp) {
 <span class="fc" id="L805">ENTERING(&quot;3wrxwwd3y5ts0ekr32o8vhuvv&quot;,&quot;xlspdxload&quot;);</span>
 try {
 <span class="fc" id="L807">     ST_HDict_t op=null;</span>
-<span class="fc bfc" id="L808" title="All 2 branches covered.">     for (op = (ST_HDict_t) xlp.hdx.searchf.exe(zz, xlp.hdx, null, 0000200); op!=null;</span>
-<span class="fc" id="L809">    		 op = (ST_HDict_t) xlp.hdx.searchf.exe(zz, xlp.hdx, op, 0000010)) {</span>
+<span class="fc bfc" id="L808" title="All 2 branches covered.">     for (op = (ST_HDict_t) xlp.hdx.searchf.exeSearch(zz, xlp.hdx, null, 0000200); op!=null;</span>
+<span class="fc" id="L809">    		 op = (ST_HDict_t) xlp.hdx.searchf.exeSearch(zz, xlp.hdx, op, 0000010)) {</span>
    	/*          tree       rectangle    data        node             lvl */
 //    	 	RTreeInsert(xlp-&gt;spdx, &amp;op-&gt;d.rect, op-&gt;d.data, &amp;xlp-&gt;spdx-&gt;root, 0);
     	 // WARNING ARRAY

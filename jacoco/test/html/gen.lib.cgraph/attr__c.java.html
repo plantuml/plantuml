@@ -327,8 +327,8 @@ try {
 <span class="fc" id="L327">	    sz = 4;</span>
 <span class="fc bfc" id="L328" title="All 2 branches covered.">	rec.str = new ArrayList&lt;CString&gt;(); for (int i=0; i&lt;sz; i++) rec.str.add(null);</span>
 	/* doesn't call agxset() so no obj-modified callbacks occur */
-<span class="fc bfc" id="L330" title="All 2 branches covered.">	for (sym = (ST_Agsym_s) ((__ptr__)datadict.searchf.exe(zz, datadict,null,0000200)); sym!=null;</span>
-<span class="fc" id="L331">	     sym = (ST_Agsym_s) ((__ptr__)datadict.searchf.exe(zz, datadict,sym,0000010)))</span>
+<span class="fc bfc" id="L330" title="All 2 branches covered.">	for (sym = (ST_Agsym_s) ((__ptr__)datadict.searchf.exeSearch(zz, datadict,null,0000200)); sym!=null;</span>
+<span class="fc" id="L331">	     sym = (ST_Agsym_s) ((__ptr__)datadict.searchf.exeSearch(zz, datadict,sym,0000010)))</span>
 <span class="fc" id="L332">	    rec.str.set(sym.id, agstrdup(zz, agraphof(obj), sym.defval));</span>
     } else {
     }
@@ -633,7 +633,7 @@ try {
 <span class="fc" id="L633">	    lsym.defval = agstrdup(zz, g, value);</span>
 	} else {
 <span class="fc" id="L635">	    lsym = agnewsym(zz, g, sym.name, value, sym.id, hdr.tag.objtype);</span>
-<span class="fc" id="L636">	    dict.searchf.exe(zz, dict, lsym, 0000001);</span>
+<span class="fc" id="L636">	    dict.searchf.exeSearch(zz, dict, lsym, 0000001);</span>
 	}
     }
 <span class="fc" id="L639">    agmethod_upd(g, obj, sym);</span>

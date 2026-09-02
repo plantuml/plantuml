@@ -189,42 +189,45 @@ try {
     int bi, si, splinepi;
     double t;
 <span class="fc" id="L191">    final CArray&lt;ST_pointf&gt; sp = CArray.&lt;ST_pointf&gt;ALLOC__(4, ZType.ST_pointf);</span>
-<span class="fc" id="L192">    int num_div = delta * boxn;</span>
-<span class="fc bfc" id="L193" title="All 2 branches covered.">    for (splinepi = 0; splinepi + 3 &lt; pn; splinepi += 3) {</span>
-<span class="fc bfc" id="L194" title="All 2 branches covered.">	for (si = 0; si &lt;= num_div; si++) {</span>
-<span class="fc" id="L195">	    t = si / (double)num_div;</span>
-<span class="fc" id="L196">	    sp.get__(0).___(pps.get__(splinepi));</span>
-<span class="fc" id="L197">	    sp.get__(1).___(pps.get__(splinepi+1));</span>
-<span class="fc" id="L198">	    sp.get__(2).___(pps.get__(splinepi+2));</span>
-<span class="fc" id="L199">	    sp.get__(3).___(pps.get__(splinepi+3));</span>
-<span class="fc" id="L200">	    sp.get__(0).x = sp.get__(0).x + t * (sp.get__(1).x - sp.get__(0).x);</span>
-<span class="fc" id="L201">	    sp.get__(0).y = sp.get__(0).y + t * (sp.get__(1).y - sp.get__(0).y);</span>
-<span class="fc" id="L202">	    sp.get__(1).x = sp.get__(1).x + t * (sp.get__(2).x - sp.get__(1).x);</span>
-<span class="fc" id="L203">	    sp.get__(1).y = sp.get__(1).y + t * (sp.get__(2).y - sp.get__(1).y);</span>
-<span class="fc" id="L204">	    sp.get__(2).x = sp.get__(2).x + t * (sp.get__(3).x - sp.get__(2).x);</span>
-<span class="fc" id="L205">	    sp.get__(2).y = sp.get__(2).y + t * (sp.get__(3).y - sp.get__(2).y);</span>
-<span class="fc" id="L206"> 	    sp.get__(0).x = sp.get__(0).x + t * (sp.get__(1).x - sp.get__(0).x);</span>
-<span class="fc" id="L207">	    sp.get__(0).y = sp.get__(0).y + t * (sp.get__(1).y - sp.get__(0).y);</span>
-<span class="fc" id="L208">	    sp.get__(1).x = sp.get__(1).x + t * (sp.get__(2).x - sp.get__(1).x);</span>
-<span class="fc" id="L209">	    sp.get__(1).y = sp.get__(1).y + t * (sp.get__(2).y - sp.get__(1).y);</span>
-<span class="fc" id="L210">	    sp.get__(0).x = sp.get__(0).x + t * (sp.get__(1).x - sp.get__(0).x);</span>
-<span class="fc" id="L211">	    sp.get__(0).y = sp.get__(0).y + t * (sp.get__(1).y - sp.get__(0).y);</span>
-<span class="fc bfc" id="L212" title="All 2 branches covered.">	    for (bi = 0; bi &lt; boxn; bi++) {</span>
+    // The four slots are fixed: hoisted out of the loops (each get__ is a
+    // method call and offset arithmetic; the inner loop did ~44 of them).
+<span class="fc" id="L194">    final ST_pointf s0 = sp.get__(0), s1 = sp.get__(1), s2 = sp.get__(2), s3 = sp.get__(3);</span>
+<span class="fc" id="L195">    int num_div = delta * boxn;</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">    for (splinepi = 0; splinepi + 3 &lt; pn; splinepi += 3) {</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">	for (si = 0; si &lt;= num_div; si++) {</span>
+<span class="fc" id="L198">	    t = si / (double)num_div;</span>
+<span class="fc" id="L199">	    s0.___(pps.get__(splinepi));</span>
+<span class="fc" id="L200">	    s1.___(pps.get__(splinepi+1));</span>
+<span class="fc" id="L201">	    s2.___(pps.get__(splinepi+2));</span>
+<span class="fc" id="L202">	    s3.___(pps.get__(splinepi+3));</span>
+<span class="fc" id="L203">	    s0.x = s0.x + t * (s1.x - s0.x);</span>
+<span class="fc" id="L204">	    s0.y = s0.y + t * (s1.y - s0.y);</span>
+<span class="fc" id="L205">	    s1.x = s1.x + t * (s2.x - s1.x);</span>
+<span class="fc" id="L206">	    s1.y = s1.y + t * (s2.y - s1.y);</span>
+<span class="fc" id="L207">	    s2.x = s2.x + t * (s3.x - s2.x);</span>
+<span class="fc" id="L208">	    s2.y = s2.y + t * (s3.y - s2.y);</span>
+<span class="fc" id="L209"> 	    s0.x = s0.x + t * (s1.x - s0.x);</span>
+<span class="fc" id="L210">	    s0.y = s0.y + t * (s1.y - s0.y);</span>
+<span class="fc" id="L211">	    s1.x = s1.x + t * (s2.x - s1.x);</span>
+<span class="fc" id="L212">	    s1.y = s1.y + t * (s2.y - s1.y);</span>
+<span class="fc" id="L213">	    s0.x = s0.x + t * (s1.x - s0.x);</span>
+<span class="fc" id="L214">	    s0.y = s0.y + t * (s1.y - s0.y);</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">	    for (bi = 0; bi &lt; boxn; bi++) {</span>
 /* this tested ok on 64bit machines, but on 32bit we need this FUDGE
  *     or graphs/directed/records.gv fails */
-<span class="fc bfc" id="L215" title="All 4 branches covered.">		if (sp.get__(0).y &lt;= boxes[bi].UR.y+.0001 &amp;&amp; sp.get__(0).y &gt;= boxes[bi].LL.y-.0001) {</span>
-<span class="fc bfc" id="L216" title="All 2 branches covered.">		    if (boxes[bi].LL.x &gt; sp.get__(0).x)</span>
-<span class="fc" id="L217">			boxes[bi].LL.x = sp.get__(0).x;</span>
-<span class="fc bfc" id="L218" title="All 2 branches covered.">		    if (boxes[bi].UR.x &lt; sp.get__(0).x)</span>
-<span class="fc" id="L219">			boxes[bi].UR.x = sp.get__(0).x;</span>
+<span class="fc bfc" id="L218" title="All 4 branches covered.">		if (s0.y &lt;= boxes[bi].UR.y+.0001 &amp;&amp; s0.y &gt;= boxes[bi].LL.y-.0001) {</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">		    if (boxes[bi].LL.x &gt; s0.x)</span>
+<span class="fc" id="L220">			boxes[bi].LL.x = s0.x;</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">		    if (boxes[bi].UR.x &lt; s0.x)</span>
+<span class="fc" id="L222">			boxes[bi].UR.x = s0.x;</span>
 		}
 	    }
 	}
     }
 } finally {
-<span class="fc" id="L225">LEAVING(&quot;cu8ssjizw7ileqe9u7tcclq7k&quot;,&quot;limitBoxes&quot;);</span>
+<span class="fc" id="L228">LEAVING(&quot;cu8ssjizw7ileqe9u7tcclq7k&quot;,&quot;limitBoxes&quot;);</span>
 }
-<span class="fc" id="L227">}</span>
+<span class="fc" id="L230">}</span>
 
 
 
@@ -234,245 +237,245 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/routespl.c&quot;, name=&quot;&quot;, key=&quot;3mcnemqisisnqtd4mr72ej76y&quot;, definition=&quot;static pointf *_routesplines(path * pp, int *npoints, int polyline)&quot;)
 public static CArray&lt;ST_pointf&gt; _routesplines(Globals zz, ST_path pp, int npoints[], int polyline) {
-<span class="fc" id="L237">ENTERING(&quot;3mcnemqisisnqtd4mr72ej76y&quot;,&quot;_routesplines&quot;);</span>
+<span class="fc" id="L240">ENTERING(&quot;3mcnemqisisnqtd4mr72ej76y&quot;,&quot;_routesplines&quot;);</span>
 try {
-<span class="fc" id="L239">    final ST_Ppoly_t poly = new ST_Ppoly_t();</span>
-<span class="fc" id="L240">    final ST_Ppoly_t pl  = new ST_Ppoly_t(), spl = new ST_Ppoly_t();</span>
+<span class="fc" id="L242">    final ST_Ppoly_t poly = new ST_Ppoly_t();</span>
+<span class="fc" id="L243">    final ST_Ppoly_t pl  = new ST_Ppoly_t(), spl = new ST_Ppoly_t();</span>
     int splinepi;
-<span class="fc" id="L242">    final CArray&lt;ST_pointf&gt; eps = CArray.&lt;ST_pointf&gt;ALLOC__(2, ZType.ST_pointf);</span>
-<span class="fc" id="L243">    final CArray&lt;ST_pointf&gt; evs = CArray.&lt;ST_pointf&gt;ALLOC__(2, ZType.ST_pointf);</span>
+<span class="fc" id="L245">    final CArray&lt;ST_pointf&gt; eps = CArray.&lt;ST_pointf&gt;ALLOC__(2, ZType.ST_pointf);</span>
+<span class="fc" id="L246">    final CArray&lt;ST_pointf&gt; evs = CArray.&lt;ST_pointf&gt;ALLOC__(2, ZType.ST_pointf);</span>
     int edgei, prev, next;
-<span class="fc" id="L245">    int pi=0, bi;</span>
+<span class="fc" id="L248">    int pi=0, bi;</span>
     ST_boxf[] boxes;
     int boxn;
     ST_Agedge_s realedge;
     int flip;
-<span class="fc" id="L250">    int loopcnt, delta = 10;</span>
+<span class="fc" id="L253">    int loopcnt, delta = 10;</span>
     boolean unbounded;
     
-<span class="fc" id="L253">    zz.nedges++;</span>
-<span class="fc" id="L254">    zz.nboxes += pp.nbox;</span>
+<span class="fc" id="L256">    zz.nedges++;</span>
+<span class="fc" id="L257">    zz.nboxes += pp.nbox;</span>
     
-<span class="fc" id="L256">    for (realedge = (ST_Agedge_s) pp.data;</span>
-<span class="pc bpc" id="L257" title="1 of 4 branches missed.">	 realedge!=null &amp;&amp; ED_edge_type(realedge) != 0;</span>
-<span class="fc" id="L258">	 realedge = ED_to_orig(realedge));</span>
-<span class="pc bpc" id="L259" title="1 of 2 branches missed.">    if ((realedge) == null) {</span>
-<span class="nc" id="L260">	UNSUPPORTED(&quot;agerr(AGERR, _in routesplines, cannot find NORMAL edge&quot;);</span>
-<span class="nc" id="L261">	return null;</span>
+<span class="fc" id="L259">    for (realedge = (ST_Agedge_s) pp.data;</span>
+<span class="pc bpc" id="L260" title="1 of 4 branches missed.">	 realedge!=null &amp;&amp; ED_edge_type(realedge) != 0;</span>
+<span class="fc" id="L261">	 realedge = ED_to_orig(realedge));</span>
+<span class="pc bpc" id="L262" title="1 of 2 branches missed.">    if ((realedge) == null) {</span>
+<span class="nc" id="L263">	UNSUPPORTED(&quot;agerr(AGERR, _in routesplines, cannot find NORMAL edge&quot;);</span>
+<span class="nc" id="L264">	return null;</span>
     }
     
-<span class="fc" id="L264">    boxes = pp.boxes;</span>
-<span class="fc" id="L265">    boxn = pp.nbox;</span>
+<span class="fc" id="L267">    boxes = pp.boxes;</span>
+<span class="fc" id="L268">    boxn = pp.nbox;</span>
     
-<span class="pc bpc" id="L267" title="1 of 2 branches missed.">    if (checkpath(boxn, boxes, pp)!=0)</span>
-<span class="nc" id="L268">	return null;</span>
+<span class="pc bpc" id="L270" title="1 of 2 branches missed.">    if (checkpath(boxn, boxes, pp)!=0)</span>
+<span class="nc" id="L271">	return null;</span>
     
-<span class="fc bfc" id="L270" title="All 2 branches covered.">    if (boxn * 8 &gt; zz.polypointn) {</span>
-<span class="fc" id="L271">	zz.polypoints = CArray.&lt;ST_pointf&gt;REALLOC__(boxn * 8, zz.polypoints, ZType.ST_pointf);</span>
-<span class="fc" id="L272">	zz.polypointn = boxn * 8;</span>
+<span class="fc bfc" id="L273" title="All 2 branches covered.">    if (boxn * 8 &gt; zz.polypointn) {</span>
+<span class="fc" id="L274">	zz.polypoints = CArray.&lt;ST_pointf&gt;REALLOC__(boxn * 8, zz.polypoints, ZType.ST_pointf);</span>
+<span class="fc" id="L275">	zz.polypointn = boxn * 8;</span>
     }
     
-<span class="pc bpc" id="L275" title="1 of 4 branches missed.">    if ((boxn &gt; 1) &amp;&amp; (((ST_boxf)boxes[0]).LL.y &gt; ((ST_boxf)boxes[1]).LL.y)) {</span>
-<span class="fc" id="L276">        flip = 1;</span>
-<span class="fc bfc" id="L277" title="All 2 branches covered.">	for (bi = 0; bi &lt; boxn; bi++) {</span>
-<span class="fc" id="L278">	    double v = ((ST_boxf)boxes[bi]).UR.y;</span>
-<span class="fc" id="L279">	    ((ST_boxf)boxes[bi]).UR.y= -1*((ST_boxf)boxes[bi]).LL.y;</span>
-<span class="fc" id="L280">	    ((ST_boxf)boxes[bi]).LL.y = -v;</span>
+<span class="pc bpc" id="L278" title="1 of 4 branches missed.">    if ((boxn &gt; 1) &amp;&amp; (((ST_boxf)boxes[0]).LL.y &gt; ((ST_boxf)boxes[1]).LL.y)) {</span>
+<span class="fc" id="L279">        flip = 1;</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">	for (bi = 0; bi &lt; boxn; bi++) {</span>
+<span class="fc" id="L281">	    double v = ((ST_boxf)boxes[bi]).UR.y;</span>
+<span class="fc" id="L282">	    ((ST_boxf)boxes[bi]).UR.y= -1*((ST_boxf)boxes[bi]).LL.y;</span>
+<span class="fc" id="L283">	    ((ST_boxf)boxes[bi]).LL.y = -v;</span>
 	}
     }
-<span class="fc" id="L283">    else flip = 0;</span>
+<span class="fc" id="L286">    else flip = 0;</span>
     
-<span class="pc bpc" id="L285" title="1 of 2 branches missed.">    if ((agtail(realedge) != aghead(realedge))) {</span>
+<span class="pc bpc" id="L288" title="1 of 2 branches missed.">    if ((agtail(realedge) != aghead(realedge))) {</span>
 	/* I assume that the path goes either down only or
 	   up - right - down */
-<span class="fc bfc" id="L288" title="All 2 branches covered.">	for (bi = 0, pi = 0; bi &lt; boxn; bi++) {</span>
-<span class="fc" id="L289">	    next = prev = 0;</span>
-<span class="fc bfc" id="L290" title="All 2 branches covered.">	    if (bi &gt; 0)</span>
-<span class="fc bfc" id="L291" title="All 2 branches covered.">		prev = (((ST_boxf)boxes[bi]).LL.y &gt; ((ST_boxf)boxes[bi-1]).LL.y) ? -1 : 1;</span>
-<span class="fc bfc" id="L292" title="All 2 branches covered.">	    if (bi &lt; boxn - 1)</span>
-<span class="fc bfc" id="L293" title="All 2 branches covered.">		next = (((ST_boxf)boxes[bi+1]).LL.y &gt; ((ST_boxf)boxes[bi]).LL.y) ? 1 : -1;</span>
-<span class="fc bfc" id="L294" title="All 2 branches covered.">	    if (prev != next) {</span>
-<span class="fc bfc" id="L295" title="All 4 branches covered.">		if (next == -1 || prev == 1) {</span>
-<span class="fc" id="L296">		    zz.polypoints.get__(pi).x = boxes[bi].LL.x;</span>
-<span class="fc" id="L297">		    zz.polypoints.get__(pi++).y = boxes[bi].UR.y;</span>
-<span class="fc" id="L298">		    zz.polypoints.get__(pi).x = boxes[bi].LL.x;</span>
-<span class="fc" id="L299">		    zz.polypoints.get__(pi++).y =boxes[bi].LL.y;</span>
+<span class="fc bfc" id="L291" title="All 2 branches covered.">	for (bi = 0, pi = 0; bi &lt; boxn; bi++) {</span>
+<span class="fc" id="L292">	    next = prev = 0;</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">	    if (bi &gt; 0)</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">		prev = (((ST_boxf)boxes[bi]).LL.y &gt; ((ST_boxf)boxes[bi-1]).LL.y) ? -1 : 1;</span>
+<span class="fc bfc" id="L295" title="All 2 branches covered.">	    if (bi &lt; boxn - 1)</span>
+<span class="fc bfc" id="L296" title="All 2 branches covered.">		next = (((ST_boxf)boxes[bi+1]).LL.y &gt; ((ST_boxf)boxes[bi]).LL.y) ? 1 : -1;</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">	    if (prev != next) {</span>
+<span class="fc bfc" id="L298" title="All 4 branches covered.">		if (next == -1 || prev == 1) {</span>
+<span class="fc" id="L299">		    zz.polypoints.get__(pi).x = boxes[bi].LL.x;</span>
+<span class="fc" id="L300">		    zz.polypoints.get__(pi++).y = boxes[bi].UR.y;</span>
+<span class="fc" id="L301">		    zz.polypoints.get__(pi).x = boxes[bi].LL.x;</span>
+<span class="fc" id="L302">		    zz.polypoints.get__(pi++).y =boxes[bi].LL.y;</span>
 		} else {
-<span class="fc" id="L301">		    zz.polypoints.get__(pi).x = boxes[bi].UR.x;</span>
-<span class="fc" id="L302">		    zz.polypoints.get__(pi++).y = boxes[bi].LL.y;</span>
-<span class="fc" id="L303">		    zz.polypoints.get__(pi).x = boxes[bi].UR.x;</span>
-<span class="fc" id="L304">		    zz.polypoints.get__(pi++).y = boxes[bi].UR.y;</span>
+<span class="fc" id="L304">		    zz.polypoints.get__(pi).x = boxes[bi].UR.x;</span>
+<span class="fc" id="L305">		    zz.polypoints.get__(pi++).y = boxes[bi].LL.y;</span>
+<span class="fc" id="L306">		    zz.polypoints.get__(pi).x = boxes[bi].UR.x;</span>
+<span class="fc" id="L307">		    zz.polypoints.get__(pi++).y = boxes[bi].UR.y;</span>
 		}
 	    }
-<span class="pc bpc" id="L307" title="1 of 2 branches missed.">	    else if (prev == 0) { /* single box */</span>
-<span class="nc" id="L308">UNSUPPORTED(&quot;2bfai79qe7cec0rljrn56jg2f&quot;); // 		polypoints[pi].x = boxes[bi].LL.x;</span>
-<span class="nc" id="L309">UNSUPPORTED(&quot;cjppvcr7k9pknjrjugccsky56&quot;); // 		polypoints[pi++].y = boxes[bi].UR.y;</span>
-<span class="nc" id="L310">UNSUPPORTED(&quot;2bfai79qe7cec0rljrn56jg2f&quot;); // 		polypoints[pi].x = boxes[bi].LL.x;</span>
-<span class="nc" id="L311">UNSUPPORTED(&quot;99xeozpks5v0iza4sv2occuuq&quot;); // 		polypoints[pi++].y = boxes[bi].LL.y;</span>
+<span class="pc bpc" id="L310" title="1 of 2 branches missed.">	    else if (prev == 0) { /* single box */</span>
+<span class="nc" id="L311">UNSUPPORTED(&quot;2bfai79qe7cec0rljrn56jg2f&quot;); // 		polypoints[pi].x = boxes[bi].LL.x;</span>
+<span class="nc" id="L312">UNSUPPORTED(&quot;cjppvcr7k9pknjrjugccsky56&quot;); // 		polypoints[pi++].y = boxes[bi].UR.y;</span>
+<span class="nc" id="L313">UNSUPPORTED(&quot;2bfai79qe7cec0rljrn56jg2f&quot;); // 		polypoints[pi].x = boxes[bi].LL.x;</span>
+<span class="nc" id="L314">UNSUPPORTED(&quot;99xeozpks5v0iza4sv2occuuq&quot;); // 		polypoints[pi++].y = boxes[bi].LL.y;</span>
 	    } 
 	    else {
-<span class="pc bpc" id="L314" title="2 of 4 branches missed."> 		if (!(prev == -1 &amp;&amp; next == -1)) {</span>
-<span class="nc" id="L315">UNSUPPORTED(&quot;cgpvvfb9phbipyhij0cjh1nmi&quot;); // 		    agerr(AGERR, &quot;in routesplines, illegal values of prev %d and next %d, line %d\n&quot;, prev, next, 444);</span>
-<span class="nc" id="L316">UNSUPPORTED(&quot;9idk92zg2ysz316lfwzvvvde6&quot;); // 		    return NULL;</span>
+<span class="pc bpc" id="L317" title="2 of 4 branches missed."> 		if (!(prev == -1 &amp;&amp; next == -1)) {</span>
+<span class="nc" id="L318">UNSUPPORTED(&quot;cgpvvfb9phbipyhij0cjh1nmi&quot;); // 		    agerr(AGERR, &quot;in routesplines, illegal values of prev %d and next %d, line %d\n&quot;, prev, next, 444);</span>
+<span class="nc" id="L319">UNSUPPORTED(&quot;9idk92zg2ysz316lfwzvvvde6&quot;); // 		    return NULL;</span>
  		}
 	    }
 	}
-<span class="fc bfc" id="L320" title="All 2 branches covered.">	for (bi = boxn - 1; bi &gt;= 0; bi--) {</span>
-<span class="fc" id="L321">	    next = prev = 0;</span>
-<span class="fc bfc" id="L322" title="All 2 branches covered.">	    if (bi &lt; boxn - 1)</span>
-<span class="fc bfc" id="L323" title="All 2 branches covered.">		prev = (((ST_boxf)boxes[bi]).LL.y &gt; ((ST_boxf)boxes[bi+1]).LL.y) ? -1 : 1;</span>
-<span class="fc bfc" id="L324" title="All 2 branches covered.">	    if (bi &gt; 0)</span>
-<span class="fc bfc" id="L325" title="All 2 branches covered.">		next = (((ST_boxf)boxes[bi-1]).LL.y &gt; ((ST_boxf)boxes[bi]).LL.y) ? 1 : -1;</span>
-<span class="fc bfc" id="L326" title="All 2 branches covered.">	    if (prev != next) {</span>
-<span class="fc bfc" id="L327" title="All 4 branches covered.">		if (next == -1 || prev == 1 ) {</span>
-<span class="fc" id="L328">		    zz.polypoints.get__(pi).x = boxes[bi].LL.x;</span>
-<span class="fc" id="L329">		    zz.polypoints.get__(pi++).y = boxes[bi].UR.y;</span>
-<span class="fc" id="L330">		    zz.polypoints.get__(pi).x = boxes[bi].LL.x;</span>
-<span class="fc" id="L331">		    zz.polypoints.get__(pi++).y = boxes[bi].LL.y;</span>
-		} else {
-<span class="fc" id="L333">		    zz.polypoints.get__(pi).x = boxes[bi].UR.x;</span>
+<span class="fc bfc" id="L323" title="All 2 branches covered.">	for (bi = boxn - 1; bi &gt;= 0; bi--) {</span>
+<span class="fc" id="L324">	    next = prev = 0;</span>
+<span class="fc bfc" id="L325" title="All 2 branches covered.">	    if (bi &lt; boxn - 1)</span>
+<span class="fc bfc" id="L326" title="All 2 branches covered.">		prev = (((ST_boxf)boxes[bi]).LL.y &gt; ((ST_boxf)boxes[bi+1]).LL.y) ? -1 : 1;</span>
+<span class="fc bfc" id="L327" title="All 2 branches covered.">	    if (bi &gt; 0)</span>
+<span class="fc bfc" id="L328" title="All 2 branches covered.">		next = (((ST_boxf)boxes[bi-1]).LL.y &gt; ((ST_boxf)boxes[bi]).LL.y) ? 1 : -1;</span>
+<span class="fc bfc" id="L329" title="All 2 branches covered.">	    if (prev != next) {</span>
+<span class="fc bfc" id="L330" title="All 4 branches covered.">		if (next == -1 || prev == 1 ) {</span>
+<span class="fc" id="L331">		    zz.polypoints.get__(pi).x = boxes[bi].LL.x;</span>
+<span class="fc" id="L332">		    zz.polypoints.get__(pi++).y = boxes[bi].UR.y;</span>
+<span class="fc" id="L333">		    zz.polypoints.get__(pi).x = boxes[bi].LL.x;</span>
 <span class="fc" id="L334">		    zz.polypoints.get__(pi++).y = boxes[bi].LL.y;</span>
-<span class="fc" id="L335">		    zz.polypoints.get__(pi).x = boxes[bi].UR.x;</span>
-<span class="fc" id="L336">		    zz.polypoints.get__(pi++).y = boxes[bi].UR.y;</span>
+		} else {
+<span class="fc" id="L336">		    zz.polypoints.get__(pi).x = boxes[bi].UR.x;</span>
+<span class="fc" id="L337">		    zz.polypoints.get__(pi++).y = boxes[bi].LL.y;</span>
+<span class="fc" id="L338">		    zz.polypoints.get__(pi).x = boxes[bi].UR.x;</span>
+<span class="fc" id="L339">		    zz.polypoints.get__(pi++).y = boxes[bi].UR.y;</span>
 		}
 	    } 
-<span class="pc bpc" id="L339" title="1 of 2 branches missed.">	    else if (prev == 0) { /* single box */</span>
-<span class="nc" id="L340">UNSUPPORTED(&quot;ya84m81ogarx28l99om39lba&quot;); // 		polypoints[pi].x = boxes[bi].UR.x;</span>
-<span class="nc" id="L341">UNSUPPORTED(&quot;99xeozpks5v0iza4sv2occuuq&quot;); // 		polypoints[pi++].y = boxes[bi].LL.y;</span>
-<span class="nc" id="L342">UNSUPPORTED(&quot;ya84m81ogarx28l99om39lba&quot;); // 		polypoints[pi].x = boxes[bi].UR.x;</span>
-<span class="nc" id="L343">UNSUPPORTED(&quot;cjppvcr7k9pknjrjugccsky56&quot;); // 		polypoints[pi++].y = boxes[bi].UR.y;</span>
+<span class="pc bpc" id="L342" title="1 of 2 branches missed.">	    else if (prev == 0) { /* single box */</span>
+<span class="nc" id="L343">UNSUPPORTED(&quot;ya84m81ogarx28l99om39lba&quot;); // 		polypoints[pi].x = boxes[bi].UR.x;</span>
+<span class="nc" id="L344">UNSUPPORTED(&quot;99xeozpks5v0iza4sv2occuuq&quot;); // 		polypoints[pi++].y = boxes[bi].LL.y;</span>
+<span class="nc" id="L345">UNSUPPORTED(&quot;ya84m81ogarx28l99om39lba&quot;); // 		polypoints[pi].x = boxes[bi].UR.x;</span>
+<span class="nc" id="L346">UNSUPPORTED(&quot;cjppvcr7k9pknjrjugccsky56&quot;); // 		polypoints[pi++].y = boxes[bi].UR.y;</span>
 	    }
 	    else {
-<span class="pc bpc" id="L346" title="2 of 4 branches missed.">		if (!(prev == -1 &amp;&amp; next == -1)) {</span>
-<span class="nc" id="L347">UNSUPPORTED(&quot;87y5d0ts6xdjyx905bha50f3s&quot;); // 		    /* it went badly, e.g. degenerate box in boxlist */</span>
-<span class="nc" id="L348">UNSUPPORTED(&quot;1qt7hixteu3pt64wk1sqw352a&quot;); // 		    agerr(AGERR, &quot;in routesplines, illegal values of prev %d and next %d, line %d\n&quot;, prev, next, 476);</span>
-<span class="nc" id="L349">UNSUPPORTED(&quot;35untdbpd42pt4c74gjbxqx7q&quot;); // 		    return NULL; /* for correctness sake, it's best to just stop */</span>
+<span class="pc bpc" id="L349" title="2 of 4 branches missed.">		if (!(prev == -1 &amp;&amp; next == -1)) {</span>
+<span class="nc" id="L350">UNSUPPORTED(&quot;87y5d0ts6xdjyx905bha50f3s&quot;); // 		    /* it went badly, e.g. degenerate box in boxlist */</span>
+<span class="nc" id="L351">UNSUPPORTED(&quot;1qt7hixteu3pt64wk1sqw352a&quot;); // 		    agerr(AGERR, &quot;in routesplines, illegal values of prev %d and next %d, line %d\n&quot;, prev, next, 476);</span>
+<span class="nc" id="L352">UNSUPPORTED(&quot;35untdbpd42pt4c74gjbxqx7q&quot;); // 		    return NULL; /* for correctness sake, it's best to just stop */</span>
 		}
-<span class="fc" id="L351">		zz.polypoints.get__(pi).x = boxes[bi].UR.x;</span>
-<span class="fc" id="L352">		zz.polypoints.get__(pi++).y = boxes[bi].LL.y;</span>
-<span class="fc" id="L353">		zz.polypoints.get__(pi).x = boxes[bi].UR.x;</span>
-<span class="fc" id="L354">		zz.polypoints.get__(pi++).y = boxes[bi].UR.y;</span>
-<span class="fc" id="L355">		zz.polypoints.get__(pi).x = boxes[bi].LL.x;</span>
-<span class="fc" id="L356">		zz.polypoints.get__(pi++).y = boxes[bi].UR.y;</span>
-<span class="fc" id="L357">		zz.polypoints.get__(pi).x = boxes[bi].LL.x;</span>
-<span class="fc" id="L358">		zz.polypoints.get__(pi++).y = boxes[bi].LL.y;</span>
+<span class="fc" id="L354">		zz.polypoints.get__(pi).x = boxes[bi].UR.x;</span>
+<span class="fc" id="L355">		zz.polypoints.get__(pi++).y = boxes[bi].LL.y;</span>
+<span class="fc" id="L356">		zz.polypoints.get__(pi).x = boxes[bi].UR.x;</span>
+<span class="fc" id="L357">		zz.polypoints.get__(pi++).y = boxes[bi].UR.y;</span>
+<span class="fc" id="L358">		zz.polypoints.get__(pi).x = boxes[bi].LL.x;</span>
+<span class="fc" id="L359">		zz.polypoints.get__(pi++).y = boxes[bi].UR.y;</span>
+<span class="fc" id="L360">		zz.polypoints.get__(pi).x = boxes[bi].LL.x;</span>
+<span class="fc" id="L361">		zz.polypoints.get__(pi++).y = boxes[bi].LL.y;</span>
 	    }
 	}
     }
     else {
-<span class="nc" id="L363">UNSUPPORTED(&quot;1izvmtfwbnl5xq4u2x5fdraxp&quot;); // 	agerr(AGERR, &quot;in routesplines, edge is a loop at %s\n&quot;, agnameof(aghead(realedge)));</span>
-<span class="nc" id="L364">UNSUPPORTED(&quot;11hwqop4xebvtcskop4uhpp01&quot;); // 	return NULL;</span>
+<span class="nc" id="L366">UNSUPPORTED(&quot;1izvmtfwbnl5xq4u2x5fdraxp&quot;); // 	agerr(AGERR, &quot;in routesplines, edge is a loop at %s\n&quot;, agnameof(aghead(realedge)));</span>
+<span class="nc" id="L367">UNSUPPORTED(&quot;11hwqop4xebvtcskop4uhpp01&quot;); // 	return NULL;</span>
     }
     
-<span class="fc bfc" id="L367" title="All 2 branches covered.">    if (flip!=0) {</span>
+<span class="fc bfc" id="L370" title="All 2 branches covered.">    if (flip!=0) {</span>
 	int i;
-<span class="fc bfc" id="L369" title="All 2 branches covered.">	for (bi = 0; bi &lt; boxn; bi++) {</span>
-<span class="fc" id="L370">	    int v = (int) boxes[bi].UR.y;</span>
-<span class="fc" id="L371">	    boxes[bi].UR.y = -1*((ST_boxf)boxes[bi]).LL.y;</span>
-<span class="fc" id="L372">	    boxes[bi].LL.y = -v;</span>
+<span class="fc bfc" id="L372" title="All 2 branches covered.">	for (bi = 0; bi &lt; boxn; bi++) {</span>
+<span class="fc" id="L373">	    int v = (int) boxes[bi].UR.y;</span>
+<span class="fc" id="L374">	    boxes[bi].UR.y = -1*((ST_boxf)boxes[bi]).LL.y;</span>
+<span class="fc" id="L375">	    boxes[bi].LL.y = -v;</span>
 	}
-<span class="fc bfc" id="L374" title="All 2 branches covered.">	for (i = 0; i &lt; pi; i++)</span>
-<span class="fc" id="L375">	    zz.polypoints.get__(i).y = -1 * zz.polypoints.get__(i).y;</span>
+<span class="fc bfc" id="L377" title="All 2 branches covered.">	for (i = 0; i &lt; pi; i++)</span>
+<span class="fc" id="L378">	    zz.polypoints.get__(i).y = -1 * zz.polypoints.get__(i).y;</span>
     }
-<span class="fc bfc" id="L377" title="All 2 branches covered.">    for (bi = 0; bi &lt; boxn; bi++) {</span>
-<span class="fc" id="L378">	boxes[bi].LL.x = INT_MAX;</span>
-<span class="fc" id="L379">	boxes[bi].UR.x = INT_MIN;</span>
+<span class="fc bfc" id="L380" title="All 2 branches covered.">    for (bi = 0; bi &lt; boxn; bi++) {</span>
+<span class="fc" id="L381">	boxes[bi].LL.x = INT_MAX;</span>
+<span class="fc" id="L382">	boxes[bi].UR.x = INT_MIN;</span>
 	}
-<span class="fc" id="L381">    poly.ps = zz.polypoints;</span>
-<span class="fc" id="L382">    poly.pn = pi;</span>
-<span class="fc" id="L383">    eps.get__(0).x = pp.start.p.x;</span>
-<span class="fc" id="L384">    eps.get__(0).y = pp.start.p.y;</span>
-<span class="fc" id="L385">    eps.get__(1).x = pp.end.p.x;</span>
-<span class="fc" id="L386">    eps.get__(1).y = pp.end.p.y;</span>
-<span class="pc bpc" id="L387" title="1 of 2 branches missed.">    if (Pshortestpath(zz, poly, eps, pl) &lt; 0) {</span>
-<span class="nc" id="L388">		System.err.println(&quot;in routesplines, Pshortestpath failed\n&quot;);</span>
-<span class="nc" id="L389">		return null;</span>
+<span class="fc" id="L384">    poly.ps = zz.polypoints;</span>
+<span class="fc" id="L385">    poly.pn = pi;</span>
+<span class="fc" id="L386">    eps.get__(0).x = pp.start.p.x;</span>
+<span class="fc" id="L387">    eps.get__(0).y = pp.start.p.y;</span>
+<span class="fc" id="L388">    eps.get__(1).x = pp.end.p.x;</span>
+<span class="fc" id="L389">    eps.get__(1).y = pp.end.p.y;</span>
+<span class="pc bpc" id="L390" title="1 of 2 branches missed.">    if (Pshortestpath(zz, poly, eps, pl) &lt; 0) {</span>
+<span class="nc" id="L391">		System.err.println(&quot;in routesplines, Pshortestpath failed\n&quot;);</span>
+<span class="nc" id="L392">		return null;</span>
     }
     
     
-<span class="pc bpc" id="L393" title="1 of 2 branches missed.">    if (polyline!=0) {</span>
-<span class="nc" id="L394">	make_polyline (zz, pl, spl);</span>
+<span class="pc bpc" id="L396" title="1 of 2 branches missed.">    if (polyline!=0) {</span>
+<span class="nc" id="L397">	make_polyline (zz, pl, spl);</span>
     }
     else {
-<span class="fc bfc" id="L397" title="All 2 branches covered.">	if (poly.pn &gt; zz.edgen) {</span>
-<span class="fc" id="L398">	    zz.edges = CArray.&lt;ST_Pedge_t&gt;REALLOC__(poly.pn, zz.edges, ZType.ST_Pedge_t);</span>
-<span class="fc" id="L399">	    zz.edgen = poly.pn;</span>
+<span class="fc bfc" id="L400" title="All 2 branches covered.">	if (poly.pn &gt; zz.edgen) {</span>
+<span class="fc" id="L401">	    zz.edges = CArray.&lt;ST_Pedge_t&gt;REALLOC__(poly.pn, zz.edges, ZType.ST_Pedge_t);</span>
+<span class="fc" id="L402">	    zz.edgen = poly.pn;</span>
 	}
-<span class="fc bfc" id="L401" title="All 2 branches covered.">	for (edgei = 0; edgei &lt; poly.pn; edgei++) {</span>
-<span class="fc" id="L402">	    zz.edges.get__(edgei).a.___(zz.polypoints.get__(edgei));</span>
-<span class="fc" id="L403">	    zz.edges.get__(edgei).b.___(zz.polypoints.get__((edgei + 1) % poly.pn));</span>
+<span class="fc bfc" id="L404" title="All 2 branches covered.">	for (edgei = 0; edgei &lt; poly.pn; edgei++) {</span>
+<span class="fc" id="L405">	    zz.edges.get__(edgei).a.___(zz.polypoints.get__(edgei));</span>
+<span class="fc" id="L406">	    zz.edges.get__(edgei).b.___(zz.polypoints.get__((edgei + 1) % poly.pn));</span>
 	}
-<span class="fc bfc" id="L405" title="All 2 branches covered.">	if (pp.start.constrained) {</span>
-<span class="fc" id="L406"> 	    evs.get__(0).x = Math.cos(pp.start.theta);</span>
-<span class="fc" id="L407"> 	    evs.get__(0).y = Math.sin(pp.start.theta);</span>
+<span class="fc bfc" id="L408" title="All 2 branches covered.">	if (pp.start.constrained) {</span>
+<span class="fc" id="L409"> 	    evs.get__(0).x = Math.cos(pp.start.theta);</span>
+<span class="fc" id="L410"> 	    evs.get__(0).y = Math.sin(pp.start.theta);</span>
 	} else
 	{
-<span class="fc" id="L410">	    evs.get__(0).x = evs.get__(0).y = 0;</span>
+<span class="fc" id="L413">	    evs.get__(0).x = evs.get__(0).y = 0;</span>
     }
-<span class="fc bfc" id="L412" title="All 2 branches covered.">	if (pp.end.constrained) {</span>
-<span class="fc" id="L413"> 	    evs.get__(1).x = -Math.cos(pp.end.theta);</span>
-<span class="fc" id="L414"> 	    evs.get__(1).y = -Math.sin(pp.end.theta);</span>
+<span class="fc bfc" id="L415" title="All 2 branches covered.">	if (pp.end.constrained) {</span>
+<span class="fc" id="L416"> 	    evs.get__(1).x = -Math.cos(pp.end.theta);</span>
+<span class="fc" id="L417"> 	    evs.get__(1).y = -Math.sin(pp.end.theta);</span>
 	} else
 	{
-<span class="fc" id="L417">	    evs.get__(1).x = evs.get__(1).y = 0;</span>
+<span class="fc" id="L420">	    evs.get__(1).x = evs.get__(1).y = 0;</span>
 	}
 	
 	
-<span class="pc bpc" id="L421" title="1 of 2 branches missed.">	if (Proutespline(zz, zz.edges, poly.pn, pl, evs, spl) &lt; 0) {</span>
-<span class="nc" id="L422">UNSUPPORTED(&quot;elkeyywrfd4hq75w7toc94rzs&quot;); // 	    agerr(AGERR, &quot;in routesplines, Proutespline failed\n&quot;);</span>
-<span class="nc" id="L423">UNSUPPORTED(&quot;7t3fvwp9cv90qu5bdjdglcgtk&quot;); // 	    return NULL;</span>
+<span class="pc bpc" id="L424" title="1 of 2 branches missed.">	if (Proutespline(zz, zz.edges, poly.pn, pl, evs, spl) &lt; 0) {</span>
+<span class="nc" id="L425">UNSUPPORTED(&quot;elkeyywrfd4hq75w7toc94rzs&quot;); // 	    agerr(AGERR, &quot;in routesplines, Proutespline failed\n&quot;);</span>
+<span class="nc" id="L426">UNSUPPORTED(&quot;7t3fvwp9cv90qu5bdjdglcgtk&quot;); // 	    return NULL;</span>
 	}
     }
-<span class="pc bpc" id="L426" title="1 of 2 branches missed.">    if (mkspacep(zz, spl.pn))</span>
-<span class="nc" id="L427">UNSUPPORTED(&quot;7x5kpcbvg4va887hky7ufm45y&quot;); // 	return NULL;  /* Bailout if no memory left */</span>
-<span class="fc bfc" id="L428" title="All 2 branches covered.">    for (bi = 0; bi &lt; boxn; bi++) {</span>
-<span class="fc" id="L429">    	boxes[bi].LL.x = INT_MAX;</span>
-<span class="fc" id="L430">    	boxes[bi].UR.x = INT_MIN;</span>
+<span class="pc bpc" id="L429" title="1 of 2 branches missed.">    if (mkspacep(zz, spl.pn))</span>
+<span class="nc" id="L430">UNSUPPORTED(&quot;7x5kpcbvg4va887hky7ufm45y&quot;); // 	return NULL;  /* Bailout if no memory left */</span>
+<span class="fc bfc" id="L431" title="All 2 branches covered.">    for (bi = 0; bi &lt; boxn; bi++) {</span>
+<span class="fc" id="L432">    	boxes[bi].LL.x = INT_MAX;</span>
+<span class="fc" id="L433">    	boxes[bi].UR.x = INT_MIN;</span>
     }
-<span class="fc" id="L432">    unbounded = true;</span>
-<span class="fc bfc" id="L433" title="All 2 branches covered.">    for (splinepi = 0; splinepi &lt; spl.pn; splinepi++) {</span>
-<span class="fc" id="L434">	zz.ps.get__(splinepi).___(spl.ps.get__(splinepi));</span>
+<span class="fc" id="L435">    unbounded = true;</span>
+<span class="fc bfc" id="L436" title="All 2 branches covered.">    for (splinepi = 0; splinepi &lt; spl.pn; splinepi++) {</span>
+<span class="fc" id="L437">	zz.ps.get__(splinepi).___(spl.ps.get__(splinepi));</span>
     }
     
     
-<span class="pc bpc" id="L438" title="1 of 4 branches missed.">    for (loopcnt = 0; unbounded &amp;&amp; (loopcnt &lt; 15); loopcnt++) {</span>
-<span class="fc" id="L439">	limitBoxes (boxes, boxn, zz.ps, spl.pn, delta);</span>
+<span class="pc bpc" id="L441" title="1 of 4 branches missed.">    for (loopcnt = 0; unbounded &amp;&amp; (loopcnt &lt; 15); loopcnt++) {</span>
+<span class="fc" id="L442">	limitBoxes (boxes, boxn, zz.ps, spl.pn, delta);</span>
 	
     /* The following check is necessary because if a box is not very 
      * high, it is possible that the sampling above might miss it.
      * Therefore, we make the sample finer until all boxes have
      * valid values. cf. bug 456. Would making sp[] pointfs help?
      */
-<span class="fc bfc" id="L446" title="All 2 branches covered.">	for (bi = 0; bi &lt; boxn; bi++) {</span>
+<span class="fc bfc" id="L449" title="All 2 branches covered.">	for (bi = 0; bi &lt; boxn; bi++) {</span>
 	/* these fp equality tests are used only to detect if the
 	 * values have been changed since initialization - ok */
-<span class="pc bpc" id="L449" title="1 of 4 branches missed.">	    if ((boxes[bi].LL.x == INT_MAX) || (boxes[bi].UR.x == INT_MIN)) {</span>
-<span class="fc" id="L450">		delta *= 2; /* try again with a finer interval */</span>
-<span class="pc bpc" id="L451" title="1 of 2 branches missed.">		if (delta &gt; INT_MAX/boxn) /* in limitBoxes, boxn*delta must fit in an int, so give up */</span>
-<span class="nc" id="L452">		    loopcnt = 15;</span>
+<span class="pc bpc" id="L452" title="1 of 4 branches missed.">	    if ((boxes[bi].LL.x == INT_MAX) || (boxes[bi].UR.x == INT_MIN)) {</span>
+<span class="fc" id="L453">		delta *= 2; /* try again with a finer interval */</span>
+<span class="pc bpc" id="L454" title="1 of 2 branches missed.">		if (delta &gt; INT_MAX/boxn) /* in limitBoxes, boxn*delta must fit in an int, so give up */</span>
+<span class="nc" id="L455">		    loopcnt = 15;</span>
 		break;
 	    }
 	}
-<span class="fc bfc" id="L456" title="All 2 branches covered.">	if (bi == boxn)</span>
-<span class="fc" id="L457">	    unbounded = false;</span>
+<span class="fc bfc" id="L459" title="All 2 branches covered.">	if (bi == boxn)</span>
+<span class="fc" id="L460">	    unbounded = false;</span>
     }
-<span class="pc bpc" id="L459" title="1 of 2 branches missed.">    if (unbounded) {  </span>
+<span class="pc bpc" id="L462" title="1 of 2 branches missed.">    if (unbounded) {  </span>
 	/* Either an extremely short, even degenerate, box, or some failure with the path
          * planner causing the spline to miss some boxes. In any case, use the shortest path 
 	 * to bound the boxes. This will probably mean a bad edge, but we avoid an infinite
 	 * loop and we can see the bad edge, and even use the showboxes scaffolding.
 	 */
-<span class="nc" id="L465">	final ST_Ppoly_t polyspl = new ST_Ppoly_t();</span>
-<span class="nc" id="L466">	System.err.println(&quot;Unable to reclaim box space in spline routing for edge \&quot;%s\&quot; -&gt; \&quot;%s\&quot;. Something is probably seriously wrong.\n&quot;);</span>
-<span class="nc" id="L467">	make_polyline (zz, pl, polyspl);</span>
-<span class="nc" id="L468">	limitBoxes (boxes, boxn, polyspl.ps, polyspl.pn, 10);</span>
-<span class="nc" id="L469">	Memory.free (polyspl.ps);</span>
+<span class="nc" id="L468">	final ST_Ppoly_t polyspl = new ST_Ppoly_t();</span>
+<span class="nc" id="L469">	System.err.println(&quot;Unable to reclaim box space in spline routing for edge \&quot;%s\&quot; -&gt; \&quot;%s\&quot;. Something is probably seriously wrong.\n&quot;);</span>
+<span class="nc" id="L470">	make_polyline (zz, pl, polyspl);</span>
+<span class="nc" id="L471">	limitBoxes (boxes, boxn, polyspl.ps, polyspl.pn, 10);</span>
+<span class="nc" id="L472">	Memory.free (polyspl.ps);</span>
     }
     
-<span class="fc" id="L472">    npoints[0] = spl.pn;</span>
-<span class="fc" id="L473">    return zz.ps;</span>
+<span class="fc" id="L475">    npoints[0] = spl.pn;</span>
+<span class="fc" id="L476">    return zz.ps;</span>
 } finally {
-<span class="fc" id="L475">LEAVING(&quot;3mcnemqisisnqtd4mr72ej76y&quot;,&quot;_routesplines&quot;);</span>
+<span class="fc" id="L478">LEAVING(&quot;3mcnemqisisnqtd4mr72ej76y&quot;,&quot;_routesplines&quot;);</span>
 }
 }
 
@@ -484,11 +487,11 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/routespl.c&quot;, name=&quot;&quot;, key=&quot;axqoytp2rpr8crajhkuvns6q9&quot;, definition=&quot;pointf *routesplines(path * pp, int *npoints)&quot;)
 public static CArray&lt;ST_pointf&gt; routesplines(Globals zz, ST_path pp, int npoints[]) {
-<span class="fc" id="L487">ENTERING(&quot;axqoytp2rpr8crajhkuvns6q9&quot;,&quot;routesplines&quot;);</span>
+<span class="fc" id="L490">ENTERING(&quot;axqoytp2rpr8crajhkuvns6q9&quot;,&quot;routesplines&quot;);</span>
 try {
-<span class="fc" id="L489">    return _routesplines (zz, pp, npoints, 0);</span>
+<span class="fc" id="L492">    return _routesplines (zz, pp, npoints, 0);</span>
 } finally {
-<span class="fc" id="L491">LEAVING(&quot;axqoytp2rpr8crajhkuvns6q9&quot;,&quot;routesplines&quot;);</span>
+<span class="fc" id="L494">LEAVING(&quot;axqoytp2rpr8crajhkuvns6q9&quot;,&quot;routesplines&quot;);</span>
 }
 }
 
@@ -500,11 +503,11 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/routespl.c&quot;, name=&quot;&quot;, key=&quot;2v22s41xitwnnsljk9n01nrcy&quot;, definition=&quot;pointf *routepolylines(path * pp, int *npoints)&quot;)
 public static CArray&lt;ST_pointf&gt; routepolylines(Globals zz,ST_path pp, int npoints[]) {
-<span class="nc" id="L503">ENTERING(&quot;2v22s41xitwnnsljk9n01nrcy&quot;,&quot;routepolylines&quot;);</span>
+<span class="nc" id="L506">ENTERING(&quot;2v22s41xitwnnsljk9n01nrcy&quot;,&quot;routepolylines&quot;);</span>
 try {
-<span class="nc" id="L505">    return _routesplines (zz, pp, npoints, 1);</span>
+<span class="nc" id="L508">    return _routesplines (zz, pp, npoints, 1);</span>
 } finally {
-<span class="nc" id="L507">LEAVING(&quot;2v22s41xitwnnsljk9n01nrcy&quot;,&quot;routepolylines&quot;);</span>
+<span class="nc" id="L510">LEAVING(&quot;2v22s41xitwnnsljk9n01nrcy&quot;,&quot;routepolylines&quot;);</span>
 }
 }
 
@@ -515,24 +518,24 @@ try {
 // static int overlap(int i0, int i1, int j0, int j1) 
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/routespl.c&quot;, name=&quot;overlap&quot;, key=&quot;65qv6x7ghwyt6hey5qd8cgizn&quot;, definition=&quot;static int overlap(int i0, int i1, int j0, int j1)&quot;)
-<span class="fc" id="L518">public static int overlap(double i0, double i1, double j0, double j1) {return overlap((int) i0, (int) i1, (int) j0, (int) j1);}</span>
+<span class="fc" id="L521">public static int overlap(double i0, double i1, double j0, double j1) {return overlap((int) i0, (int) i1, (int) j0, (int) j1);}</span>
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/routespl.c&quot;, name=&quot;&quot;, key=&quot;&quot;, definition=&quot;&quot;)
 public static int overlap(int i0, int i1, int j0, int j1) {
-<span class="fc" id="L522">ENTERING(&quot;65qv6x7ghwyt6hey5qd8cgizn&quot;,&quot;overlap&quot;);</span>
+<span class="fc" id="L525">ENTERING(&quot;65qv6x7ghwyt6hey5qd8cgizn&quot;,&quot;overlap&quot;);</span>
 try {
     /* i'll bet there's an elegant way to do this */
-<span class="fc bfc" id="L525" title="All 2 branches covered.">    if (i1 &lt;= j0)</span>
-<span class="fc" id="L526">	return 0;</span>
-<span class="fc bfc" id="L527" title="All 2 branches covered.">    if (i0 &gt;= j1)</span>
-<span class="fc" id="L528">	return 0;</span>
-<span class="pc bpc" id="L529" title="1 of 4 branches missed.">    if ((j0 &lt;= i0) &amp;&amp; (i0 &lt;= j1))</span>
-<span class="fc" id="L530">	return (j1 - i0);</span>
-<span class="pc bpc" id="L531" title="1 of 4 branches missed.">    if ((j0 &lt;= i1) &amp;&amp; (i1 &lt;= j1))</span>
-<span class="fc" id="L532">	return (i1 - j0);</span>
-<span class="fc" id="L533">    return Math.min(i1 - i0, j1 - j0);</span>
+<span class="fc bfc" id="L528" title="All 2 branches covered.">    if (i1 &lt;= j0)</span>
+<span class="fc" id="L529">	return 0;</span>
+<span class="fc bfc" id="L530" title="All 2 branches covered.">    if (i0 &gt;= j1)</span>
+<span class="fc" id="L531">	return 0;</span>
+<span class="pc bpc" id="L532" title="1 of 4 branches missed.">    if ((j0 &lt;= i0) &amp;&amp; (i0 &lt;= j1))</span>
+<span class="fc" id="L533">	return (j1 - i0);</span>
+<span class="pc bpc" id="L534" title="1 of 4 branches missed.">    if ((j0 &lt;= i1) &amp;&amp; (i1 &lt;= j1))</span>
+<span class="fc" id="L535">	return (i1 - j0);</span>
+<span class="fc" id="L536">    return Math.min(i1 - i0, j1 - j0);</span>
 } finally {
-<span class="fc" id="L535">LEAVING(&quot;65qv6x7ghwyt6hey5qd8cgizn&quot;,&quot;overlap&quot;);</span>
+<span class="fc" id="L538">LEAVING(&quot;65qv6x7ghwyt6hey5qd8cgizn&quot;,&quot;overlap&quot;);</span>
 }
 }
 
@@ -544,68 +547,68 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/routespl.c&quot;, name=&quot;checkpath&quot;, key=&quot;dxqjhiid5f58b9gjxp0v3j97b&quot;, definition=&quot;static int checkpath(int boxn, boxf* boxes, path* thepath)&quot;)
 public static int checkpath(int boxn, ST_boxf[] boxes, ST_path thepath) {
-<span class="fc" id="L547">ENTERING(&quot;dxqjhiid5f58b9gjxp0v3j97b&quot;,&quot;checkpath&quot;);</span>
+<span class="fc" id="L550">ENTERING(&quot;dxqjhiid5f58b9gjxp0v3j97b&quot;,&quot;checkpath&quot;);</span>
 try {
 	ST_boxf ba, bb;
     int bi, i, errs, l, r, d, u;
     int xoverlap, yoverlap;
     /* remove degenerate boxes. */
-<span class="fc" id="L553">    i = 0;</span>
-<span class="fc bfc" id="L554" title="All 2 branches covered.">    for (bi = 0; bi &lt; boxn; bi++) {</span>
-<span class="pc bpc" id="L555" title="1 of 2 branches missed.">	if (Math.abs(((ST_boxf)boxes[bi]).LL.y - ((ST_boxf)boxes[bi]).UR.y) &lt; .01)</span>
-<span class="nc" id="L556">	    continue;</span>
-<span class="pc bpc" id="L557" title="1 of 2 branches missed.">	if (Math.abs(((ST_boxf)boxes[bi]).LL.x - ((ST_boxf)boxes[bi]).UR.x) &lt; .01)</span>
-<span class="nc" id="L558">	    continue;</span>
-<span class="pc bpc" id="L559" title="1 of 2 branches missed.">	if (i != bi)</span>
-<span class="nc" id="L560">	    boxes[i].___(boxes[bi]);</span>
-<span class="fc" id="L561">	i++;</span>
+<span class="fc" id="L556">    i = 0;</span>
+<span class="fc bfc" id="L557" title="All 2 branches covered.">    for (bi = 0; bi &lt; boxn; bi++) {</span>
+<span class="pc bpc" id="L558" title="1 of 2 branches missed.">	if (Math.abs(((ST_boxf)boxes[bi]).LL.y - ((ST_boxf)boxes[bi]).UR.y) &lt; .01)</span>
+<span class="nc" id="L559">	    continue;</span>
+<span class="pc bpc" id="L560" title="1 of 2 branches missed.">	if (Math.abs(((ST_boxf)boxes[bi]).LL.x - ((ST_boxf)boxes[bi]).UR.x) &lt; .01)</span>
+<span class="nc" id="L561">	    continue;</span>
+<span class="pc bpc" id="L562" title="1 of 2 branches missed.">	if (i != bi)</span>
+<span class="nc" id="L563">	    boxes[i].___(boxes[bi]);</span>
+<span class="fc" id="L564">	i++;</span>
     }
-<span class="fc" id="L563">    boxn = i;</span>
-<span class="fc" id="L564">    ba = (ST_boxf) boxes[0];</span>
-<span class="pc bpc" id="L565" title="2 of 4 branches missed.">    if (ba.LL.x &gt; ba.UR.x || ba.LL.y &gt; ba.UR.y) {</span>
-<span class="nc" id="L566">UNSUPPORTED(&quot;39tznwvf6k5lgj78jp32p0kfl&quot;); // 	agerr(AGERR, &quot;in checkpath, box 0 has LL coord &gt; UR coord\n&quot;);</span>
-<span class="nc" id="L567">UNSUPPORTED(&quot;evdvb9esh16y8zeoczxhcz7xm&quot;); // 	printpath(thepath);</span>
-<span class="nc" id="L568">UNSUPPORTED(&quot;eleqpc2p2r3hvma6tipoy7tr&quot;); // 	return 1;</span>
+<span class="fc" id="L566">    boxn = i;</span>
+<span class="fc" id="L567">    ba = (ST_boxf) boxes[0];</span>
+<span class="pc bpc" id="L568" title="2 of 4 branches missed.">    if (ba.LL.x &gt; ba.UR.x || ba.LL.y &gt; ba.UR.y) {</span>
+<span class="nc" id="L569">UNSUPPORTED(&quot;39tznwvf6k5lgj78jp32p0kfl&quot;); // 	agerr(AGERR, &quot;in checkpath, box 0 has LL coord &gt; UR coord\n&quot;);</span>
+<span class="nc" id="L570">UNSUPPORTED(&quot;evdvb9esh16y8zeoczxhcz7xm&quot;); // 	printpath(thepath);</span>
+<span class="nc" id="L571">UNSUPPORTED(&quot;eleqpc2p2r3hvma6tipoy7tr&quot;); // 	return 1;</span>
     }
-<span class="fc bfc" id="L570" title="All 2 branches covered.">    for (bi = 0; bi &lt; boxn - 1; bi++) {</span>
-<span class="fc" id="L571">	ba = (ST_boxf) boxes[bi];</span>
-<span class="fc" id="L572">	bb = (ST_boxf) boxes[bi + 1];</span>
-<span class="pc bpc" id="L573" title="2 of 4 branches missed.">	if (bb.LL.x &gt; bb.UR.x || bb.LL.y &gt; bb.UR.y) {</span>
-<span class="nc" id="L574">UNSUPPORTED(&quot;c8oodo0ge4n4dglb28fvf610v&quot;); // 	    agerr(AGERR, &quot;in checkpath, box %d has LL coord &gt; UR coord\n&quot;,</span>
-<span class="nc" id="L575">UNSUPPORTED(&quot;929pkk2ob1lh7hfe4scuoo5pn&quot;); // 		  bi + 1);</span>
-<span class="nc" id="L576">UNSUPPORTED(&quot;2m9o6g4nneiul4gt8xb9yb9zi&quot;); // 	    printpath(thepath);</span>
-<span class="nc" id="L577">UNSUPPORTED(&quot;btmwubugs9vkexo4yb7a5nqel&quot;); // 	    return 1;</span>
+<span class="fc bfc" id="L573" title="All 2 branches covered.">    for (bi = 0; bi &lt; boxn - 1; bi++) {</span>
+<span class="fc" id="L574">	ba = (ST_boxf) boxes[bi];</span>
+<span class="fc" id="L575">	bb = (ST_boxf) boxes[bi + 1];</span>
+<span class="pc bpc" id="L576" title="2 of 4 branches missed.">	if (bb.LL.x &gt; bb.UR.x || bb.LL.y &gt; bb.UR.y) {</span>
+<span class="nc" id="L577">UNSUPPORTED(&quot;c8oodo0ge4n4dglb28fvf610v&quot;); // 	    agerr(AGERR, &quot;in checkpath, box %d has LL coord &gt; UR coord\n&quot;,</span>
+<span class="nc" id="L578">UNSUPPORTED(&quot;929pkk2ob1lh7hfe4scuoo5pn&quot;); // 		  bi + 1);</span>
+<span class="nc" id="L579">UNSUPPORTED(&quot;2m9o6g4nneiul4gt8xb9yb9zi&quot;); // 	    printpath(thepath);</span>
+<span class="nc" id="L580">UNSUPPORTED(&quot;btmwubugs9vkexo4yb7a5nqel&quot;); // 	    return 1;</span>
 	}
-<span class="pc bpc" id="L579" title="1 of 2 branches missed.">	l = (ba.UR.x &lt; bb.LL.x) ? 1 : 0;</span>
-<span class="pc bpc" id="L580" title="1 of 2 branches missed.">	r = (ba.LL.x &gt; bb.UR.x) ? 1 : 0;</span>
-<span class="pc bpc" id="L581" title="1 of 2 branches missed.">	d = (ba.UR.y &lt; bb.LL.y) ? 1 : 0;</span>
-<span class="pc bpc" id="L582" title="1 of 2 branches missed.">	u = (ba.LL.y &gt; bb.UR.y) ? 1 : 0;</span>
-<span class="fc" id="L583">	errs = l + r + d + u;</span>
+<span class="pc bpc" id="L582" title="1 of 2 branches missed.">	l = (ba.UR.x &lt; bb.LL.x) ? 1 : 0;</span>
+<span class="pc bpc" id="L583" title="1 of 2 branches missed.">	r = (ba.LL.x &gt; bb.UR.x) ? 1 : 0;</span>
+<span class="pc bpc" id="L584" title="1 of 2 branches missed.">	d = (ba.UR.y &lt; bb.LL.y) ? 1 : 0;</span>
+<span class="pc bpc" id="L585" title="1 of 2 branches missed.">	u = (ba.LL.y &gt; bb.UR.y) ? 1 : 0;</span>
+<span class="fc" id="L586">	errs = l + r + d + u;</span>
 	/*if (errs &gt; 0 &amp;&amp; Verbose) {
 	    fprintf(stderr, &quot;in checkpath, boxes %d and %d don't touch\n&quot;,
 		    bi, bi + 1);
 	    printpath(thepath);
 	}*/
-<span class="pc bpc" id="L589" title="1 of 2 branches missed.">	if (errs &gt; 0) {</span>
+<span class="pc bpc" id="L592" title="1 of 2 branches missed.">	if (errs &gt; 0) {</span>
 	    int xy;
-<span class="nc bnc" id="L591" title="All 2 branches missed.">	    if (l == 1)</span>
+<span class="nc bnc" id="L594" title="All 2 branches missed.">	    if (l == 1)</span>
 	    {
-<span class="nc" id="L593">		xy = (int) ba.UR.x;</span>
-<span class="nc" id="L594">		ba.UR.x = bb.LL.x;</span>
-<span class="nc" id="L595">		bb.LL.x = xy;</span>
-<span class="nc" id="L596">		l = 0;</span>
+<span class="nc" id="L596">		xy = (int) ba.UR.x;</span>
+<span class="nc" id="L597">		ba.UR.x = bb.LL.x;</span>
+<span class="nc" id="L598">		bb.LL.x = xy;</span>
+<span class="nc" id="L599">		l = 0;</span>
 		}
-<span class="nc bnc" id="L598" title="All 2 branches missed.">	    else if (r == 1) {</span>
-<span class="nc" id="L599">	    	xy = (int)(ba.LL.x);</span>
-<span class="nc" id="L600">	    	ba.LL.x = bb.UR.x;</span>
-<span class="nc" id="L601">	    	bb.UR.x = xy;</span>
-<span class="nc" id="L602">	    	r = 0;</span>
+<span class="nc bnc" id="L601" title="All 2 branches missed.">	    else if (r == 1) {</span>
+<span class="nc" id="L602">	    	xy = (int)(ba.LL.x);</span>
+<span class="nc" id="L603">	    	ba.LL.x = bb.UR.x;</span>
+<span class="nc" id="L604">	    	bb.UR.x = xy;</span>
+<span class="nc" id="L605">	    	r = 0;</span>
 	    }
-<span class="nc bnc" id="L604" title="All 2 branches missed.">	    else if (d == 1) {</span>
-<span class="nc" id="L605">	    	xy = (int)(ba.UR.y);</span>
-<span class="nc" id="L606">	    	ba.UR.y = bb.LL.y;</span>
-<span class="nc" id="L607">	    	bb.LL.y = xy;</span>
-<span class="nc" id="L608">	    	d = 0;</span>
+<span class="nc bnc" id="L607" title="All 2 branches missed.">	    else if (d == 1) {</span>
+<span class="nc" id="L608">	    	xy = (int)(ba.UR.y);</span>
+<span class="nc" id="L609">	    	ba.UR.y = bb.LL.y;</span>
+<span class="nc" id="L610">	    	bb.LL.y = xy;</span>
+<span class="nc" id="L611">	    	d = 0;</span>
 	    }
 	    // [FIX-cluster-layout] Ported from lib/common/routespl.c (was UNSUPPORTED
 	    // 5kcd52bwvbxxs0md0enfs100u): symmetric to the d==1 branch above. First
@@ -613,80 +616,80 @@ try {
 	    // skipped by make_LR_constraints' deferred pass (see SMETANA.md) can end
 	    // up outside its endpoints' x-span, making make_flat_labeled_edge produce
 	    // consecutive boxes where ba lies entirely above bb.
-<span class="nc bnc" id="L616" title="All 2 branches missed.">	    else if (u == 1) {</span>
-<span class="nc" id="L617">	    	xy = (int)(ba.LL.y);</span>
-<span class="nc" id="L618">	    	ba.LL.y = bb.UR.y;</span>
-<span class="nc" id="L619">	    	bb.UR.y = xy;</span>
-<span class="nc" id="L620">	    	u = 0;</span>
+<span class="nc bnc" id="L619" title="All 2 branches missed.">	    else if (u == 1) {</span>
+<span class="nc" id="L620">	    	xy = (int)(ba.LL.y);</span>
+<span class="nc" id="L621">	    	ba.LL.y = bb.UR.y;</span>
+<span class="nc" id="L622">	    	bb.UR.y = xy;</span>
+<span class="nc" id="L623">	    	u = 0;</span>
 	    }
 	    // [FIX-cluster-layout] Ported from lib/common/routespl.c (was UNSUPPORTED):
 	    // second repair pass, reached only when the two boxes were disjoint on
 	    // BOTH axes at once (errs == 2). The first if/else chain above fixed one
 	    // axis and zeroed its flag; this meets the boxes at the midpoint on the
 	    // remaining axis.
-<span class="nc bnc" id="L627" title="All 2 branches missed.">	    for (i = 0; i &lt; errs - 1; i++) {</span>
-<span class="nc bnc" id="L628" title="All 2 branches missed.">		if (l == 1) {</span>
-<span class="nc" id="L629">		    xy = (int) ((ba.UR.x + bb.LL.x) / 2.0 + 0.5);</span>
-<span class="nc" id="L630">		    ba.UR.x = xy;</span>
-<span class="nc" id="L631">		    bb.LL.x = xy;</span>
-<span class="nc" id="L632">		    l = 0;</span>
+<span class="nc bnc" id="L630" title="All 2 branches missed.">	    for (i = 0; i &lt; errs - 1; i++) {</span>
+<span class="nc bnc" id="L631" title="All 2 branches missed.">		if (l == 1) {</span>
+<span class="nc" id="L632">		    xy = (int) ((ba.UR.x + bb.LL.x) / 2.0 + 0.5);</span>
+<span class="nc" id="L633">		    ba.UR.x = xy;</span>
+<span class="nc" id="L634">		    bb.LL.x = xy;</span>
+<span class="nc" id="L635">		    l = 0;</span>
 		}
-<span class="nc bnc" id="L634" title="All 2 branches missed.">		else if (r == 1) {</span>
-<span class="nc" id="L635">		    xy = (int) ((ba.LL.x + bb.UR.x) / 2.0 + 0.5);</span>
-<span class="nc" id="L636">		    ba.LL.x = xy;</span>
-<span class="nc" id="L637">		    bb.UR.x = xy;</span>
-<span class="nc" id="L638">		    r = 0;</span>
+<span class="nc bnc" id="L637" title="All 2 branches missed.">		else if (r == 1) {</span>
+<span class="nc" id="L638">		    xy = (int) ((ba.LL.x + bb.UR.x) / 2.0 + 0.5);</span>
+<span class="nc" id="L639">		    ba.LL.x = xy;</span>
+<span class="nc" id="L640">		    bb.UR.x = xy;</span>
+<span class="nc" id="L641">		    r = 0;</span>
 		}
-<span class="nc bnc" id="L640" title="All 2 branches missed.">		else if (d == 1) {</span>
-<span class="nc" id="L641">		    xy = (int) ((ba.UR.y + bb.LL.y) / 2.0 + 0.5);</span>
-<span class="nc" id="L642">		    ba.UR.y = xy;</span>
-<span class="nc" id="L643">		    bb.LL.y = xy;</span>
-<span class="nc" id="L644">		    d = 0;</span>
+<span class="nc bnc" id="L643" title="All 2 branches missed.">		else if (d == 1) {</span>
+<span class="nc" id="L644">		    xy = (int) ((ba.UR.y + bb.LL.y) / 2.0 + 0.5);</span>
+<span class="nc" id="L645">		    ba.UR.y = xy;</span>
+<span class="nc" id="L646">		    bb.LL.y = xy;</span>
+<span class="nc" id="L647">		    d = 0;</span>
 		}
-<span class="nc bnc" id="L646" title="All 2 branches missed.">		else if (u == 1) {</span>
-<span class="nc" id="L647">		    xy = (int) ((ba.LL.y + bb.UR.y) / 2.0 + 0.5);</span>
-<span class="nc" id="L648">		    ba.LL.y = xy;</span>
-<span class="nc" id="L649">		    bb.UR.y = xy;</span>
-<span class="nc" id="L650">		    u = 0;</span>
+<span class="nc bnc" id="L649" title="All 2 branches missed.">		else if (u == 1) {</span>
+<span class="nc" id="L650">		    xy = (int) ((ba.LL.y + bb.UR.y) / 2.0 + 0.5);</span>
+<span class="nc" id="L651">		    ba.LL.y = xy;</span>
+<span class="nc" id="L652">		    bb.UR.y = xy;</span>
+<span class="nc" id="L653">		    u = 0;</span>
 		}
 	    }
 	}
 	/* check for overlapping boxes */
-<span class="fc" id="L655">	xoverlap = overlap(ba.LL.x, ba.UR.x, bb.LL.x, bb.UR.x);</span>
-<span class="fc" id="L656">	yoverlap = overlap(ba.LL.y, ba.UR.y, bb.LL.y, bb.UR.y);</span>
-<span class="pc bpc" id="L657" title="2 of 4 branches missed.">	if (xoverlap!=0 &amp;&amp; yoverlap!=0) {</span>
-<span class="nc bnc" id="L658" title="All 2 branches missed."> 	    if (xoverlap &lt; yoverlap) {</span>
-<span class="nc bnc" id="L659" title="All 2 branches missed."> 	    	if (ba.UR.x - ba.LL.x &gt; bb.UR.x - bb.LL.x) {</span>
+<span class="fc" id="L658">	xoverlap = overlap(ba.LL.x, ba.UR.x, bb.LL.x, bb.UR.x);</span>
+<span class="fc" id="L659">	yoverlap = overlap(ba.LL.y, ba.UR.y, bb.LL.y, bb.UR.y);</span>
+<span class="pc bpc" id="L660" title="2 of 4 branches missed.">	if (xoverlap!=0 &amp;&amp; yoverlap!=0) {</span>
+<span class="nc bnc" id="L661" title="All 2 branches missed."> 	    if (xoverlap &lt; yoverlap) {</span>
+<span class="nc bnc" id="L662" title="All 2 branches missed."> 	    	if (ba.UR.x - ba.LL.x &gt; bb.UR.x - bb.LL.x) {</span>
  	    		/* take space from ba */
-<span class="nc" id="L661">UNSUPPORTED(&quot;5dqxf3gq05pjtobtnru1g2tuj&quot;); // 		    if (ba.UR.x &lt; bb.UR.x)</span>
-<span class="nc" id="L662">UNSUPPORTED(&quot;8gz6k803qp9zyw9s459cpp039&quot;); // 			ba.UR.x = bb.LL.x;</span>
-<span class="nc" id="L663">UNSUPPORTED(&quot;9acag2yacl63g8rg6r1alu62x&quot;); // 		    else</span>
-<span class="nc" id="L664">UNSUPPORTED(&quot;5r6ck8hfb1cxywn9go61se9kx&quot;); // 			ba.LL.x = bb.UR.x;</span>
+<span class="nc" id="L664">UNSUPPORTED(&quot;5dqxf3gq05pjtobtnru1g2tuj&quot;); // 		    if (ba.UR.x &lt; bb.UR.x)</span>
+<span class="nc" id="L665">UNSUPPORTED(&quot;8gz6k803qp9zyw9s459cpp039&quot;); // 			ba.UR.x = bb.LL.x;</span>
+<span class="nc" id="L666">UNSUPPORTED(&quot;9acag2yacl63g8rg6r1alu62x&quot;); // 		    else</span>
+<span class="nc" id="L667">UNSUPPORTED(&quot;5r6ck8hfb1cxywn9go61se9kx&quot;); // 			ba.LL.x = bb.UR.x;</span>
  	    	} else {
  	    		/* take space from bb */
-<span class="nc bnc" id="L667" title="All 2 branches missed."> 	    		if (ba.UR.x &lt; bb.UR.x)</span>
-<span class="nc" id="L668"> 	    			bb.LL.x = ba.UR.x;</span>
+<span class="nc bnc" id="L670" title="All 2 branches missed."> 	    		if (ba.UR.x &lt; bb.UR.x)</span>
+<span class="nc" id="L671"> 	    			bb.LL.x = ba.UR.x;</span>
  	    		else
-<span class="nc" id="L670"> 	    			bb.UR.x = ba.LL.x;</span>
+<span class="nc" id="L673"> 	    			bb.UR.x = ba.LL.x;</span>
  	    	}
  	    } else {		/* symmetric for y coords */
-<span class="nc bnc" id="L673" title="All 2 branches missed."> 	    	if (ba.UR.y - ba.LL.y &gt; bb.UR.y - bb.LL.y) {</span>
+<span class="nc bnc" id="L676" title="All 2 branches missed."> 	    	if (ba.UR.y - ba.LL.y &gt; bb.UR.y - bb.LL.y) {</span>
  	    		/* take space from ba */
-<span class="nc bnc" id="L675" title="All 2 branches missed."> 	    		if (ba.UR.y &lt; bb.UR.y)</span>
-<span class="nc" id="L676"> 	    			ba.UR.y = bb.LL.y;</span>
+<span class="nc bnc" id="L678" title="All 2 branches missed."> 	    		if (ba.UR.y &lt; bb.UR.y)</span>
+<span class="nc" id="L679"> 	    			ba.UR.y = bb.LL.y;</span>
  	    		else
-<span class="nc" id="L678"> 	    			ba.LL.y = bb.UR.y;</span>
+<span class="nc" id="L681"> 	    			ba.LL.y = bb.UR.y;</span>
  	    	} else {
  	    		/* take space from bb */
-<span class="nc bnc" id="L681" title="All 2 branches missed."> 	    		if (ba.UR.y &lt; bb.UR.y)</span>
-<span class="nc" id="L682"> 	    			bb.LL.y = ba.UR.y;</span>
+<span class="nc bnc" id="L684" title="All 2 branches missed."> 	    		if (ba.UR.y &lt; bb.UR.y)</span>
+<span class="nc" id="L685"> 	    			bb.LL.y = ba.UR.y;</span>
  	    		else
-<span class="nc" id="L684"> 	    			bb.UR.y = ba.LL.y;</span>
+<span class="nc" id="L687"> 	    			bb.UR.y = ba.LL.y;</span>
  	    	}
 	    }
 	}
     }
-<span class="pc bpc" id="L689" title="4 of 8 branches missed.">    if (thepath.start.p.x &lt; ((ST_boxf)boxes[0]).LL.x</span>
+<span class="pc bpc" id="L692" title="4 of 8 branches missed.">    if (thepath.start.p.x &lt; ((ST_boxf)boxes[0]).LL.x</span>
 	|| thepath.start.p.x &gt; ((ST_boxf)boxes[0]).UR.x
 	|| thepath.start.p.y &lt; ((ST_boxf)boxes[0]).LL.y
 	|| thepath.start.p.y &gt; ((ST_boxf)boxes[0]).UR.y) {
@@ -694,16 +697,16 @@ try {
 	    fprintf(stderr, &quot;in checkpath, start port not in first box\n&quot;);
 	    printpath(thepath);
 	}*/
-<span class="nc bnc" id="L697" title="All 2 branches missed.">	if (thepath.start.p.x &lt; ((ST_boxf)boxes[0]).LL.x)</span>
-<span class="nc" id="L698">	    thepath.start.p.x = (((ST_boxf)boxes[0]).LL.x);</span>
-<span class="nc bnc" id="L699" title="All 2 branches missed.">	if (thepath.start.p.x &gt; ((ST_boxf)boxes[0]).UR.x)</span>
-<span class="nc" id="L700">	    thepath.start.p.x = (((ST_boxf)boxes[0]).UR.x);</span>
-<span class="nc bnc" id="L701" title="All 2 branches missed.">	if (thepath.start.p.y &lt; ((ST_boxf)boxes[0]).LL.y)</span>
-<span class="nc" id="L702">	    thepath.start.p.y = (((ST_boxf)boxes[0]).LL.y);</span>
-<span class="nc bnc" id="L703" title="All 2 branches missed.">	if (thepath.start.p.y &gt; ((ST_boxf)boxes[0]).UR.y)</span>
-<span class="nc" id="L704">	    thepath.start.p.y = (((ST_boxf)boxes[0]).UR.y);</span>
+<span class="nc bnc" id="L700" title="All 2 branches missed.">	if (thepath.start.p.x &lt; ((ST_boxf)boxes[0]).LL.x)</span>
+<span class="nc" id="L701">	    thepath.start.p.x = (((ST_boxf)boxes[0]).LL.x);</span>
+<span class="nc bnc" id="L702" title="All 2 branches missed.">	if (thepath.start.p.x &gt; ((ST_boxf)boxes[0]).UR.x)</span>
+<span class="nc" id="L703">	    thepath.start.p.x = (((ST_boxf)boxes[0]).UR.x);</span>
+<span class="nc bnc" id="L704" title="All 2 branches missed.">	if (thepath.start.p.y &lt; ((ST_boxf)boxes[0]).LL.y)</span>
+<span class="nc" id="L705">	    thepath.start.p.y = (((ST_boxf)boxes[0]).LL.y);</span>
+<span class="nc bnc" id="L706" title="All 2 branches missed.">	if (thepath.start.p.y &gt; ((ST_boxf)boxes[0]).UR.y)</span>
+<span class="nc" id="L707">	    thepath.start.p.y = (((ST_boxf)boxes[0]).UR.y);</span>
     }
-<span class="pc bpc" id="L706" title="3 of 8 branches missed.">    if (thepath.end.p.x &lt; ((ST_boxf)boxes[boxn - 1]).LL.x</span>
+<span class="pc bpc" id="L709" title="3 of 8 branches missed.">    if (thepath.end.p.x &lt; ((ST_boxf)boxes[boxn - 1]).LL.x</span>
 	|| thepath.end.p.x &gt; ((ST_boxf)boxes[boxn - 1]).UR.x
 	|| thepath.end.p.y &lt; ((ST_boxf)boxes[boxn - 1]).LL.y
 	|| thepath.end.p.y &gt; ((ST_boxf)boxes[boxn - 1]).UR.y) {
@@ -711,18 +714,18 @@ try {
 	    fprintf(stderr, &quot;in checkpath, end port not in last box\n&quot;);
 	    printpath(thepath);
 	}*/
-<span class="pc bpc" id="L714" title="1 of 2 branches missed.">	if (thepath.end.p.x &lt; ((ST_boxf)boxes[boxn - 1]).LL.x)</span>
-<span class="nc" id="L715">	    thepath.end.p.x = (((ST_boxf)boxes[boxn - 1]).LL.x);</span>
-<span class="pc bpc" id="L716" title="1 of 2 branches missed.">	if (thepath.end.p.x &gt; ((ST_boxf)boxes[boxn - 1]).UR.x)</span>
-<span class="nc" id="L717">	    thepath.end.p.x = (((ST_boxf)boxes[boxn - 1]).UR.x);</span>
-<span class="pc bpc" id="L718" title="1 of 2 branches missed.">	if (thepath.end.p.y &lt; ((ST_boxf)boxes[boxn - 1]).LL.y)</span>
-<span class="nc" id="L719">	    thepath.end.p.y = (((ST_boxf)boxes[boxn - 1]).LL.y);</span>
-<span class="pc bpc" id="L720" title="1 of 2 branches missed.">	if (thepath.end.p.y &gt; ((ST_boxf)boxes[boxn - 1]).UR.y)</span>
-<span class="fc" id="L721">	    thepath.end.p.y = (((ST_boxf)boxes[boxn - 1]).UR.y);</span>
+<span class="pc bpc" id="L717" title="1 of 2 branches missed.">	if (thepath.end.p.x &lt; ((ST_boxf)boxes[boxn - 1]).LL.x)</span>
+<span class="nc" id="L718">	    thepath.end.p.x = (((ST_boxf)boxes[boxn - 1]).LL.x);</span>
+<span class="pc bpc" id="L719" title="1 of 2 branches missed.">	if (thepath.end.p.x &gt; ((ST_boxf)boxes[boxn - 1]).UR.x)</span>
+<span class="nc" id="L720">	    thepath.end.p.x = (((ST_boxf)boxes[boxn - 1]).UR.x);</span>
+<span class="pc bpc" id="L721" title="1 of 2 branches missed.">	if (thepath.end.p.y &lt; ((ST_boxf)boxes[boxn - 1]).LL.y)</span>
+<span class="nc" id="L722">	    thepath.end.p.y = (((ST_boxf)boxes[boxn - 1]).LL.y);</span>
+<span class="pc bpc" id="L723" title="1 of 2 branches missed.">	if (thepath.end.p.y &gt; ((ST_boxf)boxes[boxn - 1]).UR.y)</span>
+<span class="fc" id="L724">	    thepath.end.p.y = (((ST_boxf)boxes[boxn - 1]).UR.y);</span>
     }
-<span class="fc" id="L723">    return 0;</span>
+<span class="fc" id="L726">    return 0;</span>
 } finally {
-<span class="fc" id="L725">LEAVING(&quot;dxqjhiid5f58b9gjxp0v3j97b&quot;,&quot;checkpath&quot;);</span>
+<span class="fc" id="L728">LEAVING(&quot;dxqjhiid5f58b9gjxp0v3j97b&quot;,&quot;checkpath&quot;);</span>
 }
 }
 
@@ -734,20 +737,20 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/routespl.c&quot;, name=&quot;mkspacep&quot;, key=&quot;de6jvvw786rx88318tuuqywgq&quot;, definition=&quot;static int mkspacep(int size)&quot;)
 public static boolean mkspacep(Globals zz, int size) {
-<span class="fc" id="L737">ENTERING(&quot;de6jvvw786rx88318tuuqywgq&quot;,&quot;mkspacep&quot;);</span>
+<span class="fc" id="L740">ENTERING(&quot;de6jvvw786rx88318tuuqywgq&quot;,&quot;mkspacep&quot;);</span>
 try {
-<span class="pc bpc" id="L739" title="1 of 2 branches missed.">    if (size &gt; zz.maxpn) {</span>
-<span class="nc" id="L740">	int newmax = zz.maxpn + (size / 300 + 1) * 300;</span>
-<span class="nc" id="L741">	zz.ps = CArray.&lt;ST_pointf&gt;REALLOC__(newmax, zz.ps, ZType.ST_pointf);</span>
-<span class="nc bnc" id="L742" title="All 2 branches missed.">	if ((zz.ps) == null) {</span>
-<span class="nc" id="L743">UNSUPPORTED(&quot;ds2v91aohji00tc7zmjuc3v6q&quot;); // 	    agerr(AGERR, &quot;cannot re-allocate ps\n&quot;);</span>
-<span class="nc" id="L744">UNSUPPORTED(&quot;btmwubugs9vkexo4yb7a5nqel&quot;); // 	    return 1;</span>
+<span class="pc bpc" id="L742" title="1 of 2 branches missed.">    if (size &gt; zz.maxpn) {</span>
+<span class="nc" id="L743">	int newmax = zz.maxpn + (size / 300 + 1) * 300;</span>
+<span class="nc" id="L744">	zz.ps = CArray.&lt;ST_pointf&gt;REALLOC__(newmax, zz.ps, ZType.ST_pointf);</span>
+<span class="nc bnc" id="L745" title="All 2 branches missed.">	if ((zz.ps) == null) {</span>
+<span class="nc" id="L746">UNSUPPORTED(&quot;ds2v91aohji00tc7zmjuc3v6q&quot;); // 	    agerr(AGERR, &quot;cannot re-allocate ps\n&quot;);</span>
+<span class="nc" id="L747">UNSUPPORTED(&quot;btmwubugs9vkexo4yb7a5nqel&quot;); // 	    return 1;</span>
 	}
-<span class="nc" id="L746">	zz.maxpn = newmax;</span>
+<span class="nc" id="L749">	zz.maxpn = newmax;</span>
     }
-<span class="fc" id="L748">    return false;</span>
+<span class="fc" id="L751">    return false;</span>
 } finally {
-<span class="fc" id="L750">LEAVING(&quot;de6jvvw786rx88318tuuqywgq&quot;,&quot;mkspacep&quot;);</span>
+<span class="fc" id="L753">LEAVING(&quot;de6jvvw786rx88318tuuqywgq&quot;,&quot;mkspacep&quot;);</span>
 }
 }
 
@@ -758,30 +761,30 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/routespl.c&quot;, name=&quot;makeStraightEdge&quot;, key=&quot;2erpr561ggowmq2m9465p5kqd&quot;, definition=&quot;void  makeStraightEdge(graph_t * g, edge_t * e, int et, splineInfo* sinfo)&quot;)
 public static Object makeStraightEdge(Object... arg_) {
-<span class="nc" id="L761">UNSUPPORTED(&quot;347dderd02mvlozoheqo4ejwo&quot;); // void </span>
-<span class="nc" id="L762">UNSUPPORTED(&quot;89t1p0jilkexnvk5i1vv1arc0&quot;); // makeStraightEdge(graph_t * g, edge_t * e, int et, splineInfo* sinfo)</span>
-<span class="nc" id="L763">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
-<span class="nc" id="L764">UNSUPPORTED(&quot;7pmvaj5a5w3pee9zkh22s4jt5&quot;); //     edge_t *e0;</span>
-<span class="nc" id="L765">UNSUPPORTED(&quot;821nfzu5iwd6ayryeggj37hj2&quot;); //     edge_t** edges;</span>
-<span class="nc" id="L766">UNSUPPORTED(&quot;19s88cb2xh6yjpqg0ip3ovi08&quot;); //     edge_t* elist[20];</span>
-<span class="nc" id="L767">UNSUPPORTED(&quot;5dd4r3fk1fwybt8tvqt4z4ta3&quot;); //     int i, e_cnt;</span>
-<span class="nc" id="L768">UNSUPPORTED(&quot;310og4kvqsrlm4vs26zqw8c8p&quot;); //     e_cnt = 1;</span>
-<span class="nc" id="L769">UNSUPPORTED(&quot;63kfcznl8sc62h1pj6k83cjn3&quot;); //     e0 = e;</span>
-<span class="nc" id="L770">UNSUPPORTED(&quot;1451mr2njzp5m6mj64k6m36tf&quot;); //     while ((e0 = ED_to_virt(e0))) e_cnt++;</span>
-<span class="nc" id="L771">UNSUPPORTED(&quot;1qovtxs3b3fa6ztj4wx1ahkf2&quot;); //     if (e_cnt &lt;= 20)</span>
-<span class="nc" id="L772">UNSUPPORTED(&quot;bp3rco5i77vkqs7wua0k7dbfo&quot;); // 	edges = elist;</span>
-<span class="nc" id="L773">UNSUPPORTED(&quot;div10atae09n36x269sl208r1&quot;); //     else</span>
-<span class="nc" id="L774">UNSUPPORTED(&quot;8zwb4z35iwpyfy9d9n4b51yvh&quot;); // 	edges = (edge_t**)zmalloc((e_cnt)*sizeof(edge_t*));</span>
-<span class="nc" id="L775">UNSUPPORTED(&quot;63kfcznl8sc62h1pj6k83cjn3&quot;); //     e0 = e;</span>
-<span class="nc" id="L776">UNSUPPORTED(&quot;tf4qi3e2hsjxi603z57w6hx6&quot;); //     for (i = 0; i &lt; e_cnt; i++) {</span>
-<span class="nc" id="L777">UNSUPPORTED(&quot;106t1hs57atf24mgepcp9wwjw&quot;); // 	edges[i] = e0;</span>
-<span class="nc" id="L778">UNSUPPORTED(&quot;dfdtts0ddwzo6ffy5m1pso8t6&quot;); // 	e0 = ED_to_virt(e0);</span>
-<span class="nc" id="L779">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
-<span class="nc" id="L780">UNSUPPORTED(&quot;db2lohkib2plgiw7i90nxgkjk&quot;); //     makeStraightEdges (g, edges, e_cnt, et, sinfo);</span>
-<span class="nc" id="L781">UNSUPPORTED(&quot;b1xlizpp11lvumjyajfk6mxky&quot;); //     if (e_cnt &gt; 20) free (edges);</span>
-<span class="nc" id="L782">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+<span class="nc" id="L764">UNSUPPORTED(&quot;347dderd02mvlozoheqo4ejwo&quot;); // void </span>
+<span class="nc" id="L765">UNSUPPORTED(&quot;89t1p0jilkexnvk5i1vv1arc0&quot;); // makeStraightEdge(graph_t * g, edge_t * e, int et, splineInfo* sinfo)</span>
+<span class="nc" id="L766">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L767">UNSUPPORTED(&quot;7pmvaj5a5w3pee9zkh22s4jt5&quot;); //     edge_t *e0;</span>
+<span class="nc" id="L768">UNSUPPORTED(&quot;821nfzu5iwd6ayryeggj37hj2&quot;); //     edge_t** edges;</span>
+<span class="nc" id="L769">UNSUPPORTED(&quot;19s88cb2xh6yjpqg0ip3ovi08&quot;); //     edge_t* elist[20];</span>
+<span class="nc" id="L770">UNSUPPORTED(&quot;5dd4r3fk1fwybt8tvqt4z4ta3&quot;); //     int i, e_cnt;</span>
+<span class="nc" id="L771">UNSUPPORTED(&quot;310og4kvqsrlm4vs26zqw8c8p&quot;); //     e_cnt = 1;</span>
+<span class="nc" id="L772">UNSUPPORTED(&quot;63kfcznl8sc62h1pj6k83cjn3&quot;); //     e0 = e;</span>
+<span class="nc" id="L773">UNSUPPORTED(&quot;1451mr2njzp5m6mj64k6m36tf&quot;); //     while ((e0 = ED_to_virt(e0))) e_cnt++;</span>
+<span class="nc" id="L774">UNSUPPORTED(&quot;1qovtxs3b3fa6ztj4wx1ahkf2&quot;); //     if (e_cnt &lt;= 20)</span>
+<span class="nc" id="L775">UNSUPPORTED(&quot;bp3rco5i77vkqs7wua0k7dbfo&quot;); // 	edges = elist;</span>
+<span class="nc" id="L776">UNSUPPORTED(&quot;div10atae09n36x269sl208r1&quot;); //     else</span>
+<span class="nc" id="L777">UNSUPPORTED(&quot;8zwb4z35iwpyfy9d9n4b51yvh&quot;); // 	edges = (edge_t**)zmalloc((e_cnt)*sizeof(edge_t*));</span>
+<span class="nc" id="L778">UNSUPPORTED(&quot;63kfcznl8sc62h1pj6k83cjn3&quot;); //     e0 = e;</span>
+<span class="nc" id="L779">UNSUPPORTED(&quot;tf4qi3e2hsjxi603z57w6hx6&quot;); //     for (i = 0; i &lt; e_cnt; i++) {</span>
+<span class="nc" id="L780">UNSUPPORTED(&quot;106t1hs57atf24mgepcp9wwjw&quot;); // 	edges[i] = e0;</span>
+<span class="nc" id="L781">UNSUPPORTED(&quot;dfdtts0ddwzo6ffy5m1pso8t6&quot;); // 	e0 = ED_to_virt(e0);</span>
+<span class="nc" id="L782">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L783">UNSUPPORTED(&quot;db2lohkib2plgiw7i90nxgkjk&quot;); //     makeStraightEdges (g, edges, e_cnt, et, sinfo);</span>
+<span class="nc" id="L784">UNSUPPORTED(&quot;b1xlizpp11lvumjyajfk6mxky&quot;); //     if (e_cnt &gt; 20) free (edges);</span>
+<span class="nc" id="L785">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
 
-<span class="nc" id="L784">throw new UnsupportedOperationException();</span>
+<span class="nc" id="L787">throw new UnsupportedOperationException();</span>
 }
 
 

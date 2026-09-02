@@ -84,8 +84,8 @@ import smetana.core.__struct__;
 
 	@Override
 	public Object getTheField(FieldOffset offset) {
-<span class="pc bpc" id="L87" title="1 of 4 branches missed.">		if (offset == null || offset.getSign() == 0) {</span>
-<span class="fc" id="L88">			return this;</span>
+<span class="pc bpc" id="L87" title="2 of 4 branches missed.">		if (offset == null || offset.getSign() == 0) {</span>
+<span class="nc" id="L88">			return this;</span>
 		}
 <span class="fc bfc" id="L90" title="All 2 branches covered.">		if (offset == FieldOffset.seq_link)</span>
 <span class="fc" id="L91">			return seq_link;</span>
