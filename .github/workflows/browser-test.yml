@@ -29,7 +29,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  themes:
+  checks:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -78,3 +78,6 @@ jobs:
 
       - name: Check viz missing
         run: node browser-test/check-viz-missing.js target=plantuml-mit/build/npm-plantuml
+
+      - name: Add Gradle title to Summary
+        run: echo "## Gradle" >> $GITHUB_STEP_SUMMARY
