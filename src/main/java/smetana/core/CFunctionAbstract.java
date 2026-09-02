@@ -48,4 +48,12 @@ public abstract class CFunctionAbstract extends UnsupportedC implements CFunctio
 		return name;
 	}
 
+	public int exeCmpInt(Globals zz, Object a0, Object a1, Object a2, Object a3) {
+		return (Integer) exe(zz, a0, a1, a2, a3);
+	}
+
+	public Object exeSearch(Globals zz, Object a0, Object a1, int type) {
+		return exe(zz, a0, a1, type);
+	}
+
 }

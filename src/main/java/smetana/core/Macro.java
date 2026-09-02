@@ -1407,23 +1407,23 @@ final public class Macro {
 	public static final int LAYOUT_USES_RANKDIR = (1 << 0);
 
 	public static void dtinsert(Globals zz, ST_dt_s d, Object o) {
-		d.searchf.exe(zz, d, o, DT_INSERT);
+		d.searchf.exeSearch(zz, d, o, DT_INSERT);
 	}
 
 	public static Object dtsearch(Globals zz, ST_dt_s d, Object o) {
-		return d.searchf.exe(zz, d, o, DT_SEARCH);
+		return d.searchf.exeSearch(zz, d, o, DT_SEARCH);
 	}
 
 	public static Object dtfirst(Globals zz, ST_dt_s d) {
-		return d.searchf.exe(zz, d, null, DT_FIRST);
+		return d.searchf.exeSearch(zz, d, null, DT_FIRST);
 	}
 
 	public static Object dtnext(Globals zz, ST_dt_s d, Object o) {
-		return d.searchf.exe(zz, d, o, DT_NEXT);
+		return d.searchf.exeSearch(zz, d, o, DT_NEXT);
 	}
 
 	public static Object dtdelete(Globals zz, ST_dt_s d, Object o) {
-		return d.searchf.exe(zz, d, o, DT_DELETE);
+		return d.searchf.exeSearch(zz, d, o, DT_DELETE);
 	}
 
 //	#define dtlink(d,e)	(((Dtlink_t*)(e))->right)
@@ -1666,12 +1666,16 @@ final public class Macro {
 	public static __ptr__ _DTKEY(__ptr__ o, FieldOffset ky, int sz) {
 		// return (__ptr__) (sz < 0 ? ((__ptr__)o).addVirtualBytes(ky) :
 		// ((__ptr__)o).addVirtualBytes(ky));
+		// Zero offset means the object itself is the key (every struct's
+		// getTheField returns this for sign 0).
+		if (ky == null || ky.getSign() == 0)
+			return o;
 		return (__ptr__) o.getTheField(ky);
 	}
 
 	public static int _DTCMP(Globals zz, ST_dt_s dt, __ptr__ k1, __ptr__ k2, final ST_dtdisc_s dc, CFunction cmpf,
 			int sz) {
-		return cmpf != null ? (Integer) ((CFunction) cmpf).exe(zz, dt, k1, k2, dc)
+		return cmpf != null ? cmpf.exeCmpInt(zz, dt, k1, k2, dc)
 				: (sz <= 0 ? strcmp((CString) k1, (CString) k2) : UNSUPPORTED_INT("memcmp(ok,nk,sz)"));
 	}
 

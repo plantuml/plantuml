@@ -755,7 +755,7 @@ try {
 		   (hp.d.rect.boundary[3] - hp.d.rect.boundary[1]) / 2;
 		  
 		  hp.key = hd_hil_s_from_xy(pi, order);
-		  if ((xlp.hdx.searchf.exe(zz, xlp.hdx, hp, 0000001)) == null)
+		  if ((xlp.hdx.searchf.exeSearch(zz, xlp.hdx, hp, 0000001)) == null)
 			  
  	    return -1;
      }
@@ -805,8 +805,8 @@ public static int xlspdxload(Globals zz, ST_XLabels_t xlp) {
 ENTERING("3wrxwwd3y5ts0ekr32o8vhuvv","xlspdxload");
 try {
      ST_HDict_t op=null;
-     for (op = (ST_HDict_t) xlp.hdx.searchf.exe(zz, xlp.hdx, null, 0000200); op!=null;
-    		 op = (ST_HDict_t) xlp.hdx.searchf.exe(zz, xlp.hdx, op, 0000010)) {
+     for (op = (ST_HDict_t) xlp.hdx.searchf.exeSearch(zz, xlp.hdx, null, 0000200); op!=null;
+    		 op = (ST_HDict_t) xlp.hdx.searchf.exeSearch(zz, xlp.hdx, op, 0000010)) {
    	/*          tree       rectangle    data        node             lvl */
 //    	 	RTreeInsert(xlp->spdx, &op->d.rect, op->d.data, &xlp->spdx->root, 0);
     	 // WARNING ARRAY

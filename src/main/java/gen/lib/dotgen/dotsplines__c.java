@@ -807,13 +807,9 @@ public static CFunction edgecmp = new CFunctionAbstract("edgecmp") {
 public static int edgecmp(CArrayOfStar<ST_Agedge_s> ptr0, CArrayOfStar<ST_Agedge_s> ptr1) {
 ENTERING("1nf1s6wkn35ptjn884ii56fh","edgecmp");
 try {
-    final ST_Agedgeinfo_t fwdedgeai = new ST_Agedgeinfo_t(), fwdedgebi = new ST_Agedgeinfo_t();
-    final ST_Agedgepair_s fwdedgea = new ST_Agedgepair_s(), fwdedgeb = new ST_Agedgepair_s();
     ST_Agedge_s e0, e1, ea, eb, le0, le1;
     int et0, et1, v0, v1, rv;
     double t0, t1;
-    fwdedgea.out.base.data = fwdedgeai;
-    fwdedgeb.out.base.data = fwdedgebi;
     e0 = ptr0.get_(0);
     e1 = ptr1.get_(0);
     et0 = ED_tree_index(e0) & 15;
@@ -839,11 +835,16 @@ try {
 	return (le0.tag.seq - le1.tag.seq);
     ea = (ED_tail_port(e0).defined || ED_head_port(e0).defined) ? e0 : le0;
     if ((ED_tree_index(ea) & 32)!=0) {
+	// Scratch built only on this rare branch: most comparisons return above.
+	final ST_Agedgepair_s fwdedgea = new ST_Agedgepair_s();
+	fwdedgea.out.base.data = new ST_Agedgeinfo_t();
 	MAKEFWDEDGE(fwdedgea.out, ea);
 	ea = (ST_Agedge_s) fwdedgea.out;
     }
     eb = (ED_tail_port(e1).defined || ED_head_port(e1).defined) ? e1 : le1;
     if ((ED_tree_index(eb) & 32)!=0) {
+	final ST_Agedgepair_s fwdedgeb = new ST_Agedgepair_s();
+	fwdedgeb.out.base.data = new ST_Agedgeinfo_t();
 	MAKEFWDEDGE(fwdedgeb.out, eb);
 	eb = (ST_Agedge_s) fwdedgeb.out;
     }

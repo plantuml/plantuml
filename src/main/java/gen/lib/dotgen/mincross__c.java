@@ -397,18 +397,21 @@ LEAVING("657v773m21j5w3g3v94o7464t","left2right");
 public static int in_cross(ST_Agnode_s v, ST_Agnode_s w) {
 ENTERING("daknncpjy7g5peiicolbmh55i","in_cross");
 try {
+    // Hoisted: get_ is a pure read the JIT cannot common up across calls.
     CArrayOfStar<ST_Agedge_s> e2_ = ND_in(w).list;
+    final CArrayOfStar<ST_Agedge_s> e1_ = ND_in(v).list;
     int inv, cross = 0, t;
-    for (int ie2 = 0; e2_.get_(ie2)!=null; ie2++) {
-	int cnt = ED_xpenalty(e2_.get_(ie2));		
-	inv = ND_order((agtail(e2_.get_(ie2))));
-    CArrayOfStar<ST_Agedge_s> e1_ = ND_in(v).list;
-	for (int ie1 = 0; e1_.get_(ie1)!=null; ie1++) {
-	    t = ND_order(agtail(e1_.get_(ie1))) - inv;
+    ST_Agedge_s e2, e1;
+    for (int ie2 = 0; (e2 = e2_.get_(ie2))!=null; ie2++) {
+	int cnt = ED_xpenalty(e2);
+	inv = ND_order((agtail(e2)));
+	final double e2px = ED_tail_port(e2).p.x;
+	for (int ie1 = 0; (e1 = e1_.get_(ie1))!=null; ie1++) {
+	    t = ND_order(agtail(e1)) - inv;
 	    if ((t > 0)
 		|| ((t == 0)
-		    && (  ED_tail_port(e1_.get_(ie1)).p.x > ED_tail_port(e2_.get_(ie2)).p.x)))
-		cross += ED_xpenalty(e1_.get_(ie1)) * cnt;
+		    && (  ED_tail_port(e1).p.x > e2px)))
+		cross += ED_xpenalty(e1) * cnt;
 	}
     }
     return cross;
@@ -427,18 +430,21 @@ LEAVING("daknncpjy7g5peiicolbmh55i","in_cross");
 public static int out_cross(ST_Agnode_s v, ST_Agnode_s w) {
 ENTERING("b7mf74np8ewrgzwd5u0o8fqod","out_cross");
 try {
+ 	// Hoisted: get_ is a pure read the JIT cannot common up across calls.
  	CArrayOfStar<ST_Agedge_s> e2_ = ND_out(w).list;
+    final CArrayOfStar<ST_Agedge_s> e1_ = ND_out(v).list;
     int inv, cross = 0, t;
-    for (int ie2 = 0; e2_.get_(ie2)!=null; ie2++) {
-	int cnt = ED_xpenalty(e2_.get_(ie2));
-	inv = ND_order(aghead(e2_.get_(ie2)));
-    CArrayOfStar<ST_Agedge_s> e1_ = ND_out(v).list;
-	for (int ie1 = 0; e1_.get_(ie1)!=null; ie1++) {
-	    t = ND_order(aghead(e1_.get_(ie1))) - inv;
+    ST_Agedge_s e2, e1;
+    for (int ie2 = 0; (e2 = e2_.get_(ie2))!=null; ie2++) {
+	int cnt = ED_xpenalty(e2);
+	inv = ND_order(aghead(e2));
+	final double e2px = ED_head_port(e2).p.x;
+	for (int ie1 = 0; (e1 = e1_.get_(ie1))!=null; ie1++) {
+	    t = ND_order(aghead(e1)) - inv;
 	    if ((t > 0)
 		|| ((t == 0)
-		    && ((ED_head_port(e1_.get_(ie1))).p.x) > (ED_head_port(e2_.get_(ie2))).p.x))
-		cross += ((ED_xpenalty(e1_.get_(ie1))) * cnt);
+		    && ((ED_head_port(e1)).p.x) > e2px))
+		cross += ((ED_xpenalty(e1)) * cnt);
 	}
     }
     return cross;
@@ -1635,45 +1641,47 @@ try {
     boolean changed = false;
     int nelt;
     boolean muststay, sawclust;
-    CArrayOfStar<ST_Agnode_s> vlist = GD_rank(g).get__(r).v;
-    CArrayOfStar<ST_Agnode_s> lp, rp=null, ep = vlist.plus_(GD_rank(g).get__(r).n);
+    // C walks node_t** pointers here; the translated plus_ allocates a wrapper
+    // per step, so the walk uses plain indexes into vlist instead.
+    final CArrayOfStar<ST_Agnode_s> vlist = GD_rank(g).get__(r).v;
+    int lp, rp = 0, ep = GD_rank(g).get__(r).n;
     
     for (nelt = GD_rank(g).get__(r).n - 1; nelt >= 0; nelt--) {
-	lp = vlist;
-	while (lp.comparePointer_(ep)<0) {
+	lp = 0;
+	while (lp < ep) {
 	    /* find leftmost node that can be compared */
-	    while ((lp.comparePointer_(ep) < 0) && (ND_mval(lp.get_(0)) < 0))
-		lp = lp.plus_(1);
-	    if (lp.comparePointer_(ep) >= 0)
+	    while ((lp < ep) && (ND_mval(vlist.get_(lp)) < 0))
+		lp = lp + 1;
+	    if (lp >= ep)
 		break;
 	    /* find the node that can be compared */
 	    sawclust = muststay = false;
-	    for (rp = lp.plus_(1); rp.comparePointer_(ep) < 0; rp=rp.plus_(1)) {
-		if (sawclust && ND_clust(rp.get_(0))!=null)
+	    for (rp = lp + 1; rp < ep; rp = rp + 1) {
+		if (sawclust && ND_clust(vlist.get_(rp))!=null)
 		    continue;	/* ### */
-		if (left2right(zz, g, lp.get_(0), rp.get_(0))) {
+		if (left2right(zz, g, vlist.get_(lp), vlist.get_(rp))) {
 		    muststay = true;
 		    break;
 		}
-		if (ND_mval(rp.get_(0)) >= 0)
+		if (ND_mval(vlist.get_(rp)) >= 0)
 		    break;
-		if (ND_clust(rp.get_(0))!=null)
+		if (ND_clust(vlist.get_(rp))!=null)
 		    sawclust = true;	/* ### */
 	    }
-	    if (rp.comparePointer_(ep) >= 0)
+	    if (rp >= ep)
 		break;
 	    if (muststay == false) {
-		int p1 = (int) (ND_mval(lp.get_(0)));
-		int p2 = (int) (ND_mval(rp.get_(0)));
+		int p1 = (int) (ND_mval(vlist.get_(lp)));
+		int p2 = (int) (ND_mval(vlist.get_(rp)));
 		if ((p1 > p2) || ((p1 == p2) && (reverse))) {
-		    exchange(zz, lp.get_(0), rp.get_(0));
+		    exchange(zz, vlist.get_(lp), vlist.get_(rp));
 		    changed=true;
 		}
 	    }
 	    lp = rp;
 	}
 	if ((hasfixed == false) && (reverse == false))
-	    ep = ep.plus_(-1);
+	    ep = ep - 1;
     }
     if (changed) {
 	GD_rank(zz.Root).get__(r).valid= 0;
@@ -1801,15 +1809,17 @@ try {
     for (i = 0; i < GD_rank(g).get__(r + 1).n; i++)
     	zz.Count[i] = 0;
     
-    for (top = 0; top < GD_rank(g).get__(r).n; top++) {
+    final int rn = GD_rank(g).get__(r).n;
+    for (top = 0; top < rn; top++) {
 	ST_Agedge_s e;
+	final CArrayOfStar<?> outlist = ND_out(rtop.get_(top)).list;
 	if (max > 0) {
-	    for (i = 0; (e = (ST_Agedge_s) ND_out(rtop.get_(top)).list.get_(i))!=null; i++) {
+	    for (i = 0; (e = (ST_Agedge_s) outlist.get_(i))!=null; i++) {
 		for (k = ND_order(aghead(e)) + 1; k <= max; k++)
 		    cross += zz.Count[k] * ED_xpenalty(e);
 	    }
 	}
-	for (i = 0; (e = (ST_Agedge_s) ND_out(rtop.get_(top)).list.get_(i))!=null; i++) {
+	for (i = 0; (e = (ST_Agedge_s) outlist.get_(i))!=null; i++) {
 	    int inv = ND_order(aghead(e));
 	    if (inv > max)
 		max = inv;

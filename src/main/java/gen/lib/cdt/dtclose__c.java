@@ -142,7 +142,7 @@ ENTERING("7ggbhlblmrfr1wq1k20npwyxb","dtclose");
  	if(dt.view!=null)	/* turn off viewing */
 UNSUPPORTED("1xbo7gf92fmqmu2tzpfeuc0wk"); // 		dtview(dt,((Dt_t*)0));
  	if(ev == 0) /* release all allocated data */ {
- 		dt.meth.searchf.exe(zz, dt, null, 0000100);
+ 		dt.meth.searchf.exeSearch(zz, dt, null, 0000100);
  		if(dtsize_(dt) > 0)
  			return -1;
 if(dt.data.ntab > 0)

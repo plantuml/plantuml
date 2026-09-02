@@ -97,13 +97,13 @@ try {
 	
 	/* these operations only happen at the top level */
 	if ((type&(DT_INSERT|DT_DELETE|DT_CLEAR|DT_RENEW))!=0)
-		return (__ptr__) dt.meth.searchf.exe(zz, dt, obj, type);
+		return (__ptr__) dt.meth.searchf.exeSearch(zz, dt, obj, type);
 	
 	
 	if(((type&(DT_MATCH|DT_SEARCH))!=0) || /* order sets first/last done below */
 	   (((type&(DT_FIRST|DT_LAST))!=0) && (dt.meth.type&(DT_OBAG|DT_OSET)) == 0 ) )
 	{	for(d = dt; d!=null; d = d.view)
-			if((o = (__ptr__) d.meth.searchf.exe(zz, d,obj,type))!=null )
+			if((o = (__ptr__) d.meth.searchf.exeSearch(zz, d,obj,type))!=null )
 				break;
 		dt.walk = d;
 		return o;
@@ -117,7 +117,7 @@ try {
 	
 		n = nk = null; p = null;
 		for(d = dt; d!=null; d = d.view)
-		{	if((o = (__ptr__) d.meth.searchf.exe(zz, d, obj, type) ) == null)
+		{	if((o = (__ptr__) d.meth.searchf.exeSearch(zz, d, obj, type) ) == null)
 				continue;
 			ky = d.disc.key;
 			sz = d.disc.size;

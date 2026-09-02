@@ -423,20 +423,23 @@ LEAVING("7vf9jtj9i8rg0cxrstbqswuck","loadtriangle");
 public static void connecttris(Globals zz, int tri1, int tri2) {
 ENTERING("6coujw0qksrgu5sxj0r39qm1u","connecttris");
 try {
-	CArray<ST_triangle_t> tri1p;
-	CArray<ST_triangle_t> tri2p;
+	// Hoisted out of the 3x3 loop: plus_ allocates a wrapper per call, and
+	// tri1/tri2 do not change inside the loops (C pointer arithmetic is free,
+	// the emulated equivalent is not).
+	final CArray<ST_triangle_t> tri1p = zz.tris.plus_(tri1);
+	final CArray<ST_triangle_t> tri2p = zz.tris.plus_(tri2);
+	final ST_triangle_t t1 = tri1p.get__(0);
+	final ST_triangle_t t2 = tri2p.get__(0);
     int ei, ej;
     for (ei = 0; ei < 3; ei++) {
 	for (ej = 0; ej < 3; ej++) {
-	    tri1p = zz.tris.plus_(tri1);
-	    tri2p = zz.tris.plus_(tri2);
-	    if ((tri1p.get__(0).e[ei].pnl0p.pp == tri2p.get__(0).e[ej].pnl0p.pp &&
-		 tri1p.get__(0).e[ei].pnl1p.pp == tri2p.get__(0).e[ej].pnl1p.pp) ||
-		(tri1p.get__(0).e[ei].pnl0p.pp == tri2p.get__(0).e[ej].pnl1p.pp &&
-		 tri1p.get__(0).e[ei].pnl1p.pp == tri2p.get__(0).e[ej].pnl0p.pp))
+	    if ((t1.e[ei].pnl0p.pp == t2.e[ej].pnl0p.pp &&
+		 t1.e[ei].pnl1p.pp == t2.e[ej].pnl1p.pp) ||
+		(t1.e[ei].pnl0p.pp == t2.e[ej].pnl1p.pp &&
+		 t1.e[ei].pnl1p.pp == t2.e[ej].pnl0p.pp))
 		 {
-	    	tri1p.get__(0).e[ei].rtp = tri2p;
-	    	tri2p.get__(0).e[ej].rtp = tri1p;
+	    	t1.e[ei].rtp = tri2p;
+	    	t2.e[ej].rtp = tri1p;
 		 }
 	}
     }

@@ -285,11 +285,14 @@ public static ST_Agsubnode_s agsubrep(Globals zz, ST_Agraph_s g, ST_Agnode_s n) 
 ENTERING("b32ssm6ex1pdz1b3nt4fwlhul","agsubrep");
 try {
 	ST_Agsubnode_s sn;
-    final ST_Agsubnode_s template = new ST_Agsubnode_s();
 	if (g == n.root) sn = n.mainsub;
 	else {
+			// dtsearch only reads the template as a key; the per-render
+			// scratch on zz avoids one allocation per subgraph lookup.
+			final ST_Agsubnode_s template = zz.agsubrepScratch;
 			template.node = n;
 			sn = (ST_Agsubnode_s) dtsearch(zz, g.n_id, template);
+			template.node = null;
 	}
     return sn;
 } finally {
@@ -516,6 +519,11 @@ public static CFunction agedgeidcmpf = new CFunctionAbstract("agedgeidcmpf") {
 	
 	public Object exe(Globals zz, Object... args) {
 		return agedgeidcmpf((ST_dt_s)args[0], (ST_Agedge_s)args[1], (ST_Agedge_s)args[2], (ST_dtdisc_s)args[3]);
+	}
+
+	@Override
+	public int exeCmpInt(Globals zz, Object a0, Object a1, Object a2, Object a3) {
+		return agedgeidcmpf((ST_dt_s)a0, (ST_Agedge_s)a1, (ST_Agedge_s)a2, (ST_dtdisc_s)a3);
 	}};
 	
 
@@ -547,6 +555,11 @@ public static CFunction agedgeseqcmpf = new CFunctionAbstract("agedgeseqcmpf") {
 	
 	public Object exe(Globals zz, Object... args) {
 		return agedgeseqcmpf((ST_dt_s)args[0], (ST_Agedge_s)args[1], (ST_Agedge_s)args[2], (ST_dtdisc_s)args[3]);
+	}
+
+	@Override
+	public int exeCmpInt(Globals zz, Object a0, Object a1, Object a2, Object a3) {
+		return agedgeseqcmpf((ST_dt_s)a0, (ST_Agedge_s)a1, (ST_Agedge_s)a2, (ST_dtdisc_s)a3);
 	}};
 	
 

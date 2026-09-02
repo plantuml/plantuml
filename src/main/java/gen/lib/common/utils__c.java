@@ -428,34 +428,44 @@ private static ST_pointf Bezier_w_(CArray<ST_pointf> V, int degree, double t, CA
 ENTERING("6p0ey2c2ujk2o7h221p0b4xon","Bezier");
 try {
     int i, j;			/* Index variables      */
-    final CArray<ST_pointf> Vtemp[] = new CArray[] { CArray.ALLOC__(W_DEGREE+1,ZType.ST_pointf),
-    		CArray.ALLOC__(W_DEGREE+1,ZType.ST_pointf),
-    		CArray.ALLOC__(W_DEGREE+1,ZType.ST_pointf),
-    		CArray.ALLOC__(W_DEGREE+1,ZType.ST_pointf),
-    		CArray.ALLOC__(W_DEGREE+1,ZType.ST_pointf),
-    		CArray.ALLOC__(W_DEGREE+1,ZType.ST_pointf)};
+    // Flat primitive triangles instead of six ST_pointf arrays per call; the
+    // arithmetic and its order are unchanged. Row i lives at offset i*(W_DEGREE+1).
+    final int W = W_DEGREE + 1;
+    final double[] tx = new double[W * W];
+    final double[] ty = new double[W * W];
 
     /* Copy control points  */
     for (j = 0; j <= degree; j++) {
-	Vtemp[0].get__(j).___(V.get__(j));
+	final ST_pointf v = V.get__(j);
+	tx[j] = v.x;
+	ty[j] = v.y;
     }
-    
+
     /* Triangle computation */
     for (i = 1; i <= degree; i++) {
 	for (j = 0; j <= degree - i; j++) {
-	    Vtemp[i].get__(j).x =
-		(1.0 - t) * Vtemp[i - 1].get__(j).x + t * Vtemp[i - 1].get__(j + 1).x;
-	    Vtemp[i].get__(j).y =
-		(1.0 - t) * Vtemp[i - 1].get__(j).y + t * Vtemp[i - 1].get__(j + 1).y;
+	    tx[i * W + j] =
+		(1.0 - t) * tx[(i - 1) * W + j] + t * tx[(i - 1) * W + j + 1];
+	    ty[i * W + j] =
+		(1.0 - t) * ty[(i - 1) * W + j] + t * ty[(i - 1) * W + j + 1];
 	}
     }
     if (Left != null)
-	for (j = 0; j <= degree; j++)
-	    Left.get__(j).___(Vtemp[j].get__(0));
+	for (j = 0; j <= degree; j++) {
+	    final ST_pointf p = Left.get__(j);
+	    p.x = tx[j * W];
+	    p.y = ty[j * W];
+	}
     if (Right != null)
-	for (j = 0; j <= degree; j++)
-	    Right.get__(j).___(Vtemp[degree - j].get__(j));
-    return (Vtemp[degree].get__(0));
+	for (j = 0; j <= degree; j++) {
+	    final ST_pointf p = Right.get__(j);
+	    p.x = tx[(degree - j) * W + j];
+	    p.y = ty[(degree - j) * W + j];
+	}
+    final ST_pointf result = new ST_pointf();
+    result.x = tx[degree * W];
+    result.y = ty[degree * W];
+    return result;
 } finally {
 LEAVING("6p0ey2c2ujk2o7h221p0b4xon","Bezier");
 }
