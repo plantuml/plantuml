@@ -80,7 +80,11 @@ public class GraphVizjsTeaVMEngine {
 	 * JavaScript bridge that calls Viz.instance() and renders the DOT source.
 	 * Uses Viz.js API: Viz.instance().then(viz => viz.renderString(dot, options))
 	 */
-	@JSBody(params = { "dotSource", "onSuccess", "onError" }, script = 
+	@JSBody(params = { "dotSource", "onSuccess", "onError" }, script =
+		"if (typeof Viz === 'undefined' || !Viz || typeof Viz.instance !== 'function') {" +
+		"  onError('Viz is not loaded: this diagram type needs the Graphviz layout engine (viz-global.js). Load viz-global.js before rendering.');" +
+		"  return;" +
+		"}" +
 		"Viz.instance().then(function(viz) {" +
 		"  try {" +
 		"    var svg = viz.renderString(dotSource, { format: 'svg', engine: 'dot' });" +
@@ -113,7 +117,11 @@ public class GraphVizjsTeaVMEngine {
 	/**
 	 * JavaScript bridge for engine-specific rendering.
 	 */
-	@JSBody(params = { "dotSource", "engine", "onSuccess", "onError" }, script = 
+	@JSBody(params = { "dotSource", "engine", "onSuccess", "onError" }, script =
+		"if (typeof Viz === 'undefined' || !Viz || typeof Viz.instance !== 'function') {" +
+		"  onError('Viz is not loaded: this diagram type needs the Graphviz layout engine (viz-global.js). Load viz-global.js before rendering.');" +
+		"  return;" +
+		"}" +
 		"Viz.instance().then(function(viz) {" +
 		"  try {" +
 		"    var svg = viz.renderString(dotSource, { format: 'svg', engine: engine });" +

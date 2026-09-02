@@ -110,6 +110,12 @@ public class CommandPragma extends SingleLineCommand2<TitledDiagram> {
 			}
 		} else {
 			system.getPragma().define(name, value);
+
+			// Honored in every build: the browser (TeaVM) build uses it to lay out
+			// class/component/deployment/state/usecase diagrams without viz-global.js.
+			if (name.equalsIgnoreCase("layout") && value.equalsIgnoreCase("smetana"))
+				system.setUseSmetana(true);
+
 			if (!TeaVM.isTeaVM()) {
 				if (name.equalsIgnoreCase("graphviz_dot") && value.equalsIgnoreCase("jdot"))
 					return CommandExecutionResult.error(
@@ -118,9 +124,6 @@ public class CommandPragma extends SingleLineCommand2<TitledDiagram> {
 				if (name.equalsIgnoreCase("graphviz_dot"))
 					return CommandExecutionResult.error("This directive has been renamed to '!pragma layout " + value
 							+ "'. Please update your diagram.");
-
-				if (name.equalsIgnoreCase("layout") && value.equalsIgnoreCase("smetana"))
-					system.setUseSmetana(true);
 
 				if (name.equalsIgnoreCase("layout") && value.equalsIgnoreCase("elk"))
 					system.setUseElk(true);
