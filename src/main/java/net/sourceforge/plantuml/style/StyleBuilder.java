@@ -128,7 +128,7 @@ public class StyleBuilder implements AutomaticCounter {
 		return index.getMergedStyle(signature);
 	}
 
-	public Style getMergedStyleSpecial(StyleSignatureBasic signature, int deltaPriority) {
+	public Style getMergedStyleSpecial(StyleSignatureBasic signature, int ancestorRank) {
 		boolean added = this.printedForLog.add(signature);
 		if (added)
 			Log.info(() -> "Using style " + signature);
@@ -139,7 +139,7 @@ public class StyleBuilder implements AutomaticCounter {
 
 			Style tmp = style;
 			if (key.isStarred())
-				tmp = tmp.deltaPriority(deltaPriority);
+				tmp = tmp.withAncestorRank(ancestorRank);
 
 			if (mergedStyle == null)
 				mergedStyle = tmp;

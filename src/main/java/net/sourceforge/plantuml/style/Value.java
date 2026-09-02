@@ -63,6 +63,6 @@ public interface Value {
 
 	public HorizontalAlignment asHorizontalAlignment();
 
-	public int getPriority();
+	public Specificity getSpecificity();
 
-}
+}

@@ -79,8 +79,8 @@ public abstract class ValueAbstract implements Value {
 		throw new UnsupportedOperationException("Class=" + getClass());
 	}
 
-	public int getPriority() {
+	public Specificity getSpecificity() {
 		throw new UnsupportedOperationException("Class=" + getClass());
 	}
 
-}
+}

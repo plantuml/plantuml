@@ -36,7 +36,7 @@ class StyleParserTest {
 		assertEquals(1, styles.size());
 		final Style style = styles.iterator().next();
 
-		assertEquals("[]  [wrapper] {FontColor=red/null (1002), BackGroundColor=lightblue/null (1001)}",
+		assertEquals("[]  [wrapper] {FontColor=red/null (2,stereo=1), BackGroundColor=lightblue/null (1,stereo=1)}",
 				style.toString());
 
 		assertEquals("red", style.value(PName.FontColor).asString());

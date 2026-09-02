@@ -45,35 +45,31 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 /**
- * Pins today's exact behavior for an element carrying SEVERAL stereotype labels (e.g.
+ * Pins today's behavior for an element carrying SEVERAL stereotype labels (e.g.
  * {@code <<foo>><<bar>>}), reached through {@link StyleSignatureBasic#withTOBECHANGED}: nothing
- * else pinned it before, and it is the crux of whether a future {@code StyleQuery}-based rewrite
- * of {@code getStyleSignature()}-style call sites (see {@code EntityImageActivity} and its ~35
+ * else pins it down, and it is the crux of whether a future {@code StyleQuery}-based rewrite of
+ * {@code getStyleSignature()}-style call sites (see {@code EntityImageActivity} and its ~35
  * siblings) can be purely mechanical, or must first settle a real behavior question.
  *
- * {@link StyleSignatures#getMergedStyle} resolves each label as its OWN, separate query -- one
- * full trie lookup per label -- and folds the results with
- * {@link MergeStrategy#KEEP_EXISTING_VALUE_OF_STEREOTYPE} ({@link Style#mergeWith} refuses to
- * overwrite a property once some earlier match already set it at stereotype-boosted priority).
- * Two consequences fall out, neither obvious from reading {@code withTOBECHANGED} alone:
+ * {@code withTOBECHANGED} now folds every label into ONE signature requiring all of them at once,
+ * instead of resolving each label as its own separate query and picking a winner (the old
+ * {@code StyleSignatures} composite's job) -- exactly like a CSS selector requiring several
+ * classes at once ({@code .foo.bar}) is one selector, not two. Two consequences fall out, neither
+ * obvious from reading {@code withTOBECHANGED} alone:
  *
  * <ul>
- * <li>a conflict between two single-stereotype declarations is settled by the LABEL ORDER on the
- * element's own tag ({@code <<foo>><<bar>>} vs {@code <<bar>><<foo>>}), not by which declaration
- * comes first in the {@code .skin} file;
+ * <li>a conflict between two single-stereotype declarations that both match (an element tagged
+ * {@code <<foo>><<bar>>} satisfies both a lone {@code .foo} and a lone {@code .bar} selector, each
+ * requiring only one of its two stereotypes) is settled purely by which declaration comes LATER
+ * in the {@code .skin} file -- {@link Specificity}'s source-order tiebreak -- never by the LABEL
+ * ORDER on the element's own tag, since the query itself no longer has an order once its labels
+ * are folded into one signature;
  * <li>a declaration that itself requires several stereotypes at once (written as nested selectors,
  * {@code .foo { .bar { ... } } }, since there is no single-token compound-stereotype selector
- * syntax) can NEVER win here: neither the {@code {foo}} nor the {@code {bar}} per-label query
- * alone is a superset of {@code {foo, bar}}, so {@link StyleSignatureBasic#matchAll} always
- * rejects it, whichever label is queried first.
+ * syntax) always wins over either single-stereotype declaration, whatever their relative file
+ * order -- {@link Specificity}'s stereotype-count tier outranks the source-order tiebreak, exactly
+ * like a CSS declaration naming two classes always outranks one naming only one of them.
  * </ul>
- *
- * The already-tested, not-yet-wired {@code parser2} pipeline
- * ({@link net.sourceforge.plantuml.style.parser2.StyleMerge#mergeAll}) answers both differently:
- * one combined query carrying every stereotype atom at once, folded by declaration order/priority
- * -- so ties go to file order instead of label order, and the compound declaration above would
- * actually match. Whichever way that gets settled, these two tests make sure it is a deliberate
- * choice instead of an accidental side effect.
  */
 class StyleSignatureStereotypeFanOutTest {
 
@@ -84,22 +80,23 @@ class StyleSignatureStereotypeFanOutTest {
 	}
 
 	@Test
-	void aConflictBetweenTwoSingleStereotypeDeclarationsIsSettledByTheElementsOwnLabelOrder() throws Exception {
+	void aConflictBetweenTwoSingleStereotypeDeclarationsIsSettledByFileOrderNotByTheElementsOwnLabelOrder()
+			throws Exception {
 		final String skin = "" //
 				+ ".foo {\n  BackGroundColor red\n}\n" //
-				+ ".bar {\n  BackGroundColor blue\n}\n";
+				+ ".bar {\n  BackGroundColor blue\n}\n"; // declared later, so it wins any tie
 		final StyleBuilder builder = builderFrom(skin);
 		final StyleSignature base = StyleSignatureBasic.of(SName.root);
 
 		final Style fooLabelFirst = base.withTOBECHANGED(Stereotype.build("<<foo>><<bar>>")).getMergedStyle(builder);
-		assertEquals("red", fooLabelFirst.value(PName.BackGroundColor).asString());
+		assertEquals("blue", fooLabelFirst.value(PName.BackGroundColor).asString());
 
 		final Style barLabelFirst = base.withTOBECHANGED(Stereotype.build("<<bar>><<foo>>")).getMergedStyle(builder);
 		assertEquals("blue", barLabelFirst.value(PName.BackGroundColor).asString());
 	}
 
 	@Test
-	void aDeclarationRequiringBothStereotypesAtOnceNeverWinsOverEitherSingleOne() throws Exception {
+	void aDeclarationRequiringBothStereotypesAtOnceAlwaysWinsOverEitherSingleOne() throws Exception {
 		final String skin = "" //
 				+ ".foo {\n  BackGroundColor red\n}\n" //
 				+ ".bar {\n  BackGroundColor blue\n}\n" //
@@ -107,14 +104,13 @@ class StyleSignatureStereotypeFanOutTest {
 		final StyleBuilder builder = builderFrom(skin);
 		final StyleSignature base = StyleSignatureBasic.of(SName.root);
 
-		// "green" (the {foo, bar} declaration) can never win today, whatever the label order on
-		// the element -- only whichever single-stereotype declaration matches its first label
-		// does (see the sibling test for why that one is "red").
+		// "green" (the {foo, bar} declaration) always wins now, whatever the label order on the
+		// element and whatever file order the three declarations were in.
 		final Style result = base.withTOBECHANGED(Stereotype.build("<<foo>><<bar>>")).getMergedStyle(builder);
-		assertEquals("red", result.value(PName.BackGroundColor).asString());
+		assertEquals("green", result.value(PName.BackGroundColor).asString());
 
 		final Style resultReversed = base.withTOBECHANGED(Stereotype.build("<<bar>><<foo>>")).getMergedStyle(builder);
-		assertEquals("blue", resultReversed.value(PName.BackGroundColor).asString());
+		assertEquals("green", resultReversed.value(PName.BackGroundColor).asString());
 	}
 
 }
