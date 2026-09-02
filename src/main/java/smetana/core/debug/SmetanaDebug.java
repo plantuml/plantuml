@@ -45,6 +45,12 @@ import h.ST_Agobj_s;
 import smetana.core.Globals;
 
 public final class SmetanaDebug {
+
+	// Compile-time switch for the trace scaffolding below and its call sites.
+	// When false, javac drops the guarded code entirely, so the release build
+	// carries no cost for it (label building via safeName() is expensive: it
+	// throws and catches an exception for every virtual node).
+	static public final boolean TRACE_ON = false;
 	// ::remove folder when __HAXE__
 	static private final Map<String, String> methods = new LinkedHashMap<String, String>();
 
