@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.url.UrlBuilder;
 
-<span class="fc" id="L60">public class BodierLikeClassOrObject extends BodierAbstract {</span>
+public class BodierLikeClassOrObject extends BodierAbstract {
 
 	private final Set&lt;VisibilityModifier&gt; hideVisibilityModifier;
 	private LeafType type;
@@ -99,110 +99,115 @@ import net.sourceforge.plantuml.url.UrlBuilder;
 <span class="fc" id="L99">		return false;</span>
 	}
 
+	// Compiled once: String.replaceAll would recompile this regex for every
+	// member line of every class or object.
+<span class="fc" id="L104">	private static final java.util.regex.Pattern URL_PATTERN = java.util.regex.Pattern</span>
+<span class="fc" id="L105">			.compile(UrlBuilder.getRegexp());</span>
+
 	private boolean isMethod(CharSequence s) {
-<span class="fc" id="L103">		final String purged = s.toString().replaceAll(UrlBuilder.getRegexp(), &quot;&quot;);</span>
-<span class="fc bfc" id="L104" title="All 2 branches covered.">		if (purged.contains(&quot;{method}&quot;))</span>
-<span class="fc" id="L105">			return true;</span>
+<span class="fc" id="L108">		final String purged = URL_PATTERN.matcher(s.toString()).replaceAll(&quot;&quot;);</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (purged.contains(&quot;{method}&quot;))</span>
+<span class="fc" id="L110">			return true;</span>
 
-<span class="fc bfc" id="L107" title="All 2 branches covered.">		if (purged.contains(&quot;{field}&quot;))</span>
-<span class="fc" id="L108">			return false;</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (purged.contains(&quot;{field}&quot;))</span>
+<span class="fc" id="L113">			return false;</span>
 
-<span class="pc bpc" id="L110" title="1 of 4 branches missed.">		return purged.contains(&quot;(&quot;) || purged.contains(&quot;)&quot;);</span>
+<span class="pc bpc" id="L115" title="1 of 4 branches missed.">		return purged.contains(&quot;(&quot;) || purged.contains(&quot;)&quot;);</span>
 	}
 
 	@Override
 	public Display getMethodsToDisplay() {
-<span class="fc bfc" id="L115" title="All 2 branches covered.">		if (methodsToDisplay == null) {</span>
-<span class="fc" id="L116">			methodsToDisplay = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L117" title="All 2 branches covered.">			for (int i = 0; i &lt; rawBody.size(); i++) {</span>
-<span class="fc" id="L118">				final CharSequence s = rawBody.get(i);</span>
-<span class="fc bfc" id="L119" title="All 2 branches covered.">				if (isMethod(i, rawBody) == false)</span>
-<span class="fc" id="L120">					continue;</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (methodsToDisplay == null) {</span>
+<span class="fc" id="L121">			methodsToDisplay = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">			for (int i = 0; i &lt; rawBody.size(); i++) {</span>
+<span class="fc" id="L123">				final CharSequence s = rawBody.get(i);</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">				if (isMethod(i, rawBody) == false)</span>
+<span class="fc" id="L125">					continue;</span>
 
-<span class="pc bpc" id="L122" title="3 of 4 branches missed.">				if (s.length() == 0 &amp;&amp; methodsToDisplay.size() == 0)</span>
-<span class="nc" id="L123">					continue;</span>
+<span class="pc bpc" id="L127" title="3 of 4 branches missed.">				if (s.length() == 0 &amp;&amp; methodsToDisplay.size() == 0)</span>
+<span class="nc" id="L128">					continue;</span>
 
-<span class="fc" id="L125">				final Member m = Member.method(s);</span>
-<span class="pc bpc" id="L126" title="1 of 2 branches missed.">				if (hideVisibilityModifier == null</span>
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">						|| hideVisibilityModifier.contains(m.getVisibilityModifier()) == false)</span>
-<span class="fc" id="L128">					methodsToDisplay.add(m);</span>
+<span class="fc" id="L130">				final Member m = Member.method(s);</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">				if (hideVisibilityModifier == null</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">						|| hideVisibilityModifier.contains(m.getVisibilityModifier()) == false)</span>
+<span class="fc" id="L133">					methodsToDisplay.add(m);</span>
 
 			}
-<span class="fc" id="L131">			removeFinalEmptyMembers(methodsToDisplay);</span>
+<span class="fc" id="L136">			removeFinalEmptyMembers(methodsToDisplay);</span>
 		}
-<span class="fc" id="L133">		return Display.create(methodsToDisplay);</span>
+<span class="fc" id="L138">		return Display.create(methodsToDisplay);</span>
 	}
 
 	private boolean isMethod(int i, List&lt;CharSequence&gt; rawBody) {
-<span class="pc bpc" id="L137" title="3 of 8 branches missed.">		if (i &gt; 0 &amp;&amp; i &lt; rawBody.size() - 1 &amp;&amp; rawBody.get(i).length() == 0 &amp;&amp; isMethod(rawBody.get(i - 1))</span>
-<span class="nc bnc" id="L138" title="All 2 branches missed.">				&amp;&amp; isMethod(rawBody.get(i + 1))) {</span>
-<span class="nc" id="L139">			return true;</span>
+<span class="pc bpc" id="L142" title="3 of 8 branches missed.">		if (i &gt; 0 &amp;&amp; i &lt; rawBody.size() - 1 &amp;&amp; rawBody.get(i).length() == 0 &amp;&amp; isMethod(rawBody.get(i - 1))</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">				&amp;&amp; isMethod(rawBody.get(i + 1))) {</span>
+<span class="nc" id="L144">			return true;</span>
 		}
-<span class="fc" id="L141">		return isMethod(rawBody.get(i));</span>
+<span class="fc" id="L146">		return isMethod(rawBody.get(i));</span>
 	}
 
 	@Override
 	public Display getFieldsToDisplay() {
-<span class="fc bfc" id="L146" title="All 2 branches covered.">		if (fieldsToDisplay == null) {</span>
-<span class="fc" id="L147">			fieldsToDisplay = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L148" title="All 2 branches covered.">			for (CharSequence s : rawBody) {</span>
-<span class="pc bpc" id="L149" title="1 of 4 branches missed.">				if (type != LeafType.OBJECT &amp;&amp; isMethod(s) == true)</span>
-<span class="fc" id="L150">					continue;</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">		if (fieldsToDisplay == null) {</span>
+<span class="fc" id="L152">			fieldsToDisplay = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">			for (CharSequence s : rawBody) {</span>
+<span class="pc bpc" id="L154" title="1 of 4 branches missed.">				if (type != LeafType.OBJECT &amp;&amp; isMethod(s) == true)</span>
+<span class="fc" id="L155">					continue;</span>
 
-<span class="pc bpc" id="L152" title="3 of 4 branches missed.">				if (s.length() == 0 &amp;&amp; fieldsToDisplay.size() == 0)</span>
-<span class="nc" id="L153">					continue;</span>
+<span class="pc bpc" id="L157" title="3 of 4 branches missed.">				if (s.length() == 0 &amp;&amp; fieldsToDisplay.size() == 0)</span>
+<span class="nc" id="L158">					continue;</span>
 
-<span class="fc" id="L155">				final Member m = Member.field(s);</span>
-<span class="pc bpc" id="L156" title="1 of 2 branches missed.">				if (hideVisibilityModifier == null</span>
-<span class="pc bpc" id="L157" title="1 of 2 branches missed.">						|| hideVisibilityModifier.contains(m.getVisibilityModifier()) == false)</span>
-<span class="fc" id="L158">					fieldsToDisplay.add(m);</span>
+<span class="fc" id="L160">				final Member m = Member.field(s);</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">				if (hideVisibilityModifier == null</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">						|| hideVisibilityModifier.contains(m.getVisibilityModifier()) == false)</span>
+<span class="fc" id="L163">					fieldsToDisplay.add(m);</span>
 
-<span class="fc" id="L160">			}</span>
-<span class="fc" id="L161">			removeFinalEmptyMembers(fieldsToDisplay);</span>
+<span class="fc" id="L165">			}</span>
+<span class="fc" id="L166">			removeFinalEmptyMembers(fieldsToDisplay);</span>
 		}
-<span class="fc" id="L163">		return Display.create(fieldsToDisplay);</span>
+<span class="fc" id="L168">		return Display.create(fieldsToDisplay);</span>
 	}
 
 	private void removeFinalEmptyMembers(List&lt;Member&gt; result) {
-<span class="pc bpc" id="L167" title="1 of 4 branches missed.">		while (result.size() &gt; 0 &amp;&amp; StringUtils.trin(result.get(result.size() - 1).getDisplay(false)).length() == 0)</span>
-<span class="nc" id="L168">			result.remove(result.size() - 1);</span>
+<span class="pc bpc" id="L172" title="1 of 4 branches missed.">		while (result.size() &gt; 0 &amp;&amp; StringUtils.trin(result.get(result.size() - 1).getDisplay(false)).length() == 0)</span>
+<span class="nc" id="L173">			result.remove(result.size() - 1);</span>
 
-<span class="fc" id="L170">	}</span>
+<span class="fc" id="L175">	}</span>
 
 	@Override
 	public boolean hasUrl() {
-<span class="nc bnc" id="L174" title="All 2 branches missed.">		for (CharSequence cs : getFieldsToDisplay())</span>
-<span class="nc bnc" id="L175" title="All 2 branches missed.">			if (cs instanceof Member) {</span>
-<span class="nc" id="L176">				final Member m = (Member) cs;</span>
-<span class="nc bnc" id="L177" title="All 2 branches missed.">				if (m.hasUrl())</span>
-<span class="nc" id="L178">					return true;</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">		for (CharSequence cs : getFieldsToDisplay())</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">			if (cs instanceof Member) {</span>
+<span class="nc" id="L181">				final Member m = (Member) cs;</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">				if (m.hasUrl())</span>
+<span class="nc" id="L183">					return true;</span>
 
 			}
 
-<span class="nc bnc" id="L182" title="All 2 branches missed.">		for (CharSequence cs : getMethodsToDisplay())</span>
-<span class="nc bnc" id="L183" title="All 2 branches missed.">			if (cs instanceof Member) {</span>
-<span class="nc" id="L184">				final Member m = (Member) cs;</span>
-<span class="nc bnc" id="L185" title="All 2 branches missed.">				if (m.hasUrl())</span>
-<span class="nc" id="L186">					return true;</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">		for (CharSequence cs : getMethodsToDisplay())</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">			if (cs instanceof Member) {</span>
+<span class="nc" id="L189">				final Member m = (Member) cs;</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">				if (m.hasUrl())</span>
+<span class="nc" id="L191">					return true;</span>
 
 			}
-<span class="nc" id="L189">		return false;</span>
+<span class="nc" id="L194">		return false;</span>
 	}
 
 	private List&lt;CharSequence&gt; rawBodyWithoutHidden() {
-<span class="nc" id="L193">		final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L194" title="All 2 branches missed.">		for (CharSequence s : rawBody) {</span>
+<span class="nc" id="L198">		final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">		for (CharSequence s : rawBody) {</span>
 			final Member m;
-<span class="nc bnc" id="L196" title="All 2 branches missed.">			if (isMethod(s))</span>
-<span class="nc" id="L197">				m = Member.method(s);</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">			if (isMethod(s))</span>
+<span class="nc" id="L202">				m = Member.method(s);</span>
 			else
-<span class="nc" id="L199">				m = Member.field(s);</span>
+<span class="nc" id="L204">				m = Member.field(s);</span>
 
-<span class="nc bnc" id="L201" title="All 2 branches missed.">			if (hideVisibilityModifier.contains(m.getVisibilityModifier()) == false)</span>
-<span class="nc" id="L202">				result.add(m);</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">			if (hideVisibilityModifier.contains(m.getVisibilityModifier()) == false)</span>
+<span class="nc" id="L207">				result.add(m);</span>
 
-<span class="nc" id="L204">		}</span>
-<span class="nc" id="L205">		return result;</span>
+<span class="nc" id="L209">		}</span>
+<span class="nc" id="L210">		return result;</span>
 	}
 
 	@Override
@@ -212,41 +217,41 @@ import net.sourceforge.plantuml.url.UrlBuilder;
 		if (BodyFactory.BODY3)
 			return new Body3(rawBody, skinParam, style);
 
-<span class="pc bpc" id="L215" title="2 of 4 branches missed.">		if (type.isLikeClass() &amp;&amp; isBodyEnhanced()) {</span>
-<span class="nc bnc" id="L216" title="All 4 branches missed.">			if (showMethods || showFields)</span>
-<span class="nc" id="L217">				return BodyFactory.create1(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),</span>
-<span class="nc" id="L218">						rawBodyWithoutHidden(), skinParam, stereotype, leaf, style);</span>
+<span class="pc bpc" id="L220" title="2 of 4 branches missed.">		if (type.isLikeClass() &amp;&amp; isBodyEnhanced()) {</span>
+<span class="nc bnc" id="L221" title="All 4 branches missed.">			if (showMethods || showFields)</span>
+<span class="nc" id="L222">				return BodyFactory.create1(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),</span>
+<span class="nc" id="L223">						rawBodyWithoutHidden(), skinParam, stereotype, leaf, style);</span>
 
-<span class="nc" id="L220">			return null;</span>
+<span class="nc" id="L225">			return null;</span>
 		}
-<span class="pc bpc" id="L222" title="1 of 2 branches missed.">		if (leaf == null)</span>
-<span class="nc" id="L223">			throw new IllegalStateException();</span>
+<span class="pc bpc" id="L227" title="1 of 2 branches missed.">		if (leaf == null)</span>
+<span class="nc" id="L228">			throw new IllegalStateException();</span>
 
-<span class="pc bpc" id="L225" title="1 of 2 branches missed.">		if (type == LeafType.OBJECT) {</span>
-<span class="nc bnc" id="L226" title="All 2 branches missed.">			if (showFields == false)</span>
+<span class="pc bpc" id="L230" title="1 of 2 branches missed.">		if (type == LeafType.OBJECT) {</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">			if (showFields == false)</span>
 				// return new TextBlockLineBefore(style.value(PName.LineThickness).asDouble(),
 				// TextBlockUtils.empty(0, 0));
-<span class="nc" id="L229">				return TextBlockUtils.empty(0, 0);</span>
+<span class="nc" id="L234">				return TextBlockUtils.empty(0, 0);</span>
 
-<span class="nc" id="L231">			return BodyFactory.create1(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),</span>
-<span class="nc" id="L232">					rawBodyWithoutHidden(), skinParam, stereotype, leaf, style);</span>
+<span class="nc" id="L236">			return BodyFactory.create1(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),</span>
+<span class="nc" id="L237">					rawBodyWithoutHidden(), skinParam, stereotype, leaf, style);</span>
 		}
-<span class="pc bpc" id="L234" title="1 of 2 branches missed.">		if (TeaVM.a())</span>
-<span class="pc bpc" id="L235" title="1 of 2 branches missed.">			assert type.isLikeClass();</span>
+<span class="pc bpc" id="L239" title="1 of 2 branches missed.">		if (TeaVM.a())</span>
+<span class="pc bpc" id="L240" title="1 of 2 branches missed.">			assert type.isLikeClass();</span>
 
-<span class="fc" id="L237">		final MethodsOrFieldsArea fields = new MethodsOrFieldsArea(getFieldsToDisplay(), skinParam, leaf, style);</span>
+<span class="fc" id="L242">		final MethodsOrFieldsArea fields = new MethodsOrFieldsArea(getFieldsToDisplay(), skinParam, leaf, style);</span>
 
-<span class="fc" id="L239">		final MethodsOrFieldsArea methods = new MethodsOrFieldsArea(getMethodsToDisplay(), skinParam, leaf, style);</span>
-<span class="pc bpc" id="L240" title="1 of 4 branches missed.">		if (showFields &amp;&amp; showMethods == false)</span>
-<span class="nc" id="L241">			return fields.asBlockMemberImpl();</span>
-<span class="fc bfc" id="L242" title="All 4 branches covered.">		else if (showMethods &amp;&amp; showFields == false)</span>
-<span class="fc" id="L243">			return methods.asBlockMemberImpl();</span>
-<span class="pc bpc" id="L244" title="1 of 4 branches missed.">		else if (showFields == false &amp;&amp; showMethods == false)</span>
-<span class="fc" id="L245">			return TextBlockUtils.empty(0, 0);</span>
+<span class="fc" id="L244">		final MethodsOrFieldsArea methods = new MethodsOrFieldsArea(getMethodsToDisplay(), skinParam, leaf, style);</span>
+<span class="pc bpc" id="L245" title="1 of 4 branches missed.">		if (showFields &amp;&amp; showMethods == false)</span>
+<span class="nc" id="L246">			return fields.asBlockMemberImpl();</span>
+<span class="fc bfc" id="L247" title="All 4 branches covered.">		else if (showMethods &amp;&amp; showFields == false)</span>
+<span class="fc" id="L248">			return methods.asBlockMemberImpl();</span>
+<span class="pc bpc" id="L249" title="1 of 4 branches missed.">		else if (showFields == false &amp;&amp; showMethods == false)</span>
+<span class="fc" id="L250">			return TextBlockUtils.empty(0, 0);</span>
 
-<span class="fc" id="L247">		final TextBlock bb1 = fields.asBlockMemberImpl();</span>
-<span class="fc" id="L248">		final TextBlock bb2 = methods.asBlockMemberImpl();</span>
-<span class="fc" id="L249">		return TextBlockUtils.mergeTB(bb1, bb2, HorizontalAlignment.LEFT);</span>
+<span class="fc" id="L252">		final TextBlock bb1 = fields.asBlockMemberImpl();</span>
+<span class="fc" id="L253">		final TextBlock bb2 = methods.asBlockMemberImpl();</span>
+<span class="fc" id="L254">		return TextBlockUtils.mergeTB(bb1, bb2, HorizontalAlignment.LEFT);</span>
 	}
 
 }
