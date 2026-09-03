@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
@@ -62,6 +63,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class FtileBoxEmoji extends AbstractFtile {
 
@@ -76,8 +78,8 @@ public class FtileBoxEmoji extends AbstractFtile {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity);
 	}
 
-	static public StyleSignature getStyleSignatureArrow() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	static public StyleQuery getStyleSignatureArrow() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
 	}
 
 	@Override
@@ -106,7 +108,7 @@ public class FtileBoxEmoji extends AbstractFtile {
 			styleBuilder = skinParam.getCurrentStyleBuilder();
 
 		final Style style = getStyleSignature().withTOBECHANGED(stereotype).getMergedStyleREMOVEME(styleBuilder);
-		final Style styleArrow = getStyleSignatureArrow().getMergedStyleREMOVEME(styleBuilder);
+		final Style styleArrow = styleBuilder.getMergedStyle(getStyleSignatureArrow());
 		return new FtileBoxEmoji(skinParam, label, swimlane, style, styleArrow);
 	}
 

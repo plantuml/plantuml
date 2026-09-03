@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
@@ -66,6 +68,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class GtileBox extends AbstractGtile {
 
@@ -90,8 +93,8 @@ public class GtileBox extends AbstractGtile {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity);
 	}
 
-	static public StyleSignature getDefaultStyleDefinitionArrow() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	static public StyleQuery getDefaultStyleDefinitionArrow() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
 	}
 
 	final public LinkRendering getInLinkRendering() {
@@ -115,7 +118,7 @@ public class GtileBox extends AbstractGtile {
 			BoxStyle boxStyle, Stereotype stereotype) {
 		final Style style = getDefaultStyleDefinitionActivity().withTOBECHANGED(stereotype)
 				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
-		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style styleArrow = skinParam.getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionArrow());
 
 		return new GtileBox(stringBounder, skinParam, label, swimlane, boxStyle, style, styleArrow);
 	}

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
@@ -57,7 +58,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public abstract class AbstractParallelFtilesBuilder {
 
@@ -70,12 +71,12 @@ public abstract class AbstractParallelFtilesBuilder {
 	protected final List<Ftile> list99 = new ArrayList<>();
 	protected final Colors colors;
 
-	public StyleSignature getStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity);
+	public StyleQuery getStyleSignature() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity));
 	}
 
-	final public StyleSignature getStyleSignatureArrow() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	final public StyleQuery getStyleSignatureArrow() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
 	}
 
 	public AbstractParallelFtilesBuilder(ISkinParam skinParam, StringBounder stringBounder, List<Ftile> all,
@@ -189,7 +190,7 @@ public abstract class AbstractParallelFtilesBuilder {
 		if (Display.isNull(display))
 			return null;
 
-		final Style style = getStyleSignatureArrow().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder());
+		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getStyleSignatureArrow());
 		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam().getIHtmlColorSet());
 
 		return display.create7(fontConfiguration, HorizontalAlignment.LEFT, skinParam(), CreoleMode.SIMPLE_LINE);

@@ -37,6 +37,8 @@ package net.sourceforge.plantuml.decoration;
 
 import java.util.Objects;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
@@ -44,7 +46,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class HtmlColorAndStyle {
 
@@ -79,13 +81,13 @@ public class HtmlColorAndStyle {
 		return style;
 	}
 
-	static final public StyleSignature getDefaultStyleDefinitionArrow() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	static final public StyleQuery getDefaultStyleDefinitionArrow() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
 	}
 
 	public static HtmlColorAndStyle build(ISkinParam skinParam, String definition) throws NoSuchColorException {
 
-		final Style style = getDefaultStyleDefinitionArrow().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionArrow());
 		HColor arrowColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final HColor arrowHeadColor = null;
 

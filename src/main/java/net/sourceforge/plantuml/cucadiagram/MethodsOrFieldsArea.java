@@ -357,7 +357,7 @@ public class MethodsOrFieldsArea extends TextBlockMemoized implements WithPorts 
 				}
 			};
 		}
-		final Style style = modifier.getStyleSignature().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(modifier.getStyleSignature());
 		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final boolean isField = modifier.isField();
 		final HColor backColor = isField ? null

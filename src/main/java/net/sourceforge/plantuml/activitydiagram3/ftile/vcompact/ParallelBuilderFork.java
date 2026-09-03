@@ -83,7 +83,7 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 		Ftile result = middle;
 		final List<Connection> conns = new ArrayList<>();
 		final Swimlane swimlaneBlack = in;
-		final Style style = getStyleSignatureArrow().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder());
+		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getStyleSignatureArrow());
 		final Ftile black = new FtileBlackBlock(skinParam(), swimlaneBlack, colors);
 		double x = 0;
 		for (Ftile tmp : list99) {
@@ -116,7 +116,7 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 
 		result = new FtileAssemblySimple(result, out);
 		final List<Connection> conns = new ArrayList<>();
-		final Style style = getStyleSignatureArrow().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder());
+		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getStyleSignatureArrow());
 		double x = 0;
 		for (Ftile tmp : list99) {
 			final XDimension2D dim = tmp.calculateDimension(getStringBounder());

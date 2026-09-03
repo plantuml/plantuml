@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -48,7 +50,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class LinkAnchor {
 
@@ -95,9 +97,9 @@ public class LinkAnchor {
 		final double ymin = Math.min(y1, y2);
 		final double ymax = Math.max(y1, y2);
 
-		final StyleSignature signature = StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram,
-				SName.arrow);
-		final Style style = signature.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final StyleQuery signature = StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram,
+				SName.arrow));
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(signature);
 
 		final HColor color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, style);

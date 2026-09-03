@@ -51,8 +51,10 @@ import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public enum VisibilityModifier {
 	PRIVATE_FIELD(StringUtils.PRIVATE_FIELD, ColorParam.iconPrivate, null),
@@ -333,21 +335,21 @@ public enum VisibilityModifier {
 		return false;
 	}
 
-	public StyleSignature getStyleSignature() {
+	public StyleQuery getStyleSignature() {
 		if (this == IE_MANDATORY)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.visibilityIcon, SName.IEMandatory);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.visibilityIcon, SName.IEMandatory));
 
 		if (this == PUBLIC_FIELD || this == PUBLIC_METHOD)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.visibilityIcon, SName.public_);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.visibilityIcon, SName.public_));
 
 		if (this == PRIVATE_FIELD || this == PRIVATE_METHOD)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.visibilityIcon, SName.private_);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.visibilityIcon, SName.private_));
 
 		if (this == PROTECTED_FIELD || this == PROTECTED_METHOD)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.visibilityIcon, SName.protected_);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.visibilityIcon, SName.protected_));
 
 		if (this == PACKAGE_PRIVATE_FIELD || this == VisibilityModifier.PACKAGE_PRIVATE_METHOD)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.visibilityIcon, SName.package_);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.visibilityIcon, SName.package_));
 
 		throw new IllegalStateException();
 	}

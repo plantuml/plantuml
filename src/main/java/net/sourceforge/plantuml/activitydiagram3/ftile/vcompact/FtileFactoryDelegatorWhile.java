@@ -75,7 +75,7 @@ public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 
 		final ConditionStyle conditionStyle = skinParam().getConditionStyle();
 
-		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyleREMOVEME(currentStyleBuilder);
+		final Style styleArrow = currentStyleBuilder.getMergedStyle(getDefaultStyleDefinitionArrow());
 		final Style styleDiamond = getDefaultStyleDefinitionDiamond().getMergedStyleREMOVEME(currentStyleBuilder);
 		final HColor borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());
 		final HColor backColor = color == null

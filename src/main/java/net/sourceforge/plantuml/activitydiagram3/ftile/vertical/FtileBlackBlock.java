@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
@@ -57,7 +58,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class FtileBlackBlock extends AbstractFtile {
 
@@ -94,14 +95,14 @@ public class FtileBlackBlock extends AbstractFtile {
 		return new FtileGeometry(width + supp, height, width / 2, 0, height);
 	}
 
-	private StyleSignature getSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activityBar);
+	private StyleQuery getSignature() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activityBar));
 	}
 
 	public void drawU(UGraphic ug) {
 		final URectangle rect = URectangle.build(width, height).rounded(5).ignoreForCompressionOnX();
 
-		final Style style = getSignature().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder());
+		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getSignature());
 		final double shadowing = style.getShadowing();
 		rect.setDeltaShadow(shadowing);
 		final HColor colorBar = colors == null ? style.value(PName.BackGroundColor).asColor(getIHtmlColorSet())
