@@ -97,8 +97,8 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleLoader;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
@@ -315,7 +315,7 @@ public class SkinParam implements ISkinParam {
 		if (result != null)
 			return result;
 
-		final Style style = getCurrentStyleBuilder().getMergedStyleTOBEREMOVED(StyleSignature.ofSName0(SName.root, SName.document));
+		final Style style = getCurrentStyleBuilder().getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.document)));
 		return style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 	}
 
