@@ -76,6 +76,23 @@ public final class StyleQuery {
 		return of(names, Collections.<String> emptySet(), LevelConstraint.none());
 	}
 
+	/**
+	 * This same query, additionally requiring {@code stereotype} -- e.g. so a "frequent use"
+	 * factory that starts from a plain, stereotype-less query (the common case, since most such
+	 * factories are called with no stereotype in hand yet) can still fold one in once the caller
+	 * has it, the way {@code StyleSignature.addStereotype} does for the legacy signature.
+	 * {@code stereotype} is cleaned exactly as {@link StyleAtom#ofStereotype} cleans it (see
+	 * there for why), so passing it in raw, un-lower-cased text is fine. Requiring several
+	 * stereotypes at once (an element tagged with more than one, e.g. {@code <<foo>><<bar>>}) is
+	 * just calling this again on the result, since a {@link TreeSet} silently dedupes a
+	 * stereotype already present.
+	 */
+	public StyleQuery withStereotype(String stereotype) {
+		final SortedSet<StyleAtom> result = new TreeSet<StyleAtom>(atoms);
+		result.add(StyleAtom.ofStereotype(stereotype));
+		return new StyleQuery(result, levelConstraint);
+	}
+
 	public SortedSet<StyleAtom> getAtoms() {
 		return atoms;
 	}

@@ -40,6 +40,7 @@ import java.util.EnumMap;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.utils.Log;
 
 public class StyleBuilder implements AutomaticCounter {
@@ -126,6 +127,10 @@ public class StyleBuilder implements AutomaticCounter {
 		// should not suppress the very same "Using style ..." line for the next diagram just
 		// because they share an index).
 		return index.getMergedStyle(signature);
+	}
+
+	public Style getMergedStyle(StyleQuery query) {
+		return index.getMergedStyle(query);
 	}
 
 	public Style getMergedStyleSpecial(StyleSignature signature, int ancestorRank) {

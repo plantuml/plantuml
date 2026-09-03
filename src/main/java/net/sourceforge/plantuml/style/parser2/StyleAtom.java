@@ -67,7 +67,25 @@ public final class StyleAtom implements Comparable<StyleAtom> {
 	public static StyleAtom ofStereotype(String stereotype) {
 		if (stereotype == null)
 			throw new IllegalArgumentException("stereotype");
-		return new StyleAtom(null, stereotype.toLowerCase());
+		return new StyleAtom(null, clean(stereotype));
+	}
+
+	/**
+	 * Lower-cases {@code name} and drops every {@code _}/{@code .} in it -- exactly what
+	 * {@code StyleSignature}'s own (private) stereotype cleaning does. Kept in sync with that
+	 * one deliberately: a stereotype fed in raw (say, through {@link StyleQuery#withStereotype})
+	 * has to end up as the very same atom as the same stereotype arriving through the legacy
+	 * {@code StyleSignature.addStereotype} path, or the two would silently stop matching each
+	 * other in the trie.
+	 */
+	private static String clean(String name) {
+		final StringBuilder sb = new StringBuilder(name.length());
+		for (int i = 0; i < name.length(); i++) {
+			final char c = name.charAt(i);
+			if (c != '_' && c != '.')
+				sb.append(Character.toLowerCase(c));
+		}
+		return sb.toString();
 	}
 
 	public boolean isName() {
