@@ -134,7 +134,7 @@ public class EbnfExpression implements TextBlockable {
 
 	@Override
 	public TextBlock getUDrawable(ISkinParam skinParam, PreprocessingArtifact preprocessing) {
-		final Style style = ETile.getStyleSignature().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(ETile.getStyleQuery());
 		final FontConfiguration fc = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 
 		if (tokens.size() == 0)

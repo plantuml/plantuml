@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.gantt.draw;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.TreeSet;
 
@@ -71,6 +72,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class TaskDrawRegular extends AbstractTaskDraw {
 
@@ -292,8 +294,9 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 			off.add(new Segment(x1, x2));
 		}
 
-		final HColor backUndone = StyleSignature.ofSName0(SName.root, SName.element, SName.ganttDiagram, SName.undone)
-				.getMergedStyleREMOVEME(getStyleBuilder()).value(PName.BackGroundColor).asColor(getColorSet());
+		final HColor backUndone = getStyleBuilder()
+				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.undone)))
+				.value(PName.BackGroundColor).asColor(getColorSet());
 
 		final RectangleTask rectangleTask = new RectangleTask(startPos, endPos, round, getCompletion(), off);
 

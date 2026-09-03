@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.gantt;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 import net.sourceforge.plantuml.crash.CrashImage;
@@ -63,7 +64,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class GanttDiagramMainBlock extends TextBlockMemoized {
 
@@ -106,8 +107,8 @@ public class GanttDiagramMainBlock extends TextBlockMemoized {
 //			if (displayConfig.getLabelStrategy().titleInFirstColumn())
 //				ug = ug.apply(UTranslate.dx(layout.getTitlesWidth()));
 
-			final Style style = StyleSignature.ofSName0(SName.root, SName.element, SName.ganttDiagram, SName.timeline)
-					.getMergedStyleREMOVEME(timelineStyle.getSkinParam().getCurrentStyleBuilder());
+			final Style style = timelineStyle.getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery
+					.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.timeline)));
 
 			final HColor back = style.value(PName.BackGroundColor).asColor(timelineStyle.getColorSet());
 			if (back.isTransparent() == false) {

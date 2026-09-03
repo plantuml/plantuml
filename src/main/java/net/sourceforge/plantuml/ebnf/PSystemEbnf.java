@@ -96,7 +96,7 @@ public class PSystemEbnf extends TitledDiagram {
 	@Override
 	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
 		if (expressions.size() == 0) {
-			final Style style = ETile.getStyleSignature().getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
+			final Style style = getSkinParam().getCurrentStyleBuilder().getMergedStyle(ETile.getStyleQuery());
 			final FontConfiguration fc = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 
 			final TextBlock tmp = EbnfEngine.syntaxError(fc, getSkinParam());
