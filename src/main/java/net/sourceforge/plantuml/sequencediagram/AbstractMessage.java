@@ -64,14 +64,14 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	}
 
 	final public Style[] getUsedStyles() {
-		Style style = getStyleSignature().getMergedStyleREMOVEME(styleBuilder);
+		Style style = getStyleSignatureTOBEREMOVED().getMergedStyleREMOVEME(styleBuilder);
 		if (style != null && arrowConfiguration.getColor() != null)
 			style = style.eventuallyOverride(PName.LineColor, arrowConfiguration.getColor());
 
 		return new Style[] { style };
 	}
 
-	public StyleSignature getStyleSignature() {
+	public StyleSignature getStyleSignatureTOBEREMOVED() {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.arrow)
 				.withTOBECHANGED(stereotype);
 	}

@@ -236,7 +236,7 @@ public class LifeLine {
 				if (currentStyleBuilder == null)
 					currentStyleBuilder = skinParam2.getCurrentStyleBuilder();
 
-				Style style = type.getStyleSignature().withTOBECHANGED(participant.getStereotype())
+				Style style = type.getStyleSignatureTOBEREMOVED().withTOBECHANGED(participant.getStereotype())
 						.getMergedStyleREMOVEME(currentStyleBuilder);
 
 				if (style != null) {

@@ -48,8 +48,8 @@ public class Delay extends AbstractEvent implements Event, WithStyle {
 
 	final private Style style;
 
-	public StyleSignature getStyleSignature() {
-		return ComponentType.DELAY_TEXT.getStyleSignature();
+	public StyleSignature getStyleSignatureTOBEREMOVED() {
+		return ComponentType.DELAY_TEXT.getStyleSignatureTOBEREMOVED();
 	}
 
 	public Style[] getUsedStyles() {
@@ -58,7 +58,7 @@ public class Delay extends AbstractEvent implements Event, WithStyle {
 
 	public Delay(Display text, StyleBuilder styleBuilder) {
 		this.text = text;
-		this.style = getStyleSignature().getMergedStyleREMOVEME(styleBuilder);
+		this.style = getStyleSignatureTOBEREMOVED().getMergedStyleREMOVEME(styleBuilder);
 	}
 
 	public final Display getText() {

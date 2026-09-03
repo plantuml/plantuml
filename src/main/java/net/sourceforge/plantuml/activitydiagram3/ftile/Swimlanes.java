@@ -125,7 +125,7 @@ public class Swimlanes implements TextBlock, Styleable {
 		return Collections.unmodifiableList(swimlanesSpecial);
 	}
 
-	public StyleSignature getStyleSignature() {
+	public StyleSignature getStyleSignatureTOBEREMOVED() {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.swimlane);
 	}
 
@@ -136,7 +136,7 @@ public class Swimlanes implements TextBlock, Styleable {
 
 	protected Style getStyle() {
 		if (style == null)
-			this.style = getStyleSignature().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+			this.style = getStyleSignatureTOBEREMOVED().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 		return style;
 	}

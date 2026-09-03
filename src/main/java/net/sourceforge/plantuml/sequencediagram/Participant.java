@@ -78,16 +78,16 @@ public class Participant implements SpecificBackcolorable, WithStyle, AsciiBlock
 	private final LineLocation location;
 	private final String uid;
 
-	public StyleSignature getStyleSignature() {
-		return type.getStyleSignature().addClickable(getUrl());
+	public StyleSignature getStyleSignatureTOBEREMOVED() {
+		return type.getStyleSignatureTOBEREMOVED().addClickable(getUrl());
 	}
 
 	public Style[] getUsedStyles() {
 
-		final StyleSignature signature = getStyleSignature().withTOBECHANGED(stereotype);
+		final StyleSignature signature = getStyleSignatureTOBEREMOVED().withTOBECHANGED(stereotype);
 		Style tmp = signature.getMergedStyleREMOVEME(styleBuilder);
 		tmp = tmp.eventuallyOverride(getColors());
-		Style stereo = getStyleSignature().forStereotypeItself(stereotype).getMergedStyleREMOVEME(styleBuilder);
+		Style stereo = getStyleSignatureTOBEREMOVED().forStereotypeItself(stereotype).getMergedStyleREMOVEME(styleBuilder);
 		if (tmp != null)
 			stereo = tmp.mergeWith(stereo, MergeStrategy.OVERWRITE_EXISTING_VALUE);
 

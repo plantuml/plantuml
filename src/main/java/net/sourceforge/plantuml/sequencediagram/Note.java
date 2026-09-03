@@ -68,12 +68,12 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 	private Url url;
 	private Stereotype stereotype;
 
-	public StyleSignature getStyleSignature() {
+	public StyleSignature getStyleSignatureTOBEREMOVED() {
 		return noteStyle.getDefaultStyleDefinition();
 	}
 
 	public Style[] getUsedStyles() {
-		StyleSignature styleSignature = getStyleSignature();
+		StyleSignature styleSignature = getStyleSignatureTOBEREMOVED();
 		if (stereotype != null)
 			styleSignature = styleSignature.mergeWith(stereotype.getStyles(styleBuilder));
 		final Style style = styleSignature.getMergedStyleREMOVEME(styleBuilder).eventuallyOverride(colors);
