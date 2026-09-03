@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.gantt;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
 import net.sourceforge.plantuml.decoration.WithLinkType;
@@ -51,7 +53,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class GanttConstraint extends WithLinkType {
 
@@ -94,12 +96,12 @@ public class GanttConstraint extends WithLinkType {
 		return source.toString() + " --> " + dest.toString();
 	}
 
-	final public StyleSignature getStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.ganttDiagram, SName.arrow);
+	final public StyleQuery getStyleSignature() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.arrow));
 	}
 
 	public UDrawable getUDrawable(TimeScale timeScale, TaskDrawRegistryData toTaskDraw) {
-		Style style = getStyleSignature().getMergedStyleREMOVEME(styleBuilder).eventuallyOverride(PName.LineColor,
+		Style style = styleBuilder.getMergedStyle(getStyleSignature()).eventuallyOverride(PName.LineColor,
 				getSpecificColor());
 		style = style.eventuallyOverride(getType().getStroke3(style.getStroke()));
 		return new GanttArrow(colorSet, style, timeScale, source, dest, toTaskDraw, styleBuilder);

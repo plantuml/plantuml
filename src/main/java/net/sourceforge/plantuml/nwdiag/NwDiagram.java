@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.nwdiag;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -75,7 +76,7 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class NwDiagram extends TitledDiagram {
 
@@ -316,8 +317,8 @@ public class NwDiagram extends TitledDiagram {
 		};
 	}
 
-	private StyleSignature getStyleDefinitionNetwork(SName sname) {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.nwdiagDiagram, sname);
+	private StyleQuery getStyleDefinitionNetwork(SName sname) {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.nwdiagDiagram, sname));
 	}
 
 	private TextBlock toTextBlockForNetworkName(String name, String s) {
@@ -325,7 +326,7 @@ public class NwDiagram extends TitledDiagram {
 			name += "" + Jaws.BLOCK_E1_NEWLINE + s;
 
 		final StyleBuilder styleBuilder = getSkinParam().getCurrentStyleBuilder();
-		final Style style = getStyleDefinitionNetwork(SName.network).getMergedStyleREMOVEME(styleBuilder);
+		final Style style = styleBuilder.getMergedStyle(getStyleDefinitionNetwork(SName.network));
 		final FontConfiguration fontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 		return Display.getWithNewlines(getPragma(), name).create(fontConfiguration, HorizontalAlignment.RIGHT,
 				new SpriteContainerEmpty());

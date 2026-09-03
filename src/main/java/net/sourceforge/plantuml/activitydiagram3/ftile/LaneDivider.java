@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -50,7 +52,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class LaneDivider implements TextBlock {
 
@@ -68,13 +70,13 @@ public class LaneDivider implements TextBlock {
 		this.height = height;
 	}
 
-	public StyleSignature getDefaultStyleDefinition() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.swimlane);
+	public StyleQuery getDefaultStyleDefinition() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.swimlane));
 	}
 
 	private Style getStyle() {
 		if (style == null) {
-			this.style = getDefaultStyleDefinition().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+			this.style = skinParam.getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinition());
 		}
 		return style;
 	}

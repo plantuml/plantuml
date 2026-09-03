@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -48,7 +50,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class GtileHexagonInside extends AbstractGtile {
 
@@ -60,8 +62,8 @@ public class GtileHexagonInside extends AbstractGtile {
 
 	protected final double shadowing;
 
-	final public StyleSignature getDefaultStyleDefinition() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
+	final public StyleQuery getDefaultStyleDefinition() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));
 	}
 
 	// FtileDiamondInside
@@ -85,7 +87,7 @@ public class GtileHexagonInside extends AbstractGtile {
 			HColor borderColor, Swimlane swimlane) {
 		super(stringBounder, skinParam, swimlane);
 
-		final Style style = getDefaultStyleDefinition().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinition());
 		this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 		this.backColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 		this.shadowing = style.getShadowing();

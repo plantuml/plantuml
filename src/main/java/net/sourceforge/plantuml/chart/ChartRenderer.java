@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.chart;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -58,6 +59,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class ChartRenderer {
 
@@ -156,7 +158,7 @@ public class ChartRenderer {
 		final StringBounder stringBounder = ug.getStringBounder();
 
 		// Get style and colors
-		final Style style = getStyleSignature().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getStyleSignature());
 		final HColor lineColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final HColor fontColor = style.value(PName.FontColor).asColor(skinParam.getIHtmlColorSet());
 
@@ -241,8 +243,8 @@ public class ChartRenderer {
 	private void drawYAxis(UGraphic ug, double height, double width, ChartAxis axis, boolean leftSide, HColor lineColor,
 			HColor fontColor) {
 		// Get axis-specific style
-		final Style axisStyle = getAxisStyleSignature(false)
-			.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style axisStyle = skinParam.getCurrentStyleBuilder()
+			.getMergedStyle(getAxisStyleSignature(false));
 
 		// Extract styled properties
 		final HColor styledLineColor = axisStyle.value(PName.LineColor)
@@ -259,8 +261,8 @@ public class ChartRenderer {
 		ug.draw(ULine.vline(height));
 
 		// Get grid style
-		final Style gridStyle = getGridStyleSignature()
-			.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style gridStyle = skinParam.getCurrentStyleBuilder()
+			.getMergedStyle(getGridStyleSignature());
 
 		// Extract grid properties
 		HColor gridColor = gridStyle.value(PName.LineColor)
@@ -460,8 +462,8 @@ public class ChartRenderer {
 		}
 
 		// Get axis-specific style
-		final Style axisStyle = getAxisStyleSignature(true)
-			.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style axisStyle = skinParam.getCurrentStyleBuilder()
+			.getMergedStyle(getAxisStyleSignature(true));
 
 		// Extract styled properties
 		final HColor styledLineColor = axisStyle.value(PName.LineColor)
@@ -483,8 +485,8 @@ public class ChartRenderer {
 			final double categoryWidth = width / xAxisLabels.size();
 
 		// Get grid style
-		final Style gridStyle = getGridStyleSignature()
-			.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style gridStyle = skinParam.getCurrentStyleBuilder()
+			.getMergedStyle(getGridStyleSignature());
 
 		// Extract grid properties
 		HColor gridColor = gridStyle.value(PName.LineColor)
@@ -709,8 +711,8 @@ public class ChartRenderer {
 			return; // Only draw grids for coordinate-pair mode
 
 		// Get grid style
-		final Style gridStyle = getGridStyleSignature()
-			.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style gridStyle = skinParam.getCurrentStyleBuilder()
+			.getMergedStyle(getGridStyleSignature());
 
 		// Extract grid properties
 		HColor gridColor = gridStyle.value(PName.LineColor)
@@ -863,7 +865,7 @@ public class ChartRenderer {
 						seriesStyle = getScatterStyle(s);
 						break;
 					default:
-						seriesStyle = getStyleSignature().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+						seriesStyle = skinParam.getCurrentStyleBuilder().getMergedStyle(getStyleSignature());
 				}
 
 				// Extract series color - priority: explicit color > style color > default color
@@ -948,8 +950,8 @@ public class ChartRenderer {
 		}
 	}
 
-	private StyleSignature getStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.chartDiagram);
+	private StyleQuery getStyleSignature() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram));
 	}
 
 	private StyleSignature getBarStyleSignature() {
@@ -1058,21 +1060,21 @@ public class ChartRenderer {
 		return signature.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 	}
 
-	private StyleSignature getAxisStyleSignature(boolean horizontal) {
+	private StyleQuery getAxisStyleSignature(boolean horizontal) {
 		SName axisType = horizontal ? SName.hAxis : SName.vAxis;
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.chartDiagram, SName.axis, axisType);
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.axis, axisType));
 	}
 
-	private StyleSignature getGridStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.chartDiagram, SName.grid);
+	private StyleQuery getGridStyleSignature() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.grid));
 	}
 
-	private StyleSignature getLegendStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.chartDiagram, SName.legend);
+	private StyleQuery getLegendStyleSignature() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.legend));
 	}
 
-	private StyleSignature getAnnotationStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.chartDiagram, SName.annotation);
+	private StyleQuery getAnnotationStyleSignature() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.annotation));
 	}
 
 	private XDimension2D calculateLegendDimension(StringBounder stringBounder) {
@@ -1080,8 +1082,8 @@ public class ChartRenderer {
 			return new XDimension2D(0, 0);
 
 		// Get legend style
-		final Style legendStyle = getLegendStyleSignature()
-			.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style legendStyle = skinParam.getCurrentStyleBuilder()
+			.getMergedStyle(getLegendStyleSignature());
 
 		// Extract legend font configuration
 		final FontConfiguration fontConfig = legendStyle.getFontConfiguration(skinParam.getIHtmlColorSet());
@@ -1117,8 +1119,8 @@ public class ChartRenderer {
 			return;
 
 		// Get legend style
-		final Style legendStyle = getLegendStyleSignature()
-			.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style legendStyle = skinParam.getCurrentStyleBuilder()
+			.getMergedStyle(getLegendStyleSignature());
 
 		// Extract legend properties
 		final FontConfiguration fontConfig = legendStyle.getFontConfiguration(skinParam.getIHtmlColorSet());
@@ -1279,8 +1281,8 @@ public class ChartRenderer {
 			return;
 
 		// Get annotation style
-		final Style annotationStyle = getAnnotationStyleSignature()
-			.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style annotationStyle = skinParam.getCurrentStyleBuilder()
+			.getMergedStyle(getAnnotationStyleSignature());
 
 		// Extract annotation properties
 		final FontConfiguration fontConfig = annotationStyle.getFontConfiguration(skinParam.getIHtmlColorSet());

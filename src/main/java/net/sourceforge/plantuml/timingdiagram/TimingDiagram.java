@@ -39,6 +39,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -66,7 +67,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
 import net.sourceforge.plantuml.timingdiagram.graphic.Panels;
 import net.sourceforge.plantuml.timingdiagram.graphic.TimeArrow;
@@ -113,12 +114,12 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 		return TextBlockUtils.withMargin(result, 10, 10);
 	}
 
-	private StyleSignature getStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.timingDiagram);
+	private StyleQuery getStyleSignature() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.timingDiagram));
 	}
 
 	private HColor black() {
-		final Style style = getStyleSignature().getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
+		final Style style = getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleSignature());
 		return style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 
 	}
@@ -186,7 +187,7 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 	}
 
 	private UStroke getBorderStroke() {
-		return getStyleSignature().getMergedStyleREMOVEME(getCurrentStyleBuilder()).getStroke();
+		return getCurrentStyleBuilder().getMergedStyle(getStyleSignature()).getStroke();
 	}
 
 	private UTranslate getLastTranslate(final StringBounder stringBounder) {

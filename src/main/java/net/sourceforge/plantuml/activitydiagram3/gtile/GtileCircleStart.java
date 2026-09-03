@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -45,7 +47,7 @@ import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class GtileCircleStart extends AbstractGtile {
 	// ::remove folder when __HAXE__
@@ -55,14 +57,14 @@ public class GtileCircleStart extends AbstractGtile {
 	private final HColor backColor;
 	private double shadowing;
 
-	private StyleSignature getDefaultStyleDefinitionCircle() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.circle);
+	private StyleQuery getDefaultStyleDefinitionCircle() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.circle));
 	}
 
 	public GtileCircleStart(StringBounder stringBounder, ISkinParam skinParam, HColor backColor, Swimlane swimlane) {
 		super(stringBounder, skinParam, swimlane);
 		this.backColor = backColor;
-		final Style style = getDefaultStyleDefinitionCircle().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder());
+		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionCircle());
 		this.shadowing = style.getShadowing();
 
 	}

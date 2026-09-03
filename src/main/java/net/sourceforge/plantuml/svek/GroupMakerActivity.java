@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.svek;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -56,7 +57,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
 
 public final class GroupMakerActivity {
@@ -105,8 +106,8 @@ public final class GroupMakerActivity {
 		return result;
 	}
 
-	final public StyleSignature getDefaultStyleDefinitionGroup() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.group);
+	final public StyleQuery getDefaultStyleDefinitionGroup() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.group));
 	}
 
 	public IEntityImage getImage() throws IOException, InterruptedException {
@@ -135,7 +136,7 @@ public final class GroupMakerActivity {
 					? getColor(ColorParam.background, stereo)
 					: group.getColors().getColor(ColorType.BACK);
 
-			final Style style = getDefaultStyleDefinitionGroup().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+			final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionGroup());
 			final double shadowing = style.getShadowing();
 
 			return new InnerActivity(svek2.buildImage(stringBounder, null, new String[0], false), borderColor,

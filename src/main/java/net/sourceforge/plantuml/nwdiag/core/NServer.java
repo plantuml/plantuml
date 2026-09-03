@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.nwdiag.core;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +60,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.PackageStyle;
 
 public class NServer {
@@ -150,20 +151,20 @@ public class NServer {
 				HorizontalAlignment.LEFT, skinParam);
 	}
 
-	private StyleSignature getStyleDefinition(SName sname) {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.nwdiagDiagram, sname);
+	private StyleQuery getStyleDefinition(SName sname) {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.nwdiagDiagram, sname));
 	}
 
 	private FontConfiguration getFontConfiguration(SName sname) {
 		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
-		final Style style = getStyleDefinition(sname).getMergedStyleREMOVEME(styleBuilder);
+		final Style style = styleBuilder.getMergedStyle(getStyleDefinition(sname));
 		return style.getFontConfiguration(skinParam.getIHtmlColorSet());
 	}
 
 	public NServerDraw getDraw(double topMargin, Map<Network, String> conns, List<Network> networks,
 			ISkinParam skinParam) {
 		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
-		Fashion symbolContext = getStyleDefinition(SName.server).getMergedStyleREMOVEME(styleBuilder)
+		Fashion symbolContext = styleBuilder.getMergedStyle(getStyleDefinition(SName.server))
 				.getSymbolContext(skinParam.getIHtmlColorSet());
 		if (backcolor != null)
 			try {
