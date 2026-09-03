@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.gitlog;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -52,7 +54,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class MagicBox {
 
@@ -63,8 +65,8 @@ public class MagicBox {
 	public MagicBox(ISkinParam skinParam, GNode node) {
 		this.skinParam = skinParam;
 		this.node = node;
-		final Style style = StyleSignature.ofSName0(SName.root, SName.element, SName.gitDiagram)
-				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder()
+				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.gitDiagram)));
 		this.fontColor = style.value(PName.FontColor).asColor(skinParam.getIHtmlColorSet());
 	}
 

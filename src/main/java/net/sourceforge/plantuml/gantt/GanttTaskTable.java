@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.gantt;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -60,7 +61,7 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 /**
  * Draws, on the left side of a Gantt diagram, a textual table giving for each
@@ -195,8 +196,8 @@ public final class GanttTaskTable {
 	}
 
 	private Style getStyle() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.ganttDiagram, SName.timeline)
-				.getMergedStyleREMOVEME(timelineStyle.getSkinParam().getCurrentStyleBuilder());
+		return timelineStyle.getSkinParam().getCurrentStyleBuilder().getMergedStyle(
+				StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.timeline)));
 	}
 
 	private FontConfiguration getFontConfiguration() {

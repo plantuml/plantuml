@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.packetdiag;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
@@ -55,7 +57,7 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 /**
  * A single drawable field (block) in a {@code packetdiag} diagram.
@@ -216,8 +218,8 @@ public class PacketBlock {
 	}
 
 	Style getStyle() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.packetdiagDiagram, SName.rectangle)
-				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(
+				StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.packetdiagDiagram, SName.rectangle)));
 	}
 
 	Fashion getFashion() {

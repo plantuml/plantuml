@@ -42,6 +42,7 @@ import static gen.lib.gvc.gvc__c.gvContext;
 import static gen.lib.gvc.gvlayout__c.gvLayoutJobs;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -64,7 +65,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import smetana.core.CString;
 import smetana.core.Globals;
 
@@ -85,8 +86,8 @@ public class SmetanaForGit {
 	}
 
 	private Style getStyle() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.gitDiagram)
-				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		return skinParam.getCurrentStyleBuilder()
+				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.gitDiagram)));
 	}
 
 	private HColor arrowColor() {
