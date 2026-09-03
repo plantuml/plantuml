@@ -258,14 +258,6 @@ public class StyleSignature {
 
 	// Frequent use
 
-	public static StyleSignature activity() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity);
-	}
-
-	public static StyleSignature activityDiamond() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
-	}
-
 	public static StyleSignature activityArrow() {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.arrow);
 	}
