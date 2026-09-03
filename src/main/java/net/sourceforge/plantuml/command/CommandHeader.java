@@ -97,7 +97,7 @@ public class CommandHeader extends SingleLineCommand2<TitledDiagram> {
 		final String align = arg.get("POSITION", 0);
 		HorizontalAlignment ha = HorizontalAlignment.fromString(align, HorizontalAlignment.RIGHT);
 		if (align == null)
-			ha = FontParam.HEADER.getStyleDefinition(null).getMergedStyle(diagram.getCurrentStyleBuilder())
+			ha = FontParam.HEADER.getStyleDefinition(null).getMergedStyleREMOVEME(diagram.getCurrentStyleBuilder())
 					.getHorizontalAlignment();
 
 		final Display s = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy("LABEL", 0));

@@ -78,7 +78,7 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 		super(entity);
 
 		final FontConfiguration fc = FontConfiguration.create(getSkinParam(),
-				getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder()));
+				getStyleSignature().getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder()));
 
 		this.desc = entity.getDisplay().create(fc, HorizontalAlignment.CENTER, getSkinParam());
 		this.url = entity.getUrl99();
@@ -92,7 +92,7 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 
 	final public void drawU(UGraphic ug) {
 
-		final Style style = getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		final Style style = getStyleSignature().getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
 		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 		final double shadow = style.getShadowing();

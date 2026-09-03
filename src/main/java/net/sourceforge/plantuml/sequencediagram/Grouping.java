@@ -81,14 +81,14 @@ public abstract class Grouping extends AbstractEvent implements Event, WithStyle
 	}
 
 	private Style computeStyleHeader(StyleBuilder styleBuilder) {
-		final Style flat = getHeaderStyleDefinition().getMergedStyle(styleBuilder);
+		final Style flat = getHeaderStyleDefinition().getMergedStyleREMOVEME(styleBuilder);
 		if (type == GroupingType.START_PARTITION)
 			return flat;
 
 		// "style" (this.style, already assigned above in the constructor) is the
 		// plain "group" style -- the exact ancestor "nested" cascades from, so
 		// mergeNestedChildOver() can isolate what header{} itself actually sets.
-		final Style nested = getNestedHeaderStyleDefinition().getMergedStyle(styleBuilder);
+		final Style nested = getNestedHeaderStyleDefinition().getMergedStyleREMOVEME(styleBuilder);
 		if (flat == null)
 			return nested;
 
@@ -108,7 +108,7 @@ public abstract class Grouping extends AbstractEvent implements Event, WithStyle
 		this.comment = comment;
 		this.type = type;
 		this.backColorElement = backColorElement;
-		this.style = getStyleSignature().getMergedStyle(styleBuilder);
+		this.style = getStyleSignature().getMergedStyleREMOVEME(styleBuilder);
 		this.styleHeader = computeStyleHeader(styleBuilder);
 	}
 

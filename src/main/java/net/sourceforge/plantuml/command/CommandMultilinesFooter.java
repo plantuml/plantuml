@@ -97,7 +97,7 @@ public class CommandMultilinesFooter extends CommandMultilines<TitledDiagram> {
 			HorizontalAlignment ha = HorizontalAlignment.fromString(align, HorizontalAlignment.CENTER);
 			if (align == null)
 				ha = FontParam.FOOTER.getStyleDefinition(null)
-						.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder()).getHorizontalAlignment();
+						.getMergedStyleREMOVEME(diagram.getSkinParam().getCurrentStyleBuilder()).getHorizontalAlignment();
 
 			diagram.updateFooter(location, strings, ha);
 			return CommandExecutionResult.ok();

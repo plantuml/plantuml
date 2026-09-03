@@ -114,7 +114,7 @@ class Idea {
 		final StyleSignature defaultStyleDefinitionArrow = StyleSignature
 				.ofSName0(SName.root, SName.element, SName.mindmapDiagram, SName.arrow).addStereotype(stereotype)
 				.addLevel(level);
-		return defaultStyleDefinitionArrow.getMergedStyle(styleBuilder);
+		return defaultStyleDefinitionArrow.getMergedStyleREMOVEME(styleBuilder);
 	}
 
 	public static Idea createIdeaSimple(StyleBuilder styleBuilder, HColor backColor, Display label, IdeaShape shape,

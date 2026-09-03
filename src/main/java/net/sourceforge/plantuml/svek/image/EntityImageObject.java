@@ -125,12 +125,12 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 
 	private Style getStyle() {
 		return getStyleSignature().withTOBECHANGED(getEntity().getStereotype())
-				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
 	}
 
 	private Style getStyleHeader() {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.objectDiagram, SName.object, SName.header)
-				.withTOBECHANGED(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+				.withTOBECHANGED(getEntity().getStereotype()).getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
 	}
 
 	private Display getUnderlinedName(Entity entity) {

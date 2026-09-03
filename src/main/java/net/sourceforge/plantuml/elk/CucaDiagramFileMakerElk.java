@@ -157,7 +157,7 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 		final SName styleName = skinParam.getDiagramType().getStyleName();
 
 		final Style style = getDefaultStyleDefinitionArrow(link.getStereotype(), styleName)
-				.getMergedStyle(link.getStyleBuilder());
+				.getMergedStyleREMOVEME(link.getStyleBuilder());
 		return style.getFontConfiguration(skinParam.getIHtmlColorSet());
 	}
 
@@ -214,7 +214,7 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 			// alignment, skinParam);
 			// else
 			final Style arrowStyle = getDefaultStyleDefinitionArrow(link.getStereotype(),
-					skinParam.getDiagramType().getStyleName()).getMergedStyle(link.getStyleBuilder());
+					skinParam.getDiagramType().getStyleName()).getMergedStyleREMOVEME(link.getStyleBuilder());
 			final LineBreakStrategy styleWidth = arrowStyle.wrapWidth();
 			final LineBreakStrategy wrapWidth = styleWidth.getMaxWidth() > 0 ? styleWidth : skinParam.maxMessageSize();
 			block = link.getLabel().create0(font, alignment, skinParam, wrapWidth, CreoleMode.SIMPLE_LINE, null, null);

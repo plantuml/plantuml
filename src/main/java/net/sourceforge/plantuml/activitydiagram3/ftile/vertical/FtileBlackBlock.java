@@ -101,7 +101,7 @@ public class FtileBlackBlock extends AbstractFtile {
 	public void drawU(UGraphic ug) {
 		final URectangle rect = URectangle.build(width, height).rounded(5).ignoreForCompressionOnX();
 
-		final Style style = getSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());
+		final Style style = getSignature().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder());
 		final double shadowing = style.getShadowing();
 		rect.setDeltaShadow(shadowing);
 		final HColor colorBar = colors == null ? style.value(PName.BackGroundColor).asColor(getIHtmlColorSet())

@@ -156,7 +156,7 @@ public class ChartRenderer {
 		final StringBounder stringBounder = ug.getStringBounder();
 
 		// Get style and colors
-		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = getStyleSignature().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 		final HColor lineColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final HColor fontColor = style.value(PName.FontColor).asColor(skinParam.getIHtmlColorSet());
 
@@ -242,7 +242,7 @@ public class ChartRenderer {
 			HColor fontColor) {
 		// Get axis-specific style
 		final Style axisStyle = getAxisStyleSignature(false)
-			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 		// Extract styled properties
 		final HColor styledLineColor = axisStyle.value(PName.LineColor)
@@ -260,7 +260,7 @@ public class ChartRenderer {
 
 		// Get grid style
 		final Style gridStyle = getGridStyleSignature()
-			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 		// Extract grid properties
 		HColor gridColor = gridStyle.value(PName.LineColor)
@@ -461,7 +461,7 @@ public class ChartRenderer {
 
 		// Get axis-specific style
 		final Style axisStyle = getAxisStyleSignature(true)
-			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 		// Extract styled properties
 		final HColor styledLineColor = axisStyle.value(PName.LineColor)
@@ -484,7 +484,7 @@ public class ChartRenderer {
 
 		// Get grid style
 		final Style gridStyle = getGridStyleSignature()
-			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 		// Extract grid properties
 		HColor gridColor = gridStyle.value(PName.LineColor)
@@ -710,7 +710,7 @@ public class ChartRenderer {
 
 		// Get grid style
 		final Style gridStyle = getGridStyleSignature()
-			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 		// Extract grid properties
 		HColor gridColor = gridStyle.value(PName.LineColor)
@@ -863,7 +863,7 @@ public class ChartRenderer {
 						seriesStyle = getScatterStyle(s);
 						break;
 					default:
-						seriesStyle = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
+						seriesStyle = getStyleSignature().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 				}
 
 				// Extract series color - priority: explicit color > style color > default color
@@ -961,12 +961,12 @@ public class ChartRenderer {
 		if (series.getStereotype() != null) {
 			// Use withTOBECHANGED for element-level stereotype styling
 			Style style = signature.withTOBECHANGED(series.getStereotype())
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., .primary)
 			// This matches the pattern used by sequence diagrams
 			Style stereoStyle = signature.forStereotypeItself(series.getStereotype())
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 			// Merge with stereo style overwriting existing values
 			if (style != null)
@@ -974,7 +974,7 @@ public class ChartRenderer {
 
 			return stereoStyle;
 		}
-		return signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		return signature.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 	}
 
 	private StyleSignature getLineStyleSignature() {
@@ -986,11 +986,11 @@ public class ChartRenderer {
 		if (series.getStereotype() != null) {
 			// Use withTOBECHANGED for element-level stereotype styling
 			Style style = signature.withTOBECHANGED(series.getStereotype())
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., line.target)
 			Style stereoStyle = signature.forStereotypeItself(series.getStereotype())
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 			// Merge with stereo style overwriting existing values
 			if (style != null)
@@ -998,7 +998,7 @@ public class ChartRenderer {
 
 			return stereoStyle;
 		}
-		return signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		return signature.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 	}
 
 	private StyleSignature getAreaStyleSignature() {
@@ -1010,11 +1010,11 @@ public class ChartRenderer {
 		if (series.getStereotype() != null) {
 			// Use withTOBECHANGED for element-level stereotype styling
 			Style style = signature.withTOBECHANGED(series.getStereotype())
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., area.highlight)
 			Style stereoStyle = signature.forStereotypeItself(series.getStereotype())
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 			// Merge with stereo style overwriting existing values
 			if (style != null)
@@ -1022,7 +1022,7 @@ public class ChartRenderer {
 
 			return stereoStyle;
 		}
-		return signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		return signature.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 	}
 
 	private String formatAxisValue(double value) {
@@ -1043,11 +1043,11 @@ public class ChartRenderer {
 		if (series.getStereotype() != null) {
 			// Use withTOBECHANGED for element-level stereotype styling
 			Style style = signature.withTOBECHANGED(series.getStereotype())
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., scatter.highlight)
 			Style stereoStyle = signature.forStereotypeItself(series.getStereotype())
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 			// Merge with stereo style overwriting existing values
 			if (style != null)
@@ -1055,7 +1055,7 @@ public class ChartRenderer {
 
 			return stereoStyle;
 		}
-		return signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		return signature.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 	}
 
 	private StyleSignature getAxisStyleSignature(boolean horizontal) {
@@ -1081,7 +1081,7 @@ public class ChartRenderer {
 
 		// Get legend style
 		final Style legendStyle = getLegendStyleSignature()
-			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 		// Extract legend font configuration
 		final FontConfiguration fontConfig = legendStyle.getFontConfiguration(skinParam.getIHtmlColorSet());
@@ -1118,7 +1118,7 @@ public class ChartRenderer {
 
 		// Get legend style
 		final Style legendStyle = getLegendStyleSignature()
-			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 		// Extract legend properties
 		final FontConfiguration fontConfig = legendStyle.getFontConfiguration(skinParam.getIHtmlColorSet());
@@ -1280,7 +1280,7 @@ public class ChartRenderer {
 
 		// Get annotation style
 		final Style annotationStyle = getAnnotationStyleSignature()
-			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 		// Extract annotation properties
 		final FontConfiguration fontConfig = annotationStyle.getFontConfiguration(skinParam.getIHtmlColorSet());

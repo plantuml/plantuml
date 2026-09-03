@@ -96,7 +96,7 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final XDimension2D dim = title.calculateDimension(stringBounder);
 
-		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());
+		final Style style = getStyleSignature().getMergedStyleREMOVEME(getStyleBuilder());
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
 		final ClockwiseTopRightBottomLeft padding = style.getPadding();
 
@@ -194,7 +194,7 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 	}
 
 	private void drawShape(UGraphic ug) {
-		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());
+		final Style style = getStyleSignature().getMergedStyleREMOVEME(getStyleBuilder());
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
 
 		final double startPos = timeScale.getPosition(start) + margin.getLeft();

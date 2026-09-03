@@ -282,7 +282,7 @@ public final class DiagramChromeFactory {
 			return original;
 
 		final Style style = StyleSignature.ofSName0(SName.root, SName.document, SName.mainframe)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, style);
 		final TextBlock title = mainFrame.create(fontConfiguration, HorizontalAlignment.CENTER, skinParam);
 
@@ -366,7 +366,7 @@ public final class DiagramChromeFactory {
 			return original;
 
 		final Style style = StyleSignature.ofSName0(SName.root, SName.document, SName.title)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 		final TextBlock titleBlock = style.createTextBlockBordered(title.getDisplay(), skinParam.getIHtmlColorSet(),
 				skinParam, Style.ID_TITLE, LineBreakStrategy.NONE);
 
@@ -386,7 +386,7 @@ public final class DiagramChromeFactory {
 			return original;
 
 		final Style style = StyleSignature.ofSName0(SName.root, SName.document, SName.caption)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 		final TextBlock captionBlock = style.createTextBlockBordered(caption.getDisplay(), skinParam.getIHtmlColorSet(),
 				skinParam, Style.ID_CAPTION, LineBreakStrategy.NONE);
 
@@ -412,7 +412,7 @@ public final class DiagramChromeFactory {
 		TextBlock textHeader = null;
 		if (!header.isNull()) {
 			final Style style = StyleSignature.ofSName0(SName.root, SName.document, SName.header)
-					.getMergedStyle(skinParam.getCurrentStyleBuilder());
+					.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 			textHeader = header.createRibbon(FontConfiguration.create(skinParam, FontParam.HEADER, null), skinParam,
 					style);
 		}
@@ -423,7 +423,7 @@ public final class DiagramChromeFactory {
 		TextBlock textFooter = null;
 		if (!footer.isNull()) {
 			final Style style = StyleSignature.ofSName0(SName.root, SName.document, SName.footer)
-					.getMergedStyle(skinParam.getCurrentStyleBuilder());
+					.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 			textFooter = footer.createRibbon(FontConfiguration.create(skinParam, FontParam.FOOTER, null), skinParam,
 					style);
 		}

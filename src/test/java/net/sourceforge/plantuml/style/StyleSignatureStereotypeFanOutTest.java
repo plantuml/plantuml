@@ -88,10 +88,10 @@ class StyleSignatureStereotypeFanOutTest {
 		final StyleBuilder builder = builderFrom(skin);
 		final StyleSignature base = StyleSignature.ofSName0(SName.root);
 
-		final Style fooLabelFirst = base.withTOBECHANGED(Stereotype.build("<<foo>><<bar>>")).getMergedStyle(builder);
+		final Style fooLabelFirst = base.withTOBECHANGED(Stereotype.build("<<foo>><<bar>>")).getMergedStyleREMOVEME(builder);
 		assertEquals("blue", fooLabelFirst.value(PName.BackGroundColor).asString());
 
-		final Style barLabelFirst = base.withTOBECHANGED(Stereotype.build("<<bar>><<foo>>")).getMergedStyle(builder);
+		final Style barLabelFirst = base.withTOBECHANGED(Stereotype.build("<<bar>><<foo>>")).getMergedStyleREMOVEME(builder);
 		assertEquals("blue", barLabelFirst.value(PName.BackGroundColor).asString());
 	}
 
@@ -106,10 +106,10 @@ class StyleSignatureStereotypeFanOutTest {
 
 		// "green" (the {foo, bar} declaration) always wins now, whatever the label order on the
 		// element and whatever file order the three declarations were in.
-		final Style result = base.withTOBECHANGED(Stereotype.build("<<foo>><<bar>>")).getMergedStyle(builder);
+		final Style result = base.withTOBECHANGED(Stereotype.build("<<foo>><<bar>>")).getMergedStyleREMOVEME(builder);
 		assertEquals("green", result.value(PName.BackGroundColor).asString());
 
-		final Style resultReversed = base.withTOBECHANGED(Stereotype.build("<<bar>><<foo>>")).getMergedStyle(builder);
+		final Style resultReversed = base.withTOBECHANGED(Stereotype.build("<<bar>><<foo>>")).getMergedStyleREMOVEME(builder);
 		assertEquals("green", resultReversed.value(PName.BackGroundColor).asString());
 	}
 

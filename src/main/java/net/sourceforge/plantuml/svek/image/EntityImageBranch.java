@@ -76,7 +76,7 @@ public class EntityImageBranch extends AbstractEntityImage {
 		diams.addPoint(0, SIZE);
 		diams.addPoint(SIZE, 0);
 
-		final Style style = getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		final Style style = getStyleSignature().getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
 		final HColor border = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 		final HColor back = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 		final UStroke stroke = style.getStroke();

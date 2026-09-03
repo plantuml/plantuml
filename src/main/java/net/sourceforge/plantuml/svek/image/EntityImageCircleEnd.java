@@ -60,7 +60,7 @@ public class EntityImageCircleEnd extends AbstractEntityImage {
 
 	public EntityImageCircleEnd(Entity entity) {
 		super(entity);
-		final Style style = getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		final Style style = getStyleSignature().getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
 		this.circle = new CircleEnd(getSkinParam(), style, entity.getColors());
 	}
 

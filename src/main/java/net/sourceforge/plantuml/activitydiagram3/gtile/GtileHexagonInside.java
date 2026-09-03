@@ -85,7 +85,7 @@ public class GtileHexagonInside extends AbstractGtile {
 			HColor borderColor, Swimlane swimlane) {
 		super(stringBounder, skinParam, swimlane);
 
-		final Style style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = getDefaultStyleDefinition().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 		this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 		this.backColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 		this.shadowing = style.getShadowing();

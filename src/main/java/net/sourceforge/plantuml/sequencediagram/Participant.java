@@ -85,9 +85,9 @@ public class Participant implements SpecificBackcolorable, WithStyle, AsciiBlock
 	public Style[] getUsedStyles() {
 
 		final StyleSignature signature = getStyleSignature().withTOBECHANGED(stereotype);
-		Style tmp = signature.getMergedStyle(styleBuilder);
+		Style tmp = signature.getMergedStyleREMOVEME(styleBuilder);
 		tmp = tmp.eventuallyOverride(getColors());
-		Style stereo = getStyleSignature().forStereotypeItself(stereotype).getMergedStyle(styleBuilder);
+		Style stereo = getStyleSignature().forStereotypeItself(stereotype).getMergedStyleREMOVEME(styleBuilder);
 		if (tmp != null)
 			stereo = tmp.mergeWith(stereo, MergeStrategy.OVERWRITE_EXISTING_VALUE);
 

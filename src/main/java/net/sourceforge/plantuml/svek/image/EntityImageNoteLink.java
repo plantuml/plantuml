@@ -61,7 +61,7 @@ public class EntityImageNoteLink extends TextBlockMemoized implements IEntityIma
 	public EntityImageNoteLink(Display note, Colors colors, ISkinParam skinParam, StyleBuilder styleBuilder) {
 		final Rose skin = new Rose();
 		comp = skin.createComponentNote(
-				new Style[] { ComponentType.NOTE.getStyleSignature().getMergedStyle(styleBuilder) }, ComponentType.NOTE,
+				new Style[] { ComponentType.NOTE.getStyleSignature().getMergedStyleREMOVEME(styleBuilder) }, ComponentType.NOTE,
 				skinParam, note, colors);
 	}
 

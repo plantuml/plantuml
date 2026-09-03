@@ -194,7 +194,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 	}
 
 	private Style getStyle() {
-		return getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		return getStyleSignature().getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
 	}
 
 	@Override

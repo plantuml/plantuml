@@ -386,7 +386,7 @@ public class Cluster implements Moveable {
 		final DiagramType diagramType = diagram.getDiagramType();
 		final USymbol uSymbol = group.getUSymbol() == null ? USymbols.PACKAGE : group.getUSymbol();
 		final Style style = getDefaultStyleDefinition(diagramType.getStyleName(), uSymbol, group.getGroupType())
-				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.withTOBECHANGED(group.getStereotype()).getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 		return style;
 	}
 
@@ -462,12 +462,12 @@ public class Cluster implements Moveable {
 		HColor southBackcolor = northBackcolor;
 		if (northBackcolor == null) {
 			northBackcolor = EntityImageStateCommon.STYLE.addSName(SName.name).withTOBECHANGED(group.getStereotype())
-					.getMergedStyle(styleBuilder).value(PName.BackGroundColor).asColor(colorSet);
+					.getMergedStyleREMOVEME(styleBuilder).value(PName.BackGroundColor).asColor(colorSet);
 			centerBackColor = EntityImageStateCommon.STYLE.addSName(SName.description)
-					.withTOBECHANGED(group.getStereotype()).getMergedStyle(styleBuilder).value(PName.BackGroundColor)
+					.withTOBECHANGED(group.getStereotype()).getMergedStyleREMOVEME(styleBuilder).value(PName.BackGroundColor)
 					.asColor(colorSet);
 			southBackcolor = EntityImageStateCommon.STYLE.addSName(SName.body).withTOBECHANGED(group.getStereotype())
-					.getMergedStyle(styleBuilder).value(PName.BackGroundColor).asColor(colorSet);
+					.getMergedStyleREMOVEME(styleBuilder).value(PName.BackGroundColor).asColor(colorSet);
 		}
 
 		final TextBlock attribute = ((Entity) group).getStateDescription(skinParam);
@@ -701,7 +701,7 @@ public class Cluster implements Moveable {
 	public static HColor getBackColor(HColor backColor, Stereotype stereotype, SName styleName, USymbol symbol,
 			StyleBuilder styleBuilder, HColorSet colorSet, GroupType groupType) {
 
-		final Style style = getDefaultStyleDefinition(styleName, symbol, groupType).getMergedStyle(styleBuilder);
+		final Style style = getDefaultStyleDefinition(styleName, symbol, groupType).getMergedStyleREMOVEME(styleBuilder);
 		if (backColor == null)
 			backColor = style.value(PName.BackGroundColor).asColor(colorSet);
 
@@ -736,7 +736,7 @@ public class Cluster implements Moveable {
 		final DiagramType diagramType = DiagramType.CLASS;
 
 		final Style style = getDefaultStyleDefinition(diagramType.getStyleName(), uSymbol, group.getGroupType())
-				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.withTOBECHANGED(group.getStereotype()).getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 		final UStroke stroke = getStrokeInternal(group, style);
 

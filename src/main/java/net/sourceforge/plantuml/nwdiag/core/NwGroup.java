@@ -142,7 +142,7 @@ public class NwGroup implements NStackable {
 
 	public void drawGroup(UGraphic ug, MinMax size, ISkinParam skinParam) {
 		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
-		final Style style = getStyleDefinition().getMergedStyle(styleBuilder);
+		final Style style = getStyleDefinition().getMergedStyleREMOVEME(styleBuilder);
 		final TextBlock block = buildHeaderName(skinParam);
 		if (block != null) {
 			final XDimension2D blockDim = block.calculateDimension(ug.getStringBounder());
@@ -167,7 +167,7 @@ public class NwGroup implements NStackable {
 			return null;
 
 		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
-		final Style style = getStyleDefinition().getMergedStyle(styleBuilder);
+		final Style style = getStyleDefinition().getMergedStyleREMOVEME(styleBuilder);
 		return Display.getWithNewlines(skinParam.getPragma(), getDescription())
 				.create(style.getFontConfiguration(skinParam.getIHtmlColorSet()), HorizontalAlignment.LEFT, skinParam);
 	}

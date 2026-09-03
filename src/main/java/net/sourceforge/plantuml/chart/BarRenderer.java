@@ -90,9 +90,9 @@ public class BarRenderer {
 		StyleSignature signature = getBarStyleSignature();
 		if (series != null && series.getStereotype() != null) {
 			return signature.withTOBECHANGED(series.getStereotype())
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 		}
-		return signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		return signature.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 	}
 
 	public void draw(UGraphic ug, ChartSeries series, HColor color) {
@@ -237,7 +237,7 @@ public class BarRenderer {
 
 		// Get bar style
 		final Style barStyle = getBarStyleSignature()
-			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 		// Extract line thickness for bar borders
 		final double lineThickness = barStyle.value(PName.LineThickness).asDouble();
@@ -302,7 +302,7 @@ public class BarRenderer {
 
 		// Get bar style
 		final Style barStyle = getBarStyleSignature()
-			.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 		// Extract bar width ratio from style (default 0.6 = 60%)
 		double barWidthRatio = 0.6;

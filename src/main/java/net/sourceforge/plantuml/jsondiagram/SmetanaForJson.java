@@ -117,12 +117,12 @@ public class SmetanaForJson {
 
 	private Style getStyleArrow() {
 		return StyleSignature.ofSName0(SName.root, SName.element, getDiagramType(), SName.arrow)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 	}
 
 	private Style getStyleNode() {
 		return StyleSignature.ofSName0(SName.root, SName.element, getDiagramType(), SName.node)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 	}
 
 	private ST_Agnode_s manageOneNode(Globals zz, JsonValue current, List<Highlighted> highlighted) {

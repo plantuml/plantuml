@@ -54,7 +54,7 @@ public class Newpage extends AbstractEvent implements Event, WithStyle {
 	}
 
 	public Newpage(StyleBuilder styleBuilder) {
-		this.style = getStyleSignature().getMergedStyle(styleBuilder);
+		this.style = getStyleSignature().getMergedStyleREMOVEME(styleBuilder);
 	}
 
 	public boolean dealWith(Participant someone) {

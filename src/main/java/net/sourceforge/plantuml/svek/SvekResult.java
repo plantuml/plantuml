@@ -73,7 +73,7 @@ public final class SvekResult implements IEntityImage {
 				cluster.drawU(ug);
 
 		final Style style2 = getDefaultStyleDefinition(null)
-				.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(dotData.getSkinParam().getCurrentStyleBuilder());
 
 		final HColor borderColor = HColors
 				.noGradient(style2.value(PName.LineColor).asColor(dotData.getSkinParam().getIHtmlColorSet()));
@@ -117,7 +117,7 @@ public final class SvekResult implements IEntityImage {
 	// Duplicate SvekResult / GeneralImageBuilder
 	public HColor getBackcolor() {
 		final Style style = StyleSignature.ofSName0(SName.root, SName.document)
-				.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(dotData.getSkinParam().getCurrentStyleBuilder());
 		return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
 	}
 

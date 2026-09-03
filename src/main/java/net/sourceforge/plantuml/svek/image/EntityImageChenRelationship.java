@@ -100,13 +100,13 @@ public class EntityImageChenRelationship extends AbstractEntityImage {
 
 	private Style getStyle(Entity group, ISkinParam skinParam) {
 		return getStyleSignature().withTOBECHANGED(group.getStereotype())
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 	}
 
 	private static Style getStyleTitle(Entity group, ISkinParam skinParam) {
 		return StyleSignature
 				.ofSName0(SName.root, SName.element, SName.chenEerDiagram, SName.chenRelationship, SName.title)
-				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.withTOBECHANGED(group.getStereotype()).getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 	}
 
 	@Override

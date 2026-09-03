@@ -97,7 +97,7 @@ public class LinkAnchor {
 
 		final StyleSignature signature = StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram,
 				SName.arrow);
-		final Style style = signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = signature.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 		final HColor color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, style);

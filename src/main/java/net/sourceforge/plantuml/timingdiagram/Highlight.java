@@ -75,7 +75,7 @@ public class Highlight {
 	}
 
 	private Style getStyle() {
-		return getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		return getStyleSignature().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 	}
 

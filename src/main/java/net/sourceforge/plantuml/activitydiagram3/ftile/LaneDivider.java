@@ -74,7 +74,7 @@ public class LaneDivider implements TextBlock {
 
 	private Style getStyle() {
 		if (style == null) {
-			this.style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder());
+			this.style = getDefaultStyleDefinition().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 		}
 		return style;
 	}

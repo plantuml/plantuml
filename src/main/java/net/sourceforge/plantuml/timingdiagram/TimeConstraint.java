@@ -137,7 +137,7 @@ public class TimeConstraint {
 	}
 
 	private Style getStyle() {
-		return getStyleSignature().getMergedStyle(styleBuilder);
+		return getStyleSignature().getMergedStyleREMOVEME(styleBuilder);
 	}
 
 	private UStroke getUStroke() {

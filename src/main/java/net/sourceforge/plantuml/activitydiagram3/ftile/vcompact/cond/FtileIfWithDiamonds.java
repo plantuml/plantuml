@@ -111,7 +111,7 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 	}
 
 	public static Opale createOpale(final PositionedNote first, ISkinParam skinParam) {
-		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder())
+		final Style style = getStyleSignature().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder())
 				.eventuallyOverride(first.getColors());
 		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());

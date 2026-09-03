@@ -205,13 +205,13 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 	@Override
 	public final Style getStyle(SName param) {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.ganttDiagram, param)
-				.getMergedStyle(getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(getCurrentStyleBuilder());
 	}
 
 	@Override
 	public final Style getStyle(SName param1, SName param2) {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.ganttDiagram, param1, param2)
-				.getMergedStyle(getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(getCurrentStyleBuilder());
 	}
 
 	public StyleSignature getDefaultStyleDefinitionArrow() {

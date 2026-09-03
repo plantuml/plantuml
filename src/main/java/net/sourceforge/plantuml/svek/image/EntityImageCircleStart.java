@@ -59,7 +59,7 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 
 	public EntityImageCircleStart(Entity entity) {
 		super(entity);
-		final Style style = getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		final Style style = getStyleSignature().getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
 		this.circle = new CircleStart(getSkinParam(), style, entity.getColors());
 	}
 

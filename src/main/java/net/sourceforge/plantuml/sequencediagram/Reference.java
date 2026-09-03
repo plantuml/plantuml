@@ -83,13 +83,13 @@ public class Reference extends AbstractEvent implements EventWithNote {
 	}
 
 	private Style computeStyleHeader(StyleBuilder styleBuilder) {
-		final Style flat = getHeaderStyleDefinition().getMergedStyle(styleBuilder);
+		final Style flat = getHeaderStyleDefinition().getMergedStyleREMOVEME(styleBuilder);
 		// "style" (this.style, already assigned above in the constructor) is the
 		// plain "reference" style -- the exact ancestor "nested" cascades from,
 		// so mergeNestedChildOver() can isolate what header{} itself actually
 		// sets (see Style.mergeNestedChildOver()'s javadoc for why this
 		// filtering is needed at all).
-		final Style nested = getNestedHeaderStyleDefinition().getMergedStyle(styleBuilder);
+		final Style nested = getNestedHeaderStyleDefinition().getMergedStyleREMOVEME(styleBuilder);
 		if (flat == null)
 			return nested;
 
@@ -108,7 +108,7 @@ public class Reference extends AbstractEvent implements EventWithNote {
 		this.strings = strings;
 		this.backColorGeneral = backColorGeneral;
 		this.backColorElement = backColorElement;
-		this.style = getDefaultStyleDefinition().getMergedStyle(styleBuilder);
+		this.style = getDefaultStyleDefinition().getMergedStyleREMOVEME(styleBuilder);
 		this.styleHeader = computeStyleHeader(styleBuilder);
 	}
 

@@ -64,7 +64,7 @@ public class MagicBox {
 		this.skinParam = skinParam;
 		this.node = node;
 		final Style style = StyleSignature.ofSName0(SName.root, SName.element, SName.gitDiagram)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 		this.fontColor = style.value(PName.FontColor).asColor(skinParam.getIHtmlColorSet());
 	}
 

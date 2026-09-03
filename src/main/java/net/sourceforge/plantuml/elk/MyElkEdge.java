@@ -140,7 +140,7 @@ public class MyElkEdge implements UDrawable {
 		final StyleSignature result = StyleSignature
 				.ofSName0(SName.root, SName.element, diagram.getDiagramType().getStyleName(), SName.arrow)
 				.withTOBECHANGED(link.getStereotype());
-		return result.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
+		return result.getMergedStyleREMOVEME(diagram.getSkinParam().getCurrentStyleBuilder());
 	}
 
 	@DuplicateCode(reference = "SvekEdge")

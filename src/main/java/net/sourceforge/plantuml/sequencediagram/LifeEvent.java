@@ -106,7 +106,7 @@ public class LifeEvent extends AbstractEvent implements Event {
 	}
 
 	public Style[] getUsedStyle() {
-		final Style style = type.getStyleSignature().getMergedStyle(styleBuilder);
+		final Style style = type.getStyleSignature().getMergedStyleREMOVEME(styleBuilder);
 		return new Style[] { style };
 	}
 

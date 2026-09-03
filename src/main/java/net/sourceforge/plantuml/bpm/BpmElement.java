@@ -144,7 +144,7 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 	}
 
 	private Style getStyle(ISkinParam skinParam) {
-		return getSignatureCircle().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		return getSignatureCircle().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 	}
 
 	public TextBlock toTextBlockInternal(ISkinParam skinParam) {

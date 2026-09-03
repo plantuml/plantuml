@@ -117,7 +117,7 @@ public class TaskDrawSeparator implements TaskDraw {
 	}
 
 	private Style getStyle() {
-		return getStyleSignature().getMergedStyle(styleBuilder);
+		return getStyleSignature().getMergedStyleREMOVEME(styleBuilder);
 	}
 
 	private TextBlock getTitle() {

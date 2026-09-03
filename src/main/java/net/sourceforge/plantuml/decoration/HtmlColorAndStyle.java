@@ -85,7 +85,7 @@ public class HtmlColorAndStyle {
 
 	public static HtmlColorAndStyle build(ISkinParam skinParam, String definition) throws NoSuchColorException {
 
-		final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = getDefaultStyleDefinitionArrow().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 		HColor arrowColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final HColor arrowHeadColor = null;
 

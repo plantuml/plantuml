@@ -299,7 +299,7 @@ public class Rose {
 
 		final StyleSignature signature = StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram,
 				SName.arrow);
-		final Style textStyle = signature.getMergedStyle(param.getCurrentStyleBuilder());
+		final Style textStyle = signature.getMergedStyleREMOVEME(param.getCurrentStyleBuilder());
 		final String value = textStyle.value(PName.HorizontalAlignment).asString();
 		HorizontalAlignment messageHorizontalAlignment = textStyle.getHorizontalAlignment();
 

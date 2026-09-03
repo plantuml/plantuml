@@ -58,7 +58,7 @@ public class Delay extends AbstractEvent implements Event, WithStyle {
 
 	public Delay(Display text, StyleBuilder styleBuilder) {
 		this.text = text;
-		this.style = getStyleSignature().getMergedStyle(styleBuilder);
+		this.style = getStyleSignature().getMergedStyleREMOVEME(styleBuilder);
 	}
 
 	public final Display getText() {
