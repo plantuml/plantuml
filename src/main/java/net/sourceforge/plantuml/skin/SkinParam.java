@@ -315,7 +315,7 @@ public class SkinParam implements ISkinParam {
 		if (result != null)
 			return result;
 
-		final Style style = getCurrentStyleBuilder().getMergedStyle(StyleSignature.ofSName0(SName.root, SName.document));
+		final Style style = getCurrentStyleBuilder().getMergedStyleTOBEREMOVED(StyleSignature.ofSName0(SName.root, SName.document));
 		return style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 	}
 

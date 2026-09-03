@@ -250,7 +250,7 @@ public class StyleSignature {
 		if (styleBuilder == null)
 			return null;
 
-		return styleBuilder.getMergedStyle(this);
+		return styleBuilder.getMergedStyleTOBEREMOVED(this);
 	}
 
 	public final boolean isWithDot() {

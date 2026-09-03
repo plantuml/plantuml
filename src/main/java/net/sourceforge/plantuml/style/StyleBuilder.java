@@ -116,7 +116,7 @@ public class StyleBuilder implements AutomaticCounter {
 		return ++counter;
 	}
 
-	public Style getMergedStyle(StyleSignature signature) {
+	public Style getMergedStyleTOBEREMOVED(StyleSignature signature) {
 //		boolean added = this.printedForLog.add(signature);
 //		if (added)
 //			Log.info(() -> "Using style " + signature);
