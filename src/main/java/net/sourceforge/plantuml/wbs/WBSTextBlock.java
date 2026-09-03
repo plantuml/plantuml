@@ -56,7 +56,6 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 abstract class WBSTextBlock extends TextBlockMemoized implements AsciiBlock {
 
@@ -84,8 +83,8 @@ abstract class WBSTextBlock extends TextBlockMemoized implements AsciiBlock {
 	}
 
 	private Style getStyleUsed() {
-		final StyleSignature signature = StyleSignatureBasic
-				.of(SName.root, SName.element, SName.wbsDiagram, SName.arrow).addLevel(level)
+		final StyleSignature signature = StyleSignature
+				.ofSName0(SName.root, SName.element, SName.wbsDiagram, SName.arrow).addLevel(level)
 				.withTOBECHANGED(stereotype);
 		return signature.getMergedStyle(styleBuilder);
 	}

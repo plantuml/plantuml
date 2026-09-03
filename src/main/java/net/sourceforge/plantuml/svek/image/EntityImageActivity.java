@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -140,7 +139,7 @@ public class EntityImageActivity extends AbstractEntityImage {
 
 	@Override
 	public StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity)
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity)
 				.withTOBECHANGED(getStereo());
 	}
 

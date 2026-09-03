@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.style.parser2.RawSelector;
  *
  * This walk mirrors {@code net.sourceforge.plantuml.style.parser2.StyleAtomTrie#compileNode}
  * closely -- same tree, same recursion shape -- but instead of inserting into a trie keyed by
- * {@code StyleAtom}, it accumulates a legacy {@link StyleSignatureBasic} along the path and
+ * {@code StyleAtom}, it accumulates a legacy {@link StyleSignature} along the path and
  * emits one {@link Style} per node that has properties, converting each
  * {@link PrioritizedValue} to a {@link Value} on the way. Two legacy behaviors that
  * {@code StyleAtomTrie#compileNode} does not need to reproduce (nothing downstream of it reads
@@ -82,11 +82,11 @@ final class LegacyStyleFlattener {
 	/** Every declaration in {@code root}, as flat legacy {@link Style} objects. */
 	static List<Style> flatten(MergedStyleNode root) {
 		final List<Style> result = new ArrayList<Style>();
-		flattenNode(root, StyleSignatureBasic.empty(), result);
+		flattenNode(root, StyleSignature.empty(), result);
 		return result;
 	}
 
-	private static void flattenNode(MergedStyleNode node, StyleSignatureBasic pathSoFar, List<Style> result) {
+	private static void flattenNode(MergedStyleNode node, StyleSignature pathSoFar, List<Style> result) {
 		if (node.getProperties().isEmpty() == false)
 			result.add(new Style(pathSoFar, toValueMap(node.getProperties(), pathSoFar.getStereotypes().size())));
 
@@ -101,11 +101,11 @@ final class LegacyStyleFlattener {
 		flattenOtherChildren(node, node.getStarredOtherChildren(), pathSoFar, result);
 	}
 
-	private static void flattenNamedChildren(Map<SName, MergedStyleNode> children, StyleSignatureBasic pathSoFar,
+	private static void flattenNamedChildren(Map<SName, MergedStyleNode> children, StyleSignature pathSoFar,
 			List<Style> result) {
 		for (Map.Entry<SName, MergedStyleNode> ent : children.entrySet()) {
 			final MergedStyleNode child = ent.getValue();
-			StyleSignatureBasic childSignature = pathSoFar.addSName(ent.getKey());
+			StyleSignature childSignature = pathSoFar.addSName(ent.getKey());
 			if (child.isStar())
 				childSignature = childSignature.addStar();
 			flattenNode(child, childSignature, result);
@@ -113,13 +113,13 @@ final class LegacyStyleFlattener {
 	}
 
 	private static void flattenOtherChildren(MergedStyleNode node, Map<String, MergedStyleNode> children,
-			StyleSignatureBasic pathSoFar, List<Style> result) {
+			StyleSignature pathSoFar, List<Style> result) {
 		for (Map.Entry<String, MergedStyleNode> ent : children.entrySet()) {
 			final String key = ent.getKey();
 			final MergedStyleNode child = ent.getValue();
 			final RawSelector.Kind kind = node.getOtherChildKind(key);
 
-			StyleSignatureBasic childSignature;
+			StyleSignature childSignature;
 			if (kind == RawSelector.Kind.DEPTH)
 				childSignature = pathSoFar.addLevel(parseDepthKey(key));
 			else

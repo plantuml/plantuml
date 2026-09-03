@@ -55,7 +55,6 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public final class SvekResult implements IEntityImage {
 
@@ -109,7 +108,7 @@ public final class SvekResult implements IEntityImage {
 	}
 
 	private StyleSignature getDefaultStyleDefinition(Stereotype stereotype) {
-		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element,
+		StyleSignature result = StyleSignature.ofSName0(SName.root, SName.element,
 				dotData.geDiagramType().getStyleName(), SName.arrow);
 
 		return result.withTOBECHANGED(stereotype);
@@ -117,7 +116,7 @@ public final class SvekResult implements IEntityImage {
 
 	// Duplicate SvekResult / GeneralImageBuilder
 	public HColor getBackcolor() {
-		final Style style = StyleSignatureBasic.of(SName.root, SName.document)
+		final Style style = StyleSignature.ofSName0(SName.root, SName.document)
 				.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
 		return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
 	}

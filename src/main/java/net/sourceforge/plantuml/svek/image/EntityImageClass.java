@@ -60,7 +60,6 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Kal;
 import net.sourceforge.plantuml.svek.Margins;
@@ -160,7 +159,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 	@Override
 	public StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.classDiagram, SName.class_);
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.classDiagram, SName.class_);
 	}
 
 	private Style getStyle() {
@@ -171,7 +170,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	}
 
 	private Style getStyleHeader() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header) //
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header) //
 				.withTOBECHANGED(getEntity().getStereotype()) //
 				.with(getEntity().getStereostyles()) //
 				.getMergedStyle(getEntity().getCurrentStyleBuilder());

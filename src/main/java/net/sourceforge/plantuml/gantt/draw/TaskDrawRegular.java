@@ -71,7 +71,6 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public class TaskDrawRegular extends AbstractTaskDraw {
 
@@ -185,7 +184,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 
 	@Override
 	StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.task)
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.ganttDiagram, SName.task)
 				.withTOBECHANGED(getTask().getStereotype());
 	}
 
@@ -293,7 +292,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 			off.add(new Segment(x1, x2));
 		}
 
-		final HColor backUndone = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.undone)
+		final HColor backUndone = StyleSignature.ofSName0(SName.root, SName.element, SName.ganttDiagram, SName.undone)
 				.getMergedStyle(getStyleBuilder()).value(PName.BackGroundColor).asColor(getColorSet());
 
 		final RectangleTask rectangleTask = new RectangleTask(startPos, endPos, round, getCompletion(), off);

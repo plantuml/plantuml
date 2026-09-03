@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class ChartRenderer {
 
@@ -948,16 +948,16 @@ public class ChartRenderer {
 		}
 	}
 
-	private StyleSignatureBasic getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram);
+	private StyleSignature getStyleSignature() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.chartDiagram);
 	}
 
-	private StyleSignatureBasic getBarStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.bar);
+	private StyleSignature getBarStyleSignature() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.chartDiagram, SName.bar);
 	}
 
 	private Style getBarStyle(ChartSeries series) {
-		StyleSignatureBasic signature = getBarStyleSignature();
+		StyleSignature signature = getBarStyleSignature();
 		if (series.getStereotype() != null) {
 			// Use withTOBECHANGED for element-level stereotype styling
 			Style style = signature.withTOBECHANGED(series.getStereotype())
@@ -977,12 +977,12 @@ public class ChartRenderer {
 		return signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
-	private StyleSignatureBasic getLineStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.line);
+	private StyleSignature getLineStyleSignature() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.chartDiagram, SName.line);
 	}
 
 	private Style getLineStyle(ChartSeries series) {
-		StyleSignatureBasic signature = getLineStyleSignature();
+		StyleSignature signature = getLineStyleSignature();
 		if (series.getStereotype() != null) {
 			// Use withTOBECHANGED for element-level stereotype styling
 			Style style = signature.withTOBECHANGED(series.getStereotype())
@@ -1001,12 +1001,12 @@ public class ChartRenderer {
 		return signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
-	private StyleSignatureBasic getAreaStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.area);
+	private StyleSignature getAreaStyleSignature() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.chartDiagram, SName.area);
 	}
 
 	private Style getAreaStyle(ChartSeries series) {
-		StyleSignatureBasic signature = getAreaStyleSignature();
+		StyleSignature signature = getAreaStyleSignature();
 		if (series.getStereotype() != null) {
 			// Use withTOBECHANGED for element-level stereotype styling
 			Style style = signature.withTOBECHANGED(series.getStereotype())
@@ -1034,12 +1034,12 @@ public class ChartRenderer {
 		return String.format("%.1f", value);
 	}
 
-	private StyleSignatureBasic getScatterStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.scatter);
+	private StyleSignature getScatterStyleSignature() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.chartDiagram, SName.scatter);
 	}
 
 	private Style getScatterStyle(ChartSeries series) {
-		StyleSignatureBasic signature = getScatterStyleSignature();
+		StyleSignature signature = getScatterStyleSignature();
 		if (series.getStereotype() != null) {
 			// Use withTOBECHANGED for element-level stereotype styling
 			Style style = signature.withTOBECHANGED(series.getStereotype())
@@ -1058,21 +1058,21 @@ public class ChartRenderer {
 		return signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
-	private StyleSignatureBasic getAxisStyleSignature(boolean horizontal) {
+	private StyleSignature getAxisStyleSignature(boolean horizontal) {
 		SName axisType = horizontal ? SName.hAxis : SName.vAxis;
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.axis, axisType);
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.chartDiagram, SName.axis, axisType);
 	}
 
-	private StyleSignatureBasic getGridStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.grid);
+	private StyleSignature getGridStyleSignature() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.chartDiagram, SName.grid);
 	}
 
-	private StyleSignatureBasic getLegendStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.legend);
+	private StyleSignature getLegendStyleSignature() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.chartDiagram, SName.legend);
 	}
 
-	private StyleSignatureBasic getAnnotationStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.annotation);
+	private StyleSignature getAnnotationStyleSignature() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.chartDiagram, SName.annotation);
 	}
 
 	private XDimension2D calculateLegendDimension(StringBounder stringBounder) {

@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.skin;
 import net.sourceforge.plantuml.sequencediagram.LifeEventType;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.Styleable;
 
 public enum ComponentType implements Styleable {
@@ -74,38 +73,38 @@ public enum ComponentType implements Styleable {
 
 	public StyleSignature getStyleSignature() {
 		if (this == PARTICIPANT_HEAD || this == PARTICIPANT_TAIL)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.participant);
+			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.participant);
 
 		if (this == PARTICIPANT_LINE /*|| this == CONTINUE_LINE*/)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine);
+			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine);
 
 		if (this == ACTIVATION_BOX_CLOSE_CLOSE || this == ACTIVATION_BOX_CLOSE_OPEN || this == ACTIVATION_BOX_OPEN_CLOSE
 				|| this == ACTIVATION_BOX_OPEN_OPEN)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.activationBox);
+			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.activationBox);
 
 		if (this == DESTROY)
 			return LifeEventType.DESTROY.getStyleSignature();
 
 		if (this == DIVIDER)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.separator);
+			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.separator);
 
 		if (this == ENGLOBER)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.box);
+			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.box);
 
 		if (this == NEWPAGE)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.newpage);
+			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.newpage);
 
 		if (this == NOTE)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.note);
+			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.note);
 
 		if (this == DELAY_TEXT)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.delay);
+			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.delay);
 
 		if (this == DELAY_LINE)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.delay);
+			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.delay);
 
 //		if (this == REFERENCE) {
-//			return StyleSignature.of(SName.root, SName.element,
+//			return StyleSignature.ofSName(SName.root, SName.element,
 //					SName.sequenceDiagram, SName.reference);
 //		}
 		throw new UnsupportedOperationException(toString());

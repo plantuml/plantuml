@@ -88,7 +88,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
 import net.sourceforge.plantuml.svek.image.EntityImageStateCommon;
@@ -283,16 +283,16 @@ public class Cluster implements Moveable {
 		this.xyNoteBottom = pos;
 	}
 
-	static public StyleSignatureBasic getDefaultStyleDefinition(SName diagramStyleName, USymbol symbol,
+	static public StyleSignature getDefaultStyleDefinition(SName diagramStyleName, USymbol symbol,
 			GroupType groupType) {
 		if (diagramStyleName == SName.stateDiagram)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.group);
+			return StyleSignature.ofSName0(SName.root, SName.element, SName.stateDiagram, SName.state, SName.group);
 		if (symbol != null)
-			return StyleSignatureBasic.of(SName.root, SName.element, diagramStyleName, SName.group, symbol.getSNames());
+			return StyleSignature.ofSName1(SName.root, SName.element, diagramStyleName, SName.group, symbol.getSNames());
 		if (groupType == GroupType.PACKAGE)
-			return StyleSignatureBasic.of(SName.root, SName.element, diagramStyleName, SName.package_, SName.group);
+			return StyleSignature.ofSName0(SName.root, SName.element, diagramStyleName, SName.package_, SName.group);
 
-		return StyleSignatureBasic.of(SName.root, SName.element, diagramStyleName, SName.group);
+		return StyleSignature.ofSName0(SName.root, SName.element, diagramStyleName, SName.group);
 	}
 
 	public void drawU(UGraphic ug) {

@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
 import net.sourceforge.plantuml.url.Url;
 
@@ -68,12 +68,12 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 	private Url url;
 	private Stereotype stereotype;
 
-	public StyleSignatureBasic getStyleSignature() {
+	public StyleSignature getStyleSignature() {
 		return noteStyle.getDefaultStyleDefinition();
 	}
 
 	public Style[] getUsedStyles() {
-		StyleSignatureBasic styleSignature = getStyleSignature();
+		StyleSignature styleSignature = getStyleSignature();
 		if (stereotype != null)
 			styleSignature = styleSignature.mergeWith(stereotype.getStyles(styleBuilder));
 		final Style style = styleSignature.getMergedStyle(styleBuilder).eventuallyOverride(colors);

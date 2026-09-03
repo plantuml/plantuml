@@ -53,12 +53,12 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class Gtiles {
 
 	static public GtileHexagonInside hexagonInside(Swimlane swimlane, StringBounder stringBounder, ISkinParam skinParam,
-			StyleSignatureBasic styleSignature, HColor color, Display label) {
+			StyleSignature styleSignature, HColor color, Display label) {
 
 		final Style style = styleSignature.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
@@ -77,7 +77,7 @@ public class Gtiles {
 	}
 
 	static public AbstractGtileRoot diamondEmpty(Swimlane swimlane, StringBounder stringBounder, ISkinParam skinParam,
-			StyleSignatureBasic styleSignature, HColor color) {
+			StyleSignature styleSignature, HColor color) {
 
 		final Style style = styleSignature.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());

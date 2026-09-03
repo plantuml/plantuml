@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.skin.SkinParamUtils;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class GtileCircleSpot extends AbstractGtile {
 
@@ -62,8 +62,8 @@ public class GtileCircleSpot extends AbstractGtile {
 	private final HColor backColor;
 	private double shadowing;
 
-	private StyleSignatureBasic getDefaultStyleDefinitionCircle() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle);
+	private StyleSignature getDefaultStyleDefinitionCircle() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.circle);
 	}
 
 	public GtileCircleSpot(StringBounder stringBounder, ISkinParam skinParam, HColor backColor, Swimlane swimlane,

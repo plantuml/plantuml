@@ -69,7 +69,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.url.Url;
@@ -98,12 +98,12 @@ public class ConditionalBuilder {
 	private final Collection<PositionedNote> notes;
 	private final Style styleDiamond;
 
-	private StyleSignatureBasic getStyleSignatureDiamond() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
+	private StyleSignature getStyleSignatureDiamond() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
 	}
 
-	private StyleSignatureBasic getStyleSignatureArrow() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	private StyleSignature getStyleSignatureArrow() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
 	public ConditionalBuilder(Swimlane swimlane, HColor backColor, FtileFactory ftileFactory,

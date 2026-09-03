@@ -59,13 +59,13 @@ import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.descdiagram.command.StringWithArrow;
 import net.sourceforge.plantuml.dot.DotSplines;
 import net.sourceforge.plantuml.dot.GraphvizVersion;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorType;
-import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -103,7 +103,6 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.extremity.Extremity;
 import net.sourceforge.plantuml.svek.extremity.ExtremityArrow;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
@@ -815,7 +814,7 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 	}
 
 	private StyleSignature getDefaultStyleDefinition(Stereotype stereotype) {
-		final StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, diagramType().getStyleName(),
+		final StyleSignature result = StyleSignature.ofSName0(SName.root, SName.element, diagramType().getStyleName(),
 				SName.arrow);
 
 		return result.withTOBECHANGED(stereotype);

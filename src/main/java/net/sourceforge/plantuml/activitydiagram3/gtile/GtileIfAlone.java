@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class GtileIfAlone extends GtileTopDown3 {
 
@@ -73,16 +73,16 @@ public class GtileIfAlone extends GtileTopDown3 {
 		return Gtiles.withNorthMargin(tmp, 20);
 	}
 
-	final public StyleSignatureBasic getDefaultStyleDefinitionActivity() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity);
+	final public StyleSignature getDefaultStyleDefinitionActivity() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity);
 	}
 
-	final static public StyleSignatureBasic getDefaultStyleDefinitionDiamond() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
+	final static public StyleSignature getDefaultStyleDefinitionDiamond() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
 	}
 
-	final public StyleSignatureBasic getDefaultStyleDefinitionArrow() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	final public StyleSignature getDefaultStyleDefinitionArrow() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
 	@Override

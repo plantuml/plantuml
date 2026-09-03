@@ -49,8 +49,8 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.decoration.symbol.USymbolFolder;
 import net.sourceforge.plantuml.elk.proxy.graph.ElkEdge;
 import net.sourceforge.plantuml.elk.proxy.graph.ElkNode;
-import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -73,7 +73,6 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.ClusterManager;
 import net.sourceforge.plantuml.svek.GeneralImageBuilder;
@@ -214,7 +213,7 @@ class MyElkDrawing implements TextBlock {
 
 	// Duplication from SvekEdge
 	final public StyleSignature getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
-		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.arrow);
+		StyleSignature result = StyleSignature.ofSName0(SName.root, SName.element, styleName, SName.arrow);
 		if (stereotype != null)
 			result = result.withTOBECHANGED(stereotype);
 

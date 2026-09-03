@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class GtileWhile extends GtileTopDown3 {
 
@@ -52,8 +52,8 @@ public class GtileWhile extends GtileTopDown3 {
 		super(tile1, tile2, tile3);
 	}
 
-	private static StyleSignatureBasic getDefaultStyleDefinitionDiamond() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
+	private static StyleSignature getDefaultStyleDefinitionDiamond() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
 	}
 
 	private static Gtile getShape1(Gtile toto, Swimlane swimlane, Display test, Display yes) {

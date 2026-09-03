@@ -64,7 +64,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.image.Opale;
 
 public class FtileIfWithDiamonds extends FtileIfNude {
@@ -144,8 +144,8 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 		};
 	}
 
-	private static StyleSignatureBasic getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.note);
+	private static StyleSignature getStyleSignature() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.note);
 	}
 
 	@Override

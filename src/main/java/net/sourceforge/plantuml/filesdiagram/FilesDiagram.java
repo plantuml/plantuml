@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.text.StringLocated;
 
@@ -68,7 +68,7 @@ public class FilesDiagram extends TitledDiagram {
 		} catch (StyleParsingException e) {
 			e.printStackTrace();
 		}
-		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.filesDiagram) //
+		final Style style = StyleSignature.ofSName0(SName.root, SName.element, SName.filesDiagram) //
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 
 		// final FontConfiguration fontConfiguration =

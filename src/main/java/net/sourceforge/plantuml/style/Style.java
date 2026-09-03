@@ -62,9 +62,9 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 public class Style {
 
 	private final Map<PName, Value> map;
-	private final StyleSignatureBasic signature;
+	private final StyleSignature signature;
 
-	public Style(StyleSignatureBasic signature, Map<PName, Value> map) {
+	public Style(StyleSignature signature, Map<PName, Value> map) {
 		this.map = map;
 		this.signature = signature;
 	}
@@ -222,7 +222,7 @@ public class Style {
 		return result;
 	}
 
-	public StyleSignatureBasic getSignature() {
+	public StyleSignature getSignature() {
 		return signature;
 	}
 

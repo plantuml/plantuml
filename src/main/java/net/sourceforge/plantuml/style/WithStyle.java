@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.style;
 
 public interface WithStyle extends Styleable {
-    // ::remove file when __HAXE__
 
 	public Style[] getUsedStyles();
 

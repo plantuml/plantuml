@@ -60,7 +60,7 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 /**
  * Draws, on the left side of a Gantt diagram, a textual table giving for each
@@ -195,7 +195,7 @@ public final class GanttTaskTable {
 	}
 
 	private Style getStyle() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.timeline)
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.ganttDiagram, SName.timeline)
 				.getMergedStyle(timelineStyle.getSkinParam().getCurrentStyleBuilder());
 	}
 

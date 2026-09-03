@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class LaneDivider implements TextBlock {
 
@@ -68,8 +68,8 @@ public class LaneDivider implements TextBlock {
 		this.height = height;
 	}
 
-	public StyleSignatureBasic getDefaultStyleDefinition() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.swimlane);
+	public StyleSignature getDefaultStyleDefinition() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.swimlane);
 	}
 
 	private Style getStyle() {

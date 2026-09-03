@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class FtileBlackBlock extends AbstractFtile {
 
@@ -94,8 +94,8 @@ public class FtileBlackBlock extends AbstractFtile {
 		return new FtileGeometry(width + supp, height, width / 2, 0, height);
 	}
 
-	private StyleSignatureBasic getSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activityBar);
+	private StyleSignature getSignature() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activityBar);
 	}
 
 	public void drawU(UGraphic ug) {

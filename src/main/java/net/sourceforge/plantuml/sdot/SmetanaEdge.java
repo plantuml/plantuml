@@ -68,7 +68,6 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.extremity.Extremity;
@@ -253,8 +252,8 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 	}
 
 	private Style getStyle() {
-		final StyleSignature result = StyleSignatureBasic
-				.of(SName.root, SName.element, diagramType().getStyleName(), SName.arrow)
+		final StyleSignature result = StyleSignature
+				.ofSName0(SName.root, SName.element, diagramType().getStyleName(), SName.arrow)
 				.withTOBECHANGED(link.getStereotype());
 		return result.getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}

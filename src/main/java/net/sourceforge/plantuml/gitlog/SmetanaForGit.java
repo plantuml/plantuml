@@ -64,7 +64,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 import smetana.core.CString;
 import smetana.core.Globals;
 
@@ -85,7 +85,7 @@ public class SmetanaForGit {
 	}
 
 	private Style getStyle() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.gitDiagram)
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.gitDiagram)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 

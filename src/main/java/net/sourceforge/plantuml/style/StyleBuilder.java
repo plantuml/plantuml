@@ -50,7 +50,7 @@ public class StyleBuilder implements AutomaticCounter {
 	// that actually had to change; how styles are parsed into Style objects in the first
 	// place (loadInternal/muteStyle's callers) is untouched.
 	private StyleIndex index = StyleIndex.empty();
-	private final Set<StyleSignatureBasic> printedForLog;
+	// private final Set<StyleSignature> printedForLog;
 	private int counter;
 
 	public void printMe() {
@@ -58,12 +58,12 @@ public class StyleBuilder implements AutomaticCounter {
 			style.printMe();
 	}
 
-	private StyleBuilder(Set<StyleSignatureBasic> printedForLog) {
-		this.printedForLog = new LinkedHashSet<>();
-	}
+//	private StyleBuilder(Set<StyleSignature> printedForLog) {
+//		this.printedForLog = new LinkedHashSet<>();
+//	}
 
 	public StyleBuilder() {
-		this(new LinkedHashSet<StyleSignatureBasic>());
+		// this(new LinkedHashSet<StyleSignature>());
 	}
 
 	public StyleBuilder cloneMe() {
@@ -75,11 +75,11 @@ public class StyleBuilder implements AutomaticCounter {
 	}
 
 	public Style createStyleStereotype(String name) {
-		if (name.contains(StyleSignatureBasic.STAR))
+		if (name.contains(StyleSignature.STAR))
 			throw new IllegalArgumentException();
 
 		name = name.toLowerCase();
-		final StyleSignatureBasic signature = StyleSignatureBasic.createStereotype(name);
+		final StyleSignature signature = StyleSignature.createStereotype(name);
 
 		// An exact-signature lookup, not a cascade: only a bare ".name { ... }" declared with
 		// no SName scoping at all can ever match. Several such declarations (repeated in the
@@ -97,13 +97,13 @@ public class StyleBuilder implements AutomaticCounter {
 	}
 
 	public StyleBuilder muteStyle(Collection<Style> modifiedStyles) {
-		final StyleBuilder result = new StyleBuilder(this.printedForLog);
+		final StyleBuilder result = new StyleBuilder(/*this.printedForLog*/);
 		result.counter = this.counter;
 		result.index = this.index.withMuted(modifiedStyles);
 		return result;
 	}
 
-	public void loadInternal(StyleSignatureBasic signature, Style newStyle) {
+	public void loadInternal(StyleSignature signature, Style newStyle) {
 		if (signature.isStarred())
 			throw new IllegalArgumentException();
 
@@ -115,10 +115,10 @@ public class StyleBuilder implements AutomaticCounter {
 		return ++counter;
 	}
 
-	public Style getMergedStyle(StyleSignatureBasic signature) {
-		boolean added = this.printedForLog.add(signature);
-		if (added)
-			Log.info(() -> "Using style " + signature);
+	public Style getMergedStyle(StyleSignature signature) {
+//		boolean added = this.printedForLog.add(signature);
+//		if (added)
+//			Log.info(() -> "Using style " + signature);
 
 		// The actual computation -- and its memoization -- now live on the (immutable, often
 		// shared-across-diagrams) StyleIndex itself; see StyleIndex#getMergedStyle's javadoc.
@@ -128,14 +128,14 @@ public class StyleBuilder implements AutomaticCounter {
 		return index.getMergedStyle(signature);
 	}
 
-	public Style getMergedStyleSpecial(StyleSignatureBasic signature, int ancestorRank) {
-		boolean added = this.printedForLog.add(signature);
-		if (added)
-			Log.info(() -> "Using style " + signature);
+	public Style getMergedStyleSpecial(StyleSignature signature, int ancestorRank) {
+//		boolean added = this.printedForLog.add(signature);
+//		if (added)
+//			Log.info(() -> "Using style " + signature);
 
 		Style mergedStyle = null;
-		for (Style style : index.findMatching(signature)) {
-			final StyleSignatureBasic key = style.getSignature();
+		for (Style style : index.findMatching(signature.toQuery())) {
+			final StyleSignature key = style.getSignature();
 
 			Style tmp = style;
 			if (key.isStarred())

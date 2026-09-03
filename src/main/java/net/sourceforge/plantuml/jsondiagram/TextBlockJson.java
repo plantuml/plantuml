@@ -65,7 +65,6 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.yaml.Highlighted;
 
 //See TextBlockMap
@@ -138,16 +137,16 @@ public class TextBlockJson extends TextBlockMemoized {
 	private Style getStyleToUse(boolean header, Highlighted highlighted) {
 		final StyleSignature signature;
 		if (header && highlighted != null)
-			signature = StyleSignatureBasic
-					.of(SName.root, SName.element, diagramType, SName.header, SName.node, SName.highlight)
+			signature = StyleSignature
+					.ofSName0(SName.root, SName.element, diagramType, SName.header, SName.node, SName.highlight)
 					.withTOBECHANGED(highlighted.getStereotype());
 		else if (highlighted != null)
-			signature = StyleSignatureBasic.of(SName.root, SName.element, diagramType, SName.node, SName.highlight)
+			signature = StyleSignature.ofSName0(SName.root, SName.element, diagramType, SName.node, SName.highlight)
 					.withTOBECHANGED(highlighted.getStereotype());
 		else if (header)
-			signature = StyleSignatureBasic.of(SName.root, SName.element, diagramType, SName.header, SName.node);
+			signature = StyleSignature.ofSName0(SName.root, SName.element, diagramType, SName.header, SName.node);
 		else
-			signature = StyleSignatureBasic.of(SName.root, SName.element, diagramType, SName.node);
+			signature = StyleSignature.ofSName0(SName.root, SName.element, diagramType, SName.node);
 
 		return signature.getMergedStyle(styleBuilder);
 	}
@@ -266,7 +265,7 @@ public class TextBlockJson extends TextBlockMemoized {
 		final double widthColB = getWidthColB(stringBounder);
 
 		double y = 0;
-		final Style styleNode = StyleSignatureBasic.of(SName.root, SName.element, diagramType, SName.node)
+		final Style styleNode = StyleSignature.ofSName0(SName.root, SName.element, diagramType, SName.node)
 				.getMergedStyle(styleBuilder);
 		final UGraphic ugNode = styleNode.applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet());
 		for (Line line : lines) {
@@ -293,8 +292,8 @@ public class TextBlockJson extends TextBlockMemoized {
 			final double heightOfRow = line.getHeightOfRow(stringBounder);
 			if (line.highlighted != null) {
 				final URectangle back = URectangle.build(trueWidth - 2, heightOfRow).rounded(4);
-				final Style styleNodeHighlight = StyleSignatureBasic
-						.of(SName.root, SName.element, diagramType, SName.node, SName.highlight)
+				final Style styleNodeHighlight = StyleSignature
+						.ofSName0(SName.root, SName.element, diagramType, SName.node, SName.highlight)
 						.withTOBECHANGED(line.highlighted.getStereotype()).getMergedStyle(styleBuilder);
 				final HColor cellBackColor = styleNodeHighlight.value(PName.BackGroundColor)
 						.asColor(skinParam.getIHtmlColorSet());

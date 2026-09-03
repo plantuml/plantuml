@@ -44,14 +44,14 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlockMemoized;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public abstract class ETile extends TextBlockMemoized {
 
 	protected final boolean TRACE = false;
 
-	public static StyleSignatureBasic getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.ebnf);
+	public static StyleSignature getStyleSignature() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.ebnf);
 	}
 
 	public abstract void push(ETile tile);

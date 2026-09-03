@@ -81,7 +81,6 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.image.EntityImageClass;
 import net.sourceforge.plantuml.svek.image.EntityImageNote;
 import net.sourceforge.plantuml.teavm.TeaVM;
@@ -114,7 +113,7 @@ public final class GraphvizImageBuilder {
 	}
 
 	final public StyleSignature getDefaultStyleDefinitionArrow(Stereotype stereotype) {
-		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.arrow);
+		StyleSignature result = StyleSignature.ofSName0(SName.root, SName.element, styleName, SName.arrow);
 		if (stereotype != null)
 			result = result.withTOBECHANGED(stereotype);
 
@@ -122,7 +121,7 @@ public final class GraphvizImageBuilder {
 	}
 
 	final public StyleSignature getStyleArrowCardinality(Stereotype stereotype) {
-		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.arrow,
+		StyleSignature result = StyleSignature.ofSName0(SName.root, SName.element, styleName, SName.arrow,
 				SName.cardinality);
 		if (stereotype != null)
 			result = result.withTOBECHANGED(stereotype);
@@ -201,7 +200,7 @@ public final class GraphvizImageBuilder {
 
 	// Duplicate SvekResult / GeneralImageBuilder
 	private HColor getBackcolor() {
-		final Style style = StyleSignatureBasic.of(SName.root, SName.document)
+		final Style style = StyleSignature.ofSName0(SName.root, SName.document)
 				.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
 		return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
 	}

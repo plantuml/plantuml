@@ -60,7 +60,7 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class ParallelBuilderSplit extends AbstractParallelFtilesBuilder {
 
@@ -69,8 +69,8 @@ public class ParallelBuilderSplit extends AbstractParallelFtilesBuilder {
 	}
 
 	@Override
-	public StyleSignatureBasic getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	public StyleSignature getStyleSignature() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
 	@Override

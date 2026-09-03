@@ -96,7 +96,6 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.ClusterHeader;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
@@ -681,13 +680,13 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	}
 
 	private Style getStyle() {
-		return StyleSignatureBasic.of(SName.root, SName.element, diagram.getDiagramType().getStyleName(), SName.arrow)
+		return StyleSignature.ofSName0(SName.root, SName.element, diagram.getDiagramType().getStyleName(), SName.arrow)
 				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 	}
 
 	// Duplication from SvekEdge
 	final public StyleSignature getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
-		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.arrow);
+		StyleSignature result = StyleSignature.ofSName0(SName.root, SName.element, styleName, SName.arrow);
 		if (stereotype != null)
 			result = result.withTOBECHANGED(stereotype);
 

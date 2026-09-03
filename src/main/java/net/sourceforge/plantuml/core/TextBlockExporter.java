@@ -91,7 +91,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.SvgCharSizeHack;
 import net.sourceforge.plantuml.url.CMapData;
@@ -508,7 +508,7 @@ public class TextBlockExporter {
 		}
 
 		private static ClockwiseTopRightBottomLeft calculateMargin(net.sourceforge.plantuml.TitledDiagram diagram) {
-			final Style style = StyleSignatureBasic.of(SName.root, SName.document)
+			final Style style = StyleSignature.ofSName0(SName.root, SName.document)
 					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 			if (style.hasValue(PName.Margin))
 				return style.getMargin();

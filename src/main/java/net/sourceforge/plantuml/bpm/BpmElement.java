@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.skin.SkinParamUtils;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzzle {
 
@@ -139,8 +139,8 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 		}
 	}
 
-	private StyleSignatureBasic getSignatureCircle() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle);
+	private StyleSignature getSignatureCircle() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.circle);
 	}
 
 	private Style getStyle(ISkinParam skinParam) {

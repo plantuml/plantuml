@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class TimeArrow implements UDrawable {
 
@@ -152,7 +152,7 @@ public class TimeArrow implements UDrawable {
 		return getStyleSignature().getMergedStyle(styleBuilder);
 	}
 
-	private StyleSignatureBasic getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram,SName.arrow);
+	private StyleSignature getStyleSignature() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.timingDiagram,SName.arrow);
 	}
 }

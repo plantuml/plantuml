@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
 /**
@@ -355,7 +355,7 @@ public class PacketDiagram extends TitledDiagram {
 	 */
 	public Style getStyle() {
 		if (style == null) {
-			style = StyleSignatureBasic.of(SName.root, SName.element, SName.packetdiagDiagram)
+			style = StyleSignature.ofSName0(SName.root, SName.element, SName.packetdiagDiagram)
 					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 		}
 		return style;

@@ -70,7 +70,6 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.text.Guillemet;
@@ -202,10 +201,10 @@ public class EntityImageUseCase extends AbstractEntityImage {
 	public StyleSignature getStyleSignature() {
 		final LeafType type = getEntity().getLeafType();
 		if (type == LeafType.USECASE_BUSINESS)
-			return StyleSignatureBasic
-					.of(SName.root, SName.element, SName.componentDiagram, SName.usecase, SName.business)
+			return StyleSignature
+					.ofSName0(SName.root, SName.element, SName.componentDiagram, SName.usecase, SName.business)
 					.withTOBECHANGED(getStereo());
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.componentDiagram, SName.usecase)
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.componentDiagram, SName.usecase)
 				.withTOBECHANGED(getStereo());
 	}
 
