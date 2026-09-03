@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.core;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -71,7 +72,7 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.DecorateEntityImage;
 import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 import net.sourceforge.plantuml.warning.Warning;
@@ -281,8 +282,8 @@ public final class DiagramChromeFactory {
 		if (Display.isNull(mainFrame))
 			return original;
 
-		final Style style = StyleSignature.ofSName0(SName.root, SName.document, SName.mainframe)
-				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder()
+				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.document, SName.mainframe)));
 		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, style);
 		final TextBlock title = mainFrame.create(fontConfiguration, HorizontalAlignment.CENTER, skinParam);
 
@@ -365,8 +366,8 @@ public final class DiagramChromeFactory {
 		if (title.isNull())
 			return original;
 
-		final Style style = StyleSignature.ofSName0(SName.root, SName.document, SName.title)
-				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder()
+				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.document, SName.title)));
 		final TextBlock titleBlock = style.createTextBlockBordered(title.getDisplay(), skinParam.getIHtmlColorSet(),
 				skinParam, Style.ID_TITLE, LineBreakStrategy.NONE);
 
@@ -385,8 +386,8 @@ public final class DiagramChromeFactory {
 		if (caption.isNull())
 			return original;
 
-		final Style style = StyleSignature.ofSName0(SName.root, SName.document, SName.caption)
-				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder()
+				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.document, SName.caption)));
 		final TextBlock captionBlock = style.createTextBlockBordered(caption.getDisplay(), skinParam.getIHtmlColorSet(),
 				skinParam, Style.ID_CAPTION, LineBreakStrategy.NONE);
 
@@ -411,8 +412,8 @@ public final class DiagramChromeFactory {
 
 		TextBlock textHeader = null;
 		if (!header.isNull()) {
-			final Style style = StyleSignature.ofSName0(SName.root, SName.document, SName.header)
-					.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+			final Style style = skinParam.getCurrentStyleBuilder()
+					.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.document, SName.header)));
 			textHeader = header.createRibbon(FontConfiguration.create(skinParam, FontParam.HEADER, null), skinParam,
 					style);
 		}
@@ -422,8 +423,8 @@ public final class DiagramChromeFactory {
 
 		TextBlock textFooter = null;
 		if (!footer.isNull()) {
-			final Style style = StyleSignature.ofSName0(SName.root, SName.document, SName.footer)
-					.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+			final Style style = skinParam.getCurrentStyleBuilder()
+					.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.document, SName.footer)));
 			textFooter = footer.createRibbon(FontConfiguration.create(skinParam, FontParam.FOOTER, null), skinParam,
 					style);
 		}
