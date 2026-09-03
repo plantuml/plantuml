@@ -112,7 +112,7 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 			ftiles.add(new FtileDecorateOutLabel(new FtileDecorateInLabel(branch.getFtile(), dimLabelIn), dimLabelOut));
 		}
 
-		final Style style = getDefaultStyleDefinitionArrow().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder());
+		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionArrow());
 		final Rainbow arrowColor = Rainbow.build(style, skinParam().getIHtmlColorSet());
 
 		if (ftiles.size() == 1) {

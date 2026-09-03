@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -64,6 +65,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.url.Url;
 
 public class FtileFactoryDelegator implements FtileFactory {
@@ -72,29 +74,29 @@ public class FtileFactoryDelegator implements FtileFactory {
 
 	private final Rose rose = new Rose();
 
-	final public StyleSignature getDefaultStyleDefinitionActivity() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity);
+	final public StyleQuery getDefaultStyleDefinitionActivity() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity));
 	}
 
 	final public StyleSignature getDefaultStyleDefinitionDiamond() {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
 	}
 
-	final public StyleSignature getDefaultStyleDefinitionArrow() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	final public StyleQuery getDefaultStyleDefinitionArrow() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
 	}
 
 	protected final Rainbow getInLinkRenderingColor(Ftile tile) {
 		Rainbow color;
 		final LinkRendering linkRendering = tile.getInLinkRendering();
 		if (linkRendering == null) {
-			final Style style = getDefaultStyleDefinitionArrow().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder());
+			final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionArrow());
 			return Rainbow.build(style, skinParam().getIHtmlColorSet());
 		} else {
 			color = linkRendering.getRainbow();
 		}
 		if (color.size() == 0) {
-			final Style style = getDefaultStyleDefinitionArrow().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder());
+			final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionArrow());
 			return Rainbow.build(style, skinParam().getIHtmlColorSet());
 		}
 		return color;
@@ -105,7 +107,7 @@ public class FtileFactoryDelegator implements FtileFactory {
 		if (Display.isNull(display))
 			return null;
 
-		final Style style = getDefaultStyleDefinitionArrow().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder());
+		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionArrow());
 		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam().getIHtmlColorSet());
 
 		return display.create7(fontConfiguration, HorizontalAlignment.LEFT, skinParam(), CreoleMode.SIMPLE_LINE);

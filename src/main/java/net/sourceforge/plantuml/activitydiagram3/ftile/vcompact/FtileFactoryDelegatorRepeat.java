@@ -91,7 +91,7 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 		final ConditionStyle conditionStyle = skinParam().getConditionStyle();
 		final HColorSet colorSet = skinParam().getIHtmlColorSet();
 
-		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyleREMOVEME(currentStyleBuilder);
+		final Style styleArrow = currentStyleBuilder.getMergedStyle(getDefaultStyleDefinitionArrow());
 		final Style styleDiamond = getDefaultStyleDefinitionDiamond().getMergedStyleREMOVEME(currentStyleBuilder);
 
 		final HColor borderColor = styleDiamond.value(PName.LineColor).asColor(colorSet);
@@ -104,7 +104,7 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 		if (stereogroup2.getInnerColors(colorSet).isEmpty() && stereogroup2.isEmpty())
 			diamondColor2 = diamondColor1;
 
-		final Colors colorsEntry = getDefaultStyleDefinitionActivity().getMergedStyleREMOVEME(currentStyleBuilder)
+		final Colors colorsEntry = currentStyleBuilder.getMergedStyle(getDefaultStyleDefinitionActivity())
 				.toColors(colorSet).add(ColorType.BACK, diamondColor1);
 
 		final Rainbow arrowColor = Rainbow.build(styleArrow, colorSet);

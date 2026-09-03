@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -50,7 +51,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class GtileAssembly extends GtileTopDown {
 
@@ -68,8 +69,8 @@ public class GtileAssembly extends GtileTopDown {
 		return new UTranslate(0, height);
 	}
 
-	final public StyleSignature getDefaultStyleDefinitionArrow() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	final public StyleQuery getDefaultStyleDefinitionArrow() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
 	}
 
 	@Override
@@ -85,7 +86,7 @@ public class GtileAssembly extends GtileTopDown {
 		if (Display.isNull(display))
 			return TextBlockUtils.EMPTY_TEXT_BLOCK;
 
-		final Style style = getDefaultStyleDefinitionArrow().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder());
+		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionArrow());
 		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam().getIHtmlColorSet());
 		return display.create7(fontConfiguration, HorizontalAlignment.LEFT, skinParam(), CreoleMode.SIMPLE_LINE);
 	}

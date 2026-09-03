@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.filesdiagram;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -57,7 +58,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.image.Opale;
 
 public class FEntry implements Iterable<FEntry> {
@@ -164,9 +165,9 @@ public class FEntry implements Iterable<FEntry> {
 
 	private Opale createOpale(ISkinParam skinParam) {
 
-		final StyleSignature signature = StyleSignature.ofSName0(SName.root, SName.element, SName.filesDiagram,
-				SName.note);
-		final Style style = signature.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final StyleQuery signature = StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.filesDiagram,
+				SName.note));
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(signature);
 
 		final FontConfiguration fc = FontConfiguration.create(skinParam, style);
 		final double shadowing = style.getShadowing();
