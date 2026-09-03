@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -89,6 +90,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.Styleable;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.MathUtils;
@@ -244,8 +246,8 @@ public class Swimlanes implements TextBlock, Styleable {
 			}
 
 			TextBlock full = root.createFtile(getFtileFactory(ug.getStringBounder()));
-			final Style style = skinParam.getCurrentStyleBuilder().getMergedStyleTOBEREMOVED(
-					StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.goto_));
+			final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(
+					StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.goto_)));
 			final HColor gotoColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 			final boolean isDebug = Boolean.parseBoolean(skinParam.options().getValue(OptionKey.DEBUG));
 
@@ -267,7 +269,7 @@ public class Swimlanes implements TextBlock, Styleable {
 		TextBlock full = root.createGtile(skinParam, ug.getStringBounder());
 
 		final Style style = skinParam.getCurrentStyleBuilder()
-				.getMergedStyleTOBEREMOVED(StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.goto_));
+				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.goto_)));
 		final HColor gotoColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final boolean isDebug = true;
 
