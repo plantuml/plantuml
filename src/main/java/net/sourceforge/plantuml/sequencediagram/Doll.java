@@ -100,12 +100,12 @@ public class Doll implements WithStyle {
 
 	}
 
-	final public StyleSignature getStyleSignature() {
-		return ComponentType.ENGLOBER.getStyleSignature();
+	final public StyleSignature getStyleSignatureTOBEREMOVED() {
+		return ComponentType.ENGLOBER.getStyleSignatureTOBEREMOVED();
 	}
 
 	final public Style[] getUsedStyles() {
-		Style tmp = getStyleSignature().withTOBECHANGED(englober.getStereotype()).getMergedStyleREMOVEME(styleBuilder);
+		Style tmp = getStyleSignatureTOBEREMOVED().withTOBECHANGED(englober.getStereotype()).getMergedStyleREMOVEME(styleBuilder);
 		final HColor backColor = englober.getBoxColor();
 		if (tmp != null)
 			tmp = tmp.eventuallyOverride(PName.BackGroundColor, backColor);

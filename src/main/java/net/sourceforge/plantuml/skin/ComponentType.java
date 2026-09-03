@@ -71,7 +71,7 @@ public enum ComponentType implements Styleable {
 		return this == ARROW;
 	}
 
-	public StyleSignature getStyleSignature() {
+	public StyleSignature getStyleSignatureTOBEREMOVED() {
 		if (this == PARTICIPANT_HEAD || this == PARTICIPANT_TAIL)
 			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.participant);
 
@@ -83,7 +83,7 @@ public enum ComponentType implements Styleable {
 			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.activationBox);
 
 		if (this == DESTROY)
-			return LifeEventType.DESTROY.getStyleSignature();
+			return LifeEventType.DESTROY.getStyleSignatureTOBEREMOVED();
 
 		if (this == DIVIDER)
 			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.separator);

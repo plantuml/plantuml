@@ -52,7 +52,7 @@ public enum ParticipantType implements Styleable {
 	private ParticipantType() {
 	}
 
-	public StyleSignature getStyleSignature() {
+	public StyleSignature getStyleSignatureTOBEREMOVED() {
 		if (this == PARTICIPANT)
 			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.participant);
 

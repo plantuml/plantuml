@@ -73,7 +73,7 @@ public class FtileNoteAlone extends AbstractFtile implements Stencil, Styleable 
 	private final boolean withOutPoint;
 	private final Swimlane swimlane;
 
-	public StyleSignature getStyleSignature() {
+	public StyleSignature getStyleSignatureTOBEREMOVED() {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.note);
 	}
 
@@ -102,7 +102,7 @@ public class FtileNoteAlone extends AbstractFtile implements Stencil, Styleable 
 		this.swimlane = swimlane;
 		this.withOutPoint = withOutPoint;
 
-		final Style style = getStyleSignature().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style style = getStyleSignatureTOBEREMOVED().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 		final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 		final double shadowing = style.getShadowing();

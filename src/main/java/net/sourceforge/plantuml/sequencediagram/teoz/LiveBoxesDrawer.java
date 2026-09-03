@@ -77,10 +77,10 @@ public class LiveBoxesDrawer {
 		this.stereotype = stereotype;
 		this.cross = skin.createComponent(
 				new Style[] {
-						ComponentType.DESTROY.getStyleSignature().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder()) },
+						ComponentType.DESTROY.getStyleSignatureTOBEREMOVED().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder()) },
 				ComponentType.DESTROY, null, skinParam, null);
 		this.compForWidth = skin.createComponent(
-				new Style[] { ComponentType.ACTIVATION_BOX_CLOSE_CLOSE.getStyleSignature()
+				new Style[] { ComponentType.ACTIVATION_BOX_CLOSE_CLOSE.getStyleSignatureTOBEREMOVED()
 						.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder()) },
 				ComponentType.ACTIVATION_BOX_CLOSE_CLOSE, null, skinParam, null);
 		this.context = context;
@@ -137,7 +137,7 @@ public class LiveBoxesDrawer {
 		final StyleBuilder currentStyleBuilder = styleBuilder == null ? skinParam.getCurrentStyleBuilder()
 				: styleBuilder;
 
-		Style style = type.getStyleSignature().withTOBECHANGED(stereotype).getMergedStyleREMOVEME(currentStyleBuilder);
+		Style style = type.getStyleSignatureTOBEREMOVED().withTOBECHANGED(stereotype).getMergedStyleREMOVEME(currentStyleBuilder);
 
 		if (style == null) {
 			if (symbolContext != null)

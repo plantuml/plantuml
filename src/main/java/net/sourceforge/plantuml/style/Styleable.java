@@ -35,8 +35,14 @@
  */
 package net.sourceforge.plantuml.style;
 
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
+
 public interface Styleable {
 
-	public StyleSignature getStyleSignature();
+	public StyleSignature getStyleSignatureTOBEREMOVED();
+	
+	public default StyleQuery getStyleQuery() {
+		return getStyleSignatureTOBEREMOVED().toQuery();
+	}
 
 }

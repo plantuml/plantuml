@@ -101,7 +101,7 @@ public class LifeEventTile extends AbstractTile {
 	}
 
 	private StyleSignature getStyleSignature() {
-		return ComponentType.DESTROY.getStyleSignature();
+		return ComponentType.DESTROY.getStyleSignatureTOBEREMOVED();
 	}
 
     private Style[] getUsedStyle() {

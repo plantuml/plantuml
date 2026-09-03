@@ -59,7 +59,7 @@ public abstract class Grouping extends AbstractEvent implements Event, WithStyle
 	final private Style style;
 	final private Style styleHeader;
 
-	final public StyleSignature getStyleSignature() {
+	final public StyleSignature getStyleSignatureTOBEREMOVED() {
 		if (type == GroupingType.START_PARTITION)
 			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.partition);
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.group);
@@ -111,7 +111,7 @@ public abstract class Grouping extends AbstractEvent implements Event, WithStyle
 		this.comment = comment;
 		this.type = type;
 		this.backColorElement = backColorElement;
-		this.style = getStyleSignature().getMergedStyleREMOVEME(styleBuilder);
+		this.style = getStyleSignatureTOBEREMOVED().getMergedStyleREMOVEME(styleBuilder);
 		this.styleHeader = computeStyleHeader(styleBuilder);
 	}
 

@@ -80,7 +80,7 @@ public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Stylea
 	private final XDimension2D dimNote;
 	private final XDimension2D dimTile;
 
-	public StyleSignature getStyleSignature() {
+	public StyleSignature getStyleSignatureTOBEREMOVED() {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.note);
 	}
 
@@ -105,7 +105,7 @@ public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Stylea
 		if (note.getType() == NoteType.FLOATING_NOTE)
 			withLink = false;
 
-		final Style style = getStyleSignature().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder())
+		final Style style = getStyleSignatureTOBEREMOVED().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder())
 				.eventuallyOverride(note.getColors());
 		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 		final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());

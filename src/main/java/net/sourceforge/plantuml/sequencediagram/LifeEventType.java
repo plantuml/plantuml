@@ -43,7 +43,7 @@ public enum LifeEventType implements Styleable {
 	ACTIVATE, DEACTIVATE, DESTROY, CREATE;
 
 	@Override
-	public StyleSignature getStyleSignature() {
+	public StyleSignature getStyleSignatureTOBEREMOVED() {
 		if (this == DESTROY)
 			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.destroy);
 		

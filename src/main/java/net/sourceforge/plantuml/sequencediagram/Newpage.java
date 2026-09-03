@@ -45,8 +45,8 @@ public class Newpage extends AbstractEvent implements Event, WithStyle {
 
 	final private Style style;
 
-	public StyleSignature getStyleSignature() {
-		return ComponentType.NEWPAGE.getStyleSignature();
+	public StyleSignature getStyleSignatureTOBEREMOVED() {
+		return ComponentType.NEWPAGE.getStyleSignatureTOBEREMOVED();
 	}
 
 	public Style[] getUsedStyles() {
@@ -54,7 +54,7 @@ public class Newpage extends AbstractEvent implements Event, WithStyle {
 	}
 
 	public Newpage(StyleBuilder styleBuilder) {
-		this.style = getStyleSignature().getMergedStyleREMOVEME(styleBuilder);
+		this.style = getStyleSignatureTOBEREMOVED().getMergedStyleREMOVEME(styleBuilder);
 	}
 
 	public boolean dealWith(Participant someone) {

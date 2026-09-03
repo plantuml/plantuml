@@ -92,7 +92,7 @@ public class PartitionTile extends GroupingTile {
 		return new Component() {
 
 			@Override
-			public StyleSignature getStyleSignature() {
+			public StyleSignature getStyleSignatureTOBEREMOVED() {
 				throw new UnsupportedOperationException();
 			}
 
