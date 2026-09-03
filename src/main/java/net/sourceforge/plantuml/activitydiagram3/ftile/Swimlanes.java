@@ -244,7 +244,7 @@ public class Swimlanes implements TextBlock, Styleable {
 			}
 
 			TextBlock full = root.createFtile(getFtileFactory(ug.getStringBounder()));
-			final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(
+			final Style style = skinParam.getCurrentStyleBuilder().getMergedStyleTOBEREMOVED(
 					StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.goto_));
 			final HColor gotoColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 			final boolean isDebug = Boolean.parseBoolean(skinParam.options().getValue(OptionKey.DEBUG));
@@ -267,7 +267,7 @@ public class Swimlanes implements TextBlock, Styleable {
 		TextBlock full = root.createGtile(skinParam, ug.getStringBounder());
 
 		final Style style = skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.goto_));
+				.getMergedStyleTOBEREMOVED(StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.goto_));
 		final HColor gotoColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final boolean isDebug = true;
 
