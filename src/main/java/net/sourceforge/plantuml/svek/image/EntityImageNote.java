@@ -98,7 +98,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
 		final Display strings = entity.getDisplay();
 
-		this.style = getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		this.style = getStyleSignature().getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
 		if (entity.getColors().getColor(ColorType.BACK) == null)
 			this.noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 		else

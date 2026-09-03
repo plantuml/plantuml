@@ -136,7 +136,7 @@ public class Swimlanes implements TextBlock, Styleable {
 
 	protected Style getStyle() {
 		if (style == null)
-			this.style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
+			this.style = getStyleSignature().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 		return style;
 	}

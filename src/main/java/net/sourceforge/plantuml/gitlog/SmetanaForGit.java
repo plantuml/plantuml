@@ -86,7 +86,7 @@ public class SmetanaForGit {
 
 	private Style getStyle() {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.gitDiagram)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 	}
 
 	private HColor arrowColor() {

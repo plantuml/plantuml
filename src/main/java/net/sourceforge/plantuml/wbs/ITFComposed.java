@@ -220,7 +220,7 @@ class ITFComposed extends WBSTextBlock implements ITF {
 
 	private HColor getLinkColor() {
 		final Style styleArrow = getIdea().getStyle().getSignature().withTOBECHANGED(getIdea().getStereotype())
-				.getMergedStyle(getIdea().getStyleBuilder());
+				.getMergedStyleREMOVEME(getIdea().getStyleBuilder());
 		return styleArrow.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 	}
 

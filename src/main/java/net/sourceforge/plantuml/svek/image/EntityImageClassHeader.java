@@ -92,7 +92,7 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 		final Style styleHeader = getStyleSignature() //
 				.withTOBECHANGED(stereotype) //
 				.with(entity.getStereostyles()) //
-				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
 
 		FontConfiguration fontConfigurationName = FontConfiguration.create(getSkinParam(), styleHeader,
 				entity.getColors());
@@ -138,7 +138,7 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 					.ofSName0(SName.root, SName.element, SName.classDiagram, SName.class_, SName.generic) //
 					.withTOBECHANGED(stereotype) //
 					.with(entity.getStereostyles()) //
-					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+					.getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
 
 			genericBlock = Display.getWithNewlines(getSkinParam().getPragma(), generic).create(
 					FontConfiguration.create(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),
@@ -171,7 +171,7 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 
 		final LeafType leafType = entity.getLeafType();
 
-		final Style style = spotStyleSignature(leafType).getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = spotStyleSignature(leafType).getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 		final HColor spotBorder = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final HColor spotBackColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 

@@ -681,7 +681,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 	private Style getStyle() {
 		return StyleSignature.ofSName0(SName.root, SName.element, diagram.getDiagramType().getStyleName(), SName.arrow)
-				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(diagram.getSkinParam().getCurrentStyleBuilder());
 	}
 
 	// Duplication from SvekEdge
@@ -697,7 +697,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		final SName styleName = skinParam.getDiagramType().getStyleName();
 
 		final Style style = getDefaultStyleDefinitionArrow(link.getStereotype(), styleName)
-				.getMergedStyle(link.getStyleBuilder());
+				.getMergedStyleREMOVEME(link.getStyleBuilder());
 		return style.getFontConfiguration(skinParam.getIHtmlColorSet());
 	}
 
@@ -754,7 +754,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			// alignment, skinParam);
 			// else
 			final Style arrowStyle = getDefaultStyleDefinitionArrow(link.getStereotype(),
-					skinParam.getDiagramType().getStyleName()).getMergedStyle(link.getStyleBuilder());
+					skinParam.getDiagramType().getStyleName()).getMergedStyleREMOVEME(link.getStyleBuilder());
 			final LineBreakStrategy styleWidth = arrowStyle.wrapWidth();
 			final LineBreakStrategy wrapWidth = styleWidth.getMaxWidth() > 0 ? styleWidth : skinParam.maxMessageSize();
 			block = link.getLabel().create0(font, alignment, skinParam, wrapWidth, CreoleMode.SIMPLE_LINE, null, null);

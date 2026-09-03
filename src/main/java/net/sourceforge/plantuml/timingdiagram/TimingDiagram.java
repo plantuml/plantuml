@@ -118,7 +118,7 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 	}
 
 	private HColor black() {
-		final Style style = getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		final Style style = getStyleSignature().getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
 		return style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 
 	}
@@ -186,7 +186,7 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 	}
 
 	private UStroke getBorderStroke() {
-		return getStyleSignature().getMergedStyle(getCurrentStyleBuilder()).getStroke();
+		return getStyleSignature().getMergedStyleREMOVEME(getCurrentStyleBuilder()).getStroke();
 	}
 
 	private UTranslate getLastTranslate(final StringBounder stringBounder) {

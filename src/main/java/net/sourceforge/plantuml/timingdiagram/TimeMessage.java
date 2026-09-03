@@ -84,7 +84,7 @@ public class TimeMessage extends WithLinkType {
 	}
 
 	private Style getStyle() {
-		return getStyleSignature().getMergedStyle(styleBuilder);
+		return getStyleSignature().getMergedStyleREMOVEME(styleBuilder);
 	}
 
 	private StyleSignature getStyleSignature() {

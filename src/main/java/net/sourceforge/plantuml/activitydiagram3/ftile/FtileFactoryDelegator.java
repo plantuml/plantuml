@@ -88,13 +88,13 @@ public class FtileFactoryDelegator implements FtileFactory {
 		Rainbow color;
 		final LinkRendering linkRendering = tile.getInLinkRendering();
 		if (linkRendering == null) {
-			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
+			final Style style = getDefaultStyleDefinitionArrow().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder());
 			return Rainbow.build(style, skinParam().getIHtmlColorSet());
 		} else {
 			color = linkRendering.getRainbow();
 		}
 		if (color.size() == 0) {
-			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
+			final Style style = getDefaultStyleDefinitionArrow().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder());
 			return Rainbow.build(style, skinParam().getIHtmlColorSet());
 		}
 		return color;
@@ -105,7 +105,7 @@ public class FtileFactoryDelegator implements FtileFactory {
 		if (Display.isNull(display))
 			return null;
 
-		final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
+		final Style style = getDefaultStyleDefinitionArrow().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder());
 		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam().getIHtmlColorSet());
 
 		return display.create7(fontConfiguration, HorizontalAlignment.LEFT, skinParam(), CreoleMode.SIMPLE_LINE);

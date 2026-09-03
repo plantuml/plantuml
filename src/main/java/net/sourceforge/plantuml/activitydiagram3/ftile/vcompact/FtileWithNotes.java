@@ -106,7 +106,7 @@ public class FtileWithNotes extends AbstractFtile {
 			if (note.getColors() != null)
 				skinParam2 = note.getColors().mute(skinParam2);
 
-			final Style style = getStyleSignature().getMergedStyle(skinParam().getCurrentStyleBuilder())
+			final Style style = getStyleSignature().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder())
 					.eventuallyOverride(note.getColors());
 			final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 			final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());

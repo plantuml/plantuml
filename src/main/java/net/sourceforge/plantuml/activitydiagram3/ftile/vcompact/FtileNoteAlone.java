@@ -102,7 +102,7 @@ public class FtileNoteAlone extends AbstractFtile implements Stencil, Styleable 
 		this.swimlane = swimlane;
 		this.withOutPoint = withOutPoint;
 
-		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = getStyleSignature().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 		final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 		final double shadowing = style.getShadowing();

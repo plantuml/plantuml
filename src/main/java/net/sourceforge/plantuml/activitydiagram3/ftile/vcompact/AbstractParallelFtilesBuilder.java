@@ -189,7 +189,7 @@ public abstract class AbstractParallelFtilesBuilder {
 		if (Display.isNull(display))
 			return null;
 
-		final Style style = getStyleSignatureArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
+		final Style style = getStyleSignatureArrow().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder());
 		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam().getIHtmlColorSet());
 
 		return display.create7(fontConfiguration, HorizontalAlignment.LEFT, skinParam(), CreoleMode.SIMPLE_LINE);

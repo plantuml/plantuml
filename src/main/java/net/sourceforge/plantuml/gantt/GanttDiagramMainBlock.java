@@ -107,7 +107,7 @@ public class GanttDiagramMainBlock extends TextBlockMemoized {
 //				ug = ug.apply(UTranslate.dx(layout.getTitlesWidth()));
 
 			final Style style = StyleSignature.ofSName0(SName.root, SName.element, SName.ganttDiagram, SName.timeline)
-					.getMergedStyle(timelineStyle.getSkinParam().getCurrentStyleBuilder());
+					.getMergedStyleREMOVEME(timelineStyle.getSkinParam().getCurrentStyleBuilder());
 
 			final HColor back = style.value(PName.BackGroundColor).asColor(timelineStyle.getColorSet());
 			if (back.isTransparent() == false) {

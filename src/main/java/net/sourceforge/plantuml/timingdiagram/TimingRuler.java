@@ -185,12 +185,12 @@ public class TimingRuler {
 
 	private Style getStyleTimegrid() {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.timingDiagram, SName.timegrid)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 	}
 
 	private Style getStyleTimeline() {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.timingDiagram, SName.timeline)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 	}
 
 	private TextBlock getTimeTextBlock(long time) {

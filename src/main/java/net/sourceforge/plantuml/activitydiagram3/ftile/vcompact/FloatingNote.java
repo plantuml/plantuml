@@ -67,7 +67,7 @@ public class FloatingNote implements Stencil, TextBlock {
 	private FloatingNote(Display note, ISkinParam skinParam, SName sname, boolean withLink) {
 
 		final Style style = StyleSignature.ofSName0(SName.root, SName.element, sname, SName.note)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 		final LineBreakStrategy wrapWidth = style.wrapWidth();
 		final FontConfiguration fc = FontConfiguration.create(skinParam, style);
 		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());

@@ -77,7 +77,7 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 		double x = 0;
 		for (Ftile tmp : list99) {
 			final XDimension2D dim = tmp.calculateDimension(getStringBounder());
-			Style style = getStyleSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());
+			Style style = getStyleSignature().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder());
 			final Rainbow def = Rainbow.build(style, skinParam().getIHtmlColorSet());
 			final Rainbow rainbow = tmp.getInLinkRendering().getRainbow(def);
 			conns.add(new ConnectionIn(black, tmp, x, rainbow));
@@ -93,7 +93,7 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 
 	@Override
 	protected Ftile doStep2(Ftile inner, Ftile result) {
-		final Style style = getStyleSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());
+		final Style style = getStyleSignature().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder());
 
 		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());
 		final HColor backColor = style.value(PName.BackGroundColor).asColor(skinParam().getIHtmlColorSet());

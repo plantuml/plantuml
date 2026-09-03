@@ -76,7 +76,7 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 		StyleSignature styleSignature = getStyleSignature();
 		if (stereotype != null)
 			styleSignature = styleSignature.mergeWith(stereotype.getStyles(styleBuilder));
-		final Style style = styleSignature.getMergedStyle(styleBuilder).eventuallyOverride(colors);
+		final Style style = styleSignature.getMergedStyleREMOVEME(styleBuilder).eventuallyOverride(colors);
 
 		return new Style[] { style };
 	}

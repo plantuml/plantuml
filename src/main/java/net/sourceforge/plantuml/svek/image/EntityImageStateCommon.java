@@ -90,19 +90,19 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 
 	public static Style getStyleStateName(Stereotype stereotype, StyleBuilder styleBuilder) {
 		final StyleSignature toto1 = STYLE.addSName(SName.name);
-		return toto1.withTOBECHANGED(stereotype).getMergedStyle(styleBuilder);
+		return toto1.withTOBECHANGED(stereotype).getMergedStyleREMOVEME(styleBuilder);
 	}
 
 	public static Style getStyleStateDescription(Stereotype stereotype, StyleBuilder styleBuilder) {
-		return STYLE.addSName(SName.description).withTOBECHANGED(stereotype).getMergedStyle(styleBuilder);
+		return STYLE.addSName(SName.description).withTOBECHANGED(stereotype).getMergedStyleREMOVEME(styleBuilder);
 	}
 
 	public static Style getStyleState(Stereotype stereotype, StyleBuilder styleBuilder) {
-		return STYLE.withTOBECHANGED(stereotype).getMergedStyle(styleBuilder);
+		return STYLE.withTOBECHANGED(stereotype).getMergedStyleREMOVEME(styleBuilder);
 	}
 
 	public static Style getStyleStateBody(Stereotype stereotype, StyleBuilder styleBuilder) {
-		return STYLE.addSName(SName.body).withTOBECHANGED(stereotype).getMergedStyle(styleBuilder);
+		return STYLE.addSName(SName.body).withTOBECHANGED(stereotype).getMergedStyleREMOVEME(styleBuilder);
 	}
 
 	final protected Style getStyleState() {
@@ -111,7 +111,7 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 
 	final protected Style getStyleStateDescription() {
 		return STYLE.addSName(SName.name).withTOBECHANGED(getEntity().getStereotype())
-				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
 	}
 
 	final public ShapeType getShapeType() {

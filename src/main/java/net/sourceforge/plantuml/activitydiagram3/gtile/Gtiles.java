@@ -60,7 +60,7 @@ public class Gtiles {
 	static public GtileHexagonInside hexagonInside(Swimlane swimlane, StringBounder stringBounder, ISkinParam skinParam,
 			StyleSignature styleSignature, HColor color, Display label) {
 
-		final Style style = styleSignature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = styleSignature.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final HColor backColor = color == null
 				? style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet())
@@ -79,7 +79,7 @@ public class Gtiles {
 	static public AbstractGtileRoot diamondEmpty(Swimlane swimlane, StringBounder stringBounder, ISkinParam skinParam,
 			StyleSignature styleSignature, HColor color) {
 
-		final Style style = styleSignature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = styleSignature.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final HColor backColor = color == null
 				? style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet())

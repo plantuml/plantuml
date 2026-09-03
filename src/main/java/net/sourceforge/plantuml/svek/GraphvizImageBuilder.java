@@ -201,7 +201,7 @@ public final class GraphvizImageBuilder {
 	// Duplicate SvekResult / GeneralImageBuilder
 	private HColor getBackcolor() {
 		final Style style = StyleSignature.ofSName0(SName.root, SName.document)
-				.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(dotData.getSkinParam().getCurrentStyleBuilder());
 		return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
 	}
 
@@ -232,9 +232,9 @@ public final class GraphvizImageBuilder {
 			try {
 				final ISkinParam skinParam = dotData.getSkinParam();
 				final FontConfiguration labelFont = getDefaultStyleDefinitionArrow(link.getStereotype())
-						.getMergedStyle(link.getStyleBuilder()).getFontConfiguration(skinParam.getIHtmlColorSet());
+						.getMergedStyleREMOVEME(link.getStyleBuilder()).getFontConfiguration(skinParam.getIHtmlColorSet());
 				final FontConfiguration cardinalityFont = getStyleArrowCardinality(link.getStereotype())
-						.getMergedStyle(link.getStyleBuilder()).getFontConfiguration(skinParam.getIHtmlColorSet());
+						.getMergedStyleREMOVEME(link.getStyleBuilder()).getFontConfiguration(skinParam.getIHtmlColorSet());
 
 				final SvekEdge line = new SvekEdge(link, skinParam, stringBounder, labelFont, cardinalityFont,
 						dotStringFactory.getBibliotekon(), pragma, dotStringFactory.getGraphvizVersion());

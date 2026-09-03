@@ -72,7 +72,7 @@ public class EntityImageActivity extends AbstractEntityImage {
 		super(entity);
 		this.bibliotekon = bibliotekon;
 
-		final Style style = getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		final Style style = getStyleSignature().getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
 		final FontConfiguration fontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 		final HorizontalAlignment horizontalAlignment = style.getHorizontalAlignment();
 		this.shadowing = style.getShadowing();
@@ -128,7 +128,7 @@ public class EntityImageActivity extends AbstractEntityImage {
 
 		ug = applyColors(ug);
 
-		final Style style = getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		final Style style = getStyleSignature().getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
 		final UStroke stroke = style.getStroke();
 
 		ug.apply(stroke).draw(rect);
@@ -145,7 +145,7 @@ public class EntityImageActivity extends AbstractEntityImage {
 
 	private UGraphic applyColors(UGraphic ug) {
 
-		final Style style = getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		final Style style = getStyleSignature().getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
 		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
 		if (backcolor == null)

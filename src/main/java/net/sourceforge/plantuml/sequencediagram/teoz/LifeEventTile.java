@@ -105,7 +105,7 @@ public class LifeEventTile extends AbstractTile {
 	}
 
     private Style[] getUsedStyle() {
-        final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
+        final Style style = getStyleSignature().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 		return new Style[] { style };
     }	
 

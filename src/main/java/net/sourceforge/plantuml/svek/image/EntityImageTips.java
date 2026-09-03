@@ -84,7 +84,7 @@ public class EntityImageTips extends AbstractEntityImage {
 	// parsed silently recolors every earlier tip on the same side of the
 	// same class (issue #2814).
 	private Style getStyleFor(Tip tip) {
-		return getStyleSignatureFor(tip.getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		return getStyleSignatureFor(tip.getStereotype()).getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
 	}
 
 	private StyleSignature getStyleSignatureFor(Stereotype stereotype) {

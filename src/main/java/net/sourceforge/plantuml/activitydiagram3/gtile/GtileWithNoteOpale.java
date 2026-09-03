@@ -105,7 +105,7 @@ public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Stylea
 		if (note.getType() == NoteType.FLOATING_NOTE)
 			withLink = false;
 
-		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder())
+		final Style style = getStyleSignature().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder())
 				.eventuallyOverride(note.getColors());
 		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 		final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());

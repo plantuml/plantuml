@@ -75,9 +75,9 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 		final ConditionEndStyle conditionEndStyle = skinParam().getConditionEndStyle();
 		final Branch branch0 = thens.get(0);
 
-		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(currentStyleBuilder);
+		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyleREMOVEME(currentStyleBuilder);
 		final Style styleDiamond = getDefaultStyleDefinitionDiamond().withTOBECHANGED(stereotype)
-				.getMergedStyle(currentStyleBuilder);
+				.getMergedStyleREMOVEME(currentStyleBuilder);
 		final HColor backColor = branch0.getColor() == null
 				? styleDiamond.value(PName.BackGroundColor).asColor(skinParam().getIHtmlColorSet())
 				: branch0.getColor();

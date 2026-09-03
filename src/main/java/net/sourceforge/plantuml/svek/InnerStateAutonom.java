@@ -115,13 +115,13 @@ public final class InnerStateAutonom extends TextBlockMemoized implements IEntit
 
 		if (this.northBackcolor == null) {
 			this.northBackcolor = EntityImageStateCommon.STYLE.addSName(SName.name)
-					.withTOBECHANGED(group.getStereotype()).getMergedStyle(styleBuilder).value(PName.BackGroundColor)
+					.withTOBECHANGED(group.getStereotype()).getMergedStyleREMOVEME(styleBuilder).value(PName.BackGroundColor)
 					.asColor(colorSet);
 			this.centerBackColor = EntityImageStateCommon.STYLE.addSName(SName.description)
-					.withTOBECHANGED(group.getStereotype()).getMergedStyle(styleBuilder).value(PName.BackGroundColor)
+					.withTOBECHANGED(group.getStereotype()).getMergedStyleREMOVEME(styleBuilder).value(PName.BackGroundColor)
 					.asColor(colorSet);
 			this.southBackcolor = EntityImageStateCommon.STYLE.addSName(SName.body)
-					.withTOBECHANGED(group.getStereotype()).getMergedStyle(styleBuilder).value(PName.BackGroundColor)
+					.withTOBECHANGED(group.getStereotype()).getMergedStyleREMOVEME(styleBuilder).value(PName.BackGroundColor)
 					.asColor(colorSet);
 		}
 

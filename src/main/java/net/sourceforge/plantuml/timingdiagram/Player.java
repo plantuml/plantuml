@@ -75,7 +75,7 @@ public abstract class Player {
 	public final void addNote(TimeTick now, Display note, Position position, Stereotype stereotype) {
 		final StyleSignature signature = StyleSignature.ofSName0(SName.root, SName.element, SName.timingDiagram,
 				SName.note);
-		final Style style = signature.withTOBECHANGED(stereotype).getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = signature.withTOBECHANGED(stereotype).getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 		this.notes.add(new TimingNote(now, this, note, position, skinParam, style));
 	}
@@ -96,7 +96,7 @@ public abstract class Player {
 
 	final protected Style getStyle() {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.timingDiagram, sname).withTOBECHANGED(stereotype)
-				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
 	}
 
 	public final List<TimingNote> getNotes() {
@@ -127,7 +127,7 @@ public abstract class Player {
 		if (title.isWhite())
 			return TextBlockUtils.EMPTY_TEXT_BLOCK;
 		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, StyleSignature
-				.ofSName0(SName.root, SName.element, SName.timingDiagram).getMergedStyle(skinParam.getCurrentStyleBuilder()));
+				.ofSName0(SName.root, SName.element, SName.timingDiagram).getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder()));
 		return title.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);
 	}
 

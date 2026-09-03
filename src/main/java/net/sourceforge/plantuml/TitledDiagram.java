@@ -279,7 +279,7 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 	@Override
 	public final HColor calculateBackColor() {
 		final Style style = StyleSignature.ofSName0(SName.root, SName.document, this.getDiagramType().getStyleName())
-				.getMergedStyle(this.getSkinParam().getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(this.getSkinParam().getCurrentStyleBuilder());
 
 		HColor backgroundColor = style.value(PName.BackGroundColor).asColor(this.getSkinParam().getIHtmlColorSet());
 		if (backgroundColor == null)

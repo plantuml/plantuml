@@ -75,7 +75,7 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 		final Stereotype stereotype = entity.getStereotype();
 
 		this.style = getStyleSignature().withTOBECHANGED(stereotype)
-				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
 
 		final FontConfiguration fontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 

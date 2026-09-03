@@ -146,7 +146,7 @@ public final class ClusterHeader {
 		return signature //
 				.withTOBECHANGED(g.getStereotype()) //
 				.with(g.getStereostyles()) //
-				.getMergedStyle(g.getSkinParam().getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(g.getSkinParam().getCurrentStyleBuilder());
 	}
 
 	private StyleSignature getSignature() {
@@ -210,7 +210,7 @@ public final class ClusterHeader {
 
 		final Style style = Cluster
 				.getDefaultStyleDefinition(skinParam.getDiagramType().getStyleName(), g.getUSymbol(), g.getGroupType())
-				.forStereotypeItself(g.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.forStereotypeItself(g.getStereotype()).getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 		final HorizontalAlignment horizontalAlignment = getTitleHorizontalAlignment();

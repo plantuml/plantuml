@@ -114,8 +114,8 @@ public class GtileBox extends AbstractGtile {
 	public static GtileBox create(StringBounder stringBounder, ISkinParam skinParam, Display label, Swimlane swimlane,
 			BoxStyle boxStyle, Stereotype stereotype) {
 		final Style style = getDefaultStyleDefinitionActivity().withTOBECHANGED(stereotype)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 
 		return new GtileBox(stringBounder, skinParam, label, swimlane, boxStyle, style, styleArrow);
 	}

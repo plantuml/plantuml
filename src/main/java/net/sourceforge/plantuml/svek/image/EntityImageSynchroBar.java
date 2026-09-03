@@ -75,7 +75,7 @@ public class EntityImageSynchroBar extends AbstractEntityImage {
 		final Shadowable rect = URectangle.build(dim.getWidth(), dim.getHeight());
 
 		final Style style = getStyleSignature().withTOBECHANGED(getEntity().getStereotype())
-				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
 		final HColor color = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 		final double shadowing = style.getShadowing();
 

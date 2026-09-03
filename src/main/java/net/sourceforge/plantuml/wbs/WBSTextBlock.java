@@ -86,7 +86,7 @@ abstract class WBSTextBlock extends TextBlockMemoized implements AsciiBlock {
 		final StyleSignature signature = StyleSignature
 				.ofSName0(SName.root, SName.element, SName.wbsDiagram, SName.arrow).addLevel(level)
 				.withTOBECHANGED(stereotype);
-		return signature.getMergedStyle(styleBuilder);
+		return signature.getMergedStyleREMOVEME(styleBuilder);
 	}
 
 	final protected void drawLine(UGraphic ug, double x1, double y1, double x2, double y2) {

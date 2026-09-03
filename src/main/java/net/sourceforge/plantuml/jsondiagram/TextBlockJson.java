@@ -148,7 +148,7 @@ public class TextBlockJson extends TextBlockMemoized {
 		else
 			signature = StyleSignature.ofSName0(SName.root, SName.element, diagramType, SName.node);
 
-		return signature.getMergedStyle(styleBuilder);
+		return signature.getMergedStyleREMOVEME(styleBuilder);
 	}
 
 	private Highlighted isHighlighted(String key, List<Highlighted> highlighted) {
@@ -266,7 +266,7 @@ public class TextBlockJson extends TextBlockMemoized {
 
 		double y = 0;
 		final Style styleNode = StyleSignature.ofSName0(SName.root, SName.element, diagramType, SName.node)
-				.getMergedStyle(styleBuilder);
+				.getMergedStyleREMOVEME(styleBuilder);
 		final UGraphic ugNode = styleNode.applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet());
 		for (Line line : lines) {
 			final double heightOfRow = line.getHeightOfRow(stringBounder);
@@ -283,7 +283,7 @@ public class TextBlockJson extends TextBlockMemoized {
 		ugNode.apply(backColor.bg()).apply(backColor).draw(fullNodeRectangle);
 
 		final Style styleSeparator = styleNode.getSignature().addSName(SName.separator)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 		final UGraphic ugSeparator = styleSeparator.applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet());
 
 		y = 0;
@@ -294,7 +294,7 @@ public class TextBlockJson extends TextBlockMemoized {
 				final URectangle back = URectangle.build(trueWidth - 2, heightOfRow).rounded(4);
 				final Style styleNodeHighlight = StyleSignature
 						.ofSName0(SName.root, SName.element, diagramType, SName.node, SName.highlight)
-						.withTOBECHANGED(line.highlighted.getStereotype()).getMergedStyle(styleBuilder);
+						.withTOBECHANGED(line.highlighted.getStereotype()).getMergedStyleREMOVEME(styleBuilder);
 				final HColor cellBackColor = styleNodeHighlight.value(PName.BackGroundColor)
 						.asColor(skinParam.getIHtmlColorSet());
 				ugline.apply(cellBackColor).apply(cellBackColor.bg()).apply(new UTranslate(1.5, 0)).draw(back);

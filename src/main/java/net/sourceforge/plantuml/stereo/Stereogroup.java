@@ -152,7 +152,7 @@ public class Stereogroup {
 
 	public HColor getHColor(StyleSignature styleSignature, PName pname, StyleBuilder styleBuilder, HColorSet colorSet)
 			throws NoSuchColorException {
-		final Style style = styleSignature.withTOBECHANGED(this).getMergedStyle(styleBuilder);
+		final Style style = styleSignature.withTOBECHANGED(this).getMergedStyleREMOVEME(styleBuilder);
 		final Colors colors = getInnerColors(colorSet);
 		return colors.getColor(style, pname, colorSet);
 	}

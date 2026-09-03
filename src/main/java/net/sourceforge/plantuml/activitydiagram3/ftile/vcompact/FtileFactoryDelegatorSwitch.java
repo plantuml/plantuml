@@ -112,7 +112,7 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 			ftiles.add(new FtileDecorateOutLabel(new FtileDecorateInLabel(branch.getFtile(), dimLabelIn), dimLabelOut));
 		}
 
-		final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
+		final Style style = getDefaultStyleDefinitionArrow().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder());
 		final Rainbow arrowColor = Rainbow.build(style, skinParam().getIHtmlColorSet());
 
 		if (ftiles.size() == 1) {
@@ -130,7 +130,7 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 
 		LineBreakStrategy lineBreak = LineBreakStrategy.NONE;
 
-		final Style style = getDefaultStyleDefinitionDiamond().getMergedStyle(skinParam().getCurrentStyleBuilder());
+		final Style style = getDefaultStyleDefinitionDiamond().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder());
 		lineBreak = style.wrapWidth();
 		final FontConfiguration fcDiamond = style.getFontConfiguration(skinParam().getIHtmlColorSet());
 		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());
@@ -150,7 +150,7 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 
 	private Ftile getDiamond2(Swimlane swimlane, Branch branch0, Colors endColors) {
 
-		final Style style = getDefaultStyleDefinitionDiamond().getMergedStyle(skinParam().getCurrentStyleBuilder());
+		final Style style = getDefaultStyleDefinitionDiamond().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder());
 		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());
 		final HColor backColor = branch0.getColor() == null
 				? endColors.getColor(style, PName.BackGroundColor, skinParam().getIHtmlColorSet())

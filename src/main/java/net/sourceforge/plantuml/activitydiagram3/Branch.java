@@ -249,7 +249,7 @@ public class Branch {
 		if (display == null)
 			return TextBlockUtils.EMPTY_TEXT_BLOCK;
 
-		final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
+		final Style style = getDefaultStyleDefinitionArrow().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder());
 		final LineBreakStrategy lineBreak = style.wrapWidth();
 		final FontConfiguration fcArrow = style.getFontConfiguration(skinParam().getIHtmlColorSet());
 

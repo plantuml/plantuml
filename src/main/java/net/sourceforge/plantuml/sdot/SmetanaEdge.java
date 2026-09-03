@@ -255,7 +255,7 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 		final StyleSignature result = StyleSignature
 				.ofSName0(SName.root, SName.element, diagramType().getStyleName(), SName.arrow)
 				.withTOBECHANGED(link.getStereotype());
-		return result.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		return result.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 	}
 
 	public XPoint2D getStartPoint() {

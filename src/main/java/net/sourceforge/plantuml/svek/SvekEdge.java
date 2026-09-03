@@ -286,7 +286,7 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 			final HorizontalAlignment alignment = getMessageTextAlignment(diagramType(), skinParam);
 			final boolean hasSeveralGuideLines = link.getLabel().hasSeveralGuideLines();
 			final Style arrowStyle = getDefaultStyleDefinition(link.getStereotype())
-					.getMergedStyle(skinParam.getCurrentStyleBuilder());
+					.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 			final LineBreakStrategy styleWidth = arrowStyle.wrapWidth();
 			final LineBreakStrategy wrapWidth = styleWidth.getMaxWidth() > 0
 					? styleWidth
@@ -871,7 +871,7 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		y += dy;
 
 		final StyleBuilder currentStyleBuilder = this.getCurrentStyleBuilder();
-		final Style styleLine = getDefaultStyleDefinition(this.getStereotype()).getMergedStyle(currentStyleBuilder);
+		final Style styleLine = getDefaultStyleDefinition(this.getStereotype()).getMergedStyleREMOVEME(currentStyleBuilder);
 		final UStroke suggestedStroke = styleLine.getStroke();
 		final Rainbow rainbow = Rainbow.build(styleLine, this.skinParam.getIHtmlColorSet());
 

@@ -97,7 +97,7 @@ public class CommandMultilinesHeader extends CommandMultilines<TitledDiagram> {
 			HorizontalAlignment ha = HorizontalAlignment.fromString(align, HorizontalAlignment.RIGHT);
 			if (align == null)
 				ha = FontParam.HEADER.getStyleDefinition(null)
-						.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder()).getHorizontalAlignment();
+						.getMergedStyleREMOVEME(diagram.getSkinParam().getCurrentStyleBuilder()).getHorizontalAlignment();
 
 			diagram.updateHeader(location, strings, ha);
 			return CommandExecutionResult.ok();

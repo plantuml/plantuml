@@ -90,7 +90,7 @@ public class PSystemRegex extends TitledDiagram {
 			e.printStackTrace();
 		}
 
-		this.style = ETile.getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		this.style = ETile.getStyleSignature().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 		this.fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 		this.colorSet = skinParam.getIHtmlColorSet();
 		this.lineColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());

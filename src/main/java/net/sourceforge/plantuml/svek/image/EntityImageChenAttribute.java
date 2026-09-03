@@ -107,12 +107,12 @@ public class EntityImageChenAttribute extends AbstractEntityImage {
 
 	private static Style getStyle(Entity group, ISkinParam skinParam) {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.chenEerDiagram, SName.chenAttribute)
-				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.withTOBECHANGED(group.getStereotype()).getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 	}
 
 	private static Style getStyleTitle(Entity group, ISkinParam skinParam) {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.chenEerDiagram, SName.chenAttribute, SName.title)
-				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.withTOBECHANGED(group.getStereotype()).getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 	}
 
 	@Override

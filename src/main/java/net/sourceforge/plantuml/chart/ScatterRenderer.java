@@ -84,9 +84,9 @@ public class ScatterRenderer {
 		StyleSignature signature = getScatterStyleSignature();
 		if (series != null && series.getStereotype() != null) {
 			return signature.withTOBECHANGED(series.getStereotype())
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 		}
-		return signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		return signature.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 	}
 
 	public void draw(UGraphic ug, ChartSeries series, HColor color) {

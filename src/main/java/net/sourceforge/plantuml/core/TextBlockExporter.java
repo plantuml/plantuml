@@ -509,7 +509,7 @@ public class TextBlockExporter {
 
 		private static ClockwiseTopRightBottomLeft calculateMargin(net.sourceforge.plantuml.TitledDiagram diagram) {
 			final Style style = StyleSignature.ofSName0(SName.root, SName.document)
-					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
+					.getMergedStyleREMOVEME(diagram.getSkinParam().getCurrentStyleBuilder());
 			if (style.hasValue(PName.Margin))
 				return style.getMargin();
 			return diagram.getDefaultMargins();

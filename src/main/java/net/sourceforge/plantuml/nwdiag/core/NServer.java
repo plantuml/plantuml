@@ -156,14 +156,14 @@ public class NServer {
 
 	private FontConfiguration getFontConfiguration(SName sname) {
 		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
-		final Style style = getStyleDefinition(sname).getMergedStyle(styleBuilder);
+		final Style style = getStyleDefinition(sname).getMergedStyleREMOVEME(styleBuilder);
 		return style.getFontConfiguration(skinParam.getIHtmlColorSet());
 	}
 
 	public NServerDraw getDraw(double topMargin, Map<Network, String> conns, List<Network> networks,
 			ISkinParam skinParam) {
 		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
-		Fashion symbolContext = getStyleDefinition(SName.server).getMergedStyle(styleBuilder)
+		Fashion symbolContext = getStyleDefinition(SName.server).getMergedStyleREMOVEME(styleBuilder)
 				.getSymbolContext(skinParam.getIHtmlColorSet());
 		if (backcolor != null)
 			try {

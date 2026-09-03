@@ -111,26 +111,26 @@ public class VCompactFactory implements FtileFactory {
 
 	@Override
 	public Ftile start(Swimlane swimlane, Colors colors) {
-		final Style style = getSignatureCircleStart().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = getSignatureCircleStart().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 		return new FtileCircleStart(skinParam(), swimlane, style, colors);
 	}
 
 	@Override
 	public Ftile stop(Swimlane swimlane, Colors colors) {
-		final Style style = getSignatureCircleStop().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = getSignatureCircleStop().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 		return new FtileCircleStop(skinParam(), swimlane, style, colors);
 	}
 
 	@Override
 	public Ftile spot(Swimlane swimlane, String spot, HColor color) {
 		final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);
-		final Style style = getSignatureCircleSpot().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = getSignatureCircleSpot().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 		return new FtileCircleSpot(skinParam(), swimlane, spot, font, color, style);
 	}
 
 	@Override
 	public Ftile end(Swimlane swimlane, Colors colors) {
-		final Style style = getSignatureCircleEnd().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = getSignatureCircleEnd().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 		return new FtileCircleEndCross(skinParam(), swimlane, style, colors);
 	}
 

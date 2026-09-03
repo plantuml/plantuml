@@ -217,7 +217,7 @@ public class PacketBlock {
 
 	Style getStyle() {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.packetdiagDiagram, SName.rectangle)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
 	}
 
 	Fashion getFashion() {

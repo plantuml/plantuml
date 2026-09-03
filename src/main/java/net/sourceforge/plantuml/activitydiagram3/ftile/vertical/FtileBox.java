@@ -143,8 +143,8 @@ public class FtileBox extends AbstractFtile {
 		if (styleBuilder == null)
 			styleBuilder = skinParam.getCurrentStyleBuilder();
 
-		final Style style = getStyleSignature().withTOBECHANGED(stereotype).getMergedStyle(styleBuilder);
-		final Style styleArrow = getStyleSignatureArrow().getMergedStyle(styleBuilder);
+		final Style style = getStyleSignature().withTOBECHANGED(stereotype).getMergedStyleREMOVEME(styleBuilder);
+		final Style styleArrow = getStyleSignatureArrow().getMergedStyleREMOVEME(styleBuilder);
 		return new FtileBox(skinParam, label, swimlane, boxStyle, style, styleArrow);
 	}
 

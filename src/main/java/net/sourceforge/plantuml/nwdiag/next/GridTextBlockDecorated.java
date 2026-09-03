@@ -76,7 +76,7 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 
 	private void drawLinks(UGraphic ug, StyleBuilder styleBuilder) {
 
-		final Style style = getStyleDefinitionNetwork(SName.arrow).getMergedStyle(styleBuilder);
+		final Style style = getStyleDefinitionNetwork(SName.arrow).getMergedStyleREMOVEME(styleBuilder);
 		final HColor lineColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 
 		ug = ug.apply(lineColor);
@@ -148,7 +148,7 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 
 			UGraphic ug2 = ug.apply(new UTranslate(network.getXmin(), y));
 			final StyleBuilder styleBuilder = getSkinParam().getCurrentStyleBuilder();
-			final Style style = getStyleDefinitionNetwork(SName.network).getMergedStyle(styleBuilder);
+			final Style style = getStyleDefinitionNetwork(SName.network).getMergedStyleREMOVEME(styleBuilder);
 			final double deltaShadow = style.getShadowing();
 			ug2 = ug2.apply(style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet()));
 			ug2 = ug2.apply(style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet()).bg());

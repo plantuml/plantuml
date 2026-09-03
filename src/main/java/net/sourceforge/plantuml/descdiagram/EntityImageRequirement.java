@@ -100,7 +100,7 @@ public class EntityImageRequirement extends AbstractEntityImage {
 
 	private Style getStyle() {
 		return getStyleSignature().withTOBECHANGED(getEntity().getStereotype())
-				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
 	}
 
 	private UStroke getStroke() {

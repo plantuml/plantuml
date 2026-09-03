@@ -196,7 +196,7 @@ public final class GanttTaskTable {
 
 	private Style getStyle() {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.ganttDiagram, SName.timeline)
-				.getMergedStyle(timelineStyle.getSkinParam().getCurrentStyleBuilder());
+				.getMergedStyleREMOVEME(timelineStyle.getSkinParam().getCurrentStyleBuilder());
 	}
 
 	private FontConfiguration getFontConfiguration() {

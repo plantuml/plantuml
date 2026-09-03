@@ -356,7 +356,7 @@ public class PacketDiagram extends TitledDiagram {
 	public Style getStyle() {
 		if (style == null) {
 			style = StyleSignature.ofSName0(SName.root, SName.element, SName.packetdiagDiagram)
-					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+					.getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
 		}
 		return style;
 	}

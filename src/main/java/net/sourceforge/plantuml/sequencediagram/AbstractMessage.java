@@ -64,7 +64,7 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	}
 
 	final public Style[] getUsedStyles() {
-		Style style = getStyleSignature().getMergedStyle(styleBuilder);
+		Style style = getStyleSignature().getMergedStyleREMOVEME(styleBuilder);
 		if (style != null && arrowConfiguration.getColor() != null)
 			style = style.eventuallyOverride(PName.LineColor, arrowConfiguration.getColor());
 

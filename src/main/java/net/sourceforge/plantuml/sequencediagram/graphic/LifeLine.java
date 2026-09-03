@@ -237,7 +237,7 @@ public class LifeLine {
 					currentStyleBuilder = skinParam2.getCurrentStyleBuilder();
 
 				Style style = type.getStyleSignature().withTOBECHANGED(participant.getStereotype())
-						.getMergedStyle(currentStyleBuilder);
+						.getMergedStyleREMOVEME(currentStyleBuilder);
 
 				if (style != null) {
 					style = style.eventuallyOverride(PName.BackGroundColor, specificBackColor);

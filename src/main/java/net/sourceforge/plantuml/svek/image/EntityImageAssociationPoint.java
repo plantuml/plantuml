@@ -70,7 +70,7 @@ public class EntityImageAssociationPoint extends AbstractEntityImage {
 	}
 
 	private Style getStyle() {
-		return getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		return getStyleSignature().getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
 	}
 
 	final public void drawU(UGraphic ug) {
