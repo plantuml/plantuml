@@ -187,13 +187,18 @@ public final class StyleIndex {
 	 * rather than once per {@link StyleBuilder} clone (see this class's own javadoc for why that
 	 * distinction is what makes the caching worth having across diagrams sharing a skin).
 	 */
+	// This method is to be deleted
 	Style getMergedStyle(StyleSignature signature) {
-		return mergedStyleCache.computeIfAbsent(signature, sig -> computeMergedStyle(sig));
+		return mergedStyleCache.computeIfAbsent(signature, sig -> computeMergedStyle(sig.toQuery()));
 	}
 
-	private Style computeMergedStyle(StyleSignature signature) {
+	Style getMergedStyle(StyleQuery query) {
+		return computeMergedStyle(query);
+	}
+
+	private Style computeMergedStyle(StyleQuery query) {
 		Style mergedStyle = null;
-		for (Style style : findMatching(signature.toQuery())) {
+		for (Style style : findMatching(query)) {
 			if (mergedStyle == null)
 				mergedStyle = style;
 			else
