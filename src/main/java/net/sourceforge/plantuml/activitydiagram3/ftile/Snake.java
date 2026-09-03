@@ -136,19 +136,19 @@ public class Snake implements UShape {
 	}
 
 	public static Snake create(ISkinParam skinParam, Rainbow color) {
-		final Style style = StyleSignature.activityArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleSignature.activityArrow());
 		return new Snake(skinParam, null, color, null, new Worm(style, skinParam.arrows()), MergeStrategy.FULL, null,
 				new ArrayList<Text>());
 	}
 
 	public static Snake create(ISkinParam skinParam, Rainbow color, UPolygon endDecoration) {
-		final Style style = StyleSignature.activityArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleSignature.activityArrow());
 		return new Snake(skinParam, null, color, endDecoration, new Worm(style, skinParam.arrows()), MergeStrategy.FULL,
 				null, new ArrayList<Text>());
 	}
 
 	public static Snake create(ISkinParam skinParam, UPolygon startDecoration, Rainbow color, UPolygon endDecoration) {
-		final Style style = StyleSignature.activityArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleSignature.activityArrow());
 		return new Snake(skinParam, startDecoration, color, endDecoration, new Worm(style, skinParam.arrows()),
 				MergeStrategy.FULL, null, new ArrayList<Text>());
 	}

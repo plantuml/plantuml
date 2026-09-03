@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.style;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -258,8 +259,8 @@ public class StyleSignature {
 
 	// Frequent use
 
-	public static StyleSignature activityArrow() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.arrow);
+	public static StyleQuery activityArrow() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.arrow));
 	}
 
 	public static StyleSignature ofSName0(SName... names) {
