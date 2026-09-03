@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
 
@@ -66,7 +67,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.utils.MathUtils;
 
@@ -80,8 +81,8 @@ public class FtileWithNotes extends AbstractFtile {
 
 	private final double suppSpace = 20;
 
-	public StyleSignature getStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.note);
+	public StyleQuery getStyleSignature() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.note));
 	}
 
 	public Set<Swimlane> getSwimlanes() {
@@ -106,7 +107,7 @@ public class FtileWithNotes extends AbstractFtile {
 			if (note.getColors() != null)
 				skinParam2 = note.getColors().mute(skinParam2);
 
-			final Style style = getStyleSignature().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder())
+			final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getStyleSignature())
 					.eventuallyOverride(note.getColors());
 			final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 			final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());

@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.bpm;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBox;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileCircleStart;
@@ -59,7 +61,7 @@ import net.sourceforge.plantuml.skin.SkinParamUtils;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzzle {
 
@@ -139,12 +141,12 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 		}
 	}
 
-	private StyleSignature getSignatureCircle() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.circle);
+	private StyleQuery getSignatureCircle() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.circle));
 	}
 
 	private Style getStyle(ISkinParam skinParam) {
-		return getSignatureCircle().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(getSignatureCircle());
 	}
 
 	public TextBlock toTextBlockInternal(ISkinParam skinParam) {

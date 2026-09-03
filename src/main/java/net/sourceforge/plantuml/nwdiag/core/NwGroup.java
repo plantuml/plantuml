@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.nwdiag.core;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
@@ -55,7 +56,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class NwGroup implements NStackable {
 
@@ -136,13 +137,13 @@ public class NwGroup implements NStackable {
 		return blockDim.getHeight();
 	}
 
-	private StyleSignature getStyleDefinition() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.nwdiagDiagram, SName.group);
+	private StyleQuery getStyleDefinition() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.nwdiagDiagram, SName.group));
 	}
 
 	public void drawGroup(UGraphic ug, MinMax size, ISkinParam skinParam) {
 		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
-		final Style style = getStyleDefinition().getMergedStyleREMOVEME(styleBuilder);
+		final Style style = styleBuilder.getMergedStyle(getStyleDefinition());
 		final TextBlock block = buildHeaderName(skinParam);
 		if (block != null) {
 			final XDimension2D blockDim = block.calculateDimension(ug.getStringBounder());
@@ -167,7 +168,7 @@ public class NwGroup implements NStackable {
 			return null;
 
 		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
-		final Style style = getStyleDefinition().getMergedStyleREMOVEME(styleBuilder);
+		final Style style = styleBuilder.getMergedStyle(getStyleDefinition());
 		return Display.getWithNewlines(skinParam.getPragma(), getDescription())
 				.create(style.getFontConfiguration(skinParam.getIHtmlColorSet()), HorizontalAlignment.LEFT, skinParam);
 	}

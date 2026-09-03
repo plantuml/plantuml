@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.nwdiag.next;
 
+import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -49,7 +50,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class GridTextBlockDecorated extends GridTextBlockSimple {
 
@@ -76,7 +77,7 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 
 	private void drawLinks(UGraphic ug, StyleBuilder styleBuilder) {
 
-		final Style style = getStyleDefinitionNetwork(SName.arrow).getMergedStyleREMOVEME(styleBuilder);
+		final Style style = styleBuilder.getMergedStyle(getStyleDefinitionNetwork(SName.arrow));
 		final HColor lineColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 
 		ug = ug.apply(lineColor);
@@ -131,8 +132,8 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 		return false;
 	}
 
-	private StyleSignature getStyleDefinitionNetwork(SName sname) {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.nwdiagDiagram, sname);
+	private StyleQuery getStyleDefinitionNetwork(SName sname) {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.nwdiagDiagram, sname));
 	}
 
 	private void drawNetworkTube(UGraphic ug) {
@@ -148,7 +149,7 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 
 			UGraphic ug2 = ug.apply(new UTranslate(network.getXmin(), y));
 			final StyleBuilder styleBuilder = getSkinParam().getCurrentStyleBuilder();
-			final Style style = getStyleDefinitionNetwork(SName.network).getMergedStyleREMOVEME(styleBuilder);
+			final Style style = styleBuilder.getMergedStyle(getStyleDefinitionNetwork(SName.network));
 			final double deltaShadow = style.getShadowing();
 			ug2 = ug2.apply(style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet()));
 			ug2 = ug2.apply(style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet()).bg());

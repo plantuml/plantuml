@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.timingdiagram.graphic;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -47,7 +49,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 
 public class PlayerFrame {
@@ -62,17 +64,17 @@ public class PlayerFrame {
 		this.compact = compact;
 	}
 
-	private StyleSignature getStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.timingDiagram);
+	private StyleQuery getStyleSignature() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.timingDiagram));
 	}
 
 	private HColor getLineColor() {
-		final Style style = getStyleSignature().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getStyleSignature());
 		return style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 	}
 
 	private UStroke getUStroke() {
-		final Style style = getStyleSignature().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getStyleSignature());
 		return style.getStroke();
 	}
 

@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import net.sourceforge.plantuml.activitydiagram3.Branch;
@@ -69,7 +70,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.url.Url;
@@ -98,12 +99,12 @@ public class ConditionalBuilder {
 	private final Collection<PositionedNote> notes;
 	private final Style styleDiamond;
 
-	private StyleSignature getStyleSignatureDiamond() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
+	private StyleQuery getStyleSignatureDiamond() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));
 	}
 
-	private StyleSignature getStyleSignatureArrow() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	private StyleQuery getStyleSignatureArrow() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
 	}
 
 	public ConditionalBuilder(Swimlane swimlane, HColor backColor, FtileFactory ftileFactory,
@@ -243,7 +244,7 @@ public class ConditionalBuilder {
 				.createSheet(labelTest);
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, diamondLineBreak, skinParam.getPadding());
 
-		final UStroke thickness = getStyleSignatureDiamond().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder())
+		final UStroke thickness = skinParam.getCurrentStyleBuilder().getMergedStyle(getStyleSignatureDiamond())
 				.getStroke();
 		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Hexagon.asStencil(sheetBlock1), thickness);
 

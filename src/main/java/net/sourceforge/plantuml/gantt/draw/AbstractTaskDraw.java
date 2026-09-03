@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.gantt.draw;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.gantt.core.GSide;
 import net.sourceforge.plantuml.gantt.core.Task;
 import net.sourceforge.plantuml.gantt.data.TaskDrawRegistryData;
@@ -64,6 +66,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.url.Url;
 
@@ -115,19 +118,19 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 
 	abstract StyleSignature getStyleSignature();
 
-	private StyleSignature getStyleSignatureUnstarted() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.ganttDiagram, SName.task, SName.unstarted);
+	private StyleQuery getStyleSignatureUnstarted() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.task, SName.unstarted));
 	}
 
 	final protected HColor getLineColor() {
-		final HColor unstarted = getStyleSignatureUnstarted().getMergedStyleREMOVEME(styleBuilder).value(PName.LineColor)
+		final HColor unstarted = styleBuilder.getMergedStyle(getStyleSignatureUnstarted()).value(PName.LineColor)
 				.asColor(getColorSet());
 		final HColor regular = getStyle().value(PName.LineColor).asColor(getColorSet());
 		return HColors.unlinear(unstarted, regular, completion);
 	}
 
 	final protected HColor getBackgroundColor() {
-		final HColor unstarted = getStyleSignatureUnstarted().getMergedStyleREMOVEME(styleBuilder).value(PName.BackGroundColor)
+		final HColor unstarted = styleBuilder.getMergedStyle(getStyleSignatureUnstarted()).value(PName.BackGroundColor)
 				.asColor(getColorSet());
 		final HColor regular = getStyle().value(PName.BackGroundColor).asColor(getColorSet());
 		return HColors.unlinear(unstarted, regular, completion);

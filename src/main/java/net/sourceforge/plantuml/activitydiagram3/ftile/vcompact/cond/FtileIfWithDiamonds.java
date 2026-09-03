@@ -64,7 +64,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.image.Opale;
 
 public class FtileIfWithDiamonds extends FtileIfNude {
@@ -111,7 +111,7 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 	}
 
 	public static Opale createOpale(final PositionedNote first, ISkinParam skinParam) {
-		final Style style = getStyleSignature().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder())
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getStyleSignature())
 				.eventuallyOverride(first.getColors());
 		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
@@ -144,8 +144,8 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 		};
 	}
 
-	private static StyleSignature getStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.note);
+	private static StyleQuery getStyleSignature() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.note));
 	}
 
 	@Override

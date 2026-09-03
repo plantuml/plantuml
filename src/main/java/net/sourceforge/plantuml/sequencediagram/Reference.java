@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.sequencediagram;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -47,7 +48,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.warning.Warning;
 
@@ -63,12 +64,12 @@ public class Reference extends AbstractEvent implements EventWithNote {
 	final private Style style;
 	final private Style styleHeader;
 
-	public StyleSignature getDefaultStyleDefinition() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.reference);
+	public StyleQuery getDefaultStyleDefinition() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.reference));
 	}
 
-	private StyleSignature getHeaderStyleDefinition() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.referenceHeader);
+	private StyleQuery getHeaderStyleDefinition() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.referenceHeader));
 	}
 
 	// The nested counterpart of the legacy flat "referenceHeader" above, added
@@ -78,18 +79,18 @@ public class Reference extends AbstractEvent implements EventWithNote {
 	// computeStyleHeader()) rather than a replacement, so every existing
 	// diagram styling `referenceHeader` directly keeps working unchanged: only
 	// diagrams that opt into the new nested form are affected.
-	private StyleSignature getNestedHeaderStyleDefinition() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.reference, SName.header);
+	private StyleQuery getNestedHeaderStyleDefinition() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.reference, SName.header));
 	}
 
 	private Style computeStyleHeader(StyleBuilder styleBuilder) {
-		final Style flat = getHeaderStyleDefinition().getMergedStyleREMOVEME(styleBuilder);
+		final Style flat = styleBuilder.getMergedStyle(getHeaderStyleDefinition());
 		// "style" (this.style, already assigned above in the constructor) is the
 		// plain "reference" style -- the exact ancestor "nested" cascades from,
 		// so mergeNestedChildOver() can isolate what header{} itself actually
 		// sets (see Style.mergeNestedChildOver()'s javadoc for why this
 		// filtering is needed at all).
-		final Style nested = getNestedHeaderStyleDefinition().getMergedStyleREMOVEME(styleBuilder);
+		final Style nested = styleBuilder.getMergedStyle(getNestedHeaderStyleDefinition());
 		if (flat == null)
 			return nested;
 
@@ -108,7 +109,7 @@ public class Reference extends AbstractEvent implements EventWithNote {
 		this.strings = strings;
 		this.backColorGeneral = backColorGeneral;
 		this.backColorElement = backColorElement;
-		this.style = getDefaultStyleDefinition().getMergedStyleREMOVEME(styleBuilder);
+		this.style = styleBuilder.getMergedStyle(getDefaultStyleDefinition());
 		this.styleHeader = computeStyleHeader(styleBuilder);
 	}
 
