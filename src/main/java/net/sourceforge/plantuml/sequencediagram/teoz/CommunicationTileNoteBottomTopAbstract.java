@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public abstract class CommunicationTileNoteBottomTopAbstract extends AbstractTile {
 
@@ -120,7 +120,7 @@ public abstract class CommunicationTileNoteBottomTopAbstract extends AbstractTil
 
 	protected final void drawLine(UGraphic ug, double x1, double y1, double x2, double y2) {
 
-		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram)
+		final Style style = StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final HColor color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 

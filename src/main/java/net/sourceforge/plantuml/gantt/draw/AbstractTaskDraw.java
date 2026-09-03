@@ -64,7 +64,6 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.url.Url;
 
@@ -116,8 +115,8 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 
 	abstract StyleSignature getStyleSignature();
 
-	private StyleSignatureBasic getStyleSignatureUnstarted() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.task, SName.unstarted);
+	private StyleSignature getStyleSignatureUnstarted() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.ganttDiagram, SName.task, SName.unstarted);
 	}
 
 	final protected HColor getLineColor() {
@@ -213,7 +212,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	}
 
 	protected Opale getOpaleNote() {
-		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.note)
+		final Style style = StyleSignature.ofSName0(SName.root, SName.element, SName.ganttDiagram, SName.note)
 				.withTOBECHANGED(noteStereotype).getMergedStyle(getStyleBuilder());
 
 		final FontConfiguration fc = style.getFontConfiguration(getColorSet());

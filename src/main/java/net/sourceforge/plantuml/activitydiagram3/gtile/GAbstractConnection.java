@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public abstract class GAbstractConnection implements GConnection {
 
@@ -86,8 +86,8 @@ public abstract class GAbstractConnection implements GConnection {
 		throw new UnsupportedOperationException();
 	}
 
-	private final StyleSignatureBasic getDefaultStyleDefinitionArrow() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	private final StyleSignature getDefaultStyleDefinitionArrow() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
 	protected ISkinParam skinParam() {

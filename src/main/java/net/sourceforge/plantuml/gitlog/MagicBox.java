@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class MagicBox {
 
@@ -63,7 +63,7 @@ public class MagicBox {
 	public MagicBox(ISkinParam skinParam, GNode node) {
 		this.skinParam = skinParam;
 		this.node = node;
-		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.gitDiagram)
+		final Style style = StyleSignature.ofSName0(SName.root, SName.element, SName.gitDiagram)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		this.fontColor = style.value(PName.FontColor).asColor(skinParam.getIHtmlColorSet());
 	}

@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class LinkAnchor {
 
@@ -95,7 +95,7 @@ public class LinkAnchor {
 		final double ymin = Math.min(y1, y2);
 		final double ymax = Math.max(y1, y2);
 
-		final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram,
+		final StyleSignature signature = StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram,
 				SName.arrow);
 		final Style style = signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
 

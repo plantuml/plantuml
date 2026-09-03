@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class GtileAssembly extends GtileTopDown {
 
@@ -68,8 +68,8 @@ public class GtileAssembly extends GtileTopDown {
 		return new UTranslate(0, height);
 	}
 
-	final public StyleSignatureBasic getDefaultStyleDefinitionArrow() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	final public StyleSignature getDefaultStyleDefinitionArrow() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
 	@Override

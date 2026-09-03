@@ -75,7 +75,6 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Margins;
@@ -109,7 +108,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 	@Override
 	public StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), symbol.getSNames());
+		return StyleSignature.ofSName2(SName.root, SName.element, getStyleName(), symbol.getSNames());
 
 	}
 
@@ -140,20 +139,20 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		final Colors colors = entity.getColors();
 
-		final StyleSignatureBasic signatureTitle;
+		final StyleSignature signatureTitle;
 		if (symbol instanceof USymbolActorBusiness)
-			signatureTitle = StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), SName.actor,
+			signatureTitle = StyleSignature.ofSName0(SName.root, SName.element, getStyleName(), SName.actor,
 					SName.business, SName.title);
 		else
-			signatureTitle = StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), symbol.getSNames(),
+			signatureTitle = StyleSignature.ofSName2(SName.root, SName.element, getStyleName(), symbol.getSNames(),
 					SName.title);
 
 		final Stereotype stereotype = entity.getStereotype();
 		final Style styleTitle = signatureTitle.withTOBECHANGED(stereotype)
 				.getMergedStyle(getEntity().getCurrentStyleBuilder()).eventuallyOverride(colors);
 
-		final Style styleStereo = StyleSignatureBasic
-				.of(SName.root, SName.element, getStyleName(), symbol.getSNames(), SName.stereotype)
+		final Style styleStereo = StyleSignature
+				.ofSName2(SName.root, SName.element, getStyleName(), symbol.getSNames(), SName.stereotype)
 				.forStereotypeItself(stereotype).getMergedStyle(getEntity().getCurrentStyleBuilder());
 
 		final Style style = getStyleSignature().withTOBECHANGED(stereotype)

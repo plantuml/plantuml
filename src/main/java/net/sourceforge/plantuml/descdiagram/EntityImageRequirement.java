@@ -62,7 +62,6 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.text.Guillemet;
@@ -96,7 +95,7 @@ public class EntityImageRequirement extends AbstractEntityImage {
 
 	@Override
 	public StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.componentDiagram, SName.requirement);
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.componentDiagram, SName.requirement);
 	}
 
 	private Style getStyle() {

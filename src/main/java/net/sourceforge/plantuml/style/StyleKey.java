@@ -91,7 +91,7 @@ public class StyleKey {
 		return new StyleKey(snames, level, true);
 	}
 
-	public static StyleKey of(SName... names) {
+	public static StyleKey ofSNames(SName... names) {
 
 		final EnumSet<SName> result = EnumSet.noneOf(SName.class);
 		for (SName name : names)

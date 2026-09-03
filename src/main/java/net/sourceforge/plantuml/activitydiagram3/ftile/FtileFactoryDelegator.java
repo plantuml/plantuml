@@ -63,7 +63,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.url.Url;
 
 public class FtileFactoryDelegator implements FtileFactory {
@@ -72,16 +72,16 @@ public class FtileFactoryDelegator implements FtileFactory {
 
 	private final Rose rose = new Rose();
 
-	final public StyleSignatureBasic getDefaultStyleDefinitionActivity() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity);
+	final public StyleSignature getDefaultStyleDefinitionActivity() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity);
 	}
 
-	final public StyleSignatureBasic getDefaultStyleDefinitionDiamond() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
+	final public StyleSignature getDefaultStyleDefinitionDiamond() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
 	}
 
-	final public StyleSignatureBasic getDefaultStyleDefinitionArrow() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	final public StyleSignature getDefaultStyleDefinitionArrow() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
 	protected final Rainbow getInLinkRenderingColor(Ftile tile) {

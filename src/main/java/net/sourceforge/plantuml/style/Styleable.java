@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.style;
 
 public interface Styleable {
-    // ::remove file when __HAXE__
 
 	public StyleSignature getStyleSignature();
 

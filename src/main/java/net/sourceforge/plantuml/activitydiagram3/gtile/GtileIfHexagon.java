@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class GtileIfHexagon extends GtileColumns {
 
@@ -176,16 +176,16 @@ public class GtileIfHexagon extends GtileColumns {
 		return nude.delta(0, height2 + 30);
 	}
 
-	final public StyleSignatureBasic getDefaultStyleDefinitionActivity() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity);
+	final public StyleSignature getDefaultStyleDefinitionActivity() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity);
 	}
 
-	final public StyleSignatureBasic getDefaultStyleDefinitionDiamond() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
+	final public StyleSignature getDefaultStyleDefinitionDiamond() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
 	}
 
-	final public StyleSignatureBasic getDefaultStyleDefinitionArrow() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	final public StyleSignature getDefaultStyleDefinitionArrow() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
 	@Override

@@ -75,7 +75,7 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class NwDiagram extends TitledDiagram {
 
@@ -316,8 +316,8 @@ public class NwDiagram extends TitledDiagram {
 		};
 	}
 
-	private StyleSignatureBasic getStyleDefinitionNetwork(SName sname) {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.nwdiagDiagram, sname);
+	private StyleSignature getStyleDefinitionNetwork(SName sname) {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.nwdiagDiagram, sname);
 	}
 
 	private TextBlock toTextBlockForNetworkName(String name, String s) {

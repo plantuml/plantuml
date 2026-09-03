@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.klimt.font;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 interface FontParamConstant {
 	String FAMILY = "SansSerif";
@@ -186,23 +186,23 @@ public enum FontParam {
 		return FontConfiguration.create(skinParam, this, null);
 	}
 
-	public StyleSignatureBasic getStyleDefinition(SName diagramType) {
+	public StyleSignature getStyleDefinition(SName diagramType) {
 		if (this == FOOTER) {
-			return StyleSignatureBasic.of(SName.root, SName.document, SName.footer);
+			return StyleSignature.ofSName0(SName.root, SName.document, SName.footer);
 		}
 		if (this == HEADER) {
-			return StyleSignatureBasic.of(SName.root, SName.document, SName.header);
+			return StyleSignature.ofSName0(SName.root, SName.document, SName.header);
 		}
 		if (this == TITLE) {
-			return StyleSignatureBasic.of(SName.root, SName.document, SName.title);
+			return StyleSignature.ofSName0(SName.root, SName.document, SName.title);
 		}
 		if (this == CLASS_ATTRIBUTE) {
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.classDiagram, SName.class_);
+			return StyleSignature.ofSName0(SName.root, SName.element, SName.classDiagram, SName.class_);
 		}
 		if (this == RECTANGLE || this == NODE) {
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.componentDiagram, SName.component);
+			return StyleSignature.ofSName0(SName.root, SName.element, SName.componentDiagram, SName.component);
 		}
-		return StyleSignatureBasic.of(SName.root, SName.element, diagramType, SName.component);
+		return StyleSignature.ofSName0(SName.root, SName.element, diagramType, SName.component);
 //		System.err.println("Warning " + this);
 //		throw new UnsupportedOperationException();
 	}

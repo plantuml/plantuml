@@ -87,7 +87,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.Styleable;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
 import net.sourceforge.plantuml.teavm.TeaVM;
@@ -123,8 +123,8 @@ public class Swimlanes implements TextBlock, Styleable {
 		return Collections.unmodifiableList(swimlanesSpecial);
 	}
 
-	public StyleSignatureBasic getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.swimlane);
+	public StyleSignature getStyleSignature() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.swimlane);
 	}
 
 	public Swimlanes(ISkinParam skinParam, Pragma pragma) {
@@ -245,7 +245,7 @@ public class Swimlanes implements TextBlock, Styleable {
 
 			TextBlock full = root.createFtile(getFtileFactory(ug.getStringBounder()));
 			final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(
-					StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.goto_));
+					StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.goto_));
 			final HColor gotoColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 			final boolean isDebug = Boolean.parseBoolean(skinParam.options().getValue(OptionKey.DEBUG));
 
@@ -267,7 +267,7 @@ public class Swimlanes implements TextBlock, Styleable {
 		TextBlock full = root.createGtile(skinParam, ug.getStringBounder());
 
 		final Style style = skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.goto_));
+				.getMergedStyle(StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.goto_));
 		final HColor gotoColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final boolean isDebug = true;
 

@@ -61,7 +61,6 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public class TaskDrawDiamond extends AbstractTaskDraw {
 
@@ -72,7 +71,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 
 	@Override
 	StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.milestone);
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.ganttDiagram, SName.milestone);
 	}
 
 	private double getYNotePosition(StringBounder stringBounder) {

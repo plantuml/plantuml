@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.wbs.WElement;
 
 class Idea {
@@ -63,31 +63,31 @@ class Idea {
 	private final Stereotype stereotype;
 
 	@DuplicateCode(reference = "WElement")
-	private StyleSignatureBasic getDefaultStyleDefinitionNode(int level) {
+	private StyleSignature getDefaultStyleDefinitionNode(int level) {
 		if (level == 0)
 			if (shape == IdeaShape.NONE)
-				return StyleSignatureBasic
-						.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode, SName.boxless)
+				return StyleSignature
+						.ofSName0(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode, SName.boxless)
 						.addStereotype(stereotype).addLevel(level);
 			else
-				return StyleSignatureBasic
-						.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode)
+				return StyleSignature
+						.ofSName0(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode)
 						.addStereotype(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE && children.size() == 0)
-			return StyleSignatureBasic
-					.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode, SName.boxless)
+			return StyleSignature
+					.ofSName0(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode, SName.boxless)
 					.addStereotype(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.boxless)
+			return StyleSignature.ofSName0(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.boxless)
 					.addStereotype(stereotype).addLevel(level);
 
 		if (children.size() == 0)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode)
+			return StyleSignature.ofSName0(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode)
 					.addStereotype(stereotype).addLevel(level);
 
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node)
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.mindmapDiagram, SName.node)
 				.addStereotype(stereotype).addLevel(level);
 	}
 
@@ -102,7 +102,7 @@ class Idea {
 		int ancestorRank = 0;
 		Style result = styleBuilder.getMergedStyleSpecial(getDefaultStyleDefinitionNode(level), ancestorRank);
 		for (Idea up = parent; up != null; up = up.parent) {
-			final StyleSignatureBasic ss = up.getDefaultStyleDefinitionNode(level).addStar();
+			final StyleSignature ss = up.getDefaultStyleDefinitionNode(level).addStar();
 			ancestorRank--;
 			final Style styleParent = styleBuilder.getMergedStyleSpecial(ss, ancestorRank);
 			result = result.mergeWith(styleParent, MergeStrategy.OVERWRITE_EXISTING_VALUE);
@@ -111,8 +111,8 @@ class Idea {
 	}
 
 	public Style getStyleArrow() {
-		final StyleSignatureBasic defaultStyleDefinitionArrow = StyleSignatureBasic
-				.of(SName.root, SName.element, SName.mindmapDiagram, SName.arrow).addStereotype(stereotype)
+		final StyleSignature defaultStyleDefinitionArrow = StyleSignature
+				.ofSName0(SName.root, SName.element, SName.mindmapDiagram, SName.arrow).addStereotype(stereotype)
 				.addLevel(level);
 		return defaultStyleDefinitionArrow.getMergedStyle(styleBuilder);
 	}

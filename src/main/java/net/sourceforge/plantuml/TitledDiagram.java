@@ -76,7 +76,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleLoader;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.warning.Warning;
@@ -278,7 +278,7 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 
 	@Override
 	public final HColor calculateBackColor() {
-		final Style style = StyleSignatureBasic.of(SName.root, SName.document, this.getDiagramType().getStyleName())
+		final Style style = StyleSignature.ofSName0(SName.root, SName.document, this.getDiagramType().getStyleName())
 				.getMergedStyle(this.getSkinParam().getCurrentStyleBuilder());
 
 		HColor backgroundColor = style.value(PName.BackGroundColor).asColor(this.getSkinParam().getIHtmlColorSet());

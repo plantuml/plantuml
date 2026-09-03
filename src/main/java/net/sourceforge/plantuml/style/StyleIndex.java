@@ -47,8 +47,8 @@ import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 /**
  * The fast, queryable counterpart of the old {@code StyleStorage}: every loaded {@link Style}
- * is indexed by its signature's tags (see {@link StyleSignatureBasic}) in a
- * {@link StyleAtomTrie}, so {@link #findMatching(StyleSignatureBasic)} only ever visits
+ * is indexed by its signature's tags (see {@link StyleSignature}) in a
+ * {@link StyleAtomTrie}, so {@link #findMatching(StyleSignature)} only ever visits
  * declarations that could possibly match a query, instead of the old linear scan over every
  * style ever loaded checking {@code StyleSignatureBasic#matchAll} one by one -- the actual fix
  * for the slow style resolution ({@link StyleBuilder#getMergedStyle},
@@ -63,7 +63,7 @@ import net.sourceforge.plantuml.style.parser2.StyleQuery;
  * and reused across diagrams (see {@code StyleLoader#loadSkin}) never has a later diagram's own
  * {@code <style>} override leak back into the shared, cached instance it was cloned from.
  *
- * {@link #getMergedStyle(StyleSignatureBasic)}'s result IS memoized here, per signature -- and
+ * {@link #getMergedStyle(StyleSignature)}'s result IS memoized here, per signature -- and
  * deliberately at this level rather than in {@link StyleBuilder}: {@code StyleLoader#loadSkin}
  * hands out a fresh {@link StyleBuilder} (via {@code cloneMe()}) for every diagram that shares a
  * given {@code .skin} file, but every one of those clones keeps pointing at the very same
@@ -82,7 +82,7 @@ public final class StyleIndex {
 
 	private final List<Style> allStyles;
 
-	private final Map<StyleSignatureBasic, Style> mergedStyleCache = new ConcurrentHashMap<StyleSignatureBasic, Style>();
+	private final Map<StyleSignature, Style> mergedStyleCache = new ConcurrentHashMap<StyleSignature, Style>();
 
 	// Lazily (re)built from allStyles on first query after a with...() call produced this
 	// index, then reused for every later query -- a style sheet is loaded once but queried
@@ -104,7 +104,7 @@ public final class StyleIndex {
 	 * The counterpart of the old {@code StyleBuilder#loadInternal}'s
 	 * {@code storage.get(signature)}/{@code storage.put(...)} pair, called while loading a .skin
 	 * file: a light-only "root { FontColor black }" and a later, dark-only
-	 * "@media (dark) { root { FontColor white } }" share the exact same {@link StyleSignatureBasic}
+	 * "@media (dark) { root { FontColor white } }" share the exact same {@link StyleSignature}
 	 * and MUST be folded into one {@link Style} right here, at load time -- not left for
 	 * {@link #findMatching} to hand back as two separate entries. Deferring that fold to query
 	 * time is unsound: a cross-selector cascade merge (say, "root" combined with a more specific
@@ -149,7 +149,7 @@ public final class StyleIndex {
 	 * or appends it as a new entry when no such element exists yet.
 	 */
 	private static void mergeOrAppend(List<Style> list, Style newStyle) {
-		final StyleSignatureBasic signature = newStyle.getSignature();
+		final StyleSignature signature = newStyle.getSignature();
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getSignature().equals(signature)) {
 				list.set(i, list.get(i).mergeWith(newStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE));
@@ -173,27 +173,27 @@ public final class StyleIndex {
 	}
 	/**
 	 * Every loaded style whose signature is a subset of {@code query}'s (per
-	 * {@link StyleSignatureBasic#matchAll}), in the order they were loaded or muted in.
+	 * {@link StyleSignature#matchAll}), in the order they were loaded or muted in.
 	 */
-	public List<Style> findMatching(StyleSignatureBasic query) {
-		return trie().findMatching(query.toQuery());
+	public List<Style> findMatching(StyleQuery query) {
+		return trie().findMatching(query);
 	}
 
 	/**
-	 * Every style matching {@code signature} (see {@link #findMatching(StyleSignatureBasic)}),
+	 * Every style matching {@code signature} (see {@link #findMatching(StyleSignature)}),
 	 * folded together into one {@link Style} in match order using
 	 * {@link MergeStrategy#OVERWRITE_EXISTING_VALUE} -- {@link StyleBuilder#getMergedStyle}'s
 	 * actual computation, moved here so its result can be memoized once per index instance
 	 * rather than once per {@link StyleBuilder} clone (see this class's own javadoc for why that
 	 * distinction is what makes the caching worth having across diagrams sharing a skin).
 	 */
-	public Style getMergedStyle(StyleSignatureBasic signature) {
+	Style getMergedStyle(StyleSignature signature) {
 		return mergedStyleCache.computeIfAbsent(signature, sig -> computeMergedStyle(sig));
 	}
 
-	private Style computeMergedStyle(StyleSignatureBasic signature) {
+	private Style computeMergedStyle(StyleSignature signature) {
 		Style mergedStyle = null;
-		for (Style style : findMatching(signature)) {
+		for (Style style : findMatching(signature.toQuery())) {
 			if (mergedStyle == null)
 				mergedStyle = style;
 			else

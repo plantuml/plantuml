@@ -63,7 +63,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class GanttDiagramMainBlock extends TextBlockMemoized {
 
@@ -106,7 +106,7 @@ public class GanttDiagramMainBlock extends TextBlockMemoized {
 //			if (displayConfig.getLabelStrategy().titleInFirstColumn())
 //				ug = ug.apply(UTranslate.dx(layout.getTitlesWidth()));
 
-			final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.timeline)
+			final Style style = StyleSignature.ofSName0(SName.root, SName.element, SName.ganttDiagram, SName.timeline)
 					.getMergedStyle(timelineStyle.getSkinParam().getCurrentStyleBuilder());
 
 			final HColor back = style.value(PName.BackGroundColor).asColor(timelineStyle.getColorSet());

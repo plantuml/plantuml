@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class GtileCircleStart extends AbstractGtile {
 	// ::remove folder when __HAXE__
@@ -55,8 +55,8 @@ public class GtileCircleStart extends AbstractGtile {
 	private final HColor backColor;
 	private double shadowing;
 
-	private StyleSignatureBasic getDefaultStyleDefinitionCircle() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle);
+	private StyleSignature getDefaultStyleDefinitionCircle() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.circle);
 	}
 
 	public GtileCircleStart(StringBounder stringBounder, ISkinParam skinParam, HColor backColor, Swimlane swimlane) {

@@ -40,14 +40,14 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class EntityImageLegend {
 
 	public static TextBlock create(Display note, ISkinParam skinParam) {
 
-		final Style style = StyleSignatureBasic
-				.of(SName.root, SName.root, SName.document, skinParam.getDiagramType().getStyleName(), SName.legend)
+		final Style style = StyleSignature
+				.ofSName0(SName.root, SName.root, SName.document, skinParam.getDiagramType().getStyleName(), SName.legend)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 
 		return style.createTextBlockBordered(note, skinParam.getIHtmlColorSet(), skinParam, Style.ID_LEGEND,

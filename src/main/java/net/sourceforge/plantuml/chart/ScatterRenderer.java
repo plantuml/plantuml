@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class ScatterRenderer {
 
@@ -76,12 +76,12 @@ public class ScatterRenderer {
 		this.xAxis = xAxis;
 	}
 
-	private StyleSignatureBasic getScatterStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.scatter);
+	private StyleSignature getScatterStyleSignature() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.chartDiagram, SName.scatter);
 	}
 
 	private Style getScatterStyle(ChartSeries series) {
-		StyleSignatureBasic signature = getScatterStyleSignature();
+		StyleSignature signature = getScatterStyleSignature();
 		if (series != null && series.getStereotype() != null) {
 			return signature.withTOBECHANGED(series.getStereotype())
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());

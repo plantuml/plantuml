@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
 
 public final class GroupMakerActivity {
@@ -105,8 +105,8 @@ public final class GroupMakerActivity {
 		return result;
 	}
 
-	final public StyleSignatureBasic getDefaultStyleDefinitionGroup() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.group);
+	final public StyleSignature getDefaultStyleDefinitionGroup() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.group);
 	}
 
 	public IEntityImage getImage() throws IOException, InterruptedException {

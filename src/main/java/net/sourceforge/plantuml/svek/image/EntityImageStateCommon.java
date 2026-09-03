@@ -51,14 +51,14 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.url.Url;
 
 public abstract class EntityImageStateCommon extends AbstractEntityImage {
 
-	public static final StyleSignatureBasic STYLE = StyleSignatureBasic.of(SName.root, SName.element,
+	public static final StyleSignature STYLE = StyleSignature.ofSName0(SName.root, SName.element,
 			SName.stateDiagram, SName.state);
 
 	final protected TextBlock name;
@@ -84,12 +84,12 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 	}
 
 	@Override
-	public StyleSignatureBasic getStyleSignature() {
+	public StyleSignature getStyleSignature() {
 		return STYLE;
 	}
 
 	public static Style getStyleStateName(Stereotype stereotype, StyleBuilder styleBuilder) {
-		final StyleSignatureBasic toto1 = STYLE.addSName(SName.name);
+		final StyleSignature toto1 = STYLE.addSName(SName.name);
 		return toto1.withTOBECHANGED(stereotype).getMergedStyle(styleBuilder);
 	}
 

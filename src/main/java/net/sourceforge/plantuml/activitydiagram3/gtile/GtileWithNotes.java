@@ -61,7 +61,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.utils.MathUtils;
 
@@ -74,8 +74,8 @@ public class GtileWithNotes extends AbstractGtile {
 
 	private final double suppSpace = 20;
 
-	public StyleSignatureBasic getDefaultStyleDefinition() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.note);
+	public StyleSignature getDefaultStyleDefinition() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.note);
 	}
 
 	@Override

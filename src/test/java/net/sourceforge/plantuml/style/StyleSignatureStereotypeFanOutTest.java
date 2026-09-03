@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 /**
  * Pins today's behavior for an element carrying SEVERAL stereotype labels (e.g.
- * {@code <<foo>><<bar>>}), reached through {@link StyleSignatureBasic#withTOBECHANGED}: nothing
+ * {@code <<foo>><<bar>>}), reached through {@link StyleSignature#withTOBECHANGED}: nothing
  * else pins it down, and it is the crux of whether a future {@code StyleQuery}-based rewrite of
  * {@code getStyleSignature()}-style call sites (see {@code EntityImageActivity} and its ~35
  * siblings) can be purely mechanical, or must first settle a real behavior question.
@@ -86,7 +86,7 @@ class StyleSignatureStereotypeFanOutTest {
 				+ ".foo {\n  BackGroundColor red\n}\n" //
 				+ ".bar {\n  BackGroundColor blue\n}\n"; // declared later, so it wins any tie
 		final StyleBuilder builder = builderFrom(skin);
-		final StyleSignature base = StyleSignatureBasic.of(SName.root);
+		final StyleSignature base = StyleSignature.ofSName0(SName.root);
 
 		final Style fooLabelFirst = base.withTOBECHANGED(Stereotype.build("<<foo>><<bar>>")).getMergedStyle(builder);
 		assertEquals("blue", fooLabelFirst.value(PName.BackGroundColor).asString());
@@ -102,7 +102,7 @@ class StyleSignatureStereotypeFanOutTest {
 				+ ".bar {\n  BackGroundColor blue\n}\n" //
 				+ ".foo {\n  .bar {\n    BackGroundColor green\n  }\n}\n";
 		final StyleBuilder builder = builderFrom(skin);
-		final StyleSignature base = StyleSignatureBasic.of(SName.root);
+		final StyleSignature base = StyleSignature.ofSName0(SName.root);
 
 		// "green" (the {foo, bar} declaration) always wins now, whatever the label order on the
 		// element and whatever file order the three declarations were in.

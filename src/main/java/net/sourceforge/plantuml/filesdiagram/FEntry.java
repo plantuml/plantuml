@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.image.Opale;
 
 public class FEntry implements Iterable<FEntry> {
@@ -164,7 +164,7 @@ public class FEntry implements Iterable<FEntry> {
 
 	private Opale createOpale(ISkinParam skinParam) {
 
-		final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, SName.filesDiagram,
+		final StyleSignature signature = StyleSignature.ofSName0(SName.root, SName.element, SName.filesDiagram,
 				SName.note);
 		final Style style = signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
 

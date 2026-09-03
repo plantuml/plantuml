@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.utils.Direction;
 
 public class Snake implements UShape {
@@ -136,19 +136,19 @@ public class Snake implements UShape {
 	}
 
 	public static Snake create(ISkinParam skinParam, Rainbow color) {
-		final Style style = StyleSignatureBasic.activityArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = StyleSignature.activityArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		return new Snake(skinParam, null, color, null, new Worm(style, skinParam.arrows()), MergeStrategy.FULL, null,
 				new ArrayList<Text>());
 	}
 
 	public static Snake create(ISkinParam skinParam, Rainbow color, UPolygon endDecoration) {
-		final Style style = StyleSignatureBasic.activityArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = StyleSignature.activityArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		return new Snake(skinParam, null, color, endDecoration, new Worm(style, skinParam.arrows()), MergeStrategy.FULL,
 				null, new ArrayList<Text>());
 	}
 
 	public static Snake create(ISkinParam skinParam, UPolygon startDecoration, Rainbow color, UPolygon endDecoration) {
-		final Style style = StyleSignatureBasic.activityArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = StyleSignature.activityArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		return new Snake(skinParam, startDecoration, color, endDecoration, new Worm(style, skinParam.arrows()),
 				MergeStrategy.FULL, null, new ArrayList<Text>());
 	}

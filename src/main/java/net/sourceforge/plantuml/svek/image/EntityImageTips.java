@@ -58,7 +58,6 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -89,7 +88,7 @@ public class EntityImageTips extends AbstractEntityImage {
 	}
 
 	private StyleSignature getStyleSignatureFor(Stereotype stereotype) {
-		return StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), SName.note)
+		return StyleSignature.ofSName0(SName.root, SName.element, getStyleName(), SName.note)
 				.withTOBECHANGED(stereotype);
 	}
 

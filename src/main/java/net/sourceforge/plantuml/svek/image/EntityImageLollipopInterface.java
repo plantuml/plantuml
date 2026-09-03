@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.url.Url;
@@ -67,7 +66,7 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 
 	@Override
 	public StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), SName.circle)
+		return StyleSignature.ofSName0(SName.root, SName.element, getStyleName(), SName.circle)
 				.withTOBECHANGED(getStereo());
 	}
 

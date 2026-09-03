@@ -51,7 +51,6 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.SvekNode;
@@ -64,7 +63,7 @@ public class EntityImageStateBorder extends AbstractEntityImageBorder {
 
 	@Override
 	public StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state);
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.stateDiagram, SName.state);
 	}
 
 	private boolean upPosition() {

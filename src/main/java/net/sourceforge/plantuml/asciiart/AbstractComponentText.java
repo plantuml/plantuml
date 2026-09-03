@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public abstract class AbstractComponentText implements Component {
 	
@@ -54,7 +54,7 @@ public abstract class AbstractComponentText implements Component {
 		throw new UnsupportedOperationException();
 	}
 
-	public StyleSignatureBasic getStyleSignature() {
+	public StyleSignature getStyleSignature() {
 		throw new UnsupportedOperationException();
 	}
 

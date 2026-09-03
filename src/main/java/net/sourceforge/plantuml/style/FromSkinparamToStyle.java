@@ -396,7 +396,7 @@ public class FromSkinparamToStyle {
 	private void addStyle(PName propertyName, Value value, SName... styleNames) {
 		Map<PName, Value> map = new EnumMap<PName, Value>(PName.class);
 		map.put(propertyName, value);
-		StyleSignatureBasic sig = StyleSignatureBasic.of(styleNames);
+		StyleSignature sig = StyleSignature.ofSName0(styleNames);
 		if (stereo != null) {
 			final String[] names = stereo.split("\\&");
 			map = StyleLoader.addStereotypeCount(map, names.length);

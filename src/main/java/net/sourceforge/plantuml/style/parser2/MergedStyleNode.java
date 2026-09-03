@@ -77,7 +77,7 @@ import net.sourceforge.plantuml.style.SName;
  *
  * What this tree still does <b>not</b> do: turn a nested path such as
  * {@code sequenceDiagram > participant} into the flat, order-independent signature
- * (a set of {@link SName}) the legacy {@link net.sourceforge.plantuml.style.StyleSignatureBasic}
+ * (a set of {@link SName}) the legacy {@link net.sourceforge.plantuml.style.StyleSignature}
  * matches against, or resolve {@code depth(n)} into an actual matching rule. Those are later
  * steps; see {@link MergedStyleSheet}.
  *

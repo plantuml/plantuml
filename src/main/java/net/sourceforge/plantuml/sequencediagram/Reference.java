@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.warning.Warning;
 
@@ -63,12 +63,12 @@ public class Reference extends AbstractEvent implements EventWithNote {
 	final private Style style;
 	final private Style styleHeader;
 
-	public StyleSignatureBasic getDefaultStyleDefinition() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.reference);
+	public StyleSignature getDefaultStyleDefinition() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.reference);
 	}
 
-	private StyleSignatureBasic getHeaderStyleDefinition() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.referenceHeader);
+	private StyleSignature getHeaderStyleDefinition() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.referenceHeader);
 	}
 
 	// The nested counterpart of the legacy flat "referenceHeader" above, added
@@ -78,8 +78,8 @@ public class Reference extends AbstractEvent implements EventWithNote {
 	// computeStyleHeader()) rather than a replacement, so every existing
 	// diagram styling `referenceHeader` directly keeps working unchanged: only
 	// diagrams that opt into the new nested form are affected.
-	private StyleSignatureBasic getNestedHeaderStyleDefinition() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.reference, SName.header);
+	private StyleSignature getNestedHeaderStyleDefinition() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.reference, SName.header);
 	}
 
 	private Style computeStyleHeader(StyleBuilder styleBuilder) {

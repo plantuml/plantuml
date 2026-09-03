@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class NwGroup implements NStackable {
 
@@ -136,8 +136,8 @@ public class NwGroup implements NStackable {
 		return blockDim.getHeight();
 	}
 
-	private StyleSignatureBasic getStyleDefinition() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.nwdiagDiagram, SName.group);
+	private StyleSignature getStyleDefinition() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.nwdiagDiagram, SName.group);
 	}
 
 	public void drawGroup(UGraphic ug, MinMax size, ISkinParam skinParam) {

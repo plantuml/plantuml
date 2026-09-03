@@ -71,7 +71,7 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.DecorateEntityImage;
 import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 import net.sourceforge.plantuml.warning.Warning;
@@ -281,7 +281,7 @@ public final class DiagramChromeFactory {
 		if (Display.isNull(mainFrame))
 			return original;
 
-		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.mainframe)
+		final Style style = StyleSignature.ofSName0(SName.root, SName.document, SName.mainframe)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, style);
 		final TextBlock title = mainFrame.create(fontConfiguration, HorizontalAlignment.CENTER, skinParam);
@@ -365,7 +365,7 @@ public final class DiagramChromeFactory {
 		if (title.isNull())
 			return original;
 
-		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.title)
+		final Style style = StyleSignature.ofSName0(SName.root, SName.document, SName.title)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final TextBlock titleBlock = style.createTextBlockBordered(title.getDisplay(), skinParam.getIHtmlColorSet(),
 				skinParam, Style.ID_TITLE, LineBreakStrategy.NONE);
@@ -385,7 +385,7 @@ public final class DiagramChromeFactory {
 		if (caption.isNull())
 			return original;
 
-		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.caption)
+		final Style style = StyleSignature.ofSName0(SName.root, SName.document, SName.caption)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final TextBlock captionBlock = style.createTextBlockBordered(caption.getDisplay(), skinParam.getIHtmlColorSet(),
 				skinParam, Style.ID_CAPTION, LineBreakStrategy.NONE);
@@ -411,7 +411,7 @@ public final class DiagramChromeFactory {
 
 		TextBlock textHeader = null;
 		if (!header.isNull()) {
-			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.header)
+			final Style style = StyleSignature.ofSName0(SName.root, SName.document, SName.header)
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			textHeader = header.createRibbon(FontConfiguration.create(skinParam, FontParam.HEADER, null), skinParam,
 					style);
@@ -422,7 +422,7 @@ public final class DiagramChromeFactory {
 
 		TextBlock textFooter = null;
 		if (!footer.isNull()) {
-			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.footer)
+			final Style style = StyleSignature.ofSName0(SName.root, SName.document, SName.footer)
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			textFooter = footer.createRibbon(FontConfiguration.create(skinParam, FontParam.FOOTER, null), skinParam,
 					style);

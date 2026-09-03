@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class TimingRuler {
 
@@ -184,12 +184,12 @@ public class TimingRuler {
 	}
 
 	private Style getStyleTimegrid() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.timegrid)
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.timingDiagram, SName.timegrid)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
 	private Style getStyleTimeline() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.timeline)
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.timingDiagram, SName.timeline)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 

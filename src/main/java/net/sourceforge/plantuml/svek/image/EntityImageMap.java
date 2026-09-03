@@ -67,7 +67,6 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -135,7 +134,7 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 
 	@Override
 	public StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.objectDiagram, SName.map);
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.objectDiagram, SName.map);
 	}
 
 	private Style getStyle() {
@@ -144,7 +143,7 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 	}
 
 	private Style getStyleHeader() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.objectDiagram, SName.map, SName.header)
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.objectDiagram, SName.map, SName.header)
 				.withTOBECHANGED(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 

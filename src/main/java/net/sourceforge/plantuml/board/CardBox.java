@@ -61,7 +61,7 @@ public class CardBox implements TextBlock {
 	}
 
 //	private StyleSignature getDefaultStyleDefinitionNode() {
-//		return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.node);
+//		return StyleSignature.ofSName(SName.root, SName.element, SName.mindmapDiagram, SName.node);
 //	}
 
 	@Fast

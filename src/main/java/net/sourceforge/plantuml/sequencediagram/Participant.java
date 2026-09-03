@@ -58,7 +58,6 @@ import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.WithStyle;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -79,7 +78,7 @@ public class Participant implements SpecificBackcolorable, WithStyle, AsciiBlock
 	private final LineLocation location;
 	private final String uid;
 
-	public StyleSignatureBasic getStyleSignature() {
+	public StyleSignature getStyleSignature() {
 		return type.getStyleSignature().addClickable(getUrl());
 	}
 

@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.utils.Direction;
 
 final public class WElement {
@@ -73,30 +73,30 @@ final public class WElement {
 	private XDimension2D dimension;
 
 	@DuplicateCode(reference = "Idea")
-	private StyleSignatureBasic getDefaultStyleDefinitionNode(int level) {
+	private StyleSignature getDefaultStyleDefinitionNode(int level) {
 		if (level == 0)
 			if (shape == IdeaShape.NONE)
-				return StyleSignatureBasic
-						.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode, SName.boxless)
+				return StyleSignature
+						.ofSName0(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode, SName.boxless)
 						.addStereotype(stereotype).addLevel(level);
 			else
-				return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode)
+				return StyleSignature.ofSName0(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode)
 						.addStereotype(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE && isLeaf())
-			return StyleSignatureBasic
-					.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode, SName.boxless)
+			return StyleSignature
+					.ofSName0(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode, SName.boxless)
 					.addStereotype(stereotype).addLevel(level);
 
 		if (isLeaf())
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode)
+			return StyleSignature.ofSName0(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode)
 					.addStereotype(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.boxless)
+			return StyleSignature.ofSName0(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.boxless)
 					.addStereotype(stereotype).addLevel(level);
 
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node).addStereotype(stereotype)
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.wbsDiagram, SName.node).addStereotype(stereotype)
 				.addLevel(level);
 	}
 
@@ -118,7 +118,7 @@ final public class WElement {
 		int ancestorRank = 0;
 		Style result = styleBuilder.getMergedStyleSpecial(getDefaultStyleDefinitionNode(level), ancestorRank);
 		for (WElement up = parent; up != null; up = up.parent) {
-			final StyleSignatureBasic ss = up.getDefaultStyleDefinitionNode(level).addStar();
+			final StyleSignature ss = up.getDefaultStyleDefinitionNode(level).addStar();
 			ancestorRank--;
 			final Style styleParent = styleBuilder.getMergedStyleSpecial(ss, ancestorRank);
 			result = result.mergeWith(styleParent, MergeStrategy.OVERWRITE_EXISTING_VALUE);

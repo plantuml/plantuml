@@ -53,7 +53,7 @@ class StyleFontWeightTest {
 			final String rawValue = (String) nameValuePairs[i + 1];
 			map.put(name, ValueImpl.regular(rawValue, COUNTER));
 		}
-		return new Style(StyleSignatureBasic.empty(), map);
+		return new Style(StyleSignature.empty(), map);
 	}
 
 	// -----------------------------------------------------------------------

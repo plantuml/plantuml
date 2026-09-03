@@ -61,7 +61,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public final class ClusterHeader {
 
@@ -142,26 +142,26 @@ public final class ClusterHeader {
 	}
 
 	private Style getStyle() {
-		final StyleSignatureBasic signature = getSignature();
+		final StyleSignature signature = getSignature();
 		return signature //
 				.withTOBECHANGED(g.getStereotype()) //
 				.with(g.getStereostyles()) //
 				.getMergedStyle(g.getSkinParam().getCurrentStyleBuilder());
 	}
 
-	private StyleSignatureBasic getSignature() {
+	private StyleSignature getSignature() {
 		final SName sname = g.getSkinParam().getDiagramType().getStyleName();
-		final StyleSignatureBasic signature;
+		final StyleSignature signature;
 		final USymbol uSymbol = g.getUSymbol();
 		if (g.getGroupType() == GroupType.STATE)
-			signature = StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.name);
+			signature = StyleSignature.ofSName0(SName.root, SName.element, SName.stateDiagram, SName.state, SName.name);
 		else if (uSymbol != null)
-			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, uSymbol.getSNames(), SName.composite,
+			signature = StyleSignature.ofSName2(SName.root, SName.element, sname, uSymbol.getSNames(), SName.composite,
 					SName.title);
 		else if (g.getGroupType() == GroupType.PACKAGE)
-			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, SName.package_, SName.title);
+			signature = StyleSignature.ofSName0(SName.root, SName.element, sname, SName.package_, SName.title);
 		else
-			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, SName.composite, SName.title);
+			signature = StyleSignature.ofSName0(SName.root, SName.element, sname, SName.composite, SName.title);
 		return signature;
 	}
 

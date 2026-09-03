@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.timingdiagram.graphic.Panels;
 import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrame;
 import net.sourceforge.plantuml.utils.Position;
@@ -74,7 +73,7 @@ public abstract class Player {
 	private final SName sname;
 
 	public final void addNote(TimeTick now, Display note, Position position, Stereotype stereotype) {
-		final StyleSignature signature = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram,
+		final StyleSignature signature = StyleSignature.ofSName0(SName.root, SName.element, SName.timingDiagram,
 				SName.note);
 		final Style style = signature.withTOBECHANGED(stereotype).getMergedStyle(skinParam.getCurrentStyleBuilder());
 
@@ -96,7 +95,7 @@ public abstract class Player {
 	}
 
 	final protected Style getStyle() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, sname).withTOBECHANGED(stereotype)
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.timingDiagram, sname).withTOBECHANGED(stereotype)
 				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 
@@ -127,8 +126,8 @@ public abstract class Player {
 	private TextBlock getTitle() {
 		if (title.isWhite())
 			return TextBlockUtils.EMPTY_TEXT_BLOCK;
-		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, StyleSignatureBasic
-				.of(SName.root, SName.element, SName.timingDiagram).getMergedStyle(skinParam.getCurrentStyleBuilder()));
+		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, StyleSignature
+				.ofSName0(SName.root, SName.element, SName.timingDiagram).getMergedStyle(skinParam.getCurrentStyleBuilder()));
 		return title.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);
 	}
 

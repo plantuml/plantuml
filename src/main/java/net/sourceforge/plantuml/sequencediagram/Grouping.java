@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
 
 public abstract class Grouping extends AbstractEvent implements Event, WithStyle {
@@ -56,16 +56,16 @@ public abstract class Grouping extends AbstractEvent implements Event, WithStyle
 	final private Style style;
 	final private Style styleHeader;
 
-	final public StyleSignatureBasic getStyleSignature() {
+	final public StyleSignature getStyleSignature() {
 		if (type == GroupingType.START_PARTITION)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.partition);
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.group);
+			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.partition);
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.group);
 	}
 
-	final private StyleSignatureBasic getHeaderStyleDefinition() {
+	final private StyleSignature getHeaderStyleDefinition() {
 		if (type == GroupingType.START_PARTITION)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.partition, SName.header);
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.groupHeader);
+			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.partition, SName.header);
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.groupHeader);
 	}
 
 	// The nested counterpart of the legacy flat "groupHeader" above, added for
@@ -76,8 +76,8 @@ public abstract class Grouping extends AbstractEvent implements Event, WithStyle
 	// the flat style (see computeStyleHeader()) rather than a replacement, so
 	// every existing diagram styling `groupHeader` directly keeps working
 	// unchanged: only diagrams that opt into the new nested form are affected.
-	final private StyleSignatureBasic getNestedHeaderStyleDefinition() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.group, SName.header);
+	final private StyleSignature getNestedHeaderStyleDefinition() {
+		return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.group, SName.header);
 	}
 
 	private Style computeStyleHeader(StyleBuilder styleBuilder) {

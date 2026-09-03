@@ -61,7 +61,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.utils.MathUtils;
 
 public class GtileGroup extends AbstractGtileRoot {
@@ -77,7 +77,7 @@ public class GtileGroup extends AbstractGtileRoot {
 	private final USymbol type;
 	private final double roundCorner;
 
-	final public StyleSignatureBasic getStyleSignature() {
+	final public StyleSignature getStyleSignature() {
 		return FtileGroup.getStyleSignature(type);
 	}
 
