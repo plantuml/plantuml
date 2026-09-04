@@ -58,7 +58,6 @@ import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class ChartRenderer {
@@ -954,21 +953,21 @@ public class ChartRenderer {
 		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram));
 	}
 
-	private StyleSignature getBarStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.chartDiagram, SName.bar);
+	private StyleQuery getBarStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.bar));
 	}
 
 	private Style getBarStyle(ChartSeries series) {
-		StyleSignature signature = getBarStyleSignature();
+		StyleQuery query = getBarStyleQuery();
 		if (series.getStereotype() != null) {
 			// Use withTOBECHANGED for element-level stereotype styling
-			Style style = signature.withTOBECHANGED(series.getStereotype())
-				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+			Style style = skinParam.getCurrentStyleBuilder()
+					.getMergedStyle(query.withTOBECHANGED(series.getStereotype()));
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., .primary)
 			// This matches the pattern used by sequence diagrams
-			Style stereoStyle = signature.forStereotypeItself(series.getStereotype())
-				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+			Style stereoStyle = skinParam.getCurrentStyleBuilder()
+					.getMergedStyle(query.forStereotypeItself(series.getStereotype()));
 
 			// Merge with stereo style overwriting existing values
 			if (style != null)
@@ -976,23 +975,23 @@ public class ChartRenderer {
 
 			return stereoStyle;
 		}
-		return signature.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);
 	}
 
-	private StyleSignature getLineStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.chartDiagram, SName.line);
+	private StyleQuery getLineStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.line));
 	}
 
 	private Style getLineStyle(ChartSeries series) {
-		StyleSignature signature = getLineStyleSignature();
+		StyleQuery query = getLineStyleQuery();
 		if (series.getStereotype() != null) {
 			// Use withTOBECHANGED for element-level stereotype styling
-			Style style = signature.withTOBECHANGED(series.getStereotype())
-				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+			Style style = skinParam.getCurrentStyleBuilder()
+					.getMergedStyle(query.withTOBECHANGED(series.getStereotype()));
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., line.target)
-			Style stereoStyle = signature.forStereotypeItself(series.getStereotype())
-				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+			Style stereoStyle = skinParam.getCurrentStyleBuilder()
+					.getMergedStyle(query.forStereotypeItself(series.getStereotype()));
 
 			// Merge with stereo style overwriting existing values
 			if (style != null)
@@ -1000,23 +999,23 @@ public class ChartRenderer {
 
 			return stereoStyle;
 		}
-		return signature.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);
 	}
 
-	private StyleSignature getAreaStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.chartDiagram, SName.area);
+	private StyleQuery getAreaStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.area));
 	}
 
 	private Style getAreaStyle(ChartSeries series) {
-		StyleSignature signature = getAreaStyleSignature();
+		StyleQuery query = getAreaStyleQuery();
 		if (series.getStereotype() != null) {
 			// Use withTOBECHANGED for element-level stereotype styling
-			Style style = signature.withTOBECHANGED(series.getStereotype())
-				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+			Style style = skinParam.getCurrentStyleBuilder()
+					.getMergedStyle(query.withTOBECHANGED(series.getStereotype()));
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., area.highlight)
-			Style stereoStyle = signature.forStereotypeItself(series.getStereotype())
-				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+			Style stereoStyle = skinParam.getCurrentStyleBuilder()
+					.getMergedStyle(query.forStereotypeItself(series.getStereotype()));
 
 			// Merge with stereo style overwriting existing values
 			if (style != null)
@@ -1024,7 +1023,7 @@ public class ChartRenderer {
 
 			return stereoStyle;
 		}
-		return signature.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);
 	}
 
 	private String formatAxisValue(double value) {
@@ -1036,20 +1035,20 @@ public class ChartRenderer {
 		return String.format("%.1f", value);
 	}
 
-	private StyleSignature getScatterStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.chartDiagram, SName.scatter);
+	private StyleQuery getScatterStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.scatter));
 	}
 
 	private Style getScatterStyle(ChartSeries series) {
-		StyleSignature signature = getScatterStyleSignature();
+		StyleQuery query = getScatterStyleQuery();
 		if (series.getStereotype() != null) {
 			// Use withTOBECHANGED for element-level stereotype styling
-			Style style = signature.withTOBECHANGED(series.getStereotype())
-				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+			Style style = skinParam.getCurrentStyleBuilder()
+					.getMergedStyle(query.withTOBECHANGED(series.getStereotype()));
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., scatter.highlight)
-			Style stereoStyle = signature.forStereotypeItself(series.getStereotype())
-				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+			Style stereoStyle = skinParam.getCurrentStyleBuilder()
+					.getMergedStyle(query.forStereotypeItself(series.getStereotype()));
 
 			// Merge with stereo style overwriting existing values
 			if (style != null)
@@ -1057,7 +1056,7 @@ public class ChartRenderer {
 
 			return stereoStyle;
 		}
-		return signature.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);
 	}
 
 	private StyleQuery getAxisStyleSignature(boolean horizontal) {

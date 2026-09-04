@@ -35,7 +35,10 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
@@ -66,6 +69,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
 import net.sourceforge.plantuml.utils.MathUtils;
 
@@ -89,6 +93,13 @@ public class FtileGroup extends AbstractFtile {
 	final static public StyleSignature getStyleSignature(USymbol symbol) {
 		return StyleSignature.ofSName2(SName.root, SName.element, SName.activityDiagram, symbol.getSNames(),
 				SName.composite);
+	}
+
+	final static public StyleQuery getStyleQuery(USymbol symbol) {
+		final List<SName> names = new ArrayList<>(Arrays.asList(SName.root, SName.element, SName.activityDiagram));
+		names.addAll(Arrays.asList(symbol.getSNames()));
+		names.add(SName.composite);
+		return StyleQuery.of(names);
 	}
 
 	public FtileGroup(Ftile inner, Display title, HColor backColor, ISkinParam skinParam, USymbol type, Style style) {

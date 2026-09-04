@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.chart;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +57,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class BarRenderer {
 
@@ -82,17 +83,16 @@ public class BarRenderer {
 		this.horizontal = horizontal;
 	}
 
-	private StyleSignature getBarStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.chartDiagram, SName.bar);
+	private StyleQuery getBarStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.bar));
 	}
 
 	private Style getBarStyle(ChartSeries series) {
-		StyleSignature signature = getBarStyleSignature();
-		if (series != null && series.getStereotype() != null) {
-			return signature.withTOBECHANGED(series.getStereotype())
-				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
-		}
-		return signature.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		StyleQuery query = getBarStyleQuery();
+		if (series != null && series.getStereotype() != null)
+			return skinParam.getCurrentStyleBuilder().getMergedStyle(query.withTOBECHANGED(series.getStereotype()));
+
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);
 	}
 
 	public void draw(UGraphic ug, ChartSeries series, HColor color) {
@@ -236,8 +236,7 @@ public class BarRenderer {
 		final double groupOffset = (categoryWidth - groupWidth) / 2;
 
 		// Get bar style
-		final Style barStyle = getBarStyleSignature()
-			.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style barStyle = skinParam.getCurrentStyleBuilder().getMergedStyle(getBarStyleQuery());
 
 		// Extract line thickness for bar borders
 		final double lineThickness = barStyle.value(PName.LineThickness).asDouble();
@@ -301,8 +300,7 @@ public class BarRenderer {
 		final double categoryWidth = plotWidth / categoryCount;
 
 		// Get bar style
-		final Style barStyle = getBarStyleSignature()
-			.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style barStyle = skinParam.getCurrentStyleBuilder().getMergedStyle(getBarStyleQuery());
 
 		// Extract bar width ratio from style (default 0.6 = 60%)
 		double barWidthRatio = 0.6;

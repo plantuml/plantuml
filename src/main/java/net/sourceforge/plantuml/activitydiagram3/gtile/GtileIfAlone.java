@@ -62,14 +62,14 @@ public class GtileIfAlone extends GtileTopDown3 {
 	private static Gtile getShape1(Swimlane swimlane, Branch branch0, StringBounder stringBounder,
 			ISkinParam skinParam) {
 		GtileHexagonInside tmp = Gtiles.hexagonInside(swimlane, stringBounder, skinParam,
-				getDefaultStyleDefinitionDiamond(), branch0.getColor(), branch0.getLabelTest());
+				getDefaultStyleDefinitionDiamond().toQuery(), branch0.getColor(), branch0.getLabelTest());
 		final TextBlock tmp0 = branch0.getTextBlockPositive();
 		return Gtiles.withSouthMargin(tmp.withSouthLabel(tmp0), 20);
 	}
 
 	private static Gtile getShape2(Swimlane swimlane, HColor color, StringBounder stringBounder, ISkinParam skinParam) {
 		final AbstractGtileRoot tmp = Gtiles.diamondEmpty(swimlane, stringBounder, skinParam,
-				getDefaultStyleDefinitionDiamond(), color);
+				getDefaultStyleDefinitionDiamond().toQuery(), color);
 		return Gtiles.withNorthMargin(tmp, 20);
 	}
 

@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.chart;
 
+import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -55,7 +56,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class ScatterRenderer {
 
@@ -76,17 +77,16 @@ public class ScatterRenderer {
 		this.xAxis = xAxis;
 	}
 
-	private StyleSignature getScatterStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.chartDiagram, SName.scatter);
+	private StyleQuery getScatterStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.scatter));
 	}
 
 	private Style getScatterStyle(ChartSeries series) {
-		StyleSignature signature = getScatterStyleSignature();
-		if (series != null && series.getStereotype() != null) {
-			return signature.withTOBECHANGED(series.getStereotype())
-				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
-		}
-		return signature.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		StyleQuery query = getScatterStyleQuery();
+		if (series != null && series.getStereotype() != null)
+			return skinParam.getCurrentStyleBuilder().getMergedStyle(query.withTOBECHANGED(series.getStereotype()));
+
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);
 	}
 
 	public void draw(UGraphic ug, ChartSeries series, HColor color) {

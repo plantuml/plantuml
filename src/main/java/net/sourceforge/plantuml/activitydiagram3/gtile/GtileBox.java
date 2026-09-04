@@ -93,6 +93,10 @@ public class GtileBox extends AbstractGtile {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity);
 	}
 
+	static public StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity));
+	}
+
 	static public StyleQuery getDefaultStyleDefinitionArrow() {
 		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
 	}
@@ -116,8 +120,7 @@ public class GtileBox extends AbstractGtile {
 
 	public static GtileBox create(StringBounder stringBounder, ISkinParam skinParam, Display label, Swimlane swimlane,
 			BoxStyle boxStyle, Stereotype stereotype) {
-		final Style style = getDefaultStyleDefinitionActivity().withTOBECHANGED(stereotype)
-				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getStyleQuery().withTOBECHANGED(stereotype));
 		final Style styleArrow = skinParam.getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionArrow());
 
 		return new GtileBox(stringBounder, skinParam, label, swimlane, boxStyle, style, styleArrow);

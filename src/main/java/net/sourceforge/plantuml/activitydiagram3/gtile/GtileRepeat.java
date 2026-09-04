@@ -66,7 +66,7 @@ public class GtileRepeat extends GtileTopDown3 {
 
 	private static Gtile getShape1(Swimlane swimlane, HColor color, StringBounder stringBounder, ISkinParam skinParam) {
 		final AbstractGtileRoot tmp = Gtiles.diamondEmpty(swimlane, stringBounder, skinParam,
-				getDefaultStyleDefinitionDiamond(), color);
+				getDefaultStyleDefinitionDiamond().toQuery(), color);
 		return Gtiles.withSouthMargin(tmp, 20);
 //		GtileHexagonInside tmp = Gtiles.hexagonInside(stringBounder, skinParam, swimlane,
 //				getDefaultStyleDefinitionDiamond(), branch0);
@@ -77,7 +77,7 @@ public class GtileRepeat extends GtileTopDown3 {
 	private static Gtile getShape2(Swimlane swimlane, HColor color, StringBounder stringBounder, ISkinParam skinParam,
 			Display test) {
 		final AbstractGtileRoot tmp = Gtiles.hexagonInside(swimlane, stringBounder, skinParam,
-				getDefaultStyleDefinitionDiamond(), color, test);
+				getDefaultStyleDefinitionDiamond().toQuery(), color, test);
 		return Gtiles.withNorthMargin(tmp, 20);
 	}
 

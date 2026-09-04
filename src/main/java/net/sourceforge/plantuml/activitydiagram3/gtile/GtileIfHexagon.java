@@ -79,8 +79,8 @@ public class GtileIfHexagon extends GtileColumns {
 		this.branches = branches;
 
 		this.shape1 = getShape1(swimlane);
-		this.shape2 = Gtiles.diamondEmpty(swimlane, getStringBounder(), skinParam(), getDefaultStyleDefinitionDiamond(),
-				branches.get(0).getColor());
+		this.shape2 = Gtiles.diamondEmpty(swimlane, getStringBounder(), skinParam(),
+				getDefaultStyleDefinitionDiamond().toQuery(), branches.get(0).getColor());
 
 		final XDimension2D dimShape1 = shape1.calculateDimension(stringBounder);
 		this.pushDown(dimShape1.getHeight());
@@ -145,7 +145,8 @@ public class GtileIfHexagon extends GtileColumns {
 
 	private Gtile getShape1(Swimlane swimlane) {
 		GtileHexagonInside tmp = Gtiles.hexagonInside(swimlane, getStringBounder(), skinParam(),
-				getDefaultStyleDefinitionDiamond(), branches.get(0).getColor(), branches.get(0).getLabelTest());
+				getDefaultStyleDefinitionDiamond().toQuery(), branches.get(0).getColor(),
+				branches.get(0).getLabelTest());
 
 		final TextBlock tmp0 = branches.get(0).getTextBlockPositive();
 		if (branches.size() == 1) {
