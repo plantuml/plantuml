@@ -129,6 +129,7 @@ final public class UmlSource {
 	 * @param checkEndingBackslash <code>true</code> if an ending backslash means
 	 *                             that a line has to be collapsed with the
 	 *                             following one.
+	 * @param rawSource            the original lines before processing
 	 */
 	public static UmlSource createWithRaw(List<StringLocated> source, boolean checkEndingBackslash,
 			List<StringLocated> rawSource) {
