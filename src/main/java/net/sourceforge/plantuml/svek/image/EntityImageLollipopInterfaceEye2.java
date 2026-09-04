@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.text.Guillemet;
@@ -94,12 +94,12 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 	}
 
 	@Override
-	public StyleSignature getStyleSignature() {
+	public StyleQuery getStyleQuery() {
 		return FontParam.COMPONENT.getStyleDefinition(SName.componentDiagram);
 	}
 
 	private Style getStyle() {
-		return getStyleSignature().getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
+		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery());
 	}
 
 	@Override

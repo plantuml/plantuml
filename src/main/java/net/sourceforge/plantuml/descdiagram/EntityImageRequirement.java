@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.descdiagram;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -61,7 +63,7 @@ import net.sourceforge.plantuml.skin.SkinParamUtils;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.text.Guillemet;
@@ -94,13 +96,13 @@ public class EntityImageRequirement extends AbstractEntityImage {
 	}
 
 	@Override
-	public StyleSignature getStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.componentDiagram, SName.requirement);
+	public StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.componentDiagram, SName.requirement));
 	}
 
 	private Style getStyle() {
-		return getStyleSignature().withTOBECHANGED(getEntity().getStereotype())
-				.getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
+		return getSkinParam().getCurrentStyleBuilder()
+				.getMergedStyle(getStyleQuery().withTOBECHANGED(getEntity().getStereotype()));
 	}
 
 	private UStroke getStroke() {

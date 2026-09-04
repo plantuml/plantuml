@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.gantt.draw;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.gantt.LabelStrategy;
 import net.sourceforge.plantuml.gantt.core.GArrowType;
 import net.sourceforge.plantuml.gantt.core.GSide;
@@ -60,7 +62,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class TaskDrawDiamond extends AbstractTaskDraw {
 
@@ -70,8 +72,8 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 	}
 
 	@Override
-	StyleSignature getStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.ganttDiagram, SName.milestone);
+	StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.milestone));
 	}
 
 	private double getYNotePosition(StringBounder stringBounder) {
