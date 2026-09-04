@@ -18,7 +18,7 @@ on:
         description: "Commit/branch/tag to benchmark (empty = the branch this workflow is dispatched on)"
         default: ""
       compare:
-        description: "Comparison engine: empty = npm pin from perf-bench/reference.json, npm:<version>, or any git ref (built from source)"
+        description: "Comparison engine: empty = npm pin from tools/perf-bench/reference.json, npm:<version>, or any git ref (built from source)"
         default: ""
       reps:
         description: "Renders per diagram per block"
@@ -73,8 +73,8 @@ jobs:
         run: |
           COMPARE='${{ inputs.compare }}'
           if [ -z "$COMPARE" ]; then
-            COMPARE=$(node -p "JSON.parse(require('fs').readFileSync('perf-bench/reference.json','utf8')).pin")
-            echo "Using pin from perf-bench/reference.json: $COMPARE"
+            COMPARE=$(node -p "JSON.parse(require('fs').readFileSync('tools/perf-bench/reference.json','utf8')).pin")
+            echo "Using pin from tools/perf-bench/reference.json: $COMPARE"
           fi
           if [[ "$COMPARE" == npm:* ]]; then
             VER="${COMPARE#npm:}"
@@ -103,17 +103,17 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: perf-bench/package-lock.json
+          cache-dependency-path: tools/perf-bench/package-lock.json
 
       - name: Install Playwright
         run: |
-          cd perf-bench
+          cd tools/perf-bench
           npm ci
           npx playwright install --with-deps chromium
 
       - name: Run benchmark
         run: |
-          node perf-bench/bench.js \
+          node tools/perf-bench/bench.js \
             target=target/plantuml-mit/build/npm-plantuml \
             reference="$COMPARE_DIR" \
             --reps '${{ inputs.reps || 6 }}' \
