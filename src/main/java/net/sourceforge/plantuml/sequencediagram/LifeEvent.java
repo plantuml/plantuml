@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.sequencediagram;
 import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class LifeEvent extends AbstractEvent implements Event {
 
@@ -101,12 +101,12 @@ public class LifeEvent extends AbstractEvent implements Event {
 		return message;
 	}
 
-	public StyleSignature getStyleSignature() {
-		return type.getStyleSignatureTOBEREMOVED();
+	public StyleQuery getStyleQuery() {
+		return type.getStyleQuery();
 	}
 
 	public Style[] getUsedStyle() {
-		final Style style = type.getStyleSignatureTOBEREMOVED().getMergedStyleREMOVEME(styleBuilder);
+		final Style style = styleBuilder.getMergedStyle(type.getStyleQuery());
 		return new Style[] { style };
 	}
 

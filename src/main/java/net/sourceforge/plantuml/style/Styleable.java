@@ -39,8 +39,6 @@ import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public interface Styleable {
 
-	public StyleSignature getStyleSignatureTOBEREMOVED();
-	
 	public StyleQuery getStyleQuery();
 
 }

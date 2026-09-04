@@ -49,7 +49,6 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
 import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.url.Url;
@@ -66,16 +65,11 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	}
 
 	final public Style[] getUsedStyles() {
-		Style style = getStyleSignatureTOBEREMOVED().getMergedStyleREMOVEME(styleBuilder);
+		Style style = styleBuilder.getMergedStyle(getStyleQuery());
 		if (style != null && arrowConfiguration.getColor() != null)
 			style = style.eventuallyOverride(PName.LineColor, arrowConfiguration.getColor());
 
 		return new Style[] { style };
-	}
-
-	public StyleSignature getStyleSignatureTOBEREMOVED() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.arrow)
-				.withTOBECHANGED(stereotype);
 	}
 
 	@Override

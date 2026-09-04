@@ -88,11 +88,6 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 	private final Swimlane swimlaneNote;
 
 	@Override
-	public StyleSignature getStyleSignatureTOBEREMOVED() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.note);
-	}
-	
-	@Override
 	public StyleQuery getStyleQuery() {
 		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.note));
 	}
@@ -142,8 +137,8 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 
 		final Stereotype stereotype = note.getStereotype();
 
-		final Style style = getStyleSignatureTOBEREMOVED().withTOBECHANGED(stereotype)
-				.getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder()).eventuallyOverride(note.getColors());
+		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery()).eventuallyOverride(note.getColors());
+		
 		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 		final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 		final FontConfiguration fc = style.getFontConfiguration(getIHtmlColorSet());

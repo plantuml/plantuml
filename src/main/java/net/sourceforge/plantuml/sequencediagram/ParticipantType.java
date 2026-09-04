@@ -84,33 +84,4 @@ public enum ParticipantType implements Styleable {
 		return null;
 	}
 
-
-	public StyleSignature getStyleSignatureTOBEREMOVED() {
-		if (this == PARTICIPANT)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.participant);
-
-		if (this == ACTOR)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.actor);
-
-		if (this == BOUNDARY)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.boundary);
-
-		if (this == CONTROL)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.control);
-
-		if (this == ENTITY)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.entity);
-
-		if (this == QUEUE)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.queue);
-
-		if (this == DATABASE)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.database);
-
-		if (this == COLLECTIONS)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.collections);
-
-		return null;
-	}
-
 }

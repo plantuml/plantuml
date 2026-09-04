@@ -56,11 +56,6 @@ public abstract class AbstractComponentText implements Component {
 	}
 
 	@Override
-	public StyleSignature getStyleSignatureTOBEREMOVED() {
-		throw new UnsupportedOperationException();
-	}	
-	
-	@Override
 	public StyleQuery getStyleQuery() {
 		throw new UnsupportedOperationException();
 	}
