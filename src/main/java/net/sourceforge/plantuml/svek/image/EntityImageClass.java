@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityPortion;
 import net.sourceforge.plantuml.abel.LineConfigurable;
@@ -59,7 +61,7 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Kal;
 import net.sourceforge.plantuml.svek.Margins;
@@ -158,22 +160,21 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	}
 
 	@Override
-	public StyleSignature getStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.classDiagram, SName.class_);
+	public StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.classDiagram, SName.class_));
 	}
 
 	private Style getStyle() {
-		return getStyleSignature() //
+		return getEntity().getCurrentStyleBuilder().getMergedStyle(getStyleQuery() //
 				.withTOBECHANGED(getEntity().getStereotype()) //
-				.with(getEntity().getStereostyles()) //
-				.getMergedStyleREMOVEME(getEntity().getCurrentStyleBuilder());
+				.with(getEntity().getStereostyles()));
 	}
 
 	private Style getStyleHeader() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header) //
+		return getEntity().getCurrentStyleBuilder().getMergedStyle(StyleQuery
+				.of(Arrays.asList(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header)) //
 				.withTOBECHANGED(getEntity().getStereotype()) //
-				.with(getEntity().getStereostyles()) //
-				.getMergedStyleREMOVEME(getEntity().getCurrentStyleBuilder());
+				.with(getEntity().getStereostyles()));
 	}
 
 	private void drawInternal(UGraphic ug) {

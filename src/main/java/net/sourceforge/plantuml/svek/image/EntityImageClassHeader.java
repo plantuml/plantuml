@@ -65,7 +65,6 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.HeaderLayout;
@@ -77,8 +76,8 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 	final private HeaderLayout headerLayout;
 
 	@Override
-	public StyleSignature getStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header);
+	public StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header));
 	}
 
 	public EntityImageClassHeader(Entity entity, PortionShower portionShower) {
@@ -91,10 +90,9 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 		final boolean displayGenericWithOldFashion = getSkinParam().displayGenericWithOldFashion();
 		final String generic = displayGenericWithOldFashion ? null : entity.getGeneric();
 
-		final Style styleHeader = getStyleSignature() //
+		final Style styleHeader = getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery() //
 				.withTOBECHANGED(stereotype) //
-				.with(entity.getStereostyles()) //
-				.getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
+				.with(entity.getStereostyles()));
 
 		FontConfiguration fontConfigurationName = FontConfiguration.create(getSkinParam(), styleHeader,
 				entity.getColors());
@@ -136,11 +134,10 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 		if (generic == null) {
 			genericBlock = null;
 		} else {
-			final Style styleGeneric = StyleSignature
-					.ofSName0(SName.root, SName.element, SName.classDiagram, SName.class_, SName.generic) //
+			final Style styleGeneric = getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery
+					.of(Arrays.asList(SName.root, SName.element, SName.classDiagram, SName.class_, SName.generic)) //
 					.withTOBECHANGED(stereotype) //
-					.with(entity.getStereostyles()) //
-					.getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
+					.with(entity.getStereostyles()));
 
 			genericBlock = Display.getWithNewlines(getSkinParam().getPragma(), generic).create(
 					FontConfiguration.create(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),

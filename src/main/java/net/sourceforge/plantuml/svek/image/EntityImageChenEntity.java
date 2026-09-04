@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
@@ -55,7 +57,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.url.Url;
@@ -90,18 +92,20 @@ public class EntityImageChenEntity extends AbstractEntityImage {
 	}
 
 	@Override
-	public StyleSignature getStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.chenEerDiagram, SName.chenEntity);
+	public StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chenEerDiagram, SName.chenEntity));
 	}
 
 	private static Style getStyleState(Entity group, ISkinParam skinParam) {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.chenEerDiagram, SName.chenEntity)
-				.withTOBECHANGED(group.getStereotype()).getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(
+				StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chenEerDiagram, SName.chenEntity))
+						.withTOBECHANGED(group.getStereotype()));
 	}
 
 	private static Style getStyleStateTitle(Entity group, ISkinParam skinParam) {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.chenEerDiagram, SName.chenEntity, SName.title)
-				.withTOBECHANGED(group.getStereotype()).getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQuery
+				.of(Arrays.asList(SName.root, SName.element, SName.chenEerDiagram, SName.chenEntity, SName.title))
+				.withTOBECHANGED(group.getStereotype()));
 	}
 
 	@Override
