@@ -53,14 +53,14 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class Gtiles {
 
 	static public GtileHexagonInside hexagonInside(Swimlane swimlane, StringBounder stringBounder, ISkinParam skinParam,
-			StyleSignature styleSignature, HColor color, Display label) {
+			StyleQuery styleQuery, HColor color, Display label) {
 
-		final Style style = styleSignature.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(styleQuery);
 		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final HColor backColor = color == null
 				? style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet())
@@ -77,9 +77,9 @@ public class Gtiles {
 	}
 
 	static public AbstractGtileRoot diamondEmpty(Swimlane swimlane, StringBounder stringBounder, ISkinParam skinParam,
-			StyleSignature styleSignature, HColor color) {
+			StyleQuery styleQuery, HColor color) {
 
-		final Style style = styleSignature.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(styleQuery);
 		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final HColor backColor = color == null
 				? style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet())

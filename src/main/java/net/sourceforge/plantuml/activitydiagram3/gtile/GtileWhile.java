@@ -58,7 +58,7 @@ public class GtileWhile extends GtileTopDown3 {
 
 	private static Gtile getShape1(Gtile toto, Swimlane swimlane, Display test, Display yes) {
 		GtileHexagonInside tmp0 = Gtiles.hexagonInside(swimlane, toto.getStringBounder(), toto.skinParam(),
-				getDefaultStyleDefinitionDiamond(), HColors.BLUE, test);
+				getDefaultStyleDefinitionDiamond().toQuery(), HColors.BLUE, test);
 
 //		final TextBlock tmp0 = branches.get(0).getTextBlockPositive();
 //		return Gtiles.withSouthMargin(tmp.withSouthLabel(tmp0), 10);
