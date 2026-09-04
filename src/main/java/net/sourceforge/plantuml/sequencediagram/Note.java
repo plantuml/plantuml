@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.url.Url;
 
 final public class Note extends AbstractEvent implements Event, SpecificBackcolorable, WithStyle {
@@ -68,8 +69,14 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 	private Url url;
 	private Stereotype stereotype;
 
+	@Override
 	public StyleSignature getStyleSignatureTOBEREMOVED() {
 		return noteStyle.getDefaultStyleDefinition();
+	}
+	
+	@Override
+	public StyleQuery getStyleQuery() {
+		return noteStyle.getStyleQuery();
 	}
 
 	public Style[] getUsedStyles() {

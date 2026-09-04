@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.sequencediagram;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
@@ -50,6 +51,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.warning.Warning;
@@ -73,6 +75,12 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 
 	public StyleSignature getStyleSignatureTOBEREMOVED() {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.arrow)
+				.withTOBECHANGED(stereotype);
+	}
+
+	@Override
+	public StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.arrow))
 				.withTOBECHANGED(stereotype);
 	}
 

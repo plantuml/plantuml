@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -78,8 +79,14 @@ public class Participant implements SpecificBackcolorable, WithStyle, AsciiBlock
 	private final LineLocation location;
 	private final String uid;
 
+	@Override
 	public StyleSignature getStyleSignatureTOBEREMOVED() {
 		return type.getStyleSignatureTOBEREMOVED().addClickable(getUrl());
+	}
+
+	@Override
+	public StyleQuery getStyleQuery() {
+		return type.getStyleQuery().addClickable(getUrl());
 	}
 
 	public Style[] getUsedStyles() {

@@ -41,8 +41,6 @@ public interface Styleable {
 
 	public StyleSignature getStyleSignatureTOBEREMOVED();
 	
-	public default StyleQuery getStyleQuery() {
-		return getStyleSignatureTOBEREMOVED().toQuery();
-	}
+	public StyleQuery getStyleQuery();
 
 }

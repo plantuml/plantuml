@@ -35,9 +35,12 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.Styleable;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public enum ParticipantType implements Styleable {
 	PARTICIPANT, //
@@ -51,6 +54,36 @@ public enum ParticipantType implements Styleable {
 
 	private ParticipantType() {
 	}
+	
+	@Override
+	public StyleQuery getStyleQuery() {
+		if (this == PARTICIPANT)
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.participant));
+
+		if (this == ACTOR)
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.actor));
+
+		if (this == BOUNDARY)
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.boundary));
+
+		if (this == CONTROL)
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.control));
+
+		if (this == ENTITY)
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.entity));
+
+		if (this == QUEUE)
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.queue));
+
+		if (this == DATABASE)
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.database));
+
+		if (this == COLLECTIONS)
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.collections));
+
+		return null;
+	}
+
 
 	public StyleSignature getStyleSignatureTOBEREMOVED() {
 		if (this == PARTICIPANT)

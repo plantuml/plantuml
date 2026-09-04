@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class Doll implements WithStyle {
 
@@ -100,12 +101,19 @@ public class Doll implements WithStyle {
 
 	}
 
+	@Override
 	final public StyleSignature getStyleSignatureTOBEREMOVED() {
 		return ComponentType.ENGLOBER.getStyleSignatureTOBEREMOVED();
 	}
 
+	@Override
+	final public StyleQuery getStyleQuery() {
+		return ComponentType.ENGLOBER.getStyleQuery();
+	}
+
 	final public Style[] getUsedStyles() {
-		Style tmp = getStyleSignatureTOBEREMOVED().withTOBECHANGED(englober.getStereotype()).getMergedStyleREMOVEME(styleBuilder);
+		Style tmp = getStyleSignatureTOBEREMOVED().withTOBECHANGED(englober.getStereotype())
+				.getMergedStyleREMOVEME(styleBuilder);
 		final HColor backColor = englober.getBoxColor();
 		if (tmp != null)
 			tmp = tmp.eventuallyOverride(PName.BackGroundColor, backColor);

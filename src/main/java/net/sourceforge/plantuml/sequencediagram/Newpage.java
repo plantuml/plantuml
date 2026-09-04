@@ -40,13 +40,20 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class Newpage extends AbstractEvent implements Event, WithStyle {
 
 	final private Style style;
 
+	@Override
 	public StyleSignature getStyleSignatureTOBEREMOVED() {
 		return ComponentType.NEWPAGE.getStyleSignatureTOBEREMOVED();
+	}
+	
+	@Override
+	public StyleQuery getStyleQuery() {
+		return ComponentType.NEWPAGE.getStyleQuery();
 	}
 
 	public Style[] getUsedStyles() {
