@@ -48,11 +48,28 @@ How it works
        Alice->Bob : foo
        @enduml
 
-Output files are named ``<slug>.puml`` (or ``<slug>-01.puml``,
-``<slug>-02.puml``, ... when a page embeds more than one diagram) and written
-into ``src/test/resources/vega/site`` (relative to the repository root, i.e.
-two levels above this script), so they become regular Vega non-regression
+Output files are grouped in one directory per page, named after its slug, so
+that the fixtures stay easy to browse instead of piling up flat::
+
+    src/test/resources/vega/site/activity-diagram-beta/activity-diagram-beta-01.puml
+    src/test/resources/vega/site/activity-diagram-beta/activity-diagram-beta-02.puml
+    src/test/resources/vega/site/xmi/xmi.puml
+
+(a page with a single diagram just gets ``<slug>/<slug>.puml``; one with
+several gets ``<slug>/<slug>-01.puml``, ``<slug>-02.puml``, ...). This lives
+under ``src/test/resources/vega/site`` relative to the repository root, i.e.
+two levels above this script, so the files become regular Vega non-regression
 tests the next time ``VegaTest`` runs.
+
+Caching
+-------
+Both the TOC page and every page's raw markdown are cached on disk under
+``tools/alphadoc-to-vega/cache`` (next to this script) the first time they
+are fetched, so re-running the script to tweak the extraction logic or the
+output layout does not mean re-downloading the whole site every time. The
+cache is plain raw HTTP response bodies, one file per URL - there is no
+expiry logic: delete ``tools/alphadoc-to-vega/cache`` (or pass
+``--no-cache``/``--refresh-cache``) whenever you want fresh content.
 """
 
 from __future__ import annotations
@@ -79,8 +96,10 @@ DEFAULT_TOC_URL = "https://alphadoc.plantuml.com/toc/markdown/en"
 DEFAULT_RAW_URL_TEMPLATE = "https://alphadoc.plantuml.com/raw/markdown/en/{slug}"
 
 # Two levels up from tools/alphadoc-to-vega/ is the repository root.
-REPO_ROOT = Path(__file__).resolve().parents[2]
+SCRIPT_DIR = Path(__file__).resolve().parent
+REPO_ROOT = SCRIPT_DIR.parents[1]
 DEFAULT_OUTPUT_DIR = REPO_ROOT / "src" / "test" / "resources" / "vega" / "site"
+DEFAULT_CACHE_DIR = SCRIPT_DIR / "cache"
 
 USER_AGENT = (
     "alphadoc-to-vega/1.0 (+https://github.com/plantuml/plantuml/tree/"
@@ -174,6 +193,46 @@ def fetch_url(url: str, timeout: int = DEFAULT_TIMEOUT, retries: int = DEFAULT_R
     raise FetchError(f"Could not fetch {url}: {last_error}")
 
 
+def fetch_cached(
+    url: str,
+    cache_file: Path | None,
+    timeout: int = DEFAULT_TIMEOUT,
+    retries: int = DEFAULT_RETRIES,
+    use_cache: bool = True,
+    refresh: bool = False,
+) -> str:
+    """Fetch ``url``, transparently caching the raw response body on disk.
+
+    ``cache_file`` is the on-disk file backing this particular URL. When
+    caching is enabled and that file already exists, its content is returned
+    without touching the network at all - unless ``refresh`` is set, in which
+    case the cache entry is ignored (but still overwritten with the freshly
+    fetched content, unless ``use_cache`` is False). Pass ``cache_file=None``
+    or ``use_cache=False`` to always hit the network.
+    """
+    if use_cache and cache_file is not None and not refresh and cache_file.exists():
+        LOG.debug("Cache hit: %s -> %s", url, cache_file)
+        return cache_file.read_text(encoding="utf-8", errors="replace")
+
+    content = fetch_url(url, timeout=timeout, retries=retries)
+
+    if use_cache and cache_file is not None:
+        cache_file.parent.mkdir(parents=True, exist_ok=True)
+        cache_file.write_text(content, encoding="utf-8", newline="\n")
+
+    return content
+
+
+def slug_cache_file(cache_dir: Path, slug: str) -> Path:
+    """Where the raw markdown for a given page slug is cached."""
+    return cache_dir / "pages" / f"{slug}.html"
+
+
+def toc_cache_file(cache_dir: Path) -> Path:
+    """Where the raw TOC page is cached."""
+    return cache_dir / "toc.html"
+
+
 # ---------------------------------------------------------------------------
 # Parsing
 # ---------------------------------------------------------------------------
@@ -216,6 +275,17 @@ def diagram_filenames(slug: str, count: int) -> List[str]:
     return [f"{slug}-{index:02d}.puml" for index in range(1, count + 1)]
 
 
+def diagram_paths(output_dir: Path, slug: str, count: int) -> List[Path]:
+    """Build the .puml path(s) for the diagrams found on a given page.
+
+    Every page gets its own sub-directory (named after its slug) under
+    ``output_dir``, e.g. ``site/activity-diagram-beta/activity-diagram-beta-01.puml``,
+    so pages with many diagrams don't drown the flat file listing.
+    """
+    page_dir = output_dir / slug
+    return [page_dir / filename for filename in diagram_filenames(slug, count)]
+
+
 def write_puml(path: Path, diagram: str, output_format: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     content = f"---\noutput: {output_format}\n---\n{diagram}\n"
@@ -234,11 +304,22 @@ def process_slug(
     output_format: str,
     timeout: int,
     retries: int,
+    cache_dir: Path | None,
+    use_cache: bool,
+    refresh_cache: bool,
 ) -> Tuple[int, int]:
     """Fetch one page and write its diagrams. Returns (written, failed)."""
     url = raw_url_template.format(slug=slug)
+    cache_file = slug_cache_file(cache_dir, slug) if cache_dir is not None else None
     try:
-        markdown_text = fetch_url(url, timeout=timeout, retries=retries)
+        markdown_text = fetch_cached(
+            url,
+            cache_file,
+            timeout=timeout,
+            retries=retries,
+            use_cache=use_cache,
+            refresh=refresh_cache,
+        )
     except FetchError as exc:
         LOG.error("Skipping %s: %s", slug, exc)
         return 0, 1
@@ -249,8 +330,8 @@ def process_slug(
         return 0, 0
 
     written = 0
-    for filename, diagram in zip(diagram_filenames(slug, len(diagrams)), diagrams):
-        write_puml(output_dir / filename, diagram, output_format)
+    for path, diagram in zip(diagram_paths(output_dir, slug, len(diagrams)), diagrams):
+        write_puml(path, diagram, output_format)
         written += 1
     LOG.info("%-40s -> %d diagram(s)", slug, written)
     return written, 0
@@ -266,9 +347,15 @@ def run(
     timeout: int = DEFAULT_TIMEOUT,
     retries: int = DEFAULT_RETRIES,
     clean_stale: bool = False,
+    cache_dir: Path | None = DEFAULT_CACHE_DIR,
+    use_cache: bool = True,
+    refresh_cache: bool = False,
 ) -> int:
+    toc_cache = toc_cache_file(cache_dir) if cache_dir is not None else None
     LOG.info("Fetching table of contents: %s", toc_url)
-    toc_html = fetch_url(toc_url, timeout=timeout, retries=retries)
+    toc_html = fetch_cached(
+        toc_url, toc_cache, timeout=timeout, retries=retries, use_cache=use_cache, refresh=refresh_cache
+    )
     slugs = extract_toc_slugs(toc_html)
     if not slugs:
         LOG.error("No page found in the TOC (site layout may have changed): %s", toc_url)
@@ -282,21 +369,31 @@ def run(
 
     total_written = 0
     total_failed = 0
-    written_files = set()
+    written_paths = set()
     for index, slug in enumerate(slugs, start=1):
         LOG.debug("[%d/%d] %s", index, len(slugs), slug)
         written, failed = process_slug(
-            slug, raw_url_template, output_dir, output_format, timeout, retries
+            slug,
+            raw_url_template,
+            output_dir,
+            output_format,
+            timeout,
+            retries,
+            cache_dir,
+            use_cache,
+            refresh_cache,
         )
         total_written += written
         total_failed += failed
         if written:
-            written_files.update(diagram_filenames(slug, written))
+            written_paths.update(
+                path.relative_to(output_dir) for path in diagram_paths(output_dir, slug, written)
+            )
         if delay and index < len(slugs):
             time.sleep(delay)
 
     if clean_stale:
-        remove_stale_files(output_dir, written_files)
+        remove_stale_files(output_dir, written_paths)
 
     LOG.info(
         "Done: %d diagram(s) written from %d page(s) (%d page(s) failed)",
@@ -307,12 +404,18 @@ def run(
     return 0 if total_failed == 0 else 2
 
 
-def remove_stale_files(output_dir: Path, expected_files: set) -> None:
-    """Delete .puml files from a previous run that no longer match any page."""
-    for existing in output_dir.glob("*.puml"):
-        if existing.name not in expected_files:
+def remove_stale_files(output_dir: Path, expected_paths: set) -> None:
+    """Delete .puml files (and now-empty page directories) from a previous
+    run that no longer match any page."""
+    for existing in output_dir.rglob("*.puml"):
+        if existing.relative_to(output_dir) not in expected_paths:
             LOG.info("Removing stale file: %s", existing)
             existing.unlink()
+
+    for page_dir in output_dir.iterdir():
+        if page_dir.is_dir() and not any(page_dir.iterdir()):
+            LOG.info("Removing now-empty directory: %s", page_dir)
+            page_dir.rmdir()
 
 
 # ---------------------------------------------------------------------------
@@ -366,6 +469,25 @@ def parse_args(argv: Sequence[str]) -> argparse.Namespace:
         action="store_true",
         help="Remove .puml files from a previous run that no longer correspond to any page",
     )
+    parser.add_argument(
+        "--cache-dir",
+        type=Path,
+        default=DEFAULT_CACHE_DIR,
+        help=(
+            "Directory used to cache raw fetched pages, so re-running the script is fast "
+            "(default: %(default)s). Delete it by hand to force a full re-download."
+        ),
+    )
+    parser.add_argument(
+        "--no-cache",
+        action="store_true",
+        help="Disable the on-disk cache entirely: always fetch from the network and don't save anything",
+    )
+    parser.add_argument(
+        "--refresh-cache",
+        action="store_true",
+        help="Ignore any existing cache entry (still re-populates the cache with the fresh content)",
+    )
     parser.add_argument("-v", "--verbose", action="store_true", help="Verbose (debug) logging")
     return parser.parse_args(argv)
 
@@ -387,6 +509,9 @@ def main(argv: Sequence[str] | None = None) -> int:
             timeout=args.timeout,
             retries=args.retries,
             clean_stale=args.clean_stale,
+            cache_dir=args.cache_dir,
+            use_cache=not args.no_cache,
+            refresh_cache=args.refresh_cache,
         )
     except FetchError as exc:
         LOG.error("%s", exc)

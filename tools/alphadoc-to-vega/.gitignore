@@ -1,0 +1,3 @@
+# Local cache of raw fetched alphadoc pages (see alphadoc_to_vega.py).
+# Delete this directory by hand to force a fresh download.
+/cache/
