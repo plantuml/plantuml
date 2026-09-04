@@ -24,9 +24,39 @@ public final class TeaVmScriptLoader {
 
 	/**
 	 * Loads a JS file once. Multiple concurrent calls are coalesced. The state is
-	 * stored on window.
+	 * stored on the global object.
+	 * <p>
+	 * Every lazily loaded support script comes through here: the stdlib bundles
+	 * ({@code <lib>.min.js}) and also {@code themes.js}, {@code emoji.js} and
+	 * {@code openiconic.js}, which all have the same problem this method's two
+	 * host-provided globals solve. They are checked in this order:
+	 * <ul>
+	 * <li>{@code PLANTUML_STDLIB_LOADER}: a function {@code (url, onOk, onErr)}
+	 * that delivers the script's content itself, in whatever way fits the host.
+	 * For a stdlib bundle it populates {@code PLANTUML_STDLIB} /
+	 * {@code PLANTUML_STDLIB_JSON} / {@code PLANTUML_STDLIB_INFO} for the
+	 * library before calling {@code onOk}, or calls {@code onErr} with a
+	 * message. Returning {@code false} (strictly) declines the URL, and loading
+	 * proceeds through the script tag as if no hook were set, so a host that
+	 * only handles stdlib bundles can decline {@code themes.js} and friends.
+	 * The hook is the only way to load these files where a script tag cannot
+	 * work: a Web Worker (no document), a browser extension that may fetch
+	 * remote data but not execute remote code, or a non-browser runtime.
+	 * Mirrors how a host can pre-populate {@code PLANTUML_THEMES} for
+	 * {@link #getTheme(String)}.</li>
+	 * <li>{@code PLANTUML_STDLIB_BASE}: a URL prefix for the script tag, so a
+	 * page that imports the engine from a CDN can point the loading of all of
+	 * these files at wherever they are hosted. Without it the URL stays
+	 * relative, which resolves against the consuming document, not the
+	 * engine's location.</li>
+	 * </ul>
+	 * A host may instead pre-populate the globals a script would have set and
+	 * mark {@code __pl_script_state[url] = { state: 'loaded' }}; the fast path
+	 * then skips loading entirely. With neither global set, the behaviour is
+	 * exactly what it always was.
 	 */
-	@JSBody(params = { "url", "onOk", "onErr" }, script = "var w = window;"
+	@JSBody(params = { "url", "onOk", "onErr" }, script = "var w = (typeof globalThis !== 'undefined') ? globalThis"
+			+ " : ((typeof self !== 'undefined') ? self : window);"
 			+ "w.__pl_script_state = w.__pl_script_state || Object.create(null);" + "var st = w.__pl_script_state[url];"
 			+
 
@@ -35,13 +65,23 @@ public final class TeaVmScriptLoader {
 
 			"st = w.__pl_script_state[url] = { state: 'loading', ok: [onOk], err: [onErr] };" +
 
-			"var s = document.createElement('script');" + "s.src = url;" + "s.async = true;" +
-
-			"s.onload = function() {" + "  st.state = 'loaded';" + "  var list = st.ok; st.ok = []; st.err = [];"
+			"var ok = function() {" + "  st.state = 'loaded';" + "  var list = st.ok; st.ok = []; st.err = [];"
 			+ "  for (var i = 0; i < list.length; i++) list[i]();" + "};" +
 
-			"s.onerror = function() {" + "  st.state = 'error';" + "  var list = st.err; st.ok = []; st.err = [];"
-			+ "  for (var i = 0; i < list.length; i++) list[i]('Failed to load ' + url);" + "};" +
+			"var fail = function(message) {" + "  st.state = 'error';" + "  var list = st.err; st.ok = []; st.err = [];"
+			+ "  for (var i = 0; i < list.length; i++) list[i](message);" + "};" +
+
+			"if (typeof w.PLANTUML_STDLIB_LOADER === 'function') {"
+			+ "  var handled = w.PLANTUML_STDLIB_LOADER(url, ok, function(message) { fail(message || ('Loader failed for ' + url)); });"
+			+ "  if (handled !== false) return;" + "}" +
+
+			"var full = (typeof w.PLANTUML_STDLIB_BASE === 'string') ? (w.PLANTUML_STDLIB_BASE + url) : url;" +
+
+			"var s = document.createElement('script');" + "s.src = full;" + "s.async = true;" +
+
+			"s.onload = ok;" +
+
+			"s.onerror = function() { fail('Failed to load ' + full); };" +
 
 			"document.head.appendChild(s);")
 	public static native void loadOnce(String url, Ok onOk, Err onErr);
@@ -54,7 +94,9 @@ public final class TeaVmScriptLoader {
 	 * @return the JS array of lines, or null if not found
 	 */
 	@JSBody(params = { "namespace",
-			"path" }, script = "var ns = window.PLANTUML_STDLIB && window.PLANTUML_STDLIB[namespace];"
+			"path" }, script = "var g = (typeof globalThis !== 'undefined') ? globalThis"
+					+ " : ((typeof self !== 'undefined') ? self : this);"
+					+ "var ns = g.PLANTUML_STDLIB && g.PLANTUML_STDLIB[namespace];"
 					+ "return (ns && ns[path]) || null;")
 	public static native JSObject getRaw_PLANTUML_STDLIB(String namespace, String path);
 
@@ -99,7 +141,9 @@ public final class TeaVmScriptLoader {
 	 * @return
 	 */
 	@JSBody(params = { "namespace",
-			"path" }, script = "var ns = window.PLANTUML_STDLIB_JSON && window.PLANTUML_STDLIB_JSON[namespace];"
+			"path" }, script = "var g = (typeof globalThis !== 'undefined') ? globalThis"
+					+ " : ((typeof self !== 'undefined') ? self : this);"
+					+ "var ns = g.PLANTUML_STDLIB_JSON && g.PLANTUML_STDLIB_JSON[namespace];"
 					+ "return (ns && ns[path]) || null;")
 	public static native JSObject getRaw_PLANTUML_STDLIB_JSON(String namespace, String path);
 
@@ -114,7 +158,9 @@ public final class TeaVmScriptLoader {
 	 * @return the JS info object, or null if not found
 	 */
 	// Mirrors getRaw_PLANTUML_STDLIB but for the INFO metadata map
-	@JSBody(params = "namespace", script = "return (window.PLANTUML_STDLIB_INFO && window.PLANTUML_STDLIB_INFO[namespace]) || null;")
+	@JSBody(params = "namespace", script = "var g = (typeof globalThis !== 'undefined') ? globalThis"
+			+ " : ((typeof self !== 'undefined') ? self : this);"
+			+ "return (g.PLANTUML_STDLIB_INFO && g.PLANTUML_STDLIB_INFO[namespace]) || null;")
 	public static native JSObject getRaw_PLANTUML_STDLIB_INFO(String namespace);
 
 	/**
@@ -152,7 +198,9 @@ public final class TeaVmScriptLoader {
 	@JSBody(params = "obj", script = "return obj == null ? null : JSON.stringify(obj);")
 	public static native String stringify(JSObject obj);
 
-	@JSBody(params = "url", script = "var st = window.__pl_script_state && window.__pl_script_state[url];"
+	@JSBody(params = "url", script = "var g = (typeof globalThis !== 'undefined') ? globalThis"
+			+ " : ((typeof self !== 'undefined') ? self : this);"
+			+ "var st = g.__pl_script_state && g.__pl_script_state[url];"
 			+ "return !!(st && st.state === 'loaded');")
 	private static native boolean isLoaded(String url);
 

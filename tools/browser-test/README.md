@@ -60,6 +60,34 @@ an unhandled exception and leaving the target element empty. A control page with
 `viz-global.js` pins that the normal path is unchanged. Run the same
 way with `node check-viz-missing.js target=...`.
 
+## check-stdlib-loader.js
+
+Checks how the engine loads stdlib bundles for `!include <lib/...>`, and the two host-provided
+globals that customize it:
+
+- with neither global set, behaviour is unchanged: a bundle next to the page loads through a
+  relative script tag, a missing bundle fails the include visibly instead of hanging, and
+  diagrams without stdlib includes are untouched;
+- `PLANTUML_STDLIB_BASE` prefixes the script URL, so a page importing the engine from a CDN can
+  point bundle loading at the project site or its own assets with one line (relative URLs
+  resolve against the consuming document, not the engine, so without it stdlib only works for
+  pages hosted next to the bundles);
+- `PLANTUML_STDLIB_LOADER` replaces the script tag with a host callback that delivers the
+  bundle as data, the only viable path for hosts that cannot execute remote code (browser
+  extensions under the Chrome MV3 and Mozilla AMO rules) or that have no document (Web
+  Workers). The check asserts no `.min.js` is fetched at all, that concurrent includes of one
+  library coalesce into a single loader call, that a library whose info carries a `link` to
+  another library resolves through two loader calls, and that a loader failure surfaces as a
+  visible include error. Every lazily loaded support script (`themes.js`, `emoji.js`,
+  `openiconic.js`) comes through the same loader, so the hook can decline a URL by returning
+  false, and loading falls back to the script tag; the check pins that with a hook that
+  declines everything.
+
+The stdlib libraries used are synthetic (one sequence participant each) and each exists only at
+the location its scenario is supposed to use, so a wrong loading path cannot render by
+accident, no real bundle is needed, and no layout engine is involved.
+`node check-stdlib-loader.js target=...`.
+
 ## Running it
 
 ```
