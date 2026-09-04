@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
 import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.url.Url;
@@ -76,10 +75,9 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 
 	public Style[] getUsedStyles() {
 		StyleQuery styleQuery = getStyleQuery();
-		StyleSignature styleSignature = getStyleSignatureTOBEREMOVED();
 		if (stereotype != null)
-			styleSignature = styleSignature.mergeWith(stereotype.getStyles(styleBuilder));
-		final Style style = styleSignature.getMergedStyleREMOVEME(styleBuilder).eventuallyOverride(colors);
+			styleQuery = styleQuery.mergeWith(stereotype.getStyles(styleBuilder));
+		final Style style = styleBuilder.getMergedStyle(styleQuery).eventuallyOverride(colors);
 
 		return new Style[] { style };
 	}

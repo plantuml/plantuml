@@ -37,11 +37,14 @@ package net.sourceforge.plantuml.style.parser2;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.url.Url;
 
 /**
@@ -98,17 +101,75 @@ public final class StyleQuery {
 	}
 
 	public StyleQuery withTOBECHANGED(Stereotype stereotype) {
+		if (stereotype == null)
+			return this;
+
 		StyleQuery result = this;
 		for (String s : stereotype.getMultipleLabels())
 			result = result.withStereotype(s);
 		return result;
 	}
-	
-	public StyleQuery addClickable(Url url) {
-		throw new UnsupportedOperationException();
+
+	/**
+	 * This same query, additionally requiring every one of {@code stereo}'s labels at once, the
+	 * same way {@link #withTOBECHANGED(Stereotype)} does -- but also requiring the special
+	 * {@link SName#stereotype} tag, mirroring {@code StyleSignature.forStereotypeItself}: used to
+	 * resolve the CSS-class-like rule for the stereotype itself (e.g. {@code <<foo>>}'s own
+	 * {@code .foo { ... }} declaration), as opposed to a plain element carrying that stereotype.
+	 */
+	public StyleQuery forStereotypeItself(Stereotype stereo) {
+		if (stereo == null || stereo.getStyleNames().size() == 0)
+			return this;
+
+		final List<String> labels = stereo.getLabels(Guillemet.NONE);
+		if (labels.size() == 0)
+			return this;
+
+		final SortedSet<StyleAtom> withStereotypeTag = new TreeSet<StyleAtom>(atoms);
+		withStereotypeTag.add(StyleAtom.of(SName.stereotype));
+		StyleQuery result = new StyleQuery(withStereotypeTag, levelConstraint);
+		for (String name : labels)
+			result = result.withStereotype(name);
+
+		return result;
 	}
 
+	public StyleQuery addClickable(Url url) {
+		if (url == null)
+			return this;
 
+		final SortedSet<StyleAtom> result = new TreeSet<StyleAtom>(atoms);
+		result.add(StyleAtom.of(SName.clickable));
+		return new StyleQuery(result, levelConstraint);
+	}
+
+	/**
+	 * This query, unioned with {@code other}: every atom either carries, plus the least
+	 * restrictive combination of their two {@link LevelConstraint}s (deepest level, starred if
+	 * either side is) -- mirroring {@code StyleKey.mergeWith}.
+	 */
+	public StyleQuery mergeWith(StyleQuery other) {
+		final SortedSet<StyleAtom> result = new TreeSet<StyleAtom>(atoms);
+		result.addAll(other.atoms);
+
+		final int mergedLevel = Math.max(levelConstraint.getLevel(), other.levelConstraint.getLevel());
+		final boolean mergedStar = levelConstraint.isStar() || other.levelConstraint.isStar();
+
+		return new StyleQuery(result, LevelConstraint.of(mergedLevel, mergedStar));
+	}
+
+	/**
+	 * This query, unioned in turn with each of {@code others}'s own signature -- mirroring
+	 * {@code StyleSignature.mergeWith(List<Style>)}, via {@code StyleSignature.toQuery()} since a
+	 * {@link Style}'s signature is still the legacy type.
+	 */
+	public StyleQuery mergeWith(List<Style> others) {
+		StyleQuery result = this;
+		for (Style other : others)
+			result = result.mergeWith(other.getSignature().toQuery());
+
+		return result;
+	}
 
 	public SortedSet<StyleAtom> getAtoms() {
 		return atoms;
