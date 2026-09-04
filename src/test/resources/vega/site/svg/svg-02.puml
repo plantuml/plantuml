@@ -1,0 +1,28 @@
+---
+output: svg
+---
+@startuml
+!pragma svginteractive true
+left to right direction
+skinparam actorStyle awesome
+
+actor Guest as g
+package Professional {
+  actor Chef as c
+  actor "Food Critic" as fc
+}
+package Restaurant {
+  usecase "Eat Food" as UC1
+  usecase "Pay for Food" as UC2
+  usecase "Drink" as UC3
+  usecase "Review" as UC4
+  usecase "Cook" as UC5
+}
+
+g --> UC1
+g --> UC2
+g --> UC3
+
+fc -u-> UC4
+c -u-> UC5
+@enduml

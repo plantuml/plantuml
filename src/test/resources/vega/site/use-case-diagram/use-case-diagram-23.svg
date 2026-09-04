@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="143px" preserveAspectRatio="none" style="width:304px;height:143px;background:#FFFFFF;" version="1.1" viewBox="0 0 304 143" width="304px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity First usecase-->
+    <g class="entity" data-qualified-name="First usecase" data-source-line="2" id="ent0001">
+      <ellipse cx="67.356" cy="28.671" fill="#F1F1F1" rx="61.356" ry="14.671" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="79.363" x="26.992" y="30.742">First usecase</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="123.822" x2="108.25" y1="23.557" y2="39.129"/>
+    </g>
+    <!--entity UC2-->
+    <g class="entity" data-qualified-name="UC2" data-source-line="3" id="ent0002">
+      <ellipse cx="217.379" cy="28.476" fill="#F1F1F1" rx="70.379" ry="16.476" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="101.15" x="166.804" y="30.365">Another usecase</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="282.148" x2="264.767" y1="22.732" y2="40.113"/>
+    </g>
+    <!--entity UC3-->
+    <g class="entity" data-qualified-name="UC3" data-source-line="4" id="ent0003">
+      <ellipse cx="67.26" cy="103.899" fill="#F1F1F1" rx="32.76" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="28.088" x="53.217" y="105.788">UC3</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="97.41" x2="81.665" y1="99.403" y2="115.148"/>
+    </g>
+    <!--entity UC4-->
+    <g class="entity" data-qualified-name="UC4" data-source-line="5" id="ent0004">
+      <ellipse cx="168.275" cy="103.799" fill="#F1F1F1" rx="49.775" ry="22.799" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="26.425" x="155.063" y="98.688">Last</text>
+      <text fill="#000" font-size="14" textLength="52.15" x="142.2" y="112.688">usecase</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="214.083" x2="185.261" y1="95.851" y2="124.674"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="172px" preserveAspectRatio="none" style="width:96px;height:172px;background:#FFFFFF;" version="1.1" viewBox="0 0 96 172" width="96px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="60.05" x="16" y="16"/>
+    <text fill="#000" font-size="12" textLength="40.05" x="26" y="35.333">Action 1</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="60.05" x="16" y="68"/>
+    <text fill="#000" font-size="12" textLength="40.05" x="26" y="87.333">Action 2</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="60.05" x="16" y="120"/>
+    <text fill="#000" font-size="12" textLength="40.05" x="26" y="139.333">Action 3</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="46.025" x2="46.025" y1="48" y2="68"/>
+    <polygon fill="#181818" points="42.025,58,46.025,68,50.025,58,46.025,62" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="46.025" x2="46.025" y1="100" y2="120"/>
+    <polygon fill="#181818" points="42.025,110,46.025,120,50.025,110,46.025,114" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

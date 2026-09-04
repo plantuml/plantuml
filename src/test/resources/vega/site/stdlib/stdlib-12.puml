@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+!include <edgy/edgy>
+
+$architectureFacet(Architecture) {
+	$process(Process, process)
+	$asset(Asset, asset)
+	$capability(Capability, capability)
+}
+
+$linkRight(process, asset)
+$linkDown(process, capability)
+$linkDown(asset, capability)
+
+@enduml

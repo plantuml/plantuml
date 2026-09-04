@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="156px" preserveAspectRatio="none" style="width:254px;height:156px;background:#FFFFFF;" version="1.1" viewBox="0 0 254 156" width="254px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="44.063" x="10" y="60.5"/>
+    <text fill="#000" font-size="14" textLength="24.063" x="20" y="81.389">root</text>
+    <rect fill="#90EE90" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="35.575" x="104.063" y="47"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="114.063" y="67.889">b1</text>
+    <rect fill="#90EE90" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="43.363" x="189.638" y="20"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="199.638" y="40.889">b11</text>
+    <path d="M139.638,64 L149.638,64 C164.638,64 164.638,37 179.638,37 L189.638,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#90EE90" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="43.363" x="189.638" y="74"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="199.638" y="94.889">b12</text>
+    <path d="M139.638,64 L149.638,64 C164.638,64 164.638,91 179.638,91 L189.638,91" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M54.063,77.5 L64.063,77.5 C79.063,77.5 79.063,64 94.063,64 L104.063,64" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="35.575" x="104.063" y="101"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="114.063" y="121.889">b2</text>
+    <path d="M54.063,77.5 L64.063,77.5 C79.063,77.5 79.063,118 94.063,118 L104.063,118" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

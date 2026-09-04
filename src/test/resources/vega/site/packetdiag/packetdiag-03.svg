@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="PACKET" height="571px" preserveAspectRatio="none" style="width:1407px;height:571px;background:#FFFFFF;" version="1.1" viewBox="0 0 1407 571" width="1407px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="14" x="6.106" y="20.889">0</text>
+    <path d="M10,24 L10,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M52,40 L52,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M94,40 L94,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M136,40 L136,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M178,40 L178,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M220,40 L220,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M262,40 L262,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M304,40 L304,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M346,24 L346,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M388,40 L388,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M430,40 L430,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M472,40 L472,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M514,40 L514,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M556,40 L556,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M598,40 L598,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M640,40 L640,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="674.213" y="20.889">16</text>
+    <path d="M682,24 L682,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M724,40 L724,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M766,40 L766,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M808,40 L808,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M850,40 L850,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M892,40 L892,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M934,40 L934,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M976,40 L976,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M1018,24 L1018,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M1060,40 L1060,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M1102,40 L1102,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M1144,40 L1144,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M1186,40 L1186,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M1228,40 L1228,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M1270,40 L1270,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M1312,40 L1312,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="1346.213" y="20.889">32</text>
+    <path d="M1354,24 L1354,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#F1F1F1" height="72" style="stroke:#181818;stroke-width:0.5;" width="672" x="10" y="56"/>
+    <text fill="#000" font-size="14" textLength="70" x="311" y="95.889">Source Port</text>
+    <rect fill="#F1F1F1" height="72" style="stroke:#181818;stroke-width:0.5;" width="672" x="682" y="56"/>
+    <text fill="#000" font-size="14" textLength="95.725" x="970.138" y="95.889">Destination Port</text>
+    <rect fill="#F1F1F1" height="72" style="stroke:#181818;stroke-width:0.5;" width="1344" x="10" y="128"/>
+    <text fill="#000" font-size="14" textLength="112.875" x="625.563" y="167.889">Sequence Number</text>
+    <rect fill="#F1F1F1" height="72" style="stroke:#181818;stroke-width:0.5;" width="1344" x="10" y="200"/>
+    <text fill="#000" font-size="14" textLength="156.45" x="603.775" y="239.889">Acknowledgment Number</text>
+    <rect fill="#F1F1F1" height="72" style="stroke:#181818;stroke-width:0.5;" width="168" x="10" y="272"/>
+    <text fill="#000" font-size="14" textLength="66.763" x="60.619" y="311.889">Data Offset</text>
+    <rect fill="#F1F1F1" height="72" style="stroke:#181818;stroke-width:0.5;" width="252" x="178" y="272"/>
+    <text fill="#000" font-size="14" textLength="59.938" x="274.031" y="311.889">Reserved</text>
+    <rect fill="#F1F1F1" height="72" style="stroke:#181818;stroke-width:0.5;" width="42" x="430" y="272"/>
+    <text fill="#000" font-size="14" textLength="31.15" x="435.425" y="311.889">URG</text>
+    <rect fill="#F1F1F1" height="72" style="stroke:#181818;stroke-width:0.5;" width="42" x="472" y="272"/>
+    <text fill="#000" font-size="14" textLength="28.875" x="478.563" y="311.889">ACK</text>
+    <rect fill="#F1F1F1" height="72" style="stroke:#181818;stroke-width:0.5;" width="42" x="514" y="272"/>
+    <text fill="#000" font-size="14" textLength="28.875" x="520.563" y="311.889">PSH</text>
+    <rect fill="#F1F1F1" height="72" style="stroke:#181818;stroke-width:0.5;" width="42" x="556" y="272"/>
+    <text fill="#000" font-size="14" textLength="28.087" x="562.956" y="311.889">RST</text>
+    <rect fill="#F1F1F1" height="72" style="stroke:#181818;stroke-width:0.5;" width="42" x="598" y="272"/>
+    <text fill="#000" font-size="14" textLength="28.875" x="604.563" y="311.889">SYN</text>
+    <rect fill="#F1F1F1" height="72" style="stroke:#181818;stroke-width:0.5;" width="42" x="640" y="272"/>
+    <text fill="#000" font-size="14" textLength="22.575" x="649.713" y="311.889">FIN</text>
+    <rect fill="#F1F1F1" height="72" style="stroke:#181818;stroke-width:0.5;" width="672" x="682" y="272"/>
+    <text fill="#000" font-size="14" textLength="49.875" x="993.063" y="311.889">Window</text>
+    <rect fill="#F1F1F1" height="72" style="stroke:#181818;stroke-width:0.5;" width="672" x="10" y="344"/>
+    <text fill="#000" font-size="14" textLength="66.15" x="312.925" y="383.889">Checksum</text>
+    <rect fill="#F1F1F1" height="72" style="stroke:#181818;stroke-width:0.5;" width="672" x="682" y="344"/>
+    <text fill="#000" font-size="14" textLength="86.363" x="974.819" y="383.889">Urgent Pointer</text>
+    <rect fill="#F1F1F1" height="72" style="stroke:#181818;stroke-width:0.5;" width="1344" x="10" y="416"/>
+    <text fill="#000" font-size="14" textLength="132.3" x="615.85" y="455.889">(Options and Padding)</text>
+    <rect fill="#F1F1F1" height="72" style="stroke:#181818;stroke-width:0.5;" width="1344" x="10" y="488"/>
+    <text fill="#000" font-size="14" textLength="27.213" x="668.394" y="527.889">data</text>
+  </g>
+</svg>

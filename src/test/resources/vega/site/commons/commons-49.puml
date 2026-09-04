@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startsalt
+mainframe This is a **mainframe**
+{+
+  Login    | "MyName   "
+  Password | "****     "
+  [Cancel] | [  OK   ]
+}
+@endsalt

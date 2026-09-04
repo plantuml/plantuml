@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="239px" preserveAspectRatio="none" style="width:257px;height:239px;background:#FFFFFF;" version="1.1" viewBox="0 0 257 239" width="257px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:1.5;" x1="46.688" x2="46.688" y1="72" y2="92"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="53.375" x="20" y="92"/>
+    <text fill="#000" font-size="12" textLength="33.375" x="30" y="111.333">A topic</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="46.688" x2="56.688" y1="155" y2="155"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="65.975" x="56.688" y="139"/>
+    <text fill="#000" font-size="12" textLength="45.975" x="66.688" y="158.333">common</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="46.688" x2="56.688" y1="202" y2="202"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="72.65" x="56.688" y="186"/>
+    <text fill="#000" font-size="12" textLength="52.65" x="66.688" y="205.333">common2</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="46.688" x2="46.688" y1="124" y2="202"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="193.013" x2="193.013" y1="72" y2="92"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="87.35" x="149.338" y="92"/>
+    <text fill="#000" font-size="12" textLength="67.35" x="159.338" y="111.333">Another topic</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="46.688" x2="193.013" y1="72" y2="72"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="43.325" x="98.188" y="20"/>
+    <text fill="#000" font-size="12" textLength="23.325" x="108.188" y="39.333">Test</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="119.85" x2="119.85" y1="52" y2="72"/>
+    <line style="stroke:#0F0;stroke-width:1;" x1="157.834" x2="122.663" y1="124" y2="139.997"/>
+    <polygon fill="#0F0" points="122.663,139.997,132.511,139.912,127.214,137.927,129.199,132.629,122.663,139.997" style="stroke:#0F0;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="175.991" x2="110.034" y1="124" y2="186"/>
+    <polygon fill="#00F" points="110.034,186,119.331,182.75,113.677,182.575,113.852,176.921,110.034,186" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

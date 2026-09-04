@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startflow
+foo "flow"
+bar "bar"
+baz "baz"
+@endflow

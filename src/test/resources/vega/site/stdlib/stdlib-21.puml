@@ -1,0 +1,47 @@
+---
+output: svg
+---
+@startuml
+scale 0.7
+!include <logos/apple-pay>
+!include <logos/dinersclub>
+!include <logos/discover>
+!include <logos/google-pay>
+!include <logos/jcb>
+!include <logos/maestro>
+!include <logos/mastercard>
+!include <logos/paypal>
+!include <logos/unionpay>
+!include <logos/visaelectron>
+!include <logos/visa>
+' ...
+
+title Gil Barbara's logos example - **Payment Scheme**
+
+actor customer
+rectangle "<$apple-pay>"    as ap
+rectangle "<$dinersclub>"   as dc
+rectangle "<$discover>"     as d
+rectangle "<$google-pay>"   as gp
+rectangle "<$jcb>"          as j
+rectangle "<$maestro>"      as ma
+rectangle "<$mastercard>"   as m
+rectangle "<$paypal>"       as p
+rectangle "<$unionpay>"     as up
+rectangle "<$visa>"         as v
+rectangle "<$visaelectron>" as ve
+rectangle "..." as etc
+
+customer --> ap
+customer ---> dc
+customer --> d
+customer ---> gp
+customer --> j
+customer ---> ma
+customer --> m
+customer ---> p
+customer --> up
+customer ---> v
+customer --> ve
+customer ---> etc
+@enduml

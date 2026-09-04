@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+state Car
+state CarWithWheel
+Car -> CarWithWheel [[http://plantuml.com/state-diagram]] : Add wheel to car
+@enduml

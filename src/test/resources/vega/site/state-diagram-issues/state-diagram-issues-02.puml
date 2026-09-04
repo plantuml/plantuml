@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+@startuml
+state FooGradient #red-green;line:00FFFF
+state FooDashed #red|green;line.dashed;line:blue {
+}
+state FooDotted #line.dotted;line:blue {
+}
+state FooBold #line.bold {
+}
+state Foo1 #line.dotted;line:green {
+state inner1 #line.dotted;line:yellow
+}
+
+state out #line.dotted;line:gold
+
+state Foo2 #line.bold;line:green {
+state inner2 #line.dotted;line:yellow
+}
+inner1 -> inner2
+out -> inner2
+@enduml
+@enduml

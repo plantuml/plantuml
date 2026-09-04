@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startsalt
+ {
+ [X] checkbox|[] checkbox
+ () radio | (X) radio
+ This is a text|[This is my button]|This is another text
+ "A field"|"Another long Field"|[A button]
+ <<folder
+ ............
+ .XXXXX......
+ .X...X......
+ .XXXXXXXXXX.
+ .X........X.
+ .X........X.
+ .X........X.
+ .X........X.
+ .XXXXXXXXXX.
+ ............
+ >>|<color:blue>other folder|<<folder>>
+^Droplist^
+}
+@endsalt

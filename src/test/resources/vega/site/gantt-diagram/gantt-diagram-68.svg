@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="206px" preserveAspectRatio="none" style="width:588px;height:206px;background:#FFFFFF;" version="1.1" viewBox="0 0 588 206" width="588px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="125.688" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="125.688" y1="16" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="125.688" y1="189" y2="189"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="189"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="38.938" x2="38.938" y1="0" y2="189"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="77.875" x2="77.875" y1="0" y2="189"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="125.688" x2="125.688" y1="0" y2="189"/>
+    <text fill="#000" font-size="10" textLength="21.063" x="5" y="10.778">Start</text>
+    <text fill="#000" font-size="10" textLength="17.813" x="43.938" y="10.778">End</text>
+    <text fill="#000" font-size="10" textLength="37.813" x="82.875" y="10.778">Duration</text>
+    <text fill="#000" font-size="10" textLength="23.375" x="5" y="29.778">Day 1</text>
+    <text fill="#000" font-size="10" textLength="28.938" x="43.938" y="29.778">Day 20</text>
+    <text fill="#000" font-size="10" textLength="32.25" x="82.875" y="29.778">20 days</text>
+    <text fill="#000" font-size="10" textLength="28.938" x="5" y="51.778">Day 21</text>
+    <text fill="#000" font-size="10" textLength="28.938" x="43.938" y="51.778">Day 24</text>
+    <text fill="#000" font-size="10" textLength="26.688" x="82.875" y="51.778">4 days</text>
+    <text fill="#000" font-size="10" textLength="28.938" x="5" y="141.278">Day 25</text>
+    <text fill="#000" font-size="10" textLength="28.938" x="43.938" y="141.278">Day 25</text>
+    <text fill="#000" font-size="10" textLength="21.688" x="82.875" y="141.278">1 day</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="125.688" x2="125.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="141.688" x2="141.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="157.688" x2="157.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="173.688" x2="173.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="189.688" x2="189.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="205.688" x2="205.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="221.688" x2="221.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="237.688" x2="237.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="253.688" x2="253.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="269.688" x2="269.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="285.688" x2="285.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="301.688" x2="301.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="317.688" x2="317.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="333.688" x2="333.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="349.688" x2="349.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="365.688" x2="365.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="381.688" x2="381.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="397.688" x2="397.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="413.688" x2="413.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="429.688" x2="429.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="445.688" x2="445.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="461.688" x2="461.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="477.688" x2="477.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="493.688" x2="493.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="509.688" x2="509.688" y1="6" y2="197"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="525.688" x2="525.688" y1="6" y2="197"/>
+    <text fill="#000" font-size="10" x="130.906" y="7.778">1</text>
+    <text fill="#000" font-size="10" x="146.906" y="7.778">2</text>
+    <text fill="#000" font-size="10" x="162.906" y="7.778">3</text>
+    <text fill="#000" font-size="10" x="178.906" y="7.778">4</text>
+    <text fill="#000" font-size="10" x="194.906" y="7.778">5</text>
+    <text fill="#000" font-size="10" x="210.906" y="7.778">6</text>
+    <text fill="#000" font-size="10" x="226.906" y="7.778">7</text>
+    <text fill="#000" font-size="10" x="242.906" y="7.778">8</text>
+    <text fill="#000" font-size="10" x="258.906" y="7.778">9</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="272.125" y="7.778">10</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="288.125" y="7.778">11</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="304.125" y="7.778">12</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="320.125" y="7.778">13</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="336.125" y="7.778">14</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="352.125" y="7.778">15</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="368.125" y="7.778">16</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="384.125" y="7.778">17</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="400.125" y="7.778">18</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="416.125" y="7.778">19</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="432.125" y="7.778">20</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="448.125" y="7.778">21</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="464.125" y="7.778">22</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="480.125" y="7.778">23</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="496.125" y="7.778">24</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="512.125" y="7.778">25</text>
+    <path d="M437.688,36 L437.688,49 L442.688,49" fill="none" style="stroke:#00F;stroke-width:1.5;"/>
+    <polygon fill="#00F" points="441.688,45,445.688,49,441.688,53,441.688,45" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M125.688,38 L125.688,88 L216.688,88 L216.688,48 L206.688,38 L125.688,38" fill="#FEFFDD" style="stroke:#FF4500;stroke-width:0.5;"/>
+    <path d="M206.688,38 L206.688,48 L216.688,48 L206.688,38" fill="#FEFFDD" style="stroke:#FF4500;stroke-width:0.5;"/>
+    <text fill="#006400" font-size="10" textLength="41.563" x="131.688" y="50.778">memo1 ...</text>
+    <text fill="#006400" font-size="10" textLength="41.563" x="131.688" y="60.778">memo2 ...</text>
+    <text fill="#006400" font-size="10" textLength="70" x="131.688" y="70.778">explanations1 ...</text>
+    <text fill="#006400" font-size="10" textLength="70" x="131.688" y="80.778">explanations2 ...</text>
+    <rect fill="#ADFF2F" height="18" style="stroke:none;" width="316" x="127.688" y="18"/>
+    <rect fill="none" height="18" style="stroke:#00F;stroke-width:1;" width="316" x="127.688" y="18"/>
+    <rect fill="#ADFF2F" height="18" style="stroke:none;" width="60" x="447.688" y="40"/>
+    <rect fill="none" height="18" style="stroke:#00F;stroke-width:1;" width="60" x="447.688" y="40"/>
+    <rect fill="#008000" height="26" style="stroke:none;" width="400" x="125.688" y="93"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="125.688" x2="130.688" y1="106" y2="106"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="235.788" x2="524.688" y1="106" y2="106"/>
+    <polygon fill="#FF0" points="517.688,126,529.688,138,517.688,150,505.688,138" style="stroke:#F00;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <rect fill="#008000" height="26" style="stroke:none;" width="400" x="125.688" y="158"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="125.688" x2="130.688" y1="171" y2="171"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="167.388" x2="524.688" y1="171" y2="171"/>
+    <text fill="#F00" font-family="Helvetica" font-size="18" font-weight="700" textLength="49.05" x="131.688" y="32">Task1</text>
+    <text fill="#F00" font-family="Helvetica" font-size="18" font-weight="700" textLength="49.05" x="451.688" y="54">Task2</text>
+    <text fill="#800080" font-size="16" font-weight="700" textLength="95.1" x="135.688" y="110.444">Separator title</text>
+    <text fill="#00F" font-size="25" font-style="italic" textLength="34.688" x="532.688" y="145.444">M1</text>
+    <text fill="#800080" font-size="16" font-weight="700" textLength="26.7" x="135.688" y="175.444">end</text>
+    <text fill="#000" font-size="10" x="130.906" y="199.778">1</text>
+    <text fill="#000" font-size="10" x="146.906" y="199.778">2</text>
+    <text fill="#000" font-size="10" x="162.906" y="199.778">3</text>
+    <text fill="#000" font-size="10" x="178.906" y="199.778">4</text>
+    <text fill="#000" font-size="10" x="194.906" y="199.778">5</text>
+    <text fill="#000" font-size="10" x="210.906" y="199.778">6</text>
+    <text fill="#000" font-size="10" x="226.906" y="199.778">7</text>
+    <text fill="#000" font-size="10" x="242.906" y="199.778">8</text>
+    <text fill="#000" font-size="10" x="258.906" y="199.778">9</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="272.125" y="199.778">10</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="288.125" y="199.778">11</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="304.125" y="199.778">12</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="320.125" y="199.778">13</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="336.125" y="199.778">14</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="352.125" y="199.778">15</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="368.125" y="199.778">16</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="384.125" y="199.778">17</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="400.125" y="199.778">18</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="416.125" y="199.778">19</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="432.125" y="199.778">20</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="448.125" y="199.778">21</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="464.125" y="199.778">22</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="480.125" y="199.778">23</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="496.125" y="199.778">24</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="512.125" y="199.778">25</text>
+  </g>
+</svg>

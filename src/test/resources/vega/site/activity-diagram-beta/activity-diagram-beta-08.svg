@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="132px" preserveAspectRatio="none" style="width:193px;height:132px;background:#FFFFFF;" version="1.1" viewBox="0 0 193 132" width="193px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <polygon fill="#F1F1F1" points="75.825,15,105.8,15,117.8,27,105.8,39,75.825,39,63.825,27,75.825,15" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="11" textLength="29.975" x="75.825" y="30.056">color?</text>
+    <text fill="#F00" font-size="11" textLength="15.881" x="47.944" y="24.556">red</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="60.65" x="16" y="49"/>
+    <text fill="#000" font-size="12" textLength="40.65" x="26" y="68.333">print red</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="77.3" x="96.65" y="49"/>
+    <text fill="#000" font-size="12" textLength="57.3" x="106.65" y="68.333">print not red</text>
+    <polygon fill="#F1F1F1" points="90.813,87,102.813,99,90.813,111,78.813,99,90.813,87" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="63.825" x2="46.325" y1="27" y2="27"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="46.325" x2="46.325" y1="27" y2="49"/>
+    <polygon fill="#181818" points="42.325,39,46.325,49,50.325,39,46.325,43" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="117.8" x2="135.3" y1="27" y2="27"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="135.3" x2="135.3" y1="27" y2="49"/>
+    <polygon fill="#181818" points="131.3,39,135.3,49,139.3,39,135.3,43" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="46.325" x2="46.325" y1="81" y2="99"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="46.325" x2="78.813" y1="99" y2="99"/>
+    <polygon fill="#181818" points="68.813,95,78.813,99,68.813,103,72.813,99" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="135.3" x2="135.3" y1="81" y2="99"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="135.3" x2="102.813" y1="99" y2="99"/>
+    <polygon fill="#181818" points="112.813,95,102.813,99,112.813,103,108.813,99" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

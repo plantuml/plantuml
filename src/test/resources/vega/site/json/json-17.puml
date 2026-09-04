@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startjson
+{
+  "empty_tab": [],
+  "empty_list": {}
+}
+@endjson

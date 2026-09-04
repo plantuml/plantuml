@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="TIMING" height="282px" preserveAspectRatio="none" style="width:275px;height:282px;background:#FFFFFF;" version="1.1" viewBox="0 0 275 282" width="275px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="20" y1="20" y2="250"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="254.425" x2="254.425" y1="20" y2="250"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="49.425" x2="49.425" y1="20" y2="250"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="99.425" x2="99.425" y1="20" y2="250"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="149.425" x2="149.425" y1="20" y2="250"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="199.425" x2="199.425" y1="20" y2="250"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="249.425" x2="249.425" y1="20" y2="250"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="254.425" y1="20" y2="20"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="36.575" x="25" y="30.889">Vcore</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="62.575" y1="35" y2="35"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="62.575" x2="72.575" y1="35" y2="20"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="19.425" x="28" y="130.889">0.0</text>
+    <text fill="#333" font-size="14" font-weight="700" textLength="19.425" x="28" y="46.889">6.0</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="49.425" x2="49.425" y1="127" y2="127"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="49.425" x2="149.425" y1="127" y2="127"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="149.425" x2="199.425" y1="127" y2="43"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="199.425" x2="249.425" y1="43" y2="43"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="254.425" y1="135" y2="135"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="29.662" x="25" y="145.889">VCC</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="55.662" y1="150" y2="150"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="55.662" x2="65.663" y1="150" y2="135"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="19.425" x="28" y="245.889">0.0</text>
+    <text fill="#333" font-size="14" font-weight="700" textLength="19.425" x="28" y="161.889">6.0</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="49.425" x2="49.425" y1="200" y2="200"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="49.425" x2="199.425" y1="200" y2="158"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="199.425" x2="249.425" y1="158" y2="158"/>
+    <line style="stroke:#333;stroke-width:2;" x1="49.425" x2="49.425" y1="250" y2="255"/>
+    <line style="stroke:#333;stroke-width:2;" x1="99.425" x2="99.425" y1="250" y2="255"/>
+    <line style="stroke:#333;stroke-width:2;" x1="149.425" x2="149.425" y1="250" y2="255"/>
+    <line style="stroke:#333;stroke-width:2;" x1="199.425" x2="199.425" y1="250" y2="255"/>
+    <line style="stroke:#333;stroke-width:2;" x1="249.425" x2="249.425" y1="250" y2="255"/>
+    <line style="stroke:#333;stroke-width:2;" x1="49.425" x2="249.425" y1="250" y2="250"/>
+    <text fill="#333" font-size="11" x="46.366" y="264.556">0</text>
+    <text fill="#333" font-size="11" x="146.366" y="264.556">2</text>
+    <text fill="#333" font-size="11" x="196.366" y="264.556">3</text>
+    <line style="stroke:#00008B;stroke-width:1.5;" x1="99.425" x2="149.425" y1="127" y2="172"/>
+    <polygon fill="#00008B" points="142.007,169.005,145.668,164.937,149.425,172" style="stroke:#00008B;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#00008B" font-family="serif" font-size="14" textLength="32.463" x="143.837" y="163.86">"test"</text>
+  </g>
+</svg>

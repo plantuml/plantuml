@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+class C1 $tag13
+enum E1
+interface I1 $tag13
+C1 -- I1
+
+hide $tag13
+@enduml

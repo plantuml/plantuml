@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startsalt
+{
+  <&person> Login  | "MyName   "
+  <&key> Password  | "****     "
+  [<&circle-x> Cancel ] | [ <&account-login> OK   ]
+}
+@endsalt

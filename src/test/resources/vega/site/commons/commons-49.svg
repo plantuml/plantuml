@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="126px" preserveAspectRatio="none" style="width:182px;height:126px;background:#FFFFFF;" version="1.1" viewBox="0 0 182 126" width="182px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFF" height="95.167" style="stroke:#181818;stroke-width:1.5;" width="161" x="10" y="15"/>
+    <path d="M130.513,15 L130.513,22 L120.513,32 L10,32" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="44.45" x="13" y="26.889">This is a</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="66.063" x="57.45" y="26.889">mainframe</text>
+    <text fill="#000" font-size="12" textLength="29.4" x="16" y="50.5">Login</text>
+    <text fill="#000" font-size="12" textLength="48" x="78" y="50.5">MyName</text>
+    <line style="stroke:#000;stroke-width:1;" x1="76" x2="151" y1="53.167" y2="53.167"/>
+    <line style="stroke:#000;stroke-width:1;" x1="76" x2="76" y1="50.167" y2="52.167"/>
+    <line style="stroke:#000;stroke-width:1;" x1="151" x2="151" y1="50.167" y2="52.167"/>
+    <text fill="#000" font-size="12" textLength="52.725" x="16" y="66.5">Password</text>
+    <text fill="#000" font-size="12" textLength="18.6" x="78" y="66.5">****</text>
+    <line style="stroke:#000;stroke-width:1;" x1="76" x2="151" y1="69.167" y2="69.167"/>
+    <line style="stroke:#000;stroke-width:1;" x1="76" x2="76" y1="66.167" y2="68.167"/>
+    <line style="stroke:#000;stroke-width:1;" x1="151" x2="151" y1="66.167" y2="68.167"/>
+    <rect fill="#EEE" height="16" rx="5" ry="5" style="stroke:#000;stroke-width:2.5;" width="52" x="18.5" y="75.667"/>
+    <text fill="#000" font-size="12" textLength="37.425" x="25.788" y="87">Cancel</text>
+    <rect fill="#EEE" height="16" rx="5" ry="5" style="stroke:#000;stroke-width:2.5;" width="60" x="77.5" y="75.667"/>
+    <text fill="#000" font-size="12" textLength="17.325" x="98.838" y="87">OK</text>
+    <line style="stroke:#000;stroke-width:1;" x1="15" x2="74" y1="40.167" y2="40.167"/>
+    <line style="stroke:#000;stroke-width:1;" x1="74" x2="154" y1="40.167" y2="40.167"/>
+    <line style="stroke:#000;stroke-width:1;" x1="15" x2="74" y1="95.167" y2="95.167"/>
+    <line style="stroke:#000;stroke-width:1;" x1="74" x2="154" y1="95.167" y2="95.167"/>
+    <line style="stroke:#000;stroke-width:1;" x1="15" x2="15" y1="40.167" y2="56.167"/>
+    <line style="stroke:#000;stroke-width:1;" x1="154" x2="154" y1="72.167" y2="95.167"/>
+    <line style="stroke:#000;stroke-width:1;" x1="154" x2="154" y1="56.167" y2="72.167"/>
+    <line style="stroke:#000;stroke-width:1;" x1="154" x2="154" y1="40.167" y2="56.167"/>
+    <line style="stroke:#000;stroke-width:1;" x1="15" x2="15" y1="72.167" y2="95.167"/>
+    <line style="stroke:#000;stroke-width:1;" x1="15" x2="15" y1="56.167" y2="72.167"/>
+  </g>
+</svg>

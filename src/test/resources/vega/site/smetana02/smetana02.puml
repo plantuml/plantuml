@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+class Foo1
+
+Foo1 --> Foo2
+Foo1 --> Foo3
+Foo1 ---> Foo4 : test 4
+Foo1 ----> Foo5 : test 5
+
+@enduml

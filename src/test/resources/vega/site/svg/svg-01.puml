@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+!pragma svgInteractive true
+
+package P {
+  A-->B
+  A-->C
+}
+C-->D
+D-->A
+E-->F
+F-->B
+B-->G
+@enduml

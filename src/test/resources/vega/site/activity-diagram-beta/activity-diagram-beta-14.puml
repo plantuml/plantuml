@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+if (condition?) then
+  :error; <<#pink>>
+  kill
+endif
+:action; <<#palegreen>>
+@enduml

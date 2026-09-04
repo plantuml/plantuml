@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+!THE_DATE=%date()
+!ANOTHER_DATE=%date("yyyy.MM.dd G' at 'HH:mm:ss z")
+Title Generated THE_DATE \nor ANOTHER_DATE
+@enduml

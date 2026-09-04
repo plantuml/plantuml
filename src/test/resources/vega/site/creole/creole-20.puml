@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+rectangle "<font:Noto Emoji><U+1F3F7></font> label"
+rectangle "<font:Noto Emoji><U+1F527></font> wrench"
+rectangle "<font:Noto Emoji><U+1F6E0></font> hammer_and_wrench"
+@enduml

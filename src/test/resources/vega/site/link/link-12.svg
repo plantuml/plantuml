@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="102px" preserveAspectRatio="none" style="width:470px;height:102px;background:#FFFFFF;" version="1.1" viewBox="0 0 470 102" width="470px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity Foo-->
+    <g class="entity" data-qualified-name="Foo" data-source-line="1" id="ent0001">
+      <ellipse cx="126" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M126,28.5 L126,55.5 M113,36.5 L139,36.5 M126,55.5 L113,70.5 M126,55.5 L139,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="24.15" x="113.925" y="82.889">Foo</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="3" id="ent0003">
+      <a href="http://www.google.com" target="_top" title="http://www.google.com" xlink:actuate="onRequest" xlink:href="http://www.google.com" xlink:show="new" xlink:title="http://www.google.com" xlink:type="simple">
+        <path d="M6,37 L6,60 A0,0 0 0 0 6,60 L93.544,60 A0,0 0 0 0 93.544,60 L93.544,55 L112.103,49 L93.544,47 L93.544,47 L83.544,37 L6,37 A0,0 0 0 0 6,37" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+        <path d="M83.544,37 L83.544,47 L93.544,47 L83.544,37" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+        <text fill="#000" font-size="13" textLength="66.544" x="12" y="52.111">This is a note</text>
+      </a>
+    </g>
+    <g class="entity" data-qualified-name="GMN5" data-source-line="7" id="ent0006">
+      <path d="M158,24.5 L158,45 L139.711,49 L158,53 L158,73.5 A0,0 0 0 0 158,73.5 L454.113,73.5 A0,0 0 0 0 454.113,73.5 L454.113,34.5 L444.113,24.5 L158,24.5 A0,0 0 0 0 158,24.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M444.113,24.5 L444.113,34.5 L454.113,34.5 L444.113,24.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="93.925" x="164" y="39.611">Yet another link to</text>
+      <a href="http://www.google.com" target="_top" title="http://www.google.com" xlink:actuate="onRequest" xlink:href="http://www.google.com" xlink:show="new" xlink:title="http://www.google.com" xlink:type="simple">
+        <text fill="#00F" font-size="13" text-decoration="underline" textLength="131.381" x="257.925" y="39.611">http://www.google.com</text>
+      </a>
+      <text fill="#000" font-size="13" textLength="49.806" x="389.306" y="39.611">as demo.</text>
+      <text fill="#000" font-size="13" textLength="68.006" x="164" y="52.611">You can also</text>
+      <a href="http://www.yahoo.fr" target="_top" title="http://www.yahoo.fr" xlink:actuate="onRequest" xlink:href="http://www.yahoo.fr" xlink:show="new" xlink:title="http://www.yahoo.fr" xlink:type="simple">
+        <text fill="#00F" font-size="13" text-decoration="underline" textLength="68.575" x="232.006" y="52.611">specify a text</text>
+      </a>
+      <text fill="#000" font-size="13" textLength="56.306" x="300.581" y="52.611">for the link.</text>
+      <text fill="#000" font-size="13" textLength="51.35" x="164" y="65.611">And even</text>
+      <a href="http://www.yahoo.fr" target="_top" title="This is a tooltip" xlink:actuate="onRequest" xlink:href="http://www.yahoo.fr" xlink:show="new" xlink:title="This is a tooltip" xlink:type="simple">
+        <text fill="#00F" font-size="13" text-decoration="underline" textLength="63.619" x="215.35" y="65.611">add a tooltip</text>
+      </a>
+      <text fill="#000" font-size="13" textLength="52" x="278.969" y="65.611">to the link.</text>
+    </g>
+  </g>
+</svg>

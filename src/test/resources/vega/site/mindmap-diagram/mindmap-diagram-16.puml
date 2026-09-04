@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startmindmap
+*_ root node
+**_ some first level node
+***_ second level node
+***_ another second level node
+***_ foo
+***_ bar
+***_ foobar
+**_ another first level node
+@endmindmap

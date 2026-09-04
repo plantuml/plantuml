@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="200px" preserveAspectRatio="none" style="width:243px;height:200px;background:#FFFFFF;" version="1.1" viewBox="0 0 243 200" width="243px" zoomAndPan="magnify">
+  <defs>
+    <filter height="1" id="bragtkg9y8sd70" width="1" x="0" y="0">
+      <feFlood flood-color="#5F9EA0" result="flood"/>
+      <feComposite in="SourceGraphic" in2="flood" operator="over"/>
+    </filter>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="2">
+      <text fill="#000" font-size="14" font-weight="700" text-decoration="underline" textLength="42.875" x="25.544" y="25.889">Simple</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="147.088" x="68.419" y="25.889">communication example</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="15.575" x="15" y="39.889">on</text>
+      <text fill="#000" font-size="14" font-style="italic" font-weight="700" textLength="45.15" x="30.575" y="39.889">several</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="85.75" x="75.725" y="39.889">lines and using</text>
+      <text fill="#000" filter="url(#bragtkg9y8sd70)" font-size="14" font-weight="700" textLength="64.575" x="161.475" y="39.889">creole tags</text>
+    </g>
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="72" width="8" x="36.419" y="88"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="39.919" x2="39.919" y1="88" y2="160"/>
+    </g>
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="72" width="8" x="201.388" y="88"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="204.888" x2="204.888" y1="88" y2="160"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="17.694" y="59"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="24.694" y="76.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="185.419" y="59"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="192.419" y="76.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="17.694" y="160"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="24.694" y="177.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="185.419" y="160"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="192.419" y="177.889">Bob</text>
+    <polygon fill="#181818" points="192.888,111,202.888,115,192.888,119,196.888,115" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="39.919" x2="198.888" y1="115" y2="115"/>
+    <text fill="#000" font-size="13" textLength="130.813" x="46.919" y="110.111">Authentication Request</text>
+    <polygon fill="#181818" points="50.919,138,40.919,142,50.919,146,46.919,142" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="44.919" x2="203.888" y1="142" y2="142"/>
+    <text fill="#000" font-size="13" textLength="140.969" x="56.919" y="137.111">Authentication Response</text>
+  </g>
+</svg>

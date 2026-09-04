@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="TIMING" height="252px" preserveAspectRatio="none" style="width:510px;height:252px;background:#FFFFFF;" version="1.1" viewBox="0 0 510 252" width="510px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="20" y1="20" y2="220"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="489.4" x2="489.4" y1="20" y2="220"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="84.4" x2="84.4" y1="20" y2="220"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="134.4" x2="134.4" y1="20" y2="220"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="184.4" x2="184.4" y1="20" y2="220"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="234.4" x2="234.4" y1="20" y2="220"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="284.4" x2="284.4" y1="20" y2="220"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="334.4" x2="334.4" y1="20" y2="220"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="384.4" x2="384.4" y1="20" y2="220"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="434.4" x2="434.4" y1="20" y2="220"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="484.4" x2="484.4" y1="20" y2="220"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="489.4" y1="20" y2="20"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="84.962" x="25" y="30.889">DNS Resolver</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="110.962" y1="35" y2="35"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="110.962" x2="120.962" y1="35" y2="20"/>
+    <text fill="#333" font-size="12" textLength="19.35" x="25" y="69.333">Idle</text>
+    <text fill="#333" font-size="12" textLength="59.4" x="25" y="49.333">Processing</text>
+    <line style="stroke:#006400;stroke-width:2;" x1="84.4" x2="284.4" y1="65" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="284.4" x2="434.4" y1="45" y2="45"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="434.4" x2="484.4" y1="65" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="284.4" x2="284.4" y1="45" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="434.4" x2="434.4" y1="45" y2="65"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="489.4" y1="83" y2="83"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="80.15" x="25" y="93.889">Web Browser</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="106.15" y1="98" y2="98"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="106.15" x2="116.15" y1="98" y2="83"/>
+    <text fill="#333" font-size="12" textLength="19.35" x="25" y="152.333">Idle</text>
+    <text fill="#333" font-size="12" textLength="59.4" x="25" y="132.333">Processing</text>
+    <text fill="#333" font-size="12" textLength="40.05" x="25" y="112.333">Waiting</text>
+    <line style="stroke:#006400;stroke-width:2;" x1="84.4" x2="134.4" y1="148" y2="148"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="134.4" x2="234.4" y1="128" y2="128"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="234.4" x2="484.4" y1="108" y2="108"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="134.4" x2="134.4" y1="128" y2="148"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="234.4" x2="234.4" y1="108" y2="128"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="489.4" y1="166" y2="166"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="58.363" x="25" y="176.889">Web User</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="84.363" y1="181" y2="181"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="84.363" x2="94.363" y1="181" y2="166"/>
+    <polygon fill="#E2E2F0" points="96.4,186,122.4,186,134.4,198,122.4,210,96.4,210,84.4,198" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="146.4,186,484.4,186,484.4,210,146.4,210,134.4,198" style="stroke:#E2E2F0;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M484.4,186 L146.4,186 L134.4,198 L146.4,210 L484.4,210" fill="#E2E2F0" style="stroke:#006400;stroke-width:1.5;"/>
+    <text fill="#333" font-size="12" font-weight="700" textLength="19.35" x="99.725" y="201.333">Idle</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="40.05" x="146.4" y="201.333">Waiting</text>
+    <line style="stroke:#333;stroke-width:2;" x1="84.4" x2="84.4" y1="220" y2="225"/>
+    <line style="stroke:#333;stroke-width:2;" x1="134.4" x2="134.4" y1="220" y2="225"/>
+    <line style="stroke:#333;stroke-width:2;" x1="184.4" x2="184.4" y1="220" y2="225"/>
+    <line style="stroke:#333;stroke-width:2;" x1="234.4" x2="234.4" y1="220" y2="225"/>
+    <line style="stroke:#333;stroke-width:2;" x1="284.4" x2="284.4" y1="220" y2="225"/>
+    <line style="stroke:#333;stroke-width:2;" x1="334.4" x2="334.4" y1="220" y2="225"/>
+    <line style="stroke:#333;stroke-width:2;" x1="384.4" x2="384.4" y1="220" y2="225"/>
+    <line style="stroke:#333;stroke-width:2;" x1="434.4" x2="434.4" y1="220" y2="225"/>
+    <line style="stroke:#333;stroke-width:2;" x1="484.4" x2="484.4" y1="220" y2="225"/>
+    <line style="stroke:#333;stroke-width:2;" x1="84.4" x2="484.4" y1="220" y2="220"/>
+    <text fill="#333" font-size="11" x="81.341" y="234.556">0</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="125.222" y="234.556">100</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="225.222" y="234.556">300</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="275.222" y="234.556">400</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="425.222" y="234.556">700</text>
+    <line style="stroke:#00008B;stroke-width:1.5;" x1="134.4" x2="134.4" y1="198" y2="148"/>
+    <polygon fill="#00008B" points="137.136,155.518,131.664,155.518,134.4,148" style="stroke:#00008B;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#00008B" font-family="serif" font-size="14" textLength="28.088" x="134.4" y="166.406">URL</text>
+    <line style="stroke:#00008B;stroke-width:1.5;" x1="234.4" x2="259.4" y1="108" y2="65"/>
+    <polygon fill="#00008B" points="257.987,72.874,253.256,70.124,259.4,65" style="stroke:#00008B;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#00008B" font-family="serif" font-size="14" textLength="78.75" x="255.622" y="82.388">Resolve URL</text>
+  </g>
+</svg>

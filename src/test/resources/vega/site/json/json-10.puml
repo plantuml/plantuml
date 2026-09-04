@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startjson
+{
+"DecimalNumber": [-1, 0, 1],
+"DecimalNumber . Digits": [-1.1, 0.1, 1.1],
+"DecimalNumber ExponentPart": [1E5]
+}
+@endjson

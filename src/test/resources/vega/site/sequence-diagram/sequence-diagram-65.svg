@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="224px" preserveAspectRatio="none" style="width:247px;height:224px;background:#FFFFFF;" version="1.1" viewBox="0 0 247 224" width="247px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#ADD8E6" height="198" style="stroke:#181818;stroke-width:0.5;" width="155.75" x="16" y="11"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="86.694" x="50.528" y="21.111">Internal Service</text>
+    <rect fill="#DDD" height="180" style="stroke:#181818;stroke-width:0.5;" width="106.813" x="64.938" y="29"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="52" x="92.344" y="39.111">Subteam</text>
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="99" width="8" x="35.969" y="75"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="39.469" x2="39.469" y1="75" y2="174"/>
+    </g>
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="99" width="8" x="87.663" y="75"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="91.163" x2="91.163" y1="75" y2="174"/>
+    </g>
+    <g>
+      <title>John</title>
+      <rect fill="#000" fill-opacity="0" height="99" width="8" x="142.069" y="75"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="145.569" x2="145.569" y1="75" y2="174"/>
+    </g>
+    <g>
+      <title>Other</title>
+      <rect fill="#000" fill-opacity="0" height="99" width="8" x="208.706" y="75"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="212.206" x2="212.206" y1="75" y2="174"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="20" y="46"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="27" y="63.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="68.938" y="46"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="75.938" y="63.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.363" x="123.387" y="46"/>
+    <text fill="#000" font-size="14" textLength="30.362" x="130.388" y="63.889">John</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="48.913" x="187.75" y="46"/>
+    <text fill="#000" font-size="14" textLength="34.913" x="194.75" y="63.889">Other</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="20" y="174"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="27" y="191.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="68.938" y="174"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="75.938" y="191.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.363" x="123.387" y="174"/>
+    <text fill="#000" font-size="14" textLength="30.362" x="130.388" y="191.889">John</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="48.913" x="187.75" y="174"/>
+    <text fill="#000" font-size="14" textLength="34.913" x="194.75" y="191.889">Other</text>
+    <polygon fill="#181818" points="79.163,98,89.163,102,79.163,106,83.163,102" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="39.469" x2="85.163" y1="102" y2="102"/>
+    <text fill="#000" font-size="13" textLength="27.544" x="46.469" y="97.111">hello</text>
+    <polygon fill="#181818" points="133.569,125,143.569,129,133.569,133,137.569,129" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="91.163" x2="139.569" y1="129" y2="129"/>
+    <text fill="#000" font-size="13" textLength="27.544" x="98.163" y="124.111">hello</text>
+    <polygon fill="#181818" points="200.206,152,210.206,156,200.206,160,204.206,156" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="145.569" x2="206.206" y1="156" y2="156"/>
+    <text fill="#000" font-size="13" textLength="29.738" x="152.569" y="151.111">Hello</text>
+  </g>
+</svg>

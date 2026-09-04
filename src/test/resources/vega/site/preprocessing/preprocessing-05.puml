@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startmindmap
+!procedure $foo($arg)
+  !while $arg!=0
+    !$i=3
+    **[#palegreen] arg = $arg
+    !while $i!=0
+      *** i = $i
+      !$i = $i - 1
+    !endwhile
+    !$arg = $arg - 1
+  !endwhile
+!endprocedure
+
+*:While
+Loop;
+$foo(2)
+@endmindmap

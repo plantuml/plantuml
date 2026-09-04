@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+skinparam titleFontSize 14
+title
+  Example of simple table
+  |= |= table |= header |
+  | a | table | row |
+  | b | table | row |
+end title
+[*] --> State1
+@enduml

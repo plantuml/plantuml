@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+mainframe This is a **mainframe**
+
+[*] --> State1
+State1 -> State2
+@enduml

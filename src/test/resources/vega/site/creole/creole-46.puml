@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startmindmap
+* Style equivalent\n(between Creole and HTML)
+**:**Creole**
+----
+<#silver>|= code|= output|
+| \n This is ""~**bold**""\n | \n This is **bold** |
+| \n This is ""~//italics//""\n | \n This is //italics// |
+| \n This is ""~""monospaced~"" ""\n | \n This is ""monospaced"" |
+| \n This is ""~--stroked--""\n | \n This is --stroked-- |
+| \n This is ""~__underlined__""\n |  \n This is __underlined__ |
+| \n This is ""<U+007E><U+007E>waved<U+007E><U+007E>""\n | \n This is ~~waved~~ |;
+**:<b>Legacy HTML like
+----
+<#silver>|= code|= output|
+| \n This is ""~<b>bold</b>""\n | \n This is <b>bold</b> |
+| \n This is ""~<i>italics</i>""\n | \n This is <i>italics</i> |
+| \n This is ""~<font:monospaced>monospaced</font>""\n | \n This is <font:monospaced>monospaced</font> |
+| \n This is ""~<s>stroked</s>""\n | \n  This is <s>stroked</s> |
+| \n This is ""~<u>underlined</u>""\n | \n This is <u>underlined</u> |
+| \n This is ""~<w>waved</w>""\n | \n This is <w>waved</w> |
+
+And color as a bonus...
+<#silver>|= code|= output|
+| \n This is ""~<s:""<color:green>""green""</color>"">stroked</s>""\n | \n  This is <s:green>stroked</s> |
+| \n This is ""~<u:""<color:red>""red""</color>"">underlined</u>""\n | \n This is <u:red>underlined</u> |
+| \n This is ""~<w:""<color:#0000FF>""#0000FF""</color>"">waved</w>""\n | \n This is <w:#0000FF>waved</w> |;
+@endmindmap

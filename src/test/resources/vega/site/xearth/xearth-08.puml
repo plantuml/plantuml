@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+xearth(300,300)
+viewMagnification = 1.2
+daySideBrightness = 100
+nightSideBrightness = 50
+terminatorDiscontinuity = 30
+sunPosRelLong = -40
+sunPosRelLat = 20
+@enduml

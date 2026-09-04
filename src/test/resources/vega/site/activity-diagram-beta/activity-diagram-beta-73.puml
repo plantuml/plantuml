@@ -1,0 +1,33 @@
+---
+output: svg
+---
+@startuml
+:Creole:
+  wave: ~~wave~~
+  bold: **bold**
+  italics: //italics//
+  monospaced: ""monospaced""
+  stricken-out: --stricken-out--
+  underlined: __underlined__
+  not-underlined: ~__not underlined__
+  wave-underlined: ~~wave-underlined~~;
+:HTML Creole:
+  bold: <b>bold
+  italics: <i>italics
+  monospaced: <font:monospaced>monospaced
+  stroked: <s>stroked
+  underlined: <u>underlined
+  waved: <w>waved
+  green-stroked: <s:green>stroked
+  red-underlined: <u:red>underlined
+  blue-waved: <w:#0000FF>waved
+  Blue: <color:blue>Blue
+  Orange: <back:orange>Orange background
+  big: <size:20>big;
+:Graphic:
+  OpenIconic: account-login <&account-login>
+  Unicode: This is <U+221E> long
+  Emoji: <:calendar:> Calendar
+  Image:
+  <img:https://plantuml.com/logo3.png>;
+@enduml

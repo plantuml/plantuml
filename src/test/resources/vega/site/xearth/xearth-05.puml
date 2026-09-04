@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+xearth(300,300)
+viewPositionType = Fixed
+viewPosLat = -30
+viewPosLong = -30
+shadeP = false
+gridP = false
+@enduml

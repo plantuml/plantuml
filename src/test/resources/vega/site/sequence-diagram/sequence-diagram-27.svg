@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="318px" preserveAspectRatio="none" style="width:286px;height:318px;background:#FFFFFF;" version="1.1" viewBox="0 0 286 318" width="286px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="none" height="149" style="stroke:#000;stroke-width:1.5;" width="253.963" x="13" y="105"/>
+    <rect fill="none" height="52" style="stroke:#000;stroke-width:1.5;" width="186.813" x="32" y="161"/>
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="239" width="8" x="44.5" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="48" x2="48" y1="39" y2="278"/>
+    </g>
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="239" width="8" x="199.313" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="202.813" x2="202.813" y1="39" y2="278"/>
+    </g>
+    <g>
+      <title>Log</title>
+      <rect fill="#000" fill-opacity="0" height="239" width="8" x="247.463" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="250.963" x2="250.963" y1="39" y2="278"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="25.775" y="10"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="32.775" y="27.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="183.344" y="10"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="190.344" y="27.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="37.363" x="232.281" y="10"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="239.281" y="27.889">Log</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="25.775" y="278"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="32.775" y="295.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="183.344" y="278"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="190.344" y="295.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="37.363" x="232.281" y="278"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="239.281" y="295.889">Log</text>
+    <polygon fill="#181818" points="190.813,62,200.813,66,190.813,70,194.813,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="48" x2="196.813" y1="66" y2="66"/>
+    <text fill="#000" font-size="13" textLength="130.813" x="55" y="61.111">Authentication Request</text>
+    <polygon fill="#181818" points="59,89,49,93,59,97,55,93" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="53" x2="201.813" y1="93" y2="93"/>
+    <text fill="#000" font-size="13" textLength="122.2" x="65" y="88.111">Authentication Failure</text>
+    <path d="M13,105 L126.738,105 L126.738,110 L116.738,120 L13,120 L13,105" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="149" style="stroke:#000;stroke-width:1.5;" width="253.963" x="13" y="105"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="68.738" x="28" y="116.111">My own label</text>
+    <text fill="#000" font-size="11" font-weight="700" textLength="70.331" x="141.738" y="115.556">[My own label 2]</text>
+    <polygon fill="#181818" points="238.963,145,248.963,149,238.963,153,242.963,149" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="48" x2="244.963" y1="149" y2="149"/>
+    <text fill="#000" font-size="13" textLength="81.494" x="55" y="144.111">Log attack start</text>
+    <path d="M32,161 L101.619,161 L101.619,166 L91.619,176 L32,176 L32,161" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="52" style="stroke:#000;stroke-width:1.5;" width="186.813" x="32" y="161"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="24.619" x="47" y="172.111">loop</text>
+    <text fill="#000" font-size="11" font-weight="700" textLength="56.788" x="116.619" y="171.556">[1000 times]</text>
+    <polygon fill="#181818" points="190.813,201,200.813,205,190.813,209,194.813,205" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="48" x2="196.813" y1="205" y2="205"/>
+    <text fill="#000" font-size="13" textLength="63.619" x="55" y="200.111">DNS Attack</text>
+    <polygon fill="#181818" points="238.963,242,248.963,246,238.963,250,242.963,246" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="48" x2="244.963" y1="246" y2="246"/>
+    <text fill="#000" font-size="13" textLength="78" x="55" y="241.111">Log attack end</text>
+  </g>
+</svg>

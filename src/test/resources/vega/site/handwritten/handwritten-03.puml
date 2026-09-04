@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+!option handwritten true
+class Object
+class String extends Object
+class Date extends Object
+@enduml

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="67px" preserveAspectRatio="none" style="width:192px;height:67px;background:#FFFFFF;" version="1.1" viewBox="0 0 192 67" width="192px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="70.575" x="10" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42.788" x="15" y="22.889">partlen</text>
+    <text fill="#000" font-size="14" x="67.788" y="22.889">2</text>
+    <line style="stroke:#000;stroke-width:1;" x1="62.788" x2="62.788" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="80.575" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="30.362" x="15" y="40.889">color</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="67.788" y="40.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="62.788" x2="62.788" y1="28" y2="46"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="70.575" x="10" y="10"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="62.088" x="118" y="19"/>
+    <text fill="#000" font-size="14" font-weight="700" x="123" y="31.889">A</text>
+    <text fill="#000" font-size="14" textLength="32.725" x="142.363" y="31.889">black</text>
+    <line style="stroke:#000;stroke-width:1;" x1="137.363" x2="137.363" y1="19" y2="37"/>
+    <line style="stroke:#000;stroke-width:1;" x1="118" x2="180.088" y1="37" y2="37"/>
+    <text fill="#000" font-size="14" font-weight="700" x="123" y="49.889">B</text>
+    <text fill="#000" font-size="14" textLength="26.512" x="142.363" y="49.889">blue</text>
+    <line style="stroke:#000;stroke-width:1;" x1="137.363" x2="137.363" y1="37" y2="55"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="62.088" x="118" y="19"/>
+    <path d="M69,37 L82,37 C91.29,37 101.311,37 110.684,37" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M110.684,40.077 L112.991,37 L110.684,33.923 L118.375,37 L110.684,40.077" fill="#000"/>
+    <ellipse cx="69" cy="37" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

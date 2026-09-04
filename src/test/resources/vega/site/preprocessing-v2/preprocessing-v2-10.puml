@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+!preprocessorV2
+!unquoted function COMP_TEXTGENCOMP(name)
+[name] << Comp >>
+interface Ifc << IfcType >> AS name##Ifc
+name##Ifc - [name]
+!endfunction
+COMP_TEXTGENCOMP(dummy)
+@enduml

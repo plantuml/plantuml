@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="215px" preserveAspectRatio="none" style="width:242px;height:215px;background:#FFFFFF;" version="1.1" viewBox="0 0 242 215" width="242px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="demo" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="99.938" x="126" y="12"/>
+      <text fill="#000" font-size="14" textLength="35" x="158.469" y="24.889">demo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="127" x2="224.938" y1="30" y2="30"/>
+      <g data-visibility-modifier="IE_MANDATORY">
+        <ellipse cx="137" cy="42.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.238" x="146" y="44.889">Bullet list</text>
+      <g data-visibility-modifier="IE_MANDATORY">
+        <ellipse cx="137" cy="56.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="73.938" x="146" y="58.889">Second item</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="6" id="ent0003">
+      <path d="M6,14.5 L6,63.5 A0,0 0 0 0 6,63.5 L107.656,63.5 A0,0 0 0 0 107.656,63.5 L107.656,43 L125.895,39 L107.656,35 L107.656,24.5 L97.656,14.5 L6,14.5 A0,0 0 0 0 6,14.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M97.656,14.5 L97.656,24.5 L107.656,24.5 L97.656,14.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <ellipse cx="17.5" cy="25" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="13" textLength="48.506" x="24" y="29.611">Bullet list</text>
+      <ellipse cx="17.5" cy="38" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="13" textLength="68.656" x="24" y="42.611">Second item</text>
+      <rect fill="#000" height="3.5" width="3.5" x="21" y="48.5"/>
+      <text fill="#000" font-size="13" textLength="47.694" x="28" y="55.611">Sub item</text>
+    </g>
+    <g class="legend" data-source-line="11">
+      <rect fill="#DDD" height="108" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="136.088" x="49.456" y="88"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="54.456" y="103.889">1.</text>
+      <text fill="#000" font-size="14" textLength="82.513" x="69.944" y="103.889">Numbered list</text>
+      <text fill="#000" font-size="14" textLength="11.638" x="54.456" y="117.889">2.</text>
+      <text fill="#000" font-size="14" textLength="73.938" x="69.944" y="117.889">Second item</text>
+      <text fill="#000" font-size="14" textLength="11.638" x="66.094" y="131.889">1.</text>
+      <text fill="#000" font-size="14" textLength="51.363" x="81.581" y="131.889">Sub item</text>
+      <text fill="#000" font-size="14" textLength="11.638" x="66.094" y="145.889">2.</text>
+      <text fill="#000" font-size="14" textLength="98" x="81.581" y="145.889">Another sub item</text>
+      <text fill="#000" font-size="14" textLength="89.863" x="54.456" y="159.889">* Can't quite mix</text>
+      <text fill="#000" font-size="14" textLength="126.088" x="54.456" y="173.889">* Numbers and bullets</text>
+      <text fill="#000" font-size="14" textLength="11.638" x="54.456" y="187.889">3.</text>
+      <text fill="#000" font-size="14" textLength="58.363" x="69.944" y="187.889">Third item</text>
+    </g>
+  </g>
+</svg>

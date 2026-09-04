@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="47px" preserveAspectRatio="none" style="width:359px;height:47px;background:#FFFFFF;" version="1.1" viewBox="0 0 359 47" width="359px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="348.15" x="5" y="14.333">PlantUML version $version$ / $git.commit.id$ [Unknown compile time]</text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="50.025" x="5" y="26.333">GraphViz</text>
+    <text fill="#000" font-size="12" x="55.025" y="26.333"> </text>
+    <text fill="#000" font-family="monospace" font-size="12" textLength="229.35" x="55.025" y="26.333">dot - graphviz version 2.44.1 (20200629.0846)</text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="206.775" x="5" y="38.333">Installation seems OK. File generation OK</text>
+  </g>
+</svg>

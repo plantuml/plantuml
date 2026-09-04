@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startregex
+title minimumRepetition
+ab{1}c{1,}
+@endregex

@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startjson
+{
+"$foo":{ "company": "Skynet", "employees" : [
+  {"name" : "alice", "salary": 100 },
+  {"name" : "bob", "salary": 50} ]
+}
+}
+@endjson

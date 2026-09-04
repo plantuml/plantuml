@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="156px" preserveAspectRatio="none" style="width:217px;height:156px;background:#FFFFFF;" version="1.1" viewBox="0 0 217 156" width="217px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="header" data-source-line="3">
+      <text fill="#F00" font-size="10" textLength="40" x="170.506" y="12.778">Warning:</text>
+      <text fill="#888" font-size="10" textLength="100.063" x="110.444" y="22.778">Do not use in production.</text>
+    </g>
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="28.725" y="60"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="32.225" x2="32.225" y1="60" y2="105"/>
+    </g>
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="183.538" y="60"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="187.038" x2="187.038" y1="60" y2="105"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="10" y="31"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="17" y="48.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="167.569" y="31"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="174.569" y="48.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="10" y="105"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="17" y="122.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="167.569" y="105"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="174.569" y="122.889">Bob</text>
+    <polygon fill="#181818" points="175.038,83,185.038,87,175.038,91,179.038,87" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="32.225" x2="181.038" y1="87" y2="87"/>
+    <text fill="#000" font-size="13" textLength="130.813" x="39.225" y="82.111">Authentication Request</text>
+    <g class="footer" data-source-line="8">
+      <text fill="#888" font-size="10" textLength="122.125" x="46.691" y="146.778">Generated for demonstration</text>
+    </g>
+  </g>
+</svg>

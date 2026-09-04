@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+rectangle A [
+{{
+    rectangle A
+}}
+]
+
+rectangle B [
+{{
+    skinparam Backgroundcolor transparent
+    rectangle B
+}}
+]
+@enduml

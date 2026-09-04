@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="190.625px" preserveAspectRatio="none" style="width:447px;height:190px;" version="1.1" viewBox="0 0 447 190" width="447.917px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="gp0lm5lfi81ex0" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#7C9AB9"/>
+      <stop offset="100%" stop-color="#304D6D"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>a</title>
+      <rect fill="#000" fill-opacity="0" height="47.917" width="8.333" x="77.956" y="70.833"/>
+      <line style="stroke:#999;stroke-width:1.042;stroke-dasharray:5.208,5.208;" x1="81.602" x2="81.602" y1="70.833" y2="118.75"/>
+    </g>
+    <g>
+      <title>b</title>
+      <rect fill="#000" fill-opacity="0" height="47.917" width="8.333" x="220.326" y="70.833"/>
+      <line style="stroke:#999;stroke-width:1.042;stroke-dasharray:5.208,5.208;" x1="223.971" x2="223.971" y1="70.833" y2="118.75"/>
+    </g>
+    <g>
+      <title>c</title>
+      <rect fill="#000" fill-opacity="0" height="47.917" width="8.333" x="362.344" y="70.833"/>
+      <line style="stroke:#999;stroke-width:1.042;stroke-dasharray:5.208,5.208;" x1="365.99" x2="365.99" y1="70.833" y2="118.75"/>
+    </g>
+    <rect fill="url(#gp0lm5lfi81ex0)" height="43.75" rx="4.167" ry="4.167" style="stroke:#304D6D;stroke-width:1.042;" width="48.62" x="57.292" y="20.833"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" x="78.125" y="46.181">a</text>
+    <rect fill="url(#gp0lm5lfi81ex0)" height="43.75" rx="4.167" ry="4.167" style="stroke:#304D6D;stroke-width:1.042;" width="48.62" x="199.661" y="20.833"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" x="220.495" y="46.181">b</text>
+    <rect fill="url(#gp0lm5lfi81ex0)" height="43.75" rx="4.167" ry="4.167" style="stroke:#304D6D;stroke-width:1.042;" width="47.917" x="342.031" y="20.833"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" x="362.865" y="46.181">c</text>
+    <rect fill="url(#gp0lm5lfi81ex0)" height="43.75" rx="4.167" ry="4.167" style="stroke:#304D6D;stroke-width:1.042;" width="48.62" x="57.292" y="123.958"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" x="78.125" y="149.306">a</text>
+    <rect fill="url(#gp0lm5lfi81ex0)" height="43.75" rx="4.167" ry="4.167" style="stroke:#304D6D;stroke-width:1.042;" width="48.62" x="199.661" y="123.958"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" x="220.495" y="149.306">b</text>
+    <rect fill="url(#gp0lm5lfi81ex0)" height="43.75" rx="4.167" ry="4.167" style="stroke:#304D6D;stroke-width:1.042;" width="47.917" x="342.031" y="123.958"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" x="362.865" y="149.306">c</text>
+    <polygon fill="#446E9B" points="211.471,81.25,221.888,85.417,211.471,89.583,215.638,85.417" style="stroke:#446E9B;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#446E9B;stroke-width:3.125;" x1="81.602" x2="217.721" y1="85.417" y2="85.417"/>
+    <polygon fill="#446E9B" points="353.49,95.833,363.906,100,353.49,104.167,357.656,100" style="stroke:#446E9B;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#446E9B;stroke-width:3.125;" x1="223.971" x2="359.74" y1="100" y2="100"/>
+  </g>
+</svg>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="TIMING" height="97px" preserveAspectRatio="none" style="width:481px;height:97px;background:#FFFFFF;" version="1.1" viewBox="0 0 481 97" width="481px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="20" y1="20" y2="65"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="460" x2="460" y1="20" y2="65"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="30" x2="30" y1="20" y2="65"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="80" x2="80" y1="20" y2="65"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="130" x2="130" y1="20" y2="65"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="180" x2="180" y1="20" y2="65"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="230" x2="230" y1="20" y2="65"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="280" x2="280" y1="20" y2="65"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="330" x2="330" y1="20" y2="65"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="380" x2="380" y1="20" y2="65"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="430" x2="430" y1="20" y2="65"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="460" y1="20" y2="20"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="42.088" x="25" y="30.889">enable</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="68.088" y1="35" y2="35"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="68.088" x2="78.088" y1="35" y2="20"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="30" x2="30" y1="57" y2="57"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="30" x2="215" y1="57" y2="57"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="215" x2="215" y1="43" y2="57"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="215" x2="405" y1="43" y2="43"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="405" x2="405" y1="43" y2="57"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="405" x2="455" y1="57" y2="57"/>
+    <line style="stroke:#333;stroke-width:2;" x1="30" x2="30" y1="65" y2="70"/>
+    <line style="stroke:#333;stroke-width:2;" x1="80" x2="80" y1="65" y2="70"/>
+    <line style="stroke:#333;stroke-width:2;" x1="130" x2="130" y1="65" y2="70"/>
+    <line style="stroke:#333;stroke-width:2;" x1="180" x2="180" y1="65" y2="70"/>
+    <line style="stroke:#333;stroke-width:2;" x1="230" x2="230" y1="65" y2="70"/>
+    <line style="stroke:#333;stroke-width:2;" x1="280" x2="280" y1="65" y2="70"/>
+    <line style="stroke:#333;stroke-width:2;" x1="330" x2="330" y1="65" y2="70"/>
+    <line style="stroke:#333;stroke-width:2;" x1="380" x2="380" y1="65" y2="70"/>
+    <line style="stroke:#333;stroke-width:2;" x1="430" x2="430" y1="65" y2="70"/>
+    <line style="stroke:#333;stroke-width:2;" x1="30" x2="430" y1="65" y2="65"/>
+    <text fill="#333" font-size="11" x="26.941" y="79.556">3</text>
+    <text fill="#333" font-size="11" x="126.941" y="79.556">5</text>
+    <text fill="#333" font-size="11" x="176.941" y="79.556">6</text>
+    <text fill="#333" font-size="11" textLength="12.238" x="373.881" y="79.556">10</text>
+  </g>
+</svg>

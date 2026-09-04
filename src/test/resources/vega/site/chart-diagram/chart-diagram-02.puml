@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startchart
+h-axis [Jan, Feb, Mar, Apr]
+v-axis 0 --> 100
+bar "Revenue" [45, 62, 58, 70] #1f77b4
+legend right
+@endchart

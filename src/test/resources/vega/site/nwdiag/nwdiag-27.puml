@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startnwdiag
+nwdiag {
+  e1
+  network n1 {
+    e1
+    e2
+    e3
+  }
+
+  network n2 {
+    e3
+    e4
+    e5
+  }
+
+  network n3 {
+    e2
+    e6
+  }
+}
+@endnwdiag

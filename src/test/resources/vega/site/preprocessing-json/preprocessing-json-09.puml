@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startmindmap
+!$foo = { "company": "Skynet", "employees" : [
+  {"name" : "alice", "salary": 100 },
+  {"name" : "bob", "salary": 50} ]
+}
+
+* The salary of
+!foreach $emp in $foo.employees
+  ** **$emp.name**
+  *** is
+  **** **$emp.salary**
+!endfor
+@endmindmap

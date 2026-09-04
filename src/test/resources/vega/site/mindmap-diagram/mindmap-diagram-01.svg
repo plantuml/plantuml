@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="399px" preserveAspectRatio="none" style="width:532px;height:399px;background:#FFFFFF;" version="1.1" viewBox="0 0 532 399" width="532px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="64.45" x="10" y="182"/>
+    <text fill="#000" font-size="14" textLength="44.45" x="20" y="202.889">Debian</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="65.15" x="124.45" y="101"/>
+    <text fill="#000" font-size="14" textLength="45.15" x="134.45" y="121.889">Ubuntu</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="79.938" x="239.6" y="20"/>
+    <text fill="#000" font-size="14" textLength="59.938" x="249.6" y="40.889">Linux Mint</text>
+    <path d="M189.6,118 L199.6,118 C214.6,118 214.6,37 229.6,37 L239.6,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="72.15" x="239.6" y="74"/>
+    <text fill="#000" font-size="14" textLength="52.15" x="249.6" y="94.889">Kubuntu</text>
+    <path d="M189.6,118 L199.6,118 C214.6,118 214.6,91 229.6,91 L239.6,91" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="70.575" x="239.6" y="128"/>
+    <text fill="#000" font-size="14" textLength="50.575" x="249.6" y="148.889">Lubuntu</text>
+    <path d="M189.6,118 L199.6,118 C214.6,118 214.6,145 229.6,145 L239.6,145" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="82.387" x="239.6" y="182"/>
+    <text fill="#000" font-size="14" textLength="62.387" x="249.6" y="202.889">KDE Neon</text>
+    <path d="M189.6,118 L199.6,118 C214.6,118 214.6,199 229.6,199 L239.6,199" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M74.45,199 L84.45,199 C99.45,199 99.45,118 114.45,118 L124.45,118" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="58.938" x="124.45" y="155"/>
+    <text fill="#000" font-size="14" textLength="38.938" x="134.45" y="175.889">LMDE</text>
+    <path d="M74.45,199 L84.45,199 C99.45,199 99.45,172 114.45,172 L124.45,172" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="73.813" x="124.45" y="209"/>
+    <text fill="#000" font-size="14" textLength="53.813" x="134.45" y="229.889">SolydXK</text>
+    <path d="M74.45,199 L84.45,199 C99.45,199 99.45,226 114.45,226 L124.45,226" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="80.637" x="124.45" y="263"/>
+    <text fill="#000" font-size="14" textLength="60.637" x="134.45" y="283.889">SteamOS</text>
+    <path d="M74.45,199 L84.45,199 C99.45,199 99.45,280 114.45,280 L124.45,280" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="199.9" x="124.45" y="317"/>
+    <text fill="#000" font-size="14" textLength="179.9" x="134.45" y="337.889">Raspbian with a very long name</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="137.6" x="374.35" y="290"/>
+    <text fill="#000" font-size="14" text-decoration="line-through" textLength="59.15" x="384.35" y="310.889">Raspmbc</text>
+    <text fill="#000" font-size="14" textLength="58.45" x="443.5" y="310.889">=&gt; OSMC</text>
+    <path d="M324.35,334 L334.35,334 C349.35,334 349.35,307 364.35,307 L374.35,307" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="133.838" x="374.35" y="344"/>
+    <text fill="#000" font-size="14" text-decoration="line-through" textLength="46.725" x="384.35" y="364.889">Raspyfi</text>
+    <text fill="#000" font-size="14" textLength="67.113" x="431.075" y="364.889">=&gt; Volumio</text>
+    <path d="M324.35,334 L334.35,334 C349.35,334 349.35,361 364.35,361 L374.35,361" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M74.45,199 L84.45,199 C99.45,199 99.45,334 114.45,334 L124.45,334" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

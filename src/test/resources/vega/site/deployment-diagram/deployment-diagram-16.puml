@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+agent a
+cloud c #pink;line:red;line.bold;text:red
+file  f #palegreen;line:green;line.dashed;text:green
+node  n #aliceblue;line:blue;line.dotted;text:blue
+@enduml

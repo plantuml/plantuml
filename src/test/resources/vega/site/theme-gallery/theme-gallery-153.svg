@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="154.167px" preserveAspectRatio="none" style="width:190px;height:154px;" version="1.1" viewBox="0 0 190 154" width="190.625px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12.5" textLength="69.453" x="11.458" y="21.181">Just plain text</text>
+    <rect fill="#EEE" height="16.667" rx="5.208" ry="5.208" style="stroke:#000;stroke-width:2.604;" width="145.833" x="14.063" y="28.646"/>
+    <text fill="#000" font-size="12.5" textLength="84.063" x="44.948" y="40.451">This is my button</text>
+    <text fill="#000" font-size="12.5" textLength="90.391" x="32.292" y="59.722">Unchecked radio</text>
+    <ellipse cx="18.75" cy="56.25" fill="none" rx="5.208" ry="5.208" style="stroke:#000;stroke-width:1.563;"/>
+    <text fill="#000" font-size="12.5" textLength="77.188" x="32.292" y="74.306">Checked radio</text>
+    <ellipse cx="18.75" cy="70.833" fill="none" rx="5.208" ry="5.208" style="stroke:#000;stroke-width:1.563;"/>
+    <ellipse cx="18.75" cy="70.833" fill="#000" rx="2.083" ry="2.083" style="stroke:#000;stroke-width:1.563;"/>
+    <text fill="#000" font-size="12.5" textLength="82.734" x="32.292" y="88.889">Unchecked box</text>
+    <rect fill="none" height="10.417" style="stroke:#000;stroke-width:1.563;" width="10.417" x="13.542" y="80.208"/>
+    <text fill="#000" font-size="12.5" textLength="69.531" x="32.292" y="103.472">Checked box</text>
+    <rect fill="none" height="10.417" style="stroke:#000;stroke-width:1.563;" width="10.417" x="13.542" y="94.792"/>
+    <polygon fill="#000" points="14.583,100,17.708,103.125,25,93.75,17.708,101.042" style="stroke:#000;stroke-width:1.563;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="12.5" textLength="74.922" x="14.583" y="118.056">Enter text here</text>
+    <line style="stroke:#000;stroke-width:1.042;" x1="12.5" x2="165.625" y1="120.833" y2="120.833"/>
+    <line style="stroke:#000;stroke-width:1.042;" x1="12.5" x2="12.5" y1="117.708" y2="119.792"/>
+    <line style="stroke:#000;stroke-width:1.042;" x1="165.625" x2="165.625" y1="117.708" y2="119.792"/>
+    <rect fill="#EEE" height="15.625" style="stroke:#000;stroke-width:1.042;" width="165.625" x="11.458" y="125"/>
+    <text fill="#000" font-size="12.5" textLength="80" x="13.542" y="136.806">This is a droplist</text>
+    <line style="stroke:#000;stroke-width:1.042;" x1="165.625" x2="165.625" y1="125" y2="140.625"/>
+    <polygon fill="#000" points="168.75,131.25,175,131.25,171.875,135.417" style="stroke:#000;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#000;stroke-width:1.042;" x1="10.417" x2="179.167" y1="10.417" y2="10.417"/>
+    <line style="stroke:#000;stroke-width:1.042;" x1="10.417" x2="179.167" y1="142.708" y2="142.708"/>
+    <line style="stroke:#000;stroke-width:1.042;" x1="10.417" x2="10.417" y1="10.417" y2="25"/>
+    <line style="stroke:#000;stroke-width:1.042;" x1="179.167" x2="179.167" y1="10.417" y2="25"/>
+    <line style="stroke:#000;stroke-width:1.042;" x1="10.417" x2="10.417" y1="123.958" y2="142.708"/>
+    <line style="stroke:#000;stroke-width:1.042;" x1="179.167" x2="179.167" y1="123.958" y2="142.708"/>
+    <line style="stroke:#000;stroke-width:1.042;" x1="10.417" x2="10.417" y1="92.708" y2="107.292"/>
+    <line style="stroke:#000;stroke-width:1.042;" x1="179.167" x2="179.167" y1="92.708" y2="107.292"/>
+    <line style="stroke:#000;stroke-width:1.042;" x1="10.417" x2="10.417" y1="63.542" y2="78.125"/>
+    <line style="stroke:#000;stroke-width:1.042;" x1="179.167" x2="179.167" y1="63.542" y2="78.125"/>
+    <line style="stroke:#000;stroke-width:1.042;" x1="10.417" x2="10.417" y1="25" y2="48.958"/>
+    <line style="stroke:#000;stroke-width:1.042;" x1="179.167" x2="179.167" y1="25" y2="48.958"/>
+    <line style="stroke:#000;stroke-width:1.042;" x1="10.417" x2="10.417" y1="107.292" y2="123.958"/>
+    <line style="stroke:#000;stroke-width:1.042;" x1="179.167" x2="179.167" y1="107.292" y2="123.958"/>
+    <line style="stroke:#000;stroke-width:1.042;" x1="10.417" x2="10.417" y1="78.125" y2="92.708"/>
+    <line style="stroke:#000;stroke-width:1.042;" x1="179.167" x2="179.167" y1="78.125" y2="92.708"/>
+    <line style="stroke:#000;stroke-width:1.042;" x1="10.417" x2="10.417" y1="48.958" y2="63.542"/>
+    <line style="stroke:#000;stroke-width:1.042;" x1="179.167" x2="179.167" y1="48.958" y2="63.542"/>
+  </g>
+</svg>

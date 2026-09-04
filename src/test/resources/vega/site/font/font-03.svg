@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="177px" preserveAspectRatio="none" style="width:91px;height:177px;background:#FFFFFF;" version="1.1" viewBox="0 0 91 177" width="91px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Room-->
+    <g class="entity" data-qualified-name="Room" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="69.363" x="14.5" y="12"/>
+      <ellipse cx="29.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="24.5" y="33">C</text>
+      <text fill="#000" font-family="Segoe UI" font-size="14" textLength="37.363" x="43.5" y="31.889">Room</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="15.5" x2="82.863" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="15.5" x2="82.863" y1="52" y2="52"/>
+    </g>
+    <!--class Chair-->
+    <g class="entity" data-qualified-name="Chair" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="65.512" x="16" y="113"/>
+      <ellipse cx="31" cy="129" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="26" y="134">C</text>
+      <text fill="#000" font-family="Segoe UI" font-size="14" textLength="33.512" x="45" y="132.889">Chair</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="17" x2="80.512" y1="145" y2="145"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="17" x2="80.512" y1="153" y2="153"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="composition" id="lnk3">
+      <polygon fill="#181818" points="49,60.211,45,66.211,49,72.211,53,66.211,49,60.211" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M49,72.211 C49,88.099 49,97.077 49,112.934" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="Segoe UI" font-size="13" textLength="20.963" x="51" y="90.111">has</text>
+      <text fill="#000" font-family="Segoe UI" font-size="13" textLength="41.925" x="7" y="109.045">several</text>
+      <text fill="#000" font-family="Segoe UI" font-size="13" x="41" y="71.322">1</text>
+    </g>
+  </g>
+</svg>

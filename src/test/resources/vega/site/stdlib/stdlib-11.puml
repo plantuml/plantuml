@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+!include <edgy/edgy>
+
+$identityFacet(Identity, identity) {
+	$content(Content, content)
+	$purpose(Purpose, purpose)
+	$story(Story, story)
+}
+
+$linkLeft(content, purpose)
+$linkDown(content, story)
+$linkDown(purpose, story)
+
+@enduml

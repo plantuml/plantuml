@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="192px" preserveAspectRatio="none" style="width:245px;height:192px;background:#FFFFFF;" version="1.1" viewBox="0 0 245 192" width="245px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#00F" font-size="12" textLength="66.675" x="6" y="15.333">Just plain text</text>
+    <rect fill="#EEE" height="16" rx="5" ry="5" style="stroke:#000;stroke-width:2.5;" width="204" x="8.5" y="22.5"/>
+    <text fill="#000" font-size="12" textLength="116.7" x="52.15" y="33.833">This is my default button</text>
+    <rect fill="#EEE" height="16" rx="5" ry="5" style="stroke:#000;stroke-width:2.5;" width="188" x="8.5" y="45.5"/>
+    <text fill="#008000" font-size="12" textLength="111.375" x="46.812" y="56.833">This is my green button</text>
+    <rect fill="#EEE" height="16" rx="5" ry="5" style="stroke:#000;stroke-width:2.5;" width="212" x="8.5" y="68.5"/>
+    <text fill="#9A9A9A" font-size="12" textLength="125.475" x="51.762" y="79.833">This is my disabled button</text>
+    <text fill="#F00" font-size="12" textLength="79.425" x="26" y="98.333">Unchecked box</text>
+    <rect fill="none" height="10" style="stroke:#000;stroke-width:1.5;" width="10" x="8" y="90"/>
+    <text fill="#008000" font-size="12" textLength="66.75" x="26" y="112.333">Checked box</text>
+    <rect fill="none" height="10" style="stroke:#000;stroke-width:1.5;" width="10" x="8" y="104"/>
+    <polygon fill="#000" points="9,109,12,112,19,103,12,110" style="stroke:#000;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="12" textLength="71.925" x="9" y="126.333">Enter text here</text>
+    <line style="stroke:#000;stroke-width:1;" x1="7" x2="154" y1="129" y2="129"/>
+    <line style="stroke:#000;stroke-width:1;" x1="7" x2="7" y1="126" y2="128"/>
+    <line style="stroke:#000;stroke-width:1;" x1="154" x2="154" y1="126" y2="128"/>
+    <rect fill="#EEE" height="15" style="stroke:#000;stroke-width:1;" width="159" x="6" y="133"/>
+    <text fill="#000" font-size="12" textLength="76.8" x="8" y="144.333">This is a droplist</text>
+    <line style="stroke:#000;stroke-width:1;" x1="154" x2="154" y1="133" y2="148"/>
+    <polygon fill="#000" points="157,139,163,139,160,143" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <rect fill="#EEE" height="15" style="stroke:#000;stroke-width:1;" width="231" x="6" y="151"/>
+    <text fill="#9A9A9A" font-size="12" textLength="121.575" x="8" y="162.333">This is a disabled droplist</text>
+    <line style="stroke:#000;stroke-width:1;" x1="226" x2="226" y1="151" y2="166"/>
+    <polygon fill="#000" points="229,157,235,157,232,161" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <rect fill="#EEE" height="15" style="stroke:#000;stroke-width:1;" width="191" x="6" y="169"/>
+    <text fill="#F00" font-size="12" textLength="94.125" x="8" y="180.333">This is a red droplist</text>
+    <line style="stroke:#000;stroke-width:1;" x1="186" x2="186" y1="169" y2="184"/>
+    <polygon fill="#000" points="189,175,195,175,192,179" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

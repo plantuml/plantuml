@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+title
+<#lightblue,#red>|=  Step  |=  Date  |=  Name  |=  Status  |=  Link  |
+<#lightgreen>|  1.1  |  TBD  | plantuml news |<#Navy><color:OrangeRed><b> Unknown  | [[https://plantuml.com/news plantuml news]] |
+end title
+@enduml

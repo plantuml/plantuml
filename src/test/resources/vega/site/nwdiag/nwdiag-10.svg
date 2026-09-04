@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="NWDIAG" height="288px" preserveAspectRatio="none" style="width:294px;height:288px;background:#FFFFFF;" version="1.1" viewBox="0 0 294 288" width="294px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="71.325" x="20.3" y="14.333">Sample_front</text>
+    <text fill="#000" font-size="12" textLength="86.625" x="5" y="26.333">192.168.10.0/24</text>
+    <text fill="#000" font-size="12" textLength="72.75" x="18.875" y="159.333">Sample_back</text>
+    <text fill="#000" font-size="12" textLength="86.625" x="5" y="171.333">192.168.20.0/24</text>
+    <rect fill="#E7E7E7" height="52" style="stroke:#E7E7E7;stroke-width:1;" width="170.8" x="106.625" y="61"/>
+    <rect fill="#E7E7E7" height="51" style="stroke:#E7E7E7;stroke-width:1;" width="152.1" x="120.975" y="195"/>
+    <rect fill="#F00" height="5" style="stroke:#181818;stroke-width:1;" width="190.8" x="96.625" y="14.5"/>
+    <rect fill="#98FB98" height="5" style="stroke:#181818;stroke-width:1;" width="190.8" x="96.625" y="159.5"/>
+    <path d="M151.325,19.5 L151.325,66" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="11" textLength="9.144" x="146.753" y="37.806">.1</text>
+    <text fill="#000" font-size="11" textLength="9.144" x="146.753" y="48.806">.2</text>
+    <path d="M151.325,108 L151.325,159.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="11" textLength="9.144" x="146.753" y="136.806">.1</text>
+    <path d="M246.725,19.5 L246.725,71" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="11" textLength="9.144" x="242.153" y="40.306">.2</text>
+    <text fill="#000" font-size="11" textLength="9.144" x="242.153" y="51.306">.3</text>
+    <path d="M246.725,103 L246.725,159.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="11" textLength="9.144" x="242.153" y="134.306">.2</text>
+    <path d="M147.325,164.5 L147.325,200" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="11" textLength="21.381" x="136.634" y="182.806">.101</text>
+    <path d="M242.725,164.5 L242.725,204.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="11" textLength="21.381" x="232.034" y="185.056">.102</text>
+    <polygon fill="#F1F1F1" points="111.625,76,121.625,66,187.025,66,187.025,98,177.025,108,111.625,108,111.625,76" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="177.025" x2="187.025" y1="76" y2="66"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="111.625" x2="177.025" y1="76" y2="76"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="177.025" x2="177.025" y1="76" y2="108"/>
+    <text fill="#000" font-size="12" textLength="35.4" x="126.625" y="95.333">web01</text>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="55.4" x="217.025" y="71"/>
+    <text fill="#000" font-size="12" textLength="35.4" x="227.025" y="90.333">web02</text>
+    <path d="M125.975,210 C125.975,200 149.325,200 149.325,200 C149.325,200 172.675,200 172.675,210 L172.675,231 C172.675,241 149.325,241 149.325,241 C149.325,241 125.975,241 125.975,231 L125.975,210" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M125.975,210 C125.975,220 149.325,220 149.325,220 C149.325,220 172.675,220 172.675,210" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="12" textLength="26.7" x="135.975" y="233.333">db01</text>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="46.7" x="221.375" y="204.5"/>
+    <text fill="#000" font-size="12" textLength="26.7" x="231.375" y="223.833">db02</text>
+  </g>
+</svg>

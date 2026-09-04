@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startmindmap
+right to left direction
+* 1
+** 2
+*** 4
+*** 5
+** 3
+*** 6
+*** 7
+@endmindmap

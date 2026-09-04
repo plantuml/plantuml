@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+participant Alice as a
+participant Bob   as b
+a ->     a : ""->   ""
+a ->>    a : ""->>  ""
+a -\     a : ""-\   ""
+a -\\    a : ""-\\\\""
+a -/     a : ""-/   ""
+a -//    a : ""-//  ""
+a ->x    a : ""->x  ""
+a x->    a : ""x->  ""
+a o->    a : ""o->  ""
+a ->o    a : ""->o  ""
+a o->o   a : ""o->o ""
+a <->    a : ""<->  ""
+a o<->o  a : ""o<->o""
+a x<->x  a : ""x<->x""
+a ->>o   a : ""->>o ""
+a -\o    a : ""-\o  ""
+a -\\o   a : ""-\\\\o""
+a -/o    a : ""-/o  ""
+a -//o   a : ""-//o ""
+a x->o   a : ""x->o ""
+@enduml

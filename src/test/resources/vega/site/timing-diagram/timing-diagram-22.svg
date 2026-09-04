@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="TIMING" height="106px" preserveAspectRatio="none" style="width:1114px;height:106px;background:#FFFFFF;" version="1.1" viewBox="0 0 1114 106" width="1114px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="20" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="1093.89" x2="1093.89" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="25" x2="25" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="65" x2="65" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="105" x2="105" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="145" x2="145" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="185" x2="185" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="225" x2="225" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="265" x2="265" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="305" x2="305" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="345" x2="345" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="385" x2="385" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="425" x2="425" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="465" x2="465" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="505" x2="505" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="545" x2="545" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="585" x2="585" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="625" x2="625" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="665" x2="665" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="705" x2="705" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="745" x2="745" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="785" x2="785" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="825" x2="825" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="865" x2="865" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="905" x2="905" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="945" x2="945" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="985" x2="985" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="1025" x2="1025" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="1065" x2="1065" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="1093.89" y1="20" y2="20"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="104.213" x="25" y="30.889">OpenGL Desktop</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="130.213" y1="35" y2="35"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="130.213" x2="140.213" y1="35" y2="20"/>
+    <polygon fill="#E2E2F0" points="56.836,40,220.014,40,232.014,52,220.014,64,56.836,64,44.836,52" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="244.014,40,261.329,40,273.329,52,261.329,64,244.014,64,232.014,52" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="285.329,40,397.986,40,409.986,52,397.986,64,285.329,64,273.329,52" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="421.986,40,520.726,40,532.726,52,520.726,64,421.986,64,409.986,52" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="544.726,40,676.781,40,688.781,52,676.781,64,544.726,64,532.726,52" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="700.781,40,1036.89,40,1048.89,52,1036.89,64,700.781,64,688.781,52" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="1060.89,40,1088.89,40,1088.89,64,1060.89,64,1048.89,52" style="stroke:#E2E2F0;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M1088.89,40 L1060.89,40 L1048.89,52 L1060.89,64 L1088.89,64" fill="#E2E2F0" style="stroke:#006400;stroke-width:1.5;"/>
+    <text fill="#333" font-size="12" font-weight="700" textLength="16.65" x="130.1" y="55.333">1.0</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="16.65" x="244.346" y="55.333">1.1</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="16.65" x="333.333" y="55.333">1.2</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="16.65" x="463.031" y="55.333">1.3</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="16.65" x="602.428" y="55.333">3.0</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="16.65" x="860.511" y="55.333">3.0</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="16.65" x="1060.89" y="55.333">4.6</text>
+    <line style="stroke:#333;stroke-width:2;" x1="25" x2="1065" y1="74" y2="74"/>
+    <line style="stroke:#333;stroke-width:2;" x1="25" x2="25" y1="74" y2="79"/>
+    <text fill="#333" font-size="11" textLength="28.119" x="10.941" y="88.556">92-01</text>
+    <line style="stroke:#333;stroke-width:2;" x1="44.836" x2="44.836" y1="74" y2="79"/>
+    <text fill="#333" font-size="11" textLength="28.119" x="30.776" y="88.556">92-06</text>
+    <line style="stroke:#333;stroke-width:2;" x1="232.014" x2="232.014" y1="74" y2="79"/>
+    <text fill="#333" font-size="11" textLength="28.119" x="217.954" y="88.556">97-03</text>
+    <line style="stroke:#333;stroke-width:2;" x1="273.329" x2="273.329" y1="74" y2="79"/>
+    <text fill="#333" font-size="11" textLength="28.119" x="259.269" y="88.556">98-03</text>
+    <line style="stroke:#333;stroke-width:2;" x1="409.986" x2="409.986" y1="74" y2="79"/>
+    <text fill="#333" font-size="11" textLength="28.119" x="395.927" y="88.556">01-08</text>
+    <line style="stroke:#333;stroke-width:2;" x1="532.726" x2="532.726" y1="74" y2="79"/>
+    <text fill="#333" font-size="11" textLength="28.119" x="518.667" y="88.556">04-09</text>
+    <line style="stroke:#333;stroke-width:2;" x1="688.781" x2="688.781" y1="74" y2="79"/>
+    <text fill="#333" font-size="11" textLength="28.119" x="674.721" y="88.556">08-08</text>
+    <line style="stroke:#333;stroke-width:2;" x1="1048.89" x2="1048.89" y1="74" y2="79"/>
+    <text fill="#333" font-size="11" textLength="28.119" x="1034.831" y="88.556">17-07</text>
+  </g>
+</svg>

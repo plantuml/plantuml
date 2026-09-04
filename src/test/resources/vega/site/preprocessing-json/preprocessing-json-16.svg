@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="108px" preserveAspectRatio="none" style="width:288px;height:108px;background:#FFFFFF;" version="1.1" viewBox="0 0 288 108" width="288px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity l-->
+    <g class="entity" data-qualified-name="l" data-source-line="5" id="ent0001">
+      <text fill="#000" font-size="14" font-weight="700" textLength="21.787" x="16" y="34.889">key</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="217.088" x="45.4" y="34.889">%json_key_exists(json_object, key)</text>
+      <text fill="#000" font-size="14" textLength="22.4" x="16" y="48.889">"hr"</text>
+      <text fill="#000" font-size="14" x="45.4" y="48.889">1</text>
+      <text fill="#000" font-size="14" textLength="29.4" x="16" y="62.889">"foo"</text>
+      <text fill="#000" font-size="14" x="45.4" y="62.889">0</text>
+      <text fill="#000" font-size="14" textLength="21.875" x="16" y="76.889">null</text>
+      <text fill="#000" font-size="14" x="45.4" y="76.889">0</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="262.488" y1="24" y2="24"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="262.488" y1="38" y2="38"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="262.488" y1="52" y2="52"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="262.488" y1="66" y2="66"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="262.488" y1="80" y2="80"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="16" y1="24" y2="80"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="45.4" x2="45.4" y1="24" y2="80"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="262.488" x2="262.488" y1="24" y2="80"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="NWDIAG" height="331px" preserveAspectRatio="none" style="width:187px;height:331px;background:#FFFFFF;" version="1.1" viewBox="0 0 187 331" width="187px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" x="5" y="14.333"> </text>
+    <text fill="#000" font-size="12" x="5" y="126.333"> </text>
+    <rect fill="#E2E2F0" height="5" style="stroke:#181818;stroke-width:1;" width="170.8" x="10" y="222.5"/>
+    <path d="M52.7,85.5 L52.7,120.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M52.7,120.5 L52.7,155.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M50.7,187.5 L50.7,222.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M54.7,227.5 L54.7,257.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M140.1,227.5 L140.1,257.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M37.696,51.918 C40.707,43.128 45.94,40.362 53.92,46.529 C61.732,40.691 68.936,43.745 71.483,52.756 C77.875,54.954 78.219,61.016 73.542,65.066 C79.484,69.693 78.812,76.038 71.32,78.432 C68.997,89.354 61.156,90.52 52.99,84.912 C45.273,91.142 40.134,87.74 37.843,79.307 C29.386,76.793 28.176,72.268 33.227,65.301 C27.108,59.371 30.583,53.429 37.696,51.918" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="12" textLength="19.35" x="43.025" y="67.833">inet</text>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="51.275" x="27.063" y="155.5"/>
+    <text fill="#000" font-size="12" textLength="31.275" x="37.063" y="174.833">router</text>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="55.4" x="25" y="257.5"/>
+    <text fill="#000" font-size="12" textLength="35.4" x="35" y="276.833">web01</text>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="55.4" x="110.4" y="257.5"/>
+    <text fill="#000" font-size="12" textLength="35.4" x="120.4" y="276.833">web02</text>
+  </g>
+</svg>

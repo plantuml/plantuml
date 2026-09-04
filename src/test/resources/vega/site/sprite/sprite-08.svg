@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="108px" preserveAspectRatio="none" style="width:183px;height:108px;background:#FFFFFF;" version="1.1" viewBox="0 0 183 108" width="183px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <ellipse cx="89.623" cy="25" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="33.846" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="147.246" x="16" y="55"/>
+    <text fill="#000" font-size="12" textLength="36.75" x="26" y="76.179">click on</text>
+    <image height="14" width="14" x="62.75" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAABeElEQVR4XpWSP2vCQBiHr1upQ9cOXboW13bq0tUvUZdSBzEufoCOBvwDbQYhGFKyigpGXRxiUQlREhBj7BIlKkQwKHUogqTvBSIJtKKBB+5y73P53XtB6/UaYRaLxa0sy6KiKJ8ueD6fzx9Xq9U51Jy5tZj9wDTNoKqq795FURTpdrutdbtdZTab3XvlfZFhGHeCIPBecTweP8NmLLwXisXij2VZgX9FiHytaVqo3+87wNdCkOayWq3qPnE4HIY7nU64VCq9YnEymTw0Gg2mXC47sCzL6Lp+g0WYv0iSFAbnCeXz+W2lUiFzudwHFuEsQVhMNJtNh1qtlphOp1dYpCgqU6/XMzRN2yidTm+8UQ+JOOpyuQyQJOkXeZ43IDbzF3CUb5+YSqW2o9EoOxgMmFar9XUIaNobdJlyxR1ctHQs0OWeI8bj8ZNEeHrRaNRGkUjEhsHuFLCDCoXChiAIO5lMHkUsFrPhL9og6NQFx3E23uUYsIRv4Rc8iybQoPRNuQAAAABJRU5ErkJggg==" y="65"/>
+    <text fill="#000" font-size="12" textLength="76.65" x="76.596" y="76.179">to print the page</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="89.623" x2="89.623" y1="35" y2="55"/>
+    <polygon fill="#181818" points="85.623,45,89.623,55,93.623,45,89.623,49" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

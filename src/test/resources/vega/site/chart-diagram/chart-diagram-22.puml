@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+v-axis 0 --> 100
+bar "Series 1" [45, 62, 58, 70] #3498db
+bar "Series 2" [35, 48, 52, 61] #2ecc71
+bar "Series 3" [25, 30, 28, 32] #red
+legend right
+@endchart

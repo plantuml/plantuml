@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startuml
+state a
+state b
+state c
+state d
+
+a -> b: //link label//
+note top of link
+  Link note
+end note
+b -down-> c: //link label//
+note right of link
+  Link note
+end note
+c -left-> d: //link label//
+note bottom of link
+  Link note
+end note
+d -up-> a: //link label//
+note left of link
+  Link note
+end note
+@enduml

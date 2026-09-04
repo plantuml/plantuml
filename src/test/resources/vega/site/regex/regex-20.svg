@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="REGEX" height="90px" preserveAspectRatio="none" style="width:500px;height:90px;background:#FFFFFF;" version="1.1" viewBox="0 0 500 90" width="500px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="116.813" x="190.706" y="30.889">unicodeCategories</text>
+    </g>
+    <line style="stroke:#181818;stroke-width:1;" x1="15" x2="15" y1="62" y2="62"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="41.062" x="15" y="50"/>
+    <text fill="#000" font-size="14" textLength="31.062" x="20" y="65.889">letter</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="56.062" x2="76.063" y1="62" y2="62"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="38.7" x="76.063" y="50"/>
+    <text fill="#000" font-size="14" textLength="28.7" x="81.063" y="65.889">\p{L}</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="114.762" x2="134.763" y1="62" y2="62"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="66.612" x="134.763" y="50"/>
+    <text fill="#000" font-size="14" textLength="56.612" x="139.763" y="65.889">\p{Letter}</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="201.375" x2="221.375" y1="62" y2="62"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="43.512" x="221.375" y="50"/>
+    <text fill="#000" font-size="14" textLength="33.512" x="226.375" y="65.889">lower</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="264.887" x2="284.887" y1="62" y2="62"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="41.85" x="284.887" y="50"/>
+    <text fill="#000" font-size="14" textLength="31.85" x="289.887" y="65.889">\p{Ll}</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="326.737" x2="346.737" y1="62" y2="62"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="137.488" x="346.737" y="50"/>
+    <text fill="#000" font-size="14" textLength="127.488" x="351.737" y="65.889">\p{Lowercase_letter}</text>
+  </g>
+</svg>

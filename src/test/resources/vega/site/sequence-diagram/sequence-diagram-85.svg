@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="200px" preserveAspectRatio="none" style="width:265px;height:200px;background:#FFFFFF;" version="1.1" viewBox="0 0 265 200" width="265px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>A</title>
+      <rect fill="#000" fill-opacity="0" height="121" width="8" x="18.181" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="21.681" x2="21.681" y1="39" y2="160"/>
+    </g>
+    <g>
+      <title>C</title>
+      <rect fill="#000" fill-opacity="0" height="121" width="8" x="121.725" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="125.225" x2="125.225" y1="39" y2="160"/>
+    </g>
+    <g>
+      <title>B</title>
+      <rect fill="#000" fill-opacity="0" height="121" width="8" x="239.244" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="242.744" x2="242.744" y1="39" y2="160"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="10" y="10"/>
+    <text fill="#000" font-size="14" x="17" y="27.889">A</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="24.15" x="113.15" y="10"/>
+    <text fill="#000" font-size="14" x="120.15" y="27.889">C</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="231.063" y="10"/>
+    <text fill="#000" font-size="14" x="238.063" y="27.889">B</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="10" y="160"/>
+    <text fill="#000" font-size="14" x="17" y="177.889">A</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="24.15" x="113.15" y="160"/>
+    <text fill="#000" font-size="14" x="120.15" y="177.889">C</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="231.063" y="160"/>
+    <text fill="#000" font-size="14" x="238.063" y="177.889">B</text>
+    <polygon fill="#181818" points="115.959,134.05,123.225,142,112.481,141.254,117.822,139.391" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="21.681" x2="123.225" y1="92" y2="142"/>
+    <text fill="#000" font-size="13" textLength="33.881" x="28.681" y="74.111">Starts</text>
+    <text fill="#000" font-size="13" textLength="79.544" x="28.681" y="87.111">when 'B' sends</text>
+    <polygon fill="#181818" points="135.174,111.007,126.225,117,136.838,118.832,132.094,115.752" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="241.744" x2="125.225" y1="92" y2="117"/>
+    <text fill="#000" font-size="13" x="142.225" y="61.111"> </text>
+    <text fill="#000" font-size="13" textLength="89.944" x="142.225" y="74.111">But B's message</text>
+    <text fill="#000" font-size="13" textLength="93.519" x="142.225" y="87.111">arrives before A's</text>
+  </g>
+</svg>

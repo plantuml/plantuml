@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+'Default is skinparam activityShape roundBox
+skinparam activityShape octagon
+
+(*) --> "First Action"
+"First Action" --> (*)
+
+@enduml

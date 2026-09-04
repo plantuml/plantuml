@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="882px" preserveAspectRatio="none" style="width:666px;height:882px;background:#FFFFFF;" version="1.1" viewBox="0 0 666 882" width="666px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="3">
+      <text fill="#000" font-size="14" font-weight="700" textLength="105.175" x="279.569" y="25.889">LiveBox Scenario</text>
+    </g>
+    <rect fill="none" height="608" style="stroke:#000;stroke-width:1.5;" width="524.325" x="13" y="239"/>
+    <rect fill="none" height="133" style="stroke:#000;stroke-width:1.5;" width="417.45" x="32" y="403"/>
+    <g>
+      <title>Nesta</title>
+      <rect fill="#000" fill-opacity="0" height="752" width="8" x="44.5" y="119"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="48" x2="48" y1="119" y2="871"/>
+    </g>
+    <g>
+      <title>HospitalFrom</title>
+      <rect fill="#000" fill-opacity="0" height="752" width="8" x="165.269" y="119"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="168.769" x2="168.769" y1="119" y2="871"/>
+    </g>
+    <g>
+      <title>Pilot</title>
+      <rect fill="#000" fill-opacity="0" height="752" width="8" x="263.044" y="119"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="266.544" x2="266.544" y1="119" y2="871"/>
+    </g>
+    <g>
+      <title>Drone</title>
+      <rect fill="#000" fill-opacity="0" height="752" width="8" x="356.513" y="119"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="360.013" x2="360.013" y1="119" y2="871"/>
+    </g>
+    <g>
+      <title>Controller</title>
+      <rect fill="#000" fill-opacity="0" height="752" width="8" x="429.95" y="119"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="433.45" x2="433.45" y1="119" y2="871"/>
+    </g>
+    <g>
+      <title>HospitalTo</title>
+      <rect fill="#000" fill-opacity="0" height="752" width="8" x="517.825" y="119"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="521.325" x2="521.325" y1="119" y2="871"/>
+    </g>
+    <g>
+      <title>NHS</title>
+      <rect fill="#000" fill-opacity="0" height="752" width="8" x="629.981" y="119"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="633.481" x2="633.481" y1="119" y2="871"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="50.575" x="22.713" y="90"/>
+    <text fill="#000" font-size="14" textLength="36.575" x="29.713" y="107.889">Nesta</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="97.3" x="120.119" y="90"/>
+    <text fill="#000" font-size="14" textLength="83.3" x="127.119" y="107.889">HospitalFrom</text>
+    <text fill="#000" font-size="14" textLength="27.3" x="249.894" y="115.889">Pilot</text>
+    <ellipse cx="266.544" cy="53.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M266.544,61.5 L266.544,88.5 M253.544,69.5 L279.544,69.5 M266.544,88.5 L253.544,103.5 M266.544,88.5 L279.544,103.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="52.15" x="333.938" y="90"/>
+    <text fill="#000" font-size="14" textLength="38.15" x="340.938" y="107.889">Drone</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="74.725" x="396.088" y="90"/>
+    <text fill="#000" font-size="14" textLength="60.725" x="403.088" y="107.889">Controller</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81.025" x="480.813" y="90"/>
+    <text fill="#000" font-size="14" textLength="67.025" x="487.813" y="107.889">HospitalTo</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="43.662" x="611.65" y="90"/>
+    <text fill="#000" font-size="14" textLength="29.662" x="618.65" y="107.889">NHS</text>
+    <polygon fill="#181818" points="532.325,142,522.325,146,532.325,150,528.325,146" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="526.325" x2="632.481" y1="146" y2="146"/>
+    <text fill="#000" font-size="13" textLength="88.156" x="538.325" y="141.111">request delivery</text>
+    <polygon fill="#181818" points="59,169,49,173,59,177,55,173" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="53" x2="520.325" y1="173" y2="173"/>
+    <text fill="#000" font-size="13" textLength="349.7" x="65" y="168.111">request delivery(HospitalFrom, HospitalTo, Type, Size, Amount)</text>
+    <polygon fill="#181818" points="348.013,196,358.013,200,348.013,204,352.013,200" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="48" x2="354.013" y1="200" y2="200"/>
+    <text fill="#000" font-size="13" textLength="33.963" x="55" y="195.111">select</text>
+    <polygon fill="#181818" points="254.544,223,264.544,227,254.544,231,258.544,227" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="48" x2="260.544" y1="227" y2="227"/>
+    <text fill="#000" font-size="13" textLength="33.963" x="55" y="222.111">select</text>
+    <path d="M13,239 L71.731,239 L71.731,244 L61.731,254 L13,254 L13,239" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="608" style="stroke:#000;stroke-width:1.5;" width="524.325" x="13" y="239"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="13.731" x="28" y="250.111">alt</text>
+    <text fill="#000" font-size="11" font-weight="700" textLength="47.025" x="86.731" y="249.556">[selected]</text>
+    <polygon fill="#181818" points="156.769,279,166.769,283,156.769,287,160.769,283" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="48" x2="162.769" y1="283" y2="283"/>
+    <text fill="#000" font-size="13" textLength="36.075" x="55" y="278.111">inform</text>
+    <polygon fill="#181818" points="254.544,306,264.544,310,254.544,314,258.544,310" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="168.769" x2="260.544" y1="310" y2="310"/>
+    <text fill="#000" font-size="13" textLength="73.775" x="175.769" y="305.111">send payload</text>
+    <polygon fill="#181818" points="348.013,333,358.013,337,348.013,341,352.013,337" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="266.544" x2="354.013" y1="337" y2="337"/>
+    <text fill="#000" font-size="13" textLength="69.469" x="273.544" y="332.111">load delivery</text>
+    <polygon fill="#181818" points="421.45,360,431.45,364,421.45,368,425.45,364" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="266.544" x2="427.45" y1="364" y2="364"/>
+    <text fill="#000" font-size="13" textLength="28.194" x="273.544" y="359.111">send</text>
+    <polygon fill="#181818" points="371.013,387,361.013,391,371.013,395,367.013,391" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="365.013" x2="432.45" y1="391" y2="391"/>
+    <text fill="#000" font-size="13" textLength="38.919" x="377.013" y="386.111">take off</text>
+    <path d="M32,403 L101.619,403 L101.619,408 L91.619,418 L32,418 L32,403" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="133" style="stroke:#000;stroke-width:1.5;" width="417.45" x="32" y="403"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="24.619" x="47" y="414.111">loop</text>
+    <polygon fill="#181818" points="348.013,443,358.013,447,348.013,451,352.013,447" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="266.544" x2="354.013" y1="447" y2="447"/>
+    <text fill="#000" font-size="13" textLength="57.769" x="273.544" y="442.111">maneuver</text>
+    <polygon fill="#181818" points="421.45,470,431.45,474,421.45,478,425.45,474" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="360.013" x2="427.45" y1="474" y2="474"/>
+    <text fill="#000" font-size="13" textLength="33.881" x="367.013" y="469.111">report</text>
+    <polygon fill="#181818" points="277.544,497,267.544,501,277.544,505,273.544,501" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="271.544" x2="432.45" y1="501" y2="501"/>
+    <text fill="#000" font-size="13" textLength="40.544" x="283.544" y="496.111">display</text>
+    <polygon fill="#181818" points="59,524,49,528,59,532,55,528" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="53" x2="432.45" y1="528" y2="528"/>
+    <text fill="#000" font-size="13" textLength="96.2" x="65" y="523.111">notify periodically</text>
+    <polygon fill="#181818" points="421.45,565,431.45,569,421.45,573,425.45,569" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="266.544" x2="427.45" y1="569" y2="569"/>
+    <text fill="#000" font-size="13" textLength="42.006" x="273.544" y="564.111">landing</text>
+    <polygon fill="#181818" points="371.013,592,361.013,596,371.013,600,367.013,596" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="365.013" x2="432.45" y1="596" y2="596"/>
+    <text fill="#000" font-size="13" textLength="42.006" x="377.013" y="591.111">landing</text>
+    <polygon fill="#181818" points="421.45,619,431.45,623,421.45,627,425.45,623" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="360.013" x2="427.45" y1="623" y2="623"/>
+    <text fill="#000" font-size="13" textLength="39.081" x="367.013" y="618.111">landed</text>
+    <polygon fill="#181818" points="277.544,646,267.544,650,277.544,654,273.544,650" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="271.544" x2="432.45" y1="650" y2="650"/>
+    <text fill="#000" font-size="13" textLength="39.081" x="283.544" y="645.111">landed</text>
+    <polygon fill="#181818" points="59,673,49,677,59,681,55,677" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="53" x2="432.45" y1="677" y2="677"/>
+    <text fill="#000" font-size="13" textLength="39.081" x="65" y="672.111">landed</text>
+    <polygon fill="#181818" points="509.325,700,519.325,704,509.325,708,513.325,704" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="48" x2="515.325" y1="704" y2="704"/>
+    <text fill="#000" font-size="13" textLength="36.075" x="55" y="699.111">inform</text>
+    <polygon fill="#181818" points="371.013,727,361.013,731,371.013,735,367.013,731" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="365.013" x2="520.325" y1="731" y2="731"/>
+    <text fill="#000" font-size="13" textLength="39.081" x="377.013" y="726.111">unload</text>
+    <polygon fill="#181818" points="371.013,754,361.013,758,371.013,762,367.013,758" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="365.013" x2="520.325" y1="758" y2="758"/>
+    <text fill="#000" font-size="13" textLength="36.725" x="377.013" y="753.111">turn off</text>
+    <polygon fill="#181818" points="509.325,781,519.325,785,509.325,789,513.325,785" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="48" x2="515.325" y1="785" y2="785"/>
+    <text fill="#000" font-size="13" textLength="98.313" x="55" y="780.111">package received</text>
+    <polygon fill="#181818" points="156.769,808,166.769,812,156.769,816,160.769,812" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="48" x2="162.769" y1="812" y2="812"/>
+    <text fill="#000" font-size="13" textLength="96.769" x="55" y="807.111">inform successful</text>
+    <polygon fill="#181818" points="254.544,835,264.544,839,254.544,843,258.544,839" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="48" x2="260.544" y1="839" y2="839"/>
+    <text fill="#000" font-size="13" textLength="96.769" x="55" y="834.111">inform successful</text>
+  </g>
+</svg>

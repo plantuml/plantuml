@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+!include <edgy/edgy>
+
+$outcome("Outcome", outcome)
+$activity("Activity", activity)
+$object("Object", object)
+
+$link(object, activity, "just a link")
+$flow(activity, outcome, "a flow with a direction")
+$tree(outcome, object, "a hierarchical connection")
+@enduml

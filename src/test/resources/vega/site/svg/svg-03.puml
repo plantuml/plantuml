@@ -1,0 +1,62 @@
+---
+output: svg
+---
+@startuml
+!pragma svginteractive true
+
+
+Alice -> Bob: Authentication Request
+
+alt successful case
+
+    Bob -> Alice: Authentication Accepted
+
+else some kind of failure
+
+    Bob -> Alice: Authentication Failure
+    group My own label
+    Alice -> Log : Log attack start
+        loop 1000 times
+            Alice -> Bob: DNS Attack
+        end
+    Alice -> Log : Log attack end
+    end
+
+else Another type of failure
+
+   Bob -> Alice: Please repeat
+
+end
+|||
+Alice -> Bob : message 1
+Alice -> Bob : message 2
+Alice -> Bob : message 3
+Alice -> Bob : message 4
+Alice -> Bob : message 5
+Alice -> Bob : message 6
+Alice -> Bob : message 7
+Alice -> Bob : message 8
+Alice -> Bob : message 9
+|||
+Alice -> Bob : message 10
+Alice -> Bob : message 11
+Alice -> Bob : message 12
+Alice -> Bob : message 13
+Alice -> Bob : message 14
+Alice -> Bob : message 15
+Alice -> Bob : message 16
+Alice -> Bob : message 17
+Alice -> Bob : message 18
+Alice -> Bob : message 19
+|||
+Alice -> Bob : message 20
+Alice -> Bob : message 21
+Alice -> Bob : message 22
+Alice -> Bob : message 23
+Alice -> Bob : message 24
+Alice -> Bob : message 25
+Alice -> Bob : message 26
+Alice -> Bob : message 27
+Alice -> Bob : message 28
+Alice -> Bob : message 29
+@enduml

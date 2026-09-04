@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="TIMING" height="226px" preserveAspectRatio="none" style="width:693px;height:226px;background:#FFFFFF;" version="1.1" viewBox="0 0 693 226" width="693px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="20" y1="20" y2="194"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="672.75" x2="672.75" y1="20" y2="194"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="67.75" x2="67.75" y1="20" y2="194"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="117.75" x2="117.75" y1="20" y2="194"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="167.75" x2="167.75" y1="20" y2="194"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="217.75" x2="217.75" y1="20" y2="194"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="267.75" x2="267.75" y1="20" y2="194"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="317.75" x2="317.75" y1="20" y2="194"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="367.75" x2="367.75" y1="20" y2="194"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="417.75" x2="417.75" y1="20" y2="194"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="467.75" x2="467.75" y1="20" y2="194"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="517.75" x2="517.75" y1="20" y2="194"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="567.75" x2="567.75" y1="20" y2="194"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="617.75" x2="617.75" y1="20" y2="194"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="667.75" x2="667.75" y1="20" y2="194"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="672.75" y1="20" y2="20"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="35.875" x="25" y="30.889">Client</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="61.875" y1="35" y2="35"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="61.875" x2="71.875" y1="35" y2="20"/>
+    <polygon fill="#E2E2F0" points="25,52,55.75,52,67.75,64,55.75,76,25,76" style="stroke:#E2E2F0;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M25,52 L55.75,52 L67.75,64 L55.75,76 L25,76" fill="#E2E2F0" style="stroke:#006400;stroke-width:1.5;"/>
+    <text fill="#333" font-size="12" font-weight="700" textLength="18.75" x="37" y="67.333">idle</text>
+    <polygon fill="#E2E2F0" points="79.75,52,105.75,52,117.75,64,105.75,76,79.75,76,67.75,64" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="129.75,52,255.75,52,267.75,64,255.75,76,129.75,76,117.75,64" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="279.75,52,305.75,52,317.75,64,305.75,76,279.75,76,267.75,64" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="329.75,52,355.75,52,367.75,64,355.75,76,329.75,76,317.75,64" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="379.75,52,405.75,52,417.75,64,405.75,76,379.75,76,367.75,64" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="429.75,52,505.75,52,517.75,64,505.75,76,429.75,76,417.75,64" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="529.75,52,555.75,52,567.75,64,555.75,76,529.75,76,517.75,64" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="579.75,52,667.75,52,667.75,76,579.75,76,567.75,64" style="stroke:#E2E2F0;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M667.75,52 L579.75,52 L567.75,64 L579.75,76 L667.75,76" fill="#E2E2F0" style="stroke:#006400;stroke-width:1.5;"/>
+    <text fill="#333" font-size="12" font-weight="700" textLength="26.025" x="79.738" y="67.333">send</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="28.05" x="178.725" y="67.333">await</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="22.65" x="281.425" y="67.333">recv</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="18.75" x="333.375" y="67.333">idle</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="26.025" x="379.738" y="67.333">send</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="28.05" x="453.725" y="67.333">await</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="22.65" x="531.425" y="67.333">recv</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="18.75" x="579.75" y="67.333">idle</text>
+    <line style="stroke:#8B0000;stroke-width:1.5;" x1="271.75" x2="613.75" y1="43.5" y2="43.5"/>
+    <polygon fill="#8B0000" points="276.75,47.5,276.75,39.5,268.75,43.5" style="stroke:#8B0000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#8B0000" points="608.75,47.5,608.75,39.5,616.75,43.5" style="stroke:#8B0000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#8B0000" font-size="12" textLength="161.85" x="361.825" y="35.833">no need to re-request from server</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="672.75" y1="86" y2="86"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="41.213" x="25" y="96.889">Server</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="67.213" y1="101" y2="101"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="67.213" x2="77.213" y1="101" y2="86"/>
+    <polygon fill="#E2E2F0" points="25,106,105.75,106,117.75,118,105.75,130,25,130" style="stroke:#E2E2F0;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M25,106 L105.75,106 L117.75,118 L105.75,130 L25,130" fill="#E2E2F0" style="stroke:#006400;stroke-width:1.5;"/>
+    <text fill="#333" font-size="12" font-weight="700" textLength="18.75" x="37" y="121.333">idle</text>
+    <polygon fill="#E2E2F0" points="129.75,106,155.75,106,167.75,118,155.75,130,129.75,130,117.75,118" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="179.75,106,205.75,106,217.75,118,205.75,130,179.75,130,167.75,118" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="229.75,106,255.75,106,267.75,118,255.75,130,229.75,130,217.75,118" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="279.75,106,405.75,106,417.75,118,405.75,130,279.75,130,267.75,118" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="429.75,106,455.75,106,467.75,118,455.75,130,429.75,130,417.75,118" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="479.75,106,505.75,106,517.75,118,505.75,130,479.75,130,467.75,118" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="529.75,106,667.75,106,667.75,130,529.75,130,517.75,118" style="stroke:#E2E2F0;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M667.75,106 L529.75,106 L517.75,118 L529.75,130 L667.75,130" fill="#E2E2F0" style="stroke:#006400;stroke-width:1.5;"/>
+    <text fill="#333" font-size="12" font-weight="700" textLength="22.65" x="131.425" y="121.333">recv</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="25.35" x="180.075" y="121.333">work</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="26.025" x="229.738" y="121.333">send</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="18.75" x="333.375" y="121.333">idle</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="22.65" x="431.425" y="121.333">recv</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="26.025" x="479.738" y="121.333">send</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="18.75" x="529.75" y="121.333">idle</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="672.75" y1="140" y2="140"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="123.725" x="25" y="150.889">Response freshness</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="149.725" y1="155" y2="155"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="149.725" x2="159.725" y1="155" y2="140"/>
+    <polygon fill="#E2E2F0" points="229.75,160,605.75,160,617.75,172,605.75,184,229.75,184,217.75,172" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="629.75,160,667.75,160,667.75,184,629.75,184,617.75,172" style="stroke:#E2E2F0;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M667.75,160 L629.75,160 L617.75,172 L629.75,184 L667.75,184" fill="#E2E2F0" style="stroke:#006400;stroke-width:1.5;"/>
+    <text fill="#333" font-size="12" font-weight="700" textLength="26.625" x="404.438" y="175.333">fresh</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="25.35" x="629.75" y="175.333">stale</text>
+    <line style="stroke:#333;stroke-width:2;" x1="67.75" x2="67.75" y1="194" y2="199"/>
+    <line style="stroke:#333;stroke-width:2;" x1="117.75" x2="117.75" y1="194" y2="199"/>
+    <line style="stroke:#333;stroke-width:2;" x1="167.75" x2="167.75" y1="194" y2="199"/>
+    <line style="stroke:#333;stroke-width:2;" x1="217.75" x2="217.75" y1="194" y2="199"/>
+    <line style="stroke:#333;stroke-width:2;" x1="267.75" x2="267.75" y1="194" y2="199"/>
+    <line style="stroke:#333;stroke-width:2;" x1="317.75" x2="317.75" y1="194" y2="199"/>
+    <line style="stroke:#333;stroke-width:2;" x1="367.75" x2="367.75" y1="194" y2="199"/>
+    <line style="stroke:#333;stroke-width:2;" x1="417.75" x2="417.75" y1="194" y2="199"/>
+    <line style="stroke:#333;stroke-width:2;" x1="467.75" x2="467.75" y1="194" y2="199"/>
+    <line style="stroke:#333;stroke-width:2;" x1="517.75" x2="517.75" y1="194" y2="199"/>
+    <line style="stroke:#333;stroke-width:2;" x1="567.75" x2="567.75" y1="194" y2="199"/>
+    <line style="stroke:#333;stroke-width:2;" x1="617.75" x2="617.75" y1="194" y2="199"/>
+    <line style="stroke:#333;stroke-width:2;" x1="667.75" x2="667.75" y1="194" y2="199"/>
+    <line style="stroke:#333;stroke-width:2;" x1="67.75" x2="667.75" y1="194" y2="194"/>
+    <text fill="#333" font-size="11" x="64.691" y="208.556">0</text>
+    <text fill="#333" font-size="11" textLength="12.238" x="111.631" y="208.556">25</text>
+    <text fill="#333" font-size="11" textLength="12.238" x="161.631" y="208.556">50</text>
+    <text fill="#333" font-size="11" textLength="12.238" x="211.631" y="208.556">75</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="258.572" y="208.556">100</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="308.572" y="208.556">125</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="358.572" y="208.556">150</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="408.572" y="208.556">175</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="458.572" y="208.556">200</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="508.572" y="208.556">225</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="558.572" y="208.556">250</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="608.572" y="208.556">275</text>
+    <line style="stroke:#00008B;stroke-width:1.5;" x1="67.75" x2="117.75" y1="64" y2="118"/>
+    <polygon fill="#00008B" points="110.635,114.343,114.65,110.625,117.75,118" style="stroke:#00008B;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#00008B" font-family="serif" font-size="14" textLength="28.788" x="112.643" y="109.373">GET</text>
+    <line style="stroke:#00008B;stroke-width:1.5;" x1="367.75" x2="417.75" y1="64" y2="118"/>
+    <polygon fill="#00008B" points="410.635,114.343,414.65,110.625,417.75,118" style="stroke:#00008B;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#00008B" font-family="serif" font-size="14" textLength="28.788" x="412.643" y="95.373">GET</text>
+    <text fill="#00008B" font-family="serif" font-size="14" textLength="132.213" x="412.643" y="109.373">If-Modified-Since: 150</text>
+    <line style="stroke:#00008B;stroke-width:1.5;" x1="217.75" x2="267.75" y1="118" y2="64"/>
+    <polygon fill="#00008B" points="264.65,71.375,260.635,67.657,267.75,64" style="stroke:#00008B;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#00008B" font-family="serif" font-size="14" textLength="43.575" x="262.643" y="80.405">200 OK</text>
+    <text fill="#00008B" font-family="serif" font-size="14" textLength="73.938" x="262.643" y="94.405">Expires: 275</text>
+    <line style="stroke:#00008B;stroke-width:1.5;" x1="467.75" x2="517.75" y1="118" y2="64"/>
+    <polygon fill="#00008B" points="514.65,71.375,510.635,67.657,517.75,64" style="stroke:#00008B;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#00008B" font-family="serif" font-size="14" textLength="98.088" x="512.643" y="80.405">304 Not Modified</text>
+  </g>
+</svg>

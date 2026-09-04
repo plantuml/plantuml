@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="REGEX" height="90px" preserveAspectRatio="none" style="width:249px;height:90px;background:#FFFFFF;" version="1.1" viewBox="0 0 249 90" width="249px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="97.388" x="75.206" y="30.889">specialEscapes</text>
+    </g>
+    <line style="stroke:#181818;stroke-width:1;" x1="15" x2="15" y1="62" y2="62"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="17.7" x="15" y="50"/>
+    <text fill="#000" font-size="14" textLength="7.7" x="20" y="65.889">\t</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="32.7" x2="52.7" y1="62" y2="62"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="18.487" x="52.7" y="50"/>
+    <text fill="#000" font-size="14" textLength="8.487" x="57.7" y="65.889">\r</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="71.188" x2="91.188" y1="62" y2="62"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="21.638" x="91.188" y="50"/>
+    <text fill="#000" font-size="14" textLength="11.638" x="96.188" y="65.889">\n</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="112.825" x2="132.825" y1="62" y2="62"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="21.638" x="132.825" y="50"/>
+    <text fill="#000" font-size="14" textLength="11.638" x="137.825" y="65.889">\a</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="154.463" x2="174.463" y1="62" y2="62"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="21.638" x="174.463" y="50"/>
+    <text fill="#000" font-size="14" textLength="11.638" x="179.463" y="65.889">\e</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="196.1" x2="216.1" y1="62" y2="62"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="17.7" x="216.1" y="50"/>
+    <text fill="#000" font-size="14" textLength="7.7" x="221.1" y="65.889">\f</text>
+  </g>
+</svg>

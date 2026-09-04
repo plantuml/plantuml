@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="173.958px" preserveAspectRatio="none" style="width:320px;height:173px;" version="1.1" viewBox="0 0 320 173" width="320.833px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="gdscc3h39jgi70" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#D3F198"/>
+      <stop offset="100%" stop-color="#B5E853"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="url(#gdscc3h39jgi70)" height="47.917" rx="20.833" ry="20.833" style="stroke:#D3F198;stroke-width:1.042;" width="59.896" x="120.677" y="62.5"/>
+    <text fill="#6A9FB5" font-family="'Verdana'" font-size="16.667" font-weight="700" textLength="28.646" x="136.302" y="91.088">root</text>
+    <rect fill="url(#gdscc3h39jgi70)" height="39.583" rx="20.833" ry="20.833" style="stroke:#D3F198;stroke-width:1.042;" width="67.109" x="232.656" y="43.75"/>
+    <text fill="#151515" font-family="'Verdana'" font-size="14.583" font-weight="700" textLength="56.693" x="237.865" y="60.301">right_1.1</text>
+    <text fill="#151515" font-family="'Verdana'" font-size="14.583" font-weight="700" textLength="56.693" x="237.865" y="74.884">right_1.2</text>
+    <path d="M180.573,86.458 L190.99,86.458 C206.615,86.458 206.615,63.542 222.24,63.542 L232.656,63.542" fill="none" style="stroke:#B5E853;stroke-width:3.125;"/>
+    <rect fill="url(#gdscc3h39jgi70)" height="25" rx="20.833" ry="20.833" style="stroke:#D3F198;stroke-width:1.042;" width="54.987" x="232.656" y="104.167"/>
+    <text fill="#151515" font-family="'Verdana'" font-size="14.583" font-weight="700" textLength="44.57" x="237.865" y="120.718">right_2</text>
+    <path d="M180.573,86.458 L190.99,86.458 C206.615,86.458 206.615,116.667 222.24,116.667 L232.656,116.667" fill="none" style="stroke:#B5E853;stroke-width:3.125;"/>
+    <rect fill="url(#gdscc3h39jgi70)" height="25" rx="20.833" ry="20.833" style="stroke:#D3F198;stroke-width:1.042;" width="46.055" x="22.539" y="20.833"/>
+    <text fill="#151515" font-family="'Verdana'" font-size="14.583" font-weight="700" textLength="35.638" x="27.747" y="37.384">left_1</text>
+    <path d="M120.677,86.458 L110.26,86.458 C94.635,86.458 94.635,33.333 79.01,33.333 L68.594,33.333" fill="none" style="stroke:#B5E853;stroke-width:3.125;"/>
+    <rect fill="url(#gdscc3h39jgi70)" height="25" rx="20.833" ry="20.833" style="stroke:#D3F198;stroke-width:1.042;" width="46.055" x="22.539" y="66.667"/>
+    <text fill="#151515" font-family="'Verdana'" font-size="14.583" font-weight="700" textLength="35.638" x="27.747" y="83.218">left_2</text>
+    <path d="M120.677,86.458 L110.26,86.458 C94.635,86.458 94.635,79.167 79.01,79.167 L68.594,79.167" fill="none" style="stroke:#B5E853;stroke-width:3.125;"/>
+    <rect fill="url(#gdscc3h39jgi70)" height="39.583" rx="20.833" ry="20.833" style="stroke:#D3F198;stroke-width:1.042;" width="58.177" x="10.417" y="112.5"/>
+    <text fill="#151515" font-family="'Verdana'" font-size="14.583" font-weight="700" textLength="47.76" x="15.625" y="129.051">left_3.1</text>
+    <text fill="#151515" font-family="'Verdana'" font-size="14.583" font-weight="700" textLength="47.76" x="15.625" y="143.634">left_3.2</text>
+    <path d="M120.677,86.458 L110.26,86.458 C94.635,86.458 94.635,132.292 79.01,132.292 L68.594,132.292" fill="none" style="stroke:#B5E853;stroke-width:3.125;"/>
+  </g>
+</svg>

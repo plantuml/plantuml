@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startgantt
+Project starts 2020-11-08
+[Task 7 days] as [T7] starts at 2020-11-09
+[T7] ends at 2020-11-15
+[Task 7 days] as [T7bis] starts at 2020-11-09
+[T7bis] ends at 2020-11-15
+@endgantt

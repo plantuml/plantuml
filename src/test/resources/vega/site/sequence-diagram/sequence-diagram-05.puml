@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+participant Participant [
+    =Title
+    ----
+    ""SubTitle""
+]
+
+participant Bob
+
+Participant -> Bob
+@enduml

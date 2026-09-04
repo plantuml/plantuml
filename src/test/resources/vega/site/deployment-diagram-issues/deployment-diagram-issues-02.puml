@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+hexagon h {
+node #pink "VeryLOOOOOOOOOOOOOOOOOOOg\nVeryLOOOOOOOOOOOOOOOOOOOg\nVeryLOOOOOOOOOOOOOOOOOOOg\nVeryLOOOOOOOOOOOOOOOOOOOg\nVeryLOOOOOOOOOOOOOOOOOOOg"
+}
+footer Observed on    : 1.2021.01beta3\n(current version: %version())
+@enduml

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="147px" preserveAspectRatio="none" style="width:64px;height:147px;background:#FFFFFF;" version="1.1" viewBox="0 0 64 147" width="64px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <ellipse cx="29.338" cy="25" fill="#98FB98" rx="10" ry="10" style="stroke:#008000;stroke-width:2;"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="24.338" y="30">1</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="26.675" x="16" y="55"/>
+    <text fill="#000" font-size="12" x="26" y="74.333">a</text>
+    <ellipse cx="29.338" cy="117" fill="#98FB98" rx="10" ry="10" style="stroke:#008000;stroke-width:2;"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="24.338" y="122">A</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="29.338" x2="29.338" y1="35" y2="55"/>
+    <polygon fill="#181818" points="25.338,45,29.338,55,33.338,45,29.338,49" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="29.338" x2="29.338" y1="87" y2="107"/>
+    <polygon fill="#181818" points="25.338,97,29.338,107,33.338,97,29.338,101" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

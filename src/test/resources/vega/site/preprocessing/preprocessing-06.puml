@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+!procedure $foo($arg)
+  !while $arg!=0
+    [Component $arg] as $arg
+    !$arg = $arg - 1
+  !endwhile
+!endprocedure
+
+$foo(4)
+
+1->2
+3-->4
+@enduml

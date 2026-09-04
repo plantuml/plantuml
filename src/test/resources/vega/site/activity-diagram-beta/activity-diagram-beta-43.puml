@@ -1,0 +1,57 @@
+---
+output: svg
+---
+@startuml
+skinparam colorArrowSeparationSpace 1
+start
+-[#red;#green;#orange;#blue]->
+if(a?)then(yes)
+-[#red]->
+:activity;
+-[#red]->
+if(c?)then(yes)
+-[#maroon,dashed]->
+else(no)
+-[#red]->
+if(b?)then(yes)
+-[#maroon,dashed]->
+else(no)
+-[#blue,dashed;dotted]->
+:do a;
+-[#red]->
+:do b;
+-[#red]->
+endif
+-[#red;#maroon,dashed]->
+endif
+-[#red;#maroon,dashed]->
+elseif(e?)then(yes)
+-[#green]->
+if(c?)then(yes)
+-[#maroon,dashed]->
+else(no)
+-[#green]->
+if(d?)then(yes)
+-[#maroon,dashed]->
+else(no)
+-[#green]->
+:do something; <<continuous>>
+-[#green]->
+endif
+-[#green;#maroon,dashed]->
+partition dummy {
+:some function;
+}
+-[#green;#maroon,dashed]->
+endif
+-[#green;#maroon,dashed]->
+
+elseif(f?)then(yes)
+-[#orange]->
+:activity; <<continuous>>
+-[#orange]->
+else(no)
+-[#blue,dashed;dotted]->
+endif
+stop
+@enduml

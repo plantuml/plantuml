@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+ParticipantNumber1 -> ParticipantNumber2 : this is a very long message that is very long
+ParticipantNumber1 -> ParticipantNumber1 : this is a very long message that is very long
+ParticipantNumber2 -> ParticipantNumber3 : foo2
+@enduml

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="237px" preserveAspectRatio="none" style="width:114px;height:237px;background:#FFFFFF;" version="1.1" viewBox="0 0 114 237" width="114px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="158" width="8" x="25.969" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="29.469" x2="29.469" y1="39" y2="197"/>
+    </g>
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="158" width="8" x="77.663" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="81.163" x2="81.163" y1="39" y2="197"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="10" y="10"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="17" y="27.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="58.938" y="10"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="65.938" y="27.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="10" y="197"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="17" y="214.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="58.938" y="197"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="65.938" y="214.889">Alice</text>
+    <line style="stroke:#181818;stroke-width:2;" x1="63.162" x2="73.163" y1="48" y2="58"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="63.162" x2="73.163" y1="58" y2="48"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="29.469" x2="68.163" y1="53" y2="53"/>
+    <polygon fill="#181818" points="69.163,63,79.163,67,69.163,71,73.163,67" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="29.469" x2="75.163" y1="67" y2="67"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="79.163" x2="69.163" y1="81" y2="77"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="79.163" x2="69.163" y1="81" y2="85"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="29.469" x2="80.163" y1="81" y2="81"/>
+    <polygon fill="#181818" points="69.163,91,79.163,95,69.163,95" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="29.469" x2="80.163" y1="95" y2="95"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="30.469" x2="40.469" y1="109" y2="113"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="29.469" x2="80.163" y1="109" y2="109"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="30.469" x2="40.469" y1="123" y2="119"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="29.469" x2="80.163" y1="123" y2="123"/>
+    <ellipse cx="80.663" cy="136.25" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="63.662,133,73.663,137,63.662,141,67.663,137" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="29.469" x2="69.663" y1="137" y2="137"/>
+    <ellipse cx="28.969" cy="150.25" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="35.969" x2="45.969" y1="151" y2="155"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="34.969" x2="80.163" y1="151" y2="151"/>
+    <polygon fill="#181818" points="40.469,161,30.469,165,40.469,169,36.469,165" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#181818" points="69.163,161,79.163,165,69.163,169,73.163,165" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="34.469" x2="75.163" y1="165" y2="165"/>
+    <polygon fill="#181818" points="40.469,175,30.469,179,40.469,183,36.469,179" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="80.663" cy="178.25" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="63.662,175,73.663,179,63.662,183,67.663,179" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="34.469" x2="69.663" y1="179" y2="179"/>
+  </g>
+</svg>

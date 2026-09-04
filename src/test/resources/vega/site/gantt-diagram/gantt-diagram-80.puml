@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startgantt
+Project starts the 20th of september 2018
+sunday are close
+2018/09/21 to 2018/09/23 are colored in salmon
+2018/09/21 to 2018/09/30 are named [Vacation in the Bahamas]
+
+today is 30 days after start and is colored in #AAF
+[Foo] happens 40 days after start
+[Dummy] requires 10 days and starts 10 days after start
+
+@endgantt

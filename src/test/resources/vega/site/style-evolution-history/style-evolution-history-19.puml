@@ -1,0 +1,31 @@
+---
+output: svg
+---
+@startuml
+skinparam useBetaStyle true
+style dummy1 {
+  FontColor purple
+  FontStyle bold
+  BackgroundColor white
+}
+
+stereotype foo3 {
+  FontColor blue
+  FontStyle bold
+}
+
+style stereotype {
+  FontColor green
+  FontSize 8
+}
+
+style stereotype+foo3 {
+  FontSize 24
+  FontColor red
+}
+
+participant Bob <<dummy1>>
+actor Alice <<foo2>>
+actor Charlie <<foo3>>
+actor David <<foo4>>
+@enduml

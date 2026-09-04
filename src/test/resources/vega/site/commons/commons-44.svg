@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="NWDIAG" height="187px" preserveAspectRatio="none" style="width:163px;height:187px;background:#FFFFFF;" version="1.1" viewBox="0 0 163 187" width="163px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFF" height="166.5" style="stroke:#181818;stroke-width:1.5;" width="152.75" x="5" y="10"/>
+    <path d="M125.513,10 L125.513,17 L115.513,27 L5,27" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="44.45" x="8" y="21.889">This is a</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="66.063" x="52.45" y="21.889">mainframe</text>
+    <text fill="#000" font-size="12" textLength="19.35" x="15" y="49.333">inet</text>
+    <rect fill="#E2E2F0" height="5" style="stroke:#181818;stroke-width:1;" width="95.4" x="39.35" y="43.5"/>
+    <path d="M89.05,48.5 L89.05,78.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M62.453,86.644 C64.558,80.712 70.539,79.378 74.784,84.188 C78.064,76.928 83.846,77.358 88.231,83.039 C92.454,78.592 96.916,78.449 100.039,84.301 C105.719,80.091 110.229,79.388 113.058,87.35 C119.431,89.596 121.279,95.68 115.742,100.38 C121.436,106.246 119.215,111.575 112.466,114.568 C109.691,120.396 105.163,122.922 100.095,116.979 C97.794,124.097 93.37,123.896 88.258,120.001 C82.637,125.264 77.256,124.781 74.982,116.677 C69.003,121.739 65.688,119.146 63.25,112.978 C56.013,112.545 51.984,106.446 56.387,99.904 C51.866,92.657 53.272,87.623 62.453,86.644" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="12" textLength="35.4" x="69.35" y="102.833">web01</text>
+  </g>
+</svg>

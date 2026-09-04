@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startwire
+
+* DDR3L #salmon
+	print("This is inside")
+
+print("This text is printed between")
+print("the components")
+
+* SLC_NAND [150x200]
+* TestPoints
+--
+* Big_Chip #AAA
+	move(10, 30)
+	print("Foo 10")
+	* PF3000 [150x300]
+		print("Foo 20")
+
+	print("Bar")
+
+	* EEPROM #lightBlue
+@endwire

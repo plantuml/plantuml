@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="58px" preserveAspectRatio="none" style="width:191px;height:58px;background:#FFFFFF;" version="1.1" viewBox="0 0 191 58" width="191px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="47.213" x="10" y="19"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="15" y="31.889">$foo</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="52.213" y="31.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="47.213" x2="47.213" y1="19" y2="37"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="47.213" x="10" y="19"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="85.363" x="94" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="99" y="22.889">name</text>
+    <text fill="#000" font-size="14" textLength="30.362" x="144" y="22.889">John</text>
+    <line style="stroke:#000;stroke-width:1;" x1="139" x2="139" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="94" x2="179.363" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="99" y="40.889">age</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="144" y="40.889">30</text>
+    <line style="stroke:#000;stroke-width:1;" x1="139" x2="139" y1="28" y2="46"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="85.363" x="94" y="10"/>
+    <path d="M45,28 L58,28 C67.296,28 77.215,28 86.755,28" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M86.755,31.02 L89.02,28 L86.755,24.98 L94.306,28 L86.755,31.02" fill="#000"/>
+    <ellipse cx="45" cy="28" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

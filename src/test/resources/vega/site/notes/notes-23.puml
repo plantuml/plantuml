@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+<style>
+.s2n {
+    backgroundcolor green
+    Linecolor red
+    LineThickness 2
+}
+</style>
+
+concise "Web User" as A
+
+@0
+A is Idle
+
+@100
+A is Waiting
+note top of A <<s2n>>: first note\non several\nlines
+note bottom of A <<s2n>>: second note\non several\nlines
+
+@300
+@enduml

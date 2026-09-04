@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WIRE" height="471px" preserveAspectRatio="none" style="width:241px;height:471px;background:#FFFFFF;" version="1.1" viewBox="0 0 241 471" width="241px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="none" height="100" style="stroke:#000;stroke-width:1;" width="200" x="20" y="30"/>
+    <text fill="#000" font-size="12" textLength="32.775" x="25" y="39.333">DDR3</text>
+    <rect fill="none" height="100" style="stroke:#000;stroke-width:1;" width="200" x="20" y="350"/>
+    <text fill="#000" font-size="12" textLength="57.525" x="25" y="359.333">SLC NAND</text>
+    <text fill="#000" font-size="12" x="15" y="19.333"> </text>
+    <path d="M25,348 L30,343 L20,343 L25,348" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="25" x2="25" y1="131" y2="349"/>
+    <path d="M40,348 L45,343 L35,343 L40,348" fill="#000"/>
+    <path d="M40,131 L45,136 L35,136 L40,131" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="40" x2="40" y1="131" y2="349"/>
+    <path d="M55,131 L60,136 L50,136 L55,131" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="55" x2="55" y1="131" y2="349"/>
+    <line style="stroke:#000;stroke-width:1;" x1="70" x2="70" y1="131" y2="349"/>
+    <path d="M85,131 L85,334 L80,334 L90,349 L100,334 L95,334 L95,131 L85,131" fill="#FFF" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,131 L105,146 L110,146 L110,334 L105,334 L115,349 L125,334 L120,334 L120,146 L125,146 L115,131" fill="#FFF" style="stroke:#000;stroke-width:1;"/>
+    <path d="M140,131 L130,146 L135,146 L135,349 L145,349 L145,146 L150,146 L140,131" fill="#FFF" style="stroke:#000;stroke-width:1;"/>
+    <path d="M160,131 L160,349 L170,349 L170,131 L160,131" fill="#FFF" style="stroke:#F00;stroke-width:1;"/>
+  </g>
+</svg>

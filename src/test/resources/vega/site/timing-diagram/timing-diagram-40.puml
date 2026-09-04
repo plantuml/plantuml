@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+robust "Flow rate" as rate
+
+@0
+rate is high
+
+@5
+rate is none
+
+@6
+rate is low
+@enduml

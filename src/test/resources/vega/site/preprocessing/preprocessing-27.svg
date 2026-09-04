@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="183px" preserveAspectRatio="none" style="width:169px;height:183px;background:#FFFFFF;" version="1.1" viewBox="0 0 169 183" width="169px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="44.063" x="10" y="74"/>
+    <text fill="#000" font-size="14" textLength="24.063" x="20" y="94.889">root</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="44.15" x="104.063" y="20"/>
+    <text fill="#000" font-size="14" textLength="24.15" x="114.063" y="40.889">Abc</text>
+    <path d="M54.063,91 L64.063,91 C79.063,91 79.063,37 94.063,37 L104.063,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="41.787" x="104.063" y="74"/>
+    <text fill="#000" font-size="14" textLength="21.787" x="114.063" y="94.889">Def</text>
+    <path d="M54.063,91 L64.063,91 C79.063,91 79.063,91 94.063,91 L104.063,91" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="41.788" x="104.063" y="128"/>
+    <text fill="#000" font-size="14" textLength="21.788" x="114.063" y="148.889">Ghi</text>
+    <path d="M54.063,91 L64.063,91 C79.063,91 79.063,145 94.063,145 L104.063,145" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

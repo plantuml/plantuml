@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+nwdiag {
+    Internet [shape = cloud]
+    Internet -- A
+    Internet -- B
+}
+@enduml

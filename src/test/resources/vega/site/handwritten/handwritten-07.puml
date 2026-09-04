@@ -1,0 +1,31 @@
+---
+output: svg
+---
+@startgantt
+!option handwritten true
+hide footbox
+Project starts the 2020-12-01
+
+[Task1] lasts 9 days
+sunday are closed
+
+note bottom
+  memo1 ...
+  memo2 ...
+  explanations1 ...
+  explanations2 ...
+end note
+
+[Task2] lasts 10 days
+[Task2] starts 7 days after [Task1]'s end
+note bottom
+  memo1 ...
+  memo2 ...
+  explanations1 ...
+  explanations2 ...
+end note
+-- Separator title --
+[M1] happens on 5 days after [Task1]'s end
+
+-- end --
+@endgantt

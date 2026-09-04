@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startuml
+left to right direction
+
+!$data={"parts":[
+{"shape": "cloud",    "name": "id1", "colour": "#palegreen", "desc": "some text"},
+{"shape": "folder",   "name": "id2", "colour": "#lightblue", "desc": "more text"},
+{"shape": "database", "name": "id3", "colour": "#pink",      "desc": "even more text"}
+]}
+
+rectangle Outer {
+rectangle Inner #tan as "
+{{json
+$data
+}}
+"
+together {
+!foreach $part in $data.parts
+  $part.shape $part.colour $part.name as "$part.desc"
+  Inner --> $part.name
+!endfor
+}
+}
+@enduml

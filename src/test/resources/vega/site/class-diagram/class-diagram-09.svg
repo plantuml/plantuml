@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="202px" preserveAspectRatio="none" style="width:161px;height:202px;background:#FFFFFF;" version="1.1" viewBox="0 0 161 202" width="161px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Object-->
+    <g class="entity" data-qualified-name="Object" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="72.425" x="39.5" y="12"/>
+      <ellipse cx="54.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="49.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="40.425" x="68.5" y="31.889">Object</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="40.5" x2="110.925" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="40.5" x2="110.925" y1="52" y2="52"/>
+      <text fill="#000" font-size="14" textLength="50.575" x="45.5" y="66.889">equals()</text>
+    </g>
+    <!--class ArrayList-->
+    <g class="entity" data-qualified-name="ArrayList" data-source-line="1" id="ent0002">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="139.488" x="6" y="110"/>
+      <ellipse cx="44.524" cy="126" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="39.524" y="131">C</text>
+      <text fill="#000" font-size="14" textLength="55.213" x="63.751" y="129.889">ArrayList</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="144.488" y1="142" y2="142"/>
+      <text fill="#000" font-size="14" textLength="127.488" x="12" y="156.889">Object[] elementData</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="144.488" y1="164" y2="164"/>
+      <text fill="#000" font-size="14" textLength="34.212" x="12" y="178.889">size()</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="75.5,74.069,69.5,92.069,81.5,92.069,75.5,74.069" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M75.5,92.069 C75.5,103.232 75.5,98.03 75.5,109.758" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

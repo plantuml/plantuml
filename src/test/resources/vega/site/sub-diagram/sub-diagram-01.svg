@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="325px" preserveAspectRatio="none" style="width:375px;height:325px;background:#FFFFFF;" version="1.1" viewBox="0 0 375 325" width="375px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class ATest-->
+    <g class="entity" data-qualified-name="ATest" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="83.575" x="15" y="12"/>
+      <ellipse cx="36.75" cy="28" fill="#A9DCDF" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="31.75" y="33">A</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="36.575" x="52.25" y="31.889">ATest</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="16" x2="97.575" y1="44" y2="44"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="26" cy="56.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="47.512" x="35" y="58.889">String id</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="16" x2="97.575" y1="66" y2="66"/>
+      <g data-visibility-modifier="PRIVATE_METHOD">
+        <rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="23" y="75.5"/>
+      </g>
+      <text fill="#000" font-size="14" font-style="italic" textLength="57.575" x="35" y="80.889">void doit()</text>
+    </g>
+    <!--class Test-->
+    <g class="entity" data-qualified-name="Test" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="104" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="102.213" x="6" y="124"/>
+      <ellipse cx="40.35" cy="140" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="35.35" y="145">C</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="58.65" y="143.889">Test</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="107.213" y1="156" y2="156"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="165.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="49" x="26" y="170.889">int count</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="179.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="41.213" x="26" y="184.889">int max</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="193.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="76.213" x="26" y="198.889">int increment</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="107.213" y1="206" y2="206"/>
+      <g data-visibility-modifier="PRIVATE_METHOD">
+        <rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="215.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="57.575" x="26" y="220.889">void doit()</text>
+    </g>
+    <path d="M126.5,145 L126.5,167 L83.575,217 L126.5,175 L126.5,197 A0,0 0 0 0 126.5,197 L189.5,197 A0,0 0 0 0 189.5,197 L189.5,155 L179.5,145 L126.5,145 A0,0 0 0 0 126.5,145" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M179.5,145 L179.5,155 L189.5,155 L179.5,145" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <image height="174" width="242" x="132.5" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE3NCIgd2lkdGg9IjI0MiIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgPjxkZWZzLz48ZyBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIj48ZWxsaXBzZSBjeD0iMTIyLjciIGN5PSIyNSIgcng9IjEwIiByeT0iMTAiIGZpbGw9IiMyMjIiIHN0eWxlPSJzdHJva2U6IzIyMjtzdHJva2Utd2lkdGg6MTsiLz48cmVjdCB4PSI1MCIgeT0iOTkiIHdpZHRoPSIxNDUuNCIgaGVpZ2h0PSIzMiIgZmlsbD0iI0YxRjFGMSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiByeD0iMTIuNSIgcnk9IjEyLjUiLz48dGV4dCB4PSI2MCIgeT0iMTE4LjMzMyIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxMiIgdGV4dExlbmd0aD0iMTI1LjQiPmNvdW50ID0gY291bnQgKyBpbmNyZW1lbnQ8L3RleHQ+PHBvbHlnb24gcG9pbnRzPSI5Mi41ODgsNTUsMTUyLjgxMyw1NSwxNjQuODEzLDY3LDE1Mi44MTMsNzksOTIuNTg4LDc5LDgwLjU4OCw2Nyw5Mi41ODgsNTUiIGZpbGw9IiNGMUYxRjEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41O3N0cm9rZS1saW5lam9pbjptaXRlcjtzdHJva2UtbWl0ZXJsaW1pdDoxMDsiLz48dGV4dCB4PSI5Mi41ODgiIHk9IjcwLjA1NiIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxMSIgdGV4dExlbmd0aD0iNjAuMjI1Ij5jb3VudCAmbHQ7IG1heD88L3RleHQ+PGVsbGlwc2UgY3g9IjI5IiBjeT0iMTEwIiByeD0iMTEiIHJ5PSIxMSIgZmlsbD0ibm9uZSIgc3R5bGU9InN0cm9rZTojMjIyO3N0cm9rZS13aWR0aDoxOyIvPjxlbGxpcHNlIGN4PSIyOSIgY3k9IjExMCIgcng9IjYiIHJ5PSI2IiBmaWxsPSIjMjIyIiBzdHlsZT0ic3Ryb2tlOiMyMjI7c3Ryb2tlLXdpZHRoOjE7Ii8+PGxpbmUgeDE9IjEyMi43IiB5MT0iNzkiIHgyPSIxMjIuNyIgeTI9Ijk5IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PHBvbHlnb24gcG9pbnRzPSIxMTguNyw4OSwxMjIuNyw5OSwxMjYuNyw4OSwxMjIuNyw5MyIgZmlsbD0iIzE4MTgxOCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxO3N0cm9rZS1saW5lam9pbjptaXRlcjtzdHJva2UtbWl0ZXJsaW1pdDoxMDsiLz48bGluZSB4MT0iMTIyLjciIHkxPSIxMzEiIHgyPSIxMjIuNyIgeTI9IjE0MSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHgxPSIxMjIuNyIgeTE9IjE0MSIgeDI9IjIwNy40IiB5Mj0iMTQxIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PHBvbHlnb24gcG9pbnRzPSIyMDMuNCwxMTMsMjA3LjQsMTAzLDIxMS40LDExMywyMDcuNCwxMDkiIGZpbGw9IiMxODE4MTgiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTtzdHJva2UtbGluZWpvaW46bWl0ZXI7c3Ryb2tlLW1pdGVybGltaXQ6MTA7Ii8+PGxpbmUgeDE9IjIwNy40IiB5MT0iNjciIHgyPSIyMDcuNCIgeTI9IjE0MSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHgxPSIyMDcuNCIgeTE9IjY3IiB4Mj0iMTY0LjgxMyIgeTI9IjY3IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PHBvbHlnb24gcG9pbnRzPSIxNzQuODEzLDYzLDE2NC44MTMsNjcsMTc0LjgxMyw3MSwxNzAuODEzLDY3IiBmaWxsPSIjMTgxODE4IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO3N0cm9rZS1taXRlcmxpbWl0OjEwOyIvPjxsaW5lIHgxPSI4MC41ODgiIHkxPSI2NyIgeDI9IjI5IiB5Mj0iNjciIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48bGluZSB4MT0iMjkiIHkxPSI2NyIgeDI9IjI5IiB5Mj0iOTkiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48cG9seWdvbiBwb2ludHM9IjI1LDg5LDI5LDk5LDMzLDg5LDI5LDkzIiBmaWxsPSIjMTgxODE4IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO3N0cm9rZS1taXRlcmxpbWl0OjEwOyIvPjxsaW5lIHgxPSIxMjIuNyIgeTE9IjM1IiB4Mj0iMTIyLjciIHkyPSI1NSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxwb2x5Z29uIHBvaW50cz0iMTE4LjcsNDUsMTIyLjcsNTUsMTI2LjcsNDUsMTIyLjcsNDkiIGZpbGw9IiMxODE4MTgiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTtzdHJva2UtbGluZWpvaW46bWl0ZXI7c3Ryb2tlLW1pdGVybGltaXQ6MTA7Ii8+PC9nPjwvc3ZnPg==" y="150"/>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="57,88.204,51,106.204,63,106.204,57,88.204" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M57,106.204 C57,117.333 57,111.738 57,123.608" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

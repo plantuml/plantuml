@@ -1,0 +1,31 @@
+---
+output: svg
+---
+@startuml
+<style>
+  /* Global style applied to all elements */
+  element {
+    BackGroundColor: #AAA;
+  }
+
+  /* Specific styles for a sequence diagram */
+  sequenceDiagram {
+    participant {
+      FontColor: green;
+      FontSize: 26;
+      FontStyle: italic;
+      LineColor: #E00;
+    }
+    arrow {
+      FontColor: red;
+      LineColor: blue;
+    }
+  }
+</style>
+
+participant Alice
+participant Bob
+
+Alice -> Bob : hello
+
+@enduml

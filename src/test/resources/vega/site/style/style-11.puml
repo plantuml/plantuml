@@ -1,0 +1,28 @@
+---
+output: svg
+---
+@startjson
+<style>
+jsonDiagram {
+  node {
+    FontName Helvetica
+    FontColor Coral
+    FontSize 12
+    FontStyle bold
+    BackGroundColor Khaki
+    LineColor lightblue
+  }
+  arrow {
+    BackGroundColor lightblue
+    LineColor green
+  }
+}
+</style>
+{
+    "quiz": {
+        "question": "2+2?",
+        "options": ["3", "4", "5"],
+        "answer": "4"
+    }
+}
+@endjson

@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+<style>
+element {MinimumWidth 150}
+</style>
+* Action 1
+** Sub-Action 1.1
+** Sub-Action 1.2
+*** Sub-Action 1.2.1
+*** Sub-Action 1.2.2
+* Action 2
+@enduml

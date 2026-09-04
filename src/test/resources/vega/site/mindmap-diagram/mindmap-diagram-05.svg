@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="269px" preserveAspectRatio="none" style="width:393px;height:269px;background:#FFFFFF;" version="1.1" viewBox="0 0 393 269" width="393px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="120.45" x="10" y="117"/>
+    <text fill="#000" font-size="14" textLength="100.45" x="20" y="137.889">Class Templates</text>
+    <rect fill="#F1F1F1" height="118" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="160.088" x="180.45" y="20"/>
+    <text fill="#000" font-size="14" textLength="62.3" x="190.45" y="40.889">Example 1</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="140.088" x="190.45" y="54.889">template &lt;typename T&gt;</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="78.575" x="190.45" y="68.889">class cname{</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="114.188" x="190.45" y="82.889">void f1()&lt;U+003B&gt;</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="11.55" x="190.45" y="96.889">...</text>
+    <text fill="#000" font-family="monospace" font-size="14" x="190.45" y="110.889">}</text>
+    <text fill="#000" font-size="14" x="190.45" y="124.889"> </text>
+    <path d="M130.45,134 L140.45,134 C155.45,134 155.45,79 170.45,79 L180.45,79" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="90" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="191.938" x="180.45" y="158"/>
+    <text fill="#000" font-size="14" textLength="62.3" x="190.45" y="178.889">Example 2</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="171.938" x="190.45" y="192.889">other template &lt;typename T&gt;</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="78.575" x="190.45" y="206.889">class cname{</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="11.55" x="190.45" y="220.889">...</text>
+    <text fill="#000" font-size="14" x="190.45" y="234.889"> </text>
+    <path d="M130.45,134 L140.45,134 C155.45,134 155.45,203 170.45,203 L180.45,203" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startgantt
+Project starts 2021-03-29
+[Review 01] happens at 2021-03-29
+[Review 02 - 3 weeks] happens on 3 weeks after [Review 01]'s end
+[Review 02 - 21 days] happens on 21 days after [Review 01]'s end
+@endgantt

@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startchen
+
+entity DIRECTOR {
+  Number : INTEGER <<key>>
+  Name {
+    Fname : STRING
+    Lname : STRING
+  }
+  Born : DATE
+  Died : DATE
+  Age : INTEGER
+}
+
+entity CUSTOMER {
+  Number : INTEGER <<key>>
+  Bonus : REAL <<derived>>
+  Name : STRING <<multi>>
+}
+
+@endchen

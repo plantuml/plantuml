@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+!include <kubernetes/k8s-sprites-unlabeled-25pct>
+package "Infrastructure" {
+  component "<$master>\nmaster" as master
+  component "<$etcd>\netcd" as etcd
+  component "<$node>\nnode" as node
+}
+@enduml

@@ -1,0 +1,34 @@
+---
+output: svg
+---
+@startuml
+scale 1 as 50 pixels
+
+concise state0
+concise substate1
+robust bit2
+
+bit2 has HIGH,LOW
+
+@state0
+0 is 18_start
+6 is s_dPause
+8 is 10_data
+14 is {hidden}
+
+@substate1
+0 is sSeq
+4 is sPause
+6 is {hidden}
+8 is dSeq
+12 is dPause
+14 is {hidden}
+
+@bit2
+0 is HIGH
+2 is LOW
+4 is {hidden}
+8 is HIGH
+10 is LOW
+12 is {hidden}
+@enduml

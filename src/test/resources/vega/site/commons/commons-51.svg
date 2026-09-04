@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="324px" preserveAspectRatio="none" style="width:192px;height:324px;background:#FFFFFF;" version="1.1" viewBox="0 0 192 324" width="192px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="header" data-source-line="2">
+      <text fill="#888" font-size="10" textLength="55.563" x="130.138" y="7.778">some header</text>
+    </g>
+    <g class="title" data-source-line="6">
+      <text fill="#000" font-size="14" font-weight="700" textLength="40.425" x="72.637" y="31.889">My title</text>
+    </g>
+    <rect fill="#FFF" height="175" style="stroke:#181818;stroke-width:1.5;" width="176.7" x="5" y="56"/>
+    <path d="M125.513,56 L125.513,63 L115.513,73 L5,73" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="44.45" x="8" y="67.889">This is a</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="66.063" x="52.45" y="67.889">mainframe</text>
+    <!--entity vpnServerA-->
+    <g class="entity" data-qualified-name="vpnServerA" data-source-line="14" id="ent0001">
+      <rect fill="#C9FFC9" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="90.088" x="16" y="93"/>
+      <path d="M52.994,106.06 A0.5,0.5 0 0 0 52.494,106.556 L52.4,116.472 A0.5,0.5 0 0 0 52.9,116.976 L55.937,116.976 L53.679,119.107 A0.5,0.5 0 0 0 54.021,119.97 L67.958,120.017 A0.5,0.5 0 0 0 68.337,119.187 L66.4,116.976 L69.083,116.976 A0.5,0.5 0 0 0 69.583,116.474 L69.536,106.558 A0.5,0.5 0 0 0 69.036,106.06 M53.488,107.06 L68.539,107.06 L68.582,115.976 L53.404,115.976 M56.865,117.476 L65.509,117.476 L66.855,119.013 L55.275,118.974" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="70.088" x="26" y="133.889">VPN Server</text>
+    </g>
+    <!--entity GO-->
+    <g class="entity" data-qualified-name="GO" data-source-line="16" id="ent0002">
+      <rect fill="#90EE90" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.7" x="124" y="103"/>
+      <text fill="#000" font-size="14" textLength="21.7" x="134" y="123.889">GO</text>
+    </g>
+    <!--entity STOP-->
+    <g class="entity" data-qualified-name="STOP" data-source-line="17" id="ent0003">
+      <rect fill="#F00" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58.15" x="32" y="183"/>
+      <text fill="#000" font-size="14" textLength="38.15" x="42" y="203.889">STOP</text>
+    </g>
+    <!--entity WAIT-->
+    <g class="entity" data-qualified-name="WAIT" data-source-line="18" id="ent0004">
+      <rect fill="#FFA500" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="55" x="108.5" y="183"/>
+      <text fill="#000" font-size="14" textLength="35" x="118.5" y="203.889">WAIT</text>
+    </g>
+    <g class="legend" data-source-line="10">
+      <rect fill="#DDD" height="24" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="76.238" x="54.731" y="253"/>
+      <text fill="#000" font-size="14" textLength="66.238" x="59.731" y="268.889">The legend</text>
+    </g>
+    <g class="caption" data-source-line="8">
+      <text fill="#000" font-size="14" textLength="81.813" x="51.944" y="301.889">This is caption</text>
+    </g>
+    <g class="footer" data-source-line="4">
+      <text fill="#888" font-size="10" textLength="49.938" x="67.881" y="314.778">some footer</text>
+    </g>
+  </g>
+</svg>

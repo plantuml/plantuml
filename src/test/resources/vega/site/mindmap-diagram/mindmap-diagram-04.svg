@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="372px" preserveAspectRatio="none" style="width:606px;height:372px;background:#FFFFFF;" version="1.1" viewBox="0 0 606 372" width="606px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="40.213" x="298.05" y="168.5"/>
+    <text fill="#000" font-size="14" textLength="20.213" x="308.05" y="189.389">OS</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="65.15" x="388.263" y="101"/>
+    <text fill="#000" font-size="14" textLength="45.15" x="398.263" y="121.889">Ubuntu</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="79.938" x="503.413" y="20"/>
+    <text fill="#000" font-size="14" textLength="59.938" x="513.413" y="40.889">Linux Mint</text>
+    <path d="M453.413,118 L463.413,118 C478.413,118 478.413,37 493.413,37 L503.413,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="72.15" x="503.413" y="74"/>
+    <text fill="#000" font-size="14" textLength="52.15" x="513.413" y="94.889">Kubuntu</text>
+    <path d="M453.413,118 L463.413,118 C478.413,118 478.413,91 493.413,91 L503.413,91" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="70.575" x="503.413" y="128"/>
+    <text fill="#000" font-size="14" textLength="50.575" x="513.413" y="148.889">Lubuntu</text>
+    <path d="M453.413,118 L463.413,118 C478.413,118 478.413,145 493.413,145 L503.413,145" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="82.387" x="503.413" y="182"/>
+    <text fill="#000" font-size="14" textLength="62.387" x="513.413" y="202.889">KDE Neon</text>
+    <path d="M453.413,118 L463.413,118 C478.413,118 478.413,199 493.413,199 L503.413,199" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M338.263,185.5 L348.263,185.5 C363.263,185.5 363.263,118 378.263,118 L388.263,118" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="58.938" x="388.263" y="155"/>
+    <text fill="#000" font-size="14" textLength="38.938" x="398.263" y="175.889">LMDE</text>
+    <path d="M338.263,185.5 L348.263,185.5 C363.263,185.5 363.263,172 378.263,172 L388.263,172" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="73.813" x="388.263" y="209"/>
+    <text fill="#000" font-size="14" textLength="53.813" x="398.263" y="229.889">SolydXK</text>
+    <path d="M338.263,185.5 L348.263,185.5 C363.263,185.5 363.263,226 378.263,226 L388.263,226" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="80.637" x="388.263" y="263"/>
+    <text fill="#000" font-size="14" textLength="60.637" x="398.263" y="283.889">SteamOS</text>
+    <path d="M338.263,185.5 L348.263,185.5 C363.263,185.5 363.263,280 378.263,280 L388.263,280" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="79.238" x="388.263" y="317"/>
+    <text fill="#000" font-size="14" textLength="59.238" x="398.263" y="337.889">Raspbian</text>
+    <path d="M338.263,185.5 L348.263,185.5 C363.263,185.5 363.263,334 378.263,334 L388.263,334" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="92.45" x="155.6" y="101"/>
+    <text fill="#000" font-size="14" textLength="72.45" x="165.6" y="121.889">Windows 95</text>
+    <path d="M298.05,185.5 L288.05,185.5 C273.05,185.5 273.05,118 258.05,118 L248.05,118" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="92.45" x="155.6" y="155"/>
+    <text fill="#000" font-size="14" textLength="72.45" x="165.6" y="175.889">Windows 98</text>
+    <path d="M298.05,185.5 L288.05,185.5 C273.05,185.5 273.05,172 258.05,172 L248.05,172" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="95.6" x="152.45" y="209"/>
+    <text fill="#000" font-size="14" textLength="75.6" x="162.45" y="229.889">Windows NT</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="84.663" x="17.788" y="182"/>
+    <text fill="#000" font-size="14" textLength="64.663" x="27.788" y="202.889">Windows 8</text>
+    <path d="M152.45,226 L142.45,226 C127.45,226 127.45,199 112.45,199 L102.45,199" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="92.45" x="10" y="236"/>
+    <text fill="#000" font-size="14" textLength="72.45" x="20" y="256.889">Windows 10</text>
+    <path d="M152.45,226 L142.45,226 C127.45,226 127.45,253 112.45,253 L102.45,253" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M298.05,185.5 L288.05,185.5 C273.05,185.5 273.05,226 258.05,226 L248.05,226" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+'!preprocessorV2
+interface List
+List : int size()
+List : void clear()
+List <|.. ArrayList
+@enduml

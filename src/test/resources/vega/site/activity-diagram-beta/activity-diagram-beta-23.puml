@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+:Step 1;
+if (condition1) then
+  while (loop forever)
+   :Step 2;
+  endwhile
+  -[hidden]->
+  detach
+else
+  :end normally;
+  stop
+endif
+@enduml

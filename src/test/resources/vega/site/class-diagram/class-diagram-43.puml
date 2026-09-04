@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+
+set separator ::
+class X1::X2::foo {
+  some info
+}
+
+@enduml

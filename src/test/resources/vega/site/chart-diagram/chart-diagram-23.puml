@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+v-axis 0 --> 100
+bar "Sales" [45, 62, 58, 70] #3498db labels
+line "Target" [70, 75, 80, 85] #ff7f0e labels
+legend right
+@endchart

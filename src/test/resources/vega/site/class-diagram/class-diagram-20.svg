@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="320px" preserveAspectRatio="none" style="width:513px;height:320px;background:#FFFFFF;" version="1.1" viewBox="0 0 513 320" width="513px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Object-->
+    <g class="entity" data-qualified-name="Object" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81.4" x="26" y="96"/>
+      <ellipse cx="41" cy="114" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="36" y="119">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="53.4" x="53" y="110.333">«general»</text>
+      <text fill="#000" font-size="14" textLength="40.425" x="59.488" y="123.889">Object</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="27" x2="106.4" y1="132" y2="132"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="27" x2="106.4" y1="140" y2="140"/>
+    </g>
+    <!--class ArrayList-->
+    <g class="entity" data-qualified-name="ArrayList" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="87.213" x="23" y="256"/>
+      <ellipse cx="38" cy="272" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="33" y="277">C</text>
+      <text fill="#000" font-size="14" textLength="55.213" x="52" y="275.889">ArrayList</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="24" x2="109.213" y1="288" y2="288"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="24" x2="109.213" y1="296" y2="296"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN4" data-source-line="4" id="ent0005">
+      <path d="M6,18 L6,54 A0,0 0 0 0 6,54 L62.5,54 L66.5,95.97 L70.5,54 L126.694,54 A0,0 0 0 0 126.694,54 L126.694,28 L116.694,18 L6,18 A0,0 0 0 0 6,18" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M116.694,18 L116.694,28 L126.694,28 L116.694,18" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="99.694" x="12" y="33.111">In java, every class</text>
+      <text fill="#000" font-size="13" textLength="91" x="12" y="46.111">extends this one.</text>
+    </g>
+    <g class="entity" data-qualified-name="N1" data-source-line="6" id="ent0007">
+      <path d="M145,24 L145,47 L274.469,47 L274.469,34 L264.469,24 L145,24" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M264.469,24 L264.469,34 L274.469,34 L264.469,24" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="108.469" x="151" y="39.111">This is a floating note</text>
+    </g>
+    <g class="entity" data-qualified-name="N2" data-source-line="7" id="ent0008">
+      <path d="M45.5,184 L45.5,220 L185.775,220 L185.775,194 L175.775,184 L45.5,184" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M175.775,184 L175.775,194 L185.775,194 L175.775,184" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="119.275" x="51.5" y="199.111">This note is connected</text>
+      <text fill="#000" font-size="13" textLength="97.5" x="51.5" y="212.111">to several objects.</text>
+    </g>
+    <!--class Foo-->
+    <g class="entity" data-qualified-name="Foo" data-source-line="11" id="ent0011">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="56.15" x="441.5" y="12"/>
+      <ellipse cx="456.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="451.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="24.15" x="470.5" y="31.889">Foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="442.5" x2="496.65" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="442.5" x2="496.65" y1="52" y2="52"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN12" data-source-line="12" id="ent0013">
+      <path d="M292,24 L292,47 A0,0 0 0 0 292,47 L422.85,47 A0,0 0 0 0 422.85,47 L422.85,42 L441.24,36 L422.85,34 L422.85,34 L412.85,24 L292,24 A0,0 0 0 0 292,24" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M412.85,24 L412.85,34 L422.85,34 L412.85,24" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="109.85" x="298" y="39.111">On last defined class</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="50.908,148.142,37.094,161.149,47.661,166.836,50.908,148.142" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M42.378,163.993 C36.647,174.639 39.388,171.586 36.5,184 C32.875,199.584 32.771,204.441 36.5,220 C39.499,232.516 45.616,245.373 51.549,255.878" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0008" data-link-type="association" id="lnk9">
+      <path d="M82.274,148.109 C89.548,159.688 98.002,173.146 104.563,183.589" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0002" data-link-type="association" id="lnk10">
+      <path d="M104.381,220.246 C97.604,230.756 88.857,244.323 81.476,255.772" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

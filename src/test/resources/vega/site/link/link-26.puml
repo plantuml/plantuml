@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startmindmap
+
+skinparam topurl https://plantuml.com/
+
+* [[index PlantUML website]]
+** [[sequence-diagram Sequence]]
+** [[mindmap-diagram MindMap]]
+** [[wbs-diagram WBS]]
+** ...
+@endmindmap

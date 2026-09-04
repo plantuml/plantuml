@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="241px" preserveAspectRatio="none" style="width:301px;height:241px;background:#FFFFFF;" version="1.1" viewBox="0 0 301 241" width="301px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class a-->
+    <g class="entity" data-qualified-name="a" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="39.788" x="6" y="22"/>
+      <ellipse cx="21" cy="38" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="43">C</text>
+      <text fill="#000" font-size="14" x="35" y="41.889">a</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="44.788" y1="54" y2="54"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="44.788" y1="62" y2="62"/>
+    </g>
+    <!--class b-->
+    <g class="entity" data-qualified-name="b" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="39.788" x="151" y="22"/>
+      <ellipse cx="166" cy="38" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="161" y="43">C</text>
+      <text fill="#000" font-size="14" x="180" y="41.889">b</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="152" x2="189.788" y1="54" y2="54"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="152" x2="189.788" y1="62" y2="62"/>
+    </g>
+    <!--class c-->
+    <g class="entity" data-qualified-name="c" data-source-line="7" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="39" x="151.5" y="177"/>
+      <ellipse cx="166.5" cy="193" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="161.5" y="198">C</text>
+      <text fill="#000" font-size="14" x="180.5" y="196.889">c</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="152.5" x2="189.5" y1="209" y2="209"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="152.5" x2="189.5" y1="217" y2="217"/>
+    </g>
+    <!--class d-->
+    <g class="entity" data-qualified-name="d" data-source-line="11" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="39.788" x="7" y="177"/>
+      <ellipse cx="22" cy="193" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="17" y="198">C</text>
+      <text fill="#000" font-size="14" x="36" y="196.889">d</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="45.788" y1="209" y2="209"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="45.788" y1="217" y2="217"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="150.542,46,141.542,42,145.542,46,141.542,50,150.542,46" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M46.162,46 C73.709,46 117.841,46 145.542,46" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M63.5,0 L63.5,23 L133.5,23 L133.5,10 L123.5,0 L63.5,0" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M123.5,0 L123.5,10 L133.5,10 L123.5,0" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="49.156" x="69.5" y="15.111">Link note</text>
+      <text fill="#000" font-size="13" font-style="italic" textLength="47.125" x="75.016" y="39.111">link label</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="171,176.544,175,167.544,171,171.544,167,167.544,171,176.544" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M171,70.237 C171,98.995 171,142.686 171,171.544" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" font-style="italic" textLength="47.125" x="172" y="127.111">link label</text>
+      <path d="M225.125,112 L225.125,135 L295.125,135 L295.125,122 L285.125,112 L225.125,112" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M285.125,112 L285.125,122 L295.125,122 L285.125,112" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="49.156" x="231.125" y="127.111">Link note</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0004" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="47.023,201,56.023,205,52.023,201,56.023,197,47.023,201" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M52.023,201 C79.534,201 123.726,201 151.147,201" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" font-style="italic" textLength="47.125" x="75.766" y="161.111">link label</text>
+      <path d="M64.25,170 L64.25,193 L134.25,193 L134.25,180 L124.25,170 L64.25,170" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M124.25,170 L124.25,180 L134.25,180 L124.25,170" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="49.156" x="70.25" y="185.111">Link note</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0006" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="26.152,70.237,22.211,79.263,26.185,75.237,30.211,79.211,26.152,70.237" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M26.185,75.237 C26.373,103.994 26.658,147.686 26.847,176.544" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M32,112 L32,135 L102,135 L102,122 L92,112 L32,112" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M92,112 L92,122 L102,122 L92,112" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="49.156" x="38" y="127.111">Link note</text>
+      <text fill="#000" font-size="13" font-style="italic" textLength="47.125" x="108.156" y="127.111">link label</text>
+    </g>
+  </g>
+</svg>

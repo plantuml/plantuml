@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startgantt
+Label on first column and left aligned
+[Task1] requires 1 days
+then [Task2_long_long_long] as [T2] requires 2 days
+-- Phase Two --
+then [Task3] as [T3] requires 2 days
+[Task4] as [T4] requires 1 day
+[Task5] as [T5] requires 2 days
+[T2] -> [T4]
+[T2] -> [T5]
+[Task6_long_long_long] as [T6] requires 4 days
+[T3] -> [T6]
+[T5] -> [T6]
+[End] happens 1 day after [T6]'s end
+@endgantt

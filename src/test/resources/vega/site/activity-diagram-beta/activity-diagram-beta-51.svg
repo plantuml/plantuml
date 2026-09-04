@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="559px" preserveAspectRatio="none" style="width:267px;height:559px;background:#FFFFFF;" version="1.1" viewBox="0 0 267 559" width="267px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <ellipse cx="197.556" cy="25" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    <rect fill="none" height="78" style="stroke:#000;stroke-width:1.5;" width="197.025" x="39.544" y="45"/>
+    <path d="M88.394,45 L88.394,52 L78.394,62 L39.544,62" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="38.85" x="42.544" y="56.889">Group</text>
+    <path d="M49.544,83.5 L49.544,106.5 L148.544,106.5 L148.544,93.5 L138.544,83.5 L49.544,83.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M138.544,83.5 L138.544,93.5 L148.544,93.5 L138.544,83.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="78" x="55.544" y="98.611">Note on Group</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="58.025" x="168.544" y="79"/>
+    <text fill="#000" font-size="12" textLength="38.025" x="178.544" y="98.333">Activity</text>
+    <rect fill="none" height="78" style="stroke:#000;stroke-width:1.5;" width="208.644" x="27.925" y="133"/>
+    <path d="M89.288,133 L89.288,140 L79.288,150 L27.925,150" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="51.363" x="30.925" y="144.889">Partition</text>
+    <path d="M37.925,171.5 L37.925,194.5 L148.544,194.5 L148.544,181.5 L138.544,171.5 L37.925,171.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M138.544,171.5 L138.544,181.5 L148.544,181.5 L138.544,171.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="89.619" x="43.925" y="186.611">Note on Partition</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="58.025" x="168.544" y="167"/>
+    <text fill="#000" font-size="12" textLength="38.025" x="178.544" y="186.333">Activity</text>
+    <polygon fill="none" points="25,221,85.512,221,92.512,241,236.569,241,236.569,307,25,307,25,221" style="stroke:#000;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="25" x2="92.512" y1="241" y2="241"/>
+    <text fill="#000" font-size="14" textLength="54.512" x="29" y="233.889">Package</text>
+    <path d="M35,259.5 L35,282.5 L148.544,282.5 L148.544,269.5 L138.544,259.5 L35,259.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M138.544,259.5 L138.544,269.5 L148.544,269.5 L138.544,259.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="92.544" x="41" y="274.611">Note on Package</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="58.025" x="168.544" y="255"/>
+    <text fill="#000" font-size="12" textLength="38.025" x="178.544" y="274.333">Activity</text>
+    <rect fill="none" height="86" style="stroke:#000;stroke-width:1.5;" width="219.531" x="17.038" y="317"/>
+    <text fill="#000" font-size="14" textLength="63.087" x="95.259" y="329.889">Rectangle</text>
+    <path d="M27.038,355.5 L27.038,378.5 L148.544,378.5 L148.544,365.5 L138.544,355.5 L27.038,355.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M138.544,355.5 L138.544,365.5 L148.544,365.5 L138.544,355.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="100.506" x="33.038" y="370.611">Note on Rectangle</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="58.025" x="168.544" y="351"/>
+    <text fill="#000" font-size="12" textLength="38.025" x="178.544" y="370.333">Activity</text>
+    <rect fill="none" height="86" style="stroke:#000;stroke-width:1.5;" width="189.144" x="47.425" y="413"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="47.425" x2="236.569" y1="431" y2="431"/>
+    <text fill="#000" font-size="14" textLength="30.363" x="126.816" y="425.889">Card</text>
+    <path d="M57.425,451.5 L57.425,474.5 L148.544,474.5 L148.544,461.5 L138.544,451.5 L57.425,451.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M138.544,451.5 L138.544,461.5 L148.544,461.5 L138.544,451.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="70.119" x="63.425" y="466.611">Note on Card</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="58.025" x="168.544" y="447"/>
+    <text fill="#000" font-size="12" textLength="38.025" x="178.544" y="466.333">Activity</text>
+    <ellipse cx="197.556" cy="529" fill="none" rx="10" ry="10" style="stroke:#222;stroke-width:1.5;"/>
+    <line style="stroke:#222;stroke-width:2.5;" x1="191.369" x2="203.743" y1="522.813" y2="535.187"/>
+    <line style="stroke:#222;stroke-width:2.5;" x1="203.743" x2="191.369" y1="522.813" y2="535.187"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="197.556" x2="197.556" y1="35" y2="79"/>
+    <polygon fill="#181818" points="193.556,69,197.556,79,201.556,69,197.556,73" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="197.556" x2="197.556" y1="111" y2="167"/>
+    <polygon fill="#181818" points="193.556,157,197.556,167,201.556,157,197.556,161" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="197.556" x2="197.556" y1="199" y2="255"/>
+    <polygon fill="#181818" points="193.556,245,197.556,255,201.556,245,197.556,249" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="197.556" x2="197.556" y1="287" y2="351"/>
+    <polygon fill="#181818" points="193.556,341,197.556,351,201.556,341,197.556,345" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="197.556" x2="197.556" y1="383" y2="447"/>
+    <polygon fill="#181818" points="193.556,437,197.556,447,201.556,437,197.556,441" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="197.556" x2="197.556" y1="479" y2="519"/>
+    <polygon fill="#181818" points="193.556,509,197.556,519,201.556,509,197.556,513" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

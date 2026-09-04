@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="221px" preserveAspectRatio="none" style="width:140px;height:221px;background:#FFFFFF;" version="1.1" viewBox="0 0 140 221" width="140px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity f3-->
+    <g class="entity" data-qualified-name="f3" data-source-line="4" id="ent0001">
+      <ellipse cx="15" cy="186" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="9.181" y="213.889">f3</text>
+    </g>
+    <!--entity b3-->
+    <g class="entity" data-qualified-name="b3" data-source-line="4" id="ent0002">
+      <ellipse cx="115" cy="186" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="107.213" y="213.889">b3</text>
+    </g>
+    <!--entity f2-->
+    <g class="entity" data-qualified-name="f2" data-source-line="5" id="ent0004">
+      <ellipse cx="15" cy="133" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="9.181" y="160.889">f2</text>
+    </g>
+    <!--entity b2-->
+    <g class="entity" data-qualified-name="b2" data-source-line="5" id="ent0005">
+      <ellipse cx="115" cy="133" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="107.213" y="160.889">b2</text>
+    </g>
+    <!--entity f1-->
+    <g class="entity" data-qualified-name="f1" data-source-line="6" id="ent0007">
+      <ellipse cx="15" cy="80" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="9.181" y="107.889">f1</text>
+    </g>
+    <!--entity b1-->
+    <g class="entity" data-qualified-name="b1" data-source-line="6" id="ent0008">
+      <ellipse cx="115" cy="80" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="107.213" y="107.889">b1</text>
+    </g>
+    <!--entity f0-->
+    <g class="entity" data-qualified-name="f0" data-source-line="7" id="ent0010">
+      <ellipse cx="15" cy="27" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="9.181" y="54.889">f0</text>
+    </g>
+    <!--entity b0-->
+    <g class="entity" data-qualified-name="b0" data-source-line="7" id="ent0011">
+      <ellipse cx="115" cy="27" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="107.213" y="54.889">b0</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M24.02,189 C42.397,189 87.386,189 105.869,189" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#000" font-family="monospace" font-size="13" textLength="15.275" x="57.4" y="171.111">~~</text>
+      <text fill="#000" font-size="13" font-style="italic" textLength="36.075" x="47" y="184.111">dotted</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="association" id="lnk6">
+      <path d="M24.02,136 C42.397,136 87.386,136 105.869,136" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-family="monospace" font-size="13" textLength="7.15" x="61.753" y="118.111">..</text>
+      <text fill="#000" font-size="13" font-style="italic" textLength="42.656" x="44" y="131.111">dashed</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0008" data-link-type="association" id="lnk9">
+      <path d="M24.02,83 C42.397,83 87.386,83 105.869,83" fill="none" style="stroke:#181818;stroke-width:2;"/>
+      <text fill="#000" font-family="monospace" font-size="13" textLength="15.275" x="57.672" y="65.111">==</text>
+      <text fill="#000" font-size="13" font-style="italic" textLength="24.619" x="53" y="78.111">bold</text>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0011" data-link-type="association" id="lnk12">
+      <path d="M24.02,30 C42.397,30 87.386,30 105.869,30" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="13" textLength="8.612" x="60.966" y="12.111">--</text>
+      <text fill="#000" font-size="13" font-style="italic" textLength="27.544" x="51.5" y="25.111">plain</text>
+    </g>
+  </g>
+</svg>

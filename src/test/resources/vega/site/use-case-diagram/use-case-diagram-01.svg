@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="137px" preserveAspectRatio="none" style="width:281px;height:137px;background:#FFFFFF;" version="1.1" viewBox="0 0 281 137" width="281px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity First usecase-->
+    <g class="entity" data-qualified-name="First usecase" data-source-line="2" id="ent0001">
+      <ellipse cx="61.911" cy="27.582" fill="#F1F1F1" rx="55.911" ry="13.582" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="79.363" x="22.23" y="31.082">First usecase</text>
+    </g>
+    <!--entity UC2-->
+    <g class="entity" data-qualified-name="UC2" data-source-line="3" id="ent0002">
+      <ellipse cx="201.005" cy="27.301" fill="#F1F1F1" rx="64.505" ry="15.301" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="101.15" x="150.43" y="30.801">Another usecase</text>
+    </g>
+    <!--entity UC3-->
+    <g class="entity" data-qualified-name="UC3" data-source-line="4" id="ent0003">
+      <ellipse cx="61.861" cy="99.899" fill="#F1F1F1" rx="22.861" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="28.088" x="47.817" y="103.399">UC3</text>
+    </g>
+    <!--entity UC4-->
+    <g class="entity" data-qualified-name="UC4" data-source-line="5" id="ent0004">
+      <ellipse cx="140.125" cy="100.054" fill="#F1F1F1" rx="36.625" ry="21.054" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="26.425" x="126.912" y="93.952">Last</text>
+      <text fill="#000" font-size="14" textLength="52.15" x="114.05" y="107.952">usecase</text>
+    </g>
+  </g>
+</svg>

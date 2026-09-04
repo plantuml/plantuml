@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+skinparam useBetaStyle true
+title Styling example
+<style>
+sequenceDiagram+actor {
+  FontColor blue
+}
+</style>
+' In that case, only actor from sequence diagram are printed in blue.
+' Actors in other diagram and other sequence element are unchanged.
+actor Alice
+Alice -> Bob : hello
+@enduml

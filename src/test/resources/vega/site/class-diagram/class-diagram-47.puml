@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+Student -o Room
+Chair --* Room
+@enduml

@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startchart
+<style>
+.datapoints {
+MarkerColor #1f77b4
+MarkerShape circle
+MarkerSize 10
+}
+.highlights {
+MarkerColor #e74c3c
+MarkerShape triangle
+MarkerSize 10
+}
+</style>
+h-axis [Q1, Q2, Q3, Q4, Q5]
+v-axis 0 --> 100
+scatter <<datapoints>> "Data Points" [20, 40, 60, 80, 70]
+scatter <<highlights>> "Highlights" [30, 55, 65, 75, 85]
+legend right
+@endchart

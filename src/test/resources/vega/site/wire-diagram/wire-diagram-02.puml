@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startwire
+* first
+* second_box [100x50]
+* third
+--
+* big_container
+	* foo1
+	* foo2
+	* foo3
+@endwire

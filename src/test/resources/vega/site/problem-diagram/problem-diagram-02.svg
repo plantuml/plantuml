@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="386px" preserveAspectRatio="none" style="width:890px;height:386px;background:#FFFFFF;" version="1.1" viewBox="0 0 890 386" width="890px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="2">
+      <text fill="#000" font-size="14" font-weight="700" textLength="135.45" x="373.775" y="20.889">Problem Diagram R1-1</text>
+    </g>
+    <!--cluster D31-->
+    <g class="cluster" data-qualified-name="D31" data-source-line="4" id="ent0002">
+      <path d="M332.5,118.389 L434.738,118.389 A3.75,3.75 0 0 1 437.238,120.889 L444.238,152.389 L464.5,152.389 A2.5,2.5 0 0 1 467,154.889 L467,359.889 A2.5,2.5 0 0 1 464.5,362.389 L332.5,362.389 A2.5,2.5 0 0 1 330,359.889 L330,120.889 A2.5,2.5 0 0 1 332.5,118.389" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="330" x2="444.238" y1="152.389" y2="152.389"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="101.238" x="334" y="131.278">Drone collocated</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="101.15" x="334.044" y="145.278">with Smartphone</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="74.813" x="365.094" y="165.278">«Designed»</text>
+    </g>
+    <!--cluster D321-->
+    <g class="cluster" data-qualified-name="D31.D321" data-source-line="6" id="ent0004">
+      <path d="M348.5,187.389 L425.713,187.389 A3.75,3.75 0 0 1 428.213,189.889 L435.213,207.389 L448.5,207.389 A2.5,2.5 0 0 1 451,209.889 L451,283.889 A2.5,2.5 0 0 1 448.5,286.389 L348.5,286.389 A2.5,2.5 0 0 1 346,283.889 L346,189.889 A2.5,2.5 0 0 1 348.5,187.389" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="346" x2="435.213" y1="207.389" y2="207.389"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="76.213" x="350" y="200.278">Smartphone</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="59.238" x="372.881" y="220.278">«Causal»</text>
+    </g>
+    <ellipse cx="785.786" cy="184.346" fill="#FFF" rx="87.786" ry="19.957" style="stroke:#000;stroke-width:1.5;stroke-dasharray:7,7;"/>
+    <text fill="#000" font-size="14" textLength="142.45" x="714.561" y="186.235">Collect drone flight paths</text>
+    <rect fill="#FFF" height="44" style="stroke:#000;stroke-width:1.5;" width="50.775" x="373" y="58.389"/>
+    <text fill="#000" font-size="12" textLength="24.675" x="386.05" y="75.722">Path</text>
+    <rect fill="none" height="16" style="stroke:#000;stroke-width:1;" width="16" x="407.775" y="86.389"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="410.775" y="99.389">X</text>
+    <rect fill="#FFF" height="28" style="stroke:#000;stroke-width:1.5;" width="103.4" x="6" y="145.389"/>
+    <rect fill="#FFF" height="28" style="stroke:#000;stroke-width:1.5;" width="4" x="10" y="145.389"/>
+    <text fill="#000" font-size="12" textLength="89.4" x="18" y="162.722">Onboard LiveBox</text>
+    <rect fill="#FFF" height="44" style="stroke:#000;stroke-width:1.5;" width="60.15" x="368.5" y="302.389"/>
+    <text fill="#000" font-size="12" textLength="32.7" x="382.225" y="319.722">Drone</text>
+    <rect fill="none" height="16" style="stroke:#000;stroke-width:1;" width="16" x="412.65" y="330.389"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="415.65" y="343.389">B</text>
+    <rect fill="#FFF" height="28" style="stroke:#000;stroke-width:1.5;" width="73.125" x="362" y="242.389"/>
+    <rect fill="#FFF" height="28" style="stroke:#000;stroke-width:1.5;" width="4" x="362" y="242.389"/>
+    <text fill="#000" font-size="12" textLength="64.125" x="370.5" y="259.722">LiveBox App</text>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0001" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="424.201,87.053,431.849,93.259,429.029,88.355,433.932,85.535,424.201,87.053" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M429.029,88.355 C485.779,103.665 622.509,140.552 710.496,164.289" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="574.328" y="53.5">d</text>
+      <path d="M497,62.389 L497,98.389 L658,98.389 L658,72.389 L648,62.389 L497,62.389" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M648,62.389 L648,72.389 L658,72.389 L648,62.389" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="128.538" x="503" y="77.5">the flight path consists of</text>
+      <text fill="#000" font-size="13" textLength="140.888" x="503" y="90.5">zero to many geolocations</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="association" id="lnk9">
+      <path d="M428.546,316.033 C479.893,301.004 589.792,267.674 680,232.389 C701.466,223.992 724.835,213.453 744.066,204.391" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="574.188" y="169.5">e</text>
+      <path d="M480,178.389 L480,227.389 L675,227.389 L675,188.389 L665,178.389 L480,178.389" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M665,178.389 L665,188.389 L675,188.389 L665,178.389" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="174.606" x="486" y="193.5">the drone's geolocation includes</text>
+      <text fill="#000" font-size="13" textLength="143.813" x="486" y="206.5">latitude, longitude, altitude</text>
+      <text fill="#000" font-size="13" textLength="99.613" x="486" y="219.5">and the timestamp</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0006" data-link-type="association" id="lnk10">
+      <path d="M105.178,145.291 C112.46,143.228 119.917,141.193 127,139.389 C216.897,116.491 324.991,94.585 372.75,85.189" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="14.463" x="217.713" y="46.5">d2</text>
+      <path d="M137.5,55.389 L137.5,91.389 L311.5,91.389 L311.5,65.389 L301.5,55.389 L137.5,55.389" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M301.5,55.389 L301.5,65.389 L311.5,65.389 L301.5,55.389" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="153.888" x="143.5" y="70.5">&lt;(geolocation, timestamp)&gt;</text>
+      <text fill="#000" font-size="13" textLength="139.263" x="143.5" y="83.5">by the order of timestamps</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0005" data-link-type="association" id="lnk11">
+      <path d="M70.582,173.424 C83.19,187.059 104.264,207.157 127,217.389 C205.314,252.634 308.108,257.536 361.618,257.383" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="14.463" x="217.534" y="154.5">e1</text>
+      <path d="M132,163.389 L132,212.389 L317,212.389 L317,173.389 L307,163.389 L132,163.389" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M307,163.389 L307,173.389 L317,173.389 L307,163.389" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="164.531" x="138" y="178.5">(geolocation, timestamp) from</text>
+      <text fill="#000" font-size="13" textLength="153.156" x="138" y="191.5">the smart phone as a payload</text>
+      <text fill="#000" font-size="13" textLength="62.075" x="138" y="204.5">of the drone</text>
+    </g>
+  </g>
+</svg>

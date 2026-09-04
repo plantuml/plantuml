@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+left to right direction
+skinparam nodesep 5
+
+f3  ~~  b3  : ""~~""\n//dotted//
+f2  ..  b2  : ""..""\n//dashed//
+f1  ==  b1  : ""==""\n//bold//
+f0  --  b0  : ""--""\n//plain//
+@enduml

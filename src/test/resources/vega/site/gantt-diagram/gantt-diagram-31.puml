@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startgantt
+saturday are closed
+sunday are closed
+
+Project starts the 1st of january 2021
+[Prototype design end] as [TASK1] requires 8 days
+[TASK1] is colored in Lavender/LightBlue
+[Testing] requires 3 days
+[TASK1]->[Testing]
+
+2021-01-18 to 2021-01-22 are named [End's committee]
+2021-01-18 to 2021-01-22 are colored in salmon
+@endgantt

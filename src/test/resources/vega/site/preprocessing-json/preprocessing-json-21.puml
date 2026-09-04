@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startjson
+!$a = [1, 2, 3]
+%json_remove($a, 1)
+@endjson

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="213px" preserveAspectRatio="none" style="width:140px;height:213px;background:#FFFFFF;" version="1.1" viewBox="0 0 140 213" width="140px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <ellipse cx="68.075" cy="25" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="76.175" x="29.988" y="55"/>
+    <text fill="#000" font-size="12" textLength="56.175" x="39.988" y="74.333">Hello world</text>
+    <rect fill="#F1F1F1" height="44" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="104.15" x="16" y="107"/>
+    <text fill="#000" font-size="12" textLength="84.15" x="26" y="126.333">This is defined on</text>
+    <text fill="#000" font-size="12" textLength="38.7" x="26" y="138.333">several</text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="24.75" x="64.7" y="138.333">lines</text>
+    <ellipse cx="68.075" cy="182" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+    <ellipse cx="68.075" cy="182" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="68.075" x2="68.075" y1="35" y2="55"/>
+    <polygon fill="#181818" points="64.075,45,68.075,55,72.075,45,68.075,49" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="68.075" x2="68.075" y1="87" y2="107"/>
+    <polygon fill="#181818" points="64.075,97,68.075,107,72.075,97,68.075,101" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="68.075" x2="68.075" y1="151" y2="171"/>
+    <polygon fill="#181818" points="64.075,161,68.075,171,72.075,161,68.075,165" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

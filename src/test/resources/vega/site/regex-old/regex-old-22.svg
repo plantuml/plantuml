@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="REGEX" height="122px" preserveAspectRatio="none" style="width:178px;height:122px;background:#FFFFFF;" version="1.1" viewBox="0 0 178 122" width="178px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="88.638" x="43.787" y="30.889">namedGroups</text>
+    </g>
+    <line style="stroke:#181818;stroke-width:1;" x1="15" x2="15" y1="84" y2="84"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="17.788" x="15" y="72"/>
+    <text fill="#000" font-size="14" x="20" y="87.889">a</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="32.788" x2="52.788" y1="84" y2="84"/>
+    <rect fill="#E8E8FF" height="56" style="stroke:#E8E8FF;stroke-width:1;" width="71.638" x="52.788" y="50"/>
+    <rect fill="#E8E8FF" height="14" style="stroke:#E8E8FF;stroke-width:1;" width="57.425" x="52.788" y="36"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="52.788" x2="62.788" y1="84" y2="84"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="114.425" x2="124.425" y1="84" y2="84"/>
+    <path d="M70.788,76 C70.788,82 72.788,84 78.788,84" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="70.788" x2="70.788" y1="73" y2="76"/>
+    <path d="M70.788,73 C70.788,67 72.788,65 78.788,65" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="77.788" x2="99.425" y1="65" y2="65"/>
+    <path d="M88.77,65 L88.77,62 L82.77,65 L88.77,68 L88.77,65" fill="#181818"/>
+    <path d="M106.425,76 C106.425,82 104.425,84 98.425,84" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="106.425" x2="106.425" y1="73" y2="76"/>
+    <path d="M98.425,65 C104.425,65 106.425,67 106.425,73" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="62.788" x2="77.788" y1="84" y2="84"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="99.425" x2="114.425" y1="84" y2="84"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="21.638" x="77.788" y="72"/>
+    <text fill="#000" font-size="14" textLength="11.638" x="82.788" y="87.889">\d</text>
+    <text fill="#000" font-size="14" textLength="47.425" x="57.788" y="50">number</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="124.425" x2="144.425" y1="84" y2="84"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="17.788" x="144.425" y="72"/>
+    <text fill="#000" font-size="14" x="149.425" y="87.889">b</text>
+  </g>
+</svg>

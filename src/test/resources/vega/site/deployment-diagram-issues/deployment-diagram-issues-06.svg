@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="173px" preserveAspectRatio="none" style="width:906px;height:173px;background:#FFFFFF;" version="1.1" viewBox="0 0 906 173" width="906px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster package_nested-->
+    <g class="cluster" data-qualified-name="package_nested" data-source-line="16" id="ent0003">
+      <path d="M603,13 L706.725,13 A3.75,3.75 0 0 1 709.225,15.5 L716.225,33 L716,33 A2.5,2.5 0 0 1 718.5,35.5 L718.5,111.5 A2.5,2.5 0 0 1 716,114 L603,114 A2.5,2.5 0 0 1 600.5,111.5 L600.5,15.5 A2.5,2.5 0 0 1 603,13" fill="#98FB98" style="stroke:#F00;stroke-width:2;"/>
+      <line style="stroke:#F00;stroke-width:2;" x1="600.5" x2="716.225" y1="33" y2="33"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="102.725" x="604.5" y="25.889">package_nested</text>
+    </g>
+    <!--cluster node_nested-->
+    <g class="cluster" data-qualified-name="node_nested" data-source-line="22" id="ent0007">
+      <polygon fill="#98FB98" points="734.5,14,744.5,4,890.5,4,890.5,108,880.5,118,734.5,118,734.5,14" style="stroke:#F00;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#F00;stroke-width:2;" x1="880.5" x2="890.5" y1="14" y2="4"/>
+      <line style="stroke:#F00;stroke-width:2;" x1="734.5" x2="880.5" y1="14" y2="14"/>
+      <line style="stroke:#F00;stroke-width:2;" x1="880.5" x2="880.5" y1="14" y2="118"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="80.938" x="768.031" y="27.889">node_nested</text>
+    </g>
+    <!--entity package-->
+    <g class="entity" data-qualified-name="package" data-source-line="13" id="ent0001">
+      <path d="M8.5,57.5 L74.438,57.5 A3.75,3.75 0 0 1 76.938,60 L83.938,77.5 L98.438,77.5 A2.5,2.5 0 0 1 100.938,80 L100.938,92 A2.5,2.5 0 0 1 98.438,94.5 L8.5,94.5 A2.5,2.5 0 0 1 6,92 L6,60 A2.5,2.5 0 0 1 8.5,57.5" fill="#98FB98" style="stroke:#F00;stroke-width:2;"/>
+      <line style="stroke:#F00;stroke-width:2;" x1="6" x2="83.938" y1="77.5" y2="77.5"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="52.937" x="16" y="71.389">package</text>
+    </g>
+    <!--entity package_empty_nested-->
+    <g class="entity" data-qualified-name="package_empty_nested" data-source-line="14" id="ent0002">
+      <path d="M121.5,57.5 L283.075,57.5 A3.75,3.75 0 0 1 285.575,60 L292.575,77.5 L307.075,77.5 A2.5,2.5 0 0 1 309.575,80 L309.575,92 A2.5,2.5 0 0 1 307.075,94.5 L121.5,94.5 A2.5,2.5 0 0 1 119,92 L119,60 A2.5,2.5 0 0 1 121.5,57.5" fill="#98FB98" style="stroke:#F00;stroke-width:2;"/>
+      <line style="stroke:#F00;stroke-width:2;" x1="119" x2="292.575" y1="77.5" y2="77.5"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="148.575" x="129" y="71.389">package_empty_nested</text>
+    </g>
+    <!--entity node-->
+    <g class="entity" data-qualified-name="node" data-source-line="19" id="ent0005">
+      <polygon fill="#98FB98" points="328,64,338,54,399.15,54,399.15,88,389.15,98,328,98,328,64" style="stroke:#F00;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#F00;stroke-width:2;" x1="389.15" x2="399.15" y1="64" y2="54"/>
+      <line style="stroke:#F00;stroke-width:2;" x1="328" x2="389.15" y1="64" y2="64"/>
+      <line style="stroke:#F00;stroke-width:2;" x1="389.15" x2="389.15" y1="64" y2="98"/>
+      <text fill="#000" font-size="14" textLength="31.15" x="343" y="84.889">node</text>
+    </g>
+    <!--entity node_empty_nested-->
+    <g class="entity" data-qualified-name="node_empty_nested" data-source-line="20" id="ent0006">
+      <polygon fill="#98FB98" points="417,64,427,54,583.788,54,583.788,88,573.788,98,417,98,417,64" style="stroke:#F00;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#F00;stroke-width:2;" x1="573.788" x2="583.788" y1="64" y2="54"/>
+      <line style="stroke:#F00;stroke-width:2;" x1="417" x2="573.788" y1="64" y2="64"/>
+      <line style="stroke:#F00;stroke-width:2;" x1="573.788" x2="573.788" y1="64" y2="98"/>
+      <text fill="#000" font-size="14" textLength="126.788" x="432" y="84.889">node_empty_nested</text>
+    </g>
+    <!--entity n-->
+    <g class="entity" data-qualified-name="package_nested.n" data-source-line="17" id="ent0004">
+      <polygon fill="#98FB98" points="635.5,64,645.5,54,683.288,54,683.288,88,673.288,98,635.5,98,635.5,64" style="stroke:#F00;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#F00;stroke-width:2;" x1="673.288" x2="683.288" y1="64" y2="54"/>
+      <line style="stroke:#F00;stroke-width:2;" x1="635.5" x2="673.288" y1="64" y2="64"/>
+      <line style="stroke:#F00;stroke-width:2;" x1="673.288" x2="673.288" y1="64" y2="98"/>
+      <text fill="#000" font-size="14" x="650.5" y="84.889">n</text>
+    </g>
+    <!--entity m-->
+    <g class="entity" data-qualified-name="node_nested.m" data-source-line="23" id="ent0008">
+      <polygon fill="#98FB98" points="786.5,64,796.5,54,838.138,54,838.138,88,828.138,98,786.5,98,786.5,64" style="stroke:#F00;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#F00;stroke-width:2;" x1="828.138" x2="838.138" y1="64" y2="54"/>
+      <line style="stroke:#F00;stroke-width:2;" x1="786.5" x2="828.138" y1="64" y2="64"/>
+      <line style="stroke:#F00;stroke-width:2;" x1="828.138" x2="828.138" y1="64" y2="98"/>
+      <text fill="#000" font-size="14" x="801.5" y="84.889">m</text>
+    </g>
+    <g class="footer" data-source-line="25">
+      <text fill="#888" font-size="10" x="449.75" y="143.778"> </text>
+      <text fill="#888" font-size="10" textLength="121.063" x="389.219" y="153.778">Observed on    : 1.2021.9beta2</text>
+      <text fill="#888" font-size="10" textLength="116.063" x="391.719" y="163.778">(current version: $version$)</text>
+    </g>
+  </g>
+</svg>

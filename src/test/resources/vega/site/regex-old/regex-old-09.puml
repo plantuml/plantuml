@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startregex
+title unicodeEscapes
+\uFFFF\x{FFFF}
+@endregex

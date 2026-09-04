@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="152px" preserveAspectRatio="none" style="width:172px;height:152px;background:#FFFFFF;" version="1.1" viewBox="0 0 172 152" width="172px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity vpnServerA-->
+    <g class="entity" data-qualified-name="vpnServerA" data-source-line="1" id="ent0001">
+      <rect fill="#C9FFC9" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="90.088" x="6" y="12"/>
+      <path d="M42.994,25.06 A0.5,0.5 0 0 0 42.494,25.556 L42.4,35.472 A0.5,0.5 0 0 0 42.9,35.976 L45.937,35.976 L43.679,38.107 A0.5,0.5 0 0 0 44.021,38.97 L57.958,39.017 A0.5,0.5 0 0 0 58.337,38.187 L56.4,35.976 L59.083,35.976 A0.5,0.5 0 0 0 59.583,35.474 L59.536,25.558 A0.5,0.5 0 0 0 59.036,25.06 M43.488,26.06 L58.539,26.06 L58.582,34.976 L43.404,34.976 M46.865,36.476 L55.509,36.476 L56.855,38.013 L45.275,37.974" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="70.088" x="16" y="52.889">VPN Server</text>
+    </g>
+    <!--entity GO-->
+    <g class="entity" data-qualified-name="GO" data-source-line="3" id="ent0002">
+      <rect fill="#90EE90" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.7" x="114" y="22"/>
+      <text fill="#000" font-size="14" textLength="21.7" x="124" y="42.889">GO</text>
+    </g>
+    <!--entity STOP-->
+    <g class="entity" data-qualified-name="STOP" data-source-line="4" id="ent0003">
+      <rect fill="#F00" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58.15" x="22" y="102"/>
+      <text fill="#000" font-size="14" textLength="38.15" x="32" y="122.889">STOP</text>
+    </g>
+    <!--entity WAIT-->
+    <g class="entity" data-qualified-name="WAIT" data-source-line="5" id="ent0004">
+      <rect fill="#FFA500" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="55" x="98.5" y="102"/>
+      <text fill="#000" font-size="14" textLength="35" x="108.5" y="122.889">WAIT</text>
+    </g>
+  </g>
+</svg>

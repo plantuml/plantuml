@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+state alias1 : ""state alias1""
+state "alias2" : ""state "alias2"""
+state "long name" as alias3 : ""state "long name" as alias3""
+state alias4 as "long name" : ""state alias4 as "long name"""
+
+alias1 -> alias2
+alias2 -> alias3
+alias3 -> alias4
+@enduml

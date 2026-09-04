@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="431px" preserveAspectRatio="none" style="width:616px;height:431px;background:#FFFFFF;" version="1.1" viewBox="0 0 616 431" width="616px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="70" y1="60" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="360" y2="360"/>
+    <text fill="#000" font-size="14" x="52.213" y="363.889">0</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="300" y2="300"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="303.889">20</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="240" y2="240"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="243.889">40</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="180" y2="180"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="183.889">60</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="120" y2="120"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="123.889">80</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="60" y2="60"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="36.637" y="63.889">100</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="360" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="110" x2="110" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="100.681" y="380.889">Q1</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="190" x2="190" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="180.681" y="380.889">Q2</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="270" x2="270" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="260.681" y="380.889">Q3</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="350" x2="350" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="340.681" y="380.889">Q4</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="430" x2="430" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="420.681" y="380.889">Q5</text>
+    <ellipse cx="110" cy="300" fill="#1F77B4" rx="5" ry="5" style="stroke:#1F77B4;stroke-width:1;"/>
+    <ellipse cx="190" cy="240" fill="#1F77B4" rx="5" ry="5" style="stroke:#1F77B4;stroke-width:1;"/>
+    <ellipse cx="270" cy="180" fill="#1F77B4" rx="5" ry="5" style="stroke:#1F77B4;stroke-width:1;"/>
+    <ellipse cx="350" cy="120" fill="#1F77B4" rx="5" ry="5" style="stroke:#1F77B4;stroke-width:1;"/>
+    <ellipse cx="430" cy="150" fill="#1F77B4" rx="5" ry="5" style="stroke:#1F77B4;stroke-width:1;"/>
+    <polygon fill="#E74C3C" points="110,265,105,275,115,275" style="stroke:#E74C3C;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E74C3C" points="190,190,185,200,195,200" style="stroke:#E74C3C;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E74C3C" points="270,160,265,170,275,170" style="stroke:#E74C3C;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E74C3C" points="350,130,345,140,355,140" style="stroke:#E74C3C;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E74C3C" points="430,100,425,110,435,110" style="stroke:#E74C3C;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="486" cy="66" fill="#1F77B4" rx="4.2" ry="4.2" style="stroke:#1F77B4;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="68.513" x="497" y="70.889">Data Points</text>
+    <polygon fill="#E74C3C" points="486,90.8,481.8,99.2,490.2,99.2" style="stroke:#E74C3C;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="14" textLength="61.6" x="497" y="99.889">Highlights</text>
+  </g>
+</svg>

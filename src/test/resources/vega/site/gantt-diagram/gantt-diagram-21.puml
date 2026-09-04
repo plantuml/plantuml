@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startgantt
+[task1] requires 10 days
+[task1] links to [[http://plantuml.com]]
+@endgantt

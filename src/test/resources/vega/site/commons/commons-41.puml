@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startgantt
+mainframe This is a **mainframe**
+
+[t] lasts 5 days
+@endgantt

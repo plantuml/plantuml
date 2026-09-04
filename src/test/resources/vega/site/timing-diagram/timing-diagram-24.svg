@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="TIMING" height="189px" preserveAspectRatio="none" style="width:491px;height:189px;background:#FFFFFF;" version="1.1" viewBox="0 0 491 189" width="491px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="20" y1="20" y2="157"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="470.05" x2="470.05" y1="20" y2="157"/>
+    <rect fill="#FFD700" height="137" style="stroke:none;" width="125" x="165.05" y="20"/>
+    <rect fill="#EEE" height="137" style="stroke:none;" width="50" x="365.05" y="20"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="65.05" x2="65.05" y1="20" y2="157"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="115.05" x2="115.05" y1="20" y2="157"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="165.05" x2="165.05" y1="20" y2="157"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="215.05" x2="215.05" y1="20" y2="157"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="265.05" x2="265.05" y1="20" y2="157"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="315.05" x2="315.05" y1="20" y2="157"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="365.05" x2="365.05" y1="20" y2="157"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="415.05" x2="415.05" y1="20" y2="157"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="465.05" x2="465.05" y1="20" y2="157"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="470.05" y1="20" y2="20"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="80.15" x="25" y="30.889">Web Browser</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="106.15" y1="35" y2="35"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="106.15" x2="116.15" y1="35" y2="20"/>
+    <text fill="#333" font-size="12" textLength="19.35" x="25" y="89.333">Idle</text>
+    <text fill="#333" font-size="12" textLength="27.975" x="25" y="69.333">Proc.</text>
+    <text fill="#333" font-size="12" textLength="40.05" x="25" y="49.333">Waiting</text>
+    <line style="stroke:#006400;stroke-width:2;" x1="65.05" x2="165.05" y1="85" y2="85"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="165.05" x2="215.05" y1="65" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="215.05" x2="415.05" y1="45" y2="45"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="415.05" x2="465.05" y1="85" y2="85"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="165.05" x2="165.05" y1="65" y2="85"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="215.05" x2="215.05" y1="45" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="415.05" x2="415.05" y1="45" y2="85"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="470.05" y1="103" y2="103"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="58.363" x="25" y="113.889">Web User</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="84.363" y1="118" y2="118"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="84.363" x2="94.363" y1="118" y2="103"/>
+    <polygon fill="#E2E2F0" points="77.05,123,103.05,123,115.05,135,103.05,147,77.05,147,65.05,135" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E0FFFF" points="127.05,123,303.05,123,315.05,135,303.05,147,127.05,147,115.05,135" style="stroke:#0FF;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="327.05,123,465.05,123,465.05,147,327.05,147,315.05,135" style="stroke:#E2E2F0;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M465.05,123 L327.05,123 L315.05,135 L327.05,147 L465.05,147" fill="#E2E2F0" style="stroke:#006400;stroke-width:1.5;"/>
+    <text fill="#333" font-size="12" font-weight="700" textLength="19.35" x="80.375" y="138.333">Idle</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="40.05" x="195.025" y="138.333">Waiting</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="12.675" x="327.05" y="138.333">ok</text>
+    <line style="stroke:#333;stroke-width:2;" x1="65.05" x2="65.05" y1="157" y2="162"/>
+    <line style="stroke:#333;stroke-width:2;" x1="115.05" x2="115.05" y1="157" y2="162"/>
+    <line style="stroke:#333;stroke-width:2;" x1="165.05" x2="165.05" y1="157" y2="162"/>
+    <line style="stroke:#333;stroke-width:2;" x1="215.05" x2="215.05" y1="157" y2="162"/>
+    <line style="stroke:#333;stroke-width:2;" x1="265.05" x2="265.05" y1="157" y2="162"/>
+    <line style="stroke:#333;stroke-width:2;" x1="315.05" x2="315.05" y1="157" y2="162"/>
+    <line style="stroke:#333;stroke-width:2;" x1="365.05" x2="365.05" y1="157" y2="162"/>
+    <line style="stroke:#333;stroke-width:2;" x1="415.05" x2="415.05" y1="157" y2="162"/>
+    <line style="stroke:#333;stroke-width:2;" x1="465.05" x2="465.05" y1="157" y2="162"/>
+    <line style="stroke:#333;stroke-width:2;" x1="65.05" x2="465.05" y1="157" y2="157"/>
+    <text fill="#333" font-size="11" x="61.991" y="171.556">0</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="105.872" y="171.556">100</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="155.872" y="171.556">200</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="205.872" y="171.556">300</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="305.872" y="171.556">500</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="405.872" y="171.556">700</text>
+    <line style="stroke:#00008B;stroke-width:1.5;" x1="115.05" x2="115.05" y1="135" y2="85"/>
+    <polygon fill="#00008B" points="117.786,92.518,112.314,92.518,115.05,85" style="stroke:#00008B;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#00008B" font-family="serif" font-size="14" textLength="28.088" x="115.05" y="103.406">URL</text>
+    <line style="stroke:#00008B;stroke-width:1.5;" x1="215.05" x2="240.05" y1="123" y2="45"/>
+    <polygon fill="#00008B" points="240.361,52.994,235.15,51.324,240.05,45" style="stroke:#00008B;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#00008B" font-family="serif" font-size="14" textLength="35.875" x="237.756" y="63.048">URL2</text>
+    <line style="stroke:#696969;stroke-width:2;stroke-dasharray:4,4;" x1="165.05" x2="165.05" y1="20" y2="157"/>
+    <line style="stroke:#696969;stroke-width:2;stroke-dasharray:4,4;" x1="290.05" x2="290.05" y1="20" y2="157"/>
+    <text fill="#000" font-size="12" textLength="86.1" x="168.05" y="31.333">This is my caption</text>
+    <line style="stroke:#333;stroke-width:2;stroke-dasharray:4,4;" x1="365.05" x2="365.05" y1="20" y2="157"/>
+    <line style="stroke:#333;stroke-width:2;stroke-dasharray:4,4;" x1="415.05" x2="415.05" y1="20" y2="157"/>
+    <text fill="#000" font-size="12" textLength="72.075" x="368.05" y="31.333">This is another</text>
+    <text fill="#000" font-size="12" textLength="44.775" x="368.05" y="43.333">highlight</text>
+  </g>
+</svg>

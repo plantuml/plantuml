@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+skinparam defaultFontName VL Gothic
+部屋 *-- 椅子 : "1" 持っています "いくつか"
+@enduml

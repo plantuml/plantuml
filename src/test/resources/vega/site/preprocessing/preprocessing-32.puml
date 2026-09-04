@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startcreole
+| Nb param. | Input | Output |
+| 0 | <U+0025>random()      | %random()     |
+| 1 | <U+0025>random(5)     | %random(5)    |
+| 2 | <U+0025>random(7, 15) | %random(7, 15) |
+@endcreole

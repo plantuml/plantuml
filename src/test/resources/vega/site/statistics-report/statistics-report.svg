@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="561px" preserveAspectRatio="none" style="width:666px;height:561px;background:#FFFFFF;" version="1.1" viewBox="0 0 666 561" width="666px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class StatsUtil-->
+    <g class="entity" data-qualified-name="StatsUtil" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="118.4" x="6" y="40"/>
+      <ellipse cx="36.413" cy="56" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="31.413" y="61">C</text>
+      <text fill="#000" font-size="14" textLength="52.15" x="53.838" y="59.889">StatsUtil</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="123.4" y1="72" y2="72"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="123.4" y1="80" y2="80"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="92.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="92.4" x="26" y="94.889">Stats getStats()</text>
+    </g>
+    <!--class Stats-->
+    <g class="entity" data-qualified-name="Stats" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="118" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="318.6" x="172.5" y="12"/>
+      <ellipse cx="311.625" cy="28" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="306.625" y="33">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="31.85" x="332.125" y="31.889">Stats</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="173.5" x2="490.1" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="173.5" x2="490.1" y1="52" y2="52"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="183.5" cy="64.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="178.938" x="192.5" y="66.889">StatsTable getLastSessions()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="183.5" cy="78.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="292.6" x="192.5" y="80.889">StatsTable getCurrentSessionByDiagramType()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="183.5" cy="92.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="252.788" x="192.5" y="94.889">StatsTable getCurrentSessionByFormat()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="183.5" cy="106.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="211.75" x="192.5" y="108.889">StatsTable getAllByDiagramType()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="183.5" cy="120.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="171.938" x="192.5" y="122.889">StatsTable getAllByFormat()</text>
+    </g>
+    <!--class StatsTable-->
+    <g class="entity" data-qualified-name="StatsTable" data-source-line="12" id="ent0004">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="314.138" x="175" y="183"/>
+      <ellipse cx="294.35" cy="199" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="289.35" y="204">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="66.938" x="314.85" y="202.889">StatsTable</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="176" x2="488.138" y1="215" y2="215"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="176" x2="488.138" y1="223" y2="223"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="186" cy="235.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="288.138" x="195" y="237.889">Collection&lt;StatsColumn&gt; getColumnHeaders()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="186" cy="249.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="158.813" x="195" y="251.889">List&lt;StatsLine&gt; getLines()</text>
+    </g>
+    <!--class StatsColumn-->
+    <g class="entity" data-qualified-name="StatsColumn" data-source-line="13" id="ent0006">
+      <rect fill="#F1F1F1" height="104" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="127.413" x="268.5" y="441"/>
+      <ellipse cx="290.368" cy="457" fill="#EB937F" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="285.368" y="462">E</text>
+      <text fill="#000" font-size="14" textLength="80.15" x="305.894" y="460.889">StatsColumn</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="269.5" x2="394.913" y1="473" y2="473"/>
+      <text fill="#000" font-size="14" textLength="84.087" x="274.5" y="487.889">SESSION_ID</text>
+      <text fill="#000" font-size="14" textLength="63.087" x="274.5" y="501.889">VERSION</text>
+      <text fill="#000" font-size="14" textLength="115.413" x="274.5" y="515.889">PARSED_COUNT</text>
+      <text fill="#000" font-size="14" textLength="11.55" x="274.5" y="529.889">...</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="269.5" x2="394.913" y1="537" y2="537"/>
+    </g>
+    <!--class StatsLine-->
+    <g class="entity" data-qualified-name="StatsLine" data-source-line="24" id="ent0008">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="314.138" x="336" y="312"/>
+      <ellipse cx="459.638" cy="328" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="454.638" y="333">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="58.363" x="480.138" y="331.889">StatsLine</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="337" x2="649.138" y1="344" y2="344"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="337" x2="649.138" y1="352" y2="352"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="347" cy="364.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="288.138" x="356" y="366.889">Collection&lt;StatsColumn&gt; getColumnHeaders()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="347" cy="378.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="230.3" x="356" y="380.889">Object getValue(StatsColumn column)</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="172.37,71,163.37,67,167.37,71,163.37,75,172.37,71" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M124.256,71 C138.928,71 150.354,71 167.37,71" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="27.544" x="134.75" y="63.111">build</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="aggregation" id="lnk5">
+      <polygon fill="none" points="332,130.069,328,136.069,332,142.069,336,136.069,332,130.069" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#181818" points="332,182.996,336,173.996,332,177.996,328,173.996,332,182.996" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M332,142.069 C332,159.885 332,161.994 332,177.996" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="48.425" x="334" y="160.111">contains</text>
+      <text fill="#000" font-size="13" x="324" y="179.108">5</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0006" data-link-type="aggregation" id="lnk7">
+      <polygon fill="none" points="302.895,259.243,296.236,262.011,296.231,269.222,302.889,266.454,302.895,259.243" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#181818" points="298.632,440.83,297.849,431.012,296.244,436.436,290.82,434.832,298.632,440.83" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M296.231,269.222 C285.926,284.653 282.257,293.315 277,312 C267.851,344.515 268.865,355.216 277,388 C281.501,406.139 287.423,420.204 296.244,436.436" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="46.963" x="279" y="353.611">headers</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0008" data-link-type="composition" id="lnk9">
+      <polygon fill="#181818" points="379.001,259.075,381.234,265.932,388.422,266.507,386.189,259.651,379.001,259.075" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#181818" points="445.941,311.879,441.352,303.164,442.015,308.782,436.397,309.445,445.941,311.879" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M388.422,266.507 C409.491,283.127 420.939,292.157 442.015,308.782" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="48.425" x="424" y="289.111">contains</text>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0006" data-link-type="aggregation" id="lnk10">
+      <polygon fill="none" points="450.699,388.046,443.55,388.99,441.672,395.952,448.821,395.008,450.699,388.046" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#181818" points="390.359,440.89,399.765,437.97,394.121,437.596,394.495,431.952,390.359,440.89" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M441.672,395.952 C423.225,412.108 414.082,420.114 394.121,437.596" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="46.963" x="428" y="418.111">headers</text>
+    </g>
+  </g>
+</svg>

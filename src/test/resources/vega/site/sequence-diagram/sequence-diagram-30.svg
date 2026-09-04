@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="222px" preserveAspectRatio="none" style="width:316px;height:222px;background:#FFFFFF;" version="1.1" viewBox="0 0 316 222" width="316px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="143" width="8" x="120.538" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="124.038" x2="124.038" y1="39" y2="182"/>
+    </g>
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="143" width="8" x="172.231" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="175.731" x2="175.731" y1="39" y2="182"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="101.813" y="10"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="108.813" y="27.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="156.263" y="10"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="163.263" y="27.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="101.813" y="182"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="108.813" y="199.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="156.263" y="182"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="163.263" y="199.889">Bob</text>
+    <polygon fill="#181818" points="163.731,62,173.731,66,163.731,70,167.731,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="124.038" x2="169.731" y1="66" y2="66"/>
+    <text fill="#000" font-size="13" textLength="27.544" x="131.038" y="61.111">hello</text>
+    <path d="M15,52 L15,75 L119,75 L119,62 L109,52 L15,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M109,52 L109,62 L119,62 L109,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="83.038" x="21" y="67.111">this is a first note</text>
+    <polygon fill="#181818" points="135.038,95,125.038,99,135.038,103,131.038,99" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="129.038" x2="174.731" y1="99" y2="99"/>
+    <text fill="#000" font-size="13" textLength="13.731" x="141.038" y="94.111">ok</text>
+    <path d="M180.731,85 L180.731,108 L299.731,108 L299.731,95 L289.731,85 L180.731,85" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M289.731,85 L289.731,95 L299.731,95 L289.731,85" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="98.963" x="186.731" y="100.111">this is another note</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="175.731" x2="217.731" y1="132" y2="132"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="217.731" x2="217.731" y1="132" y2="145"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="176.731" x2="217.731" y1="145" y2="145"/>
+    <polygon fill="#181818" points="186.731,141,176.731,145,186.731,149,182.731,145" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="66.463" x="182.731" y="127.111">I am thinking</text>
+    <path d="M47.762,118 L47.762,167 L169.763,167 L169.763,128 L159.763,118 L47.762,118" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M159.763,118 L159.763,128 L169.763,128 L159.763,118" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="32.5" x="53.762" y="133.111">a note</text>
+    <text fill="#000" font-size="13" textLength="101.969" x="53.762" y="146.111">can also be defined</text>
+    <text fill="#000" font-size="13" textLength="83.2" x="53.762" y="159.111">on several lines</text>
+  </g>
+</svg>

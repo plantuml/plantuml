@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+!function bold($text)
+!$result = "<b>"+ $text +"</b>"
+!log Calling bold function with $text. The result is $result
+!return $result
+!endfunction
+
+Alice -> Bob : This is bold("bold")
+Alice -> Bob : This is bold("a second call")
+@enduml

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="132px" preserveAspectRatio="none" style="width:157px;height:132px;background:#FFFFFF;" version="1.1" viewBox="0 0 157 132" width="157px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFF" height="106" style="stroke:#181818;stroke-width:1.5;" width="141.413" x="5" y="10"/>
+    <path d="M125.513,10 L125.513,17 L115.513,27 L5,27" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="44.45" x="8" y="21.889">This is a</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="66.063" x="52.45" y="21.889">mainframe</text>
+    <g class="entity" data-qualified-name="user" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="113.413" x="16" y="47"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="59.1" y="59.889">user</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="17" x2="128.413" y1="65" y2="65"/>
+      <text fill="#000" font-size="14" textLength="101.413" x="22" y="79.889">name = "Dummy"</text>
+      <text fill="#000" font-size="14" textLength="42.525" x="22" y="93.889">id = 123</text>
+    </g>
+  </g>
+</svg>

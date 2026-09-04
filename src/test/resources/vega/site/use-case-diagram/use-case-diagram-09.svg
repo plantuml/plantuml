@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="199px" preserveAspectRatio="none" style="width:245px;height:199px;background:#FFFFFF;" version="1.1" viewBox="0 0 245 199" width="245px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Restaurant-->
+    <g class="cluster" data-qualified-name="Restaurant" data-source-line="3" id="ent0002">
+      <rect fill="none" height="171" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="139" x="90" y="4"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="68.425" x="125.288" y="16.889">Restaurant</text>
+    </g>
+    <!--entity fc-->
+    <g class="entity" data-qualified-name="fc" data-source-line="2" id="ent0001">
+      <ellipse cx="37.938" cy="73.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M37.938,81.5 L37.938,108.5 M24.938,89.5 L50.938,89.5 M37.938,108.5 L24.938,123.5 M37.938,108.5 L50.938,123.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="63.875" x="6" y="135.889">Food Critic</text>
+    </g>
+    <!--entity UC1-->
+    <g class="entity" data-qualified-name="Restaurant.UC1" data-source-line="4" id="ent0003">
+      <ellipse cx="159.432" cy="57.899" fill="#F1F1F1" rx="40.432" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="52.937" x="132.964" y="61.399">Eat Food</text>
+    </g>
+    <!--entity UC2-->
+    <g class="entity" data-qualified-name="Restaurant.UC2" data-source-line="5" id="ent0004">
+      <ellipse cx="159.34" cy="102.068" fill="#F1F1F1" rx="53.34" ry="13.068" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="72.363" x="123.158" y="105.568">Pay for Food</text>
+    </g>
+    <!--entity UC3-->
+    <g class="entity" data-qualified-name="Restaurant.UC3" data-source-line="6" id="ent0005">
+      <ellipse cx="159.64" cy="145.899" fill="#F1F1F1" rx="26.14" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="32.725" x="143.278" y="149.399">Drink</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="118.793,70.036,108.998,69.003,114.036,71.576,111.463,76.614,118.793,70.036" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M70.093,88.022 C76.622,85.247 83.5,82.439 90,80 C99.239,76.533 104.542,74.651 114.036,71.576" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="105.818,102,96.818,98,100.818,102,96.818,106,105.818,102" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M70.085,102 C81.012,102 88.614,102 100.818,102" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="133.248,138.529,125.826,132.055,128.47,137.056,123.469,139.7,133.248,138.529" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M70.093,115.978 C76.622,118.753 83.5,121.561 90,124 C104.15,129.31 115.449,133.043 128.47,137.056" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

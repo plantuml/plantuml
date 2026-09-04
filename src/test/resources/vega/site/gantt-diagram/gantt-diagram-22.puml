@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startgantt
+Project starts the 20th of september 2017
+[Prototype design] as [TASK1] requires 13 days
+[TASK1] is colored in Lavender/LightBlue
+@endgantt

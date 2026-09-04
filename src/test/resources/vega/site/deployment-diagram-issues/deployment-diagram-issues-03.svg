@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="94px" preserveAspectRatio="none" style="width:189px;height:94px;background:#FFFFFF;" version="1.1" viewBox="0 0 189 94" width="189px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity h-->
+    <g class="entity" data-qualified-name="h" data-source-line="2" id="ent0001">
+      <text fill="#000" font-size="14" textLength="31.85" x="47.65" y="27.889">more</text>
+      <text fill="#000" font-size="14" textLength="23.363" x="47.65" y="41.889">and</text>
+      <text fill="#000" font-size="14" textLength="31.85" x="47.65" y="55.889">more</text>
+      <text fill="#000" font-size="14" textLength="83.3" x="47.65" y="69.889">combinatorial</text>
+    </g>
+  </g>
+</svg>

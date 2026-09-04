@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="TIMING" height="135px" preserveAspectRatio="none" style="width:437px;height:135px;background:#FFFFFF;" version="1.1" viewBox="0 0 437 135" width="437px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="20" y1="20" y2="103"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="416.675" x2="416.675" y1="20" y2="103"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="61.675" x2="61.675" y1="20" y2="103"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="111.675" x2="111.675" y1="20" y2="103"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="161.675" x2="161.675" y1="20" y2="103"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="211.675" x2="211.675" y1="20" y2="103"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="261.675" x2="261.675" y1="20" y2="103"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="311.675" x2="311.675" y1="20" y2="103"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="361.675" x2="361.675" y1="20" y2="103"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="411.675" x2="411.675" y1="20" y2="103"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="416.675" y1="20" y2="20"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="53.725" x="25" y="30.889">Flow rate</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="79.725" y1="35" y2="35"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="79.725" x2="89.725" y1="35" y2="20"/>
+    <text fill="#333" font-size="12" textLength="30" x="25" y="89.333">0 gpm</text>
+    <text fill="#333" font-size="12" textLength="36.675" x="25" y="69.333">15 gpm</text>
+    <text fill="#333" font-size="12" textLength="36.675" x="25" y="49.333">35 gpm</text>
+    <line style="stroke:#006400;stroke-width:2;" x1="61.675" x2="311.675" y1="45" y2="45"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="311.675" x2="361.675" y1="85" y2="85"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="361.675" x2="411.675" y1="65" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="311.675" x2="311.675" y1="45" y2="85"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="361.675" x2="361.675" y1="65" y2="85"/>
+    <line style="stroke:#333;stroke-width:2;" x1="61.675" x2="61.675" y1="103" y2="108"/>
+    <line style="stroke:#333;stroke-width:2;" x1="111.675" x2="111.675" y1="103" y2="108"/>
+    <line style="stroke:#333;stroke-width:2;" x1="161.675" x2="161.675" y1="103" y2="108"/>
+    <line style="stroke:#333;stroke-width:2;" x1="211.675" x2="211.675" y1="103" y2="108"/>
+    <line style="stroke:#333;stroke-width:2;" x1="261.675" x2="261.675" y1="103" y2="108"/>
+    <line style="stroke:#333;stroke-width:2;" x1="311.675" x2="311.675" y1="103" y2="108"/>
+    <line style="stroke:#333;stroke-width:2;" x1="361.675" x2="361.675" y1="103" y2="108"/>
+    <line style="stroke:#333;stroke-width:2;" x1="411.675" x2="411.675" y1="103" y2="108"/>
+    <line style="stroke:#333;stroke-width:2;" x1="61.675" x2="411.675" y1="103" y2="103"/>
+    <text fill="#333" font-size="11" x="58.616" y="117.556">0</text>
+    <text fill="#333" font-size="11" x="308.616" y="117.556">5</text>
+    <text fill="#333" font-size="11" x="358.616" y="117.556">6</text>
+  </g>
+</svg>

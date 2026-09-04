@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+clock clk with period 1
+binary "Enable" as EN
+
+@0
+EN is low
+
+@5
+EN is high
+
+@10
+EN is low
+@enduml

@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="70px" preserveAspectRatio="none" style="width:526px;height:70px;background:#FFFFFF;" version="1.1" viewBox="0 0 526 70" width="526px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:none;" x1="0" x2="121.188" y1="0" y2="0"/>
+    <line style="stroke:none;" x1="0" x2="121.188" y1="39" y2="39"/>
+    <line style="stroke:none;" x1="0" x2="121.188" y1="69" y2="69"/>
+    <line style="stroke:none;" x1="0" x2="0" y1="0" y2="69"/>
+    <line style="stroke:none;" x1="36.688" x2="36.688" y1="0" y2="69"/>
+    <line style="stroke:none;" x1="73.375" x2="73.375" y1="0" y2="69"/>
+    <line style="stroke:none;" x1="121.188" x2="121.188" y1="0" y2="69"/>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;" width="32" x="201.188" y="39"/>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;" width="48" x="249.188" y="39"/>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;" width="32" x="313.188" y="39"/>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;" width="32" x="425.188" y="39"/>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;" width="16" x="473.188" y="39"/>
+    <line style="stroke:none;" x1="121.188" x2="121.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="137.188" x2="137.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="153.188" x2="153.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="169.188" x2="169.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="185.188" x2="185.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="201.188" x2="201.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="217.188" x2="217.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="233.188" x2="233.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="249.188" x2="249.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="265.188" x2="265.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="281.188" x2="281.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="297.188" x2="297.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="313.188" x2="313.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="329.188" x2="329.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="345.188" x2="345.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="361.188" x2="361.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="377.188" x2="377.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="393.188" x2="393.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="409.188" x2="409.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="425.188" x2="425.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="441.188" x2="441.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="457.188" x2="457.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="473.188" x2="473.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="489.188" x2="489.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="505.188" x2="505.188" y1="39" y2="69"/>
+    <line style="stroke:none;" x1="121.188" x2="505.188" y1="39" y2="39"/>
+    <line style="stroke:none;" x1="121.188" x2="505.188" y1="69" y2="69"/>
+    <path d="M369.188,52 L369.188,61.5 L374.188,61.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="373.188,57.5,377.188,61.5,373.188,65.5,373.188,57.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <rect fill="#F0F" height="11" style="stroke:none;" width="79" x="123.188" y="41"/>
+    <path d="M201.188,52 L123.188,52 L123.188,41 L201.188,41" fill="none" style="stroke:#B22222;stroke-width:1;"/>
+    <rect fill="#F0F" height="11" style="stroke:none;" width="17" x="233.188" y="41"/>
+    <line style="stroke:#B22222;stroke-width:1;" x1="233.188" x2="249.188" y1="41" y2="41"/>
+    <line style="stroke:#B22222;stroke-width:1;" x1="233.188" x2="249.188" y1="52" y2="52"/>
+    <rect fill="#F0F" height="11" style="stroke:none;" width="17" x="297.188" y="41"/>
+    <line style="stroke:#B22222;stroke-width:1;" x1="297.188" x2="313.188" y1="41" y2="41"/>
+    <line style="stroke:#B22222;stroke-width:1;" x1="297.188" x2="313.188" y1="52" y2="52"/>
+    <rect fill="#F0F" height="11" style="stroke:none;" width="30" x="345.188" y="41"/>
+    <path d="M345.188,41 L375.188,41 L375.188,52 L345.188,52" fill="none" style="stroke:#B22222;stroke-width:1;"/>
+    <line style="stroke:#B22222;stroke-width:1;stroke-dasharray:2,3;" x1="204.188" x2="230.188" y1="41" y2="41"/>
+    <line style="stroke:#B22222;stroke-width:1;stroke-dasharray:2,3;" x1="204.188" x2="230.188" y1="52" y2="52"/>
+    <line style="stroke:#B22222;stroke-width:1;stroke-dasharray:2,3;" x1="252.188" x2="294.188" y1="41" y2="41"/>
+    <line style="stroke:#B22222;stroke-width:1;stroke-dasharray:2,3;" x1="252.188" x2="294.188" y1="52" y2="52"/>
+    <line style="stroke:#B22222;stroke-width:1;stroke-dasharray:2,3;" x1="316.188" x2="342.188" y1="41" y2="41"/>
+    <line style="stroke:#B22222;stroke-width:1;stroke-dasharray:2,3;" x1="316.188" x2="342.188" y1="52" y2="52"/>
+    <rect fill="#ADFF2F" height="11" style="stroke:none;" width="47" x="379.188" y="56"/>
+    <path d="M425.188,67 L379.188,67 L379.188,56 L425.188,56" fill="none" style="stroke:#008000;stroke-width:1;"/>
+    <rect fill="#ADFF2F" height="11" style="stroke:none;" width="17" x="457.188" y="56"/>
+    <line style="stroke:#008000;stroke-width:1;" x1="457.188" x2="473.188" y1="56" y2="56"/>
+    <line style="stroke:#008000;stroke-width:1;" x1="457.188" x2="473.188" y1="67" y2="67"/>
+    <rect fill="#ADFF2F" height="11" style="stroke:none;" width="14" x="489.188" y="56"/>
+    <path d="M489.188,56 L503.188,56 L503.188,67 L489.188,67" fill="none" style="stroke:#008000;stroke-width:1;"/>
+    <line style="stroke:#008000;stroke-width:1;stroke-dasharray:2,3;" x1="428.188" x2="454.188" y1="56" y2="56"/>
+    <line style="stroke:#008000;stroke-width:1;stroke-dasharray:2,3;" x1="428.188" x2="454.188" y1="67" y2="67"/>
+    <line style="stroke:#008000;stroke-width:1;stroke-dasharray:2,3;" x1="476.188" x2="486.188" y1="56" y2="56"/>
+    <line style="stroke:#008000;stroke-width:1;stroke-dasharray:2,3;" x1="476.188" x2="486.188" y1="67" y2="67"/>
+    <text fill="#000" font-size="11" textLength="79.475" x="127.188" y="49.556">Prototype design</text>
+    <text fill="#000" font-size="11" textLength="67.169" x="383.188" y="64.556">Test prototype</text>
+  </g>
+</svg>

@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+!$a = 10
+!$ijk = "foo"
+Alice -> Bob : A
+!if ($ijk == "foo") && ($a+10>=4)
+Alice -> Bob : yes
+!else
+Alice -> Bob : This should not appear
+!endif
+Alice -> Bob : B
+@enduml

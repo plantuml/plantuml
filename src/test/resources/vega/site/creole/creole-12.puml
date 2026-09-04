@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+start
+:Here is the result
+|= |= table |= header |
+| a | table | row |
+|<#FF8080> red |<#80FF80> green |<#8080FF> blue |
+<#yellow>| b | table | row |;
+@enduml

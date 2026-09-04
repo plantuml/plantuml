@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="352px" preserveAspectRatio="none" style="width:284px;height:352px;background:#FFFFFF;" version="1.1" viewBox="0 0 284 352" width="284px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="20" font-weight="700" x="15" y="185.556">4</text>
+    <text fill="#000" font-size="20" font-weight="700" x="45" y="25.556">2</text>
+    <text fill="#000" font-size="20" font-weight="700" x="45" y="153.556">8</text>
+    <text fill="#000" font-size="20" font-weight="700" x="45" y="281.556">3</text>
+    <text fill="#000" font-size="20" font-weight="700" x="75" y="25.556">1</text>
+    <text fill="#000" font-size="20" font-weight="700" x="75" y="57.556">6</text>
+    <text fill="#000" font-size="20" font-weight="700" x="75" y="217.556">9</text>
+    <text fill="#000" font-size="20" font-weight="700" x="75" y="249.556">4</text>
+    <text fill="#000" font-size="20" font-weight="700" x="105" y="25.556">6</text>
+    <text fill="#000" font-size="20" font-weight="700" x="105" y="249.556">1</text>
+    <text fill="#000" font-size="20" font-weight="700" x="135" y="57.556">5</text>
+    <text fill="#000" font-size="20" font-weight="700" x="135" y="89.556">8</text>
+    <text fill="#000" font-size="20" font-weight="700" x="135" y="121.556">6</text>
+    <text fill="#000" font-size="20" font-weight="700" x="135" y="185.556">2</text>
+    <text fill="#000" font-size="20" font-weight="700" x="165" y="57.556">7</text>
+    <text fill="#000" font-size="20" font-weight="700" x="165" y="153.556">3</text>
+    <text fill="#000" font-size="20" font-weight="700" x="165" y="217.556">5</text>
+    <text fill="#000" font-size="20" font-weight="700" x="195" y="89.556">2</text>
+    <text fill="#000" font-size="20" font-weight="700" x="195" y="121.556">5</text>
+    <text fill="#000" font-size="20" font-weight="700" x="225" y="217.556">3</text>
+    <text fill="#000" font-size="20" font-weight="700" x="225" y="281.556">7</text>
+    <text fill="#000" font-size="20" font-weight="700" x="255" y="57.556">4</text>
+    <text fill="#000" font-size="20" font-weight="700" x="255" y="281.556">6</text>
+    <rect fill="#000" height="3" style="stroke:none;" width="273" x="5" y="5"/>
+    <rect fill="#000" height="1" style="stroke:none;" width="273" x="5" y="37"/>
+    <rect fill="#000" height="1" style="stroke:none;" width="273" x="5" y="69"/>
+    <rect fill="#000" height="3" style="stroke:none;" width="273" x="5" y="101"/>
+    <rect fill="#000" height="1" style="stroke:none;" width="273" x="5" y="133"/>
+    <rect fill="#000" height="1" style="stroke:none;" width="273" x="5" y="165"/>
+    <rect fill="#000" height="3" style="stroke:none;" width="273" x="5" y="197"/>
+    <rect fill="#000" height="1" style="stroke:none;" width="273" x="5" y="229"/>
+    <rect fill="#000" height="1" style="stroke:none;" width="273" x="5" y="261"/>
+    <rect fill="#000" height="3" style="stroke:none;" width="273" x="5" y="293"/>
+    <rect fill="#000" height="291" style="stroke:none;" width="3" x="5" y="5"/>
+    <rect fill="#000" height="291" style="stroke:none;" width="1" x="35" y="5"/>
+    <rect fill="#000" height="291" style="stroke:none;" width="1" x="65" y="5"/>
+    <rect fill="#000" height="291" style="stroke:none;" width="3" x="95" y="5"/>
+    <rect fill="#000" height="291" style="stroke:none;" width="1" x="125" y="5"/>
+    <rect fill="#000" height="291" style="stroke:none;" width="1" x="155" y="5"/>
+    <rect fill="#000" height="291" style="stroke:none;" width="3" x="185" y="5"/>
+    <rect fill="#000" height="291" style="stroke:none;" width="1" x="215" y="5"/>
+    <rect fill="#000" height="291" style="stroke:none;" width="1" x="245" y="5"/>
+    <rect fill="#000" height="291" style="stroke:none;" width="3" x="275" y="5"/>
+    <text fill="#000" font-size="11" textLength="98.244" x="5" y="314.556">https://plantuml.com</text>
+    <text fill="#000" font-size="11" textLength="89.375" x="5" y="325.556">Seed 6vjv9e42btiw</text>
+    <text fill="#000" font-size="11" textLength="66.069" x="5" y="336.556">Difficulty 5800</text>
+  </g>
+</svg>

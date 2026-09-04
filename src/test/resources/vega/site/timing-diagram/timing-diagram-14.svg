@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="TIMING" height="106px" preserveAspectRatio="none" style="width:351px;height:106px;background:#FFFFFF;" version="1.1" viewBox="0 0 351 106" width="351px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="20" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="330" x2="330" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="25" x2="25" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="75" x2="75" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="125" x2="125" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="175" x2="175" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="225" x2="225" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="275" x2="275" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="325" x2="325" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="330" y1="20" y2="20"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="58.363" x="25" y="30.889">Web User</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="84.363" y1="35" y2="35"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="84.363" x2="94.363" y1="35" y2="20"/>
+    <line style="stroke:#006400;stroke-width:1.5;" x1="25" x2="75" y1="52" y2="52"/>
+    <polygon fill="#E2E2F0" points="87,40,113,40,125,52,113,64,87,64,75,52" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#006400;stroke-width:1.5;" x1="125" x2="175" y1="52" y2="52"/>
+    <polygon fill="#E2E2F0" points="237,40,263,40,275,52,263,64,237,64,225,52" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#006400;stroke-width:1.5;" x1="275" x2="325" y1="52" y2="52"/>
+    <text fill="#333" font-size="12" font-weight="700" textLength="14.7" x="92.65" y="55.333">A1</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="14.7" x="242.65" y="55.333">A3</text>
+    <line style="stroke:#333;stroke-width:2;" x1="25" x2="25" y1="74" y2="79"/>
+    <line style="stroke:#333;stroke-width:2;" x1="75" x2="75" y1="74" y2="79"/>
+    <line style="stroke:#333;stroke-width:2;" x1="125" x2="125" y1="74" y2="79"/>
+    <line style="stroke:#333;stroke-width:2;" x1="175" x2="175" y1="74" y2="79"/>
+    <line style="stroke:#333;stroke-width:2;" x1="225" x2="225" y1="74" y2="79"/>
+    <line style="stroke:#333;stroke-width:2;" x1="275" x2="275" y1="74" y2="79"/>
+    <line style="stroke:#333;stroke-width:2;" x1="325" x2="325" y1="74" y2="79"/>
+    <line style="stroke:#333;stroke-width:2;" x1="25" x2="325" y1="74" y2="74"/>
+    <text fill="#333" font-size="11" x="21.941" y="88.556">0</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="65.822" y="88.556">100</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="115.822" y="88.556">200</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="165.822" y="88.556">300</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="215.822" y="88.556">400</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="265.822" y="88.556">500</text>
+  </g>
+</svg>

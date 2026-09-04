@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="282px" preserveAspectRatio="none" style="width:128px;height:282px;background:#FFFFFF;" version="1.1" viewBox="0 0 128 282" width="128px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="header" data-source-line="1">
+      <text fill="#888" font-size="10" textLength="55.563" x="61.213" y="17.778">some header</text>
+    </g>
+    <g class="title" data-source-line="5">
+      <text fill="#000" font-size="14" font-weight="700" textLength="40.425" x="43.175" y="41.889">My title</text>
+    </g>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="37.213" x2="37.213" y1="118" y2="138"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="33.35" x="20.538" y="138"/>
+    <text fill="#000" font-size="12" textLength="13.35" x="30.538" y="157.333">d1</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="90.563" x2="90.563" y1="118" y2="138"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="33.35" x="73.888" y="138"/>
+    <text fill="#000" font-size="12" textLength="13.35" x="83.888" y="157.333">d2</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="37.213" x2="90.563" y1="118" y2="118"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="23.975" x="51.9" y="66"/>
+    <text fill="#000" font-size="12" x="61.9" y="85.333">r</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="63.888" x2="63.888" y1="98" y2="118"/>
+    <g class="legend" data-source-line="9">
+      <rect fill="#DDD" height="32" style="stroke:#000;stroke-width:1.5;" width="76.775" x="25" y="195"/>
+      <text fill="#000" font-size="12" textLength="56.775" x="35" y="214.333">The legend</text>
+    </g>
+    <g class="caption" data-source-line="7">
+      <text fill="#000" font-size="14" textLength="81.813" x="22.481" y="254.889">This is caption</text>
+    </g>
+    <g class="footer" data-source-line="3">
+      <text fill="#888" font-size="10" textLength="49.938" x="38.419" y="267.778">some footer</text>
+    </g>
+  </g>
+</svg>

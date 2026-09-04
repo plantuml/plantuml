@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="245px" preserveAspectRatio="none" style="width:243px;height:245px;background:#FFFFFF;" version="1.1" viewBox="0 0 243 245" width="243px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Box B-->
+    <g class="cluster" data-qualified-name="Box B" data-source-line="2" id="ent0002">
+      <rect fill="none" height="217" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="156" x="71.5" y="4"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="33.512" x="132.744" y="16.889">Box B</text>
+    </g>
+    <!--entity A-->
+    <g class="entity" data-qualified-name="A" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.363" x="6" y="103"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="35.363" y="108"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="33.363" y="110"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="33.363" y="114"/>
+      <text fill="#000" font-size="14" x="21" y="133.889">A</text>
+    </g>
+    <!--entity B-->
+    <g class="entity" data-qualified-name="Box B.B" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="160" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="123.088" x="88" y="45"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="191.088" y="50"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="189.088" y="52"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="189.088" y="56"/>
+      <text fill="#000" font-size="14" textLength="41.3" x="103" y="75.889">Level 1</text>
+      <text fill="#000" font-size="14" textLength="49.088" x="121" y="91.889">Level 2a</text>
+      <text fill="#000" font-size="14" textLength="49.088" x="129" y="105.889">Level 3a</text>
+      <text fill="#000" font-size="14" textLength="49.088" x="129" y="119.889">Level 3b</text>
+      <text fill="#000" font-size="14" textLength="48.3" x="129" y="133.889">Level 3c</text>
+      <text fill="#000" font-size="14" textLength="49.088" x="137" y="147.889">Level 4a</text>
+      <text fill="#000" font-size="14" textLength="49.088" x="129" y="161.889">Level 3d</text>
+      <text fill="#000" font-size="14" textLength="49.088" x="121" y="175.889">Level 2b</text>
+      <text fill="#000" font-size="14" textLength="49.088" x="129" y="189.889">Level 3e</text>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:0.5;" width="2" x="118" y="87"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="111" x2="119" y1="88" y2="88"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="111" x2="111" y1="81" y2="88"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:0.5;" width="2" x="126" y="101"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="119" x2="127" y1="102" y2="102"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="119" x2="119" y1="88" y2="102"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:0.5;" width="2" x="126" y="115"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="119" x2="127" y1="116" y2="116"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="119" x2="119" y1="102" y2="116"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:0.5;" width="2" x="126" y="129"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="119" x2="127" y1="130" y2="130"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="119" x2="119" y1="116" y2="130"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:0.5;" width="2" x="134" y="143"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="127" x2="135" y1="144" y2="144"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="127" x2="127" y1="130" y2="144"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:0.5;" width="2" x="126" y="157"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="119" x2="127" y1="158" y2="158"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="119" x2="119" y1="130" y2="158"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:0.5;" width="2" x="118" y="171"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="111" x2="119" y1="172" y2="172"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="111" x2="111" y1="88" y2="172"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:0.5;" width="2" x="126" y="185"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="119" x2="127" y1="186" y2="186"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="119" x2="119" y1="172" y2="186"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="87.943,125,78.943,121,82.943,125,78.943,129,87.943,125" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M55.137,125 C66.072,125 72.007,125 82.943,125" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

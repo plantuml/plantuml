@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+skinparam topurl http://www.google.com
+Dog --|> Mammal
+url of Mammal is [[/search]]
+url of Dog is [[http://www.yahoo.com{This is Dog}]]
+Dog o-- Cat
+Cat --|> Mammal
+@enduml

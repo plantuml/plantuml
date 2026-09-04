@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="202px" preserveAspectRatio="none" style="width:231px;height:202px;background:#FFFFFF;" version="1.1" viewBox="0 0 231 202" width="231px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Student-->
+    <g class="entity" data-qualified-name="Student" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="80.212" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="48.212" x="35" y="31.889">Student</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="85.212" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="37.363" x="12" y="58.889">Name</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="85.212" y1="66" y2="66"/>
+    </g>
+    <!--class Course-->
+    <g class="entity" data-qualified-name="Course" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.15" x="138.5" y="19"/>
+      <ellipse cx="153.5" cy="35" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="148.5" y="40">C</text>
+      <text fill="#000" font-size="14" textLength="45.15" x="167.5" y="38.889">Course</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="139.5" x2="214.65" y1="51" y2="51"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="139.5" x2="214.65" y1="59" y2="59"/>
+    </g>
+    <!--class Enrollment-->
+    <g class="entity" data-qualified-name="Enrollment" data-source-line="5" id="ent0004">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="98.938" x="62.5" y="110"/>
+      <ellipse cx="77.5" cy="126" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="72.5" y="131">C</text>
+      <text fill="#000" font-size="14" textLength="66.938" x="91.5" y="129.889">Enrollment</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="63.5" x2="160.438" y1="142" y2="142"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="63.5" x2="160.438" y1="150" y2="150"/>
+      <text fill="#000" font-size="14" textLength="37.275" x="68.5" y="164.889">drop()</text>
+      <text fill="#000" font-size="14" textLength="49.787" x="68.5" y="178.889">cancel()</text>
+    </g>
+    <ellipse cx="106" cy="33" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:1;"/>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0006" data-link-type="association" id="lnk7">
+      <path d="M86.219,43 C92.127,43 98.035,43 103.943,43" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="19.419" x="87.219" y="39.111">0..*</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0002" data-link-type="association" id="lnk8">
+      <path d="M120.125,43 C126.198,43 132.27,43 138.343,43" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="19.419" x="118.343" y="39.111">1..*</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0004" data-link-type="association" id="lnk9">
+      <path d="M112,55.023 C112,67.997 112,90.23 112,109.587" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

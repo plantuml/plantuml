@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="197px" preserveAspectRatio="none" style="width:253px;height:197px;background:#FFFFFF;" version="1.1" viewBox="0 0 253 197" width="253px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name=".start." data-source-line="1" id="ent0001">
+      <ellipse cx="16" cy="35" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="State1" data-source-line="1" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="60.425" x="44" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="44" x2="104.425" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="40.425" x="54" y="27.889">State1</text>
+    </g>
+    <g class="entity" data-qualified-name="State2" data-source-line="2" id="ent0004">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="60.425" x="44" y="131"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="44" x2="104.425" y1="155" y2="155"/>
+      <text fill="#000" font-size="14" textLength="40.425" x="54" y="146.889">State2</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="43.892,37,34.892,33,38.892,37,34.892,41,43.892,37" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M26.422,37 C32.245,37 33.069,37 38.892,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="74,130.789,78,121.789,74,125.789,70,121.789,74,130.789" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M74,62.242 C74,82.323 74,105.717 74,125.789" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M79,85 L79,108 L247,108 L247,95 L237,85 L79,85" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M237,85 L237,95 L247,95 L237,85" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="147.306" x="85" y="100.111">this is a state-transition note</text>
+    </g>
+  </g>
+</svg>

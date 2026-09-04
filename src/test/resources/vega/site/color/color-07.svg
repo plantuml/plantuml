@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="217px" preserveAspectRatio="none" style="width:1256px;height:217px;background:#FFFFFF;" version="1.1" viewBox="0 0 1256 217" width="1256px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster ClassColor-->
+    <g class="cluster" data-qualified-name="ClassColor" data-source-line="5" id="ent0001">
+      <rect fill="none" height="189" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="728" x="14" y="4"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="68.6" x="343.7" y="16.889">ClassColor</text>
+    </g>
+    <!--cluster DefaultColor-->
+    <g class="cluster" data-qualified-name="DefaultColor" data-source-line="12" id="ent0007">
+      <rect fill="none" height="189" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="490" x="758" y="4"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="77.875" x="964.063" y="16.889">DefaultColor</text>
+    </g>
+    <!--entity Class_C_Background\n #ADD1B2-->
+    <g class="entity" data-qualified-name="ClassColor.Class_C_Background.n .ADD1B2" data-source-line="6" id="ent0002">
+      <rect fill="#ADD1B2" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="220" x="30" y="45"/>
+      <text fill="#000" font-size="14" textLength="135.538" x="40" y="65.889">Class_C_Background</text>
+      <text fill="#000" font-size="14" textLength="62.388" x="40" y="79.889">#ADD1B2</text>
+    </g>
+    <!--entity Class_N_Background\n #E3664A-->
+    <g class="entity" data-qualified-name="ClassColor.Class_N_Background.n .E3664A" data-source-line="7" id="ent0003">
+      <rect fill="#E3664A" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="220" x="268" y="45"/>
+      <text fill="#000" font-size="14" textLength="135.538" x="278" y="65.889">Class_N_Background</text>
+      <text fill="#000" font-size="14" textLength="57.662" x="278" y="79.889">#E3664A</text>
+    </g>
+    <!--entity Class_A_Background\n #A9DCDF-->
+    <g class="entity" data-qualified-name="ClassColor.Class_A_Background.n .A9DCDF" data-source-line="8" id="ent0004">
+      <rect fill="#A9DCDF" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="220" x="506" y="45"/>
+      <text fill="#000" font-size="14" textLength="134.75" x="516" y="65.889">Class_A_Background</text>
+      <text fill="#000" font-size="14" textLength="63.963" x="516" y="79.889">#A9DCDF</text>
+    </g>
+    <!--entity Class_I_Background\n #B4A7E5-->
+    <g class="entity" data-qualified-name="ClassColor.Class_I_Background.n .B4A7E5" data-source-line="9" id="ent0005">
+      <rect fill="#B4A7E5" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="220" x="30" y="129"/>
+      <text fill="#000" font-size="14" textLength="129.238" x="40" y="149.889">Class_I_Background</text>
+      <text fill="#000" font-size="14" textLength="59.238" x="40" y="163.889">#B4A7E5</text>
+    </g>
+    <!--entity Class_E_Background\n #EB937F-->
+    <g class="entity" data-qualified-name="ClassColor.Class_E_Background.n .EB937F" data-source-line="10" id="ent0006">
+      <rect fill="#EB937F" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="220" x="268" y="129"/>
+      <text fill="#000" font-size="14" textLength="134.75" x="278" y="149.889">Class_E_Background</text>
+      <text fill="#000" font-size="14" textLength="58.45" x="278" y="163.889">#EB937F</text>
+    </g>
+    <!--entity BackGroundColor_Default\n #FEFECE-->
+    <g class="entity" data-qualified-name="DefaultColor.BackGroundColor_Default.n .FEFECE" data-source-line="13" id="ent0008">
+      <rect fill="#FEFECE" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="220" x="774" y="45"/>
+      <text fill="#000" font-size="14" textLength="163.45" x="784" y="65.889">BackGroundColor_Default</text>
+      <text fill="#000" font-size="14" textLength="63.175" x="784" y="79.889">#FEFECE</text>
+    </g>
+    <!--entity LineColor_Default\n #A80036-->
+    <g class="entity" data-qualified-name="DefaultColor.LineColor_Default.n .A80036" data-source-line="14" id="ent0009">
+      <rect fill="#A80036" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="220" x="1012" y="45"/>
+      <text fill="#000" font-size="14" textLength="112.175" x="1022" y="65.889">LineColor_Default</text>
+      <text fill="#000" font-size="14" textLength="56.087" x="1022" y="79.889">#A80036</text>
+    </g>
+    <!--entity Legend_BackGroundColor\n #DDDDDD-->
+    <g class="entity" data-qualified-name="DefaultColor.Legend_BackGroundColor.n .DDDDDD" data-source-line="15" id="ent0010">
+      <rect fill="#DDD" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="220" x="774" y="129"/>
+      <text fill="#000" font-size="14" textLength="165.813" x="784" y="149.889">Legend_BackGroundColor</text>
+      <text fill="#000" font-size="14" textLength="68.688" x="784" y="163.889">#DDDDDD</text>
+    </g>
+    <!--entity //TBC//\n...-->
+    <g class="entity" data-qualified-name="DefaultColor...TBC...n..." data-source-line="16" id="ent0011">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="220" x="1012" y="129"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="28.088" x="1022" y="149.889">TBC</text>
+      <text fill="#000" font-size="14" textLength="11.55" x="1022" y="163.889">...</text>
+    </g>
+  </g>
+</svg>

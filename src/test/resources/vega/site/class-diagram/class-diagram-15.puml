@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+class Dummy {
+ field1
+ \~Dummy()
+ method1()
+}
+
+@enduml

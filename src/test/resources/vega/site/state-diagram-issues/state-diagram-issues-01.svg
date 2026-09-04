@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="167px" preserveAspectRatio="none" style="width:708px;height:167px;background:#FFFFFF;" version="1.1" viewBox="0 0 708 167" width="708px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="glwrsmledlvna0" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#F00"/>
+      <stop offset="100%" stop-color="#008000"/>
+    </linearGradient>
+    <linearGradient id="glwrsmledlvna1" x1="0%" x2="100%" y1="50%" y2="50%">
+      <stop offset="0%" stop-color="#F00"/>
+      <stop offset="100%" stop-color="#008000"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Foo1-->
+    <g class="cluster" data-qualified-name="Foo1" data-source-line="8" id="ent0005">
+      <path d="M504.5,36.577 L571.5,36.577 A12.5,12.5 0 0 1 584,49.077 L584,55.577 L492,55.577 L492,49.077 A12.5,12.5 0 0 1 504.5,36.577" fill="#F1F1F1"/>
+      <rect fill="none" height="107" rx="12.5" ry="12.5" style="stroke:#008000;stroke-width:1;stroke-dasharray:1,3;" width="92" x="492" y="36.577"/>
+      <line style="stroke:#008000;stroke-width:1;stroke-dasharray:1,3;" x1="492" x2="584" y1="55.577" y2="55.577"/>
+      <text fill="#000" font-size="14" textLength="31.938" x="522.031" y="47.466">Foo1</text>
+    </g>
+    <!--cluster Foo2-->
+    <g class="cluster" data-qualified-name="Foo2" data-source-line="14" id="ent0008">
+      <path d="M612.5,36.577 L679.5,36.577 A12.5,12.5 0 0 1 692,49.077 L692,55.577 L600,55.577 L600,49.077 A12.5,12.5 0 0 1 612.5,36.577" fill="#F1F1F1"/>
+      <rect fill="none" height="107" rx="12.5" ry="12.5" style="stroke:#008000;stroke-width:2;" width="92" x="600" y="36.577"/>
+      <line style="stroke:#008000;stroke-width:2;" x1="600" x2="692" y1="55.577" y2="55.577"/>
+      <text fill="#000" font-size="14" textLength="31.938" x="630.031" y="47.466">Foo2</text>
+    </g>
+    <g class="entity" data-qualified-name="FooGradient" data-source-line="1" id="ent0001">
+      <rect fill="url(#glwrsmledlvna0)" height="50" rx="12.5" ry="12.5" style="stroke:#0FF;stroke-width:0.5;" width="97.788" x="6" y="77.577"/>
+      <line style="stroke:#0FF;stroke-width:0.5;" x1="6" x2="103.788" y1="101.577" y2="101.577"/>
+      <text fill="#000" font-size="14" textLength="77.788" x="16" y="93.466">FooGradient</text>
+    </g>
+    <g class="entity" data-qualified-name="FooDashed" data-source-line="2" id="ent0002">
+      <rect fill="url(#glwrsmledlvna1)" height="50" rx="12.5" ry="12.5" style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" width="92.45" x="122" y="77.577"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="122" x2="214.45" y1="101.577" y2="101.577"/>
+      <text fill="#000" font-size="14" textLength="72.45" x="132" y="93.466">FooDashed</text>
+    </g>
+    <g class="entity" data-qualified-name="FooDotted" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" width="85.363" x="232.5" y="77.577"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" x1="232.5" x2="317.863" y1="101.577" y2="101.577"/>
+      <text fill="#000" font-size="14" textLength="65.363" x="242.5" y="93.466">FooDotted</text>
+    </g>
+    <g class="entity" data-qualified-name="FooBold" data-source-line="6" id="ent0004">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:2;" width="72.238" x="336" y="77.577"/>
+      <line style="stroke:#181818;stroke-width:2;" x1="336" x2="408.238" y1="101.577" y2="101.577"/>
+      <text fill="#000" font-size="14" textLength="52.238" x="346" y="93.466">FooBold</text>
+    </g>
+    <g class="entity" data-qualified-name="out" data-source-line="12" id="ent0007">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#FFD700;stroke-width:1;stroke-dasharray:1,3;" width="50" x="426" y="77.577"/>
+      <line style="stroke:#FFD700;stroke-width:1;stroke-dasharray:1,3;" x1="426" x2="476" y1="101.577" y2="101.577"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="441.288" y="93.466">out</text>
+    </g>
+    <g class="entity" data-qualified-name="Foo1.inner1" data-source-line="9" id="ent0006">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#FF0;stroke-width:1;stroke-dasharray:1,3;" width="58.937" x="508.5" y="77.577"/>
+      <line style="stroke:#FF0;stroke-width:1;stroke-dasharray:1,3;" x1="508.5" x2="567.438" y1="101.577" y2="101.577"/>
+      <text fill="#000" font-size="14" textLength="38.937" x="518.5" y="93.466">inner1</text>
+    </g>
+    <g class="entity" data-qualified-name="Foo2.inner2" data-source-line="15" id="ent0009">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#FF0;stroke-width:1;stroke-dasharray:1,3;" width="58.937" x="616.5" y="77.577"/>
+      <line style="stroke:#FF0;stroke-width:1;stroke-dasharray:1,3;" x1="616.5" x2="675.438" y1="101.577" y2="101.577"/>
+      <text fill="#000" font-size="14" textLength="38.937" x="626.5" y="93.466">inner2</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0009" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="616.268,102.577,607.268,98.577,611.268,102.577,607.268,106.577,616.268,102.577" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M567.531,102.577 C583.777,102.577 595.022,102.577 611.268,102.577" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0009" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="634.019,77.543,633.149,67.732,631.593,73.171,626.154,71.614,634.019,77.543" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M457.22,77.439 C463.6,57.59 475.686,31.206 497,18.577 C528.354,0 546.164,2.766 579,18.577 C604.211,30.717 620.454,53.098 631.593,73.171" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

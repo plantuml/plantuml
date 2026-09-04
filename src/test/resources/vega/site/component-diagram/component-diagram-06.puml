@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+[Component] as C
+
+note as N
+  A floating note can also
+  be on several lines
+end note
+
+C .. N
+@enduml

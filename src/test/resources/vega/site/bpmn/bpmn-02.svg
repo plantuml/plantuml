@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="BPM" height="269px" preserveAspectRatio="none" style="width:1251px;height:269px;background:#FFFFFF;" version="1.1" viewBox="0 0 1251 269" width="1251px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="1240.375" y1="10" y2="10"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="1240.375" y1="72" y2="72"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="1240.375" y1="134" y2="134"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="1240.375" y1="196" y2="196"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="10" y1="10" y2="258"/>
+    <line style="stroke:#000;stroke-width:1;" x1="60" x2="60" y1="10" y2="258"/>
+    <line style="stroke:#000;stroke-width:1;" x1="135.425" x2="135.425" y1="10" y2="258"/>
+    <line style="stroke:#000;stroke-width:1;" x1="189.425" x2="189.425" y1="10" y2="258"/>
+    <line style="stroke:#000;stroke-width:1;" x1="318.175" x2="318.175" y1="10" y2="258"/>
+    <line style="stroke:#000;stroke-width:1;" x1="473.625" x2="473.625" y1="10" y2="258"/>
+    <line style="stroke:#000;stroke-width:1;" x1="527.625" x2="527.625" y1="10" y2="258"/>
+    <line style="stroke:#000;stroke-width:1;" x1="581.625" x2="581.625" y1="10" y2="258"/>
+    <line style="stroke:#000;stroke-width:1;" x1="635.625" x2="635.625" y1="10" y2="258"/>
+    <line style="stroke:#000;stroke-width:1;" x1="724.925" x2="724.925" y1="10" y2="258"/>
+    <line style="stroke:#000;stroke-width:1;" x1="847.6" x2="847.6" y1="10" y2="258"/>
+    <line style="stroke:#000;stroke-width:1;" x1="901.6" x2="901.6" y1="10" y2="258"/>
+    <line style="stroke:#000;stroke-width:1;" x1="990.975" x2="990.975" y1="10" y2="258"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1103.675" x2="1103.675" y1="10" y2="258"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1157.675" x2="1157.675" y1="10" y2="258"/>
+    <ellipse cx="35" cy="41" fill="#F1F1F1" rx="10" ry="10" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="45" x2="55" y1="41" y2="41"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="45.425" x="75" y="25"/>
+    <text fill="#000" font-size="12" textLength="25.425" x="85" y="44.333">login</text>
+    <line style="stroke:#F00;stroke-width:1;" x1="120.425" x2="130.425" y1="41" y2="41"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="65" x2="75" y1="41" y2="41"/>
+    <polygon fill="#FEFECE" points="162.425,29,174.425,41,162.425,53,150.425,41,162.425,29" style="stroke:#A80036;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="174.425" x2="184.425" y1="41" y2="41"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="162.425" x2="162.425" y1="53" y2="63"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="140.425" x2="150.425" y1="41" y2="41"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="253.8" x2="263.8" y1="41" y2="41"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="243.8" x2="253.8" y1="41" y2="41"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="125.45" x="333.175" y="25"/>
+    <text fill="#000" font-size="12" textLength="105.45" x="343.175" y="44.333">show new message1</text>
+    <line style="stroke:#F00;stroke-width:1;" x1="458.625" x2="468.625" y1="41" y2="41"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="323.175" x2="333.175" y1="41" y2="41"/>
+    <polygon fill="#FEFECE" points="500.625,29,512.625,41,500.625,53,488.625,41,500.625,29" style="stroke:#A80036;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="512.625" x2="522.625" y1="41" y2="41"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="500.625" x2="500.625" y1="53" y2="63"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="478.625" x2="488.625" y1="41" y2="41"/>
+    <polygon fill="#FEFECE" points="554.625,29,566.625,41,554.625,53,542.625,41,554.625,29" style="stroke:#A80036;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="566.625" x2="576.625" y1="41" y2="41"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="554.625" x2="554.625" y1="53" y2="63"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="532.625" x2="542.625" y1="41" y2="41"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="608.625" x2="618.625" y1="41" y2="41"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="598.625" x2="608.625" y1="41" y2="41"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="680.275" x2="690.275" y1="41" y2="41"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="670.275" x2="680.275" y1="41" y2="41"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="786.262" x2="796.262" y1="41" y2="41"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="776.262" x2="786.262" y1="41" y2="41"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="874.6" x2="884.6" y1="41" y2="41"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="864.6" x2="874.6" y1="41" y2="41"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="946.287" x2="956.287" y1="41" y2="41"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="936.287" x2="946.287" y1="41" y2="41"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="82.7" x="1005.975" y="25"/>
+    <text fill="#000" font-size="12" textLength="62.7" x="1015.975" y="44.333">Accept Task</text>
+    <line style="stroke:#F00;stroke-width:1;" x1="1088.675" x2="1098.675" y1="41" y2="41"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="995.975" x2="1005.975" y1="41" y2="41"/>
+    <polygon fill="#FEFECE" points="1130.675,29,1142.675,41,1130.675,53,1118.675,41,1130.675,29" style="stroke:#A80036;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="1142.675" x2="1152.675" y1="41" y2="41"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="1130.675" x2="1130.675" y1="53" y2="63"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="1108.675" x2="1118.675" y1="41" y2="41"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="52.7" x="1172.675" y="25"/>
+    <text fill="#000" font-size="12" textLength="32.7" x="1182.675" y="44.333">logout</text>
+    <line style="stroke:#F00;stroke-width:1;" x1="1162.675" x2="1172.675" y1="41" y2="41"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="162.425" x2="162.425" y1="93" y2="103"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="162.425" x2="162.425" y1="103" y2="113"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="500.625" x2="500.625" y1="93" y2="103"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="500.625" x2="500.625" y1="103" y2="113"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="554.625" x2="554.625" y1="93" y2="103"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="554.625" x2="564.625" y1="103" y2="103"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="554.625" x2="554.625" y1="103" y2="113"/>
+    <polygon fill="#FEFECE" points="608.625,91,620.625,103,608.625,115,596.625,103,608.625,91" style="stroke:#A80036;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="620.625" x2="630.625" y1="103" y2="103"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="608.625" x2="608.625" y1="115" y2="125"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="586.625" x2="596.625" y1="103" y2="103"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="680.275" x2="690.275" y1="103" y2="103"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="670.275" x2="680.275" y1="103" y2="103"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="92.675" x="739.925" y="87"/>
+    <text fill="#000" font-size="12" textLength="72.675" x="749.925" y="106.333">read message</text>
+    <line style="stroke:#F00;stroke-width:1;" x1="832.6" x2="842.6" y1="103" y2="103"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="729.925" x2="739.925" y1="103" y2="103"/>
+    <polygon fill="#FEFECE" points="874.6,91,886.6,103,874.6,115,862.6,103,874.6,91" style="stroke:#A80036;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="886.6" x2="896.6" y1="103" y2="103"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="874.6" x2="874.6" y1="115" y2="125"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="852.6" x2="862.6" y1="103" y2="103"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="946.287" x2="956.287" y1="103" y2="103"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="936.287" x2="946.287" y1="103" y2="103"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="1047.325" x2="1057.325" y1="103" y2="103"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="1037.325" x2="1047.325" y1="103" y2="103"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="1130.675" x2="1130.675" y1="93" y2="103"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="1130.675" x2="1130.675" y1="103" y2="113"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="1120.675" x2="1130.675" y1="103" y2="103"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="162.425" x2="162.425" y1="155" y2="165"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="162.425" x2="162.425" y1="165" y2="175"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="500.625" x2="500.625" y1="155" y2="165"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="500.625" x2="500.625" y1="165" y2="175"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="554.625" x2="554.625" y1="155" y2="165"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="554.625" x2="554.625" y1="165" y2="175"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="608.625" x2="608.625" y1="155" y2="165"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="608.625" x2="618.625" y1="165" y2="165"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="59.3" x="650.625" y="149"/>
+    <text fill="#000" font-size="12" textLength="39.3" x="660.625" y="168.333">dummy</text>
+    <line style="stroke:#F00;stroke-width:1;" x1="709.925" x2="719.925" y1="165" y2="165"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="640.625" x2="650.625" y1="165" y2="165"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="786.262" x2="796.262" y1="165" y2="165"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="776.262" x2="786.262" y1="165" y2="165"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="874.6" x2="874.6" y1="155" y2="165"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="864.6" x2="874.6" y1="165" y2="165"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="1130.675" x2="1130.675" y1="155" y2="165"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="1130.675" x2="1130.675" y1="165" y2="175"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="162.425" x2="162.425" y1="217" y2="227"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="162.425" x2="172.425" y1="227" y2="227"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="98.75" x="204.425" y="211"/>
+    <text fill="#000" font-size="12" textLength="78.75" x="214.425" y="230.333">show new task2</text>
+    <line style="stroke:#F00;stroke-width:1;" x1="303.175" x2="313.175" y1="227" y2="227"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="194.425" x2="204.425" y1="227" y2="227"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="395.9" x2="405.9" y1="227" y2="227"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="385.9" x2="395.9" y1="227" y2="227"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="500.625" x2="500.625" y1="217" y2="227"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="490.625" x2="500.625" y1="227" y2="227"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="554.625" x2="554.625" y1="217" y2="227"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="554.625" x2="564.625" y1="227" y2="227"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="608.625" x2="618.625" y1="227" y2="227"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="598.625" x2="608.625" y1="227" y2="227"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="680.275" x2="690.275" y1="227" y2="227"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="670.275" x2="680.275" y1="227" y2="227"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="786.262" x2="796.262" y1="227" y2="227"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="776.262" x2="786.262" y1="227" y2="227"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="874.6" x2="884.6" y1="227" y2="227"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="864.6" x2="874.6" y1="227" y2="227"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="59.375" x="916.6" y="211"/>
+    <text fill="#000" font-size="12" textLength="39.375" x="926.6" y="230.333">nothing</text>
+    <line style="stroke:#F00;stroke-width:1;" x1="975.975" x2="985.975" y1="227" y2="227"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="906.6" x2="916.6" y1="227" y2="227"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="1047.325" x2="1057.325" y1="227" y2="227"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="1037.325" x2="1047.325" y1="227" y2="227"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="1130.675" x2="1130.675" y1="217" y2="227"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="1120.675" x2="1130.675" y1="227" y2="227"/>
+  </g>
+</svg>

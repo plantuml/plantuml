@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startregex
+!option useDescriptiveNames false
+
+\d?\D+\w*\W{1,2}|\s.\S
+@endregex

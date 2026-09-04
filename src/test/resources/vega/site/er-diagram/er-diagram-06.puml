@@ -1,0 +1,34 @@
+---
+output: svg
+---
+@startchen
+
+entity CUSTOMER {
+  Number <<key>>
+  Name
+}
+
+entity MOVIE {
+  Code <<key>>
+}
+
+entity INVOICE {
+  Number <<key>>
+  Amount
+}
+
+relationship RENTED_TO {
+  Date
+}
+
+RENTED_TO =1= CUSTOMER
+RENTED_TO -N- MOVIE
+RENTED_TO =1= INVOICE
+
+relationship REFERENCES {
+}
+
+REFERENCES -1- MOVIE
+REFERENCES -1- MOVIE
+
+@endchen

@@ -1,0 +1,132 @@
+---
+output: svg
+---
+@startwire
+goto(0,360)
+* DDR3L [70x70]      #lightgray
+* SLC_NAND [70x70]   #lightgray
+* TestPoints [70x30] #lightgray
+* PF3000 [70x130]    #lightgray
+move(0,220)
+* EEPROM [70x30]     #lightgray
+
+--
+move(60,0)
+* i_MX7_SoC #lightgray
+	* 2x_ARM [70x70] #white
+	* ARM [70x70]    #white
+	* PXP [70x70]    #white
+	* Crypto [70x30] #white
+	* DDR3 [70x70]   #white
+	move(0,90)
+	* JTAG [70x30]   #white
+	--
+	* signals #white
+		* 24_bit_display [85x20]
+		* 24_bit_camera [85x20]
+		* 2x_DS_DSIO [85x20]
+		* 124x_GPIO [85x20]
+		* 4x_12C [85x20]
+		* 3x_12S [85x20]
+		* 7x_UART [85x20]
+		* 2x_QuadSPI [85x20]
+		* 4x_eCSPI [85x20]
+		* 2x_CAN [85x20]
+		* 4x_Timer [85x20]
+		* Local_bus [85x20]
+		* GPMI [85x20]
+		* 2x_Gbit_MAC [85x20]
+		* 6x6_keypard [85x20]
+		* 4x_PWM [85x20]
+		* 2x_SmartCard [85x20]
+		* 4x_Watchdog [85x20]
+		* MQS [85x20]
+
+	move(35,10)
+	* ADC1 [70x30]     #white
+	* ADC2 [70x30]     #white
+	* MIPI_DSI [70x30] #white
+	* PCIe [70x30]     #white
+	* USB2_0   [70x30] #white
+	* USB2_0_  [70x30] #white
+	* USB2_0__ [70x30] #white
+	* MIPI_CSI [70x30] #white
+
+--
+move(40, 480)
+* WLAN_BT    [100x30] #lightgray
+* 1Gbit_PHY [100x30]  #lightgray
+* 1Gbit_PHY_ [100x30] #lightgray
+move(0, 120)
+* WM_8731L [100x30] #lightgray
+
+move(-40, 10)
+* SPI_FLASH [80x30] #lightgray
+move(110, -50)
+* Resistive [80x30] #lightgray
+
+move(-90, 80)
+* DSI_to_LVDS [100x30] #lightgray
+move(0,30)
+* USB2_0 [100x40] #lightgray
+
+--
+
+* 240pin [50x1220] #lightgray
+
+
+DDR3L(100%,50%-10) <=> i_MX7_SoC.DDR3    : 32 bit
+SLC_NAND <-> i_MX7_SoC.signals           : GPMI
+SLC_NAND(100%, 50) <-> i_MX7_SoC.signals : MMC
+
+TestPoints <-> i_MX7_SoC.JTAG            : JTAG
+
+
+PF3000 => i_MX7_SoC #0000ff : Power
+PF3000 => i_MX7_SoC : Power
+PF3000 => i_MX7_SoC : Power
+
+EEPROM <-> DSI_to_LVDS : I2C
+
+i_MX7_SoC.signals(100%,25) => 240pin : \nup to 1x PD (24-bit)\n
+i_MX7_SoC.signals(100%,65) <= 240pin : up to 1x C (P CSI)
+
+i_MX7_SoC.signals -> 240pin #red :
+i_MX7_SoC.signals <-> 240pin : up-to 7x
+i_MX7_SoC.signals <-> 240pin : up-to 3x
+i_MX7_SoC.signals <-> 240pin : up-to 3x
+i_MX7_SoC.signals <-> 240pin : up-to 124x
+i_MX7_SoC.signals <-> 240pin : up-to 2x
+i_MX7_SoC.signals <-> 240pin : up-to 3x
+i_MX7_SoC.signals <-> 240pin : up-to 2x
+i_MX7_SoC.signals <-> 240pin : up-to 2x
+i_MX7_SoC.signals <-> 240pin : up-to 4x PWM
+i_MX7_SoC.signals <-> 240pin : up-to 6x
+i_MX7_SoC.signals <-> 240pin : up-to 1x
+i_MX7_SoC.signals <-> 240pin : up-to 6 x 6
+i_MX7_SoC.signals <-> 240pin : up-to 2x
+i_MX7_SoC.signals <-> 240pin : up-to 4x
+i_MX7_SoC.signals <-> 240pin : up-to 1x MQS int
+
+i_MX7_SoC.signals <-> WLAN_BT : UART
+i_MX7_SoC.signals <-> WLAN_BT : MMC
+
+i_MX7_SoC.signals <-> 1Gbit_PHY : RGMII
+1Gbit_PHY <-> 240pin : 1Gbit Eth
+
+i_MX7_SoC.signals <-> 1Gbit_PHY_ : RGMII
+1Gbit_PHY_ <-> 240pin : 1Gbit Eth
+
+i_MX7_SoC.PCIe <=> 240pin : PCI Express 1
+
+i_MX7_SoC.USB2_0 <-> USB2_0 : HSIC
+USB2_0 <-> 240pin : USB 2.0
+USB2_0 <-> 240pin : USB 2.0
+USB2_0 <-> 240pin : USB 2.0
+
+i_MX7_SoC.USB2_0_ <-> 240pin : USB 2.0 OTG
+i_MX7_SoC.USB2_0__ <-> 240pin : USB 2.0 HOST
+
+i_MX7_SoC.MIPI_CSI <-> 240pin : MIPI-CSI
+
+@endwire

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="291px" preserveAspectRatio="none" style="width:164px;height:291px;background:#FFFFFF;" version="1.1" viewBox="0 0 164 291" width="164px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <ellipse cx="79.625" cy="25" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="174" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="127.25" x="16" y="55"/>
+    <text fill="#000" font-size="12" font-weight="700" textLength="40.65" x="26" y="74.333">test list 1</text>
+    <ellipse cx="31.5" cy="81.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-size="12" textLength="44.775" x="38" y="86.333">Bullet list</text>
+    <ellipse cx="31.5" cy="93.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-size="12" textLength="63.375" x="38" y="98.333">Second item</text>
+    <rect fill="#000" height="3.5" width="3.5" x="35" y="103"/>
+    <text fill="#000" font-size="12" textLength="44.025" x="42" y="110.333">Sub item</text>
+    <rect fill="#000" height="3.5" width="3.5" x="43" y="115"/>
+    <text fill="#000" font-size="12" textLength="63.375" x="50" y="122.333">Sub sub item</text>
+    <ellipse cx="31.5" cy="129.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-size="12" textLength="50.025" x="38" y="134.333">Third item</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="16" x2="143.25" y1="142" y2="142"/>
+    <text fill="#000" font-size="12" font-weight="700" textLength="40.65" x="26" y="156.333">test list 2</text>
+    <text fill="#000" font-size="12" textLength="9.975" x="26" y="168.333">1.</text>
+    <text fill="#000" font-size="12" textLength="70.725" x="39.275" y="168.333">Numbered list</text>
+    <text fill="#000" font-size="12" textLength="9.975" x="26" y="180.333">2.</text>
+    <text fill="#000" font-size="12" textLength="63.375" x="39.275" y="180.333">Second item</text>
+    <text fill="#000" font-size="12" textLength="9.975" x="35.975" y="192.333">1.</text>
+    <text fill="#000" font-size="12" textLength="44.025" x="49.25" y="192.333">Sub item</text>
+    <text fill="#000" font-size="12" textLength="9.975" x="35.975" y="204.333">2.</text>
+    <text fill="#000" font-size="12" textLength="84" x="49.25" y="204.333">Another sub item</text>
+    <text fill="#000" font-size="12" textLength="9.975" x="26" y="216.333">3.</text>
+    <text fill="#000" font-size="12" textLength="50.025" x="39.275" y="216.333">Third item</text>
+    <ellipse cx="79.625" cy="260" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+    <ellipse cx="79.625" cy="260" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="79.625" x2="79.625" y1="35" y2="55"/>
+    <polygon fill="#181818" points="75.625,45,79.625,55,83.625,45,79.625,49" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="79.625" x2="79.625" y1="229" y2="249"/>
+    <polygon fill="#181818" points="75.625,239,79.625,249,83.625,239,79.625,243" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

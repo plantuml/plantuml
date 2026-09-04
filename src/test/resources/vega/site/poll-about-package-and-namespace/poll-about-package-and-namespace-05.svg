@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="133px" preserveAspectRatio="none" style="width:348px;height:133px;background:#FFFFFF;" version="1.1" viewBox="0 0 348 133" width="348px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster net-->
+    <g class="cluster" data-qualified-name="net" data-source-line="3" id="ent0001">
+      <path d="M16.5,4 L36.925,4 A3.75,3.75 0 0 1 39.425,6.5 L46.425,24 L103.5,24 A2.5,2.5 0 0 1 106,26.5 L106,106.5 A2.5,2.5 0 0 1 103.5,109 L16.5,109 A2.5,2.5 0 0 1 14,106.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="46.425" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.425" x="18" y="16.889">net</text>
+    </g>
+    <!--cluster net.entities-->
+    <g class="cluster" data-qualified-name="net.entities" data-source-line="7" id="ent0003">
+      <path d="M124.5,4 L193.138,4 A3.75,3.75 0 0 1 195.638,6.5 L202.638,24 L211.5,24 A2.5,2.5 0 0 1 214,26.5 L214,106.5 A2.5,2.5 0 0 1 211.5,109 L124.5,109 A2.5,2.5 0 0 1 122,106.5 L122,6.5 A2.5,2.5 0 0 1 124.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="122" x2="202.638" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="126" y="16.889">net.entities</text>
+    </g>
+    <!--cluster net.entities.sub-->
+    <g class="cluster" data-qualified-name="net.entities.sub" data-source-line="11" id="ent0005">
+      <path d="M232.5,4 L327.563,4 A3.75,3.75 0 0 1 330.063,6.5 L337.063,24 L337.5,24 A2.5,2.5 0 0 1 340,26.5 L340,106.5 A2.5,2.5 0 0 1 337.5,109 L232.5,109 A2.5,2.5 0 0 1 230,106.5 L230,6.5 A2.5,2.5 0 0 1 232.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="230" x2="337.063" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="94.063" x="234" y="16.889">net.entities.sub</text>
+    </g>
+    <!--class foo1-->
+    <g class="entity" data-qualified-name="net.foo1" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.213" x="30.5" y="45"/>
+      <ellipse cx="45.5" cy="61" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="40.5" y="66">C</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="59.5" y="64.889">foo1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="31.5" x2="88.713" y1="77" y2="77"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="31.5" x2="88.713" y1="85" y2="85"/>
+    </g>
+    <!--class foo2-->
+    <g class="entity" data-qualified-name="net.entities.foo2" data-source-line="8" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.213" x="138.5" y="45"/>
+      <ellipse cx="153.5" cy="61" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="148.5" y="66">C</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="167.5" y="64.889">foo2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="139.5" x2="196.713" y1="77" y2="77"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="139.5" x2="196.713" y1="85" y2="85"/>
+    </g>
+    <!--class foo3-->
+    <g class="entity" data-qualified-name="net.entities.sub.foo3" data-source-line="12" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.213" x="255.5" y="45"/>
+      <ellipse cx="270.5" cy="61" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="265.5" y="66">C</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="284.5" y="64.889">foo3</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="256.5" x2="313.713" y1="77" y2="77"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="256.5" x2="313.713" y1="85" y2="85"/>
+    </g>
+  </g>
+</svg>

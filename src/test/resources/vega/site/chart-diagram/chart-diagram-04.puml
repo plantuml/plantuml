@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+v-axis 0 --> 100
+stackMode stacked
+bar "Revenue" [45, 62, 58, 70] #3498db
+bar "Costs" [25, 30, 28, 32] #e74c3c
+legend right
+@endchart

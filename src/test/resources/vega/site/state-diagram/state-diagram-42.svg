@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="430px" preserveAspectRatio="none" style="width:121px;height:430px;background:#FFFFFF;" version="1.1" viewBox="0 0 121 430" width="121px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name=".start." data-source-line="4" id="ent0001">
+      <ellipse cx="53" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="Opened" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="69.788" x="18" y="72"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="18" x2="87.788" y1="96" y2="96"/>
+      <text fill="#000" font-size="14" textLength="49.788" x="28" y="87.889">Opened</text>
+    </g>
+    <g class="entity" data-qualified-name="Closed" data-source-line="6" id="ent0004">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="63.663" x="21" y="218"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="21" x2="84.663" y1="242" y2="242"/>
+      <text fill="#000" font-size="14" textLength="43.663" x="31" y="233.889">Closed</text>
+    </g>
+    <rect fill="none" height="21" rx="2.5" ry="2.5" style="stroke:none;" width="38.388" x="6" y="158"/>
+    <text fill="#000" font-size="13" textLength="30.388" x="10" y="172.111">close</text>
+    <rect fill="none" height="21" rx="2.5" ry="2.5" style="stroke:none;" width="36.925" x="62.5" y="158"/>
+    <text fill="#000" font-size="13" textLength="28.925" x="66.5" y="172.111">open</text>
+    <g class="entity" data-qualified-name="Locked" data-source-line="9" id="ent0013">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="65.15" x="20.5" y="364"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="20.5" x2="85.65" y1="388" y2="388"/>
+      <text fill="#000" font-size="14" textLength="45.15" x="30.5" y="379.889">Locked</text>
+    </g>
+    <rect fill="none" height="21" rx="2.5" ry="2.5" style="stroke:none;" width="31.156" x="9.5" y="304"/>
+    <text fill="#000" font-size="13" textLength="23.156" x="13.5" y="318.111">lock</text>
+    <rect fill="none" height="21" rx="2.5" ry="2.5" style="stroke:none;" width="45.619" x="59" y="304"/>
+    <text fill="#000" font-size="13" textLength="37.619" x="63" y="318.111">unlock</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="53,71.764,57,62.764,53,66.764,49,62.764,53,71.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M53,36.094 C53,45.61 53,54.662 53,66.764" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="association" id="lnk6">
+      <path d="M43.52,122.037 C38.761,134.106 33.22,148.155 29.448,157.72" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0004" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="43.442,217.764,43.862,207.924,41.608,213.113,36.419,210.859,43.442,217.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M29.375,182.094 C33.128,191.61 36.835,201.01 41.608,213.113" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0004" data-link-type="association" id="lnk11">
+      <path d="M76.625,182.094 C72.872,191.61 67.331,205.662 62.558,217.764" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0008" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="62.48,122.037,62.06,131.877,64.314,126.689,69.502,128.942,62.48,122.037" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M64.314,126.689 C69.073,138.758 72.78,148.155 76.552,157.72" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0014" data-link-type="association" id="lnk15">
+      <path d="M43.52,268.037 C38.761,280.106 33.22,294.155 29.448,303.72" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0013" data-link-type="dependency" id="lnk16">
+      <polygon fill="#181818" points="43.442,363.764,43.862,353.924,41.608,359.113,36.419,356.859,43.442,363.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M29.375,328.094 C33.128,337.61 36.835,347.01 41.608,359.113" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0017" data-entity-2="ent0013" data-link-type="association" id="lnk20">
+      <path d="M77.469,328.094 C73.582,337.61 67.842,351.662 62.899,363.764" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0017" data-link-type="dependency" id="lnk21">
+      <polygon fill="#181818" points="62.818,268.037,62.518,277.882,64.709,272.666,69.924,274.857,62.818,268.037" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M64.709,272.666 C69.638,284.735 73.486,294.155 77.393,303.72" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startuml
+!function LineColor() return "#blue"
+
+!unquoted procedure Msg($from, $to, $note = "", $activate = "false")
+  !if (($activate == "true") || ($activate == "TRUE"))
+    $from [LineColor()]->> $to ++
+  !else
+    $from [LineColor()]->> $to
+  !endif
+
+  !if ($note!="")
+    note left : $note
+!endprocedure
+
+box
+  participant "Service A" as A
+  participant "Service B" as B
+end box
+
+box
+  database "Service C" as C
+end box
+
+Msg(A, B, "", true)
+Msg(B, C, "B to C msg", false)
+deactivate B
+@enduml

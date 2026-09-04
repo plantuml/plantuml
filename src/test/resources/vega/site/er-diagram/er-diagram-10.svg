@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHEN_EER" height="276px" preserveAspectRatio="none" style="width:122px;height:276px;background:#FFFFFF;" version="1.1" viewBox="0 0 122 276" width="122px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="100.238" x="6" y="119"/>
+      <text fill="#000" font-size="14" textLength="80.238" x="16" y="139.889">CUSTOMER</text>
+    </g>
+    <g>
+      <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="76.963" x="17.5" y="226"/>
+      <text fill="#000" font-size="14" textLength="56.963" x="27.5" y="246.889">PARENT</text>
+    </g>
+    <g>
+      <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="81.512" x="15" y="12"/>
+      <text fill="#000" font-size="14" textLength="61.512" x="25" y="32.889">MEMBER</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk4">
+      <path d="M56,153.406 C56,173.132 56,206.034 56,225.709" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="association" id="lnk5">
+      <path d="M56,46.406 C56,66.132 56,99.034 56,118.709" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

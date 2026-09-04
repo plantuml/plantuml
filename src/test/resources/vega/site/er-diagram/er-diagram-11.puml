@@ -1,0 +1,31 @@
+---
+output: svg
+---
+@startchen
+
+entity CUSTOMER {
+}
+
+entity PARENT {
+}
+
+entity MEMBER {
+}
+
+CUSTOMER ->- o { PARENT, MEMBER }
+
+entity CHILD {
+}
+
+entity TODDLER {
+}
+
+entity PRIMARY_AGE {
+}
+
+entity TEENAGER {
+}
+
+CHILD =>= d { TODDLER, PRIMARY_AGE, TEENAGER }
+
+@endchen

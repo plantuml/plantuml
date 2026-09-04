@@ -1,0 +1,197 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="138px" preserveAspectRatio="none" style="width:1521px;height:138px;background:#FFFFFF;" version="1.1" viewBox="0 0 1521 138" width="1521px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster actionVeryLOOOOOOOOOOOOOOOOOOOg-->
+    <g class="cluster" data-qualified-name="actionVeryLOOOOOOOOOOOOOOOOOOOg" data-source-line="1" id="ent0001">
+      <polygon fill="#F0F8FF" points="202,19,256,19,266,64.5,256,110,202,110" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="37.363" x="215.319" y="31.889">action</text>
+    </g>
+    <!--cluster cardVeryLOOOOOOOOOOOOOOOOOOOg-->
+    <g class="cluster" data-qualified-name="cardVeryLOOOOOOOOOOOOOOOOOOOg" data-source-line="7" id="ent0004">
+      <rect fill="#F0F8FF" height="91" rx="2.5" ry="2.5" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" width="64" x="282" y="19"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" x1="282" x2="346" y1="37" y2="37"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="27.213" x="300.394" y="31.889">card</text>
+    </g>
+    <!--cluster cloudVeryLOOOOOOOOOOOOOOOOOOOg-->
+    <g class="cluster" data-qualified-name="cloudVeryLOOOOOOOOOOOOOOOOOOOg" data-source-line="10" id="ent0006">
+      <path d="M370.132,28.965 C372.209,21.956 375.912,20.113 382.137,24.652 C384.426,15.99 389.206,15.902 395.675,20.328 C400.391,16.791 404.734,16.938 406.777,23.319 C413.611,17.452 417.459,19.591 420.132,27.388 C427.476,30.891 428.297,36.445 421.295,41.16 C428.781,43.349 428.962,48.546 424.178,53.582 C429.83,56.14 429.952,61.193 424.974,64.525 C431.61,69.413 431.671,75.154 423.717,78.754 C428.174,83.889 426.168,87.83 420.453,90.018 C426.309,94.111 426.211,99.322 419.389,102.318 C415.42,108.02 410.825,108.411 406.184,103.125 C403.145,108.377 398.821,109.714 394.736,104.241 C390.511,110.723 386.627,109.836 382.471,104.171 C377.681,109.326 373.922,108.518 371.013,102.28 C365.157,100.863 363.3,95.976 367.616,91.387 C360.961,88.108 359.246,83.64 364.594,77.71 C358.022,75.551 356.54,69.151 361.824,64.505 C357.525,59.829 359.868,55.103 365.335,53.558 C360.372,47.99 359.264,43.413 367.389,39.799 C363.374,35.828 364.154,30.405 370.132,28.965" fill="#F0F8FF" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="33.512" x="377.244" y="42.889">cloud</text>
+    </g>
+    <!--cluster componentVeryLOOOOOOOOOOOOOOOOOOOg-->
+    <g class="cluster" data-qualified-name="componentVeryLOOOOOOOOOOOOOOOOOOOg" data-source-line="13" id="ent0008">
+      <rect fill="#F0F8FF" height="91" rx="2.5" ry="2.5" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" width="85" x="442" y="19"/>
+      <rect fill="#F0F8FF" height="10" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" width="15" x="507" y="24"/>
+      <rect fill="#F0F8FF" height="2" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" width="4" x="505" y="26"/>
+      <rect fill="#F0F8FF" height="2" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" width="4" x="505" y="30"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="69.213" x="449.894" y="42.889">component</text>
+    </g>
+    <!--cluster databaseVeryLOOOOOOOOOOOOOOOOOOOg-->
+    <g class="cluster" data-qualified-name="databaseVeryLOOOOOOOOOOOOOOOOOOOg" data-source-line="16" id="ent0010">
+      <path d="M543,14 C543,4 579.5,4 579.5,4 C579.5,4 616,4 616,14 L616,100 C616,110 579.5,110 579.5,110 C579.5,110 543,110 543,100 L543,14" fill="#F0F8FF" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <path d="M543,14 C543,24 579.5,24 579.5,24 C579.5,24 616,24 616,14" fill="none" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="57.575" x="550.713" y="36.889">database</text>
+    </g>
+    <!--cluster fileVeryLOOOOOOOOOOOOOOOOOOOg-->
+    <g class="cluster" data-qualified-name="fileVeryLOOOOOOOOOOOOOOOOOOOg" data-source-line="19" id="ent0012">
+      <path d="M632,21.5 L632,107.5 A2.5,2.5 0 0 0 634.5,110 L693.5,110 A2.5,2.5 0 0 0 696,107.5 L696,29 L686,19 L634.5,19 A2.5,2.5 0 0 0 632,21.5" fill="#F0F8FF" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <path d="M686,19 L686,26.5 A2.5,2.5 0 0 0 688.5,29 L696,29" fill="#F0F8FF" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="17.938" x="655.031" y="31.889">file</text>
+    </g>
+    <!--cluster folderVeryLOOOOOOOOOOOOOOOOOOOg-->
+    <g class="cluster" data-qualified-name="folderVeryLOOOOOOOOOOOOOOOOOOOg" data-source-line="22" id="ent0014">
+      <path d="M714.5,19 L750.5,19 A3.75,3.75 0 0 1 753,21.5 L760,39 L773.5,39 A2.5,2.5 0 0 1 776,41.5 L776,107.5 A2.5,2.5 0 0 1 773.5,110 L714.5,110 A2.5,2.5 0 0 1 712,107.5 L712,21.5 A2.5,2.5 0 0 1 714.5,19" fill="#F0F8FF" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" x1="712" x2="760" y1="39" y2="39"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="35" x="716" y="31.889">folder</text>
+    </g>
+    <!--cluster frameVeryLOOOOOOOOOOOOOOOOOOOg-->
+    <g class="cluster" data-qualified-name="frameVeryLOOOOOOOOOOOOOOOOOOOg" data-source-line="25" id="ent0016">
+      <rect fill="#F0F8FF" height="91" rx="2.5" ry="2.5" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" width="64" x="792" y="19"/>
+      <path d="M837.7,19 L837.7,26 L827.7,36 L792,36" fill="none" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="35.7" x="795" y="30.889">frame</text>
+    </g>
+    <!--cluster hexagonVeryLOOOOOOOOOOOOOOOOOOOg-->
+    <g class="cluster" data-qualified-name="hexagonVeryLOOOOOOOOOOOOOOOOOOOg" data-source-line="28" id="ent0018">
+      <path d="M872,64.5 L880.625,19 L932.375,19 L941,64.5 L932.375,110 L880.625,110 L872,64.5" fill="#F0F8FF" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="53.725" x="879.638" y="31.889">hexagon</text>
+    </g>
+    <!--cluster nodeVeryLOOOOOOOOOOOOOOOOOOOg-->
+    <g class="cluster" data-qualified-name="nodeVeryLOOOOOOOOOOOOOOOOOOOg" data-source-line="31" id="ent0020">
+      <polygon fill="#F0F8FF" points="957,20,967,10,1064,10,1064,104,1054,114,957,114,957,20" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" x1="1054" x2="1064" y1="20" y2="10"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" x1="957" x2="1054" y1="20" y2="20"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" x1="1054" x2="1054" y1="20" y2="114"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="31.15" x="990.925" y="33.889">node</text>
+    </g>
+    <!--cluster packageVeryLOOOOOOOOOOOOOOOOOOOg-->
+    <g class="cluster" data-qualified-name="packageVeryLOOOOOOOOOOOOOOOOOOOg" data-source-line="34" id="ent0022">
+      <path d="M1082.5,19 L1136.438,19 A3.75,3.75 0 0 1 1138.938,21.5 L1145.938,39 L1149.5,39 A2.5,2.5 0 0 1 1152,41.5 L1152,107.5 A2.5,2.5 0 0 1 1149.5,110 L1082.5,110 A2.5,2.5 0 0 1 1080,107.5 L1080,21.5 A2.5,2.5 0 0 1 1082.5,19" fill="#F0F8FF" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" x1="1080" x2="1145.938" y1="39" y2="39"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="52.937" x="1084" y="31.889">package</text>
+    </g>
+    <!--cluster queueVeryLOOOOOOOOOOOOOOOOOOOg-->
+    <g class="cluster" data-qualified-name="queueVeryLOOOOOOOOOOOOOOOOOOOg" data-source-line="40" id="ent0025">
+      <path d="M1173,19 L1235,19 C1240,19 1240,64.5 1240,64.5 C1240,64.5 1240,110 1235,110 L1173,110 C1168,110 1168,64.5 1168,64.5 C1168,64.5 1168,19 1173,19" fill="#F0F8FF" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <path d="M1235,19 C1230,19 1230,64.5 1230,64.5 C1230,110 1235,110 1235,110" fill="none" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="38.938" x="1184.531" y="31.889">queue</text>
+    </g>
+    <!--cluster rectangleVeryLOOOOOOOOOOOOOOOOOOOg-->
+    <g class="cluster" data-qualified-name="rectangleVeryLOOOOOOOOOOOOOOOOOOOg" data-source-line="43" id="ent0027">
+      <rect fill="#F0F8FF" height="91" rx="2.5" ry="2.5" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" width="73" x="1256" y="19"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="57.575" x="1263.713" y="31.889">rectangle</text>
+    </g>
+    <!--cluster stackVeryLOOOOOOOOOOOOOOOOOOOg-->
+    <g class="cluster" data-qualified-name="stackVeryLOOOOOOOOOOOOOOOOOOOg" data-source-line="46" id="ent0029">
+      <rect fill="#F0F8FF" height="91" rx="2.5" ry="2.5" style="stroke:none;" width="42" x="1360" y="19"/>
+      <path d="M1345,19 L1357.5,19 A2.5,2.5 0 0 1 1360,21.5 L1360,107.5 A2.5,2.5 0 0 0 1362.5,110 L1399.5,110 A2.5,2.5 0 0 0 1402,107.5 L1402,21.5 A2.5,2.5 0 0 1 1404.5,19 L1417,19" fill="none" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="32.637" x="1364.681" y="42.889">stack</text>
+    </g>
+    <!--cluster storageVeryLOOOOOOOOOOOOOOOOOOOg-->
+    <g class="cluster" data-qualified-name="storageVeryLOOOOOOOOOOOOOOOOOOOg" data-source-line="49" id="ent0031">
+      <rect fill="#F0F8FF" height="91" rx="35" ry="35" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" width="72" x="1433" y="19"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="46.637" x="1445.681" y="36.889">storage</text>
+    </g>
+    <!--entity artifactVeryLOOOOOOOOOOOOOOOOOOOg-->
+    <g class="entity" data-qualified-name="artifactVeryLOOOOOOOOOOOOOOOOOOOg" data-source-line="4" id="ent0003">
+      <rect fill="#F0F8FF" height="37" rx="2.5" ry="2.5" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" width="71.913" x="6" y="58.5"/>
+      <polygon fill="#F0F8FF" points="60.912,63.5,60.912,77.5,72.913,77.5,72.913,69.5,66.913,63.5,60.912,63.5" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" x1="66.913" x2="66.913" y1="63.5" y2="69.5"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" x1="72.913" x2="66.913" y1="69.5" y2="69.5"/>
+      <text fill="#00F" font-size="14" textLength="41.913" x="16" y="82.389">artifact</text>
+    </g>
+    <!--entity processVeryLOOOOOOOOOOOOOOOOOOOg-->
+    <g class="entity" data-qualified-name="processVeryLOOOOOOOOOOOOOOOOOOOg" data-source-line="37" id="ent0024">
+      <polygon fill="#F0F8FF" points="96.5,60,175.5,60,185.5,77,175.5,94,96.5,94,106.5,77" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#00F" font-size="14" textLength="49" x="116.5" y="80.889">process</text>
+    </g>
+    <!--entity f1-->
+    <g class="entity" data-qualified-name="actionVeryLOOOOOOOOOOOOOOOOOOOg.f1" data-source-line="2" id="ent0002">
+      <path d="M218,62.5 L218,91.5 A2.5,2.5 0 0 0 220.5,94 L247.138,94 A2.5,2.5 0 0 0 249.638,91.5 L249.638,70 L239.638,60 L220.5,60 A2.5,2.5 0 0 0 218,62.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M239.638,60 L239.638,67.5 A2.5,2.5 0 0 0 242.138,70 L249.638,70" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="228" y="80.889">f1</text>
+    </g>
+    <!--entity f2-->
+    <g class="entity" data-qualified-name="cardVeryLOOOOOOOOOOOOOOOOOOOg.f2" data-source-line="8" id="ent0005">
+      <path d="M298,62.5 L298,91.5 A2.5,2.5 0 0 0 300.5,94 L327.138,94 A2.5,2.5 0 0 0 329.638,91.5 L329.638,70 L319.638,60 L300.5,60 A2.5,2.5 0 0 0 298,62.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M319.638,60 L319.638,67.5 A2.5,2.5 0 0 0 322.138,70 L329.638,70" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="308" y="80.889">f2</text>
+    </g>
+    <!--entity f3-->
+    <g class="entity" data-qualified-name="cloudVeryLOOOOOOOOOOOOOOOOOOOg.f3" data-source-line="11" id="ent0007">
+      <path d="M378,62.5 L378,91.5 A2.5,2.5 0 0 0 380.5,94 L407.138,94 A2.5,2.5 0 0 0 409.638,91.5 L409.638,70 L399.638,60 L380.5,60 A2.5,2.5 0 0 0 378,62.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M399.638,60 L399.638,67.5 A2.5,2.5 0 0 0 402.138,70 L409.638,70" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="388" y="80.889">f3</text>
+    </g>
+    <!--entity f4-->
+    <g class="entity" data-qualified-name="componentVeryLOOOOOOOOOOOOOOOOOOOg.f4" data-source-line="14" id="ent0009">
+      <path d="M468,62.5 L468,91.5 A2.5,2.5 0 0 0 470.5,94 L497.138,94 A2.5,2.5 0 0 0 499.638,91.5 L499.638,70 L489.638,60 L470.5,60 A2.5,2.5 0 0 0 468,62.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M489.638,60 L489.638,67.5 A2.5,2.5 0 0 0 492.138,70 L499.638,70" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="478" y="80.889">f4</text>
+    </g>
+    <!--entity f5-->
+    <g class="entity" data-qualified-name="databaseVeryLOOOOOOOOOOOOOOOOOOOg.f5" data-source-line="17" id="ent0011">
+      <path d="M563,62.5 L563,91.5 A2.5,2.5 0 0 0 565.5,94 L592.138,94 A2.5,2.5 0 0 0 594.638,91.5 L594.638,70 L584.638,60 L565.5,60 A2.5,2.5 0 0 0 563,62.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M584.638,60 L584.638,67.5 A2.5,2.5 0 0 0 587.138,70 L594.638,70" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="573" y="80.889">f5</text>
+    </g>
+    <!--entity f6-->
+    <g class="entity" data-qualified-name="fileVeryLOOOOOOOOOOOOOOOOOOOg.f6" data-source-line="20" id="ent0013">
+      <path d="M648,62.5 L648,91.5 A2.5,2.5 0 0 0 650.5,94 L677.138,94 A2.5,2.5 0 0 0 679.638,91.5 L679.638,70 L669.638,60 L650.5,60 A2.5,2.5 0 0 0 648,62.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M669.638,60 L669.638,67.5 A2.5,2.5 0 0 0 672.138,70 L679.638,70" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="658" y="80.889">f6</text>
+    </g>
+    <!--entity f7-->
+    <g class="entity" data-qualified-name="folderVeryLOOOOOOOOOOOOOOOOOOOg.f7" data-source-line="23" id="ent0015">
+      <path d="M728,62.5 L728,91.5 A2.5,2.5 0 0 0 730.5,94 L757.138,94 A2.5,2.5 0 0 0 759.638,91.5 L759.638,70 L749.638,60 L730.5,60 A2.5,2.5 0 0 0 728,62.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M749.638,60 L749.638,67.5 A2.5,2.5 0 0 0 752.138,70 L759.638,70" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="738" y="80.889">f7</text>
+    </g>
+    <!--entity f8-->
+    <g class="entity" data-qualified-name="frameVeryLOOOOOOOOOOOOOOOOOOOg.f8" data-source-line="26" id="ent0017">
+      <path d="M808,62.5 L808,91.5 A2.5,2.5 0 0 0 810.5,94 L837.138,94 A2.5,2.5 0 0 0 839.638,91.5 L839.638,70 L829.638,60 L810.5,60 A2.5,2.5 0 0 0 808,62.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M829.638,60 L829.638,67.5 A2.5,2.5 0 0 0 832.138,70 L839.638,70" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="818" y="80.889">f8</text>
+    </g>
+    <!--entity f9-->
+    <g class="entity" data-qualified-name="hexagonVeryLOOOOOOOOOOOOOOOOOOOg.f9" data-source-line="29" id="ent0019">
+      <path d="M890,62.5 L890,91.5 A2.5,2.5 0 0 0 892.5,94 L919.138,94 A2.5,2.5 0 0 0 921.638,91.5 L921.638,70 L911.638,60 L892.5,60 A2.5,2.5 0 0 0 890,62.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M911.638,60 L911.638,67.5 A2.5,2.5 0 0 0 914.138,70 L921.638,70" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="900" y="80.889">f9</text>
+    </g>
+    <!--entity f10-->
+    <g class="entity" data-qualified-name="nodeVeryLOOOOOOOOOOOOOOOOOOOg.f10" data-source-line="32" id="ent0021">
+      <path d="M990.5,62.5 L990.5,91.5 A2.5,2.5 0 0 0 993,94 L1027.425,94 A2.5,2.5 0 0 0 1029.925,91.5 L1029.925,70 L1019.925,60 L993,60 A2.5,2.5 0 0 0 990.5,62.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M1019.925,60 L1019.925,67.5 A2.5,2.5 0 0 0 1022.425,70 L1029.925,70" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="1000.5" y="80.889">f10</text>
+    </g>
+    <!--entity f11-->
+    <g class="entity" data-qualified-name="packageVeryLOOOOOOOOOOOOOOOOOOOg.f11" data-source-line="35" id="ent0023">
+      <path d="M1096.5,62.5 L1096.5,91.5 A2.5,2.5 0 0 0 1099,94 L1133.425,94 A2.5,2.5 0 0 0 1135.925,91.5 L1135.925,70 L1125.925,60 L1099,60 A2.5,2.5 0 0 0 1096.5,62.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M1125.925,60 L1125.925,67.5 A2.5,2.5 0 0 0 1128.425,70 L1135.925,70" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="1106.5" y="80.889">f11</text>
+    </g>
+    <!--entity f12-->
+    <g class="entity" data-qualified-name="queueVeryLOOOOOOOOOOOOOOOOOOOg.f12" data-source-line="41" id="ent0026">
+      <path d="M1184.5,62.5 L1184.5,91.5 A2.5,2.5 0 0 0 1187,94 L1221.425,94 A2.5,2.5 0 0 0 1223.925,91.5 L1223.925,70 L1213.925,60 L1187,60 A2.5,2.5 0 0 0 1184.5,62.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M1213.925,60 L1213.925,67.5 A2.5,2.5 0 0 0 1216.425,70 L1223.925,70" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="1194.5" y="80.889">f12</text>
+    </g>
+    <!--entity f13-->
+    <g class="entity" data-qualified-name="rectangleVeryLOOOOOOOOOOOOOOOOOOOg.f13" data-source-line="44" id="ent0028">
+      <path d="M1272.5,62.5 L1272.5,91.5 A2.5,2.5 0 0 0 1275,94 L1309.425,94 A2.5,2.5 0 0 0 1311.925,91.5 L1311.925,70 L1301.925,60 L1275,60 A2.5,2.5 0 0 0 1272.5,62.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M1301.925,60 L1301.925,67.5 A2.5,2.5 0 0 0 1304.425,70 L1311.925,70" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="1282.5" y="80.889">f13</text>
+    </g>
+    <!--entity f14-->
+    <g class="entity" data-qualified-name="stackVeryLOOOOOOOOOOOOOOOOOOOg.f14" data-source-line="47" id="ent0030">
+      <path d="M1361.5,62.5 L1361.5,91.5 A2.5,2.5 0 0 0 1364,94 L1398.425,94 A2.5,2.5 0 0 0 1400.925,91.5 L1400.925,70 L1390.925,60 L1364,60 A2.5,2.5 0 0 0 1361.5,62.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M1390.925,60 L1390.925,67.5 A2.5,2.5 0 0 0 1393.425,70 L1400.925,70" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="1371.5" y="80.889">f14</text>
+    </g>
+    <!--entity f15-->
+    <g class="entity" data-qualified-name="storageVeryLOOOOOOOOOOOOOOOOOOOg.f15" data-source-line="50" id="ent0032">
+      <path d="M1449.5,62.5 L1449.5,91.5 A2.5,2.5 0 0 0 1452,94 L1486.425,94 A2.5,2.5 0 0 0 1488.925,91.5 L1488.925,70 L1478.925,60 L1452,60 A2.5,2.5 0 0 0 1449.5,62.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M1478.925,60 L1478.925,67.5 A2.5,2.5 0 0 0 1481.425,70 L1488.925,70" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="1459.5" y="80.889">f15</text>
+    </g>
+  </g>
+</svg>

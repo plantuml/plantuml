@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="69px" preserveAspectRatio="none" style="width:219px;height:69px;background:#FFFFFF;" version="1.1" viewBox="0 0 219 69" width="219px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="60.825" x="6" y="15.333">This is a long</text>
+    <text fill="#000" font-size="12" textLength="78.6" x="6" y="29.333">text in a textarea</text>
+    <text fill="#000" font-size="12" x="9" y="57.333"> </text>
+    <line style="stroke:#000;stroke-width:1;" x1="7" x2="210" y1="60" y2="60"/>
+    <line style="stroke:#000;stroke-width:1;" x1="7" x2="7" y1="57" y2="59"/>
+    <line style="stroke:#000;stroke-width:1;" x1="210" x2="210" y1="57" y2="59"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="213" y1="5" y2="5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="213" y1="63" y2="63"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="5" y1="5" y2="19"/>
+    <line style="stroke:#000;stroke-width:1;" x1="213" x2="213" y1="19" y2="33"/>
+    <line style="stroke:#000;stroke-width:1;" x1="213" x2="213" y1="5" y2="19"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="5" y1="47" y2="63"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="5" y1="33" y2="47"/>
+    <line style="stroke:#000;stroke-width:1;" x1="213" x2="213" y1="47" y2="63"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="5" y1="19" y2="33"/>
+    <line style="stroke:#000;stroke-width:1;" x1="213" x2="213" y1="33" y2="47"/>
+  </g>
+</svg>

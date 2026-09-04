@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="226px" preserveAspectRatio="none" style="width:155px;height:226px;background:#FFFFFF;" version="1.1" viewBox="0 0 155 226" width="155px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity First Actor-->
+    <g class="entity" data-qualified-name="First Actor" data-source-line="2" id="ent0001">
+      <ellipse cx="35.925" cy="27.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="33.981" x2="43.685" y1="35.26" y2="25.556"/>
+      <path d="M35.925,35.5 L35.925,62.5 M22.925,43.5 L48.925,43.5 M35.925,62.5 L22.925,77.5 M35.925,62.5 L48.925,77.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="59.85" x="6" y="89.889">First Actor</text>
+    </g>
+    <!--entity Man2-->
+    <g class="entity" data-qualified-name="Man2" data-source-line="3" id="ent0002">
+      <ellipse cx="109" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="107.056" x2="116.76" y1="28.26" y2="18.556"/>
+      <path d="M109,28.5 L109,55.5 M96,36.5 L122,36.5 M109,55.5 L96,70.5 M109,55.5 L122,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="49" x="84.5" y="82.889">Another</text>
+      <text fill="#000" font-size="14" textLength="31.062" x="84.5" y="96.889">actor</text>
+    </g>
+    <!--entity Woman3-->
+    <g class="entity" data-qualified-name="Woman3" data-source-line="4" id="ent0003">
+      <ellipse cx="36" cy="144.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="34.056" x2="43.76" y1="152.26" y2="142.556"/>
+      <path d="M36,152.5 L36,179.5 M23,160.5 L49,160.5 M36,179.5 L23,194.5 M36,179.5 L49,194.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="56" x="8" y="206.889">Woman3</text>
+    </g>
+    <!--entity Person1-->
+    <g class="entity" data-qualified-name="Person1" data-source-line="5" id="ent0004">
+      <ellipse cx="111.244" cy="144.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="109.3" x2="119.004" y1="152.26" y2="142.556"/>
+      <path d="M111.244,152.5 L111.244,179.5 M98.244,160.5 L124.244,160.5 M111.244,179.5 L98.244,194.5 M111.244,179.5 L124.244,194.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="57.488" x="82.5" y="206.889">Last actor</text>
+    </g>
+  </g>
+</svg>

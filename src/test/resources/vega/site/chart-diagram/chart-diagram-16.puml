@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+v-axis "Profit/Loss ($K)" -50 --> 50 spacing 25
+bar "Product A" [-20, 10, 30, 25] #3498db
+@endchart

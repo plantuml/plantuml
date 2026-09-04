@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startnwdiag
+nwdiag {
+  network LAN1 {
+     a [address = "a1"];
+  }
+  network LAN2 {
+     a [address = "a2"];
+     switch;
+  }
+  switch -- equip;
+  equip -- printer;
+}
+@endnwdiag

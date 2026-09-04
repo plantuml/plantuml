@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startfiles
+<note>
+this is a note on top
+on two lines
+</note>
+/a/a1.py
+/a/a2.py
+<note>
+this is a note on a2
+on two lines
+</note>
+/a/a3.py
+/b/z/b1.txt
+<note>
+this is a note on b1
+</note>
+@endfiles

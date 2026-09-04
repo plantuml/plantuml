@@ -1,0 +1,183 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="468px" preserveAspectRatio="none" style="width:671px;height:468px;background:#FFFFFF;" version="1.1" viewBox="0 0 671 468" width="671px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class e01-->
+    <g class="entity" data-qualified-name="e01" data-source-line="8" id="ent0001">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="201.788" x="326.5" y="12"/>
+      <ellipse cx="408.356" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="403.356" y="33">E</text>
+      <text fill="#000" font-size="14" textLength="29.575" x="428.856" y="31.889">User</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="327.5" x2="527.288" y1="44" y2="44"/>
+      <g data-visibility-modifier="IE_MANDATORY">
+        <ellipse cx="337.5" cy="56.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="175.788" x="346.5" y="58.889">user_id : number «generated»</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="327.5" x2="527.288" y1="66" y2="66"/>
+      <g data-visibility-modifier="IE_MANDATORY">
+        <ellipse cx="337.5" cy="78.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="61.337" x="346.5" y="80.889">name : text</text>
+      <text fill="#000" font-size="14" textLength="94.063" x="346.5" y="94.889">description : text</text>
+    </g>
+    <!--class e02-->
+    <g class="entity" data-qualified-name="e02" data-source-line="15" id="ent0002">
+      <rect fill="#F1F1F1" height="132" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="201.788" x="211.5" y="138"/>
+      <ellipse cx="292.963" cy="154" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="287.963" y="159">E</text>
+      <text fill="#000" font-size="14" textLength="30.363" x="313.463" y="157.889">Card</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="212.5" x2="412.288" y1="170" y2="170"/>
+      <g data-visibility-modifier="IE_MANDATORY">
+        <ellipse cx="222.5" cy="182.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="175.788" x="231.5" y="184.889">card_id : number «generated»</text>
+      <text fill="#000" font-size="14" textLength="140.175" x="231.5" y="198.889">sync_enabled: boolean</text>
+      <text fill="#000" font-size="14" textLength="96.425" x="231.5" y="212.889">version: number</text>
+      <text fill="#000" font-size="14" textLength="162.575" x="231.5" y="226.889">last_sync_version: number</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="212.5" x2="412.288" y1="234" y2="234"/>
+      <g data-visibility-modifier="IE_MANDATORY">
+        <ellipse cx="222.5" cy="246.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="130.725" x="231.5" y="248.889">user_id : number «FK»</text>
+      <text fill="#000" font-size="14" textLength="106.488" x="231.5" y="262.889">other_details : text</text>
+    </g>
+    <!--class e05-->
+    <g class="entity" data-qualified-name="e05" data-source-line="25" id="ent0003">
+      <rect fill="#F1F1F1" height="104" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="250.788" x="6" y="327"/>
+      <ellipse cx="90.175" cy="343" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="85.175" y="348">E</text>
+      <text fill="#000" font-size="14" textLength="73.938" x="110.675" y="346.889">CardHistory</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="255.788" y1="359" y2="359"/>
+      <g data-visibility-modifier="IE_MANDATORY">
+        <ellipse cx="17" cy="371.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="224.788" x="26" y="373.889">card_history_id : number «generated»</text>
+      <text fill="#000" font-size="14" textLength="96.425" x="26" y="387.889">version : number</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="255.788" y1="395" y2="395"/>
+      <g data-visibility-modifier="IE_MANDATORY">
+        <ellipse cx="17" cy="407.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="130.725" x="26" y="409.889">card_id : number «FK»</text>
+      <text fill="#000" font-size="14" textLength="106.488" x="26" y="423.889">other_details : text</text>
+    </g>
+    <!--class e04-->
+    <g class="entity" data-qualified-name="e04" data-source-line="33" id="ent0004">
+      <rect fill="#F1F1F1" height="104" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="166.788" x="460" y="327"/>
+      <ellipse cx="492.933" cy="343" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="487.933" y="348">E</text>
+      <text fill="#000" font-size="14" textLength="94.938" x="510.918" y="346.889">CardsAccounts</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="461" x2="625.788" y1="359" y2="359"/>
+      <g data-visibility-modifier="IE_MANDATORY">
+        <ellipse cx="471" cy="371.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="140.788" x="480" y="373.889">id : number «generated»</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="461" x2="625.788" y1="381" y2="381"/>
+      <text fill="#000" font-size="14" textLength="130.725" x="466" y="395.889">card_id : number «FK»</text>
+      <text fill="#000" font-size="14" textLength="152.513" x="466" y="409.889">account_id : number «FK»</text>
+      <text fill="#000" font-size="14" textLength="106.488" x="466" y="423.889">other_details : text</text>
+    </g>
+    <!--class e03-->
+    <g class="entity" data-qualified-name="e03" data-source-line="42" id="ent0005">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="223.575" x="431.5" y="159"/>
+      <ellipse cx="513.75" cy="175" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="508.75" y="180">E</text>
+      <text fill="#000" font-size="14" textLength="50.575" x="534.25" y="178.889">Account</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="432.5" x2="654.075" y1="191" y2="191"/>
+      <g data-visibility-modifier="IE_MANDATORY">
+        <ellipse cx="442.5" cy="203.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="197.575" x="451.5" y="205.889">account_id : number «generated»</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="432.5" x2="654.075" y1="213" y2="213"/>
+      <text fill="#000" font-size="14" textLength="130.725" x="437.5" y="227.889">user_id : number «FK»</text>
+      <text fill="#000" font-size="14" textLength="106.488" x="437.5" y="241.889">other_details : text</text>
+    </g>
+    <!--class e06-->
+    <g class="entity" data-qualified-name="e06" data-source-line="49" id="ent0006">
+      <rect fill="#F1F1F1" height="146" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="166.788" x="275" y="306"/>
+      <ellipse cx="331.613" cy="322" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="326.613" y="327">E</text>
+      <text fill="#000" font-size="14" textLength="45.063" x="352.113" y="325.889">Stream</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="276" x2="440.788" y1="338" y2="338"/>
+      <g data-visibility-modifier="IE_MANDATORY">
+        <ellipse cx="286" cy="350.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="140.788" x="295" y="352.889">id : number «generated»</text>
+      <text fill="#000" font-size="14" textLength="96.425" x="295" y="366.889">version: number</text>
+      <text fill="#000" font-size="14" textLength="126" x="295" y="380.889">searchingText: string</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="276" x2="440.788" y1="388" y2="388"/>
+      <text fill="#000" font-size="14" textLength="141.663" x="281" y="402.889">owner_id : number «FK»</text>
+      <text fill="#000" font-size="14" textLength="151.813" x="281" y="416.889">follower_id : number «FK»</text>
+      <text fill="#000" font-size="14" textLength="130.725" x="281" y="430.889">card_id: number «FK»</text>
+      <text fill="#000" font-size="14" textLength="106.488" x="281" y="444.889">other_details : text</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="crowfoot" id="lnk7">
+      <line style="stroke:#181818;stroke-width:1;" x1="387.4" x2="387.67" y1="108.561" y2="98.564"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="387.4" x2="397.072" y1="108.561" y2="106.021"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="387.4" x2="392.371" y1="108.561" y2="102.293"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="383.023" x2="389.291" y1="107.642" y2="112.613"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="369.756" x2="363.488" y1="137.244" y2="132.273"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="371.621" x2="365.353" y1="134.894" y2="129.923"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="369.108" x2="364.137" y1="131.625" y2="137.893"/>
+      <path d="M387.4,108.561 C378.483,119.804 378.658,119.584 369.108,131.625" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="crowfoot" id="lnk8">
+      <line style="stroke:#181818;stroke-width:1;" x1="467.932" x2="458.249" y1="108.54" y2="106.041"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="467.932" x2="467.619" y1="108.54" y2="98.544"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="467.932" x2="462.934" y1="108.54" y2="102.293"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="466.058" x2="472.305" y1="112.6" y2="107.603"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="508.908" x2="502.661" y1="153.356" y2="158.354"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="507.033" x2="500.787" y1="151.014" y2="156.011"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="503.285" x2="508.283" y1="152.732" y2="158.979"/>
+      <path d="M467.932,108.54 C482.323,126.529 488.916,134.77 503.285,152.732" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="crowfoot" id="lnk9">
+      <line style="stroke:#181818;stroke-width:1;" x1="238.546" x2="240.184" y1="275.685" y2="265.82"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="238.546" x2="248.475" y1="275.685" y2="274.495"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="238.546" x2="244.33" y1="275.685" y2="270.157"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="234.337" x2="239.864" y1="274.175" y2="279.958"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="190.595" x2="185.067" y1="327.05" y2="321.267"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="192.764" x2="187.236" y1="324.977" y2="319.194"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="190.723" x2="184.94" y1="321.395" y2="326.922"/>
+      <path d="M238.546,275.685 C218.905,294.458 209.333,303.607 190.723,321.395" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="crowfoot" id="lnk10">
+      <line style="stroke:#181818;stroke-width:1;" x1="409.402" x2="399.403" y1="274.725" y2="274.846"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="409.402" x2="406.486" y1="274.725" y2="265.159"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="409.402" x2="402.944" y1="274.725" y2="270.003"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="408.655" x2="413.377" y1="279.134" y2="272.676"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="478.174" x2="473.274" y1="321.353" y2="327.677"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="475.803" x2="470.902" y1="319.515" y2="325.839"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="472.562" x2="478.886" y1="322.065" y2="326.965"/>
+      <path d="M409.402,274.725 C425.643,286.6 435.901,294.235 451.5,306 C460.406,312.717 463.408,314.971 472.562,322.065" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0004" data-link-type="crowfoot" id="lnk11">
+      <line style="stroke:#181818;stroke-width:1;" x1="543.5" x2="537.5" y1="257.103" y2="249.103"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="543.5" x2="549.5" y1="257.103" y2="249.103"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="543.5" x2="543.5" y1="257.103" y2="249.103"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="539.5" x2="547.5" y1="259.103" y2="259.103"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="547.5" x2="539.5" y1="322.923" y2="322.923"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="547.5" x2="539.5" y1="319.923" y2="319.923"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="543.5" x2="543.5" y1="318.923" y2="326.923"/>
+      <path d="M543.5,257.103 C543.5,280.829 543.5,294.208 543.5,318.923" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0006" data-link-type="crowfoot" id="lnk12">
+      <line style="stroke:#181818;stroke-width:1;" x1="331.946" x2="324.092" y1="278.135" y2="271.946"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="331.946" x2="335.689" y1="278.135" y2="268.862"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="331.946" x2="329.891" y1="278.135" y2="270.404"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="328.595" x2="336.326" y1="281.096" y2="279.04"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="342.153" x2="334.422" y1="300.954" y2="303.01"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="341.382" x2="333.651" y1="298.055" y2="300.111"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="337.259" x2="339.315" y1="298.117" y2="305.848"/>
+      <path d="M331.946,278.135 C335.025,289.713 334.135,286.365 337.259,298.117" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0006" data-link-type="crowfoot" id="lnk13">
+      <line style="stroke:#181818;stroke-width:1;" x1="490.495" x2="492.24" y1="254.567" y2="244.72"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="490.495" x2="500.436" y1="254.567" y2="253.485"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="490.495" x2="496.338" y1="254.567" y2="249.103"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="486.302" x2="491.766" y1="253.011" y2="258.855"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="441.417" x2="435.953" y1="305.938" y2="300.095"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="443.608" x2="438.144" y1="303.889" y2="298.046"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="441.607" x2="435.763" y1="300.284" y2="305.748"/>
+      <path d="M490.495,254.567 C472.082,271.786 462.171,281.054 441.607,300.284" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

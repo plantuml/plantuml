@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+:* You can change <color:red>text color</color>
+* You can change <back:cadetblue>background color</back>
+* You can change <size:18>size</size>
+* You use <u>legacy</u> <b>HTML <i>tag</i></b>
+* You use <u:red>color</u> <s:green>in HTML</s> <w:#0000FF>tag</w>
+----
+* Use image : <img:https://plantuml.com/logo3.png>
+;
+@enduml

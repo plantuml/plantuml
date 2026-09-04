@@ -1,0 +1,38 @@
+---
+output: svg
+---
+@startuml
+<style>
+timingDiagram {
+  .red {
+    LineColor red
+  }
+  .blue {
+    LineColor blue
+    LineThickness 5
+  }
+}
+</style>
+
+clock clk with period 1
+binary "Input Signal 1"  as IS1
+binary "Input Signal 2"  as IS2 <<blue>>
+binary "Output Signal 1" as OS1 <<red>>
+
+@0
+IS1 is low
+IS2 is high
+OS1 is low
+@2
+OS1 is high
+@4
+OS1 is low
+@5
+IS1 is high
+OS1 is high
+@6
+IS2 is low
+@10
+IS1 is low
+OS1 is low
+@enduml

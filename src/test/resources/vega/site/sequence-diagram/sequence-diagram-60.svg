@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="152px" preserveAspectRatio="none" style="width:150px;height:152px;background:#FFFFFF;" version="1.1" viewBox="0 0 150 152" width="150px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>A</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="30.606" y="53"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="34.106" x2="34.106" y1="53" y2="98"/>
+    </g>
+    <g>
+      <title>B</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="111.563" y="53"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="115.063" x2="115.063" y1="53" y2="98"/>
+    </g>
+    <rect fill="#E2E2F0" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="48.212" x="10" y="10"/>
+    <text fill="#000" font-size="14" x="29.425" y="27.889">A</text>
+    <text fill="#000" font-size="14" font-style="italic" textLength="34.212" x="17" y="41.889">«st1»</text>
+    <rect fill="#E2E2F0" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="48.212" x="90.956" y="10"/>
+    <text fill="#000" font-size="14" x="110.381" y="27.889">B</text>
+    <text fill="#000" font-size="14" font-style="italic" textLength="34.212" x="97.956" y="41.889">«st2»</text>
+    <rect fill="#E2E2F0" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="48.212" x="10" y="98"/>
+    <text fill="#000" font-size="14" x="29.425" y="115.889">A</text>
+    <text fill="#000" font-size="14" font-style="italic" textLength="34.212" x="17" y="129.889">«st1»</text>
+    <rect fill="#E2E2F0" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="48.212" x="90.956" y="98"/>
+    <text fill="#000" font-size="14" x="110.381" y="115.889">B</text>
+    <text fill="#000" font-size="14" font-style="italic" textLength="34.212" x="97.956" y="129.889">«st2»</text>
+    <polygon fill="#181818" points="103.063,76,113.063,80,103.063,84,107.063,80" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="34.106" x2="109.063" y1="80" y2="80"/>
+    <text fill="#000" font-size="13" textLength="56.956" x="41.106" y="75.111">stereo test</text>
+  </g>
+</svg>

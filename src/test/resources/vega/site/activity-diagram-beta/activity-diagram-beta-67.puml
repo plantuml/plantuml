@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+skinparam ConditionEndStyle diamond
+:A;
+if (decision) then (yes)
+    :B1;
+else (no)
+endif
+:C;
+@enduml

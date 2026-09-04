@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="141px" preserveAspectRatio="none" style="width:141px;height:141px;background:#FFFFFF;" version="1.1" viewBox="0 0 141 141" width="141px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="34" y="85"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="37.5" x2="37.5" y1="85" y2="130"/>
+    </g>
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="99" y="85"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="102.5" x2="102.5" y1="85" y2="130"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="30.45" x="19.275" y="81.889">Alice</text>
+    <ellipse cx="37.5" cy="26.5" fill="#E2E2F0" rx="16" ry="16" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M37.5,46.5 C41.5,46.5 44.5,46.5 48.5,42.5 C56.5,42.5 64.5,50.5 64.5,58.5 L64.5,62.5 C64.5,66.5 60.5,70.5 56.5,70.5 L18.5,70.5 C14.5,70.5 10.5,66.5 10.5,62.5 L10.5,58.5 C10.5,50.5 18.5,42.5 26.5,42.5 C30.5,46.5 33.5,46.5 37.5,46.5" fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="87.031" y="81.889">Bob</text>
+    <ellipse cx="102.5" cy="26.5" fill="#E2E2F0" rx="16" ry="16" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M102.5,46.5 C106.5,46.5 109.5,46.5 113.5,42.5 C121.5,42.5 129.5,50.5 129.5,58.5 L129.5,62.5 C129.5,66.5 125.5,70.5 121.5,70.5 L83.5,70.5 C79.5,70.5 75.5,66.5 75.5,62.5 L75.5,58.5 C75.5,50.5 83.5,42.5 91.5,42.5 C95.5,46.5 98.5,46.5 102.5,46.5" fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
+    <polygon fill="#181818" points="90.5,108,100.5,112,90.5,116,94.5,112" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="37.5" x2="96.5" y1="112" y2="112"/>
+    <text fill="#000" font-size="13" textLength="27.544" x="44.5" y="107.111">hello</text>
+  </g>
+</svg>

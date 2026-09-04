@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="160px" preserveAspectRatio="none" style="width:242px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 242 160" width="242px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity Component-->
+    <g class="entity" data-qualified-name="Component" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="112.363" x="60" y="54"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="152.363" y="59"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="150.363" y="61"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="150.363" y="65"/>
+      <text fill="#000" font-size="14" textLength="72.363" x="75" y="84.889">Component</text>
+    </g>
+    <!--entity left-->
+    <g class="entity" data-qualified-name="left" data-source-line="2" id="ent0002">
+      <ellipse cx="116" cy="21" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="18.637" x="106.681" y="48.889">left</text>
+    </g>
+    <!--entity right-->
+    <g class="entity" data-qualified-name="right" data-source-line="3" id="ent0005">
+      <ellipse cx="116" cy="125" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="102.394" y="152.889">right</text>
+    </g>
+    <!--entity up-->
+    <g class="entity" data-qualified-name="up" data-source-line="4" id="ent0007">
+      <ellipse cx="15" cy="73" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="7.212" y="100.889">up</text>
+    </g>
+    <!--entity down-->
+    <g class="entity" data-qualified-name="down" data-source-line="5" id="ent0010">
+      <ellipse cx="217" cy="73" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="33.512" x="200.244" y="100.889">down</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="116,36.048,112,45.048,116,41.048,120,45.048,116,36.048" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M116,41.048 C116,46.917 116,47.787 116,53.656" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="116,115.813,120,106.813,116,110.813,112,106.813,116,115.813" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M116,98.083 C116,103.993 116,104.903 116,110.813" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0001" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="24.102,76,33.102,80,29.102,76,33.102,72,24.102,76" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M29.102,76 C37.322,76 45.813,76 59.916,76" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0010" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="207.776,76,198.776,72,202.776,76,198.776,80,207.776,76" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M172.001,76 C186.064,76 194.528,76 202.776,76" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

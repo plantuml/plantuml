@@ -1,0 +1,43 @@
+---
+output: svg
+---
+@startuml
+skinparam backgroundColor #EEEBDC
+skinparam handwritten true
+
+skinparam sequenceArrowColor DeepSkyBlue
+skinparam sequenceActorBorderColor DeepSkyBlue
+skinparam sequenceLifeLineBorderColor blue
+skinparam sequenceLifeLineBackgroundColor #A9DCDF
+skinparam sequenceParticipantBorderColor DeepSkyBlue
+skinparam sequenceParticipantBackgroundColor DodgerBlue
+skinparam sequenceParticipantFontName Impact
+skinparam sequenceParticipantFontSize 17
+skinparam sequenceParticipantFontColor #A9DCDF
+skinparam sequenceActorBackgroundColor aqua
+skinparam sequenceActorFontColor DeepSkyBlue
+skinparam sequenceActorFontSize 17
+skinparam sequenceActorFontName Aapex
+
+actor User
+participant "First Class" as ParticipantA
+participant "Second Class" as ParticipantB
+participant "Last Class" as ParticipantC
+
+User -> ParticipantA: DoWork
+activate ParticipantA
+
+ParticipantA -> ParticipantB: Create Request
+activate ParticipantB
+
+ParticipantB -> ParticipantC: DoWork
+activate ParticipantC
+ParticipantC --> ParticipantB: WorkDone
+destroy ParticipantC
+
+ParticipantB --> ParticipantA: Request Created
+deactivate ParticipantB
+
+ParticipantA --> User: Done
+deactivate ParticipantA
+@enduml

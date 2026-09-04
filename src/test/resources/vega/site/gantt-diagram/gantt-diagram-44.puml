@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startgantt
+printscale weekly with week numbering from 1
+Project starts the 6th of July 2020
+[Task1] on {Alice} requires 2 weeks
+[Task2] on {Bob:50%} requires 2 weeks
+then [Task3] on {Alice:25%} requires 3 days
+@endgantt

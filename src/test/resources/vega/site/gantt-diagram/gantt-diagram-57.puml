@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startgantt
+[Task1] on {Alice} {Bob} requires 20 days
+@endgantt

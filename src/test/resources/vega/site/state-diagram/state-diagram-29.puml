@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+<style>
+  diamond {
+    BackgroundColor #palegreen
+    LineColor #green
+    LineThickness 2.5
+}
+</style>
+state state1
+state state2
+state choice1 <<choice>>
+state end3    <<end>>
+
+state1  --> choice1 : 1
+choice1 --> state2  : 2
+choice1 --> end3    : 3
+@enduml

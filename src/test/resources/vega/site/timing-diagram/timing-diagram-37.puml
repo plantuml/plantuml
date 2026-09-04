@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+title Between min-max
+analog "Analog" between 350 and 450 as A
+
+@0
+A is 350
+
+@100
+A is 450
+
+@300
+A is 350
+@enduml

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="66px" preserveAspectRatio="none" style="width:174px;height:66px;background:#FFFFFF;" version="1.1" viewBox="0 0 174 66" width="174px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="29.4" x="6" y="15.333">Login</text>
+    <path d="M40.4,7 C39.3,7 38.4,8.12 38.4,9.5 C38.4,10.88 39.3,12 40.4,12 C41.5,12 42.4,10.88 42.4,9.5 C42.4,8.12 41.5,7 40.4,7 M38.31,12 C37.25,12.05 36.4,12.92 36.4,14 L36.4,15 L44.4,15 L44.4,14 C44.4,12.92 43.56,12.05 42.49,12 C41.95,12.61 41.21,13 40.4,13 C39.59,13 38.85,12.61 38.31,12" fill="#000"/>
+    <text fill="#000" font-size="12" textLength="48" x="92" y="15.333">MyName</text>
+    <line style="stroke:#000;stroke-width:1;" x1="90" x2="165" y1="18" y2="18"/>
+    <line style="stroke:#000;stroke-width:1;" x1="90" x2="90" y1="15" y2="17"/>
+    <line style="stroke:#000;stroke-width:1;" x1="165" x2="165" y1="15" y2="17"/>
+    <text fill="#000" font-size="12" textLength="52.725" x="6" y="31.333">Password</text>
+    <path d="M65.225,23 C63.845,23 62.725,24.12 62.725,25.5 C62.725,25.66 62.725,25.82 62.755,25.97 L59.725,29 L59.725,31 L62.725,31 L62.725,29 L64.725,29 L64.725,28 L64.755,27.97 C64.905,28 65.065,28 65.225,28 C66.605,28 67.725,26.88 67.725,25.5 C67.725,24.12 66.605,23 65.225,23 M65.725,24 C66.275,24 66.725,24.45 66.725,25 C66.725,25.55 66.275,26 65.725,26 C65.175,26 64.725,25.55 64.725,25 C64.725,24.45 65.175,24 65.725,24" fill="#000"/>
+    <text fill="#000" font-size="12" textLength="18.6" x="92" y="31.333">****</text>
+    <line style="stroke:#000;stroke-width:1;" x1="90" x2="165" y1="34" y2="34"/>
+    <line style="stroke:#000;stroke-width:1;" x1="90" x2="90" y1="31" y2="33"/>
+    <line style="stroke:#000;stroke-width:1;" x1="165" x2="165" y1="31" y2="33"/>
+    <rect fill="#EEE" height="16" rx="5" ry="5" style="stroke:#000;stroke-width:2.5;" width="76" x="8.5" y="40.5"/>
+    <text fill="#000" font-size="12" textLength="37.425" x="22.788" y="51.833">Cancel</text>
+    <path d="M65.213,43.5 C63.003,43.5 61.213,45.29 61.213,47.5 C61.213,49.71 63.003,51.5 65.213,51.5 C67.423,51.5 69.213,49.71 69.213,47.5 C69.213,45.29 67.423,43.5 65.213,43.5 M63.713,45.28 L65.213,46.78 L66.713,45.28 L67.433,46 L65.933,47.5 L67.433,49 L66.713,49.72 L65.213,48.22 L63.713,49.72 L62.993,49 L64.492,47.5 L62.993,46 L63.713,45.28" fill="#000"/>
+    <rect fill="#EEE" height="16" rx="5" ry="5" style="stroke:#000;stroke-width:2.5;" width="44" x="91.5" y="40.5"/>
+    <text fill="#000" font-size="12" textLength="17.325" x="99.838" y="51.833">OK</text>
+    <path d="M121.163,43.5 L121.163,44.5 L125.163,44.5 L125.163,49.5 L121.163,49.5 L121.163,50.5 L126.163,50.5 L126.163,43.5 L121.163,43.5 M122.163,45.5 L122.163,46.5 L118.163,46.5 L118.163,47.5 L122.163,47.5 L122.163,48.5 L124.163,47 L122.163,45.5" fill="#000"/>
+  </g>
+</svg>

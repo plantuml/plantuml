@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="153px" preserveAspectRatio="none" style="width:372px;height:153px;background:#FFFFFF;" version="1.1" viewBox="0 0 372 153" width="372px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity DA-->
+    <g class="entity" data-qualified-name="DA" data-source-line="2" id="ent0001">
+      <ellipse cx="51.5" cy="31" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="74.725" x="14.137" y="58.889">Data Access</text>
+    </g>
+    <!--entity First Component-->
+    <g class="entity" data-qualified-name="First Component" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="139.575" x="78.5" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="198.075" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="196.075" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="196.075" y="23"/>
+      <text fill="#000" font-size="14" textLength="99.575" x="93.5" y="42.889">First Component</text>
+    </g>
+    <!--entity HTTP-->
+    <g class="entity" data-qualified-name="HTTP" data-source-line="5" id="ent0004">
+      <ellipse cx="148.5" cy="118" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="36.663" x="130.169" y="145.889">HTTP</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN6" data-source-line="7" id="ent0007">
+      <path d="M6,109 L6,132 A0,0 0 0 0 6,132 L121.006,132 A0,0 0 0 0 121.006,132 L121.006,127 L139.141,121 L121.006,119 L121.006,119 L111.006,109 L6,109 A0,0 0 0 0 6,109" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M111.006,109 L111.006,119 L121.006,119 L111.006,109" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="94.006" x="12" y="124.111">Web Service only</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN9" data-source-line="10" id="ent0010">
+      <path d="M237,16 L237,30 L218.742,34 L237,38 L237,52 A0,0 0 0 0 237,52 L355.663,52 A0,0 0 0 0 355.663,52 L355.663,26 L345.663,16 L237,16 A0,0 0 0 0 237,16" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M345.663,16 L345.663,26 L355.663,26 L345.663,16" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="78.813" x="243" y="31.111">A note can also</text>
+      <text fill="#000" font-size="13" textLength="97.663" x="243" y="44.111">be on several lines</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M60.594,34 C66.546,34 72.498,34 78.45,34" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="148.5,108.847,152.5,99.847,148.5,103.847,144.5,99.847,148.5,108.847" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M148.5,56.011 C148.5,72.726 148.5,90.459 148.5,103.847" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="20.963" x="150.5" y="86.111">use</text>
+    </g>
+  </g>
+</svg>

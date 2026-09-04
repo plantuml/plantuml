@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+!$json_object= {
+  "name"   : "Mark McGwire",
+  "hr"     : 65,
+  "avg"    : 0.278,
+  "letters": ["a", "b", "c"]
+}
+
+label l [
+|= $variable          |= <U+0025>get_json_type($var)         |= <U+0025>size($var)         |
+| json_object         | %get_json_type($json_object)         | %size($json_object)         |
+| json_object.name    | %get_json_type($json_object.name)    | %size($json_object.name)    |
+| json_object.hr      | %get_json_type($json_object.hr)      | %size($json_object.hr)      |
+| json_object.letters | %get_json_type($json_object.letters) | %size($json_object.letters) |
+]
+@enduml

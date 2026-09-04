@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="169px" preserveAspectRatio="none" style="width:205px;height:169px;background:#FFFFFF;" version="1.1" viewBox="0 0 205 169" width="205px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="38.1" x="16" y="15.333">Region</text>
+    <text fill="#000" font-size="12" textLength="56.775" x="95.275" y="15.333">Population</text>
+    <text fill="#000" font-size="12" textLength="21.375" x="174.65" y="15.333">Age</text>
+    <text fill="#000" font-size="12" textLength="31.35" x="16" y="27.333">World</text>
+    <text fill="#000" font-size="12" textLength="54.15" x="95.275" y="27.333">7.13 billion</text>
+    <text fill="#000" font-size="12" textLength="13.35" x="174.65" y="27.333">30</text>
+    <text fill="#000" font-size="12" textLength="44.025" x="26" y="39.333">America</text>
+    <text fill="#000" font-size="12" textLength="54.15" x="95.275" y="39.333">964 million</text>
+    <text fill="#000" font-size="12" textLength="13.35" x="174.65" y="39.333">30</text>
+    <text fill="#000" font-size="12" textLength="42.075" x="36" y="51.333">Canada</text>
+    <text fill="#000" font-size="12" textLength="47.475" x="95.275" y="51.333">35 million</text>
+    <text fill="#000" font-size="12" textLength="13.35" x="174.65" y="51.333">30</text>
+    <text fill="#000" font-size="12" textLength="24.75" x="36" y="63.333">USA</text>
+    <text fill="#000" font-size="12" textLength="54.15" x="95.275" y="63.333">319 million</text>
+    <text fill="#000" font-size="12" textLength="13.35" x="174.65" y="63.333">30</text>
+    <text fill="#000" font-size="12" textLength="25.425" x="46" y="75.333">NYC</text>
+    <text fill="#000" font-size="12" textLength="40.8" x="95.275" y="75.333">8 million</text>
+    <text fill="#000" font-size="12" textLength="13.35" x="174.65" y="75.333">30</text>
+    <text fill="#000" font-size="12" textLength="37.35" x="46" y="87.333">Boston</text>
+    <text fill="#000" font-size="12" textLength="69.375" x="95.275" y="87.333">617 thousand</text>
+    <text fill="#000" font-size="12" textLength="13.35" x="174.65" y="87.333">30</text>
+    <text fill="#000" font-size="12" textLength="38.025" x="36" y="99.333">Mexico</text>
+    <text fill="#000" font-size="12" textLength="54.15" x="95.275" y="99.333">117 million</text>
+    <text fill="#000" font-size="12" textLength="13.35" x="174.65" y="99.333">30</text>
+    <text fill="#000" font-size="12" textLength="38.7" x="26" y="111.333">Europe</text>
+    <text fill="#000" font-size="12" textLength="54.15" x="95.275" y="111.333">601 million</text>
+    <text fill="#000" font-size="12" textLength="13.35" x="174.65" y="111.333">30</text>
+    <text fill="#000" font-size="12" textLength="21.975" x="36" y="123.333">Italy</text>
+    <text fill="#000" font-size="12" textLength="47.475" x="95.275" y="123.333">61 million</text>
+    <text fill="#000" font-size="12" textLength="13.35" x="174.65" y="123.333">30</text>
+    <text fill="#000" font-size="12" textLength="49.275" x="36" y="135.333">Germany</text>
+    <text fill="#000" font-size="12" textLength="47.475" x="95.275" y="135.333">82 million</text>
+    <text fill="#000" font-size="12" textLength="13.35" x="174.65" y="135.333">30</text>
+    <text fill="#000" font-size="12" textLength="30.75" x="46" y="147.333">Berlin</text>
+    <text fill="#000" font-size="12" textLength="40.8" x="95.275" y="147.333">3 million</text>
+    <text fill="#000" font-size="12" textLength="13.35" x="174.65" y="147.333">30</text>
+    <text fill="#000" font-size="12" textLength="30.675" x="26" y="159.333">Africa</text>
+    <text fill="#000" font-size="12" textLength="37.5" x="95.275" y="159.333">1 billion</text>
+    <text fill="#000" font-size="12" textLength="13.35" x="174.65" y="159.333">30</text>
+    <rect fill="none" height="2" style="stroke:#888;stroke-width:1;" width="2" x="9" y="23"/>
+    <rect fill="none" height="2" style="stroke:#888;stroke-width:1;" width="2" x="19" y="35"/>
+    <line style="stroke:#888;stroke-width:1;" x1="10" x2="10" y1="26" y2="36"/>
+    <line style="stroke:#888;stroke-width:1;" x1="10" x2="18" y1="36" y2="36"/>
+    <line style="stroke:#888;stroke-width:1;" x1="20" x2="20" y1="38" y2="48"/>
+    <line style="stroke:#888;stroke-width:1;" x1="20" x2="28" y1="48" y2="48"/>
+    <rect fill="none" height="2" style="stroke:#888;stroke-width:1;" width="2" x="29" y="59"/>
+    <line style="stroke:#888;stroke-width:1;" x1="20" x2="20" y1="38" y2="60"/>
+    <line style="stroke:#888;stroke-width:1;" x1="20" x2="28" y1="60" y2="60"/>
+    <line style="stroke:#888;stroke-width:1;" x1="30" x2="30" y1="62" y2="72"/>
+    <line style="stroke:#888;stroke-width:1;" x1="30" x2="38" y1="72" y2="72"/>
+    <line style="stroke:#888;stroke-width:1;" x1="30" x2="30" y1="62" y2="84"/>
+    <line style="stroke:#888;stroke-width:1;" x1="30" x2="38" y1="84" y2="84"/>
+    <line style="stroke:#888;stroke-width:1;" x1="20" x2="20" y1="38" y2="96"/>
+    <line style="stroke:#888;stroke-width:1;" x1="20" x2="28" y1="96" y2="96"/>
+    <rect fill="none" height="2" style="stroke:#888;stroke-width:1;" width="2" x="19" y="107"/>
+    <line style="stroke:#888;stroke-width:1;" x1="10" x2="10" y1="26" y2="108"/>
+    <line style="stroke:#888;stroke-width:1;" x1="10" x2="18" y1="108" y2="108"/>
+    <line style="stroke:#888;stroke-width:1;" x1="20" x2="20" y1="110" y2="120"/>
+    <line style="stroke:#888;stroke-width:1;" x1="20" x2="28" y1="120" y2="120"/>
+    <rect fill="none" height="2" style="stroke:#888;stroke-width:1;" width="2" x="29" y="131"/>
+    <line style="stroke:#888;stroke-width:1;" x1="20" x2="20" y1="110" y2="132"/>
+    <line style="stroke:#888;stroke-width:1;" x1="20" x2="28" y1="132" y2="132"/>
+    <line style="stroke:#888;stroke-width:1;" x1="30" x2="30" y1="134" y2="144"/>
+    <line style="stroke:#888;stroke-width:1;" x1="30" x2="38" y1="144" y2="144"/>
+    <line style="stroke:#888;stroke-width:1;" x1="10" x2="10" y1="26" y2="156"/>
+    <line style="stroke:#888;stroke-width:1;" x1="10" x2="18" y1="156" y2="156"/>
+  </g>
+</svg>

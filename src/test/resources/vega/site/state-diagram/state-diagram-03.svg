@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="414.052px" preserveAspectRatio="none" style="width:350px;height:414px;background:#FFFFFF;" version="1.1" viewBox="0 0 350 414" width="350.763px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster NotShooting-->
+    <g class="cluster" data-qualified-name="NotShooting" data-source-line="4" id="ent0001">
+      <path d="M141.449,48.039 L193.301,48.039 A9.532,9.532 0 0 1 202.832,57.571 L202.832,62.527 L131.917,62.527 L131.917,57.571 A9.532,9.532 0 0 1 141.449,48.039" fill="#F1F1F1"/>
+      <rect fill="none" height="128.105" rx="9.532" ry="9.532" style="stroke:#181818;stroke-width:0.381;" width="70.915" x="131.917" y="48.039"/>
+      <line style="stroke:#181818;stroke-width:0.381;" x1="131.917" x2="202.832" y1="62.527" y2="62.527"/>
+      <text fill="#000" font-size="10.675" textLength="58.781" x="137.984" y="56.342">NotShooting</text>
+    </g>
+    <g class="entity" data-qualified-name="Configuring" data-source-line="10" id="ent0002">
+      <path d="M14.107,208.932 L328.817,208.932 A9.532,9.532 0 0 1 338.349,218.464 L338.349,227.233 L4.575,227.233 L4.575,218.464 A9.532,9.532 0 0 1 14.107,208.932" fill="#F1F1F1"/>
+      <rect fill="none" height="192.919" rx="9.532" ry="9.532" style="stroke:#181818;stroke-width:0.381;" width="333.774" x="4.575" y="208.932"/>
+      <line style="stroke:#181818;stroke-width:0.381;" x1="4.575" x2="338.349" y1="227.233" y2="227.233"/>
+      <text fill="#000" font-size="10.675" textLength="54.645" x="144.14" y="221.048">Configuring</text>
+      <g class="entity" data-qualified-name="Configuring.NewValuePreview" data-source-line="16" id="ent0003">
+        <path d="M91.29,235.621 L196.519,235.621 A9.532,9.532 0 0 1 206.05,245.153 L206.05,253.922 L81.758,253.922 L81.758,245.153 A9.532,9.532 0 0 1 91.29,235.621" fill="#F1F1F1"/>
+        <rect fill="none" height="76.253" rx="9.532" ry="9.532" style="stroke:#181818;stroke-width:0.381;" width="124.292" x="81.758" y="235.621"/>
+        <line style="stroke:#181818;stroke-width:0.381;" x1="81.758" x2="206.05" y1="253.922" y2="253.922"/>
+        <text fill="#000" font-size="10.675" textLength="86.804" x="100.502" y="247.737">NewValuePreview</text>
+        <g class="entity" data-qualified-name="Configuring.NewValuePreview.State1" data-source-line="17" id="ent0017">
+          <rect fill="#F1F1F1" height="38.126" rx="9.532" ry="9.532" style="stroke:#181818;stroke-width:0.381;" width="46.076" x="86.334" y="262.309"/>
+          <line style="stroke:#181818;stroke-width:0.381;" x1="86.334" x2="132.409" y1="280.61" y2="280.61"/>
+          <text fill="#000" font-size="10.675" textLength="30.825" x="93.959" y="274.425">State1</text>
+        </g>
+        <g class="entity" data-qualified-name="Configuring.NewValuePreview.State2" data-source-line="17" id="ent0018">
+          <rect fill="#F1F1F1" height="38.126" rx="9.532" ry="9.532" style="stroke:#181818;stroke-width:0.381;" width="46.076" x="145.811" y="262.309"/>
+          <line style="stroke:#181818;stroke-width:0.381;" x1="145.811" x2="191.886" y1="280.61" y2="280.61"/>
+          <text fill="#000" font-size="10.675" textLength="30.825" x="153.436" y="274.425">State2</text>
+        </g>
+        <g class="link" data-entity-1="ent0017" data-entity-2="ent0018" data-link-type="dependency" id="lnk19">
+          <polygon fill="#181818" points="145.604,281.373,138.741,278.322,141.791,281.373,138.741,284.423,145.604,281.373" style="stroke:#181818;stroke-width:0.763;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+          <path d="M132.21,281.373 C136.675,281.373 137.327,281.373 141.791,281.373" fill="none" style="stroke:#181818;stroke-width:0.763;"/>
+        </g>
+      </g>
+      <g class="start_entity" data-qualified-name="Configuring..start.Configuring" data-source-line="11" id="ent0011">
+        <ellipse cx="320.048" cy="272.222" fill="#222" rx="7.625" ry="7.625" style="stroke:#222;stroke-width:0.763;"/>
+      </g>
+      <g class="entity" data-qualified-name="Configuring.NewValueSelection" data-source-line="11" id="ent0012">
+        <rect fill="#F1F1F1" height="38.126" rx="9.532" ry="9.532" style="stroke:#181818;stroke-width:0.381;" width="107.993" x="142.379" y="352.288"/>
+        <line style="stroke:#181818;stroke-width:0.381;" x1="142.379" x2="250.372" y1="370.588" y2="370.588"/>
+        <text fill="#000" font-size="10.675" textLength="92.742" x="150.005" y="364.403">NewValueSelection</text>
+      </g>
+      <g class="link" data-entity-1="ent0011" data-entity-2="ent0012" data-link-type="dependency" id="lnk13">
+        <polygon fill="#181818" points="250.746,362.952,258.178,364.029,254.416,361.919,256.525,358.157,250.746,362.952" style="stroke:#181818;stroke-width:0.763;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M319.372,283.056 C317.836,296.695 312.887,323.388 297.172,338.562 C284.575,350.727 271.038,357.239 254.416,361.919" fill="none" style="stroke:#181818;stroke-width:0.763;"/>
+      </g>
+      <g class="link" data-entity-1="ent0012" data-entity-2="ent0003" data-link-type="dependency" id="lnk14">
+        <polygon fill="#181818" points="206.082,299.053,210.112,305.391,209.258,301.163,213.487,300.309,206.082,299.053" style="stroke:#181818;stroke-width:0.763;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M224.01,352.23 C232.213,344.406 237.749,334.94 232.358,325.599 C226.107,314.771 219.767,308.142 209.258,301.163" fill="none" style="stroke:#181818;stroke-width:0.763;"/>
+        <text fill="#000" font-size="9.913" textLength="56.875" x="236.17" y="334.834">EvNewValue</text>
+      </g>
+      <g class="link" data-entity-1="ent0003" data-entity-2="ent0012" data-link-type="dependency" id="lnk15">
+        <polygon fill="#181818" points="142.206,367.55,135.627,363.929,138.407,367.227,135.109,370.007,142.206,367.55" style="stroke:#181818;stroke-width:0.763;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M81.634,286.9 C44.571,297.103 8.388,313.929 28.763,338.562 C43.031,355.812 95.033,363.531 138.407,367.227" fill="none" style="stroke:#181818;stroke-width:0.763;"/>
+        <text fill="#000" font-size="9.913" textLength="96.031" x="30.288" y="334.834">EvNewValueRejected</text>
+      </g>
+      <g class="link" data-entity-1="ent0003" data-entity-2="ent0012" data-link-type="dependency" id="lnk16">
+        <polygon fill="#181818" points="153.721,352.095,150.209,345.456,150.723,349.739,146.44,350.253,153.721,352.095" style="stroke:#181818;stroke-width:0.763;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M135.872,312.091 C135.674,321.235 137.072,330.65 141.617,338.562 C144.64,343.825 145.9,345.949 150.723,349.739" fill="none" style="stroke:#181818;stroke-width:0.763;"/>
+        <text fill="#000" font-size="9.913" textLength="85.003" x="143.142" y="334.834">EvNewValueSaved</text>
+      </g>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="2" id="ent0004">
+      <ellipse cx="150.218" cy="16.776" fill="#222" rx="7.625" ry="7.625" style="stroke:#222;stroke-width:0.763;"/>
+    </g>
+    <g class="start_entity" data-qualified-name="NotShooting..start.NotShooting" data-source-line="5" id="ent0006">
+      <ellipse cx="177.669" cy="86.928" fill="#222" rx="7.625" ry="7.625" style="stroke:#222;stroke-width:0.763;"/>
+    </g>
+    <g class="entity" data-qualified-name="NotShooting.Idle" data-source-line="5" id="ent0007">
+      <rect fill="#F1F1F1" height="38.126" rx="9.532" ry="9.532" style="stroke:#181818;stroke-width:0.381;" width="38.126" x="152.505" y="125.817"/>
+      <line style="stroke:#181818;stroke-width:0.381;" x1="152.505" x2="190.632" y1="144.118" y2="144.118"/>
+      <text fill="#000" font-size="10.675" textLength="17.214" x="162.962" y="137.933">Idle</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0001" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="150.218,47.928,153.268,41.065,150.218,44.115,147.168,41.065,150.218,47.928" style="stroke:#181818;stroke-width:0.763;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M150.218,27.478 C150.218,30.771 150.218,34.825 150.218,39.259 C150.218,41.477 150.218,43.789 150.218,46.15 C150.218,46.74 150.218,43.52 150.218,44.115" fill="none" style="stroke:#181818;stroke-width:0.763;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="173.625,125.607,177.415,119.123,174.046,121.818,171.352,118.449,173.625,125.607" style="stroke:#181818;stroke-width:0.763;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M176.716,97.794 C175.891,105.213 175.092,112.407 174.046,121.818" fill="none" style="stroke:#181818;stroke-width:0.763;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0002" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="187.66,208.908,190.641,202.014,187.622,205.095,184.541,202.076,187.66,208.908" style="stroke:#181818;stroke-width:0.763;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M180.023,164.273 C182.184,169.926 184.204,176.234 185.294,182.244 C186.858,190.869 187.531,196.059 187.622,205.095" fill="none" style="stroke:#181818;stroke-width:0.763;"/>
+      <text fill="#000" font-size="9.913" textLength="40.271" x="187.582" y="191.479">EvConfig</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0007" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="152.342,162.507,145.472,165.542,149.781,165.332,149.991,169.64,152.342,162.507" style="stroke:#181818;stroke-width:0.763;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M135.042,208.82 C135.012,199.758 136.337,190.776 139.542,182.244 C142.275,174.972 144.618,171.024 149.781,165.332" fill="none" style="stroke:#181818;stroke-width:0.763;"/>
+      <text fill="#000" font-size="9.913" textLength="40.271" x="141.068" y="191.479">EvConfig</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="269px" preserveAspectRatio="none" style="width:274px;height:269px;background:#FFFFFF;" version="1.1" viewBox="0 0 274 269" width="274px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <ellipse cx="188.344" cy="25" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    <rect fill="none" height="204" style="stroke:#000;stroke-width:1.5;" width="237.069" x="16" y="45"/>
+    <path d="M143.6,45 L143.6,52 L133.6,62 L16,62" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="49" x="19" y="56.889">process</text>
+    <text fill="#000" font-size="14" textLength="68.6" x="68" y="56.889">HelloWorld</text>
+    <path d="M36,131 L36,177 L133.619,177 L133.619,141 L123.619,131 L36,131" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M123.619,131 L123.619,141 L133.619,141 L123.619,131" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="76.619" x="42" y="146.111">This is my note</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="36" x2="133.619" y1="154" y2="154"/>
+    <text fill="#000" font-size="13" font-style="italic" textLength="59.231" x="42" y="169.111">Creole test</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="54.725" x="160.981" y="79"/>
+    <text fill="#000" font-size="12" textLength="34.725" x="170.981" y="98.333">Ready</text>
+    <polygon fill="#F1F1F1" points="143.619,138,233.069,138,243.069,154,233.069,170,143.619,170" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="12" textLength="69.45" x="153.619" y="157.333">HelloWorld(i)</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="76.1" x="150.294" y="205"/>
+    <text fill="#000" font-size="12" textLength="56.1" x="160.294" y="224.333">Hello-Sent</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="188.344" x2="188.344" y1="111" y2="138"/>
+    <polygon fill="#181818" points="184.344,128,188.344,138,192.344,128,188.344,132" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="188.344" x2="188.344" y1="170" y2="205"/>
+    <polygon fill="#181818" points="184.344,195,188.344,205,192.344,195,188.344,199" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="188.344" x2="188.344" y1="35" y2="79"/>
+    <polygon fill="#181818" points="184.344,69,188.344,79,192.344,69,188.344,73" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

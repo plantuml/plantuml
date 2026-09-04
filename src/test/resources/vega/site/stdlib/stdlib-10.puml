@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+!include <edgy/edgy>
+
+left to right direction
+
+$activity("Parent Activity") {
+  $activity("Brother", child1, 1)
+  $activity("Sister", child2, 1)
+  $activity("Latecomer", child3, 1)
+}
+
+$flow(child1, child2)
+$flow(child2, child3)
+
+@enduml

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="237px" preserveAspectRatio="none" style="width:446px;height:237px;background:#FFFFFF;" version="1.1" viewBox="0 0 446 237" width="446px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#90EE90" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="53.512" x="10" y="101"/>
+    <text fill="#000" font-size="14" textLength="33.512" x="20" y="121.889">Linux</text>
+    <rect fill="#FFF" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="60.512" x="113.512" y="47"/>
+    <text fill="#000" font-size="14" textLength="40.512" x="123.512" y="67.889">NixOS</text>
+    <path d="M63.512,118 L73.512,118 C88.512,118 88.512,64 103.512,64 L113.512,64" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#FFF" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="64.45" x="113.512" y="101"/>
+    <text fill="#000" font-size="14" textLength="44.45" x="123.512" y="121.889">Debian</text>
+    <rect fill="#90EE90" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="65.15" x="227.962" y="101"/>
+    <text fill="#000" font-size="14" textLength="45.15" x="237.962" y="121.889">Ubuntu</text>
+    <rect fill="#90EE90" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="79.938" x="343.112" y="20"/>
+    <text fill="#000" font-size="14" textLength="59.938" x="353.112" y="40.889">Linux Mint</text>
+    <path d="M293.112,118 L303.112,118 C318.112,118 318.112,37 333.112,37 L343.112,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#90EE90" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="72.15" x="343.112" y="74"/>
+    <text fill="#000" font-size="14" textLength="52.15" x="353.112" y="94.889">Kubuntu</text>
+    <path d="M293.112,118 L303.112,118 C318.112,118 318.112,91 333.112,91 L343.112,91" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#90EE90" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="70.575" x="343.112" y="128"/>
+    <text fill="#000" font-size="14" textLength="50.575" x="353.112" y="148.889">Lubuntu</text>
+    <path d="M293.112,118 L303.112,118 C318.112,118 318.112,145 333.112,145 L343.112,145" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#90EE90" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="82.387" x="343.112" y="182"/>
+    <text fill="#000" font-size="14" textLength="62.387" x="353.112" y="202.889">KDE Neon</text>
+    <path d="M293.112,118 L303.112,118 C318.112,118 318.112,199 333.112,199 L343.112,199" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M177.962,118 L187.962,118 C202.962,118 202.962,118 217.962,118 L227.962,118" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M63.512,118 L73.512,118 C88.512,118 88.512,118 103.512,118 L113.512,118" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="NWDIAG" height="135px" preserveAspectRatio="none" style="width:769px;height:135px;background:#FFFFFF;" version="1.1" viewBox="0 0 769 135" width="769px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="44.025" x="5" y="14.333">Network</text>
+    <rect fill="#E2E2F0" height="5" style="stroke:#181818;stroke-width:1;" width="708.875" x="54.025" y="8.5"/>
+    <path d="M90.375,13.5 L90.375,46.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M175.413,13.5 L175.413,48" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M257.1,13.5 L257.1,46.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M322.812,13.5 L322.812,52.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M407.525,13.5 L407.525,43.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M509.85,13.5 L509.85,47.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M625.25,13.5 L625.25,57.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M726.613,13.5 L726.613,53.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <ellipse cx="88.375" cy="62.5" fill="#F1F1F1" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+    <polygon fill="#181818" points="84.375,50.5,90.375,45.5,88.375,50.5,90.375,55.5,84.375,50.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="12" textLength="38.7" x="69.025" y="87.833">Control</text>
+    <path d="M137.725,58 C137.725,48 173.413,48 173.413,48 C173.413,48 209.1,48 209.1,58 L209.1,79 C209.1,89 173.413,89 173.413,89 C173.413,89 137.725,89 137.725,79 L137.725,58" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M137.725,58 C137.725,68 173.413,68 173.413,68 C173.413,68 209.1,68 209.1,58" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="12" textLength="51.375" x="147.725" y="81.333">Database</text>
+    <ellipse cx="255.1" cy="62.5" fill="#F1F1F1" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="243.1" x2="267.1" y1="76.5" y2="76.5"/>
+    <text fill="#000" font-size="12" textLength="30" x="240.1" y="87.833">Entity</text>
+    <polygon fill="#F1F1F1" points="301.1,52.5,301.1,84.5,340.525,84.5,340.525,62.5,330.525,52.5,301.1,52.5" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M330.525,52.5 L330.525,62.5 L340.525,62.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="12" textLength="19.425" x="311.1" y="71.833">File</text>
+    <polygon fill="#F1F1F1" points="370.525,43.5,416.525,43.5,423.525,64.5,440.525,64.5,440.525,93.5,370.525,93.5,370.525,43.5" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="370.525" x2="423.525" y1="64.5" y2="64.5"/>
+    <text fill="#000" font-size="12" textLength="34.05" x="380.525" y="80.833">Folder</text>
+    <rect fill="#F1F1F1" height="42" style="stroke:#181818;stroke-width:0.5;" width="74.65" x="470.525" y="47.5"/>
+    <path d="M495.408,47.5 L495.408,52.5 L488.408,59.5 L470.525,59.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="12" textLength="34.65" x="485.525" y="76.833">Frame</text>
+    <text fill="#000" font-size="12" textLength="48.075" x="599.213" y="71.833">Hexagon</text>
+    <ellipse cx="724.613" cy="62.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="12" textLength="46.575" x="701.325" y="80.833">Interface</text>
+  </g>
+</svg>

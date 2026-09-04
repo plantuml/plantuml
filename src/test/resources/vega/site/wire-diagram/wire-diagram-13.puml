@@ -1,0 +1,35 @@
+---
+output: svg
+---
+@startwire
+* MicroProc
+	* SOMI
+	* SIMO
+	* SCLK
+-------
+* TMP125_1
+	* SOMI
+	* SIMO
+	* SCLK
+* TMP125_2
+	* SOMI
+	* SIMO
+	* SCLK
+* TMP125_3
+	* SOMI
+	* SIMO
+	* SCLK
+
+
+
+
+MicroProc.SIMO -> TMP125_1 : SIMO
+MicroProc.SIMO -> TMP125_2 : SIMO
+MicroProc.SIMO -> TMP125_3 : SIMO
+
+TMP125_1.SOMI -> MicroProc.SOMI : SOMI
+TMP125_2.SOMI -> MicroProc.SOMI : SOMI
+TMP125_3.SOMI -> MicroProc.SOMI : SOMI
+
+
+@endwire

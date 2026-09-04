@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+[*] --> Opened
+
+Opened --> Closed : close
+Opened <-- Closed : open
+
+Closed --> Locked : lock
+Closed <-- Locked : unlock
+@enduml

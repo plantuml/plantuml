@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+Write your own dedication!
+@enduml

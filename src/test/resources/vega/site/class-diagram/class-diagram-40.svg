@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="287px" preserveAspectRatio="none" style="width:404px;height:287px;background:#FFFFFF;" version="1.1" viewBox="0 0 404 287" width="404px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Classic Collections-->
+    <g class="cluster" data-qualified-name="Classic Collections" data-source-line="2" id="ent0001">
+      <path d="M16.5,4 L131.338,4 A3.75,3.75 0 0 1 133.838,6.5 L140.838,24 L140.5,24 A2.5,2.5 0 0 1 143,26.5 L143,244.5 A2.5,2.5 0 0 1 140.5,247 L16.5,247 A2.5,2.5 0 0 1 14,244.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="#DDD" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="140.838" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="113.838" x="18" y="16.889">Classic Collections</text>
+    </g>
+    <!--cluster com-->
+    <g class="cluster" data-qualified-name="com" data-source-line="7" id="ent0007">
+      <path d="M161.5,101 L188.925,101 A3.75,3.75 0 0 1 191.425,103.5 L198.425,121 L393.5,121 A2.5,2.5 0 0 1 396,123.5 L396,260.5 A2.5,2.5 0 0 1 393.5,263 L161.5,263 A2.5,2.5 0 0 1 159,260.5 L159,103.5 A2.5,2.5 0 0 1 161.5,101" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="159" x2="198.425" y1="121" y2="121"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.425" x="163" y="113.889">com</text>
+    </g>
+    <!--cluster plantuml-->
+    <g class="cluster" data-qualified-name="com.plantuml" data-source-line="6" id="ent0005">
+      <path d="M177.5,142 L231.438,142 A3.75,3.75 0 0 1 233.938,144.5 L240.938,162 L377.5,162 A2.5,2.5 0 0 1 380,164.5 L380,244.5 A2.5,2.5 0 0 1 377.5,247 L177.5,247 A2.5,2.5 0 0 1 175,244.5 L175,144.5 A2.5,2.5 0 0 1 177.5,142" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="175" x2="240.938" y1="162" y2="162"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="52.937" x="179" y="154.889">plantuml</text>
+    </g>
+    <!--class Object-->
+    <g class="entity" data-qualified-name="Classic Collections.Object" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="72.425" x="51" y="45"/>
+      <ellipse cx="66" cy="61" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="61" y="66">C</text>
+      <text fill="#000" font-size="14" textLength="40.425" x="80" y="64.889">Object</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="52" x2="122.425" y1="77" y2="77"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="52" x2="122.425" y1="85" y2="85"/>
+    </g>
+    <!--class ArrayList-->
+    <g class="entity" data-qualified-name="Classic Collections.ArrayList" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="87.213" x="39.5" y="183"/>
+      <ellipse cx="54.5" cy="199" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="49.5" y="204">C</text>
+      <text fill="#000" font-size="14" textLength="55.213" x="68.5" y="202.889">ArrayList</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="40.5" x2="125.713" y1="215" y2="215"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="40.5" x2="125.713" y1="223" y2="223"/>
+    </g>
+    <!--class Demo1-->
+    <g class="entity" data-qualified-name="com.plantuml.Demo1" data-source-line="7" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.15" x="191.5" y="183"/>
+      <ellipse cx="206.5" cy="199" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="201.5" y="204">C</text>
+      <text fill="#000" font-size="14" textLength="45.15" x="220.5" y="202.889">Demo1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="192.5" x2="267.65" y1="215" y2="215"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="192.5" x2="267.65" y1="223" y2="223"/>
+    </g>
+    <!--class Demo2-->
+    <g class="entity" data-qualified-name="com.plantuml.Demo2" data-source-line="8" id="ent0009">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.15" x="286.5" y="183"/>
+      <ellipse cx="301.5" cy="199" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="296.5" y="204">C</text>
+      <text fill="#000" font-size="14" textLength="45.15" x="315.5" y="202.889">Demo2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="287.5" x2="362.65" y1="215" y2="215"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="287.5" x2="362.65" y1="223" y2="223"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="extension" id="lnk4">
+      <polygon fill="none" points="86.321,93.071,79.795,110.886,91.79,111.239,86.321,93.071" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M85.792,111.063 C85.057,136.071 84.419,157.763 83.682,182.816" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0006" data-link-type="extension" id="lnk8">
+      <polygon fill="none" points="123.135,85.516,136.226,99.25,141.848,88.649,123.135,85.516" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M139.037,93.949 C147.305,98.334 139.853,95.108 147,101 C175.688,124.648 200.938,159.752 215.841,182.754" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0009" data-link-type="composition" id="lnk10">
+      <polygon fill="#181818" points="268.594,207,274.594,211,280.594,207,274.594,203,268.594,207" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M280.594,207 C286.469,207 280.345,207 286.221,207" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="98px" preserveAspectRatio="none" style="width:92px;height:98px;background:#FFFFFF;" version="1.1" viewBox="0 0 92 98" width="92px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity <$react{scale=0.2}>-->
+    <g class="entity" data-qualified-name="..react.scale.0.2.." data-source-line="8" id="ent0001">
+      <rect fill="#F1F1F1" height="69.538" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="69.538" x="6" y="12"/>
+      <ellipse cx="40.769" cy="46.769" fill="#61DAFB" rx="4.415" ry="4.415" style="stroke:#61DAFB;stroke-width:0.5;"/>
+      <path d="M17.077,46.769 A23.692,9.046 0 0 1 40.769,37.723 A23.692,9.046 0 0 1 64.462,46.769 A23.692,9.046 0 0 1 40.769,55.815 A23.692,9.046 0 0 1 17.077,46.769" fill="none" style="stroke:#61DAFB;stroke-width:2.154;"/>
+      <path d="M28.923,26.251 A23.692,9.046 60 0 1 48.603,42.246 A23.692,9.046 60 0 1 52.615,67.287 A23.692,9.046 60 0 1 32.935,51.292 A23.692,9.046 60 0 1 28.923,26.251" fill="none" style="stroke:#61DAFB;stroke-width:2.154;"/>
+      <path d="M52.615,26.251 A23.692,9.046 120 0 1 48.603,51.292 A23.692,9.046 120 0 1 28.923,67.287 A23.692,9.046 120 0 1 32.935,42.246 A23.692,9.046 120 0 1 52.615,26.251" fill="none" style="stroke:#61DAFB;stroke-width:2.154;"/>
+    </g>
+  </g>
+</svg>

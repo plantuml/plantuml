@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startchart
+h-axis 0 --> 100
+v-axis 0 --> 100 grid
+scatter [(10,45), (25,62), (40,58), (55,70)] #3498db
+@endchart

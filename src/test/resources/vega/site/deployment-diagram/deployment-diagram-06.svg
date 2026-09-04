@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="54px" preserveAspectRatio="none" style="width:222px;height:54px;background:#FFFFFF;" version="1.1" viewBox="0 0 222 54" width="222px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity usecase1-->
+    <g class="entity" data-qualified-name="usecase1" data-source-line="2" id="ent0001">
+      <ellipse cx="51.382" cy="24.899" fill="#F1F1F1" rx="45.382" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="59.938" x="21.413" y="28.399">usecase1</text>
+    </g>
+    <!--entity usecase2-->
+    <g class="entity" data-qualified-name="usecase2" data-source-line="3" id="ent0002">
+      <ellipse cx="160.382" cy="24.899" fill="#F1F1F1" rx="45.382" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="59.938" x="130.413" y="28.399">usecase2</text>
+    </g>
+  </g>
+</svg>

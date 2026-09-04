@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startmindmap
+* count
+** 100
+*** 101
+*** 102
+** 200
+
+left side
+
+** A
+*** AA
+*** AB
+** B
+@endmindmap

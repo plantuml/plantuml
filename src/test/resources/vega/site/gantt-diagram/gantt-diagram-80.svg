@@ -1,0 +1,250 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="126px" preserveAspectRatio="none" style="width:817px;height:126px;background:#FFFFFF;" version="1.1" viewBox="0 0 817 126" width="817px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="121.063" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="121.063" y1="55" y2="55"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="121.063" y1="85" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="36.625" x2="36.625" y1="0" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="73.25" x2="73.25" y1="0" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="121.063" x2="121.063" y1="0" y2="85"/>
+    <text fill="#000" font-size="10" textLength="21.063" x="5" y="30.278">Start</text>
+    <text fill="#000" font-size="10" textLength="17.813" x="41.625" y="30.278">End</text>
+    <text fill="#000" font-size="10" textLength="37.813" x="78.25" y="30.278">Duration</text>
+    <text fill="#000" font-size="10" textLength="26.625" x="5" y="65.278">Oct 30</text>
+    <text fill="#000" font-size="10" textLength="26.625" x="41.625" y="65.278">Oct 30</text>
+    <text fill="#000" font-size="10" textLength="21.688" x="78.25" y="65.278">1 day</text>
+    <text fill="#000" font-size="10" textLength="21.062" x="5" y="80.278">Oct 1</text>
+    <text fill="#000" font-size="10" textLength="26.625" x="41.625" y="80.278">Oct 11</text>
+    <text fill="#000" font-size="10" textLength="32.25" x="78.25" y="80.278">11 days</text>
+    <rect fill="#FA8072" height="30" style="stroke:none;" width="48" x="137.063" y="55"/>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;" width="16" x="281.063" y="55"/>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;" width="16" x="393.063" y="55"/>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;" width="16" x="505.063" y="55"/>
+    <rect fill="#AAF" height="30" style="stroke:none;" width="16" x="601.063" y="55"/>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;" width="16" x="617.063" y="55"/>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;" width="16" x="729.063" y="55"/>
+    <text fill="#000" font-size="12" font-weight="700" textLength="85.35" x="166.388" y="9.333">September 2018</text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="69.3" x="502.413" y="9.333">October 2018</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="123.219" y="21.778">Th</text>
+    <text fill="#000" font-size="10" textLength="9.438" x="140.344" y="21.778">Fr</text>
+    <text fill="#000" font-size="10" textLength="12.25" x="154.938" y="21.778">Sa</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="170.938" y="21.778">Su</text>
+    <text fill="#000" font-size="10" textLength="13.875" x="186.125" y="21.778">Mo</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="203.219" y="21.778">Tu</text>
+    <text fill="#000" font-size="10" textLength="15" x="217.563" y="21.778">We</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="235.219" y="21.778">Th</text>
+    <text fill="#000" font-size="10" textLength="9.438" x="252.344" y="21.778">Fr</text>
+    <text fill="#000" font-size="10" textLength="12.25" x="266.938" y="21.778">Sa</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="282.938" y="21.778">Su</text>
+    <text fill="#000" font-size="10" textLength="13.875" x="298.125" y="21.778">Mo</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="315.219" y="21.778">Tu</text>
+    <text fill="#000" font-size="10" textLength="15" x="329.563" y="21.778">We</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="347.219" y="21.778">Th</text>
+    <text fill="#000" font-size="10" textLength="9.438" x="364.344" y="21.778">Fr</text>
+    <text fill="#000" font-size="10" textLength="12.25" x="378.938" y="21.778">Sa</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="394.938" y="21.778">Su</text>
+    <text fill="#000" font-size="10" textLength="13.875" x="410.125" y="21.778">Mo</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="427.219" y="21.778">Tu</text>
+    <text fill="#000" font-size="10" textLength="15" x="441.563" y="21.778">We</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="459.219" y="21.778">Th</text>
+    <text fill="#000" font-size="10" textLength="9.438" x="476.344" y="21.778">Fr</text>
+    <text fill="#000" font-size="10" textLength="12.25" x="490.938" y="21.778">Sa</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="506.938" y="21.778">Su</text>
+    <text fill="#000" font-size="10" textLength="13.875" x="522.125" y="21.778">Mo</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="539.219" y="21.778">Tu</text>
+    <text fill="#000" font-size="10" textLength="15" x="553.563" y="21.778">We</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="571.219" y="21.778">Th</text>
+    <text fill="#000" font-size="10" textLength="9.438" x="588.344" y="21.778">Fr</text>
+    <text fill="#000" font-size="10" textLength="12.25" x="602.938" y="21.778">Sa</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="618.938" y="21.778">Su</text>
+    <text fill="#000" font-size="10" textLength="13.875" x="634.125" y="21.778">Mo</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="651.219" y="21.778">Tu</text>
+    <text fill="#000" font-size="10" textLength="15" x="665.563" y="21.778">We</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="683.219" y="21.778">Th</text>
+    <text fill="#000" font-size="10" textLength="9.438" x="700.344" y="21.778">Fr</text>
+    <text fill="#000" font-size="10" textLength="12.25" x="714.938" y="21.778">Sa</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="730.938" y="21.778">Su</text>
+    <text fill="#000" font-size="10" textLength="13.875" x="746.125" y="21.778">Mo</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="763.219" y="21.778">Tu</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="123.5" y="33.778">20</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="139.5" y="33.778">21</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="155.5" y="33.778">22</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="171.5" y="33.778">23</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="187.5" y="33.778">24</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="203.5" y="33.778">25</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="219.5" y="33.778">26</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="235.5" y="33.778">27</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="251.5" y="33.778">28</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="267.5" y="33.778">29</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="283.5" y="33.778">30</text>
+    <text fill="#000" font-size="10" x="302.281" y="33.778">1</text>
+    <text fill="#000" font-size="10" x="318.281" y="33.778">2</text>
+    <text fill="#000" font-size="10" x="334.281" y="33.778">3</text>
+    <text fill="#000" font-size="10" x="350.281" y="33.778">4</text>
+    <text fill="#000" font-size="10" x="366.281" y="33.778">5</text>
+    <text fill="#000" font-size="10" x="382.281" y="33.778">6</text>
+    <text fill="#989898" font-size="10" x="398.281" y="33.778">7</text>
+    <text fill="#000" font-size="10" x="414.281" y="33.778">8</text>
+    <text fill="#000" font-size="10" x="430.281" y="33.778">9</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="443.5" y="33.778">10</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="459.5" y="33.778">11</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="475.5" y="33.778">12</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="491.5" y="33.778">13</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="507.5" y="33.778">14</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="523.5" y="33.778">15</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="539.5" y="33.778">16</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="555.5" y="33.778">17</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="571.5" y="33.778">18</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="587.5" y="33.778">19</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="603.5" y="33.778">20</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="619.5" y="33.778">21</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="635.5" y="33.778">22</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="651.5" y="33.778">23</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="667.5" y="33.778">24</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="683.5" y="33.778">25</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="699.5" y="33.778">26</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="715.5" y="33.778">27</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="731.5" y="33.778">28</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="747.5" y="33.778">29</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="763.5" y="33.778">30</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="121.063" x2="121.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="137.063" x2="137.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="153.063" x2="153.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="169.063" x2="169.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="185.063" x2="185.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="201.063" x2="201.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="217.063" x2="217.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="233.063" x2="233.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="249.063" x2="249.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="265.063" x2="265.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="281.063" x2="281.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="297.063" x2="297.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="313.063" x2="313.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="329.063" x2="329.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="345.063" x2="345.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="361.063" x2="361.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="377.063" x2="377.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="393.063" x2="393.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="409.063" x2="409.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="425.063" x2="425.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="441.063" x2="441.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="457.063" x2="457.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="473.063" x2="473.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="489.063" x2="489.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="505.063" x2="505.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="521.063" x2="521.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="537.063" x2="537.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="553.063" x2="553.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="569.063" x2="569.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="585.063" x2="585.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="601.063" x2="601.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="617.063" x2="617.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="633.063" x2="633.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="649.063" x2="649.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="665.063" x2="665.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="681.063" x2="681.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="697.063" x2="697.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="713.063" x2="713.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="729.063" x2="729.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="745.063" x2="745.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="761.063" x2="761.063" y1="55" y2="85"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="777.063" x2="777.063" y1="55" y2="85"/>
+    <text fill="#000" font-size="12" textLength="123.45" x="137.063" y="48.333">Vacation in the Bahamas</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="121.063" x2="777.063" y1="55" y2="55"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="121.063" x2="777.063" y1="85" y2="85"/>
+    <polygon fill="#000" points="769.063,57,774.063,62,769.063,67,764.063,62" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="95" x="299.063" y="72"/>
+    <path d="M393.063,83 L299.063,83 L299.063,72 L393.063,72" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="62" x="409.063" y="72"/>
+    <path d="M409.063,72 L471.063,72 L471.063,83 L409.063,83" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="396.063" x2="406.063" y1="72" y2="72"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="396.063" x2="406.063" y1="83" y2="83"/>
+    <text fill="#000" font-size="11" textLength="18.975" x="777.063" y="65.556">Foo</text>
+    <text fill="#000" font-size="11" textLength="37.881" x="303.063" y="80.556">Dummy</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="123.219" y="92.778">Th</text>
+    <text fill="#000" font-size="10" textLength="9.438" x="140.344" y="92.778">Fr</text>
+    <text fill="#000" font-size="10" textLength="12.25" x="154.938" y="92.778">Sa</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="170.938" y="92.778">Su</text>
+    <text fill="#000" font-size="10" textLength="13.875" x="186.125" y="92.778">Mo</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="203.219" y="92.778">Tu</text>
+    <text fill="#000" font-size="10" textLength="15" x="217.563" y="92.778">We</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="235.219" y="92.778">Th</text>
+    <text fill="#000" font-size="10" textLength="9.438" x="252.344" y="92.778">Fr</text>
+    <text fill="#000" font-size="10" textLength="12.25" x="266.938" y="92.778">Sa</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="282.938" y="92.778">Su</text>
+    <text fill="#000" font-size="10" textLength="13.875" x="298.125" y="92.778">Mo</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="315.219" y="92.778">Tu</text>
+    <text fill="#000" font-size="10" textLength="15" x="329.563" y="92.778">We</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="347.219" y="92.778">Th</text>
+    <text fill="#000" font-size="10" textLength="9.438" x="364.344" y="92.778">Fr</text>
+    <text fill="#000" font-size="10" textLength="12.25" x="378.938" y="92.778">Sa</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="394.938" y="92.778">Su</text>
+    <text fill="#000" font-size="10" textLength="13.875" x="410.125" y="92.778">Mo</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="427.219" y="92.778">Tu</text>
+    <text fill="#000" font-size="10" textLength="15" x="441.563" y="92.778">We</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="459.219" y="92.778">Th</text>
+    <text fill="#000" font-size="10" textLength="9.438" x="476.344" y="92.778">Fr</text>
+    <text fill="#000" font-size="10" textLength="12.25" x="490.938" y="92.778">Sa</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="506.938" y="92.778">Su</text>
+    <text fill="#000" font-size="10" textLength="13.875" x="522.125" y="92.778">Mo</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="539.219" y="92.778">Tu</text>
+    <text fill="#000" font-size="10" textLength="15" x="553.563" y="92.778">We</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="571.219" y="92.778">Th</text>
+    <text fill="#000" font-size="10" textLength="9.438" x="588.344" y="92.778">Fr</text>
+    <text fill="#000" font-size="10" textLength="12.25" x="602.938" y="92.778">Sa</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="618.938" y="92.778">Su</text>
+    <text fill="#000" font-size="10" textLength="13.875" x="634.125" y="92.778">Mo</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="651.219" y="92.778">Tu</text>
+    <text fill="#000" font-size="10" textLength="15" x="665.563" y="92.778">We</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="683.219" y="92.778">Th</text>
+    <text fill="#000" font-size="10" textLength="9.438" x="700.344" y="92.778">Fr</text>
+    <text fill="#000" font-size="10" textLength="12.25" x="714.938" y="92.778">Sa</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="730.938" y="92.778">Su</text>
+    <text fill="#000" font-size="10" textLength="13.875" x="746.125" y="92.778">Mo</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="763.219" y="92.778">Tu</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="123.5" y="106.778">20</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="139.5" y="106.778">21</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="155.5" y="106.778">22</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="171.5" y="106.778">23</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="187.5" y="106.778">24</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="203.5" y="106.778">25</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="219.5" y="106.778">26</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="235.5" y="106.778">27</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="251.5" y="106.778">28</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="267.5" y="106.778">29</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="283.5" y="106.778">30</text>
+    <text fill="#000" font-size="10" x="302.281" y="106.778">1</text>
+    <text fill="#000" font-size="10" x="318.281" y="106.778">2</text>
+    <text fill="#000" font-size="10" x="334.281" y="106.778">3</text>
+    <text fill="#000" font-size="10" x="350.281" y="106.778">4</text>
+    <text fill="#000" font-size="10" x="366.281" y="106.778">5</text>
+    <text fill="#000" font-size="10" x="382.281" y="106.778">6</text>
+    <text fill="#989898" font-size="10" x="398.281" y="106.778">7</text>
+    <text fill="#000" font-size="10" x="414.281" y="106.778">8</text>
+    <text fill="#000" font-size="10" x="430.281" y="106.778">9</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="443.5" y="106.778">10</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="459.5" y="106.778">11</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="475.5" y="106.778">12</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="491.5" y="106.778">13</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="507.5" y="106.778">14</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="523.5" y="106.778">15</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="539.5" y="106.778">16</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="555.5" y="106.778">17</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="571.5" y="106.778">18</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="587.5" y="106.778">19</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="603.5" y="106.778">20</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="619.5" y="106.778">21</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="635.5" y="106.778">22</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="651.5" y="106.778">23</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="667.5" y="106.778">24</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="683.5" y="106.778">25</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="699.5" y="106.778">26</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="715.5" y="106.778">27</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="731.5" y="106.778">28</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="747.5" y="106.778">29</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="763.5" y="106.778">30</text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="85.35" x="166.388" y="121.333">September 2018</text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="69.3" x="502.413" y="121.333">October 2018</text>
+  </g>
+</svg>

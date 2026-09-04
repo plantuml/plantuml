@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+left to right direction
+
+class User {
+  id : INTEGER
+  ..
+  other_id : INTEGER
+}
+
+class Email {
+  id : INTEGER
+  ..
+  user_id : INTEGER
+  address : INTEGER
+}
+
+User::id *-- Email::user_id
+@enduml

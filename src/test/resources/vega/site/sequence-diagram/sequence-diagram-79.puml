@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+participant Alice
+participant Bob
+participant Carol
+
+Alice -> Bob : hello
+@enduml

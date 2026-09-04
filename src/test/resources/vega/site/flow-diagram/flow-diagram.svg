@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="FLOW" height="211px" preserveAspectRatio="none" style="width:201px;height:211px;background:#FFFFFF;" version="1.1" viewBox="0 0 201 211" width="201px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FEFECE" height="34" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1.5;" width="44.938" x="77.531" y="18"/>
+    <text fill="#000" font-family="serif" font-size="14" textLength="24.938" x="87.531" y="38.889">flow</text>
+    <rect fill="#FEFECE" height="34" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1.5;" width="40.213" x="79.894" y="88"/>
+    <text fill="#000" font-family="serif" font-size="14" textLength="20.213" x="89.894" y="108.889">bar</text>
+    <rect fill="#FEFECE" height="34" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1.5;" width="42.575" x="78.713" y="158"/>
+    <text fill="#000" font-family="serif" font-size="14" textLength="22.575" x="88.713" y="178.889">baz</text>
+    <line style="stroke:#A80036;stroke-width:1;" x1="100" x2="100" y1="52" y2="88"/>
+    <ellipse cx="100.5" cy="88.5" fill="#A80036" rx="3.5" ry="3.5" style="stroke:#A80036;stroke-width:1;"/>
+    <line style="stroke:#A80036;stroke-width:1;" x1="100" x2="100" y1="122" y2="158"/>
+    <ellipse cx="100.5" cy="158.5" fill="#A80036" rx="3.5" ry="3.5" style="stroke:#A80036;stroke-width:1;"/>
+  </g>
+</svg>

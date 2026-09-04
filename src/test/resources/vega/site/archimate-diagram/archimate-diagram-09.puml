@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+!include <archimate/Archimate>
+Motivation_Stakeholder(StakeholderElement, "Stakeholder Description")
+Business_Service(BService, "Business Service")
+Rel_Composition_Down(StakeholderElement, BService, "Description for the relationship")
+@enduml

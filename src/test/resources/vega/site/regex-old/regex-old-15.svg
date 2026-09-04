@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="REGEX" height="102px" preserveAspectRatio="none" style="width:156px;height:102px;background:#FFFFFF;" version="1.1" viewBox="0 0 156 102" width="156px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="114.45" x="20" y="30.889">requiredRepetition</text>
+    </g>
+    <line style="stroke:#181818;stroke-width:1;" x1="34.938" x2="34.938" y1="74" y2="74"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="17.788" x="34.938" y="62"/>
+    <text fill="#000" font-size="14" x="39.938" y="77.889">a</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="52.725" x2="72.725" y1="74" y2="74"/>
+    <path d="M80.725,66 C80.725,72 82.725,74 88.725,74" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="80.725" x2="80.725" y1="63" y2="66"/>
+    <path d="M80.725,63 C80.725,57 82.725,55 88.725,55" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="87.725" x2="105.513" y1="55" y2="55"/>
+    <path d="M96.398,55 L96.398,52 L90.398,55 L96.398,58 L96.398,55" fill="#181818"/>
+    <path d="M112.513,66 C112.513,72 110.513,74 104.513,74" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="112.513" x2="112.513" y1="63" y2="66"/>
+    <path d="M104.513,55 C110.513,55 112.513,57 112.513,63" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="72.725" x2="87.725" y1="74" y2="74"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="105.513" x2="120.513" y1="74" y2="74"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="17.788" x="87.725" y="62"/>
+    <text fill="#000" font-size="14" x="92.725" y="77.889">b</text>
+  </g>
+</svg>

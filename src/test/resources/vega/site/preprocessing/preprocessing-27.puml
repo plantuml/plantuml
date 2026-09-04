@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startmindmap
+!$list = %splitstr_regex("AbcDefGhi", "(?=[A-Z])")
+
+* root
+!foreach $item in $list
+  ** $item
+!endfor
+@endmindmap

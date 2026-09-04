@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startgantt
+[Test prototype] requires 10 days
+[Prototype completed] happens at [Test prototype]'s end
+[Setup assembly line] requires 12 days
+[Setup assembly line] starts at [Test prototype]'s end
+@endgantt

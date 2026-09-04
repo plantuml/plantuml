@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="634px" preserveAspectRatio="none" style="width:129px;height:634px;background:#FFFFFF;" version="1.1" viewBox="0 0 129 634" width="129px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="612" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="107.125" x="10" y="10"/>
+    <text fill="#000" font-size="14" textLength="38.15" x="15" y="22.889">adaml</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" textLength="61.425" x="15" y="40.889">archimate</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="15" y="58.889">aws</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="64" y2="64"/>
+    <text fill="#000" font-size="14" textLength="39.025" x="15" y="76.889">awslib</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="82" y2="82"/>
+    <text fill="#000" font-size="14" textLength="54.6" x="15" y="94.889">awslib10</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="100" y2="100"/>
+    <text fill="#000" font-size="14" textLength="54.6" x="15" y="112.889">awslib14</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="118" y2="118"/>
+    <text fill="#000" font-size="14" textLength="54.6" x="15" y="130.889">awslib20</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="136" y2="136"/>
+    <text fill="#000" font-size="14" textLength="35" x="15" y="148.889">azure</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="154" y2="154"/>
+    <text fill="#000" font-size="14" textLength="58.275" x="15" y="166.889">bootstrap</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="172" y2="172"/>
+    <text fill="#000" font-size="14" textLength="97.125" x="15" y="184.889">bootstrap1.12.1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="190" y2="190"/>
+    <text fill="#000" font-size="14" textLength="97.125" x="15" y="202.889">bootstrap1.13.1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="208" y2="208"/>
+    <text fill="#000" font-size="14" textLength="14.787" x="15" y="220.889">c4</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="226" y2="226"/>
+    <text fill="#000" font-size="14" textLength="38.938" x="15" y="238.889">classy</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="244" y2="244"/>
+    <text fill="#000" font-size="14" textLength="58.363" x="15" y="256.889">classy-c4</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="262" y2="262"/>
+    <text fill="#000" font-size="14" textLength="74.025" x="15" y="274.889">cloudinsight</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="280" y2="280"/>
+    <text fill="#000" font-size="14" textLength="56.875" x="15" y="292.889">cloudogu</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="298" y2="298"/>
+    <text fill="#000" font-size="14" textLength="76.213" x="15" y="310.889">domainstory</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="316" y2="316"/>
+    <text fill="#000" font-size="14" textLength="30.363" x="15" y="328.889">edgy</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="334" y2="334"/>
+    <text fill="#000" font-size="14" textLength="18.725" x="15" y="346.889">eip</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="352" y2="352"/>
+    <text fill="#000" font-size="14" textLength="39.725" x="15" y="364.889">elastic</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="370" y2="370"/>
+    <text fill="#000" font-size="14" textLength="22.575" x="15" y="382.889">gcp</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="388" y2="388"/>
+    <text fill="#000" font-size="14" textLength="22.575" x="15" y="400.889">ibm</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="406" y2="406"/>
+    <text fill="#000" font-size="14" textLength="21.787" x="15" y="418.889">k8s</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="424" y2="424"/>
+    <text fill="#000" font-size="14" textLength="69.212" x="15" y="436.889">kubernetes</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="442" y2="442"/>
+    <text fill="#000" font-size="14" textLength="33.512" x="15" y="454.889">logos</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="460" y2="460"/>
+    <text fill="#000" font-size="14" textLength="49.788" x="15" y="472.889">material</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="478" y2="478"/>
+    <text fill="#000" font-size="14" textLength="57.575" x="15" y="490.889">material2</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="496" y2="496"/>
+    <text fill="#000" font-size="14" textLength="88.638" x="15" y="508.889">material2.1.19</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="514" y2="514"/>
+    <text fill="#000" font-size="14" textLength="57.575" x="15" y="526.889">material7</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="532" y2="532"/>
+    <text fill="#000" font-size="14" textLength="88.638" x="15" y="544.889">material7.4.47</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="550" y2="550"/>
+    <text fill="#000" font-size="14" textLength="33.425" x="15" y="562.889">office</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="568" y2="568"/>
+    <text fill="#000" font-size="14" textLength="22.575" x="15" y="580.889">osa</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="586" y2="586"/>
+    <text fill="#000" font-size="14" textLength="30.362" x="15" y="598.889">osa2</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="117.125" y1="604" y2="604"/>
+    <text fill="#000" font-size="14" textLength="47.425" x="15" y="616.889">tupadr3</text>
+    <rect fill="none" height="612" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="107.125" x="10" y="10"/>
+  </g>
+</svg>

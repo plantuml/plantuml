@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="298px" preserveAspectRatio="none" style="width:172px;height:298px;background:#FFFFFF;" version="1.1" viewBox="0 0 172 298" width="172px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:1.5;" x1="54.35" x2="54.35" y1="72" y2="92"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="68.7" x="20" y="92"/>
+    <path d="M35,103 C32.79,103 31,104.79 31,107 C31,109.21 32.79,111 35,111 C37.21,111 39,109.21 39,107 C39,104.79 37.21,103 35,103 M35,104 C35.33,104 35.64,104.09 35.94,104.19 C35.73,104.39 35.49,104.57 35.53,104.75 C35.57,104.93 36.22,104.88 36.22,105.25 C36.22,105.52 35.8,105.6 36.09,105.91 C36.44,106.26 35.45,106.89 35.43,107.35 C35.4,108.18 36.27,108.32 36.96,108.32 C37.38,108.32 37.49,108.52 37.46,108.76 C36.92,109.53 36,110.01 34.99,110.01 C34.61,110.01 34.26,109.92 33.93,109.79 C34.15,109.35 33.65,108.48 33.18,108.2 C32.95,107.97 32.46,108.06 32.18,107.95 C32.09,107.68 32,107.41 31.99,107.11 C32.02,107.06 32.07,107.02 32.15,107.02 C32.34,107.02 32.6,107.4 32.74,107.36 C32.92,107.32 32,106.05 32.43,105.8 C32.63,105.68 33.03,106.19 32.9,105.64 C32.78,105.13 33.26,105.36 33.56,105.23 C33.82,105.12 34.01,104.82 33.69,104.64 C33.63,104.61 33.56,104.54 33.47,104.45 C33.92,104.18 34.44,104.01 35,104.01 M37.31,105.09 C37.49,105.31 37.63,105.55 37.75,105.81 C37.75,105.82 37.75,105.83 37.75,105.84 C37.71,105.91 37.64,105.95 37.53,106.06 C37.25,106.34 37.21,105.85 37.09,105.75 C36.96,105.63 36.49,105.77 36.43,105.62 C36.36,105.44 36.93,105.2 37.31,105.09" fill="#000"/>
+    <text fill="#000" font-size="12" textLength="38.7" x="40" y="111.333">Ubuntu</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="54.35" x2="64.35" y1="161" y2="161"/>
+    <rect fill="#F1F1F1" height="44" style="stroke:#181818;stroke-width:1.5;" width="87.35" x="64.35" y="139"/>
+    <text fill="#000" font-size="12" textLength="51.375" x="74.35" y="158.333">Linux Mint</text>
+    <text fill="#000" font-size="12" textLength="67.35" x="74.35" y="170.333">Open Source</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="54.35" x2="64.35" y1="214" y2="214"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="64.7" x="64.35" y="198"/>
+    <text fill="#000" font-size="12" textLength="44.7" x="74.35" y="217.333">Kubuntu</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="54.35" x2="64.35" y1="261" y2="261"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="29.9" x="64.35" y="245"/>
+    <text fill="#000" font-size="12" textLength="9.9" x="74.35" y="264.333">...</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="54.35" x2="54.35" y1="124" y2="261"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="54.35" x2="85.85" y1="72" y2="72"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="68.1" x="51.8" y="20"/>
+    <path d="M62.8,31 L62.8,39 L63.8,39 L63.8,31 L62.8,31 M64.8,31 L64.8,35 L66.8,35 L66.8,36 L70.8,36 L68.8,34.03 L70.8,32 L67.8,32 L67.8,31 L64.8,31" fill="#000"/>
+    <text fill="#000" font-size="12" textLength="38.1" x="71.8" y="39.333">Debian</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="85.85" x2="85.85" y1="52" y2="72"/>
+  </g>
+</svg>

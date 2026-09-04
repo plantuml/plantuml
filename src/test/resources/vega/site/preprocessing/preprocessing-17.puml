@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+!function $inc($string)
+!$val = %intval($string)
+!log value is $val
+!dump_memory
+!return $val+1
+!endfunction
+
+Alice -> Bob : 4 $inc("3")
+!unused = "foo"
+!dump_memory EOF
+@enduml

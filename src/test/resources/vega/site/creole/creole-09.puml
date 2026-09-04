@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startuml
+hide footbox
+note over Source
+<code>
+  This is **bold**
+  This is //italics//
+  This is ""monospaced""
+  This is --stricken-out--
+  This is __underlined__
+  This is ~~wave-underlined~~
+  --test Unicode and icons--
+  This is <U+221E> long
+  This is a <&code> icon
+</code>
+end note
+/note over Output
+  This is **bold**
+  This is //italics//
+  This is ""monospaced""
+  This is --stricken-out--
+  This is __underlined__
+  This is ~~wave-underlined~~
+  --test Unicode and icons--
+  This is <U+221E> long
+  This is a <&code> icon
+end note
+@enduml

@@ -1,0 +1,38 @@
+---
+output: svg
+---
+@startuml
+<style>
+.stereo {
+  BackgroundColor palegreen
+}
+</style>
+actor actor << stereo >>
+actor/ "actor/" << stereo >>
+agent agent << stereo >>
+artifact artifact << stereo >>
+boundary boundary << stereo >>
+card card << stereo >>
+circle circle << stereo >>
+cloud cloud << stereo >>
+collections collections << stereo >>
+component component << stereo >>
+control control << stereo >>
+database database << stereo >>
+entity entity << stereo >>
+file file << stereo >>
+folder folder << stereo >>
+frame frame << stereo >>
+hexagon hexagon << stereo >>
+interface interface << stereo >>
+label label << stereo >>
+node node << stereo >>
+package package << stereo >>
+person person << stereo >>
+queue queue << stereo >>
+rectangle rectangle << stereo >>
+stack stack << stereo >>
+storage storage << stereo >>
+usecase usecase << stereo >>
+usecase/ "usecase/" << stereo >>
+@enduml

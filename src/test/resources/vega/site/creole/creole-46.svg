@@ -1,0 +1,185 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="861px" preserveAspectRatio="none" style="width:686px;height:861px;background:#FFFFFF;" version="1.1" viewBox="0 0 686 861" width="686px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="48" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="185.025" x="10" y="406"/>
+    <text fill="#000" font-size="14" textLength="95.025" x="20" y="426.889">Style equivalent</text>
+    <text fill="#000" font-size="14" textLength="165.025" x="20" y="440.889">(between Creole and HTML)</text>
+    <rect fill="#F1F1F1" height="314" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="273.575" x="245.025" y="20"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="41.3" x="255.025" y="40.889">Creole</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="245.025" x2="518.6" y1="49" y2="49"/>
+    <rect fill="#C0C0C0" height="14" style="stroke:none;" width="253.575" x="255.025" y="56"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="30.362" x="255.025" y="66.889">code</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="38.85" x="391.788" y="66.889">output</text>
+    <text fill="#000" font-size="14" x="255.025" y="80.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="255.025" y="94.889">This is</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="48.213" x="291.688" y="94.889">**bold**</text>
+    <text fill="#000" font-size="14" x="255.025" y="108.889"> </text>
+    <text fill="#000" font-size="14" x="391.788" y="80.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="391.788" y="94.889">This is</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="26.513" x="428.45" y="94.889">bold</text>
+    <text fill="#000" font-size="14" x="454.963" y="94.889"> </text>
+    <text fill="#000" font-size="14" x="255.025" y="122.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="255.025" y="136.889">This is</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="50.488" x="291.688" y="136.889">//italics//</text>
+    <text fill="#000" font-size="14" x="255.025" y="150.889"> </text>
+    <text fill="#000" font-size="14" x="391.788" y="122.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="391.788" y="136.889">This is</text>
+    <text fill="#000" font-size="14" font-style="italic" textLength="35.088" x="428.45" y="136.889">italics</text>
+    <text fill="#000" font-size="14" x="463.538" y="136.889"> </text>
+    <text fill="#000" font-size="14" x="255.025" y="164.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="255.025" y="178.889">This is</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="100.1" x="291.688" y="178.889">""monospaced""</text>
+    <text fill="#000" font-size="14" x="255.025" y="192.889"> </text>
+    <text fill="#000" font-size="14" x="391.788" y="164.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="391.788" y="178.889">This is</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="80.15" x="428.45" y="178.889">monospaced</text>
+    <text fill="#000" font-size="14" x="508.6" y="178.889"> </text>
+    <text fill="#000" font-size="14" x="255.025" y="206.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="255.025" y="220.889">This is</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="64.4" x="291.688" y="220.889">--stroked--</text>
+    <text fill="#000" font-size="14" x="255.025" y="234.889"> </text>
+    <text fill="#000" font-size="14" x="391.788" y="206.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="391.788" y="220.889">This is</text>
+    <text fill="#000" font-size="14" text-decoration="line-through" textLength="45.85" x="428.45" y="220.889">stroked</text>
+    <text fill="#000" font-size="14" x="474.3" y="220.889"> </text>
+    <text fill="#000" font-size="14" x="255.025" y="248.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="255.025" y="262.889">This is</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="96.6" x="291.688" y="262.889">__underlined__</text>
+    <text fill="#000" font-size="14" x="255.025" y="276.889"> </text>
+    <text fill="#000" font-size="14" textLength="7.7" x="391.788" y="248.889">  </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="391.788" y="262.889">This is</text>
+    <text fill="#000" font-size="14" text-decoration="underline" textLength="65.45" x="428.45" y="262.889">underlined</text>
+    <text fill="#000" font-size="14" x="493.9" y="262.889"> </text>
+    <text fill="#000" font-size="14" x="255.025" y="290.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="255.025" y="304.889">This is</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="73.413" x="291.688" y="304.889">~~waved~~</text>
+    <text fill="#000" font-size="14" x="255.025" y="318.889"> </text>
+    <text fill="#000" font-size="14" x="391.788" y="290.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="391.788" y="304.889">This is</text>
+    <text fill="#000" font-size="14" text-decoration="wavy underline" textLength="40.512" x="428.45" y="304.889">waved</text>
+    <text fill="#000" font-size="14" x="468.963" y="304.889"> </text>
+    <line style="stroke:#000;stroke-width:1.5;" x1="255.025" x2="508.6" y1="56" y2="56"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="255.025" x2="508.6" y1="70" y2="70"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="255.025" x2="508.6" y1="112" y2="112"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="255.025" x2="508.6" y1="154" y2="154"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="255.025" x2="508.6" y1="196" y2="196"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="255.025" x2="508.6" y1="238" y2="238"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="255.025" x2="508.6" y1="280" y2="280"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="255.025" x2="508.6" y1="322" y2="322"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="255.025" x2="255.025" y1="56" y2="322"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="391.788" x2="391.788" y1="56" y2="322"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="508.6" x2="508.6" y1="56" y2="322"/>
+    <path d="M195.025,430 L205.025,430 C220.025,430 220.025,177 235.025,177 L245.025,177" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="486" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="420.925" x="245.025" y="354"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="104.388" x="255.025" y="374.889">Legacy HTML like</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="245.025" x2="665.95" y1="383" y2="383"/>
+    <rect fill="#C0C0C0" height="14" style="stroke:none;" width="400.925" x="255.025" y="390"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="30.362" x="255.025" y="400.889">code</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="38.85" x="539.138" y="400.889">output</text>
+    <text fill="#000" font-size="14" x="255.025" y="414.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="255.025" y="428.889">This is</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="78.838" x="291.688" y="428.889">&lt;b&gt;bold&lt;/b&gt;</text>
+    <text fill="#000" font-size="14" x="255.025" y="442.889"> </text>
+    <text fill="#000" font-size="14" x="539.138" y="414.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="539.138" y="428.889">This is</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="26.513" x="575.8" y="428.889">bold</text>
+    <text fill="#000" font-size="14" x="602.313" y="428.889"> </text>
+    <text fill="#000" font-size="14" x="255.025" y="456.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="255.025" y="470.889">This is</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="78.138" x="291.688" y="470.889">&lt;i&gt;italics&lt;/i&gt;</text>
+    <text fill="#000" font-size="14" x="255.025" y="484.889"> </text>
+    <text fill="#000" font-size="14" x="539.138" y="456.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="539.138" y="470.889">This is</text>
+    <text fill="#000" font-size="14" font-style="italic" textLength="35.088" x="575.8" y="470.889">italics</text>
+    <text fill="#000" font-size="14" x="610.888" y="470.889"> </text>
+    <text fill="#000" font-size="14" x="255.025" y="498.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="255.025" y="512.889">This is</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="247.45" x="291.688" y="512.889">&lt;font:monospaced&gt;monospaced&lt;/font&gt;</text>
+    <text fill="#000" font-size="14" x="255.025" y="526.889"> </text>
+    <text fill="#000" font-size="14" x="539.138" y="498.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="539.138" y="512.889">This is</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="80.15" x="575.8" y="512.889">monospaced</text>
+    <text fill="#000" font-size="14" x="655.95" y="512.889"> </text>
+    <text fill="#000" font-size="14" x="255.025" y="540.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="255.025" y="554.889">This is</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="96.6" x="291.688" y="554.889">&lt;s&gt;stroked&lt;/s&gt;</text>
+    <text fill="#000" font-size="14" x="255.025" y="568.889"> </text>
+    <text fill="#000" font-size="14" x="539.138" y="540.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="539.138" y="554.889">This is</text>
+    <text fill="#000" font-size="14" text-decoration="line-through" textLength="45.85" x="575.8" y="554.889">stroked</text>
+    <text fill="#000" font-size="14" x="621.65" y="554.889"> </text>
+    <text fill="#000" font-size="14" x="255.025" y="582.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="255.025" y="596.889">This is</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="117.775" x="291.688" y="596.889">&lt;u&gt;underlined&lt;/u&gt;</text>
+    <text fill="#000" font-size="14" x="255.025" y="610.889"> </text>
+    <text fill="#000" font-size="14" x="539.138" y="582.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="539.138" y="596.889">This is</text>
+    <text fill="#000" font-size="14" text-decoration="underline" textLength="65.45" x="575.8" y="596.889">underlined</text>
+    <text fill="#000" font-size="14" x="641.25" y="596.889"> </text>
+    <text fill="#000" font-size="14" x="255.025" y="624.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="255.025" y="638.889">This is</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="97.563" x="291.688" y="638.889">&lt;w&gt;waved&lt;/w&gt;</text>
+    <text fill="#000" font-size="14" x="255.025" y="652.889"> </text>
+    <text fill="#000" font-size="14" x="539.138" y="624.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="539.138" y="638.889">This is</text>
+    <text fill="#000" font-size="14" text-decoration="wavy underline" textLength="40.512" x="575.8" y="638.889">waved</text>
+    <text fill="#000" font-size="14" x="616.313" y="638.889"> </text>
+    <line style="stroke:#000;stroke-width:1.5;" x1="255.025" x2="655.95" y1="390" y2="390"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="255.025" x2="655.95" y1="404" y2="404"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="255.025" x2="655.95" y1="446" y2="446"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="255.025" x2="655.95" y1="488" y2="488"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="255.025" x2="655.95" y1="530" y2="530"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="255.025" x2="655.95" y1="572" y2="572"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="255.025" x2="655.95" y1="614" y2="614"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="255.025" x2="655.95" y1="656" y2="656"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="255.025" x2="255.025" y1="390" y2="656"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="539.138" x2="539.138" y1="390" y2="656"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="655.95" x2="655.95" y1="390" y2="656"/>
+    <text fill="#000" font-size="14" x="255.025" y="668.889"> </text>
+    <text fill="#000" font-size="14" textLength="127.575" x="255.025" y="682.889">And color as a bonus...</text>
+    <rect fill="#C0C0C0" height="14" style="stroke:none;" width="296.275" x="255.025" y="688"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="30.362" x="255.025" y="698.889">code</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="38.85" x="449.188" y="698.889">output</text>
+    <text fill="#000" font-size="14" x="255.025" y="712.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="255.025" y="726.889">This is</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="19.075" x="291.688" y="726.889">&lt;s:</text>
+    <text fill="#008000" font-family="monospace" font-size="14" textLength="35.788" x="310.763" y="726.889">green</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="81.375" x="346.55" y="726.889">&gt;stroked&lt;/s&gt;</text>
+    <text fill="#000" font-size="14" x="255.025" y="740.889"> </text>
+    <text fill="#000" font-size="14" x="449.188" y="712.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="449.188" y="726.889">This is</text>
+    <text fill="#000" font-size="14" textLength="45.85" x="485.85" y="726.889">stroked</text>
+    <line style="stroke:#008000;stroke-width:0.5;" x1="485.85" x2="531.7" y1="723.389" y2="723.389"/>
+    <text fill="#000" font-size="14" x="531.7" y="726.889"> </text>
+    <text fill="#000" font-size="14" x="255.025" y="754.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="255.025" y="768.889">This is</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="19.863" x="291.688" y="768.889">&lt;u:</text>
+    <text fill="#F00" font-family="monospace" font-size="14" textLength="20.213" x="311.55" y="768.889">red</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="101.763" x="331.763" y="768.889">&gt;underlined&lt;/u&gt;</text>
+    <text fill="#000" font-size="14" x="255.025" y="782.889"> </text>
+    <text fill="#000" font-size="14" x="449.188" y="754.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="449.188" y="768.889">This is</text>
+    <text fill="#000" font-size="14" textLength="65.45" x="485.85" y="768.889">underlined</text>
+    <line style="stroke:#F00;stroke-width:0.5;" x1="485.85" x2="551.3" y1="769.889" y2="769.889"/>
+    <text fill="#000" font-size="14" x="551.3" y="768.889"> </text>
+    <text fill="#000" font-size="14" x="255.025" y="796.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="255.025" y="810.889">This is</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="22.225" x="291.688" y="810.889">&lt;w:</text>
+    <text fill="#00F" font-family="monospace" font-size="14" textLength="56.087" x="313.913" y="810.889">#0000FF</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="79.188" x="370" y="810.889">&gt;waved&lt;/w&gt;</text>
+    <text fill="#000" font-size="14" x="255.025" y="824.889"> </text>
+    <text fill="#000" font-size="14" x="449.188" y="796.889"> </text>
+    <text fill="#000" font-size="14" textLength="36.663" x="449.188" y="810.889">This is</text>
+    <text fill="#000" font-size="14" text-decoration="wavy underline" textLength="40.512" x="485.85" y="810.889">waved</text>
+    <text fill="#000" font-size="14" x="526.363" y="810.889"> </text>
+    <line style="stroke:#000;stroke-width:1.5;" x1="255.025" x2="551.3" y1="688" y2="688"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="255.025" x2="551.3" y1="702" y2="702"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="255.025" x2="551.3" y1="744" y2="744"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="255.025" x2="551.3" y1="786" y2="786"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="255.025" x2="551.3" y1="828" y2="828"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="255.025" x2="255.025" y1="688" y2="828"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="449.188" x2="449.188" y1="688" y2="828"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="551.3" x2="551.3" y1="688" y2="828"/>
+    <path d="M195.025,430 L205.025,430 C220.025,430 220.025,597 235.025,597 L245.025,597" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+<style>
+element {
+  backgroundColor: #OrangeRed;
+}
+
+@media (prefers-color-scheme:dark) {
+element {
+  backgroundColor: #DarkGoldenRod;
+}
+}
+</style>
+
+Alice -> Bob
+@enduml

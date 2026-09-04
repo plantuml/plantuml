@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startnwdiag
+network dmz {
+  address = "210.x.x.x/24"
+}
+@endnwdiag

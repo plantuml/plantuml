@@ -1,0 +1,56 @@
+---
+output: svg
+---
+@startuml
+hide empty members
+hide circle
+
+class "<:wrench:> Property" as Property {
+<#transparent,#transparent>|<:link:>| id| iri| 1..1|
+|<:spiral_notepad:>| name (bsdd:name)| string| 1..1|
+|<:calendar:>| activationDateUtc| dateTime| 1..1|
+|<:spiral_notepad:>| code| string| 1..1|
+|<:spiral_notepad:>| connectedPropertyCode| string| 0..*|
+|<:spiral_notepad:>| countryOfOrigin| string| 0..1|
+|<:spiral_notepad:>| countryOfUse| string| 0..*|
+|<:spiral_notepad:>| creatorLanguageCode| string| 0..1|
+|<:spiral_notepad:>| dataType| string| 0..1|
+|<:calendar:>| deActivationDateUtc| dateTime| 0..1|
+|<:spiral_notepad:>| definition| string| 0..1|
+|<:spiral_notepad:>| deprecationExplanation| string| 0..1|
+|<:spiral_notepad:>| description| string| 0..1|
+|<:spiral_notepad:>| dimension| string| 0..1|
+|<:1234:>| dimensionAmountOfSubstance| int| 0..1|
+|<:1234:>| dimensionElectricCurrent| int| 0..1|
+|<:1234:>| dimensionLength| int| 0..1|
+|<:1234:>| dimensionLuminousIntensity| int| 0..1|
+|<:1234:>| dimensionMass| int| 0..1|
+|<:1234:>| dimensionThermodynamicTemperature| int| 0..1|
+|<:1234:>| dimensionTime| int| 0..1|
+|<:spiral_notepad:>| documentReference| string| 0..1|
+|<:spiral_notepad:>| dynamicParameterPropertyCodes| string| 0..*|
+|<:spiral_notepad:>| example| string| 0..1|
+|<:ballot_box_with_check:>| isDynamic| boolean| 1..1|
+|<:eight_spoked_asterisk:>| maxExclusive| decimal| 0..1|
+|<:eight_spoked_asterisk:>| maxInclusive| decimal| 0..1|
+|<:spiral_notepad:>| methodOfMeasurement| string| 0..1|
+|<:eight_spoked_asterisk:>| minExclusive| decimal| 0..1|
+|<:eight_spoked_asterisk:>| minInclusive| decimal| 0..1|
+|<:spiral_notepad:>| name| string| 1..1|
+|<:spiral_notepad:>| pattern| string| 0..1|
+|<:spiral_notepad:>| physicalQuantity| string| 0..1|
+|<:book:>| propertyValueKind| PropertyValueKind| 0..1|
+|<:spiral_notepad:>| replacedObjectCodes| string| 0..*|
+|<:spiral_notepad:>| replacingObjectCodes| string| 0..*|
+|<:calendar:>| revisionDateUtc| dateTime| 0..1|
+|<:1234:>| revisionNumber| int| 0..1|
+|<:spiral_notepad:>| status| string| 1..1|
+|<:spiral_notepad:>| subdivisionsOfUse| string| 0..*|
+|<:spiral_notepad:>| textFormat| string| 0..1|
+|<:spiral_notepad:>| uid| string| 0..1|
+|<:spiral_notepad:>| unit| string| 0..*|
+|<:calendar:>| versionDateUtc| dateTime| 0..1|
+|<:1234:>| versionNumber| int| 0..1|
+|<:link:>| visualRepresentationUri| iri| 0..1|
+}
+@enduml

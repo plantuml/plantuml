@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startnwdiag
+nwdiag {
+  network Network {
+      Server [description="**test list 1**\n* Bullet list\n* Second item\n** Sub item\n*** Sub sub item\n* Third item\n----\n**test list 2**\n# Numbered list\n# Second item\n## Sub item\n## Another sub item\n# Third item"];
+}
+@endnwdiag

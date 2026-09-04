@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startgantt
+<style>
+ganttDiagram {
+  timeline {
+    LineColor transparent
+    FontColor transparent
+ }
+}
+</style>
+
+hide footbox
+[Test prototype] requires 7 days
+[Prototype completed] happens at [Test prototype]'s end
+[Setup assembly line] requires 9 days
+[Setup assembly line] starts at [Test prototype]'s end
+then [Setup] requires 5 days
+[T2] requires 2 days and starts at [Test prototype]'s end
+then [T3] requires 3 days
+-- end task --
+then [T4] requires 2 days
+@endgantt

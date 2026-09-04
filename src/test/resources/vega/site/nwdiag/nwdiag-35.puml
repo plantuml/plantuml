@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startnwdiag
+nwdiag {
+  network Network {
+    Actor       [shape = actor]
+    Agent       [shape = agent]
+    Artifact    [shape = artifact]
+    Boundary    [shape = boundary]
+    Card        [shape = card]
+    Cloud       [shape = cloud]
+    Collections [shape = collections]
+    Component   [shape = component]
+  }
+}
+@endnwdiag

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="187px" preserveAspectRatio="none" style="width:202px;height:187px;background:#FFFFFF;" version="1.1" viewBox="0 0 202 187" width="202px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#DDD" height="161" style="stroke:#181818;stroke-width:0.5;" width="169.137" x="16" y="11"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="64.269" x="68.434" y="21.111">component</text>
+    <rect fill="#DDD" height="143" style="stroke:#181818;stroke-width:0.5;" width="104.944" x="16" y="29"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="28.194" x="54.375" y="39.111">sub1</text>
+    <text fill="#000" font-size="13" font-weight="700" x="54.375" y="52.111"> </text>
+    <text fill="#000" font-size="13" font-weight="700" x="54.375" y="65.111"> </text>
+    <rect fill="#DDD" height="99" style="stroke:#181818;stroke-width:0.5;" width="73.156" x="47.788" y="73"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="49.156" x="59.788" y="83.111">subsub1</text>
+    <rect fill="#DDD" height="143" style="stroke:#181818;stroke-width:0.5;" width="52.194" x="132.944" y="29"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="28.194" x="144.944" y="39.111">sub2</text>
+    <g>
+      <title>a</title>
+      <rect fill="#000" fill-opacity="0" height="18" width="8" x="27.394" y="119"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="30.894" x2="30.894" y1="119" y2="137"/>
+    </g>
+    <g>
+      <title>suba</title>
+      <rect fill="#000" fill-opacity="0" height="18" width="8" x="80.866" y="119"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="84.366" x2="84.366" y1="119" y2="137"/>
+    </g>
+    <g>
+      <title>b</title>
+      <rect fill="#000" fill-opacity="0" height="18" width="8" x="155.541" y="119"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="159.041" x2="159.041" y1="119" y2="137"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="20" y="90"/>
+    <text fill="#000" font-size="14" x="27" y="107.889">a</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.363" x="62.184" y="90"/>
+    <text fill="#000" font-size="14" textLength="30.362" x="69.184" y="107.889">suba</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="148.147" y="90"/>
+    <text fill="#000" font-size="14" x="155.147" y="107.889">b</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="20" y="137"/>
+    <text fill="#000" font-size="14" x="27" y="154.889">a</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.363" x="62.184" y="137"/>
+    <text fill="#000" font-size="14" textLength="30.362" x="69.184" y="154.889">suba</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="148.147" y="137"/>
+    <text fill="#000" font-size="14" x="155.147" y="154.889">b</text>
+  </g>
+</svg>

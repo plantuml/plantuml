@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="328px" preserveAspectRatio="none" style="width:186px;height:328px;background:#FFFFFF;" version="1.1" viewBox="0 0 186 328" width="186px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="150" x="16" y="16"/>
+    <text fill="#000" font-size="12" textLength="40.05" x="26" y="35.333">Action 1</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="150" x="16" y="68"/>
+    <ellipse cx="31.5" cy="82.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-size="12" textLength="75.375" x="38" y="87.333">Sub-Action 1.1</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="150" x="16" y="120"/>
+    <ellipse cx="31.5" cy="134.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-size="12" textLength="75.375" x="38" y="139.333">Sub-Action 1.2</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="150" x="16" y="172"/>
+    <rect fill="#000" height="3.5" width="3.5" x="35" y="184"/>
+    <text fill="#000" font-size="12" textLength="85.35" x="42" y="191.333">Sub-Action 1.2.1</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="150" x="16" y="224"/>
+    <rect fill="#000" height="3.5" width="3.5" x="35" y="236"/>
+    <text fill="#000" font-size="12" textLength="85.35" x="42" y="243.333">Sub-Action 1.2.2</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="150" x="16" y="276"/>
+    <text fill="#000" font-size="12" textLength="40.05" x="26" y="295.333">Action 2</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="91" x2="91" y1="48" y2="68"/>
+    <polygon fill="#181818" points="87,58,91,68,95,58,91,62" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="91" x2="91" y1="100" y2="120"/>
+    <polygon fill="#181818" points="87,110,91,120,95,110,91,114" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="91" x2="91" y1="152" y2="172"/>
+    <polygon fill="#181818" points="87,162,91,172,95,162,91,166" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="91" x2="91" y1="204" y2="224"/>
+    <polygon fill="#181818" points="87,214,91,224,95,214,91,218" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="91" x2="91" y1="256" y2="276"/>
+    <polygon fill="#181818" points="87,266,91,276,95,266,91,270" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

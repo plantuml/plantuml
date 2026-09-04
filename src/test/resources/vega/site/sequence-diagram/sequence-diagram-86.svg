@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="243px" preserveAspectRatio="none" style="width:224px;height:243px;background:#FFFFFF;" version="1.1" viewBox="0 0 224 243" width="224px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>S1</title>
+      <rect fill="#000" fill-opacity="0" height="164" width="8" x="80.156" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="83.656" x2="83.656" y1="39" y2="203"/>
+    </g>
+    <g>
+      <title>S2</title>
+      <rect fill="#000" fill-opacity="0" height="164" width="8" x="135.925" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="139.425" x2="139.425" y1="39" y2="203"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="31.15" x="68.081" y="10"/>
+    <text fill="#000" font-size="14" textLength="17.15" x="75.081" y="27.889">S1</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="31.15" x="123.85" y="10"/>
+    <text fill="#000" font-size="14" textLength="17.15" x="130.85" y="27.889">S2</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="31.15" x="68.081" y="203"/>
+    <text fill="#000" font-size="14" textLength="17.15" x="75.081" y="220.889">S1</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="31.15" x="123.85" y="203"/>
+    <text fill="#000" font-size="14" textLength="17.15" x="130.85" y="220.889">S2</text>
+    <polygon fill="#181818" points="130.513,100.74,137.425,109,126.723,107.785,132.141,106.158" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="83.656" x2="137.425" y1="79" y2="109"/>
+    <text fill="#000" font-size="13" textLength="31.769" x="90.656" y="61.111">msg 1</text>
+    <text fill="#000" font-size="13" x="90.656" y="74.111"> </text>
+    <polygon fill="#181818" points="91.568,100.74,84.656,109,95.358,107.785,89.94,106.158" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="138.425" x2="83.656" y1="79" y2="109"/>
+    <text fill="#000" font-size="13" textLength="31.769" x="100.656" y="74.111">msg 2</text>
+    <path d="M15,152 L15,188 L78,188 L78,162 L68,152 L15,152" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M68,152 L68,162 L78,162 L68,152" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="24.538" x="21" y="167.111">msg</text>
+    <text fill="#000" font-size="13" textLength="42.656" x="21" y="180.111">S2 to S1</text>
+    <path d="M144.425,152 L144.425,188 L207.425,188 L207.425,162 L197.425,152 L144.425,152" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M197.425,152 L197.425,162 L207.425,162 L197.425,152" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="24.538" x="150.425" y="167.111">msg</text>
+    <text fill="#000" font-size="13" textLength="42.656" x="150.425" y="180.111">S1 to S2</text>
+  </g>
+</svg>

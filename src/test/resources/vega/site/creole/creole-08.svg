@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="156px" preserveAspectRatio="none" style="width:237px;height:156px;background:#FFFFFF;" version="1.1" viewBox="0 0 237 156" width="237px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="77" width="8" x="28.725" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="32.225" x2="32.225" y1="39" y2="116"/>
+    </g>
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="77" width="8" x="80.419" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="83.919" x2="83.919" y1="39" y2="116"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="10" y="10"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="17" y="27.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="64.45" y="10"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="71.45" y="27.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="10" y="116"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="17" y="133.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="64.45" y="116"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="71.45" y="133.889">Bob</text>
+    <polygon fill="#181818" points="71.919,62,81.919,66,71.919,70,75.919,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="32.225" x2="77.919" y1="66" y2="66"/>
+    <text fill="#000" font-size="13" textLength="27.544" x="39.225" y="61.111">hello</text>
+    <path d="M88.919,52 L88.919,101 L220.919,101 L220.919,62 L210.919,52 L88.919,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M210.919,52 L210.919,62 L220.919,62 L210.919,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="41.113" x="94.919" y="67.111">main() {</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="111.15" x="94.919" y="80.111">printf("Hello world");</text>
+    <text fill="#000" font-family="monospace" font-size="13" x="94.919" y="93.111">}</text>
+  </g>
+</svg>

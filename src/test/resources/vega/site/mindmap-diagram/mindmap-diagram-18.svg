@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="156px" preserveAspectRatio="none" style="width:440px;height:156px;background:#FFFFFF;" version="1.1" viewBox="0 0 440 156" width="440px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="54.212" x="178.087" y="60.5"/>
+    <text fill="#000" font-size="14" textLength="34.212" x="188.087" y="81.389">count</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="43.363" x="282.3" y="47"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="292.3" y="67.889">100</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="43.363" x="375.662" y="20"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="385.662" y="40.889">101</text>
+    <path d="M325.662,64 L335.662,64 C350.662,64 350.662,37 365.662,37 L375.662,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="43.363" x="375.662" y="74"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="385.662" y="94.889">102</text>
+    <path d="M325.662,64 L335.662,64 C350.662,64 350.662,91 365.662,91 L375.662,91" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M232.3,77.5 L242.3,77.5 C257.3,77.5 257.3,64 272.3,64 L282.3,64" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="43.363" x="282.3" y="101"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="292.3" y="121.889">200</text>
+    <path d="M232.3,77.5 L242.3,77.5 C257.3,77.5 257.3,118 272.3,118 L282.3,118" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="29.362" x="98.725" y="47"/>
+    <text fill="#000" font-size="14" x="108.725" y="67.889">A</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="38.725" x="10" y="20"/>
+    <text fill="#000" font-size="14" textLength="18.725" x="20" y="40.889">AA</text>
+    <path d="M98.725,64 L88.725,64 C73.725,64 73.725,37 58.725,37 L48.725,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="38.725" x="10" y="74"/>
+    <text fill="#000" font-size="14" textLength="18.725" x="20" y="94.889">AB</text>
+    <path d="M98.725,64 L88.725,64 C73.725,64 73.725,91 58.725,91 L48.725,91" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M178.087,77.5 L168.087,77.5 C153.087,77.5 153.087,64 138.087,64 L128.087,64" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="29.362" x="98.725" y="101"/>
+    <text fill="#000" font-size="14" x="108.725" y="121.889">B</text>
+    <path d="M178.087,77.5 L168.087,77.5 C153.087,77.5 153.087,118 138.087,118 L128.087,118" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

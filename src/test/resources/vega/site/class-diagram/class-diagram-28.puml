@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+
+class Foo1
+class Foo2
+
+Foo2 *-- Foo1
+
+hide Foo2
+
+@enduml

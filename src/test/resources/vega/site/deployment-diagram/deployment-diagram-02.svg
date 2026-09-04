@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="283px" preserveAspectRatio="none" style="width:535px;height:283px;background:#FFFFFF;" version="1.1" viewBox="0 0 535 283" width="535px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity folder-->
+    <g class="entity" data-qualified-name="folder" data-source-line="1" id="ent0001">
+      <path d="M8.5,12 L49.5,12 A3.75,3.75 0 0 1 52,14.5 L59,33 L162.65,33 A2.5,2.5 0 0 1 165.15,35.5 L165.15,127.5 A2.5,2.5 0 0 1 162.65,130 L8.5,130 A2.5,2.5 0 0 1 6,127.5 L6,14.5 A2.5,2.5 0 0 1 8.5,12" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="59" y1="33" y2="33"/>
+      <text fill="#000" font-size="14" textLength="44.45" x="16" y="50.889">This is a</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="35" x="60.45" y="50.889">folder</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="164.15" y1="54" y2="54"/>
+      <text fill="#000" font-size="14" textLength="129.15" x="16" y="68.889">You can use separator</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="164.15" y1="76" y2="76"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="164.15" y1="78" y2="78"/>
+      <text fill="#000" font-size="14" textLength="87.85" x="16" y="90.889">of different kind</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="7" x2="164.15" y1="98" y2="98"/>
+      <text fill="#000" font-size="14" textLength="52.15" x="16" y="112.889">and style</text>
+    </g>
+    <!--entity node-->
+    <g class="entity" data-qualified-name="node" data-source-line="11" id="ent0002">
+      <polygon fill="#F1F1F1" points="183,26,193,16,352.15,16,352.15,116,342.15,126,183,126,183,26" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="342.15" x2="352.15" y1="26" y2="16"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="183" x2="342.15" y1="26" y2="26"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="342.15" x2="342.15" y1="26" y2="126"/>
+      <text fill="#000" font-size="14" textLength="44.45" x="198" y="46.889">This is a</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="31.15" x="242.45" y="46.889">node</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="183" x2="342.15" y1="50" y2="50"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="342.15" x2="352.15" y1="50" y2="40"/>
+      <text fill="#000" font-size="14" textLength="129.15" x="198" y="64.889">You can use separator</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="183" x2="342.15" y1="72" y2="72"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="342.15" x2="352.15" y1="72" y2="62"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="183" x2="342.15" y1="74" y2="74"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="342.15" x2="352.15" y1="74" y2="64"/>
+      <text fill="#000" font-size="14" textLength="87.85" x="198" y="86.889">of different kind</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="183" x2="342.15" y1="94" y2="94"/>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="342.15" x2="352.15" y1="94" y2="84"/>
+      <text fill="#000" font-size="14" textLength="52.15" x="198" y="108.889">and style</text>
+    </g>
+    <!--entity database-->
+    <g class="entity" data-qualified-name="database" data-source-line="21" id="ent0003">
+      <path d="M370,26.5 C370,16.5 444.575,16.5 444.575,16.5 C444.575,16.5 519.15,16.5 519.15,26.5 L519.15,115.5 C519.15,125.5 444.575,125.5 444.575,125.5 C444.575,125.5 370,125.5 370,115.5 L370,26.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M370,26.5 C370,36.5 444.575,36.5 444.575,36.5 C444.575,36.5 519.15,36.5 519.15,26.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="44.45" x="380" y="51.389">This is a</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="57.575" x="424.45" y="51.389">database</text>
+      <path d="M370,49.5 C370,59.5 444.575,59.5 444.575,59.5 C444.575,59.5 519.15,59.5 519.15,49.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" textLength="129.15" x="380" y="69.389">You can use separator</text>
+      <path d="M370,71.5 C370,81.5 444.575,81.5 444.575,81.5 C444.575,81.5 519.15,81.5 519.15,71.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M370,73.5 C370,83.5 444.575,83.5 444.575,83.5 C444.575,83.5 519.15,83.5 519.15,73.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" textLength="87.85" x="380" y="91.389">of different kind</text>
+      <path d="M370,93.5 C370,103.5 444.575,103.5 444.575,103.5 C444.575,103.5 519.15,103.5 519.15,93.5" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;"/>
+      <text fill="#000" font-size="14" textLength="52.15" x="380" y="113.389">and style</text>
+    </g>
+    <!--entity usecase-->
+    <g class="entity" data-qualified-name="usecase" data-source-line="31" id="ent0004">
+      <ellipse cx="85.716" cy="216.52" fill="#F1F1F1" rx="79.716" ry="50.52" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="44.45" x="37.416" y="190.101">This is a</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="52.15" x="81.866" y="190.101">usecase</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="15.991" x2="155.44" y1="193.212" y2="193.212"/>
+      <text fill="#000" font-size="14" textLength="129.15" x="21.141" y="208.101">You can use separator</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7.027" x2="164.405" y1="215.212" y2="215.212"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7.007" x2="164.424" y1="217.212" y2="217.212"/>
+      <text fill="#000" font-size="14" textLength="87.85" x="41.791" y="230.101">of different kind</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="13.993" x2="157.439" y1="237.212" y2="237.212"/>
+      <text fill="#000" font-size="14" textLength="52.15" x="59.641" y="252.101">and style</text>
+    </g>
+    <!--entity card-->
+    <g class="entity" data-qualified-name="card" data-source-line="41" id="ent0005">
+      <rect fill="#F1F1F1" height="100" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="149.15" x="183" y="166.5"/>
+      <text fill="#000" font-size="14" textLength="44.45" x="193" y="180.389">This is a</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="237.45" y="180.389">card</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="184" x2="331.15" y1="183.5" y2="183.5"/>
+      <text fill="#000" font-size="14" textLength="129.15" x="193" y="198.389">You can use separator</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="184" x2="331.15" y1="205.5" y2="205.5"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="184" x2="331.15" y1="207.5" y2="207.5"/>
+      <text fill="#000" font-size="14" textLength="87.85" x="193" y="220.389">of different kind</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="184" x2="331.15" y1="227.5" y2="227.5"/>
+      <text fill="#000" font-size="14" textLength="52.15" x="193" y="242.389">and style</text>
+      <text fill="#00F" font-size="14" font-style="italic" textLength="124.338" x="193" y="256.389">(add from V1.2020.7)</text>
+    </g>
+  </g>
+</svg>

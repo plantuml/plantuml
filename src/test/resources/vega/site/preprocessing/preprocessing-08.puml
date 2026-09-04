@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+!function $double($a)
+!return $a + $a
+!endfunction
+
+Alice -> Bob : The double of 3 is $double(3)
+@enduml

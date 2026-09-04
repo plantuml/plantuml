@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+
+skinparam usecaseBackgroundColor DarkSeaGreen
+skinparam usecaseArrowColor Olive
+skinparam actorBorderColor black
+skinparam usecaseBorderColor DarkSlateGray
+
+使用者 << 人類 >>
+"主數據庫" as 數據庫 << 應用程式 >>
+(草創) << 一桿 >>
+"主数据燕" as (贏余) << 基本的 >>
+
+使用者 -> (草創)
+使用者 --> (贏余)
+
+數據庫  --> (贏余)
+@enduml

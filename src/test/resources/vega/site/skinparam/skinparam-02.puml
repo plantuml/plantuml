@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+
+left to right direction
+
+skinparam shadowing<<no_shadow>> false
+skinparam shadowing<<with_shadow>> true
+
+actor User
+(Glowing use case) <<with_shadow>> as guc
+(Flat use case) <<no_shadow>> as fuc
+User -- guc
+User -- fuc
+
+@enduml

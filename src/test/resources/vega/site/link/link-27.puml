@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+title test on HyperlinkColor [[test link]]
+
+ class test <<normal>> {
+  * aaa
+  + [[normal model]]
+  - bb
+ }
+
+  class test_with_stereo AS "[[http://www.plantuml.com test]]" <<red>> {
+  * aaa
+  + [[red model]]
+  - bb
+ }
+@enduml

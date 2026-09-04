@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="238px" preserveAspectRatio="none" style="width:291px;height:238px;background:#FFFFFF;" version="1.1" viewBox="0 0 291 238" width="291px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity l-->
+    <g class="entity" data-qualified-name="l" data-source-line="6" id="ent0001">
+      <text fill="#000" font-size="18" font-weight="700" textLength="96.075" x="16" y="36">json_object:</text>
+      <image height="112" width="220" x="16" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjExMiIgd2lkdGg9IjIyMCIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgPjxkZWZzLz48ZyBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIj48cmVjdCB4PSIxMCIgeT0iMTAiIHdpZHRoPSIxNDQuMzM3IiBoZWlnaHQ9IjcyIiBmaWxsPSIjRjFGMUYxIiBzdHlsZT0ic3Ryb2tlOiNGMUYxRjE7c3Ryb2tlLXdpZHRoOjEuNTsiIHJ4PSI1IiByeT0iNSIvPjx0ZXh0IHg9IjE1IiB5PSIyMi44ODkiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTQiIHRleHRMZW5ndGg9IjM1IiBmb250LXdlaWdodD0iNzAwIj5uYW1lPC90ZXh0Pjx0ZXh0IHg9IjYzLjA2MiIgeT0iMjIuODg5IiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjE0IiB0ZXh0TGVuZ3RoPSI4Ni4yNzUiPk1hcmsgTWNHd2lyZTwvdGV4dD48bGluZSB4MT0iNTguMDYyIiB5MT0iMTAiIHgyPSI1OC4wNjIiIHkyPSIyOCIgc3R5bGU9InN0cm9rZTojMDAwO3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHgxPSIxMCIgeTE9IjI4IiB4Mj0iMTU0LjMzNyIgeTI9IjI4IiBzdHlsZT0ic3Ryb2tlOiMwMDA7c3Ryb2tlLXdpZHRoOjE7Ii8+PHRleHQgeD0iMTUiIHk9IjQwLjg4OSIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNCIgdGV4dExlbmd0aD0iMTIuNDI1IiBmb250LXdlaWdodD0iNzAwIj5ocjwvdGV4dD48dGV4dCB4PSI2My4wNjIiIHk9IjQwLjg4OSIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNCIgdGV4dExlbmd0aD0iMTUuNTc1Ij42NTwvdGV4dD48bGluZSB4MT0iNTguMDYyIiB5MT0iMjgiIHgyPSI1OC4wNjIiIHkyPSI0NiIgc3R5bGU9InN0cm9rZTojMDAwO3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHgxPSIxMCIgeTE9IjQ2IiB4Mj0iMTU0LjMzNyIgeTI9IjQ2IiBzdHlsZT0ic3Ryb2tlOiMwMDA7c3Ryb2tlLXdpZHRoOjE7Ii8+PHRleHQgeD0iMTUiIHk9IjU4Ljg4OSIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNCIgdGV4dExlbmd0aD0iMjIuNTc1IiBmb250LXdlaWdodD0iNzAwIj5hdmc8L3RleHQ+PHRleHQgeD0iNjMuMDYyIiB5PSI1OC44ODkiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTQiIHRleHRMZW5ndGg9IjM1Ij4wLjI3ODwvdGV4dD48bGluZSB4MT0iNTguMDYyIiB5MT0iNDYiIHgyPSI1OC4wNjIiIHkyPSI2NCIgc3R5bGU9InN0cm9rZTojMDAwO3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHgxPSIxMCIgeTE9IjY0IiB4Mj0iMTU0LjMzNyIgeTI9IjY0IiBzdHlsZT0ic3Ryb2tlOiMwMDA7c3Ryb2tlLXdpZHRoOjE7Ii8+PHRleHQgeD0iMTUiIHk9Ijc2Ljg4OSIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNCIgdGV4dExlbmd0aD0iMzguMDYyIiBmb250LXdlaWdodD0iNzAwIj5sZXR0ZXJzPC90ZXh0Pjx0ZXh0IHg9IjYzLjA2MiIgeT0iNzYuODg5IiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjE0IiB0ZXh0TGVuZ3RoPSIxMS41NSI+wqDCoMKgPC90ZXh0PjxsaW5lIHgxPSI1OC4wNjIiIHkxPSI2NCIgeDI9IjU4LjA2MiIgeTI9IjgyIiBzdHlsZT0ic3Ryb2tlOiMwMDA7c3Ryb2tlLXdpZHRoOjE7Ii8+PHJlY3QgeD0iMTAiIHk9IjEwIiB3aWR0aD0iMTQ0LjMzNyIgaGVpZ2h0PSI3MiIgZmlsbD0ibm9uZSIgc3R5bGU9InN0cm9rZTojMDAwO3N0cm9rZS13aWR0aDoxLjU7IiByeD0iNSIgcnk9IjUiLz48cmVjdCB4PSIxOTEiIHk9IjQ2IiB3aWR0aD0iMTcuNzg4IiBoZWlnaHQ9IjU0IiBmaWxsPSIjRjFGMUYxIiBzdHlsZT0ic3Ryb2tlOiNGMUYxRjE7c3Ryb2tlLXdpZHRoOjEuNTsiIHJ4PSI1IiByeT0iNSIvPjx0ZXh0IHg9IjE5NiIgeT0iNTguODg5IiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjE0Ij5hPC90ZXh0PjxsaW5lIHgxPSIxOTEiIHkxPSI2NCIgeDI9IjIwOC43ODgiIHkyPSI2NCIgc3R5bGU9InN0cm9rZTojMDAwO3N0cm9rZS13aWR0aDoxOyIvPjx0ZXh0IHg9IjE5NiIgeT0iNzYuODg5IiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjE0Ij5iPC90ZXh0PjxsaW5lIHgxPSIxOTEiIHkxPSI4MiIgeDI9IjIwOC43ODgiIHkyPSI4MiIgc3R5bGU9InN0cm9rZTojMDAwO3N0cm9rZS13aWR0aDoxOyIvPjx0ZXh0IHg9IjE5NiIgeT0iOTQuODg5IiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjE0Ij5jPC90ZXh0PjxyZWN0IHg9IjE5MSIgeT0iNDYiIHdpZHRoPSIxNy43ODgiIGhlaWdodD0iNTQiIGZpbGw9Im5vbmUiIHN0eWxlPSJzdHJva2U6IzAwMDtzdHJva2Utd2lkdGg6MS41OyIgcng9IjUiIHJ5PSI1Ii8+PHBhdGggZD0iTTE0MS41LDczIEwxNTQuNSw3MyBDMTY0LjEwOSw3MyAxNzQuODczLDczIDE4My40NjMsNzMiIHN0eWxlPSJzdHJva2U6IzAwMDtzdHJva2Utd2lkdGg6MTtzdHJva2UtZGFzaGFycmF5OjMsMzsiIGZpbGw9Im5vbmUiLz48cGF0aCBkPSJNMTgzLjQ2Myw3Ni4wOTcgTDE4NS43ODYsNzMgTDE4My40NjMsNjkuOTAzIEwxOTEuMjA2LDczIEwxODMuNDYzLDc2LjA5NyIgZmlsbD0iIzAwMCIvPjxlbGxpcHNlIGN4PSIxNDEuNSIgY3k9IjczIiByeD0iMyIgcnk9IjMiIGZpbGw9IiMwMDAiIHN0eWxlPSJzdHJva2U6IzAwMDtzdHJva2Utd2lkdGg6MTsiLz48L2c+PC9zdmc+" y="40"/>
+      <text fill="#000" font-size="14" x="16" y="92.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="56.875" x="16" y="108.889">$variable</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="136.063" x="128.788" y="108.889">%get_json_type($var)</text>
+      <text fill="#000" font-size="14" textLength="70.875" x="16" y="122.889">json_object</text>
+      <text fill="#000" font-size="14" textLength="37.363" x="128.788" y="122.889">object</text>
+      <text fill="#000" font-size="14" textLength="109.725" x="16" y="136.889">json_object.name</text>
+      <text fill="#000" font-size="14" textLength="34.213" x="128.788" y="136.889">string</text>
+      <text fill="#000" font-size="14" textLength="87.15" x="16" y="150.889">json_object.hr</text>
+      <text fill="#000" font-size="14" textLength="47.425" x="128.788" y="150.889">number</text>
+      <text fill="#000" font-size="14" textLength="112.788" x="16" y="164.889">json_object.letters</text>
+      <text fill="#000" font-size="14" textLength="31.85" x="128.788" y="164.889">array</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="264.85" y1="98" y2="98"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="264.85" y1="112" y2="112"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="264.85" y1="126" y2="126"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="264.85" y1="140" y2="140"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="264.85" y1="154" y2="154"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="264.85" y1="168" y2="168"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="16" y1="98" y2="168"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="128.788" x2="128.788" y1="98" y2="168"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="264.85" x2="264.85" y1="98" y2="168"/>
+      <text fill="#000" font-size="14" x="16" y="180.889"> </text>
+      <text fill="#000" font-size="14" textLength="73.063" x="16" y="194.889">Test on type:</text>
+      <text fill="#000" font-size="14" textLength="138.513" x="16" y="208.889">json_object.letters is an</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="31.85" x="154.513" y="208.889">array</text>
+    </g>
+  </g>
+</svg>

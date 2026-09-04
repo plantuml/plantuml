@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="104px" preserveAspectRatio="none" style="width:712px;height:104px;background:#FFFFFF;" version="1.1" viewBox="0 0 712 104" width="712px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="75.212" x="223.938" y="34.5"/>
+    <text fill="#000" font-size="14" textLength="55.212" x="233.938" y="55.389">root node</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="136.725" x="349.15" y="33"/>
+    <text fill="#000" font-size="14" textLength="116.725" x="359.15" y="53.889">some first level node</text>
+    <text fill="#000" font-size="14" textLength="105.175" x="538.875" y="21.889">second level node</text>
+    <path d="M485.875,50 L495.875,50 C510.875,50 510.875,18 525.875,18 L535.875,18" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="152.6" x="538.875" y="37.889">another second level node</text>
+    <path d="M485.875,50 L495.875,50 C510.875,50 510.875,34 525.875,34 L535.875,34" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="19.425" x="538.875" y="53.889">foo</text>
+    <path d="M485.875,50 L495.875,50 C510.875,50 510.875,50 525.875,50 L535.875,50" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="20.213" x="538.875" y="69.889">bar</text>
+    <path d="M485.875,50 L495.875,50 C510.875,50 510.875,66 525.875,66 L535.875,66" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="39.637" x="538.875" y="85.889">foobar</text>
+    <path d="M485.875,50 L495.875,50 C510.875,50 510.875,82 525.875,82 L535.875,82" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M299.15,51.5 L309.15,51.5 C324.15,51.5 324.15,50 339.15,50 L349.15,50" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="129.938" x="352.15" y="88.889">another first level node</text>
+    <path d="M299.15,51.5 L309.15,51.5 C324.15,51.5 324.15,85 339.15,85 L349.15,85" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="163.938" x="10" y="26.5"/>
+    <text fill="#000" font-size="14" textLength="143.938" x="20" y="47.389">some first right level node</text>
+    <path d="M223.938,51.5 L213.938,51.5 C198.938,51.5 198.938,43.5 183.938,43.5 L173.938,43.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="157.15" x="13.787" y="82.389">another first right level node</text>
+    <path d="M223.938,51.5 L213.938,51.5 C198.938,51.5 198.938,78.5 183.938,78.5 L173.938,78.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

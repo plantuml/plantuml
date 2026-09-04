@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="279px" preserveAspectRatio="none" style="width:262px;height:279px;background:#FFFFFF;" version="1.1" viewBox="0 0 262 279" width="262px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="none" height="18" style="stroke:none;" width="215.25" x="20" y="17.5"/>
+    <rect fill="#98FB98" height="241" style="stroke:#98FB98;stroke-width:1;" width="88.975" x="20" y="17.5"/>
+    <ellipse cx="65.488" cy="50.5" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="52.025" x="39.475" y="80.5"/>
+    <text fill="#000" font-size="12" textLength="32.025" x="49.475" y="99.833">go fish</text>
+    <line style="stroke:#000;stroke-width:1.5;" x1="20" x2="20" y1="17.5" y2="258.5"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="51.95" x="114.975" y="132.5"/>
+    <text fill="#000" font-size="12" textLength="31.95" x="124.975" y="151.833">fry fish</text>
+    <line style="stroke:#000;stroke-width:1.5;" x1="108.975" x2="108.975" y1="17.5" y2="258.5"/>
+    <rect fill="#FFD700" height="241" style="stroke:#FFD700;stroke-width:1;" width="65.325" x="170.925" y="17.5"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="55.325" x="176.925" y="184.5"/>
+    <text fill="#000" font-size="12" textLength="35.325" x="186.925" y="203.833">eat fish</text>
+    <ellipse cx="204.588" cy="247.5" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+    <ellipse cx="204.588" cy="247.5" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="170.925" x2="170.925" y1="17.5" y2="258.5"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="236.25" x2="236.25" y1="17.5" y2="258.5"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="65.488" x2="65.488" y1="60.5" y2="80.5"/>
+    <polygon fill="#181818" points="61.488,70.5,65.488,80.5,69.488,70.5,65.488,74.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="204.588" x2="204.588" y1="216.5" y2="236.5"/>
+    <polygon fill="#181818" points="200.588,226.5,204.588,236.5,208.588,226.5,204.588,230.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="65.488" x2="65.488" y1="112.5" y2="117.5"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="65.488" x2="140.95" y1="117.5" y2="117.5"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="140.95" x2="140.95" y1="117.5" y2="132.5"/>
+    <polygon fill="#181818" points="136.95,122.5,140.95,132.5,144.95,122.5,140.95,126.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="140.95" x2="140.95" y1="164.5" y2="169.5"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="140.95" x2="204.588" y1="169.5" y2="169.5"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="204.588" x2="204.588" y1="169.5" y2="184.5"/>
+    <polygon fill="#181818" points="200.588,174.5,204.588,184.5,208.588,174.5,204.588,178.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="18" textLength="78.975" x="25" y="31.5">fisherman</text>
+    <text fill="#000" font-size="18" textLength="38.025" x="120.938" y="31.5">cook</text>
+    <text fill="#000" font-size="18" textLength="40.95" x="183.113" y="31.5">eater</text>
+  </g>
+</svg>

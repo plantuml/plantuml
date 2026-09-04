@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="340px" preserveAspectRatio="none" style="width:188px;height:340px;background:#FFFFFF;" version="1.1" viewBox="0 0 188 340" width="188px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>caller</title>
+      <rect fill="#000" fill-opacity="0" height="261" width="8" x="51.694" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="55.194" x2="55.194" y1="39" y2="300"/>
+    </g>
+    <g>
+      <title>server</title>
+      <rect fill="#000" fill-opacity="0" height="261" width="8" x="124.119" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="127.619" x2="127.619" y1="39" y2="300"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="47.512" x="31.437" y="10"/>
+    <text fill="#000" font-size="14" textLength="33.512" x="38.438" y="27.889">caller</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="52.85" x="101.194" y="10"/>
+    <text fill="#000" font-size="14" textLength="38.85" x="108.194" y="27.889">server</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="47.512" x="31.437" y="300"/>
+    <text fill="#000" font-size="14" textLength="33.512" x="38.438" y="317.889">caller</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="52.85" x="101.194" y="300"/>
+    <text fill="#000" font-size="14" textLength="38.85" x="108.194" y="317.889">server</text>
+    <polygon fill="#181818" points="115.619,62,125.619,66,115.619,70,119.619,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="55.194" x2="121.619" y1="66" y2="66"/>
+    <text fill="#000" font-size="13" textLength="44.85" x="62.194" y="61.111">conReq</text>
+    <polygon fill="#FEFFDD" points="43.037,79,67.038,79,77.038,89,67.038,100,43.037,100,33.037,89,43.037,79" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="20.313" x="45.037" y="93.111">idle</text>
+    <polygon fill="#181818" points="66.194,120,56.194,124,66.194,128,62.194,124" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="60.194" x2="126.619" y1="124" y2="124"/>
+    <text fill="#000" font-size="13" textLength="48.425" x="72.194" y="119.111">conConf</text>
+    <rect fill="#FEFFDD" height="34" style="stroke:#181818;stroke-width:0.5;" width="88" x="83.237" y="137"/>
+    <text fill="#000" font-size="13" textLength="80.763" x="87.237" y="151.111">"r" as rectangle</text>
+    <text fill="#000" font-size="13" textLength="80.113" x="87.237" y="164.111">"h" as hexagon</text>
+    <rect fill="#FEFFDD" height="47" style="stroke:#181818;stroke-width:0.5;" width="64" x="95.425" y="181"/>
+    <text fill="#000" font-size="13" textLength="29.656" x="99.425" y="195.111">this is</text>
+    <text fill="#000" font-size="13" textLength="56.387" x="99.425" y="208.111">on several</text>
+    <text fill="#000" font-size="13" textLength="26.813" x="99.425" y="221.111">lines</text>
+    <polygon fill="#FEFFDD" points="25,238,85,238,95,261,85,285,25,285,15,261,25,238" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="29.656" x="27" y="252.111">this is</text>
+    <text fill="#000" font-size="13" textLength="56.387" x="27" y="265.111">on several</text>
+    <text fill="#000" font-size="13" textLength="26.813" x="27" y="278.111">lines</text>
+  </g>
+</svg>

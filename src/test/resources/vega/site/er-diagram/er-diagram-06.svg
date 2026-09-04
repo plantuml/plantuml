@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHEN_EER" height="298px" preserveAspectRatio="none" style="width:636px;height:298px;background:#FFFFFF;" version="1.1" viewBox="0 0 636 298" width="636px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="100.238" x="22.493" y="248"/>
+      <text fill="#000" font-size="14" textLength="80.238" x="32.493" y="268.889">CUSTOMER</text>
+    </g>
+    <g>
+      <ellipse cx="72.698" cy="197.899" fill="#F1F1F1" rx="38.205" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="49.787" x="47.804" y="201.889">Number</text>
+    </g>
+    <g>
+      <ellipse cx="158.412" cy="197.899" fill="#F1F1F1" rx="29.419" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="37.363" x="139.731" y="201.889">Name</text>
+    </g>
+    <g>
+      <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="65.063" x="266.993" y="248"/>
+      <text fill="#000" font-size="14" textLength="45.063" x="276.993" y="268.889">MOVIE</text>
+    </g>
+    <g>
+      <ellipse cx="326.69" cy="197.899" fill="#F1F1F1" rx="26.697" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="33.512" x="309.933" y="201.889">Code</text>
+    </g>
+    <g>
+      <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="77.575" x="462.493" y="248"/>
+      <text fill="#000" font-size="14" textLength="57.575" x="472.493" y="268.889">INVOICE</text>
+    </g>
+    <g>
+      <ellipse cx="501.698" cy="197.899" fill="#F1F1F1" rx="38.205" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="49.787" x="476.804" y="201.889">Number</text>
+    </g>
+    <g>
+      <ellipse cx="594.584" cy="197.899" fill="#F1F1F1" rx="37.091" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="48.212" x="570.478" y="201.889">Amount</text>
+    </g>
+    <g>
+      <polygon fill="#F1F1F1" points="156.993,111.331,224.654,77.5,292.316,111.331,224.654,145.162" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#000" font-size="14" textLength="84.963" x="182.173" y="115.22">RENTED_TO</text>
+    </g>
+    <g>
+      <ellipse cx="224.405" cy="24.899" fill="#F1F1F1" rx="23.913" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="29.575" x="209.618" y="28.889">Date</text>
+    </g>
+    <g>
+      <polygon fill="#F1F1F1" points="336.493,111.587,409.667,75,482.841,111.587,409.667,148.174" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#000" font-size="14" textLength="95.987" x="361.673" y="115.476">REFERENCES</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="association" id="lnk3">
+      <path d="M72.493,211.226 C72.493,221.523 72.493,236.341 72.493,247.655" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0001" data-link-type="association" id="lnk5">
+      <path d="M142.317,211.226 C128.596,221.597 108.807,236.553 93.798,247.897" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0006" data-link-type="association" id="lnk8">
+      <path d="M321.414,211.226 C317.137,221.523 310.982,236.341 306.282,247.655" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0009" data-link-type="association" id="lnk11">
+      <path d="M501.493,211.226 C501.493,221.523 501.493,236.341 501.493,247.655" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0009" data-link-type="association" id="lnk13">
+      <path d="M577,211.226 C562.162,221.597 540.763,236.553 524.532,247.897" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0015" data-entity-2="ent0014" data-link-type="association" id="lnk16">
+      <path d="M224.493,38.107 C224.493,48.329 224.493,63.463 224.493,77.255" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0001" data-link-type="association" id="lnk17">
+      <path d="M156.889,116.251 C108.816,122.874 47.334,140.252 15.493,185 C0,206.772 25.344,231.762 47.018,247.704" fill="none" style="stroke:#181818;stroke-width:2;"/>
+      <text fill="#000" font-size="11" x="17.493" y="201.056">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0006" data-link-type="association" id="lnk18">
+      <path d="M224.014,145.541 C224.952,165.44 228.381,190.758 238.493,211 C246.079,226.186 260.121,238.857 272.822,247.998" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" x="240.493" y="201.056">N</text>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0009" data-link-type="association" id="lnk19">
+      <path d="M292.063,143.81 C314.876,155.526 339.992,169.73 361.493,185 C375.338,194.833 375.431,201.479 389.493,211 C412.204,226.377 440.074,239.584 462.331,248.968" fill="none" style="stroke:#181818;stroke-width:2;"/>
+      <text fill="#000" font-size="11" x="391.493" y="201.056">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0020" data-entity-2="ent0006" data-link-type="association" id="lnk21">
+      <path d="M415.543,148.465 C416.989,168.418 415.42,192.802 403.493,211 C387.385,235.576 356.16,249.315 332.109,256.609" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" x="416.493" y="201.056">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0020" data-entity-2="ent0006" data-link-type="association" id="lnk22">
+      <path d="M336.244,136.942 C314.423,148.035 293.012,163.602 280.493,185 C268.952,204.724 279.626,231.121 289.021,247.846" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" x="282.493" y="201.056">1</text>
+    </g>
+  </g>
+</svg>

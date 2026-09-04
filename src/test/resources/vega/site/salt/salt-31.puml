@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startsalt
+skinparam dpi 200
+{
+  <&person> Login  | "MyName   "
+  <&key> Password  | "****     "
+  [<&circle-x> Cancel ] | [ <&account-login> OK   ]
+}
+@endsalt

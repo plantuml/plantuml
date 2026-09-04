@@ -1,0 +1,50 @@
+---
+output: svg
+---
+@startgantt
+<style>
+title {
+  HorizontalAlignment right
+  FontSize 24
+  FontColor blue
+}
+
+header {
+  HorizontalAlignment center
+  FontSize 26
+  FontColor purple
+}
+
+footer {
+  HorizontalAlignment left
+  FontSize 28
+  FontColor red
+}
+
+legend {
+  FontSize 30
+  BackGroundColor yellow
+  Margin 30
+  Padding 50
+}
+
+caption {
+  FontSize 32
+}
+</style>
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+
+[t] lasts 5 days
+
+@endgantt

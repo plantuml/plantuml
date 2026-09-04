@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="392.708px" preserveAspectRatio="none" style="width:684px;height:392px;" version="1.1" viewBox="0 0 684 392" width="684.375px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Participant</title>
+      <rect fill="#000" fill-opacity="0" height="208.333" width="8.333" x="104.01" y="91.667"/>
+      <line style="stroke:#4E5D6C;stroke-width:1.042;stroke-dasharray:5.208,5.208;" x1="107.656" x2="107.656" y1="91.667" y2="300"/>
+    </g>
+    <g>
+      <title>Actor</title>
+      <rect fill="#000" fill-opacity="0" height="208.333" width="8.333" x="224.154" y="91.667"/>
+      <line style="stroke:#4E5D6C;stroke-width:1.042;stroke-dasharray:5.208,5.208;" x1="227.799" x2="227.799" y1="91.667" y2="300"/>
+    </g>
+    <g>
+      <title>Boundary</title>
+      <rect fill="#000" fill-opacity="0" height="208.333" width="8.333" x="282.148" y="91.667"/>
+      <line style="stroke:#4E5D6C;stroke-width:1.042;stroke-dasharray:5.208,5.208;" x1="285.794" x2="285.794" y1="91.667" y2="300"/>
+    </g>
+    <g>
+      <title>Control</title>
+      <rect fill="#000" fill-opacity="0" height="208.333" width="8.333" x="345.729" y="91.667"/>
+      <line style="stroke:#4E5D6C;stroke-width:1.042;stroke-dasharray:5.208,5.208;" x1="349.375" x2="349.375" y1="91.667" y2="300"/>
+    </g>
+    <g>
+      <title>Entity</title>
+      <rect fill="#000" fill-opacity="0" height="208.333" width="8.333" x="398.177" y="91.667"/>
+      <line style="stroke:#4E5D6C;stroke-width:1.042;stroke-dasharray:5.208,5.208;" x1="401.823" x2="401.823" y1="91.667" y2="300"/>
+    </g>
+    <g>
+      <title>Database</title>
+      <rect fill="#000" fill-opacity="0" height="208.333" width="8.333" x="457.227" y="91.667"/>
+      <line style="stroke:#4E5D6C;stroke-width:1.042;stroke-dasharray:5.208,5.208;" x1="460.872" x2="460.872" y1="91.667" y2="300"/>
+    </g>
+    <g>
+      <title>Collections</title>
+      <rect fill="#000" fill-opacity="0" height="208.333" width="8.333" x="546.901" y="91.667"/>
+      <line style="stroke:#4E5D6C;stroke-width:1.042;stroke-dasharray:5.208,5.208;" x1="550.547" x2="550.547" y1="91.667" y2="300"/>
+    </g>
+    <g>
+      <title>Queue</title>
+      <rect fill="#000" fill-opacity="0" height="208.333" width="8.333" x="635.859" y="91.667"/>
+      <line style="stroke:#4E5D6C;stroke-width:1.042;stroke-dasharray:5.208,5.208;" x1="639.505" x2="639.505" y1="91.667" y2="300"/>
+    </g>
+    <rect fill="none" height="43.75" rx="4.167" ry="4.167" style="stroke:#E58748;stroke-width:1.042;" width="100.729" x="57.292" y="41.667"/>
+    <text fill="#DF691A" font-family="'Verdana'" font-size="12.5" textLength="59.063" x="78.125" y="67.014">Participant</text>
+    <text fill="#DF691A" font-family="'Verdana'" font-size="12.5" textLength="29.141" x="210.104" y="88.889">Actor</text>
+    <ellipse cx="227.799" cy="25" fill="none" rx="8.333" ry="8.333" style="stroke:#E58748;stroke-width:1.042;"/>
+    <path d="M227.799,33.333 L227.799,61.458 M214.258,41.667 L241.341,41.667 M227.799,61.458 L214.258,77.083 M227.799,61.458 L241.341,77.083" fill="none" style="stroke:#E58748;stroke-width:1.042;"/>
+    <text fill="#DF691A" font-family="'Verdana'" font-size="12.5" textLength="53.516" x="255.911" y="88.889">Boundary</text>
+    <path d="M264.44,50 L264.44,75 M264.44,62.5 L282.148,62.5" fill="none" style="stroke:#E58748;stroke-width:1.042;"/>
+    <ellipse cx="294.648" cy="62.5" fill="none" rx="12.5" ry="12.5" style="stroke:#E58748;stroke-width:1.042;"/>
+    <text fill="#DF691A" font-family="'Verdana'" font-size="12.5" textLength="40.313" x="326.094" y="88.889">Control</text>
+    <ellipse cx="349.375" cy="62.5" fill="none" rx="12.5" ry="12.5" style="stroke:#E58748;stroke-width:1.042;"/>
+    <polygon fill="#E58748" points="345.208,50,351.458,44.792,349.375,50,351.458,55.208,345.208,50" style="stroke:#E58748;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#DF691A" font-family="'Verdana'" font-size="12.5" textLength="31.25" x="383.073" y="88.889">Entity</text>
+    <ellipse cx="401.823" cy="62.5" fill="none" rx="12.5" ry="12.5" style="stroke:#E58748;stroke-width:1.042;"/>
+    <line style="stroke:#E58748;stroke-width:1.042;" x1="389.323" x2="414.323" y1="77.083" y2="77.083"/>
+    <text fill="#DF691A" font-family="'Verdana'" font-size="12.5" textLength="53.516" x="430.99" y="88.889">Database</text>
+    <path d="M442.122,41.667 C442.122,31.25 460.872,31.25 460.872,31.25 C460.872,31.25 479.622,31.25 479.622,41.667 L479.622,68.75 C479.622,79.167 460.872,79.167 460.872,79.167 C460.872,79.167 442.122,79.167 442.122,68.75 L442.122,41.667" fill="none" style="stroke:#E58748;stroke-width:1.042;"/>
+    <path d="M442.122,41.667 C442.122,52.083 460.872,52.083 460.872,52.083 C460.872,52.083 479.622,52.083 479.622,41.667" fill="none" style="stroke:#E58748;stroke-width:1.042;"/>
+    <rect fill="none" height="25" rx="4.167" ry="4.167" style="stroke:#E58748;stroke-width:1.042;" width="73.75" x="515.755" y="51.042"/>
+    <rect fill="none" height="25" rx="4.167" ry="4.167" style="stroke:#E58748;stroke-width:1.042;" width="73.75" x="511.589" y="55.208"/>
+    <text fill="#DF691A" font-family="'Verdana'" font-size="12.5" textLength="61.25" x="517.839" y="71.181">Collections</text>
+    <path d="M615.547,68.75 L663.464,68.75 C668.672,68.75 668.672,80.208 668.672,80.208 C668.672,80.208 668.672,91.667 663.464,91.667 L615.547,91.667 C610.339,91.667 610.339,80.208 610.339,80.208 C610.339,80.208 610.339,68.75 615.547,68.75" fill="none" style="stroke:#E58748;stroke-width:1.042;"/>
+    <path d="M663.464,68.75 C658.255,68.75 658.255,80.208 658.255,80.208 C658.255,91.667 663.464,91.667 663.464,91.667" fill="none" style="stroke:#E58748;stroke-width:1.042;"/>
+    <text fill="#DF691A" font-family="'Verdana'" font-size="12.5" textLength="37.5" x="615.547" y="83.681">Queue</text>
+    <rect fill="none" height="43.75" rx="4.167" ry="4.167" style="stroke:#E58748;stroke-width:1.042;" width="100.729" x="57.292" y="305.208"/>
+    <text fill="#DF691A" font-family="'Verdana'" font-size="12.5" textLength="59.063" x="78.125" y="330.556">Participant</text>
+    <text fill="#DF691A" font-family="'Verdana'" font-size="12.5" textLength="29.141" x="210.104" y="309.722">Actor</text>
+    <ellipse cx="227.799" cy="321.875" fill="none" rx="8.333" ry="8.333" style="stroke:#E58748;stroke-width:1.042;"/>
+    <path d="M227.799,330.208 L227.799,358.333 M214.258,338.542 L241.341,338.542 M227.799,358.333 L214.258,373.958 M227.799,358.333 L241.341,373.958" fill="none" style="stroke:#E58748;stroke-width:1.042;"/>
+    <text fill="#DF691A" font-family="'Verdana'" font-size="12.5" textLength="53.516" x="255.911" y="309.722">Boundary</text>
+    <path d="M264.44,316.667 L264.44,341.667 M264.44,329.167 L282.148,329.167" fill="none" style="stroke:#E58748;stroke-width:1.042;"/>
+    <ellipse cx="294.648" cy="329.167" fill="none" rx="12.5" ry="12.5" style="stroke:#E58748;stroke-width:1.042;"/>
+    <text fill="#DF691A" font-family="'Verdana'" font-size="12.5" textLength="40.313" x="326.094" y="309.722">Control</text>
+    <ellipse cx="349.375" cy="329.167" fill="none" rx="12.5" ry="12.5" style="stroke:#E58748;stroke-width:1.042;"/>
+    <polygon fill="#E58748" points="345.208,316.667,351.458,311.458,349.375,316.667,351.458,321.875,345.208,316.667" style="stroke:#E58748;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#DF691A" font-family="'Verdana'" font-size="12.5" textLength="31.25" x="383.073" y="309.722">Entity</text>
+    <ellipse cx="401.823" cy="329.167" fill="none" rx="12.5" ry="12.5" style="stroke:#E58748;stroke-width:1.042;"/>
+    <line style="stroke:#E58748;stroke-width:1.042;" x1="389.323" x2="414.323" y1="343.75" y2="343.75"/>
+    <text fill="#DF691A" font-family="'Verdana'" font-size="12.5" textLength="53.516" x="430.99" y="309.722">Database</text>
+    <path d="M442.122,322.917 C442.122,312.5 460.872,312.5 460.872,312.5 C460.872,312.5 479.622,312.5 479.622,322.917 L479.622,350 C479.622,360.417 460.872,360.417 460.872,360.417 C460.872,360.417 442.122,360.417 442.122,350 L442.122,322.917" fill="none" style="stroke:#E58748;stroke-width:1.042;"/>
+    <path d="M442.122,322.917 C442.122,333.333 460.872,333.333 460.872,333.333 C460.872,333.333 479.622,333.333 479.622,322.917" fill="none" style="stroke:#E58748;stroke-width:1.042;"/>
+    <rect fill="none" height="25" rx="4.167" ry="4.167" style="stroke:#E58748;stroke-width:1.042;" width="73.75" x="515.755" y="310.417"/>
+    <rect fill="none" height="25" rx="4.167" ry="4.167" style="stroke:#E58748;stroke-width:1.042;" width="73.75" x="511.589" y="314.583"/>
+    <text fill="#DF691A" font-family="'Verdana'" font-size="12.5" textLength="61.25" x="517.839" y="330.556">Collections</text>
+    <path d="M615.547,300 L663.464,300 C668.672,300 668.672,311.458 668.672,311.458 C668.672,311.458 668.672,322.917 663.464,322.917 L615.547,322.917 C610.339,322.917 610.339,311.458 610.339,311.458 C610.339,311.458 610.339,300 615.547,300" fill="none" style="stroke:#E58748;stroke-width:1.042;"/>
+    <path d="M663.464,300 C658.255,300 658.255,311.458 658.255,311.458 C658.255,322.917 663.464,322.917 663.464,322.917" fill="none" style="stroke:#E58748;stroke-width:1.042;"/>
+    <text fill="#DF691A" font-family="'Verdana'" font-size="12.5" textLength="37.5" x="615.547" y="314.931">Queue</text>
+    <polygon fill="#DF691A" points="215.299,114.583,225.716,118.75,215.299,122.917,219.466,118.75" style="stroke:#DF691A;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#DF691A;stroke-width:3.125;" x1="107.656" x2="221.549" y1="118.75" y2="118.75"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" textLength="42.344" x="114.948" y="113.889">To actor</text>
+    <polygon fill="#DF691A" points="273.294,141.667,283.711,145.833,273.294,150,277.461,145.833" style="stroke:#DF691A;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#DF691A;stroke-width:3.125;" x1="107.656" x2="279.544" y1="145.833" y2="145.833"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" textLength="66.719" x="114.948" y="140.972">To boundary</text>
+    <polygon fill="#DF691A" points="336.875,168.75,347.292,172.917,336.875,177.083,341.042,172.917" style="stroke:#DF691A;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#DF691A;stroke-width:3.125;" x1="107.656" x2="343.125" y1="172.917" y2="172.917"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" textLength="52.109" x="114.948" y="168.056">To control</text>
+    <polygon fill="#DF691A" points="389.323,195.833,399.74,200,389.323,204.167,393.49,200" style="stroke:#DF691A;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#DF691A;stroke-width:3.125;" x1="107.656" x2="395.573" y1="200" y2="200"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" textLength="44.453" x="114.948" y="195.139">To entity</text>
+    <polygon fill="#DF691A" points="448.372,222.917,458.789,227.083,448.372,231.25,452.539,227.083" style="stroke:#DF691A;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#DF691A;stroke-width:3.125;" x1="107.656" x2="454.622" y1="227.083" y2="227.083"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" textLength="66.016" x="114.948" y="222.222">To database</text>
+    <polygon fill="#DF691A" points="538.047,250,548.464,254.167,538.047,258.333,542.214,254.167" style="stroke:#DF691A;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#DF691A;stroke-width:3.125;" x1="107.656" x2="544.297" y1="254.167" y2="254.167"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" textLength="73.047" x="114.948" y="249.306">To collections</text>
+    <polygon fill="#DF691A" points="627.005,277.083,637.422,281.25,627.005,285.417,631.172,281.25" style="stroke:#DF691A;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#DF691A;stroke-width:3.125;" x1="107.656" x2="633.255" y1="281.25" y2="281.25"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" textLength="49.375" x="114.948" y="276.389">To queue</text>
+  </g>
+</svg>

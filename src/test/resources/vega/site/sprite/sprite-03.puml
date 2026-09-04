@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+sprite foo1 <svg width="8" height="8" viewBox="0 0 8 8">
+<path d="M1 0l-1 1 1.5 1.5-1.5 1.5h4v-4l-1.5 1.5-1.5-1.5zm3 4v4l1.5-1.5 1.5 1.5 1-1-1.5-1.5 1.5-1.5h-4z" />
+</svg>
+
+Alice->Bob : <$foo1*3>
+@enduml

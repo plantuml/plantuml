@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startyaml
+title "Auto Insurance Application Process"
+block "Auto Insurance Application Received"
+if "# of at fault Accidents > 4" then
+  block "Approved = false"
+else
+  if "# of at fault Accidents <= 1" then
+    block "Approved = true"
+  else
+    block "Approved = true"
+    block "Review each Accident"
+    if "# DUI or Fatality" then
+      block "Approved = false"
+      break "Exit process"
+    else
+      block "Review Next"
+    endif
+  endif
+endif
+block "End"
+@endnassi

@@ -1,0 +1,60 @@
+---
+output: svg
+---
+@startnwdiag
+<style>
+nwdiagDiagram {
+  network {
+    BackGroundColor green
+    LineColor red
+    LineThickness 1.0
+    FontSize 18
+    FontColor navy
+  }
+  server {
+    BackGroundColor pink
+    LineColor yellow
+    LineThickness 1.0
+    ' FontXXX only for description or label
+    FontSize 18
+    FontColor #blue
+  }
+  arrow {
+    ' FontXXX only for address
+    FontSize 17
+    FontColor #red
+    FontName Monospaced
+    LineColor black
+  }
+  group {
+    BackGroundColor cadetblue
+    LineColor black
+    LineThickness 2.0
+    FontSize 11
+    FontStyle bold
+    Margin 5
+    Padding 5
+  }
+}
+</style>
+nwdiag {
+  network DMZ {
+      address = "y.x.x.x/24"
+      web01 [address = "y.x.x.1"];
+      web02 [address = "y.x.x.2"];
+  }
+
+   network Internal {
+    web01;
+    web02;
+    db01 [address = "w.w.w.z", shape = database];
+  }
+
+    group {
+    description = "long group label";
+    web01;
+    web02;
+    db01;
+  }
+}
+@endnwdiag

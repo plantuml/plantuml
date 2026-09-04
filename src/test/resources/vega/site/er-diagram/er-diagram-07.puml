@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startchen
+
+entity CUSTOMER {
+  Number <<key>>
+  Name
+}
+
+entity MOVIE {
+  Code <<key>>
+}
+
+relationship RENTED_TO {
+  Date
+}
+
+RENTED_TO -(1,N)- CUSTOMER
+RENTED_TO -(0,1)- MOVIE
+
+@endchen

@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startwbs
+* <&flag> Debian
+** <&globe> Ubuntu
+
+***:Linux Mint
+Open Source;
+
+*** Kubuntu
+*** ...
+@endwbs

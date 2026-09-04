@@ -1,0 +1,231 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="642px" preserveAspectRatio="none" style="width:179px;height:642px;background:#FFFFFF;" version="1.1" viewBox="0 0 179 642" width="179px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity i15-->
+    <g class="entity" data-qualified-name="i15" data-source-line="349" id="ent0001">
+      <ellipse cx="15" cy="609" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="16.05" x="6.975" y="635.333">i15</text>
+    </g>
+    <!--entity j15-->
+    <g class="entity" data-qualified-name="j15" data-source-line="349" id="ent0002">
+      <ellipse cx="154" cy="609" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="16.05" x="145.975" y="635.333">j15</text>
+    </g>
+    <!--entity i14-->
+    <g class="entity" data-qualified-name="i14" data-source-line="349" id="ent0004">
+      <ellipse cx="15" cy="567" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="16.05" x="6.975" y="593.333">i14</text>
+    </g>
+    <!--entity j14-->
+    <g class="entity" data-qualified-name="j14" data-source-line="349" id="ent0005">
+      <ellipse cx="154" cy="567" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="16.05" x="145.975" y="593.333">j14</text>
+    </g>
+    <!--entity i13-->
+    <g class="entity" data-qualified-name="i13" data-source-line="349" id="ent0007">
+      <ellipse cx="15" cy="525" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="16.05" x="6.975" y="551.333">i13</text>
+    </g>
+    <!--entity j13-->
+    <g class="entity" data-qualified-name="j13" data-source-line="349" id="ent0008">
+      <ellipse cx="154" cy="525" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="16.05" x="145.975" y="551.333">j13</text>
+    </g>
+    <!--entity i12-->
+    <g class="entity" data-qualified-name="i12" data-source-line="349" id="ent0010">
+      <ellipse cx="15" cy="483" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="16.05" x="6.975" y="509.333">i12</text>
+    </g>
+    <!--entity j12-->
+    <g class="entity" data-qualified-name="j12" data-source-line="349" id="ent0011">
+      <ellipse cx="154" cy="483" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="16.05" x="145.975" y="509.333">j12</text>
+    </g>
+    <!--entity i11-->
+    <g class="entity" data-qualified-name="i11" data-source-line="349" id="ent0013">
+      <ellipse cx="15" cy="441" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="16.05" x="6.975" y="467.333">i11</text>
+    </g>
+    <!--entity j11-->
+    <g class="entity" data-qualified-name="j11" data-source-line="349" id="ent0014">
+      <ellipse cx="154" cy="441" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="16.05" x="145.975" y="467.333">j11</text>
+    </g>
+    <!--entity i10-->
+    <g class="entity" data-qualified-name="i10" data-source-line="349" id="ent0016">
+      <ellipse cx="15" cy="399" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="16.05" x="6.975" y="425.333">i10</text>
+    </g>
+    <!--entity j10-->
+    <g class="entity" data-qualified-name="j10" data-source-line="349" id="ent0017">
+      <ellipse cx="154" cy="399" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="16.05" x="145.975" y="425.333">j10</text>
+    </g>
+    <!--entity i9-->
+    <g class="entity" data-qualified-name="i9" data-source-line="349" id="ent0019">
+      <ellipse cx="15" cy="357" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.375" x="10.313" y="383.333">i9</text>
+    </g>
+    <!--entity j9-->
+    <g class="entity" data-qualified-name="j9" data-source-line="349" id="ent0020">
+      <ellipse cx="154" cy="357" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.375" x="149.313" y="383.333">j9</text>
+    </g>
+    <!--entity i8-->
+    <g class="entity" data-qualified-name="i8" data-source-line="349" id="ent0022">
+      <ellipse cx="15" cy="315" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.375" x="10.313" y="341.333">i8</text>
+    </g>
+    <!--entity j8-->
+    <g class="entity" data-qualified-name="j8" data-source-line="349" id="ent0023">
+      <ellipse cx="154" cy="315" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.375" x="149.313" y="341.333">j8</text>
+    </g>
+    <!--entity i7-->
+    <g class="entity" data-qualified-name="i7" data-source-line="349" id="ent0025">
+      <ellipse cx="15" cy="273" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.375" x="10.313" y="299.333">i7</text>
+    </g>
+    <!--entity j7-->
+    <g class="entity" data-qualified-name="j7" data-source-line="349" id="ent0026">
+      <ellipse cx="154" cy="273" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.375" x="149.313" y="299.333">j7</text>
+    </g>
+    <!--entity i6-->
+    <g class="entity" data-qualified-name="i6" data-source-line="349" id="ent0028">
+      <ellipse cx="15" cy="231" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.375" x="10.313" y="257.333">i6</text>
+    </g>
+    <!--entity j6-->
+    <g class="entity" data-qualified-name="j6" data-source-line="349" id="ent0029">
+      <ellipse cx="154" cy="231" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.375" x="149.313" y="257.333">j6</text>
+    </g>
+    <!--entity i5-->
+    <g class="entity" data-qualified-name="i5" data-source-line="349" id="ent0031">
+      <ellipse cx="15" cy="189" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.375" x="10.313" y="215.333">i5</text>
+    </g>
+    <!--entity j5-->
+    <g class="entity" data-qualified-name="j5" data-source-line="349" id="ent0032">
+      <ellipse cx="154" cy="189" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.375" x="149.313" y="215.333">j5</text>
+    </g>
+    <!--entity i4-->
+    <g class="entity" data-qualified-name="i4" data-source-line="349" id="ent0034">
+      <ellipse cx="15" cy="147" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.375" x="10.313" y="173.333">i4</text>
+    </g>
+    <!--entity j4-->
+    <g class="entity" data-qualified-name="j4" data-source-line="349" id="ent0035">
+      <ellipse cx="154" cy="147" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.375" x="149.313" y="173.333">j4</text>
+    </g>
+    <!--entity i3-->
+    <g class="entity" data-qualified-name="i3" data-source-line="349" id="ent0037">
+      <ellipse cx="15" cy="105" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.375" x="10.313" y="131.333">i3</text>
+    </g>
+    <!--entity j3-->
+    <g class="entity" data-qualified-name="j3" data-source-line="349" id="ent0038">
+      <ellipse cx="154" cy="105" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.375" x="149.313" y="131.333">j3</text>
+    </g>
+    <!--entity i2-->
+    <g class="entity" data-qualified-name="i2" data-source-line="349" id="ent0040">
+      <ellipse cx="15" cy="63" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.375" x="10.313" y="89.333">i2</text>
+    </g>
+    <!--entity j2-->
+    <g class="entity" data-qualified-name="j2" data-source-line="349" id="ent0041">
+      <ellipse cx="154" cy="63" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.375" x="149.313" y="89.333">j2</text>
+    </g>
+    <!--entity i1-->
+    <g class="entity" data-qualified-name="i1" data-source-line="349" id="ent0043">
+      <ellipse cx="15" cy="21" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.375" x="10.313" y="47.333">i1</text>
+    </g>
+    <!--entity j1-->
+    <g class="entity" data-qualified-name="j1" data-source-line="349" id="ent0044">
+      <ellipse cx="154" cy="21" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.375" x="149.313" y="47.333">j1</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#000" points="144.71,612,136.71,609,136.71,615,144.71,612" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M24.16,612 C48.469,612 112.232,612 136.71,612" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="54.075" x="57.5" y="607.333">Triggering</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="extension" id="lnk6">
+      <polygon fill="none" points="144.71,570,126.71,564,126.71,576,144.71,570" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M24.16,570 C48.469,570 102.232,570 126.71,570" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="74.175" x="47.5" y="565.333">Specialization</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0008" data-link-type="dependency" id="lnk9">
+      <polygon fill="#000" points="144.71,528,135.71,524,139.71,528,135.71,532,144.71,528" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M24.16,528 C48.469,528 115.232,528 139.71,528" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="40.725" x="64.5" y="523.333">Serving</text>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0011" data-link-type="extension" id="lnk12">
+      <polygon fill="none" points="144.71,486,126.71,480,126.71,492,144.71,486" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M24.16,486 C48.469,486 102.232,486 126.71,486" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="59.475" x="55" y="481.333">Realization</text>
+    </g>
+    <g class="link" data-entity-1="ent0013" data-entity-2="ent0014" data-link-type="dependency" id="lnk15">
+      <polygon fill="#000" points="144.71,444,135.71,440,139.71,444,135.71,448,144.71,444" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M24.16,444 C48.469,444 115.232,444 139.71,444" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="48.675" x="60.5" y="439.333">Influence</text>
+    </g>
+    <g class="link" data-entity-1="ent0016" data-entity-2="ent0017" data-link-type="dependency" id="lnk18">
+      <polygon fill="#000" points="144.71,402,136.71,399,136.71,405,144.71,402" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M24.16,402 C48.469,402 112.232,402 136.71,402" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="25.425" x="72" y="397.333">Flow</text>
+    </g>
+    <g class="link" data-entity-1="ent0019" data-entity-2="ent0020" data-link-type="composition" id="lnk21">
+      <polygon fill="#000" points="24.16,360,30.16,364,36.16,360,30.16,356,24.16,360" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M36.16,360 C60.469,360 120.232,360 144.71,360" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="66.75" x="51.5" y="355.333">Composition</text>
+    </g>
+    <g class="link" data-entity-1="ent0022" data-entity-2="ent0023" id="lnk24">
+      <line style="stroke:#000;stroke-width:1;" x1="144.71" x2="135.71" y1="318" y2="314"/>
+      <line style="stroke:#000;stroke-width:1;" x1="144.71" x2="136.71" y1="318" y2="318"/>
+      <path d="M24.16,318 C48.469,318 112.232,318 136.71,318" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="81.45" x="44" y="313.333">Association_dir</text>
+    </g>
+    <g class="link" data-entity-1="ent0025" data-entity-2="ent0026" data-link-type="association" id="lnk27">
+      <path d="M24.16,276 C48.469,276 120.232,276 144.71,276" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="61.425" x="54" y="271.333">Association</text>
+    </g>
+    <g class="link" data-entity-1="ent0028" data-entity-2="ent0029" data-link-type="dependency" id="lnk30">
+      <ellipse cx="30.16" cy="234" fill="#000" rx="6" ry="6" style="stroke:#000;stroke-width:1.5;"/>
+      <polygon fill="#000" points="144.71,234,136.71,231,136.71,237,144.71,234" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M36.16,234 C60.469,234 112.232,234 136.71,234" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="62.7" x="53.5" y="229.333">Assignment</text>
+    </g>
+    <g class="link" data-entity-1="ent0031" data-entity-2="ent0032" data-link-type="aggregation" id="lnk33">
+      <polygon fill="none" points="24.16,192,30.16,196,36.16,192,30.16,188,24.16,192" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M36.16,192 C60.469,192 120.232,192 144.71,192" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="64.725" x="52.5" y="187.333">Aggregation</text>
+    </g>
+    <g class="link" data-entity-1="ent0034" data-entity-2="ent0035" data-link-type="dependency" id="lnk36">
+      <polygon fill="#000" points="144.71,150,135.71,146,139.71,150,135.71,154,144.71,150" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M24.16,150 C48.469,150 115.232,150 139.71,150" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="54.075" x="57.5" y="145.333">Access_w</text>
+    </g>
+    <g class="link" data-entity-1="ent0037" data-entity-2="ent0038" data-link-type="dependency" id="lnk39">
+      <polygon fill="#000" points="24.16,108,33.16,112,29.16,108,33.16,104,24.16,108" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#000" points="144.71,108,135.71,104,139.71,108,135.71,112,144.71,108" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M29.16,108 C53.469,108 115.232,108 139.71,108" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="58.05" x="55.5" y="103.333">Access_rw</text>
+    </g>
+    <g class="link" data-entity-1="ent0040" data-entity-2="ent0041" data-link-type="dependency" id="lnk42">
+      <polygon fill="#000" points="24.16,66,33.16,70,29.16,66,33.16,62,24.16,66" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M29.16,66 C53.469,66 120.232,66 144.71,66" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="49.35" x="60" y="61.333">Access_r</text>
+    </g>
+    <g class="link" data-entity-1="ent0043" data-entity-2="ent0044" data-link-type="association" id="lnk45">
+      <path d="M24.16,24 C48.469,24 120.232,24 144.71,24" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="38.7" x="65.5" y="19.333">Access</text>
+    </g>
+  </g>
+</svg>

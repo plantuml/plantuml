@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="90px" preserveAspectRatio="none" style="width:164px;height:90px;background:#FFFFFF;" version="1.1" viewBox="0 0 164 90" width="164px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity A-->
+    <g class="entity" data-qualified-name="A" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="62" x="6" y="12"/>
+      <image height="62" width="51" x="16" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjYyIiB3aWR0aD0iNTEiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciID48ZGVmcy8+PGcgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGxlbmd0aEFkanVzdD0ic3BhY2luZyI+PCEtLWVudGl0eSBBLS0+PGcgY2xhc3M9ImVudGl0eSIgZGF0YS1xdWFsaWZpZWQtbmFtZT0iQSIgaWQ9ImVudDAwMDEiIGRhdGEtc291cmNlLWxpbmU9IjEiPjxyZWN0IHg9IjYiIHk9IjEyIiB3aWR0aD0iMjkuMzYyIiBoZWlnaHQ9IjM0IiBmaWxsPSIjRjFGMUYxIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHJ4PSIyLjUiIHJ5PSIyLjUiLz48dGV4dCB4PSIxNiIgeT0iMzIuODg5IiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjE0Ij5BPC90ZXh0PjwvZz48L2c+PC9zdmc+" y="22"/>
+    </g>
+    <!--entity B-->
+    <g class="entity" data-qualified-name="B" data-source-line="7" id="ent0002">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="62" x="86" y="12"/>
+      <image height="62" width="51" x="96" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjYyIiB3aWR0aD0iNTEiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciID48ZGVmcy8+PGcgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGxlbmd0aEFkanVzdD0ic3BhY2luZyI+PCEtLWVudGl0eSBCLS0+PGcgY2xhc3M9ImVudGl0eSIgZGF0YS1xdWFsaWZpZWQtbmFtZT0iQiIgaWQ9ImVudDAwMDEiIGRhdGEtc291cmNlLWxpbmU9IjIiPjxyZWN0IHg9IjYiIHk9IjEyIiB3aWR0aD0iMjkuMzYyIiBoZWlnaHQ9IjM0IiBmaWxsPSIjRjFGMUYxIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHJ4PSIyLjUiIHJ5PSIyLjUiLz48dGV4dCB4PSIxNiIgeT0iMzIuODg5IiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjE0Ij5CPC90ZXh0PjwvZz48L2c+PC9zdmc+" y="22"/>
+    </g>
+  </g>
+</svg>

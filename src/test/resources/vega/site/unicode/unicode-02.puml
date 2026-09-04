@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+
+(*) --> "膩平台"
+--> === S1 ===
+--> 鞠躬向公眾
+--> === S2 ===
+--> 這傢伙波武器
+--> (*)
+
+skinparam backgroundColor #AAFFFF
+skinparam activityStartColor red
+skinparam activityBarColor SaddleBrown
+skinparam activityEndColor Silver
+skinparam activityBackgroundColor Peru
+skinparam activityBorderColor Peru
+@enduml

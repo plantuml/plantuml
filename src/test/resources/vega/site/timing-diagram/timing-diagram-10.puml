@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+concise "Season" as S
+'30 days is scaled to 50 pixels
+scale 2592000 as 50 pixels
+
+@2000/11/01
+S is "Winter"
+
+@2001/02/01
+S is "Spring"
+
+@2001/05/01
+S is "Summer"
+
+@2001/08/01
+S is "Fall"
+@enduml

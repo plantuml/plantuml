@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="NWDIAG" height="135px" preserveAspectRatio="none" style="width:287px;height:135px;background:#FFFFFF;" version="1.1" viewBox="0 0 287 135" width="287px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="44.025" x="5" y="14.333">Network</text>
+    <rect fill="#E2E2F0" height="5" style="stroke:#181818;stroke-width:1;" width="226.15" x="54.025" y="8.5"/>
+    <path d="M106.025,13.5 L106.025,43.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M219.1,13.5 L219.1,57.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#F1F1F1" points="69.025,43.5,115.025,43.5,122.025,64.5,139.025,64.5,139.025,93.5,69.025,93.5,69.025,43.5" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="69.025" x2="122.025" y1="64.5" y2="64.5"/>
+    <text fill="#000" font-size="12" textLength="34.05" x="79.025" y="80.833">Folder</text>
+    <text fill="#000" font-size="12" textLength="48.075" x="193.063" y="71.833">Hexagon</text>
+  </g>
+</svg>

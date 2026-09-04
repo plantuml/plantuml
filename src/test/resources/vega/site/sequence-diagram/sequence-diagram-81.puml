@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+Alice -> Bob: Authentication Request
+alt#Gold #LightBlue Successful case
+    Bob -> Alice: Authentication Accepted
+else #Pink Failure
+    Bob -> Alice: Authentication Rejected
+end
+@enduml

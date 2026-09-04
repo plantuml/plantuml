@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="90.732px" preserveAspectRatio="none" style="width:83px;height:90px;background:#FFFFFF;" version="1.1" viewBox="0 0 83 90" width="83.415px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="32.927" width="5.854" x="19.002" y="28.537"/>
+      <line style="stroke:#181818;stroke-width:0.366;stroke-dasharray:3.659,3.659;" x1="21.563" x2="21.563" y1="28.537" y2="61.463"/>
+    </g>
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="32.927" width="5.854" x="56.826" y="28.537"/>
+      <line style="stroke:#181818;stroke-width:0.366;stroke-dasharray:3.659,3.659;" x1="59.387" x2="59.387" y1="28.537" y2="61.463"/>
+    </g>
+    <rect fill="#E2E2F0" height="20.488" rx="1.829" ry="1.829" style="stroke:#181818;stroke-width:0.366;" width="28.491" x="7.317" y="7.317"/>
+    <text fill="#000" font-size="10.244" textLength="18.247" x="12.439" y="20.407">Bob</text>
+    <rect fill="#E2E2F0" height="20.488" rx="1.829" ry="1.829" style="stroke:#181818;stroke-width:0.366;" width="32.524" x="43.125" y="7.317"/>
+    <text fill="#000" font-size="10.244" textLength="22.28" x="48.247" y="20.407">Alice</text>
+    <rect fill="#E2E2F0" height="20.488" rx="1.829" ry="1.829" style="stroke:#181818;stroke-width:0.366;" width="28.491" x="7.317" y="61.463"/>
+    <text fill="#000" font-size="10.244" textLength="18.247" x="12.439" y="74.553">Bob</text>
+    <rect fill="#E2E2F0" height="20.488" rx="1.829" ry="1.829" style="stroke:#181818;stroke-width:0.366;" width="32.524" x="43.125" y="61.463"/>
+    <text fill="#000" font-size="10.244" textLength="22.28" x="48.247" y="74.553">Alice</text>
+    <polygon fill="#181818" points="50.607,45.366,57.924,48.293,50.607,51.22,53.534,48.293" style="stroke:#181818;stroke-width:0.732;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:0.732;" x1="21.563" x2="54.997" y1="48.293" y2="48.293"/>
+    <text fill="#000" font-size="9.512" textLength="20.154" x="26.684" y="44.715">hello</text>
+  </g>
+</svg>

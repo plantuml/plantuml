@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startgantt
+[Task1] requires 10 days
+then [Task2] requires 4 days
+-- Phase Two --
+then [Task3] requires 5 days
+then [Task4] requires 6 days
+@endgantt

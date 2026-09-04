@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="223px" preserveAspectRatio="none" style="width:250px;height:223px;background:#FFFFFF;" version="1.1" viewBox="0 0 250 223" width="250px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <ellipse cx="123.088" cy="25" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="105.95" x="70.113" y="55"/>
+    <text fill="#000" font-size="12" textLength="85.95" x="80.113" y="74.333">starting progress</text>
+    <rect fill="#FF69B4" height="44" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="214.175" x="16" y="107"/>
+    <text fill="#000" font-size="12" textLength="130.125" x="26" y="126.333">reading configuration files</text>
+    <text fill="#000" font-size="12" textLength="194.175" x="26" y="138.333">These files should be edited at this point!</text>
+    <rect fill="#AAA" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="124.7" x="60.738" y="171"/>
+    <text fill="#000" font-size="12" textLength="104.7" x="70.738" y="190.333">ending of the process</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="123.088" x2="123.088" y1="35" y2="55"/>
+    <polygon fill="#181818" points="119.088,45,123.088,55,127.088,45,123.088,49" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="123.088" x2="123.088" y1="87" y2="107"/>
+    <polygon fill="#181818" points="119.088,97,123.088,107,127.088,97,123.088,101" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="123.088" x2="123.088" y1="151" y2="171"/>
+    <polygon fill="#181818" points="119.088,161,123.088,171,127.088,161,123.088,165" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

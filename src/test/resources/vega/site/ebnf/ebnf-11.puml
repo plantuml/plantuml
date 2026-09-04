@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startebnf
+grammar = { rule };
+rule = lhs , "=" (* definition *) , rhs , ";" (* termination *);
+lhs = identifier ;
+rhs = identifier
+     | terminal
+     | "[" , rhs (* optional *) , "]"
+     | "{" , rhs (* repetition *), "}"
+     | "(" , rhs (* grouping *) , ")"
+     | "(*" , string (* comment *) , "*)"
+     | "?" , rhs (* special sequence, aka notation *) , "?"
+     | rhs , "|" (* alternation *) , rhs
+     | rhs , "," (* concatenation *), rhs ;
+identifier = letter , { letter | digit | "_" } ;
+terminal = "'" , character , { character } , "'"
+         | '"' , character , { character } , '"' ;
+character = letter | digit | symbol | "_" ;
+symbol = "[" | "]" | "{" | "}" | "(" | ")" | "<" | ">"
+       | "'" | '"' | "=" | "|" | "." | "," | ";" ;
+digit = ? 0-9 ? ;
+letter = ? A-Z or a-z ? ;
+@endebnf

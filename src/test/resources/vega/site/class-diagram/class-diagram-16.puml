@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+-class "private Class" {
+}
+
+#class "protected Class" {
+}
+
+~class "package private Class" {
+}
+
++class "public Class" {
+}
+@enduml

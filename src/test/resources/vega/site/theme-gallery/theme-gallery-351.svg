@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="379.167px" preserveAspectRatio="none" style="width:269px;height:379px;" version="1.1" viewBox="0 0 269 379" width="269.792px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <ellipse cx="86.263" cy="26.042" fill="#5BC0DE" rx="10.417" ry="10.417" style="stroke:#E58748;stroke-width:1.042;"/>
+    <rect fill="none" height="25" rx="4.167" ry="4.167" style="stroke:#E58748;stroke-width:1.042;" width="28.516" x="72.005" y="57.292"/>
+    <text fill="#DF691A" font-family="'Verdana'" font-size="12.5" textLength="16.016" x="78.255" y="73.264">init</text>
+    <polygon fill="none" points="69.232,124.653,103.294,124.653,115.794,137.153,103.294,149.653,69.232,149.653,56.732,137.153,69.232,124.653" style="stroke:#717D89;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#717D89" font-family="'Verdana'" font-size="12.5" textLength="34.063" x="69.232" y="140.625">color?</text>
+    <text fill="#F00" font-family="'Verdana'" font-size="12.5" textLength="18.047" x="38.685" y="134.375">red</text>
+    <rect fill="none" height="25" rx="4.167" ry="4.167" style="stroke:#E58748;stroke-width:1.042;" width="54.844" x="16.667" y="160.069"/>
+    <text fill="#DF691A" font-family="'Verdana'" font-size="12.5" textLength="42.344" x="22.917" y="176.042">print red</text>
+    <path d="M185.365,161.111 L185.365,168.403 L164.531,172.569 L185.365,176.736 L185.365,184.028 A0,0 0 0 0 185.365,184.028 L248.255,184.028 A0,0 0 0 0 248.255,184.028 L248.255,171.528 L237.839,161.111 L185.365,161.111 A0,0 0 0 0 185.365,161.111" fill="none" style="stroke:#7CCDE5;stroke-width:1.042;"/>
+    <path d="M237.839,161.111 L237.839,171.528 L248.255,171.528 L237.839,161.111" fill="none" style="stroke:#7CCDE5;stroke-width:1.042;"/>
+    <text fill="#7CCDE5" font-family="'Verdana'" font-size="12.5" textLength="41.016" x="191.615" y="176.042">no color</text>
+    <rect fill="none" height="25" rx="4.167" ry="4.167" style="stroke:#E58748;stroke-width:1.042;" width="72.188" x="92.344" y="160.069"/>
+    <text fill="#DF691A" font-family="'Verdana'" font-size="12.5" textLength="59.688" x="98.594" y="176.042">print not red</text>
+    <polygon fill="none" points="86.263,191.319,98.763,203.819,86.263,216.319,73.763,203.819,86.263,191.319" style="stroke:#717D89;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <rect fill="none" height="70.833" rx="4.167" ry="4.167" style="stroke:#DF691A;stroke-width:1.042;" width="54.193" x="59.167" y="226.736"/>
+    <path d="M91.849,226.736 L91.849,231.944 L81.432,242.361 L59.167,242.361" fill="none" style="stroke:#DF691A;stroke-width:1.042;"/>
+    <text fill="#DF691A" font-family="'Verdana'" font-size="12.5" textLength="22.266" x="62.292" y="237.5">End</text>
+    <rect fill="none" height="25" rx="4.167" ry="4.167" style="stroke:#E58748;stroke-width:1.042;" width="33.359" x="69.583" y="260.069"/>
+    <text fill="#DF691A" font-family="'Verdana'" font-size="12.5" textLength="20.859" x="75.833" y="276.042">end</text>
+    <ellipse cx="86.263" cy="347.917" fill="none" rx="10.417" ry="10.417" style="stroke:#5BC0DE;stroke-width:1.042;"/>
+    <line style="stroke:#5BC0DE;stroke-width:2.604;" x1="79.818" x2="92.708" y1="341.472" y2="354.362"/>
+    <line style="stroke:#5BC0DE;stroke-width:2.604;" x1="92.708" x2="79.818" y1="341.472" y2="354.362"/>
+    <line style="stroke:#DF691A;stroke-width:3.125;" x1="86.263" x2="86.263" y1="36.458" y2="57.292"/>
+    <polygon fill="#DF691A" points="82.096,46.875,86.263,57.292,90.43,46.875,86.263,51.042" style="stroke:#DF691A;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#DF691A;stroke-width:3.125;" x1="56.732" x2="44.089" y1="137.153" y2="137.153"/>
+    <line style="stroke:#DF691A;stroke-width:3.125;" x1="44.089" x2="44.089" y1="137.153" y2="160.069"/>
+    <polygon fill="#DF691A" points="39.922,149.653,44.089,160.069,48.255,149.653,44.089,153.819" style="stroke:#DF691A;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#DF691A;stroke-width:3.125;" x1="115.794" x2="128.438" y1="137.153" y2="137.153"/>
+    <line style="stroke:#DF691A;stroke-width:3.125;" x1="128.438" x2="128.438" y1="137.153" y2="160.069"/>
+    <polygon fill="#DF691A" points="124.271,149.653,128.438,160.069,132.604,149.653,128.438,153.819" style="stroke:#DF691A;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#DF691A;stroke-width:3.125;" x1="44.089" x2="44.089" y1="185.069" y2="203.819"/>
+    <line style="stroke:#DF691A;stroke-width:3.125;" x1="44.089" x2="73.763" y1="203.819" y2="203.819"/>
+    <polygon fill="#DF691A" points="63.346,199.653,73.763,203.819,63.346,207.986,67.513,203.819" style="stroke:#DF691A;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#DF691A;stroke-width:3.125;" x1="128.438" x2="128.438" y1="185.069" y2="203.819"/>
+    <line style="stroke:#DF691A;stroke-width:3.125;" x1="128.438" x2="98.763" y1="203.819" y2="203.819"/>
+    <polygon fill="#DF691A" points="109.18,199.653,98.763,203.819,109.18,207.986,105.013,203.819" style="stroke:#DF691A;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#DF691A;stroke-width:3.125;" x1="86.263" x2="86.263" y1="82.292" y2="124.653"/>
+    <polygon fill="#DF691A" points="82.096,114.236,86.263,124.653,90.43,114.236,86.263,118.403" style="stroke:#DF691A;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" textLength="57.578" x="90.43" y="103.646">test of color</text>
+    <line style="stroke:#DF691A;stroke-width:3.125;" x1="86.263" x2="86.263" y1="216.319" y2="260.069"/>
+    <polygon fill="#DF691A" points="82.096,249.653,86.263,260.069,90.43,249.653,86.263,253.819" style="stroke:#DF691A;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#DF691A;stroke-width:3.125;" x1="86.263" x2="86.263" y1="285.069" y2="337.5"/>
+    <polygon fill="#DF691A" points="82.096,327.083,86.263,337.5,90.43,327.083,86.263,331.25" style="stroke:#DF691A;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" textLength="66.719" x="90.43" y="315.104">this is the end</text>
+  </g>
+</svg>

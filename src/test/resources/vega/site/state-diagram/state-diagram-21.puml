@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+state start <<start>>
+start -> A
+note left of start : this is a short note on start
+
+state end <<end>>
+A -> end
+
+note right of end
+ note
+ on end
+end note
+@enduml

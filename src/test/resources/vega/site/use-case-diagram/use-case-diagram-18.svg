@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="164px" preserveAspectRatio="none" style="width:116px;height:164px;background:#FFFFFF;" version="1.1" viewBox="0 0 116 164" width="116px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity actor1-->
+    <g class="entity" data-qualified-name="actor1" data-source-line="1" id="ent0001">
+      <ellipse cx="52.925" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M52.925,28.5 L52.925,55.5 M39.925,36.5 L65.925,36.5 M52.925,55.5 L39.925,70.5 M52.925,55.5 L65.925,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="38.85" x="33.5" y="82.889">actor1</text>
+    </g>
+    <!--entity Usecase1-->
+    <g class="entity" data-qualified-name="Usecase1" data-source-line="1" id="ent0002">
+      <ellipse cx="53.053" cy="134.899" fill="#F1F1F1" rx="47.053" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="62.3" x="21.903" y="138.399">Usecase1</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="53,121.875,57,112.875,53,116.875,49,112.875,53,121.875" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M53,86.111 C53,98.917 53,107.469 53,116.875" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

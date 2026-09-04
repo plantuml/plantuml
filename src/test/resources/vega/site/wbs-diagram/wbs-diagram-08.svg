@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="196px" preserveAspectRatio="none" style="width:222px;height:196px;background:#FFFFFF;" version="1.1" viewBox="0 0 222 196" width="222px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:1.5;" x1="43.513" x2="43.513" y1="54" y2="74"/>
+    <text fill="#000" font-size="12" textLength="44.025" x="20" y="84.333">America</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="43.513" x2="53.513" y1="110" y2="110"/>
+    <text fill="#000" font-size="12" textLength="42.075" x="53.513" y="113.333">Canada</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="43.513" x2="53.513" y1="139" y2="139"/>
+    <text fill="#000" font-size="12" textLength="38.025" x="53.513" y="142.333">Mexico</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="43.513" x2="53.513" y1="168" y2="168"/>
+    <text fill="#000" font-size="12" textLength="24.75" x="53.513" y="171.333">USA</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="43.513" x2="43.513" y1="88" y2="168"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="139.438" x2="139.438" y1="54" y2="74"/>
+    <text fill="#000" font-size="12" textLength="38.7" x="118.587" y="84.333">Europe</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="139.438" x2="149.438" y1="110" y2="110"/>
+    <text fill="#000" font-size="12" textLength="44.1" x="149.438" y="113.333">England</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="139.438" x2="149.438" y1="139" y2="139"/>
+    <text fill="#000" font-size="12" textLength="49.275" x="149.438" y="142.333">Germany</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="139.438" x2="149.438" y1="168" y2="168"/>
+    <text fill="#000" font-size="12" textLength="30.75" x="149.438" y="171.333">Spain</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="139.438" x2="139.438" y1="88" y2="168"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="43.513" x2="139.438" y1="54" y2="54"/>
+    <text fill="#000" font-size="12" textLength="31.35" x="74.3" y="30.333">World</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="91.475" x2="91.475" y1="34" y2="54"/>
+  </g>
+</svg>

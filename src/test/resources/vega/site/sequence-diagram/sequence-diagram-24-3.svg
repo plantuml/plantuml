@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="159px" preserveAspectRatio="none" style="width:142px;height:159px;background:#FFFFFF;" version="1.1" viewBox="0 0 142 159" width="142px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="70" width="8" x="42.563" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="46.063" x2="46.063" y1="39" y2="109"/>
+    </g>
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="70" width="8" x="94.256" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="97.756" x2="97.756" y1="39" y2="109"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="23.838" y="10"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="30.838" y="27.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="78.288" y="10"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="85.288" y="27.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="23.838" y="108"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="30.838" y="125.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="78.288" y="108"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="85.288" y="125.889">Bob</text>
+    <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:2,2;" x1="23.838" x2="117.225" y1="49" y2="49"/>
+    <polygon fill="#181818" points="85.756,75,95.756,79,85.756,83,89.756,79" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="46.063" x2="91.756" y1="79" y2="79"/>
+    <text fill="#000" font-size="13" textLength="15.925" x="53.063" y="74.111">A3</text>
+    <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:2,2;" x1="23.838" x2="117.225" y1="97" y2="97"/>
+    <g class="footer" data-source-line="1">
+      <text fill="#888" font-size="10" textLength="130.063" x="5" y="149.778">This is %page% of %lastpage%</text>
+    </g>
+  </g>
+</svg>

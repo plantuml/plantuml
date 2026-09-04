@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+concise "Web User" as WU
+
+@0
+WU is {-}
+
+@100
+WU is A1
+
+@200
+WU is {-}
+
+@300
+WU is {hidden}
+
+@400
+WU is A3
+
+@500
+WU is {-}
+@enduml

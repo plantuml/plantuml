@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startjson
+!$a = {"age" : 30, "name":"Bob"}
+!$b = [1, 2, {"a":0, "b":1}]
+%json_add($a, tab, $b)
+@endjson

@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+!theme lightgray
+
+object user1
+user1 : name = "Dummy"
+user1 : id = 123
+
+object user2 {
+  name = "Dummy"
+  id = 123
+}
+
+object o1
+object o2
+diamond dia
+object o3
+
+o1  --> dia
+o2  --> dia
+dia --> o3
+@enduml

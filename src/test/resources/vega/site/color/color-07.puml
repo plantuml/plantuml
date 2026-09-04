@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+skinparam minClassWidth 200
+skinparam nodesep 10
+skinparam ranksep 10
+
+rectangle "ClassColor" {
+rectangle "Class_C_Background\n #ADD1B2" #ADD1B2
+rectangle "Class_N_Background\n #E3664A" #E3664A
+rectangle "Class_A_Background\n #A9DCDF" #A9DCDF
+rectangle "Class_I_Background\n #B4A7E5" #B4A7E5
+rectangle "Class_E_Background\n #EB937F" #EB937F
+}
+rectangle "DefaultColor" {
+rectangle "BackGroundColor_Default\n #FEFECE" #FEFECE
+rectangle "LineColor_Default\n #A80036"       #A80036
+rectangle "Legend_BackGroundColor\n #DDDDDD"   #DDDDDD
+rectangle "//TBC//\n..."
+}
+@enduml

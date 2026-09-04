@@ -1,0 +1,32 @@
+---
+output: svg
+---
+@startuml
+card a
+card b
+package A {
+  card a1
+  card a2
+  card a3
+  card a4
+  card a5
+  package sub_a {
+   card sa1
+   card sa2
+   card sa3
+  }
+}
+
+package B {
+  card b1
+  card b2
+  card b3
+  card b4
+  card b5
+  package sub_b {
+   card sb1
+   card sb2
+   card sb3
+  }
+}
+@enduml

@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="117px" preserveAspectRatio="none" style="width:338px;height:117px;background:#FFFFFF;" version="1.1" viewBox="0 0 338 117" width="338px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="50.7" x="26" y="15.333">checkbox</text>
+    <rect fill="none" height="10" style="stroke:#000;stroke-width:1.5;" width="10" x="8" y="7"/>
+    <polygon fill="#000" points="9,12,12,15,19,6,12,13" style="stroke:#000;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="12" textLength="50.7" x="108" y="15.333">checkbox</text>
+    <rect fill="none" height="10" style="stroke:#000;stroke-width:1.5;" width="10" x="90" y="7"/>
+    <text fill="#000" font-size="12" textLength="26.7" x="26" y="29.333">radio</text>
+    <ellipse cx="13" cy="26" fill="none" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;"/>
+    <text fill="#000" font-size="12" textLength="26.7" x="108" y="29.333">radio</text>
+    <ellipse cx="95" cy="26" fill="none" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;"/>
+    <ellipse cx="95" cy="26" fill="#000" rx="2" ry="2" style="stroke:#000;stroke-width:1.5;"/>
+    <text fill="#000" font-size="12" textLength="57.375" x="6" y="43.333">This is a text</text>
+    <rect fill="#EEE" height="16" rx="5" ry="5" style="stroke:#000;stroke-width:2.5;" width="140" x="90.5" y="36.5"/>
+    <text fill="#000" font-size="12" textLength="80.7" x="120.15" y="47.833">This is my button</text>
+    <text fill="#000" font-size="12" textLength="91.35" x="240" y="43.333">This is another text</text>
+    <text fill="#000" font-size="12" textLength="30.075" x="9" y="66.333">A field</text>
+    <line style="stroke:#000;stroke-width:1;" x1="7" x2="66" y1="69" y2="69"/>
+    <line style="stroke:#000;stroke-width:1;" x1="7" x2="7" y1="66" y2="68"/>
+    <line style="stroke:#000;stroke-width:1;" x1="66" x2="66" y1="66" y2="68"/>
+    <text fill="#000" font-size="12" textLength="90.825" x="91" y="66.333">Another long Field</text>
+    <line style="stroke:#000;stroke-width:1;" x1="89" x2="236" y1="69" y2="69"/>
+    <line style="stroke:#000;stroke-width:1;" x1="89" x2="89" y1="66" y2="68"/>
+    <line style="stroke:#000;stroke-width:1;" x1="236" x2="236" y1="66" y2="68"/>
+    <rect fill="#EEE" height="16" rx="5" ry="5" style="stroke:#000;stroke-width:2.5;" width="68" x="242.5" y="59.5"/>
+    <text fill="#000" font-size="12" textLength="41.325" x="255.838" y="70.833">A button</text>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="7" y="81"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="7" y="82"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="7" y="83"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="7" y="84"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="7" y="85"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="7" y="86"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="7" y="87"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="7" y="88"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="8" y="81"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="8" y="83"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="8" y="88"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="9" y="81"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="9" y="83"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="9" y="88"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="10" y="81"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="10" y="83"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="10" y="88"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="11" y="81"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="11" y="82"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="11" y="83"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="11" y="88"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="12" y="83"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="12" y="88"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="13" y="83"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="13" y="88"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="14" y="83"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="14" y="88"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="15" y="83"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="15" y="88"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="16" y="83"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="16" y="84"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="16" y="85"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="16" y="86"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="16" y="87"/>
+    <rect fill="#000" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="16" y="88"/>
+    <text fill="#00F" font-size="12" textLength="57.3" x="88" y="89.333">other folder</text>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="241" y="81"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="241" y="82"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="241" y="83"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="241" y="84"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="241" y="85"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="241" y="86"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="241" y="87"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="241" y="88"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="242" y="81"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="242" y="83"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="242" y="88"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="243" y="81"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="243" y="83"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="243" y="88"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="244" y="81"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="244" y="83"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="244" y="88"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="245" y="81"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="245" y="82"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="245" y="83"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="245" y="88"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="246" y="83"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="246" y="88"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="247" y="83"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="247" y="88"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="248" y="83"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="248" y="88"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="249" y="83"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="249" y="88"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="250" y="83"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="250" y="84"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="250" y="85"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="250" y="86"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="250" y="87"/>
+    <rect fill="#00F" height="0.5" style="stroke:#000;stroke-width:0.5;" width="0.5" x="250" y="88"/>
+    <rect fill="#EEE" height="15" style="stroke:#000;stroke-width:1;" width="79" x="6" y="94"/>
+    <text fill="#000" font-size="12" textLength="40.725" x="8" y="105.333">Droplist</text>
+    <line style="stroke:#000;stroke-width:1;" x1="74" x2="74" y1="94" y2="109"/>
+    <polygon fill="#000" points="77,100,83,100,80,104" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

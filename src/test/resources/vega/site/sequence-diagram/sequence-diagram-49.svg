@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="341px" preserveAspectRatio="none" style="width:270px;height:341px;background:#FFFFFF;" version="1.1" viewBox="0 0 270 341" width="270px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>alice</title>
+      <rect fill="#000" fill-opacity="0" height="262" width="8" x="27.938" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="31.438" x2="31.438" y1="39" y2="301"/>
+    </g>
+    <g>
+      <title>bob</title>
+      <rect fill="#000" fill-opacity="0" height="262" width="8" x="103.9" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="107.4" x2="107.4" y1="39" y2="301"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="217" style="stroke:#181818;stroke-width:1;" width="10" x="102.4" y="66"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="110" style="stroke:#181818;stroke-width:1;" width="10" x="107.4" y="106"/>
+    </g>
+    <g>
+      <title>bib</title>
+      <rect fill="#000" fill-opacity="0" height="262" width="8" x="171.825" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="175.325" x2="175.325" y1="39" y2="301"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#050" height="56" style="stroke:#181818;stroke-width:1;" width="10" x="170.325" y="133"/>
+    </g>
+    <g>
+      <title>george</title>
+      <rect fill="#000" fill-opacity="0" height="123" width="8" x="226.975" y="141"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="230.475" x2="230.475" y1="141" y2="264"/>
+    </g>
+    <line style="stroke:#A80036;stroke-width:2;" x1="221.475" x2="239.475" y1="247" y2="265"/>
+    <line style="stroke:#A80036;stroke-width:2;" x1="221.475" x2="239.475" y1="265" y2="247"/>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.875" x="10" y="10"/>
+    <text fill="#000" font-size="14" textLength="28.875" x="17" y="27.889">alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="37.363" x="88.719" y="10"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="95.719" y="27.889">bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="32.725" x="158.962" y="10"/>
+    <text fill="#000" font-size="14" textLength="18.725" x="165.962" y="27.889">bib</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.875" x="10" y="301"/>
+    <text fill="#000" font-size="14" textLength="28.875" x="17" y="318.889">alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="37.363" x="88.719" y="301"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="95.719" y="318.889">bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="32.725" x="158.962" y="301"/>
+    <text fill="#000" font-size="14" textLength="18.725" x="165.962" y="318.889">bib</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="57.575" x="201.687" y="301"/>
+    <text fill="#000" font-size="14" textLength="43.575" x="208.687" y="318.889">george</text>
+    <polygon fill="#181818" points="90.4,62,100.4,66,90.4,70,94.4,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="31.438" x2="96.4" y1="66" y2="66"/>
+    <text fill="#000" font-size="13" textLength="27.544" x="38.438" y="61.111">hello</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="112.4" x2="159.4" y1="93" y2="93"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="159.4" x2="159.4" y1="93" y2="106"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="118.4" x2="159.4" y1="106" y2="106"/>
+    <polygon fill="#181818" points="128.4,102,118.4,106,128.4,110,124.4,106" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="39.813" x="124.4" y="88.111">self call</text>
+    <polygon fill="#181818" points="158.325,129,168.325,133,158.325,137,162.325,133" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="117.4" x2="164.325" y1="133" y2="133"/>
+    <text fill="#000" font-size="13" textLength="27.544" x="124.4" y="128.111">hello</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="57.575" x="201.687" y="141"/>
+    <text fill="#000" font-size="14" textLength="43.575" x="208.687" y="158.889">george</text>
+    <polygon fill="#181818" points="189.687,156,199.687,160,189.687,164,193.687,160" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="117.4" x2="195.687" y1="160" y2="160"/>
+    <text fill="#000" font-size="13" textLength="36.075" x="124.4" y="155.111">create</text>
+    <polygon fill="#181818" points="128.4,185,118.4,189,128.4,193,124.4,189" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="122.4" x2="169.325" y1="189" y2="189"/>
+    <text fill="#000" font-size="13" textLength="28.925" x="134.4" y="184.111">done</text>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="117.4" x2="159.4" y1="216" y2="216"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="159.4" x2="159.4" y1="216" y2="229"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="112.4" x2="159.4" y1="229" y2="229"/>
+    <polygon fill="#181818" points="122.4,225,112.4,229,122.4,233,118.4,229" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="10.806" x="124.4" y="211.111">rc</text>
+    <polygon fill="#181818" points="218.475,252,228.475,256,218.475,260,222.475,256" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="112.4" x2="224.475" y1="256" y2="256"/>
+    <text fill="#000" font-size="13" textLength="35.425" x="119.4" y="251.111">delete</text>
+    <polygon fill="#181818" points="42.438,279,32.438,283,42.438,287,38.438,283" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="36.438" x2="101.4" y1="283" y2="283"/>
+    <text fill="#000" font-size="13" textLength="46.963" x="48.438" y="278.111">success</text>
+  </g>
+</svg>

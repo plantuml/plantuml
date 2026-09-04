@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+title Minimal example
+domain "Biddable" as B <<B>>
+domain "Causal"   as C <<C>>
+domain "Designed" as D <<D>>
+domain "Lexical"  as L <<X>>
+domain "Machine"  as M <<S>>
+domain "Problem"  as s <<P>>
+requirement "Requirement" as R
+@enduml

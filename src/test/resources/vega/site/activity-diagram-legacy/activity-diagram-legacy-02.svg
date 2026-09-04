@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="265px" preserveAspectRatio="none" style="width:164px;height:265px;background:#FFFFFF;" version="1.1" viewBox="0 0 164 265" width="164px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name="start" data-source-line="2" id="ent0001">
+      <ellipse cx="53" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="76.7" x="14.5" y="73"/>
+    <text fill="#000" font-size="12" textLength="56.7" x="24.5" y="92.333">First Action</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="94.1" x="6" y="156"/>
+    <text fill="#000" font-size="12" textLength="74.1" x="16" y="175.333">Second Action</text>
+    <g class="end_entity" data-qualified-name="end" data-source-line="4" id="ent0006">
+      <ellipse cx="53" cy="236" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1.5;"/>
+      <ellipse cx="53" cy="236" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="53,72.81,57,63.81,53,67.81,49,63.81,53,72.81" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M53,36.263 C53,46.456 53,56.552 53,67.81" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="53,155.833,57,146.833,53,150.833,49,146.833,53,155.833" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M53,105.235 C53,119.717 53,136.374 53,150.833" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="101.613" x="55" y="133.556">You can put also labels</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0006" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="53,224.641,57,215.641,53,219.641,49,215.641,53,224.641" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M53,188.251 C53,199.467 53,209.468 53,219.641" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

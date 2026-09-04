@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="140px" preserveAspectRatio="none" style="width:192px;height:140px;background:#FFFFFF;" version="1.1" viewBox="0 0 192 140" width="192px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>C </title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="39.969" y="47"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="43.469" x2="43.469" y1="47" y2="92"/>
+    </g>
+    <g>
+      <title>C </title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="141.969" y="47"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="145.469" x2="145.469" y1="47" y2="92"/>
+    </g>
+    <rect fill="#E2E2F0" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="66.938" x="10" y="10"/>
+    <ellipse cx="28" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="23" y="33">C</text>
+    <text fill="#000" font-size="14" textLength="24.938" x="45" y="27.889">Bob</text>
+    <rect fill="#E2E2F0" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="72.45" x="109.244" y="10"/>
+    <ellipse cx="127.244" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="122.244" y="33">C</text>
+    <text fill="#000" font-size="14" textLength="30.45" x="144.244" y="27.889">Alice</text>
+    <rect fill="#E2E2F0" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="66.938" x="10" y="92"/>
+    <ellipse cx="28" cy="110" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="23" y="115">C</text>
+    <text fill="#000" font-size="14" textLength="24.938" x="45" y="109.889">Bob</text>
+    <rect fill="#E2E2F0" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="72.45" x="109.244" y="92"/>
+    <ellipse cx="127.244" cy="110" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="122.244" y="115">C</text>
+    <text fill="#000" font-size="14" textLength="30.45" x="144.244" y="109.889">Alice</text>
+    <polygon fill="#181818" points="133.469,70,143.469,74,133.469,78,137.469,74" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="43.469" x2="139.469" y1="74" y2="74"/>
+    <text fill="#000" font-size="13" textLength="78" x="50.469" y="69.111">First message</text>
+  </g>
+</svg>

@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+!$json_object= {
+  "name": "Mark McGwire", "hr": 65, "avg":  0.278
+}
+
+label l [
+|= key  |= <U+0025>json_key_exists(json_object, key)   |
+| "hr"  | %json_key_exists($json_object, "hr") |
+| "foo" | %json_key_exists($json_object, "foo")|
+| null  | %json_key_exists($json_object, null) |
+]
+@enduml

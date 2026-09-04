@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+start
+group Initialization {
+    :read config file;
+    :init internal variable;
+}
+group Running group {
+    :wait for user interaction;
+    :print information;
+}
+
+stop
+@enduml

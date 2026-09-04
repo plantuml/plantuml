@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="NWDIAG" height="71px" preserveAspectRatio="none" style="width:151px;height:71px;background:#FFFFFF;" version="1.1" viewBox="0 0 151 71" width="151px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="22.65" x="46.925" y="14.333">dmz</text>
+    <text fill="#000" font-size="12" textLength="64.575" x="5" y="26.333">210.x.x.x/24</text>
+    <rect fill="#E2E2F0" height="5" style="stroke:#181818;stroke-width:1;" width="70" x="73.575" y="14.5"/>
+  </g>
+</svg>

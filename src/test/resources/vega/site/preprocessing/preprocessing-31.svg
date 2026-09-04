@@ -1,0 +1,686 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="2452px" preserveAspectRatio="none" style="width:706px;height:2452px;background:#FFFFFF;" version="1.1" viewBox="0 0 706 2452" width="706px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="612" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="117.125" x="10" y="919"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="38.15" x="15" y="931.889">adaml</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="931.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="919" y2="937"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="937" y2="937"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="61.425" x="15" y="949.889">archimate</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="949.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="937" y2="955"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="955" y2="955"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="24.938" x="15" y="967.889">aws</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="967.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="955" y2="973"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="973" y2="973"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="39.025" x="15" y="985.889">awslib</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="985.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="973" y2="991"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="991" y2="991"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="54.6" x="15" y="1003.889">awslib10</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1003.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="991" y2="1009"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1009" y2="1009"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="54.6" x="15" y="1021.889">awslib14</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1021.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1009" y2="1027"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1027" y2="1027"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="54.6" x="15" y="1039.889">awslib20</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1039.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1027" y2="1045"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1045" y2="1045"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="15" y="1057.889">azure</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1057.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1045" y2="1063"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1063" y2="1063"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="58.275" x="15" y="1075.889">bootstrap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1075.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1063" y2="1081"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1081" y2="1081"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="97.125" x="15" y="1093.889">bootstrap1.12.1</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1093.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1081" y2="1099"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1099" y2="1099"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="97.125" x="15" y="1111.889">bootstrap1.13.1</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1111.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1099" y2="1117"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1117" y2="1117"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="14.787" x="15" y="1129.889">c4</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1129.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1117" y2="1135"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1135" y2="1135"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="38.938" x="15" y="1147.889">classy</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1147.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1135" y2="1153"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1153" y2="1153"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="58.363" x="15" y="1165.889">classy-c4</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1165.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1153" y2="1171"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1171" y2="1171"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="74.025" x="15" y="1183.889">cloudinsight</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1183.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1171" y2="1189"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1189" y2="1189"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.875" x="15" y="1201.889">cloudogu</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1201.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1189" y2="1207"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1207" y2="1207"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="76.213" x="15" y="1219.889">domainstory</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1219.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1207" y2="1225"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1225" y2="1225"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="30.363" x="15" y="1237.889">edgy</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1237.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1225" y2="1243"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1243" y2="1243"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="18.725" x="15" y="1255.889">eip</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1255.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1243" y2="1261"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1261" y2="1261"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="39.725" x="15" y="1273.889">elastic</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1273.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1261" y2="1279"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1279" y2="1279"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="22.575" x="15" y="1291.889">gcp</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1291.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1279" y2="1297"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1297" y2="1297"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="22.575" x="15" y="1309.889">ibm</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1309.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1297" y2="1315"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1315" y2="1315"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="21.787" x="15" y="1327.889">k8s</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1327.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1315" y2="1333"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1333" y2="1333"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="69.212" x="15" y="1345.889">kubernetes</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1345.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1333" y2="1351"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1351" y2="1351"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="33.512" x="15" y="1363.889">logos</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1363.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1351" y2="1369"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1369" y2="1369"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="49.788" x="15" y="1381.889">material</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1381.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1369" y2="1387"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1387" y2="1387"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="57.575" x="15" y="1399.889">material2</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1399.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1387" y2="1405"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1405" y2="1405"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="88.638" x="15" y="1417.889">material2.1.19</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1417.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1405" y2="1423"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1423" y2="1423"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="57.575" x="15" y="1435.889">material7</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1435.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1423" y2="1441"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1441" y2="1441"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="88.638" x="15" y="1453.889">material7.4.47</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1453.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1441" y2="1459"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1459" y2="1459"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="33.425" x="15" y="1471.889">office</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1471.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1459" y2="1477"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1477" y2="1477"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="22.575" x="15" y="1489.889">osa</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1489.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1477" y2="1495"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1495" y2="1495"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="30.362" x="15" y="1507.889">osa2</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1507.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1495" y2="1513"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="127.125" y1="1513" y2="1513"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="47.425" x="15" y="1525.889">tupadr3</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="122.125" y="1525.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="117.125" x2="117.125" y1="1513" y2="1531"/>
+    <rect fill="none" height="612" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="117.125" x="10" y="919"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="267.1" x="295.5" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="300.5" y="22.889">name</text>
+    <text fill="#000" font-size="14" textLength="38.15" x="355.65" y="22.889">adaml</text>
+    <line style="stroke:#000;stroke-width:1;" x1="350.65" x2="350.65" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="295.5" x2="562.6" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="300.5" y="40.889">version</text>
+    <text fill="#000" font-size="14" textLength="31.063" x="355.65" y="40.889">0.1.2</text>
+    <line style="stroke:#000;stroke-width:1;" x1="350.65" x2="350.65" y1="28" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="295.5" x2="562.6" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="300.5" y="58.889">source</text>
+    <text fill="#000" font-size="14" textLength="201.95" x="355.65" y="58.889">https://github.com/rocher/AdaML</text>
+    <line style="stroke:#000;stroke-width:1;" x1="350.65" x2="350.65" y1="46" y2="64"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="267.1" x="295.5" y="10"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="402.55" x="227.5" y="82"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="232.5" y="94.889">name</text>
+    <text fill="#000" font-size="14" textLength="61.425" x="287.65" y="94.889">archimate</text>
+    <line style="stroke:#000;stroke-width:1;" x1="282.65" x2="282.65" y1="82" y2="100"/>
+    <line style="stroke:#000;stroke-width:1;" x1="227.5" x2="630.05" y1="100" y2="100"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="232.5" y="112.889">version</text>
+    <text fill="#000" font-size="14" textLength="31.063" x="287.65" y="112.889">3.2.2</text>
+    <line style="stroke:#000;stroke-width:1;" x1="282.65" x2="282.65" y1="100" y2="118"/>
+    <line style="stroke:#000;stroke-width:1;" x1="227.5" x2="630.05" y1="118" y2="118"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="232.5" y="130.889">source</text>
+    <text fill="#000" font-size="14" textLength="337.4" x="287.65" y="130.889">https://github.com/plantuml-stdlib/Archimate-PlantUML</text>
+    <line style="stroke:#000;stroke-width:1;" x1="282.65" x2="282.65" y1="118" y2="136"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="402.55" x="227.5" y="82"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="393.275" x="232.5" y="154"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="237.5" y="166.889">name</text>
+    <text fill="#000" font-size="14" textLength="24.938" x="292.65" y="166.889">aws</text>
+    <line style="stroke:#000;stroke-width:1;" x1="287.65" x2="287.65" y1="154" y2="172"/>
+    <line style="stroke:#000;stroke-width:1;" x1="232.5" x2="625.775" y1="172" y2="172"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="237.5" y="184.889">version</text>
+    <text fill="#000" font-size="14" textLength="54.425" x="292.65" y="184.889">18.02.22</text>
+    <line style="stroke:#000;stroke-width:1;" x1="287.65" x2="287.65" y1="172" y2="190"/>
+    <line style="stroke:#000;stroke-width:1;" x1="232.5" x2="625.775" y1="190" y2="190"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="237.5" y="202.889">source</text>
+    <text fill="#000" font-size="14" textLength="328.125" x="292.65" y="202.889">https://github.com/milo-minderbinder/AWS-PlantUML</text>
+    <line style="stroke:#000;stroke-width:1;" x1="287.65" x2="287.65" y1="190" y2="208"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="393.275" x="232.5" y="154"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="374.55" x="241.5" y="226"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="246.5" y="238.889">name</text>
+    <text fill="#000" font-size="14" textLength="39.025" x="301.65" y="238.889">awslib</text>
+    <line style="stroke:#000;stroke-width:1;" x1="296.65" x2="296.65" y1="226" y2="244"/>
+    <line style="stroke:#000;stroke-width:1;" x1="241.5" x2="616.05" y1="244" y2="244"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="246.5" y="256.889">version</text>
+    <text fill="#000" font-size="14" textLength="38.85" x="301.65" y="256.889">14.0.0</text>
+    <line style="stroke:#000;stroke-width:1;" x1="296.65" x2="296.65" y1="244" y2="262"/>
+    <line style="stroke:#000;stroke-width:1;" x1="241.5" x2="616.05" y1="262" y2="262"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="246.5" y="274.889">source</text>
+    <text fill="#000" font-size="14" textLength="309.4" x="301.65" y="274.889">https://github.com/awslabs/aws-icons-for-plantuml</text>
+    <line style="stroke:#000;stroke-width:1;" x1="296.65" x2="296.65" y1="262" y2="280"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="374.55" x="241.5" y="226"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="374.55" x="241.5" y="298"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="246.5" y="310.889">name</text>
+    <text fill="#000" font-size="14" textLength="54.6" x="301.65" y="310.889">awslib10</text>
+    <line style="stroke:#000;stroke-width:1;" x1="296.65" x2="296.65" y1="298" y2="316"/>
+    <line style="stroke:#000;stroke-width:1;" x1="241.5" x2="616.05" y1="316" y2="316"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="246.5" y="328.889">version</text>
+    <text fill="#000" font-size="14" textLength="38.85" x="301.65" y="328.889">10.0.0</text>
+    <line style="stroke:#000;stroke-width:1;" x1="296.65" x2="296.65" y1="316" y2="334"/>
+    <line style="stroke:#000;stroke-width:1;" x1="241.5" x2="616.05" y1="334" y2="334"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="246.5" y="346.889">source</text>
+    <text fill="#000" font-size="14" textLength="309.4" x="301.65" y="346.889">https://github.com/awslabs/aws-icons-for-plantuml</text>
+    <line style="stroke:#000;stroke-width:1;" x1="296.65" x2="296.65" y1="334" y2="352"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="374.55" x="241.5" y="298"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="374.55" x="241.5" y="370"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="246.5" y="382.889">name</text>
+    <text fill="#000" font-size="14" textLength="54.6" x="301.65" y="382.889">awslib14</text>
+    <line style="stroke:#000;stroke-width:1;" x1="296.65" x2="296.65" y1="370" y2="388"/>
+    <line style="stroke:#000;stroke-width:1;" x1="241.5" x2="616.05" y1="388" y2="388"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="246.5" y="400.889">version</text>
+    <text fill="#000" font-size="14" textLength="38.85" x="301.65" y="400.889">14.0.0</text>
+    <line style="stroke:#000;stroke-width:1;" x1="296.65" x2="296.65" y1="388" y2="406"/>
+    <line style="stroke:#000;stroke-width:1;" x1="241.5" x2="616.05" y1="406" y2="406"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="246.5" y="418.889">source</text>
+    <text fill="#000" font-size="14" textLength="309.4" x="301.65" y="418.889">https://github.com/awslabs/aws-icons-for-plantuml</text>
+    <line style="stroke:#000;stroke-width:1;" x1="296.65" x2="296.65" y1="406" y2="424"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="374.55" x="241.5" y="370"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="374.55" x="241.5" y="442"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="246.5" y="454.889">name</text>
+    <text fill="#000" font-size="14" textLength="54.6" x="301.65" y="454.889">awslib20</text>
+    <line style="stroke:#000;stroke-width:1;" x1="296.65" x2="296.65" y1="442" y2="460"/>
+    <line style="stroke:#000;stroke-width:1;" x1="241.5" x2="616.05" y1="460" y2="460"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="246.5" y="472.889">version</text>
+    <text fill="#000" font-size="14" textLength="27.213" x="301.65" y="472.889">20.0</text>
+    <line style="stroke:#000;stroke-width:1;" x1="296.65" x2="296.65" y1="460" y2="478"/>
+    <line style="stroke:#000;stroke-width:1;" x1="241.5" x2="616.05" y1="478" y2="478"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="246.5" y="490.889">source</text>
+    <text fill="#000" font-size="14" textLength="309.4" x="301.65" y="490.889">https://github.com/awslabs/aws-icons-for-plantuml</text>
+    <line style="stroke:#000;stroke-width:1;" x1="296.65" x2="296.65" y1="478" y2="496"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="374.55" x="241.5" y="442"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="376.125" x="241" y="514"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="246" y="526.889">name</text>
+    <text fill="#000" font-size="14" textLength="35" x="301.15" y="526.889">azure</text>
+    <line style="stroke:#000;stroke-width:1;" x1="296.15" x2="296.15" y1="514" y2="532"/>
+    <line style="stroke:#000;stroke-width:1;" x1="241" x2="617.125" y1="532" y2="532"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="246" y="544.889">version</text>
+    <text fill="#000" font-size="14" textLength="31.063" x="301.15" y="544.889">2.2.0</text>
+    <line style="stroke:#000;stroke-width:1;" x1="296.15" x2="296.15" y1="532" y2="550"/>
+    <line style="stroke:#000;stroke-width:1;" x1="241" x2="617.125" y1="550" y2="550"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="246" y="562.889">source</text>
+    <text fill="#000" font-size="14" textLength="310.975" x="301.15" y="562.889">https://github.com/plantuml-stdlib/Azure-PlantUML</text>
+    <line style="stroke:#000;stroke-width:1;" x1="296.15" x2="296.15" y1="550" y2="568"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="376.125" x="241" y="514"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="244.613" x="306.5" y="586"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="311.5" y="598.889">name</text>
+    <text fill="#000" font-size="14" textLength="58.275" x="366.65" y="598.889">bootstrap</text>
+    <line style="stroke:#000;stroke-width:1;" x1="361.65" x2="361.65" y1="586" y2="604"/>
+    <line style="stroke:#000;stroke-width:1;" x1="306.5" x2="551.113" y1="604" y2="604"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="311.5" y="616.889">version</text>
+    <text fill="#000" font-size="14" textLength="38.85" x="366.65" y="616.889">1.13.1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="361.65" x2="361.65" y1="604" y2="622"/>
+    <line style="stroke:#000;stroke-width:1;" x1="306.5" x2="551.113" y1="622" y2="622"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="311.5" y="634.889">source</text>
+    <text fill="#000" font-size="14" textLength="179.463" x="366.65" y="634.889">https://github.com/twbs/icons</text>
+    <line style="stroke:#000;stroke-width:1;" x1="361.65" x2="361.65" y1="622" y2="640"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="244.613" x="306.5" y="586"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="244.613" x="306.5" y="658"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="311.5" y="670.889">name</text>
+    <text fill="#000" font-size="14" textLength="97.125" x="366.65" y="670.889">bootstrap1.12.1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="361.65" x2="361.65" y1="658" y2="676"/>
+    <line style="stroke:#000;stroke-width:1;" x1="306.5" x2="551.113" y1="676" y2="676"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="311.5" y="688.889">version</text>
+    <text fill="#000" font-size="14" textLength="38.85" x="366.65" y="688.889">1.12.1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="361.65" x2="361.65" y1="676" y2="694"/>
+    <line style="stroke:#000;stroke-width:1;" x1="306.5" x2="551.113" y1="694" y2="694"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="311.5" y="706.889">source</text>
+    <text fill="#000" font-size="14" textLength="179.463" x="366.65" y="706.889">https://github.com/twbs/icons</text>
+    <line style="stroke:#000;stroke-width:1;" x1="361.65" x2="361.65" y1="694" y2="712"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="244.613" x="306.5" y="658"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="244.613" x="306.5" y="730"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="311.5" y="742.889">name</text>
+    <text fill="#000" font-size="14" textLength="97.125" x="366.65" y="742.889">bootstrap1.13.1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="361.65" x2="361.65" y1="730" y2="748"/>
+    <line style="stroke:#000;stroke-width:1;" x1="306.5" x2="551.113" y1="748" y2="748"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="311.5" y="760.889">version</text>
+    <text fill="#000" font-size="14" textLength="38.85" x="366.65" y="760.889">1.13.1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="361.65" x2="361.65" y1="748" y2="766"/>
+    <line style="stroke:#000;stroke-width:1;" x1="306.5" x2="551.113" y1="766" y2="766"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="311.5" y="778.889">source</text>
+    <text fill="#000" font-size="14" textLength="179.463" x="366.65" y="778.889">https://github.com/twbs/icons</text>
+    <line style="stroke:#000;stroke-width:1;" x1="361.65" x2="361.65" y1="766" y2="784"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="244.613" x="306.5" y="730"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="357.488" x="250.5" y="802"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="255.5" y="814.889">name</text>
+    <text fill="#000" font-size="14" textLength="14.787" x="310.65" y="814.889">c4</text>
+    <line style="stroke:#000;stroke-width:1;" x1="305.65" x2="305.65" y1="802" y2="820"/>
+    <line style="stroke:#000;stroke-width:1;" x1="250.5" x2="607.988" y1="820" y2="820"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="255.5" y="832.889">version</text>
+    <text fill="#000" font-size="14" textLength="38.85" x="310.65" y="832.889">2.13.0</text>
+    <line style="stroke:#000;stroke-width:1;" x1="305.65" x2="305.65" y1="820" y2="838"/>
+    <line style="stroke:#000;stroke-width:1;" x1="250.5" x2="607.988" y1="838" y2="838"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="255.5" y="850.889">source</text>
+    <text fill="#000" font-size="14" textLength="292.338" x="310.65" y="850.889">https://github.com/plantuml-stdlib/C4-PlantUML</text>
+    <line style="stroke:#000;stroke-width:1;" x1="305.65" x2="305.65" y1="838" y2="856"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="357.488" x="250.5" y="802"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="383.825" x="237" y="874"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="242" y="886.889">name</text>
+    <text fill="#000" font-size="14" textLength="38.938" x="297.15" y="886.889">classy</text>
+    <line style="stroke:#000;stroke-width:1;" x1="292.15" x2="292.15" y1="874" y2="892"/>
+    <line style="stroke:#000;stroke-width:1;" x1="237" x2="620.825" y1="892" y2="892"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="242" y="904.889">version</text>
+    <text fill="#000" font-size="14" textLength="31.063" x="297.15" y="904.889">1.0.2</text>
+    <line style="stroke:#000;stroke-width:1;" x1="292.15" x2="292.15" y1="892" y2="910"/>
+    <line style="stroke:#000;stroke-width:1;" x1="237" x2="620.825" y1="910" y2="910"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="242" y="922.889">source</text>
+    <text fill="#000" font-size="14" textLength="318.675" x="297.15" y="922.889">https://github.com/james-gadrow-kr/classy-plantuml</text>
+    <line style="stroke:#000;stroke-width:1;" x1="292.15" x2="292.15" y1="910" y2="928"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="383.825" x="237" y="874"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="345.675" x="256" y="946"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="261" y="958.889">name</text>
+    <text fill="#000" font-size="14" textLength="58.363" x="316.15" y="958.889">classy-c4</text>
+    <line style="stroke:#000;stroke-width:1;" x1="311.15" x2="311.15" y1="946" y2="964"/>
+    <line style="stroke:#000;stroke-width:1;" x1="256" x2="601.675" y1="964" y2="964"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="261" y="976.889">version</text>
+    <text fill="#000" font-size="14" textLength="31.063" x="316.15" y="976.889">1.0.3</text>
+    <line style="stroke:#000;stroke-width:1;" x1="311.15" x2="311.15" y1="964" y2="982"/>
+    <line style="stroke:#000;stroke-width:1;" x1="256" x2="601.675" y1="982" y2="982"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="261" y="994.889">source</text>
+    <text fill="#000" font-size="14" textLength="280.525" x="316.15" y="994.889">https://github.com/james-gadrow-kr/classy-c4</text>
+    <line style="stroke:#000;stroke-width:1;" x1="311.15" x2="311.15" y1="982" y2="1000"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="345.675" x="256" y="946"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="409.55" x="224" y="1018"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="229" y="1030.889">name</text>
+    <text fill="#000" font-size="14" textLength="74.025" x="284.15" y="1030.889">cloudinsight</text>
+    <line style="stroke:#000;stroke-width:1;" x1="279.15" x2="279.15" y1="1018" y2="1036"/>
+    <line style="stroke:#000;stroke-width:1;" x1="224" x2="633.55" y1="1036" y2="1036"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="229" y="1048.889">version</text>
+    <text fill="#000" font-size="14" textLength="31.063" x="284.15" y="1048.889">1.0.0</text>
+    <line style="stroke:#000;stroke-width:1;" x1="279.15" x2="279.15" y1="1036" y2="1054"/>
+    <line style="stroke:#000;stroke-width:1;" x1="224" x2="633.55" y1="1054" y2="1054"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="229" y="1066.889">source</text>
+    <text fill="#000" font-size="14" textLength="344.4" x="284.15" y="1066.889">https://github.com/plantuml-stdlib/cicon-plantuml-sprites</text>
+    <line style="stroke:#000;stroke-width:1;" x1="279.15" x2="279.15" y1="1054" y2="1072"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="409.55" x="224" y="1018"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="400.275" x="229" y="1090"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="234" y="1102.889">name</text>
+    <text fill="#000" font-size="14" textLength="56.875" x="289.15" y="1102.889">cloudogu</text>
+    <line style="stroke:#000;stroke-width:1;" x1="284.15" x2="284.15" y1="1090" y2="1108"/>
+    <line style="stroke:#000;stroke-width:1;" x1="229" x2="629.275" y1="1108" y2="1108"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="234" y="1120.889">version</text>
+    <text fill="#000" font-size="14" textLength="31.063" x="289.15" y="1120.889">1.0.2</text>
+    <line style="stroke:#000;stroke-width:1;" x1="284.15" x2="284.15" y1="1108" y2="1126"/>
+    <line style="stroke:#000;stroke-width:1;" x1="229" x2="629.275" y1="1126" y2="1126"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="234" y="1138.889">source</text>
+    <text fill="#000" font-size="14" textLength="335.125" x="289.15" y="1138.889">https://github.com/cloudogu/plantuml-cloudogu-sprites</text>
+    <line style="stroke:#000;stroke-width:1;" x1="284.15" x2="284.15" y1="1126" y2="1144"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="400.275" x="229" y="1090"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="372.975" x="242.5" y="1162"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="247.5" y="1174.889">name</text>
+    <text fill="#000" font-size="14" textLength="76.213" x="302.65" y="1174.889">domainstory</text>
+    <line style="stroke:#000;stroke-width:1;" x1="297.65" x2="297.65" y1="1162" y2="1180"/>
+    <line style="stroke:#000;stroke-width:1;" x1="242.5" x2="615.475" y1="1180" y2="1180"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="247.5" y="1192.889">version</text>
+    <text fill="#000" font-size="14" textLength="31.063" x="302.65" y="1192.889">0.4.0</text>
+    <line style="stroke:#000;stroke-width:1;" x1="297.65" x2="297.65" y1="1180" y2="1198"/>
+    <line style="stroke:#000;stroke-width:1;" x1="242.5" x2="615.475" y1="1198" y2="1198"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="247.5" y="1210.889">source</text>
+    <text fill="#000" font-size="14" textLength="307.825" x="302.65" y="1210.889">https://github.com/johthor/DomainStory-PlantUML</text>
+    <line style="stroke:#000;stroke-width:1;" x1="297.65" x2="297.65" y1="1198" y2="1216"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="372.975" x="242.5" y="1162"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="318.55" x="269.5" y="1234"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="274.5" y="1246.889">name</text>
+    <text fill="#000" font-size="14" textLength="30.363" x="329.65" y="1246.889">edgy</text>
+    <line style="stroke:#000;stroke-width:1;" x1="324.65" x2="324.65" y1="1234" y2="1252"/>
+    <line style="stroke:#000;stroke-width:1;" x1="269.5" x2="588.05" y1="1252" y2="1252"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="274.5" y="1264.889">version</text>
+    <text fill="#000" font-size="14" textLength="31.063" x="329.65" y="1264.889">0.8.0</text>
+    <line style="stroke:#000;stroke-width:1;" x1="324.65" x2="324.65" y1="1252" y2="1270"/>
+    <line style="stroke:#000;stroke-width:1;" x1="269.5" x2="588.05" y1="1270" y2="1270"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="274.5" y="1282.889">source</text>
+    <text fill="#000" font-size="14" textLength="253.4" x="329.65" y="1282.889">https://github.com/boessu/plantuml-stdlib</text>
+    <line style="stroke:#000;stroke-width:1;" x1="324.65" x2="324.65" y1="1270" y2="1288"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="318.55" x="269.5" y="1234"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="362.125" x="248" y="1306"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="253" y="1318.889">name</text>
+    <text fill="#000" font-size="14" textLength="18.725" x="308.15" y="1318.889">eip</text>
+    <line style="stroke:#000;stroke-width:1;" x1="303.15" x2="303.15" y1="1306" y2="1324"/>
+    <line style="stroke:#000;stroke-width:1;" x1="248" x2="610.125" y1="1324" y2="1324"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="253" y="1336.889">version</text>
+    <text fill="#000" font-size="14" textLength="31.063" x="308.15" y="1336.889">1.0.0</text>
+    <line style="stroke:#000;stroke-width:1;" x1="303.15" x2="303.15" y1="1324" y2="1342"/>
+    <line style="stroke:#000;stroke-width:1;" x1="248" x2="610.125" y1="1342" y2="1342"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="253" y="1354.889">source</text>
+    <text fill="#000" font-size="14" textLength="296.975" x="308.15" y="1354.889">https://github.com/plantuml-stdlib/EIP-PlantUML</text>
+    <line style="stroke:#000;stroke-width:1;" x1="303.15" x2="303.15" y1="1342" y2="1360"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="362.125" x="248" y="1306"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="411.213" x="223.5" y="1378"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="228.5" y="1390.889">name</text>
+    <text fill="#000" font-size="14" textLength="39.725" x="283.65" y="1390.889">elastic</text>
+    <line style="stroke:#000;stroke-width:1;" x1="278.65" x2="278.65" y1="1378" y2="1396"/>
+    <line style="stroke:#000;stroke-width:1;" x1="223.5" x2="634.713" y1="1396" y2="1396"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="228.5" y="1408.889">version</text>
+    <text fill="#000" font-size="14" textLength="31.063" x="283.65" y="1408.889">0.0.1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="278.65" x2="278.65" y1="1396" y2="1414"/>
+    <line style="stroke:#000;stroke-width:1;" x1="223.5" x2="634.713" y1="1414" y2="1414"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="228.5" y="1426.889">source</text>
+    <text fill="#000" font-size="14" textLength="346.063" x="283.65" y="1426.889">https://github.com/Crashedmind/PlantUML-Elastic-icons</text>
+    <line style="stroke:#000;stroke-width:1;" x1="278.65" x2="278.65" y1="1414" y2="1432"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="411.213" x="223.5" y="1378"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="400.275" x="229" y="1450"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="234" y="1462.889">name</text>
+    <text fill="#000" font-size="14" textLength="22.575" x="289.15" y="1462.889">gcp</text>
+    <line style="stroke:#000;stroke-width:1;" x1="284.15" x2="284.15" y1="1450" y2="1468"/>
+    <line style="stroke:#000;stroke-width:1;" x1="229" x2="629.275" y1="1468" y2="1468"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="234" y="1480.889">version</text>
+    <text fill="#000" font-size="14" textLength="31.063" x="289.15" y="1480.889">6.0.0</text>
+    <line style="stroke:#000;stroke-width:1;" x1="284.15" x2="284.15" y1="1468" y2="1486"/>
+    <line style="stroke:#000;stroke-width:1;" x1="229" x2="629.275" y1="1486" y2="1486"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="234" y="1498.889">source</text>
+    <text fill="#000" font-size="14" textLength="335.125" x="289.15" y="1498.889">https://github.com/Crashedmind/PlantUML-icons-GCP</text>
+    <line style="stroke:#000;stroke-width:1;" x1="284.15" x2="284.15" y1="1486" y2="1504"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="400.275" x="229" y="1450"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="397.825" x="230" y="1522"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="235" y="1534.889">name</text>
+    <text fill="#000" font-size="14" textLength="22.575" x="290.15" y="1534.889">ibm</text>
+    <line style="stroke:#000;stroke-width:1;" x1="285.15" x2="285.15" y1="1522" y2="1540"/>
+    <line style="stroke:#000;stroke-width:1;" x1="230" x2="627.825" y1="1540" y2="1540"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="235" y="1552.889">version</text>
+    <text fill="#000" font-size="14" textLength="31.063" x="290.15" y="1552.889">1.0.1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="285.15" x2="285.15" y1="1540" y2="1558"/>
+    <line style="stroke:#000;stroke-width:1;" x1="230" x2="627.825" y1="1558" y2="1558"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="235" y="1570.889">source</text>
+    <text fill="#000" font-size="14" textLength="332.675" x="290.15" y="1570.889">https://github.com/XReyRobert/ibm-icons-for-plantuml</text>
+    <line style="stroke:#000;stroke-width:1;" x1="285.15" x2="285.15" y1="1558" y2="1576"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="397.825" x="230" y="1522"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="362.825" x="247.5" y="1594"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="252.5" y="1606.889">name</text>
+    <text fill="#000" font-size="14" textLength="21.787" x="307.65" y="1606.889">k8s</text>
+    <line style="stroke:#000;stroke-width:1;" x1="302.65" x2="302.65" y1="1594" y2="1612"/>
+    <line style="stroke:#000;stroke-width:1;" x1="247.5" x2="610.325" y1="1612" y2="1612"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="252.5" y="1624.889">version</text>
+    <text fill="#000" font-size="14" textLength="31.063" x="307.65" y="1624.889">1.0.0</text>
+    <line style="stroke:#000;stroke-width:1;" x1="302.65" x2="302.65" y1="1612" y2="1630"/>
+    <line style="stroke:#000;stroke-width:1;" x1="247.5" x2="610.325" y1="1630" y2="1630"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="252.5" y="1642.889">source</text>
+    <text fill="#000" font-size="14" textLength="297.675" x="307.65" y="1642.889">https://github.com/dcasati/kubernetes-PlantUML</text>
+    <line style="stroke:#000;stroke-width:1;" x1="302.65" x2="302.65" y1="1630" y2="1648"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="362.825" x="247.5" y="1594"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="446.037" x="206" y="1666"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="211" y="1678.889">name</text>
+    <text fill="#000" font-size="14" textLength="69.212" x="266.15" y="1678.889">kubernetes</text>
+    <line style="stroke:#000;stroke-width:1;" x1="261.15" x2="261.15" y1="1666" y2="1684"/>
+    <line style="stroke:#000;stroke-width:1;" x1="206" x2="652.037" y1="1684" y2="1684"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="211" y="1696.889">version</text>
+    <text fill="#000" font-size="14" textLength="38.85" x="266.15" y="1696.889">5.3.45</text>
+    <line style="stroke:#000;stroke-width:1;" x1="261.15" x2="261.15" y1="1684" y2="1702"/>
+    <line style="stroke:#000;stroke-width:1;" x1="206" x2="652.037" y1="1702" y2="1702"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="211" y="1714.889">source</text>
+    <text fill="#000" font-size="14" textLength="380.887" x="266.15" y="1714.889">https://github.com/plantuml-stdlib/plantuml-kubernetes-sprites</text>
+    <line style="stroke:#000;stroke-width:1;" x1="261.15" x2="261.15" y1="1702" y2="1720"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="446.037" x="206" y="1666"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="439.125" x="209.5" y="1738"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="214.5" y="1750.889">name</text>
+    <text fill="#000" font-size="14" textLength="33.512" x="269.65" y="1750.889">logos</text>
+    <line style="stroke:#000;stroke-width:1;" x1="264.65" x2="264.65" y1="1738" y2="1756"/>
+    <line style="stroke:#000;stroke-width:1;" x1="209.5" x2="648.625" y1="1756" y2="1756"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="214.5" y="1768.889">version</text>
+    <text fill="#000" font-size="14" textLength="31.063" x="269.65" y="1768.889">1.1.0</text>
+    <line style="stroke:#000;stroke-width:1;" x1="264.65" x2="264.65" y1="1756" y2="1774"/>
+    <line style="stroke:#000;stroke-width:1;" x1="209.5" x2="648.625" y1="1774" y2="1774"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="214.5" y="1786.889">source</text>
+    <text fill="#000" font-size="14" textLength="373.975" x="269.65" y="1786.889">https://github.com/plantuml-stdlib/gilbarbara-plantuml-sprites</text>
+    <line style="stroke:#000;stroke-width:1;" x1="264.65" x2="264.65" y1="1774" y2="1792"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="439.125" x="209.5" y="1738"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="346.638" x="255.5" y="1810"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="260.5" y="1822.889">name</text>
+    <text fill="#000" font-size="14" textLength="49.788" x="315.65" y="1822.889">material</text>
+    <line style="stroke:#000;stroke-width:1;" x1="310.65" x2="310.65" y1="1810" y2="1828"/>
+    <line style="stroke:#000;stroke-width:1;" x1="255.5" x2="602.138" y1="1828" y2="1828"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="260.5" y="1840.889">version</text>
+    <text fill="#000" font-size="14" textLength="38.85" x="315.65" y="1840.889">2.1.19</text>
+    <line style="stroke:#000;stroke-width:1;" x1="310.65" x2="310.65" y1="1828" y2="1846"/>
+    <line style="stroke:#000;stroke-width:1;" x1="255.5" x2="602.138" y1="1846" y2="1846"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="260.5" y="1858.889">source</text>
+    <text fill="#000" font-size="14" textLength="281.488" x="315.65" y="1858.889">https://github.com/Templarian/MaterialDesign</text>
+    <line style="stroke:#000;stroke-width:1;" x1="310.65" x2="310.65" y1="1846" y2="1864"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="346.638" x="255.5" y="1810"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="346.638" x="255.5" y="1882"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="260.5" y="1894.889">name</text>
+    <text fill="#000" font-size="14" textLength="57.575" x="315.65" y="1894.889">material2</text>
+    <line style="stroke:#000;stroke-width:1;" x1="310.65" x2="310.65" y1="1882" y2="1900"/>
+    <line style="stroke:#000;stroke-width:1;" x1="255.5" x2="602.138" y1="1900" y2="1900"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="260.5" y="1912.889">version</text>
+    <text fill="#000" font-size="14" textLength="38.85" x="315.65" y="1912.889">2.1.19</text>
+    <line style="stroke:#000;stroke-width:1;" x1="310.65" x2="310.65" y1="1900" y2="1918"/>
+    <line style="stroke:#000;stroke-width:1;" x1="255.5" x2="602.138" y1="1918" y2="1918"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="260.5" y="1930.889">source</text>
+    <text fill="#000" font-size="14" textLength="281.488" x="315.65" y="1930.889">https://github.com/Templarian/MaterialDesign</text>
+    <line style="stroke:#000;stroke-width:1;" x1="310.65" x2="310.65" y1="1918" y2="1936"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="346.638" x="255.5" y="1882"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="346.638" x="255.5" y="1954"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="260.5" y="1966.889">name</text>
+    <text fill="#000" font-size="14" textLength="88.638" x="315.65" y="1966.889">material2.1.19</text>
+    <line style="stroke:#000;stroke-width:1;" x1="310.65" x2="310.65" y1="1954" y2="1972"/>
+    <line style="stroke:#000;stroke-width:1;" x1="255.5" x2="602.138" y1="1972" y2="1972"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="260.5" y="1984.889">version</text>
+    <text fill="#000" font-size="14" textLength="38.85" x="315.65" y="1984.889">2.1.19</text>
+    <line style="stroke:#000;stroke-width:1;" x1="310.65" x2="310.65" y1="1972" y2="1990"/>
+    <line style="stroke:#000;stroke-width:1;" x1="255.5" x2="602.138" y1="1990" y2="1990"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="260.5" y="2002.889">source</text>
+    <text fill="#000" font-size="14" textLength="281.488" x="315.65" y="2002.889">https://github.com/Templarian/MaterialDesign</text>
+    <line style="stroke:#000;stroke-width:1;" x1="310.65" x2="310.65" y1="1990" y2="2008"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="346.638" x="255.5" y="1954"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="384.7" x="236.5" y="2026"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="241.5" y="2038.889">name</text>
+    <text fill="#000" font-size="14" textLength="57.575" x="296.65" y="2038.889">material7</text>
+    <line style="stroke:#000;stroke-width:1;" x1="291.65" x2="291.65" y1="2026" y2="2044"/>
+    <line style="stroke:#000;stroke-width:1;" x1="236.5" x2="621.2" y1="2044" y2="2044"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="241.5" y="2056.889">version</text>
+    <text fill="#000" font-size="14" textLength="38.85" x="296.65" y="2056.889">7.4.47</text>
+    <line style="stroke:#000;stroke-width:1;" x1="291.65" x2="291.65" y1="2044" y2="2062"/>
+    <line style="stroke:#000;stroke-width:1;" x1="236.5" x2="621.2" y1="2062" y2="2062"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="241.5" y="2074.889">source</text>
+    <text fill="#000" font-size="14" textLength="319.55" x="296.65" y="2074.889">https://github.com/Templarian/MaterialDesign-SVG/</text>
+    <line style="stroke:#000;stroke-width:1;" x1="291.65" x2="291.65" y1="2062" y2="2080"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="384.7" x="236.5" y="2026"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="384.7" x="236.5" y="2098"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="241.5" y="2110.889">name</text>
+    <text fill="#000" font-size="14" textLength="88.638" x="296.65" y="2110.889">material7.4.47</text>
+    <line style="stroke:#000;stroke-width:1;" x1="291.65" x2="291.65" y1="2098" y2="2116"/>
+    <line style="stroke:#000;stroke-width:1;" x1="236.5" x2="621.2" y1="2116" y2="2116"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="241.5" y="2128.889">version</text>
+    <text fill="#000" font-size="14" textLength="38.85" x="296.65" y="2128.889">7.4.47</text>
+    <line style="stroke:#000;stroke-width:1;" x1="291.65" x2="291.65" y1="2116" y2="2134"/>
+    <line style="stroke:#000;stroke-width:1;" x1="236.5" x2="621.2" y1="2134" y2="2134"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="241.5" y="2146.889">source</text>
+    <text fill="#000" font-size="14" textLength="319.55" x="296.65" y="2146.889">https://github.com/Templarian/MaterialDesign-SVG/</text>
+    <line style="stroke:#000;stroke-width:1;" x1="291.65" x2="291.65" y1="2134" y2="2152"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="384.7" x="236.5" y="2098"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="323.888" x="267" y="2170"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="272" y="2182.889">name</text>
+    <text fill="#000" font-size="14" textLength="33.425" x="327.15" y="2182.889">office</text>
+    <line style="stroke:#000;stroke-width:1;" x1="322.15" x2="322.15" y1="2170" y2="2188"/>
+    <line style="stroke:#000;stroke-width:1;" x1="267" x2="590.888" y1="2188" y2="2188"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="272" y="2200.889">version</text>
+    <text fill="#000" font-size="14" textLength="31.063" x="327.15" y="2200.889">1.0.0</text>
+    <line style="stroke:#000;stroke-width:1;" x1="322.15" x2="322.15" y1="2188" y2="2206"/>
+    <line style="stroke:#000;stroke-width:1;" x1="267" x2="590.888" y1="2206" y2="2206"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="272" y="2218.889">source</text>
+    <text fill="#000" font-size="14" textLength="258.738" x="327.15" y="2218.889">https://github.com/Roemer/plantuml-office</text>
+    <line style="stroke:#000;stroke-width:1;" x1="322.15" x2="322.15" y1="2206" y2="2224"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="323.888" x="267" y="2170"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="522.337" x="168" y="2242"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="173" y="2254.889">name</text>
+    <text fill="#000" font-size="14" textLength="22.575" x="228.15" y="2254.889">osa</text>
+    <line style="stroke:#000;stroke-width:1;" x1="223.15" x2="223.15" y1="2242" y2="2260"/>
+    <line style="stroke:#000;stroke-width:1;" x1="168" x2="690.337" y1="2260" y2="2260"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="173" y="2272.889">version</text>
+    <text fill="#000" font-size="14" textLength="31.063" x="228.15" y="2272.889">0.0.1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="223.15" x2="223.15" y1="2260" y2="2278"/>
+    <line style="stroke:#000;stroke-width:1;" x1="168" x2="690.337" y1="2278" y2="2278"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="173" y="2290.889">source</text>
+    <text fill="#000" font-size="14" textLength="457.187" x="228.15" y="2290.889">https://github.com/Crashedmind/PlantUML-opensecurityarchitecture-icons</text>
+    <line style="stroke:#000;stroke-width:1;" x1="223.15" x2="223.15" y1="2278" y2="2296"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="522.337" x="168" y="2242"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="530.125" x="164" y="2314"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="169" y="2326.889">name</text>
+    <text fill="#000" font-size="14" textLength="30.362" x="224.15" y="2326.889">osa2</text>
+    <line style="stroke:#000;stroke-width:1;" x1="219.15" x2="219.15" y1="2314" y2="2332"/>
+    <line style="stroke:#000;stroke-width:1;" x1="164" x2="694.125" y1="2332" y2="2332"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="169" y="2344.889">version</text>
+    <text fill="#000" font-size="14" textLength="31.063" x="224.15" y="2344.889">0.0.1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="219.15" x2="219.15" y1="2332" y2="2350"/>
+    <line style="stroke:#000;stroke-width:1;" x1="164" x2="694.125" y1="2350" y2="2350"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="169" y="2362.889">source</text>
+    <text fill="#000" font-size="14" textLength="464.975" x="224.15" y="2362.889">https://github.com/Crashedmind/PlantUML-opensecurityarchitecture2-icons</text>
+    <line style="stroke:#000;stroke-width:1;" x1="219.15" x2="219.15" y1="2350" y2="2368"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="530.125" x="164" y="2314"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="387.588" x="235" y="2386"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="240" y="2398.889">name</text>
+    <text fill="#000" font-size="14" textLength="47.425" x="295.15" y="2398.889">tupadr3</text>
+    <line style="stroke:#000;stroke-width:1;" x1="290.15" x2="290.15" y1="2386" y2="2404"/>
+    <line style="stroke:#000;stroke-width:1;" x1="235" x2="622.588" y1="2404" y2="2404"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="240" y="2416.889">version</text>
+    <text fill="#000" font-size="14" textLength="31.063" x="295.15" y="2416.889">3.0.0</text>
+    <line style="stroke:#000;stroke-width:1;" x1="290.15" x2="290.15" y1="2404" y2="2422"/>
+    <line style="stroke:#000;stroke-width:1;" x1="235" x2="622.588" y1="2422" y2="2422"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="240" y="2434.889">source</text>
+    <text fill="#000" font-size="14" textLength="322.438" x="295.15" y="2434.889">https://github.com/tupadr3/plantuml-icon-font-sprites</text>
+    <line style="stroke:#000;stroke-width:1;" x1="290.15" x2="290.15" y1="2422" y2="2440"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="387.588" x="235" y="2386"/>
+    <path d="M122,931 L122,918 C122,870.998 132.217,107.628 164,73 C195.243,38.96 242.269,25.974 288.044,22.806" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M288.22,25.858 L290.334,22.674 L287.869,19.753 L295.675,22.366 L288.22,25.858" fill="#000"/>
+    <ellipse cx="122" cy="931" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,946 L128,946 C217.09,946 103.913,210.777 164,145 C179.585,127.939 199.134,116.158 220.511,108.248" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M221.526,111.174 L222.706,107.487 L219.497,105.321 L227.828,105.712 L221.526,111.174" fill="#000"/>
+    <ellipse cx="115" cy="946" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,964 L128,964 C211.096,964 107.856,278.261 164,217 C180.813,198.655 202.209,186.421 225.527,178.543" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M226.45,181.461 L227.715,177.851 L224.604,175.625 L232.822,176.236 L226.45,181.461" fill="#000"/>
+    <ellipse cx="115" cy="964" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,982 L128,982 C205.104,982 111.799,345.745 164,289 C182.928,268.424 207.624,255.546 234.318,247.882" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M235.129,250.913 L236.592,247.274 L233.508,244.85 L241.897,245.856 L235.129,250.913" fill="#000"/>
+    <ellipse cx="115" cy="982" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1000 L128,1000 C199.113,1000 115.741,413.231 164,361 C182.973,340.465 207.693,327.61 234.397,319.954" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M235.207,322.987 L236.672,319.347 L233.588,316.922 L241.979,317.931 L235.207,322.987" fill="#000"/>
+    <ellipse cx="115" cy="1000" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1018 L128,1018 C193.123,1018 119.682,480.717 164,433 C182.954,412.592 207.587,399.782 234.187,392.128" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M234.997,395.148 L236.452,391.52 L233.377,389.107 L241.738,390.103 L234.997,395.148" fill="#000"/>
+    <ellipse cx="115" cy="1018" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1036 L128,1036 C187.135,1036 123.621,548.204 164,505 C183.018,484.651 207.684,471.873 234.298,464.232" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M235.107,467.254 L236.565,463.625 L233.49,461.21 L241.854,462.211 L235.107,467.254" fill="#000"/>
+    <ellipse cx="115" cy="1036" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1054 L128,1054 C181.151,1054 127.56,615.693 164,577 C182.95,556.878 207.427,544.178 233.827,536.534" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M234.637,539.532 L236.076,535.927 L233.018,533.537 L241.322,534.51 L234.637,539.532" fill="#000"/>
+    <ellipse cx="115" cy="1054" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1072 L128,1072 C175.17,1072 131.496,683.184 164,649 C198.324,612.902 250.451,600.77 299.381,598.843" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M299.468,601.846 L301.633,598.777 L299.294,595.84 L306.888,598.625 L299.468,601.846" fill="#000"/>
+    <ellipse cx="115" cy="1072" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1090 L128,1090 C210.389,1090 106.86,780.355 164,721 C198.399,685.268 250.264,673.12 298.98,671.083" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M299.077,674.198 L301.317,671.01 L298.883,667.968 L306.769,670.841 L299.077,674.198" fill="#000"/>
+    <ellipse cx="115" cy="1090" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1108 L128,1108 C198.456,1108 114.718,843.352 164,793 C198.616,757.632 250.377,745.507 298.955,743.387" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M299.058,746.494 L301.285,743.31 L298.853,740.281 L306.722,743.131 L299.058,746.494" fill="#000"/>
+    <ellipse cx="115" cy="1108" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1126 L128,1126 C186.549,1126 122.562,906.363 164,865 C185.619,843.419 213.64,830.565 243.334,823.374" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M244.017,826.407 L245.608,822.862 L242.65,820.342 L250.916,821.666 L244.017,826.407" fill="#000"/>
+    <ellipse cx="115" cy="1126" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1144 L128,1144 C174.69,1144 130.381,969.4 164,937 C182.526,919.145 205.457,907.342 230.011,899.804" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M230.855,902.731 L232.206,899.172 L229.168,896.878 L237.327,897.695 L230.855,902.731" fill="#000"/>
+    <ellipse cx="115" cy="1144" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1162 L128,1162 C197.857,1162 112.295,1055.974 164,1009 C187.579,987.579 217.565,975.066 248.818,968.222" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M249.434,971.237 L251.08,967.76 L248.203,965.206 L256.357,966.683 L249.434,971.237" fill="#000"/>
+    <ellipse cx="115" cy="1162" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1180 L128,1180 C174.819,1180 127.555,1110.39 164,1081 C179.824,1068.239 197.99,1058.795 217.231,1051.904" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M218.201,1054.758 L219.372,1051.177 L216.262,1049.05 L224.367,1049.48 L218.201,1054.758" fill="#000"/>
+    <ellipse cx="115" cy="1180" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1198 L128,1198 C153.612,1198 141.718,1165.63 164,1153 C182.033,1142.779 201.838,1135.03 222.246,1129.202" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M223.039,1132.099 L224.418,1128.608 L221.453,1126.306 L229.488,1127.22 L223.039,1132.099" fill="#000"/>
+    <ellipse cx="115" cy="1198" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1216 L128,1216 C162.72,1216 199.607,1214.19 235.211,1211.507" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M235.445,1214.538 L237.484,1211.331 L234.976,1208.476 L242.787,1210.922 L235.445,1214.538" fill="#000"/>
+    <ellipse cx="115" cy="1216" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1234 L128,1234 C171.574,1234 218.56,1236.851 262.139,1240.7" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M261.868,1243.711 L264.397,1240.903 L262.41,1237.689 L269.667,1241.378 L261.868,1243.711" fill="#000"/>
+    <ellipse cx="115" cy="1234" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1252 L128,1252 C153.612,1252 141.718,1284.37 164,1297 C187.401,1310.264 213.788,1319.364 240.604,1325.507" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M239.942,1328.536 L242.875,1326.003 L241.266,1322.478 L248.176,1327.162 L239.942,1328.536" fill="#000"/>
+    <ellipse cx="115" cy="1252" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1270 L128,1270 C174.819,1270 127.555,1339.61 164,1369 C179.594,1381.576 197.464,1390.931 216.395,1397.794" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M215.391,1400.717 L218.587,1398.548 L217.399,1394.872 L223.701,1400.305 L215.391,1400.717" fill="#000"/>
+    <ellipse cx="115" cy="1270" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1288 L128,1288 C197.857,1288 112.295,1394.026 164,1441 C180.719,1456.189 200.659,1466.899 221.988,1474.285" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M221.037,1477.199 L224.173,1474.999 L222.94,1471.372 L229.272,1476.664 L221.037,1477.199" fill="#000"/>
+    <ellipse cx="115" cy="1288" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1306 L128,1306 C174.69,1306 130.381,1480.6 164,1513 C180.787,1529.178 201.189,1540.388 223.139,1547.958" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M222.206,1550.829 L225.292,1548.657 L224.072,1545.086 L230.317,1550.289 L222.206,1550.829" fill="#000"/>
+    <ellipse cx="115" cy="1306" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1324 L128,1324 C186.549,1324 122.562,1543.637 164,1585 C184.939,1605.901 211.883,1618.617 240.536,1625.93" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M239.838,1628.857 L242.731,1626.453 L241.233,1623.002 L247.854,1627.674 L239.838,1628.857" fill="#000"/>
+    <ellipse cx="115" cy="1324" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1342 L128,1342 C198.456,1342 114.718,1606.648 164,1657 C174.421,1667.647 186.395,1676.188 199.368,1682.983" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M198.01,1685.732 L201.43,1684.002 L200.727,1680.234 L206.241,1686.379 L198.01,1685.732" fill="#000"/>
+    <ellipse cx="115" cy="1342" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1360 L128,1360 C210.389,1360 106.86,1669.645 164,1729 C175.256,1740.692 188.381,1749.859 202.655,1756.972" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M201.323,1759.811 L204.784,1757.971 L203.987,1754.134 L209.751,1760.302 L201.323,1759.811" fill="#000"/>
+    <ellipse cx="115" cy="1360" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1378 L128,1378 C175.17,1378 131.496,1766.816 164,1801 C186.395,1824.552 216.369,1837.902 248.088,1844.872" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M247.466,1847.936 L250.386,1845.339 L248.71,1841.809 L255.748,1846.428 L247.466,1847.936" fill="#000"/>
+    <ellipse cx="115" cy="1378" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1396 L128,1396 C181.151,1396 127.56,1834.307 164,1873 C186.355,1896.737 216.402,1910.146 248.224,1917.11" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M247.603,1920.184 L250.529,1917.576 L248.845,1914.037 L255.908,1918.663 L247.603,1920.184" fill="#000"/>
+    <ellipse cx="115" cy="1396" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1414 L128,1414 C187.135,1414 123.621,1901.796 164,1945 C186.265,1968.822 216.27,1982.269 248.08,1989.245" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M247.458,1992.318 L250.385,1989.711 L248.702,1986.172 L255.763,1990.8 L247.458,1992.318" fill="#000"/>
+    <ellipse cx="115" cy="1414" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1432 L128,1432 C193.123,1432 119.682,1969.283 164,2017 C181.797,2036.162 204.6,2048.625 229.337,2056.412" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M228.468,2059.363 L231.551,2057.063 L230.205,2053.46 L236.716,2058.583 L228.468,2059.363" fill="#000"/>
+    <ellipse cx="115" cy="1432" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1450 L128,1450 C199.113,1450 115.741,2036.769 164,2089 C181.819,2108.285 204.706,2120.797 229.545,2128.59" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M228.677,2131.554 L231.768,2129.241 L230.414,2125.626 L236.955,2130.762 L228.677,2131.554" fill="#000"/>
+    <ellipse cx="115" cy="1450" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1468 L128,1468 C205.104,1468 111.799,2104.255 164,2161 C188.825,2187.986 223.571,2201.73 259.734,2207.839" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M259.258,2210.933 L262.054,2208.196 L260.21,2204.745 L267.469,2209.029 L259.258,2210.933" fill="#000"/>
+    <ellipse cx="115" cy="1468" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1486 L128,1486 C211.096,1486 107.856,2171.739 164,2233 C165.177,2234.284 166.376,2235.538 167.596,2236.762" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M165.523,2238.957 L169.242,2238.317 L169.67,2234.568 L173.083,2241.946 L165.523,2238.957" fill="#000"/>
+    <ellipse cx="115" cy="1486" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M115,1504 L128,1504 C217.09,1504 103.913,2239.223 164,2305 C165.175,2306.286 166.372,2307.542 167.59,2308.768" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M165.514,2310.96 L169.234,2310.325 L169.667,2306.576 L173.069,2313.959 L165.514,2310.96" fill="#000"/>
+    <ellipse cx="115" cy="1504" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M122,1519 L122,1532 C122,1579.002 132.217,2342.372 164,2377 C181.398,2395.956 203.691,2408.382 227.936,2416.221" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M227.061,2419.115 L230.106,2416.878 L228.812,2413.327 L235.17,2418.41 L227.061,2419.115" fill="#000"/>
+    <ellipse cx="122" cy="1519" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

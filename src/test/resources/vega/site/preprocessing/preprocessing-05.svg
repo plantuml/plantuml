@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="345px" preserveAspectRatio="none" style="width:281px;height:345px;background:#FFFFFF;" version="1.1" viewBox="0 0 281 345" width="281px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="48" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="55.088" x="10" y="148"/>
+    <text fill="#000" font-size="14" textLength="35.088" x="20" y="168.889">While</text>
+    <text fill="#000" font-size="14" textLength="31.15" x="20" y="182.889">Loop</text>
+    <rect fill="#98FB98" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="56.225" x="115.088" y="74"/>
+    <text fill="#000" font-size="14" textLength="36.225" x="125.088" y="94.889">arg = 2</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="39.162" x="221.313" y="20"/>
+    <text fill="#000" font-size="14" textLength="19.162" x="231.313" y="40.889">i = 3</text>
+    <path d="M171.313,91 L181.313,91 C196.313,91 196.313,37 211.313,37 L221.313,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="39.162" x="221.313" y="74"/>
+    <text fill="#000" font-size="14" textLength="19.162" x="231.313" y="94.889">i = 2</text>
+    <path d="M171.313,91 L181.313,91 C196.313,91 196.313,91 211.313,91 L221.313,91" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="39.162" x="221.313" y="128"/>
+    <text fill="#000" font-size="14" textLength="19.162" x="231.313" y="148.889">i = 1</text>
+    <path d="M171.313,91 L181.313,91 C196.313,91 196.313,145 211.313,145 L221.313,145" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M65.088,172 L75.088,172 C90.088,172 90.088,91 105.088,91 L115.088,91" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#98FB98" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="56.225" x="115.088" y="236"/>
+    <text fill="#000" font-size="14" textLength="36.225" x="125.088" y="256.889">arg = 1</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="39.162" x="221.313" y="182"/>
+    <text fill="#000" font-size="14" textLength="19.162" x="231.313" y="202.889">i = 3</text>
+    <path d="M171.313,253 L181.313,253 C196.313,253 196.313,199 211.313,199 L221.313,199" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="39.162" x="221.313" y="236"/>
+    <text fill="#000" font-size="14" textLength="19.162" x="231.313" y="256.889">i = 2</text>
+    <path d="M171.313,253 L181.313,253 C196.313,253 196.313,253 211.313,253 L221.313,253" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="39.162" x="221.313" y="290"/>
+    <text fill="#000" font-size="14" textLength="19.162" x="231.313" y="310.889">i = 1</text>
+    <path d="M171.313,253 L181.313,253 C196.313,253 196.313,307 211.313,307 L221.313,307" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M65.088,172 L75.088,172 C90.088,172 90.088,253 105.088,253 L115.088,253" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

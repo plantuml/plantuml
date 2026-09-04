@@ -1,0 +1,40 @@
+---
+output: svg
+---
+@startuml
+hide footbox
+note over Source
+<code>
+  This is <b>bold</b>
+  This is <i>italics</i>
+  This is <font:monospaced>monospaced</font>
+  This is <s>stroked</s>
+  This is <u>underlined</u>
+  This is <w>waved</w>
+  This is <s:green>stroked</s>
+  This is <u:red>underlined</u>
+  This is <w:#0000FF>waved</w>
+  This is <b>a bold text containing <plain>plain text</plain> inside</b>
+  -- other examples --
+  This is <color:blue>Blue</color>
+  This is <back:orange>Orange background</back>
+  This is <size:20>big</size>
+</code>
+end note
+/note over Output
+  This is <b>bold</b>
+  This is <i>italics</i>
+  This is <font:monospaced>monospaced</font>
+  This is <s>stroked</s>
+  This is <u>underlined</u>
+  This is <w>waved</w>
+  This is <s:green>stroked</s>
+  This is <u:red>underlined</u>
+  This is <w:#0000FF>waved</w>
+  This is <b>a bold text containing <plain>plain text</plain> inside</b>
+  -- other examples --
+  This is <color:blue>Blue</color>
+  This is <back:orange>Orange background</back>
+  This is <size:20>big</size>
+end note
+@enduml

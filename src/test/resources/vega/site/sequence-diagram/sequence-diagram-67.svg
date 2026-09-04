@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="375px" preserveAspectRatio="none" style="width:345px;height:375px;background:#FFFFFF;" version="1.1" viewBox="0 0 345 375" width="345px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>.u.User</title>
+      <rect fill="#000" fill-opacity="0" height="206" width="8" x="24.287" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="27.787" x2="27.787" y1="84" y2="290"/>
+    </g>
+    <g>
+      <title>.u.First Class</title>
+      <rect fill="#000" fill-opacity="0" height="206" width="8" x="100.25" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="103.75" x2="103.75" y1="84" y2="290"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="161" style="stroke:#181818;stroke-width:1;" width="10" x="98.75" y="111"/>
+    </g>
+    <g>
+      <title>.u.Second Class</title>
+      <rect fill="#000" fill-opacity="0" height="206" width="8" x="196.7" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="200.2" x2="200.2" y1="84" y2="290"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="94" style="stroke:#181818;stroke-width:1;" width="10" x="195.2" y="151"/>
+    </g>
+    <g>
+      <title>.u.Last Class</title>
+      <rect fill="#000" fill-opacity="0" height="129" width="8" x="292.756" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="296.256" x2="296.256" y1="84" y2="213"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="27" style="stroke:#181818;stroke-width:1;" width="10" x="291.256" y="178"/>
+    </g>
+    <line style="stroke:#A80036;stroke-width:2;" x1="287.256" x2="305.256" y1="196" y2="214"/>
+    <line style="stroke:#A80036;stroke-width:2;" x1="287.256" x2="305.256" y1="214" y2="196"/>
+    <text fill="#000" font-size="14" text-decoration="underline" textLength="29.575" x="10" y="80.889">User</text>
+    <ellipse cx="27.787" cy="18.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M27.787,26.5 L27.787,53.5 M14.787,34.5 L40.787,34.5 M27.787,53.5 L14.787,68.5 M27.787,53.5 L40.787,68.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#E2E2F0" height="28" rx="10" ry="10" style="stroke:#181818;stroke-width:0.5;" width="76.3" x="65.6" y="55"/>
+    <text fill="#000" font-size="14" text-decoration="underline" textLength="62.3" x="72.6" y="72.889">First Class</text>
+    <rect fill="#E2E2F0" height="28" rx="10" ry="10" style="stroke:#181818;stroke-width:0.5;" width="96.6" x="151.9" y="55"/>
+    <text fill="#000" font-size="14" text-decoration="underline" textLength="82.6" x="158.9" y="72.889">Second Class</text>
+    <rect fill="#E2E2F0" height="28" rx="10" ry="10" style="stroke:#181818;stroke-width:0.5;" width="75.513" x="258.5" y="55"/>
+    <text fill="#000" font-size="14" text-decoration="underline" textLength="61.513" x="265.5" y="72.889">Last Class</text>
+    <text fill="#000" font-size="14" text-decoration="underline" textLength="29.575" x="10" y="300.889">User</text>
+    <ellipse cx="27.787" cy="312.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M27.787,320.5 L27.787,347.5 M14.787,328.5 L40.787,328.5 M27.787,347.5 L14.787,362.5 M27.787,347.5 L40.787,362.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#E2E2F0" height="28" rx="10" ry="10" style="stroke:#181818;stroke-width:0.5;" width="76.3" x="65.6" y="290"/>
+    <text fill="#000" font-size="14" text-decoration="underline" textLength="62.3" x="72.6" y="307.889">First Class</text>
+    <rect fill="#E2E2F0" height="28" rx="10" ry="10" style="stroke:#181818;stroke-width:0.5;" width="96.6" x="151.9" y="290"/>
+    <text fill="#000" font-size="14" text-decoration="underline" textLength="82.6" x="158.9" y="307.889">Second Class</text>
+    <rect fill="#E2E2F0" height="28" rx="10" ry="10" style="stroke:#181818;stroke-width:0.5;" width="75.513" x="258.5" y="290"/>
+    <text fill="#000" font-size="14" text-decoration="underline" textLength="61.513" x="265.5" y="307.889">Last Class</text>
+    <polygon fill="#181818" points="86.75,107,96.75,111,86.75,115,90.75,111" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="27.787" x2="92.75" y1="111" y2="111"/>
+    <text fill="#000" font-size="13" textLength="46.963" x="34.787" y="106.111">DoWork</text>
+    <polygon fill="#181818" points="183.2,147,193.2,151,183.2,155,187.2,151" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="108.75" x2="189.2" y1="151" y2="151"/>
+    <text fill="#000" font-size="13" textLength="39" x="115.75" y="133.111">Create</text>
+    <text fill="#000" font-size="13" textLength="48.425" x="115.75" y="146.111">Request</text>
+    <polygon fill="#181818" points="279.256,174,289.256,178,279.256,182,283.256,178" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="205.2" x2="285.256" y1="178" y2="178"/>
+    <text fill="#000" font-size="13" textLength="46.963" x="212.2" y="173.111">DoWork</text>
+    <polygon fill="#181818" points="216.2,201,206.2,205,216.2,209,212.2,205" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:2;stroke-dasharray:2,2;" x1="210.2" x2="290.256" y1="205" y2="205"/>
+    <text fill="#000" font-size="13" textLength="61.425" x="222.2" y="200.111">WorkDone</text>
+    <polygon fill="#181818" points="119.75,241,109.75,245,119.75,249,115.75,245" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:2;stroke-dasharray:2,2;" x1="113.75" x2="194.2" y1="245" y2="245"/>
+    <text fill="#000" font-size="13" textLength="48.425" x="125.75" y="227.111">Request</text>
+    <text fill="#000" font-size="13" textLength="46.231" x="125.75" y="240.111">Created</text>
+    <polygon fill="#181818" points="38.787,268,28.787,272,38.787,276,34.787,272" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:2;stroke-dasharray:2,2;" x1="32.787" x2="97.75" y1="272" y2="272"/>
+    <text fill="#000" font-size="13" textLength="31.119" x="44.787" y="267.111">Done</text>
+  </g>
+</svg>

@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+<style>
+message {
+  fontSize 24
+}
+.BobAndAliceMessage {
+  fontSize 10
+}
+</style>
+participant Bob
+actor Alice
+participant Sally
+
+Bob->Alice: Hello <<BobAndAliceMessage>>
+Alice->Sally: Also Hello!
+@enduml

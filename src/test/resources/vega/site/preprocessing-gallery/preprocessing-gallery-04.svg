@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="250px" preserveAspectRatio="none" style="width:159px;height:250px;background:#FFFFFF;" version="1.1" viewBox="0 0 159 250" width="159px" zoomAndPan="magnify">
+  <defs>
+    <style type="text/css">path:hover { stroke: #000000 !important;}</style>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="23">
+      <text fill="#000" font-family="Helvetica" font-size="14" font-weight="700" textLength="79.45" x="36.525" y="20.889">JSON Tables</text>
+    </g>
+    <!--class table1-->
+    <g class="entity" data-qualified-name="table1" data-source-line="84" id="ent0001">
+      <a href="" target="_top" title="table1 is a table" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="table1 is a table" xlink:type="simple">
+        <rect fill="#808080" height="74" rx="5" ry="5" style="stroke:#000;stroke-width:0.5;" width="98.363" x="26.5" y="47"/>
+        <text fill="#FFF" font-family="Helvetica" font-size="14" font-weight="700" textLength="52.238" x="49.563" y="62.889">TABLE1</text>
+        <line style="stroke:#000;stroke-width:0.5;" x1="27.5" x2="123.863" y1="71" y2="71"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <a href="" target="_top" title="table1 is a table" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="table1 is a table" xlink:type="simple">
+          <ellipse cx="37.5" cy="83.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="" target="_top" title="table1 is a table" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="table1 is a table" xlink:type="simple">
+        <text fill="#FFF" font-family="Helvetica" font-size="14" textLength="10.938" x="46.5" y="85.889">id</text>
+      </a>
+      <g data-visibility-modifier="IE_MANDATORY">
+        <a href="" target="_top" title="table1 is a table" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="table1 is a table" xlink:type="simple">
+          <ellipse cx="37.5" cy="97.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="" target="_top" title="table1 is a table" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="table1 is a table" xlink:type="simple">
+        <text fill="#FFF" font-family="Helvetica" font-size="14" textLength="35" x="46.5" y="99.889">name</text>
+      </a>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <a href="" target="_top" title="table1 is a table" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="table1 is a table" xlink:type="simple">
+          <polygon fill="none" points="37.5,106.5,41.5,110.5,37.5,114.5,33.5,110.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        </a>
+      </g>
+      <a href="" target="_top" title="table1 is a table" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="table1 is a table" xlink:type="simple">
+        <text fill="#FFF" font-family="Helvetica" font-size="14" textLength="72.363" x="46.5" y="113.889">foreign_key</text>
+      </a>
+    </g>
+    <!--class table2-->
+    <g class="entity" data-qualified-name="table2" data-source-line="84" id="ent0002">
+      <a href="" target="_top" title="table2 is a table" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="table2 is a table" xlink:type="simple">
+        <rect fill="#808080" height="60" rx="5" ry="5" style="stroke:#000;stroke-width:0.5;" width="61" x="6" y="174"/>
+        <text fill="#FFF" font-family="Helvetica" font-size="14" font-weight="700" textLength="52.238" x="10.381" y="189.889">TABLE2</text>
+        <line style="stroke:#000;stroke-width:0.5;" x1="7" x2="66" y1="198" y2="198"/>
+      </a>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <a href="" target="_top" title="table2 is a table" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="table2 is a table" xlink:type="simple">
+          <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="207.5"/>
+        </a>
+      </g>
+      <a href="" target="_top" title="table2 is a table" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="table2 is a table" xlink:type="simple">
+        <text fill="#FFF" font-family="Helvetica" font-size="14" textLength="10.938" x="26" y="212.889">id</text>
+      </a>
+      <g data-visibility-modifier="PACKAGE_PRIVATE_FIELD">
+        <a href="" target="_top" title="table2 is a table" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="table2 is a table" xlink:type="simple">
+          <polygon fill="none" points="17,220.5,13,226.5,21,226.5" style="stroke:#1963A0;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        </a>
+      </g>
+      <a href="" target="_top" title="table2 is a table" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="table2 is a table" xlink:type="simple">
+        <text fill="#FFF" font-family="Helvetica" font-size="14" textLength="35" x="26" y="226.889">name</text>
+      </a>
+    </g>
+    <!--class table3-->
+    <g class="entity" data-qualified-name="table3" data-source-line="84" id="ent0003">
+      <a href="" target="_top" title="table3 is a table" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="table3 is a table" xlink:type="simple">
+        <rect fill="#808080" height="60" rx="5" ry="5" style="stroke:#000;stroke-width:0.5;" width="58.238" x="85.5" y="174"/>
+        <text fill="#FFF" font-family="Helvetica" font-size="14" font-weight="700" textLength="52.238" x="88.5" y="189.889">TABLE3</text>
+        <line style="stroke:#000;stroke-width:0.5;" x1="86.5" x2="142.738" y1="198" y2="198"/>
+        <text fill="#FFF" font-family="Helvetica" font-size="14" textLength="35" x="91.5" y="212.889">name</text>
+        <text fill="#FFF" font-family="Helvetica" font-size="14" textLength="33.512" x="91.5" y="226.889">value</text>
+      </a>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="crowfoot" id="lnk4">
+      <a href="" target="_top" title="table1.foreign_key = table2.id" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="table1.foreign_key = table2.id" xlink:type="simple">
+        <line style="stroke:#808080;stroke-width:1;" x1="61.076" x2="55.991" y1="128.641" y2="118.535"/>
+        <line style="stroke:#808080;stroke-width:1;" x1="61.076" x2="71.183" y1="128.641" y2="123.556"/>
+        <line style="stroke:#808080;stroke-width:1;" x1="61.076" x2="63.587" y1="128.641" y2="121.045"/>
+        <path d="M61.076,128.641 C55.476,145.585 51.397,157.926 46.12,173.893" fill="none" style="stroke:#808080;stroke-width:1;"/>
+      </a>
+      <text fill="#000" font-family="Helvetica" font-size="13" x="59.5" y="151.111"> </text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="association" id="lnk5">
+      <a href="" target="_top" title="table1.name = table3.name" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="table1.name = table3.name" xlink:type="simple">
+        <path d="M87.413,121.045 C93.013,137.989 99.603,157.926 104.88,173.893" fill="none" style="stroke:#808080;stroke-width:1;"/>
+      </a>
+      <text fill="#000" font-family="Helvetica" font-size="13" x="100.5" y="151.111"> </text>
+    </g>
+  </g>
+</svg>

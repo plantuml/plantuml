@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="539px" preserveAspectRatio="none" style="width:192px;height:539px;background:#FFFFFF;" version="1.1" viewBox="0 0 192 539" width="192px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <ellipse cx="93.022" cy="25" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="111.044" y="79"/>
+    <text fill="#000" font-size="12" textLength="30" x="121.044" y="98.333">Text 1</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="111.044" y="155"/>
+    <text fill="#000" font-size="12" textLength="30" x="121.044" y="174.333">Text 2</text>
+    <ellipse cx="136.044" cy="218" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+    <ellipse cx="136.044" cy="218" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="111.044" y="273"/>
+    <text fill="#000" font-size="12" textLength="30" x="121.044" y="292.333">Text 3</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="111.044" y="349"/>
+    <text fill="#000" font-size="12" textLength="30" x="121.044" y="368.333">Text 4</text>
+    <polygon fill="#F1F1F1" points="37.309,55,88.734,55,100.734,67,88.734,79,37.309,79,25.309,67,37.309,55" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="11" textLength="51.425" x="37.309" y="70.056">condition A</text>
+    <text fill="#000" font-size="11" textLength="17.119" x="100.734" y="64.556">yes</text>
+    <polygon fill="#F1F1F1" points="37.309,131,88.734,131,100.734,143,88.734,155,37.309,155,25.309,143,37.309,131" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="11" textLength="51.425" x="37.309" y="146.056">condition B</text>
+    <text fill="#000" font-size="11" textLength="17.119" x="100.734" y="140.556">yes</text>
+    <polygon fill="#F1F1F1" points="37,249,89.044,249,101.044,261,89.044,273,37,273,25,261,37,249" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="11" textLength="52.044" x="37" y="264.056">condition C</text>
+    <text fill="#000" font-size="11" textLength="17.119" x="101.044" y="258.556">yes</text>
+    <polygon fill="#F1F1F1" points="37,325,89.044,325,101.044,337,89.044,349,37,349,25,337,37,325" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="11" textLength="52.044" x="37" y="340.056">condition D</text>
+    <text fill="#000" font-size="11" textLength="17.119" x="101.044" y="334.556">yes</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="65.375" x="60.334" y="401"/>
+    <text fill="#000" font-size="12" textLength="45.375" x="70.334" y="420.333">Text else</text>
+    <polygon fill="#F1F1F1" points="93.022,453,105.022,465,93.022,477,81.022,465,93.022,453" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="93.022" cy="508" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+    <ellipse cx="93.022" cy="508" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="136.044" x2="136.044" y1="187" y2="207"/>
+    <polygon fill="#181818" points="132.044,197,136.044,207,140.044,197,136.044,201" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="100.734" x2="136.044" y1="67" y2="67"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="136.044" x2="136.044" y1="67" y2="79"/>
+    <polygon fill="#181818" points="132.044,69,136.044,79,140.044,69,136.044,73" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="100.734" x2="136.044" y1="143" y2="143"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="136.044" x2="136.044" y1="143" y2="155"/>
+    <polygon fill="#181818" points="132.044,145,136.044,155,140.044,145,136.044,149" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="101.044" x2="136.044" y1="261" y2="261"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="136.044" x2="136.044" y1="261" y2="273"/>
+    <polygon fill="#181818" points="132.044,263,136.044,273,140.044,263,136.044,267" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="101.044" x2="136.044" y1="337" y2="337"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="136.044" x2="136.044" y1="337" y2="349"/>
+    <polygon fill="#181818" points="132.044,339,136.044,349,140.044,339,136.044,343" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="63.022" x2="63.022" y1="79" y2="131"/>
+    <polygon fill="#181818" points="59.022,121,63.022,131,67.022,121,63.022,125" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="63.022" x2="63.022" y1="155" y2="249"/>
+    <polygon fill="#181818" points="59.022,239,63.022,249,67.022,239,63.022,243" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="63.022" x2="63.022" y1="273" y2="325"/>
+    <polygon fill="#181818" points="59.022,315,63.022,325,67.022,315,63.022,319" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="136.044" x2="136.044" y1="111" y2="126"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="136.044" x2="161.044" y1="126" y2="126"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="161.044" x2="161.044" y1="126" y2="465"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="161.044" x2="105.022" y1="465" y2="465"/>
+    <polygon fill="#181818" points="115.022,461,105.022,465,115.022,469,111.022,465" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="136.044" x2="136.044" y1="305" y2="320"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="136.044" x2="161.044" y1="320" y2="320"/>
+    <polygon fill="#181818" points="151.044,316,161.044,320,151.044,324,155.044,320" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="136.044" x2="136.044" y1="381" y2="396"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="136.044" x2="161.044" y1="396" y2="396"/>
+    <polygon fill="#181818" points="151.044,392,161.044,396,151.044,400,155.044,396" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="93.022" x2="93.022" y1="35" y2="40"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="93.022" x2="63.022" y1="40" y2="40"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="63.022" x2="63.022" y1="40" y2="55"/>
+    <polygon fill="#181818" points="59.022,45,63.022,55,67.022,45,63.022,49" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="63.022" x2="63.022" y1="349" y2="386"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="63.022" x2="93.022" y1="386" y2="386"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="93.022" x2="93.022" y1="386" y2="401"/>
+    <polygon fill="#181818" points="89.022,391,93.022,401,97.022,391,93.022,395" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="11" textLength="36.094" x="63.022" y="373.056">nothing</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="93.022" x2="93.022" y1="433" y2="438"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="93.022" x2="93.022" y1="438" y2="453"/>
+    <polygon fill="#181818" points="89.022,443,93.022,453,97.022,443,93.022,447" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="93.022" x2="93.022" y1="477" y2="497"/>
+    <polygon fill="#181818" points="89.022,487,93.022,497,97.022,487,93.022,491" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

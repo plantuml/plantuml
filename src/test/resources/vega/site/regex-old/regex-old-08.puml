@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startregex
+title octalEscapes
+\0377\337
+@endregex

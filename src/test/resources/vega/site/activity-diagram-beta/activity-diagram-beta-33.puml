@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+split
+   -[hidden]->
+   :A;
+split again
+   -[hidden]->
+   :a;
+   :b;
+split again
+   -[hidden]->
+   (Z)
+end split
+:D;
+@enduml

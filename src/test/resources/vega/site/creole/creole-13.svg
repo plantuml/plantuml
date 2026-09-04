@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="59px" preserveAspectRatio="none" style="width:315px;height:59px;background:#FFFFFF;" version="1.1" viewBox="0 0 315 59" width="315px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <rect fill="#ADD8E6" height="14" style="stroke:none;" width="288.137" x="10" y="12"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="28.787" x="10" y="22.889">Step</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="29.575" x="38.787" y="22.889">Date</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="37.363" x="68.363" y="22.889">Name</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="39.637" x="154.025" y="22.889">Status</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="25.725" x="212.475" y="22.889">Link</text>
+      <rect fill="#90EE90" height="14" style="stroke:none;" width="288.137" x="10" y="26"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.425" x="10" y="36.889">1.1</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="28.088" x="38.787" y="36.889">TBD</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="85.663" x="68.363" y="36.889">plantuml news</text>
+      <rect fill="#000080" height="14" style="stroke:none;" width="58.45" x="154.025" y="26"/>
+      <text fill="#FF4500" font-size="14" font-weight="700" textLength="58.45" x="154.025" y="36.889">Unknown</text>
+      <text fill="#000" font-size="14" font-weight="700" x="212.475" y="36.889"> </text>
+      <a href="https://plantuml.com/news" target="_top" title="https://plantuml.com/news" xlink:actuate="onRequest" xlink:href="https://plantuml.com/news" xlink:show="new" xlink:title="https://plantuml.com/news" xlink:type="simple">
+        <text fill="#00F" font-size="14" font-weight="700" text-decoration="underline" textLength="85.663" x="212.475" y="36.889">plantuml news</text>
+      </a>
+      <text fill="#000" font-size="14" font-weight="700" x="298.137" y="36.889"> </text>
+      <line style="stroke:#F00;stroke-width:1;" x1="10" x2="298.137" y1="12" y2="12"/>
+      <line style="stroke:#F00;stroke-width:1;" x1="10" x2="298.137" y1="26" y2="26"/>
+      <line style="stroke:#F00;stroke-width:1;" x1="10" x2="298.137" y1="40" y2="40"/>
+      <line style="stroke:#F00;stroke-width:1;" x1="10" x2="10" y1="12" y2="40"/>
+      <line style="stroke:#F00;stroke-width:1;" x1="38.787" x2="38.787" y1="12" y2="40"/>
+      <line style="stroke:#F00;stroke-width:1;" x1="68.363" x2="68.363" y1="12" y2="40"/>
+      <line style="stroke:#F00;stroke-width:1;" x1="154.025" x2="154.025" y1="12" y2="40"/>
+      <line style="stroke:#F00;stroke-width:1;" x1="212.475" x2="212.475" y1="12" y2="40"/>
+      <line style="stroke:#F00;stroke-width:1;" x1="298.137" x2="298.137" y1="12" y2="40"/>
+    </g>
+  </g>
+</svg>

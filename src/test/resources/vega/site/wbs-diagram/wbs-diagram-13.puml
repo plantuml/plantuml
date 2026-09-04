@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startwbs
+<style>
+wbsDiagram {
+  .pink {
+      BackgroundColor pink
+  }
+  .your_style_name {
+      BackgroundColor SkyBlue
+  }
+}
+</style>
++ this is the partner workpackage <<your_style_name>>
+++ this is my workpackage <<pink>>
+++:This is on multiple
+lines; <<pink>>
+++ this is another workpackage
+@endwbs

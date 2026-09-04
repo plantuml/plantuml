@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startgantt
+[Prototype design] starts D+0
+[Test prototype] starts D+15
+[Prototype design] ends D+14
+[Test prototype] ends D+24
+@endgantt

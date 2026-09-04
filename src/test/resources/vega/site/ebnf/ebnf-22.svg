@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="EBNF" height="287px" preserveAspectRatio="none" style="width:233px;height:287px;background:#FFFFFF;" version="1.1" viewBox="0 0 233 287" width="233px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M10,15 L10,38 L222.425,38 L222.425,25 L212.425,15 L10,15" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M212.425,15 L212.425,25 L222.425,25 L212.425,15" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="191.425" x="16" y="30.111">Test of accentuated or Unicode char</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="14.787" x="10" y="63.889">alt</text>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="29.425" x="64" y="77"/>
+    <text fill="#000" font-size="14" textLength="19.425" x="69" y="92.889">été</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="40" x2="64" y1="89" y2="89"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="93.425" x2="128.363" y1="89" y2="89"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="40.363" x="64" y="111"/>
+    <text fill="#000" font-size="14" textLength="30.362" x="69" y="126.889">hiver</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="104.363" x2="104.363" y1="123" y2="123"/>
+    <path d="M52,111 C52,120 55,123 64,123" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="52" x2="52" y1="101" y2="111"/>
+    <path d="M40,89 C49,89 52,92 52,101" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M116.363,111 C116.363,120 113.363,123 104.363,123" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="116.363" x2="116.363" y1="101" y2="111"/>
+    <path d="M116.363,101 C116.363,92 119.363,89 128.363,89" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <ellipse cx="14" cy="89" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="158.363" cy="89" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="89" y2="89"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="128.363" x2="154.363" y1="89" y2="89"/>
+    <path d="M139.363,89 L139.363,86 L145.363,89 L139.363,92 L139.363,89" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="30.362" x="10" y="160.889">hiver</text>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="37.213" x="40" y="174"/>
+    <text fill="#000" font-size="14" textLength="27.213" x="45" y="189.889">froid</text>
+    <ellipse cx="14" cy="186" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="107.213" cy="186" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="186" y2="186"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="77.213" x2="103.213" y1="186" y2="186"/>
+    <path d="M88.213,186 L88.213,183 L94.213,186 L88.213,189 L88.213,186" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="19.425" x="10" y="223.889">été</text>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="48.15" x="40" y="237"/>
+    <text fill="#000" font-size="14" textLength="38.15" x="45" y="252.889">chaud</text>
+    <ellipse cx="14" cy="249" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="118.15" cy="249" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="249" y2="249"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="88.15" x2="114.15" y1="249" y2="249"/>
+    <path d="M99.15,249 L99.15,246 L105.15,249 L99.15,252 L99.15,249" fill="#181818"/>
+  </g>
+</svg>

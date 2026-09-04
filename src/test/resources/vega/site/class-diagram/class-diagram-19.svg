@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="212px" preserveAspectRatio="none" style="width:331px;height:212px;background:#FFFFFF;" version="1.1" viewBox="0 0 331 212" width="331px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Foo1-->
+    <g class="entity" data-qualified-name="Foo1" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="184" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="181.663" x="6" y="12"/>
+      <ellipse cx="76.613" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="71.613" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="31.938" x="97.113" y="31.889">Foo1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="186.663" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="70.087" x="12" y="58.889">You can use</text>
+      <text fill="#000" font-size="14" textLength="74.025" x="12" y="72.889">several lines</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="7" x2="186.663" y1="80" y2="80"/>
+      <text fill="#000" font-size="14" textLength="66.938" x="12" y="94.889">as you want</text>
+      <text fill="#000" font-size="14" textLength="59.15" x="12" y="108.889">and group</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="186.663" y1="116" y2="116"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="186.663" y1="118" y2="118"/>
+      <text fill="#000" font-size="14" textLength="92.488" x="12" y="130.889">things together.</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="186.663" y1="138" y2="138"/>
+      <text fill="#000" font-size="14" textLength="169.663" x="12" y="152.889">You can have as many groups</text>
+      <text fill="#000" font-size="14" textLength="66.938" x="12" y="166.889">as you want</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="186.663" y1="174" y2="174"/>
+      <text fill="#000" font-size="14" textLength="68.513" x="12" y="188.889">End of class</text>
+    </g>
+    <!--class User-->
+    <g class="entity" data-qualified-name="User" data-source-line="16" id="ent0002">
+      <rect fill="#F1F1F1" height="182" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="108.513" x="206.5" y="13"/>
+      <ellipse cx="242.622" cy="29" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="237.622" y="34">C</text>
+      <text fill="#000" font-size="14" textLength="29.575" x="261.316" y="32.889">User</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="207.5" x2="314.013" y1="45" y2="45"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="217.5" cy="75.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="66.063" x="226.5" y="77.889">getName()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="217.5" cy="89.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="80.063" x="226.5" y="91.889">getAddress()</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="207.5" x2="219.938" y1="60" y2="60"/>
+      <text fill="#000" font-size="14" textLength="81.638" x="219.938" y="63.389">Simple Getter</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="301.575" x2="314.013" y1="60" y2="60"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="217.5" cy="121.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="65.275" x="226.5" y="123.889">setName()</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="207.5" x2="225.013" y1="106" y2="106"/>
+      <text fill="#000" font-size="14" textLength="71.488" x="225.013" y="109.389">Some setter</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="296.5" x2="314.013" y1="106" y2="106"/>
+      <text fill="#000" font-size="14" textLength="38.15" x="212.5" y="155.889">int age</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="207.5" x2="226.15" y1="138" y2="138"/>
+      <text fill="#000" font-size="14" textLength="69.213" x="226.15" y="141.389">private data</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="295.363" x2="314.013" y1="138" y2="138"/>
+      <text fill="#000" font-size="14" textLength="96.513" x="212.5" y="187.889">String password</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="207.5" x2="230.044" y1="170" y2="170"/>
+      <text fill="#000" font-size="14" textLength="61.425" x="230.044" y="173.389">encrypted</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="291.469" x2="314.013" y1="170" y2="170"/>
+    </g>
+  </g>
+</svg>

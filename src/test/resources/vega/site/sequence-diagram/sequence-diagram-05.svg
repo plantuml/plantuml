@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="167px" preserveAspectRatio="none" style="width:135px;height:167px;background:#FFFFFF;" version="1.1" viewBox="0 0 135 167" width="135px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>.Title</title>
+      <rect fill="#000" fill-opacity="0" height="32" width="8" x="39.225" y="67"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="42.725" x2="42.725" y1="67" y2="99"/>
+    </g>
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="32" width="8" x="101.419" y="67"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="104.919" x2="104.919" y1="67" y2="99"/>
+    </g>
+    <rect fill="#E2E2F0" height="56" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="65.45" x="10" y="10"/>
+    <text fill="#000" font-size="18" font-weight="700" textLength="34.088" x="25.681" y="31">Title</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="10" x2="75.45" y1="40" y2="40"/>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="51.45" x="17" y="55.889">SubTitle</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="85.45" y="38"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="92.45" y="55.889">Bob</text>
+    <rect fill="#E2E2F0" height="56" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="65.45" x="10" y="99"/>
+    <text fill="#000" font-size="18" font-weight="700" textLength="34.088" x="25.681" y="120">Title</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="10" x2="75.45" y1="129" y2="129"/>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="51.45" x="17" y="144.889">SubTitle</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="85.45" y="99"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="92.45" y="116.889">Bob</text>
+    <polygon fill="#181818" points="92.919,77,102.919,81,92.919,85,96.919,81" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="42.725" x2="98.919" y1="81" y2="81"/>
+  </g>
+</svg>

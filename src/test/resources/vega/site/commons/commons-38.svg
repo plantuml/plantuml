@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="201px" preserveAspectRatio="none" style="width:192px;height:201px;background:#FFFFFF;" version="1.1" viewBox="0 0 192 201" width="192px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFF" height="175" style="stroke:#181818;stroke-width:1.5;" width="176.7" x="5" y="10"/>
+    <path d="M125.513,10 L125.513,17 L115.513,27 L5,27" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="44.45" x="8" y="21.889">This is a</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="66.063" x="52.45" y="21.889">mainframe</text>
+    <!--entity vpnServerA-->
+    <g class="entity" data-qualified-name="vpnServerA" data-source-line="3" id="ent0001">
+      <rect fill="#C9FFC9" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="90.088" x="16" y="47"/>
+      <path d="M52.994,60.06 A0.5,0.5 0 0 0 52.494,60.556 L52.4,70.472 A0.5,0.5 0 0 0 52.9,70.976 L55.937,70.976 L53.679,73.107 A0.5,0.5 0 0 0 54.021,73.97 L67.958,74.017 A0.5,0.5 0 0 0 68.337,73.187 L66.4,70.976 L69.083,70.976 A0.5,0.5 0 0 0 69.583,70.474 L69.536,60.558 A0.5,0.5 0 0 0 69.036,60.06 M53.488,61.06 L68.539,61.06 L68.582,69.976 L53.404,69.976 M56.865,71.476 L65.509,71.476 L66.855,73.013 L55.275,72.974" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="70.088" x="26" y="87.889">VPN Server</text>
+    </g>
+    <!--entity GO-->
+    <g class="entity" data-qualified-name="GO" data-source-line="4" id="ent0002">
+      <rect fill="#90EE90" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.7" x="124" y="57"/>
+      <text fill="#000" font-size="14" textLength="21.7" x="134" y="77.889">GO</text>
+    </g>
+    <!--entity STOP-->
+    <g class="entity" data-qualified-name="STOP" data-source-line="5" id="ent0003">
+      <rect fill="#F00" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58.15" x="32" y="137"/>
+      <text fill="#000" font-size="14" textLength="38.15" x="42" y="157.889">STOP</text>
+    </g>
+    <!--entity WAIT-->
+    <g class="entity" data-qualified-name="WAIT" data-source-line="6" id="ent0004">
+      <rect fill="#FFA500" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="55" x="108.5" y="137"/>
+      <text fill="#000" font-size="14" textLength="35" x="118.5" y="157.889">WAIT</text>
+    </g>
+  </g>
+</svg>

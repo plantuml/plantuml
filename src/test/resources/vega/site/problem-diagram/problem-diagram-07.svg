@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="242px" preserveAspectRatio="none" style="width:302px;height:242px;background:#FFFFFF;" version="1.1" viewBox="0 0 302 242" width="302px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFF" height="28" style="stroke:#000;stroke-width:1.5;" width="68.725" x="6" y="98"/>
+    <rect fill="#FFF" height="28" style="stroke:#000;stroke-width:1.5;" width="4" x="10" y="98"/>
+    <text fill="#000" font-size="12" textLength="39.975" x="25.375" y="115.333">Monitor</text>
+    <rect fill="#FFF" height="28" style="stroke:#000;stroke-width:1.5;" width="69.125" x="122" y="12"/>
+    <rect fill="#FFF" height="28" style="stroke:#000;stroke-width:1.5;" width="4" x="122" y="12"/>
+    <text fill="#000" font-size="12" textLength="39.45" x="140.838" y="29.333">Display</text>
+    <rect fill="#FFF" height="44" style="stroke:#000;stroke-width:1.5;" width="50.775" x="131" y="58"/>
+    <text fill="#000" font-size="12" textLength="36.75" x="138.013" y="75.333">Collect</text>
+    <rect fill="none" height="16" style="stroke:#000;stroke-width:1;" width="16" x="165.775" y="86"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="168.775" y="99">C</text>
+    <rect fill="#FFF" height="44" style="stroke:#000;stroke-width:1.5;" width="60.15" x="126.5" y="120"/>
+    <text fill="#000" font-size="12" textLength="23.4" x="144.875" y="137.333">Pilot</text>
+    <rect fill="none" height="16" style="stroke:#000;stroke-width:1;" width="16" x="170.65" y="148"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="173.65" y="161">B</text>
+    <rect fill="#FFF" height="44" style="stroke:#000;stroke-width:1.5;" width="50.775" x="131" y="182"/>
+    <text fill="#000" font-size="12" textLength="30.075" x="141.35" y="199.333">Table</text>
+    <rect fill="none" height="16" style="stroke:#000;stroke-width:1;" width="16" x="165.775" y="210"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="168.775" y="223">X</text>
+    <rect fill="#FFF" height="32" style="stroke:#000;stroke-width:1.5;" width="27.4" x="27" y="48"/>
+    <text fill="#000" font-size="12" textLength="23.4" x="29" y="59.333">XYZ</text>
+    <rect fill="none" height="16" style="stroke:#000;stroke-width:1;" width="16" x="38.4" y="64"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="41.4" y="77">P</text>
+    <ellipse cx="262.169" cy="111.899" fill="#FFF" rx="24.169" ry="12.899" style="stroke:#000;stroke-width:1.5;stroke-dasharray:7,7;"/>
+    <text fill="#000" font-size="14" textLength="17.938" x="253.2" y="113.788">R1</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk8">
+      <path d="M62.646,97.973 C66.797,95.082 71.079,92.002 75,89 C96.78,72.326 100.22,65.674 122,49 C125.921,45.998 130.203,42.918 134.354,40.027" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="95" y="60.111">a</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0007" data-link-type="association" id="lnk9">
+      <path d="M179.063,40.197 C183.097,43.022 187.229,46.035 191,49 C211.565,65.168 233.767,85.736 247.527,98.887" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" x="211" y="61.111">a</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0007" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="182.028,87.584,189.445,94.064,186.805,89.06,191.808,86.42,182.028,87.584" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M186.805,89.06 C203.662,94.272 221.13,99.673 237.714,104.801" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" x="211" y="91.111">b</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0007" data-link-type="association" id="lnk11">
+      <path d="M182.201,182.389 C193.718,172.281 207.591,160.059 220,149 C228.876,141.09 238.773,132.162 246.619,125.058" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" x="211.5" y="144.111">c</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0007" data-link-type="association" id="lnk12">
+      <path d="M186.509,134.378 C197.078,131.53 209.105,128.207 220,125 C225.731,123.313 231.884,121.411 237.635,119.593" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" x="211" y="120.111">d</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="association" id="lnk13">
+      <path d="M59.313,126.375 C78.475,141.839 109.09,166.546 130.623,183.924" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="95.5" y="151.111">c</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="association" id="lnk14">
+      <path d="M75.087,102.572 C92.952,97.557 114.53,91.5 130.834,86.924" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="95" y="91.111">b</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="association" id="lnk15">
+      <path d="M75.087,120.839 C91.375,125.125 110.751,130.224 126.401,134.342" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="95" y="122.111">d</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+A ->(10) B: text 10
+B ->(10) A: text 10
+
+A ->(10) B: text 10
+A (10)<- B: text 10
+@enduml

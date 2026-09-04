@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+|Lane 1|
+|Lane 2|
+|Lane 1|
+start
+if (sure?) then (yes)
+else (no)
+    |Lane 2|
+    :baz;
+endif
+|Lane 2|
+:foo;
+@enduml

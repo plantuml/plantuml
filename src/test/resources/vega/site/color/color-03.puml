@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+<style>
+document {
+  BackGroundColor darkblue
+}
+root {
+  FontColor #?black:white
+  LineColor white
+}
+</style>
+alice -> bob : hello
+@enduml

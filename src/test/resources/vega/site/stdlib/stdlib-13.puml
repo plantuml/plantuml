@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+!include <edgy/edgy>
+
+$experienceFacet(Experience) {
+	$task(Task, task)
+	$journey(Journey, journey)
+	$channel(Channel, channel)
+}
+
+$linkRight(task, journey)
+$linkDown(task, channel)
+$linkDown(journey, channel)
+
+@enduml

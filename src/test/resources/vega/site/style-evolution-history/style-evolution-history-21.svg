@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="296px" preserveAspectRatio="none" style="width:263px;height:296px;background:#FFFFFF;" version="1.1" viewBox="0 0 263 296" width="263px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="236.513" x="10" y="20.889">Style hierarchy cascade per type Option1</text>
+    </g>
+    <!--cluster SequenceDiagram-->
+    <g class="cluster" data-qualified-name="SequenceDiagram" data-source-line="9" id="ent0009">
+      <path d="M61.756,191 L178.781,191 A3.75,3.75 0 0 1 181.281,193.5 L188.281,211 L207.756,211 A2.5,2.5 0 0 1 210.256,213.5 L210.256,269.5 A2.5,2.5 0 0 1 207.756,272 L61.756,272 A2.5,2.5 0 0 1 59.256,269.5 L59.256,193.5 A2.5,2.5 0 0 1 61.756,191" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="59.256" x2="188.281" y1="211" y2="211"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="116.025" x="63.256" y="203.889">SequenceDiagram</text>
+    </g>
+    <!--class root-->
+    <g class="entity" data-qualified-name="root" data-source-line="5" id="ent0001">
+      <rect fill="#F1F1F1" height="24" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="30.063" x="127.256" y="39"/>
+      <text fill="#000" font-size="14" textLength="24.063" x="130.256" y="54.889">root</text>
+    </g>
+    <!--class message-->
+    <g class="entity" data-qualified-name="message" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="24" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="62.788" x="75.756" y="159"/>
+      <text fill="#000" font-size="14" textLength="56.788" x="78.756" y="174.889">message</text>
+    </g>
+    <!--class element-->
+    <g class="entity" data-qualified-name="element" data-source-line="7" id="ent0004">
+      <rect fill="#F1F1F1" height="24" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="55.788" x="144.256" y="99"/>
+      <text fill="#000" font-size="14" textLength="49.788" x="147.256" y="114.889">element</text>
+    </g>
+    <!--class actor-->
+    <g class="entity" data-qualified-name="actor" data-source-line="8" id="ent0006">
+      <rect fill="#F1F1F1" height="24" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="37.062" x="156.756" y="159"/>
+      <text fill="#000" font-size="14" textLength="31.062" x="159.756" y="174.889">actor</text>
+    </g>
+    <!--class message-->
+    <g class="entity" data-qualified-name="SequenceDiagram.message" data-source-line="9" id="ent0008">
+      <rect fill="#F1F1F1" height="24" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="62.788" x="75.756" y="232"/>
+      <text fill="#000" font-size="14" textLength="56.788" x="78.756" y="247.889">message</text>
+    </g>
+    <!--class actor-->
+    <g class="entity" data-qualified-name="SequenceDiagram.actor" data-source-line="10" id="ent0011">
+      <rect fill="#F1F1F1" height="24" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="37.062" x="156.756" y="232"/>
+      <text fill="#000" font-size="14" textLength="31.062" x="159.756" y="247.889">actor</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="138.9,63.314,128.029,78.865,139.534,82.277,138.9,63.314" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M133.782,80.571 C127.075,103.184 117.207,136.451 110.551,158.892" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="extension" id="lnk5">
+      <polygon fill="none" points="148.041,63.183,150.981,81.927,161.639,76.414,148.041,63.183" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M156.31,79.171 C161.622,89.441 161.183,88.592 166.49,98.851" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0006" data-link-type="extension" id="lnk7">
+      <polygon fill="none" points="172.835,123.183,167.772,141.469,179.756,140.849,172.835,123.183" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M173.764,141.159 C174.296,151.429 174.149,148.592 174.68,158.851" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0008" data-link-type="extension" id="lnk10">
+      <polygon fill="none" points="107.256,183.094,101.256,201.094,113.256,201.094,107.256,183.094" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M107.256,201.094 C107.256,214.354 107.256,218.421 107.256,231.75" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0011" data-link-type="extension" id="lnk12">
+      <polygon fill="none" points="175.256,183.094,169.256,201.094,181.256,201.094,175.256,183.094" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M175.256,201.094 C175.256,214.354 175.256,218.421 175.256,231.75" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

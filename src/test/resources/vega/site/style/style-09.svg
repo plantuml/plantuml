@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="227px" preserveAspectRatio="none" style="width:497px;height:227px;background:#FFFFFF;" version="1.1" viewBox="0 0 497 227" width="497px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFF" height="38" style="stroke:#F00;stroke-width:1;stroke-dasharray:8,3;" width="50.162" x="10" y="94"/>
+    <text fill="#000" font-size="14" textLength="13.3" x="22" y="116.889">Hi</text>
+    <text fill="#000" font-size="14" x="35.3" y="116.889"> </text>
+    <text fill="#000" font-size="14" textLength="12.862" x="35.3" y="116.889">=)</text>
+    <rect fill="#FFD700" height="80" rx="20" ry="20" style="stroke:#00F;stroke-width:3;" width="110.363" x="96.163" y="73"/>
+    <text fill="#000" font-size="14" textLength="67.638" x="115.95" y="95.889">sometimes</text>
+    <text fill="#000" font-size="14" x="183.588" y="95.889"> </text>
+    <text fill="#000" font-size="14" x="183.588" y="95.889">i</text>
+    <text fill="#000" font-size="14" textLength="30.363" x="115.119" y="109.889">have</text>
+    <text fill="#000" font-size="14" x="145.481" y="109.889"> </text>
+    <text fill="#000" font-size="14" textLength="31.15" x="145.481" y="109.889">node</text>
+    <text fill="#000" font-size="14" x="176.631" y="109.889"> </text>
+    <text fill="#000" font-size="14" textLength="10.938" x="176.631" y="109.889">in</text>
+    <text fill="#000" font-size="14" textLength="35.875" x="111.225" y="123.889">which</text>
+    <text fill="#000" font-size="14" x="147.1" y="123.889"> </text>
+    <text fill="#000" font-size="14" x="147.1" y="123.889">i</text>
+    <text fill="#000" font-size="14" x="150.25" y="123.889"> </text>
+    <text fill="#000" font-size="14" textLength="29.575" x="150.25" y="123.889">want</text>
+    <text fill="#000" font-size="14" x="179.825" y="123.889"> </text>
+    <text fill="#000" font-size="14" textLength="11.638" x="179.825" y="123.889">to</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="108.163" y="137.889">write</text>
+    <text fill="#000" font-size="14" x="137.737" y="137.889"> </text>
+    <text fill="#000" font-size="14" x="137.737" y="137.889">a</text>
+    <text fill="#000" font-size="14" x="145.525" y="137.889"> </text>
+    <text fill="#000" font-size="14" textLength="26.512" x="145.525" y="137.889">long</text>
+    <text fill="#000" font-size="14" x="172.038" y="137.889"> </text>
+    <text fill="#000" font-size="14" textLength="22.488" x="172.038" y="137.889">text</text>
+    <rect fill="#FFD700" height="66" rx="20" ry="20" style="stroke:#00F;stroke-width:3;" width="97.938" x="242.525" y="80"/>
+    <text fill="#000" font-size="14" textLength="21.788" x="254.525" y="102.889">this</text>
+    <text fill="#000" font-size="14" x="276.313" y="102.889"> </text>
+    <text fill="#000" font-size="14" textLength="41.213" x="276.313" y="102.889">results</text>
+    <text fill="#000" font-size="14" x="317.525" y="102.889"> </text>
+    <text fill="#000" font-size="14" textLength="10.938" x="317.525" y="102.889">in</text>
+    <text fill="#000" font-size="14" textLength="33.513" x="259.163" y="116.889">really</text>
+    <text fill="#000" font-size="14" x="292.675" y="116.889"> </text>
+    <text fill="#000" font-size="14" textLength="31.15" x="292.675" y="116.889">huge</text>
+    <text fill="#000" font-size="14" textLength="50.575" x="266.206" y="130.889">diagram</text>
+    <rect fill="#FFD700" height="62" style="stroke:#FFD700;stroke-width:3;" width="89.212" x="376.463" y="13"/>
+    <text fill="#000" font-size="14" textLength="11.638" x="379.463" y="26.889">of</text>
+    <text fill="#000" font-size="14" x="391.1" y="26.889"> </text>
+    <text fill="#000" font-size="14" textLength="45.85" x="391.1" y="26.889">course,</text>
+    <text fill="#000" font-size="14" x="436.95" y="26.889"> </text>
+    <text fill="#000" font-size="14" x="436.95" y="26.889">i</text>
+    <text fill="#000" font-size="14" x="440.1" y="26.889"> </text>
+    <text fill="#000" font-size="14" textLength="22.575" x="440.1" y="26.889">can</text>
+    <text fill="#000" font-size="14" textLength="53.025" x="382.088" y="40.889">explicitly</text>
+    <text fill="#000" font-size="14" x="435.112" y="40.889"> </text>
+    <text fill="#000" font-size="14" textLength="24.938" x="435.112" y="40.889">split</text>
+    <text fill="#000" font-size="14" textLength="24.938" x="404.706" y="54.889">with</text>
+    <text fill="#000" font-size="14" x="429.644" y="54.889"> </text>
+    <text fill="#000" font-size="14" x="429.644" y="54.889">a</text>
+    <text fill="#000" font-size="14" textLength="25.725" x="397.269" y="68.889">new</text>
+    <text fill="#000" font-size="14" x="422.994" y="68.889"> </text>
+    <text fill="#000" font-size="14" textLength="21.875" x="422.994" y="68.889">line</text>
+    <path d="M340.463,113 L350.463,113 C365.463,113 351.463,44 366.463,44 L376.463,44" fill="none" style="stroke:#008000;stroke-width:0.5;stroke-dasharray:4,4;"/>
+    <rect fill="#FFD700" height="132" style="stroke:#FFD700;stroke-width:3;" width="100.238" x="376.463" y="81"/>
+    <text fill="#000" font-size="14" textLength="19.425" x="388.825" y="94.889">but</text>
+    <text fill="#000" font-size="14" x="408.25" y="94.889"> </text>
+    <text fill="#000" font-size="14" textLength="7" x="408.25" y="94.889">it</text>
+    <text fill="#000" font-size="14" x="415.25" y="94.889"> </text>
+    <text fill="#000" font-size="14" textLength="33.512" x="415.25" y="94.889">could</text>
+    <text fill="#000" font-size="14" x="448.763" y="94.889"> </text>
+    <text fill="#000" font-size="14" textLength="15.575" x="448.763" y="94.889">be</text>
+    <text fill="#000" font-size="14" textLength="25.725" x="379.463" y="108.889">cool</text>
+    <text fill="#000" font-size="14" x="405.188" y="108.889"> </text>
+    <text fill="#000" font-size="14" textLength="7" x="405.188" y="108.889">if</text>
+    <text fill="#000" font-size="14" x="412.188" y="108.889"> </text>
+    <text fill="#000" font-size="14" textLength="61.513" x="412.188" y="108.889">PlantUML</text>
+    <text fill="#000" font-size="14" textLength="24.938" x="382.569" y="122.889">was</text>
+    <text fill="#000" font-size="14" x="407.506" y="122.889"> </text>
+    <text fill="#000" font-size="14" textLength="26.513" x="407.506" y="122.889">able</text>
+    <text fill="#000" font-size="14" x="434.019" y="122.889"> </text>
+    <text fill="#000" font-size="14" textLength="11.638" x="434.019" y="122.889">to</text>
+    <text fill="#000" font-size="14" x="445.656" y="122.889"> </text>
+    <text fill="#000" font-size="14" textLength="24.938" x="445.656" y="122.889">split</text>
+    <text fill="#000" font-size="14" textLength="26.512" x="398.888" y="136.889">long</text>
+    <text fill="#000" font-size="14" x="425.4" y="136.889"> </text>
+    <text fill="#000" font-size="14" textLength="28.875" x="425.4" y="136.889">lines</text>
+    <text fill="#000" font-size="14" textLength="85.575" x="383.794" y="150.889">automatically,</text>
+    <text fill="#000" font-size="14" textLength="42" x="385.325" y="164.889">maybe</text>
+    <text fill="#000" font-size="14" x="427.325" y="164.889"> </text>
+    <text fill="#000" font-size="14" textLength="24.938" x="427.325" y="164.889">with</text>
+    <text fill="#000" font-size="14" x="452.263" y="164.889"> </text>
+    <text fill="#000" font-size="14" textLength="15.575" x="452.263" y="164.889">an</text>
+    <text fill="#000" font-size="14" textLength="38.15" x="379.9" y="178.889">option</text>
+    <text fill="#000" font-size="14" x="418.05" y="178.889"> </text>
+    <text fill="#000" font-size="14" textLength="11.638" x="418.05" y="178.889">to</text>
+    <text fill="#000" font-size="14" x="429.688" y="178.889"> </text>
+    <text fill="#000" font-size="14" textLength="43.575" x="429.688" y="178.889">specify</text>
+    <text fill="#000" font-size="14" textLength="19.425" x="386.55" y="192.889">the</text>
+    <text fill="#000" font-size="14" x="405.975" y="192.889"> </text>
+    <text fill="#000" font-size="14" textLength="60.638" x="405.975" y="192.889">maximum</text>
+    <text fill="#000" font-size="14" textLength="32.725" x="384.931" y="206.889">width</text>
+    <text fill="#000" font-size="14" x="417.656" y="206.889"> </text>
+    <text fill="#000" font-size="14" textLength="11.638" x="417.656" y="206.889">of</text>
+    <text fill="#000" font-size="14" x="429.294" y="206.889"> </text>
+    <text fill="#000" font-size="14" x="429.294" y="206.889">a</text>
+    <text fill="#000" font-size="14" x="437.081" y="206.889"> </text>
+    <text fill="#000" font-size="14" textLength="31.15" x="437.081" y="206.889">node</text>
+    <path d="M340.463,113 L350.463,113 C365.463,113 351.463,147 366.463,147 L376.463,147" fill="none" style="stroke:#008000;stroke-width:0.5;stroke-dasharray:4,4;"/>
+    <path d="M206.525,113 L216.525,113 C231.525,113 217.525,113 232.525,113 L242.525,113" fill="none" style="stroke:#008000;stroke-width:0.5;stroke-dasharray:4,4;"/>
+    <path d="M60.162,113 L70.163,113 C85.163,113 71.163,113 86.163,113 L96.163,113" fill="none" style="stroke:#008000;stroke-width:0.5;stroke-dasharray:4,4;"/>
+  </g>
+</svg>

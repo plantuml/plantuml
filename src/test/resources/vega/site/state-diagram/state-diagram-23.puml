@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+[*] -> State1
+State1 --> State2
+note on link
+  this is a state-transition note
+end note
+@enduml

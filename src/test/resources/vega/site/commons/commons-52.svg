@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="333px" preserveAspectRatio="none" style="width:146px;height:333px;background:#FFFFFF;" version="1.1" viewBox="0 0 146 333" width="146px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="header" data-source-line="2">
+      <text fill="#888" font-size="10" textLength="55.563" x="83.95" y="7.778">some header</text>
+    </g>
+    <g class="title" data-source-line="6">
+      <text fill="#000" font-size="14" font-weight="700" textLength="40.425" x="49.544" y="31.889">My title</text>
+    </g>
+    <rect fill="#FFF" height="184" style="stroke:#181818;stroke-width:1.5;" width="130.513" x="5" y="56"/>
+    <path d="M125.513,56 L125.513,63 L115.513,73 L5,73" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="44.45" x="8" y="67.889">This is a</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="66.063" x="52.45" y="67.889">mainframe</text>
+    <!--class a-->
+    <g class="entity" data-qualified-name="a" data-source-line="14" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="39.788" x="16" y="93"/>
+      <ellipse cx="31" cy="109" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="26" y="114">C</text>
+      <text fill="#000" font-size="14" x="45" y="112.889">a</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="17" x2="54.788" y1="125" y2="125"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="17" x2="54.788" y1="133" y2="133"/>
+    </g>
+    <!--class b-->
+    <g class="entity" data-qualified-name="b" data-source-line="14" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="39.788" x="16" y="177"/>
+      <ellipse cx="31" cy="193" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="26" y="198">C</text>
+      <text fill="#000" font-size="14" x="45" y="196.889">b</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="17" x2="54.788" y1="209" y2="209"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="17" x2="54.788" y1="217" y2="217"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M36,141.279 C36,152.453 36,165.802 36,176.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="legend" data-source-line="10">
+      <rect fill="#DDD" height="24" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="76.238" x="31.637" y="262"/>
+      <text fill="#000" font-size="14" textLength="66.238" x="36.637" y="277.889">The legend</text>
+    </g>
+    <g class="caption" data-source-line="8">
+      <text fill="#000" font-size="14" textLength="81.813" x="28.85" y="310.889">This is caption</text>
+    </g>
+    <g class="footer" data-source-line="4">
+      <text fill="#888" font-size="10" textLength="49.938" x="44.787" y="323.778">some footer</text>
+    </g>
+  </g>
+</svg>

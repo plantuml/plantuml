@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+scale 180*90
+Bob->Alice : hello
+@enduml

@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+<style>
+visibilityIcon {
+  protected {
+    LineColor DarkGoldenRod
+    BackgroundColor DarkGoldenRod
+  }
+}
+</style>
+
+class TaskRunner {
+  --
+  {method} + executeTask
+  {method} # executeForAllSubtasks
+}
+class MetadataInspector {
+  --
+  {method} # inspectClassMetadata
+  {method} # inspectFooterMetadata
+}
+TaskRunner <|-- MetadataInspector
+@enduml

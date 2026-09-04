@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="237px" preserveAspectRatio="none" style="width:293px;height:237px;background:#FFFFFF;" version="1.1" viewBox="0 0 293 237" width="293px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="129.025" x="10" y="101"/>
+    <a href="https://plantuml.com/index" target="_top" title="https://plantuml.com/index" xlink:actuate="onRequest" xlink:href="https://plantuml.com/index" xlink:show="new" xlink:title="https://plantuml.com/index" xlink:type="simple">
+      <text fill="#00F" font-size="14" text-decoration="underline" textLength="109.025" x="20" y="121.889">PlantUML website</text>
+    </a>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="83.087" x="189.025" y="20"/>
+    <a href="https://plantuml.com/sequence-diagram" target="_top" title="https://plantuml.com/sequence-diagram" xlink:actuate="onRequest" xlink:href="https://plantuml.com/sequence-diagram" xlink:show="new" xlink:title="https://plantuml.com/sequence-diagram" xlink:type="simple">
+      <text fill="#00F" font-size="14" text-decoration="underline" textLength="63.087" x="199.025" y="40.889">Sequence</text>
+    </a>
+    <path d="M139.025,118 L149.025,118 C164.025,118 164.025,37 179.025,37 L189.025,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="77.575" x="189.025" y="74"/>
+    <a href="https://plantuml.com/mindmap-diagram" target="_top" title="https://plantuml.com/mindmap-diagram" xlink:actuate="onRequest" xlink:href="https://plantuml.com/mindmap-diagram" xlink:show="new" xlink:title="https://plantuml.com/mindmap-diagram" xlink:type="simple">
+      <text fill="#00F" font-size="14" text-decoration="underline" textLength="57.575" x="199.025" y="94.889">MindMap</text>
+    </a>
+    <path d="M139.025,118 L149.025,118 C164.025,118 164.025,91 179.025,91 L189.025,91" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="51.938" x="189.025" y="128"/>
+    <a href="https://plantuml.com/wbs-diagram" target="_top" title="https://plantuml.com/wbs-diagram" xlink:actuate="onRequest" xlink:href="https://plantuml.com/wbs-diagram" xlink:show="new" xlink:title="https://plantuml.com/wbs-diagram" xlink:type="simple">
+      <text fill="#00F" font-size="14" text-decoration="underline" textLength="31.938" x="199.025" y="148.889">WBS</text>
+    </a>
+    <path d="M139.025,118 L149.025,118 C164.025,118 164.025,145 179.025,145 L189.025,145" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="31.55" x="189.025" y="182"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="199.025" y="202.889">...</text>
+    <path d="M139.025,118 L149.025,118 C164.025,118 164.025,199 179.025,199 L189.025,199" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

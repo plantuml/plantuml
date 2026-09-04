@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="REGEX" height="90px" preserveAspectRatio="none" style="width:134px;height:90px;background:#FFFFFF;" version="1.1" viewBox="0 0 134 90" width="134px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="85.575" x="23.6" y="30.889">stringAnchors</text>
+    </g>
+    <line style="stroke:#181818;stroke-width:1;" x1="15" x2="15" y1="62" y2="62"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="16.563" x="15" y="50"/>
+    <text fill="#000" font-size="14" x="20" y="65.889">^</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="31.563" x2="51.563" y1="62" y2="62"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="29.425" x="51.563" y="50"/>
+    <text fill="#000" font-size="14" textLength="19.425" x="56.563" y="65.889">foo</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="80.988" x2="100.988" y1="62" y2="62"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="17.788" x="100.988" y="50"/>
+    <text fill="#000" font-size="14" x="105.988" y="65.889">$</text>
+  </g>
+</svg>

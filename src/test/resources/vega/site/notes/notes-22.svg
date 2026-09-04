@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="78px" preserveAspectRatio="none" style="width:279px;height:78px;background:#FFFFFF;" version="1.1" viewBox="0 0 279 78" width="279px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="a" data-source-line="8" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="94" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="94" x2="144" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" x="115.106" y="27.889">a</text>
+    </g>
+    <g class="entity" data-qualified-name="b" data-source-line="9" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="213" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="213" x2="263" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" x="234.106" y="27.889">b</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN4" data-source-line="13" id="ent0005">
+      <path d="M6,25 L6,48 A0,0 0 0 0 6,48 L76.156,48 A0,0 0 0 0 76.156,48 L76.156,43 L93.828,37 L76.156,35 L76.156,35 L66.156,25 L6,25 A0,0 0 0 0 6,25" fill="#008000" style="stroke:#F00;stroke-width:2;"/>
+      <path d="M66.156,25 L66.156,35 L76.156,35 L66.156,25" fill="#008000" style="stroke:#F00;stroke-width:2;"/>
+      <text fill="#000" font-size="13" textLength="49.156" x="12" y="40.111">Link note</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="212.8,37,203.8,33,207.8,37,203.8,41,212.8,37" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M144.237,37 C164.432,37 187.614,37 207.8,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" font-style="italic" textLength="47.125" x="155" y="29.111">link label</text>
+    </g>
+  </g>
+</svg>

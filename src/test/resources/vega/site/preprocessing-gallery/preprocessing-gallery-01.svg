@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="199px" preserveAspectRatio="none" style="width:278px;height:199px;background:#FFFFFF;" version="1.1" viewBox="0 0 278 199" width="278px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="14">
+      <text fill="#000" font-size="14" font-weight="700" textLength="151.725" x="59.637" y="20.889">Elements and Notes Part1</text>
+    </g>
+    <!--class elementArray-->
+    <g class="entity" data-qualified-name="elementArray" data-source-line="17" id="ent0001">
+      <rect fill="#F1F1F1" height="136" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="115.212" x="147" y="47"/>
+      <ellipse cx="162" cy="65" fill="#32DC32" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="157" y="70">E</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="56.025" x="189.594" y="61.333">«element»</text>
+      <text fill="#000" font-size="14" textLength="83.212" x="176" y="74.889">elementArray</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="148" x2="261.213" y1="83" y2="83"/>
+      <text fill="#000" font-size="14" textLength="84.7" x="153" y="97.889">name : someId</text>
+      <text fill="#000" font-size="14" textLength="99.488" x="153" y="111.889">name : MemberA</text>
+      <text fill="#000" font-size="14" textLength="99.488" x="153" y="125.889">name : MemberB</text>
+      <text fill="#000" font-size="14" textLength="100.275" x="153" y="139.889">name : MemberC</text>
+      <text fill="#000" font-size="14" textLength="100.275" x="153" y="153.889">name : MemberD</text>
+      <text fill="#000" font-size="14" textLength="99.488" x="153" y="167.889">name : MemberE</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="148" x2="261.213" y1="175" y2="175"/>
+    </g>
+    <path d="M6,98.5 L6,121.5 A0,0 0 0 0 6,121.5 L128.644,121.5 A0,0 0 0 0 128.644,121.5 L128.644,116.5 L153,122 L128.644,108.5 L128.644,108.5 L118.644,98.5 L6,98.5 A0,0 0 0 0 6,98.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M118.644,98.5 L118.644,108.5 L128.644,108.5 L118.644,98.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="101.644" x="12" y="113.611">Member of Interest</text>
+  </g>
+</svg>

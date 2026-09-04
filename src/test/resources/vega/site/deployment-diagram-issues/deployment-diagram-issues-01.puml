@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+hexagon H1 {
+node n1
+}
+[C]
+
+C --> H1: doesn't lead\n to hexagon H1
+@enduml

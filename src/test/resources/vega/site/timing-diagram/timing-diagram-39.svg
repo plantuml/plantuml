@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="TIMING" height="382px" preserveAspectRatio="none" style="width:280px;height:382px;background:#FFFFFF;" version="1.1" viewBox="0 0 280 382" width="280px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="20" y1="20" y2="350"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="259.063" x2="259.063" y1="20" y2="350"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="54.063" x2="54.063" y1="20" y2="350"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="104.063" x2="104.063" y1="20" y2="350"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="154.063" x2="154.063" y1="20" y2="350"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="204.063" x2="204.063" y1="20" y2="350"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="254.063" x2="254.063" y1="20" y2="350"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="259.063" y1="20" y2="20"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="36.575" x="25" y="30.889">Vcore</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="62.575" y1="35" y2="35"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="62.575" x2="72.575" y1="35" y2="20"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="19.425" x="32.637" y="130.889">0.0</text>
+    <text fill="#333" font-size="14" font-weight="700" textLength="19.425" x="32.637" y="46.889">6.0</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="54.063" x2="54.063" y1="127" y2="127"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="54.063" x2="154.063" y1="127" y2="127"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="154.063" x2="204.063" y1="127" y2="43"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="204.063" x2="254.063" y1="43" y2="43"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="259.063" y1="135" y2="135"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="29.662" x="25" y="145.889">VCC</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="55.662" y1="150" y2="150"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="55.662" x2="65.663" y1="150" y2="135"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="24.063" x="28" y="320.798">-3.0</text>
+    <text fill="#333" font-size="14" font-weight="700" textLength="19.425" x="32.637" y="270.616">0.0</text>
+    <text fill="#333" font-size="14" font-weight="700" textLength="19.425" x="32.637" y="220.434">3.0</text>
+    <text fill="#333" font-size="14" font-weight="700" textLength="19.425" x="32.637" y="170.253">6.0</text>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="54.063" x2="254.063" y1="316.909" y2="316.909"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="54.063" x2="254.063" y1="266.727" y2="266.727"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="54.063" x2="254.063" y1="216.545" y2="216.545"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="54.063" x2="254.063" y1="166.364" y2="166.364"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="54.063" x2="54.063" y1="216.545" y2="216.545"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="54.063" x2="204.063" y1="216.545" y2="166.364"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="204.063" x2="254.063" y1="166.364" y2="166.364"/>
+    <line style="stroke:#333;stroke-width:2;" x1="54.063" x2="54.063" y1="350" y2="355"/>
+    <line style="stroke:#333;stroke-width:2;" x1="104.063" x2="104.063" y1="350" y2="355"/>
+    <line style="stroke:#333;stroke-width:2;" x1="154.063" x2="154.063" y1="350" y2="355"/>
+    <line style="stroke:#333;stroke-width:2;" x1="204.063" x2="204.063" y1="350" y2="355"/>
+    <line style="stroke:#333;stroke-width:2;" x1="254.063" x2="254.063" y1="350" y2="355"/>
+    <line style="stroke:#333;stroke-width:2;" x1="54.063" x2="254.063" y1="350" y2="350"/>
+    <text fill="#333" font-size="11" x="51.003" y="364.556">0</text>
+    <text fill="#333" font-size="11" x="151.003" y="364.556">2</text>
+    <text fill="#333" font-size="11" x="201.003" y="364.556">3</text>
+    <line style="stroke:#00008B;stroke-width:1.5;" x1="104.063" x2="154.063" y1="127" y2="183.091"/>
+    <polygon fill="#00008B" points="147.018,179.3,151.103,175.659,154.063,183.091" style="stroke:#00008B;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#00008B" font-family="serif" font-size="14" textLength="32.463" x="149.06" y="174.368">"test"</text>
+  </g>
+</svg>

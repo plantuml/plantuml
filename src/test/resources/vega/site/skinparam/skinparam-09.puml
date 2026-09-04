@@ -1,0 +1,32 @@
+---
+output: svg
+---
+@startuml
+skinparam handwritten true
+
+skinparam actor {
+BorderColor black
+FontName Courier
+        BackgroundColor<< Human >> Gold
+}
+
+skinparam usecase {
+BackgroundColor DarkSeaGreen
+BorderColor DarkSlateGray
+
+BackgroundColor<< Main >> YellowGreen
+BorderColor<< Main >> YellowGreen
+
+ArrowColor Olive
+}
+
+User << Human >>
+:Main Database: as MySql << Application >>
+(Start) << One Shot >>
+(Use the application) as (Use) << Main >>
+
+User -> (Start)
+User --> (Use)
+
+MySql --> (Use)
+@enduml

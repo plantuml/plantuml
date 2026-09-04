@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="431px" preserveAspectRatio="none" style="width:588px;height:431px;background:#FFFFFF;" version="1.1" viewBox="0 0 588 431" width="588px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="70" y1="60" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="360" y2="360"/>
+    <text fill="#000" font-size="14" x="52.213" y="363.889">0</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="300" y2="300"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="303.889">20</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="240" y2="240"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="243.889">40</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="180" y2="180"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="183.889">60</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="120" y2="120"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="123.889">80</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="60" y2="60"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="36.637" y="63.889">100</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="360" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="110" x2="110" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="100.681" y="380.889">Q1</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="190" x2="190" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="180.681" y="380.889">Q2</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="270" x2="270" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="260.681" y="380.889">Q3</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="350" x2="350" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="340.681" y="380.889">Q4</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="430" x2="430" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="420.681" y="380.889">Q5</text>
+    <rect fill="#3498DB" height="135" style="stroke:#181818;stroke-width:0.5;" width="48" x="86" y="225"/>
+    <rect fill="#3498DB" height="186" style="stroke:#181818;stroke-width:0.5;" width="48" x="166" y="174"/>
+    <rect fill="#3498DB" height="174" style="stroke:#181818;stroke-width:0.5;" width="48" x="246" y="186"/>
+    <rect fill="#3498DB" height="210" style="stroke:#181818;stroke-width:0.5;" width="48" x="326" y="150"/>
+    <rect fill="#3498DB" height="249" style="stroke:#181818;stroke-width:0.5;" width="48" x="406" y="111"/>
+    <line style="stroke:#FF7F0E;stroke-width:2;" x1="110" x2="190" y1="210" y2="195"/>
+    <line style="stroke:#FF7F0E;stroke-width:2;" x1="190" x2="270" y1="195" y2="180"/>
+    <line style="stroke:#FF7F0E;stroke-width:2;" x1="270" x2="350" y1="180" y2="165"/>
+    <line style="stroke:#FF7F0E;stroke-width:2;" x1="350" x2="430" y1="165" y2="150"/>
+    <text fill="#000" font-size="14" textLength="64.663" x="397.669" y="161.889">Peak sales</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="430" x2="430" y1="146" y2="116"/>
+    <polygon fill="#181818" points="430,116,425,124,435,124" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="14" textLength="62.3" x="238.85" y="171.889">Target line</text>
+    <rect fill="#3498DB" height="12" style="stroke:#3498DB;stroke-width:1;" width="12" x="480" y="60"/>
+    <text fill="#000" font-size="14" textLength="35.088" x="497" y="70.889">Sales</text>
+    <line style="stroke:#FF7F0E;stroke-width:2;" x1="480" x2="492" y1="95" y2="95"/>
+    <text fill="#000" font-size="14" textLength="40.425" x="497" y="99.889">Target</text>
+  </g>
+</svg>

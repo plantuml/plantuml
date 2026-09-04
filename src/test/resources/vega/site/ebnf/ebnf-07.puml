@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startebnf
+title Comments
+(* Notes for Rule1 *)
+Rule1 = {"a-z" (* any letter *) };
+(* Notes for Rule2 *)
+Rule2 =;
+(* Additional notes and references *)
+@endebnf

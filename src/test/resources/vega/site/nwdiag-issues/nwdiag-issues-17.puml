@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+nwdiag {
+  network {
+    a;
+    b;
+    c;
+  }
+  b -- 2
+  c -- 3
+}
+@enduml

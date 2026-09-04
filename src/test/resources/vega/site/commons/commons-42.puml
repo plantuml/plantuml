@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+mainframe This is a **mainframe**
+
+object user {
+  name = "Dummy"
+  id = 123
+}
+@enduml

@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+' style enclosure declaration
+<style>
+
+    ' scope to sequenceDiagram elements
+    sequenceDiagram {
+
+     ' scope to actor element types
+     actor {
+       FontColor Blue
+     }
+
+    }
+}
+</style>
+
+' printed in blue
+actor Bob
+' also printed in blue
+actor Sally
+@enduml

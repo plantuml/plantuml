@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+ :start;
+ fork
+   :foo1;
+   :foo2;
+ fork again
+   :foo3;
+   kill
+ endfork
+ if (foo4) then
+   :foo5;
+   kill
+ endif
+ :foo6;
+ kill
+ :foo7;
+ stop
+@enduml

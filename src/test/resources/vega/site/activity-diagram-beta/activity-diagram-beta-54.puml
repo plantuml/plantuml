@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+|#palegreen|f| fisherman
+|c| cook
+|#gold|e| eater
+|f|
+start
+:go fish;
+|c|
+:fry fish;
+|e|
+:eat fish;
+stop
+@enduml

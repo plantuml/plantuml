@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="66px" preserveAspectRatio="none" style="width:150px;height:66px;background:#FFFFFF;" version="1.1" viewBox="0 0 150 66" width="150px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="29.4" x="6" y="15.333">Login</text>
+    <text fill="#000" font-size="12" textLength="48" x="68" y="15.333">MyName</text>
+    <line style="stroke:#000;stroke-width:1;" x1="66" x2="141" y1="18" y2="18"/>
+    <line style="stroke:#000;stroke-width:1;" x1="66" x2="66" y1="15" y2="17"/>
+    <line style="stroke:#000;stroke-width:1;" x1="141" x2="141" y1="15" y2="17"/>
+    <text fill="#000" font-size="12" textLength="52.725" x="6" y="31.333">Password</text>
+    <text fill="#000" font-size="12" textLength="18.6" x="68" y="31.333">****</text>
+    <line style="stroke:#000;stroke-width:1;" x1="66" x2="141" y1="34" y2="34"/>
+    <line style="stroke:#000;stroke-width:1;" x1="66" x2="66" y1="31" y2="33"/>
+    <line style="stroke:#000;stroke-width:1;" x1="141" x2="141" y1="31" y2="33"/>
+    <rect fill="#EEE" height="16" rx="5" ry="5" style="stroke:#000;stroke-width:2.5;" width="52" x="8.5" y="40.5"/>
+    <text fill="#000" font-size="12" textLength="37.425" x="15.788" y="51.833">Cancel</text>
+    <rect fill="#EEE" height="16" rx="5" ry="5" style="stroke:#000;stroke-width:2.5;" width="60" x="67.5" y="40.5"/>
+    <text fill="#000" font-size="12" textLength="17.325" x="88.838" y="51.833">OK</text>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="64" y1="5" y2="5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="64" x2="144" y1="5" y2="5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="64" y1="60" y2="60"/>
+    <line style="stroke:#000;stroke-width:1;" x1="64" x2="144" y1="60" y2="60"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="5" y1="5" y2="21"/>
+    <line style="stroke:#000;stroke-width:1;" x1="144" x2="144" y1="37" y2="60"/>
+    <line style="stroke:#000;stroke-width:1;" x1="144" x2="144" y1="21" y2="37"/>
+    <line style="stroke:#000;stroke-width:1;" x1="144" x2="144" y1="5" y2="21"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="5" y1="37" y2="60"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="5" y1="21" y2="37"/>
+  </g>
+</svg>

@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+!function $inc($value, $step=1)
+!return $value + $step
+!endfunction
+
+Alice -> Bob : Just one more $inc(3)
+Alice -> Bob : Add two to three : $inc(3, 2)
+@enduml

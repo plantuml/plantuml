@@ -1,0 +1,28 @@
+---
+output: svg
+---
+@startuml
+hide stereotype
+' style enclosure declaration
+<style>
+    ' scope to sequenceDiagram elements
+    sequenceDiagram {
+
+      ' scope to actor element types
+      actor {
+        FontColor Blue
+      }
+
+     ' define a new style, using CSS class syntax
+     .myStyle {
+        FontColor Red
+     }
+
+}
+</style>
+
+' printed in blue
+actor Bob
+' this will now be printed in Red
+actor Sally <<myStyle>>
+@enduml

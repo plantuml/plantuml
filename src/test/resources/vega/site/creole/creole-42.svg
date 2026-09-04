@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="194px" preserveAspectRatio="none" style="width:192px;height:194px;background:#FFFFFF;" version="1.1" viewBox="0 0 192 194" width="192px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="n" data-source-line="2" id="ent0001">
+      <path d="M6,12 L6,177.5 L176.013,177.5 L176.013,22 L166.013,12 L6,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M166.013,12 L166.013,22 L176.013,22 L166.013,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="149.013" x="12" y="27.111">You can have horizontal line</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="175.013" y1="30" y2="30"/>
+      <text fill="#000" font-size="13" textLength="73.775" x="12" y="44.111">Or double line</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="175.013" y1="51" y2="51"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="175.013" y1="53" y2="53"/>
+      <text fill="#000" font-size="13" textLength="70.769" x="12" y="65.111">Or strong line</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="175.013" y1="72" y2="72"/>
+      <text fill="#000" font-size="13" textLength="70.769" x="12" y="86.111">Or dotted line</text>
+      <text fill="#000" font-size="13" font-style="italic" textLength="52.65" x="12" y="116.111">and title...</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="7" x2="72.238" y1="99.5" y2="99.5"/>
+      <text fill="#000" font-size="13" textLength="37.538" x="72.238" y="102.611">My title</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="109.775" x2="175.013" y1="99.5" y2="99.5"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="78.697" y1="129.5" y2="129.5"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="78.697" y1="131.5" y2="131.5"/>
+      <text fill="#000" font-size="13" textLength="24.619" x="78.697" y="132.611">Title</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="103.316" x2="175.013" y1="129.5" y2="129.5"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="103.316" x2="175.013" y1="131.5" y2="131.5"/>
+      <text fill="#000" font-size="13" textLength="36.156" x="12" y="165.611">Enjoy!</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="58.141" y1="149" y2="149"/>
+      <text fill="#000" font-size="13" textLength="65.731" x="58.141" y="152.111">Another title</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="123.872" x2="175.013" y1="149" y2="149"/>
+    </g>
+  </g>
+</svg>

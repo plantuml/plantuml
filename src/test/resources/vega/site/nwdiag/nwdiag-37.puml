@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startnwdiag
+nwdiag {
+  network Network {
+    Label       [shape = label]
+    Node        [shape = node]
+    Package     [shape = package]
+    Person      [shape = person]
+    Queue       [shape = queue]
+    Stack       [shape = stack]
+    Rectangle   [shape = rectangle]
+    Storage     [shape = storage]
+    Usecase     [shape = usecase]
+  }
+}
+@endnwdiag

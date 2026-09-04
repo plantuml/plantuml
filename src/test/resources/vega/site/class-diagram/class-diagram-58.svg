@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="160px" preserveAspectRatio="none" style="width:199px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 199 160" width="199px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class ArrayList-->
+    <g class="entity" data-qualified-name="ArrayList" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="87.213" x="38.5" y="96"/>
+      <ellipse cx="53.5" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="48.5" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="55.213" x="67.5" y="115.889">ArrayList</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="39.5" x2="124.713" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="39.5" x2="124.713" y1="136" y2="136"/>
+    </g>
+    <!--class List-->
+    <g class="entity" data-qualified-name="List" data-source-line="1" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="53.787" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="21.787" x="35" y="31.889">List</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="58.787" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="58.787" y1="52" y2="52"/>
+    </g>
+    <!--class AbstractList-->
+    <g class="entity" data-qualified-name="AbstractList" data-source-line="2" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="105.063" x="78.5" y="12"/>
+      <ellipse cx="93.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="88.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="73.063" x="107.5" y="31.889">AbstractList</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="79.5" x2="182.563" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="79.5" x2="182.563" y1="52" y2="52"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="46.91,60.279,50.993,78.808,61.294,72.652,46.91,60.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M56.144,75.73 C62.821,86.904 61.565,84.802 68.224,95.947" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0001" data-link-type="extension" id="lnk5">
+      <polygon fill="none" points="117.09,60.279,102.706,72.652,113.007,78.808,117.09,60.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M107.856,75.73 C101.179,86.904 102.435,84.802 95.776,95.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

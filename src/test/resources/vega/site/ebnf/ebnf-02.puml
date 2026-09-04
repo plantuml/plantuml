@@ -1,0 +1,29 @@
+---
+output: svg
+---
+@startebnf
+title All EBNF elements managed by PlantUML
+
+(* Nodes *)
+litteral = "a";
+special = ? a ?;
+rule = a;
+
+(* Edges *)
+required = a;
+optional = [a];
+
+zero_or_more = {a};
+one_or_more = a, {a};
+one_or_more_ebnf = {a}-;
+
+zero_or_more_with_separator = [a, {',', a}];
+one_or_more_with_separator = a, {',', a};
+zero_or_more_with_terminator = {a, ','};
+one_or_more_with_terminator = a, ',', {a, ','};
+one_or_more_with_terminator_ebnf = {a, ','}-;
+
+alternative = a | b;
+group = (a | b) , c;
+without_group = a | b , c;
+@endebnf

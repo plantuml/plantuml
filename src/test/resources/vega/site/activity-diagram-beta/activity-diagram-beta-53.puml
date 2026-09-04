@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+|#pink|Actor_For_red|
+start
+if (color?) is (red) then
+:**action red**; <<#pink>>
+:foo1;
+else (not red)
+|#lightgray|Actor_For_no_red|
+:**action not red**; <<#lightgray>>
+:foo2;
+endif
+|Next_Actor|
+:foo3; <<#lightblue>>
+:foo4;
+|Final_Actor|
+:foo5; <<#palegreen>>
+stop
+@enduml

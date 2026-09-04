@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+!$a  = 42
+!$ab = "foo1"
+!$cd = "foo2"
+!$ef = $ab + $cd
+!$foo = { "name": "John", "age" : 30 }
+
+Alice -> Bob : $a
+Alice -> Bob : $ab
+Alice -> Bob : $cd
+Alice -> Bob : $ef
+Alice -> Bob : Do you know **$foo.name** ?
+@enduml

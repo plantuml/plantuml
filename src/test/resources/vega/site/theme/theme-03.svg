@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="HELP" height="753px" preserveAspectRatio="none" style="width:167px;height:753px;background:#FFFFFF;" version="1.1" viewBox="0 0 167 753" width="167px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-family="serif" font-size="16" font-weight="700" textLength="103.2" x="0" y="12.444">Help on themes</text>
+    <text fill="#000" font-family="serif" font-size="16" x="0" y="28.444"> </text>
+    <text fill="#000" font-family="serif" font-size="16" textLength="166.3" x="0" y="44.444">The possible themes are :</text>
+    <ellipse cx="5.5" cy="56.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="53.4" x="12" y="60.444">_none_</text>
+    <ellipse cx="5.5" cy="72.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="43.6" x="12" y="76.444">amiga</text>
+    <ellipse cx="5.5" cy="88.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="83.6" x="12" y="92.444">aws-orange</text>
+    <ellipse cx="5.5" cy="104.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="85.4" x="12" y="108.444">black-knight</text>
+    <ellipse cx="5.5" cy="120.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="61.4" x="12" y="124.444">bluegray</text>
+    <ellipse cx="5.5" cy="136.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="61.4" x="12" y="140.444">blueprint</text>
+    <ellipse cx="5.5" cy="152.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="85.3" x="12" y="156.444">carbon-gray</text>
+    <ellipse cx="5.5" cy="168.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="61.4" x="12" y="172.444">cerulean</text>
+    <ellipse cx="5.5" cy="184.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="113.9" x="12" y="188.444">cerulean-outline</text>
+    <ellipse cx="5.5" cy="200.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="133.5" x="12" y="204.444">cloudscape-design</text>
+    <ellipse cx="5.5" cy="216.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="68.3" x="12" y="220.444">crt-amber</text>
+    <ellipse cx="5.5" cy="232.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="63.9" x="12" y="236.444">crt-green</text>
+    <ellipse cx="5.5" cy="248.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="48" x="12" y="252.444">cyborg</text>
+    <ellipse cx="5.5" cy="264.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="100.5" x="12" y="268.444">cyborg-outline</text>
+    <ellipse cx="5.5" cy="280.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="48" x="12" y="284.444">hacker</text>
+    <ellipse cx="5.5" cy="296.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="60.5" x="12" y="300.444">lightgray</text>
+    <ellipse cx="5.5" cy="312.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="35.5" x="12" y="316.444">mars</text>
+    <ellipse cx="5.5" cy="328.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="53.3" x="12" y="332.444">materia</text>
+    <ellipse cx="5.5" cy="344.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="105.8" x="12" y="348.444">materia-outline</text>
+    <ellipse cx="5.5" cy="360.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="39.1" x="12" y="364.444">metal</text>
+    <ellipse cx="5.5" cy="376.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="88.9" x="12" y="380.444">mimeograph</text>
+    <ellipse cx="5.5" cy="392.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="38.2" x="12" y="396.444">minty</text>
+    <ellipse cx="5.5" cy="408.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="40" x="12" y="412.444">mono</text>
+    <ellipse cx="5.5" cy="424.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="33.9" x="12" y="428.444">plain</text>
+    <ellipse cx="5.5" cy="440.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="128.9" x="12" y="444.444">reddress-darkblue</text>
+    <ellipse cx="5.5" cy="456.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="139.5" x="12" y="460.444">reddress-darkgreen</text>
+    <ellipse cx="5.5" cy="472.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="148.4" x="12" y="476.444">reddress-darkorange</text>
+    <ellipse cx="5.5" cy="488.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="121.7" x="12" y="492.444">reddress-darkred</text>
+    <ellipse cx="5.5" cy="504.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="127.2" x="12" y="508.444">reddress-lightblue</text>
+    <ellipse cx="5.5" cy="520.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="137.8" x="12" y="524.444">reddress-lightgreen</text>
+    <ellipse cx="5.5" cy="536.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="146.7" x="12" y="540.444">reddress-lightorange</text>
+    <ellipse cx="5.5" cy="552.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="120" x="12" y="556.444">reddress-lightred</text>
+    <ellipse cx="5.5" cy="568.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="73.8" x="12" y="572.444">sandstone</text>
+    <ellipse cx="5.5" cy="584.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="37.4" x="12" y="588.444">silver</text>
+    <ellipse cx="5.5" cy="600.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="54.2" x="12" y="604.444">sketchy</text>
+    <ellipse cx="5.5" cy="616.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="106.7" x="12" y="620.444">sketchy-outline</text>
+    <ellipse cx="5.5" cy="632.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="64.1" x="12" y="636.444">spacelab</text>
+    <ellipse cx="5.5" cy="648.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="106.8" x="12" y="652.444">spacelab-white</text>
+    <ellipse cx="5.5" cy="664.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="50.7" x="12" y="668.444">sunlust</text>
+    <ellipse cx="5.5" cy="680.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="72" x="12" y="684.444">superhero</text>
+    <ellipse cx="5.5" cy="696.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="124.5" x="12" y="700.444">superhero-outline</text>
+    <ellipse cx="5.5" cy="712.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="21.3" x="12" y="716.444">toy</text>
+    <ellipse cx="5.5" cy="728.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="43.6" x="12" y="732.444">united</text>
+    <ellipse cx="5.5" cy="744.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="serif" font-size="16" textLength="48" x="12" y="748.444">vibrant</text>
+  </g>
+</svg>

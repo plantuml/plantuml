@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startebnf
+title First [modified] example of §5.8 Syntactic-term of ISO-EBNF
+
+letter = ? "A" - "Z" ?;
+
+vowel = "A" | "E" | "I" | "O" | "U";
+
+consonant = letter - vowel;
+@endebnf

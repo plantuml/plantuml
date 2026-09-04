@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="NWDIAG" height="135px" preserveAspectRatio="none" style="width:918px;height:135px;background:#FFFFFF;" version="1.1" viewBox="0 0 918 135" width="918px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="44.025" x="5" y="14.333">Network</text>
+    <rect fill="#E2E2F0" height="5" style="stroke:#181818;stroke-width:1;" width="857.029" x="54.025" y="8.5"/>
+    <path d="M95.725,13.5 L95.725,52.549" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M184.788,13.5 L184.788,47.549" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M282.513,13.5 L282.513,52.549" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M374.888,13.5 L374.888,43.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M461.9,13.5 L461.9,57.549" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M559.9,13.5 L559.9,52.549" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M666.938,13.5 L666.938,52.549" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M764.975,13.5 L764.975,52.549" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M862.015,13.5 L862.015,57.064" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="12" textLength="29.4" x="79.025" y="71.882">Label</text>
+    <polygon fill="#F1F1F1" points="148.425,57.549,158.425,47.549,217.15,47.549,217.15,79.549,207.15,89.549,148.425,89.549,148.425,57.549" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="207.15" x2="217.15" y1="57.549" y2="47.549"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="148.425" x2="207.15" y1="57.549" y2="57.549"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="207.15" x2="207.15" y1="57.549" y2="89.549"/>
+    <text fill="#000" font-size="12" textLength="28.725" x="163.425" y="76.882">Node</text>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="66.725" x="247.15" y="52.549"/>
+    <text fill="#000" font-size="12" textLength="46.725" x="257.15" y="71.882">Package</text>
+    <ellipse cx="372.888" cy="52.549" fill="#F1F1F1" rx="9.049" ry="9.049" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#F1F1F1" height="32" rx="9.049" ry="9.049" style="stroke:#181818;stroke-width:0.5;" width="58.025" x="343.875" y="61.598"/>
+    <text fill="#000" font-size="12" textLength="38.025" x="353.875" y="80.931">Person</text>
+    <path d="M436.9,57.549 L482.9,57.549 C487.9,57.549 487.9,68.549 487.9,68.549 C487.9,68.549 487.9,79.549 482.9,79.549 L436.9,79.549 C431.9,79.549 431.9,68.549 431.9,68.549 C431.9,68.549 431.9,57.549 436.9,57.549" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M482.9,57.549 C477.9,57.549 477.9,68.549 477.9,68.549 C477.9,79.549 482.9,79.549 482.9,79.549" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="12" textLength="36" x="436.9" y="71.882">Queue</text>
+    <rect fill="#F1F1F1" height="32" style="stroke:none;" width="50" x="532.9" y="52.549"/>
+    <path d="M517.9,52.549 L532.9,52.549 L532.9,84.549 L582.9,84.549 L582.9,52.549 L597.9,52.549" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="12" textLength="30" x="542.9" y="71.882">Stack</text>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="74.075" x="627.9" y="52.549"/>
+    <text fill="#000" font-size="12" textLength="54.075" x="637.9" y="71.882">Rectangle</text>
+    <rect fill="#F1F1F1" height="32" rx="35" ry="35" style="stroke:#181818;stroke-width:0.5;" width="62" x="731.975" y="52.549"/>
+    <text fill="#000" font-size="12" textLength="42" x="741.975" y="71.882">Storage</text>
+    <ellipse cx="860.015" cy="68.549" fill="#F1F1F1" rx="36.04" ry="11.485" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="12" textLength="46.725" x="836.652" y="71.049">Usecase</text>
+  </g>
+</svg>

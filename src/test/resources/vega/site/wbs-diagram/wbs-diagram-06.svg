@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="283px" preserveAspectRatio="none" style="width:392px;height:283px;background:#FFFFFF;" version="1.1" viewBox="0 0 392 283" width="392px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:1.5;" x1="43.813" x2="43.813" y1="54" y2="74"/>
+    <text fill="#000" font-size="12" textLength="44.625" x="20" y="84.333">Part One</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="43.813" x2="106.6" y1="110" y2="110"/>
+    <text fill="#000" font-size="12" textLength="42.675" x="106.6" y="113.333">Task 1.1</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="119.438" x2="129.438" y1="139" y2="139"/>
+    <text fill="#000" font-size="12" textLength="62.625" x="53.813" y="142.333">LeftTask 1.2</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="129.438" x2="139.438" y1="139" y2="139"/>
+    <text fill="#000" font-size="12" textLength="42.675" x="139.438" y="142.333">Task 1.3</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="129.438" x2="129.438" y1="117" y2="139"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="43.813" x2="186.963" y1="168" y2="168"/>
+    <text fill="#000" font-size="12" textLength="44.7" x="186.963" y="171.333">Part Two</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="200.813" x2="210.813" y1="197" y2="197"/>
+    <text fill="#000" font-size="12" textLength="140.025" x="57.788" y="200.333">Task 2.2.1 To the left boxless</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="200.813" x2="210.813" y1="226" y2="226"/>
+    <text fill="#000" font-size="12" textLength="144" x="53.813" y="229.333">Task 2.2.2 To the Left boxless</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="210.813" x2="220.813" y1="197" y2="197"/>
+    <text fill="#000" font-size="12" textLength="42.675" x="220.813" y="200.333">Task 2.1</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="210.813" x2="220.813" y1="226" y2="226"/>
+    <text fill="#000" font-size="12" textLength="42.675" x="220.813" y="229.333">Task 2.2</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="210.813" x2="220.813" y1="255" y2="255"/>
+    <text fill="#000" font-size="12" textLength="147.375" x="220.813" y="258.333">Task 2.2.3 To the right boxless</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="210.813" x2="210.813" y1="175" y2="255"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="43.813" x2="43.813" y1="88" y2="168"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="43.813" x2="195.594" y1="54" y2="54"/>
+    <text fill="#000" font-size="12" textLength="37.35" x="175.419" y="30.333">Project</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="195.594" x2="195.594" y1="34" y2="54"/>
+  </g>
+</svg>

@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startregex
+title optionalRepetition
+ab*
+@endregex

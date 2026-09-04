@@ -1,0 +1,44 @@
+---
+output: svg
+---
+@startchart
+<style>
+chartDiagram {
+    BackGroundColor white
+    FontName Arial
+    FontSize 12
+    bar {
+        LineColor #2c3e50
+        LineThickness 2.0
+        BackGroundColor #3498db
+        BarWidth 0.7
+    }
+    line {
+        LineColor #e74c3c
+        LineThickness 2.5
+    }
+    scatter {
+        MarkerShape square
+        MarkerSize 14
+        MarkerColor #9b59b6
+    }
+    axis {
+        LineColor #34495e
+        LineThickness 1.5
+        FontSize 11
+        FontColor #7f8c8d
+    }
+    grid {
+        LineColor #ecf0f1
+        LineThickness 0.8
+    }
+    legend {
+        FontSize 12
+        FontColor #2c3e50
+        BackGroundColor #f5f5f5
+        Padding 10
+        Margin 5
+    }
+}
+</style>
+@endchart

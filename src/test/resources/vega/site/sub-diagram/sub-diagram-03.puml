@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+(A) --> (B): \tSub-diagram in a message\n{{\n(C)->(D)\n}}
+@enduml

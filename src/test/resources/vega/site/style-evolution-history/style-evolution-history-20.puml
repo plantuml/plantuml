@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+title Style hierarchy cascade
+skinparam ranksep 30
+hide circle
+hide empty members
+class root
+class element extends root
+class actor extends element
+class boundary extends element
+class message extends root
+@enduml

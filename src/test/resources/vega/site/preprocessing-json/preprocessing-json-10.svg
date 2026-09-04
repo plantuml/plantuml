@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="166px" preserveAspectRatio="none" style="width:369px;height:166px;background:#FFFFFF;" version="1.1" viewBox="0 0 369 166" width="369px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="47.213" x="10" y="73"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="15" y="85.889">data</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="52.213" y="85.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="47.213" x2="47.213" y1="73" y2="91"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="47.213" x="10" y="73"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="91.575" x="94" y="73"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="71.575" x="99" y="85.889">participants</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="180.575" y="85.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="175.575" x2="175.575" y1="73" y2="91"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="91.575" x="94" y="73"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="223" y="55"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="228" y="67.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="223" x2="233" y1="73" y2="73"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="228" y="85.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="223" x2="233" y1="91" y2="91"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="228" y="103.889">   </text>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="223" y="55"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="82.3" x="273" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="278" y="22.889">name</text>
+    <text fill="#000" font-size="14" textLength="27.3" x="323" y="22.889">XYZ</text>
+    <line style="stroke:#000;stroke-width:1;" x1="318" x2="318" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="273" x2="355.3" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="14.787" x="278" y="40.889">as</text>
+    <text fill="#000" font-size="14" textLength="21" x="323" y="40.889">xyz</text>
+    <line style="stroke:#000;stroke-width:1;" x1="318" x2="318" y1="28" y2="46"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="82.3" x="273" y="10"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="83.087" x="272.5" y="64"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="277.5" y="76.889">name</text>
+    <text fill="#000" font-size="14" textLength="28.087" x="322.5" y="76.889">RST</text>
+    <line style="stroke:#000;stroke-width:1;" x1="317.5" x2="317.5" y1="64" y2="82"/>
+    <line style="stroke:#000;stroke-width:1;" x1="272.5" x2="355.588" y1="82" y2="82"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="14.787" x="277.5" y="94.889">as</text>
+    <text fill="#000" font-size="14" textLength="15.488" x="322.5" y="94.889">rst</text>
+    <line style="stroke:#000;stroke-width:1;" x1="317.5" x2="317.5" y1="82" y2="100"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="83.087" x="272.5" y="64"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="87.725" x="270" y="118"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="275" y="130.889">name</text>
+    <text fill="#000" font-size="14" textLength="32.725" x="320" y="130.889">UVW</text>
+    <line style="stroke:#000;stroke-width:1;" x1="315" x2="315" y1="118" y2="136"/>
+    <line style="stroke:#000;stroke-width:1;" x1="270" x2="357.725" y1="136" y2="136"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="14.787" x="275" y="148.889">as</text>
+    <text fill="#000" font-size="14" textLength="24.938" x="320" y="148.889">uvw</text>
+    <line style="stroke:#000;stroke-width:1;" x1="315" x2="315" y1="136" y2="154"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="87.725" x="270" y="118"/>
+    <path d="M221,64 L234,64 C242.343,64 258.222,57.337 273.607,49.744" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M275.021,52.547 L275.709,48.684 L272.194,46.942 L280.613,46.211 L275.021,52.547" fill="#000"/>
+    <ellipse cx="221" cy="64" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M221,82 L234,82 C244.009,82 254.726,82 264.948,82" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M264.948,85.08 L267.258,82 L264.948,78.92 L272.648,82 L264.948,85.08" fill="#000"/>
+    <ellipse cx="221" cy="82" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M221,100 L234,100 C242.343,100 258.222,106.663 273.607,114.256" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M272.194,117.058 L275.709,115.316 L275.021,111.453 L280.613,117.789 L272.194,117.058" fill="#000"/>
+    <ellipse cx="221" cy="100" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M174,82 L187,82 C196.604,82 207.49,82 215.555,82" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M215.555,85.075 L217.861,82 L215.555,78.925 L223.243,82 L215.555,85.075" fill="#000"/>
+    <ellipse cx="174" cy="82" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M45,82 L58,82 C67.267,82 77.126,82 86.668,82" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M86.668,85.027 L88.939,82 L86.668,78.973 L94.236,82 L86.668,85.027" fill="#000"/>
+    <ellipse cx="45" cy="82" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

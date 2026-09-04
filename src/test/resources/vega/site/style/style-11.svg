@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="70px" preserveAspectRatio="none" style="width:246px;height:70px;background:#FFFFFF;" version="1.1" viewBox="0 0 246 70" width="246px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F0E68C" height="16" rx="5" ry="5" style="stroke:#F0E68C;stroke-width:1.5;" width="42.05" x="10" y="26"/>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" textLength="22.05" x="15" y="37.333">quiz</text>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" textLength="9.9" x="47.05" y="37.333">   </text>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="42.05" x2="42.05" y1="26" y2="42"/>
+    <rect fill="none" height="16" rx="5" ry="5" style="stroke:#ADD8E6;stroke-width:1.5;" width="42.05" x="10" y="26"/>
+    <rect fill="#F0E68C" height="48" rx="5" ry="5" style="stroke:#F0E68C;stroke-width:1.5;" width="92.45" x="89" y="10"/>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" textLength="45.375" x="94" y="21.333">question</text>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" textLength="27.075" x="149.375" y="21.333">2+2?</text>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="144.375" x2="144.375" y1="10" y2="26"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="89" x2="181.45" y1="26" y2="26"/>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" textLength="38.7" x="94" y="37.333">options</text>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" textLength="9.9" x="149.375" y="37.333">   </text>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="144.375" x2="144.375" y1="26" y2="42"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="89" x2="181.45" y1="42" y2="42"/>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" textLength="38.7" x="94" y="53.333">answer</text>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" x="149.375" y="53.333">4</text>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="144.375" x2="144.375" y1="42" y2="58"/>
+    <rect fill="none" height="48" rx="5" ry="5" style="stroke:#ADD8E6;stroke-width:1.5;" width="92.45" x="89" y="10"/>
+    <rect fill="#F0E68C" height="48" rx="5" ry="5" style="stroke:#F0E68C;stroke-width:1.5;" width="16.675" x="218" y="10"/>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" x="223" y="21.333">3</text>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="218" x2="234.675" y1="26" y2="26"/>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" x="223" y="37.333">4</text>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="218" x2="234.675" y1="42" y2="42"/>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" x="223" y="53.333">5</text>
+    <rect fill="none" height="48" rx="5" ry="5" style="stroke:#ADD8E6;stroke-width:1.5;" width="16.675" x="218" y="10"/>
+    <path d="M168.5,34 L181.5,34 C191.234,34 202.167,34 210.759,34" fill="none" style="stroke:#008000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M210.759,37.073 L213.064,34 L210.759,30.927 L218.441,34 L210.759,37.073" fill="#008000"/>
+    <ellipse cx="168.5" cy="34" fill="#008000" rx="3" ry="3" style="stroke:#008000;stroke-width:1;"/>
+    <path d="M39.5,34 L52.5,34 C61.936,34 71.983,34 81.691,34" fill="none" style="stroke:#008000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M81.691,37.078 L84,34 L81.691,30.922 L89.387,34 L81.691,37.078" fill="#008000"/>
+    <ellipse cx="39.5" cy="34" fill="#008000" rx="3" ry="3" style="stroke:#008000;stroke-width:1;"/>
+  </g>
+</svg>

@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+'!preprocessorV2
+!function $inc($value, $step=1)
+!if $step==0
+!return $value
+!endif
+!return $value + $step
+!endfunction
+
+Alice -> Bob : Just one more $inc(3)
+Alice -> Bob : Add two to three : $inc(3, 2)
+@enduml

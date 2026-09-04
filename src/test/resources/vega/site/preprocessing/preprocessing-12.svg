@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="274px" preserveAspectRatio="none" style="width:116px;height:274px;background:#FFFFFF;" version="1.1" viewBox="0 0 116 274" width="116px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="195" width="8" x="54.012" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="57.512" x2="57.512" y1="39" y2="234"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="35.287" y="10"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="42.287" y="27.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="35.287" y="234"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="42.287" y="251.889">Alice</text>
+    <path d="M36.328,52 L36.328,101 L78.328,101 L78.328,62 L68.328,52 L36.328,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M68.328,52 L68.328,62 L78.328,62 L68.328,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="21.369" x="42.328" y="67.111">x = 1</text>
+    <text fill="#000" font-size="13" textLength="21.369" x="42.328" y="80.111">y = 2</text>
+    <text fill="#000" font-size="13" textLength="21.369" x="42.328" y="93.111">z = 3</text>
+    <path d="M15.366,111 L15.366,160 L99.366,160 L99.366,121 L89.366,111 L15.366,111" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M89.366,111 L89.366,121 L99.366,121 L89.366,111" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="21.369" x="21.366" y="126.111">x = 1</text>
+    <text fill="#000" font-size="13" textLength="21.369" x="21.366" y="139.111">y = 2</text>
+    <text fill="#000" font-size="13" textLength="63.294" x="21.366" y="152.111">z = DefaultZ</text>
+    <path d="M15,170 L15,219 L100,219 L100,180 L90,170 L15,170" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M90,170 L90,180 L100,180 L90,170" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="21.369" x="21" y="185.111">x = 1</text>
+    <text fill="#000" font-size="13" textLength="64.025" x="21" y="198.111">y = DefaultY</text>
+    <text fill="#000" font-size="13" textLength="63.294" x="21" y="211.111">z = DefaultZ</text>
+  </g>
+</svg>

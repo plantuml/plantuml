@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+
+skinparam guillemet false
+participant "Famous Bob" as Bob << Generated >>
+participant Alice << (C,#ADD1B2) Testable >>
+
+Bob->Alice: First message
+
+@enduml

@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+nwdiag {
+network Network1 {
+address = "Adress_line_1\nAdress_line_2\nAdress_line_3\nAdress_line_4\nAdress_line_5\nAdress_line_6\nAdress_line_7\nAdress_line_8\nAdress_line_9\nAdress_line_10\nAdress_line_11\nAdress_line_12\nAdress_line_13\nAdress_line_14\nAdress_line_15\nAdress_line_16\nAdress_line_17"
+server [address = "\nAdress_line_1\nAdress_line_2\nAdress_line_3\nAdress_line_4\nAdress_line_5\nAdress_line_6\nAdress_line_7\n"]
+}
+network Network2 {
+address = "Adress_line_1\nAdress_line_2\nAdress_line_3\nAdress_line_4\nAdress_line_5\nAdress_line_6\nAdress_line_7\nAdress_line_8\nAdress_line_9\nAdress_line_10\nAdress_line_11\nAdress_line_12\nAdress_line_13\nAdress_line_14\nAdress_line_15\nAdress_line_16\nAdress_line_17"
+server
+}
+}
+@enduml

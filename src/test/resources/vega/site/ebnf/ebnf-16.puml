@@ -1,0 +1,68 @@
+---
+output: svg
+---
+@startebnf
+ClassDeclaration = NormalClassDeclaration | EnumDeclaration | RecordDeclaration;
+NormalClassDeclaration = {ClassModifier}, "class", TypeIdentifier, [TypeParameters], [ClassExtends], [ClassImplements], [ClassPermits], ClassBody;
+ClassModifier = Annotation | "public" | "protected" | "private" | "abstract" | "static" | "final" | "sealed" | "non-sealed" | "strictfp";
+TypeParameters = "<", TypeParameterList, ">";
+TypeParameterList = TypeParameter, {",", TypeParameter};
+ClassExtends = "extends", ClassType;
+ClassImplements = "implements", InterfaceTypeList;
+InterfaceTypeList = InterfaceType, {",", InterfaceType};
+ClassPermits = "permits", TypeName, {",", TypeName};
+ClassBody = "{", {ClassBodyDeclaration}, "}";
+ClassBodyDeclaration = ClassMemberDeclaration | InstanceInitializer | StaticInitializer | ConstructorDeclaration;
+ClassMemberDeclaration = (FieldDeclaration | MethodDeclaration | ClassDeclaration | InterfaceDeclaration), ";";
+FieldDeclaration = {FieldModifier}, UnannType, VariableDeclaratorList, ";";
+FieldModifier = Annotation | "public" | "protected" | "private" | "static" | "final" | "transient" | "volatile";
+VariableDeclaratorList = VariableDeclarator, {",", VariableDeclarator};
+VariableDeclarator = VariableDeclaratorId, ["=", VariableInitializer];
+VariableDeclaratorId = Identifier, [Dims];
+VariableInitializer = Expression | ArrayInitializer;
+UnannType = UnannPrimitiveType | UnannReferenceType;
+UnannPrimitiveType = NumericType | boolean;
+UnannReferenceType = UnannClassOrInterfaceType | UnannTypeVariable | UnannArrayType;
+UnannClassOrInterfaceType = UnannClassType | UnannInterfaceType;
+UnannClassType = (TypeIdentifier, [TypeArguments]) | (PackageName, ".", {Annotation}, TypeIdentifier, [TypeArguments]) | (UnannClassOrInterfaceType, ".", {Annotation}, TypeIdentifier, [TypeArguments]) | (TypeIdentifier, [TypeArguments]) | (TypeIdentifier, [TypeArguments]);
+UnannInterfaceType = UnannClassType;
+UnannTypeVariable = TypeIdentifier;
+UnannArrayType = (UnannPrimitiveType, Dims) | (UnannClassOrInterfaceType, Dims) | (UnannTypeVariable, Dims);
+MethodDeclaration = {MethodModifier}, MethodHeader, MethodBody;
+MethodModifier = Annotation | "public" | "protected" | "private" | "abstract" | "static" | "final" | "synchronized" | "native" | "strictfp";
+MethodHeader = (Result, MethodDeclarator, [Throws]) | (TypeParameters, {Annotation}, Result, MethodDeclarator, [Throws]);
+Result = UnannType | "void";
+MethodDeclarator = Identifier, ( [ ReceiverParameter, "," ], [FormalParameterList] ), [Dims];
+ReceiverParameter = {Annotation}, UnannType, [Identifier, "."], "this";
+FormalParameterList = FormalParameter, {",", FormalParameter};
+FormalParameter = ({VariableModifier}, UnannType, VariableDeclaratorId) | VariableArityParameter;
+VariableArityParameter = {VariableModifier}, UnannType, {Annotation}, "...", Identifier;
+VariableModifier = Annotation | "final";
+Throws = "throws", ExceptionTypeList;
+ExceptionTypeList = ExceptionType, {",", ExceptionType};
+ExceptionType = ClassType | TypeVariable;
+MethodBody = Block | ";";
+InstanceInitializer = Block;
+StaticInitializer = "static", Block;
+ConstructorDeclaration = {ConstructorModifier}, ConstructorDeclarator, [Throws], ConstructorBody;
+ConstructorModifier = Annotation | "public" | "protected" | "private";
+ConstructorDeclarator = [TypeParameters], SimpleTypeName, ( [ReceiverParameter, ","], [FormalParameterList] );
+SimpleTypeName = TypeIdentifier;
+ConstructorBody = { [ExplicitConstructorInvocation], [BlockStatements] };
+ExplicitConstructorInvocation = ( [TypeArguments], "this", "(", [ArgumentList], ")", ";" ) | ([TypeArguments], "super", "(", [ArgumentList], ")", ";" ) | (ExpressionName, ".", [TypeArguments], "super", "(", [ArgumentList], ")", ";" ) | (Primary, "." [TypeArguments], "super", "(" [ArgumentList], ")", ";";
+EnumDeclaration = {ClassModifier}, "enum", TypeIdentifier, [ClassImplements], EnumBody;
+EnumBody = "{", [EnumConstantList], [","], [EnumBodyDeclarations], "}";
+EnumConstantList = EnumConstant, {",", EnumConstant};
+EnumConstant = {EnumConstantModifier}, Identifier, ["(", [ArgumentList], ")"], [ClassBody];
+EnumConstantModifier = Annotation;
+EnumBodyDeclarations = ";", {ClassBodyDeclaration};
+RecordDeclaration = {ClassModifier}, "record", TypeIdentifier, [TypeParameters], RecordHeader, [ClassImplements], RecordBody;
+RecordHeader = "(", [RecordComponentList], ")";
+RecordComponentList = RecordComponent, {",", RecordComponent};
+RecordComponent = (RecordComponentModifier}, UnannType, Identifier) | VariableArityRecordComponent;
+VariableArityRecordComponent = {RecordComponentModifier}, UnannType, {Annotation}, "...", Identifier;
+RecordComponentModifier = Annotation;
+RecordBody = "{", {RecordBodyDeclaration}, "}";
+RecordBodyDeclaration = ClassBodyDeclaration | CompactConstructorDeclaration;
+CompactConstructorDeclaration = {ConstructorModifier}, SimpleTypeName, ConstructorBody;
+@endebnf

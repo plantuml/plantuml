@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="241px" preserveAspectRatio="none" style="width:340px;height:241px;background:#FFFFFF;" version="1.1" viewBox="0 0 340 241" width="340px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="72" width="8" x="25.969" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="29.469" x2="29.469" y1="84" y2="156"/>
+    </g>
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="72" width="8" x="221.488" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="224.988" x2="224.988" y1="84" y2="156"/>
+    </g>
+    <g>
+      <title>Sally</title>
+      <rect fill="#000" fill-opacity="0" height="72" width="8" x="304.15" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="307.65" x2="307.65" y1="84" y2="156"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="10" y="55"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="17" y="72.889">Bob</text>
+    <text fill="#000" font-size="14" textLength="30.45" x="206.763" y="80.889">Alice</text>
+    <ellipse cx="224.988" cy="18.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M224.988,26.5 L224.988,53.5 M211.988,34.5 L237.988,34.5 M224.988,53.5 L211.988,68.5 M224.988,53.5 L237.988,68.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="285.425" y="55"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="292.425" y="72.889">Sally</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="10" y="156"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="17" y="173.889">Bob</text>
+    <text fill="#000" font-size="14" textLength="30.45" x="206.763" y="166.889">Alice</text>
+    <ellipse cx="224.988" cy="178.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M224.988,186.5 L224.988,213.5 M211.988,194.5 L237.988,194.5 M224.988,213.5 L211.988,228.5 M224.988,213.5 L237.988,228.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="285.425" y="156"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="292.425" y="173.889">Sally</text>
+    <polygon fill="#181818" points="212.988,107,222.988,111,212.988,115,216.988,111" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="29.469" x2="218.988" y1="111" y2="111"/>
+    <text fill="#000" font-size="13" textLength="171.519" x="36.469" y="106.111">Hello «BobAndAliceMessage»</text>
+    <polygon fill="#181818" points="295.65,134,305.65,138,295.65,142,299.65,138" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="224.988" x2="301.65" y1="138" y2="138"/>
+    <text fill="#000" font-size="13" textLength="58.663" x="231.988" y="133.111">Also Hello!</text>
+  </g>
+</svg>

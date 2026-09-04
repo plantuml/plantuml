@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="EBNF" height="203px" preserveAspectRatio="none" style="width:446px;height:203px;background:#FFFFFF;" version="1.1" viewBox="0 0 446 203" width="446px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="14" font-weight="700" textLength="88.725" x="10" y="20.889">ArrayInitializer</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="40" x2="40" y1="46" y2="46"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="14.638" x="40" y="34"/>
+    <text fill="#000" font-size="14" x="45" y="49.889">{</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="54.638" x2="74.638" y1="46" y2="46"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="74.638" x2="261.175" y1="46" y2="46"/>
+    <path d="M147.253,46 L147.253,43 L153.253,46 L147.253,49 L147.253,46" fill="#181818"/>
+    <path d="M74.638,46 C83.638,46 86.638,48 86.638,57 C86.638,66 89.638,68 98.638,68" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M237.175,68 C246.175,68 249.175,66 249.175,57 C249.175,48 252.175,46 261.175,46" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="138.538" x="98.638" y="56"/>
+    <text fill="#000" font-size="14" textLength="128.538" x="103.638" y="71.889">VariableInitializerList</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="261.175" x2="281.175" y1="46" y2="46"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="281.175" x2="343.025" y1="46" y2="46"/>
+    <path d="M303.915,46 L303.915,43 L309.915,46 L303.915,49 L303.915,46" fill="#181818"/>
+    <path d="M281.175,46 C290.175,46 293.175,48 293.175,57 C293.175,66 296.175,68 305.175,68" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M319.025,68 C328.025,68 331.025,66 331.025,57 C331.025,48 334.025,46 343.025,46" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="13.85" x="305.175" y="56"/>
+    <text fill="#000" font-size="14" x="310.175" y="71.889">,</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="343.025" x2="363.025" y1="46" y2="46"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="14.638" x="363.025" y="34"/>
+    <text fill="#000" font-size="14" x="368.025" y="49.889">}</text>
+    <ellipse cx="14" cy="46" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="407.663" cy="46" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="46" y2="46"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="377.663" x2="403.663" y1="46" y2="46"/>
+    <path d="M388.663,46 L388.663,43 L394.663,46 L388.663,49 L388.663,46" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="128.538" x="10" y="105.889">VariableInitializerList</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="40" x2="40" y1="131" y2="131"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="116.75" x="40" y="119"/>
+    <text fill="#000" font-size="14" textLength="106.75" x="45" y="134.889">VariableInitializer</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="156.75" x2="176.75" y1="131" y2="131"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="176.75" x2="405.35" y1="131" y2="131"/>
+    <path d="M266.19,131 L266.19,128 L272.19,131 L266.19,134 L266.19,131" fill="#181818"/>
+    <path d="M176.75,131 C185.75,131 188.75,139 188.75,148 C188.75,157 191.75,165 200.75,165" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M381.35,165 C390.35,165 393.35,157 393.35,148 C393.35,139 396.35,131 405.35,131" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M208.75,157 C208.75,163 210.75,165 216.75,165" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="208.75" x2="208.75" y1="154" y2="157"/>
+    <path d="M208.75,154 C208.75,148 210.75,146 216.75,146" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="215.75" x2="366.35" y1="146" y2="146"/>
+    <path d="M304.11,146 L304.11,143 L298.11,146 L304.11,149 L304.11,146" fill="#181818"/>
+    <path d="M373.35,157 C373.35,163 371.35,165 365.35,165" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="373.35" x2="373.35" y1="154" y2="157"/>
+    <path d="M365.35,146 C371.35,146 373.35,148 373.35,154" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="200.75" x2="215.75" y1="165" y2="165"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="366.35" x2="381.35" y1="165" y2="165"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="215.75" x2="215.75" y1="165" y2="165"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="13.85" x="215.75" y="153"/>
+    <text fill="#000" font-size="14" x="220.75" y="168.889">,</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="229.6" x2="249.6" y1="165" y2="165"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="116.75" x="249.6" y="153"/>
+    <text fill="#000" font-size="14" textLength="106.75" x="254.6" y="168.889">VariableInitializer</text>
+    <ellipse cx="14" cy="131" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="435.35" cy="131" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="131" y2="131"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="405.35" x2="431.35" y1="131" y2="131"/>
+    <path d="M416.35,131 L416.35,128 L422.35,131 L416.35,134 L416.35,131" fill="#181818"/>
+  </g>
+</svg>

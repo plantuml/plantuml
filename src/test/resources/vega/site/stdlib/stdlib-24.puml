@@ -1,0 +1,74 @@
+---
+output: svg
+---
+@startuml
+'Adapted from https://github.com/Crashedmind/PlantUML-opensecurityarchitecture-icons/blob/master/all
+scale .5
+!include <osa/arrow/green/left/left>
+!include <osa/arrow/yellow/right/right>
+!include <osa/awareness/awareness>
+!include <osa/contract/contract>
+!include <osa/database/database>
+!include <osa/desktop/desktop>
+!include <osa/desktop/imac/imac>
+!include <osa/device_music/device_music>
+!include <osa/device_scanner/device_scanner>
+!include <osa/device_usb/device_usb>
+!include <osa/device_wireless_router/device_wireless_router>
+!include <osa/disposal/disposal>
+!include <osa/drive_optical/drive_optical>
+!include <osa/firewall/firewall>
+!include <osa/hub/hub>
+!include <osa/ics/drive/drive>
+!include <osa/ics/plc/plc>
+!include <osa/ics/thermometer/thermometer>
+!include <osa/id/card/card>
+!include <osa/laptop/laptop>
+!include <osa/lifecycle/lifecycle>
+!include <osa/lightning/lightning>
+!include <osa/media_flash/media_flash>
+!include <osa/media_optical/media_optical>
+!include <osa/media_tape/media_tape>
+!include <osa/mobile/pda/pda>
+!include <osa/padlock/padlock>
+!include <osa/printer/printer>
+!include <osa/site_branch/site_branch>
+!include <osa/site_factory/site_factory>
+!include <osa/vpn/vpn>
+!include <osa/wireless/network/network>
+
+rectangle "OSA" {
+rectangle "Left:\n <$left>"
+rectangle "Right:\n <$right>"
+rectangle "Awareness:\n <$awareness>"
+rectangle "Contract:\n <$contract>"
+rectangle "Database:\n <$database>"
+rectangle "Desktop:\n <$desktop>"
+rectangle "Imac:\n <$imac>"
+rectangle "Device_music:\n <$device_music>"
+rectangle "Device_scanner:\n <$device_scanner>"
+rectangle "Device_usb:\n <$device_usb>"
+rectangle "Device_wireless_router:\n <$device_wireless_router>"
+rectangle "Disposal:\n <$disposal>"
+rectangle "Drive_optical:\n <$drive_optical>"
+rectangle "Firewall:\n <$firewall>"
+rectangle "Hub:\n <$hub>"
+rectangle "Drive:\n <$drive>"
+rectangle "Plc:\n <$plc>"
+rectangle "Thermometer:\n <$thermometer>"
+rectangle "Card:\n <$card>"
+rectangle "Laptop:\n <$laptop>"
+rectangle "Lifecycle:\n <$lifecycle>"
+rectangle "Lightning:\n <$lightning>"
+rectangle "Media_flash:\n <$media_flash>"
+rectangle "Media_optical:\n <$media_optical>"
+rectangle "Media_tape:\n <$media_tape>"
+rectangle "Pda:\n <$pda>"
+rectangle "Padlock:\n <$padlock>"
+rectangle "Printer:\n <$printer>"
+rectangle "Site_branch:\n <$site_branch>"
+rectangle "Site_factory:\n <$site_factory>"
+rectangle "Vpn:\n <$vpn>"
+rectangle "Network:\n <$network>"
+}
+@enduml

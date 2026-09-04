@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="132px" preserveAspectRatio="none" style="width:370px;height:132px;background:#FFFFFF;" version="1.1" viewBox="0 0 370 132" width="370px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M22,14 C19.8,14 18,16.24 18,19 C18,21.76 19.8,24 22,24 C24.2,24 26,21.76 26,19 C26,16.24 24.2,14 22,14 M17.82,24 C15.7,24.1 14,25.84 14,28 L14,30 L30,30 L30,28 C30,25.84 28.32,24.1 26.18,24 C25.1,25.22 23.62,26 22,26 C20.38,26 18.9,25.22 17.82,24" fill="#000"/>
+    <text fill="#000" font-size="24" textLength="58.8" x="32" y="30.667">Login</text>
+    <text fill="#000" font-size="24" textLength="96" x="200" y="30.667">MyName</text>
+    <line style="stroke:#000;stroke-width:2;" x1="196" x2="346" y1="36" y2="36"/>
+    <line style="stroke:#000;stroke-width:2;" x1="196" x2="196" y1="30" y2="34"/>
+    <line style="stroke:#000;stroke-width:2;" x1="346" x2="346" y1="30" y2="34"/>
+    <path d="M25,46 C22.24,46 20,48.24 20,51 C20,51.32 20,51.64 20.06,51.94 L14,58 L14,62 L20,62 L20,58 L24,58 L24,56 L24.06,55.94 C24.36,56 24.68,56 25,56 C27.76,56 30,53.76 30,51 C30,48.24 27.76,46 25,46 M26,48 C27.1,48 28,48.9 28,50 C28,51.1 27.1,52 26,52 C24.9,52 24,51.1 24,50 C24,48.9 24.9,48 26,48" fill="#000"/>
+    <text fill="#000" font-size="24" textLength="105.45" x="32" y="62.667">Password</text>
+    <text fill="#000" font-size="24" textLength="37.2" x="200" y="62.667">****</text>
+    <line style="stroke:#000;stroke-width:2;" x1="196" x2="346" y1="68" y2="68"/>
+    <line style="stroke:#000;stroke-width:2;" x1="196" x2="196" y1="62" y2="66"/>
+    <line style="stroke:#000;stroke-width:2;" x1="346" x2="346" y1="62" y2="66"/>
+    <rect fill="#EEE" height="32" rx="10" ry="10" style="stroke:#000;stroke-width:5;" width="168" x="17" y="81"/>
+    <path d="M63.575,87 C59.155,87 55.575,90.58 55.575,95 C55.575,99.42 59.155,103 63.575,103 C67.995,103 71.575,99.42 71.575,95 C71.575,90.58 67.995,87 63.575,87 M60.575,90.56 L63.575,93.56 L66.575,90.56 L68.015,92 L65.015,95 L68.015,98 L66.575,99.44 L63.575,96.44 L60.575,99.44 L59.135,98 L62.135,95 L59.135,92 L60.575,90.56" fill="#000"/>
+    <text fill="#000" font-size="24" textLength="74.85" x="73.575" y="103.667">Cancel</text>
+    <rect fill="#EEE" height="32" rx="10" ry="10" style="stroke:#000;stroke-width:5;" width="152" x="199" y="81"/>
+    <path d="M255.675,87 L255.675,89 L263.675,89 L263.675,99 L255.675,99 L255.675,101 L265.675,101 L265.675,87 L255.675,87 M257.675,91 L257.675,93 L249.675,93 L249.675,95 L257.675,95 L257.675,97 L261.675,94 L257.675,91" fill="#000"/>
+    <text fill="#000" font-size="24" textLength="34.65" x="267.675" y="103.667">OK</text>
+  </g>
+</svg>

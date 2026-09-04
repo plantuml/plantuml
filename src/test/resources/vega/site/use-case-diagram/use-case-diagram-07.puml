@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+usecase description1 as alias1
+usecase alias2 as "description2"
+@enduml

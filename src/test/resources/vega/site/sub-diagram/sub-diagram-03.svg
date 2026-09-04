@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="171px" preserveAspectRatio="none" style="width:225px;height:171px;background:#FFFFFF;" version="1.1" viewBox="0 0 225 171" width="225px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity A-->
+    <g class="entity" data-qualified-name="A" data-source-line="1" id="ent0001">
+      <ellipse cx="18.924" cy="22.939" fill="#F1F1F1" rx="12.924" ry="10.939" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="14.242" y="26.439">A</text>
+    </g>
+    <!--entity B-->
+    <g class="entity" data-qualified-name="B" data-source-line="1" id="ent0002">
+      <ellipse cx="18.924" cy="141.939" fill="#F1F1F1" rx="12.924" ry="10.939" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="14.242" y="145.439">B</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="19,130.986,23,121.986,19,125.986,15,121.986,19,130.986" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M19,36.218 C19,58.639 19,103.735 19,125.986" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="144.544" x="73" y="66.111">Sub-diagram in a message</text>
+      <image height="52" width="92" x="98.272" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjUyIiB3aWR0aD0iOTIiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciID48ZGVmcy8+PGcgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGxlbmd0aEFkanVzdD0ic3BhY2luZyI+PCEtLWVudGl0eSBDLS0+PGcgY2xhc3M9ImVudGl0eSIgZGF0YS1xdWFsaWZpZWQtbmFtZT0iQyIgaWQ9ImVudDAwMDEiIGRhdGEtc291cmNlLWxpbmU9IjEiPjxlbGxpcHNlIGN4PSIxOS4xMTUiIGN5PSIyMy4wOTIiIHJ4PSIxMy4xMTUiIHJ5PSIxMS4wOTIiIGZpbGw9IiNGMUYxRjEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjx0ZXh0IHg9IjE0LjA0IiB5PSIyNi41OTIiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTQiPkM8L3RleHQ+PC9nPjwhLS1lbnRpdHkgRC0tPjxnIGNsYXNzPSJlbnRpdHkiIGRhdGEtcXVhbGlmaWVkLW5hbWU9IkQiIGlkPSJlbnQwMDAyIiBkYXRhLXNvdXJjZS1saW5lPSIxIj48ZWxsaXBzZSBjeD0iNjMuMTE1IiBjeT0iMjMuMDkyIiByeD0iMTMuMTE1IiByeT0iMTEuMDkyIiBmaWxsPSIjRjFGMUYxIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48dGV4dCB4PSI1OC4wNCIgeT0iMjYuNTkyIiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjE0Ij5EPC90ZXh0PjwvZz48ZyBjbGFzcz0ibGluayIgZGF0YS1lbnRpdHktMT0iZW50MDAwMSIgZGF0YS1lbnRpdHktMj0iZW50MDAwMiIgaWQ9ImxuazMiIGRhdGEtbGluay10eXBlPSJkZXBlbmRlbmN5Ij48cG9seWdvbiBwb2ludHM9IjQ5Ljk0OCwyNCw0MC45NDgsMjAsNDQuOTQ4LDI0LDQwLjk0OCwyOCw0OS45NDgsMjQiIGZpbGw9IiMxODE4MTgiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTtzdHJva2UtbGluZWpvaW46bWl0ZXI7c3Ryb2tlLW1pdGVybGltaXQ6MTA7Ii8+PHBhdGggZD0iTTMyLjA2MywyNCBDMzguMDI0LDI0IDM4Ljk4NiwyNCA0NC45NDgsMjQiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIGZpbGw9Im5vbmUiLz48L2c+PC9nPjwvc3ZnPg==" y="69"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,55 @@
+---
+output: svg
+---
+@startuml
+'Adapted from https://github.com/Crashedmind/PlantUML-Elastic-icons/blob/master/All.puml
+
+'Elastic stuff here
+'================================
+
+!include <elastic/common>
+!include <elastic/apm/apm>
+!include <elastic/app_search/app_search>
+!include <elastic/beats/beats>
+!include <elastic/cloud/cloud>
+!include <elastic/cloud_in_kubernetes/cloud_in_kubernetes>
+!include <elastic/code_search/code_search>
+!include <elastic/ece/ece>
+!include <elastic/eck/eck>
+' Beware of the difference between Crashedmind and plantuml-stdlib version: with '_' usage!
+!include <elastic/elasticsearch/elasticsearch>
+!include <elastic/endpoint/endpoint>
+!include <elastic/enterprise_search/enterprise_search>
+!include <elastic/kibana/kibana>
+!include <elastic/logging/logging>
+!include <elastic/logstash/logstash>
+!include <elastic/maps/maps>
+!include <elastic/metrics/metrics>
+!include <elastic/siem/siem>
+!include <elastic/site_search/site_search>
+!include <elastic/stack/stack>
+!include <elastic/uptime/uptime>
+
+skinparam agentBackgroundColor White
+
+APM(apm)
+APP_SEARCH(app_search)
+BEATS(beats)
+CLOUD(cloud)
+CLOUD_IN_KUBERNETES(cloud_in_kubernetes)
+CODE_SEARCH(code_search)
+ECE(ece)
+ECK(eck)
+ELASTICSEARCH(elastic_search)
+ENDPOINT(endpoint)
+ENTERPRISE_SEARCH(enterprise_search)
+KIBANA(kibana)
+LOGGING(logging)
+LOGSTASH(logstash)
+MAPS(maps)
+METRICS(metrics)
+SIEM(siem)
+SITE_SEARCH(site_search)
+STACK(stack)
+UPTIME(uptime)
+@enduml

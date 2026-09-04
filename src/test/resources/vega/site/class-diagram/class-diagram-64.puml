@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+title Bracketed line style mix
+class foo
+class bar
+bar1 : [#red,thickness=1]
+bar2 : [#red,dashed,thickness=2]
+bar3 : [#green,dashed,thickness=4]
+bar4 : [#blue,dotted,thickness=8]
+bar5 : [#blue,plain,thickness=16]
+
+foo --> bar                             : ∅
+foo -[#red,thickness=1]-> bar1          : [#red,1]
+foo -[#red,dashed,thickness=2]-> bar2   : [#red,dashed,2]
+foo -[#green,dashed,thickness=4]-> bar3 : [#green,dashed,4]
+foo -[#blue,dotted,thickness=8]-> bar4  : [blue,dotted,8]
+foo -[#blue,plain,thickness=16]-> bar5  : [blue,plain,16]
+@enduml

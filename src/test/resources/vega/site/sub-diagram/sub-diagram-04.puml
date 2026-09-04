@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+!option handwritten true
+	component a {
+	}
+	note left of a
+		handwritten is OK
+	end note
+
+	note right of a
+		{{
+			a->b:test
+			note right
+				handwritten is inherited
+			end note
+		}}
+	end note
+@enduml

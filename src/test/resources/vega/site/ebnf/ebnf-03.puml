@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startebnf
+(* Example from §8.1 ISO-EBNF *)
+
+h-tab = ? IS0 6429 character Horizontal Tabulation ? ;
+
+new-line = { ? IS0 6429 character Carriage Return ? },
+? IS0 6429 character Line Feed ?,
+{ ? IS0 6429 character Carriage Return ? };
+
+(* Other possible examples: *)
+h-tab = ?Unicode U+0009?;
+empty-special = ??;
+@endebnf

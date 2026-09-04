@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="267px" preserveAspectRatio="none" style="width:177px;height:267px;background:#FFFFFF;" version="1.1" viewBox="0 0 177 267" width="177px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#AAA;stroke-width:1;stroke-dasharray:1,2;" x1="6" x2="171.175" y1="9.5" y2="9.5"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="37.363" x="6" y="24.889">with T!</text>
+    <text fill="#000" font-size="12" textLength="38.1" x="16" y="39.333">Region</text>
+    <text fill="#000" font-size="12" textLength="56.775" x="80.025" y="39.333">Population</text>
+    <text fill="#000" font-size="12" textLength="21.375" x="146.8" y="39.333">Age</text>
+    <text fill="#000" font-size="12" textLength="31.35" x="16" y="51.333">World</text>
+    <text fill="#000" font-size="12" textLength="54.15" x="80.025" y="51.333">7.13 billion</text>
+    <text fill="#000" font-size="12" textLength="13.35" x="146.8" y="51.333">30</text>
+    <text fill="#000" font-size="12" textLength="44.025" x="26" y="63.333">America</text>
+    <text fill="#000" font-size="12" textLength="54.15" x="80.025" y="63.333">964 million</text>
+    <text fill="#000" font-size="12" textLength="13.35" x="146.8" y="63.333">30</text>
+    <rect fill="none" height="2" style="stroke:#888;stroke-width:1;" width="2" x="9" y="47"/>
+    <line style="stroke:#888;stroke-width:1;" x1="10" x2="10" y1="50" y2="60"/>
+    <line style="stroke:#888;stroke-width:1;" x1="10" x2="18" y1="60" y2="60"/>
+    <line style="stroke:#888;stroke-width:1;" x1="6" x2="6" y1="30" y2="66"/>
+    <line style="stroke:#888;stroke-width:1;" x1="75.025" x2="75.025" y1="30" y2="66"/>
+    <line style="stroke:#888;stroke-width:1;" x1="141.8" x2="141.8" y1="30" y2="66"/>
+    <line style="stroke:#888;stroke-width:1;" x1="173.175" x2="173.175" y1="30" y2="66"/>
+    <line style="stroke:#AAA;stroke-width:1;stroke-dasharray:1,2;" x1="6" x2="171.175" y1="71.5" y2="71.5"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="38.15" x="6" y="86.889">with T-</text>
+    <text fill="#000" font-size="12" textLength="38.1" x="16" y="101.333">Region</text>
+    <text fill="#000" font-size="12" textLength="56.775" x="80.025" y="101.333">Population</text>
+    <text fill="#000" font-size="12" textLength="21.375" x="146.8" y="101.333">Age</text>
+    <text fill="#000" font-size="12" textLength="31.35" x="16" y="113.333">World</text>
+    <text fill="#000" font-size="12" textLength="54.15" x="80.025" y="113.333">7.13 billion</text>
+    <text fill="#000" font-size="12" textLength="13.35" x="146.8" y="113.333">30</text>
+    <text fill="#000" font-size="12" textLength="44.025" x="26" y="125.333">America</text>
+    <text fill="#000" font-size="12" textLength="54.15" x="80.025" y="125.333">964 million</text>
+    <text fill="#000" font-size="12" textLength="13.35" x="146.8" y="125.333">30</text>
+    <rect fill="none" height="2" style="stroke:#888;stroke-width:1;" width="2" x="9" y="109"/>
+    <line style="stroke:#888;stroke-width:1;" x1="10" x2="10" y1="112" y2="122"/>
+    <line style="stroke:#888;stroke-width:1;" x1="10" x2="18" y1="122" y2="122"/>
+    <line style="stroke:#888;stroke-width:1;" x1="6" x2="173.175" y1="92" y2="92"/>
+    <line style="stroke:#888;stroke-width:1;" x1="6" x2="173.175" y1="104" y2="104"/>
+    <line style="stroke:#888;stroke-width:1;" x1="6" x2="173.175" y1="116" y2="116"/>
+    <line style="stroke:#888;stroke-width:1;" x1="6" x2="173.175" y1="128" y2="128"/>
+    <line style="stroke:#AAA;stroke-width:1;stroke-dasharray:1,2;" x1="6" x2="171.175" y1="133.5" y2="133.5"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="41.738" x="6" y="148.889">with T+</text>
+    <text fill="#000" font-size="12" textLength="38.1" x="16" y="163.333">Region</text>
+    <text fill="#000" font-size="12" textLength="56.775" x="80.025" y="163.333">Population</text>
+    <text fill="#000" font-size="12" textLength="21.375" x="146.8" y="163.333">Age</text>
+    <text fill="#000" font-size="12" textLength="31.35" x="16" y="175.333">World</text>
+    <text fill="#000" font-size="12" textLength="54.15" x="80.025" y="175.333">7.13 billion</text>
+    <text fill="#000" font-size="12" textLength="13.35" x="146.8" y="175.333">30</text>
+    <text fill="#000" font-size="12" textLength="44.025" x="26" y="187.333">America</text>
+    <text fill="#000" font-size="12" textLength="54.15" x="80.025" y="187.333">964 million</text>
+    <text fill="#000" font-size="12" textLength="13.35" x="146.8" y="187.333">30</text>
+    <rect fill="none" height="2" style="stroke:#888;stroke-width:1;" width="2" x="9" y="171"/>
+    <line style="stroke:#888;stroke-width:1;" x1="10" x2="10" y1="174" y2="184"/>
+    <line style="stroke:#888;stroke-width:1;" x1="10" x2="18" y1="184" y2="184"/>
+    <line style="stroke:#888;stroke-width:1;" x1="6" x2="173.175" y1="154" y2="154"/>
+    <line style="stroke:#888;stroke-width:1;" x1="6" x2="173.175" y1="190" y2="190"/>
+    <line style="stroke:#888;stroke-width:1;" x1="6" x2="6" y1="154" y2="190"/>
+    <line style="stroke:#888;stroke-width:1;" x1="173.175" x2="173.175" y1="154" y2="190"/>
+    <line style="stroke:#AAA;stroke-width:1;stroke-dasharray:1,2;" x1="6" x2="171.175" y1="195.5" y2="195.5"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="41.3" x="6" y="210.889">with T#</text>
+    <text fill="#000" font-size="12" textLength="38.1" x="16" y="225.333">Region</text>
+    <text fill="#000" font-size="12" textLength="56.775" x="80.025" y="225.333">Population</text>
+    <text fill="#000" font-size="12" textLength="21.375" x="146.8" y="225.333">Age</text>
+    <text fill="#000" font-size="12" textLength="31.35" x="16" y="237.333">World</text>
+    <text fill="#000" font-size="12" textLength="54.15" x="80.025" y="237.333">7.13 billion</text>
+    <text fill="#000" font-size="12" textLength="13.35" x="146.8" y="237.333">30</text>
+    <text fill="#000" font-size="12" textLength="44.025" x="26" y="249.333">America</text>
+    <text fill="#000" font-size="12" textLength="54.15" x="80.025" y="249.333">964 million</text>
+    <text fill="#000" font-size="12" textLength="13.35" x="146.8" y="249.333">30</text>
+    <rect fill="none" height="2" style="stroke:#888;stroke-width:1;" width="2" x="9" y="233"/>
+    <line style="stroke:#888;stroke-width:1;" x1="10" x2="10" y1="236" y2="246"/>
+    <line style="stroke:#888;stroke-width:1;" x1="10" x2="18" y1="246" y2="246"/>
+    <line style="stroke:#888;stroke-width:1;" x1="6" x2="173.175" y1="216" y2="216"/>
+    <line style="stroke:#888;stroke-width:1;" x1="6" x2="173.175" y1="228" y2="228"/>
+    <line style="stroke:#888;stroke-width:1;" x1="6" x2="173.175" y1="240" y2="240"/>
+    <line style="stroke:#888;stroke-width:1;" x1="6" x2="173.175" y1="252" y2="252"/>
+    <line style="stroke:#888;stroke-width:1;" x1="6" x2="6" y1="216" y2="252"/>
+    <line style="stroke:#888;stroke-width:1;" x1="75.025" x2="75.025" y1="216" y2="252"/>
+    <line style="stroke:#888;stroke-width:1;" x1="141.8" x2="141.8" y1="216" y2="252"/>
+    <line style="stroke:#888;stroke-width:1;" x1="173.175" x2="173.175" y1="216" y2="252"/>
+    <line style="stroke:#AAA;stroke-width:1;stroke-dasharray:1,2;" x1="6" x2="171.175" y1="257.5" y2="257.5"/>
+  </g>
+</svg>

@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startnwdiag
+nwdiag {
+  e1
+  network n1 {
+    width = full
+    e1
+    e2
+    e3
+  }
+
+  network n2 {
+    width = full
+    e3
+    e4
+    e5
+  }
+
+  network n3 {
+    width = full
+    e2
+    e6
+  }
+}
+@endnwdiag

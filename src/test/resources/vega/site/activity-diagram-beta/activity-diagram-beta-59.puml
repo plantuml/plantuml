@@ -1,0 +1,29 @@
+---
+output: svg
+---
+@startuml
+:Ready;
+:next(o); <<procedure>>
+:Receiving;
+split
+ :nak(i); <<input>>
+ :ack(o); <<output>>
+split again
+ :ack(i); <<input>>
+ :next(o)
+ on several lines; <<procedure>>
+ :i := i + 1; <<task>>
+ :ack(o); <<output>>
+split again
+ :err(i); <<input>>
+ :nak(o); <<output>>
+split again
+ :foo; <<save>>
+split again
+ :bar; <<load>>
+split again
+ :i > 5; <<continuous>>
+stop
+end split
+:finish;
+@enduml

@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+clock "clk" as clk with period 50
+concise "Signal1" as S1
+robust "Signal2" as S2
+binary "Signal3" as S3
+
+@S1
+0 is 0
+50 is 1
+150 is 1
+
+@S2
+0 is 0
+150 is 1
+
+@S3
+50  is 1
+100 is low
+150 is high
+200 is 0
+@enduml

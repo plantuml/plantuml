@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="207px" preserveAspectRatio="none" style="width:184px;height:207px;background:#FFFFFF;" version="1.1" viewBox="0 0 184 207" width="184px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="140.875" x="18.062" y="20.889">Style hierarchy cascade</text>
+    </g>
+    <!--class root-->
+    <g class="entity" data-qualified-name="root" data-source-line="5" id="ent0001">
+      <rect fill="#F1F1F1" height="24" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="30.063" x="82.5" y="47"/>
+      <text fill="#000" font-size="14" textLength="24.063" x="85.5" y="62.889">root</text>
+    </g>
+    <!--class element-->
+    <g class="entity" data-qualified-name="element" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="24" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="55.788" x="30.5" y="107"/>
+      <text fill="#000" font-size="14" textLength="49.788" x="33.5" y="122.889">element</text>
+    </g>
+    <!--class actor-->
+    <g class="entity" data-qualified-name="actor" data-source-line="7" id="ent0004">
+      <rect fill="#F1F1F1" height="24" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="37.062" x="6" y="167"/>
+      <text fill="#000" font-size="14" textLength="31.062" x="9" y="182.889">actor</text>
+    </g>
+    <!--class boundary-->
+    <g class="entity" data-qualified-name="boundary" data-source-line="8" id="ent0006">
+      <rect fill="#F1F1F1" height="24" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="64.362" x="61.5" y="167"/>
+      <text fill="#000" font-size="14" textLength="58.362" x="64.5" y="182.889">boundary</text>
+    </g>
+    <!--class message-->
+    <g class="entity" data-qualified-name="message" data-source-line="9" id="ent0008">
+      <rect fill="#F1F1F1" height="24" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="62.788" x="105" y="107"/>
+      <text fill="#000" font-size="14" textLength="56.788" x="108" y="122.889">message</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="89.98,71.183,74.957,82.772,84.916,89.468,89.98,71.183" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M79.936,86.12 C73.03,96.391 72.895,96.592 65.997,106.851" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="extension" id="lnk5">
+      <polygon fill="none" points="51.944,131.183,37.665,143.677,48.018,149.746,51.944,131.183" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M42.842,146.712 C36.821,156.982 37.05,156.592 31.035,166.851" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0006" data-link-type="extension" id="lnk7">
+      <polygon fill="none" points="65.248,131.183,69.411,149.694,79.685,143.494,65.248,131.183" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M74.548,146.594 C80.746,156.865 80.581,156.592 86.772,166.851" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0008" data-link-type="extension" id="lnk9">
+      <polygon fill="none" points="105.02,71.183,110.084,89.468,120.043,82.772,105.02,71.183" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M115.064,86.12 C121.97,96.391 122.105,96.592 129.003,106.851" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

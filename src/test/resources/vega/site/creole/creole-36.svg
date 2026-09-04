@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="313px" preserveAspectRatio="none" style="width:194px;height:313px;background:#FFFFFF;" version="1.1" viewBox="0 0 194 313" width="194px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <ellipse cx="94.775" cy="25" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="196" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="157.55" x="16" y="55"/>
+    <text fill="#000" font-size="12" textLength="137.55" x="26" y="74.333">You can have horizontal line</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="16" x2="173.55" y1="82" y2="82"/>
+    <text fill="#000" font-size="12" textLength="68.1" x="26" y="96.333">Or double line</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="16" x2="173.55" y1="104" y2="104"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="16" x2="173.55" y1="106" y2="106"/>
+    <text fill="#000" font-size="12" textLength="65.325" x="26" y="118.333">Or strong line</text>
+    <text fill="#000" font-size="12" textLength="26.7" x="26" y="130.333">____</text>
+    <text fill="#000" font-size="12" textLength="65.325" x="26" y="142.333">Or dotted line</text>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="16" x2="77.45" y1="151" y2="151"/>
+    <text fill="#000" font-size="12" textLength="34.65" x="77.45" y="153.833">My title</text>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="112.1" x2="173.55" y1="151" y2="151"/>
+    <text fill="#000" font-size="12" textLength="65.25" x="26" y="166.333">Or dotted title</text>
+    <text fill="#000" font-size="12" font-style="italic" textLength="48.6" x="26" y="178.333">and title...</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="16" x2="83.413" y1="187" y2="187"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="16" x2="83.413" y1="189" y2="189"/>
+    <text fill="#000" font-size="12" textLength="22.725" x="83.413" y="189.833">Title</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="106.138" x2="173.55" y1="187" y2="187"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="106.138" x2="173.55" y1="189" y2="189"/>
+    <text fill="#000" font-size="12" textLength="90.75" x="26" y="202.333">Or double-line title</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="16" x2="64.438" y1="211" y2="211"/>
+    <text fill="#000" font-size="12" textLength="60.675" x="64.438" y="213.833">Another title</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="125.113" x2="173.55" y1="211" y2="211"/>
+    <text fill="#000" font-size="12" textLength="86.1" x="26" y="226.333">Or single-line title</text>
+    <text fill="#000" font-size="12" textLength="33.375" x="26" y="238.333">Enjoy!</text>
+    <ellipse cx="94.775" cy="282" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+    <ellipse cx="94.775" cy="282" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="94.775" x2="94.775" y1="35" y2="55"/>
+    <polygon fill="#181818" points="90.775,45,94.775,55,98.775,45,94.775,49" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="94.775" x2="94.775" y1="251" y2="271"/>
+    <polygon fill="#181818" points="90.775,261,94.775,271,98.775,261,94.775,265" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

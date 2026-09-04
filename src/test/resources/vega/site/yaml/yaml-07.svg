@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="YAML" height="148px" preserveAspectRatio="none" style="width:214px;height:148px;background:#FFFFFF;" version="1.1" viewBox="0 0 214 148" width="214px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="10" y="55"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="15" y="67.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="20" y1="73" y2="73"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="15" y="85.889">   </text>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="10" y="55"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="141.275" x="57" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="62" y="22.889">name</text>
+    <text fill="#000" font-size="14" textLength="86.275" x="107" y="22.889">Mark McGwire</text>
+    <line style="stroke:#000;stroke-width:1;" x1="102" x2="102" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="57" x2="198.275" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="12.425" x="62" y="40.889">hr</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="107" y="40.889">65</text>
+    <line style="stroke:#000;stroke-width:1;" x1="102" x2="102" y1="28" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="57" x2="198.275" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="22.575" x="62" y="58.889">avg</text>
+    <text fill="#000" font-size="14" textLength="35" x="107" y="58.889">0.278</text>
+    <line style="stroke:#000;stroke-width:1;" x1="102" x2="102" y1="46" y2="64"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="141.275" x="57" y="10"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="134.363" x="60.5" y="82"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="65.5" y="94.889">name</text>
+    <text fill="#000" font-size="14" textLength="79.363" x="110.5" y="94.889">Sammy Sosa</text>
+    <line style="stroke:#000;stroke-width:1;" x1="105.5" x2="105.5" y1="82" y2="100"/>
+    <line style="stroke:#000;stroke-width:1;" x1="60.5" x2="194.863" y1="100" y2="100"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="12.425" x="65.5" y="112.889">hr</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="110.5" y="112.889">63</text>
+    <line style="stroke:#000;stroke-width:1;" x1="105.5" x2="105.5" y1="100" y2="118"/>
+    <line style="stroke:#000;stroke-width:1;" x1="60.5" x2="194.863" y1="118" y2="118"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="22.575" x="65.5" y="130.889">avg</text>
+    <text fill="#000" font-size="14" textLength="35" x="110.5" y="130.889">0.288</text>
+    <line style="stroke:#000;stroke-width:1;" x1="105.5" x2="105.5" y1="118" y2="136"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="134.363" x="60.5" y="82"/>
+    <path d="M8,64 L21,64 C30.534,64 40.405,62.962 50.114,61.292" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M50.671,64.246 L52.33,60.874 L49.557,58.338 L57.499,59.899 L50.671,64.246" fill="#000"/>
+    <ellipse cx="8" cy="64" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M8,82 L21,82 C31.646,82 42.714,83.295 53.506,85.317" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M52.903,88.285 L55.732,85.77 L54.11,82.35 L60.926,86.827 L52.903,88.285" fill="#000"/>
+    <ellipse cx="8" cy="82" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

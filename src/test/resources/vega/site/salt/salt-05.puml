@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startsalt
+{
+  ^This is a closed droplist^ |
+  ^This is an open droplist^^ item 1^^ item 2^ |
+  ^This is another open droplist^ item 1^ item 2^
+}
+@endsalt

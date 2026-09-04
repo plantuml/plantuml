@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="239px" preserveAspectRatio="none" style="width:536px;height:239px;background:#FFFFFF;" version="1.1" viewBox="0 0 536 239" width="536px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:1.5;" x1="62.025" x2="62.025" y1="72" y2="92"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="84.05" x="20" y="92"/>
+    <text fill="#000" font-size="12" textLength="64.05" x="30" y="111.333">Team Lead 1</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="62.025" x2="72.025" y1="155" y2="155"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="74.75" x="72.025" y="139"/>
+    <text fill="#000" font-size="12" textLength="54.75" x="82.025" y="158.333">Engineer 1</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="62.025" x2="72.025" y1="202" y2="202"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="74.75" x="72.025" y="186"/>
+    <text fill="#000" font-size="12" textLength="54.75" x="82.025" y="205.333">Engineer 2</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="62.025" x2="62.025" y1="124" y2="202"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="208.8" x2="208.8" y1="72" y2="92"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="84.05" x="166.775" y="92"/>
+    <text fill="#000" font-size="12" textLength="64.05" x="176.775" y="111.333">Team Lead 2</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="208.8" x2="218.8" y1="155" y2="155"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="74.75" x="218.8" y="139"/>
+    <text fill="#000" font-size="12" textLength="54.75" x="228.8" y="158.333">Engineer 3</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="208.8" x2="218.8" y1="202" y2="202"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="74.75" x="218.8" y="186"/>
+    <text fill="#000" font-size="12" textLength="54.75" x="228.8" y="205.333">Engineer 4</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="208.8" x2="208.8" y1="124" y2="202"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="323.55" x2="323.55" y1="72" y2="92"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="323.55" x2="333.55" y1="108" y2="108"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="182" x="333.55" y="92"/>
+    <text fill="#000" font-size="12" textLength="162" x="343.55" y="111.333">Engineer 5 (reporting to Director)</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="323.55" x2="333.55" y1="140" y2="140"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="182" x="333.55" y="124"/>
+    <text fill="#000" font-size="12" textLength="162" x="343.55" y="143.333">Engineer 6 (reporting to Director)</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="323.55" x2="323.55" y1="92" y2="140"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="62.025" x2="323.55" y1="72" y2="72"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="62" x="161.788" y="20"/>
+    <text fill="#000" font-size="12" textLength="42" x="171.788" y="39.333">Director</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="192.788" x2="192.788" y1="52" y2="72"/>
+  </g>
+</svg>

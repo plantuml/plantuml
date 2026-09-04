@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="124px" preserveAspectRatio="none" style="width:276px;height:124px;background:#FFFFFF;" version="1.1" viewBox="0 0 276 124" width="276px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>User</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="28.287" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="31.787" x2="31.787" y1="39" y2="84"/>
+    </g>
+    <g>
+      <title>Wiki</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="241.275" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="244.775" x2="244.775" y1="39" y2="84"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="43.575" x="10" y="10"/>
+    <text fill="#000" font-size="14" textLength="29.575" x="17" y="27.889">User</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="40.513" x="224.519" y="10"/>
+    <text fill="#000" font-size="14" textLength="26.513" x="231.519" y="27.889">Wiki</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="43.575" x="10" y="84"/>
+    <text fill="#000" font-size="14" textLength="29.575" x="17" y="101.889">User</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="40.513" x="224.519" y="84"/>
+    <text fill="#000" font-size="14" textLength="26.513" x="231.519" y="101.889">Wiki</text>
+    <polygon fill="#181818" points="232.775,62,242.775,66,232.775,70,236.775,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="31.787" x2="238.775" y1="66" y2="66"/>
+    <text fill="#000" font-size="13" textLength="188.988" x="38.787" y="61.111">document, document, document...</text>
+  </g>
+</svg>

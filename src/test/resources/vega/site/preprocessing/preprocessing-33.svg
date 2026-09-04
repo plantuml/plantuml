@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="187px" preserveAspectRatio="none" style="width:219px;height:187px;background:#FFFFFF;" version="1.1" viewBox="0 0 219 187" width="219px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#CCC" height="14" style="stroke:none;" width="218.313" x="0" y="2"/>
+    <text fill="#000" font-family="serif" font-size="14" font-weight="700" textLength="31.063" x="0" y="12.889">Input</text>
+    <text fill="#000" font-family="serif" font-size="14" font-weight="700" textLength="41.913" x="176.4" y="12.889">Output</text>
+    <text fill="#000" font-family="serif" font-size="14" textLength="73.938" x="0" y="26.889">%boolval(1)</text>
+    <text fill="#000" font-family="serif" font-size="14" x="176.4" y="26.889">1</text>
+    <text fill="#000" font-family="serif" font-size="14" textLength="73.938" x="0" y="40.889">%boolval(0)</text>
+    <text fill="#000" font-family="serif" font-size="14" x="176.4" y="40.889">0</text>
+    <text fill="#000" font-family="serif" font-size="14" textLength="111.913" x="0" y="54.889">%boolval(%true())</text>
+    <text fill="#000" font-family="serif" font-size="14" x="176.4" y="54.889">1</text>
+    <text fill="#000" font-family="serif" font-size="14" textLength="117.425" x="0" y="68.889">%boolval(%false())</text>
+    <text fill="#000" font-family="serif" font-size="14" x="176.4" y="68.889">0</text>
+    <text fill="#000" font-family="serif" font-size="14" textLength="90.213" x="0" y="82.889">%boolval(true)</text>
+    <text fill="#000" font-family="serif" font-size="14" x="176.4" y="82.889">1</text>
+    <text fill="#000" font-family="serif" font-size="14" textLength="95.725" x="0" y="96.889">%boolval(false)</text>
+    <text fill="#000" font-family="serif" font-size="14" x="176.4" y="96.889">0</text>
+    <text fill="#000" font-family="serif" font-size="14" textLength="104.387" x="0" y="110.889">%boolval(TRUE)</text>
+    <text fill="#000" font-family="serif" font-size="14" x="176.4" y="110.889">1</text>
+    <text fill="#000" font-family="serif" font-size="14" textLength="110.6" x="0" y="124.889">%boolval(FALSE)</text>
+    <text fill="#000" font-family="serif" font-size="14" x="176.4" y="124.889">0</text>
+    <text fill="#000" font-family="serif" font-size="14" textLength="100.188" x="0" y="138.889">%boolval("true")</text>
+    <text fill="#000" font-family="serif" font-size="14" x="176.4" y="138.889">1</text>
+    <text fill="#000" font-family="serif" font-size="14" textLength="105.7" x="0" y="152.889">%boolval("false")</text>
+    <text fill="#000" font-family="serif" font-size="14" x="176.4" y="152.889">0</text>
+    <text fill="#000" font-family="serif" font-size="14" textLength="170.888" x="0" y="166.889">%boolval(%str2json("true"))</text>
+    <text fill="#000" font-family="serif" font-size="14" x="176.4" y="166.889">1</text>
+    <text fill="#000" font-family="serif" font-size="14" textLength="176.4" x="0" y="180.889">%boolval(%str2json("false"))</text>
+    <text fill="#000" font-family="serif" font-size="14" x="176.4" y="180.889">0</text>
+    <line style="stroke:#000;stroke-width:1;" x1="0" x2="218.313" y1="2" y2="2"/>
+    <line style="stroke:#000;stroke-width:1;" x1="0" x2="218.313" y1="16" y2="16"/>
+    <line style="stroke:#000;stroke-width:1;" x1="0" x2="218.313" y1="30" y2="30"/>
+    <line style="stroke:#000;stroke-width:1;" x1="0" x2="218.313" y1="44" y2="44"/>
+    <line style="stroke:#000;stroke-width:1;" x1="0" x2="218.313" y1="58" y2="58"/>
+    <line style="stroke:#000;stroke-width:1;" x1="0" x2="218.313" y1="72" y2="72"/>
+    <line style="stroke:#000;stroke-width:1;" x1="0" x2="218.313" y1="86" y2="86"/>
+    <line style="stroke:#000;stroke-width:1;" x1="0" x2="218.313" y1="100" y2="100"/>
+    <line style="stroke:#000;stroke-width:1;" x1="0" x2="218.313" y1="114" y2="114"/>
+    <line style="stroke:#000;stroke-width:1;" x1="0" x2="218.313" y1="128" y2="128"/>
+    <line style="stroke:#000;stroke-width:1;" x1="0" x2="218.313" y1="142" y2="142"/>
+    <line style="stroke:#000;stroke-width:1;" x1="0" x2="218.313" y1="156" y2="156"/>
+    <line style="stroke:#000;stroke-width:1;" x1="0" x2="218.313" y1="170" y2="170"/>
+    <line style="stroke:#000;stroke-width:1;" x1="0" x2="218.313" y1="184" y2="184"/>
+    <line style="stroke:#000;stroke-width:1;" x1="0" x2="0" y1="2" y2="184"/>
+    <line style="stroke:#000;stroke-width:1;" x1="176.4" x2="176.4" y1="2" y2="184"/>
+    <line style="stroke:#000;stroke-width:1;" x1="218.313" x2="218.313" y1="2" y2="184"/>
+  </g>
+</svg>

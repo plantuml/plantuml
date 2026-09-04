@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+[c]
+node node {
+  portin p1
+  portin p2
+  portin p3
+  file f1
+}
+
+c --> p1
+c --> p2
+c --> p3
+p1 --> f1
+p2 --> f1
+@enduml

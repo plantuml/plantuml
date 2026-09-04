@@ -1,0 +1,35 @@
+---
+output: svg
+---
+@startuml
+action action           #aliceblue;line:blue;line.dotted;text:blue
+actor actor             #aliceblue;line:blue;line.dotted;text:blue
+actor/ "actor/"         #aliceblue;line:blue;line.dotted;text:blue
+agent agent             #aliceblue;line:blue;line.dotted;text:blue
+artifact artifact       #aliceblue;line:blue;line.dotted;text:blue
+boundary boundary       #aliceblue;line:blue;line.dotted;text:blue
+card card               #aliceblue;line:blue;line.dotted;text:blue
+circle circle           #aliceblue;line:blue;line.dotted;text:blue
+cloud cloud             #aliceblue;line:blue;line.dotted;text:blue
+collections collections #aliceblue;line:blue;line.dotted;text:blue
+component component     #aliceblue;line:blue;line.dotted;text:blue
+control control         #aliceblue;line:blue;line.dotted;text:blue
+database database       #aliceblue;line:blue;line.dotted;text:blue
+entity entity           #aliceblue;line:blue;line.dotted;text:blue
+file file               #aliceblue;line:blue;line.dotted;text:blue
+folder folder           #aliceblue;line:blue;line.dotted;text:blue
+frame frame             #aliceblue;line:blue;line.dotted;text:blue
+hexagon hexagon         #aliceblue;line:blue;line.dotted;text:blue
+interface interface     #aliceblue;line:blue;line.dotted;text:blue
+label label             #aliceblue;line:blue;line.dotted;text:blue
+node node               #aliceblue;line:blue;line.dotted;text:blue
+package package         #aliceblue;line:blue;line.dotted;text:blue
+person person           #aliceblue;line:blue;line.dotted;text:blue
+process process         #aliceblue;line:blue;line.dotted;text:blue
+queue queue             #aliceblue;line:blue;line.dotted;text:blue
+rectangle rectangle     #aliceblue;line:blue;line.dotted;text:blue
+stack stack             #aliceblue;line:blue;line.dotted;text:blue
+storage storage         #aliceblue;line:blue;line.dotted;text:blue
+usecase usecase         #aliceblue;line:blue;line.dotted;text:blue
+usecase/ "usecase/"     #aliceblue;line:blue;line.dotted;text:blue
+@enduml

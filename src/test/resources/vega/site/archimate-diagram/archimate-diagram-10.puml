@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+left to right direction
+skinparam nodesep 4
+!include <archimate/Archimate>
+Rel_Triggering(i15, j15, Triggering)
+Rel_Specialization(i14, j14, Specialization)
+Rel_Serving(i13, j13, Serving)
+Rel_Realization(i12, j12, Realization)
+Rel_Influence(i11, j11, Influence)
+Rel_Flow(i10, j10, Flow)
+Rel_Composition(i9, j9, Composition)
+Rel_Association_dir(i8, j8, Association_dir)
+Rel_Association(i7, j7, Association)
+Rel_Assignment(i6, j6, Assignment)
+Rel_Aggregation(i5, j5, Aggregation)
+Rel_Access_w(i4, j4, Access_w)
+Rel_Access_rw(i3, j3, Access_rw)
+Rel_Access_r(i2, j2, Access_r)
+Rel_Access(i1, j1, Access)
+@enduml

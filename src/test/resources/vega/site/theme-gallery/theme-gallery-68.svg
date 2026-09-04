@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="240.625px" preserveAspectRatio="none" style="width:357px;height:240px;" version="1.1" viewBox="0 0 357 240" width="357.292px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="g1k789pqsk6pqf0" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#59B6EC"/>
+      <stop offset="100%" stop-color="#2FA4E7"/>
+    </linearGradient>
+    <linearGradient id="g1k789pqsk6pqf1" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFF"/>
+      <stop offset="100%" stop-color="#EDF0F2"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="user1" data-source-line="3" id="ent0001">
+      <rect fill="url(#g1k789pqsk6pqf0)" height="55.208" rx="4.167" ry="4.167" style="stroke:#2FA4E7;stroke-width:1.042;" width="95.501" x="16.667" y="22.917"/>
+      <path d="M20.833,22.917 L108.001,22.917 A4.167,4.167 0 0 1 112.168,27.083 L112.168,46.875 L16.667,46.875 L16.667,27.083 A4.167,4.167 0 0 1 20.833,22.917" fill="url(#g1k789pqsk6pqf0)" style="stroke:#2FA4E7;stroke-width:1.042;"/>
+      <text fill="#343A40" font-family="'Verdana'" font-size="11.458" textLength="28.646" x="50.094" y="38.079">user1</text>
+      <line style="stroke:#2FA4E7;stroke-width:1.042;" x1="17.708" x2="111.126" y1="46.875" y2="46.875"/>
+      <text fill="#343A40" font-family="'Verdana'" font-size="11.458" textLength="83.001" x="22.917" y="59.954">name = "Dummy"</text>
+      <text fill="#343A40" font-family="'Verdana'" font-size="11.458" textLength="34.805" x="22.917" y="71.412">id = 123</text>
+    </g>
+    <g class="entity" data-qualified-name="user2" data-source-line="7" id="ent0002">
+      <rect fill="url(#g1k789pqsk6pqf0)" height="55.208" rx="4.167" ry="4.167" style="stroke:#2FA4E7;stroke-width:1.042;" width="95.501" x="131.25" y="22.917"/>
+      <path d="M135.417,22.917 L222.585,22.917 A4.167,4.167 0 0 1 226.751,27.083 L226.751,46.875 L131.25,46.875 L131.25,27.083 A4.167,4.167 0 0 1 135.417,22.917" fill="url(#g1k789pqsk6pqf0)" style="stroke:#2FA4E7;stroke-width:1.042;"/>
+      <text fill="#343A40" font-family="'Verdana'" font-size="11.458" textLength="28.646" x="164.678" y="38.079">user2</text>
+      <line style="stroke:#2FA4E7;stroke-width:1.042;" x1="132.292" x2="225.71" y1="46.875" y2="46.875"/>
+      <text fill="#343A40" font-family="'Verdana'" font-size="11.458" textLength="83.001" x="137.5" y="59.954">name = "Dummy"</text>
+      <text fill="#343A40" font-family="'Verdana'" font-size="11.458" textLength="34.805" x="137.5" y="71.412">id = 123</text>
+    </g>
+    <g class="entity" data-qualified-name="o1" data-source-line="12" id="ent0003">
+      <rect fill="url(#g1k789pqsk6pqf0)" height="40.625" rx="4.167" ry="4.167" style="stroke:#2FA4E7;stroke-width:1.042;" width="35.664" x="245.833" y="30.208"/>
+      <path d="M250,30.208 L277.331,30.208 A4.167,4.167 0 0 1 281.497,34.375 L281.497,54.167 L245.833,54.167 L245.833,34.375 A4.167,4.167 0 0 1 250,30.208" fill="url(#g1k789pqsk6pqf0)" style="stroke:#2FA4E7;stroke-width:1.042;"/>
+      <text fill="#343A40" font-family="'Verdana'" font-size="11.458" textLength="12.747" x="257.292" y="45.37">o1</text>
+      <line style="stroke:#2FA4E7;stroke-width:1.042;" x1="246.875" x2="280.456" y1="54.167" y2="54.167"/>
+    </g>
+    <g class="entity" data-qualified-name="o2" data-source-line="13" id="ent0004">
+      <rect fill="url(#g1k789pqsk6pqf0)" height="40.625" rx="4.167" ry="4.167" style="stroke:#2FA4E7;stroke-width:1.042;" width="35.664" x="300" y="30.208"/>
+      <path d="M304.167,30.208 L331.497,30.208 A4.167,4.167 0 0 1 335.664,34.375 L335.664,54.167 L300,54.167 L300,34.375 A4.167,4.167 0 0 1 304.167,30.208" fill="url(#g1k789pqsk6pqf0)" style="stroke:#2FA4E7;stroke-width:1.042;"/>
+      <text fill="#343A40" font-family="'Verdana'" font-size="11.458" textLength="12.747" x="311.458" y="45.37">o2</text>
+      <line style="stroke:#2FA4E7;stroke-width:1.042;" x1="301.042" x2="334.622" y1="54.167" y2="54.167"/>
+    </g>
+    <g class="entity" data-qualified-name="dia" id="ent0005">
+      <polygon fill="url(#g1k789pqsk6pqf1)" points="290.625,115.625,303.125,128.125,290.625,140.625,278.125,128.125,290.625,115.625" style="stroke:#BABDBF;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <g class="entity" data-qualified-name="o3" data-source-line="15" id="ent0006">
+      <rect fill="url(#g1k789pqsk6pqf0)" height="40.625" rx="4.167" ry="4.167" style="stroke:#2FA4E7;stroke-width:1.042;" width="35.664" x="272.917" y="178.125"/>
+      <path d="M277.083,178.125 L304.414,178.125 A4.167,4.167 0 0 1 308.581,182.292 L308.581,202.083 L272.917,202.083 L272.917,182.292 A4.167,4.167 0 0 1 277.083,178.125" fill="url(#g1k789pqsk6pqf0)" style="stroke:#2FA4E7;stroke-width:1.042;"/>
+      <text fill="#343A40" font-family="'Verdana'" font-size="11.458" textLength="12.747" x="284.375" y="193.287">o3</text>
+      <line style="stroke:#2FA4E7;stroke-width:1.042;" x1="273.958" x2="307.539" y1="202.083" y2="202.083"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="dependency" id="lnk7">
+      <polygon fill="#2FA4E7" points="286.378,115.242,287.136,105.01,284.62,110.339,279.292,107.824,286.378,115.242" style="stroke:#2FA4E7;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M270.516,71.011 C275.532,84.996 280.375,98.501 284.62,110.339" fill="none" style="stroke:#2FA4E7;stroke-width:3.125;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="dependency" id="lnk8">
+      <polygon fill="#2FA4E7" points="294.872,115.242,301.958,107.824,296.63,110.339,294.114,105.01,294.872,115.242" style="stroke:#2FA4E7;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M310.734,71.011 C305.718,84.996 300.875,98.501 296.63,110.339" fill="none" style="stroke:#2FA4E7;stroke-width:3.125;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0006" data-link-type="dependency" id="lnk9">
+      <polygon fill="#2FA4E7" points="290.625,178.001,294.792,168.626,290.625,172.793,286.458,168.626,290.625,178.001" style="stroke:#2FA4E7;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M290.625,140.741 C290.625,150.93 290.625,160.767 290.625,172.793" fill="none" style="stroke:#2FA4E7;stroke-width:3.125;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="188px" preserveAspectRatio="none" style="width:704px;height:188px;background:#FFFFFF;" version="1.1" viewBox="0 0 704 188" width="704px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="135.45" x="281.081" y="20.889">Bracketed line style mix</text>
+    </g>
+    <!--entity foo-->
+    <g class="entity" data-qualified-name="foo" data-source-line="2" id="ent0001">
+      <polygon fill="#F1F1F1" points="208.5,57,218.5,47,267.925,47,267.925,81,257.925,91,208.5,91,208.5,57" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="257.925" x2="267.925" y1="57" y2="47"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="208.5" x2="257.925" y1="57" y2="57"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="257.925" x2="257.925" y1="57" y2="91"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="223.5" y="77.889">foo</text>
+    </g>
+    <!--entity bar-->
+    <g class="entity" data-qualified-name="bar" data-source-line="3" id="ent0002">
+      <ellipse cx="15" cy="153" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="20.213" x="4.894" y="180.889">bar</text>
+    </g>
+    <!--entity bar1-->
+    <g class="entity" data-qualified-name="bar1" data-source-line="4" id="ent0004">
+      <ellipse cx="51" cy="153" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="28" x="37" y="180.889">bar1</text>
+    </g>
+    <!--entity bar2-->
+    <g class="entity" data-qualified-name="bar2" data-source-line="5" id="ent0006">
+      <ellipse cx="121" cy="153" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="28" x="107" y="180.889">bar2</text>
+    </g>
+    <!--entity bar3-->
+    <g class="entity" data-qualified-name="bar3" data-source-line="6" id="ent0008">
+      <ellipse cx="238" cy="153" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="28" x="224" y="180.889">bar3</text>
+    </g>
+    <!--entity bar4-->
+    <g class="entity" data-qualified-name="bar4" data-source-line="7" id="ent0010">
+      <ellipse cx="369" cy="153" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="28" x="355" y="180.889">bar4</text>
+    </g>
+    <!--entity bar5-->
+    <g class="entity" data-qualified-name="bar5" data-source-line="8" id="ent0012">
+      <ellipse cx="478" cy="153" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="28" x="464" y="180.889">bar5</text>
+    </g>
+    <!--entity bar6-->
+    <g class="entity" data-qualified-name="bar6" data-source-line="9" id="ent0014">
+      <ellipse cx="585" cy="153" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="28" x="571" y="180.889">bar6</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="20.078,143.653,27.702,137.419,22.33,139.189,20.56,133.816,20.078,143.653" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M208.499,69.596 C168.88,70.407 97.72,76.746 48,109 C34.972,117.451 27.707,128.529 22.33,139.189" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="50" y="121.111">∅</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#F00" points="54.68,143.777,61.634,136.803,56.468,139.108,54.163,133.942,54.68,143.777" style="stroke:#F00;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M208.249,70.477 C173.741,72.448 116.655,80.247 78,109 C66.261,117.732 60.515,128.539 56.468,139.108" fill="none" style="stroke:#F00;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="43.956" x="80" y="121.111">[#red,1]</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0006" data-link-type="dependency" id="lnk7">
+      <polygon fill="#F00" points="123.041,143.761,128.989,135.911,124.182,138.893,121.2,134.086,123.041,143.761" style="stroke:#F00;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M208.467,75.335 C187.03,80.591 158.636,90.604 140,109 C130.407,118.469 126.591,128.611 124.182,138.893" fill="none" style="stroke:#F00;stroke-width:2;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="90.188" x="142" y="121.111">[#red,dashed,2]</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0008" data-link-type="dependency" id="lnk9">
+      <polygon fill="#008000" points="238,143.847,242,134.847,238,138.847,234,134.847,238,143.847" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M238,91.011 C238,107.726 238,125.459 238,138.847" fill="none" style="stroke:#008000;stroke-width:4;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="104.65" x="240" y="121.111">[#green,dashed,4]</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0010" data-link-type="dependency" id="lnk11">
+      <polygon fill="#00F" points="366.245,143.662,367.525,133.896,364.825,138.868,359.854,136.168,366.245,143.662" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M267.556,74.229 C291.49,79.017 324.768,88.937 347,109 C357.252,118.252 361.759,128.515 364.825,138.868" fill="none" style="stroke:#00F;stroke-width:8;stroke-dasharray:1,3;"/>
+      <text fill="#000" font-size="13" textLength="82.225" x="362" y="121.111">[blue,dotted,8]</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0012" data-link-type="dependency" id="lnk13">
+      <polygon fill="#00F" points="474.181,143.621,474.611,133.781,472.352,138.967,467.166,136.708,474.181,143.621" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M267.572,72.457 C318.662,77.183 420.794,88.892 450,109 C462.167,117.377 468.152,128.282 472.352,138.967" fill="none" style="stroke:#00F;stroke-width:16;"/>
+      <text fill="#000" font-size="13" textLength="80.925" x="466" y="121.111">[blue,plain,16]</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0014" data-link-type="dependency" id="lnk15">
+      <polygon fill="#00F" points="580.262,143.834,579.953,133.99,578.089,139.331,572.748,137.467,580.262,143.834" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M267.653,70.691 C336.374,72.763 504.3,80.664 552,109 C565.52,117.032 572.858,128.489 578.089,139.331" fill="none" style="stroke:#00F;stroke-width:4;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="125.613" x="571" y="121.111">[blue;green,dashed,4]</text>
+    </g>
+  </g>
+</svg>

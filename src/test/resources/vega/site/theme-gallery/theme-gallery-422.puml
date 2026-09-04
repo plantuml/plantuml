@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startwbs
+!theme reddress-lightgreen
+* World
+** America
+***_ Canada
+***_ Mexico
+***_ USA
+** Europe
+***_  England
+***_  Germany
+***_  Spain
+@endwbs

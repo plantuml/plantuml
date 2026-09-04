@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+robust "R-Deci" as RD
+concise "R-Algo-0" as RA0
+robust "R-Algo-1" as RA1
+
+@200
+RD is 0
+RA0 is 0
+
+@-200
+RD is 1
+RA0 is 3
+
+@100
+RD is 0
+@enduml

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="97px" preserveAspectRatio="none" style="width:177px;height:97px;background:#FFFFFF;" version="1.1" viewBox="0 0 177 97" width="177px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>First</title>
+      <rect fill="#000" fill-opacity="0" height="18" width="8" x="27.106" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="30.606" x2="30.606" y1="39" y2="57"/>
+    </g>
+    <g>
+      <title>Middle</title>
+      <rect fill="#000" fill-opacity="0" height="18" width="8" x="85.363" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="88.863" x2="88.863" y1="39" y2="57"/>
+    </g>
+    <g>
+      <title>Last</title>
+      <rect fill="#000" fill-opacity="0" height="18" width="8" x="143.225" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="146.725" x2="146.725" y1="39" y2="57"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.213" x="10" y="10"/>
+    <text fill="#000" font-size="14" textLength="27.213" x="17" y="27.889">First</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="55.3" x="61.213" y="10"/>
+    <text fill="#000" font-size="14" textLength="41.3" x="68.213" y="27.889">Middle</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="40.425" x="126.513" y="10"/>
+    <text fill="#000" font-size="14" textLength="26.425" x="133.513" y="27.889">Last</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.213" x="10" y="57"/>
+    <text fill="#000" font-size="14" textLength="27.213" x="17" y="74.889">First</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="55.3" x="61.213" y="57"/>
+    <text fill="#000" font-size="14" textLength="41.3" x="68.213" y="74.889">Middle</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="40.425" x="126.513" y="57"/>
+    <text fill="#000" font-size="14" textLength="26.425" x="133.513" y="74.889">Last</text>
+  </g>
+</svg>

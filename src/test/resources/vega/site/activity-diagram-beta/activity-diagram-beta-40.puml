@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+start
+partition #red/white testPartition {
+        :testActivity; <<#blue\green>>
+}
+@enduml

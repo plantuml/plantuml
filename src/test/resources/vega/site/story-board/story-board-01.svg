@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="BOARD" height="283px" preserveAspectRatio="none" style="width:712px;height:283px;background:#FFFFFF;" version="1.1" viewBox="0 0 712 283" width="712px" zoomAndPan="magnify">
+  <defs>
+    <filter height="300%" id="f5qwbg5m1bvnx" width="300%" x="-1" y="-1">
+      <feGaussianBlur result="blurOut" stdDeviation="2"/>
+      <feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/>
+      <feOffset dx="4" dy="4" in="blurOut2" result="blurOut3"/>
+      <feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/>
+    </filter>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#C0C0C0" filter="url(#f5qwbg5m1bvnx)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="10" y="10"/>
+    <text fill="#000" font-size="14" textLength="17.15" x="13" y="23.889">A1</text>
+    <rect fill="#C0C0C0" filter="url(#f5qwbg5m1bvnx)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="10" y="10"/>
+    <text fill="#000" font-size="14" textLength="17.15" x="13" y="23.889">A1</text>
+    <rect fill="#C0C0C0" filter="url(#f5qwbg5m1bvnx)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="10" y="100"/>
+    <text fill="#000" font-size="14" textLength="29.575" x="13" y="113.889">U1.1</text>
+    <rect fill="#C0C0C0" filter="url(#f5qwbg5m1bvnx)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="10" y="190"/>
+    <text fill="#000" font-size="14" textLength="35.088" x="13" y="203.889">S1 R1</text>
+    <rect fill="#C0C0C0" filter="url(#f5qwbg5m1bvnx)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="180" y="190"/>
+    <text fill="#000" font-size="14" textLength="35.088" x="183" y="203.889">S1 R2</text>
+    <rect fill="#C0C0C0" filter="url(#f5qwbg5m1bvnx)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="350" y="100"/>
+    <text fill="#000" font-size="14" textLength="29.575" x="353" y="113.889">U1.2</text>
+    <rect fill="#C0C0C0" filter="url(#f5qwbg5m1bvnx)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="520" y="10"/>
+    <text fill="#000" font-size="14" textLength="17.15" x="523" y="23.889">A2</text>
+    <rect fill="#C0C0C0" filter="url(#f5qwbg5m1bvnx)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="520" y="10"/>
+    <text fill="#000" font-size="14" textLength="17.15" x="523" y="23.889">A2</text>
+    <line style="stroke:#000;stroke-width:0.5;stroke-dasharray:5,5;" x1="10" x2="690" y1="90" y2="90"/>
+    <line style="stroke:#000;stroke-width:0.5;stroke-dasharray:5,5;" x1="10" x2="690" y1="180" y2="180"/>
+  </g>
+</svg>

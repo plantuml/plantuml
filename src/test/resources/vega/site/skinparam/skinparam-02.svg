@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="135px" preserveAspectRatio="none" style="width:237px;height:135px;background:#FFFFFF;" version="1.1" viewBox="0 0 237 135" width="237px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity User-->
+    <g class="entity" data-qualified-name="User" data-source-line="7" id="ent0001">
+      <ellipse cx="20.787" cy="38" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M20.787,46 L20.787,73 M7.787,54 L33.787,54 M20.787,73 L7.787,88 M20.787,73 L33.787,88" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="29.575" x="6" y="100.389">User</text>
+    </g>
+    <!--entity guc-->
+    <g class="entity" data-qualified-name="guc" data-source-line="8" id="ent0002">
+      <ellipse cx="146.642" cy="34.511" fill="#F1F1F1" rx="74.642" ry="22.511" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="96.6" x="98.342" y="30.601">«with_shadow»</text>
+      <text fill="#000" font-size="14" textLength="102.813" x="95.236" y="44.601">Glowing use case</text>
+    </g>
+    <!--entity fuc-->
+    <g class="entity" data-qualified-name="fuc" data-source-line="9" id="ent0003">
+      <ellipse cx="146.515" cy="97.488" fill="#F1F1F1" rx="63.515" ry="21.988" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="87.238" x="102.896" y="94.826">«no_shadow»</text>
+      <text fill="#000" font-size="14" textLength="75.513" x="108.759" y="108.826">Flat use case</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk4">
+      <path d="M36.167,62.829 C45.417,60.432 58.282,57.099 71.948,53.558" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="association" id="lnk5">
+      <path d="M36.167,70.056 C47.825,72.982 65.224,77.35 82.732,81.745" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

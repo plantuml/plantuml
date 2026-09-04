@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="REGEX" height="139px" preserveAspectRatio="none" style="width:426px;height:139px;background:#FFFFFF;" version="1.1" viewBox="0 0 426 139" width="426px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="133.963" x="145.381" y="30.889">repetitionEquivalance</text>
+    </g>
+    <line style="stroke:#181818;stroke-width:1;" x1="15" x2="15" y1="89" y2="89"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="15" x2="80.788" y1="89" y2="89"/>
+    <path d="M39.315,89 L39.315,86 L45.315,89 L39.315,92 L39.315,89" fill="#181818"/>
+    <path d="M15,89 C24,89 27,91 27,100 C27,109 30,111 39,111" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M56.787,111 C65.788,111 68.788,109 68.788,100 C68.788,91 71.788,89 80.788,89" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="17.788" x="39" y="99"/>
+    <text fill="#000" font-size="14" x="44" y="114.889">a</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="80.788" x2="100.788" y1="89" y2="89"/>
+    <path d="M108.788,81 C108.788,87 110.788,89 116.788,89" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="108.788" x2="108.788" y1="78" y2="81"/>
+    <path d="M108.788,78 C108.788,72 110.788,70 116.788,70" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="115.788" x2="133.575" y1="70" y2="70"/>
+    <path d="M124.46,70 L124.46,67 L118.46,70 L124.46,73 L124.46,70" fill="#181818"/>
+    <path d="M140.575,81 C140.575,87 138.575,89 132.575,89" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="140.575" x2="140.575" y1="78" y2="81"/>
+    <path d="M132.575,70 C138.575,70 140.575,72 140.575,78" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="100.788" x2="115.788" y1="89" y2="89"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="133.575" x2="148.575" y1="89" y2="89"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="17.788" x="115.788" y="77"/>
+    <text fill="#000" font-size="14" x="120.788" y="92.889">b</text>
+    <path d="M100.788,65 C100.788,61.25 102.038,60 105.788,60" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M124.681,55 C124.681,58.75 123.431,60 119.681,60" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M124.681,55 C124.681,58.75 125.931,60 129.681,60" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M143.575,60 C147.325,60 148.575,61.25 148.575,65" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="105.788" x2="119.681" y1="60" y2="60"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="129.681" x2="143.575" y1="60" y2="60"/>
+    <text fill="#000" font-size="12" textLength="17.925" x="115.719" y="52.667">{1,}</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="148.575" x2="168.575" y1="89" y2="89"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="88.575" x="168.575" y="77"/>
+    <text fill="#000" font-size="14" textLength="78.575" x="173.575" y="92.889">is the same as</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="257.15" x2="277.15" y1="89" y2="89"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="277.15" x2="342.938" y1="89" y2="89"/>
+    <path d="M301.465,89 L301.465,86 L307.465,89 L301.465,92 L301.465,89" fill="#181818"/>
+    <path d="M277.15,89 C286.15,89 289.15,91 289.15,100 C289.15,109 292.15,111 301.15,111" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M318.938,111 C327.938,111 330.938,109 330.938,100 C330.938,91 333.938,89 342.938,89" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="17.788" x="301.15" y="99"/>
+    <text fill="#000" font-size="14" x="306.15" y="114.889">a</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="342.938" x2="362.938" y1="89" y2="89"/>
+    <path d="M370.938,81 C370.938,87 372.938,89 378.938,89" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="370.938" x2="370.938" y1="78" y2="81"/>
+    <path d="M370.938,78 C370.938,72 372.938,70 378.938,70" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="377.938" x2="395.725" y1="70" y2="70"/>
+    <path d="M386.61,70 L386.61,67 L380.61,70 L386.61,73 L386.61,70" fill="#181818"/>
+    <path d="M402.725,81 C402.725,87 400.725,89 394.725,89" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="402.725" x2="402.725" y1="78" y2="81"/>
+    <path d="M394.725,70 C400.725,70 402.725,72 402.725,78" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="362.938" x2="377.938" y1="89" y2="89"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="395.725" x2="410.725" y1="89" y2="89"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="17.788" x="377.938" y="77"/>
+    <text fill="#000" font-size="14" x="382.938" y="92.889">b</text>
+  </g>
+</svg>

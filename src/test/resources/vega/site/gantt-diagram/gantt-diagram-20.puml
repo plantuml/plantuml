@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startgantt
+[Task1] requires 4 days
+then [Task1.1] requires 4 days
+[Task1.2] starts at [Task1]'s end and requires 7 days
+
+[Task2] requires 5 days
+then [Task2.1] requires 4 days
+
+[MaxTaskEnd] happens at [Task1.1]'s end
+[MaxTaskEnd] happens at [Task1.2]'s end
+[MaxTaskEnd] happens at [Task2.1]'s end
+
+@endgantt

@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startgantt
+
+-- test01 --
+
+[task01] requires 4 days
+note bottom
+'note left
+memo1 ...
+memo2 ...
+explanations1 ...
+explanations2 ...
+end note
+
+[task02] requires 8 days
+[task01] -> [task02]
+note bottom
+'note left
+memo1 ...
+memo2 ...
+explanations1 ...
+explanations2 ...
+end note
+-- test02 --
+
+[task03] as [t3] requires 7 days
+[t3] -> [t4]
+@endgantt

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="84px" preserveAspectRatio="none" style="width:164px;height:84px;background:#FFFFFF;" version="1.1" viewBox="0 0 164 84" width="164px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="a" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="6" y="34.389"/>
+      <text fill="#000" font-size="14" x="13" y="47.278">a</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="26.788" y1="52.389" y2="52.389"/>
+    </g>
+    <g class="entity" data-qualified-name="b" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="126" y="34.389"/>
+      <text fill="#000" font-size="14" x="133" y="47.278">b</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="127" x2="146.788" y1="52.389" y2="52.389"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="125.953,51.389,116.953,47.389,120.953,51.389,116.953,55.389,125.953,51.389" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M28.074,51.389 C50.935,51.389 98.115,51.389 120.953,51.389" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" font-style="italic" textLength="47.125" x="53.516" y="11.5">link label</text>
+      <path d="M42,20.389 L42,43.389 L112,43.389 L112,30.389 L102,20.389 L42,20.389" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M102,20.389 L102,30.389 L112,30.389 L102,20.389" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="49.156" x="48" y="35.5">Link note</text>
+    </g>
+  </g>
+</svg>

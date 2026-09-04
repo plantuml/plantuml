@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="110px" preserveAspectRatio="none" style="width:540px;height:110px;background:#FFFFFF;" version="1.1" viewBox="0 0 540 110" width="540px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="119" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="119" y1="39" y2="39"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="119" y1="69" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="37.25" x2="37.25" y1="0" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="71.188" x2="71.188" y1="0" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="119" x2="119" y1="0" y2="69"/>
+    <text fill="#000" font-size="10" textLength="21.063" x="5" y="22.278">Start</text>
+    <text fill="#000" font-size="10" textLength="17.813" x="42.25" y="22.278">End</text>
+    <text fill="#000" font-size="10" textLength="37.813" x="76.188" y="22.278">Duration</text>
+    <text fill="#000" font-size="10" textLength="27.25" x="5" y="49.278">Jun 27</text>
+    <text fill="#000" font-size="10" textLength="18.375" x="42.25" y="49.278">Jul 1</text>
+    <text fill="#000" font-size="10" textLength="26.688" x="76.188" y="49.278">5 days</text>
+    <text fill="#000" font-size="10" textLength="23.938" x="5" y="64.278">Jul 19</text>
+    <text fill="#000" font-size="10" textLength="23.938" x="42.25" y="64.278">Jul 21</text>
+    <text fill="#000" font-size="10" textLength="26.688" x="76.188" y="64.278">3 days</text>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;" width="256" x="199" y="39"/>
+    <text fill="#000" font-size="12" font-weight="700" textLength="52.725" x="124.638" y="9.333">June 2022</text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="48.075" x="326.963" y="9.333">July 2022</text>
+    <text fill="#000" font-size="10" textLength="13.875" x="120.063" y="21.778">Mo</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="137.156" y="21.778">Tu</text>
+    <text fill="#000" font-size="10" textLength="15" x="151.5" y="21.778">We</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="169.156" y="21.778">Th</text>
+    <text fill="#000" font-size="10" textLength="9.438" x="186.281" y="21.778">Fr</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="200.875" y="21.778">Sa</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="216.875" y="21.778">Su</text>
+    <text fill="#989898" font-size="10" textLength="13.875" x="232.063" y="21.778">Mo</text>
+    <text fill="#989898" font-size="10" textLength="11.688" x="249.156" y="21.778">Tu</text>
+    <text fill="#989898" font-size="10" textLength="15" x="263.5" y="21.778">We</text>
+    <text fill="#989898" font-size="10" textLength="11.688" x="281.156" y="21.778">Th</text>
+    <text fill="#989898" font-size="10" textLength="9.438" x="298.281" y="21.778">Fr</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="312.875" y="21.778">Sa</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="328.875" y="21.778">Su</text>
+    <text fill="#989898" font-size="10" textLength="13.875" x="344.063" y="21.778">Mo</text>
+    <text fill="#989898" font-size="10" textLength="11.688" x="361.156" y="21.778">Tu</text>
+    <text fill="#989898" font-size="10" textLength="15" x="375.5" y="21.778">We</text>
+    <text fill="#989898" font-size="10" textLength="11.688" x="393.156" y="21.778">Th</text>
+    <text fill="#989898" font-size="10" textLength="9.438" x="410.281" y="21.778">Fr</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="424.875" y="21.778">Sa</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="440.875" y="21.778">Su</text>
+    <text fill="#000" font-size="10" textLength="13.875" x="456.063" y="21.778">Mo</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="473.156" y="21.778">Tu</text>
+    <text fill="#000" font-size="10" textLength="15" x="487.5" y="21.778">We</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="505.156" y="21.778">Th</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="121.438" y="33.778">27</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="137.438" y="33.778">28</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="153.438" y="33.778">29</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="169.438" y="33.778">30</text>
+    <text fill="#000" font-size="10" x="188.219" y="33.778">1</text>
+    <text fill="#989898" font-size="10" x="204.219" y="33.778">2</text>
+    <text fill="#989898" font-size="10" x="220.219" y="33.778">3</text>
+    <text fill="#989898" font-size="10" x="236.219" y="33.778">4</text>
+    <text fill="#989898" font-size="10" x="252.219" y="33.778">5</text>
+    <text fill="#989898" font-size="10" x="268.219" y="33.778">6</text>
+    <text fill="#989898" font-size="10" x="284.219" y="33.778">7</text>
+    <text fill="#989898" font-size="10" x="300.219" y="33.778">8</text>
+    <text fill="#989898" font-size="10" x="316.219" y="33.778">9</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="329.438" y="33.778">10</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="345.438" y="33.778">11</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="361.438" y="33.778">12</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="377.438" y="33.778">13</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="393.438" y="33.778">14</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="409.438" y="33.778">15</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="425.438" y="33.778">16</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="441.438" y="33.778">17</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="457.438" y="33.778">18</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="473.438" y="33.778">19</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="489.438" y="33.778">20</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="505.438" y="33.778">21</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="119" x2="119" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="135" x2="135" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="151" x2="151" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="167" x2="167" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="183" x2="183" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="199" x2="199" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="215" x2="215" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="231" x2="231" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="247" x2="247" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="263" x2="263" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="279" x2="279" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="295" x2="295" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="311" x2="311" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="327" x2="327" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="343" x2="343" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="359" x2="359" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="375" x2="375" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="391" x2="391" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="407" x2="407" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="423" x2="423" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="439" x2="439" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="455" x2="455" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="471" x2="471" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="487" x2="487" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="503" x2="503" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="519" x2="519" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="119" x2="519" y1="39" y2="39"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="119" x2="519" y1="69" y2="69"/>
+    <path d="M191,52 L191,61.5 L468,61.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="467,57.5,471,61.5,467,65.5,467,57.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="76" x="121" y="41"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="76" x="121" y="41"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="44" x="473" y="56"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="44" x="473" y="56"/>
+    <text fill="#000" font-size="11" textLength="26.263" x="125" y="49.556">task1</text>
+    <text fill="#000" font-size="11" textLength="26.263" x="477" y="64.556">task2</text>
+    <text fill="#000" font-size="10" textLength="13.875" x="120.063" y="76.778">Mo</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="137.156" y="76.778">Tu</text>
+    <text fill="#000" font-size="10" textLength="15" x="151.5" y="76.778">We</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="169.156" y="76.778">Th</text>
+    <text fill="#000" font-size="10" textLength="9.438" x="186.281" y="76.778">Fr</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="200.875" y="76.778">Sa</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="216.875" y="76.778">Su</text>
+    <text fill="#989898" font-size="10" textLength="13.875" x="232.063" y="76.778">Mo</text>
+    <text fill="#989898" font-size="10" textLength="11.688" x="249.156" y="76.778">Tu</text>
+    <text fill="#989898" font-size="10" textLength="15" x="263.5" y="76.778">We</text>
+    <text fill="#989898" font-size="10" textLength="11.688" x="281.156" y="76.778">Th</text>
+    <text fill="#989898" font-size="10" textLength="9.438" x="298.281" y="76.778">Fr</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="312.875" y="76.778">Sa</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="328.875" y="76.778">Su</text>
+    <text fill="#989898" font-size="10" textLength="13.875" x="344.063" y="76.778">Mo</text>
+    <text fill="#989898" font-size="10" textLength="11.688" x="361.156" y="76.778">Tu</text>
+    <text fill="#989898" font-size="10" textLength="15" x="375.5" y="76.778">We</text>
+    <text fill="#989898" font-size="10" textLength="11.688" x="393.156" y="76.778">Th</text>
+    <text fill="#989898" font-size="10" textLength="9.438" x="410.281" y="76.778">Fr</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="424.875" y="76.778">Sa</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="440.875" y="76.778">Su</text>
+    <text fill="#000" font-size="10" textLength="13.875" x="456.063" y="76.778">Mo</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="473.156" y="76.778">Tu</text>
+    <text fill="#000" font-size="10" textLength="15" x="487.5" y="76.778">We</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="505.156" y="76.778">Th</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="121.438" y="90.778">27</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="137.438" y="90.778">28</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="153.438" y="90.778">29</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="169.438" y="90.778">30</text>
+    <text fill="#000" font-size="10" x="188.219" y="90.778">1</text>
+    <text fill="#989898" font-size="10" x="204.219" y="90.778">2</text>
+    <text fill="#989898" font-size="10" x="220.219" y="90.778">3</text>
+    <text fill="#989898" font-size="10" x="236.219" y="90.778">4</text>
+    <text fill="#989898" font-size="10" x="252.219" y="90.778">5</text>
+    <text fill="#989898" font-size="10" x="268.219" y="90.778">6</text>
+    <text fill="#989898" font-size="10" x="284.219" y="90.778">7</text>
+    <text fill="#989898" font-size="10" x="300.219" y="90.778">8</text>
+    <text fill="#989898" font-size="10" x="316.219" y="90.778">9</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="329.438" y="90.778">10</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="345.438" y="90.778">11</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="361.438" y="90.778">12</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="377.438" y="90.778">13</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="393.438" y="90.778">14</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="409.438" y="90.778">15</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="425.438" y="90.778">16</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="441.438" y="90.778">17</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="457.438" y="90.778">18</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="473.438" y="90.778">19</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="489.438" y="90.778">20</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="505.438" y="90.778">21</text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="52.725" x="124.638" y="105.333">June 2022</text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="48.075" x="326.963" y="105.333">July 2022</text>
+  </g>
+</svg>

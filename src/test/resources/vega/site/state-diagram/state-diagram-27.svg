@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="93px" preserveAspectRatio="none" style="width:297px;height:93px;background:#FFFFFF;" version="1.1" viewBox="0 0 297 93" width="297px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="A" data-source-line="16" id="ent0001">
+      <rect fill="#98FB98" height="65" rx="12.5" ry="12.5" style="stroke:#EE82EE;stroke-width:0.5;" width="50" x="73" y="12"/>
+      <line style="stroke:#EE82EE;stroke-width:0.5;" x1="73" x2="123" y1="37" y2="37"/>
+      <text fill="#F00" font-family="Sansserif" font-size="15" font-weight="700" x="92.984" y="28.667">A</text>
+      <text fill="#F00" font-family="Sansserif" font-size="15" font-weight="700" textLength="25.031" x="78" y="53.667">a a a</text>
+      <text fill="#F00" font-family="Sansserif" font-size="15" font-weight="700" x="78" y="68.667">a</text>
+    </g>
+    <g class="entity" data-qualified-name="B" data-source-line="17" id="ent0002">
+      <rect fill="#98FB98" height="65" rx="12.5" ry="12.5" style="stroke:#EE82EE;stroke-width:0.5;" width="50" x="166" y="12"/>
+      <line style="stroke:#EE82EE;stroke-width:0.5;" x1="166" x2="216" y1="37" y2="37"/>
+      <text fill="#F00" font-family="Sansserif" font-size="15" font-weight="700" x="185.984" y="28.667">B</text>
+      <text fill="#F00" font-family="Sansserif" font-size="15" font-weight="700" textLength="25.031" x="171" y="53.667">b b b</text>
+      <text fill="#F00" font-family="Sansserif" font-size="15" font-weight="700" x="171" y="68.667">b</text>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="19" id="ent0003">
+      <ellipse cx="16" cy="42.5" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="end_entity" data-qualified-name=".end." data-source-line="21" id="ent0006">
+      <ellipse cx="270" cy="43.5" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+      <ellipse cx="270" cy="43.5" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="72.714,44.5,63.714,40.5,67.714,44.5,63.714,48.5,72.714,44.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M26.055,44.5 C37.602,44.5 51.978,44.5 67.714,44.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="25.188" x="37" y="36.611">start</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="165.94,44.5,156.94,40.5,160.94,44.5,156.94,48.5,165.94,44.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M123.413,44.5 C136.643,44.5 147.762,44.5 160.94,44.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="21.694" x="134" y="36.611">a2b</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0006" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="258.726,44.5,249.726,40.5,253.726,44.5,249.726,48.5,258.726,44.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M216.431,44.5 C230.684,44.5 242.749,44.5 253.726,44.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="21.694" x="227" y="36.611">end</text>
+    </g>
+  </g>
+</svg>

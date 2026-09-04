@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+skinparam ranksep 30
+[*] --> State1
+State1 --> State2 : next step
+State2 -[node]-> State3 : next step\n(on the middle of the arrow)
+State3 --> [*]
+@enduml

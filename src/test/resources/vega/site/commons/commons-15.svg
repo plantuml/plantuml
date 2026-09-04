@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="205px" preserveAspectRatio="none" style="width:135px;height:205px;background:#FFFFFF;" version="1.1" viewBox="0 0 135 205" width="135px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="header" data-source-line="1">
+      <text fill="#888" font-size="10" textLength="55.563" x="72.438" y="7.778">some header</text>
+    </g>
+    <g class="title" data-source-line="5">
+      <text fill="#000" font-size="14" font-weight="700" textLength="40.425" x="43.787" y="31.889">My title</text>
+    </g>
+    <g class="entity" data-qualified-name="user" data-source-line="13" id="ent0001">
+      <rect fill="#F1F1F1" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="113.413" x="6" y="58"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="49.1" y="70.889">user</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="118.413" y1="76" y2="76"/>
+      <text fill="#000" font-size="14" textLength="101.413" x="12" y="90.889">name = "Dummy"</text>
+      <text fill="#000" font-size="14" textLength="42.525" x="12" y="104.889">id = 123</text>
+    </g>
+    <g class="legend" data-source-line="9">
+      <rect fill="#DDD" height="24" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="76.238" x="25.881" y="134"/>
+      <text fill="#000" font-size="14" textLength="66.238" x="30.881" y="149.889">The legend</text>
+    </g>
+    <g class="caption" data-source-line="7">
+      <text fill="#000" font-size="14" textLength="81.813" x="23.094" y="182.889">This is caption</text>
+    </g>
+    <g class="footer" data-source-line="3">
+      <text fill="#888" font-size="10" textLength="49.938" x="39.031" y="195.778">some footer</text>
+    </g>
+  </g>
+</svg>

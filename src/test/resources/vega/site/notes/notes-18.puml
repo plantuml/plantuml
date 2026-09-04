@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+<style>
+.s2n {
+    backgroundcolor green
+    Linecolor red
+    LineThickness 2
+}
+</style>
+node a
+node b
+
+a -> b: //link label//
+note left of a <<s2n>>
+  Link note
+end note
+@enduml

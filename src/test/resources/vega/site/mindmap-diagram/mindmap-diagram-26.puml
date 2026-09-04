@@ -1,0 +1,47 @@
+---
+output: svg
+---
+@startmindmap
+
+
+<style>
+node {
+    Padding 12
+    Margin 3
+    HorizontalAlignment center
+    LineColor blue
+    LineThickness 3.0
+    BackgroundColor gold
+    RoundCorner 40
+    MaximumWidth 100
+}
+
+rootNode {
+    LineStyle 8.0;3.0
+    LineColor red
+    BackgroundColor white
+    LineThickness 1.0
+    RoundCorner 0
+    Shadowing 0.0
+}
+
+leafNode {
+    LineColor gold
+    RoundCorner 0
+    Padding 3
+}
+
+arrow {
+    LineStyle 4
+    LineThickness 0.5
+    LineColor green
+}
+</style>
+
+* Hi =)
+** sometimes i have node in wich i want to write a long text
+*** this results in really huge diagram
+**** of course, i can explicit split with a\nnew line
+**** but it could be cool if PlantUML was able to split long lines, maybe with an option
+
+@endmindmap

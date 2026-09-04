@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startnwdiag
+nwdiag {
+  group {
+    color = "#CCFFCC";
+    description = "Long group description";
+
+    web01;
+    web02;
+    db01;
+  }
+
+  network dmz {
+    web01;
+    web02;
+  }
+  network internal {
+    web01;
+    web02;
+    db01 [address = ".101", shape = database];
+  }
+}
+@endnwdiag

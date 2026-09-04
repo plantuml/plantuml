@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+Alice -> Bob : hello1
+Alice -> Bob : hello2
+@enduml

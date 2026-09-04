@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startwbs
+!$json_object = {
+  "name": "Mark McGwire", "hr": 65, "avg":  0.278
+}
+
+* json_object
+ * keys of json_object
+!foreach $key in %get_json_keys($json_object)
+  * $key
+!endfor
+@endwbs

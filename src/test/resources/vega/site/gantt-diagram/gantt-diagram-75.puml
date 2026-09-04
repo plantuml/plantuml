@@ -1,0 +1,38 @@
+---
+output: svg
+---
+@startgantt
+
+Project starts 2020-09-01
+
+[taskA] starts 2020-09-01 and requires 3 days
+[taskB] starts 2020-09-10 and requires 3 days
+[taskB] displays on same row as [taskA]
+
+[task01] starts 2020-09-05 and requires 4 days
+
+then [task02] requires 8 days
+note bottom
+  note for task02
+  more notes
+end note
+
+then [task03] requires 7 days
+note bottom
+  note for task03
+  more notes
+end note
+
+-- separator --
+
+[taskC] starts 2020-09-02 and requires 5 days
+[taskD] starts 2020-09-09 and requires 5 days
+[taskD] displays on same row as [taskC]
+
+[task 10] starts 2020-09-05 and requires 5 days
+then [task 11] requires 5 days
+note bottom
+  note for task11
+  more notes
+end note
+@endgantt

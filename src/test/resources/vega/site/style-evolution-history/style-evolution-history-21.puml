@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+title Style hierarchy cascade per type Option1
+skinparam ranksep 30
+hide circle
+hide empty members
+class root
+class message extends root
+class element extends root
+class actor extends element
+class "SequenceDiagram.message" extends message
+class "SequenceDiagram.actor" extends actor
+
+@enduml

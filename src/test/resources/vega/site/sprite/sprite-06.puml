@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+sprite react <svg viewBox="0 0 230 230">
+<circle cx="115" cy="102" r="20.5" fill="#61dafb"/>
+<ellipse rx="110" ry="42"  cx="115" cy="102" stroke="#ff0000" stroke-width="10" fill="none"/>
+<g transform="rotate(100 115 102)">
+<ellipse rx="110" ry="42"  cx="115" cy="102" stroke="#00ff00" stroke-width="10" fill="none"/>
+</g>
+<g transform="rotate(-100 115 102)">
+<ellipse rx="110" ry="42"  cx="115" cy="102" stroke="#0000ff" stroke-width="10" fill="none"/>
+</g>
+</svg>
+
+rectangle "<$react{scale=1}>"
+@enduml

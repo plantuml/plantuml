@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+!$foo = ["abc", "def", "ghi"]
+Alice <- Bob : Yes he loves **$foo[2]** letters?
+@enduml

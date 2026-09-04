@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+class Car [[http://plantuml.com/link]]
+class Wheel [[http://plantuml.com/sequence]]
+note left [[http://plantuml.com]]
+foo
+end note
+Car *-- Wheel [[http://plantuml.com/class]] : has some
+@enduml

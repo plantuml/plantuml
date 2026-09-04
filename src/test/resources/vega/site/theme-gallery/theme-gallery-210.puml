@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startmindmap
+!theme minty
++ root
+**:right_1.1
+right_1.2;
+++ right_2
+
+left side
+
+-- left_1
+-- left_2
+**:left_3.1
+left_3.2;
+@endmindmap

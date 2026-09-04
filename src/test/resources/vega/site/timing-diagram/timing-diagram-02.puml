@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startuml
+clock   "Clock_0"   as C0 with period 50
+clock   "Clock_1"   as C1 with period 50 pulse 15 offset 10
+binary  "Binary"  as B
+concise "Concise" as C
+rectangle "Rectangle" as Re
+robust  "Robust"  as R
+analog  "Analog"  as A
+
+
+@0
+C is Idle
+R is Idle
+Re is Idle
+A is 0
+
+@100
+B is high
+C is Waiting
+Re is Waiting
+R is Processing
+A is 3
+
+@300
+R is Waiting
+A is 1
+@enduml

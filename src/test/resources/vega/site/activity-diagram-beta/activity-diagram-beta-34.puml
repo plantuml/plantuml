@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+start
+split
+   :A;
+   kill
+split again
+   :B;
+   detach
+split again
+   :C;
+   kill
+end split
+@enduml

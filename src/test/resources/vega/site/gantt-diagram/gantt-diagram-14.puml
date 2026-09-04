@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startgantt
+[Prototype design] requires 13 days
+[Test prototype] requires 4 days
+[Test prototype] starts at [Prototype design]'s end
+[Prototype design] is colored in Fuchsia/FireBrick
+[Test prototype] is colored in GreenYellow/Green
+@endgantt

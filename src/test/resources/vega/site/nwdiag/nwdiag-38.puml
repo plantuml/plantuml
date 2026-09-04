@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startnwdiag
+nwdiag {
+network Network {
+Folder [shape = folder]
+Hexagon [shape = hexagon]
+}
+}
+@endnwdiag

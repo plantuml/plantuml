@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="173px" preserveAspectRatio="none" style="width:222px;height:173px;background:#FFFFFF;" version="1.1" viewBox="0 0 222 173" width="222px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="27.788" x="91.681" y="10"/>
+    <text fill="#000" font-size="14" x="101.681" y="30.889">1</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="27.788" x="43.894" y="69"/>
+    <text fill="#000" font-size="14" x="53.894" y="89.889">2</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="27.788" x="20" y="128"/>
+    <text fill="#000" font-size="14" x="30" y="148.889">4</text>
+    <path d="M57.787,103 L57.787,106 C57.787,113 33.894,118 33.894,125 L33.894,128" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="27.788" x="67.788" y="128"/>
+    <text fill="#000" font-size="14" x="77.788" y="148.889">5</text>
+    <path d="M57.787,103 L57.787,106 C57.787,113 81.681,118 81.681,125 L81.681,128" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M105.575,44 L105.575,47 C105.575,54 57.787,59 57.787,66 L57.787,69" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="27.788" x="139.469" y="69"/>
+    <text fill="#000" font-size="14" x="149.469" y="89.889">3</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="27.788" x="115.575" y="128"/>
+    <text fill="#000" font-size="14" x="125.575" y="148.889">6</text>
+    <path d="M153.363,103 L153.363,106 C153.363,113 129.469,118 129.469,125 L129.469,128" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="27.788" x="163.363" y="128"/>
+    <text fill="#000" font-size="14" x="173.363" y="148.889">7</text>
+    <path d="M153.363,103 L153.363,106 C153.363,113 177.256,118 177.256,125 L177.256,128" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M105.575,44 L105.575,47 C105.575,54 153.363,59 153.363,66 L153.363,69" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

@@ -1,0 +1,267 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="314px" preserveAspectRatio="none" style="width:891px;height:314px;background:#FFFFFF;" version="1.1" viewBox="0 0 891 314" width="891px" zoomAndPan="magnify">
+  <defs>
+    <filter height="1" id="b1kpv63w4q3kf30" width="1" x="0" y="0">
+      <feFlood flood-color="#FFA500" result="flood"/>
+      <feComposite in="SourceGraphic" in2="flood" operator="over"/>
+    </filter>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="31.425" x="7" y="30.333">This is</text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="22.725" x="38.425" y="30.333">bold</text>
+    <text fill="#000" font-size="12" textLength="31.425" x="7" y="44.333">This is</text>
+    <text fill="#000" font-size="12" font-style="italic" textLength="30.075" x="38.425" y="44.333">italics</text>
+    <text fill="#000" font-size="12" textLength="31.425" x="7" y="58.333">This is</text>
+    <text fill="#000" font-family="monospace" font-size="12" textLength="68.7" x="38.425" y="58.333">monospaced</text>
+    <text fill="#000" font-size="12" textLength="31.425" x="7" y="72.333">This is</text>
+    <text fill="#000" font-size="12" text-decoration="line-through" textLength="61.95" x="38.425" y="72.333">stricken-out</text>
+    <text fill="#000" font-size="12" textLength="31.425" x="7" y="86.333">This is</text>
+    <text fill="#000" font-size="12" text-decoration="underline" textLength="56.1" x="38.425" y="86.333">underlined</text>
+    <text fill="#000" font-size="12" textLength="31.425" x="7" y="100.333">This is</text>
+    <text fill="#000" font-size="12" text-decoration="wavy underline" textLength="88.125" x="38.425" y="100.333">wave-underlined</text>
+    <line style="stroke:#AAA;stroke-width:1;" x1="7" x2="216.375" y1="108.5" y2="108.5"/>
+    <text fill="#000" font-size="12" textLength="62.7" x="7" y="122.333">This is ∞ long</text>
+    <text fill="#000" font-size="12" textLength="38.1" x="7" y="136.333">This is a</text>
+    <path d="M51.1,129 L48.1,135 L49.1,135 L52.1,129 L51.1,129 M47.1,130 L46.1,132 L47.1,134 L48.1,134 L47.1,132 L48.1,130 L47.1,130 M52.1,130 L53.1,132 L52.1,134 L53.1,134 L54.1,132 L53.1,130 L52.1,130" fill="#000"/>
+    <text fill="#000" font-size="12" textLength="22.05" x="55.1" y="136.333">icon</text>
+    <text fill="#000" font-size="12" textLength="57.375" x="7" y="289.333">Use image :</text>
+    <image height="151" width="151" x="64.375" xlink:href="data:image/png;base64,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" y="141"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="216.375" y1="13" y2="13"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="216.375" y1="293" y2="293"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="13" y2="34"/>
+    <line style="stroke:#000;stroke-width:1;" x1="216.375" x2="216.375" y1="13" y2="34"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="140" y2="293"/>
+    <line style="stroke:#000;stroke-width:1;" x1="216.375" x2="216.375" y1="140" y2="293"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="112" y2="126"/>
+    <line style="stroke:#000;stroke-width:1;" x1="216.375" x2="216.375" y1="112" y2="126"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="90" y2="104"/>
+    <line style="stroke:#000;stroke-width:1;" x1="216.375" x2="216.375" y1="90" y2="104"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="62" y2="76"/>
+    <line style="stroke:#000;stroke-width:1;" x1="216.375" x2="216.375" y1="62" y2="76"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="34" y2="48"/>
+    <line style="stroke:#000;stroke-width:1;" x1="216.375" x2="216.375" y1="34" y2="48"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="126" y2="140"/>
+    <line style="stroke:#000;stroke-width:1;" x1="216.375" x2="216.375" y1="126" y2="140"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="104" y2="112"/>
+    <line style="stroke:#000;stroke-width:1;" x1="216.375" x2="216.375" y1="104" y2="112"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="76" y2="90"/>
+    <line style="stroke:#000;stroke-width:1;" x1="216.375" x2="216.375" y1="76" y2="90"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="48" y2="62"/>
+    <line style="stroke:#000;stroke-width:1;" x1="216.375" x2="216.375" y1="48" y2="62"/>
+    <rect fill="#FFF" height="14" style="stroke:#FFF;stroke-width:1;" width="41.3" x="12" y="6"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="41.3" x="12" y="16.889">Creole</text>
+    <text fill="#000" font-size="12" textLength="31.425" x="219.375" y="28.333">This is</text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="22.725" x="250.8" y="28.333">bold</text>
+    <text fill="#000" font-size="12" textLength="31.425" x="219.375" y="42.333">This is</text>
+    <text fill="#000" font-size="12" font-style="italic" textLength="30.075" x="250.8" y="42.333">italics</text>
+    <text fill="#000" font-size="12" textLength="31.425" x="219.375" y="56.333">This is</text>
+    <text fill="#000" font-family="monospace" font-size="12" textLength="68.7" x="250.8" y="56.333">monospaced</text>
+    <text fill="#000" font-size="12" textLength="31.425" x="219.375" y="70.333">This is</text>
+    <text fill="#000" font-size="12" text-decoration="line-through" textLength="39.3" x="250.8" y="70.333">stroked</text>
+    <text fill="#000" font-size="12" textLength="31.425" x="219.375" y="84.333">This is</text>
+    <text fill="#000" font-size="12" text-decoration="underline" textLength="56.1" x="250.8" y="84.333">underlined</text>
+    <text fill="#000" font-size="12" textLength="31.425" x="219.375" y="98.333">This is</text>
+    <text fill="#000" font-size="12" text-decoration="wavy underline" textLength="34.725" x="250.8" y="98.333">waved</text>
+    <text fill="#000" font-size="12" textLength="31.425" x="219.375" y="112.333">This is</text>
+    <text fill="#000" font-size="12" textLength="39.3" x="250.8" y="112.333">stroked</text>
+    <line style="stroke:#008000;stroke-width:0.429;" x1="250.8" x2="290.1" y1="109.333" y2="109.333"/>
+    <text fill="#000" font-size="12" textLength="31.425" x="219.375" y="126.333">This is</text>
+    <text fill="#000" font-size="12" textLength="56.1" x="250.8" y="126.333">underlined</text>
+    <line style="stroke:#F00;stroke-width:0.429;" x1="250.8" x2="306.9" y1="127.19" y2="127.19"/>
+    <text fill="#000" font-size="12" textLength="31.425" x="219.375" y="140.333">This is</text>
+    <text fill="#000" font-size="12" text-decoration="wavy underline" textLength="34.725" x="250.8" y="140.333">waved</text>
+    <line style="stroke:#AAA;stroke-width:1;" x1="219.375" x2="354.475" y1="148.5" y2="148.5"/>
+    <text fill="#000" font-size="12" textLength="31.425" x="219.375" y="162.333">This is</text>
+    <text fill="#00F" font-size="12" textLength="24.075" x="250.8" y="162.333">Blue</text>
+    <text fill="#000" font-size="12" textLength="31.425" x="219.375" y="176.333">This is</text>
+    <text fill="#000" filter="url(#b1kpv63w4q3kf30)" font-size="12" textLength="102.675" x="250.8" y="176.333">Orange background</text>
+    <text fill="#000" font-size="12" textLength="31.425" x="219.375" y="198.333">This is</text>
+    <text fill="#000" font-size="20" textLength="26.75" x="250.8" y="196.556">big</text>
+    <line style="stroke:#000;stroke-width:1;" x1="218.375" x2="354.475" y1="12" y2="12"/>
+    <line style="stroke:#000;stroke-width:1;" x1="218.375" x2="354.475" y1="202" y2="202"/>
+    <line style="stroke:#000;stroke-width:1;" x1="218.375" x2="218.375" y1="12" y2="32"/>
+    <line style="stroke:#000;stroke-width:1;" x1="354.475" x2="354.475" y1="12" y2="32"/>
+    <line style="stroke:#000;stroke-width:1;" x1="218.375" x2="218.375" y1="166" y2="180"/>
+    <line style="stroke:#000;stroke-width:1;" x1="354.475" x2="354.475" y1="166" y2="180"/>
+    <line style="stroke:#000;stroke-width:1;" x1="218.375" x2="218.375" y1="116" y2="130"/>
+    <line style="stroke:#000;stroke-width:1;" x1="354.475" x2="354.475" y1="116" y2="130"/>
+    <line style="stroke:#000;stroke-width:1;" x1="218.375" x2="218.375" y1="60" y2="74"/>
+    <line style="stroke:#000;stroke-width:1;" x1="354.475" x2="354.475" y1="60" y2="74"/>
+    <line style="stroke:#000;stroke-width:1;" x1="218.375" x2="218.375" y1="152" y2="166"/>
+    <line style="stroke:#000;stroke-width:1;" x1="354.475" x2="354.475" y1="152" y2="166"/>
+    <line style="stroke:#000;stroke-width:1;" x1="218.375" x2="218.375" y1="102" y2="116"/>
+    <line style="stroke:#000;stroke-width:1;" x1="354.475" x2="354.475" y1="102" y2="116"/>
+    <line style="stroke:#000;stroke-width:1;" x1="218.375" x2="218.375" y1="46" y2="60"/>
+    <line style="stroke:#000;stroke-width:1;" x1="354.475" x2="354.475" y1="46" y2="60"/>
+    <line style="stroke:#000;stroke-width:1;" x1="218.375" x2="218.375" y1="144" y2="152"/>
+    <line style="stroke:#000;stroke-width:1;" x1="354.475" x2="354.475" y1="144" y2="152"/>
+    <line style="stroke:#000;stroke-width:1;" x1="218.375" x2="218.375" y1="88" y2="102"/>
+    <line style="stroke:#000;stroke-width:1;" x1="354.475" x2="354.475" y1="88" y2="102"/>
+    <line style="stroke:#000;stroke-width:1;" x1="218.375" x2="218.375" y1="32" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="354.475" x2="354.475" y1="32" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="218.375" x2="218.375" y1="180" y2="202"/>
+    <line style="stroke:#000;stroke-width:1;" x1="354.475" x2="354.475" y1="180" y2="202"/>
+    <line style="stroke:#000;stroke-width:1;" x1="218.375" x2="218.375" y1="130" y2="144"/>
+    <line style="stroke:#000;stroke-width:1;" x1="354.475" x2="354.475" y1="130" y2="144"/>
+    <line style="stroke:#000;stroke-width:1;" x1="218.375" x2="218.375" y1="74" y2="88"/>
+    <line style="stroke:#000;stroke-width:1;" x1="354.475" x2="354.475" y1="74" y2="88"/>
+    <rect fill="#FFF" height="12" style="stroke:#FFF;stroke-width:1;" width="68.1" x="224.375" y="6"/>
+    <text fill="#000" font-size="12" font-weight="700" textLength="68.1" x="224.375" y="15.333">HTML Creole</text>
+    <text fill="#000" font-size="12" textLength="137.55" x="357.475" y="28.333">You can have horizontal line</text>
+    <line style="stroke:#AAA;stroke-width:1;" x1="357.475" x2="496.025" y1="36.5" y2="36.5"/>
+    <text fill="#000" font-size="12" textLength="68.1" x="357.475" y="50.333">Or double line</text>
+    <line style="stroke:#AAA;stroke-width:1;" x1="357.475" x2="496.025" y1="57.5" y2="57.5"/>
+    <line style="stroke:#AAA;stroke-width:1;" x1="357.475" x2="496.025" y1="59.5" y2="59.5"/>
+    <text fill="#000" font-size="12" textLength="65.325" x="357.475" y="72.333">Or strong line</text>
+    <text fill="#000" font-size="12" textLength="26.7" x="357.475" y="86.333">____</text>
+    <text fill="#000" font-size="12" textLength="65.325" x="357.475" y="100.333">Or dotted line</text>
+    <line style="stroke:#AAA;stroke-width:1;stroke-dasharray:1,2;" x1="357.475" x2="496.025" y1="108.5" y2="108.5"/>
+    <text fill="#000" font-size="12" textLength="65.25" x="357.475" y="122.333">Or dotted title</text>
+    <text fill="#000" font-size="12" font-style="italic" textLength="48.6" x="357.475" y="136.333">and title...</text>
+    <line style="stroke:#AAA;stroke-width:1;" x1="357.475" x2="496.025" y1="143.5" y2="143.5"/>
+    <line style="stroke:#AAA;stroke-width:1;" x1="357.475" x2="496.025" y1="145.5" y2="145.5"/>
+    <text fill="#000" font-size="12" textLength="90.75" x="357.475" y="158.333">Or double-line title</text>
+    <line style="stroke:#AAA;stroke-width:1;" x1="357.475" x2="496.025" y1="166.5" y2="166.5"/>
+    <text fill="#000" font-size="12" textLength="86.1" x="357.475" y="180.333">Or single-line title</text>
+    <text fill="#000" font-size="12" textLength="33.375" x="357.475" y="194.333">Enjoy!</text>
+    <line style="stroke:#000;stroke-width:1;" x1="356.475" x2="496.025" y1="12" y2="12"/>
+    <line style="stroke:#000;stroke-width:1;" x1="356.475" x2="496.025" y1="198" y2="198"/>
+    <line style="stroke:#000;stroke-width:1;" x1="356.475" x2="356.475" y1="12" y2="32"/>
+    <line style="stroke:#000;stroke-width:1;" x1="496.025" x2="496.025" y1="12" y2="32"/>
+    <line style="stroke:#000;stroke-width:1;" x1="356.475" x2="356.475" y1="148" y2="162"/>
+    <line style="stroke:#000;stroke-width:1;" x1="496.025" x2="496.025" y1="148" y2="162"/>
+    <line style="stroke:#000;stroke-width:1;" x1="356.475" x2="356.475" y1="104" y2="112"/>
+    <line style="stroke:#000;stroke-width:1;" x1="496.025" x2="496.025" y1="104" y2="112"/>
+    <line style="stroke:#000;stroke-width:1;" x1="356.475" x2="356.475" y1="54" y2="62"/>
+    <line style="stroke:#000;stroke-width:1;" x1="496.025" x2="496.025" y1="54" y2="62"/>
+    <line style="stroke:#000;stroke-width:1;" x1="356.475" x2="356.475" y1="184" y2="198"/>
+    <line style="stroke:#000;stroke-width:1;" x1="496.025" x2="496.025" y1="184" y2="198"/>
+    <line style="stroke:#000;stroke-width:1;" x1="356.475" x2="356.475" y1="140" y2="148"/>
+    <line style="stroke:#000;stroke-width:1;" x1="496.025" x2="496.025" y1="140" y2="148"/>
+    <line style="stroke:#000;stroke-width:1;" x1="356.475" x2="356.475" y1="90" y2="104"/>
+    <line style="stroke:#000;stroke-width:1;" x1="496.025" x2="496.025" y1="90" y2="104"/>
+    <line style="stroke:#000;stroke-width:1;" x1="356.475" x2="356.475" y1="40" y2="54"/>
+    <line style="stroke:#000;stroke-width:1;" x1="496.025" x2="496.025" y1="40" y2="54"/>
+    <line style="stroke:#000;stroke-width:1;" x1="356.475" x2="356.475" y1="170" y2="184"/>
+    <line style="stroke:#000;stroke-width:1;" x1="496.025" x2="496.025" y1="170" y2="184"/>
+    <line style="stroke:#000;stroke-width:1;" x1="356.475" x2="356.475" y1="126" y2="140"/>
+    <line style="stroke:#000;stroke-width:1;" x1="496.025" x2="496.025" y1="126" y2="140"/>
+    <line style="stroke:#000;stroke-width:1;" x1="356.475" x2="356.475" y1="76" y2="90"/>
+    <line style="stroke:#000;stroke-width:1;" x1="496.025" x2="496.025" y1="76" y2="90"/>
+    <line style="stroke:#000;stroke-width:1;" x1="356.475" x2="356.475" y1="32" y2="40"/>
+    <line style="stroke:#000;stroke-width:1;" x1="496.025" x2="496.025" y1="32" y2="40"/>
+    <line style="stroke:#000;stroke-width:1;" x1="356.475" x2="356.475" y1="162" y2="170"/>
+    <line style="stroke:#000;stroke-width:1;" x1="496.025" x2="496.025" y1="162" y2="170"/>
+    <line style="stroke:#000;stroke-width:1;" x1="356.475" x2="356.475" y1="112" y2="126"/>
+    <line style="stroke:#000;stroke-width:1;" x1="496.025" x2="496.025" y1="112" y2="126"/>
+    <line style="stroke:#000;stroke-width:1;" x1="356.475" x2="356.475" y1="62" y2="76"/>
+    <line style="stroke:#000;stroke-width:1;" x1="496.025" x2="496.025" y1="62" y2="76"/>
+    <rect fill="#FFF" height="12" style="stroke:#FFF;stroke-width:1;" width="54.15" x="362.475" y="6"/>
+    <text fill="#000" font-size="12" textLength="54.15" x="362.475" y="15.333">Creole line</text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="40.65" x="499.025" y="28.333">test list 1</text>
+    <ellipse cx="504.525" cy="37.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-size="12" textLength="44.775" x="511.025" y="42.333">Bullet list</text>
+    <ellipse cx="504.525" cy="51.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-size="12" textLength="63.375" x="511.025" y="56.333">Second item</text>
+    <rect fill="#000" height="3.5" width="3.5" x="508.025" y="63"/>
+    <text fill="#000" font-size="12" textLength="44.025" x="515.025" y="70.333">Sub item</text>
+    <rect fill="#000" height="3.5" width="3.5" x="516.025" y="77"/>
+    <text fill="#000" font-size="12" textLength="63.375" x="523.025" y="84.333">Sub sub item</text>
+    <ellipse cx="504.525" cy="93.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-size="12" textLength="50.025" x="511.025" y="98.333">Third item</text>
+    <line style="stroke:#AAA;stroke-width:1;" x1="499.025" x2="607.275" y1="106.5" y2="106.5"/>
+    <text fill="#000" font-size="12" font-weight="700" textLength="40.65" x="499.025" y="120.333">test list 2</text>
+    <text fill="#000" font-size="12" textLength="9.975" x="499.025" y="134.333">1.</text>
+    <text fill="#000" font-size="12" textLength="70.725" x="512.3" y="134.333">Numbered list</text>
+    <text fill="#000" font-size="12" textLength="9.975" x="499.025" y="148.333">1.</text>
+    <text fill="#000" font-size="12" textLength="63.375" x="512.3" y="148.333">Second item</text>
+    <text fill="#000" font-size="12" textLength="9.975" x="509" y="162.333">1.</text>
+    <text fill="#000" font-size="12" textLength="44.025" x="522.275" y="162.333">Sub item</text>
+    <text fill="#000" font-size="12" textLength="9.975" x="509" y="176.333">1.</text>
+    <text fill="#000" font-size="12" textLength="84" x="522.275" y="176.333">Another sub item</text>
+    <text fill="#000" font-size="12" textLength="9.975" x="499.025" y="190.333">1.</text>
+    <text fill="#000" font-size="12" textLength="50.025" x="512.3" y="190.333">Third item</text>
+    <line style="stroke:#000;stroke-width:1;" x1="498.025" x2="607.275" y1="12" y2="12"/>
+    <line style="stroke:#000;stroke-width:1;" x1="498.025" x2="607.275" y1="194" y2="194"/>
+    <line style="stroke:#000;stroke-width:1;" x1="498.025" x2="498.025" y1="12" y2="32"/>
+    <line style="stroke:#000;stroke-width:1;" x1="607.275" x2="607.275" y1="12" y2="32"/>
+    <line style="stroke:#000;stroke-width:1;" x1="498.025" x2="498.025" y1="166" y2="180"/>
+    <line style="stroke:#000;stroke-width:1;" x1="607.275" x2="607.275" y1="166" y2="180"/>
+    <line style="stroke:#000;stroke-width:1;" x1="498.025" x2="498.025" y1="110" y2="124"/>
+    <line style="stroke:#000;stroke-width:1;" x1="607.275" x2="607.275" y1="110" y2="124"/>
+    <line style="stroke:#000;stroke-width:1;" x1="498.025" x2="498.025" y1="60" y2="74"/>
+    <line style="stroke:#000;stroke-width:1;" x1="607.275" x2="607.275" y1="60" y2="74"/>
+    <line style="stroke:#000;stroke-width:1;" x1="498.025" x2="498.025" y1="152" y2="166"/>
+    <line style="stroke:#000;stroke-width:1;" x1="607.275" x2="607.275" y1="152" y2="166"/>
+    <line style="stroke:#000;stroke-width:1;" x1="498.025" x2="498.025" y1="102" y2="110"/>
+    <line style="stroke:#000;stroke-width:1;" x1="607.275" x2="607.275" y1="102" y2="110"/>
+    <line style="stroke:#000;stroke-width:1;" x1="498.025" x2="498.025" y1="46" y2="60"/>
+    <line style="stroke:#000;stroke-width:1;" x1="607.275" x2="607.275" y1="46" y2="60"/>
+    <line style="stroke:#000;stroke-width:1;" x1="498.025" x2="498.025" y1="138" y2="152"/>
+    <line style="stroke:#000;stroke-width:1;" x1="607.275" x2="607.275" y1="138" y2="152"/>
+    <line style="stroke:#000;stroke-width:1;" x1="498.025" x2="498.025" y1="88" y2="102"/>
+    <line style="stroke:#000;stroke-width:1;" x1="607.275" x2="607.275" y1="88" y2="102"/>
+    <line style="stroke:#000;stroke-width:1;" x1="498.025" x2="498.025" y1="32" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="607.275" x2="607.275" y1="32" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="498.025" x2="498.025" y1="180" y2="194"/>
+    <line style="stroke:#000;stroke-width:1;" x1="607.275" x2="607.275" y1="180" y2="194"/>
+    <line style="stroke:#000;stroke-width:1;" x1="498.025" x2="498.025" y1="124" y2="138"/>
+    <line style="stroke:#000;stroke-width:1;" x1="607.275" x2="607.275" y1="124" y2="138"/>
+    <line style="stroke:#000;stroke-width:1;" x1="498.025" x2="498.025" y1="74" y2="88"/>
+    <line style="stroke:#000;stroke-width:1;" x1="607.275" x2="607.275" y1="74" y2="88"/>
+    <rect fill="#FFF" height="12" style="stroke:#FFF;stroke-width:1;" width="72.75" x="504.025" y="6"/>
+    <text fill="#000" font-size="12" textLength="72.75" x="504.025" y="15.333">Creole list item</text>
+    <text fill="#00F" font-size="16" font-weight="700" textLength="88.9" x="610.275" y="31.444">Just plain text</text>
+    <rect fill="#EEE" height="16" rx="5" ry="5" style="stroke:#000;stroke-width:2.5;" width="204" x="612.775" y="39.5"/>
+    <text fill="#000" font-size="12" textLength="116.7" x="656.425" y="50.833">This is my default button</text>
+    <rect fill="#EEE" height="16" rx="5" ry="5" style="stroke:#000;stroke-width:2.5;" width="188" x="612.775" y="62.5"/>
+    <text fill="#008000" font-size="12" font-weight="700" textLength="111.375" x="651.088" y="73.833">This is my green button</text>
+    <rect fill="#EEE" height="16" rx="5" ry="5" style="stroke:#000;stroke-width:2.5;" width="268" x="612.775" y="85.5"/>
+    <text fill="#000" font-size="12" text-decoration="line-through" x="682.05" y="96.833">-</text>
+    <text fill="#9A9A9A" font-size="12" text-decoration="line-through" textLength="125.475" x="686.025" y="96.833">This is my disabled button</text>
+    <text fill="#F00" font-size="20" textLength="132.375" x="630.275" y="121.556">Unchecked box</text>
+    <rect fill="none" height="10" style="stroke:#000;stroke-width:1.5;" width="10" x="612.275" y="111"/>
+    <text fill="#008000" font-size="12" textLength="66.75" x="630.275" y="137.333">Checked box</text>
+    <rect fill="none" height="10" style="stroke:#000;stroke-width:1.5;" width="10" x="612.275" y="129"/>
+    <polygon fill="#000" points="613.275,134,616.275,137,623.275,128,616.275,135" style="stroke:#000;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="12" font-style="italic" textLength="71.925" x="613.275" y="151.333">Enter text here</text>
+    <line style="stroke:#000;stroke-width:1;" x1="611.275" x2="790.275" y1="154" y2="154"/>
+    <line style="stroke:#000;stroke-width:1;" x1="611.275" x2="611.275" y1="151" y2="153"/>
+    <line style="stroke:#000;stroke-width:1;" x1="790.275" x2="790.275" y1="151" y2="153"/>
+    <rect fill="#EEE" height="15" style="stroke:#000;stroke-width:1;" width="159" x="610.275" y="158"/>
+    <text fill="#000" font-size="12" textLength="76.8" x="612.275" y="169.333">This is a droplist</text>
+    <line style="stroke:#000;stroke-width:1;" x1="758.275" x2="758.275" y1="158" y2="173"/>
+    <polygon fill="#000" points="761.275,164,767.275,164,764.275,168" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <rect fill="#EEE" height="15" style="stroke:#000;stroke-width:1;" width="231" x="610.275" y="176"/>
+    <text fill="#9A9A9A" font-size="12" textLength="121.575" x="612.275" y="187.333">This is a disabled droplist</text>
+    <line style="stroke:#000;stroke-width:1;" x1="830.275" x2="830.275" y1="176" y2="191"/>
+    <polygon fill="#000" points="833.275,182,839.275,182,836.275,186" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <rect fill="#EEE" height="15" style="stroke:#000;stroke-width:1;" width="191" x="610.275" y="194"/>
+    <text fill="#F00" font-size="12" font-weight="700" textLength="94.125" x="612.275" y="205.333">This is a red droplist</text>
+    <line style="stroke:#000;stroke-width:1;" x1="790.275" x2="790.275" y1="194" y2="209"/>
+    <polygon fill="#000" points="793.275,200,799.275,200,796.275,204" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#000;stroke-width:1;" x1="609.275" x2="884.275" y1="12" y2="12"/>
+    <line style="stroke:#000;stroke-width:1;" x1="609.275" x2="884.275" y1="211" y2="211"/>
+    <line style="stroke:#000;stroke-width:1;" x1="609.275" x2="609.275" y1="12" y2="36"/>
+    <line style="stroke:#000;stroke-width:1;" x1="884.275" x2="884.275" y1="12" y2="36"/>
+    <line style="stroke:#000;stroke-width:1;" x1="609.275" x2="609.275" y1="193" y2="211"/>
+    <line style="stroke:#000;stroke-width:1;" x1="884.275" x2="884.275" y1="193" y2="211"/>
+    <line style="stroke:#000;stroke-width:1;" x1="609.275" x2="609.275" y1="157" y2="175"/>
+    <line style="stroke:#000;stroke-width:1;" x1="884.275" x2="884.275" y1="157" y2="175"/>
+    <line style="stroke:#000;stroke-width:1;" x1="609.275" x2="609.275" y1="127" y2="141"/>
+    <line style="stroke:#000;stroke-width:1;" x1="884.275" x2="884.275" y1="127" y2="141"/>
+    <line style="stroke:#000;stroke-width:1;" x1="609.275" x2="609.275" y1="82" y2="105"/>
+    <line style="stroke:#000;stroke-width:1;" x1="884.275" x2="884.275" y1="82" y2="105"/>
+    <line style="stroke:#000;stroke-width:1;" x1="609.275" x2="609.275" y1="36" y2="59"/>
+    <line style="stroke:#000;stroke-width:1;" x1="884.275" x2="884.275" y1="36" y2="59"/>
+    <line style="stroke:#000;stroke-width:1;" x1="609.275" x2="609.275" y1="175" y2="193"/>
+    <line style="stroke:#000;stroke-width:1;" x1="884.275" x2="884.275" y1="175" y2="193"/>
+    <line style="stroke:#000;stroke-width:1;" x1="609.275" x2="609.275" y1="141" y2="157"/>
+    <line style="stroke:#000;stroke-width:1;" x1="884.275" x2="884.275" y1="141" y2="157"/>
+    <line style="stroke:#000;stroke-width:1;" x1="609.275" x2="609.275" y1="105" y2="127"/>
+    <line style="stroke:#000;stroke-width:1;" x1="884.275" x2="884.275" y1="105" y2="127"/>
+    <line style="stroke:#000;stroke-width:1;" x1="609.275" x2="609.275" y1="59" y2="82"/>
+    <line style="stroke:#000;stroke-width:1;" x1="884.275" x2="884.275" y1="59" y2="82"/>
+    <rect fill="#FFF" height="12" style="stroke:#FFF;stroke-width:1;" width="50.7" x="615.275" y="6"/>
+    <text fill="#000" font-size="12" textLength="50.7" x="615.275" y="15.333">Mix on salt</text>
+  </g>
+</svg>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="205px" preserveAspectRatio="none" style="width:250px;height:205px;background:#FFFFFF;" version="1.1" viewBox="0 0 250 205" width="250px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Basic elements-->
+    <g class="cluster" data-qualified-name="Basic elements" data-source-line="135" id="ent0001">
+      <rect fill="#F2F2F2" height="177" rx="25" ry="25" style="stroke:#D9D9D9;stroke-width:3;stroke-dasharray:5,5;" width="228" x="14" y="4"/>
+      <text fill="#101010" font-size="14" font-weight="700" textLength="91.088" x="82.456" y="16.889">Basic elements</text>
+    </g>
+    <!--entity People-->
+    <g class="entity" data-qualified-name="Basic elements.People" data-source-line="135" id="ent0002">
+      <rect fill="#D9D9D9" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="100" x="30" y="45"/>
+      <path d="M48,64.5 C46.346,64.5 45,63.154 45,61.5 L45,59.5 C45,57.846 46.346,56.5 48,56.5 C49.654,56.5 51,57.846 51,59.5 L51,61.5 C51,63.154 49.654,64.5 48,64.5 M48,57.5 C46.897,57.5 46,58.397 46,59.5 L46,61.5 C46,62.603 46.897,63.5 48,63.5 C49.103,63.5 50,62.603 50,61.5 L50,59.5 C50,58.397 49.103,57.5 48,57.5" fill="#262626"/>
+      <path d="M48,57.5 C46.897,57.5 46,58.397 46,59.5 L46,61.5 C46,62.603 46.897,63.5 48,63.5 C49.103,63.5 50,62.603 50,61.5 L50,59.5 C50,58.397 49.103,57.5 48,57.5" fill="#FFF"/>
+      <path d="M42,69.5 L42,68.25 C42,66.875 43.125,65.75 44.5,65.75 L51.5,65.75 C52.875,65.75 54,66.875 54,68.25 L54,69.5 L42,69.5" fill="#FFF"/>
+      <path d="M54.5,70 L41.5,70 L41.5,68.25 A3.005,3.005 0 0 1 44.5,65.25 L51.5,65.25 A3.005,3.005 0 0 1 54.5,68.25 L54.5,70 M42.5,69 L53.5,69 L53.5,68.25 C53.5,67.147 52.603,66.25 51.5,66.25 L44.5,66.25 C43.397,66.25 42.5,67.147 42.5,68.25 L42.5,69" fill="#262626"/>
+      <text fill="#262626" font-size="5" textLength="15.594" x="48.5" y="60">People</text>
+      <text fill="#101010" font-size="14" textLength="43.663" x="40" y="81.889">People</text>
+    </g>
+    <!--entity Outcome-->
+    <g class="entity" data-qualified-name="Basic elements.Outcome" data-source-line="135" id="ent0003">
+      <rect fill="#D9D9D9" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="76.7" x="148.5" y="53"/>
+      <text fill="#101010" font-size="14" textLength="56.7" x="158.5" y="73.889">Outcome</text>
+    </g>
+    <!--entity Activity-->
+    <g class="entity" data-qualified-name="Basic elements.Activity" data-source-line="135" id="ent0004">
+      <rect fill="#D9D9D9" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="64.363" x="48" y="131"/>
+      <text fill="#101010" font-size="14" textLength="44.363" x="58" y="151.889">Activity</text>
+    </g>
+    <!--entity Object-->
+    <g class="entity" data-qualified-name="Basic elements.Object" data-source-line="135" id="ent0005">
+      <rect fill="#D9D9D9" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="60.425" x="130" y="131"/>
+      <text fill="#101010" font-size="14" textLength="40.425" x="140" y="151.889">Object</text>
+    </g>
+  </g>
+</svg>

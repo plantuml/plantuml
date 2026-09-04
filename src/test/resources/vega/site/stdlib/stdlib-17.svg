@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="128px" preserveAspectRatio="none" style="width:186px;height:128px;background:#FFFFFF;" version="1.1" viewBox="0 0 186 128" width="186px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity dir-->
+    <g class="entity" data-qualified-name="dir" data-source-line="5" id="ent0001">
+      <rect fill="#F1F1F1" height="99.692" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="164.45" x="6" y="12"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="142.45" x="17" y="32.889">«MA FOLDER_MOVE»</text>
+      <image height="52" width="52" x="62.379" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAAA0CAYAAADFeBvrAAADPklEQVR4Xt2ZS0gbQRjHo20FkVBJEIzxCVJBUHvwUA8FH+BFLEGhUigUQfSQCCoaEE3vvSh4EK+iEFvxHiheSlFTkyiYNCoxFxVRUbK7eWweu9Md20CYr7W7VZOdHn6X/y7ffj92dmZ3VsMwjOZ/AgS0AwLaAQHtgIB2QEA7IKAdENAOCG64uirmXK72yNLSQHRuTjERu32A29t7CepmARAw19dPufX11/Ghoa9CRQVCGo1ihNpaFLPZPrM+3wtQ/4EBAevxvEr09GyhggLQqBKEmhrE22xfuIOD5+Q1HhIQ8FNTa0JZGWjwXxAqK1FsenqbDQafkdd5KECQ6O5eIxu7C6LBgPjJye+s32+8F46OjMzFhY4JhZ6QvWdF6L5JNTejsN3+kTk5aZT6zSP7p04I5ecjUadLRRYX3zOXl2Vk//QJYfLyULK9nQk7HG/J/ukUkhALC1F0YWGA7D9nQgmTCQmlpSBXQkxaxMn+cyYUWVkZ5ScmvEJ5OTgmF1UJhTc2Gtnd3S5+fNwtVFWB43JQnRC+HufxmCQpp1BdDc75G6oUupFyu3slqS2lUqoVypByKhl+WROS3rYPklKd2+C83iry2r+Gn1vuRJE1ofjIyAeyrlw4PFHg2U/GlE6FEEb6OOzgrdaAqNeD2plQI4Rh9/dbYlbruajVgvppqBLCSJ8KDfzYGKifhj6hw8OG+OAgqJ+GKiHW52vhzeZzsagI1E9DjRC3s9MRN5sDYnExqJ0JFULc9naXdGe8QkkJqEuSNSG8sOI6t/HbhdXpNMUtFrcoYw3CZE1IDuDVZ3Ozl7dYnILRCM79E6oVwjLSndmS+8qTRpVCeJjxw8NOpTIY1QlxLlcXfmaUDLNMVCUUWV4elZ4Zr2AwgGNyUZVQsrMTiTKm5tuQJ9TXt3bXjfpsIHsbKzozsyzU1SXwZh5ZRDXgjca2tmjY4XhH9g+E2EDgTby//xvSalN42xUUyzV4K1ivT0Xn5z8xp6fNZP9AiAmFHjHHx03R2dnVVH09LJhjkq2tKLy6ijfr8X+nfLJ/KPRT6jF7dqaT7paR8/tVBRsMKvudQjsgoB0Q0A4IaAcEtAMC2gEB7YCAdn4AjRkVwyJyvZEAAAAASUVORK5CYII=" y="36"/>
+      <text fill="#000" font-size="14" textLength="39.025" x="62.379" y="98.581">A label</text>
+    </g>
+  </g>
+</svg>

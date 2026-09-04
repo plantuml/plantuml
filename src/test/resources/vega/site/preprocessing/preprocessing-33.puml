@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startcreole
+<#ccc>|= Input                               |= Output |
+| <U+0025>boolval(1)                         | %boolval(1) |
+| <U+0025>boolval(0)                         | %boolval(0) |
+| <U+0025>boolval(<U+0025>true())            | %boolval(%true()) |
+| <U+0025>boolval(<U+0025>false())           | %boolval(%false()) |
+| <U+0025>boolval(true)                      | %boolval(true) |
+| <U+0025>boolval(false)                     | %boolval(false) |
+| <U+0025>boolval(TRUE)                      | %boolval(TRUE) |
+| <U+0025>boolval(FALSE)                     | %boolval(FALSE) |
+| <U+0025>boolval("true")                    | %boolval("true") |
+| <U+0025>boolval("false")                   | %boolval("false") |
+| <U+0025>boolval(<U+0025>str2json("true"))  | %boolval(%str2json("true")) |
+| <U+0025>boolval(<U+0025>str2json("false")) | %boolval(%str2json("false")) |
+@endcreole

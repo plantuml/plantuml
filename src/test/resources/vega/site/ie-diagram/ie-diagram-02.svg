@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="118px" preserveAspectRatio="none" style="width:172px;height:118px;background:#FFFFFF;" version="1.1" viewBox="0 0 172 118" width="172px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Entity01-->
+    <g class="entity" data-qualified-name="Entity01" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="150.338" x="6" y="12"/>
+      <ellipse cx="51.631" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="46.631" y="33">E</text>
+      <text fill="#000" font-size="14" textLength="50.575" x="72.131" y="31.889">Entity01</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="155.338" y1="44" y2="44"/>
+      <g data-visibility-modifier="IE_MANDATORY">
+        <ellipse cx="17" cy="56.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="121.363" x="26" y="58.889">identifying_attribute</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="155.338" y1="66" y2="66"/>
+      <g data-visibility-modifier="IE_MANDATORY">
+        <ellipse cx="17" cy="78.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="124.338" x="26" y="80.889">mandatory_attribute</text>
+      <text fill="#000" font-size="14" textLength="107.363" x="26" y="94.889">optional_attribute</text>
+    </g>
+  </g>
+</svg>

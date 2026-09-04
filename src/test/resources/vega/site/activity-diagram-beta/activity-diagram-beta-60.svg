@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="532px" preserveAspectRatio="none" style="width:328px;height:532px;background:#FFFFFF;" version="1.1" viewBox="0 0 328 532" width="328px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="52.025" x="83.675" y="16"/>
+    <text fill="#000" font-size="12" textLength="32.025" x="93.675" y="35.333">action</text>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="52.025" x="83.675" y="68"/>
+    <text fill="#000" font-size="12" textLength="32.025" x="93.675" y="87.333">object</text>
+    <polygon fill="#F1F1F1" points="52.975,120,156.4,120,166.4,142,156.4,164,52.975,164,62.975,142" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="12" textLength="63.375" x="72.975" y="139.333">ObjectNode</text>
+    <text fill="#000" font-size="12" textLength="73.425" x="72.975" y="151.333">typed by signal</text>
+    <polygon fill="#F1F1F1" points="25,184,184.375,184,184.375,228,25,228,35,206" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="12" textLength="100.725" x="45" y="203.333">AcceptEventAction</text>
+    <text fill="#000" font-size="12" textLength="129.375" x="45" y="215.333">without TimeEvent trigger</text>
+    <polygon fill="#F1F1F1" points="52.25,248,167.125,248,177.125,264,167.125,280,52.25,280" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="12" textLength="94.875" x="62.25" y="267.333">SendSignalAction</text>
+    <polygon fill="#F1F1F1" points="51.65,300,167.725,300,177.725,322,167.725,344,51.65,344" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="12" textLength="96.075" x="61.65" y="319.333">SendObjectAction</text>
+    <text fill="#000" font-size="12" textLength="75.45" x="61.65" y="331.333">with signal type</text>
+    <polygon fill="#F1F1F1" points="80.675,364,148.7,364,138.7,380,148.7,396,80.675,396" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="12" textLength="38.025" x="90.675" y="383.333">Trigger</text>
+    <polygon fill="#F1F1F1" points="95.021,430.667,124.354,430.667,95.021,460,124.354,460" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="12" textLength="100.725" x="194.375" y="435.333">AcceptEventAction</text>
+    <text fill="#000" font-size="12" textLength="112.725" x="194.375" y="447.333">with TimeEvent trigger</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="65.375" x="77" y="480"/>
+    <text fill="#000" font-size="12" textLength="45.375" x="87" y="499.333">an action</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="109.688" x2="109.688" y1="48" y2="68"/>
+    <polygon fill="#181818" points="105.688,58,109.688,68,113.688,58,109.688,62" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="109.688" x2="109.688" y1="100" y2="120"/>
+    <polygon fill="#181818" points="105.688,110,109.688,120,113.688,110,109.688,114" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="109.688" x2="109.688" y1="164" y2="184"/>
+    <polygon fill="#181818" points="105.688,174,109.688,184,113.688,174,109.688,178" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="109.688" x2="109.688" y1="228" y2="248"/>
+    <polygon fill="#181818" points="105.688,238,109.688,248,113.688,238,109.688,242" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="109.688" x2="109.688" y1="280" y2="300"/>
+    <polygon fill="#181818" points="105.688,290,109.688,300,113.688,290,109.688,294" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="109.688" x2="109.688" y1="344" y2="364"/>
+    <polygon fill="#181818" points="105.688,354,109.688,364,113.688,354,109.688,358" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="109.688" x2="109.688" y1="396" y2="416"/>
+    <polygon fill="#181818" points="105.688,406,109.688,416,113.688,406,109.688,410" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="109.688" x2="109.688" y1="460" y2="480"/>
+    <polygon fill="#181818" points="105.688,470,109.688,480,113.688,470,109.688,474" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

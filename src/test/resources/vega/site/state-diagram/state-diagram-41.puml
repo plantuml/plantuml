@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+skinparam stateDiagramEdgeLabelStyle node
+skinparam ranksep 20
+
+[*] --> State1
+State1 --> State2 : next step
+State2 --> State3 : next step
+State3 --> [*]
+@enduml

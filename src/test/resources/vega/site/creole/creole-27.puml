@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+
+class a {
+**test list 1**
+* Bullet list
+* Second item
+** Sub item
+*** Sub sub item
+* Third item
+----
+**test list 2**
+# Numbered list
+# Second item
+## Sub item
+## Another sub item
+# Third item
+}
+
+a -- b
+
+@enduml

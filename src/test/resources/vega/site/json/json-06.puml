@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startjson
+{
+"Numeric": [1, 2, 3],
+"String ": ["v1a", "v2b", "v3c"],
+"Boolean": [true, false, true]
+}
+@endjson

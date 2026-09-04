@@ -1,0 +1,29 @@
+---
+output: svg
+---
+@startgantt
+<style>
+ganttDiagram {
+  task {
+    BackGroundColor GreenYellow
+    LineColor Green
+    unstarted {
+      BackGroundColor Fuchsia
+    }
+  }
+  undone {
+    BackGroundColor red
+  }
+}
+</style>
+
+[Prototype Design] lasts 7 days
+[Functional Testing] lasts 4 days
+[Performance Testing] lasts 4 days
+
+[Functional Testing] starts at [Prototype Design]'s end
+[Performance Testing] starts at [Prototype Design]'s end
+
+[Functional Testing] is 0% complete
+[Performance Testing] is 80% complete
+@endgantt

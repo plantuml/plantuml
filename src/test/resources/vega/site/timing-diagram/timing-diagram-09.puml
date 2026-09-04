@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+concise "Web User" as WU
+scale 100 as 50 pixels
+
+@WU
+0 is Waiting
++500 is ok
+@enduml

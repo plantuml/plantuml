@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="EBNF" height="700px" preserveAspectRatio="none" style="width:519px;height:700px;background:#FFFFFF;" version="1.1" viewBox="0 0 519 700" width="519px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="14" font-weight="700" textLength="53.637" x="10" y="20.889">Identifier</text>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:1;stroke-dasharray:5,5;" width="438.925" x="40" y="34"/>
+    <text fill="#000" font-size="14" textLength="428.925" x="45" y="49.889">IdentifierChars but not a ReservedKeyword or BooleanLiteral or NullLiteral</text>
+    <ellipse cx="14" cy="46" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="508.925" cy="46" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="46" y2="46"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="478.925" x2="504.925" y1="46" y2="46"/>
+    <path d="M489.925,46 L489.925,43 L495.925,46 L489.925,49 L489.925,46" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="91" x="10" y="83.889">IdentifierChars</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="40" x2="40" y1="109" y2="109"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="75.275" x="40" y="97"/>
+    <text fill="#000" font-size="14" textLength="65.275" x="45" y="112.889">JavaLetter</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="115.275" x2="135.275" y1="109" y2="109"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="135.275" x2="332.125" y1="109" y2="109"/>
+    <path d="M212.015,109 L212.015,106 L218.015,109 L212.015,112 L212.015,109" fill="#181818"/>
+    <path d="M135.275,109 C144.275,109 147.275,117 147.275,126 C147.275,135 150.275,143 159.275,143" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M308.125,143 C317.125,143 320.125,135 320.125,126 C320.125,117 323.125,109 332.125,109" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M167.275,135 C167.275,141 169.275,143 175.275,143" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="167.275" x2="167.275" y1="132" y2="135"/>
+    <path d="M167.275,132 C167.275,126 169.275,124 175.275,124" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="174.275" x2="293.125" y1="124" y2="124"/>
+    <path d="M243.585,124 L243.585,121 L237.585,124 L243.585,127 L243.585,124" fill="#181818"/>
+    <path d="M300.125,135 C300.125,141 298.125,143 292.125,143" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="300.125" x2="300.125" y1="132" y2="135"/>
+    <path d="M292.125,124 C298.125,124 300.125,126 300.125,132" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="159.275" x2="174.275" y1="143" y2="143"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="293.125" x2="308.125" y1="143" y2="143"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="118.85" x="174.275" y="131"/>
+    <text fill="#000" font-size="14" textLength="108.85" x="179.275" y="146.889">JavaLetterOrDigit</text>
+    <ellipse cx="14" cy="109" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="362.125" cy="109" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="109" y2="109"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="332.125" x2="358.125" y1="109" y2="109"/>
+    <path d="M343.125,109 L343.125,106 L349.125,109 L343.125,112 L343.125,109" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="65.275" x="10" y="180.889">JavaLetter</text>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:1;stroke-dasharray:5,5;" width="254.125" x="40" y="194"/>
+    <text fill="#000" font-size="14" textLength="244.125" x="45" y="209.889">any Unicode character that is a "Java letter"</text>
+    <ellipse cx="14" cy="206" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="324.125" cy="206" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="206" y2="206"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="294.125" x2="320.125" y1="206" y2="206"/>
+    <path d="M305.125,206 L305.125,203 L311.125,206 L305.125,209 L305.125,206" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="108.85" x="10" y="243.889">JavaLetterOrDigit</text>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:1;stroke-dasharray:5,5;" width="301.55" x="40" y="257"/>
+    <text fill="#000" font-size="14" textLength="291.55" x="45" y="272.889">any Unicode character that is a "Java letter-or-digit"</text>
+    <ellipse cx="14" cy="269" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="371.55" cy="269" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="269" y2="269"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="341.55" x2="367.55" y1="269" y2="269"/>
+    <path d="M352.55,269 L352.55,266 L358.55,269 L352.55,272 L352.55,269" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="84.788" x="10" y="306.889">TypeIdentifier</text>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:1;stroke-dasharray:5,5;" width="305.4" x="40" y="320"/>
+    <text fill="#000" font-size="14" textLength="295.4" x="45" y="335.889">Identifier but not permits, record, sealed, var, or yield</text>
+    <ellipse cx="14" cy="332" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="375.4" cy="332" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="332" y2="332"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="345.4" x2="371.4" y1="332" y2="332"/>
+    <path d="M356.4,332 L356.4,329 L362.4,332 L356.4,335 L356.4,332" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="170.45" x="10" y="369.889">UnqualifiedMethodIdentifier</text>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:1;stroke-dasharray:5,5;" width="131.363" x="40" y="383"/>
+    <text fill="#000" font-size="14" textLength="121.363" x="45" y="398.889">Identifier but not yield</text>
+    <ellipse cx="14" cy="395" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="201.363" cy="395" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="395" y2="395"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="171.363" x2="197.363" y1="395" y2="395"/>
+    <path d="M182.363,395 L182.363,392 L188.363,395 L182.363,398 L182.363,395" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="38.15" x="10" y="432.889">Literal</text>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="91.638" x="64" y="446"/>
+    <text fill="#000" font-size="14" textLength="81.638" x="69" y="461.889">IntegerLiteral</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="40" x2="64" y1="458" y2="458"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="155.638" x2="217.963" y1="458" y2="458"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="129.963" x="64" y="480"/>
+    <text fill="#000" font-size="14" textLength="119.963" x="69" y="495.889">FloatingPointLiteral</text>
+    <path d="M52,480 C52,489 55,492 64,492" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="193.963" x2="193.963" y1="492" y2="492"/>
+    <path d="M205.963,480 C205.963,489 202.963,492 193.963,492" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="99.6" x="64" y="514"/>
+    <text fill="#000" font-size="14" textLength="89.6" x="69" y="529.889">BooleanLiteral</text>
+    <path d="M52,514 C52,523 55,526 64,526" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="163.6" x2="193.963" y1="526" y2="526"/>
+    <path d="M176.781,526 L176.781,523 L182.781,526 L176.781,529 L176.781,526" fill="#181818"/>
+    <path d="M205.963,514 C205.963,523 202.963,526 193.963,526" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="109.575" x="64" y="548"/>
+    <text fill="#000" font-size="14" textLength="99.575" x="69" y="563.889">CharacterLiteral</text>
+    <path d="M52,548 C52,557 55,560 64,560" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="173.575" x2="193.963" y1="560" y2="560"/>
+    <path d="M205.963,548 C205.963,557 202.963,560 193.963,560" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="84.725" x="64" y="582"/>
+    <text fill="#000" font-size="14" textLength="74.725" x="69" y="597.889">StringLiteral</text>
+    <path d="M52,582 C52,591 55,594 64,594" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="148.725" x2="193.963" y1="594" y2="594"/>
+    <path d="M169.344,594 L169.344,591 L175.344,594 L169.344,597 L169.344,594" fill="#181818"/>
+    <path d="M205.963,582 C205.963,591 202.963,594 193.963,594" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="71.512" x="64" y="616"/>
+    <text fill="#000" font-size="14" textLength="61.512" x="69" y="631.889">TextBlock</text>
+    <path d="M52,616 C52,625 55,628 64,628" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="135.513" x2="193.963" y1="628" y2="628"/>
+    <path d="M162.738,628 L162.738,625 L168.738,628 L162.738,631 L162.738,628" fill="#181818"/>
+    <path d="M205.963,616 C205.963,625 202.963,628 193.963,628" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="72.387" x="64" y="650"/>
+    <text fill="#000" font-size="14" textLength="62.387" x="69" y="665.889">NullLiteral</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="136.388" x2="193.963" y1="662" y2="662"/>
+    <path d="M163.175,662 L163.175,659 L169.175,662 L163.175,665 L163.175,662" fill="#181818"/>
+    <path d="M52,650 C52,659 55,662 64,662" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="52" x2="52" y1="470" y2="650"/>
+    <path d="M40,458 C49,458 52,461 52,470" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M205.963,650 C205.963,659 202.963,662 193.963,662" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="205.963" x2="205.963" y1="470" y2="650"/>
+    <path d="M205.963,470 C205.963,461 208.963,458 217.963,458" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <ellipse cx="14" cy="458" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="247.963" cy="458" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="458" y2="458"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="217.963" x2="243.963" y1="458" y2="458"/>
+    <path d="M228.963,458 L228.963,455 L234.963,458 L228.963,461 L228.963,458" fill="#181818"/>
+  </g>
+</svg>

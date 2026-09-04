@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startjson
+!$a = {"age" : 30}
+%json_add($a, name, Bob)
+@endjson

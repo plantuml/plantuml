@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startregex
+title unicodeCategories
+letter \p{L}\p{Letter} lower \p{Ll}\p{Lowercase_letter}
+@endregex

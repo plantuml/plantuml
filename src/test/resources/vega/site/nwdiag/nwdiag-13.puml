@@ -1,0 +1,32 @@
+---
+output: svg
+---
+@startnwdiag
+
+nwdiag {
+  group nightly {
+    color = "#FFAAAA";
+    description = "<&clock> Restarted nightly <&clock>";
+    web02;
+    db01;
+  }
+  network dmz {
+      address = "210.x.x.x/24"
+
+      user [description = "<&person*4.5>\n user1"];
+      // set multiple addresses (using comma)
+      web01 [address = "210.x.x.1, 210.x.x.20",  description = "<&cog*4>\nweb01"]
+      web02 [address = "210.x.x.2",  description = "<&cog*4>\nweb02"];
+
+  }
+  network internal {
+      address = "172.x.x.x/24";
+
+      web01 [address = "172.x.x.1"];
+      web02 [address = "172.x.x.2"];
+      db01 [address = "172.x.x.100",  description = "<&spreadsheet*4>\n db01"];
+      db02 [address = "172.x.x.101",  description = "<&spreadsheet*4>\n db02"];
+      ptr  [address = "172.x.x.110",  description = "<&print*4>\n ptr01"];
+  }
+}
+@endnwdiag

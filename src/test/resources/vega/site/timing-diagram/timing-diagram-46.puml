@@ -1,0 +1,44 @@
+---
+output: svg
+---
+@startuml
+binary "Binary Serial Data" as D
+robust "Robust" as R
+concise "Concise" as C
+
+@-3
+D is low: idle
+R is lo: idle
+C is 1: idle
+@-1
+D is high: start
+R is hi: start
+C is 0: start
+
+@0
+D is low: 1 lsb
+R is lo: 1 lsb
+C is 1: lsb
+
+@1
+D is high: 0
+R is hi: 0
+C is 0
+
+@6
+D is low: 1
+R is lo: 1
+C is 1
+
+@7
+D is high: 0 msb
+R is hi: 0 msb
+C is 0: msb
+
+@8
+D is low: stop
+R is lo: stop
+C is 1: stop
+
+@0 <-> @8 : Serial data bits for ASCII "A" (Little Endian)
+@enduml

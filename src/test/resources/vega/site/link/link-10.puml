@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startjson
+{
+"@fruit": "Apple",
+"$size": "Large",
+"Appli.": "A [[http://plantuml.com link]] on JSON"
+}
+@endjson

@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startebnf
+binaryDigit = "0" | "1";
+@endebnf

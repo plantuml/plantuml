@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startuml
+
+skinparam interface {
+  backgroundColor RosyBrown
+  borderColor orange
+}
+
+skinparam component {
+  FontSize 13
+  BackgroundColor<<Apache>> Pink
+  BorderColor<<Apache>> #FF6655
+  FontName Courier
+  BorderColor black
+  BackgroundColor gold
+  ArrowFontName Impact
+  ArrowColor #FF6655
+  ArrowFontColor #777777
+}
+
+() "Data Access" as DA
+Component "Web Server" as WS << Apache >>
+
+DA - [First Component]
+[First Component] ..> () HTTP : use
+HTTP - WS
+
+@enduml

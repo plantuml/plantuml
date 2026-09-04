@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="NWDIAG" height="127px" preserveAspectRatio="none" style="width:215px;height:127px;background:#FFFFFF;" version="1.1" viewBox="0 0 215 127" width="215px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="15.375" x="5" y="14.333">nw</text>
+    <rect fill="#E2E2F0" height="5" style="stroke:#181818;stroke-width:1;" width="183.275" x="25.375" y="8.5"/>
+    <path d="M69.025,13.5 L69.025,48.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M160.663,13.5 L160.663,43.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="53.3" x="40.375" y="48.5"/>
+    <text fill="#000" font-size="12" textLength="33.3" x="50.375" y="67.833">server</text>
+    <path d="M133.27,52.263 C136.349,45.419 140.38,44.443 145.537,50.247 C147.24,41.838 153.747,41.308 159.165,46.533 C164.588,41.83 169.79,43.552 172.4,49.901 C177.387,44.685 182.765,45.423 185.833,52.073 C194.203,54.122 195.593,58.22 190.793,65.232 C196.322,71.778 193.73,75.173 186.86,77.856 C184.792,87.002 180.531,88.254 173.129,82.91 C170.363,90.986 165.504,93.226 158.668,87.035 C153.636,91.406 147.506,89.709 146.05,82.972 C139.828,87.91 133.789,87.112 131.929,78.445 C123.816,78.437 120.825,73.514 123.909,66.182 C119.174,57.812 124.056,51.251 133.27,52.263" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="12" textLength="39.975" x="138.675" y="67.833">internet</text>
+  </g>
+</svg>

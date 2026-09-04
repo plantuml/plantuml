@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WIRE" height="556px" preserveAspectRatio="none" style="width:391px;height:556px;background:#FFFFFF;" version="1.1" viewBox="0 0 391 556" width="391px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FA8072" height="100" style="stroke:#000;stroke-width:1;" width="100" x="20" y="30"/>
+    <text fill="#000" font-size="10" textLength="52.375" x="30" y="47.778">This is inside</text>
+    <text fill="#000" font-size="12" textLength="39.45" x="25" y="39.333">DDR3L</text>
+    <rect fill="none" height="200" style="stroke:#000;stroke-width:1;" width="150" x="20" y="175.156"/>
+    <text fill="#000" font-size="12" textLength="57.525" x="25" y="184.49">SLC NAND</text>
+    <rect fill="none" height="100" style="stroke:#000;stroke-width:1;" width="100" x="20" y="395.156"/>
+    <text fill="#000" font-size="12" textLength="56.7" x="25" y="404.49">TestPoints</text>
+    <rect fill="#AAA" height="505.156" style="stroke:#000;stroke-width:1;" width="180" x="190" y="30"/>
+    <rect fill="none" height="300" style="stroke:#000;stroke-width:1;" width="150" x="210" y="92.578"/>
+    <text fill="#000" font-size="10" textLength="28.375" x="220" y="110.356">Foo 20</text>
+    <text fill="#000" font-size="12" textLength="42.075" x="215" y="101.911">PF3000</text>
+    <rect fill="#ADD8E6" height="100" style="stroke:#000;stroke-width:1;" width="100" x="210" y="425.156"/>
+    <text fill="#000" font-size="12" textLength="52.05" x="215" y="434.49">EEPROM</text>
+    <text fill="#000" font-size="10" textLength="28.375" x="210" y="77.778">Foo 10</text>
+    <text fill="#000" font-size="10" textLength="15.563" x="210" y="410.356">Bar</text>
+    <text fill="#000" font-size="12" textLength="42.15" x="195" y="39.333">Big Chip</text>
+    <text fill="#000" font-size="10" textLength="110.625" x="20" y="147.778">This text is printed between</text>
+    <text fill="#000" font-size="10" textLength="68.313" x="20" y="160.356">the components</text>
+    <text fill="#000" font-size="12" x="15" y="19.333"> </text>
+  </g>
+</svg>

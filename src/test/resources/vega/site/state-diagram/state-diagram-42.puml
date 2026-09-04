@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+skinparam stateDiagramEdgeLabelStyle node
+skinparam ranksep 20
+
+[*] --> Opened
+
+Opened --> Closed : close
+Opened <-- Closed : open
+
+Closed --> Locked : lock
+Closed <-- Locked : unlock
+@enduml

@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startwire
+!option handwritten true
+* first
+* second_box [100x50]
+* third
+@endwire

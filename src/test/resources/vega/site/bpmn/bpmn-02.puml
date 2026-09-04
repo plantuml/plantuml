@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startbpm
+:login;
+new branch
+:show new message1;
+else
+:show new task2;
+end branch
+new branch
+:Accept Task;
+else
+:nothing;
+else
+new branch
+:read message;
+else
+:dummy;
+end branch
+end branch
+:logout;
+@endbpm

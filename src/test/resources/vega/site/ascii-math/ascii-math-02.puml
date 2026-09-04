@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+:<latex>\int_0^1f(x)dx</latex>;
+:<latex>x^2+y_1+z_{12}^{34}</latex>;
+note right
+Try also
+<latex>\dfrac{d}{dx}f(x)=\lim\limits_{h \to 0}\dfrac{f(x+h)-f(x)}{h}</latex>
+<latex>P(y|\mathbf{x}) \mbox{ or } f(\mathbf{x})+\epsilon</latex>
+end note
+@enduml

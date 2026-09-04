@@ -1,0 +1,42 @@
+---
+output: svg
+---
+@startgit
+*   766651151 (HEAD -> ImproveDoc, origin/ImproveDoc) Merge branch 'plantuml:master' into ImproveDoc
+|\
+| *   b8b98d0c1 Merge pull request #1587 from travkin79/patch/1580
+| |\
+| | * 0a795acbb Fix merge problem
+| | *   7a7f59f00 Merge commit '89406657e7a26c74119a87637f8f96c94055b45b' into patch/1580
+| | |\
+| | |/
+| |/|
+| * |   89406657e Merge pull request #1588 from travkin79/patch/1475
+| |\ \
+| | * | 570d056f3 #1475 Fix show statement
+| |/ /
+| | * 263662d6d #1580 Make source code compatible to Java 1.7 (forgot one stream usage)
+| | * 8b87aa0c1 #1580 Make source code compatible to Java 1.7
+| | * f47ca8c33 #1580 Fix hiding stereotypes
+| |/
+| * f8d87217a refactor: remove unused code
+| * e92dcd400 refactor: remove unused code
+| * 8f5c3379e refactor: remove unused logo dead code
+| *   9a75a9c57 Merge remote-tracking branch 'origin/attic-proposal'
+| |\
+| | * 920bb2b33 Proposal for attic.md
+| * | 38ea5ae82 chore: prepare next development cycle
+| |/
+| * 2b2f29191 chore: gradle.properties has been skipped
+| * 8b092894e chore: version 1.2023.12
+| * 1e6ffb0be fix: add some hard-coded dot path for MacOS https://github.com/plantuml/plantuml/issues/1583
+| * 4adacbabe fix: improve error management for non-GPL version
+| *   2bb375b7b Merge pull request #1579 from plantuml/dependabot/npm_and_yarn/dot-github/actions/configure-workflow/babel/traverse-7.23.2
+| |\
+| | * f7c578e3a chore(deps-dev): bump @babel/traverse
+| |/
+* | 3a095fd7c docs: add `package-info.java` and `readme.md` (for `dedication` to `png`)
+* | 28cc4638d docs: add `package-info.java` and `readme.md` (for `abel` to `command`)
+|/
+* 172ac26e0 docs: create `ant` `readme.md`
+@endgit

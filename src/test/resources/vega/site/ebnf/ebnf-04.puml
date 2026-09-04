@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startebnf
+(* Simplified Fortran example *)
+Fortran_77_continuation_line = 5 * " ",  '[...]', 66 * [character];
+
+(* Minimal test *)
+test = 4 * '2';
+
+(* Example of §5.7 Syntactic-factor of ISO EBNF *)
+aa = "A";
+bb = 3 * aa, "B";
+cc = 3 * [aa], "C";
+dd = {aa}, "D";
+ee = aa, {aa}, "E";
+ff = 3 * aa, 3 * [aa], "F";
+gg = 3 * {aa}, "D";
+@endebnf

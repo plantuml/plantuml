@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="161px" preserveAspectRatio="none" style="width:482px;height:161px;background:#FFFFFF;" version="1.1" viewBox="0 0 482 161" width="482px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:none;" x1="0" x2="125.688" y1="0" y2="0"/>
+    <line style="stroke:none;" x1="0" x2="125.688" y1="16" y2="16"/>
+    <line style="stroke:none;" x1="0" x2="125.688" y1="152" y2="152"/>
+    <line style="stroke:none;" x1="0" x2="0" y1="0" y2="152"/>
+    <line style="stroke:none;" x1="38.938" x2="38.938" y1="0" y2="152"/>
+    <line style="stroke:none;" x1="77.875" x2="77.875" y1="0" y2="152"/>
+    <line style="stroke:none;" x1="125.688" x2="125.688" y1="0" y2="152"/>
+    <line style="stroke:none;" x1="125.688" x2="125.688" y1="6" y2="160"/>
+    <line style="stroke:none;" x1="141.688" x2="141.688" y1="6" y2="160"/>
+    <line style="stroke:none;" x1="157.688" x2="157.688" y1="6" y2="160"/>
+    <line style="stroke:none;" x1="173.688" x2="173.688" y1="6" y2="160"/>
+    <line style="stroke:none;" x1="189.688" x2="189.688" y1="6" y2="160"/>
+    <line style="stroke:none;" x1="205.688" x2="205.688" y1="6" y2="160"/>
+    <line style="stroke:none;" x1="221.688" x2="221.688" y1="6" y2="160"/>
+    <line style="stroke:none;" x1="237.688" x2="237.688" y1="6" y2="160"/>
+    <line style="stroke:none;" x1="253.688" x2="253.688" y1="6" y2="160"/>
+    <line style="stroke:none;" x1="269.688" x2="269.688" y1="6" y2="160"/>
+    <line style="stroke:none;" x1="285.688" x2="285.688" y1="6" y2="160"/>
+    <line style="stroke:none;" x1="301.688" x2="301.688" y1="6" y2="160"/>
+    <line style="stroke:none;" x1="317.688" x2="317.688" y1="6" y2="160"/>
+    <line style="stroke:none;" x1="333.688" x2="333.688" y1="6" y2="160"/>
+    <line style="stroke:none;" x1="349.688" x2="349.688" y1="6" y2="160"/>
+    <line style="stroke:none;" x1="365.688" x2="365.688" y1="6" y2="160"/>
+    <line style="stroke:none;" x1="381.688" x2="381.688" y1="6" y2="160"/>
+    <line style="stroke:none;" x1="397.688" x2="397.688" y1="6" y2="160"/>
+    <line style="stroke:none;" x1="413.688" x2="413.688" y1="6" y2="160"/>
+    <line style="stroke:none;" x1="429.688" x2="429.688" y1="6" y2="160"/>
+    <line style="stroke:none;" x1="445.688" x2="445.688" y1="6" y2="160"/>
+    <line style="stroke:none;" x1="461.688" x2="461.688" y1="6" y2="160"/>
+    <path d="M229.688,29 L229.688,53.5 L234.688,53.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="233.688,49.5,237.688,53.5,233.688,57.5,233.688,49.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M373.688,59 L373.688,68.5 L378.688,68.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="377.688,64.5,381.688,68.5,377.688,72.5,377.688,64.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M229.688,29 L229.688,83.5 L234.688,83.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="233.688,79.5,237.688,83.5,233.688,87.5,233.688,79.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M261.688,89 L261.688,98.5 L266.688,98.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="265.688,94.5,269.688,98.5,265.688,102.5,265.688,94.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M309.688,104 L309.688,144.5 L314.688,144.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="313.688,140.5,317.688,144.5,313.688,148.5,313.688,140.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="108" x="127.688" y="18"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="108" x="127.688" y="18"/>
+    <polygon fill="#000" points="229.688,33,234.688,38,229.688,43,224.688,38" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="140" x="239.688" y="48"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="140" x="239.688" y="48"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="76" x="383.688" y="63"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="76" x="383.688" y="63"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="28" x="239.688" y="78"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="28" x="239.688" y="78"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="44" x="271.688" y="93"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="44" x="271.688" y="93"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="125.688" x2="130.688" y1="121.5" y2="121.5"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="179.188" x2="460.688" y1="121.5" y2="121.5"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="28" x="319.688" y="139"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="28" x="319.688" y="139"/>
+    <text fill="#000" font-size="11" textLength="67.169" x="131.688" y="26.556">Test prototype</text>
+    <text fill="#000" font-size="11" textLength="97.763" x="237.688" y="41.556">Prototype completed</text>
+    <text fill="#000" font-size="11" textLength="92.4" x="243.688" y="56.556">Setup assembly line</text>
+    <text fill="#000" font-size="11" textLength="28.737" x="387.688" y="71.556">Setup</text>
+    <text fill="#000" font-size="11" textLength="12.856" x="243.688" y="86.556">T2</text>
+    <text fill="#000" font-size="11" textLength="12.856" x="275.688" y="101.556">T3</text>
+    <text fill="#000" font-size="11" textLength="38.5" x="135.688" y="124.556">end task</text>
+    <text fill="#000" font-size="11" textLength="12.856" x="323.688" y="147.556">T4</text>
+  </g>
+</svg>

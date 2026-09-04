@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startnwdiag
+network Network {
+  Server [description="A [[http://plantuml.com link]] on nwdiag"];
+}
+@endnwdiag

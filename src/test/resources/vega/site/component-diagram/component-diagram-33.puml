@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+component C {
+  portout p1
+  portout p2
+  portout p3
+  component c1
+}
+[o]
+p1 --> o
+p2 --> o
+p3 --> o
+c1 --> p1
+@enduml

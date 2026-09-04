@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+node n
+note right of n
+  <#FBFB77,#FBFB77>|= Husky / Yorkie |= Foo |
+  | SourceTree1 | foo1 |
+  | ST2 | foo2 |
+end note
+@enduml

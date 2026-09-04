@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="REGEX" height="112px" preserveAspectRatio="none" style="width:134px;height:112px;background:#FFFFFF;" version="1.1" viewBox="0 0 134 112" width="134px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="49.088" x="41.744" y="30.889">optional</text>
+    </g>
+    <line style="stroke:#181818;stroke-width:1;" x1="15" x2="15" y1="62" y2="62"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="17.788" x="15" y="50"/>
+    <text fill="#000" font-size="14" x="20" y="65.889">a</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="32.788" x2="52.788" y1="62" y2="62"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="52.788" x2="118.575" y1="62" y2="62"/>
+    <path d="M77.102,62 L77.102,59 L83.102,62 L77.102,65 L77.102,62" fill="#181818"/>
+    <path d="M52.788,62 C61.788,62 64.788,64 64.788,73 C64.788,82 67.788,84 76.788,84" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M94.575,84 C103.575,84 106.575,82 106.575,73 C106.575,64 109.575,62 118.575,62" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="17.788" x="76.788" y="72"/>
+    <text fill="#000" font-size="14" x="81.788" y="87.889">b</text>
+  </g>
+</svg>

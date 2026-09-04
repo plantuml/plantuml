@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="NWDIAG" height="250px" preserveAspectRatio="none" style="width:131px;height:250px;background:#FFFFFF;" version="1.1" viewBox="0 0 131 250" width="131px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="header" data-source-line="1">
+      <text fill="#888" font-size="10" textLength="55.563" x="74.188" y="7.778">some header</text>
+    </g>
+    <g class="title" data-source-line="5">
+      <text fill="#000" font-size="14" font-weight="700" textLength="40.425" x="44.662" y="31.889">My title</text>
+    </g>
+    <text fill="#000" font-size="12" textLength="19.35" x="5" y="60.333">inet</text>
+    <rect fill="#E2E2F0" height="5" style="stroke:#181818;stroke-width:1;" width="95.4" x="29.35" y="54.5"/>
+    <path d="M79.05,59.5 L79.05,89.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M52.453,97.644 C54.558,91.712 60.539,90.378 64.784,95.188 C68.064,87.928 73.846,88.358 78.231,94.039 C82.454,89.592 86.916,89.449 90.039,95.301 C95.719,91.091 100.229,90.388 103.058,98.35 C109.431,100.596 111.279,106.68 105.742,111.38 C111.436,117.246 109.215,122.575 102.466,125.568 C99.691,131.396 95.163,133.922 90.095,127.979 C87.794,135.097 83.37,134.896 78.258,131.001 C72.637,136.264 67.256,135.781 64.982,127.677 C59.003,132.739 55.688,130.146 53.25,123.978 C46.013,123.545 41.984,117.446 46.387,110.904 C41.866,103.657 43.272,98.623 52.453,97.644" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="12" textLength="35.4" x="59.35" y="113.833">web01</text>
+    <g class="legend" data-source-line="9">
+      <rect fill="#DDD" height="24" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="76.238" x="26.756" y="184.5"/>
+      <text fill="#000" font-size="14" textLength="66.238" x="31.756" y="200.389">The legend</text>
+    </g>
+    <g class="caption" data-source-line="7">
+      <text fill="#000" font-size="14" textLength="81.813" x="23.969" y="233.389">This is caption</text>
+    </g>
+    <g class="footer" data-source-line="3">
+      <text fill="#888" font-size="10" textLength="49.938" x="39.906" y="246.278">some footer</text>
+    </g>
+  </g>
+</svg>

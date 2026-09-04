@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="259px" preserveAspectRatio="none" style="width:354px;height:259px;background:#FFFFFF;" version="1.1" viewBox="0 0 354 259" width="354px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>User</title>
+      <rect fill="#000" fill-opacity="0" height="180" width="8" x="28.287" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="31.787" x2="31.787" y1="39" y2="219"/>
+    </g>
+    <g>
+      <title>A</title>
+      <rect fill="#000" fill-opacity="0" height="180" width="8" x="104.25" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="107.75" x2="107.75" y1="39" y2="219"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="135" style="stroke:#181818;stroke-width:1;" width="10" x="102.75" y="66"/>
+    </g>
+    <g>
+      <title>B</title>
+      <rect fill="#000" fill-opacity="0" height="180" width="8" x="232.906" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="236.406" x2="236.406" y1="39" y2="219"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="81" style="stroke:#181818;stroke-width:1;" width="10" x="231.406" y="93"/>
+    </g>
+    <g>
+      <title>C</title>
+      <rect fill="#000" fill-opacity="0" height="116" width="8" x="328.331" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="331.831" x2="331.831" y1="39" y2="155"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="27" style="stroke:#181818;stroke-width:1;" width="10" x="326.831" y="120"/>
+    </g>
+    <line style="stroke:#A80036;stroke-width:2;" x1="322.831" x2="340.831" y1="138" y2="156"/>
+    <line style="stroke:#A80036;stroke-width:2;" x1="322.831" x2="340.831" y1="156" y2="138"/>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="43.575" x="10" y="10"/>
+    <text fill="#000" font-size="14" textLength="29.575" x="17" y="27.889">User</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="96.069" y="10"/>
+    <text fill="#000" font-size="14" x="103.069" y="27.889">A</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="224.725" y="10"/>
+    <text fill="#000" font-size="14" x="231.725" y="27.889">B</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="24.15" x="319.756" y="10"/>
+    <text fill="#000" font-size="14" x="326.756" y="27.889">C</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="43.575" x="10" y="219"/>
+    <text fill="#000" font-size="14" textLength="29.575" x="17" y="236.889">User</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="96.069" y="219"/>
+    <text fill="#000" font-size="14" x="103.069" y="236.889">A</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="224.725" y="219"/>
+    <text fill="#000" font-size="14" x="231.725" y="236.889">B</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="24.15" x="319.756" y="219"/>
+    <text fill="#000" font-size="14" x="326.756" y="236.889">C</text>
+    <polygon fill="#181818" points="90.75,62,100.75,66,90.75,70,94.75,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="31.787" x2="96.75" y1="66" y2="66"/>
+    <text fill="#000" font-size="13" textLength="46.963" x="38.787" y="61.111">DoWork</text>
+    <polygon fill="#181818" points="219.406,89,229.406,93,219.406,97,223.406,93" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="112.75" x2="225.406" y1="93" y2="93"/>
+    <text fill="#000" font-size="13" textLength="98.963" x="119.75" y="88.111">«createRequest»</text>
+    <polygon fill="#181818" points="314.831,116,324.831,120,314.831,124,318.831,120" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="241.406" x2="320.831" y1="120" y2="120"/>
+    <text fill="#000" font-size="13" textLength="46.963" x="248.406" y="115.111">DoWork</text>
+    <polygon fill="#181818" points="252.406,143,242.406,147,252.406,151,248.406,147" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="246.406" x2="325.831" y1="147" y2="147"/>
+    <text fill="#000" font-size="13" textLength="61.425" x="258.406" y="142.111">WorkDone</text>
+    <polygon fill="#181818" points="123.75,170,113.75,174,123.75,178,119.75,174" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="117.75" x2="230.406" y1="174" y2="174"/>
+    <text fill="#000" font-size="13" textLength="94.656" x="129.75" y="169.111">RequestCreated</text>
+    <polygon fill="#181818" points="42.787,197,32.787,201,42.787,205,38.787,201" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="36.787" x2="101.75" y1="201" y2="201"/>
+    <text fill="#000" font-size="13" textLength="31.119" x="48.787" y="196.111">Done</text>
+  </g>
+</svg>

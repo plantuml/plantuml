@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="81px" preserveAspectRatio="none" style="width:215px;height:81px;background:#FFFFFF;" version="1.1" viewBox="0 0 215 81" width="215px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity n-->
+    <g class="entity" data-qualified-name="n" data-source-line="1" id="ent0001">
+      <polygon fill="#F1F1F1" points="10,26.5,20,16.5,57.788,16.5,57.788,50.5,47.788,60.5,10,60.5,10,26.5" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="47.788" x2="57.788" y1="26.5" y2="16.5"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10" x2="47.788" y1="26.5" y2="26.5"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="47.788" x2="47.788" y1="26.5" y2="60.5"/>
+      <text fill="#000" font-size="14" x="25" y="47.389">n</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="3" id="ent0003">
+      <path d="M76.5,12 L76.5,34.5 L58.375,38.5 L76.5,42.5 L76.5,65 A0,0 0 0 0 76.5,65 L199.388,65 A0,0 0 0 0 199.388,65 L199.388,22 L189.388,12 L76.5,12 A0,0 0 0 0 76.5,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M189.388,12 L189.388,22 L199.388,22 L189.388,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <rect fill="#FBFB77" height="13" style="stroke:none;" width="101.887" x="82.5" y="19"/>
+      <text fill="#000" font-size="13" font-weight="700" textLength="76.619" x="82.5" y="29.111">Husky / Yorkie</text>
+      <text fill="#000" font-size="13" font-weight="700" textLength="22.425" x="159.119" y="29.111">Foo</text>
+      <text fill="#000" font-size="13" textLength="75.156" x="82.5" y="42.111">SourceTree1</text>
+      <text fill="#000" font-size="13" textLength="25.269" x="159.119" y="42.111">foo1</text>
+      <text fill="#000" font-size="13" textLength="23.888" x="82.5" y="55.111">ST2</text>
+      <text fill="#000" font-size="13" textLength="25.269" x="159.119" y="55.111">foo2</text>
+      <line style="stroke:#FBFB77;stroke-width:0.5;" x1="82.5" x2="184.388" y1="19" y2="19"/>
+      <line style="stroke:#FBFB77;stroke-width:0.5;" x1="82.5" x2="184.388" y1="32" y2="32"/>
+      <line style="stroke:#FBFB77;stroke-width:0.5;" x1="82.5" x2="184.388" y1="45" y2="45"/>
+      <line style="stroke:#FBFB77;stroke-width:0.5;" x1="82.5" x2="184.388" y1="58" y2="58"/>
+      <line style="stroke:#FBFB77;stroke-width:0.5;" x1="82.5" x2="82.5" y1="19" y2="58"/>
+      <line style="stroke:#FBFB77;stroke-width:0.5;" x1="159.119" x2="159.119" y1="19" y2="58"/>
+      <line style="stroke:#FBFB77;stroke-width:0.5;" x1="184.388" x2="184.388" y1="19" y2="58"/>
+    </g>
+  </g>
+</svg>

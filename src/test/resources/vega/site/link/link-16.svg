@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="72px" preserveAspectRatio="none" style="width:192px;height:72px;background:#FFFFFF;" version="1.1" viewBox="0 0 192 72" width="192px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity Mamal-->
+    <g class="entity" data-qualified-name="Mamal" data-source-line="1" id="ent0001">
+      <a href="http://www.google.com" target="_top" title="http://www.google.com" xlink:actuate="onRequest" xlink:href="http://www.google.com" xlink:show="new" xlink:title="http://www.google.com" xlink:type="simple">
+        <polygon fill="#F1F1F1" points="10,22,20,12,92,12,92,46,82,56,10,56,10,22" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="82" x2="92" y1="22" y2="12"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="10" x2="82" y1="22" y2="22"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="82" x2="82" y1="22" y2="56"/>
+        <text fill="#000" font-size="14" textLength="42" x="25" y="42.889">Mamal</text>
+      </a>
+    </g>
+    <!--entity Dog-->
+    <g class="entity" data-qualified-name="Dog" data-source-line="2" id="ent0002">
+      <a href="http://www.yahoo.com" target="_top" title="This is Dog" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com" xlink:show="new" xlink:title="This is Dog" xlink:type="simple">
+        <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="65.725" x="110" y="12"/>
+        <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="155.725" y="17"/>
+        <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="153.725" y="19"/>
+        <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="153.725" y="23"/>
+        <text fill="#000" font-size="14" textLength="25.725" x="125" y="42.889">Dog</text>
+      </a>
+    </g>
+  </g>
+</svg>

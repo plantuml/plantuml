@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="EBNF" height="190px" preserveAspectRatio="none" style="width:228px;height:190px;background:#FFFFFF;" version="1.1" viewBox="0 0 228 190" width="228px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="14" font-weight="700" x="10" y="20.889">a</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="40" x2="40" y1="46" y2="46"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="33.363" x="40" y="34"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="45" y="49.889">one</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="73.363" x2="93.363" y1="46" y2="46"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="31.787" x="93.363" y="34"/>
+    <text fill="#000" font-size="14" textLength="21.787" x="98.363" y="49.889">two</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="125.15" x2="145.15" y1="46" y2="46"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="41.85" x="145.15" y="34"/>
+    <text fill="#000" font-size="14" textLength="31.85" x="150.15" y="49.889">three</text>
+    <ellipse cx="14" cy="46" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="217" cy="46" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="46" y2="46"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="187" x2="213" y1="46" y2="46"/>
+    <path d="M198,46 L198,43 L204,46 L198,49 L198,46" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" x="10" y="83.889">b</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="40" x2="40" y1="109" y2="109"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="33.363" x="40" y="97"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="45" y="112.889">one</text>
+    <path d="M42.566,141 L42.566,164 A0,0 0 0 0 42.566,164 L70.797,164 A0,0 0 0 0 70.797,164 L70.797,151 L60.797,141 L60.681,141 L56.681,121 L52.681,141 L42.566,141 A0,0 0 0 0 42.566,141" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M60.797,141 L60.797,151 L70.797,151 L60.797,141" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" x="48.566" y="156.111">1</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="73.363" x2="93.363" y1="109" y2="109"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="31.787" x="93.363" y="97"/>
+    <text fill="#000" font-size="14" textLength="21.787" x="98.363" y="112.889">two</text>
+    <path d="M95.141,141 L95.141,164 A0,0 0 0 0 95.141,164 L123.372,164 A0,0 0 0 0 123.372,164 L123.372,151 L113.372,141 L113.256,141 L109.256,121 L105.256,141 L95.141,141 A0,0 0 0 0 95.141,141" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M113.372,141 L113.372,151 L123.372,151 L113.372,141" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" x="101.141" y="156.111">2</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="125.15" x2="145.15" y1="109" y2="109"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="41.85" x="145.15" y="97"/>
+    <text fill="#000" font-size="14" textLength="31.85" x="150.15" y="112.889">three</text>
+    <path d="M151.959,141 L151.959,164 A0,0 0 0 0 151.959,164 L180.191,164 A0,0 0 0 0 180.191,164 L180.191,151 L170.191,141 L170.075,141 L166.075,121 L162.075,141 L151.959,141 A0,0 0 0 0 151.959,141" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M170.191,141 L170.191,151 L180.191,151 L170.191,141" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" x="157.959" y="156.111">3</text>
+    <ellipse cx="14" cy="109" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="217" cy="109" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="109" y2="109"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="187" x2="213" y1="109" y2="109"/>
+    <path d="M198,109 L198,106 L204,109 L198,112 L198,109" fill="#181818"/>
+  </g>
+</svg>

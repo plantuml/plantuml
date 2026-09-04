@@ -1,0 +1,103 @@
+---
+output: svg
+---
+@startuml
+'table and link demo using JSON and preprocessing
+
+hide stereotype
+hide class circle
+hide methods
+skinparam shadowing false
+skinparam defaultFontName Helvetica
+skinparam DefaultTextAlignment left
+skinparam RoundCorner 10
+skinparam pathHoverColor black
+skinparam arrow {
+  Color grey
+}
+
+skinparam class {
+  BackgroundColor grey
+  BorderColor black
+  FontColor white
+  FontStyle bold
+  AttributeFontColor white
+}
+
+title JSON Tables
+
+!$foo = {
+  "table": [
+    {
+      "table_name": "table1",
+      "description": "table1 is a table",
+      "columns": [
+        {
+          "name": "+id"
+        },
+        {
+          "name": "*name"
+        },
+        {
+          "name": "#foreign_key"
+        }
+      ]
+    },
+    {
+      "table_name": "table2",
+      "description": "table2 is a table",
+      "columns": [
+        {
+          "name": "-id"
+        },
+        {
+          "name": "~name"
+        }
+      ]
+    },
+    {
+      "table_name": "table3",
+      "description": "table3 is a table",
+      "columns": [
+        {
+          "name": "name"
+        },
+        {
+          "name": "value"
+        }
+      ]
+    }
+  ],
+  "link": [
+    {
+      "source_table": "table1",
+      "target_table": "table2",
+      "description": "table1.foreign_key = table2.id",
+      "cardinality": "M:1"
+    },
+    {
+      "source_table": "table1",
+      "target_table": "table3",
+      "description": "table1.name = table3.name",
+      "cardinality": "1:M"
+    }
+  ]
+}
+
+!foreach $tab in $foo.table
+class "%upper($tab.table_name)" as $tab.table_name {
+    !foreach $col in $tab.columns
+        $col.name
+    !endfor
+}
+url for $tab.table_name is [[{$tab.description}]]
+!endfor
+
+!foreach $link in $foo.link
+!if ($link.cardinality == "M:1")
+    $link.source_table }-- $link.target_table [[{$link.description}]]: " "
+!else
+    $link.source_table -- $link.target_table [[{$link.description}]]: " "
+!endif
+!endfor
+@enduml

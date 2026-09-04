@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startjson
+!$a = {"partlen": "2", "color": {"A":"red", "B":"blue"}}
+!$b = {"color":{"A":"black"}}
+%json_set($a, $b)
+@endjson

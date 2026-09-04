@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="281px" preserveAspectRatio="none" style="width:677px;height:281px;background:#FFFFFF;" version="1.1" viewBox="0 0 677 281" width="677px" zoomAndPan="magnify">
+  <defs>
+    <filter height="1" id="bh7c3dp4k0xod0" width="1" x="0" y="0">
+      <feFlood flood-color="#FFA500" result="flood"/>
+      <feComposite in="SourceGraphic" in2="flood" operator="over"/>
+    </filter>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Source</title>
+      <rect fill="#000" fill-opacity="0" height="231" width="8" x="205.178" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="208.678" x2="208.678" y1="39" y2="270"/>
+    </g>
+    <g>
+      <title>Output</title>
+      <rect fill="#000" fill-opacity="0" height="231" width="8" x="533.634" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="537.134" x2="537.134" y1="39" y2="270"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58.363" x="179.497" y="10"/>
+    <text fill="#000" font-size="14" textLength="44.363" x="186.497" y="27.889">Source</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="55.913" x="509.178" y="10"/>
+    <text fill="#000" font-size="14" textLength="41.913" x="516.178" y="27.889">Output</text>
+    <path d="M15,52 L15,244 L402,244 L402,62 L392,52 L15,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M392,52 L392,62 L402,62 L392,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="107.25" x="21" y="67.111">This is &lt;b&gt;bold&lt;/b&gt;</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="106.6" x="21" y="80.111">This is &lt;i&gt;italics&lt;/i&gt;</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="263.819" x="21" y="93.111">This is &lt;font:monospaced&gt;monospaced&lt;/font&gt;</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="123.744" x="21" y="106.111">This is &lt;s&gt;stroked&lt;/s&gt;</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="143.406" x="21" y="119.111">This is &lt;u&gt;underlined&lt;/u&gt;</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="124.638" x="21" y="132.111">This is &lt;w&gt;waved&lt;/w&gt;</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="160.55" x="21" y="145.111">This is &lt;s:green&gt;stroked&lt;/s&gt;</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="165.75" x="21" y="158.111">This is &lt;u:red&gt;underlined&lt;/u&gt;</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="180.294" x="21" y="171.111">This is &lt;w:#0000FF&gt;waved&lt;/w&gt;</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="366.356" x="21" y="184.111">This is &lt;b&gt;a bold text containing &lt;plain&gt;plain text&lt;/plain&gt; inside&lt;/b&gt;</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="102.456" x="21" y="197.111">-- other examples --</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="178.831" x="21" y="210.111">This is &lt;color:blue&gt;Blue&lt;/color&gt;</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="278.362" x="21" y="223.111">This is &lt;back:orange&gt;Orange background&lt;/back&gt;</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="149.906" x="21" y="236.111">This is &lt;size:20&gt;big&lt;/size&gt;</text>
+    <path d="M412.356,52 L412.356,255 L661.356,255 L661.356,62 L651.356,52 L412.356,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M651.356,52 L651.356,62 L661.356,62 L651.356,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="34.044" x="418.356" y="67.111">This is</text>
+    <text fill="#000" font-size="13" font-weight="700" textLength="24.619" x="452.4" y="67.111">bold</text>
+    <text fill="#000" font-size="13" textLength="34.044" x="418.356" y="80.111">This is</text>
+    <text fill="#000" font-size="13" font-style="italic" textLength="32.581" x="452.4" y="80.111">italics</text>
+    <text fill="#000" font-size="13" textLength="34.044" x="418.356" y="93.111">This is</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="74.425" x="452.4" y="93.111">monospaced</text>
+    <text fill="#000" font-size="13" textLength="34.044" x="418.356" y="106.111">This is</text>
+    <text fill="#000" font-size="13" text-decoration="line-through" textLength="42.575" x="452.4" y="106.111">stroked</text>
+    <text fill="#000" font-size="13" textLength="34.044" x="418.356" y="119.111">This is</text>
+    <text fill="#000" font-size="13" text-decoration="underline" textLength="60.775" x="452.4" y="119.111">underlined</text>
+    <text fill="#000" font-size="13" textLength="34.044" x="418.356" y="132.111">This is</text>
+    <text fill="#000" font-size="13" text-decoration="wavy underline" textLength="37.619" x="452.4" y="132.111">waved</text>
+    <text fill="#000" font-size="13" textLength="34.044" x="418.356" y="145.111">This is</text>
+    <text fill="#000" font-size="13" textLength="42.575" x="452.4" y="145.111">stroked</text>
+    <line style="stroke:#008000;stroke-width:0.464;" x1="452.4" x2="494.975" y1="141.861" y2="141.861"/>
+    <text fill="#000" font-size="13" textLength="34.044" x="418.356" y="158.111">This is</text>
+    <text fill="#000" font-size="13" textLength="60.775" x="452.4" y="158.111">underlined</text>
+    <line style="stroke:#F00;stroke-width:0.464;" x1="452.4" x2="513.175" y1="159.04" y2="159.04"/>
+    <text fill="#000" font-size="13" textLength="34.044" x="418.356" y="171.111">This is</text>
+    <text fill="#000" font-size="13" text-decoration="wavy underline" textLength="37.619" x="452.4" y="171.111">waved</text>
+    <text fill="#000" font-size="13" textLength="34.044" x="418.356" y="184.111">This is</text>
+    <text fill="#000" font-size="13" font-weight="700" textLength="112.044" x="452.4" y="184.111">a bold text containing</text>
+    <text fill="#000" font-size="13" textLength="48.425" x="564.444" y="184.111">plain text</text>
+    <text fill="#000" font-size="13" font-weight="700" textLength="34.044" x="612.869" y="184.111">inside</text>
+    <text fill="#000" font-size="13" textLength="34.044" x="418.356" y="210.111">This is</text>
+    <text fill="#00F" font-size="13" textLength="26.081" x="452.4" y="210.111">Blue</text>
+    <text fill="#000" font-size="13" textLength="34.044" x="418.356" y="223.111">This is</text>
+    <text fill="#000" filter="url(#bh7c3dp4k0xod0)" font-size="13" textLength="111.231" x="452.4" y="223.111">Orange background</text>
+    <text fill="#000" font-size="13" textLength="34.044" x="418.356" y="243.111">This is</text>
+    <text fill="#000" font-size="20" textLength="26.75" x="452.4" y="241.556">big</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="413.356" x2="494.519" y1="193.5" y2="193.5"/>
+    <text fill="#000" font-size="13" textLength="85.231" x="494.519" y="196.611">other examples</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="579.75" x2="660.912" y1="193.5" y2="193.5"/>
+  </g>
+</svg>

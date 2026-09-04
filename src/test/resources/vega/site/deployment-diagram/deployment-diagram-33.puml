@@ -1,0 +1,42 @@
+---
+output: svg
+---
+@startuml
+<style>
+componentDiagram {
+  BackGroundColor palegreen
+  LineThickness 2
+  LineColor red
+}
+</style>
+artifact artifact {
+}
+card card {
+}
+cloud cloud {
+}
+component component {
+}
+database database {
+}
+file file {
+}
+folder folder {
+}
+frame frame {
+}
+hexagon hexagon {
+}
+node node {
+}
+package package {
+}
+queue queue {
+}
+rectangle rectangle {
+}
+stack stack {
+}
+storage storage {
+}
+@enduml

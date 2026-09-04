@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="129px" preserveAspectRatio="none" style="width:298px;height:129px;background:#FFFFFF;" version="1.1" viewBox="0 0 298 129" width="298px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFA500" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="60.512" x="108.088" y="47"/>
+    <text fill="#000" font-size="14" textLength="40.512" x="118.088" y="67.889">Colors</text>
+    <rect fill="#90EE90" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="58.85" x="218.6" y="20"/>
+    <text fill="#000" font-size="14" textLength="38.85" x="228.6" y="40.889">Green</text>
+    <path d="M168.6,64 L178.6,64 C193.6,64 193.6,37 208.6,37 L218.6,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#FBC" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="52.725" x="218.6" y="74"/>
+    <text fill="#000" font-size="14" textLength="32.725" x="228.6" y="94.889">Rose</text>
+    <path d="M168.6,64 L178.6,64 C193.6,64 193.6,91 208.6,91 L218.6,91" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#ADD8E6" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="48.088" x="10" y="47"/>
+    <text fill="#000" font-size="14" textLength="28.088" x="20" y="67.889">Blue</text>
+    <path d="M108.088,64 L98.088,64 C83.088,64 83.088,64 68.088,64 L58.088,64" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

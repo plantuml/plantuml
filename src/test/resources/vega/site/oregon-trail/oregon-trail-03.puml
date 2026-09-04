@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+run oregon trail
+150
+100
+10
+40
+40
+4
+@enduml

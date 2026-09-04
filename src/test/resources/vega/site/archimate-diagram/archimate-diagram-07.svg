@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="80px" preserveAspectRatio="none" style="width:162px;height:80px;background:#FFFFFF;" version="1.1" viewBox="0 0 162 80" width="162px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity BService-->
+    <g class="entity" data-qualified-name="BService" data-source-line="142" id="ent0001">
+      <rect fill="#FFC" height="52" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="140" x="6" y="12"/>
+      <path d="M122.5,27.91 C119.824,27.904 117.647,30.114 117.623,32.832 C117.599,35.55 119.737,37.802 122.412,37.846 A0.5,0.5 0 0 0 122.428,37.846 L129.969,37.846 A0.5,0.5 0 0 0 129.975,37.846 C132.662,37.821 134.82,35.567 134.799,32.838 C134.778,30.12 132.602,27.911 129.93,27.911 L129.93,27.909 L129.897,27.909 M122.498,28.91 A0.5,0.5 0 0 0 122.502,28.91 L129.929,28.91 C132.052,28.91 133.781,30.654 133.798,32.846 C133.816,35.046 132.102,36.824 129.969,36.846 C129.968,36.846 129.966,36.846 129.965,36.846 L122.43,36.846 C120.305,36.811 118.603,35.034 118.623,32.842 C118.642,30.65 120.373,28.906 122.498,28.91" fill="#000"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="48.75" x="31.6" y="51.333">Business</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="80.35" y="51.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="40.05" x="80.35" y="51.333">Service</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startgantt
+Project starts the 2020/09/01
+
+2020/09/07 is colored in salmon
+2020/09/13 to 2020/09/16 are colored in lightblue
+
+[Prototype design] as [TASK1] requires 22 days
+[TASK1] is colored in Lavender/LightBlue
+[Prototype completed] happens at [TASK1]'s end
+@endgantt

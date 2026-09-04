@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="191px" preserveAspectRatio="none" style="width:549px;height:191px;background:#FFFFFF;" version="1.1" viewBox="0 0 549 191" width="549px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>ParticipantNumber1</title>
+      <rect fill="#000" fill-opacity="0" height="112" width="8" x="75.363" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="78.863" x2="78.863" y1="39" y2="151"/>
+    </g>
+    <g>
+      <title>ParticipantNumber2</title>
+      <rect fill="#000" fill-opacity="0" height="112" width="8" x="318.331" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="321.831" x2="321.831" y1="39" y2="151"/>
+    </g>
+    <g>
+      <title>ParticipantNumber3</title>
+      <rect fill="#000" fill-opacity="0" height="112" width="8" x="466.056" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="469.556" x2="469.556" y1="39" y2="151"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="137.725" x="10" y="10"/>
+    <text fill="#000" font-size="14" textLength="123.725" x="17" y="27.889">ParticipantNumber1</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="137.725" x="252.969" y="10"/>
+    <text fill="#000" font-size="14" textLength="123.725" x="259.969" y="27.889">ParticipantNumber2</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="137.725" x="400.694" y="10"/>
+    <text fill="#000" font-size="14" textLength="123.725" x="407.694" y="27.889">ParticipantNumber3</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="137.725" x="10" y="151"/>
+    <text fill="#000" font-size="14" textLength="123.725" x="17" y="168.889">ParticipantNumber1</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="137.725" x="252.969" y="151"/>
+    <text fill="#000" font-size="14" textLength="123.725" x="259.969" y="168.889">ParticipantNumber2</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="137.725" x="400.694" y="151"/>
+    <text fill="#000" font-size="14" textLength="123.725" x="407.694" y="168.889">ParticipantNumber3</text>
+    <polygon fill="#181818" points="309.831,62,319.831,66,309.831,70,313.831,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="78.863" x2="315.831" y1="66" y2="66"/>
+    <text fill="#000" font-size="13" textLength="218.969" x="85.863" y="61.111">this is a very long message that is very long</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="78.863" x2="120.863" y1="93" y2="93"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="120.863" x2="120.863" y1="93" y2="106"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="79.863" x2="120.863" y1="106" y2="106"/>
+    <polygon fill="#181818" points="89.863,102,79.863,106,89.863,110,85.863,106" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="218.969" x="85.863" y="88.111">this is a very long message that is very long</text>
+    <polygon fill="#181818" points="457.556,129,467.556,133,457.556,137,461.556,133" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="321.831" x2="463.556" y1="133" y2="133"/>
+    <text fill="#000" font-size="13" textLength="25.269" x="328.831" y="128.111">foo2</text>
+  </g>
+</svg>

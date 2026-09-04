@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startnwdiag
+  network dmz {
+      address = "210.x.x.x/24"
+
+      web01 [address = "210.x.x.1"];
+      web02 [address = "210.x.x.2"];
+  }
+@endnwdiag

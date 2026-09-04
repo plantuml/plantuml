@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startchart
+orientation horizontal
+v-axis [Product A, Product B, Product C]
+h-axis "Revenue" 0 --> 100
+bar [75, 55, 30] #3498db
+@endchart

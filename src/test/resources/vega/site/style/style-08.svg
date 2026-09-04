@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="291px" preserveAspectRatio="none" style="width:541px;height:291px;background:#FFFFFF;" version="1.1" viewBox="0 0 541 291" width="541px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFD700" height="34" rx="20" ry="20" style="stroke:#00F;stroke-width:3;" width="132.875" x="10" y="128"/>
+    <text fill="#000" font-size="14" textLength="112.875" x="20" y="148.889">Renovation project</text>
+    <rect fill="#FFD700" height="34" rx="20" ry="20" style="stroke:#00F;stroke-width:3;" width="74.6" x="192.875" y="20"/>
+    <text fill="#000" font-size="14" textLength="54.6" x="202.875" y="40.889">Planning</text>
+    <rect fill="#FFD700" height="34" rx="20" ry="20" style="stroke:#00F;stroke-width:3;" width="133.75" x="317.475" y="20"/>
+    <text fill="#000" font-size="14" textLength="113.75" x="327.475" y="40.889">Budget &amp; deadlines</text>
+    <path d="M267.475,37 L277.475,37 C292.475,37 292.475,37 307.475,37 L317.475,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M142.875,145 L152.875,145 C167.875,145 167.875,37 182.875,37 L192.875,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#FFD700" height="34" rx="20" ry="20" style="stroke:#00F;stroke-width:3;" width="81.512" x="192.875" y="101"/>
+    <text fill="#000" font-size="14" textLength="61.512" x="202.875" y="121.889">Execution</text>
+    <rect fill="#FFD700" height="34" rx="20" ry="20" style="stroke:#00F;stroke-width:3;" width="132.088" x="324.388" y="74"/>
+    <text fill="#000" font-size="14" textLength="112.088" x="334.388" y="94.889">Team coordination</text>
+    <path d="M274.388,118 L284.388,118 C299.388,118 299.388,91 314.388,91 L324.388,91" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#FFD700" height="34" rx="20" ry="20" style="stroke:#00F;stroke-width:3;" width="125.088" x="324.388" y="128"/>
+    <text fill="#000" font-size="14" textLength="105.088" x="334.388" y="148.889">Material selection</text>
+    <path d="M274.388,118 L284.388,118 C299.388,118 299.388,145 314.388,145 L324.388,145" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M142.875,145 L152.875,145 C167.875,145 167.875,118 182.875,118 L192.875,118" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#FFD700" height="34" rx="20" ry="20" style="stroke:#00F;stroke-width:3;" width="85.363" x="192.875" y="209"/>
+    <text fill="#000" font-size="14" textLength="65.363" x="202.875" y="229.889">Monitoring</text>
+    <rect fill="#FFD700" height="34" rx="20" ry="20" style="stroke:#00F;stroke-width:3;" width="105.575" x="328.238" y="182"/>
+    <text fill="#000" font-size="14" textLength="85.575" x="338.238" y="202.889">Quality control</text>
+    <path d="M278.238,226 L288.238,226 C303.238,226 303.238,199 318.238,199 L328.238,199" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#FFD700" height="34" rx="20" ry="20" style="stroke:#00F;stroke-width:3;" width="192.725" x="328.238" y="236"/>
+    <text fill="#000" font-size="14" textLength="172.725" x="338.238" y="256.889">Managing unforeseen events</text>
+    <path d="M278.238,226 L288.238,226 C303.238,226 303.238,253 318.238,253 L328.238,253" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M142.875,145 L152.875,145 C167.875,145 167.875,226 182.875,226 L192.875,226" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

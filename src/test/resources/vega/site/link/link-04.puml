@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+class Car {
+  - Some field [[[http://plantuml.com]]]
+  Some method() [[[http://plantuml.com/link]]]
+}
+@enduml

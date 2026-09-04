@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WIRE" height="341px" preserveAspectRatio="none" style="width:141px;height:341px;background:#FFFFFF;" version="1.1" viewBox="0 0 141 341" width="141px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="none" height="100" style="stroke:#000;stroke-width:1;" width="100" x="20" y="30"/>
+    <text fill="#000" font-size="12" textLength="19.275" x="25" y="39.333">first</text>
+    <rect fill="none" height="50" style="stroke:#000;stroke-width:1;" width="100" x="20" y="150"/>
+    <text fill="#000" font-size="12" textLength="58.05" x="25" y="159.333">second box</text>
+    <rect fill="none" height="100" style="stroke:#000;stroke-width:1;" width="100" x="20" y="220"/>
+    <text fill="#000" font-size="12" textLength="23.325" x="25" y="229.333">third</text>
+    <text fill="#000" font-size="12" x="15" y="19.333"> </text>
+  </g>
+</svg>

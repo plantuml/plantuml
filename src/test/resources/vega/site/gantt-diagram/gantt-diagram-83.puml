@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startgantt
+[Kick off] requires 1 days and is colored in blue
+then [Prototype design] requires 5 days
+[Test prototype] requires 4 days
+[Test prototype] starts at [Prototype design]'s end
+[Prototype design] is colored in Green
+[Test prototype] is colored in gray
+
+legend
+Legend:
+|= Color |= Task Type |
+|<#gray> | Planned |
+|<#Green>| In progress |
+|<#blue> | Done |
+end legend
+
+@endgantt

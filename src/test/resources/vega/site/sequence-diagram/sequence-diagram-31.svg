@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="314px" preserveAspectRatio="none" style="width:329px;height:314px;background:#FFFFFF;" version="1.1" viewBox="0 0 329 314" width="329px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="235" width="8" x="126.55" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="130.05" x2="130.05" y1="39" y2="274"/>
+    </g>
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="235" width="8" x="178.244" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="181.744" x2="181.744" y1="39" y2="274"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="107.825" y="10"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="114.825" y="27.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="162.275" y="10"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="169.275" y="27.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="107.825" y="274"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="114.825" y="291.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="162.275" y="274"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="169.275" y="291.889">Bob</text>
+    <path d="M15,52 L15,88 L125,88 L125,62 L115,52 L15,52" fill="#0FF" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M115,52 L115,62 L125,62 L115,52" fill="#0FF" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="89.05" x="21" y="67.111">This is displayed</text>
+    <text fill="#000" font-size="13" textLength="59.963" x="21" y="80.111">left of Alice.</text>
+    <path d="M135.05,98 L135.05,121 L312.05,121 L312.05,108 L302.05,98 L135.05,98" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M302.05,98 L302.05,108 L312.05,108 L302.05,98" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="156.975" x="141.05" y="113.111">This is displayed right of Alice.</text>
+    <path d="M46.466,131 L46.466,154 L213.466,154 L213.466,141 L203.466,131 L46.466,131" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M203.466,131 L203.466,141 L213.466,141 L203.466,131" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="146.169" x="52.466" y="146.111">This is displayed over Alice.</text>
+    <path d="M94.413,164 L94.413,200 L216.413,200 L216.413,174 L206.413,164 L94.413,164" fill="#FAA" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M206.413,164 L206.413,174 L216.413,174 L206.413,164" fill="#FAA" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="89.05" x="100.413" y="179.111">This is displayed</text>
+    <text fill="#000" font-size="13" textLength="101.969" x="100.413" y="192.111">over Bob and Alice.</text>
+    <path d="M97.703,210 L97.703,259 L213.703,259 L213.703,220 L203.703,210 L97.703,210" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M203.703,210 L203.703,220 L213.703,220 L203.703,210" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="95.388" x="103.703" y="225.111">This is yet another</text>
+    <text fill="#000" font-size="13" textLength="59.963" x="103.703" y="238.111">example of</text>
+    <text fill="#000" font-size="13" textLength="60.694" x="103.703" y="251.111">a long note.</text>
+  </g>
+</svg>

@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="439px" preserveAspectRatio="none" style="width:193px;height:439px;background:#FFFFFF;" version="1.1" viewBox="0 0 193 439" width="193px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>..test list 1..</title>
+      <rect fill="#000" fill-opacity="0" height="32" width="8" x="76.063" y="203"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="79.563" x2="79.563" y1="203" y2="235"/>
+    </g>
+    <g>
+      <title>B</title>
+      <rect fill="#000" fill-opacity="0" height="32" width="8" x="167.306" y="203"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="170.806" x2="170.806" y1="203" y2="235"/>
+    </g>
+    <rect fill="#E2E2F0" height="192" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="139.125" x="10" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="47.425" x="17" y="27.889">test list 1</text>
+    <ellipse cx="22.5" cy="37.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-size="14" textLength="52.238" x="29" y="41.889">Bullet list</text>
+    <ellipse cx="22.5" cy="51.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-size="14" textLength="73.938" x="29" y="55.889">Second item</text>
+    <rect fill="#000" height="3.5" width="3.5" x="26" y="63"/>
+    <text fill="#000" font-size="14" textLength="51.363" x="33" y="69.889">Sub item</text>
+    <rect fill="#000" height="3.5" width="3.5" x="34" y="77"/>
+    <text fill="#000" font-size="14" textLength="73.938" x="41" y="83.889">Sub sub item</text>
+    <ellipse cx="22.5" cy="93.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-size="14" textLength="58.363" x="29" y="97.889">Third item</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="10" x2="149.125" y1="106" y2="106"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="47.425" x="17" y="121.889">test list 2</text>
+    <text fill="#000" font-size="14" textLength="11.638" x="17" y="135.889">1.</text>
+    <text fill="#000" font-size="14" textLength="82.513" x="32.488" y="135.889">Numbered list</text>
+    <text fill="#000" font-size="14" textLength="11.638" x="17" y="149.889">2.</text>
+    <text fill="#000" font-size="14" textLength="73.938" x="32.488" y="149.889">Second item</text>
+    <text fill="#000" font-size="14" textLength="11.638" x="28.638" y="163.889">1.</text>
+    <text fill="#000" font-size="14" textLength="51.363" x="44.125" y="163.889">Sub item</text>
+    <text fill="#000" font-size="14" textLength="11.638" x="28.638" y="177.889">2.</text>
+    <text fill="#000" font-size="14" textLength="98" x="44.125" y="177.889">Another sub item</text>
+    <text fill="#000" font-size="14" textLength="11.638" x="17" y="191.889">3.</text>
+    <text fill="#000" font-size="14" textLength="58.363" x="32.488" y="191.889">Third item</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="159.125" y="174"/>
+    <text fill="#000" font-size="14" x="166.125" y="191.889">B</text>
+    <rect fill="#E2E2F0" height="192" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="139.125" x="10" y="235"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="47.425" x="17" y="252.889">test list 1</text>
+    <ellipse cx="22.5" cy="262.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-size="14" textLength="52.238" x="29" y="266.889">Bullet list</text>
+    <ellipse cx="22.5" cy="276.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-size="14" textLength="73.938" x="29" y="280.889">Second item</text>
+    <rect fill="#000" height="3.5" width="3.5" x="26" y="288"/>
+    <text fill="#000" font-size="14" textLength="51.363" x="33" y="294.889">Sub item</text>
+    <rect fill="#000" height="3.5" width="3.5" x="34" y="302"/>
+    <text fill="#000" font-size="14" textLength="73.938" x="41" y="308.889">Sub sub item</text>
+    <ellipse cx="22.5" cy="318.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-size="14" textLength="58.363" x="29" y="322.889">Third item</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="10" x2="149.125" y1="331" y2="331"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="47.425" x="17" y="346.889">test list 2</text>
+    <text fill="#000" font-size="14" textLength="11.638" x="17" y="360.889">1.</text>
+    <text fill="#000" font-size="14" textLength="82.513" x="32.488" y="360.889">Numbered list</text>
+    <text fill="#000" font-size="14" textLength="11.638" x="17" y="374.889">2.</text>
+    <text fill="#000" font-size="14" textLength="73.938" x="32.488" y="374.889">Second item</text>
+    <text fill="#000" font-size="14" textLength="11.638" x="28.638" y="388.889">1.</text>
+    <text fill="#000" font-size="14" textLength="51.363" x="44.125" y="388.889">Sub item</text>
+    <text fill="#000" font-size="14" textLength="11.638" x="28.638" y="402.889">2.</text>
+    <text fill="#000" font-size="14" textLength="98" x="44.125" y="402.889">Another sub item</text>
+    <text fill="#000" font-size="14" textLength="11.638" x="17" y="416.889">3.</text>
+    <text fill="#000" font-size="14" textLength="58.363" x="32.488" y="416.889">Third item</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="159.125" y="235"/>
+    <text fill="#000" font-size="14" x="166.125" y="252.889">B</text>
+    <polygon fill="#181818" points="158.806,213,168.806,217,158.806,221,162.806,217" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="79.563" x2="164.806" y1="217" y2="217"/>
+  </g>
+</svg>

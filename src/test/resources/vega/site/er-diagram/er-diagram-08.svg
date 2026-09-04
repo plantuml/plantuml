@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHEN_EER" height="229px" preserveAspectRatio="none" style="width:405px;height:229px;background:#FFFFFF;" version="1.1" viewBox="0 0 405 229" width="405px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="76.963" x="91.5" y="179"/>
+      <text fill="#000" font-size="14" textLength="56.963" x="101.5" y="199.889">PARENT</text>
+    </g>
+    <g>
+      <ellipse cx="44.205" cy="128.899" fill="#F1F1F1" rx="38.205" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="49.787" x="19.311" y="132.889">Number</text>
+    </g>
+    <g>
+      <ellipse cx="129.919" cy="128.899" fill="#F1F1F1" rx="29.419" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="37.363" x="111.238" y="132.889">Name</text>
+    </g>
+    <g>
+      <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="62.088" x="270" y="179"/>
+      <rect fill="#F1F1F1" height="28" style="stroke:#181818;stroke-width:0.5;" width="56.088" x="273" y="182"/>
+      <text fill="#000" font-size="14" textLength="42.088" x="280" y="199.889">CHILD</text>
+    </g>
+    <g>
+      <ellipse cx="300.919" cy="128.899" fill="#F1F1F1" rx="29.419" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="37.363" x="282.238" y="132.889">Name</text>
+    </g>
+    <g>
+      <ellipse cx="369.133" cy="128.899" fill="#F1F1F1" rx="20.633" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="24.938" x="356.665" y="132.889">Age</text>
+    </g>
+    <g>
+      <polygon fill="#F1F1F1" points="151.5,45.634,218.768,12,286.036,45.634,218.768,79.268" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#F1F1F1" points="161.5,45.634,218.768,17,276.036,45.634,218.768,74.268" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#000" font-size="14" textLength="84.175" x="176.68" y="49.523">PARENT_OF</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="association" id="lnk3">
+      <path d="M60.176,142.226 C73.897,152.597 93.685,167.553 108.695,178.897" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0001" data-link-type="association" id="lnk5">
+      <path d="M130,142.226 C130,152.523 130,167.341 130,178.655" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0006" data-link-type="association" id="lnk8">
+      <path d="M301,142.226 C301,152.523 301,167.341 301,178.655" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0006" data-link-type="association" id="lnk10">
+      <path d="M356.21,142.226 C345.36,152.597 329.714,167.553 317.846,178.897" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0001" data-link-type="association" id="lnk12">
+      <path d="M202.803,79.367 C193.254,98.066 180.604,121.728 168,142 C160.109,154.692 150.252,168.386 142.555,178.675" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" x="186" y="132.056">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0006" data-link-type="association" id="lnk13">
+      <path d="M226.253,79.404 C231.372,98.552 239.407,122.651 251,142 C259.322,155.889 271.822,169.139 282.241,178.917" fill="none" style="stroke:#181818;stroke-width:2;"/>
+      <text fill="#000" font-size="11" x="253" y="132.056">N</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="204px" preserveAspectRatio="none" style="width:369px;height:204px;background:#FFFFFF;" version="1.1" viewBox="0 0 369 204" width="369px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity C-->
+    <g class="entity" data-qualified-name="C" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="112.363" x="143.5" y="72"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="235.863" y="77"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="233.863" y="79"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="233.863" y="83"/>
+      <text fill="#000" font-size="14" textLength="72.363" x="158.5" y="102.889">Component</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="3" id="ent0003">
+      <path d="M163,12 L163,35 A0,0 0 0 0 163,35 L195.5,35 L199.5,71.857 L203.5,35 L236,35 A0,0 0 0 0 236,35 L236,22 L226,12 L163,12 A0,0 0 0 0 163,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M226,12 L226,22 L236,22 L226,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="52" x="169" y="27.111">A top note</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN5" data-source-line="6" id="ent0006">
+      <path d="M130,152 L130,188 A0,0 0 0 0 130,188 L269.463,188 A0,0 0 0 0 269.463,188 L269.463,162 L259.463,152 L203.5,152 L199.5,116.007 L195.5,152 L130,152 A0,0 0 0 0 130,152" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M259.463,152 L259.463,162 L269.463,162 L259.463,152" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="118.463" x="136" y="167.111">A bottom note can also</text>
+      <text fill="#000" font-size="13" textLength="97.663" x="136" y="180.111">be on several lines</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN8" data-source-line="11" id="ent0009">
+      <path d="M6,76 L6,112 A0,0 0 0 0 6,112 L124.663,112 A0,0 0 0 0 124.663,112 L124.663,98 L143.464,94 L124.663,90 L124.663,86 L114.663,76 L6,76 A0,0 0 0 0 6,76" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M114.663,76 L114.663,86 L124.663,86 L114.663,76" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="96.119" x="12" y="91.111">A left note can also</text>
+      <text fill="#000" font-size="13" textLength="97.663" x="12" y="104.111">be on several lines</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN11" data-source-line="15" id="ent0012">
+      <path d="M273.5,82 L273.5,90 L255.609,94 L273.5,98 L273.5,105 A0,0 0 0 0 273.5,105 L353.731,105 A0,0 0 0 0 353.731,105 L353.731,92 L343.731,82 L273.5,82 A0,0 0 0 0 273.5,82" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M343.731,82 L343.731,92 L353.731,92 L343.731,82" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="59.231" x="279.5" y="97.111">A right note</text>
+    </g>
+  </g>
+</svg>

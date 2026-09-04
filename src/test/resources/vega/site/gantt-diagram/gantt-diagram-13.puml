@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startgantt
+[SameTaskName] as [T1] lasts 7 days and is colored in pink
+[SameTaskName] as [T2] lasts 3 days and is colored in orange
+[T1] -> [T2]
+@endgantt

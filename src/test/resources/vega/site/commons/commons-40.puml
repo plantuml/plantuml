@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+mainframe This is a **mainframe**
+
+node n
+(u) -> [c]
+@enduml

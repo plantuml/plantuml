@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="238px" preserveAspectRatio="none" style="width:213px;height:238px;background:#FFFFFF;" version="1.1" viewBox="0 0 213 238" width="213px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Architecture-->
+    <g class="cluster" data-qualified-name="Architecture" data-source-line="140" id="ent0001">
+      <rect fill="#E0E9FF" height="210" rx="25" ry="25" style="stroke:#8CAEFF;stroke-width:3;stroke-dasharray:5,5;" width="191" x="14" y="4"/>
+      <path d="M109.5,7.172 L108.086,8.586 L98.086,18.586 L97.5,19.172 L97.5,35.5 L121.5,35.5 L121.5,19.172 L120.914,18.586 L110.914,8.586 L109.5,7.172 L109.5,7.172" fill="#FFF"/>
+      <path d="M119.5,20 L109.5,10 L99.5,20 L99.5,33.5 L119.5,33.5 L119.5,20" fill="#034CEE"/>
+      <text fill="#101010" font-size="14" font-weight="700" textLength="74.638" x="72.181" y="48.889">Architecture</text>
+    </g>
+    <!--entity process-->
+    <g class="entity" data-qualified-name="Architecture.process" data-source-line="143" id="ent0002">
+      <polygon fill="#8CAEFF" points="30.5,77,101.075,77,111.075,94,101.075,111,30.5,111" style="stroke:#FFF;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#101010" font-size="14" textLength="50.575" x="40.5" y="97.889">Process</text>
+    </g>
+    <!--entity asset-->
+    <g class="entity" data-qualified-name="Architecture.asset" data-source-line="145" id="ent0003">
+      <rect fill="#8CAEFF" height="34" style="stroke:#FFF;stroke-width:2;" width="55" x="133.5" y="77"/>
+      <text fill="#101010" font-size="14" textLength="35" x="143.5" y="97.889">Asset</text>
+    </g>
+    <!--entity capability-->
+    <g class="entity" data-qualified-name="Architecture.capability" data-source-line="145" id="ent0004">
+      <rect fill="#8CAEFF" height="34" rx="12.5" ry="12.5" style="stroke:#FFF;stroke-width:2;" width="81.6" x="59" y="164"/>
+      <text fill="#101010" font-size="14" textLength="61.6" x="69" y="184.889">Capability</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="association" id="lnk5">
+      <path d="M111.524,94 C118.896,94 126.43,94 133.323,94" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="122.5" y="86.111"> </text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="association" id="lnk6">
+      <path d="M76.591,111.389 C81.76,126.537 89.393,148.911 94.524,163.95" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="90" y="141.111"> </text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="association" id="lnk7">
+      <path d="M149.239,111.389 C138.368,126.537 122.311,148.911 111.518,163.95" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="137" y="141.111"> </text>
+    </g>
+  </g>
+</svg>

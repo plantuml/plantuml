@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="341px" preserveAspectRatio="none" style="width:222px;height:341px;background:#FFFFFF;" version="1.1" viewBox="0 0 222 341" width="222px" zoomAndPan="magnify">
+  <defs>
+    <style type="text/css">/* Source (unminified): https://github.com/plantuml/plantuml/blob/master/src/main/resources/svg/default.css */
+svg .entity{cursor:pointer}svg.mouseover-active&gt;g&gt;*{opacity:0.2 !important}svg.mouseover-active&gt;g&gt;g.mouseover-highlighted{opacity:1.0 !important}svg.click-active&gt;g&gt;*{opacity:0.3}svg.click-active&gt;g&gt;g.click-highlighted{opacity:1.0}
+</style>
+    <script>/* Source (unminified): https://github.com/plantuml/plantuml/blob/master/src/main/resources/svg/default.js */
+!function(){function e(e){return e?.replaceAll("\\","\\\\")?.replaceAll('"','\\"')}function t(){a.classList.contains("click-active")&amp;&amp;this.classList.contains("click-selected")?d("click"):s(this,"click")}function c(){var t,c;a.classList.contains("click-active")&amp;&amp;this.classList.contains("click-selected")?d("click"):(t=this,c="click",a.querySelectorAll(`.${c}-selected, .${c}-highlighted`).forEach(e=&gt;{e.classList.remove(`${c}-selected`,`${c}-highlighted`)}),a.classList.add(`${c}-active`),t.classList.add(`${c}-selected`,`${c}-highlighted`),function(t){function c(t,i,n=new Set){n.add(t);const s=e(t.id),d=i?2:1,l=i?1:2;return a.querySelectorAll(`.link[data-entity-${l}="${s}"]`).forEach(t=&gt;{if(!n.has(t)){n.add(t);const s=t.getAttribute(`data-entity-${d}`),l=a.querySelector(`[id="${e(s)}"]`);n.has(l)||(n.add(l),c(l,i,n))}}),n}const i=c(t,!1),n=c(t,!0);return i.union(n)}(t).forEach(e=&gt;{e.classList.add(`${c}-highlighted`)}))}function i(){s(this,"mouseover")}function n(){d("mouseover")}function s(t,c){a.querySelectorAll(`.${c}-selected, .${c}-highlighted`).forEach(e=&gt;{e.classList.remove(`${c}-selected`,`${c}-highlighted`)}),a.classList.add(`${c}-active`),t.classList.add(`${c}-selected`,`${c}-highlighted`),function(t){const c=t.id,i=e(c);let n=new Set;return a.querySelectorAll(`.link[data-entity-1="${i}"], .link[data-entity-2="${i}"]`).forEach(t=&gt;{const i=t.getAttribute("data-entity-1"),s=t.getAttribute("data-entity-2");i===c?(n.add(a.querySelector(`[id="${e(s)}"]`)),n.add(t)):s===c&amp;&amp;(n.add(a.querySelector(`[id="${e(i)}"]`)),n.add(t))}),n}(t).forEach(e=&gt;{e.classList.add(`${c}-highlighted`)})}function d(e){a.classList.remove(`${e}-active`)}const a=function(e,t){for(;e&amp;&amp;e.nodeName.toLowerCase()!==t;)e=e.parentElement;return e}(document.currentScript,"svg");document.addEventListener("DOMContentLoaded",()=&gt;{a.querySelectorAll("g.entity").forEach(e=&gt;{e.addEventListener("mouseover",i),e.addEventListener("mouseout",n),e.addEventListener("click",t),e.addEventListener("dblclick",c)}),a.addEventListener("keydown",e=&gt;{"Escape"===e.code&amp;&amp;d("click")})})}();
+</script>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster P-->
+    <g class="cluster" data-qualified-name="P" data-source-line="3" id="ent0001">
+      <path d="M66,68 L76.363,68 A3.75,3.75 0 0 1 78.863,70.5 L85.863,88 L195,88 A2.5,2.5 0 0 1 197.5,90.5 L197.5,254.5 A2.5,2.5 0 0 1 195,257 L66,257 A2.5,2.5 0 0 1 63.5,254.5 L63.5,70.5 A2.5,2.5 0 0 1 66,68" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="63.5" x2="85.863" y1="88" y2="88"/>
+      <text fill="#000" font-size="14" font-weight="700" x="67.5" y="80.889">P</text>
+    </g>
+    <!--class D-->
+    <g class="entity" data-qualified-name="D" data-source-line="7" id="ent0007">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.15" x="164.5" y="277"/>
+      <ellipse cx="179.5" cy="293" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="174.5" y="298">C</text>
+      <text fill="#000" font-size="14" x="193.5" y="296.889">D</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="165.5" x2="205.65" y1="309" y2="309"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="165.5" x2="205.65" y1="317" y2="317"/>
+    </g>
+    <!--class E-->
+    <g class="entity" data-qualified-name="E" data-source-line="9" id="ent0010">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" x="35" y="31.889">E</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="46.363" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="46.363" y1="52" y2="52"/>
+    </g>
+    <!--class F-->
+    <g class="entity" data-qualified-name="F" data-source-line="9" id="ent0011">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="40.575" x="6" y="109"/>
+      <ellipse cx="21" cy="125" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="130">C</text>
+      <text fill="#000" font-size="14" x="35" y="128.889">F</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="45.575" y1="141" y2="141"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="45.575" y1="149" y2="149"/>
+    </g>
+    <!--class G-->
+    <g class="entity" data-qualified-name="G" data-source-line="11" id="ent0014">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.85" x="79" y="277"/>
+      <ellipse cx="94" cy="293" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="89" y="298">C</text>
+      <text fill="#000" font-size="14" x="108" y="296.889">G</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="80" x2="120.85" y1="309" y2="309"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="80" x2="120.85" y1="317" y2="317"/>
+    </g>
+    <!--class A-->
+    <g class="entity" data-qualified-name="P.A" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="140" y="109"/>
+      <ellipse cx="155" cy="125" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="150" y="130">C</text>
+      <text fill="#000" font-size="14" x="169" y="128.889">A</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="141" x2="180.363" y1="141" y2="141"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="141" x2="180.363" y1="149" y2="149"/>
+    </g>
+    <!--class B-->
+    <g class="entity" data-qualified-name="P.B" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="80" y="193"/>
+      <ellipse cx="95" cy="209" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="90" y="214">C</text>
+      <text fill="#000" font-size="14" x="109" y="212.889">B</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="81" x2="120.363" y1="225" y2="225"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="81" x2="120.363" y1="233" y2="233"/>
+    </g>
+    <!--class C-->
+    <g class="entity" data-qualified-name="P.C" data-source-line="5" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.15" x="139.5" y="193"/>
+      <ellipse cx="154.5" cy="209" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="149.5" y="214">C</text>
+      <text fill="#000" font-size="14" x="168.5" y="212.889">C</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="140.5" x2="180.65" y1="225" y2="225"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="140.5" x2="180.65" y1="233" y2="233"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="117.368,192.947,125.911,188.046,120.321,188.912,119.454,183.322,117.368,192.947" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M143.467,157.279 C135.291,168.453 128.475,177.767 120.321,188.912" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="160.5,192.947,164.5,183.947,160.5,187.947,156.5,183.947,160.5,192.947" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M160.5,157.279 C160.5,168.453 160.5,176.802 160.5,187.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="178.472,276.947,179.673,267.172,177.014,272.164,172.021,269.505,178.472,276.947" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M167.597,241.279 C171.004,252.453 173.616,261.019 177.014,272.164" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0002" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="175.451,157.122,176.394,166.926,177.91,161.476,183.36,162.992,175.451,157.122" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M190.288,276.689 C193.925,254.774 197.261,221.212 190.5,193 C187.501,180.484 183.843,171.98 177.91,161.476" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0011" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="26.5,108.787,30.5,99.787,26.5,103.787,22.5,99.787,26.5,108.787" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M26.5,60.483 C26.5,75.209 26.5,89.113 26.5,103.787" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0003" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="79.997,193.281,76.937,183.92,76.648,189.569,70.998,189.279,79.997,193.281" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M47.113,156.842 C57.377,168.215 66.399,178.212 76.648,189.569" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0014" data-link-type="dependency" id="lnk15">
+      <polygon fill="#181818" points="100.5,276.947,104.5,267.947,100.5,271.947,96.5,267.947,100.5,276.947" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M100.5,241.279 C100.5,252.453 100.5,260.802 100.5,271.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

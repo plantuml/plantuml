@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startjson
+{
+"data":
+  {
+  "participants": [
+    {"name": "XYZ", "as": "xyz"},
+    {"name": "RST", "as": "rst"},
+    {"name": "UVW", "as": "uvw"}]
+  }
+}
+@endjson

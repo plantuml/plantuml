@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="TIMING" height="106px" preserveAspectRatio="none" style="width:212px;height:106px;background:#FFFFFF;" version="1.1" viewBox="0 0 212 106" width="212px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="20" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="191.35" x2="191.35" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="86.35" x2="86.35" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="136.35" x2="136.35" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="186.35" x2="186.35" y1="20" y2="74"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="191.35" y1="20" y2="20"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="58.363" x="25" y="30.889">Web User</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="84.363" y1="35" y2="35"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="84.363" x2="94.363" y1="35" y2="20"/>
+    <polygon fill="#E2E2F0" points="25,40,74.35,40,86.35,52,74.35,64,25,64" style="stroke:#E2E2F0;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M25,40 L74.35,40 L86.35,52 L74.35,64 L25,64" fill="#E2E2F0" style="stroke:#006400;stroke-width:1.5;"/>
+    <text fill="#333" font-size="12" font-weight="700" textLength="37.35" x="37" y="55.333">Absent</text>
+    <polygon fill="#E2E2F0" points="98.35,40,124.35,40,136.35,52,124.35,64,98.35,64,86.35,52" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="148.35,40,186.35,40,186.35,64,148.35,64,136.35,52" style="stroke:#E2E2F0;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M186.35,40 L148.35,40 L136.35,52 L148.35,64 L186.35,64" fill="#E2E2F0" style="stroke:#006400;stroke-width:1.5;"/>
+    <text fill="#333" font-size="12" font-weight="700" textLength="40.05" x="91.325" y="55.333">Waiting</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="12.675" x="148.35" y="55.333">ok</text>
+  </g>
+</svg>

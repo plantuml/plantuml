@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+
+actor actor1
+:actor2:
+
+@enduml

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="153px" preserveAspectRatio="none" style="width:347px;height:153px;background:#FFFFFF;" version="1.1" viewBox="0 0 347 153" width="347px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity Order_Service-->
+    <g class="entity" data-qualified-name="Order_Service" data-source-line="17" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="130.212" x="87" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="197.212" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="195.212" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="195.212" y="23"/>
+      <text fill="#000" font-size="14" textLength="90.212" x="102" y="42.889">Order_Service</text>
+    </g>
+    <!--entity Payment_Processor-->
+    <g class="entity" data-qualified-name="Payment_Processor" data-source-line="19" id="ent0002">
+      <ellipse cx="63" cy="118" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="126" x="0" y="145.889">Payment_Processor</text>
+    </g>
+    <!--entity Inventory_Service-->
+    <g class="entity" data-qualified-name="Inventory_Service" data-source-line="20" id="ent0004">
+      <ellipse cx="242" cy="118" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="112" x="186" y="145.889">Inventory_Service</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#F00" points="60.102,108.787,62.35,99.198,59.167,103.875,54.491,100.693,60.102,108.787" style="stroke:#F00;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M86.881,53.39 C77.868,58.644 69.744,65.377 64,74 C57.18,84.238 57.269,93.893 59.167,103.875" fill="none" style="stroke:#F00;stroke-width:1;stroke-dasharray:10,5;"/>
+      <text fill="#F00" font-size="13" textLength="152.588" x="66" y="86.111">Handles payment validation</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#00F" points="238.722,108.671,239.656,98.866,237.134,103.93,232.07,101.408,238.722,108.671" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M197.618,56.009 C205.728,61.111 213.612,67.117 220,74 C229.274,83.993 233.763,93.868 237.134,103.93" fill="none" style="stroke:#00F;stroke-width:1;stroke-dasharray:10,5;"/>
+      <text fill="#008000" font-size="13" textLength="107.006" x="232" y="86.111">Checks stock levels</text>
+    </g>
+  </g>
+</svg>

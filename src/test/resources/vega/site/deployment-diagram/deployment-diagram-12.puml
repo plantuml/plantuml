@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+title Bracketed line color
+node  foo
+foo --> bar
+foo -[#red]-> bar1     : [#red]
+foo -[#green]-> bar2   : [#green]
+foo -[#blue]-> bar3    : [#blue]
+foo -[#blue;#yellow;#green]-> bar4
+@enduml

@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+<style>
+lifeLine {
+  LineStyle 0
+}
+delay {
+  LineStyle 1-4
+}
+</style>
+Bob -> Alice : hello
+...
+Alice -> Bob : ok
+@enduml

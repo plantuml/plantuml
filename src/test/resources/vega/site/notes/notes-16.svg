@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="129px" preserveAspectRatio="none" style="width:316px;height:129px;background:#FFFFFF;" version="1.1" viewBox="0 0 316 129" width="316px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M15,20.5 L15,43.5 L102.544,43.5 L102.544,30.5 L92.544,20.5 L15,20.5" fill="#008000" style="stroke:#F00;stroke-width:2;"/>
+    <path d="M92.544,20.5 L92.544,30.5 L102.544,30.5 L92.544,20.5" fill="#008000" style="stroke:#F00;stroke-width:2;"/>
+    <text fill="#000" font-size="13" textLength="66.544" x="21" y="35.611">This is a note</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="26.675" x="112.544" y="16"/>
+    <text fill="#000" font-size="12" x="122.544" y="35.333">a</text>
+    <path d="M159.219,59.5 L159.219,80 L139.219,84 L159.219,88 L159.219,108.5 A0,0 0 0 0 159.219,108.5 L295.919,108.5 A0,0 0 0 0 295.919,108.5 L295.919,69.5 L285.919,59.5 L159.219,59.5 A0,0 0 0 0 159.219,59.5" fill="#008000" style="stroke:#F00;stroke-width:2;"/>
+    <path d="M285.919,59.5 L285.919,69.5 L295.919,69.5 L285.919,59.5" fill="#008000" style="stroke:#F00;stroke-width:2;"/>
+    <text fill="#000" font-size="13" textLength="115.7" x="165.219" y="74.611">This note is on several</text>
+    <text fill="#000" font-size="13" font-style="italic" textLength="26.813" x="165.219" y="87.611">lines</text>
+    <text fill="#000" font-size="13" textLength="42.656" x="192.031" y="87.611">and can</text>
+    <text fill="#000" font-size="13" textLength="41.925" x="165.219" y="100.611">contain</text>
+    <text fill="#000" font-size="13" font-weight="700" textLength="35.425" x="207.144" y="100.611">HTML</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="26.675" x="112.544" y="68"/>
+    <text fill="#000" font-size="12" x="122.544" y="87.333">b</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="125.881" x2="125.881" y1="48" y2="68"/>
+    <polygon fill="#181818" points="121.881,58,125.881,68,129.881,58,125.881,62" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

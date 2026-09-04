@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+Alice -> Bob: Authentication Request
+
+header
+<font color=red>Warning:</font>
+Do not use in production.
+endheader
+
+center footer Generated for demonstration
+
+@enduml

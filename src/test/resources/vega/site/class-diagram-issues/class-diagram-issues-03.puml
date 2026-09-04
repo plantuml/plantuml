@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+skinparam groupInheritance 2
+
+Parent <|-- Child1
+Parent <|-- Child2
+Composed --* Parent #blue
+Aggregated --o Parent #blue
+Arrow --> Parent #blue
+@enduml

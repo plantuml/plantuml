@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="117px" preserveAspectRatio="none" style="width:464px;height:117px;background:#FFFFFF;" version="1.1" viewBox="0 0 464 117" width="464px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="14" textLength="55.212" x="13" y="61.889">root node</text>
+    <text fill="#000" font-size="14" textLength="116.725" x="121.212" y="53.889">some first level node</text>
+    <text fill="#000" font-size="14" textLength="105.175" x="290.938" y="21.889">second level node</text>
+    <path d="M237.938,50 L247.938,50 C262.938,50 262.938,18 277.938,18 L287.938,18" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="152.6" x="290.938" y="37.889">another second level node</text>
+    <path d="M237.938,50 L247.938,50 C262.938,50 262.938,34 277.938,34 L287.938,34" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="19.425" x="290.938" y="53.889">foo</text>
+    <path d="M237.938,50 L247.938,50 C262.938,50 262.938,50 277.938,50 L287.938,50" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="20.213" x="290.938" y="69.889">bar</text>
+    <path d="M237.938,50 L247.938,50 C262.938,50 262.938,66 277.938,66 L287.938,66" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="39.637" x="290.938" y="85.889">foobar</text>
+    <path d="M237.938,50 L247.938,50 C262.938,50 262.938,82 277.938,82 L287.938,82" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M68.212,58 L78.212,58 C93.212,58 93.212,50 108.212,50 L118.212,50" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="129.938" x="121.212" y="101.889">another first level node</text>
+    <path d="M68.212,58 L78.212,58 C93.212,58 93.212,98 108.212,98 L118.212,98" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

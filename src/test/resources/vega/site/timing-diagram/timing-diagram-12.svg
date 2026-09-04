@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="TIMING" height="238px" preserveAspectRatio="none" style="width:276px;height:238px;background:#FFFFFF;" version="1.1" viewBox="0 0 276 238" width="276px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="20" y1="20" y2="206"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="255.425" x2="255.425" y1="20" y2="206"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="50.425" x2="50.425" y1="20" y2="206"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="100.425" x2="100.425" y1="20" y2="206"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="150.425" x2="150.425" y1="20" y2="206"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="200.425" x2="200.425" y1="20" y2="206"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="250.425" x2="250.425" y1="20" y2="206"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="255.425" y1="20" y2="20"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="46.813" x="25" y="30.889">Signal1</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="72.813" y1="35" y2="35"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="72.813" x2="82.813" y1="35" y2="20"/>
+    <text fill="#333" font-size="12" textLength="25.425" x="25" y="109.333">hello</text>
+    <text fill="#333" font-size="12" x="25" y="89.333">2</text>
+    <text fill="#333" font-size="12" x="25" y="69.333">1</text>
+    <text fill="#333" font-size="12" x="25" y="49.333">0</text>
+    <line style="stroke:#006400;stroke-width:2;" x1="50.425" x2="100.425" y1="45" y2="45"/>
+    <rect fill="#708090" height="20" style="stroke:#006400;stroke-width:2;" width="50" x="100.425" y="45"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="100.425" x2="100.425" y1="45" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="105.425" x2="105.425" y1="45" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="110.425" x2="110.425" y1="45" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="115.425" x2="115.425" y1="45" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="120.425" x2="120.425" y1="45" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="125.425" x2="125.425" y1="45" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="130.425" x2="130.425" y1="45" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="135.425" x2="135.425" y1="45" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="140.425" x2="140.425" y1="45" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="145.425" x2="145.425" y1="45" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="100.425" x2="150.425" y1="45" y2="45"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="100.425" x2="150.425" y1="65" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="150.425" x2="200.425" y1="65" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="200.425" x2="250.425" y1="105" y2="105"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="100.425" x2="100.425" y1="45" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="150.425" x2="150.425" y1="45" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="200.425" x2="200.425" y1="65" y2="105"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="255.425" y1="123" y2="123"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="46.813" x="25" y="133.889">Signal2</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="72.813" y1="138" y2="138"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="72.813" x2="82.813" y1="138" y2="123"/>
+    <text fill="#333" font-size="12" x="38.75" y="192.333">2</text>
+    <text fill="#333" font-size="12" x="38.75" y="172.333">1</text>
+    <text fill="#333" font-size="12" x="38.75" y="152.333">0</text>
+    <line style="stroke:#006400;stroke-width:2;" x1="50.425" x2="100.425" y1="148" y2="148"/>
+    <rect fill="#E2E2F0" height="20" style="stroke:#006400;stroke-width:2;" width="50" x="100.425" y="148"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="100.425" x2="100.425" y1="148" y2="168"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="105.425" x2="105.425" y1="148" y2="168"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="110.425" x2="110.425" y1="148" y2="168"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="115.425" x2="115.425" y1="148" y2="168"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="120.425" x2="120.425" y1="148" y2="168"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="125.425" x2="125.425" y1="148" y2="168"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="130.425" x2="130.425" y1="148" y2="168"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="135.425" x2="135.425" y1="148" y2="168"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="140.425" x2="140.425" y1="148" y2="168"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="145.425" x2="145.425" y1="148" y2="168"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="100.425" x2="150.425" y1="148" y2="148"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="100.425" x2="150.425" y1="168" y2="168"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="150.425" x2="200.425" y1="148" y2="148"/>
+    <rect fill="#E2E2F0" height="40" style="stroke:#006400;stroke-width:2;" width="50" x="200.425" y="148"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="200.425" x2="200.425" y1="148" y2="188"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="205.425" x2="205.425" y1="148" y2="188"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="210.425" x2="210.425" y1="148" y2="188"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="215.425" x2="215.425" y1="148" y2="188"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="220.425" x2="220.425" y1="148" y2="188"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="225.425" x2="225.425" y1="148" y2="188"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="230.425" x2="230.425" y1="148" y2="188"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="235.425" x2="235.425" y1="148" y2="188"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="240.425" x2="240.425" y1="148" y2="188"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="245.425" x2="245.425" y1="148" y2="188"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="200.425" x2="250.425" y1="148" y2="148"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="200.425" x2="250.425" y1="188" y2="188"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="100.425" x2="100.425" y1="148" y2="168"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="150.425" x2="150.425" y1="148" y2="168"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="200.425" x2="200.425" y1="148" y2="188"/>
+    <line style="stroke:#333;stroke-width:2;" x1="50.425" x2="50.425" y1="206" y2="211"/>
+    <line style="stroke:#333;stroke-width:2;" x1="100.425" x2="100.425" y1="206" y2="211"/>
+    <line style="stroke:#333;stroke-width:2;" x1="150.425" x2="150.425" y1="206" y2="211"/>
+    <line style="stroke:#333;stroke-width:2;" x1="200.425" x2="200.425" y1="206" y2="211"/>
+    <line style="stroke:#333;stroke-width:2;" x1="250.425" x2="250.425" y1="206" y2="211"/>
+    <line style="stroke:#333;stroke-width:2;" x1="50.425" x2="250.425" y1="206" y2="206"/>
+    <text fill="#333" font-size="11" x="47.366" y="220.556">0</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="91.247" y="220.556">100</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="141.247" y="220.556">200</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="191.247" y="220.556">300</text>
+  </g>
+</svg>

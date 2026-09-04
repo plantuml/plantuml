@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+A ->(40) B++: Rq
+B -->(20) A--: Rs
+@enduml

@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startchart
+h-axis [Jan, Feb, Mar, Apr, May, Jun]
+v-axis 0 --> 140 spacing 20
+area "Product A" [45, 62, 58, 70, 83, 78] #3498db
+area "Product B" [25, 35, 42, 38, 45, 40] #2ecc71
+legend right
+@endchart

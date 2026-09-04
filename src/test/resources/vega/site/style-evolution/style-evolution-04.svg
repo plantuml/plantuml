@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="187px" preserveAspectRatio="none" style="width:98px;height:187px;background:#FFFFFF;" version="1.1" viewBox="0 0 98 187" width="98px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="18" width="8" x="21.969" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="25.469" x2="25.469" y1="84" y2="102"/>
+    </g>
+    <g>
+      <title>Sally</title>
+      <rect fill="#000" fill-opacity="0" height="18" width="8" x="65.663" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="69.163" x2="69.163" y1="84" y2="102"/>
+    </g>
+    <text fill="#00F" font-size="14" textLength="24.938" x="10" y="80.889">Bob</text>
+    <ellipse cx="25.469" cy="18.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M25.469,26.5 L25.469,53.5 M12.469,34.5 L38.469,34.5 M25.469,53.5 L12.469,68.5 M25.469,53.5 L38.469,68.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#F00" font-size="14" textLength="30.45" x="50.938" y="80.889">Sally</text>
+    <ellipse cx="69.163" cy="18.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M69.163,26.5 L69.163,53.5 M56.162,34.5 L82.163,34.5 M69.163,53.5 L56.162,68.5 M69.163,53.5 L82.163,68.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#00F" font-size="14" textLength="24.938" x="10" y="112.889">Bob</text>
+    <ellipse cx="25.469" cy="124.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M25.469,132.5 L25.469,159.5 M12.469,140.5 L38.469,140.5 M25.469,159.5 L12.469,174.5 M25.469,159.5 L38.469,174.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#F00" font-size="14" textLength="30.45" x="50.938" y="112.889">Sally</text>
+    <ellipse cx="69.163" cy="124.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M69.163,132.5 L69.163,159.5 M56.162,140.5 L82.163,140.5 M69.163,159.5 L56.162,174.5 M69.163,159.5 L82.163,174.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+  </g>
+</svg>

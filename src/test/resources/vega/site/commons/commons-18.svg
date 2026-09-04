@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="234px" preserveAspectRatio="none" style="width:112px;height:234px;background:#FFFFFF;" version="1.1" viewBox="0 0 112 234" width="112px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="header" data-source-line="1">
+      <text fill="#888" font-size="10" textLength="55.563" x="49.675" y="12.778">some header</text>
+    </g>
+    <g class="title" data-source-line="5">
+      <text fill="#000" font-size="14" font-weight="700" textLength="40.425" x="34.906" y="36.889">My title</text>
+    </g>
+    <g>
+      <title>a</title>
+      <rect fill="#000" fill-opacity="0" height="32" width="8" x="36.225" y="85"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="39.725" x2="39.725" y1="85" y2="117"/>
+    </g>
+    <g>
+      <title>b</title>
+      <rect fill="#000" fill-opacity="0" height="32" width="8" x="68.013" y="85"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="71.513" x2="71.513" y1="85" y2="117"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="28.831" y="56"/>
+    <text fill="#000" font-size="14" x="35.831" y="73.889">a</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="60.619" y="56"/>
+    <text fill="#000" font-size="14" x="67.619" y="73.889">b</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="28.831" y="117"/>
+    <text fill="#000" font-size="14" x="35.831" y="134.889">a</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="60.619" y="117"/>
+    <text fill="#000" font-size="14" x="67.619" y="134.889">b</text>
+    <polygon fill="#181818" points="59.513,95,69.513,99,59.513,103,63.513,99" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="39.725" x2="65.513" y1="99" y2="99"/>
+    <g class="legend" data-source-line="9">
+      <rect fill="#DDD" height="24" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="76.238" x="17" y="163"/>
+      <text fill="#000" font-size="14" textLength="66.238" x="22" y="178.889">The legend</text>
+    </g>
+    <g class="caption" data-source-line="7">
+      <text fill="#000" font-size="14" textLength="81.813" x="14.212" y="211.889">This is caption</text>
+    </g>
+    <g class="footer" data-source-line="3">
+      <text fill="#888" font-size="10" textLength="49.938" x="30.15" y="224.778">some footer</text>
+    </g>
+  </g>
+</svg>

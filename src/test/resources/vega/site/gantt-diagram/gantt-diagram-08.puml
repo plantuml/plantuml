@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startgantt
+Project starts 2020-07-01
+[Prototype design] starts 2020-07-01 and ends 2020-07-15
+[Test prototype] starts 2020-07-16 and requires 10 days
+@endgantt

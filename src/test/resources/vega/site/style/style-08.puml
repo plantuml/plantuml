@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startmindmap
+<style>
+node {
+    Padding 10
+    HorizontalAlignment center
+    LineColor blue
+    LineThickness 3.0
+    BackgroundColor gold
+    RoundCorner 40
+}
+</style>
+
+* Renovation project
+** Planning
+*** Budget & deadlines
+** Execution
+*** Team coordination
+*** Material selection
+** Monitoring
+*** Quality control
+*** Managing unforeseen events
+
+@endmindmap

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="221px" preserveAspectRatio="none" style="width:274px;height:221px;background:#FFFFFF;" version="1.1" viewBox="0 0 274 221" width="274px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#DDD" height="195" style="stroke:#181818;stroke-width:0.5;" width="158.175" x="16" y="11"/>
+    <rect fill="#DDD" height="195" style="stroke:#181818;stroke-width:0.5;" width="70.875" x="186.175" y="11"/>
+    <g>
+      <title>Service A</title>
+      <rect fill="#000" fill-opacity="0" height="65" width="8" x="51.544" y="75"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="55.044" x2="55.044" y1="75" y2="140"/>
+    </g>
+    <g>
+      <title>Service B</title>
+      <rect fill="#000" fill-opacity="0" height="65" width="8" x="131.631" y="75"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="135.131" x2="135.131" y1="75" y2="140"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;" width="10" x="130.131" y="89"/>
+    </g>
+    <g>
+      <title>Service C</title>
+      <rect fill="#000" fill-opacity="0" height="65" width="8" x="218.113" y="75"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="221.613" x2="221.613" y1="75" y2="140"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="70.088" x="20" y="46"/>
+    <text fill="#000" font-size="14" textLength="56.088" x="27" y="63.889">Service A</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="70.088" x="100.088" y="46"/>
+    <text fill="#000" font-size="14" textLength="56.088" x="107.088" y="63.889">Service B</text>
+    <text fill="#000" font-size="14" textLength="56.875" x="190.175" y="71.889">Service C</text>
+    <path d="M203.613,25 C203.613,15 221.613,15 221.613,15 C221.613,15 239.613,15 239.613,25 L239.613,51 C239.613,61 221.613,61 221.613,61 C221.613,61 203.613,61 203.613,51 L203.613,25" fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M203.613,25 C203.613,35 221.613,35 221.613,35 C221.613,35 239.613,35 239.613,25" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="70.088" x="20" y="140"/>
+    <text fill="#000" font-size="14" textLength="56.088" x="27" y="157.889">Service A</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="70.088" x="100.088" y="140"/>
+    <text fill="#000" font-size="14" textLength="56.088" x="107.088" y="157.889">Service B</text>
+    <text fill="#000" font-size="14" textLength="56.875" x="190.175" y="150.889">Service C</text>
+    <path d="M203.613,164 C203.613,154 221.613,154 221.613,154 C221.613,154 239.613,154 239.613,164 L239.613,190 C239.613,200 221.613,200 221.613,200 C221.613,200 203.613,200 203.613,190 L203.613,164" fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M203.613,164 C203.613,174 221.613,174 221.613,174 C221.613,174 239.613,174 239.613,164" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="128.131" x2="118.131" y1="89" y2="85"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="128.131" x2="118.131" y1="89" y2="93"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="55.044" x2="129.131" y1="89" y2="89"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="219.613" x2="209.613" y1="103" y2="99"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="219.613" x2="209.613" y1="103" y2="107"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="140.131" x2="220.613" y1="103" y2="103"/>
+    <path d="M55.669,102 L55.669,125 L129.669,125 L129.669,112 L119.669,102 L55.669,102" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M119.669,102 L119.669,112 L129.669,112 L119.669,102" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="53.463" x="61.669" y="117.111">B to C msg</text>
+  </g>
+</svg>

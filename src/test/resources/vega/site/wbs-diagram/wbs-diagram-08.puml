@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startwbs
+*_ World
+**_ America
+***_ Canada
+***_ Mexico
+***_ USA
+**_ Europe
+***_  England
+***_  Germany
+***_  Spain
+@endwbs

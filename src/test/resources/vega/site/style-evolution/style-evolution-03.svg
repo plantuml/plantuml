@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="215px" preserveAspectRatio="none" style="width:133px;height:215px;background:#FFFFFF;" version="1.1" viewBox="0 0 133 215" width="133px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="18" width="8" x="21.969" y="98"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="25.469" x2="25.469" y1="98" y2="116"/>
+    </g>
+    <g>
+      <title>..myStyle..</title>
+      <rect fill="#000" fill-opacity="0" height="18" width="8" x="83.119" y="98"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="86.619" x2="86.619" y1="98" y2="116"/>
+    </g>
+    <text fill="#00F" font-size="14" textLength="24.938" x="10" y="94.889">Bob</text>
+    <ellipse cx="25.469" cy="32.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M25.469,40.5 L25.469,67.5 M12.469,48.5 L38.469,48.5 M25.469,67.5 L12.469,82.5 M25.469,67.5 L38.469,82.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#F00" font-size="14" font-style="italic" textLength="65.363" x="50.938" y="80.889">«myStyle»</text>
+    <text fill="#F00" font-size="14" textLength="30.45" x="68.394" y="94.889">Sally</text>
+    <ellipse cx="86.619" cy="18.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M86.619,26.5 L86.619,53.5 M73.619,34.5 L99.619,34.5 M86.619,53.5 L73.619,68.5 M86.619,53.5 L99.619,68.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#00F" font-size="14" textLength="24.938" x="10" y="126.889">Bob</text>
+    <ellipse cx="25.469" cy="138.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M25.469,146.5 L25.469,173.5 M12.469,154.5 L38.469,154.5 M25.469,173.5 L12.469,188.5 M25.469,173.5 L38.469,188.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#F00" font-size="14" font-style="italic" textLength="65.363" x="50.938" y="126.889">«myStyle»</text>
+    <text fill="#F00" font-size="14" textLength="30.45" x="68.394" y="140.889">Sally</text>
+    <ellipse cx="86.619" cy="152.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M86.619,160.5 L86.619,187.5 M73.619,168.5 L99.619,168.5 M86.619,187.5 L73.619,202.5 M86.619,187.5 L99.619,202.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+  </g>
+</svg>

@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+
+object user {
+  name = "Dummy"
+  id = 123
+}
+
+@enduml

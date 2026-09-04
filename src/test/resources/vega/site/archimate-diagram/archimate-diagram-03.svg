@@ -1,0 +1,209 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="551px" preserveAspectRatio="none" style="width:673px;height:551px;background:#FFFFFF;" version="1.1" viewBox="0 0 673 551" width="673px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity HC-->
+    <g class="entity" data-qualified-name="HC" data-source-line="8" id="ent0001">
+      <rect fill="#FFC" height="54" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="97.175" x="355.5" y="12"/>
+      <path d="M407.816,25.5 A0.5,0.5 0 0 0 407.488,25.975 L407.514,28.611 L394.957,28.615 A0.5,0.5 0 0 0 394.457,29.115 L394.453,35.164 A0.5,0.5 0 0 0 394.955,35.664 L407.484,35.617 L407.484,37.943 A0.5,0.5 0 0 0 408.367,38.264 L413.361,32.311 A0.5,0.5 0 0 0 413.363,31.67 L408.373,25.65 A0.5,0.5 0 0 0 407.816,25.5 M408.502,27.373 L412.328,31.988 L408.484,36.568 L408.484,35.115 A0.5,0.5 0 0 0 407.982,34.615 L395.453,34.662 L395.457,29.615 L408.018,29.611 A0.5,0.5 0 0 0 408.518,29.107" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="77.175" x="365.5" y="52.889">Handle claim</text>
+    </g>
+    <!--entity CI-->
+    <g class="entity" data-qualified-name="CI" data-source-line="9" id="ent0002">
+      <rect fill="#FFC" height="54" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="139.7" x="29" y="109"/>
+      <path d="M102.579,122.5 A0.5,0.5 0 0 0 102.251,122.975 L102.276,125.611 L89.719,125.615 A0.5,0.5 0 0 0 89.219,126.115 L89.215,132.164 A0.5,0.5 0 0 0 89.717,132.664 L102.246,132.617 L102.246,134.943 A0.5,0.5 0 0 0 103.129,135.264 L108.123,129.311 A0.5,0.5 0 0 0 108.125,128.67 L103.135,122.65 A0.5,0.5 0 0 0 102.578,122.5 M103.265,124.373 L107.091,128.988 L103.247,133.568 L103.247,132.115 A0.5,0.5 0 0 0 102.745,131.615 L90.216,131.662 L90.22,126.615 L102.781,126.611 A0.5,0.5 0 0 0 103.281,126.107" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="119.7" x="39" y="149.889">Capture Information</text>
+    </g>
+    <!--entity NAS-->
+    <g class="entity" data-qualified-name="NAS" data-source-line="10" id="ent0003">
+      <rect fill="#FFC" height="68" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="163.325" x="187.5" y="102"/>
+      <path d="M272.892,115.5 A0.5,0.5 0 0 0 272.563,115.975 L272.589,118.611 L260.032,118.615 A0.5,0.5 0 0 0 259.532,119.115 L259.528,125.164 A0.5,0.5 0 0 0 260.03,125.664 L272.559,125.617 L272.559,127.943 A0.5,0.5 0 0 0 273.442,128.264 L278.436,122.311 A0.5,0.5 0 0 0 278.438,121.67 L273.448,115.65 A0.5,0.5 0 0 0 272.891,115.5 M273.577,117.373 L277.403,121.988 L273.559,126.568 L273.559,125.115 A0.5,0.5 0 0 0 273.058,124.615 L260.529,124.662 L260.532,119.615 L273.093,119.611 A0.5,0.5 0 0 0 273.593,119.107" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="35.788" x="197.5" y="142.889">Notify</text>
+      <text fill="#000" font-size="14" textLength="143.325" x="197.5" y="156.889">Additional Stakeholders</text>
+    </g>
+    <!--entity V-->
+    <g class="entity" data-qualified-name="V" data-source-line="11" id="ent0004">
+      <rect fill="#FFC" height="54" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="70.663" x="368.5" y="109"/>
+      <path d="M407.56,122.5 A0.5,0.5 0 0 0 407.232,122.975 L407.258,125.611 L394.701,125.615 A0.5,0.5 0 0 0 394.201,126.115 L394.197,132.164 A0.5,0.5 0 0 0 394.699,132.664 L407.228,132.617 L407.228,134.943 A0.5,0.5 0 0 0 408.11,135.264 L413.104,129.311 A0.5,0.5 0 0 0 413.106,128.67 L408.116,122.65 A0.5,0.5 0 0 0 407.56,122.5 M408.246,124.373 L412.072,128.988 L408.228,133.568 L408.228,132.115 A0.5,0.5 0 0 0 407.726,131.615 L395.197,131.662 L395.201,126.615 L407.762,126.611 A0.5,0.5 0 0 0 408.262,126.107" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="50.663" x="378.5" y="149.889">Validate</text>
+    </g>
+    <!--entity I-->
+    <g class="entity" data-qualified-name="I" data-source-line="12" id="ent0005">
+      <rect fill="#FFC" height="54" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="87.638" x="458" y="109"/>
+      <path d="M505.548,122.5 A0.5,0.5 0 0 0 505.22,122.975 L505.245,125.611 L492.688,125.615 A0.5,0.5 0 0 0 492.188,126.115 L492.184,132.164 A0.5,0.5 0 0 0 492.686,132.664 L505.215,132.617 L505.215,134.943 A0.5,0.5 0 0 0 506.098,135.264 L511.092,129.311 A0.5,0.5 0 0 0 511.094,128.67 L506.104,122.65 A0.5,0.5 0 0 0 505.547,122.5 M506.233,124.373 L510.06,128.988 L506.216,133.568 L506.216,132.115 A0.5,0.5 0 0 0 505.714,131.615 L493.185,131.662 L493.189,126.615 L505.75,126.611 A0.5,0.5 0 0 0 506.25,126.107" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="67.638" x="468" y="149.889">Investigate</text>
+    </g>
+    <!--entity P-->
+    <g class="entity" data-qualified-name="P" data-source-line="13" id="ent0006">
+      <rect fill="#FFC" height="54" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="44.15" x="564" y="109"/>
+      <path d="M589.804,122.5 A0.5,0.5 0 0 0 589.476,122.975 L589.501,125.611 L576.944,125.615 A0.5,0.5 0 0 0 576.444,126.115 L576.44,132.164 A0.5,0.5 0 0 0 576.942,132.664 L589.471,132.617 L589.471,134.943 A0.5,0.5 0 0 0 590.354,135.264 L595.348,129.311 A0.5,0.5 0 0 0 595.35,128.67 L590.36,122.65 A0.5,0.5 0 0 0 589.803,122.5 M590.49,124.373 L594.316,128.988 L590.472,133.568 L590.472,132.115 A0.5,0.5 0 0 0 589.97,131.615 L577.441,131.662 L577.445,126.615 L590.006,126.611 A0.5,0.5 0 0 0 590.506,126.107" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="24.15" x="574" y="149.889">Pay</text>
+    </g>
+    <!--entity scanning-->
+    <g class="entity" data-qualified-name="scanning" data-source-line="26" id="ent0016">
+      <rect fill="#C2F0FF" height="54" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="78.45" x="192" y="206"/>
+      <path d="M227.725,221.91 C225.049,221.904 222.872,224.114 222.848,226.832 C222.824,229.55 224.962,231.802 227.637,231.846 A0.5,0.5 0 0 0 227.653,231.846 L235.194,231.846 A0.5,0.5 0 0 0 235.2,231.846 C237.887,231.821 240.045,229.567 240.024,226.838 C240.003,224.12 237.827,221.911 235.155,221.912 L235.155,221.909 L235.122,221.909 M227.723,222.91 A0.5,0.5 0 0 0 227.727,222.91 L235.154,222.91 C237.277,222.91 239.006,224.654 239.023,226.846 C239.04,229.046 237.327,230.824 235.194,230.846 C235.193,230.846 235.191,230.846 235.19,230.846 L227.655,230.846 C225.53,230.811 223.828,229.034 223.848,226.842 C223.867,224.65 225.598,222.906 227.723,222.91" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="58.45" x="202" y="246.889">Scanning</text>
+    </g>
+    <!--entity customerAdministration-->
+    <g class="entity" data-qualified-name="customerAdministration" data-source-line="27" id="ent0017">
+      <rect fill="#C2F0FF" height="54" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="167.788" x="6" y="206"/>
+      <path d="M86.394,221.91 C83.718,221.904 81.541,224.114 81.517,226.832 C81.492,229.55 83.631,231.802 86.306,231.846 A0.5,0.5 0 0 0 86.321,231.846 L93.862,231.846 A0.5,0.5 0 0 0 93.868,231.846 C96.556,231.821 98.714,229.567 98.692,226.838 C98.671,224.12 96.495,221.911 93.823,221.912 L93.823,221.909 L93.79,221.909 M86.392,222.91 A0.5,0.5 0 0 0 86.396,222.91 L93.823,222.91 C95.946,222.91 97.675,224.654 97.692,226.846 C97.709,229.046 95.995,230.824 93.862,230.846 C93.861,230.846 93.859,230.846 93.858,230.846 L86.324,230.846 C84.198,230.811 82.497,229.034 82.517,226.842 C82.536,224.65 84.266,222.906 86.392,222.91" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="147.788" x="16" y="246.889">Customer administration</text>
+    </g>
+    <!--entity claimsAdministration-->
+    <g class="entity" data-qualified-name="claimsAdministration" data-source-line="28" id="ent0018">
+      <rect fill="#C2F0FF" height="54" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="150.025" x="288" y="206"/>
+      <path d="M359.513,221.91 C356.837,221.904 354.659,224.114 354.635,226.832 C354.611,229.55 356.749,231.802 359.425,231.846 A0.5,0.5 0 0 0 359.44,231.846 L366.981,231.846 A0.5,0.5 0 0 0 366.987,231.846 C369.674,231.821 371.832,229.567 371.811,226.838 C371.79,224.12 369.614,221.911 366.942,221.912 L366.942,221.909 L366.909,221.909 M359.511,222.91 A0.5,0.5 0 0 0 359.515,222.91 L366.942,222.91 C369.064,222.91 370.794,224.654 370.811,226.846 C370.828,229.046 369.114,230.824 366.981,230.846 C366.98,230.846 366.978,230.846 366.977,230.846 L359.442,230.846 C357.317,230.811 355.616,229.034 355.635,226.842 C355.655,224.65 357.385,222.906 359.511,222.91" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="130.025" x="298" y="246.889">Claims administration</text>
+    </g>
+    <!--entity Printing-->
+    <g class="entity" data-qualified-name="Printing" data-source-line="29" id="ent0019">
+      <rect fill="#C2F0FF" height="54" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="67.512" x="456" y="206"/>
+      <path d="M486.256,221.91 C483.581,221.904 481.403,224.114 481.379,226.832 C481.355,229.55 483.493,231.802 486.168,231.846 A0.5,0.5 0 0 0 486.184,231.846 L493.725,231.846 A0.5,0.5 0 0 0 493.731,231.846 C496.418,231.821 498.576,229.567 498.555,226.838 C498.534,224.12 496.358,221.911 493.686,221.912 L493.686,221.909 L493.653,221.909 M486.254,222.91 A0.5,0.5 0 0 0 486.258,222.91 L493.686,222.91 C495.808,222.91 497.538,224.654 497.555,226.846 C497.572,229.046 495.858,230.824 493.725,230.846 C493.724,230.846 493.722,230.846 493.721,230.846 L486.186,230.846 C484.061,230.811 482.36,229.034 482.379,226.842 C482.399,224.65 484.129,222.906 486.254,222.91" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="47.512" x="466" y="246.889">Printing</text>
+    </g>
+    <!--entity Payment-->
+    <g class="entity" data-qualified-name="Payment" data-source-line="30" id="ent0020">
+      <rect fill="#C2F0FF" height="54" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="75.213" x="557.5" y="206"/>
+      <path d="M591.606,221.91 C588.931,221.904 586.753,224.114 586.729,226.832 C586.705,229.55 588.843,231.802 591.518,231.846 A0.5,0.5 0 0 0 591.534,231.846 L599.075,231.846 A0.5,0.5 0 0 0 599.081,231.846 C601.768,231.821 603.926,229.567 603.905,226.838 C603.884,224.12 601.708,221.911 599.036,221.912 L599.036,221.909 L599.003,221.909 M591.604,222.91 A0.5,0.5 0 0 0 591.608,222.91 L599.036,222.91 C601.158,222.91 602.888,224.654 602.905,226.846 C602.922,229.046 601.208,230.824 599.075,230.846 C599.074,230.846 599.072,230.846 599.071,230.846 L591.536,230.846 C589.411,230.811 587.71,229.034 587.729,226.842 C587.749,224.65 589.479,222.906 591.604,222.91" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="55.213" x="567.5" y="246.889">Payment</text>
+    </g>
+    <!--entity DMS-->
+    <g class="entity" data-qualified-name="DMS" data-source-line="42" id="ent0037">
+      <rect fill="#C2F0FF" height="82" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="101.638" x="428" y="296"/>
+      <path d="M487.579,310.639 L472.753,310.686 A0.5,0.5 0 0 0 472.253,311.186 L472.253,312.623 L469.765,312.604 A0.5,0.5 0 0 0 469.26,313.104 L469.26,315.039 A0.5,0.5 0 0 0 469.761,315.539 L472.241,315.539 L472.217,316.582 L469.718,316.563 A0.5,0.5 0 0 0 469.214,317.063 L469.214,318.998 A0.5,0.5 0 0 0 469.714,319.498 L472.206,319.498 L472.206,322.5 A0.5,0.5 0 0 0 472.706,323.001 L487.579,323.047 A0.5,0.5 0 0 0 488.081,322.547 L488.081,311.139 A0.5,0.5 0 0 0 487.579,310.639 M487.081,311.641 L487.081,322.045 L473.206,322.002 L473.206,319.498 L475.7,319.498 A0.5,0.5 0 0 0 476.2,318.998 L476.2,317.11 A0.5,0.5 0 0 0 475.704,316.61 L473.217,316.59 L473.241,315.539 L475.747,315.539 A0.5,0.5 0 0 0 476.247,315.039 L476.247,313.15 A0.5,0.5 0 0 0 475.751,312.651 L473.253,312.631 L473.253,311.684 M470.261,313.608 L475.247,313.647 L475.247,314.54 L470.261,314.54 M470.214,317.567 L475.2,317.606 L475.2,318.498 L470.214,318.498" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="63.788" x="438" y="336.889">Document</text>
+      <text fill="#000" font-size="14" textLength="81.638" x="438" y="350.889">Management</text>
+      <text fill="#000" font-size="14" textLength="46.637" x="438" y="364.889">System</text>
+    </g>
+    <!--entity CRM-->
+    <g class="entity" data-qualified-name="CRM" data-source-line="43" id="ent0038">
+      <rect fill="#C2F0FF" height="82" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="69.788" x="55" y="296"/>
+      <path d="M98.654,310.639 L83.828,310.686 A0.5,0.5 0 0 0 83.328,311.186 L83.328,312.623 L80.84,312.604 A0.5,0.5 0 0 0 80.335,313.104 L80.335,315.039 A0.5,0.5 0 0 0 80.836,315.539 L83.316,315.539 L83.292,316.582 L80.793,316.563 A0.5,0.5 0 0 0 80.289,317.063 L80.289,318.998 A0.5,0.5 0 0 0 80.789,319.498 L83.281,319.498 L83.281,322.5 A0.5,0.5 0 0 0 83.781,323.001 L98.654,323.047 A0.5,0.5 0 0 0 99.156,322.547 L99.156,311.139 A0.5,0.5 0 0 0 98.654,310.639 M98.156,311.641 L98.156,322.045 L84.281,322.002 L84.281,319.498 L86.775,319.498 A0.5,0.5 0 0 0 87.275,318.998 L87.275,317.11 A0.5,0.5 0 0 0 86.779,316.61 L84.292,316.59 L84.316,315.539 L86.822,315.539 A0.5,0.5 0 0 0 87.322,315.039 L87.322,313.15 A0.5,0.5 0 0 0 86.826,312.651 L84.328,312.631 L84.328,311.684 M81.336,313.608 L86.322,313.647 L86.322,314.54 L81.336,314.54 M81.289,317.567 L86.275,317.606 L86.275,318.498 L81.289,318.498" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="49.788" x="65" y="336.889">General</text>
+      <text fill="#000" font-size="14" textLength="31.938" x="65" y="350.889">CRM</text>
+      <text fill="#000" font-size="14" textLength="46.637" x="65" y="364.889">System</text>
+    </g>
+    <!--entity HAPA-->
+    <g class="entity" data-qualified-name="HAPA" data-source-line="44" id="ent0039">
+      <rect fill="#C2F0FF" height="82" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="108.725" x="300.5" y="296"/>
+      <path d="M363.623,310.639 L348.797,310.686 A0.5,0.5 0 0 0 348.297,311.186 L348.297,312.623 L345.809,312.604 A0.5,0.5 0 0 0 345.304,313.104 L345.304,315.039 A0.5,0.5 0 0 0 345.804,315.539 L348.285,315.539 L348.261,316.582 L345.762,316.563 A0.5,0.5 0 0 0 345.258,317.063 L345.258,318.998 A0.5,0.5 0 0 0 345.757,319.498 L348.25,319.498 L348.25,322.5 A0.5,0.5 0 0 0 348.75,323.001 L363.623,323.047 A0.5,0.5 0 0 0 364.125,322.547 L364.125,311.139 A0.5,0.5 0 0 0 363.623,310.639 M363.124,311.641 L363.124,322.045 L349.249,322.002 L349.249,319.498 L351.744,319.498 A0.5,0.5 0 0 0 352.243,318.998 L352.243,317.11 A0.5,0.5 0 0 0 351.747,316.61 L349.261,316.59 L349.285,315.539 L351.79,315.539 A0.5,0.5 0 0 0 352.29,315.039 L352.29,313.15 A0.5,0.5 0 0 0 351.794,312.651 L349.296,312.631 L349.296,311.684 M346.304,313.608 L351.291,313.647 L351.291,314.54 L346.304,314.54 M346.257,317.567 L351.244,317.606 L351.244,318.498 L346.257,318.498" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="81.025" x="310.5" y="336.889">Home &amp; Away</text>
+      <text fill="#000" font-size="14" textLength="37.45" x="310.5" y="350.889">Policy</text>
+      <text fill="#000" font-size="14" textLength="88.725" x="310.5" y="364.889">Administration</text>
+    </g>
+    <!--entity HFPA-->
+    <g class="entity" data-qualified-name="HFPA" data-source-line="45" id="ent0040">
+      <rect fill="#C2F0FF" height="82" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="108.725" x="548.5" y="296"/>
+      <path d="M611.623,310.639 L596.796,310.686 A0.5,0.5 0 0 0 596.297,311.186 L596.297,312.623 L593.809,312.604 A0.5,0.5 0 0 0 593.304,313.104 L593.304,315.039 A0.5,0.5 0 0 0 593.804,315.539 L596.285,315.539 L596.261,316.582 L593.762,316.563 A0.5,0.5 0 0 0 593.258,317.063 L593.258,318.998 A0.5,0.5 0 0 0 593.757,319.498 L596.25,319.498 L596.25,322.5 A0.5,0.5 0 0 0 596.75,323.001 L611.623,323.047 A0.5,0.5 0 0 0 612.125,322.547 L612.125,311.139 A0.5,0.5 0 0 0 611.623,310.639 M611.124,311.641 L611.124,322.045 L597.249,322.002 L597.249,319.498 L599.744,319.498 A0.5,0.5 0 0 0 600.243,318.998 L600.243,317.11 A0.5,0.5 0 0 0 599.747,316.61 L597.261,316.59 L597.285,315.539 L599.79,315.539 A0.5,0.5 0 0 0 600.29,315.039 L600.29,313.15 A0.5,0.5 0 0 0 599.794,312.651 L597.296,312.631 L597.296,311.684 M594.304,313.608 L599.291,313.647 L599.291,314.54 L594.304,314.54 M594.257,317.567 L599.244,317.606 L599.244,318.498 L594.257,318.498" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="81.025" x="558.5" y="336.889">Home &amp; Away</text>
+      <text fill="#000" font-size="14" textLength="56.175" x="558.5" y="350.889">Financial</text>
+      <text fill="#000" font-size="14" textLength="88.725" x="558.5" y="364.889">Administration</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="composition" id="lnk7">
+      <polygon fill="#181818" points="355.4,51.42,348.621,48.961,343.744,54.272,350.523,56.731,355.4,51.42" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M343.744,54.272 C297.603,65.562 238.202,81.264 178,102 C171.816,104.13 165.425,106.502 159.079,108.971" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="composition" id="lnk8">
+      <polygon fill="#181818" points="366.753,66.211,359.544,66.392,356.94,73.117,364.148,72.935,366.753,66.211" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M356.94,73.117 C341.331,84.101 332.814,90.094 316.27,101.736" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="composition" id="lnk9">
+      <polygon fill="#181818" points="404,66.211,400,72.211,404,78.211,408,72.211,404,66.211" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M404,78.211 C404,91.501 404,95.596 404,108.875" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="composition" id="lnk10">
+      <polygon fill="#181818" points="431.038,66.211,432.562,73.259,439.654,74.563,438.131,67.515,431.038,66.211" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M439.654,74.563 C453.365,87.854 461.352,95.596 475.05,108.875" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0006" data-link-type="composition" id="lnk11">
+      <polygon fill="#181818" points="452.541,54.031,456.967,59.724,463.925,57.827,459.498,52.135,452.541,54.031" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M463.925,57.827 C494.905,68.16 523.609,80.38 555,102 C557.978,104.051 560.887,106.43 563.655,108.954" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="187.407,136,179.407,133,179.407,139,187.407,136" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M169.059,136 C175.175,136 173.291,136 179.407,136" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="368.215,136,360.215,133,360.215,139,368.215,136" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M350.738,136 C356.564,136 354.389,136 360.215,136" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="dependency" id="lnk14">
+      <polygon fill="#181818" points="457.639,136,449.639,133,449.639,139,457.639,136" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M439.602,136 C445.614,136 443.626,136 449.639,136" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0006" data-link-type="dependency" id="lnk15">
+      <polygon fill="#181818" points="563.977,136,555.977,133,555.977,139,563.977,136" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M546.297,136 C552.19,136 550.084,136 555.977,136" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0016" data-link-type="dependency" id="lnk22">
+      <polygon fill="#181818" points="135.419,163.211,140.387,171.715,139.477,166.131,145.06,165.221,135.419,163.211" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M139.477,166.131 C157.945,179.422 176.249,192.596 194.7,205.875" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0017" data-link-type="dependency" id="lnk24">
+      <polygon fill="#181818" points="96.517,163.211,91.686,171.793,96.045,168.188,99.65,172.548,96.517,163.211" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M96.045,168.188 C94.786,181.479 93.733,192.596 92.475,205.875" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0018" data-link-type="dependency" id="lnk26">
+      <polygon fill="#181818" points="301.877,170.226,305.363,179.437,305.393,173.781,311.05,173.811,301.877,170.226" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M305.393,173.781 C316.935,185.445 326.212,194.821 337.1,205.825" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0018" data-link-type="dependency" id="lnk28">
+      <polygon fill="#181818" points="392.688,163.211,385.449,169.889,390.707,167.801,392.794,173.059,392.688,163.211" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M390.707,167.801 C384.971,181.092 380.006,192.596 374.275,205.875" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0018" data-link-type="dependency" id="lnk30">
+      <polygon fill="#181818" points="463.65,163.211,453.962,164.987,459.522,166.032,458.476,171.591,463.65,163.211" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M459.522,166.032 C440.075,179.323 420.654,192.596 401.225,205.875" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0020" data-link-type="dependency" id="lnk32">
+      <polygon fill="#181818" points="588.483,163.211,585.35,172.548,588.955,168.188,593.314,171.793,588.483,163.211" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M588.955,168.188 C590.214,181.479 591.267,192.596 592.525,205.875" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0019" data-link-type="dependency" id="lnk34">
+      <polygon fill="#181818" points="427.728,163.211,430.802,172.567,431.083,166.917,436.733,167.198,427.728,163.211" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M431.083,166.917 C443.115,180.208 454.329,192.596 466.35,205.875" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0019" data-link-type="dependency" id="lnk36">
+      <polygon fill="#181818" points="563.803,160.941,554.694,164.688,560.349,164.557,560.48,170.213,563.803,160.941" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M560.349,164.557 C557.415,167.63 557.879,167.099 555,170 C543.136,181.955 529.714,194.857 518.159,205.78" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0016" data-entity-2="ent0037" data-link-type="extension" id="lnk42">
+      <polygon fill="none" points="270.188,256.208,283.996,269.221,289.042,258.333,270.188,256.208" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M286.519,263.777 C345.902,287.146 359.65,270.158 418,296 C421.242,297.436 424.505,299.036 427.745,300.748" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0019" data-entity-2="ent0037" data-link-type="extension" id="lnk44">
+      <polygon fill="none" points="487.196,260.003,479.3,277.256,491.231,278.542,487.196,260.003" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M485.266,277.899 C484.095,288.759 484.637,283.733 483.339,295.765" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0017" data-entity-2="ent0038" data-link-type="extension" id="lnk46">
+      <polygon fill="none" points="90,260.003,84,278.003,96,278.003,90,260.003" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M90,278.003 C90,288.863 90,283.733 90,295.765" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0018" data-entity-2="ent0039" data-link-type="extension" id="lnk48">
+      <polygon fill="none" points="360.961,260.003,353.571,277.479,365.535,278.417,360.961,260.003" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M359.553,277.948 C358.701,288.808 359.099,283.733 358.156,295.765" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0020" data-entity-2="ent0040" data-link-type="extension" id="lnk50">
+      <polygon fill="none" points="597.039,260.003,592.465,278.417,604.429,277.479,597.039,260.003" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M598.447,277.948 C599.299,288.808 598.901,283.733 599.844,295.765" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="legend" data-source-line="53">
+      <rect fill="#DDD" height="132.615" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="352.737" x="12" y="400"/>
+      <text fill="#000" font-size="14" textLength="342.737" x="17" y="415.889">Example from the "Archisurance case study" (OpenGroup).</text>
+      <text fill="#000" font-size="14" textLength="24.938" x="17" y="429.889">See</text>
+      <line style="stroke:#000;stroke-width:1;" x1="12" x2="364.737" y1="438" y2="438"/>
+      <line style="stroke:#000;stroke-width:1;" x1="12" x2="364.737" y1="440" y2="440"/>
+      <path d="M31.785,446.769 A0.539,0.539 0 0 0 31.432,447.28 L31.459,450.12 L17.936,450.124 A0.539,0.539 0 0 0 17.398,450.663 L17.393,457.177 A0.539,0.539 0 0 0 17.934,457.715 L31.427,457.665 L31.427,460.17 A0.539,0.539 0 0 0 32.378,460.515 L37.756,454.104 A0.539,0.539 0 0 0 37.758,453.414 L32.384,446.931 A0.539,0.539 0 0 0 31.784,446.769 M32.523,448.786 L36.644,453.757 L32.504,458.689 L32.504,457.124 A0.539,0.539 0 0 0 31.964,456.586 L18.471,456.636 L18.475,451.201 L32.003,451.197 A0.539,0.539 0 0 0 32.541,450.654" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="108.15" x="38.538" y="461.427">:business process</text>
+      <line style="stroke:#000;stroke-width:1;" x1="12" x2="364.737" y1="469.538" y2="469.538"/>
+      <line style="stroke:#000;stroke-width:1;" x1="12" x2="364.737" y1="471.538" y2="471.538"/>
+      <path d="M24,480.903 C21.119,480.897 18.774,483.277 18.748,486.204 C18.722,489.131 21.024,491.556 23.905,491.603 A0.538,0.538 0 0 0 23.922,491.603 L32.043,491.603 A0.538,0.538 0 0 0 32.05,491.603 C34.944,491.576 37.268,489.15 37.245,486.21 C37.222,483.283 34.879,480.904 32.001,480.905 L32.001,480.903 L31.966,480.903 M23.998,481.98 A0.538,0.538 0 0 0 24.002,481.98 L32.001,481.98 C34.287,481.98 36.149,483.858 36.168,486.218 C36.186,488.588 34.34,490.503 32.043,490.526 C32.042,490.526 32.04,490.526 32.039,490.526 L23.924,490.526 C21.636,490.489 19.804,488.575 19.825,486.214 C19.846,483.854 21.709,481.975 23.998,481.98" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="115.238" x="38.538" y="492.966">: application service</text>
+      <line style="stroke:#000;stroke-width:1;" x1="12" x2="364.737" y1="501.077" y2="501.077"/>
+      <line style="stroke:#000;stroke-width:1;" x1="12" x2="364.737" y1="503.077" y2="503.077"/>
+      <path d="M37.203,511.073 L21.237,511.123 A0.539,0.539 0 0 0 20.698,511.662 L20.698,513.21 L18.019,513.189 A0.539,0.539 0 0 0 17.476,513.727 L17.476,515.811 A0.539,0.539 0 0 0 18.014,516.35 L20.686,516.35 L20.66,517.473 L17.968,517.452 A0.539,0.539 0 0 0 17.426,517.991 L17.426,520.075 A0.539,0.539 0 0 0 17.964,520.614 L20.648,520.614 L20.648,523.846 A0.539,0.539 0 0 0 21.187,524.385 L37.204,524.435 A0.539,0.539 0 0 0 37.744,523.897 L37.744,511.612 A0.539,0.539 0 0 0 37.204,511.073 M36.667,512.152 L36.667,523.356 L21.724,523.31 L21.724,520.614 L24.411,520.614 A0.539,0.539 0 0 0 24.949,520.075 L24.949,518.041 A0.539,0.539 0 0 0 24.414,517.503 L21.737,517.482 L21.763,516.35 L24.461,516.35 A0.539,0.539 0 0 0 24.999,515.811 L24.999,513.777 A0.539,0.539 0 0 0 24.465,513.239 L21.775,513.218 L21.775,512.198 M18.553,514.27 L23.923,514.312 L23.923,515.273 L18.553,515.273 M18.502,518.533 L23.872,518.576 L23.872,519.537 L18.502,519.537" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="140.088" x="38.538" y="524.504">: application component</text>
+    </g>
+  </g>
+</svg>

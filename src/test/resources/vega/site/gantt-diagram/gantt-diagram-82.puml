@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startgantt
+
+header some header
+
+footer some footer
+
+title My title
+
+[Prototype design] requires 13 days
+
+legend
+The legend
+end legend
+
+caption This is caption
+
+@endgantt

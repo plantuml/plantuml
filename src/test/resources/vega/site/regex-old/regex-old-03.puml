@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startregex
+tite shorthandCharacterClasses
+\d\w\s
+@endregex

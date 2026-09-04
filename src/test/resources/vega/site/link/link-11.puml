@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startyaml
+@fruit: Apple
+$size: Large
+Appli.: A [[http://plantuml.com link]] on YAML
+@endyaml

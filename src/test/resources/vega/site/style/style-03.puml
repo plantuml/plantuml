@@ -1,0 +1,31 @@
+---
+output: svg
+---
+@startuml
+<style>
+  sequenceDiagram {
+    .primary {
+      FontColor: darkred;
+      FontSize: 16;
+      FontStyle: bold;
+      BackGroundColor: #ffe6e6;
+    }
+    .secondary {
+      FontColor: gray;
+      FontSize: 14;
+      FontStyle: italic;
+      BackGroundColor: #f0f0f0;
+    }
+    arrow {
+      LineColor: #ff6600;
+      FontColor: #0000ff;
+    }
+  }
+</style>
+
+participant "Alice (Primary)" as Alice <<primary>>
+participant "Bob (Secondary)" as Bob <<secondary>>
+
+Alice -> Bob : Message
+
+@enduml

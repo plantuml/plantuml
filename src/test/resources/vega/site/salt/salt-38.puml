@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startsalt
+skinparam defaultFontName monospaced
+{+
+  Login    | "MyName   "
+  Password | "****     "
+  [Cancel] | [  OK   ]
+}
+@endsalt

@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+v-axis "Revenue" 0 --> 100
+v2-axis "Market Share %" 0 --> 50
+bar "Sales" [45, 62, 58, 70]
+line "Market Share" [15, 20, 18, 25] v2
+@endchart

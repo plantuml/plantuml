@@ -1,0 +1,31 @@
+---
+output: svg
+---
+@startebnf
+InterfaceDeclaration = NormalInterfaceDeclaration | AnnotationInterfaceDeclaration;
+NormalInterfaceDeclaration = {InterfaceModifier}, "interface", TypeIdentifier, [TypeParameters], [InterfaceExtends], [InterfacePermits], InterfaceBody;
+InterfaceModifier = Annotation | "public" | "protected" | "private" | "abstract" | "static" | "sealed" | "non-sealed" | "strictfp";
+InterfaceExtends = "extends", InterfaceTypeList;
+InterfacePermits = "permits", TypeName, {",", TypeName};
+InterfaceBody = "{", {InterfaceMemberDeclaration}, "}";
+InterfaceMemberDeclaration = ConstantDeclaration | InterfaceMethodDeclaration | ClassDeclaration | InterfaceDeclaration | ";";
+ConstantDeclaration = {ConstantModifier}, UnannType, VariableDeclaratorList, ";";
+ConstantModifier = Annotation | "public" | "static" | "final";
+InterfaceMethodDeclaration = {InterfaceMethodModifier}, MethodHeader, MethodBody;
+InterfaceMethodModifier = Annotation | "public" | "private" | "abstract" | "default" | "static" | "strictfp";
+AnnotationInterfaceDeclaration = {InterfaceModifier}, "@", "interface", TypeIdentifier, AnnotationInterfaceBody;
+AnnotationInterfaceBody = "{", {AnnotationInterfaceMemberDeclaration}, "}";
+AnnotationInterfaceMemberDeclaration = AnnotationInterfaceElementDeclaration | ConstantDeclaration | ClassDeclaration | InterfaceDeclaration, ";";
+AnnotationInterfaceElementDeclaration = {AnnotationInterfaceElementModifier}, UnannType, Identifier, "(", ")", [Dims], [DefaultValue], ";";
+AnnotationInterfaceElementModifier = Annotation | "public" | "abstract";
+DefaultValue = "default", ElementValue;
+Annotation = NormalAnnotation | MarkerAnnotation | SingleElementAnnotation;
+NormalAnnotation = "@", TypeName, "(", [ElementValuePairList], ")";
+ElementValuePairList = ElementValuePair, {",", ElementValuePair};
+ElementValuePair = Identifier, "=", ElementValue;
+ElementValue = ConditionalExpression | ElementValueArrayInitializer | Annotation;
+ElementValueArrayInitializer = "{", [ElementValueList], [","], "}";
+ElementValueList = ElementValue, {",", ElementValue};
+MarkerAnnotation = "@", TypeName;
+SingleElementAnnotation = "@", TypeName, "(", ElementValue, ")";
+@endebnf

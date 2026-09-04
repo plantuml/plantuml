@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startebnf
+ModuleName = Identifier | ( ModuleName, ".", Identifier);
+PackageName = Identifier | (PackageName, ".", Identifier);
+TypeName = TypeIdentifier | (PackageOrTypeName, ".", TypeIdentifier);
+ExpressionName = Identifier | ( AmbiguousName, ".", Identifier);
+MethodName = UnqualifiedMethodIdentifier;
+PackageOrTypeName = Identifier | (PackageOrTypeName, ".", Identifier);
+AmbiguousName = Identifier | (AmbiguousName, ".", Identifier);
+@endebnf

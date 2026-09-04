@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startsalt
+{
+  <color:Blue>Just plain text
+  [This is my default button]
+  [<color:green>This is my green button]
+  [<color:#9a9a9a>This is my disabled button]
+  []  <color:red>Unchecked box
+  [X] <color:green>Checked box
+  "Enter text here   "
+  ^This is a droplist^
+  ^<color:#9a9a9a>This is a disabled droplist^
+  ^<color:red>This is a red droplist^
+}
+@endsalt

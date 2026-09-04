@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="189px" preserveAspectRatio="none" style="width:150px;height:189px;background:#FFFFFF;" version="1.1" viewBox="0 0 150 189" width="150px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="header" data-source-line="2">
+      <text fill="#888" font-size="10" textLength="55.563" x="87.438" y="12.778">some header</text>
+    </g>
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="40.425" x="53.787" y="36.889">My title</text>
+    </g>
+    <text fill="#000" font-size="12" textLength="29.4" x="6" y="61.333">Login</text>
+    <text fill="#000" font-size="12" textLength="48" x="68" y="61.333">MyName</text>
+    <line style="stroke:#000;stroke-width:1;" x1="66" x2="141" y1="64" y2="64"/>
+    <line style="stroke:#000;stroke-width:1;" x1="66" x2="66" y1="61" y2="63"/>
+    <line style="stroke:#000;stroke-width:1;" x1="141" x2="141" y1="61" y2="63"/>
+    <text fill="#000" font-size="12" textLength="52.725" x="6" y="77.333">Password</text>
+    <text fill="#000" font-size="12" textLength="18.6" x="68" y="77.333">****</text>
+    <line style="stroke:#000;stroke-width:1;" x1="66" x2="141" y1="80" y2="80"/>
+    <line style="stroke:#000;stroke-width:1;" x1="66" x2="66" y1="77" y2="79"/>
+    <line style="stroke:#000;stroke-width:1;" x1="141" x2="141" y1="77" y2="79"/>
+    <rect fill="#EEE" height="16" rx="5" ry="5" style="stroke:#000;stroke-width:2.5;" width="52" x="8.5" y="86.5"/>
+    <text fill="#000" font-size="12" textLength="37.425" x="15.788" y="97.833">Cancel</text>
+    <rect fill="#EEE" height="16" rx="5" ry="5" style="stroke:#000;stroke-width:2.5;" width="60" x="67.5" y="86.5"/>
+    <text fill="#000" font-size="12" textLength="17.325" x="88.838" y="97.833">OK</text>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="64" y1="51" y2="51"/>
+    <line style="stroke:#000;stroke-width:1;" x1="64" x2="144" y1="51" y2="51"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="64" y1="106" y2="106"/>
+    <line style="stroke:#000;stroke-width:1;" x1="64" x2="144" y1="106" y2="106"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="5" y1="51" y2="67"/>
+    <line style="stroke:#000;stroke-width:1;" x1="144" x2="144" y1="83" y2="106"/>
+    <line style="stroke:#000;stroke-width:1;" x1="144" x2="144" y1="67" y2="83"/>
+    <line style="stroke:#000;stroke-width:1;" x1="144" x2="144" y1="51" y2="67"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="5" y1="83" y2="106"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="5" y1="67" y2="83"/>
+    <g class="legend" data-source-line="5">
+      <rect fill="#DDD" height="24" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="76.238" x="35.881" y="118"/>
+      <text fill="#000" font-size="14" textLength="66.238" x="40.881" y="133.889">The legend</text>
+    </g>
+    <g class="caption" data-source-line="4">
+      <text fill="#000" font-size="14" textLength="81.813" x="33.094" y="166.889">This is caption</text>
+    </g>
+    <g class="footer" data-source-line="3">
+      <text fill="#888" font-size="10" textLength="49.938" x="49.031" y="179.778">some footer</text>
+    </g>
+  </g>
+</svg>

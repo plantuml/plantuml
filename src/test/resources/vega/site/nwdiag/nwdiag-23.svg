@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="NWDIAG" height="313px" preserveAspectRatio="none" style="width:287px;height:313px;background:#FFFFFF;" version="1.1" viewBox="0 0 287 313" width="287px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="100.2" x="5" y="14.333">NETWORK_BASE</text>
+    <text fill="#000" font-size="12" textLength="44.025" x="61.175" y="138.333">IntNET1</text>
+    <text fill="#000" font-size="12" textLength="44.025" x="61.175" y="262.333">IntNET2</text>
+    <rect fill="#E2E2F0" height="5" style="stroke:#181818;stroke-width:1;" width="170.05" x="110.2" y="8.5"/>
+    <rect fill="#E2E2F0" height="5" style="stroke:#181818;stroke-width:1;" width="170.05" x="110.2" y="132.5"/>
+    <rect fill="#E2E2F0" height="5" style="stroke:#181818;stroke-width:1;" width="170.05" x="110.2" y="256.5"/>
+    <path d="M155.2,13.5 L155.2,54.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="11" textLength="31.213" x="139.594" y="34.556">dev_A</text>
+    <path d="M240.225,13.5 L240.225,54.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="11" textLength="31.213" x="224.619" y="34.556">dev_B</text>
+    <path d="M235.725,86.5 L235.725,132.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="11" textLength="37.331" x="198.394" y="112.556">dev_B1</text>
+    <path d="M240.725,86.5 L240.725,129.5 A4,4 0 0 1 240.725,141.5 L240.725,256.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="11" textLength="37.331" x="222.059" y="236.556">dev_B2</text>
+    <path d="M151.2,137.5 L151.2,178.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="11" textLength="39.119" x="131.641" y="158.556">dev_M1</text>
+    <path d="M151.2,210.5 L151.2,256.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="11" textLength="39.119" x="131.641" y="236.556">dev_M2</text>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="54.05" x="126.175" y="54.5"/>
+    <text fill="#000" font-size="12" textLength="34.05" x="136.175" y="73.833">dev_A</text>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="54.05" x="211.2" y="54.5"/>
+    <text fill="#000" font-size="12" textLength="34.05" x="221.2" y="73.833">dev_B</text>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="56" x="125.2" y="178.5"/>
+    <text fill="#000" font-size="12" textLength="36" x="135.2" y="197.833">dev_M</text>
+  </g>
+</svg>

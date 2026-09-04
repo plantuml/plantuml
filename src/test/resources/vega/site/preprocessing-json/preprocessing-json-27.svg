@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="150px" preserveAspectRatio="none" style="width:377px;height:150px;background:#FFFFFF;" version="1.1" viewBox="0 0 377 150" width="377px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity l-->
+    <g class="entity" data-qualified-name="l" data-source-line="1" id="ent0001">
+      <rect fill="#CCC" height="14" style="stroke:none;" width="335.3" x="16" y="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="77.875" x="16" y="34.889">String_value</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="257.425" x="93.875" y="34.889">%get_json_type(%str2json(String_value))</text>
+      <text fill="#000" font-size="14" textLength="38.762" x="16" y="48.889">[1, 2, 3]</text>
+      <text fill="#000" font-size="14" textLength="31.85" x="93.875" y="48.889">array</text>
+      <text fill="#000" font-size="14" textLength="71.925" x="16" y="62.889">{"a":1, "b":2}</text>
+      <text fill="#000" font-size="14" textLength="37.363" x="93.875" y="62.889">object</text>
+      <text fill="#000" font-size="14" textLength="24.063" x="16" y="76.889">true</text>
+      <text fill="#000" font-size="14" textLength="49.875" x="93.875" y="76.889">boolean</text>
+      <text fill="#000" font-size="14" textLength="21.875" x="16" y="90.889">null</text>
+      <text fill="#000" font-size="14" textLength="25.725" x="93.875" y="90.889">json</text>
+      <text fill="#000" font-size="14" textLength="58.712" x="16" y="104.889">it's a string</text>
+      <text fill="#000" font-size="14" textLength="34.213" x="93.875" y="104.889">string</text>
+      <text fill="#000" font-size="14" textLength="15.575" x="16" y="118.889">42</text>
+      <text fill="#000" font-size="14" textLength="47.425" x="93.875" y="118.889">number</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="351.3" y1="24" y2="24"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="351.3" y1="38" y2="38"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="351.3" y1="52" y2="52"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="351.3" y1="66" y2="66"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="351.3" y1="80" y2="80"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="351.3" y1="94" y2="94"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="351.3" y1="108" y2="108"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="351.3" y1="122" y2="122"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="16" y1="24" y2="122"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="93.875" x2="93.875" y1="24" y2="122"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="351.3" x2="351.3" y1="24" y2="122"/>
+    </g>
+  </g>
+</svg>

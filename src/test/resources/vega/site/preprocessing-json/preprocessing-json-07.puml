@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+!$foo = { "company": "Skynet", "employees" : [
+  {"name" : "alice", "salary": 100 },
+  {"name" : "bob", "salary": 50} ]
+}
+
+!$attribute_1="name"
+!$attribute_2="salary"
+
+start
+:The salary of <u>$foo.employees[0][$attribute_1]</u> is <u>$foo.employees[0][$attribute_2]</u>;
+@enduml

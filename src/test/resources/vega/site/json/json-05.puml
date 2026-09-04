@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startjson
+{
+"null": null,
+"true": true,
+"false": false,
+"JSON_Number": [-1, -1.1, "<color:green>TBC"],
+"JSON_String": "a\nb\rc\td <color:green>TBC...",
+"JSON_Object": {
+  "{}": {},
+  "k_int": 123,
+  "k_str": "abc",
+  "k_obj": {"k": "v"}
+},
+"JSON_Array" : [
+  [],
+  [true, false],
+  [-1, 1],
+  ["a", "b", "c"],
+  ["mix", null, true, 1, {"k": "v"}]
+]
+}
+@endjson

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="128px" preserveAspectRatio="none" style="width:105px;height:128px;background:#FFFFFF;" version="1.1" viewBox="0 0 105 128" width="105px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="MainState" data-source-line="9" id="ent0001">
+      <path d="M18.5,12 L76.5,12 A12.5,12.5 0 0 1 89,24.5 L89,36 L6,36 L6,24.5 A12.5,12.5 0 0 1 18.5,12" fill="#ADD8E6"/>
+      <path d="M6,36 L89,36 L89,99.5 A12.5,12.5 0 0 1 76.5,112 L18.5,112 A12.5,12.5 0 0 1 6,99.5 L6,36" fill="#ADD8E6"/>
+      <rect fill="none" height="100" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="83" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="89" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="63" x="16" y="27.889">MainState</text>
+      <g class="entity" data-qualified-name="MainState.SubA" data-source-line="10" id="ent0002">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="54.3" x="12" y="47"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="12" x2="66.3" y1="71" y2="71"/>
+        <text fill="#000" font-size="14" textLength="34.3" x="22" y="62.889">SubA</text>
+      </g>
+    </g>
+  </g>
+</svg>

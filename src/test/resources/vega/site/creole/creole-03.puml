@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+object demo {
+  This is not ~___underscored__.
+  This is not ~""monospaced"".
+}
+@enduml

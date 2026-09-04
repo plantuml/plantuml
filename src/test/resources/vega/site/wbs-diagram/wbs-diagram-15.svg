@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="366px" preserveAspectRatio="none" style="width:282px;height:366px;background:#FFFFFF;" version="1.1" viewBox="0 0 282 366" width="282px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#008000;stroke-width:0.5;stroke-dasharray:4,4;" x1="81.088" x2="81.088" y1="76" y2="96"/>
+    <rect fill="#FFD700" height="60" rx="20" ry="20" style="stroke:#00F;stroke-width:3;" width="122.175" x="20" y="96"/>
+    <text fill="#000" font-size="12" textLength="57.975" x="37.738" y="117.333">sometimes</text>
+    <text fill="#000" font-size="12" x="95.713" y="117.333"> </text>
+    <text fill="#000" font-size="12" x="95.713" y="117.333">i</text>
+    <text fill="#000" font-size="12" x="98.413" y="117.333"> </text>
+    <text fill="#000" font-size="12" textLength="26.025" x="98.413" y="117.333">have</text>
+    <text fill="#000" font-size="12" textLength="26.7" x="32" y="129.333">node</text>
+    <text fill="#000" font-size="12" x="58.7" y="129.333"> </text>
+    <text fill="#000" font-size="12" textLength="9.375" x="58.7" y="129.333">in</text>
+    <text fill="#000" font-size="12" x="68.075" y="129.333"> </text>
+    <text fill="#000" font-size="12" textLength="24.075" x="68.075" y="129.333">wich</text>
+    <text fill="#000" font-size="12" x="92.15" y="129.333"> </text>
+    <text fill="#000" font-size="12" x="92.15" y="129.333">i</text>
+    <text fill="#000" font-size="12" x="94.85" y="129.333"> </text>
+    <text fill="#000" font-size="12" textLength="25.35" x="94.85" y="129.333">want</text>
+    <text fill="#000" font-size="12" x="120.2" y="129.333"> </text>
+    <text fill="#000" font-size="12" textLength="9.975" x="120.2" y="129.333">to</text>
+    <text fill="#000" font-size="12" textLength="25.35" x="44.075" y="141.333">write</text>
+    <text fill="#000" font-size="12" x="69.425" y="141.333"> </text>
+    <text fill="#000" font-size="12" x="69.425" y="141.333">a</text>
+    <text fill="#000" font-size="12" x="76.1" y="141.333"> </text>
+    <text fill="#000" font-size="12" textLength="22.725" x="76.1" y="141.333">long</text>
+    <text fill="#000" font-size="12" x="98.825" y="141.333"> </text>
+    <text fill="#000" font-size="12" textLength="19.275" x="98.825" y="141.333">text</text>
+    <line style="stroke:#008000;stroke-width:0.5;stroke-dasharray:4,4;" x1="81.088" x2="91.088" y1="183" y2="183"/>
+    <rect fill="#FFD700" height="48" rx="20" ry="20" style="stroke:#00F;stroke-width:3;" width="116.1" x="91.088" y="159"/>
+    <text fill="#000" font-size="12" textLength="18.675" x="103.088" y="180.333">this</text>
+    <text fill="#000" font-size="12" x="121.763" y="180.333"> </text>
+    <text fill="#000" font-size="12" textLength="35.325" x="121.763" y="180.333">results</text>
+    <text fill="#000" font-size="12" x="157.088" y="180.333"> </text>
+    <text fill="#000" font-size="12" textLength="9.375" x="157.088" y="180.333">in</text>
+    <text fill="#000" font-size="12" x="166.463" y="180.333"> </text>
+    <text fill="#000" font-size="12" textLength="28.725" x="166.463" y="180.333">really</text>
+    <text fill="#000" font-size="12" textLength="26.7" x="114.113" y="192.333">huge</text>
+    <text fill="#000" font-size="12" x="140.813" y="192.333"> </text>
+    <text fill="#000" font-size="12" textLength="43.35" x="140.813" y="192.333">diagram</text>
+    <line style="stroke:#008000;stroke-width:0.5;stroke-dasharray:4,4;" x1="149.138" x2="159.138" y1="231" y2="231"/>
+    <rect fill="#FFD700" height="42" style="stroke:#FFD700;stroke-width:3;" width="92.175" x="159.138" y="210"/>
+    <text fill="#000" font-size="12" textLength="9.975" x="169.563" y="222.333">of</text>
+    <text fill="#000" font-size="12" x="179.538" y="222.333"> </text>
+    <text fill="#000" font-size="12" textLength="39.3" x="179.538" y="222.333">course,</text>
+    <text fill="#000" font-size="12" x="218.837" y="222.333"> </text>
+    <text fill="#000" font-size="12" x="218.837" y="222.333">i</text>
+    <text fill="#000" font-size="12" x="221.538" y="222.333"> </text>
+    <text fill="#000" font-size="12" textLength="19.35" x="221.538" y="222.333">can</text>
+    <text fill="#000" font-size="12" textLength="36.75" x="162.138" y="234.333">explicit</text>
+    <text fill="#000" font-size="12" x="198.888" y="234.333"> </text>
+    <text fill="#000" font-size="12" textLength="21.375" x="198.888" y="234.333">split</text>
+    <text fill="#000" font-size="12" x="220.263" y="234.333"> </text>
+    <text fill="#000" font-size="12" textLength="21.375" x="220.263" y="234.333">with</text>
+    <text fill="#000" font-size="12" x="241.638" y="234.333"> </text>
+    <text fill="#000" font-size="12" x="241.638" y="234.333">a</text>
+    <text fill="#000" font-size="12" textLength="22.05" x="184.825" y="246.333">new</text>
+    <text fill="#000" font-size="12" x="206.875" y="246.333"> </text>
+    <text fill="#000" font-size="12" textLength="18.75" x="206.875" y="246.333">line</text>
+    <line style="stroke:#008000;stroke-width:0.5;stroke-dasharray:4,4;" x1="149.138" x2="159.138" y1="300" y2="300"/>
+    <rect fill="#FFD700" height="90" style="stroke:#FFD700;stroke-width:3;" width="102.825" x="159.138" y="255"/>
+    <text fill="#000" font-size="12" textLength="16.65" x="164.163" y="267.333">but</text>
+    <text fill="#000" font-size="12" x="180.813" y="267.333"> </text>
+    <text fill="#000" font-size="12" textLength="6" x="180.813" y="267.333">it</text>
+    <text fill="#000" font-size="12" x="186.813" y="267.333"> </text>
+    <text fill="#000" font-size="12" textLength="28.725" x="186.813" y="267.333">could</text>
+    <text fill="#000" font-size="12" x="215.538" y="267.333"> </text>
+    <text fill="#000" font-size="12" textLength="13.35" x="215.538" y="267.333">be</text>
+    <text fill="#000" font-size="12" x="228.888" y="267.333"> </text>
+    <text fill="#000" font-size="12" textLength="22.05" x="228.888" y="267.333">cool</text>
+    <text fill="#000" font-size="12" x="250.938" y="267.333"> </text>
+    <text fill="#000" font-size="12" textLength="6" x="250.938" y="267.333">if</text>
+    <text fill="#000" font-size="12" textLength="52.725" x="162.138" y="279.333">PlantUML</text>
+    <text fill="#000" font-size="12" x="214.863" y="279.333"> </text>
+    <text fill="#000" font-size="12" textLength="21.375" x="214.863" y="279.333">was</text>
+    <text fill="#000" font-size="12" x="236.238" y="279.333"> </text>
+    <text fill="#000" font-size="12" textLength="22.725" x="236.238" y="279.333">able</text>
+    <text fill="#000" font-size="12" textLength="9.975" x="169.488" y="291.333">to</text>
+    <text fill="#000" font-size="12" x="179.463" y="291.333"> </text>
+    <text fill="#000" font-size="12" textLength="21.375" x="179.463" y="291.333">split</text>
+    <text fill="#000" font-size="12" x="200.838" y="291.333"> </text>
+    <text fill="#000" font-size="12" textLength="22.725" x="200.838" y="291.333">long</text>
+    <text fill="#000" font-size="12" x="223.563" y="291.333"> </text>
+    <text fill="#000" font-size="12" textLength="28.05" x="223.563" y="291.333">lines,</text>
+    <text fill="#000" font-size="12" textLength="36" x="175.188" y="303.333">maybe</text>
+    <text fill="#000" font-size="12" x="211.188" y="303.333"> </text>
+    <text fill="#000" font-size="12" textLength="21.375" x="211.188" y="303.333">with</text>
+    <text fill="#000" font-size="12" x="232.563" y="303.333"> </text>
+    <text fill="#000" font-size="12" textLength="13.35" x="232.563" y="303.333">an</text>
+    <text fill="#000" font-size="12" textLength="32.7" x="164.5" y="315.333">option</text>
+    <text fill="#000" font-size="12" x="197.2" y="315.333"> </text>
+    <text fill="#000" font-size="12" textLength="22.05" x="197.2" y="315.333">who</text>
+    <text fill="#000" font-size="12" x="219.25" y="315.333"> </text>
+    <text fill="#000" font-size="12" textLength="37.35" x="219.25" y="315.333">specify</text>
+    <text fill="#000" font-size="12" textLength="16.65" x="162.212" y="327.333">the</text>
+    <text fill="#000" font-size="12" x="178.862" y="327.333"> </text>
+    <text fill="#000" font-size="12" textLength="51.975" x="178.862" y="327.333">maximum</text>
+    <text fill="#000" font-size="12" x="230.838" y="327.333"> </text>
+    <text fill="#000" font-size="12" textLength="28.05" x="230.838" y="327.333">width</text>
+    <text fill="#000" font-size="12" textLength="9.975" x="188.875" y="339.333">of</text>
+    <text fill="#000" font-size="12" x="198.85" y="339.333"> </text>
+    <text fill="#000" font-size="12" x="198.85" y="339.333">a</text>
+    <text fill="#000" font-size="12" x="205.525" y="339.333"> </text>
+    <text fill="#000" font-size="12" textLength="26.7" x="205.525" y="339.333">node</text>
+    <line style="stroke:#008000;stroke-width:0.5;stroke-dasharray:4,4;" x1="149.138" x2="149.138" y1="207" y2="300"/>
+    <line style="stroke:#008000;stroke-width:0.5;stroke-dasharray:4,4;" x1="81.088" x2="81.088" y1="156" y2="183"/>
+    <line style="stroke:#008000;stroke-width:0.5;stroke-dasharray:4,4;" x1="81.088" x2="140.981" y1="76" y2="76"/>
+    <rect fill="#FFF" height="36" style="stroke:#00F;stroke-width:1;stroke-dasharray:8,8;" width="46.425" x="117.769" y="20"/>
+    <text fill="#000" font-size="12" textLength="11.4" x="129.769" y="41.333">Hi</text>
+    <text fill="#000" font-size="12" x="141.169" y="41.333"> </text>
+    <text fill="#000" font-size="12" textLength="11.025" x="141.169" y="41.333">=)</text>
+    <line style="stroke:#008000;stroke-width:0.5;stroke-dasharray:4,4;" x1="140.981" x2="140.981" y1="56" y2="76"/>
+  </g>
+</svg>

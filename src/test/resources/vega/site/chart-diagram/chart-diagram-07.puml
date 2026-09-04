@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startchart
+h-axis "t" -10 --> 10 spacing 2 label-right
+v-axis "f(t)" -10 --> 50 spacing 10 label-top
+line "Trajectory" [(-10,0), (2,10), (5,30), (8,45), (10,50)] #3498db
+scatter "Checkpoints" [(1,12), (6,34), (7,47)] #e74c3c
+legend right
+@endchart

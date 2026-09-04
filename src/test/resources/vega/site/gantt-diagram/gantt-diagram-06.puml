@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startgantt
+Project starts 2020-07-01
+[Prototype design] starts 2020-07-01
+[Test prototype] starts 2020-07-16
+[Prototype design] ends 2020-07-15
+[Test prototype] ends 2020-07-25
+
+@endgantt

@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+!function $message()
+  !return "Alice -> Bob : Hello" + %breakline() + "Bob -> Alice : Hi!"
+!endfunction
+
+$message()
+@enduml

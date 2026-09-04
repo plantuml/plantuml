@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startwbs
+* Test
+**(b) A topic
+***(c1) common
+**(t2) Another topic
+t2 --> c1
+b -> t2 #blue
+@endwbs

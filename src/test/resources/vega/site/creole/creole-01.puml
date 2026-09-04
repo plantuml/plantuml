@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+Alice -> Bob : hello --there-- here
+... Some ~~long delay~~ ...
+Bob -> Alice : ok
+note left
+  This is **bold**
+  This is //italics//
+  This is ""monospaced""
+  This is --stricken-out--
+  This is __underlined__
+  This is ~~wave-underlined~~
+end note
+@enduml

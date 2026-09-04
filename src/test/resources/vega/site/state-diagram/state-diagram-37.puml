@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+mainframe mainframe
+state a
+
+state b
+a --> b
+b--> [*]
+@enduml

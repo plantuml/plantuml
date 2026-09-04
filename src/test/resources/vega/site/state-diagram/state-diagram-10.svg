@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="311px" preserveAspectRatio="none" style="width:879px;height:311px;background:#FFFFFF;" version="1.1" viewBox="0 0 879 311" width="879px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="Active" data-source-line="3" id="ent0001">
+      <path d="M18.5,72 L850.981,72 A12.5,12.5 0 0 1 863.481,84.5 L863.481,96 L6,96 L6,84.5 A12.5,12.5 0 0 1 18.5,72" fill="#F1F1F1"/>
+      <rect fill="none" height="223" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="857.481" x="6" y="72"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="863.481" y1="96" y2="96"/>
+      <text fill="#000" font-size="14" textLength="38.15" x="415.666" y="87.889">Active</text>
+      <g class="start_entity" data-qualified-name="Active..start.Active" data-source-line="4" id="ent0006">
+        <ellipse cx="27" cy="136" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+      </g>
+      <g class="entity" data-qualified-name="Active.NumLockOff" data-source-line="4" id="ent0007">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="97.7" x="55" y="113"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="55" x2="152.7" y1="137" y2="137"/>
+        <text fill="#000" font-size="14" textLength="77.7" x="65" y="128.889">NumLockOff</text>
+      </g>
+      <g class="entity" data-qualified-name="Active.NumLockOn" data-source-line="5" id="ent0009">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="97.788" x="55" y="216"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="55" x2="152.788" y1="240" y2="240"/>
+        <text fill="#000" font-size="14" textLength="77.788" x="65" y="231.889">NumLockOn</text>
+      </g>
+      <g class="link" data-entity-1="ent0006" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+        <polygon fill="#181818" points="54.963,138,45.963,134,49.963,138,45.963,142,54.963,138" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M37.227,138 C43.139,138 44.051,138 49.963,138" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </g>
+      <g class="link" data-entity-1="ent0007" data-entity-2="ent0009" data-link-type="dependency" id="lnk10">
+        <polygon fill="#181818" points="54.967,220.22,49.672,211.916,50.799,217.459,45.255,218.585,54.967,220.22" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M54.801,158.408 C37.269,168.458 23.869,181.99 33,198 C38.179,207.082 42.01,211.638 50.799,217.459" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="117.813" x="35" y="193.111">EvNumLockPressed</text>
+      </g>
+      <g class="link" data-entity-1="ent0009" data-entity-2="ent0007" data-link-type="dependency" id="lnk11">
+        <polygon fill="#181818" points="141.016,163.34,144.632,172.501,144.582,166.844,150.239,166.794,141.016,163.34" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M141.881,215.972 C152.613,206 159.955,193.779 154,181 C150.935,174.423 149.845,172.015 144.582,166.844" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="117.813" x="159" y="193.111">EvNumLockPressed</text>
+      </g>
+      <line style="stroke:#181818;stroke-width:1.5;stroke-dasharray:8,10;" x1="284.813" x2="284.813" y1="101" y2="290"/>
+      <g class="start_entity" data-qualified-name="Active.CONC1..start.CONC1" data-source-line="8" id="ent0012">
+        <ellipse cx="300.813" cy="136" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+      </g>
+      <g class="entity" data-qualified-name="Active.CONC1.CapsLockOff" data-source-line="8" id="ent0013">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="100.85" x="329.313" y="113"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="329.313" x2="430.163" y1="137" y2="137"/>
+        <text fill="#000" font-size="14" textLength="80.85" x="339.313" y="128.889">CapsLockOff</text>
+      </g>
+      <g class="entity" data-qualified-name="Active.CONC1.CapsLockOn" data-source-line="9" id="ent0015">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="100.938" x="329.313" y="216"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="329.313" x2="430.25" y1="240" y2="240"/>
+        <text fill="#000" font-size="14" textLength="80.938" x="339.313" y="231.889">CapsLockOn</text>
+      </g>
+      <g class="link" data-entity-1="ent0012" data-entity-2="ent0013" data-link-type="dependency" id="lnk14">
+        <polygon fill="#181818" points="329.275,138,320.275,134,324.275,138,320.275,142,329.275,138" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M310.996,138 C317.089,138 318.182,138 324.275,138" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </g>
+      <g class="link" data-entity-1="ent0013" data-entity-2="ent0015" data-link-type="dependency" id="lnk16">
+        <polygon fill="#181818" points="328.999,220.161,323.197,212.204,324.666,217.666,319.204,219.136,328.999,220.161" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M329.009,159.385 C320.527,165.095 312.858,172.216 307.813,181 C298.717,196.835 307.347,207.691 324.666,217.666" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="120.738" x="309.813" y="193.111">EvCapsLockPressed</text>
+      </g>
+      <g class="link" data-entity-1="ent0015" data-entity-2="ent0013" data-link-type="dependency" id="lnk17">
+        <polygon fill="#181818" points="418.285,163.129,422.061,172.225,421.912,166.57,427.567,166.421,418.285,163.129" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M419.513,215.851 C430.499,205.952 437.934,193.813 431.813,181 C428.611,174.299 427.388,171.764 421.912,166.57" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="120.738" x="435.813" y="193.111">EvCapsLockPressed</text>
+      </g>
+      <line style="stroke:#181818;stroke-width:1.5;stroke-dasharray:8,10;" x1="564.55" x2="564.55" y1="101" y2="290"/>
+      <g class="start_entity" data-qualified-name="Active.CONC2..start.CONC2" data-source-line="12" id="ent0018">
+        <ellipse cx="580.55" cy="136" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+      </g>
+      <g class="entity" data-qualified-name="Active.CONC2.ScrollLockOff" data-source-line="12" id="ent0019">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="103.213" x="609.05" y="113"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="609.05" x2="712.262" y1="137" y2="137"/>
+        <text fill="#000" font-size="14" textLength="83.213" x="619.05" y="128.889">ScrollLockOff</text>
+      </g>
+      <g class="entity" data-qualified-name="Active.CONC2.ScrollLockOn" data-source-line="13" id="ent0021">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="103.3" x="609.05" y="216"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="609.05" x2="712.35" y1="240" y2="240"/>
+        <text fill="#000" font-size="14" textLength="83.3" x="619.05" y="231.889">ScrollLockOn</text>
+      </g>
+      <g class="link" data-entity-1="ent0018" data-entity-2="ent0019" data-link-type="dependency" id="lnk20">
+        <polygon fill="#181818" points="608.829,138,599.829,134,603.829,138,599.829,142,608.829,138" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M590.863,138 C596.851,138 597.84,138 603.829,138" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </g>
+      <g class="link" data-entity-1="ent0019" data-entity-2="ent0021" data-link-type="dependency" id="lnk22">
+        <polygon fill="#181818" points="609.034,220.259,603.177,212.341,604.684,217.793,599.232,219.3,609.034,220.259" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M608.686,159.511 C600.232,165.19 592.601,172.267 587.55,181 C578.331,196.94 587.124,207.837 604.684,217.793" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="122.931" x="589.55" y="193.111">EvScrollLockPressed</text>
+      </g>
+      <g class="link" data-entity-1="ent0021" data-entity-2="ent0019" data-link-type="dependency" id="lnk23">
+        <polygon fill="#181818" points="699.75,163.022,703.603,172.086,703.406,166.432,709.06,166.235,699.75,163.022" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M701.008,215.935 C712.205,206.047 719.783,193.892 713.55,181 C710.279,174.235 708.988,171.638 703.406,166.432" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="122.931" x="717.55" y="193.111">EvScrollLockPressed</text>
+      </g>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="1" id="ent0004">
+      <ellipse cx="434.5" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0001" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="434.5,71.924,438.5,62.924,434.5,66.924,430.5,62.924,434.5,71.924" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M434.5,36.075 C434.5,44.618 434.5,52.403 434.5,66.924" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

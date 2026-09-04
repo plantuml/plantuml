@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="NWDIAG" height="171px" preserveAspectRatio="none" style="width:363px;height:171px;background:#FFFFFF;" version="1.1" viewBox="0 0 363 171" width="363px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="44.025" x="5" y="14.333">Network</text>
+    <rect fill="#E2E2F0" height="5" style="stroke:#181818;stroke-width:1;" width="302.625" x="54.025" y="8.5"/>
+    <path d="M121.463,13.5 L121.463,43.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M272.775,13.5 L272.775,57.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#F1F1F1" points="69.025,43.5,115.025,43.5,122.025,64.5,169.9,64.5,169.9,129.5,69.025,129.5,69.025,43.5" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="69.025" x2="122.025" y1="64.5" y2="64.5"/>
+    <text fill="#000" font-size="12" textLength="23.325" x="79.025" y="80.833">Test</text>
+    <text fill="#000" font-size="12" textLength="70.875" x="79.025" y="92.833">long long label</text>
+    <text fill="#000" font-size="12" textLength="23.325" x="79.025" y="104.833">Test</text>
+    <text fill="#000" font-size="12" textLength="70.875" x="79.025" y="116.833">long long label</text>
+    <text fill="#000" font-size="12" textLength="23.325" x="235.338" y="71.833">Test</text>
+    <text fill="#000" font-size="12" textLength="70.875" x="235.338" y="83.833">long long label</text>
+    <text fill="#000" font-size="12" textLength="23.325" x="235.338" y="95.833">Test</text>
+    <text fill="#000" font-size="12" textLength="70.875" x="235.338" y="107.833">long long label</text>
+  </g>
+</svg>

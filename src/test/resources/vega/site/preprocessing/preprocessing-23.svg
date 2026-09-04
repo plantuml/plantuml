@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="297px" preserveAspectRatio="none" style="width:309px;height:297px;background:#FFFFFF;" version="1.1" viewBox="0 0 309 297" width="309px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <rect fill="#ADD8E6" height="14" style="stroke:none;" width="282.8" x="10" y="12"/>
+      <text fill="#000" font-size="14" font-weight="700" x="10" y="22.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="15.575" x="62.937" y="22.889">$a</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="15.575" x="108.7" y="22.889">$b</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="95.288" x="180.888" y="22.889">%string($a + $b)</text>
+      <rect fill="#D3D3D3" height="14" style="stroke:none;" width="282.8" x="10" y="26"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.425" x="10" y="36.889">type</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="15.487" x="62.937" y="36.889">str</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="15.487" x="108.7" y="36.889">str</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="111.913" x="180.888" y="36.889">str (concatenation)</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="52.937" x="10" y="50.889">example</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.763" x="62.937" y="50.889">"a"</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.763" x="108.7" y="50.889">"b"</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="15.575" x="180.888" y="50.889">ab</text>
+      <rect fill="#D3D3D3" height="14" style="stroke:none;" width="282.8" x="10" y="54"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.425" x="10" y="64.889">type</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="15.487" x="62.937" y="64.889">str</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="14.787" x="108.7" y="64.889">int</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="111.913" x="180.888" y="64.889">str (concatenation)</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="18.637" x="10" y="78.889">ex.</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.763" x="62.937" y="78.889">"a"</text>
+      <text fill="#000" font-size="14" font-weight="700" x="108.7" y="78.889">2</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="15.575" x="180.888" y="78.889">a2</text>
+      <rect fill="#D3D3D3" height="14" style="stroke:none;" width="282.8" x="10" y="82"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.425" x="10" y="92.889">type</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="15.487" x="62.937" y="92.889">str</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="14.787" x="108.7" y="92.889">int</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="111.913" x="180.888" y="92.889">str (concatenation)</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="18.637" x="10" y="106.889">ex.</text>
+      <text fill="#000" font-size="14" font-weight="700" x="62.937" y="106.889">1</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.763" x="108.7" y="106.889">"b"</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="15.575" x="180.888" y="106.889">1b</text>
+      <rect fill="#D3D3D3" height="14" style="stroke:none;" width="282.8" x="10" y="110"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.425" x="10" y="120.889">type</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.513" x="62.937" y="120.889">bool</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="15.487" x="108.7" y="120.889">str</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="111.913" x="180.888" y="120.889">str (concatenation)</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="18.637" x="10" y="134.889">ex.</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="45.762" x="62.937" y="134.889">%true()</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.763" x="108.7" y="134.889">"b"</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="15.575" x="180.888" y="134.889">1b</text>
+      <rect fill="#D3D3D3" height="14" style="stroke:none;" width="282.8" x="10" y="138"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.425" x="10" y="148.889">type</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="15.487" x="62.937" y="148.889">str</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.513" x="108.7" y="148.889">bool</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="111.913" x="180.888" y="148.889">str (concatenation)</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="18.637" x="10" y="162.889">ex.</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.763" x="62.937" y="162.889">"a"</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="51.275" x="108.7" y="162.889">%false()</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="15.575" x="180.888" y="162.889">a0</text>
+      <rect fill="#D3D3D3" height="14" style="stroke:none;" width="282.8" x="10" y="166"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.425" x="10" y="176.889">type</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="14.787" x="62.937" y="176.889">int</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="14.787" x="108.7" y="176.889">int</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="99.575" x="180.888" y="176.889">int (addition of int)</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="18.637" x="10" y="190.889">ex.</text>
+      <text fill="#000" font-size="14" font-weight="700" x="62.937" y="190.889">1</text>
+      <text fill="#000" font-size="14" font-weight="700" x="108.7" y="190.889">2</text>
+      <text fill="#000" font-size="14" font-weight="700" x="180.888" y="190.889">3</text>
+      <rect fill="#D3D3D3" height="14" style="stroke:none;" width="282.8" x="10" y="194"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.425" x="10" y="204.889">type</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.513" x="62.937" y="204.889">bool</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="14.787" x="108.7" y="204.889">int</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="73.15" x="180.888" y="204.889">int (addition)</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="18.637" x="10" y="218.889">ex.</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="45.762" x="62.937" y="218.889">%true()</text>
+      <text fill="#000" font-size="14" font-weight="700" x="108.7" y="218.889">2</text>
+      <text fill="#000" font-size="14" font-weight="700" x="180.888" y="218.889">3</text>
+      <rect fill="#D3D3D3" height="14" style="stroke:none;" width="282.8" x="10" y="222"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.425" x="10" y="232.889">type</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="14.787" x="62.937" y="232.889">int</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.513" x="108.7" y="232.889">bool</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="73.15" x="180.888" y="232.889">int (addition)</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="18.637" x="10" y="246.889">ex.</text>
+      <text fill="#000" font-size="14" font-weight="700" x="62.937" y="246.889">1</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="51.275" x="108.7" y="246.889">%false()</text>
+      <text fill="#000" font-size="14" font-weight="700" x="180.888" y="246.889">1</text>
+      <rect fill="#D3D3D3" height="14" style="stroke:none;" width="282.8" x="10" y="250"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.425" x="10" y="260.889">type</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="14.787" x="62.937" y="260.889">int</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="14.787" x="108.7" y="260.889">int</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="73.15" x="180.888" y="260.889">int (addition)</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="18.637" x="10" y="274.889">ex.</text>
+      <text fill="#000" font-size="14" font-weight="700" x="62.937" y="274.889">1</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="72.188" x="108.7" y="274.889">%intval("2")</text>
+      <text fill="#000" font-size="14" font-weight="700" x="180.888" y="274.889">3</text>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="292.8" y1="12" y2="12"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="292.8" y1="26" y2="26"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="292.8" y1="40" y2="40"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="292.8" y1="54" y2="54"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="292.8" y1="68" y2="68"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="292.8" y1="82" y2="82"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="292.8" y1="96" y2="96"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="292.8" y1="110" y2="110"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="292.8" y1="124" y2="124"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="292.8" y1="138" y2="138"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="292.8" y1="152" y2="152"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="292.8" y1="166" y2="166"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="292.8" y1="180" y2="180"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="292.8" y1="194" y2="194"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="292.8" y1="208" y2="208"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="292.8" y1="222" y2="222"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="292.8" y1="236" y2="236"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="292.8" y1="250" y2="250"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="292.8" y1="264" y2="264"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="292.8" y1="278" y2="278"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="10" y1="12" y2="278"/>
+      <line style="stroke:#000;stroke-width:1;" x1="62.937" x2="62.937" y1="12" y2="278"/>
+      <line style="stroke:#000;stroke-width:1;" x1="108.7" x2="108.7" y1="12" y2="278"/>
+      <line style="stroke:#000;stroke-width:1;" x1="180.888" x2="180.888" y1="12" y2="278"/>
+      <line style="stroke:#000;stroke-width:1;" x1="292.8" x2="292.8" y1="12" y2="278"/>
+    </g>
+  </g>
+</svg>

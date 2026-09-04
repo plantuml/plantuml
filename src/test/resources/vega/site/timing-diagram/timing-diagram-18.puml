@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+robust "Web Browser" as WB
+concise "Web User" as WU
+
+@2019/07/02
+WU is Idle
+WB is Idle
+
+@2019/07/04
+WU is Waiting : some note
+WB is Processing : some other note
+
+@2019/07/05
+WB is Waiting
+@enduml

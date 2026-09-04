@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+title: <size:20><&heart>Use of OpenIconic<&heart></size>
+class Wifi
+note left
+  Click on <&wifi>
+end note
+@enduml

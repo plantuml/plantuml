@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="147px" preserveAspectRatio="none" style="width:290px;height:147px;background:#FFFFFF;" version="1.1" viewBox="0 0 290 147" width="290px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Concept Model-->
+    <g class="cluster" data-qualified-name="Concept Model" data-source-line="5" id="ent0001">
+      <rect fill="none" height="119" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1;" width="268" x="14" y="4"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="67.725" x="114.137" y="16.889">«Concept»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="90.3" x="102.85" y="30.889">Concept Model</text>
+    </g>
+    <!--entity ex1-->
+    <g class="entity" data-qualified-name="Concept Model.ex1" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="89.725" x="176" y="59"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="67.725" x="187" y="79.889">«Concept»</text>
+      <text fill="#000" font-size="14" textLength="62.3" x="189.713" y="93.889">Example 1</text>
+    </g>
+    <!--entity Another rectangle-->
+    <g class="entity" data-qualified-name="Concept Model.Another rectangle" data-source-line="7" id="ent0003">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="126.575" x="30.5" y="66"/>
+      <text fill="#000" font-size="14" textLength="106.575" x="40.5" y="86.889">Another rectangle</text>
+    </g>
+  </g>
+</svg>

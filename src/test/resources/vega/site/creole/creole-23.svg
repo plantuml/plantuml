@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="121px" preserveAspectRatio="none" style="width:556px;height:121px;background:#FFFFFF;" version="1.1" viewBox="0 0 556 121" width="556px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="85" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="519.575" x="16" y="16"/>
+    <text fill="#000" font-family="monospace" font-size="12" textLength="499.575" x="26" y="35.333">This is the "caffeine" molecule: C&lt;sub&gt;8&lt;/sub&gt;H&lt;sub&gt;10&lt;/sub&gt;N&lt;sub&gt;4&lt;/sub&gt;O&lt;sub&gt;2&lt;/sub&gt;</text>
+    <text fill="#000" font-size="12" textLength="158.7" x="26" y="47.333">This is the "caffeine" molecule: C</text>
+    <text fill="#000" font-size="9" x="184.7" y="50">8</text>
+    <text fill="#000" font-size="12" x="189.706" y="47.333">H</text>
+    <text fill="#000" font-size="9" textLength="10.013" x="198.406" y="50">10</text>
+    <text fill="#000" font-size="12" x="208.419" y="47.333">N</text>
+    <text fill="#000" font-size="9" x="217.119" y="50">4</text>
+    <text fill="#000" font-size="12" x="222.125" y="47.333">O</text>
+    <text fill="#000" font-size="9" x="231.425" y="50">2</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="16" x2="535.575" y1="58" y2="58"/>
+    <text fill="#000" font-family="monospace" font-size="12" textLength="427.425" x="26" y="72.333">This is the Pythagorean theorem: a&lt;sup&gt;2&lt;/sup&gt; + b&lt;sup&gt;2&lt;/sup&gt; = c&lt;sup&gt;2&lt;/sup&gt;</text>
+    <text fill="#000" font-size="12" textLength="170.025" x="26" y="88.333">This is the Pythagorean theorem: a</text>
+    <text fill="#000" font-size="9" x="196.025" y="82">2</text>
+    <text fill="#000" font-size="12" textLength="13.725" x="201.031" y="88.333">+ b</text>
+    <text fill="#000" font-size="9" x="214.756" y="82">2</text>
+    <text fill="#000" font-size="12" textLength="13.05" x="219.763" y="88.333">= c</text>
+    <text fill="#000" font-size="9" x="232.813" y="82">2</text>
+  </g>
+</svg>

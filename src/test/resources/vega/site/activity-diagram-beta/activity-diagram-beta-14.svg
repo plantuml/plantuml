@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="120px" preserveAspectRatio="none" style="width:184px;height:120px;background:#FFFFFF;" version="1.1" viewBox="0 0 184 120" width="184px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <polygon fill="#F1F1F1" points="37,20,87.188,20,99.188,32,87.188,44,37,44,25,32,37,20" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="11" textLength="50.188" x="37" y="35.056">condition?</text>
+    <rect fill="#FFC0CB" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="45.275" x="119.188" y="16"/>
+    <text fill="#000" font-size="12" textLength="25.275" x="129.188" y="35.333">error</text>
+    <rect fill="#98FB98" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="52.025" x="36.081" y="68"/>
+    <text fill="#000" font-size="12" textLength="32.025" x="46.081" y="87.333">action</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="62.094" x2="62.094" y1="44" y2="68"/>
+    <polygon fill="#181818" points="58.094,58,62.094,68,66.094,58,62.094,62" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="99.188" x2="119.188" y1="32" y2="32"/>
+    <polygon fill="#181818" points="109.188,28,119.188,32,109.188,36,113.188,32" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

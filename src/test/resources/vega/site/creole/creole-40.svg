@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="275px" preserveAspectRatio="none" style="width:305px;height:275px;background:#FFFFFF;" version="1.1" viewBox="0 0 305 275" width="305px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="44.063" x="10" y="120"/>
+    <text fill="#000" font-size="14" textLength="24.063" x="20" y="140.889">root</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="35.575" x="104.063" y="20"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="114.063" y="40.889">d1</text>
+    <path d="M54.063,137 L64.063,137 C79.063,137 79.063,37 94.063,37 L104.063,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="180" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="180.475" x="104.063" y="74"/>
+    <text fill="#000" font-size="14" textLength="160.475" x="114.063" y="94.889">You can have horizontal line</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="104.063" x2="284.538" y1="103" y2="103"/>
+    <text fill="#000" font-size="14" textLength="79.45" x="114.063" y="118.889">Or double line</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="104.063" x2="284.538" y1="127" y2="127"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="104.063" x2="284.538" y1="129" y2="129"/>
+    <text fill="#000" font-size="14" textLength="76.212" x="114.063" y="142.889">Or strong line</text>
+    <text fill="#000" font-size="14" textLength="31.15" x="114.063" y="156.889">____</text>
+    <text fill="#000" font-size="14" textLength="76.212" x="114.063" y="170.889">Or dotted line</text>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="104.063" x2="174.087" y1="181" y2="181"/>
+    <text fill="#000" font-size="14" textLength="40.425" x="174.087" y="184.389">My title</text>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="214.513" x2="284.537" y1="181" y2="181"/>
+    <text fill="#000" font-size="14" font-style="italic" textLength="56.7" x="114.063" y="198.889">and title...</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="104.063" x2="181.044" y1="209" y2="209"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="104.063" x2="181.044" y1="211" y2="211"/>
+    <text fill="#000" font-size="14" textLength="26.513" x="181.044" y="212.389">Title</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="207.556" x2="284.538" y1="209" y2="209"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="207.556" x2="284.538" y1="211" y2="211"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="104.063" x2="158.906" y1="223" y2="223"/>
+    <text fill="#000" font-size="14" textLength="70.788" x="158.906" y="226.389">Another title</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="229.694" x2="284.538" y1="223" y2="223"/>
+    <text fill="#000" font-size="14" textLength="38.938" x="114.063" y="240.889">Enjoy!</text>
+    <path d="M54.063,137 L64.063,137 C79.063,137 79.063,164 94.063,164 L104.063,164" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

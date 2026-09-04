@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="350px" preserveAspectRatio="none" style="width:667px;height:350px;background:#FFFFFF;" version="1.1" viewBox="0 0 667 350" width="667px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="CurrentSite" data-source-line="1" id="ent0001">
+      <path d="M18.5,12 L638.5,12 A12.5,12.5 0 0 1 651,24.5 L651,36 L6,36 L6,24.5 A12.5,12.5 0 0 1 18.5,12" fill="#FFC0CB"/>
+      <path d="M6,36 L651,36 L651,321.5 A12.5,12.5 0 0 1 638.5,334 L18.5,334 A12.5,12.5 0 0 1 6,321.5 L6,36" fill="#FFC0CB"/>
+      <rect fill="none" height="322" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="645" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="651" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="70.788" x="293.106" y="27.889">CurrentSite</text>
+      <g class="entity" data-qualified-name="CurrentSite.HardwareSetup" data-source-line="2" id="ent0002">
+        <path d="M24.5,47 L116.8,47 A12.5,12.5 0 0 1 129.3,59.5 L129.3,71 L12,71 L12,59.5 A12.5,12.5 0 0 1 24.5,47" fill="#ADD8E6"/>
+        <path d="M12,71 L129.3,71 L129.3,306.5 A12.5,12.5 0 0 1 116.8,319 L24.5,319 A12.5,12.5 0 0 1 12,306.5 L12,71" fill="#ADD8E6"/>
+        <rect fill="none" height="272" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="117.3" x="12" y="47"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="12" x2="129.3" y1="71" y2="71"/>
+        <text fill="#000" font-size="14" textLength="97.3" x="22" y="62.889">HardwareSetup</text>
+        <g class="entity" data-qualified-name="CurrentSite.HardwareSetup.Site" data-source-line="3" id="ent0003">
+          <rect fill="#A52A2A" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="33.5" y="82"/>
+          <line style="stroke:#181818;stroke-width:0.5;" x1="33.5" x2="83.5" y1="106" y2="106"/>
+          <text fill="#000" font-size="14" textLength="24.15" x="46.425" y="97.889">Site</text>
+        </g>
+        <g class="entity" data-qualified-name="CurrentSite.HardwareSetup.Controller" data-source-line="4" id="ent0008">
+          <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="80.725" x="18" y="168"/>
+          <line style="stroke:#181818;stroke-width:0.5;" x1="18" x2="98.725" y1="192" y2="192"/>
+          <text fill="#000" font-size="14" textLength="60.725" x="28" y="183.889">Controller</text>
+        </g>
+        <g class="entity" data-qualified-name="CurrentSite.HardwareSetup.Devices" data-source-line="5" id="ent0010">
+          <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="69.875" x="23.5" y="254"/>
+          <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="93.375" y1="278" y2="278"/>
+          <text fill="#000" font-size="14" textLength="49.875" x="33.5" y="269.889">Devices</text>
+        </g>
+      </g>
+      <g class="entity" data-qualified-name="CurrentSite.PresentationSetup" data-source-line="7" id="ent0004">
+        <path d="M159.5,90 L295.5,90 A12.5,12.5 0 0 1 308,102.5 L308,114 L147,114 L147,102.5 A12.5,12.5 0 0 1 159.5,90" fill="#F1F1F1"/>
+        <rect fill="none" height="186" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="161" x="147" y="90"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="147" x2="308" y1="114" y2="114"/>
+        <text fill="#000" font-size="14" textLength="115.15" x="169.925" y="105.889">PresentationSetup</text>
+        <g class="entity" data-qualified-name="CurrentSite.PresentationSetup.Groups" data-source-line="8" id="ent0012">
+          <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="65.85" x="188" y="125"/>
+          <line style="stroke:#181818;stroke-width:0.5;" x1="188" x2="253.85" y1="149" y2="149"/>
+          <text fill="#000" font-size="14" textLength="45.85" x="198" y="140.889">Groups</text>
+        </g>
+        <g class="entity" data-qualified-name="CurrentSite.PresentationSetup.PlansAndGraphics" data-source-line="8" id="ent0013">
+          <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="136.025" x="153" y="211"/>
+          <line style="stroke:#181818;stroke-width:0.5;" x1="153" x2="289.025" y1="235" y2="235"/>
+          <text fill="#000" font-size="14" textLength="116.025" x="163" y="226.889">PlansAndGraphics</text>
+        </g>
+      </g>
+      <g class="entity" data-qualified-name="CurrentSite.Trends" data-source-line="10" id="ent0005">
+        <rect fill="#FF7" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="63.575" x="326.5" y="158"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="326.5" x2="390.075" y1="182" y2="182"/>
+        <text fill="#000" font-size="14" textLength="43.575" x="336.5" y="173.889">Trends</text>
+      </g>
+      <g class="entity" data-qualified-name="CurrentSite.Schedule" data-source-line="11" id="ent0006">
+        <rect fill="#F0F" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="78.45" x="408.5" y="158"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="408.5" x2="486.95" y1="182" y2="182"/>
+        <text fill="#000" font-size="14" textLength="58.45" x="418.5" y="173.889">Schedule</text>
+      </g>
+      <g class="entity" data-qualified-name="CurrentSite.AlarmSupression" data-source-line="12" id="ent0007">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="126.663" x="505" y="158"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="505" x2="631.663" y1="182" y2="182"/>
+        <text fill="#000" font-size="14" textLength="106.663" x="515" y="173.889">AlarmSupression</text>
+      </g>
+    </g>
+  </g>
+</svg>

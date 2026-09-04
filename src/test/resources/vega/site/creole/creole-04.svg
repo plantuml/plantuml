@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="183px" preserveAspectRatio="none" style="width:228px;height:183px;background:#FFFFFF;" version="1.1" viewBox="0 0 228 183" width="228px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity UC1-->
+    <g class="entity" data-qualified-name="UC1" data-source-line="1" id="ent0001">
+      <ellipse cx="109.001" cy="89.294" fill="#F1F1F1" rx="103.001" ry="77.294" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="18" font-weight="700" textLength="152.1" x="32.951" y="55.551">Extra-large heading</text>
+      <text fill="#000" font-size="14" textLength="59.063" x="79.47" y="70.44">Some text</text>
+      <text fill="#000" font-size="16" font-weight="700" textLength="97.9" x="60.051" y="85.996">Large heading</text>
+      <text fill="#000" font-size="14" textLength="57.4" x="80.301" y="100.44">Other text</text>
+      <text fill="#000" font-size="15" font-weight="700" textLength="106.781" x="55.611" y="115.218">Medium heading</text>
+      <text fill="#000" font-size="14" textLength="69.913" x="74.045" y="129.44">Information</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="24.641" x2="193.362" y1="132.551" y2="132.551"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="84.963" x="66.52" y="147.44">Small heading</text>
+    </g>
+  </g>
+</svg>

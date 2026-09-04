@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="NWDIAG" height="478px" preserveAspectRatio="none" style="width:131px;height:478px;background:#FFFFFF;" version="1.1" viewBox="0 0 131 478" width="131px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="30.075" x="5" y="14.333">LAN1</text>
+    <text fill="#000" font-size="12" textLength="30.075" x="5" y="138.333">LAN2</text>
+    <text fill="#000" font-size="12" x="35.075" y="251.333"> </text>
+    <text fill="#000" font-size="12" x="35.075" y="364.333"> </text>
+    <rect fill="#E2E2F0" height="5" style="stroke:#181818;stroke-width:1;" width="83.975" x="40.075" y="8.5"/>
+    <rect fill="#E2E2F0" height="5" style="stroke:#181818;stroke-width:1;" width="83.975" x="40.075" y="132.5"/>
+    <path d="M84.063,13.5 L84.063,54.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="11" textLength="12.238" x="77.944" y="34.556">a1</text>
+    <path d="M84.063,86.5 L84.063,132.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="11" textLength="12.238" x="77.944" y="112.556">a2</text>
+    <path d="M80.063,137.5 L80.063,173" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="11" textLength="11.619" x="74.253" y="155.806">s2</text>
+    <path d="M82.063,205 L82.063,245.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M82.063,245.5 L82.063,286" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="11" textLength="12.238" x="75.944" y="268.806">e3</text>
+    <path d="M82.063,318 L82.063,358.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M82.063,358.5 L82.063,399" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="11" textLength="22.688" x="70.719" y="381.806">USB</text>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="26.675" x="68.725" y="54.5"/>
+    <text fill="#000" font-size="12" x="78.725" y="73.833">a</text>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="53.375" x="55.375" y="173"/>
+    <text fill="#000" font-size="12" textLength="33.375" x="65.375" y="192.333">switch</text>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="49.4" x="57.363" y="286"/>
+    <text fill="#000" font-size="12" textLength="29.4" x="67.363" y="305.333">equip</text>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="53.975" x="55.075" y="399"/>
+    <text fill="#000" font-size="12" textLength="33.975" x="65.075" y="418.333">printer</text>
+  </g>
+</svg>

@@ -1,0 +1,193 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="908px" preserveAspectRatio="none" style="width:232px;height:908px;background:#FFFFFF;" version="1.1" viewBox="0 0 232 908" width="232px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="205.538" x="10" y="20.889">ArchiMate Relationships Overview</text>
+    </g>
+    <!--cluster Other-->
+    <g class="cluster" data-qualified-name="Other" data-source-line="14" id="ent0001">
+      <rect fill="#FFF" height="89" rx="0.5" ry="0.5" style="stroke:#181818;stroke-width:1;" width="189" x="24.769" y="795"/>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="29.925" x="104.306" y="806.333">Other</text>
+    </g>
+    <!--cluster Dynamic-->
+    <g class="cluster" data-qualified-name="Dynamic" data-source-line="20" id="ent0004">
+      <rect fill="#FFF" height="128" rx="0.5" ry="0.5" style="stroke:#181818;stroke-width:1;" width="189" x="24.769" y="651"/>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="46.725" x="95.906" y="662.333">Dynamic</text>
+    </g>
+    <!--cluster Dependency-->
+    <g class="cluster" data-qualified-name="Dependency" data-source-line="27" id="ent0009">
+      <rect fill="#FFF" height="374" rx="0.5" ry="0.5" style="stroke:#181818;stroke-width:1;" width="189" x="24.769" y="261"/>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="67.425" x="85.556" y="272.333">Dependency</text>
+    </g>
+    <!--cluster Structural-->
+    <g class="cluster" data-qualified-name="Structural" data-source-line="38" id="ent0018">
+      <rect fill="#FFF" height="206" rx="0.5" ry="0.5" style="stroke:#181818;stroke-width:1;" width="189" x="24.769" y="39"/>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="51.3" x="93.619" y="50.333">Structural</text>
+    </g>
+    <!--entity i14-->
+    <g class="entity" data-qualified-name="Other.i14" data-source-line="15" id="ent0002">
+      <ellipse cx="49.769" cy="847" fill="#FFF" rx="8" ry="8" style="stroke:none;"/>
+    </g>
+    <!--entity j14-->
+    <g class="entity" data-qualified-name="Other.j14" data-source-line="16" id="ent0003">
+      <ellipse cx="188.769" cy="847" fill="#FFF" rx="8" ry="8" style="stroke:none;"/>
+    </g>
+    <!--entity i10-->
+    <g class="entity" data-qualified-name="Dynamic.i10" data-source-line="21" id="ent0005">
+      <ellipse cx="49.769" cy="702" fill="#FFF" rx="8" ry="8" style="stroke:none;"/>
+    </g>
+    <!--entity j10-->
+    <g class="entity" data-qualified-name="Dynamic.j10" data-source-line="22" id="ent0006">
+      <ellipse cx="188.769" cy="702" fill="#FFF" rx="8" ry="8" style="stroke:none;"/>
+    </g>
+    <!--entity i15-->
+    <g class="entity" data-qualified-name="Dynamic.i15" data-source-line="23" id="ent0007">
+      <ellipse cx="49.769" cy="744" fill="#FFF" rx="8" ry="8" style="stroke:none;"/>
+    </g>
+    <!--entity j15-->
+    <g class="entity" data-qualified-name="Dynamic.j15" data-source-line="24" id="ent0008">
+      <ellipse cx="188.769" cy="744" fill="#FFF" rx="8" ry="8" style="stroke:none;"/>
+    </g>
+    <!--entity i13-->
+    <g class="entity" data-qualified-name="Dependency.i13" data-source-line="28" id="ent0010">
+      <ellipse cx="49.769" cy="313" fill="#FFF" rx="8" ry="8" style="stroke:none;"/>
+    </g>
+    <!--entity j13-->
+    <g class="entity" data-qualified-name="Dependency.j13" data-source-line="29" id="ent0011">
+      <ellipse cx="188.769" cy="313" fill="#FFF" rx="8" ry="8" style="stroke:none;"/>
+    </g>
+    <!--entity i4-->
+    <g class="entity" data-qualified-name="Dependency.i4" data-source-line="30" id="ent0012">
+      <ellipse cx="49.769" cy="411" fill="#FFF" rx="8" ry="8" style="stroke:none;"/>
+    </g>
+    <!--entity j4-->
+    <g class="entity" data-qualified-name="Dependency.j4" data-source-line="31" id="ent0013">
+      <ellipse cx="188.769" cy="411" fill="#FFF" rx="8" ry="8" style="stroke:none;"/>
+    </g>
+    <!--entity i11-->
+    <g class="entity" data-qualified-name="Dependency.i11" data-source-line="32" id="ent0014">
+      <ellipse cx="49.769" cy="508" fill="#FFF" rx="8" ry="8" style="stroke:none;"/>
+    </g>
+    <!--entity j11-->
+    <g class="entity" data-qualified-name="Dependency.j11" data-source-line="33" id="ent0015">
+      <ellipse cx="188.769" cy="508" fill="#FFF" rx="8" ry="8" style="stroke:none;"/>
+    </g>
+    <!--entity i7-->
+    <g class="entity" data-qualified-name="Dependency.i7" data-source-line="34" id="ent0016">
+      <ellipse cx="49.769" cy="574" fill="#FFF" rx="8" ry="8" style="stroke:none;"/>
+    </g>
+    <!--entity j7-->
+    <g class="entity" data-qualified-name="Dependency.j7" data-source-line="35" id="ent0017">
+      <ellipse cx="188.769" cy="574" fill="#FFF" rx="8" ry="8" style="stroke:none;"/>
+    </g>
+    <!--entity i9-->
+    <g class="entity" data-qualified-name="Structural.i9" data-source-line="39" id="ent0019">
+      <ellipse cx="49.769" cy="88" fill="#FFF" rx="8" ry="8" style="stroke:none;"/>
+    </g>
+    <!--entity j9-->
+    <g class="entity" data-qualified-name="Structural.j9" data-source-line="40" id="ent0020">
+      <ellipse cx="188.769" cy="88" fill="#FFF" rx="8" ry="8" style="stroke:none;"/>
+    </g>
+    <!--entity i5-->
+    <g class="entity" data-qualified-name="Structural.i5" data-source-line="41" id="ent0021">
+      <ellipse cx="49.769" cy="130" fill="#FFF" rx="8" ry="8" style="stroke:none;"/>
+    </g>
+    <!--entity j5-->
+    <g class="entity" data-qualified-name="Structural.j5" data-source-line="42" id="ent0022">
+      <ellipse cx="188.769" cy="130" fill="#FFF" rx="8" ry="8" style="stroke:none;"/>
+    </g>
+    <!--entity i6-->
+    <g class="entity" data-qualified-name="Structural.i6" data-source-line="43" id="ent0023">
+      <ellipse cx="49.769" cy="172" fill="#FFF" rx="8" ry="8" style="stroke:none;"/>
+    </g>
+    <!--entity j6-->
+    <g class="entity" data-qualified-name="Structural.j6" data-source-line="44" id="ent0024">
+      <ellipse cx="188.769" cy="172" fill="#FFF" rx="8" ry="8" style="stroke:none;"/>
+    </g>
+    <!--entity i12-->
+    <g class="entity" data-qualified-name="Structural.i12" data-source-line="45" id="ent0025">
+      <ellipse cx="49.769" cy="214" fill="#FFF" rx="8" ry="8" style="stroke:none;"/>
+    </g>
+    <!--entity j12-->
+    <g class="entity" data-qualified-name="Structural.j12" data-source-line="46" id="ent0026">
+      <ellipse cx="188.769" cy="214" fill="#FFF" rx="8" ry="8" style="stroke:none;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0008" data-link-type="dependency" id="lnk27">
+      <polygon fill="#000" points="179.479,747,171.479,744,171.479,750,179.479,747" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M58.928,747 C83.238,747 147.001,747 171.479,747" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="54.075" x="92.269" y="742.333">Triggering</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="extension" id="lnk28">
+      <polygon fill="none" points="179.479,850,161.479,844,161.479,856,179.479,850" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M58.928,850 C83.238,850 137.001,850 161.479,850" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="74.175" x="82.269" y="845.333">Specialization</text>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0011" data-link-type="dependency" id="lnk29">
+      <polygon fill="#000" points="179.479,316,170.479,312,174.479,316,170.479,320,179.479,316" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M58.928,316 C83.238,316 150.001,316 174.479,316" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="40.725" x="99.269" y="311.333">Serving</text>
+    </g>
+    <g class="link" data-entity-1="ent0025" data-entity-2="ent0026" data-link-type="extension" id="lnk30">
+      <polygon fill="none" points="179.479,217,161.479,211,161.479,223,179.479,217" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M58.928,217 C83.238,217 137.001,217 161.479,217" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="59.475" x="89.769" y="212.333">Realization</text>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0015" data-link-type="dependency" id="lnk31">
+      <polygon fill="#000" points="179.479,511,170.479,507,174.479,511,170.479,515,179.479,511" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M58.928,511 C83.238,511 150.001,511 174.479,511" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="48.675" x="95.269" y="506.333">Influence</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0006" data-link-type="dependency" id="lnk32">
+      <polygon fill="#000" points="179.479,705,171.479,702,171.479,708,179.479,705" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M58.928,705 C83.238,705 147.001,705 171.479,705" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="25.425" x="106.769" y="700.333">Flow</text>
+    </g>
+    <g class="link" data-entity-1="ent0019" data-entity-2="ent0020" data-link-type="composition" id="lnk33">
+      <polygon fill="#000" points="58.928,91,64.928,95,70.928,91,64.928,87,58.928,91" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M70.928,91 C95.238,91 155.001,91 179.479,91" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="66.75" x="86.269" y="86.333">Composition</text>
+    </g>
+    <g class="link" data-entity-1="ent0016" data-entity-2="ent0017" id="lnk34">
+      <line style="stroke:#000;stroke-width:1;" x1="179.734" x2="170.651" y1="586.927" y2="590.737"/>
+      <line style="stroke:#000;stroke-width:1;" x1="179.734" x2="174.249" y1="586.927" y2="592.751"/>
+      <path d="M58.804,586.927 C63.462,591.874 69.78,597.353 76.769,600 C112.096,613.383 126.441,613.383 161.769,600 C168.757,597.353 169.591,597.698 174.249,592.751" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" x="119.494" y="583.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="81.45" x="78.769" y="595.333">Association_dir</text>
+    </g>
+    <g class="link" data-entity-1="ent0016" data-entity-2="ent0017" data-link-type="association" id="lnk35">
+      <path d="M58.908,575.022 C64.005,573.887 70.729,572.576 76.769,572 C114.376,568.417 124.161,568.417 161.769,572 C167.809,572.576 174.533,573.887 179.629,575.022" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="61.425" x="88.769" y="564.333">Association</text>
+    </g>
+    <g class="link" data-entity-1="ent0023" data-entity-2="ent0024" data-link-type="dependency" id="lnk36">
+      <ellipse cx="64.928" cy="175" fill="#000" rx="6" ry="6" style="stroke:#000;stroke-width:1.5;"/>
+      <polygon fill="#000" points="179.479,175,171.479,172,171.479,178,179.479,175" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M70.928,175 C95.238,175 147.001,175 171.479,175" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="62.7" x="88.269" y="170.333">Assignment</text>
+    </g>
+    <g class="link" data-entity-1="ent0021" data-entity-2="ent0022" data-link-type="aggregation" id="lnk37">
+      <polygon fill="none" points="58.928,133,64.928,137,70.928,133,64.928,129,58.928,133" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M70.928,133 C95.238,133 155.001,133 179.479,133" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="64.725" x="87.269" y="128.333">Aggregation</text>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0013" data-link-type="dependency" id="lnk38">
+      <polygon fill="#000" points="186.113,426.072,180.504,434.168,185.18,430.984,188.363,435.66,186.113,426.072" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M52.425,426.072 C55.005,439.658 61.399,461.117 76.769,471 C108.545,491.431 129.993,491.431 161.769,471 C177.139,461.117 182.6,444.57 185.18,430.984" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="54.075" x="92.269" y="466.333">Access_w</text>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0013" data-link-type="dependency" id="lnk39">
+      <polygon fill="#000" points="59.195,421.803,63.654,430.584,63.074,424.957,68.701,424.377,59.195,421.803" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#000" points="179.342,421.803,169.836,424.377,175.463,424.957,174.883,430.584,179.342,421.803" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M63.074,424.957 C67.847,428.838 70.271,429.97 76.769,432 C112.828,443.264 125.709,443.264 161.769,432 C168.267,429.97 170.691,428.838 175.463,424.957" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="58.05" x="90.269" y="427.333">Access_rw</text>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0013" data-link-type="dependency" id="lnk40">
+      <polygon fill="#000" points="58.928,414,67.928,418,63.928,414,67.928,410,58.928,414" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M63.928,414 C88.238,414 155.001,414 179.479,414" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="49.35" x="94.769" y="409.333">Access_r</text>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0013" data-link-type="association" id="lnk41">
+      <path d="M59.046,405.345 C63.774,401.037 70.083,396.274 76.769,394 C112.534,381.835 126.003,381.835 161.769,394 C168.454,396.274 174.763,401.037 179.492,405.345" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="38.7" x="100.269" y="379.333">Access</text>
+    </g>
+  </g>
+</svg>

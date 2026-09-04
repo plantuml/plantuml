@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startuml
+skinparam State {
+  AttributeFontColor blue
+  AttributeFontName serif
+  AttributeFontSize  9
+  AttributeFontStyle italic
+  BackgroundColor palegreen
+  BorderColor violet
+  EndColor gold
+  FontColor red
+  FontName Sansserif
+  FontSize 15
+  FontStyle bold
+  StartColor silver
+}
+
+state A : a a a\na
+state B : b b b\nb
+
+[*] -> A  : start
+A -> B : a2b
+B -> [*] : end
+@enduml

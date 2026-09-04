@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="252px" preserveAspectRatio="none" style="width:247px;height:252px;background:#FFFFFF;" version="1.1" viewBox="0 0 247 252" width="247px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="101.238" x="69.631" y="20.889">Minimal example</text>
+    </g>
+    <rect fill="#FFF" height="44" style="stroke:#000;stroke-width:1.5;" width="50.8" x="41.5" y="47"/>
+    <text fill="#000" font-size="12" textLength="46.8" x="43.5" y="64.333">Biddable</text>
+    <rect fill="none" height="16" style="stroke:#000;stroke-width:1;" width="16" x="76.3" y="75"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="79.3" y="88">B</text>
+    <rect fill="#FFF" height="44" style="stroke:#000;stroke-width:1.5;" width="41.425" x="110.5" y="47"/>
+    <text fill="#000" font-size="12" textLength="37.425" x="112.5" y="64.333">Causal</text>
+    <rect fill="none" height="16" style="stroke:#000;stroke-width:1;" width="16" x="135.925" y="75"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="138.925" y="88">C</text>
+    <rect fill="#FFF" height="28" style="stroke:#000;stroke-width:1.5;" width="59.775" x="170" y="55"/>
+    <rect fill="#FFF" height="28" style="stroke:#000;stroke-width:1.5;" width="4" x="170" y="55"/>
+    <text fill="#000" font-size="12" textLength="50.775" x="178.5" y="72.333">Designed</text>
+    <rect fill="#FFF" height="44" style="stroke:#000;stroke-width:1.5;" width="41.425" x="46.5" y="127"/>
+    <text fill="#000" font-size="12" textLength="37.425" x="48.5" y="144.333">Lexical</text>
+    <rect fill="none" height="16" style="stroke:#000;stroke-width:1;" width="16" x="71.925" y="155"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="74.925" y="168">X</text>
+    <rect fill="#FFF" height="28" style="stroke:#000;stroke-width:1.5;" width="59.375" x="105.5" y="135"/>
+    <rect fill="#FFF" height="28" style="stroke:#000;stroke-width:1.5;" width="4" x="109.5" y="135"/>
+    <text fill="#000" font-size="12" textLength="45.375" x="117.5" y="152.333">Machine</text>
+    <rect fill="#FFF" height="44" style="stroke:#000;stroke-width:1.5;" width="48.7" x="182.5" y="127"/>
+    <text fill="#000" font-size="12" textLength="44.7" x="184.5" y="144.333">Problem</text>
+    <rect fill="none" height="16" style="stroke:#000;stroke-width:1;" width="16" x="215.2" y="155"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="218.2" y="168">P</text>
+    <ellipse cx="67.126" cy="221.625" fill="#FFF" rx="61.126" ry="14.625" style="stroke:#000;stroke-width:1.5;stroke-dasharray:7,7;"/>
+    <text fill="#000" font-size="14" textLength="80.15" x="24.051" y="224.32">Requirement</text>
+  </g>
+</svg>

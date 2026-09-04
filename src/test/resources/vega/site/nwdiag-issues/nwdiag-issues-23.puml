@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+nwdiag {
+  network net01 {
+    a01;
+  }
+  a01 -- a02;
+  network net02 {
+    a02;
+  }
+  group group02 {
+    color = pink
+    a02;
+    a01;
+  }
+}
+@enduml

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="194px" preserveAspectRatio="none" style="width:309px;height:194px;background:#FFFFFF;" version="1.1" viewBox="0 0 309 194" width="309px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity User-->
+    <g class="entity" data-qualified-name="User" data-source-line="1" id="ent0001">
+      <ellipse cx="37.363" cy="34.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M37.363,42.5 L37.363,69.5 M24.363,50.5 L50.363,50.5 M37.363,69.5 L24.363,84.5 M37.363,69.5 L50.363,84.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="29.575" x="22.575" y="96.889">User</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="60.725" x="7" y="22.889">«Human»</text>
+    </g>
+    <!--entity MySql-->
+    <g class="entity" data-qualified-name="MySql" data-source-line="2" id="ent0002">
+      <ellipse cx="248.65" cy="34.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M248.65,42.5 L248.65,69.5 M235.65,50.5 L261.65,50.5 M248.65,69.5 L235.65,84.5 M248.65,69.5 L261.65,84.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="90.3" x="203.5" y="96.889">Main Database</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="84.175" x="206.563" y="22.889">«Application»</text>
+    </g>
+    <!--entity Start-->
+    <g class="entity" data-qualified-name="Start" data-source-line="3" id="ent0003">
+      <ellipse cx="136.436" cy="56.171" fill="#F1F1F1" rx="48.936" ry="20.671" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="70.788" x="101.042" y="55.407">«One Shot»</text>
+      <text fill="#000" font-size="14" textLength="29.488" x="121.692" y="69.407">Start</text>
+    </g>
+    <!--entity Use-->
+    <g class="entity" data-qualified-name="Use" data-source-line="4" id="ent0004">
+      <ellipse cx="142.563" cy="156.864" fill="#F1F1F1" rx="74.063" ry="20.864" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="45.938" x="119.595" y="150.459">«Main»</text>
+      <text fill="#000" font-size="14" textLength="111.388" x="86.87" y="164.459">Use the application</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="87.347,56,78.347,52,82.347,56,78.347,60,87.347,56" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M69.211,56 C75.256,56 76.302,56 82.347,56" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="118.335,135.756,114.1,126.864,114.537,132.504,108.897,132.941,118.335,135.756" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M69.447,91.082 C72.472,94.133 75.521,97.146 78.5,100 C91.293,112.257 102.357,122.076 114.537,132.504" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="163.998,135.922,173.305,132.702,167.652,132.509,167.845,126.856,163.998,135.922" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M203.239,99.272 C189.622,111.99 178.962,121.946 167.652,132.509" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

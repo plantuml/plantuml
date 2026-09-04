@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WIRE" height="416px" preserveAspectRatio="none" style="width:451px;height:416px;background:#FFFFFF;" version="1.1" viewBox="0 0 451 416" width="451px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="none" height="70" style="stroke:#000;stroke-width:1;" width="70" x="20" y="30"/>
+    <text fill="#000" font-size="12" textLength="19.275" x="25" y="39.333">first</text>
+    <rect fill="none" height="70" style="stroke:#000;stroke-width:1;" width="90" x="30" y="140"/>
+    <text fill="#000" font-size="12" textLength="58.05" x="35" y="149.333">second box</text>
+    <rect fill="none" height="70" style="stroke:#000;stroke-width:1;" width="70" x="30" y="230"/>
+    <text fill="#000" font-size="12" textLength="23.325" x="35" y="239.333">third</text>
+    <rect fill="none" height="70" style="stroke:#000;stroke-width:1;" width="70" x="110" y="30"/>
+    <text fill="#000" font-size="12" textLength="18.675" x="115" y="39.333">last</text>
+    <rect fill="none" height="370" style="stroke:#000;stroke-width:1;" width="120" x="310" y="25"/>
+    <rect fill="#ADD8E6" height="100" style="stroke:#000;stroke-width:1;" width="100" x="320" y="45"/>
+    <text fill="#000" font-size="12" textLength="23.325" x="325" y="54.333">foo1</text>
+    <rect fill="#AAA" height="100" style="stroke:#000;stroke-width:1;" width="100" x="320" y="165"/>
+    <text fill="#000" font-size="12" textLength="23.325" x="325" y="174.333">foo2</text>
+    <rect fill="none" height="100" style="stroke:#000;stroke-width:1;" width="100" x="320" y="285"/>
+    <text fill="#000" font-size="12" textLength="23.325" x="325" y="294.333">foo3</text>
+    <text fill="#000" font-size="12" textLength="65.4" x="315" y="34.333">big container</text>
+    <text fill="#000" font-size="12" x="15" y="19.333"> </text>
+  </g>
+</svg>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="BPM" height="145px" preserveAspectRatio="none" style="width:538px;height:145px;background:#FFFFFF;" version="1.1" viewBox="0 0 538 145" width="538px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="527.625" y1="10" y2="10"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="527.625" y1="72" y2="72"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="10" y1="10" y2="134"/>
+    <line style="stroke:#000;stroke-width:1;" x1="60" x2="60" y1="10" y2="134"/>
+    <line style="stroke:#000;stroke-width:1;" x1="135.425" x2="135.425" y1="10" y2="134"/>
+    <line style="stroke:#000;stroke-width:1;" x1="189.425" x2="189.425" y1="10" y2="134"/>
+    <line style="stroke:#000;stroke-width:1;" x1="318.175" x2="318.175" y1="10" y2="134"/>
+    <line style="stroke:#000;stroke-width:1;" x1="473.625" x2="473.625" y1="10" y2="134"/>
+    <ellipse cx="35" cy="41" fill="#F1F1F1" rx="10" ry="10" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="45" x2="55" y1="41" y2="41"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="45.425" x="75" y="25"/>
+    <text fill="#000" font-size="12" textLength="25.425" x="85" y="44.333">login</text>
+    <line style="stroke:#F00;stroke-width:1;" x1="120.425" x2="130.425" y1="41" y2="41"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="65" x2="75" y1="41" y2="41"/>
+    <polygon fill="#FEFECE" points="162.425,29,174.425,41,162.425,53,150.425,41,162.425,29" style="stroke:#A80036;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="174.425" x2="184.425" y1="41" y2="41"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="162.425" x2="162.425" y1="53" y2="63"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="140.425" x2="150.425" y1="41" y2="41"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="253.8" x2="263.8" y1="41" y2="41"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="243.8" x2="253.8" y1="41" y2="41"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="125.45" x="333.175" y="25"/>
+    <text fill="#000" font-size="12" textLength="105.45" x="343.175" y="44.333">show new message1</text>
+    <line style="stroke:#F00;stroke-width:1;" x1="458.625" x2="468.625" y1="41" y2="41"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="323.175" x2="333.175" y1="41" y2="41"/>
+    <polygon fill="#FEFECE" points="500.625,29,512.625,41,500.625,53,488.625,41,500.625,29" style="stroke:#A80036;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="478.625" x2="488.625" y1="41" y2="41"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="162.425" x2="162.425" y1="93" y2="103"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="162.425" x2="172.425" y1="103" y2="103"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="98.75" x="204.425" y="87"/>
+    <text fill="#000" font-size="12" textLength="78.75" x="214.425" y="106.333">show new task2</text>
+    <line style="stroke:#F00;stroke-width:1;" x1="194.425" x2="204.425" y1="103" y2="103"/>
+  </g>
+</svg>

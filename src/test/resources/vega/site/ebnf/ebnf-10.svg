@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="EBNF" height="667px" preserveAspectRatio="none" style="width:437px;height:667px;background:#FFFFFF;" version="1.1" viewBox="0 0 437 667" width="437px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="89.337" x="172.906" y="30.889">LISP Grammar</text>
+    </g>
+    <text fill="#000" font-size="14" font-weight="700" textLength="138.425" x="10" y="55.889">grammars_expression</text>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="103.363" x="64" y="69"/>
+    <text fill="#000" font-size="14" textLength="93.363" x="69" y="84.889">atomic_symbol</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="40" x2="64" y1="81" y2="81"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="167.363" x2="396.15" y1="81" y2="81"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="64" x2="64" y1="115" y2="115"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="14.638" x="64" y="103"/>
+    <text fill="#000" font-size="14" x="69" y="118.889">(</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="78.638" x2="98.638" y1="115" y2="115"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="92.513" x="98.638" y="103"/>
+    <text fill="#000" font-size="14" textLength="82.513" x="103.638" y="118.889">s_expression</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="191.15" x2="211.15" y1="115" y2="115"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="13.85" x="211.15" y="103"/>
+    <text fill="#000" font-size="14" x="216.15" y="118.889">.</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="225" x2="245" y1="115" y2="115"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="92.513" x="245" y="103"/>
+    <text fill="#000" font-size="14" textLength="82.513" x="250" y="118.889">s_expression</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="337.513" x2="357.513" y1="115" y2="115"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="14.638" x="357.513" y="103"/>
+    <text fill="#000" font-size="14" x="362.513" y="118.889">)</text>
+    <path d="M52,103 C52,112 55,115 64,115" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="372.15" x2="372.15" y1="115" y2="115"/>
+    <path d="M384.15,103 C384.15,112 381.15,115 372.15,115" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="27.15" x="64" y="137"/>
+    <text fill="#000" font-size="14" textLength="17.15" x="69" y="152.889">list</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="91.15" x2="372.15" y1="149" y2="149"/>
+    <path d="M229.65,149 L229.65,146 L235.65,149 L229.65,152 L229.65,149" fill="#181818"/>
+    <path d="M52,137 C52,146 55,149 64,149" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="52" x2="52" y1="93" y2="137"/>
+    <path d="M40,81 C49,81 52,84 52,93" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M384.15,137 C384.15,146 381.15,149 372.15,149" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="384.15" x2="384.15" y1="93" y2="137"/>
+    <path d="M384.15,93 C384.15,84 387.15,81 396.15,81" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <ellipse cx="14" cy="81" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="426.15" cy="81" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="81" y2="81"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="396.15" x2="422.15" y1="81" y2="81"/>
+    <path d="M407.15,81 L407.15,78 L413.15,81 L407.15,84 L407.15,81" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="17.15" x="10" y="186.889">list</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="40" x2="40" y1="212" y2="212"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="14.638" x="40" y="200"/>
+    <text fill="#000" font-size="14" x="45" y="215.889">(</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="54.638" x2="74.638" y1="212" y2="212"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="92.513" x="74.638" y="200"/>
+    <text fill="#000" font-size="14" textLength="82.513" x="79.638" y="215.889">s_expression</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="167.15" x2="187.15" y1="212" y2="212"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="187.15" x2="357.663" y1="212" y2="212"/>
+    <path d="M253.355,212 L253.355,209 L259.355,212 L253.355,215 L253.355,212" fill="#181818"/>
+    <path d="M187.15,212 C196.15,212 199.15,220 199.15,229 C199.15,238 202.15,246 211.15,246" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M333.663,246 C342.663,246 345.663,238 345.663,229 C345.663,220 348.663,212 357.663,212" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M219.15,238 C219.15,244 221.15,246 227.15,246" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="219.15" x2="219.15" y1="235" y2="238"/>
+    <path d="M219.15,235 C219.15,229 221.15,227 227.15,227" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="226.15" x2="318.663" y1="227" y2="227"/>
+    <path d="M279.658,227 L279.658,224 L273.658,227 L279.658,230 L279.658,227" fill="#181818"/>
+    <path d="M325.663,238 C325.663,244 323.663,246 317.663,246" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="325.663" x2="325.663" y1="235" y2="238"/>
+    <path d="M317.663,227 C323.663,227 325.663,229 325.663,235" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="211.15" x2="226.15" y1="246" y2="246"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="318.663" x2="333.663" y1="246" y2="246"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="92.513" x="226.15" y="234"/>
+    <text fill="#000" font-size="14" textLength="82.513" x="231.15" y="249.889">s_expression</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="357.663" x2="377.663" y1="212" y2="212"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="14.638" x="377.663" y="200"/>
+    <text fill="#000" font-size="14" x="382.663" y="215.889">)</text>
+    <ellipse cx="14" cy="212" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="422.3" cy="212" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="212" y2="212"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="392.3" x2="418.3" y1="212" y2="212"/>
+    <path d="M403.3,212 L403.3,209 L409.3,212 L403.3,215 L403.3,212" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="93.363" x="10" y="283.889">atomic_symbol</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="40" x2="40" y1="309" y2="309"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="41.062" x="40" y="297"/>
+    <text fill="#000" font-size="14" textLength="31.062" x="45" y="312.889">letter</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="81.063" x2="101.063" y1="309" y2="309"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="72.913" x="101.063" y="297"/>
+    <text fill="#000" font-size="14" textLength="62.913" x="106.063" y="312.889">atom_part</text>
+    <ellipse cx="14" cy="309" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="203.975" cy="309" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="309" y2="309"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="173.975" x2="199.975" y1="309" y2="309"/>
+    <path d="M184.975,309 L184.975,306 L190.975,309 L184.975,312 L184.975,309" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="62.913" x="10" y="346.889">atom_part</text>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="48.063" x="64" y="360"/>
+    <text fill="#000" font-size="14" textLength="38.063" x="69" y="375.889">empty</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="40" x2="64" y1="372" y2="372"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="112.063" x2="238.338" y1="372" y2="372"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="64" x2="64" y1="406" y2="406"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="41.062" x="64" y="394"/>
+    <text fill="#000" font-size="14" textLength="31.062" x="69" y="409.889">letter</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="105.063" x2="125.063" y1="406" y2="406"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="72.913" x="125.063" y="394"/>
+    <text fill="#000" font-size="14" textLength="62.913" x="130.063" y="409.889">atom_part</text>
+    <path d="M52,394 C52,403 55,406 64,406" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="197.975" x2="214.338" y1="406" y2="406"/>
+    <path d="M226.338,394 C226.338,403 223.338,406 214.338,406" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="64" x2="64" y1="440" y2="440"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="57.425" x="64" y="428"/>
+    <text fill="#000" font-size="14" textLength="47.425" x="69" y="443.889">number</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="121.425" x2="141.425" y1="440" y2="440"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="72.913" x="141.425" y="428"/>
+    <text fill="#000" font-size="14" textLength="62.913" x="146.425" y="443.889">atom_part</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="214.338" x2="214.338" y1="440" y2="440"/>
+    <path d="M52,428 C52,437 55,440 64,440" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="52" x2="52" y1="384" y2="428"/>
+    <path d="M40,372 C49,372 52,375 52,384" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M226.338,428 C226.338,437 223.338,440 214.338,440" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="226.338" x2="226.338" y1="384" y2="428"/>
+    <path d="M226.338,384 C226.338,375 229.338,372 238.338,372" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <ellipse cx="14" cy="372" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="268.338" cy="372" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="372" y2="372"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="238.337" x2="264.338" y1="372" y2="372"/>
+    <path d="M249.337,372 L249.337,369 L255.337,372 L249.337,375 L249.337,372" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="31.062" x="10" y="477.889">letter</text>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:1;stroke-dasharray:5,5;" width="29.425" x="40" y="491"/>
+    <text fill="#000" font-size="14" textLength="19.425" x="45" y="506.889">a-z</text>
+    <ellipse cx="14" cy="503" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="99.425" cy="503" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="503" y2="503"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="69.425" x2="95.425" y1="503" y2="503"/>
+    <path d="M80.425,503 L80.425,500 L86.425,503 L80.425,506 L80.425,503" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="47.425" x="10" y="540.889">number</text>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:1;stroke-dasharray:5,5;" width="30.213" x="40" y="554"/>
+    <text fill="#000" font-size="14" textLength="20.213" x="45" y="569.889">1-9</text>
+    <ellipse cx="14" cy="566" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="100.213" cy="566" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="566" y2="566"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="70.213" x2="96.213" y1="566" y2="566"/>
+    <path d="M81.213,566 L81.213,563 L87.213,566 L81.213,569 L81.213,566" fill="#181818"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="38.063" x="10" y="603.889">empty</text>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="10" x="40" y="617"/>
+    <text fill="#000" font-size="14" x="45" y="632.889"> </text>
+    <ellipse cx="14" cy="629" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="80" cy="629" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="629" y2="629"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="50" x2="76" y1="629" y2="629"/>
+    <path d="M61,629 L61,626 L67,629 L61,632 L61,629" fill="#181818"/>
+  </g>
+</svg>

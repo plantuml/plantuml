@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="160px" preserveAspectRatio="none" style="width:260px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 260 160" width="260px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>..primary..</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="63.75" y="57"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="67.25" x2="67.25" y1="57" y2="102"/>
+    </g>
+    <g>
+      <title>..secondary..</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="188.575" y="57"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="192.075" x2="192.075" y1="57" y2="102"/>
+    </g>
+    <rect fill="#FFE6E6" height="46" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="114.5" x="10" y="10"/>
+    <text fill="#8B0000" font-size="16" font-weight="700" textLength="71.1" x="31.7" y="29.444">«primary»</text>
+    <text fill="#8B0000" font-size="16" font-weight="700" textLength="100.5" x="17" y="45.444">Alice (Primary)</text>
+    <rect fill="#F0F0F0" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="115.15" x="134.5" y="14"/>
+    <text fill="#808080" font-size="14" font-style="italic" textLength="80.15" x="152" y="31.889">«secondary»</text>
+    <text fill="#808080" font-size="14" font-style="italic" textLength="101.15" x="141.5" y="45.889">Bob (Secondary)</text>
+    <rect fill="#FFE6E6" height="46" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="114.5" x="10" y="102"/>
+    <text fill="#8B0000" font-size="16" font-weight="700" textLength="71.1" x="31.7" y="121.444">«primary»</text>
+    <text fill="#8B0000" font-size="16" font-weight="700" textLength="100.5" x="17" y="137.444">Alice (Primary)</text>
+    <rect fill="#F0F0F0" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="115.15" x="134.5" y="102"/>
+    <text fill="#808080" font-size="14" font-style="italic" textLength="80.15" x="152" y="119.889">«secondary»</text>
+    <text fill="#808080" font-size="14" font-style="italic" textLength="101.15" x="141.5" y="133.889">Bob (Secondary)</text>
+    <polygon fill="#F60" points="180.075,80,190.075,84,180.075,88,184.075,84" style="stroke:#F60;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#F60;stroke-width:1;" x1="67.25" x2="186.075" y1="84" y2="84"/>
+    <text fill="#00F" font-size="13" textLength="52.731" x="74.25" y="79.111">Message</text>
+  </g>
+</svg>

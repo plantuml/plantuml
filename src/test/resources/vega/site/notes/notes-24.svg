@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="52px" preserveAspectRatio="none" style="width:229px;height:52px;background:#FFFFFF;" version="1.1" viewBox="0 0 229 52" width="229px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity a-->
+    <g class="entity" data-qualified-name="a" data-source-line="8" id="ent0001">
+      <ellipse cx="107.077" cy="22.662" fill="#F1F1F1" rx="12.577" ry="10.662" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="103.184" y="26.162">a</text>
+    </g>
+    <!--entity b-->
+    <g class="entity" data-qualified-name="b" data-source-line="9" id="ent0002">
+      <ellipse cx="201.077" cy="22.662" fill="#F1F1F1" rx="12.577" ry="10.662" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="197.184" y="26.162">b</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN4" data-source-line="13" id="ent0005">
+      <path d="M6,12 L6,35 A0,0 0 0 0 6,35 L76.156,35 A0,0 0 0 0 76.156,35 L76.156,30 L94.432,24 L76.156,22 L76.156,22 L66.156,12 L6,12 A0,0 0 0 0 6,12" fill="#008000" style="stroke:#F00;stroke-width:2;"/>
+      <path d="M66.156,12 L66.156,22 L76.156,22 L66.156,12" fill="#008000" style="stroke:#F00;stroke-width:2;"/>
+      <text fill="#000" font-size="13" textLength="49.156" x="12" y="27.111">Link note</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="188.223,24,179.223,20,183.223,24,179.223,28,188.223,24" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M119.677,24 C137.618,24 165.229,24 183.223,24" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" font-style="italic" textLength="47.125" x="130.5" y="16.111">link label</text>
+    </g>
+  </g>
+</svg>

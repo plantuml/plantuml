@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="129px" preserveAspectRatio="none" style="width:315px;height:129px;background:#FFFFFF;" version="1.1" viewBox="0 0 315 129" width="315px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster h_KO-->
+    <g class="cluster" data-qualified-name="h_KO" data-source-line="11" id="ent0003">
+      <path d="M219.5,54.5 L229.5,4 L289.5,4 L299.5,54.5 L289.5,105 L229.5,105 L219.5,54.5" fill="#98FB98" style="stroke:#F00;stroke-width:2;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="35.788" x="241.606" y="16.889">h_KO</text>
+    </g>
+    <!--entity hexagon-->
+    <g class="entity" data-qualified-name="hexagon" data-source-line="8" id="ent0001">
+      <text fill="#000" font-size="14" textLength="53.725" x="32.863" y="70.889">hexagon</text>
+    </g>
+    <!--entity h_OK-->
+    <g class="entity" data-qualified-name="h_OK" data-source-line="9" id="ent0002">
+      <text fill="#000" font-size="14" textLength="35.788" x="149.394" y="70.889">h_OK</text>
+    </g>
+    <!--entity n-->
+    <g class="entity" data-qualified-name="h_KO.n" data-source-line="12" id="ent0004">
+      <polygon fill="#F1F1F1" points="235.5,55,245.5,45,283.288,45,283.288,79,273.288,89,235.5,89,235.5,55" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="273.288" x2="283.288" y1="55" y2="45"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="235.5" x2="273.288" y1="55" y2="55"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="273.288" x2="273.288" y1="55" y2="89"/>
+      <text fill="#000" font-size="14" x="250.5" y="75.889">n</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHEN_EER" height="299px" preserveAspectRatio="none" style="width:614px;height:299px;background:#FFFFFF;" version="1.1" viewBox="0 0 614 299" width="614px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="80.637" x="236.5" y="249"/>
+      <text fill="#000" font-size="14" textLength="60.637" x="246.5" y="269.889">Customer</text>
+    </g>
+    <g>
+      <ellipse cx="226.061" cy="196.112" fill="#F1F1F1" rx="66.061" ry="15.612" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="104.913" x="173.604" y="197.389">customer number</text>
+    </g>
+    <g>
+      <ellipse cx="415.782" cy="195.856" fill="#F1F1F1" rx="59.782" ry="14.356" style="stroke:#181818;stroke-width:0.5;stroke-dasharray:10,10;"/>
+      <text fill="#000" font-size="14" textLength="89.425" x="371.07" y="198.389">member bonus</text>
+    </g>
+    <g>
+      <ellipse cx="74.039" cy="196.008" fill="#F1F1F1" rx="68.039" ry="16.008" style="stroke:#181818;stroke-width:0.5;"/>
+      <ellipse cx="74.039" cy="196.008" fill="#F1F1F1" rx="65.039" ry="13.008" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="109.638" x="19.22" y="196.889">first and last names</text>
+    </g>
+    <g>
+      <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="57.363" x="541.5" y="249"/>
+      <text fill="#000" font-size="14" textLength="37.363" x="551.5" y="269.889">Movie</text>
+    </g>
+    <g>
+      <ellipse cx="532.762" cy="195.899" fill="#F1F1F1" rx="38.762" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="50.575" x="507.474" y="199.889">barcode</text>
+    </g>
+    <g>
+      <polygon fill="#F1F1F1" points="400,108.962,467.924,75,535.848,108.962,467.924,142.924" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#000" font-size="14" textLength="85.488" x="425.18" y="112.851">was-rented-to</text>
+    </g>
+    <g>
+      <ellipse cx="467.77" cy="24.899" fill="#F1F1F1" rx="50.27" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="66.85" x="434.345" y="28.889">date rented</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="association" id="lnk3">
+      <path d="M237.066,211.755 C245.269,222.692 256.443,237.591 264.885,248.847" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0001" data-link-type="association" id="lnk5">
+      <path d="M388.205,210.597 C365.626,221.643 333.727,237.249 309.88,248.915" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0001" data-link-type="association" id="lnk7">
+      <path d="M118.801,212.007 C153.945,223.78 202.444,240.025 236.448,251.416" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0008" data-link-type="association" id="lnk10">
+      <path d="M539.615,209.157 C545.601,220.159 554.467,236.453 561.079,248.604" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0011" data-link-type="association" id="lnk13">
+      <path d="M468,38.099 C468,47.811 468,61.925 468,74.932" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0001" data-link-type="association" id="lnk14">
+      <path d="M399.856,138.821 C378.375,149.818 355.458,163.698 337,180 C314.255,200.088 295.523,230.417 285.332,248.894" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" x="339" y="199.056">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0008" data-link-type="association" id="lnk15">
+      <path d="M536.175,137.239 C553.929,147.815 570.895,161.854 581,180 C593.017,201.58 584.824,230.914 577.579,248.872" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" x="589" y="199.056">N</text>
+    </g>
+  </g>
+</svg>

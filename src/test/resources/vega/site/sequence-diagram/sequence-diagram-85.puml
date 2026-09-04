@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+!pragma teoz true
+A ->(50) C: Starts\nwhen 'B' sends
+& B ->(25) C: \nBut B's message\n arrives before A's
+@enduml

@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+!theme spacelab
+a -> b
+b -> c
+@enduml

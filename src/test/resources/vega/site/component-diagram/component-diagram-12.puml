@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+left to right direction
+[Component] -left-> left
+[Component] -right-> right
+[Component] -up-> up
+[Component] -down-> down
+@enduml

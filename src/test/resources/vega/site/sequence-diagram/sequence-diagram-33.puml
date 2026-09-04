@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+Alice->Bob:m1
+Bob->Charlie:m2
+note over Alice, Charlie: Old method for note over all part. with:\n ""note over //FirstPart, LastPart//"".
+note across: New method with:\n""note across""
+Bob->Alice
+hnote across:Note across all part.
+@enduml

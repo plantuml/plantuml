@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+start
+:SDL Shape;
+:input; <<input>>
+:output; <<output>>
+:procedure; <<procedure>>
+:load; <<load>>
+:save; <<save>>
+:continuous; <<continuous>>
+:task; <<task>>
+end
+@enduml

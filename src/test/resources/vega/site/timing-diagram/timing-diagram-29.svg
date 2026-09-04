@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="TIMING" height="160px" preserveAspectRatio="none" style="width:516px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 516 160" width="516px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="20" y1="20" y2="128"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="495.4" x2="495.4" y1="20" y2="128"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="90.4" x2="90.4" y1="20" y2="128"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="140.4" x2="140.4" y1="20" y2="128"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="190.4" x2="190.4" y1="20" y2="128"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="240.4" x2="240.4" y1="20" y2="128"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="290.4" x2="290.4" y1="20" y2="128"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="340.4" x2="340.4" y1="20" y2="128"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="390.4" x2="390.4" y1="20" y2="128"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="440.4" x2="440.4" y1="20" y2="128"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="490.4" x2="490.4" y1="20" y2="128"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="495.4" y1="20" y2="20"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="17.938" x="25" y="30.889">LR</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="43.938" y1="35" y2="35"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="43.938" x2="53.938" y1="35" y2="20"/>
+    <polygon fill="#98FB98" points="25,40,78.4,40,90.4,52,78.4,64,25,64" style="stroke:#98FB98;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M25,40 L78.4,40 L90.4,52 L78.4,64 L25,64" fill="#98FB98" style="stroke:#006400;stroke-width:1.5;"/>
+    <text fill="#333" font-size="12" font-weight="700" textLength="41.4" x="37" y="55.333">AtPlace</text>
+    <polygon fill="#E2E2F0" points="102.4,40,178.4,40,190.4,52,178.4,64,102.4,64,90.4,52" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#FFC0CB" points="202.4,40,428.4,40,440.4,52,428.4,64,202.4,64,190.4,52" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="452.4,40,490.4,40,490.4,64,452.4,64,440.4,52" style="stroke:#E2E2F0;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M490.4,40 L452.4,40 L440.4,52 L452.4,64 L490.4,64" fill="#E2E2F0" style="stroke:#006400;stroke-width:1.5;"/>
+    <text fill="#333" font-size="12" font-weight="700" textLength="48.75" x="116.025" y="55.333">Lowering</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="46.05" x="292.375" y="55.333">Lowered</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="53.475" x="452.4" y="55.333">Releasing</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="495.4" y1="74" y2="74"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="17.938" x="25" y="84.889">ST</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="43.938" y1="89" y2="89"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="43.938" x2="53.938" y1="89" y2="74"/>
+    <polygon fill="#808080" points="28.375,94,278.4,94,290.4,106,278.4,118,28.375,118" style="stroke:#808080;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M28.375,94 L278.4,94 L290.4,106 L278.4,118 L28.375,118" fill="#808080" style="stroke:#006400;stroke-width:1.5;"/>
+    <text fill="#333" font-size="12" font-weight="700" textLength="38.025" x="40.375" y="109.333">AtLoad</text>
+    <polygon fill="#E2E2F0" points="302.4,94,490.4,94,490.4,118,302.4,118,290.4,106" style="stroke:#E2E2F0;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M490.4,94 L302.4,94 L290.4,106 L302.4,118 L490.4,118" fill="#E2E2F0" style="stroke:#006400;stroke-width:1.5;"/>
+    <text fill="#333" font-size="12" font-weight="700" textLength="38.7" x="302.4" y="109.333">Moving</text>
+    <line style="stroke:#333;stroke-width:2;" x1="90.4" x2="90.4" y1="128" y2="133"/>
+    <line style="stroke:#333;stroke-width:2;" x1="140.4" x2="140.4" y1="128" y2="133"/>
+    <line style="stroke:#333;stroke-width:2;" x1="190.4" x2="190.4" y1="128" y2="133"/>
+    <line style="stroke:#333;stroke-width:2;" x1="240.4" x2="240.4" y1="128" y2="133"/>
+    <line style="stroke:#333;stroke-width:2;" x1="290.4" x2="290.4" y1="128" y2="133"/>
+    <line style="stroke:#333;stroke-width:2;" x1="340.4" x2="340.4" y1="128" y2="133"/>
+    <line style="stroke:#333;stroke-width:2;" x1="390.4" x2="390.4" y1="128" y2="133"/>
+    <line style="stroke:#333;stroke-width:2;" x1="440.4" x2="440.4" y1="128" y2="133"/>
+    <line style="stroke:#333;stroke-width:2;" x1="490.4" x2="490.4" y1="128" y2="133"/>
+    <line style="stroke:#333;stroke-width:2;" x1="90.4" x2="490.4" y1="128" y2="128"/>
+    <text fill="#333" font-size="11" x="87.341" y="142.556">0</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="181.222" y="142.556">100</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="281.222" y="142.556">200</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="431.222" y="142.556">350</text>
+  </g>
+</svg>

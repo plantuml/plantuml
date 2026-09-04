@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startfiles
+/**creole_test**/~~wave~~
+/**creole_test**/**bold**
+/**creole_test**/""monospaced""
+/**creole_test**/--stricken-out--
+/**creole_test**/__not underlined__
+/**creole_test**/~__not underlined__
+/**creole_test**/~~wave-underlined~~
+/**creole_test**///not italics :-)//
+
+/**creole_html_test**/<b>bold
+/**creole_html_test**/<i>italics
+/**creole_html_test**/<font:monospaced>monospaced
+/**creole_html_test**/<s>stroked
+/**creole_html_test**/<u>underlined
+/**creole_html_test**/<w>waved
+/**creole_html_test**/<s:green>stroked
+/**creole_html_test**/<u:red>underlined
+/**creole_html_test**/<w:#0000FF>waved
+/**creole_html_test**/<color:blue>Blue
+/**creole_html_test**/<back:orange>Orange background
+/**creole_html_test**/<size:20>big
+@endfiles

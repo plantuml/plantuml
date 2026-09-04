@@ -1,0 +1,34 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+left to right direction
+class a
+class b
+package A {
+  class a1
+  class a2
+  class a3
+  class a4
+  class a5
+  package sub_a {
+   class sa1
+   class sa2
+   class sa3
+  }
+}
+
+package B {
+  class b1
+  class b2
+  class b3
+  class b4
+  class b5
+  package sub_b {
+   class sb1
+   class sb2
+   class sb3
+  }
+}
+@enduml

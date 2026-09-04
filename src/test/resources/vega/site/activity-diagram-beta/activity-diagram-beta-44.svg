@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="229px" preserveAspectRatio="none" style="width:124px;height:229px;background:#FFFFFF;" version="1.1" viewBox="0 0 124 229" width="124px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <ellipse cx="60.013" cy="25" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="88.025" x="16" y="55"/>
+    <text fill="#000" font-size="12" textLength="68.025" x="26" y="74.333">Some activity</text>
+    <ellipse cx="60.013" cy="117" fill="#F1F1F1" rx="10" ry="10" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="55.013" y="122">A</text>
+    <ellipse cx="60.013" cy="147" fill="#F1F1F1" rx="10" ry="10" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="55.013" y="152">A</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="86.6" x="16.713" y="177"/>
+    <text fill="#000" font-size="12" textLength="66.6" x="26.713" y="196.333">Other activity</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="60.013" x2="60.013" y1="35" y2="55"/>
+    <polygon fill="#181818" points="56.013,45,60.013,55,64.013,45,60.013,49" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="60.013" x2="60.013" y1="87" y2="107"/>
+    <polygon fill="#181818" points="56.013,97,60.013,107,64.013,97,60.013,101" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="60.013" x2="60.013" y1="157" y2="177"/>
+    <polygon fill="#181818" points="56.013,167,60.013,177,64.013,167,60.013,171" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

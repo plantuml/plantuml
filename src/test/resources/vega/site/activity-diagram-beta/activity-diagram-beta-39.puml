@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+
+start
+:starting progress;
+:reading configuration files
+These files should be edited at this point!; <<#HotPink>>
+:ending of the process; <<#AAAAAA>>
+
+@enduml

@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startgantt
+<style>
+ganttDiagram {
+	arrow {
+		LineColor blue
+	}
+}
+</style>
+[Prototype design] requires 7 days
+[Build prototype] requires 4 days
+[Prepare test] requires 6 days
+[Prototype design] -[#FF00FF]-> [Build prototype]
+[Prototype design] -[dotted]-> [Prepare test]
+Then [Run test]  requires 4 days
+@endgantt

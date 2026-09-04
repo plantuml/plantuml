@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+xearth(300,300)
+viewPositionType = Moon
+daySideBrightness = 100
+nightSideBrightness = 30
+terminatorDiscontinuity = 50
+@enduml

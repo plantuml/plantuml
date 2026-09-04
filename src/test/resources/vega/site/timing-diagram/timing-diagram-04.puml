@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+robust "Web Browser" as WB
+concise "Web User" as WU
+rectangle "Rect. Web User" as RWU
+
+@0
+WU is Idle
+RWU is Idle
+WB is Idle
+
+
+@100
+WU -> WB : URL
+WU is Waiting
+RWU is Waiting
+WB is Processing
+
+@300
+WB is Waiting
+@enduml

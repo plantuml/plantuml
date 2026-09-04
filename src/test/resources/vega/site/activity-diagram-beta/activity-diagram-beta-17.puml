@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+
+start
+
+repeat :foo as starting label;
+  :read data;
+  :generate diagrams;
+backward:This is backward;
+repeat while (more data?) is (yes)
+->no;
+
+stop
+
+@enduml

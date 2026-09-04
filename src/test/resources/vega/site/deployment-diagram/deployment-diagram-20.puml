@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+node Foo1 {
+ cloud Foo2
+}
+
+cloud Foo3 {
+  frame Foo4
+}
+
+database Foo5  {
+  storage Foo6
+}
+
+storage Foo7 {
+  storage Foo8
+}
+@enduml

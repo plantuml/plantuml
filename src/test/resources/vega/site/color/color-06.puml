@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+skinparam minClassWidth 125
+skinparam nodesep 10
+skinparam ranksep 10
+
+rectangle Application    #Application
+rectangle Business       #Business
+rectangle Implementation #Implementation
+rectangle Motivation     #Motivation
+rectangle Physical       #Physical
+rectangle Strategy       #Strategy
+rectangle Technology     #Technology
+@enduml

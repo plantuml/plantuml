@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="174px" preserveAspectRatio="none" style="width:328px;height:174px;background:#FFFFFF;" version="1.1" viewBox="0 0 328 174" width="328px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity User-->
+    <g class="entity" data-qualified-name="User" data-source-line="2" id="ent0001">
+      <ellipse cx="75" cy="28.5" fill="#F1F1F1" rx="16" ry="16" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M75,48.5 C79,48.5 82,48.5 86,44.5 C94,44.5 102,52.5 102,60.5 L102,64.5 C102,68.5 98,72.5 94,72.5 L56,72.5 C52,72.5 48,68.5 48,64.5 L48,60.5 C48,52.5 56,44.5 64,44.5 C68,48.5 71,48.5 75,48.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="29.575" x="60.213" y="83.889">User</text>
+    </g>
+    <!--entity Use-->
+    <g class="entity" data-qualified-name="Use" data-source-line="2" id="ent0002">
+      <ellipse cx="74.778" cy="140.656" fill="#F1F1F1" rx="68.778" ry="16.156" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="111.388" x="19.085" y="144.156">Use the application</text>
+    </g>
+    <!--entity Admin-->
+    <g class="entity" data-qualified-name="Admin" data-source-line="3" id="ent0004">
+      <ellipse cx="237.044" cy="28.5" fill="#F1F1F1" rx="16" ry="16" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M237.044,48.5 C241.044,48.5 244.044,48.5 248.044,44.5 C256.044,44.5 264.044,52.5 264.044,60.5 L264.044,64.5 C264.044,68.5 260.044,72.5 256.044,72.5 L218.044,72.5 C214.044,72.5 210.044,68.5 210.044,64.5 L210.044,60.5 C210.044,52.5 218.044,44.5 226.044,44.5 C230.044,48.5 233.044,48.5 237.044,48.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="70.088" x="202" y="83.889">Main Admin</text>
+    </g>
+    <!--entity Admin the application-->
+    <g class="entity" data-qualified-name="Admin the application" data-source-line="5" id="ent0005">
+      <ellipse cx="237.146" cy="140.429" fill="#F1F1F1" rx="75.146" ry="17.429" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="126.175" x="174.058" y="143.929">Admin the application</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="75,124.39,79,115.39,75,119.39,71,115.39,75,124.39" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M75,87.214 C75,100.238 75,109.18 75,119.39" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="237,122.55,241,113.55,237,117.55,233,113.55,237,122.55" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M237,87.214 C237,99.472 237,107.543 237,117.55" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

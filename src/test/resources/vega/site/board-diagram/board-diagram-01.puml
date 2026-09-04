@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startboard
+A1
++U1.1
+++S1 R1
+++S1 R2
++U1.2
+A2
+@endboard

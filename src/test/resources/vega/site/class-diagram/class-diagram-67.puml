@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+abstract   abstract
+annotation annotation #pink;line:red;line.bold;text:red
+class      class      #palegreen;line:green;line.dashed;text:green
+interface  interface  #aliceblue;line:blue;line.dotted;text:blue
+@enduml

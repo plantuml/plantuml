@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+skinparam actorStyle Hollow
+actor Alice
+actor Bob
+Alice -> Bob : hello
+hide footbox
+@enduml

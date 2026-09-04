@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="265px" preserveAspectRatio="none" style="width:104px;height:265px;background:#FFFFFF;" version="1.1" viewBox="0 0 104 265" width="104px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster frame-->
+    <g class="cluster" data-qualified-name="frame" data-source-line="1" id="ent0001">
+      <rect fill="none" height="107" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="82" x="14" y="12"/>
+      <path d="M59.7,12 L59.7,19 L49.7,29 L14,29" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="35.7" x="17" y="23.889">frame</text>
+    </g>
+    <g class="entity" data-qualified-name="b" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="30" y="139"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="30" x2="80" y1="163" y2="163"/>
+      <text fill="#000" font-size="14" x="51.106" y="154.889">b</text>
+    </g>
+    <g class="end_entity" data-qualified-name=".end." data-source-line="6" id="ent0005">
+      <ellipse cx="55" cy="236" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+      <ellipse cx="55" cy="236" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="frame.a" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="30" y="53"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="30" x2="80" y1="77" y2="77"/>
+      <text fill="#000" font-size="14" x="51.106" y="68.889">a</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="55,138.758,59,129.758,55,133.758,51,129.758,55,138.758" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M55,103.296 C55,114.441 55,122.621 55,133.758" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="55,224.72,59,215.72,55,219.72,51,215.72,55,224.72" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M55,189.037 C55,201.106 55,210.155 55,219.72" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

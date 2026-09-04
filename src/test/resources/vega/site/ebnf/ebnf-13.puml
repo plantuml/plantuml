@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startebnf
+Identifier = ?IdentifierChars but not a ReservedKeyword or BooleanLiteral or NullLiteral?;
+IdentifierChars = JavaLetter, {JavaLetterOrDigit};
+JavaLetter = ? any Unicode character that is a "Java letter" ?;
+JavaLetterOrDigit = ? any Unicode character that is a "Java letter-or-digit" ?;
+TypeIdentifier = ? Identifier but not permits, record, sealed, var, or yield ?;
+UnqualifiedMethodIdentifier = ? Identifier but not yield ?;
+Literal = IntegerLiteral | FloatingPointLiteral | BooleanLiteral | CharacterLiteral | StringLiteral | TextBlock | NullLiteral;
+@endebnf

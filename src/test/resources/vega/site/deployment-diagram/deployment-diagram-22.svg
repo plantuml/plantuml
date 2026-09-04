@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="1002px" preserveAspectRatio="none" style="width:610px;height:1002px;background:#FFFFFF;" version="1.1" viewBox="0 0 610 1002" width="610px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster storage-->
+    <g class="cluster" data-qualified-name="storage" data-source-line="1" id="ent0001">
+      <rect fill="none" height="974" rx="35" ry="35" style="stroke:#181818;stroke-width:1;" width="588" x="14" y="4"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="46.637" x="284.681" y="21.889">storage</text>
+    </g>
+    <!--cluster stack-->
+    <g class="cluster" data-qualified-name="storage.stack" data-source-line="2" id="ent0002">
+      <rect fill="none" height="917" rx="2.5" ry="2.5" style="stroke:none;" width="526" x="45" y="45"/>
+      <path d="M30,45 L42.5,45 A2.5,2.5 0 0 1 45,47.5 L45,959.5 A2.5,2.5 0 0 0 47.5,962 L568.5,962 A2.5,2.5 0 0 0 571,959.5 L571,47.5 A2.5,2.5 0 0 1 573.5,45 L586,45" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="32.637" x="291.681" y="68.889">stack</text>
+    </g>
+    <!--cluster rectangle-->
+    <g class="cluster" data-qualified-name="storage.stack.rectangle" data-source-line="3" id="ent0003">
+      <rect fill="none" height="860" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="524" x="46" y="86"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="57.575" x="279.213" y="98.889">rectangle</text>
+    </g>
+    <!--cluster queue-->
+    <g class="cluster" data-qualified-name="storage.stack.rectangle.queue" data-source-line="4" id="ent0004">
+      <path d="M67,127 L549,127 C554,127 554,528.5 554,528.5 C554,528.5 554,930 549,930 L67,930 C62,930 62,528.5 62,528.5 C62,528.5 62,127 67,127" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M549,127 C544,127 544,528.5 544,528.5 C544,930 549,930 549,930" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="38.938" x="288.531" y="139.889">queue</text>
+    </g>
+    <!--cluster process-->
+    <g class="cluster" data-qualified-name="storage.stack.rectangle.queue.process" data-source-line="5" id="ent0005">
+      <polygon fill="none" points="78,168,528,168,538,541,528,914,78,914,88,541" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="49" x="283.5" y="180.889">process</text>
+    </g>
+    <!--cluster package-->
+    <g class="cluster" data-qualified-name="storage.stack.rectangle.queue.process.package" data-source-line="6" id="ent0006">
+      <path d="M96.5,209 L150.438,209 A3.75,3.75 0 0 1 152.938,211.5 L159.938,229 L519.5,229 A2.5,2.5 0 0 1 522,231.5 L522,895.5 A2.5,2.5 0 0 1 519.5,898 L96.5,898 A2.5,2.5 0 0 1 94,895.5 L94,211.5 A2.5,2.5 0 0 1 96.5,209" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="94" x2="159.938" y1="229" y2="229"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="52.937" x="98" y="221.889">package</text>
+    </g>
+    <!--cluster node-->
+    <g class="cluster" data-qualified-name="storage.stack.rectangle.queue.process.package.node" data-source-line="7" id="ent0007">
+      <polygon fill="none" points="110,260,120,250,506,250,506,872,496,882,110,882,110,260" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="496" x2="506" y1="260" y2="250"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="110" x2="496" y1="260" y2="260"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="496" x2="496" y1="260" y2="882"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="31.15" x="288.425" y="273.889">node</text>
+    </g>
+    <!--cluster hexagon-->
+    <g class="cluster" data-qualified-name="storage.stack.rectangle.queue.process.package.node.hexagon" data-source-line="8" id="ent0008">
+      <path d="M130,581 L174.5,300 L441.5,300 L486,581 L441.5,862 L174.5,862 L130,581" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="53.725" x="281.138" y="312.889">hexagon</text>
+    </g>
+    <!--cluster frame-->
+    <g class="cluster" data-qualified-name="storage.stack.rectangle.queue.process.package.node.hexagon.frame" data-source-line="9" id="ent0009">
+      <rect fill="none" height="505" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="324" x="146" y="341"/>
+      <path d="M191.7,341 L191.7,348 L181.7,358 L146,358" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="35.7" x="149" y="352.889">frame</text>
+    </g>
+    <!--cluster folder-->
+    <g class="cluster" data-qualified-name="storage.stack.rectangle.queue.process.package.node.hexagon.frame.folder" data-source-line="10" id="ent0010">
+      <path d="M164.5,382 L200.5,382 A3.75,3.75 0 0 1 203,384.5 L210,402 L451.5,402 A2.5,2.5 0 0 1 454,404.5 L454,827.5 A2.5,2.5 0 0 1 451.5,830 L164.5,830 A2.5,2.5 0 0 1 162,827.5 L162,384.5 A2.5,2.5 0 0 1 164.5,382" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="162" x2="210" y1="402" y2="402"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="35" x="166" y="394.889">folder</text>
+    </g>
+    <!--cluster file-->
+    <g class="cluster" data-qualified-name="storage.stack.rectangle.queue.process.package.node.hexagon.frame.folder.file" data-source-line="11" id="ent0011">
+      <path d="M178,425.5 L178,811.5 A2.5,2.5 0 0 0 180.5,814 L435.5,814 A2.5,2.5 0 0 0 438,811.5 L438,433 L428,423 L180.5,423 A2.5,2.5 0 0 0 178,425.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M428,423 L428,430.5 A2.5,2.5 0 0 0 430.5,433 L438,433" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.938" x="299.031" y="435.889">file</text>
+    </g>
+    <!--cluster database-->
+    <g class="cluster" data-qualified-name="storage.stack.rectangle.queue.process.package.node.hexagon.frame.folder.file.database" data-source-line="12" id="ent0012">
+      <path d="M194,474 C194,464 308,464 308,464 C308,464 422,464 422,474 L422,788 C422,798 308,798 308,798 C308,798 194,798 194,788 L194,474" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M194,474 C194,484 308,484 308,484 C308,484 422,484 422,474" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="57.575" x="279.213" y="496.889">database</text>
+    </g>
+    <!--cluster component-->
+    <g class="cluster" data-qualified-name="storage.stack.rectangle.queue.process.package.node.hexagon.frame.folder.file.database.component" data-source-line="13" id="ent0013">
+      <rect fill="none" height="262" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="196" x="210" y="520"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="386" y="525"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="384" y="527"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="384" y="531"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="69.213" x="273.394" y="543.889">component</text>
+    </g>
+    <!--cluster cloud-->
+    <g class="cluster" data-qualified-name="storage.stack.rectangle.queue.process.package.node.hexagon.frame.folder.file.database.component.cloud" data-source-line="14" id="ent0014">
+      <path d="M242.34,570.254 C246.304,565.375 251.199,565.315 254.582,570.932 C257.294,563.497 263.843,562.163 269.048,568.269 C273.838,562.29 278.027,562.294 282.614,568.495 C286.442,561.237 290.452,560.686 295.722,567.115 C299.943,561.351 307.089,561.968 310.386,568.242 C314.03,561.599 317.98,562.282 322.444,567.401 C327.675,561.33 331.871,562.494 336.243,568.392 C341.172,562.372 345.674,564.119 348.756,570.289 C352.639,562.501 357.971,561.574 363.543,568.603 C372.753,563.604 379.66,563.858 382,576 C382.483,575.502 383.109,575.56 383.348,576.271 C391.408,581.095 391.578,586.406 383.376,591.26 C390.46,594.823 392.043,602.623 384.299,607.053 C392.211,611.584 390.779,616.95 384.474,621.652 C390.664,625.885 391.436,630.456 384.52,634.736 C391.292,638.99 390.344,646.188 383.568,649.572 C391.291,654.187 393.257,659.8 385.103,665.907 C392.092,670.126 390.68,676.383 384.692,680.229 C391.251,684.892 391.529,690.056 384.773,694.793 C391.588,700.027 391.041,704.278 384.122,708.877 C391.513,713.487 389.473,720.785 382.657,724.02 C389.483,726.745 390.904,732.21 384.477,736.82 C391.797,747.365 386.752,755.989 375,758 C376.661,757.969 377.147,759.057 376.473,760.437 C373.313,768.807 366.634,768.48 361.791,762.114 C359.053,767.007 353.844,767.852 350.68,762.58 C348.316,771.443 341.687,772.536 335.354,766.725 C331.05,772.195 326.834,772.834 322.134,767.196 C319.485,774.489 312.678,774.426 308.157,769.303 C303.089,774.209 299.391,772.195 296.931,766.533 C292.732,772.465 287.438,772.253 283.246,766.525 C277.551,772.095 272.369,770.896 268.793,764.057 C263.185,767.656 259.146,767.936 256.932,760.431 C246.211,770.107 235.666,763.343 234,751 C235.65,751.26 235.859,752.196 235.028,753.483 C228.343,748.623 226.312,742.156 234.721,737.014 C226.661,733.887 227.007,728.466 232.054,722.868 C224.605,719.978 224.252,714.443 230.107,709.601 C222.433,705.9 223.079,699.275 229.139,694.683 C221.016,690.393 220.81,685.133 227.318,679.13 C220.46,675.314 218.947,668.771 226.654,664.303 C219.646,659.667 220.35,654.309 227.2,650.21 C220.918,645.764 220.986,638.819 227.835,634.918 C222.563,629.688 223.646,624.351 230.615,621.694 C224.69,616.452 223.951,610.298 232.497,606.896 C227.129,601.46 226.194,596.409 234.235,592.603 C226.234,582.139 226.042,572.884 241,569 C242.084,568.75 242.495,569.181 242.34,570.254" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="33.512" x="291.244" y="584.889">cloud</text>
+    </g>
+    <!--cluster card-->
+    <g class="cluster" data-qualified-name="storage.stack.rectangle.queue.process.package.node.hexagon.frame.folder.file.database.component.cloud.card" data-source-line="15" id="ent0015">
+      <rect fill="none" height="148" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="132" x="242" y="602"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="242" x2="374" y1="620" y2="620"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="294.394" y="614.889">card</text>
+    </g>
+    <!--cluster artifact-->
+    <g class="cluster" data-qualified-name="storage.stack.rectangle.queue.process.package.node.hexagon.frame.folder.file.database.component.cloud.card.artifact" data-source-line="16" id="ent0016">
+      <rect fill="none" height="91" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="100" x="258" y="643"/>
+      <polygon fill="none" points="341,648,341,662,353,662,353,654,347,648,341,648" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="347" x2="347" y1="648" y2="654"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="353" x2="347" y1="654" y2="654"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="41.913" x="287.044" y="655.889">artifact</text>
+    </g>
+    <!--entity action-->
+    <g class="entity" data-qualified-name="storage.stack.rectangle.queue.process.package.node.hexagon.frame.folder.file.database.component.cloud.card.artifact.action" data-source-line="17" id="ent0017">
+      <polygon fill="#F1F1F1" points="274.5,684,331.863,684,341.863,701,331.863,718,274.5,718" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#000" font-size="14" textLength="37.363" x="284.5" y="704.889">action</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+title Between 0-max (by default)
+analog "Analog" as A
+
+@0
+A is 350
+
+@100
+A is 450
+
+@300
+A is 350
+@enduml

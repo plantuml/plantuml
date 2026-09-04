@@ -1,0 +1,35 @@
+---
+output: svg
+---
+@startuml
+!option handwritten true
+
+object user1
+user1 : name = "Dummy"
+user1 : id = 123
+
+object user2 {
+  name = "Dummy"
+  id = 123
+}
+
+object o1
+object o2
+diamond dia
+object o3
+
+o1  --> dia
+o2  "1" -> "1" dia
+dia --> o3
+
+object London
+
+map CapitalCity {
+ UK *-> London
+ USA => Washington
+ Germany => Berlin
+}
+
+note right of London: Big ben
+user1 --> CapitalCity : visits >
+@enduml

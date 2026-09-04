@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="103px" preserveAspectRatio="none" style="width:229px;height:103px;background:#FFFFFF;" version="1.1" viewBox="0 0 229 103" width="229px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="79.938" x="10" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="15" y="22.889">age</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="60" y="22.889">30</text>
+    <line style="stroke:#000;stroke-width:1;" x1="55" x2="55" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="89.938" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="15" y="40.889">name</text>
+    <text fill="#000" font-size="14" textLength="24.938" x="60" y="40.889">Bob</text>
+    <line style="stroke:#000;stroke-width:1;" x1="55" x2="55" y1="28" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="89.938" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="19.425" x="15" y="58.889">tab</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="60" y="58.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="55" x2="55" y1="46" y2="64"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="79.938" x="10" y="10"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="17.788" x="127" y="28"/>
+    <text fill="#000" font-size="14" x="132" y="40.889">1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="127" x2="144.788" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" x="132" y="58.889">2</text>
+    <line style="stroke:#000;stroke-width:1;" x1="127" x2="144.788" y1="64" y2="64"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="132" y="76.889">   </text>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="17.788" x="127" y="28"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="35.575" x="182" y="55"/>
+    <text fill="#000" font-size="14" font-weight="700" x="187" y="67.889">a</text>
+    <text fill="#000" font-size="14" x="204.788" y="67.889">0</text>
+    <line style="stroke:#000;stroke-width:1;" x1="199.788" x2="199.788" y1="55" y2="73"/>
+    <line style="stroke:#000;stroke-width:1;" x1="182" x2="217.575" y1="73" y2="73"/>
+    <text fill="#000" font-size="14" font-weight="700" x="187" y="85.889">b</text>
+    <text fill="#000" font-size="14" x="204.788" y="85.889">1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="199.788" x2="199.788" y1="73" y2="91"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="35.575" x="182" y="55"/>
+    <path d="M133,73 L146,73 C155.339,73 165.595,73 174.607,73" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M174.607,76.018 L176.871,73 L174.607,69.982 L182.152,73 L174.607,76.018" fill="#000"/>
+    <ellipse cx="133" cy="73" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M78,55 L91,55 C100.503,55 111.147,55 119.642,55" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M119.642,58.063 L121.939,55 L119.642,51.937 L127.298,55 L119.642,58.063" fill="#000"/>
+    <ellipse cx="78" cy="55" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

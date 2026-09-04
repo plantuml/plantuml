@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startwire
+* first
+* second_box [100x50]
+* third
+@endwire

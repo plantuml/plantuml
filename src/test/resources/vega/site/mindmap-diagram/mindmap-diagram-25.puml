@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startmindmap
+<style>
+mindmapDiagram {
+  node {
+    BackgroundColor lightGreen
+  }
+  boxless {
+    FontColor darkgreen
+  }
+}
+</style>
+* Linux
+** NixOS
+** Debian
+***_ Ubuntu
+**** Linux Mint
+**** Kubuntu
+**** Lubuntu
+**** KDE Neon
+@endmindmap

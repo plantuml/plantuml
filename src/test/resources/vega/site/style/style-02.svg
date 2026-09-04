@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="144px" preserveAspectRatio="none" style="width:251px;height:144px;background:#FFFFFF;" version="1.1" viewBox="0 0 251 144" width="251px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="39.6" y="49"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="43.1" x2="43.1" y1="49" y2="94"/>
+    </g>
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="208.956" y="49"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="212.456" x2="212.456" y1="49" y2="94"/>
+    </g>
+    <rect fill="#F5F5F5" height="38" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="66.2" x="10" y="10"/>
+    <text fill="#00008B" font-size="24" font-weight="700" textLength="52.2" x="17" y="35.667">Alice</text>
+    <rect fill="#F5F5F5" height="38" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="56.75" x="184.081" y="10"/>
+    <text fill="#00008B" font-size="24" font-weight="700" textLength="42.75" x="191.081" y="35.667">Bob</text>
+    <rect fill="#F5F5F5" height="38" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="66.2" x="10" y="94"/>
+    <text fill="#00008B" font-size="24" font-weight="700" textLength="52.2" x="17" y="119.667">Alice</text>
+    <rect fill="#F5F5F5" height="38" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="56.75" x="184.081" y="94"/>
+    <text fill="#00008B" font-size="24" font-weight="700" textLength="42.75" x="191.081" y="119.667">Bob</text>
+    <polygon fill="#008000" points="200.456,72,210.456,76,200.456,80,204.456,76" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#008000;stroke-width:1;" x1="43.1" x2="206.456" y1="76" y2="76"/>
+    <text fill="#006400" font-size="13" textLength="145.356" x="50.1" y="71.111">Combined Styles Example</text>
+  </g>
+</svg>

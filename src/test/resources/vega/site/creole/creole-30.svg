@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="293px" preserveAspectRatio="none" style="width:270px;height:293px;background:#FFFFFF;" version="1.1" viewBox="0 0 270 293" width="270px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="44.063" x="10" y="129"/>
+    <text fill="#000" font-size="14" textLength="24.063" x="20" y="149.889">root</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="35.575" x="104.063" y="20"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="114.063" y="40.889">d1</text>
+    <path d="M54.063,146 L64.063,146 C79.063,146 79.063,37 94.063,37 L104.063,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="198" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="145.125" x="104.063" y="74"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="47.425" x="114.063" y="94.889">test list 1</text>
+    <ellipse cx="119.563" cy="104.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-size="14" textLength="52.238" x="126.063" y="108.889">Bullet list</text>
+    <ellipse cx="119.563" cy="118.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-size="14" textLength="73.938" x="126.063" y="122.889">Second item</text>
+    <rect fill="#000" height="3.5" width="3.5" x="123.063" y="130"/>
+    <text fill="#000" font-size="14" textLength="51.363" x="130.063" y="136.889">Sub item</text>
+    <rect fill="#000" height="3.5" width="3.5" x="131.063" y="144"/>
+    <text fill="#000" font-size="14" textLength="73.938" x="138.063" y="150.889">Sub sub item</text>
+    <ellipse cx="119.563" cy="160.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-size="14" textLength="58.363" x="126.063" y="164.889">Third item</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="104.063" x2="249.188" y1="173" y2="173"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="47.425" x="114.063" y="188.889">test list 2</text>
+    <text fill="#000" font-size="14" textLength="11.638" x="114.063" y="202.889">1.</text>
+    <text fill="#000" font-size="14" textLength="82.513" x="129.55" y="202.889">Numbered list</text>
+    <text fill="#000" font-size="14" textLength="11.638" x="114.063" y="216.889">2.</text>
+    <text fill="#000" font-size="14" textLength="73.938" x="129.55" y="216.889">Second item</text>
+    <text fill="#000" font-size="14" textLength="11.638" x="125.7" y="230.889">1.</text>
+    <text fill="#000" font-size="14" textLength="51.363" x="141.188" y="230.889">Sub item</text>
+    <text fill="#000" font-size="14" textLength="11.638" x="125.7" y="244.889">2.</text>
+    <text fill="#000" font-size="14" textLength="98" x="141.188" y="244.889">Another sub item</text>
+    <text fill="#000" font-size="14" textLength="11.638" x="114.063" y="258.889">3.</text>
+    <text fill="#000" font-size="14" textLength="58.363" x="129.55" y="258.889">Third item</text>
+    <path d="M54.063,146 L64.063,146 C79.063,146 79.063,173 94.063,173 L104.063,173" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

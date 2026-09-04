@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startjson
+!option handwritten true
+{
+   "fruit":"Apple",
+   "size":"Large",
+   "color": ["Red", "Green"]
+}
+@endjson

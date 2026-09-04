@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHEN_EER" height="201px" preserveAspectRatio="none" style="width:893px;height:201px;background:#FFFFFF;" version="1.1" viewBox="0 0 893 201" width="893px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="93.238" x="249" y="151"/>
+      <text fill="#000" font-size="14" textLength="73.238" x="259" y="171.889">DIRECTOR</text>
+    </g>
+    <g>
+      <ellipse cx="76.715" cy="98.043" fill="#F1F1F1" rx="70.715" ry="16.543" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="115.938" x="18.747" y="98.389">Number : INTEGER</text>
+    </g>
+    <g>
+      <ellipse cx="194.419" cy="97.899" fill="#F1F1F1" rx="29.419" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="37.363" x="175.738" y="101.889">Name</text>
+    </g>
+    <g>
+      <ellipse cx="121.681" cy="28.736" fill="#F1F1F1" rx="64.181" ry="15.236" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="100.363" x="71.5" y="30.389">Fname : STRING</text>
+    </g>
+    <g>
+      <ellipse cx="267.359" cy="28.672" fill="#F1F1F1" rx="63.859" ry="15.172" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="99.575" x="217.571" y="30.389">Lname : STRING</text>
+    </g>
+    <g>
+      <ellipse cx="295.308" cy="97.962" fill="#F1F1F1" rx="52.808" ry="12.962" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="70.875" x="259.87" y="101.889">Born : DATE</text>
+    </g>
+    <g>
+      <ellipse cx="419.559" cy="97.912" fill="#F1F1F1" rx="52.559" ry="12.912" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="70.175" x="384.472" y="101.889">Died : DATE</text>
+    </g>
+    <g>
+      <ellipse cx="550.439" cy="97.988" fill="#F1F1F1" rx="60.439" ry="14.488" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="91.088" x="504.895" y="100.389">Age : INTEGER</text>
+    </g>
+    <g>
+      <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="100.238" x="629.5" y="81"/>
+      <text fill="#000" font-size="14" textLength="80.238" x="639.5" y="101.889">CUSTOMER</text>
+    </g>
+    <g>
+      <ellipse cx="534.715" cy="28.543" fill="#F1F1F1" rx="70.715" ry="16.543" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="115.938" x="476.747" y="28.889">Number : INTEGER</text>
+    </g>
+    <g>
+      <ellipse cx="679.74" cy="28.648" fill="#F1F1F1" rx="56.24" ry="13.648" style="stroke:#181818;stroke-width:0.5;stroke-dasharray:10,10;"/>
+      <text fill="#000" font-size="14" textLength="80.238" x="639.621" y="31.889">Bonus : REAL</text>
+    </g>
+    <g>
+      <ellipse cx="815.661" cy="28.732" fill="#F1F1F1" rx="61.661" ry="14.732" style="stroke:#181818;stroke-width:0.5;"/>
+      <ellipse cx="815.661" cy="28.732" fill="#F1F1F1" rx="58.661" ry="11.732" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="94.15" x="768.586" y="30.889">Name : STRING</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="association" id="lnk3">
+      <path d="M126.469,114.515 C163.205,125.922 212.785,141.317 248.742,152.482" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0001" data-link-type="association" id="lnk5">
+      <path d="M212.557,111.157 C229.012,122.235 253.436,138.679 271.522,150.857" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0004" data-link-type="association" id="lnk7">
+      <path d="M136.981,43.815 C150.207,56.044 169.017,73.437 181.481,84.962" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0004" data-link-type="association" id="lnk9">
+      <path d="M252.019,43.815 C238.793,56.044 219.983,73.437 207.519,84.962" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0001" data-link-type="association" id="lnk11">
+      <path d="M295.5,111.157 C295.5,122.159 295.5,138.453 295.5,150.604" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0001" data-link-type="association" id="lnk13">
+      <path d="M397.617,111.001 C377.454,122.058 347.371,138.555 325.074,150.782" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0001" data-link-type="association" id="lnk15">
+      <path d="M499.815,112.516 C453.918,124.755 386.847,142.641 342.222,154.541" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0017" data-entity-2="ent0016" data-link-type="association" id="lnk18">
+      <path d="M568.13,45.156 C591.221,55.905 621.78,70.13 645.045,80.961" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0019" data-entity-2="ent0016" data-link-type="association" id="lnk20">
+      <path d="M679.5,42.196 C679.5,53.118 679.5,68.939 679.5,80.777" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0021" data-entity-2="ent0016" data-link-type="association" id="lnk22">
+      <path d="M787.978,43.16 C765.935,54.1 734.97,69.469 711.762,80.987" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

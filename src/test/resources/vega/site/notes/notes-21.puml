@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+<style>
+.s2n {
+    backgroundcolor green
+    Linecolor red
+    LineThickness 2
+}
+</style>
+
+note left of a: this is a note
+note over a <<s2n>>: this is a note
+note left of a<<s2n>>: other note
+a -> b : txt
+
+
+note left <<s2n>>
+a note
+can be defined
+on several lines
+end note
+note right <<s2n>>: this is a first note
+@enduml

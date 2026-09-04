@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="REGEX" height="124px" preserveAspectRatio="none" style="width:107px;height:124px;background:#FFFFFF;" version="1.1" viewBox="0 0 107 124" width="107px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="65.363" x="20" y="30.889">alternation</text>
+    </g>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="17.788" x="44.288" y="50"/>
+    <text fill="#000" font-size="14" x="49.288" y="65.889">a</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="20.288" x2="44.288" y1="62" y2="62"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="62.075" x2="86.075" y1="62" y2="62"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="17.788" x="44.288" y="84"/>
+    <text fill="#000" font-size="14" x="49.288" y="99.889">b</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="62.075" x2="62.075" y1="96" y2="96"/>
+    <path d="M32.288,84 C32.288,93 35.288,96 44.288,96" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="32.288" x2="32.288" y1="74" y2="84"/>
+    <path d="M20.288,62 C29.288,62 32.288,65 32.288,74" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M74.075,84 C74.075,93 71.075,96 62.075,96" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="74.075" x2="74.075" y1="74" y2="84"/>
+    <path d="M74.075,74 C74.075,65 77.075,62 86.075,62" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

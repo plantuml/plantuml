@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="157px" preserveAspectRatio="none" style="width:227px;height:157px;background:#FFFFFF;" version="1.1" viewBox="0 0 227 157" width="227px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="3">
+      <text fill="#000" font-size="14" font-weight="700" textLength="106.575" x="59.544" y="25.889">Foot Box removed</text>
+    </g>
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="72" width="8" x="28.725" y="74"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="32.225" x2="32.225" y1="74" y2="146"/>
+    </g>
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="72" width="8" x="193.694" y="74"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="197.194" x2="197.194" y1="74" y2="146"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="10" y="45"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="17" y="62.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="177.725" y="45"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="184.725" y="62.889">Bob</text>
+    <polygon fill="#181818" points="185.194,97,195.194,101,185.194,105,189.194,101" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="32.225" x2="191.194" y1="101" y2="101"/>
+    <text fill="#000" font-size="13" textLength="130.813" x="39.225" y="96.111">Authentication Request</text>
+    <polygon fill="#181818" points="43.225,124,33.225,128,43.225,132,39.225,128" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="37.225" x2="196.194" y1="128" y2="128"/>
+    <text fill="#000" font-size="13" textLength="140.969" x="49.225" y="123.111">Authentication Response</text>
+  </g>
+</svg>

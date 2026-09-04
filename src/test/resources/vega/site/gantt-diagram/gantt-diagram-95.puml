@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startgantt
+[Prototype design] requires 1 weeks
+then [Prototype completed] requires 4 days
+[End Prototype completed] happens at [Prototype completed]'s end
+then [Test prototype] requires 5 days
+[End Test prototype] happens at [Test prototype]'s end
+
+[Prototype completed] is deleted
+[End Prototype completed] is deleted
+@endgantt

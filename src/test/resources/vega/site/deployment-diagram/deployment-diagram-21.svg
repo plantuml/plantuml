@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="1002px" preserveAspectRatio="none" style="width:618px;height:1002px;background:#FFFFFF;" version="1.1" viewBox="0 0 618 1002" width="618px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster action-->
+    <g class="cluster" data-qualified-name="action" data-source-line="1" id="ent0001">
+      <polygon fill="none" points="14,4,592,4,602,491,592,978,14,978" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="37.363" x="289.319" y="16.889">action</text>
+    </g>
+    <!--cluster artifact-->
+    <g class="cluster" data-qualified-name="action.artifact" data-source-line="2" id="ent0002">
+      <rect fill="none" height="917" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="556" x="30" y="45"/>
+      <polygon fill="none" points="569,50,569,64,581,64,581,56,575,50,569,50" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="575" x2="575" y1="50" y2="56"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="581" x2="575" y1="56" y2="56"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="41.913" x="287.044" y="57.889">artifact</text>
+    </g>
+    <!--cluster card-->
+    <g class="cluster" data-qualified-name="action.artifact.card" data-source-line="3" id="ent0003">
+      <rect fill="none" height="860" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="524" x="46" y="86"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="46" x2="570" y1="104" y2="104"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="294.394" y="98.889">card</text>
+    </g>
+    <!--cluster cloud-->
+    <g class="cluster" data-qualified-name="action.artifact.card.cloud" data-source-line="4" id="ent0004">
+      <path d="M82.716,143.074 C99.191,111.813 117.812,108.208 139.838,137.869 C154.114,113.537 178.819,109.437 193.931,136.998 C216.55,108.442 238.128,109.288 258.365,139.604 C274.707,111.269 292.056,111.05 312.649,135.209 C333.302,114.472 351.306,115.665 366.596,141.43 C382.418,107.056 401.581,109.347 425.188,133.657 C441.974,106.244 473.043,103.29 489.034,134.523 C507.644,109.932 534.113,115.363 546,142 C548.812,141.901 549.724,143.925 548.467,146.21 C575.463,162.313 577.653,190.635 548.168,206.457 C575.204,221.303 573.09,237.973 554.015,258.046 C576.915,276.27 577.331,295.832 550.462,310.698 C575.668,325.799 575.093,344.72 555.062,363.743 C581.745,382.055 584.268,403.913 555.18,422.337 C576.035,438.913 572.945,461.151 550.601,473.889 C576.303,489.501 584.071,520.781 551.029,536.792 C575.492,552.614 577.64,575.765 551.912,592.384 C578.231,608.386 576.242,626.466 550.963,641.471 C579.903,660.56 576.752,679.408 550.513,698.06 C576.229,713.272 579.263,738.154 551.105,753.936 C578.54,766.489 581.575,791.769 556.75,809.62 C583.357,826.545 584.637,850.866 555.905,866.976 C574.179,889.34 565.984,913.54 539,922 C543.544,920.263 545.715,921.531 545.79,926.515 C526.337,959.697 505.613,960.415 481.539,931.281 C463.849,953.613 439.541,951.195 424.993,927.427 C406.46,954.988 390.385,949.413 372.5,926.749 C351.966,958.673 333.017,954.438 311.109,928.201 C289.977,952.925 271.001,955.787 251.332,926.58 C233.626,957.341 215.75,955.96 195.855,928.673 C180.49,956.294 154.313,948.17 142.348,925.086 C119.689,952.346 83.44,953.868 70,915 C72.468,913.971 73.392,915.078 73.535,917.431 C54.343,901.214 55.046,880.656 77.835,868.099 C44.598,853.585 42.75,825.801 71.923,805.401 C52.168,787.435 49.931,766.513 76.663,752.73 C54.524,738.946 51.501,715.322 76.109,701.038 C48.464,683.62 45.565,666.122 74.547,647.066 C43.572,630.577 44.402,612.213 69.696,590.865 C38.722,573.907 43.113,550.715 68.905,532.981 C39.6,516.459 47.318,492.744 71.191,478.45 C47.852,459.888 43.306,434.351 74.897,419.226 C45.742,404.205 48.269,385.472 71.916,367.413 C49.062,350.873 50.758,323.048 76.944,310.868 C45.566,297.866 44.162,276.3 69.141,255.375 C42.65,238.828 44.169,213.843 74.028,202.504 C42.014,180.137 45.55,154.572 77,135 C82.74,134.86 84.156,138.131 82.716,143.074" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="33.512" x="291.244" y="150.889">cloud</text>
+    </g>
+    <!--cluster component-->
+    <g class="cluster" data-qualified-name="action.artifact.card.cloud.component" data-source-line="5" id="ent0005">
+      <rect fill="none" height="746" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="460" x="78" y="168"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="518" y="173"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="516" y="175"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="516" y="179"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="69.213" x="273.394" y="191.889">component</text>
+    </g>
+    <!--cluster database-->
+    <g class="cluster" data-qualified-name="action.artifact.card.cloud.component.database" data-source-line="6" id="ent0006">
+      <path d="M94,219 C94,209 308,209 308,209 C308,209 522,209 522,219 L522,888 C522,898 308,898 308,898 C308,898 94,898 94,888 L94,219" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M94,219 C94,229 308,229 308,229 C308,229 522,229 522,219" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="57.575" x="279.213" y="241.889">database</text>
+    </g>
+    <!--cluster file-->
+    <g class="cluster" data-qualified-name="action.artifact.card.cloud.component.database.file" data-source-line="7" id="ent0007">
+      <path d="M110,267.5 L110,879.5 A2.5,2.5 0 0 0 112.5,882 L503.5,882 A2.5,2.5 0 0 0 506,879.5 L506,275 L496,265 L112.5,265 A2.5,2.5 0 0 0 110,267.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M496,265 L496,272.5 A2.5,2.5 0 0 0 498.5,275 L506,275" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.938" x="299.031" y="277.889">file</text>
+    </g>
+    <!--cluster folder-->
+    <g class="cluster" data-qualified-name="action.artifact.card.cloud.component.database.file.folder" data-source-line="8" id="ent0008">
+      <path d="M128.5,306 L164.5,306 A3.75,3.75 0 0 1 167,308.5 L174,326 L487.5,326 A2.5,2.5 0 0 1 490,328.5 L490,863.5 A2.5,2.5 0 0 1 487.5,866 L128.5,866 A2.5,2.5 0 0 1 126,863.5 L126,308.5 A2.5,2.5 0 0 1 128.5,306" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="126" x2="174" y1="326" y2="326"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="35" x="130" y="318.889">folder</text>
+    </g>
+    <!--cluster frame-->
+    <g class="cluster" data-qualified-name="action.artifact.card.cloud.component.database.file.folder.frame" data-source-line="9" id="ent0009">
+      <rect fill="none" height="503" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="332" x="142" y="347"/>
+      <path d="M187.7,347 L187.7,354 L177.7,364 L142,364" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="35.7" x="145" y="358.889">frame</text>
+    </g>
+    <!--cluster hexagon-->
+    <g class="cluster" data-qualified-name="action.artifact.card.cloud.component.database.file.folder.frame.hexagon" data-source-line="10" id="ent0010">
+      <path d="M158,611 L195.5,388 L420.5,388 L458,611 L420.5,834 L195.5,834 L158,611" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="53.725" x="281.138" y="400.889">hexagon</text>
+    </g>
+    <!--cluster node-->
+    <g class="cluster" data-qualified-name="action.artifact.card.cloud.component.database.file.folder.frame.hexagon.node" data-source-line="11" id="ent0011">
+      <polygon fill="none" points="174,439,184,429,442,429,442,808,432,818,174,818,174,439" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="432" x2="442" y1="439" y2="429"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="174" x2="432" y1="439" y2="439"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="432" x2="432" y1="439" y2="818"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="31.15" x="288.425" y="452.889">node</text>
+    </g>
+    <!--cluster package-->
+    <g class="cluster" data-qualified-name="action.artifact.card.cloud.component.database.file.folder.frame.hexagon.node.package" data-source-line="12" id="ent0012">
+      <path d="M196.5,479 L250.438,479 A3.75,3.75 0 0 1 252.938,481.5 L259.938,499 L419.5,499 A2.5,2.5 0 0 1 422,501.5 L422,795.5 A2.5,2.5 0 0 1 419.5,798 L196.5,798 A2.5,2.5 0 0 1 194,795.5 L194,481.5 A2.5,2.5 0 0 1 196.5,479" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="194" x2="259.938" y1="499" y2="499"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="52.937" x="198" y="491.889">package</text>
+    </g>
+    <!--cluster process-->
+    <g class="cluster" data-qualified-name="action.artifact.card.cloud.component.database.file.folder.frame.hexagon.node.package.process" data-source-line="13" id="ent0013">
+      <polygon fill="none" points="210,520,396,520,406,651,396,782,210,782,220,651" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="49" x="283.5" y="532.889">process</text>
+    </g>
+    <!--cluster queue-->
+    <g class="cluster" data-qualified-name="action.artifact.card.cloud.component.database.file.folder.frame.hexagon.node.package.process.queue" data-source-line="14" id="ent0014">
+      <path d="M231,561 L385,561 C390,561 390,663.5 390,663.5 C390,663.5 390,766 385,766 L231,766 C226,766 226,663.5 226,663.5 C226,663.5 226,561 231,561" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M385,561 C380,561 380,663.5 380,663.5 C380,766 385,766 385,766" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="38.938" x="288.531" y="573.889">queue</text>
+    </g>
+    <!--cluster rectangle-->
+    <g class="cluster" data-qualified-name="action.artifact.card.cloud.component.database.file.folder.frame.hexagon.node.package.process.queue.rectangle" data-source-line="15" id="ent0015">
+      <rect fill="none" height="148" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="132" x="242" y="602"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="57.575" x="279.213" y="614.889">rectangle</text>
+    </g>
+    <!--cluster stack-->
+    <g class="cluster" data-qualified-name="action.artifact.card.cloud.component.database.file.folder.frame.hexagon.node.package.process.queue.rectangle.stack" data-source-line="16" id="ent0016">
+      <rect fill="none" height="91" rx="2.5" ry="2.5" style="stroke:none;" width="70" x="273" y="643"/>
+      <path d="M258,643 L270.5,643 A2.5,2.5 0 0 1 273,645.5 L273,731.5 A2.5,2.5 0 0 0 275.5,734 L340.5,734 A2.5,2.5 0 0 0 343,731.5 L343,645.5 A2.5,2.5 0 0 1 345.5,643 L358,643" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="32.637" x="291.681" y="666.889">stack</text>
+    </g>
+    <!--entity storage-->
+    <g class="entity" data-qualified-name="action.artifact.card.cloud.component.database.file.folder.frame.hexagon.node.package.process.queue.rectangle.stack.storage" data-source-line="17" id="ent0017">
+      <rect fill="#F1F1F1" height="34" rx="35" ry="35" style="stroke:#181818;stroke-width:0.5;" width="66.637" x="274.5" y="684"/>
+      <text fill="#000" font-size="14" textLength="46.637" x="284.5" y="704.889">storage</text>
+    </g>
+  </g>
+</svg>

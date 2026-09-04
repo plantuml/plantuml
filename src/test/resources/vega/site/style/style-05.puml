@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+<style>
+classDiagram {
+    arrow {
+        LineColor blue
+    }
+    class {
+        BackgroundColor #00ff00
+    }
+    .x {
+        BackgroundColor #00ffff
+    }
+    .y {
+        BackgroundColor #ff0000
+    }
+}
+</style>
+class Customer <<x>>
+class Order <<y>>
+class Product
+Customer --> Order
+@enduml

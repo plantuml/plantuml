@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="TIMING" height="212px" preserveAspectRatio="none" style="width:307px;height:212px;background:#FFFFFF;" version="1.1" viewBox="0 0 307 212" width="307px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="20" y1="20" y2="180"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="286.675" x2="286.675" y1="20" y2="180"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="31.675" x2="31.675" y1="20" y2="180"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="81.675" x2="81.675" y1="20" y2="180"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="131.675" x2="131.675" y1="20" y2="180"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="181.675" x2="181.675" y1="20" y2="180"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="231.675" x2="231.675" y1="20" y2="180"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="281.675" x2="281.675" y1="20" y2="180"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="286.675" y1="20" y2="20"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="42.875" x="25" y="30.889">R-Deci</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="68.875" y1="35" y2="35"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="68.875" x2="78.875" y1="35" y2="20"/>
+    <text fill="#333" font-size="12" x="25" y="69.333">1</text>
+    <text fill="#333" font-size="12" x="25" y="49.333">0</text>
+    <line style="stroke:#006400;stroke-width:2;" x1="31.675" x2="181.675" y1="65" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="181.675" x2="231.675" y1="45" y2="45"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="231.675" x2="281.675" y1="45" y2="45"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="181.675" x2="181.675" y1="45" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="231.675" x2="231.675" y1="45" y2="45"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="286.675" y1="83" y2="83"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="55.3" x="25" y="93.889">R-Algo-0</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="81.3" y1="98" y2="98"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="81.3" x2="91.3" y1="98" y2="83"/>
+    <polygon fill="#E2E2F0" points="43.675,103,219.675,103,231.675,115,219.675,127,43.675,127,31.675,115" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="243.675,103,281.675,103,281.675,127,243.675,127,231.675,115" style="stroke:#E2E2F0;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M281.675,103 L243.675,103 L231.675,115 L243.675,127 L281.675,127" fill="#E2E2F0" style="stroke:#006400;stroke-width:1.5;"/>
+    <text fill="#333" font-size="12" font-weight="700" x="128.338" y="118.333">3</text>
+    <text fill="#333" font-size="12" font-weight="700" x="243.675" y="118.333">0</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="286.675" y1="137" y2="137"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="55.3" x="25" y="147.889">R-Algo-1</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="81.3" y1="152" y2="152"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="81.3" x2="91.3" y1="152" y2="137"/>
+    <line style="stroke:#333;stroke-width:2;" x1="131.675" x2="131.675" y1="180" y2="185"/>
+    <line style="stroke:#333;stroke-width:2;" x1="181.675" x2="181.675" y1="180" y2="185"/>
+    <line style="stroke:#333;stroke-width:2;" x1="231.675" x2="231.675" y1="180" y2="185"/>
+    <line style="stroke:#333;stroke-width:2;" x1="281.675" x2="281.675" y1="180" y2="185"/>
+    <line style="stroke:#333;stroke-width:2;" x1="131.675" x2="281.675" y1="180" y2="180"/>
+    <text fill="#333" font-size="11" textLength="22" x="20.675" y="194.556">-200</text>
+    <text fill="#333" font-size="11" x="128.616" y="194.556">0</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="172.497" y="194.556">100</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="222.497" y="194.556">200</text>
+  </g>
+</svg>

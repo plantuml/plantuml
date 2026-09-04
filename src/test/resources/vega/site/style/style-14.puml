@@ -1,0 +1,32 @@
+---
+output: svg
+---
+@startuml
+<style>
+timingDiagram {
+  timeline {
+    FontColor red
+    FontSize 10
+    FontStyle italic
+    LineColor red
+    LineThickness 2
+    LineStyle 4-4
+    BackgroundColor pink
+  }
+}
+</style>
+
+clock   "Clock_0"   as C0 with period 50
+binary  "Binary"  as B
+concise "Concise" as C
+robust  "Robust"  as R
+@0
+C is Idle
+R is Idle
+@100
+B is high
+C is Waiting
+R is Processing
+@300
+R is Waiting
+@enduml

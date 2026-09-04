@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startjson
+{
+"$foo": { "name": "John", "age" : 30 }
+}
+@endjson

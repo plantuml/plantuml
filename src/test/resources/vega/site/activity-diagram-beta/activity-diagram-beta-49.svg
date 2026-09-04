@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="377px" preserveAspectRatio="none" style="width:190px;height:377px;background:#FFFFFF;" version="1.1" viewBox="0 0 190 377" width="190px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <ellipse cx="93" cy="25" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    <rect fill="#90EE90" height="130" style="stroke:#000;stroke-width:1.5;" width="136.825" x="24.588" y="45"/>
+    <path d="M119.988,45 L119.988,52 L109.988,62 L24.588,62" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="85.4" x="27.588" y="56.889">Input Interface</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="91.4" x="47.3" y="79"/>
+    <text fill="#000" font-size="12" textLength="71.4" x="57.3" y="98.333">read config file</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="116.825" x="34.588" y="131"/>
+    <text fill="#000" font-size="12" textLength="96.825" x="44.588" y="150.333">init internal variable</text>
+    <rect fill="none" height="130" style="stroke:#000;stroke-width:1.5;" width="154" x="16" y="185"/>
+    <path d="M78.238,185 L78.238,192 L68.238,202 L16,202" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="52.238" x="19" y="196.889">Running</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="134" x="26" y="219"/>
+    <text fill="#000" font-size="12" textLength="114" x="36" y="238.333">wait for user interaction</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="102.65" x="41.675" y="271"/>
+    <text fill="#000" font-size="12" textLength="82.65" x="51.675" y="290.333">print information</text>
+    <ellipse cx="93" cy="346" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+    <ellipse cx="93" cy="346" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="93" x2="93" y1="111" y2="131"/>
+    <polygon fill="#181818" points="89,121,93,131,97,121,93,125" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="93" x2="93" y1="35" y2="79"/>
+    <polygon fill="#181818" points="89,69,93,79,97,69,93,73" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="93" x2="93" y1="251" y2="271"/>
+    <polygon fill="#181818" points="89,261,93,271,97,261,93,265" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="93" x2="93" y1="163" y2="219"/>
+    <polygon fill="#181818" points="89,209,93,219,97,209,93,213" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="93" x2="93" y1="303" y2="335"/>
+    <polygon fill="#181818" points="89,325,93,335,97,325,93,329" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

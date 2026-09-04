@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+skinparam componentStyle uml1
+
+interface "Data Access" as DA
+
+DA - [First Component]
+[First Component] ..> HTTP : use
+
+@enduml

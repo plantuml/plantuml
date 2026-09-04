@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startfiles
+/a/a1.txt
+/b/b0.txt
+/a/a2.txt
+@endfiles

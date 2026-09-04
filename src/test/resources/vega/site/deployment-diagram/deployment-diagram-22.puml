@@ -1,0 +1,39 @@
+---
+output: svg
+---
+@startuml
+storage storage {
+stack stack {
+rectangle rectangle {
+queue queue {
+process process {
+package package {
+node node {
+hexagon hexagon {
+frame frame {
+folder folder {
+file file {
+database database {
+component component {
+cloud cloud {
+card card {
+artifact artifact {
+action action {
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+@enduml

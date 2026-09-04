@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+sudoku 45azkdf4sqq
+@enduml

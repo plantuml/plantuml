@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="REGEX" height="150px" preserveAspectRatio="none" style="width:505px;height:150px;background:#FFFFFF;" version="1.1" viewBox="0 0 505 150" width="505px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:1;" x1="39" x2="39" y1="54" y2="54"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="39" x2="125" y1="54" y2="54"/>
+    <path d="M71.4,54 L71.4,51 L77.4,54 L71.4,57 L71.4,54" fill="#181818"/>
+    <path d="M39,54 C48,54 51,56 51,65 C51,74 54,76 63,76" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M101,76 C110,76 113,74 113,65 C113,56 116,54 125,54" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="38" x="63" y="64"/>
+    <text fill="#000" font-size="14" textLength="28" x="68" y="79.889">数字</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="125" x2="145" y1="54" y2="54"/>
+    <path d="M153,46 C153,52 155,54 161,54" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="153" x2="153" y1="43" y2="46"/>
+    <path d="M153,43 C153,37 155,35 161,35" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="160" x2="212" y1="35" y2="35"/>
+    <path d="M189.2,35 L189.2,32 L183.2,35 L189.2,38 L189.2,35" fill="#181818"/>
+    <path d="M219,46 C219,52 217,54 211,54" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="219" x2="219" y1="43" y2="46"/>
+    <path d="M211,35 C217,35 219,37 219,43" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="145" x2="160" y1="54" y2="54"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="212" x2="227" y1="54" y2="54"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="52" x="160" y="42"/>
+    <text fill="#000" font-size="14" textLength="42" x="165" y="57.889">非数字</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="227" x2="247" y1="54" y2="54"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="247" x2="363" y1="54" y2="54"/>
+    <path d="M291.4,54 L291.4,51 L297.4,54 L291.4,57 L291.4,54" fill="#181818"/>
+    <path d="M247,54 C256,54 259,62 259,71 C259,80 262,88 271,88" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M339,88 C348,88 351,80 351,71 C351,62 354,54 363,54" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M279,80 C279,86 281,88 287,88" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="279" x2="279" y1="77" y2="80"/>
+    <path d="M279,77 C279,71 281,69 287,69" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="286" x2="324" y1="69" y2="69"/>
+    <path d="M306.8,69 L306.8,66 L300.8,69 L306.8,72 L306.8,69" fill="#181818"/>
+    <path d="M331,80 C331,86 329,88 323,88" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="331" x2="331" y1="77" y2="80"/>
+    <path d="M323,69 C329,69 331,71 331,77" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="271" x2="286" y1="88" y2="88"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="324" x2="339" y1="88" y2="88"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="38" x="286" y="76"/>
+    <text fill="#000" font-size="14" textLength="28" x="291" y="91.889">単語</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="363" x2="383" y1="54" y2="54"/>
+    <path d="M391,46 C391,52 393,54 399,54" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="391" x2="391" y1="43" y2="46"/>
+    <path d="M391,43 C391,37 393,35 399,35" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="398" x2="450" y1="35" y2="35"/>
+    <path d="M427.2,35 L427.2,32 L421.2,35 L427.2,38 L427.2,35" fill="#181818"/>
+    <path d="M457,46 C457,52 455,54 449,54" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="457" x2="457" y1="43" y2="46"/>
+    <path d="M449,35 C455,35 457,37 457,43" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="383" x2="398" y1="54" y2="54"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="450" x2="465" y1="54" y2="54"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="52" x="398" y="42"/>
+    <text fill="#000" font-size="14" textLength="42" x="403" y="57.889">非単語</text>
+    <path d="M383,30 C383,26.25 384.25,25 388,25" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M424,20 C424,23.75 422.75,25 419,25" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M424,20 C424,23.75 425.25,25 429,25" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M460,25 C463.75,25 465,26.25 465,30" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="388" x2="419" y1="25" y2="25"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="429" x2="460" y1="25" y2="25"/>
+    <text fill="#000" font-size="12" textLength="24.6" x="411.7" y="17.667">{1,2}</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="15" x2="39" y1="54" y2="54"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="465" x2="489" y1="54" y2="54"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="39" x2="39" y1="122" y2="122"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="66" x="39" y="110"/>
+    <text fill="#000" font-size="14" textLength="56" x="44" y="125.889">空白文字</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="105" x2="125" y1="122" y2="122"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="66" x="125" y="110"/>
+    <text fill="#000" font-size="14" textLength="56" x="130" y="125.889">任意文字</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="191" x2="211" y1="122" y2="122"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="80" x="211" y="110"/>
+    <text fill="#000" font-size="14" textLength="70" x="216" y="125.889">非空白文字</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="291" x2="465" y1="122" y2="122"/>
+    <path d="M376,122 L376,119 L382,122 L376,125 L376,122" fill="#181818"/>
+    <path d="M27,110 C27,119 30,122 39,122" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="27" x2="27" y1="66" y2="110"/>
+    <path d="M15,54 C24,54 27,57 27,66" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M477,110 C477,119 474,122 465,122" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="477" x2="477" y1="66" y2="110"/>
+    <path d="M477,66 C477,57 480,54 489,54" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

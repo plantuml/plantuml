@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startnwdiag
+
+header some header
+
+footer some footer
+
+title My title
+
+nwdiag {
+  network inet {
+      web01 [shape = cloud]
+  }
+}
+
+legend
+The legend
+end legend
+
+caption This is caption
+@endnwdiag

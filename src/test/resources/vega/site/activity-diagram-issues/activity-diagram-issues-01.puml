@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+|Swimlane1|
+start
+repeat :foo as starting label;
+  :read data;
+  :generate diagrams;
+|Swimlane2|
+backward:This is backward;
+repeat while (more data?)
+|Swimlane1|
+stop
+@enduml

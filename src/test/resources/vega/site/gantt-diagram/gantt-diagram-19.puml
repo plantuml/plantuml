@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startgantt
+Project starts 2020-07-01
+[Test prototype] requires 10 days
+[Prototype completed] happens 2020-07-10
+[Setup assembly line] requires 12 days
+[Setup assembly line] starts at [Test prototype]'s end
+@endgantt

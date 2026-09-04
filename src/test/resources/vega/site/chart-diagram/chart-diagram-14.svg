@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="466px" preserveAspectRatio="none" style="width:501px;height:466px;background:#FFFFFF;" version="1.1" viewBox="0 0 501 466" width="501px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="80.063" x="209.469" y="30.889">Performance</text>
+    </g>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="70" y1="95" y2="395"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="395" y2="395"/>
+    <text fill="#000" font-size="14" textLength="29.575" x="30.425" y="398.889">Poor</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="245" y2="245"/>
+    <text fill="#000" font-size="14" textLength="52.15" x="7.85" y="248.889">Average</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="95" y2="95"/>
+    <text fill="#000" font-size="14" textLength="56.875" x="3.125" y="98.889">Excellent</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="395" y2="395"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="120" x2="120" y1="395" y2="400"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="110.681" y="415.889">Q1</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="220" x2="220" y1="395" y2="400"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="210.681" y="415.889">Q2</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="320" x2="320" y1="395" y2="400"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="310.681" y="415.889">Q3</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="420" x2="420" y1="395" y2="400"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="410.681" y="415.889">Q4</text>
+    <rect fill="#3498DB" height="90" style="stroke:#181818;stroke-width:0.5;" width="60" x="90" y="305"/>
+    <rect fill="#3498DB" height="180" style="stroke:#181818;stroke-width:0.5;" width="60" x="190" y="215"/>
+    <rect fill="#3498DB" height="255" style="stroke:#181818;stroke-width:0.5;" width="60" x="290" y="140"/>
+    <rect fill="#3498DB" height="285" style="stroke:#181818;stroke-width:0.5;" width="60" x="390" y="110"/>
+  </g>
+</svg>

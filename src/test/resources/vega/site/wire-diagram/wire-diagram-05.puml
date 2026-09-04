@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startwire
+
+* DDR3 [100x200]
+--
+move(100,0)
+* SLC_NAND [100x200]
+
+DDR3 -> SLC_NAND : abcd
+DDR3 <-> SLC_NAND : abcd
+DDR3 <- SLC_NAND : abcd
+DDR3 - SLC_NAND : abcd
+DDR3 => SLC_NAND : abcd
+DDR3 <=> SLC_NAND #red : abcd
+DDR3 <= SLC_NAND : abcd
+DDR3 = SLC_NAND : abcd
+@endwire

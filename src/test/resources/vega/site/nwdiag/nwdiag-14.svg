@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="NWDIAG" height="278px" preserveAspectRatio="none" style="width:310px;height:278px;background:#FFFFFF;" version="1.1" viewBox="0 0 310 278" width="310px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="22.65" x="28.4" y="14.333">dmz</text>
+    <text fill="#000" font-size="12" textLength="39.375" x="11.675" y="116.333">internal</text>
+    <text fill="#000" font-size="12" textLength="46.05" x="5" y="227.333">internal2</text>
+    <rect fill="#77F" height="153" style="stroke:#E7E7E7;stroke-width:1;" width="227.5" x="66.05" y="38.5"/>
+    <rect fill="#FFC0CB" height="5" style="stroke:#181818;stroke-width:1;" width="170.8" x="56.05" y="8.5"/>
+    <rect fill="#E2E2F0" height="5" style="stroke:#181818;stroke-width:1;" width="247.5" x="56.05" y="110.5"/>
+    <rect fill="#ADD8E6" height="5" style="stroke:#181818;stroke-width:1;" width="247.5" x="56.05" y="221.5"/>
+    <path d="M100.75,13.5 L100.75,43.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M96.25,75.5 L96.25,110.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M101.25,75.5 L101.25,107.5 A4,4 0 0 1 101.25,119.5 L101.25,221.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M186.15,13.5 L186.15,43.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M181.65,75.5 L181.65,110.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M186.65,75.5 L186.65,107.5 A4,4 0 0 1 186.65,119.5 L186.65,221.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M263.2,115.5 L263.2,145.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M263.2,186.5 L263.2,221.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="55.4" x="71.05" y="43.5"/>
+    <text fill="#000" font-size="12" textLength="35.4" x="81.05" y="62.833">web01</text>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="55.4" x="156.45" y="43.5"/>
+    <text fill="#000" font-size="12" textLength="35.4" x="166.45" y="62.833">web02</text>
+    <path d="M241.85,155.5 C241.85,145.5 265.2,145.5 265.2,145.5 C265.2,145.5 288.55,145.5 288.55,155.5 L288.55,176.5 C288.55,186.5 265.2,186.5 265.2,186.5 C265.2,186.5 241.85,186.5 241.85,176.5 L241.85,155.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M241.85,155.5 C241.85,165.5 265.2,165.5 265.2,165.5 C265.2,165.5 288.55,165.5 288.55,155.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="12" textLength="26.7" x="251.85" y="178.833">db01</text>
+  </g>
+</svg>

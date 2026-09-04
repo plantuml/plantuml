@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+package foo {
+    object baz
+}
+
+package bar {
+    map A {
+        b *-> foo.baz
+        c =>
+    }
+}
+
+A::c --> foo
+@enduml

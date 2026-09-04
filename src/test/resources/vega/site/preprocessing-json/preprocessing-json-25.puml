@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startjson
+!$a = {"age" : 30, "name":"Bob"}
+!$b = {"glasses": true}
+%json_merge($a, $b)
+@endjson

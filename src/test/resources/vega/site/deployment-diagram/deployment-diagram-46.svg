@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="734px" preserveAspectRatio="none" style="width:208px;height:734px;background:#FFFFFF;" version="1.1" viewBox="0 0 208 734" width="208px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster A-->
+    <g class="cluster" data-qualified-name="A" data-source-line="5" id="ent0003">
+      <path d="M16.5,332 L26.862,332 A3.75,3.75 0 0 1 29.362,334.5 L36.363,352 L197.5,352 A2.5,2.5 0 0 1 200,354.5 L200,633.5 A2.5,2.5 0 0 1 197.5,636 L16.5,636 A2.5,2.5 0 0 1 14,633.5 L14,334.5 A2.5,2.5 0 0 1 16.5,332" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="36.363" y1="352" y2="352"/>
+      <text fill="#000" font-size="14" font-weight="700" x="18" y="344.889">A</text>
+    </g>
+    <!--cluster sub_a-->
+    <g class="cluster" data-qualified-name="A.sub_a" data-source-line="11" id="ent0009">
+      <path d="M32.5,373 L71.65,373 A3.75,3.75 0 0 1 74.15,375.5 L81.15,393 L181.5,393 A2.5,2.5 0 0 1 184,395.5 L184,493.5 A2.5,2.5 0 0 1 181.5,496 L32.5,496 A2.5,2.5 0 0 1 30,493.5 L30,375.5 A2.5,2.5 0 0 1 32.5,373" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="30" x2="81.15" y1="393" y2="393"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="38.15" x="34" y="385.889">sub_a</text>
+    </g>
+    <!--cluster B-->
+    <g class="cluster" data-qualified-name="B" data-source-line="18" id="ent0013">
+      <path d="M16.5,12 L26.862,12 A3.75,3.75 0 0 1 29.362,14.5 L36.363,32 L197.5,32 A2.5,2.5 0 0 1 200,34.5 L200,313.5 A2.5,2.5 0 0 1 197.5,316 L16.5,316 A2.5,2.5 0 0 1 14,313.5 L14,14.5 A2.5,2.5 0 0 1 16.5,12" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="36.363" y1="32" y2="32"/>
+      <text fill="#000" font-size="14" font-weight="700" x="18" y="24.889">B</text>
+    </g>
+    <!--cluster sub_b-->
+    <g class="cluster" data-qualified-name="B.sub_b" data-source-line="24" id="ent0019">
+      <path d="M32.5,53 L71.65,53 A3.75,3.75 0 0 1 74.15,55.5 L81.15,73 L181.5,73 A2.5,2.5 0 0 1 184,75.5 L184,173.5 A2.5,2.5 0 0 1 181.5,176 L32.5,176 A2.5,2.5 0 0 1 30,173.5 L30,55.5 A2.5,2.5 0 0 1 32.5,53" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="30" x2="81.15" y1="73" y2="73"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="38.15" x="34" y="65.889">sub_b</text>
+    </g>
+    <!--entity a-->
+    <g class="entity" data-qualified-name="a" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="27.788" x="53.5" y="694"/>
+      <text fill="#000" font-size="14" x="63.5" y="707.889">a</text>
+    </g>
+    <!--entity b-->
+    <g class="entity" data-qualified-name="b" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="27.788" x="53.5" y="652"/>
+      <text fill="#000" font-size="14" x="63.5" y="665.889">b</text>
+    </g>
+    <!--entity a1-->
+    <g class="entity" data-qualified-name="A.a1" data-source-line="6" id="ent0004">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="35.575" x="49.5" y="596"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="59.5" y="609.889">a1</text>
+    </g>
+    <!--entity a2-->
+    <g class="entity" data-qualified-name="A.a2" data-source-line="7" id="ent0005">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="35.575" x="49.5" y="554"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="59.5" y="567.889">a2</text>
+    </g>
+    <!--entity a3-->
+    <g class="entity" data-qualified-name="A.a3" data-source-line="8" id="ent0006">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="35.575" x="49.5" y="512"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="59.5" y="525.889">a3</text>
+    </g>
+    <!--entity a4-->
+    <g class="entity" data-qualified-name="A.a4" data-source-line="9" id="ent0007">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="35.575" x="128.5" y="596"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="138.5" y="609.889">a4</text>
+    </g>
+    <!--entity a5-->
+    <g class="entity" data-qualified-name="A.a5" data-source-line="10" id="ent0008">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="35.575" x="128.5" y="554"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="138.5" y="567.889">a5</text>
+    </g>
+    <!--entity sa1-->
+    <g class="entity" data-qualified-name="A.sub_a.sa1" data-source-line="12" id="ent0010">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.575" x="46" y="456"/>
+      <text fill="#000" font-size="14" textLength="22.575" x="56" y="469.889">sa1</text>
+    </g>
+    <!--entity sa2-->
+    <g class="entity" data-qualified-name="A.sub_a.sa2" data-source-line="13" id="ent0011">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.575" x="46" y="414"/>
+      <text fill="#000" font-size="14" textLength="22.575" x="56" y="427.889">sa2</text>
+    </g>
+    <!--entity sa3-->
+    <g class="entity" data-qualified-name="A.sub_a.sa3" data-source-line="14" id="ent0012">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.575" x="125" y="456"/>
+      <text fill="#000" font-size="14" textLength="22.575" x="135" y="469.889">sa3</text>
+    </g>
+    <!--entity b1-->
+    <g class="entity" data-qualified-name="B.b1" data-source-line="19" id="ent0014">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="35.575" x="49.5" y="276"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="59.5" y="289.889">b1</text>
+    </g>
+    <!--entity b2-->
+    <g class="entity" data-qualified-name="B.b2" data-source-line="20" id="ent0015">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="35.575" x="49.5" y="234"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="59.5" y="247.889">b2</text>
+    </g>
+    <!--entity b3-->
+    <g class="entity" data-qualified-name="B.b3" data-source-line="21" id="ent0016">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="35.575" x="49.5" y="192"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="59.5" y="205.889">b3</text>
+    </g>
+    <!--entity b4-->
+    <g class="entity" data-qualified-name="B.b4" data-source-line="22" id="ent0017">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="35.575" x="128.5" y="276"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="138.5" y="289.889">b4</text>
+    </g>
+    <!--entity b5-->
+    <g class="entity" data-qualified-name="B.b5" data-source-line="23" id="ent0018">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="35.575" x="128.5" y="234"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="138.5" y="247.889">b5</text>
+    </g>
+    <!--entity sb1-->
+    <g class="entity" data-qualified-name="B.sub_b.sb1" data-source-line="25" id="ent0020">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.575" x="46" y="136"/>
+      <text fill="#000" font-size="14" textLength="22.575" x="56" y="149.889">sb1</text>
+    </g>
+    <!--entity sb2-->
+    <g class="entity" data-qualified-name="B.sub_b.sb2" data-source-line="26" id="ent0021">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.575" x="46" y="94"/>
+      <text fill="#000" font-size="14" textLength="22.575" x="56" y="107.889">sb2</text>
+    </g>
+    <!--entity sb3-->
+    <g class="entity" data-qualified-name="B.sub_b.sb3" data-source-line="27" id="ent0022">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.575" x="125" y="136"/>
+      <text fill="#000" font-size="14" textLength="22.575" x="135" y="149.889">sb3</text>
+    </g>
+  </g>
+</svg>

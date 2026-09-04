@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startwbs
+mainframe This is a **mainframe**
+* r
+** d1
+** d2
+@endwbs

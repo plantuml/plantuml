@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="438px" preserveAspectRatio="none" style="width:313px;height:438px;background:#FFFFFF;" version="1.1" viewBox="0 0 313 438" width="313px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="header" data-source-line="31">
+      <text fill="#800080" font-size="26" textLength="144.463" x="83.738" y="25.222">some header</text>
+    </g>
+    <g class="title" data-source-line="35">
+      <text fill="#00F" font-size="24" font-weight="700" textLength="69.3" x="121.319" y="60.667">My title</text>
+    </g>
+    <g>
+      <title>a</title>
+      <rect fill="#000" fill-opacity="0" height="32" width="8" x="137.075" y="111"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="140.575" x2="140.575" y1="111" y2="143"/>
+    </g>
+    <g>
+      <title>b</title>
+      <rect fill="#000" fill-opacity="0" height="32" width="8" x="168.863" y="111"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="172.363" x2="172.363" y1="111" y2="143"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="129.681" y="82"/>
+    <text fill="#000" font-size="14" x="136.681" y="99.889">a</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="161.469" y="82"/>
+    <text fill="#000" font-size="14" x="168.469" y="99.889">b</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="129.681" y="143"/>
+    <text fill="#000" font-size="14" x="136.681" y="160.889">a</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="161.469" y="143"/>
+    <text fill="#000" font-size="14" x="168.469" y="160.889">b</text>
+    <polygon fill="#181818" points="160.363,121,170.363,125,160.363,129,164.363,125" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="140.575" x2="166.363" y1="125" y2="125"/>
+    <g class="legend" data-source-line="39">
+      <rect fill="#FF0" height="130" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="241.938" x="35" y="207"/>
+      <text fill="#000" font-size="30" textLength="141.938" x="85" y="280.333">The legend</text>
+    </g>
+    <g class="caption" data-source-line="37">
+      <text fill="#000" font-size="32" textLength="187" x="62.469" y="393.889">This is caption</text>
+    </g>
+    <g class="footer" data-source-line="33">
+      <text fill="#F00" font-size="28" textLength="139.825" x="5" y="424.778">some footer</text>
+    </g>
+  </g>
+</svg>

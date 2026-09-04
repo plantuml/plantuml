@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="121px" preserveAspectRatio="none" style="width:247px;height:121px;background:#FFFFFF;" version="1.1" viewBox="0 0 247 121" width="247px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" font-weight="700" textLength="42.675" x="6" y="17.333">General</text>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="61.425" y1="6" y2="6"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="6" y2="23"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="61.425" y1="23" y2="23"/>
+    <line style="stroke:#000;stroke-width:1;" x1="61.425" x2="61.425" y1="23" y2="33"/>
+    <text fill="#000" font-size="12" textLength="55.425" x="6" y="44.333">Fullscreen</text>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="61.425" y1="33" y2="33"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="33" y2="50"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="61.425" y1="50" y2="50"/>
+    <line style="stroke:#000;stroke-width:1;" x1="61.425" x2="61.425" y1="50" y2="60"/>
+    <text fill="#000" font-size="12" textLength="47.4" x="6" y="71.333">Behavior</text>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="61.425" y1="60" y2="60"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="60" y2="77"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="61.425" y1="77" y2="77"/>
+    <line style="stroke:#000;stroke-width:1;" x1="61.425" x2="61.425" y1="77" y2="87"/>
+    <text fill="#000" font-size="12" textLength="36.75" x="6" y="98.333">Saving</text>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="61.425" y1="87" y2="87"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="87" y2="104"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="61.425" y1="104" y2="104"/>
+    <line style="stroke:#000;stroke-width:1;" x1="61.425" x2="61.425" y1="104" y2="114"/>
+    <text fill="#000" font-size="12" textLength="74.7" x="65.425" y="17.333">Open image in:</text>
+    <rect fill="#EEE" height="15" style="stroke:#000;stroke-width:1;" width="95" x="142.125" y="8"/>
+    <text fill="#000" font-size="12" textLength="61.95" x="144.125" y="19.333">Smart Mode</text>
+    <line style="stroke:#000;stroke-width:1;" x1="226.125" x2="226.125" y1="8" y2="23"/>
+    <polygon fill="#000" points="229.125,14,235.125,14,232.125,18" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="12" textLength="151.425" x="84.425" y="36.333">Smooth images when zoomed</text>
+    <rect fill="none" height="10" style="stroke:#000;stroke-width:1.5;" width="10" x="66.425" y="28"/>
+    <polygon fill="#000" points="67.425,33,70.425,36,77.425,27,70.425,34" style="stroke:#000;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="12" textLength="116.775" x="84.425" y="50.333">Confirm image deletion</text>
+    <rect fill="none" height="10" style="stroke:#000;stroke-width:1.5;" width="10" x="66.425" y="42"/>
+    <polygon fill="#000" points="67.425,47,70.425,50,77.425,41,70.425,48" style="stroke:#000;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="12" textLength="104.85" x="84.425" y="64.333">Show hidden images</text>
+    <rect fill="none" height="10" style="stroke:#000;stroke-width:1.5;" width="10" x="66.425" y="56"/>
+    <rect fill="#EEE" height="16" rx="5" ry="5" style="stroke:#000;stroke-width:2.5;" width="44" x="66.925" y="71.5"/>
+    <text fill="#000" font-size="12" textLength="30.75" x="73.55" y="82.833">Close</text>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="62.425" y1="5" y2="5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="62.425" x2="241.125" y1="115" y2="115"/>
+    <line style="stroke:#000;stroke-width:1;" x1="62.425" x2="241.125" y1="5" y2="5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="62.425" y1="115" y2="115"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="5" y1="5" y2="115"/>
+    <line style="stroke:#000;stroke-width:1;" x1="241.125" x2="241.125" y1="5" y2="115"/>
+  </g>
+</svg>

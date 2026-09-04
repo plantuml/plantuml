@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="TIMING" height="238px" preserveAspectRatio="none" style="width:660px;height:238px;background:#FFFFFF;" version="1.1" viewBox="0 0 660 238" width="660px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="20" y1="20" y2="206"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="639.375" x2="639.375" y1="20" y2="206"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="34.375" x2="34.375" y1="20" y2="206"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="84.375" x2="84.375" y1="20" y2="206"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="134.375" x2="134.375" y1="20" y2="206"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="184.375" x2="184.375" y1="20" y2="206"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="234.375" x2="234.375" y1="20" y2="206"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="284.375" x2="284.375" y1="20" y2="206"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="334.375" x2="334.375" y1="20" y2="206"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="384.375" x2="384.375" y1="20" y2="206"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="434.375" x2="434.375" y1="20" y2="206"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="484.375" x2="484.375" y1="20" y2="206"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="534.375" x2="534.375" y1="20" y2="206"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="584.375" x2="584.375" y1="20" y2="206"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="634.375" x2="634.375" y1="20" y2="206"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="639.375" y1="20" y2="20"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="105.175" x="25" y="30.889">Binary Serial Data</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="131.175" y1="35" y2="35"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="131.175" x2="141.175" y1="35" y2="20"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="34.375" x2="34.375" y1="57" y2="57"/>
+    <text fill="#333" font-size="12" textLength="18.75" x="36.375" y="52.333">idle</text>
+    <line style="stroke:#006400;stroke-width:2;" x1="34.375" x2="134.375" y1="57" y2="57"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="134.375" x2="134.375" y1="43" y2="57"/>
+    <text fill="#333" font-size="12" textLength="23.25" x="136.375" y="52.333">start</text>
+    <line style="stroke:#006400;stroke-width:2;" x1="134.375" x2="184.375" y1="43" y2="43"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="184.375" x2="184.375" y1="43" y2="57"/>
+    <text fill="#333" font-size="12" textLength="22.05" x="186.375" y="52.333">1 lsb</text>
+    <line style="stroke:#006400;stroke-width:2;" x1="184.375" x2="234.375" y1="57" y2="57"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="234.375" x2="234.375" y1="43" y2="57"/>
+    <text fill="#333" font-size="12" x="236.375" y="52.333">0</text>
+    <line style="stroke:#006400;stroke-width:2;" x1="234.375" x2="484.375" y1="43" y2="43"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="484.375" x2="484.375" y1="43" y2="57"/>
+    <text fill="#333" font-size="12" x="486.375" y="52.333">1</text>
+    <line style="stroke:#006400;stroke-width:2;" x1="484.375" x2="534.375" y1="57" y2="57"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="534.375" x2="534.375" y1="43" y2="57"/>
+    <text fill="#333" font-size="12" textLength="29.325" x="536.375" y="52.333">0 msb</text>
+    <line style="stroke:#006400;stroke-width:2;" x1="534.375" x2="584.375" y1="43" y2="43"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="584.375" x2="584.375" y1="43" y2="57"/>
+    <text fill="#333" font-size="12" textLength="22.65" x="586.375" y="52.333">stop</text>
+    <line style="stroke:#006400;stroke-width:2;" x1="584.375" x2="634.375" y1="57" y2="57"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="639.375" y1="65" y2="65"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="44.363" x="25" y="75.889">Robust</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="70.363" y1="80" y2="80"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="70.363" x2="80.363" y1="80" y2="65"/>
+    <text fill="#333" font-size="12" textLength="9.375" x="25" y="114.333">lo</text>
+    <text fill="#333" font-size="12" textLength="9.375" x="25" y="94.333">hi</text>
+    <line style="stroke:#006400;stroke-width:2;" x1="34.375" x2="134.375" y1="110" y2="110"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="134.375" x2="184.375" y1="90" y2="90"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="184.375" x2="234.375" y1="110" y2="110"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="234.375" x2="484.375" y1="90" y2="90"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="484.375" x2="534.375" y1="110" y2="110"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="534.375" x2="584.375" y1="90" y2="90"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="584.375" x2="634.375" y1="110" y2="110"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="134.375" x2="134.375" y1="90" y2="110"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="184.375" x2="184.375" y1="90" y2="110"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="234.375" x2="234.375" y1="90" y2="110"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="484.375" x2="484.375" y1="90" y2="110"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="534.375" x2="534.375" y1="90" y2="110"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="584.375" x2="584.375" y1="90" y2="110"/>
+    <text fill="#333" font-size="12" textLength="18.75" x="36.375" y="107.333">idle</text>
+    <text fill="#333" font-size="12" textLength="23.25" x="136.375" y="87.333">start</text>
+    <text fill="#333" font-size="12" textLength="22.05" x="186.375" y="107.333">1 lsb</text>
+    <text fill="#333" font-size="12" x="236.375" y="87.333">0</text>
+    <text fill="#333" font-size="12" x="486.375" y="107.333">1</text>
+    <text fill="#333" font-size="12" textLength="29.325" x="536.375" y="87.333">0 msb</text>
+    <text fill="#333" font-size="12" textLength="22.65" x="586.375" y="107.333">stop</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="639.375" y1="128" y2="128"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="50.663" x="25" y="138.889">Concise</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="76.663" y1="143" y2="143"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="76.663" x2="86.663" y1="143" y2="128"/>
+    <polygon fill="#E2E2F0" points="46.375,172,122.375,172,134.375,184,122.375,196,46.375,196,34.375,184" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="146.375,172,172.375,172,184.375,184,172.375,196,146.375,196,134.375,184" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="196.375,172,222.375,172,234.375,184,222.375,196,196.375,196,184.375,184" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="246.375,172,472.375,172,484.375,184,472.375,196,246.375,196,234.375,184" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="496.375,172,522.375,172,534.375,184,522.375,196,496.375,196,484.375,184" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="546.375,172,572.375,172,584.375,184,572.375,196,546.375,196,534.375,184" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="596.375,172,634.375,172,634.375,196,596.375,196,584.375,184" style="stroke:#E2E2F0;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M634.375,172 L596.375,172 L584.375,184 L596.375,196 L634.375,196" fill="#E2E2F0" style="stroke:#006400;stroke-width:1.5;"/>
+    <text fill="#333" font-size="12" font-weight="700" x="81.038" y="187.333">1</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="18.75" x="46.375" y="169.333">idle</text>
+    <text fill="#333" font-size="12" font-weight="700" x="156.038" y="187.333">0</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="23.25" x="146.375" y="169.333">start</text>
+    <text fill="#333" font-size="12" font-weight="700" x="206.038" y="187.333">1</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="15.375" x="196.375" y="169.333">lsb</text>
+    <text fill="#333" font-size="12" font-weight="700" x="356.038" y="187.333">0</text>
+    <text fill="#333" font-size="12" font-weight="700" x="506.038" y="187.333">1</text>
+    <text fill="#333" font-size="12" font-weight="700" x="556.038" y="187.333">0</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="22.65" x="546.375" y="169.333">msb</text>
+    <text fill="#333" font-size="12" font-weight="700" x="596.375" y="187.333">1</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="22.65" x="596.375" y="169.333">stop</text>
+    <line style="stroke:#8B0000;stroke-width:1.5;" x1="188.375" x2="580.375" y1="151.5" y2="151.5"/>
+    <polygon fill="#8B0000" points="193.375,155.5,193.375,147.5,185.375,151.5" style="stroke:#8B0000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#8B0000" points="575.375,155.5,575.375,147.5,583.375,151.5" style="stroke:#8B0000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#8B0000" font-size="12" textLength="205.35" x="281.7" y="143.833">Serial data bits for ASCII "A" (Little Endian)</text>
+    <line style="stroke:#333;stroke-width:2;" x1="184.375" x2="184.375" y1="206" y2="211"/>
+    <line style="stroke:#333;stroke-width:2;" x1="234.375" x2="234.375" y1="206" y2="211"/>
+    <line style="stroke:#333;stroke-width:2;" x1="284.375" x2="284.375" y1="206" y2="211"/>
+    <line style="stroke:#333;stroke-width:2;" x1="334.375" x2="334.375" y1="206" y2="211"/>
+    <line style="stroke:#333;stroke-width:2;" x1="384.375" x2="384.375" y1="206" y2="211"/>
+    <line style="stroke:#333;stroke-width:2;" x1="434.375" x2="434.375" y1="206" y2="211"/>
+    <line style="stroke:#333;stroke-width:2;" x1="484.375" x2="484.375" y1="206" y2="211"/>
+    <line style="stroke:#333;stroke-width:2;" x1="534.375" x2="534.375" y1="206" y2="211"/>
+    <line style="stroke:#333;stroke-width:2;" x1="584.375" x2="584.375" y1="206" y2="211"/>
+    <line style="stroke:#333;stroke-width:2;" x1="634.375" x2="634.375" y1="206" y2="211"/>
+    <line style="stroke:#333;stroke-width:2;" x1="184.375" x2="634.375" y1="206" y2="206"/>
+    <text fill="#333" font-size="11" textLength="9.763" x="29.494" y="220.556">-3</text>
+    <text fill="#333" font-size="11" textLength="9.763" x="129.494" y="220.556">-1</text>
+    <text fill="#333" font-size="11" x="181.316" y="220.556">0</text>
+    <text fill="#333" font-size="11" x="231.316" y="220.556">1</text>
+    <text fill="#333" font-size="11" x="481.316" y="220.556">6</text>
+    <text fill="#333" font-size="11" x="531.316" y="220.556">7</text>
+    <text fill="#333" font-size="11" x="581.316" y="220.556">8</text>
+  </g>
+</svg>

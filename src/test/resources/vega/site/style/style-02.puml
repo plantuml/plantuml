@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startuml
+<style>
+  /* Global style for all elements */
+  element {
+    BackGroundColor: #f5f5f5;
+  }
+
+  /* Specific styles for sequence diagrams */
+  sequenceDiagram {
+    participant {
+      FontColor: darkblue;
+      FontSize: 24;
+      FontStyle: bold;
+    }
+    arrow {
+      LineColor: #008000;
+      FontColor: #006400;
+    }
+  }
+</style>
+
+participant Alice
+participant Bob
+
+Alice -> Bob : Combined Styles Example
+
+@enduml

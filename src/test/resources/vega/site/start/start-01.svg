@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="56px" preserveAspectRatio="none" style="width:48px;height:56px;background:#FFFFFF;" version="1.1" viewBox="0 0 48 56" width="48px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity .-->
+    <g class="entity" data-qualified-name="." data-source-line="1" id="ent0001">
+      <ellipse cx="15" cy="21" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="13.075" y="48.889">.</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0001" data-link-type="association" id="lnk2">
+      <path d="M24.129,20.361 C32.701,18.475 42,19.688 42,24 C42,28.313 32.701,29.525 24.129,27.639" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

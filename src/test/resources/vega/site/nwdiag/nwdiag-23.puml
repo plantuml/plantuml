@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startnwdiag
+nwdiag {
+  network NETWORK_BASE {
+   dev_A [address = "dev_A" ]
+   dev_B [address = "dev_B" ]
+  }
+  network IntNET1 {
+   dev_B [address = "dev_B1" ]
+   dev_M [address = "dev_M1" ]
+  }
+  network IntNET2 {
+   dev_B [address = "dev_B2" ]
+   dev_M [address = "dev_M2" ]
+ }
+}
+@endnwdiag

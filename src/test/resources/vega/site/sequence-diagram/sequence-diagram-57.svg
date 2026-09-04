@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="152px" preserveAspectRatio="none" style="width:272px;height:152px;background:#FFFFFF;" version="1.1" viewBox="0 0 272 152" width="272px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>.. Generated ..</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="62.981" y="53"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="66.481" x2="66.481" y1="53" y2="98"/>
+    </g>
+    <g>
+      <title>C .. Testable ..</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="193.775" y="53"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="197.275" x2="197.275" y1="53" y2="98"/>
+    </g>
+    <rect fill="#E2E2F0" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="112.963" x="10" y="10"/>
+    <text fill="#000" font-size="14" font-style="italic" textLength="98.963" x="17" y="27.889">&lt;&lt; Generated &gt;&gt;</text>
+    <text fill="#000" font-size="14" textLength="75.513" x="28.725" y="41.889">Famous Bob</text>
+    <rect fill="#E2E2F0" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="128.625" x="132.963" y="10"/>
+    <ellipse cx="150.963" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="145.963" y="33">C</text>
+    <text fill="#000" font-size="14" font-style="italic" textLength="86.625" x="167.963" y="27.889">&lt;&lt; Testable &gt;&gt;</text>
+    <text fill="#000" font-size="14" textLength="30.45" x="196.05" y="41.889">Alice</text>
+    <rect fill="#E2E2F0" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="112.963" x="10" y="98"/>
+    <text fill="#000" font-size="14" font-style="italic" textLength="98.963" x="17" y="115.889">&lt;&lt; Generated &gt;&gt;</text>
+    <text fill="#000" font-size="14" textLength="75.513" x="28.725" y="129.889">Famous Bob</text>
+    <rect fill="#E2E2F0" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="128.625" x="132.963" y="98"/>
+    <ellipse cx="150.963" cy="116" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="145.963" y="121">C</text>
+    <text fill="#000" font-size="14" font-style="italic" textLength="86.625" x="167.963" y="115.889">&lt;&lt; Testable &gt;&gt;</text>
+    <text fill="#000" font-size="14" textLength="30.45" x="196.05" y="129.889">Alice</text>
+    <polygon fill="#181818" points="185.275,76,195.275,80,185.275,84,189.275,80" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="66.481" x2="191.275" y1="80" y2="80"/>
+    <text fill="#000" font-size="13" textLength="78" x="73.481" y="75.111">First message</text>
+  </g>
+</svg>

@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startchen
+
+entity CUSTOMER {
+}
+
+entity EMPLOYEE {
+}
+
+entity PERSON {
+}
+
+PERSON ->- U { CUSTOMER, EMPLOYEE }
+
+@endchen

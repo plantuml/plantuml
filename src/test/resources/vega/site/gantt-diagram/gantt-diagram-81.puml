@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startgantt
+project starts on 2020-07-01
+[P_start] happens 2020-07-03
+[P_end]   happens 2020-07-13
+[Prototype design] occurs from [P_start] to [P_end]
+@endgantt

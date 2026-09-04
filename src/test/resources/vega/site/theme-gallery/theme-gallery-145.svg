@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="232.292px" preserveAspectRatio="none" style="width:245px;height:232px;" version="1.1" viewBox="0 0 245 232" width="245.833px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="g838xlqk6jruv0" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#D3F198"/>
+      <stop offset="100%" stop-color="#B5E853"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#B5E853;stroke-width:3.125;" x1="52.793" x2="52.793" y1="89.583" y2="110.417"/>
+    <rect fill="url(#g838xlqk6jruv0)" height="25" rx="20.833" ry="20.833" style="stroke:#D3F198;stroke-width:1.042;" width="63.919" x="20.833" y="110.417"/>
+    <text fill="#151515" font-family="'Verdana'" font-size="14.583" font-weight="700" textLength="53.503" x="26.042" y="126.968">America</text>
+    <line style="stroke:#B5E853;stroke-width:3.125;" x1="52.793" x2="63.21" y1="153.125" y2="153.125"/>
+    <text fill="#151515" font-family="'Verdana'" font-size="12.5" textLength="43.828" x="63.21" y="156.597">Canada</text>
+    <line style="stroke:#B5E853;stroke-width:3.125;" x1="52.793" x2="63.21" y1="178.125" y2="178.125"/>
+    <text fill="#151515" font-family="'Verdana'" font-size="12.5" textLength="39.609" x="63.21" y="181.597">Mexico</text>
+    <line style="stroke:#B5E853;stroke-width:3.125;" x1="52.793" x2="63.21" y1="203.125" y2="203.125"/>
+    <text fill="#151515" font-family="'Verdana'" font-size="12.5" textLength="25.781" x="63.21" y="206.597">USA</text>
+    <line style="stroke:#B5E853;stroke-width:3.125;" x1="52.793" x2="52.793" y1="135.417" y2="203.125"/>
+    <line style="stroke:#B5E853;stroke-width:3.125;" x1="159.72" x2="159.72" y1="89.583" y2="110.417"/>
+    <rect fill="url(#g838xlqk6jruv0)" height="25" rx="20.833" ry="20.833" style="stroke:#D3F198;stroke-width:1.042;" width="57.448" x="130.996" y="110.417"/>
+    <text fill="#151515" font-family="'Verdana'" font-size="14.583" font-weight="700" textLength="47.031" x="136.204" y="126.968">Europe</text>
+    <line style="stroke:#B5E853;stroke-width:3.125;" x1="159.72" x2="170.137" y1="153.125" y2="153.125"/>
+    <text fill="#151515" font-family="'Verdana'" font-size="12.5" textLength="45.938" x="170.137" y="156.597">England</text>
+    <line style="stroke:#B5E853;stroke-width:3.125;" x1="159.72" x2="170.137" y1="178.125" y2="178.125"/>
+    <text fill="#151515" font-family="'Verdana'" font-size="12.5" textLength="51.328" x="170.137" y="181.597">Germany</text>
+    <line style="stroke:#B5E853;stroke-width:3.125;" x1="159.72" x2="170.137" y1="203.125" y2="203.125"/>
+    <text fill="#151515" font-family="'Verdana'" font-size="12.5" textLength="32.031" x="170.137" y="206.597">Spain</text>
+    <line style="stroke:#B5E853;stroke-width:3.125;" x1="159.72" x2="159.72" y1="135.417" y2="203.125"/>
+    <line style="stroke:#B5E853;stroke-width:3.125;" x1="52.793" x2="159.72" y1="89.583" y2="89.583"/>
+    <rect fill="url(#g838xlqk6jruv0)" height="47.917" rx="20.833" ry="20.833" style="stroke:#D3F198;stroke-width:1.042;" width="74.792" x="68.861" y="20.833"/>
+    <text fill="#6A9FB5" font-family="'Verdana'" font-size="16.667" font-weight="700" textLength="43.542" x="84.486" y="49.421">World</text>
+    <line style="stroke:#B5E853;stroke-width:3.125;" x1="106.257" x2="106.257" y1="68.75" y2="89.583"/>
+  </g>
+</svg>

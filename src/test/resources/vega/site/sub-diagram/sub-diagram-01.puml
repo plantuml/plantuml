@@ -1,0 +1,31 @@
+---
+output: svg
+---
+@startuml
+abstract ATest {
+  {static} +String id
+  {abstract} -void doit()
+}
+
+class Test {
+  -int count
+  -int max
+  -int increment
+  -void doit()
+}
+
+ATest <|-- Test
+
+note right of Test::doit()
+{{
+  skinparam backgroundcolor transparent
+  start
+
+  while (count < max?)
+    :count = count + increment;
+  endwhile
+
+  stop
+}}
+end note
+@enduml

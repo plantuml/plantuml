@@ -1,0 +1,47 @@
+---
+output: svg
+---
+@startuml
+!include <edgy/edgy2>
+
+$baseFacet("Basic elements") {
+  $people("People")
+  $outcome("Outcome")
+  $activity("Activity")
+  $object("Object")
+}
+@enduml
+
+
+## Elastic library [elastic]
+
+|  Type   | Link |
+| ------- | ---- |
+| `stdlib`| [https://github.com/plantuml/plantuml-stdlib/tree/master/elastic](https://github.com/plantuml/plantuml-stdlib/tree/master/elastic) |
+| `src`   | [https://github.com/Crashedmind/PlantUML-Elastic-icons](https://github.com/Crashedmind/PlantUML-Elastic-icons) |
+| `orig`  | [Elastic](https://www.elastic.co) |
+
+The Elastic library consists of [Elastic](https://www.elastic.co) icons.
+It is similar in use to the AWS and Azure libraries (it used the same tool to create them).
+
+Use it by including the file that contains the sprite, eg: ``!include elastic/elastic_search/elastic_search>``.
+When imported, you can use the sprite as normally you would, using ``<$sprite_name>``.
+
+You may also include the ``common.puml`` file, eg: ``!include <elastic/common>``, which contains helper macros defined.
+With the ``common.puml`` imported, you can use the ``NAME//OF//SPRITE(parameters...)`` macro.
+
+Example of usage:
+<plantuml>
+@startuml
+!include <elastic/common>
+!include <elastic/elasticsearch/elasticsearch>
+!include <elastic/logstash/logstash>
+!include <elastic/kibana/kibana>
+
+ELASTICSEARCH(ElasticSearch, "Search and Analyze",database)
+LOGSTASH(Logstash, "Parse and Transform",node)
+KIBANA(Kibana, "Visualize",agent)
+
+Logstash -right-> ElasticSearch: Transformed Data
+ElasticSearch -right-> Kibana: Data to View
+@enduml

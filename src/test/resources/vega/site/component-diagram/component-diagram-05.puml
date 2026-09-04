@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+[Component] as C
+
+note top of C: A top note
+
+note bottom of C
+  A bottom note can also
+  be on several lines
+end note
+
+note left of C
+  A left note can also
+  be on several lines
+end note
+
+note right of C: A right note
+@enduml

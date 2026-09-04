@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="195px" preserveAspectRatio="none" style="width:184px;height:195px;background:#FFFFFF;" version="1.1" viewBox="0 0 184 195" width="184px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="59.375" x="61.491" y="69.056"/>
+    <text fill="#000" font-size="12" textLength="39.375" x="71.491" y="88.389">read file</text>
+    <polygon fill="#F1F1F1" points="56.906,15,125.45,15,137.45,27,125.45,39,56.906,39,44.906,27,56.906,15" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="11" textLength="45.169" x="95.178" y="47.556">not empty</text>
+    <text fill="#000" font-size="11" textLength="68.544" x="56.906" y="30.056">check filesize ?</text>
+    <text fill="#000" font-size="11" textLength="29.906" x="15" y="24.556">empty</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="63.425" x="59.466" y="143.056"/>
+    <text fill="#000" font-size="12" textLength="43.425" x="69.466" y="162.389">close file</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="91.178" x2="91.178" y1="39" y2="69.056"/>
+    <polygon fill="#181818" points="87.178,59.056,91.178,69.056,95.178,59.056,91.178,63.056" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="91.178" x2="91.178" y1="101.056" y2="111.056"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="91.178" x2="149.45" y1="111.056" y2="111.056"/>
+    <polygon fill="#181818" points="145.45,77.556,149.45,67.556,153.45,77.556,149.45,73.556" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="149.45" x2="149.45" y1="27" y2="111.056"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="149.45" x2="137.45" y1="27" y2="27"/>
+    <polygon fill="#181818" points="147.45,23,137.45,27,147.45,31,143.45,27" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="44.906" x2="32.906" y1="27" y2="27"/>
+    <polygon fill="#181818" points="28.906,63.556,32.906,73.556,36.906,63.556,32.906,67.556" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="32.906" x2="32.906" y1="27" y2="123.056"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="32.906" x2="91.178" y1="123.056" y2="123.056"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="91.178" x2="91.178" y1="123.056" y2="143.056"/>
+    <polygon fill="#181818" points="87.178,133.056,91.178,143.056,95.178,133.056,91.178,137.056" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="288px" preserveAspectRatio="none" style="width:246px;height:288px;background:#FFFFFF;" version="1.1" viewBox="0 0 246 288" width="246px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="209" width="8" x="64.266" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="67.766" x2="67.766" y1="39" y2="248"/>
+    </g>
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="209" width="8" x="115.959" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="119.459" x2="119.459" y1="39" y2="248"/>
+    </g>
+    <g>
+      <title>Charlie</title>
+      <rect fill="#000" fill-opacity="0" height="209" width="8" x="174.653" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="178.153" x2="178.153" y1="39" y2="248"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="45.541" y="10"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="52.541" y="27.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="99.991" y="10"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="106.991" y="27.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58.45" x="148.928" y="10"/>
+    <text fill="#000" font-size="14" textLength="44.45" x="155.928" y="27.889">Charlie</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="45.541" y="248"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="52.541" y="265.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="99.991" y="248"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="106.991" y="265.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58.45" x="148.928" y="248"/>
+    <text fill="#000" font-size="14" textLength="44.45" x="155.928" y="265.889">Charlie</text>
+    <polygon fill="#181818" points="107.459,62,117.459,66,107.459,70,111.459,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="67.766" x2="113.459" y1="66" y2="66"/>
+    <text fill="#000" font-size="13" textLength="18.038" x="74.766" y="61.111">m1</text>
+    <polygon fill="#181818" points="166.153,89,176.153,93,166.153,97,170.153,93" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="119.459" x2="172.153" y1="93" y2="93"/>
+    <text fill="#000" font-size="13" textLength="18.038" x="126.459" y="88.111">m2</text>
+    <path d="M15,106 L15,142 L230,142 L230,116 L220,106 L15,106" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M220,106 L220,116 L230,116 L220,106" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="194.919" x="21" y="121.111">Old method for note over all part. with:</text>
+    <text fill="#000" font-size="13" x="21" y="134.111"> </text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="50.537" x="21" y="134.111">note over</text>
+    <text fill="#000" font-family="monospace" font-size="13" font-style="italic" textLength="100.994" x="71.538" y="134.111">FirstPart, LastPart</text>
+    <text fill="#000" font-size="13" x="172.531" y="134.111">.</text>
+    <path d="M47.041,152 L47.041,188 L198.041,188 L198.041,162 L188.041,152 L47.041,152" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M188.041,152 L188.041,162 L198.041,162 L188.041,152" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="96.119" x="70.4" y="167.111">New method with:</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="63.537" x="70.4" y="180.111">note across</text>
+    <polygon fill="#181818" points="78.766,195,68.766,199,78.766,203,74.766,199" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="72.766" x2="118.459" y1="199" y2="199"/>
+    <polygon fill="#FEFFDD" points="57.041,212,188.041,212,198.041,222,188.041,233,57.041,233,47.041,222,57.041,212" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="104.731" x="70.594" y="226.111">Note across all part.</text>
+  </g>
+</svg>

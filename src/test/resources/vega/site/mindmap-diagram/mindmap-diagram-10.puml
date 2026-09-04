@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startmindmap
+*[#Orange] root node
+ *[#lightgreen] some first level node
+  *[#FFBBCC] second level node
+  *[#lightblue] another second level node
+ *[#lightgreen] another first level node
+@endmindmap

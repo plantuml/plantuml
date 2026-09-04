@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startnwdiag
+!include <office/Servers/application_server>
+!include <office/Servers/database_server>
+
+nwdiag {
+  network dmz {
+      address = "210.x.x.x/24"
+
+      // set multiple addresses (using comma)
+      web01 [address = "210.x.x.1, 210.x.x.20",  description = "<$application_server>\n web01"]
+      web02 [address = "210.x.x.2",  description = "<$application_server>\n web02"];
+  }
+  network internal {
+      address = "172.x.x.x/24";
+
+      web01 [address = "172.x.x.1"];
+      web02 [address = "172.x.x.2"];
+      db01 [address = "172.x.x.100",  description = "<$database_server>\n db01"];
+      db02 [address = "172.x.x.101",  description = "<$database_server>\n db02"];
+  }
+}
+@endnwdiag

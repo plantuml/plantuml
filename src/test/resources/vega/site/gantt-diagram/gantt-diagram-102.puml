@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startgantt
+[A] lasts 2 days
+[B] lasts 2 weeks
+[C] lasts 1 month
+@endgantt

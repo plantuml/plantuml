@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+class Car
+Car "1" *-- "*" Wheel [[http://plantuml.com/class-diagram]] : has some
+@enduml

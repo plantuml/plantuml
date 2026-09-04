@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="NWDIAG" height="287px" preserveAspectRatio="none" style="width:227px;height:287px;background:#FFFFFF;" version="1.1" viewBox="0 0 227 287" width="227px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="22.65" x="21.725" y="14.333">dmz</text>
+    <text fill="#000" font-size="12" textLength="39.375" x="5" y="140.333">internal</text>
+    <rect fill="#CFC" height="194.5" style="stroke:#E7E7E7;stroke-width:1;" width="150.8" x="59.375" y="38.5"/>
+    <text fill="#000" font-size="12" textLength="115.425" x="64.375" y="47.833">Long group description</text>
+    <rect fill="#E2E2F0" height="5" style="stroke:#181818;stroke-width:1;" width="170.8" x="49.375" y="8.5"/>
+    <rect fill="#E2E2F0" height="5" style="stroke:#181818;stroke-width:1;" width="170.8" x="49.375" y="134.5"/>
+    <path d="M94.075,13.5 L94.075,55.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M94.075,87.5 L94.075,134.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M179.475,13.5 L179.475,55.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M179.475,87.5 L179.475,134.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M90.075,139.5 L90.075,187" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="11" textLength="21.381" x="79.384" y="157.806">.101</text>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="55.4" x="64.375" y="55.5"/>
+    <text fill="#000" font-size="12" textLength="35.4" x="74.375" y="74.833">web01</text>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="55.4" x="149.775" y="55.5"/>
+    <text fill="#000" font-size="12" textLength="35.4" x="159.775" y="74.833">web02</text>
+    <path d="M68.725,197 C68.725,187 92.075,187 92.075,187 C92.075,187 115.425,187 115.425,197 L115.425,218 C115.425,228 92.075,228 92.075,228 C92.075,228 68.725,228 68.725,218 L68.725,197" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M68.725,197 C68.725,207 92.075,207 92.075,207 C92.075,207 115.425,207 115.425,197" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="12" textLength="26.7" x="78.725" y="220.333">db01</text>
+  </g>
+</svg>

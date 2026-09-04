@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="124px" preserveAspectRatio="none" style="width:99px;height:124px;background:#FFFFFF;" version="1.1" viewBox="0 0 99 124" width="99px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="30" x="6" y="15.333">Text1</text>
+    <line style="stroke:#AAA;stroke-width:1;stroke-dasharray:1,2;" x1="6" x2="93" y1="23.5" y2="23.5"/>
+    <text fill="#000" font-size="12" textLength="53.4" x="9" y="37.333">Some field</text>
+    <line style="stroke:#000;stroke-width:1;" x1="7" x2="90" y1="40" y2="40"/>
+    <line style="stroke:#000;stroke-width:1;" x1="7" x2="7" y1="37" y2="39"/>
+    <line style="stroke:#000;stroke-width:1;" x1="90" x2="90" y1="37" y2="39"/>
+    <line style="stroke:#AAA;stroke-width:1;" x1="6" x2="93" y1="46.5" y2="46.5"/>
+    <line style="stroke:#AAA;stroke-width:1;" x1="6" x2="93" y1="48.5" y2="48.5"/>
+    <text fill="#000" font-size="12" textLength="71.4" x="6" y="61.333">Note on usage</text>
+    <line style="stroke:#AAA;stroke-width:1.5;" x1="6" x2="93" y1="69.5" y2="69.5"/>
+    <text fill="#000" font-size="12" textLength="61.275" x="6" y="83.333">Another text</text>
+    <line style="stroke:#AAA;stroke-width:1;" x1="6" x2="93" y1="91.5" y2="91.5"/>
+    <rect fill="#EEE" height="16" rx="5" ry="5" style="stroke:#000;stroke-width:2.5;" width="20" x="8.5" y="98.5"/>
+    <text fill="#000" font-size="12" textLength="15.3" x="10.85" y="109.833">Ok</text>
+  </g>
+</svg>

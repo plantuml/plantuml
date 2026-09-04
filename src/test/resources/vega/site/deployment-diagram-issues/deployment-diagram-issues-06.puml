@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startuml
+<style>
+node {
+  BackGroundColor palegreen
+  LineThickness 2
+  LineColor red
+}
+package {
+  BackGroundColor palegreen
+  LineThickness 2
+  LineColor red
+}
+</style>
+package package
+package package_empty_nested {
+}
+package package_nested {
+node n
+}
+node node
+node node_empty_nested {
+}
+node node_nested {
+node m
+}
+footer \nObserved on    : 1.2021.9beta2\n(current version: %version())
+@enduml

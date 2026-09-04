@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startgantt
+[Task1] on {Alice} requires 10 days
+[Task2] on {Bob:50%} requires 2 days
+then [Task3] on {Alice:25%} requires 1 days
+then [Task4] on {Alice:25%} {Bob} requires 1 days
+@endgantt

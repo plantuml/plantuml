@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+archimate #Technology "VPN Server" as vpnServerA <<technology-device>>
+
+rectangle GO #lightgreen
+rectangle STOP #red
+rectangle WAIT #orange
+@enduml

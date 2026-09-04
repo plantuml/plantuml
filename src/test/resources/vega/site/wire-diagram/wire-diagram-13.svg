@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WIRE" height="1201px" preserveAspectRatio="none" style="width:301px;height:1201px;background:#FFFFFF;" version="1.1" viewBox="0 0 301 1201" width="301px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="none" height="370" style="stroke:#000;stroke-width:1;" width="120" x="20" y="30"/>
+    <rect fill="none" height="100" style="stroke:#000;stroke-width:1;" width="100" x="30" y="50"/>
+    <text fill="#000" font-size="12" textLength="30.6" x="35" y="59.333">SOMI</text>
+    <rect fill="none" height="100" style="stroke:#000;stroke-width:1;" width="100" x="30" y="170"/>
+    <text fill="#000" font-size="12" textLength="30.6" x="35" y="179.333">SIMO</text>
+    <rect fill="none" height="100" style="stroke:#000;stroke-width:1;" width="100" x="30" y="290"/>
+    <text fill="#000" font-size="12" textLength="31.425" x="35" y="299.333">SCLK</text>
+    <text fill="#000" font-size="12" textLength="54" x="25" y="39.333">MicroProc</text>
+    <rect fill="none" height="370" style="stroke:#000;stroke-width:1;" width="120" x="160" y="30"/>
+    <rect fill="none" height="100" style="stroke:#000;stroke-width:1;" width="100" x="170" y="50"/>
+    <text fill="#000" font-size="12" textLength="30.6" x="175" y="59.333">SOMI</text>
+    <rect fill="none" height="100" style="stroke:#000;stroke-width:1;" width="100" x="170" y="170"/>
+    <text fill="#000" font-size="12" textLength="30.6" x="175" y="179.333">SIMO</text>
+    <rect fill="none" height="100" style="stroke:#000;stroke-width:1;" width="100" x="170" y="290"/>
+    <text fill="#000" font-size="12" textLength="31.425" x="175" y="299.333">SCLK</text>
+    <text fill="#000" font-size="12" textLength="52.05" x="165" y="39.333">TMP125 1</text>
+    <rect fill="none" height="370" style="stroke:#000;stroke-width:1;" width="120" x="160" y="420"/>
+    <rect fill="none" height="100" style="stroke:#000;stroke-width:1;" width="100" x="170" y="440"/>
+    <text fill="#000" font-size="12" textLength="30.6" x="175" y="449.333">SOMI</text>
+    <rect fill="none" height="100" style="stroke:#000;stroke-width:1;" width="100" x="170" y="560"/>
+    <text fill="#000" font-size="12" textLength="30.6" x="175" y="569.333">SIMO</text>
+    <rect fill="none" height="100" style="stroke:#000;stroke-width:1;" width="100" x="170" y="680"/>
+    <text fill="#000" font-size="12" textLength="31.425" x="175" y="689.333">SCLK</text>
+    <text fill="#000" font-size="12" textLength="52.05" x="165" y="429.333">TMP125 2</text>
+    <rect fill="none" height="370" style="stroke:#000;stroke-width:1;" width="120" x="160" y="810"/>
+    <rect fill="none" height="100" style="stroke:#000;stroke-width:1;" width="100" x="170" y="830"/>
+    <text fill="#000" font-size="12" textLength="30.6" x="175" y="839.333">SOMI</text>
+    <rect fill="none" height="100" style="stroke:#000;stroke-width:1;" width="100" x="170" y="950"/>
+    <text fill="#000" font-size="12" textLength="30.6" x="175" y="959.333">SIMO</text>
+    <rect fill="none" height="100" style="stroke:#000;stroke-width:1;" width="100" x="170" y="1070"/>
+    <text fill="#000" font-size="12" textLength="31.425" x="175" y="1079.333">SCLK</text>
+    <text fill="#000" font-size="12" textLength="52.05" x="165" y="819.333">TMP125 3</text>
+    <text fill="#000" font-size="12" x="15" y="19.333"> </text>
+    <path d="M158,175 L153,170 L153,180 L158,175" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="131" x2="159" y1="175" y2="175"/>
+    <rect fill="#FFF" height="10" style="stroke:#FFF;stroke-width:1;" width="25.5" x="134" y="170"/>
+    <text fill="#000" font-size="10" textLength="25.5" x="134" y="177.778">SIMO</text>
+    <path d="M158,190 L153,185 L153,195 L158,190" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="131" x2="159" y1="190" y2="190"/>
+    <rect fill="#FFF" height="10" style="stroke:#FFF;stroke-width:1;" width="25.5" x="134" y="185"/>
+    <text fill="#000" font-size="10" textLength="25.5" x="134" y="192.778">SIMO</text>
+    <path d="M158,205 L153,200 L153,210 L158,205" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="131" x2="159" y1="205" y2="205"/>
+    <rect fill="#FFF" height="10" style="stroke:#FFF;stroke-width:1;" width="25.5" x="134" y="200"/>
+    <text fill="#000" font-size="10" textLength="25.5" x="134" y="207.778">SIMO</text>
+    <path d="M28,55 L23,50 L23,60 L28,55" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="271" x2="29" y1="55" y2="55"/>
+    <rect fill="#FFF" height="10" style="stroke:#FFF;stroke-width:1;" width="25.5" x="274" y="50"/>
+    <text fill="#000" font-size="10" textLength="25.5" x="274" y="57.778">SOMI</text>
+    <path d="M28,445 L23,440 L23,450 L28,445" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="271" x2="29" y1="445" y2="445"/>
+    <rect fill="#FFF" height="10" style="stroke:#FFF;stroke-width:1;" width="25.5" x="274" y="440"/>
+    <text fill="#000" font-size="10" textLength="25.5" x="274" y="447.778">SOMI</text>
+    <path d="M28,835 L23,830 L23,840 L28,835" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="271" x2="29" y1="835" y2="835"/>
+    <rect fill="#FFF" height="10" style="stroke:#FFF;stroke-width:1;" width="25.5" x="274" y="830"/>
+    <text fill="#000" font-size="10" textLength="25.5" x="274" y="837.778">SOMI</text>
+  </g>
+</svg>

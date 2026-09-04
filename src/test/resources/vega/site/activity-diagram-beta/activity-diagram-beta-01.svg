@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="132px" preserveAspectRatio="none" style="width:140px;height:132px;background:#FFFFFF;" version="1.1" viewBox="0 0 140 132" width="140px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="76.175" x="29.988" y="16"/>
+    <text fill="#000" font-size="12" textLength="56.175" x="39.988" y="35.333">Hello world</text>
+    <rect fill="#F1F1F1" height="44" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="104.15" x="16" y="68"/>
+    <text fill="#000" font-size="12" textLength="84.15" x="26" y="87.333">This is defined on</text>
+    <text fill="#000" font-size="12" textLength="38.7" x="26" y="99.333">several</text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="24.75" x="64.7" y="99.333">lines</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="68.075" x2="68.075" y1="48" y2="68"/>
+    <polygon fill="#181818" points="64.075,58,68.075,68,72.075,58,68.075,62" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

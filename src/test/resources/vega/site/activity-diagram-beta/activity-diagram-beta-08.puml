@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+if (color?) is (<color:red>red) then
+:print red;
+else
+:print not red;
+endif
+@enduml

@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startwire
+* first [70x70]
+move(10,20)
+* second_box [90x70]
+* third [70x70]
+
+goto(100,10)
+* last [70x70]
+
+goto(300,5)
+* big_container
+	* foo1 #lightBlue
+	* foo2 #AAA
+	* foo3
+
+@endwire

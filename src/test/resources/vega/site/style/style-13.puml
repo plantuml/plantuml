@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+<style>
+timingDiagram {
+  .bluecolor {
+    BackGroundColor LightSkyBlue
+  }
+}
+</style>
+concise "LR" as LR <<bluecolor>> #FFB6C1
+concise "ST" as ST
+
+LR is AtPlace
+ST is AtLoad
+
+@LR
+0 is Lowering
+100 is Lowered
+350 is Releasing
+
+@ST
+200 is Moving
+@enduml

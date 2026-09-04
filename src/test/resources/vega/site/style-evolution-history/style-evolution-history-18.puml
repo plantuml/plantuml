@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+skinparam useBetaStyle true
+stereotype foo1 {
+  FontColor red
+}
+style stereotype {
+  FontColor green
+}
+participant Bob <<foo1>>
+@enduml

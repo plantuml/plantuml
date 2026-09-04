@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="169px" preserveAspectRatio="none" style="width:433px;height:169px;background:#FFFFFF;" version="1.1" viewBox="0 0 433 169" width="433px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity DB1-->
+    <g class="entity" data-qualified-name="DB1" data-source-line="1" id="ent0001">
+      <path d="M6,22 C6,12 96.238,12 96.238,12 C96.238,12 186.475,12 186.475,22 L186.475,143 C186.475,153 96.238,153 96.238,153 C96.238,153 6,153 6,143 L6,22" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M6,22 C6,32 96.238,32 96.238,32 C96.238,32 186.475,32 186.475,22" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="160.475" x="16" y="46.889">You can have horizontal line</text>
+      <path d="M6,45 C6,55 96.238,55 96.238,55 C96.238,55 186.475,55 186.475,45" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" textLength="79.45" x="16" y="64.889">Or double line</text>
+      <path d="M6,67 C6,77 96.238,77 96.238,77 C96.238,77 186.475,77 186.475,67" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M6,69 C6,79 96.238,79 96.238,79 C96.238,79 186.475,79 186.475,69" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" textLength="76.212" x="16" y="86.889">Or strong line</text>
+      <path d="M6,89 C6,99 96.238,99 96.238,99 C96.238,99 186.475,99 186.475,89" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="76.212" x="16" y="108.889">Or dotted line</text>
+      <text fill="#000" font-size="14" textLength="38.938" x="16" y="140.889">Enjoy!</text>
+      <path d="M6,118 C6,128 96.238,128 96.238,128 C96.238,128 186.475,128 186.475,118" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;"/>
+      <rect fill="#F1F1F1" height="14" style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" width="40.425" x="76.025" y="115.5"/>
+      <text fill="#000" font-size="14" textLength="40.425" x="76.025" y="126.389">My title</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="13" id="ent0003">
+      <path d="M204.5,45 L204.5,78.5 L186.283,82.5 L204.5,86.5 L204.5,120 A0,0 0 0 0 204.5,120 L417.25,120 A0,0 0 0 0 417.25,120 L417.25,55 L407.25,45 L204.5,45 A0,0 0 0 0 204.5,45" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M407.25,45 L407.25,55 L417.25,55 L407.25,45" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="144.706" x="210.5" y="60.111">This is working also in notes</text>
+      <text fill="#000" font-size="13" textLength="191.75" x="210.5" y="73.111">You can also add title in all these lines</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="205.5" x2="298.566" y1="82.5" y2="82.5"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="205.5" x2="298.566" y1="84.5" y2="84.5"/>
+      <text fill="#000" font-size="13" textLength="24.619" x="298.566" y="85.611">Title</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="323.184" x2="416.25" y1="82.5" y2="82.5"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="323.184" x2="416.25" y1="84.5" y2="84.5"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="205.5" x2="278.009" y1="102" y2="102"/>
+      <text fill="#000" font-size="13" textLength="65.731" x="278.009" y="105.111">Another title</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="343.741" x2="416.25" y1="102" y2="102"/>
+    </g>
+  </g>
+</svg>

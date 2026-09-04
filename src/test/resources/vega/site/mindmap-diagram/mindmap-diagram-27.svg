@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="624px" preserveAspectRatio="none" style="width:683px;height:624px;background:#FFFFFF;" version="1.1" viewBox="0 0 683 624" width="683px" zoomAndPan="magnify">
+  <defs>
+    <filter height="1" id="b1u67ttu10atex0" width="1" x="0" y="0">
+      <feFlood flood-color="#FFA500" result="flood"/>
+      <feComposite in="SourceGraphic" in2="flood" operator="over"/>
+    </filter>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="134.45" x="297.938" y="294.5"/>
+    <text fill="#000" font-size="14" textLength="114.45" x="307.938" y="315.389">Creole on Mindmap</text>
+    <rect fill="#F1F1F1" height="238" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="180.475" x="482.388" y="68.5"/>
+    <text fill="#000" font-size="16" font-weight="700" textLength="72.2" x="492.388" y="90.944">Creole line</text>
+    <text fill="#000" font-size="14" textLength="160.475" x="492.388" y="105.389">You can have horizontal line</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="482.388" x2="662.863" y1="113.5" y2="113.5"/>
+    <text fill="#000" font-size="14" textLength="79.45" x="492.388" y="129.389">Or double line</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="482.388" x2="662.863" y1="137.5" y2="137.5"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="482.388" x2="662.863" y1="139.5" y2="139.5"/>
+    <text fill="#000" font-size="14" textLength="76.212" x="492.388" y="153.389">Or strong line</text>
+    <text fill="#000" font-size="14" textLength="31.15" x="492.388" y="167.389">____</text>
+    <text fill="#000" font-size="14" textLength="76.212" x="492.388" y="181.389">Or dotted line</text>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="482.388" x2="552.413" y1="191.5" y2="191.5"/>
+    <text fill="#000" font-size="14" textLength="40.425" x="552.413" y="194.889">My title</text>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="592.838" x2="662.863" y1="191.5" y2="191.5"/>
+    <text fill="#000" font-size="14" textLength="76.125" x="492.388" y="209.389">Or dotted title</text>
+    <text fill="#000" font-size="14" font-style="italic" textLength="56.7" x="492.388" y="223.389">and title...</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="482.388" x2="559.369" y1="233.5" y2="233.5"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="482.388" x2="559.369" y1="235.5" y2="235.5"/>
+    <text fill="#000" font-size="14" textLength="26.513" x="559.369" y="236.889">Title</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="585.881" x2="662.863" y1="233.5" y2="233.5"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="585.881" x2="662.863" y1="235.5" y2="235.5"/>
+    <text fill="#000" font-size="14" textLength="105.875" x="492.388" y="251.389">Or double-line title</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="482.388" x2="537.231" y1="261.5" y2="261.5"/>
+    <text fill="#000" font-size="14" textLength="70.788" x="537.231" y="264.889">Another title</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="608.019" x2="662.863" y1="261.5" y2="261.5"/>
+    <text fill="#000" font-size="14" textLength="100.45" x="492.388" y="279.389">Or single-line title</text>
+    <text fill="#000" font-size="14" textLength="38.938" x="492.388" y="293.389">Enjoy!</text>
+    <path d="M432.388,311.5 L442.388,311.5 C457.388,311.5 457.388,187.5 472.388,187.5 L482.388,187.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="228" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="145.125" x="482.388" y="326.5"/>
+    <text fill="#000" font-size="16" font-weight="700" textLength="97" x="492.388" y="348.944">Creole list item</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="47.425" x="492.388" y="363.389">test list 1</text>
+    <ellipse cx="497.888" cy="373" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-size="14" textLength="52.238" x="504.388" y="377.389">Bullet list</text>
+    <ellipse cx="497.888" cy="387" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-size="14" textLength="73.938" x="504.388" y="391.389">Second item</text>
+    <rect fill="#000" height="3.5" width="3.5" x="501.388" y="398.5"/>
+    <text fill="#000" font-size="14" textLength="51.363" x="508.388" y="405.389">Sub item</text>
+    <rect fill="#000" height="3.5" width="3.5" x="509.388" y="412.5"/>
+    <text fill="#000" font-size="14" textLength="73.938" x="516.388" y="419.389">Sub sub item</text>
+    <ellipse cx="497.888" cy="429" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-size="14" textLength="58.363" x="504.388" y="433.389">Third item</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="482.388" x2="627.513" y1="441.5" y2="441.5"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="47.425" x="492.388" y="457.389">test list 2</text>
+    <text fill="#000" font-size="14" textLength="11.638" x="492.388" y="471.389">1.</text>
+    <text fill="#000" font-size="14" textLength="82.513" x="507.875" y="471.389">Numbered list</text>
+    <text fill="#000" font-size="14" textLength="11.638" x="492.388" y="485.389">2.</text>
+    <text fill="#000" font-size="14" textLength="73.938" x="507.875" y="485.389">Second item</text>
+    <text fill="#000" font-size="14" textLength="11.638" x="504.025" y="499.389">1.</text>
+    <text fill="#000" font-size="14" textLength="51.363" x="519.513" y="499.389">Sub item</text>
+    <text fill="#000" font-size="14" textLength="11.638" x="504.025" y="513.389">2.</text>
+    <text fill="#000" font-size="14" textLength="98" x="519.513" y="513.389">Another sub item</text>
+    <text fill="#000" font-size="14" textLength="11.638" x="492.388" y="527.389">3.</text>
+    <text fill="#000" font-size="14" textLength="58.363" x="507.875" y="527.389">Third item</text>
+    <text fill="#000" font-size="14" x="492.388" y="541.389"> </text>
+    <path d="M432.388,311.5 L442.388,311.5 C457.388,311.5 457.388,440.5 472.388,440.5 L482.388,440.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="327" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="237.938" x="10" y="20"/>
+    <text fill="#000" font-size="16" font-weight="700" textLength="47.2" x="20" y="42.444">Creole</text>
+    <text fill="#000" font-size="14" textLength="36.663" x="20" y="56.889">This is</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="26.513" x="56.663" y="56.889">bold</text>
+    <text fill="#000" font-size="14" textLength="36.663" x="20" y="70.889">This is</text>
+    <text fill="#000" font-size="14" font-style="italic" textLength="35.088" x="56.663" y="70.889">italics</text>
+    <text fill="#000" font-size="14" textLength="36.663" x="20" y="84.889">This is</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="80.15" x="56.663" y="84.889">monospaced</text>
+    <text fill="#000" font-size="14" textLength="36.663" x="20" y="98.889">This is</text>
+    <text fill="#000" font-size="14" text-decoration="line-through" textLength="72.275" x="56.663" y="98.889">stricken-out</text>
+    <text fill="#000" font-size="14" textLength="36.663" x="20" y="112.889">This is</text>
+    <text fill="#000" font-size="14" text-decoration="underline" textLength="65.45" x="56.663" y="112.889">underlined</text>
+    <text fill="#000" font-size="14" textLength="36.663" x="20" y="126.889">This is</text>
+    <text fill="#000" font-size="14" text-decoration="wavy underline" textLength="102.813" x="56.663" y="126.889">wave-underlined</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="10" x2="63.956" y1="137" y2="137"/>
+    <text fill="#000" font-size="14" textLength="130.025" x="63.956" y="140.389">test Unicode and icons</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="193.981" x2="247.938" y1="137" y2="137"/>
+    <text fill="#000" font-size="14" textLength="73.15" x="20" y="154.889">This is ∞ long</text>
+    <text fill="#000" font-size="14" textLength="44.45" x="20" y="168.889">This is a</text>
+    <path d="M71.283,160.333 L67.783,167.333 L68.95,167.333 L72.45,160.333 L71.283,160.333 M66.617,161.5 L65.45,163.833 L66.617,166.167 L67.783,166.167 L66.617,163.833 L67.783,161.5 L66.617,161.5 M72.45,161.5 L73.617,163.833 L72.45,166.167 L73.617,166.167 L74.783,163.833 L73.617,161.5 L72.45,161.5" fill="#000"/>
+    <text fill="#000" font-size="14" textLength="25.725" x="75.783" y="168.889">icon</text>
+    <text fill="#000" font-size="14" textLength="66.938" x="20" y="319.889">Use image :</text>
+    <image height="151" width="151" x="86.938" xlink:href="data:image/png;base64,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" y="172"/>
+    <text fill="#000" font-size="14" x="20" y="333.889"> </text>
+    <path d="M297.938,311.5 L287.938,311.5 C272.938,311.5 272.938,183.5 257.938,183.5 L247.938,183.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="236" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="176.45" x="71.487" y="367"/>
+    <text fill="#000" font-size="14" x="81.487" y="387.889"> </text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="79.45" x="81.487" y="387.889">HTML Creole</text>
+    <text fill="#000" font-size="14" textLength="36.663" x="81.487" y="401.889">This is</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="26.513" x="118.15" y="401.889">bold</text>
+    <text fill="#000" font-size="14" textLength="36.663" x="81.487" y="415.889">This is</text>
+    <text fill="#000" font-size="14" font-style="italic" textLength="35.088" x="118.15" y="415.889">italics</text>
+    <text fill="#000" font-size="14" textLength="36.663" x="81.487" y="429.889">This is</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="80.15" x="118.15" y="429.889">monospaced</text>
+    <text fill="#000" font-size="14" textLength="36.663" x="81.487" y="443.889">This is</text>
+    <text fill="#000" font-size="14" text-decoration="line-through" textLength="45.85" x="118.15" y="443.889">stroked</text>
+    <text fill="#000" font-size="14" textLength="36.663" x="81.487" y="457.889">This is</text>
+    <text fill="#000" font-size="14" text-decoration="underline" textLength="65.45" x="118.15" y="457.889">underlined</text>
+    <text fill="#000" font-size="14" textLength="36.663" x="81.487" y="471.889">This is</text>
+    <text fill="#000" font-size="14" text-decoration="wavy underline" textLength="40.512" x="118.15" y="471.889">waved</text>
+    <text fill="#000" font-size="14" textLength="36.663" x="81.487" y="485.889">This is</text>
+    <text fill="#000" font-size="14" textLength="45.85" x="118.15" y="485.889">stroked</text>
+    <line style="stroke:#008000;stroke-width:0.5;" x1="118.15" x2="164" y1="482.389" y2="482.389"/>
+    <text fill="#000" font-size="14" textLength="36.663" x="81.487" y="499.889">This is</text>
+    <text fill="#000" font-size="14" textLength="65.45" x="118.15" y="499.889">underlined</text>
+    <line style="stroke:#F00;stroke-width:0.5;" x1="118.15" x2="183.6" y1="500.889" y2="500.889"/>
+    <text fill="#000" font-size="14" textLength="36.663" x="81.487" y="513.889">This is</text>
+    <text fill="#000" font-size="14" text-decoration="wavy underline" textLength="40.512" x="118.15" y="513.889">waved</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="71.487" x2="113.819" y1="524" y2="524"/>
+    <text fill="#000" font-size="14" textLength="91.788" x="113.819" y="527.389">other examples</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="205.606" x2="247.938" y1="524" y2="524"/>
+    <text fill="#000" font-size="14" textLength="36.663" x="81.487" y="541.889">This is</text>
+    <text fill="#00F" font-size="14" textLength="28.088" x="118.15" y="541.889">Blue</text>
+    <text fill="#000" font-size="14" textLength="36.663" x="81.487" y="555.889">This is</text>
+    <text fill="#000" filter="url(#b1u67ttu10atex0)" font-size="14" textLength="119.788" x="118.15" y="555.889">Orange background</text>
+    <text fill="#000" font-size="14" textLength="36.663" x="81.487" y="575.889">This is</text>
+    <text fill="#000" font-size="20" textLength="26.75" x="118.15" y="574.556">big</text>
+    <text fill="#000" font-size="14" x="81.487" y="589.889"> </text>
+    <path d="M297.938,311.5 L287.938,311.5 C272.938,311.5 272.938,485 257.938,485 L247.938,485" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

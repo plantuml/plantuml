@@ -1,0 +1,36 @@
+---
+output: svg
+---
+@startuml
+!include <edgy/edgy>
+
+$experienceFacet(Experience, experience)
+$architectureFacet(Architecture, architecture)
+$identityFacet(Identity, identity)
+
+$organisationFacet(Organisation, org) {
+	$organisation(Organisation, organisation)
+}
+
+$brandFacet(Brand) {
+	$brand(Brand, brand)
+}
+
+$productFacet(Product){
+	$product(Product, product)
+}
+
+$flow(brand, identity, "represents/evokes")
+$flow(brand, experience, "Supports/appears in")
+
+$flowLeft(organisation, identity, "pursues/authors")
+$flowRight(organisation, architecture, "has/performs")
+
+$flow(product, experience, "serves/features in")
+$linkUp(product, architecture, "requires/creates")
+
+$flow(organisation, brand, "builds")
+$flow(organisation, product, "makes")
+$flowLeft(product, brand, "embodies")
+
+@enduml

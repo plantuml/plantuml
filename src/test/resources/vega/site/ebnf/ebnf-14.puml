@@ -1,0 +1,28 @@
+---
+output: svg
+---
+@startebnf
+Type = PrimitiveType | ReferenceType;
+PrimitiveType = [Annotation], (NumericType | boolean );
+NumericType = IntegralType | FloatingPointType;
+IntegralType = "byte" | "short" | "int" | "long" | "char";
+FloatingPointType = "float" | "double";
+ReferenceType = ClassOrInterfaceType | TypeVariable | ArrayType;
+ClassOrInterfaceType = ClassType | InterfaceType;
+ClassType = {Annotation}, TypeIdentifier, [TypeArguments];
+PackageName = {Annotation}, TypeIdentifier, [TypeArguments];
+ClassOrInterfaceType = {Annotation}, TypeIdentifier, [TypeArguments];
+InterfaceType = ClassType;
+TypeVariable = {Annotation}, TypeIdentifier;
+ArrayType = (PrimitiveType | ClassOrInterfaceType | TypeVariable), Dims;
+Dims=  {Annotation}, "[", "]", {{Annotation}, "[", "]"};
+TypeParameter = {TypeParameterModifier}, TypeIdentifier, [TypeBound];
+TypeParameterModifier = Annotation;
+TypeBound = ("extends", TypeVariable) | ("extends", ClassOrInterfaceType, {AdditionalBound});
+AdditionalBound = "&", InterfaceType;
+TypeArguments = "<", TypeArgumentList, ">";
+TypeArgumentList = TypeArgument, {",", TypeArgument};
+TypeArgument = ReferenceType | Wildcard;
+Wildcard = {Annotation}, "?", [WildcardBounds];
+WildcardBounds = ("extends" | "super"), ReferenceType;
+@endebnf

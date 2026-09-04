@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+:Foo:
+note left of Foo [[http://www.google.com]]
+This is a note
+end note
+
+note right of Foo
+Yet another link to [[http://www.google.com]] as demo.
+You can also [[http://www.yahoo.fr specify a text]] for the link.
+And even [[http://www.yahoo.fr{This is a tooltip} add a tooltip]] to the link.
+end note
+@enduml

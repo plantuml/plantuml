@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="197px" preserveAspectRatio="none" style="width:244px;height:197px;background:#FFFFFF;" version="1.1" viewBox="0 0 244 197" width="244px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity 使用者-->
+    <g class="entity" data-qualified-name="..." data-source-line="7" id="ent0001">
+      <ellipse cx="28.787" cy="34.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#000;stroke-width:0.5;"/>
+      <path d="M28.787,42.5 L28.787,69.5 M15.787,50.5 L41.787,50.5 M28.787,69.5 L15.787,84.5 M28.787,69.5 L41.787,84.5" fill="none" style="stroke:#000;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="42" x="7.787" y="96.889">使用者</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="43.575" x="7" y="22.889">«人類»</text>
+    </g>
+    <!--entity 數據庫-->
+    <g class="entity" data-qualified-name="..." data-source-line="8" id="ent0002">
+      <ellipse cx="190.788" cy="34.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#000;stroke-width:0.5;"/>
+      <path d="M190.788,42.5 L190.788,69.5 M177.788,50.5 L203.788,50.5 M190.788,69.5 L177.788,84.5 M190.788,69.5 L203.788,84.5" fill="none" style="stroke:#000;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="56" x="162.788" y="96.889">主數據庫</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="71.575" x="155" y="22.889">«應用程式»</text>
+    </g>
+    <!--entity 草創-->
+    <g class="entity" data-qualified-name=".." data-source-line="9" id="ent0003">
+      <ellipse cx="102.893" cy="56.058" fill="#8FBC8F" rx="32.393" ry="21.058" style="stroke:#2F4F4F;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="43.575" x="81.106" y="54.437">«一桿»</text>
+      <text fill="#000" font-size="14" textLength="28" x="88.893" y="68.437">草創</text>
+    </g>
+    <!--entity 贏余-->
+    <g class="entity" data-qualified-name=".." data-source-line="10" id="ent0004">
+      <ellipse cx="110.156" cy="158.343" fill="#8FBC8F" rx="44.156" ry="22.343" style="stroke:#2F4F4F;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="57.575" x="81.368" y="155.019">«基本的»</text>
+      <text fill="#000" font-size="14" textLength="56" x="82.156" y="169.019">主数据燕</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk5">
+      <polygon fill="#808000" points="70.408,56,61.408,52,65.408,56,61.408,60,70.408,56" style="stroke:#808000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M52.125,56 C58.219,56 59.314,56 65.408,56" fill="none" style="stroke:#808000;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="dependency" id="lnk6">
+      <polygon fill="#808000" points="91.042,135.94,88.179,126.516,87.771,132.158,82.129,131.751,91.042,135.94" style="stroke:#808000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M52.182,88.651 C55.113,92.503 58.101,96.361 61,100 C70.644,112.104 78.537,121.485 87.771,132.158" fill="none" style="stroke:#808000;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk7">
+      <polygon fill="#808000" points="127.401,135.909,136.164,131.412,130.539,132.016,129.935,126.392,127.401,135.909" style="stroke:#808000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M156.179,100.204 C146.231,112.547 138.954,121.575 130.539,132.016" fill="none" style="stroke:#808000;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

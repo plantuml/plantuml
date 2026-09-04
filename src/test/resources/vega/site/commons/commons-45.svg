@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="164px" preserveAspectRatio="none" style="width:151px;height:164px;background:#FFFFFF;" version="1.1" viewBox="0 0 151 164" width="151px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFF" height="133" style="stroke:#181818;stroke-width:1.5;" width="130.513" x="10" y="15"/>
+    <path d="M130.513,15 L130.513,22 L120.513,32 L10,32" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="44.45" x="13" y="26.889">This is a</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="66.063" x="57.45" y="26.889">mainframe</text>
+    <g>
+      <title>a</title>
+      <rect fill="#000" fill-opacity="0" height="32" width="8" x="27.394" y="74"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="30.894" x2="30.894" y1="74" y2="106"/>
+    </g>
+    <g>
+      <title>b</title>
+      <rect fill="#000" fill-opacity="0" height="32" width="8" x="59.181" y="74"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="62.681" x2="62.681" y1="74" y2="106"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="20" y="45"/>
+    <text fill="#000" font-size="14" x="27" y="62.889">a</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="51.788" y="45"/>
+    <text fill="#000" font-size="14" x="58.788" y="62.889">b</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="20" y="106"/>
+    <text fill="#000" font-size="14" x="27" y="123.889">a</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="51.788" y="106"/>
+    <text fill="#000" font-size="14" x="58.788" y="123.889">b</text>
+    <polygon fill="#181818" points="50.681,84,60.681,88,50.681,92,54.681,88" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="30.894" x2="56.681" y1="88" y2="88"/>
+  </g>
+</svg>

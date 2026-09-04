@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startgantt
+[Activity1] lasts 5 days
+[Activity2] lasts 5 days
+[Activity1] is colored in White/Red
+[Activity2] is colored in Silver/SeaGreen
+[Activity1] -> [Activity2]
+@endgantt

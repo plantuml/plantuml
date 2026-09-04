@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="265px" preserveAspectRatio="none" style="width:103px;height:265px;background:#FFFFFF;" version="1.1" viewBox="0 0 103 265" width="103px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>A</title>
+      <rect fill="#000" fill-opacity="0" height="186" width="8" x="18.181" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="21.681" x2="21.681" y1="39" y2="225"/>
+    </g>
+    <g>
+      <title>B</title>
+      <rect fill="#000" fill-opacity="0" height="186" width="8" x="77.525" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="81.025" x2="81.025" y1="39" y2="225"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="10" y="10"/>
+    <text fill="#000" font-size="14" x="17" y="27.889">A</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="69.344" y="10"/>
+    <text fill="#000" font-size="14" x="76.344" y="27.889">B</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="10" y="225"/>
+    <text fill="#000" font-size="14" x="17" y="242.889">A</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="69.344" y="225"/>
+    <text fill="#000" font-size="14" x="76.344" y="242.889">B</text>
+    <polygon fill="#181818" points="69.829,70.394,79.025,76,68.499,78.283,73.108,75.003" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="21.681" x2="79.025" y1="66" y2="76"/>
+    <text fill="#000" font-size="13" textLength="35.344" x="28.681" y="61.111">text 10</text>
+    <polygon fill="#181818" points="31.878,107.394,22.681,113,33.207,115.283,28.598,112.003" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="80.025" x2="21.681" y1="103" y2="113"/>
+    <text fill="#000" font-size="13" textLength="35.344" x="38.681" y="98.111">text 10</text>
+    <polygon fill="#181818" points="69.829,154.394,79.025,160,68.499,162.283,73.108,159.003" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="21.681" x2="79.025" y1="150" y2="160"/>
+    <text fill="#000" font-size="13" textLength="35.344" x="28.681" y="145.111">text 10</text>
+    <polygon fill="#181818" points="31.878,191.394,22.681,197,33.207,199.283,28.598,196.003" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="80.025" x2="21.681" y1="187" y2="197"/>
+    <text fill="#000" font-size="13" textLength="35.344" x="38.681" y="182.111">text 10</text>
+  </g>
+</svg>

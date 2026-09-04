@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="261px" preserveAspectRatio="none" style="width:308px;height:261px;background:#FFFFFF;" version="1.1" viewBox="0 0 308 261" width="308px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="35" width="8" x="167.013" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="170.513" x2="170.513" y1="39" y2="74"/>
+    </g>
+    <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:1,4;" x1="170.513" x2="170.513" y1="74" y2="113"/>
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="108" width="8" x="167.013" y="113"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="170.513" x2="170.513" y1="113" y2="221"/>
+    </g>
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="35" width="8" x="274.131" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="277.631" x2="277.631" y1="39" y2="74"/>
+    </g>
+    <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:1,4;" x1="277.631" x2="277.631" y1="74" y2="113"/>
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="108" width="8" x="274.131" y="113"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="277.631" x2="277.631" y1="113" y2="221"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="148.288" y="10"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="155.288" y="27.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="258.163" y="10"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="265.163" y="27.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="148.288" y="221"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="155.288" y="238.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="258.163" y="221"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="265.163" y="238.889">Bob</text>
+    <polygon fill="#181818" points="265.631,62,275.631,66,265.631,70,269.631,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="170.513" x2="271.631" y1="66" y2="66"/>
+    <text fill="#000" font-size="13" textLength="27.544" x="177.513" y="61.111">hello</text>
+    <text fill="#000" font-size="13" text-decoration="line-through" textLength="29.575" x="205.056" y="61.111">there</text>
+    <text fill="#000" font-size="13" textLength="26" x="234.631" y="61.111">here</text>
+    <text fill="#000" font-size="11" textLength="28.738" x="186.122" y="96.556">Some</text>
+    <text fill="#000" font-size="11" text-decoration="wavy underline" textLength="47.162" x="214.859" y="96.556">long delay</text>
+    <text fill="#000" font-size="11" x="262.022" y="96.556"> </text>
+    <polygon fill="#181818" points="181.513,128,171.513,132,181.513,136,177.513,132" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="175.513" x2="276.631" y1="132" y2="132"/>
+    <text fill="#000" font-size="13" textLength="13.731" x="187.513" y="127.111">ok</text>
+    <path d="M15,118 L15,206 L165,206 L165,128 L155,118 L15,118" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M155,118 L155,128 L165,128 L155,118" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="34.044" x="21" y="133.111">This is</text>
+    <text fill="#000" font-size="13" font-weight="700" textLength="24.619" x="55.044" y="133.111">bold</text>
+    <text fill="#000" font-size="13" textLength="34.044" x="21" y="146.111">This is</text>
+    <text fill="#000" font-size="13" font-style="italic" textLength="32.581" x="55.044" y="146.111">italics</text>
+    <text fill="#000" font-size="13" textLength="34.044" x="21" y="159.111">This is</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="74.425" x="55.044" y="159.111">monospaced</text>
+    <text fill="#000" font-size="13" textLength="34.044" x="21" y="172.111">This is</text>
+    <text fill="#000" font-size="13" text-decoration="line-through" textLength="67.113" x="55.044" y="172.111">stricken-out</text>
+    <text fill="#000" font-size="13" textLength="34.044" x="21" y="185.111">This is</text>
+    <text fill="#000" font-size="13" text-decoration="underline" textLength="60.775" x="55.044" y="185.111">underlined</text>
+    <text fill="#000" font-size="13" textLength="34.044" x="21" y="198.111">This is</text>
+    <text fill="#000" font-size="13" text-decoration="wavy underline" textLength="95.469" x="55.044" y="198.111">wave-underlined</text>
+  </g>
+</svg>

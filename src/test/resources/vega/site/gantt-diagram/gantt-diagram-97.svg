@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="169px" preserveAspectRatio="none" style="width:403px;height:169px;background:#FFFFFF;" version="1.1" viewBox="0 0 403 169" width="403px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="125.688" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="125.688" y1="16" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="125.688" y1="152" y2="152"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="152"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="38.938" x2="38.938" y1="0" y2="152"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="77.875" x2="77.875" y1="0" y2="152"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="125.688" x2="125.688" y1="0" y2="152"/>
+    <text fill="#000" font-size="10" textLength="21.063" x="5" y="10.778">Start</text>
+    <text fill="#000" font-size="10" textLength="17.813" x="43.938" y="10.778">End</text>
+    <text fill="#000" font-size="10" textLength="37.813" x="82.875" y="10.778">Duration</text>
+    <text fill="#000" font-size="10" textLength="23.375" x="5" y="26.278">Day 1</text>
+    <text fill="#000" font-size="10" textLength="23.375" x="43.938" y="26.278">Day 1</text>
+    <text fill="#000" font-size="10" textLength="21.688" x="82.875" y="26.278">1 day</text>
+    <text fill="#000" font-size="10" textLength="23.375" x="5" y="41.278">Day 2</text>
+    <text fill="#000" font-size="10" textLength="23.375" x="43.938" y="41.278">Day 3</text>
+    <text fill="#000" font-size="10" textLength="26.688" x="82.875" y="41.278">2 days</text>
+    <text fill="#000" font-size="10" textLength="23.375" x="5" y="87.278">Day 4</text>
+    <text fill="#000" font-size="10" textLength="23.375" x="43.938" y="87.278">Day 5</text>
+    <text fill="#000" font-size="10" textLength="26.688" x="82.875" y="87.278">2 days</text>
+    <text fill="#000" font-size="10" textLength="23.375" x="5" y="102.278">Day 4</text>
+    <text fill="#000" font-size="10" textLength="23.375" x="43.938" y="102.278">Day 4</text>
+    <text fill="#000" font-size="10" textLength="21.688" x="82.875" y="102.278">1 day</text>
+    <text fill="#000" font-size="10" textLength="23.375" x="5" y="117.278">Day 4</text>
+    <text fill="#000" font-size="10" textLength="23.375" x="43.938" y="117.278">Day 5</text>
+    <text fill="#000" font-size="10" textLength="26.688" x="82.875" y="117.278">2 days</text>
+    <text fill="#000" font-size="10" textLength="23.375" x="5" y="132.278">Day 6</text>
+    <text fill="#000" font-size="10" textLength="23.375" x="43.938" y="132.278">Day 9</text>
+    <text fill="#000" font-size="10" textLength="26.688" x="82.875" y="132.278">4 days</text>
+    <text fill="#000" font-size="10" textLength="28.938" x="5" y="147.278">Day 10</text>
+    <text fill="#000" font-size="10" textLength="28.938" x="43.938" y="147.278">Day 10</text>
+    <text fill="#000" font-size="10" textLength="21.688" x="82.875" y="147.278">1 day</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="125.688" x2="125.688" y1="6" y2="160"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="141.688" x2="141.688" y1="6" y2="160"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="157.688" x2="157.688" y1="6" y2="160"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="173.688" x2="173.688" y1="6" y2="160"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="189.688" x2="189.688" y1="6" y2="160"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="205.688" x2="205.688" y1="6" y2="160"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="221.688" x2="221.688" y1="6" y2="160"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="237.688" x2="237.688" y1="6" y2="160"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="253.688" x2="253.688" y1="6" y2="160"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="269.688" x2="269.688" y1="6" y2="160"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="285.688" x2="285.688" y1="6" y2="160"/>
+    <text fill="#000" font-size="10" x="130.906" y="7.778">1</text>
+    <text fill="#000" font-size="10" x="146.906" y="7.778">2</text>
+    <text fill="#000" font-size="10" x="162.906" y="7.778">3</text>
+    <text fill="#000" font-size="10" x="178.906" y="7.778">4</text>
+    <text fill="#000" font-size="10" x="194.906" y="7.778">5</text>
+    <text fill="#000" font-size="10" x="210.906" y="7.778">6</text>
+    <text fill="#000" font-size="10" x="226.906" y="7.778">7</text>
+    <text fill="#000" font-size="10" x="242.906" y="7.778">8</text>
+    <text fill="#000" font-size="10" x="258.906" y="7.778">9</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="272.125" y="7.778">10</text>
+    <path d="M133.688,29 L133.688,38.5 L138.688,38.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="137.688,34.5,141.688,38.5,137.688,42.5,137.688,34.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M165.688,44 L165.688,84.5 L170.688,84.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="169.688,80.5,173.688,84.5,169.688,88.5,169.688,80.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M165.688,44 L165.688,99.5 L170.688,99.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="169.688,95.5,173.688,99.5,169.688,103.5,169.688,95.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M165.688,44 L165.688,114.5 L170.688,114.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="169.688,110.5,173.688,114.5,169.688,118.5,169.688,110.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M197.688,90 L197.688,129.5 L202.688,129.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="201.688,125.5,205.688,129.5,201.688,133.5,201.688,125.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M197.688,120 L197.688,129.5 L202.688,129.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="201.688,125.5,205.688,129.5,201.688,133.5,201.688,125.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="12" x="127.688" y="18"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="12" x="127.688" y="18"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="28" x="143.688" y="33"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="28" x="143.688" y="33"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="125.688" x2="130.688" y1="61.5" y2="61.5"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="192.731" x2="284.688" y1="61.5" y2="61.5"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="28" x="175.688" y="79"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="28" x="175.688" y="79"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="12" x="175.688" y="94"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="12" x="175.688" y="94"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="28" x="175.688" y="109"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="28" x="175.688" y="109"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="60" x="207.688" y="124"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="60" x="207.688" y="124"/>
+    <polygon fill="#000" points="277.688,139,282.688,144,277.688,149,272.688,144" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="11" textLength="29.975" x="143.688" y="26.556">Task1</text>
+    <text fill="#000" font-size="11" textLength="110.825" x="175.688" y="41.556">Task2_long_long_long</text>
+    <text fill="#000" font-size="11" textLength="52.044" x="135.688" y="64.556">Phase Two</text>
+    <text fill="#000" font-size="11" textLength="29.975" x="207.688" y="87.556">Task3</text>
+    <text fill="#000" font-size="11" textLength="29.975" x="191.688" y="102.556">Task4</text>
+    <text fill="#000" font-size="11" textLength="29.975" x="207.688" y="117.556">Task5</text>
+    <text fill="#000" font-size="11" textLength="110.825" x="271.688" y="132.556">Task6_long_long_long</text>
+    <text fill="#000" font-size="11" textLength="19.594" x="285.688" y="147.556">End</text>
+    <text fill="#000" font-size="10" x="130.906" y="162.778">1</text>
+    <text fill="#000" font-size="10" x="146.906" y="162.778">2</text>
+    <text fill="#000" font-size="10" x="162.906" y="162.778">3</text>
+    <text fill="#000" font-size="10" x="178.906" y="162.778">4</text>
+    <text fill="#000" font-size="10" x="194.906" y="162.778">5</text>
+    <text fill="#000" font-size="10" x="210.906" y="162.778">6</text>
+    <text fill="#000" font-size="10" x="226.906" y="162.778">7</text>
+    <text fill="#000" font-size="10" x="242.906" y="162.778">8</text>
+    <text fill="#000" font-size="10" x="258.906" y="162.778">9</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="272.125" y="162.778">10</text>
+  </g>
+</svg>

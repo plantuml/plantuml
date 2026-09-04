@@ -1,0 +1,31 @@
+---
+output: svg
+---
+@startnwdiag
+nwdiag {
+  network Sample_front {
+    address = "192.168.10.0/24"
+    color = "red"
+
+    // define group
+    group web {
+      web01 [address = ".1, .2", shape = "node"]
+      web02 [address = ".2, .3"]
+    }
+  }
+  network Sample_back {
+    address = "192.168.20.0/24"
+    color = "palegreen"
+    web01 [address = ".1"]
+    web02 [address = ".2"]
+    db01 [address = ".101", shape = database ]
+    db02 [address = ".102"]
+
+    // define network using defined nodes
+    group db {
+      db01;
+      db02;
+    }
+  }
+}
+@endnwdiag

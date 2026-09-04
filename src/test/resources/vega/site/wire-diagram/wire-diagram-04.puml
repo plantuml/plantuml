@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startwire
+* first [70x70] #EEE
+move(10,20)
+* second_box [70x70]
+* third [70x70]
+
+goto(100,10)
+* last [70x70]
+
+goto(300,5)
+* big_container
+	* foo1
+	* foo2
+	* foo3
+
+spot first
+spot big_container #blue
+spot second_box(100%, 100%)
+spot second_box(10, 30) #FF00FF
+spot third(100%+10, 50%) #cyan
+@endwire

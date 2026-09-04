@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+note as n
+You can have horizontal line
+----
+Or double line
+====
+Or strong line
+____
+Or dotted line
+..My title..
+//and title... //
+==Title==
+--Another title--
+Enjoy!
+end note
+@enduml

@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startchart
+h-axis [Jan, Feb, Mar, Apr, May, Jun] spacing 2
+v-axis 0 --> 100
+bar [45, 62, 58, 70, 83, 78] #3498db
+@endchart

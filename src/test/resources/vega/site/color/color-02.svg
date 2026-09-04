@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="214px" preserveAspectRatio="none" style="width:106px;height:214px;background:#FFFFFF;" version="1.1" viewBox="0 0 106 214" width="106px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="g11zrsslkam3xg0" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#F00"/>
+      <stop offset="100%" stop-color="#FF0"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="21.969" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="25.469" x2="25.469" y1="84" y2="129"/>
+    </g>
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="73.513" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="77.013" x2="77.013" y1="84" y2="129"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="24.938" x="10" y="80.889">Bob</text>
+    <ellipse cx="25.469" cy="18.5" fill="url(#g11zrsslkam3xg0)" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M25.469,26.5 L25.469,53.5 M12.469,34.5 L38.469,34.5 M25.469,53.5 L12.469,68.5 M25.469,53.5 L38.469,68.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="58.788" y="80.889">Alice</text>
+    <ellipse cx="77.013" cy="18.5" fill="url(#g11zrsslkam3xg0)" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M77.013,26.5 L77.013,53.5 M64.013,34.5 L90.013,34.5 M77.013,53.5 L64.013,68.5 M77.013,53.5 L90.013,68.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="10" y="139.889">Bob</text>
+    <ellipse cx="25.469" cy="151.5" fill="url(#g11zrsslkam3xg0)" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M25.469,159.5 L25.469,186.5 M12.469,167.5 L38.469,167.5 M25.469,186.5 L12.469,201.5 M25.469,186.5 L38.469,201.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="58.788" y="139.889">Alice</text>
+    <ellipse cx="77.013" cy="151.5" fill="url(#g11zrsslkam3xg0)" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M77.013,159.5 L77.013,186.5 M64.013,167.5 L90.013,167.5 M77.013,186.5 L64.013,201.5 M77.013,186.5 L90.013,201.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <polygon fill="#181818" points="36.469,107,26.469,111,36.469,115,32.469,111" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="30.469" x2="76.013" y1="111" y2="111"/>
+    <text fill="#000" font-size="13" textLength="27.544" x="42.469" y="106.111">hello</text>
+  </g>
+</svg>

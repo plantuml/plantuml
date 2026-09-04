@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="107px" preserveAspectRatio="none" style="width:172px;height:107px;background:#FFFFFF;" version="1.1" viewBox="0 0 172 107" width="172px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <ellipse cx="84.088" cy="25" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="136.175" x="16" y="55"/>
+    <text fill="#000" font-size="12" textLength="62.7" x="26" y="74.333">The salary of</text>
+    <text fill="#000" font-size="12" text-decoration="underline" textLength="24.75" x="88.7" y="74.333">alice</text>
+    <text fill="#000" font-size="12" textLength="8.7" x="113.45" y="74.333">is</text>
+    <text fill="#000" font-size="12" text-decoration="underline" textLength="20.025" x="122.15" y="74.333">100</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="84.088" x2="84.088" y1="35" y2="55"/>
+    <polygon fill="#181818" points="80.088,45,84.088,55,88.088,45,84.088,49" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

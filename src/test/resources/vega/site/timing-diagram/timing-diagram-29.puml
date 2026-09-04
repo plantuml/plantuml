@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+concise "LR" as LR
+concise "ST" as ST
+
+LR is AtPlace #palegreen
+ST is AtLoad #gray
+
+@LR
+0 is Lowering
+100 is Lowered #pink
+350 is Releasing
+
+@ST
+200 is Moving
+@enduml

@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+
+class System << (S,#FF7700) Singleton >>
+class Date << (D,orchid) >>
+@enduml

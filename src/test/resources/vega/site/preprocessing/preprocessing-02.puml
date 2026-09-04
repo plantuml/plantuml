@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+Alice -> Bob : 1. **$name** should be empty
+
+!$name ?= "Charlie"
+Alice -> Bob : 2. **$name** should be Charlie
+
+!$name = "David"
+Alice -> Bob : 3. **$name** should be David
+
+!$name ?= "Ethan"
+Alice -> Bob : 4. **$name** should be David
+@enduml

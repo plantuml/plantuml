@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="82px" preserveAspectRatio="none" style="width:330px;height:82px;background:#FFFFFF;" version="1.1" viewBox="0 0 330 82" width="330px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="32.025" x="6" y="15.333">Name</text>
+    <text fill="#000" font-size="12" x="73.7" y="15.333"> </text>
+    <line style="stroke:#000;stroke-width:1;" x1="71.7" x2="210.7" y1="18" y2="18"/>
+    <line style="stroke:#000;stroke-width:1;" x1="71.7" x2="71.7" y1="15" y2="17"/>
+    <line style="stroke:#000;stroke-width:1;" x1="210.7" x2="210.7" y1="15" y2="17"/>
+    <text fill="#000" font-size="12" textLength="51.975" x="6" y="31.333">Modifiers:</text>
+    <text fill="#000" font-size="12" textLength="31.425" x="91.7" y="32.333">public</text>
+    <ellipse cx="78.7" cy="29" fill="none" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;"/>
+    <ellipse cx="78.7" cy="29" fill="#000" rx="2" ry="2" style="stroke:#000;stroke-width:1.5;"/>
+    <text fill="#000" font-size="12" textLength="36" x="156.3" y="32.333">default</text>
+    <ellipse cx="143.3" cy="29" fill="none" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;"/>
+    <text fill="#000" font-size="12" textLength="36" x="214.3" y="32.333">private</text>
+    <ellipse cx="201.3" cy="29" fill="none" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;"/>
+    <text fill="#000" font-size="12" textLength="49.95" x="272.3" y="32.333">protected</text>
+    <ellipse cx="259.3" cy="29" fill="none" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;"/>
+    <text fill="#000" font-size="12" textLength="42.6" x="91.7" y="46.333">abstract</text>
+    <rect fill="none" height="10" style="stroke:#000;stroke-width:1.5;" width="10" x="73.7" y="38"/>
+    <text fill="#000" font-size="12" textLength="22.05" x="156.3" y="46.333">final</text>
+    <rect fill="none" height="10" style="stroke:#000;stroke-width:1.5;" width="10" x="138.3" y="38"/>
+    <text fill="#000" font-size="12" textLength="27.975" x="214.3" y="46.333">static</text>
+    <rect fill="none" height="10" style="stroke:#000;stroke-width:1.5;" width="10" x="196.3" y="38"/>
+    <text fill="#000" font-size="12" textLength="62.7" x="6" y="61.333">Superclass:</text>
+    <text fill="#000" font-size="12" textLength="86.025" x="74.7" y="62.333">java.lang.Object</text>
+    <line style="stroke:#000;stroke-width:1;" x1="72.7" x2="211.7" y1="65" y2="65"/>
+    <line style="stroke:#000;stroke-width:1;" x1="72.7" x2="72.7" y1="62" y2="64"/>
+    <line style="stroke:#000;stroke-width:1;" x1="211.7" x2="211.7" y1="62" y2="64"/>
+    <rect fill="#EEE" height="16" rx="5" ry="5" style="stroke:#000;stroke-width:2.5;" width="76" x="218.2" y="55.5"/>
+    <text fill="#000" font-size="12" textLength="49.95" x="231.225" y="66.833">Browse...</text>
+  </g>
+</svg>

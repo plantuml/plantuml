@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="208px" preserveAspectRatio="none" style="width:631px;height:208px;background:#FFFFFF;" version="1.1" viewBox="0 0 631 208" width="631px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <polygon fill="#F1F1F1" points="185.275,15,367.737,15,379.737,27,367.737,39,185.275,39,173.275,27,185.275,15" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="11" textLength="111.444" x="185.275" y="30.056">Long long long Long long</text>
+    <text fill="#F00" font-size="11" font-weight="700" textLength="71.019" x="296.719" y="30.056">long condition?</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="60.05" x="16" y="79.056"/>
+    <text fill="#000" font-size="12" textLength="40.05" x="26" y="98.389">Action  1</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="60.05" x="286.506" y="90.056"/>
+    <text fill="#000" font-size="12" textLength="40.05" x="296.506" y="109.389">Action  2</text>
+    <polygon fill="#F1F1F1" points="276.506,132.056,276.506,132.056,288.506,144.056,276.506,156.056,276.506,156.056,264.506,144.056,276.506,132.056" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="173.275" x2="46.025" y1="27" y2="27"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="46.025" x2="46.025" y1="27" y2="79.056"/>
+    <polygon fill="#181818" points="42.025,69.056,46.025,79.056,50.025,69.056,46.025,73.056" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="11" textLength="220.481" x="46.025" y="57.556">Long long long long long long long long long case 1</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="379.737" x2="385.737" y1="27" y2="27"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="385.737" x2="385.737" y1="27" y2="51"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="385.737" x2="316.531" y1="51" y2="51"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="316.531" x2="316.531" y1="51" y2="90.056"/>
+    <polygon fill="#181818" points="312.531,80.056,316.531,90.056,320.531,80.056,316.531,84.056" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#F00" font-size="11" font-weight="700" textLength="53.144" x="389.737" y="24.556">Arrow Error</text>
+    <text fill="#000" font-size="11" textLength="220.481" x="389.737" y="35.556">Long long long long long long long long long case 2</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="46.025" x2="46.025" y1="111.056" y2="144.056"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="46.025" x2="264.506" y1="144.056" y2="144.056"/>
+    <polygon fill="#181818" points="254.506,140.056,264.506,144.056,254.506,148.056,258.506,144.056" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="316.531" x2="316.531" y1="122.056" y2="144.056"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="316.531" x2="288.506" y1="144.056" y2="144.056"/>
+    <polygon fill="#181818" points="298.506,140.056,288.506,144.056,298.506,148.056,294.506,144.056" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <g class="footer" data-source-line="7">
+      <text fill="#888" font-size="10" x="314.609" y="173.833"> </text>
+      <text fill="#888" font-size="10" textLength="107.188" x="261.016" y="183.833">Observed on:   1.2022.3b2</text>
+      <text fill="#888" font-size="10" textLength="116.063" x="256.578" y="193.833">(current version: $version$)</text>
+    </g>
+  </g>
+</svg>

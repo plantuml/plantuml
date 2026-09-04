@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="76px" preserveAspectRatio="none" style="width:107px;height:76px;background:#FFFFFF;" version="1.1" viewBox="0 0 107 76" width="107px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class foo-->
+    <g class="entity" data-qualified-name="foo" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="51.425" x="40.5" y="12"/>
+      <ellipse cx="55.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="50.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="19.425" x="69.5" y="31.889">foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="41.5" x2="90.925" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="41.5" x2="90.925" y1="52" y2="52"/>
+    </g>
+    <g class="entity" data-qualified-name="foolol2" data-source-line="2" id="ent0003">
+      <ellipse cx="11" cy="29" fill="#F1F1F1" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="20.213" x="0.894" y="44.889">bar</text>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="association" id="lnk4">
+      <path d="M22.125,36 C28.181,36 34.236,36 40.292,36" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startchen
+
+entity CUSTOMER {
+}
+
+entity PARENT {
+}
+
+entity MEMBER {
+}
+
+CUSTOMER ->- PARENT
+MEMBER -<- CUSTOMER
+
+@endchen

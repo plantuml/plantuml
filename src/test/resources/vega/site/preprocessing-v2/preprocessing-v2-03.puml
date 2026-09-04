@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startuml
+!preprocessorV2
+!function msg($source, $destination)
+$source --> $destination
+!endfunction
+
+!function init_class($name)
+class $name {
+$addCommonMethod()
+}
+!endfunction
+
+
+!function $addCommonMethod()
+  toString()
+  hashCode()
+!endfunction
+
+
+init_class("foo1")
+init_class("foo2")
+msg("foo1", "foo2")
+@enduml

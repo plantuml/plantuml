@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="148px" preserveAspectRatio="none" style="width:161px;height:148px;background:#FFFFFF;" version="1.1" viewBox="0 0 161 148" width="161px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="41.775" y="51"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="45.275" x2="45.275" y1="51" y2="96"/>
+    </g>
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="117.206" y="51"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="120.706" x2="120.706" y1="51" y2="96"/>
+    </g>
+    <rect fill="#AAA" height="40" rx="2.5" ry="2.5" style="stroke:#E00;stroke-width:0.5;" width="70.55" x="10" y="10"/>
+    <text fill="#008000" font-size="26" font-style="italic" textLength="56.55" x="17" y="37.222">Alice</text>
+    <rect fill="#AAA" height="40" rx="2.5" ry="2.5" style="stroke:#E00;stroke-width:0.5;" width="60.313" x="90.55" y="10"/>
+    <text fill="#008000" font-size="26" font-style="italic" textLength="46.313" x="97.55" y="37.222">Bob</text>
+    <rect fill="#AAA" height="40" rx="2.5" ry="2.5" style="stroke:#E00;stroke-width:0.5;" width="70.55" x="10" y="96"/>
+    <text fill="#008000" font-size="26" font-style="italic" textLength="56.55" x="17" y="123.222">Alice</text>
+    <rect fill="#AAA" height="40" rx="2.5" ry="2.5" style="stroke:#E00;stroke-width:0.5;" width="60.313" x="90.55" y="96"/>
+    <text fill="#008000" font-size="26" font-style="italic" textLength="46.313" x="97.55" y="123.222">Bob</text>
+    <polygon fill="#00F" points="108.706,74,118.706,78,108.706,82,112.706,78" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#00F;stroke-width:1;" x1="45.275" x2="114.706" y1="78" y2="78"/>
+    <text fill="#F00" font-size="13" textLength="27.544" x="52.275" y="73.111">hello</text>
+  </g>
+</svg>

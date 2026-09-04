@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startgantt
+[T1] requires 4 days
+[T2] requires 4 days and starts 3 days after [T1]'s end with blue dotted link
+[T3] requires 4 days and starts 3 days after [T2]'s end with green bold link
+[T4] requires 4 days and starts 3 days after [T3]'s end with green dashed link
+@endgantt

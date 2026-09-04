@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+state a
+state b
+
+a -> b: //link label//
+note on link
+  Link note
+end note
+@enduml

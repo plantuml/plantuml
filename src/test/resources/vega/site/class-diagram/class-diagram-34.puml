@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+class C1 $tag13 $tag1
+enum E1
+interface I1 $tag13
+C1 -- I1
+
+remove *
+restore $tag1
+@enduml

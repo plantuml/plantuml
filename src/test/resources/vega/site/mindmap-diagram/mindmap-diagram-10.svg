@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="183px" preserveAspectRatio="none" style="width:515px;height:183px;background:#FFFFFF;" version="1.1" viewBox="0 0 515 183" width="515px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFA500" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="75.212" x="10" y="74"/>
+    <text fill="#000" font-size="14" textLength="55.212" x="20" y="94.889">root node</text>
+    <rect fill="#90EE90" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="136.725" x="135.212" y="47"/>
+    <text fill="#000" font-size="14" textLength="116.725" x="145.212" y="67.889">some first level node</text>
+    <rect fill="#FBC" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="125.175" x="321.938" y="20"/>
+    <text fill="#000" font-size="14" textLength="105.175" x="331.938" y="40.889">second level node</text>
+    <path d="M271.938,64 L281.938,64 C296.938,64 296.938,37 311.938,37 L321.938,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#ADD8E6" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="172.6" x="321.938" y="74"/>
+    <text fill="#000" font-size="14" textLength="152.6" x="331.938" y="94.889">another second level node</text>
+    <path d="M271.938,64 L281.938,64 C296.938,64 296.938,91 311.938,91 L321.938,91" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M85.212,91 L95.212,91 C110.212,91 110.212,64 125.212,64 L135.212,64" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#90EE90" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="149.938" x="135.212" y="128"/>
+    <text fill="#000" font-size="14" textLength="129.938" x="145.212" y="148.889">another first level node</text>
+    <path d="M85.212,91 L95.212,91 C110.212,91 110.212,145 125.212,145 L135.212,145" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

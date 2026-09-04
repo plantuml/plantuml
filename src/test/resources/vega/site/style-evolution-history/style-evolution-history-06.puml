@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+skinparam useBetaStyle true
+title Styling example
+<style>
+root {
+  FontColor blue
+}
+element {
+  FontColor green
+}
+actor {
+  FontColor red
+}
+</style>
+actor Alice
+Alice -> Bob : hello
+@enduml

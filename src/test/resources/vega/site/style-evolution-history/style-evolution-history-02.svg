@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="159px" preserveAspectRatio="none" style="width:127px;height:159px;background:#FFFFFF;" version="1.1" viewBox="0 0 127 159" width="127px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="2">
+      <text fill="#00F" font-size="14" font-weight="700" textLength="95.025" x="15" y="25.889">Styling example</text>
+    </g>
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="35.044" y="74"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="38.544" x2="38.544" y1="74" y2="119"/>
+    </g>
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="86.738" y="74"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="90.238" x2="90.238" y1="74" y2="119"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="16.319" y="45"/>
+    <text fill="#00F" font-size="14" textLength="30.45" x="23.319" y="62.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="70.769" y="45"/>
+    <text fill="#00F" font-size="14" textLength="24.938" x="77.769" y="62.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="16.319" y="119"/>
+    <text fill="#00F" font-size="14" textLength="30.45" x="23.319" y="136.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="70.769" y="119"/>
+    <text fill="#00F" font-size="14" textLength="24.938" x="77.769" y="136.889">Bob</text>
+    <polygon fill="#181818" points="78.238,97,88.238,101,78.238,105,82.238,101" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="38.544" x2="84.238" y1="101" y2="101"/>
+    <text fill="#00F" font-size="13" textLength="27.544" x="45.544" y="96.111">hello</text>
+  </g>
+</svg>

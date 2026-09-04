@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+skinparam conditionStyle diamond
+start
+repeat
+  :act1;
+  :act2;
+repeatwhile (<b>end)
+:act3;
+@enduml

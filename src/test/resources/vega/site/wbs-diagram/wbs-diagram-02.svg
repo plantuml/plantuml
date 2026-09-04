@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="239px" preserveAspectRatio="none" style="width:963px;height:239px;background:#FFFFFF;" version="1.1" viewBox="0 0 963 239" width="963px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:1.5;" x1="76.013" x2="76.013" y1="72" y2="92"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="112.025" x="20" y="92"/>
+    <text fill="#000" font-size="12" textLength="92.025" x="30" y="111.333">Launch the project</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="76.013" x2="86.013" y1="155" y2="155"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="186.8" x="86.013" y="139"/>
+    <text fill="#000" font-size="12" textLength="166.8" x="96.013" y="158.333">Complete Stakeholder Research</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="76.013" x2="86.013" y1="202" y2="202"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="154.1" x="86.013" y="186"/>
+    <text fill="#000" font-size="12" textLength="134.1" x="96.013" y="205.333">Initial Implementation Plan</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="76.013" x2="76.013" y1="124" y2="202"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="498.688" x2="498.688" y1="72" y2="92"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="90.125" x="453.625" y="92"/>
+    <text fill="#000" font-size="12" textLength="70.125" x="463.625" y="111.333">Design phase</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="488.688" x2="498.688" y1="155" y2="155"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="195.875" x="292.813" y="139"/>
+    <text fill="#000" font-size="12" textLength="175.875" x="302.813" y="158.333">Measure AsIs performance metrics</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="488.688" x2="498.688" y1="202" y2="202"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="116" x="372.688" y="186"/>
+    <text fill="#000" font-size="12" textLength="96" x="382.688" y="205.333">Identify Quick Wins</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="498.688" x2="625.4" y1="155" y2="155"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="200.075" x="625.4" y="139"/>
+    <text fill="#000" font-size="12" textLength="180.075" x="635.4" y="158.333">Model of AsIs Processes Completed</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="715.438" x2="725.438" y1="202" y2="202"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="206.75" x="508.688" y="186"/>
+    <text fill="#000" font-size="12" textLength="186.75" x="518.688" y="205.333">Model of AsIs Processes Completed1</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="725.438" x2="735.438" y1="202" y2="202"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="206.75" x="735.438" y="186"/>
+    <text fill="#000" font-size="12" textLength="186.75" x="745.438" y="205.333">Model of AsIs Processes Completed2</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="725.438" x2="725.438" y1="171" y2="202"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="498.688" x2="498.688" y1="124" y2="202"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="76.013" x2="498.688" y1="72" y2="72"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="190.925" x="191.888" y="20"/>
+    <text fill="#000" font-size="12" textLength="170.925" x="201.888" y="39.333">Business Process Modelling WBS</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="287.35" x2="287.35" y1="52" y2="72"/>
+  </g>
+</svg>

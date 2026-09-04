@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="231px" preserveAspectRatio="none" style="width:424px;height:231px;background:#FFFFFF;" version="1.1" viewBox="0 0 424 231" width="424px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <ellipse cx="134.206" cy="25" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    <path d="M15,59.5 L15,82.5 L102.544,82.5 L102.544,69.5 L92.544,59.5 L15,59.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M92.544,59.5 L92.544,69.5 L102.544,69.5 L92.544,59.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="66.544" x="21" y="74.611">This is a note</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="43.325" x="112.544" y="55"/>
+    <text fill="#000" font-size="12" textLength="23.325" x="122.544" y="74.333">foo1</text>
+    <path d="M175.869,97 L175.869,129 L155.869,133 L175.869,137 L175.869,169 A0,0 0 0 0 175.869,169 L403.3,169 A0,0 0 0 0 403.3,169 L403.3,107 L393.3,97 L175.869,97 A0,0 0 0 0 175.869,97" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M393.3,97 L393.3,107 L403.3,107 L393.3,97" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="115.7" x="181.869" y="112.111">This note is on several</text>
+    <text fill="#000" font-size="13" font-style="italic" textLength="26.813" x="181.869" y="125.111">lines</text>
+    <text fill="#000" font-size="13" textLength="42.656" x="208.681" y="125.111">and can</text>
+    <text fill="#000" font-size="13" textLength="41.925" x="181.869" y="138.111">contain</text>
+    <text fill="#000" font-size="13" font-weight="700" textLength="35.425" x="223.794" y="138.111">HTML</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="175.869" x2="403.3" y1="146" y2="146"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="175.869" x2="403.3" y1="148" y2="148"/>
+    <ellipse cx="187.369" cy="156.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-size="13" textLength="101.238" x="193.869" y="161.111">Calling the method</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="26.65" x="295.106" y="161.111">foo()</text>
+    <text fill="#000" font-size="13" textLength="66.544" x="321.756" y="161.111">is prohibited</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="43.325" x="112.544" y="117"/>
+    <text fill="#000" font-size="12" textLength="23.325" x="122.544" y="136.333">foo2</text>
+    <ellipse cx="134.206" cy="200" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+    <ellipse cx="134.206" cy="200" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="134.206" x2="134.206" y1="35" y2="55"/>
+    <polygon fill="#181818" points="130.206,45,134.206,55,138.206,45,134.206,49" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="134.206" x2="134.206" y1="87" y2="117"/>
+    <polygon fill="#181818" points="130.206,107,134.206,117,138.206,107,134.206,111" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="134.206" x2="134.206" y1="149" y2="189"/>
+    <polygon fill="#181818" points="130.206,179,134.206,189,138.206,179,134.206,183" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

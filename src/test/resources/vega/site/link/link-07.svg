@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="235px" preserveAspectRatio="none" style="width:228px;height:235px;background:#FFFFFF;" version="1.1" viewBox="0 0 228 235" width="228px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <ellipse cx="112.388" cy="25" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    <rect fill="none" height="130" style="stroke:#000;stroke-width:1.5;" width="192.775" x="16" y="45"/>
+    <path d="M118.575,45 L118.575,52 L108.575,62 L16,62" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+    <a href="http://plantuml.com" target="_top" title="http://plantuml.com" xlink:actuate="onRequest" xlink:href="http://plantuml.com" xlink:show="new" xlink:title="http://plantuml.com" xlink:type="simple">
+      <text fill="#00F" font-size="14" text-decoration="underline" textLength="92.575" x="19" y="56.889">partition_name</text>
+    </a>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="172.775" x="26" y="79"/>
+    <text fill="#000" font-size="12" textLength="60" x="36" y="98.333">read doc. on</text>
+    <a href="http://plantuml.com" target="_top" title="http://plantuml.com" xlink:actuate="onRequest" xlink:href="http://plantuml.com" xlink:show="new" xlink:title="http://plantuml.com" xlink:type="simple">
+      <text fill="#00F" font-size="12" text-decoration="underline" textLength="92.775" x="96" y="98.333">plantuml_website</text>
+    </a>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="82.625" x="71.075" y="131"/>
+    <text fill="#000" font-size="12" textLength="62.625" x="81.075" y="150.333">test diagram</text>
+    <ellipse cx="112.388" cy="205" fill="none" rx="10" ry="10" style="stroke:#222;stroke-width:1.5;"/>
+    <line style="stroke:#222;stroke-width:2.5;" x1="106.2" x2="118.575" y1="198.813" y2="211.187"/>
+    <line style="stroke:#222;stroke-width:2.5;" x1="118.575" x2="106.2" y1="198.813" y2="211.187"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="112.388" x2="112.388" y1="111" y2="131"/>
+    <polygon fill="#181818" points="108.388,121,112.388,131,116.388,121,112.388,125" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="112.388" x2="112.388" y1="35" y2="79"/>
+    <polygon fill="#181818" points="108.388,69,112.388,79,116.388,69,112.388,73" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="112.388" x2="112.388" y1="163" y2="195"/>
+    <polygon fill="#181818" points="108.388,185,112.388,195,116.388,185,112.388,189" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

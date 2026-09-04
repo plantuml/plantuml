@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="317px" preserveAspectRatio="none" style="width:160px;height:317px;background:#FFFFFF;" version="1.1" viewBox="0 0 160 317" width="160px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <ellipse cx="78.388" cy="25" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="44" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="124.775" x="16" y="55"/>
+    <text fill="#000" font-size="12" textLength="104.775" x="26" y="74.333">The connector below</text>
+    <text fill="#000" font-size="12" textLength="94.2" x="26" y="86.333">wishes he was blue</text>
+    <ellipse cx="78.388" cy="129" fill="#00F" rx="10" ry="10" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="73.388" y="134">B</text>
+    <rect fill="#F1F1F1" height="56" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="118.025" x="19.375" y="159"/>
+    <text fill="#000" font-size="12" textLength="98.025" x="29.375" y="178.333">This next connector</text>
+    <text fill="#000" font-size="12" textLength="96.075" x="29.375" y="190.333">feels that she would</text>
+    <text fill="#000" font-size="12" textLength="87.9" x="29.375" y="202.333">be better off green</text>
+    <ellipse cx="78.388" cy="245" fill="#008000" rx="10" ry="10" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="73.388" y="250">G</text>
+    <ellipse cx="78.388" cy="286" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+    <ellipse cx="78.388" cy="286" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="78.388" x2="78.388" y1="35" y2="55"/>
+    <polygon fill="#181818" points="74.388,45,78.388,55,82.388,45,78.388,49" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="78.388" x2="78.388" y1="99" y2="119"/>
+    <polygon fill="#181818" points="74.388,109,78.388,119,82.388,109,78.388,113" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="78.388" x2="78.388" y1="139" y2="159"/>
+    <polygon fill="#181818" points="74.388,149,78.388,159,82.388,149,78.388,153" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="78.388" x2="78.388" y1="215" y2="235"/>
+    <polygon fill="#181818" points="74.388,225,78.388,235,82.388,225,78.388,229" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="78.388" x2="78.388" y1="255" y2="275"/>
+    <polygon fill="#181818" points="74.388,265,78.388,275,82.388,265,78.388,269" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

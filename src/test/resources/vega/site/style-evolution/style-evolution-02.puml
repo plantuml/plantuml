@@ -1,0 +1,31 @@
+---
+output: svg
+---
+@startwbs
+<style>
+' this time, scoping to wbsDiagram
+wbsDiagram {
+
+  ' Here we introduce a global style, i.e. not targeted to any element
+  ' thus all lines (meaning connector and borders,
+  ' there are no other lines in WBS) are black by default
+  Linecolor black
+
+  ' But we can also target a diagram specific element, like arrow
+   arrow {
+    ' note that Connectors are actually "Arrows"; this may change in the future
+    ' so this means all Connectors and Arrows are now going to be green
+    LineColor green
+  }
+
+}
+</style>
+
+* World
+** America
+*** Canada
+** Europe
+*** England
+*** Germany
+*** Spain
+@endwbs

@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="1655px" preserveAspectRatio="none" style="width:582px;height:1655px;background:#FFFFFF;" version="1.1" viewBox="0 0 582 1655" width="582px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" font-weight="700" textLength="32.7" x="5" y="14.333">adaml</text>
+    <text fill="#000" font-size="12" textLength="67.35" x="5" y="26.333">Version 0.1.2</text>
+    <text fill="#000" font-size="12" textLength="236.55" x="5" y="38.333">Delivered by https://github.com/rocher/AdaML</text>
+    <text fill="#000" font-size="12" x="5" y="50.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="52.65" x="5" y="62.333">archimate</text>
+    <text fill="#000" font-size="12" textLength="67.35" x="5" y="74.333">Version 3.2.2</text>
+    <text fill="#000" font-size="12" textLength="352.65" x="5" y="86.333">Delivered by https://github.com/plantuml-stdlib/Archimate-PlantUML</text>
+    <text fill="#000" font-size="12" x="5" y="98.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="21.375" x="5" y="110.333">aws</text>
+    <text fill="#000" font-size="12" textLength="87.375" x="5" y="122.333">Version 18.02.22</text>
+    <text fill="#000" font-size="12" textLength="344.7" x="5" y="134.333">Delivered by https://github.com/milo-minderbinder/AWS-PlantUML</text>
+    <text fill="#000" font-size="12" x="5" y="146.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="33.45" x="5" y="158.333">awslib</text>
+    <text fill="#000" font-size="12" textLength="74.025" x="5" y="170.333">Version 14.0.0</text>
+    <text fill="#000" font-size="12" textLength="328.65" x="5" y="182.333">Delivered by https://github.com/awslabs/aws-icons-for-plantuml</text>
+    <text fill="#000" font-size="12" x="5" y="194.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="46.8" x="5" y="206.333">awslib10</text>
+    <text fill="#000" font-size="12" textLength="74.025" x="5" y="218.333">Version 10.0.0</text>
+    <text fill="#000" font-size="12" textLength="328.65" x="5" y="230.333">Delivered by https://github.com/awslabs/aws-icons-for-plantuml</text>
+    <text fill="#000" font-size="12" x="5" y="242.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="46.8" x="5" y="254.333">awslib14</text>
+    <text fill="#000" font-size="12" textLength="74.025" x="5" y="266.333">Version 14.0.0</text>
+    <text fill="#000" font-size="12" textLength="328.65" x="5" y="278.333">Delivered by https://github.com/awslabs/aws-icons-for-plantuml</text>
+    <text fill="#000" font-size="12" x="5" y="290.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="46.8" x="5" y="302.333">awslib20</text>
+    <text fill="#000" font-size="12" textLength="64.05" x="5" y="314.333">Version 20.0</text>
+    <text fill="#000" font-size="12" textLength="328.65" x="5" y="326.333">Delivered by https://github.com/awslabs/aws-icons-for-plantuml</text>
+    <text fill="#000" font-size="12" x="5" y="338.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="30" x="5" y="350.333">azure</text>
+    <text fill="#000" font-size="12" textLength="67.35" x="5" y="362.333">Version 2.2.0</text>
+    <text fill="#000" font-size="12" textLength="330" x="5" y="374.333">Delivered by https://github.com/plantuml-stdlib/Azure-PlantUML</text>
+    <text fill="#000" font-size="12" x="5" y="386.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="49.95" x="5" y="398.333">bootstrap</text>
+    <text fill="#000" font-size="12" textLength="74.025" x="5" y="410.333">Version 1.13.1</text>
+    <text fill="#000" font-size="12" textLength="217.275" x="5" y="422.333">Delivered by https://github.com/twbs/icons</text>
+    <text fill="#000" font-size="12" x="5" y="434.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="83.25" x="5" y="446.333">bootstrap1.12.1</text>
+    <text fill="#000" font-size="12" textLength="74.025" x="5" y="458.333">Version 1.12.1</text>
+    <text fill="#000" font-size="12" textLength="217.275" x="5" y="470.333">Delivered by https://github.com/twbs/icons</text>
+    <text fill="#000" font-size="12" x="5" y="482.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="83.25" x="5" y="494.333">bootstrap1.13.1</text>
+    <text fill="#000" font-size="12" textLength="74.025" x="5" y="506.333">Version 1.13.1</text>
+    <text fill="#000" font-size="12" textLength="217.275" x="5" y="518.333">Delivered by https://github.com/twbs/icons</text>
+    <text fill="#000" font-size="12" x="5" y="530.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="12.675" x="5" y="542.333">c4</text>
+    <text fill="#000" font-size="12" textLength="74.025" x="5" y="554.333">Version 2.13.0</text>
+    <text fill="#000" font-size="12" textLength="314.025" x="5" y="566.333">Delivered by https://github.com/plantuml-stdlib/C4-PlantUML</text>
+    <text fill="#000" font-size="12" x="5" y="578.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="33.375" x="5" y="590.333">classy</text>
+    <text fill="#000" font-size="12" textLength="67.35" x="5" y="602.333">Version 1.0.2</text>
+    <text fill="#000" font-size="12" textLength="336.6" x="5" y="614.333">Delivered by https://github.com/james-gadrow-kr/classy-plantuml</text>
+    <text fill="#000" font-size="12" x="5" y="626.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="50.025" x="5" y="638.333">classy-c4</text>
+    <text fill="#000" font-size="12" textLength="67.35" x="5" y="650.333">Version 1.0.3</text>
+    <text fill="#000" font-size="12" textLength="303.9" x="5" y="662.333">Delivered by https://github.com/james-gadrow-kr/classy-c4</text>
+    <text fill="#000" font-size="12" x="5" y="674.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="63.45" x="5" y="686.333">cloudinsight</text>
+    <text fill="#000" font-size="12" textLength="67.35" x="5" y="698.333">Version 1.0.0</text>
+    <text fill="#000" font-size="12" textLength="358.65" x="5" y="710.333">Delivered by https://github.com/plantuml-stdlib/cicon-plantuml-sprites</text>
+    <text fill="#000" font-size="12" x="5" y="722.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="48.75" x="5" y="734.333">cloudogu</text>
+    <text fill="#000" font-size="12" textLength="67.35" x="5" y="746.333">Version 1.0.2</text>
+    <text fill="#000" font-size="12" textLength="350.7" x="5" y="758.333">Delivered by https://github.com/cloudogu/plantuml-cloudogu-sprites</text>
+    <text fill="#000" font-size="12" x="5" y="770.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="65.325" x="5" y="782.333">domainstory</text>
+    <text fill="#000" font-size="12" textLength="67.35" x="5" y="794.333">Version 0.4.0</text>
+    <text fill="#000" font-size="12" textLength="327.3" x="5" y="806.333">Delivered by https://github.com/johthor/DomainStory-PlantUML</text>
+    <text fill="#000" font-size="12" x="5" y="818.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="26.025" x="5" y="830.333">edgy</text>
+    <text fill="#000" font-size="12" textLength="67.35" x="5" y="842.333">Version 0.8.0</text>
+    <text fill="#000" font-size="12" textLength="280.65" x="5" y="854.333">Delivered by https://github.com/boessu/plantuml-stdlib</text>
+    <text fill="#000" font-size="12" x="5" y="866.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="16.05" x="5" y="878.333">eip</text>
+    <text fill="#000" font-size="12" textLength="67.35" x="5" y="890.333">Version 1.0.0</text>
+    <text fill="#000" font-size="12" textLength="318" x="5" y="902.333">Delivered by https://github.com/plantuml-stdlib/EIP-PlantUML</text>
+    <text fill="#000" font-size="12" x="5" y="914.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="34.05" x="5" y="926.333">elastic</text>
+    <text fill="#000" font-size="12" textLength="67.35" x="5" y="938.333">Version 0.0.1</text>
+    <text fill="#000" font-size="12" textLength="360.075" x="5" y="950.333">Delivered by https://github.com/Crashedmind/PlantUML-Elastic-icons</text>
+    <text fill="#000" font-size="12" x="5" y="962.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="19.35" x="5" y="974.333">gcp</text>
+    <text fill="#000" font-size="12" textLength="67.35" x="5" y="986.333">Version 6.0.0</text>
+    <text fill="#000" font-size="12" textLength="350.7" x="5" y="998.333">Delivered by https://github.com/Crashedmind/PlantUML-icons-GCP</text>
+    <text fill="#000" font-size="12" x="5" y="1010.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="19.35" x="5" y="1022.333">ibm</text>
+    <text fill="#000" font-size="12" textLength="67.35" x="5" y="1034.333">Version 1.0.1</text>
+    <text fill="#000" font-size="12" textLength="348.6" x="5" y="1046.333">Delivered by https://github.com/XReyRobert/ibm-icons-for-plantuml</text>
+    <text fill="#000" font-size="12" x="5" y="1058.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="18.675" x="5" y="1070.333">k8s</text>
+    <text fill="#000" font-size="12" textLength="67.35" x="5" y="1082.333">Version 1.0.0</text>
+    <text fill="#000" font-size="12" textLength="318.6" x="5" y="1094.333">Delivered by https://github.com/dcasati/kubernetes-PlantUML</text>
+    <text fill="#000" font-size="12" x="5" y="1106.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="59.325" x="5" y="1118.333">kubernetes</text>
+    <text fill="#000" font-size="12" textLength="74.025" x="5" y="1130.333">Version 5.3.45</text>
+    <text fill="#000" font-size="12" textLength="389.925" x="5" y="1142.333">Delivered by https://github.com/plantuml-stdlib/plantuml-kubernetes-sprites</text>
+    <text fill="#000" font-size="12" x="5" y="1154.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="28.725" x="5" y="1166.333">logos</text>
+    <text fill="#000" font-size="12" textLength="67.35" x="5" y="1178.333">Version 1.1.0</text>
+    <text fill="#000" font-size="12" textLength="384" x="5" y="1190.333">Delivered by https://github.com/plantuml-stdlib/gilbarbara-plantuml-sprites</text>
+    <text fill="#000" font-size="12" x="5" y="1202.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="42.675" x="5" y="1214.333">material</text>
+    <text fill="#000" font-size="12" textLength="74.025" x="5" y="1226.333">Version 2.1.19</text>
+    <text fill="#000" font-size="12" textLength="304.725" x="5" y="1238.333">Delivered by https://github.com/Templarian/MaterialDesign</text>
+    <text fill="#000" font-size="12" x="5" y="1250.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="49.35" x="5" y="1262.333">material2</text>
+    <text fill="#000" font-size="12" textLength="74.025" x="5" y="1274.333">Version 2.1.19</text>
+    <text fill="#000" font-size="12" textLength="304.725" x="5" y="1286.333">Delivered by https://github.com/Templarian/MaterialDesign</text>
+    <text fill="#000" font-size="12" x="5" y="1298.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="75.975" x="5" y="1310.333">material2.1.19</text>
+    <text fill="#000" font-size="12" textLength="74.025" x="5" y="1322.333">Version 2.1.19</text>
+    <text fill="#000" font-size="12" textLength="304.725" x="5" y="1334.333">Delivered by https://github.com/Templarian/MaterialDesign</text>
+    <text fill="#000" font-size="12" x="5" y="1346.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="49.35" x="5" y="1358.333">material7</text>
+    <text fill="#000" font-size="12" textLength="74.025" x="5" y="1370.333">Version 7.4.47</text>
+    <text fill="#000" font-size="12" textLength="337.35" x="5" y="1382.333">Delivered by https://github.com/Templarian/MaterialDesign-SVG/</text>
+    <text fill="#000" font-size="12" x="5" y="1394.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="75.975" x="5" y="1406.333">material7.4.47</text>
+    <text fill="#000" font-size="12" textLength="74.025" x="5" y="1418.333">Version 7.4.47</text>
+    <text fill="#000" font-size="12" textLength="337.35" x="5" y="1430.333">Delivered by https://github.com/Templarian/MaterialDesign-SVG/</text>
+    <text fill="#000" font-size="12" x="5" y="1442.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="28.65" x="5" y="1454.333">office</text>
+    <text fill="#000" font-size="12" textLength="67.35" x="5" y="1466.333">Version 1.0.0</text>
+    <text fill="#000" font-size="12" textLength="285.225" x="5" y="1478.333">Delivered by https://github.com/Roemer/plantuml-office</text>
+    <text fill="#000" font-size="12" x="5" y="1490.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="19.35" x="5" y="1502.333">osa</text>
+    <text fill="#000" font-size="12" textLength="67.35" x="5" y="1514.333">Version 0.0.1</text>
+    <text fill="#000" font-size="12" textLength="455.325" x="5" y="1526.333">Delivered by https://github.com/Crashedmind/PlantUML-opensecurityarchitecture-icons</text>
+    <text fill="#000" font-size="12" x="5" y="1538.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="26.025" x="5" y="1550.333">osa2</text>
+    <text fill="#000" font-size="12" textLength="67.35" x="5" y="1562.333">Version 0.0.1</text>
+    <text fill="#000" font-size="12" textLength="462" x="5" y="1574.333">Delivered by https://github.com/Crashedmind/PlantUML-opensecurityarchitecture2-icons</text>
+    <text fill="#000" font-size="12" x="5" y="1586.333"> </text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="40.65" x="5" y="1598.333">tupadr3</text>
+    <text fill="#000" font-size="12" textLength="67.35" x="5" y="1610.333">Version 3.0.0</text>
+    <text fill="#000" font-size="12" textLength="339.825" x="5" y="1622.333">Delivered by https://github.com/tupadr3/plantuml-icon-font-sprites</text>
+    <text fill="#000" font-size="12" x="5" y="1634.333"> </text>
+    <text fill="#000" font-size="12" x="5" y="1646.333"> </text>
+    <image height="71" width="80" x="497" xlink:href="data:image/png;base64,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" y="1578"/>
+  </g>
+</svg>

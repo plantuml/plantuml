@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="199px" preserveAspectRatio="none" style="width:375px;height:199px;background:#FFFFFF;" version="1.1" viewBox="0 0 375 199" width="375px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFC" height="15" rx="2.5" ry="2.5" style="stroke:#FD8;stroke-width:3;" width="354.413" x="8" y="8"/>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="258.625" x="15" y="17">Please use CSS style instead of skinparam ParticipantPadding</text>
+    <rect fill="#DDD" height="153" style="stroke:#181818;stroke-width:0.5;" width="122.475" x="26" y="31"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="29.656" x="72.409" y="41.111">Foo1</text>
+    <rect fill="#DDD" height="153" style="stroke:#181818;stroke-width:0.5;" width="111.45" x="180.475" y="31"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="29.656" x="221.372" y="41.111">Foo2</text>
+    <g>
+      <title>Alice1</title>
+      <rect fill="#000" fill-opacity="0" height="72" width="8" x="52.619" y="77"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="56.119" x2="56.119" y1="77" y2="149"/>
+    </g>
+    <g>
+      <title>Alice2</title>
+      <rect fill="#000" fill-opacity="0" height="72" width="8" x="114.856" y="77"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="118.356" x2="118.356" y1="77" y2="149"/>
+    </g>
+    <g>
+      <title>Bob1</title>
+      <rect fill="#000" fill-opacity="0" height="72" width="8" x="204.338" y="77"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="207.838" x2="207.838" y1="77" y2="149"/>
+    </g>
+    <g>
+      <title>Bob2</title>
+      <rect fill="#000" fill-opacity="0" height="72" width="8" x="261.063" y="77"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="264.563" x2="264.563" y1="77" y2="149"/>
+    </g>
+    <g>
+      <title>Out</title>
+      <rect fill="#000" fill-opacity="0" height="72" width="8" x="342.669" y="77"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="346.169" x2="346.169" y1="77" y2="149"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="52.238" x="30" y="48"/>
+    <text fill="#000" font-size="14" textLength="38.238" x="37" y="65.889">Alice1</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="52.238" x="92.238" y="48"/>
+    <text fill="#000" font-size="14" textLength="38.238" x="99.238" y="65.889">Alice2</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="46.725" x="184.475" y="48"/>
+    <text fill="#000" font-size="14" textLength="32.725" x="191.475" y="65.889">Bob1</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="46.725" x="241.2" y="48"/>
+    <text fill="#000" font-size="14" textLength="32.725" x="248.2" y="65.889">Bob2</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="36.488" x="327.925" y="48"/>
+    <text fill="#000" font-size="14" textLength="22.488" x="334.925" y="65.889">Out</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="52.238" x="30" y="149"/>
+    <text fill="#000" font-size="14" textLength="38.238" x="37" y="166.889">Alice1</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="52.238" x="92.238" y="149"/>
+    <text fill="#000" font-size="14" textLength="38.238" x="99.238" y="166.889">Alice2</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="46.725" x="184.475" y="149"/>
+    <text fill="#000" font-size="14" textLength="32.725" x="191.475" y="166.889">Bob1</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="46.725" x="241.2" y="149"/>
+    <text fill="#000" font-size="14" textLength="32.725" x="248.2" y="166.889">Bob2</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="36.488" x="327.925" y="149"/>
+    <text fill="#000" font-size="14" textLength="22.488" x="334.925" y="166.889">Out</text>
+    <polygon fill="#181818" points="195.838,100,205.838,104,195.838,108,199.838,104" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="56.119" x2="201.838" y1="104" y2="104"/>
+    <text fill="#000" font-size="13" textLength="27.544" x="63.119" y="99.111">hello</text>
+    <polygon fill="#181818" points="334.169,127,344.169,131,334.169,135,338.169,131" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="56.119" x2="340.169" y1="131" y2="131"/>
+    <text fill="#000" font-size="13" textLength="18.038" x="63.119" y="126.111">out</text>
+  </g>
+</svg>

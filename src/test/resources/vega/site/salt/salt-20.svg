@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="111px" preserveAspectRatio="none" style="width:91px;height:111px;background:#FFFFFF;" version="1.1" viewBox="0 0 91 111" width="91px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="48.675" x="6" y="15.333">Message</text>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="55.675" y1="5" y2="5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="55.675" y1="75" y2="75"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="5" y1="5" y2="19"/>
+    <line style="stroke:#000;stroke-width:1;" x1="55.675" x2="55.675" y1="19" y2="33"/>
+    <line style="stroke:#000;stroke-width:1;" x1="55.675" x2="55.675" y1="5" y2="19"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="5" y1="61" y2="75"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="5" y1="47" y2="61"/>
+    <line style="stroke:#000;stroke-width:1;" x1="55.675" x2="55.675" y1="61" y2="75"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="5" y1="33" y2="47"/>
+    <line style="stroke:#000;stroke-width:1;" x1="55.675" x2="55.675" y1="47" y2="61"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="5" y1="19" y2="33"/>
+    <line style="stroke:#000;stroke-width:1;" x1="55.675" x2="55.675" y1="33" y2="47"/>
+    <rect fill="none" height="70" style="stroke:#000;stroke-width:1;" width="15" x="59.675" y="5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="59.675" x2="74.675" y1="17" y2="17"/>
+    <line style="stroke:#000;stroke-width:1;" x1="59.675" x2="74.675" y1="63" y2="63"/>
+    <path d="M66.675,9 L69.675,14 L63.675,14 L66.675,9" fill="#000"/>
+    <path d="M66.675,72 L69.675,67 L63.675,67 L66.675,72" fill="#000"/>
+    <rect fill="none" height="15" style="stroke:#000;stroke-width:1;" width="50.675" x="5" y="79"/>
+    <line style="stroke:#000;stroke-width:1;" x1="17" x2="17" y1="79" y2="94"/>
+    <line style="stroke:#000;stroke-width:1;" x1="43.675" x2="43.675" y1="79" y2="94"/>
+    <path d="M9,86 L14,89 L14,83 L9,86" fill="#000"/>
+    <path d="M52.675,86 L47.675,89 L47.675,83 L52.675,86" fill="#000"/>
+    <rect fill="none" height="70" style="stroke:#000;stroke-width:1;" width="15" x="59.675" y="5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="59.675" x2="74.675" y1="17" y2="17"/>
+    <line style="stroke:#000;stroke-width:1;" x1="59.675" x2="74.675" y1="63" y2="63"/>
+    <path d="M66.675,9 L69.675,14 L63.675,14 L66.675,9" fill="#000"/>
+    <path d="M66.675,72 L69.675,67 L63.675,67 L66.675,72" fill="#000"/>
+    <rect fill="none" height="15" style="stroke:#000;stroke-width:1;" width="50.675" x="5" y="79"/>
+    <line style="stroke:#000;stroke-width:1;" x1="17" x2="17" y1="79" y2="94"/>
+    <line style="stroke:#000;stroke-width:1;" x1="43.675" x2="43.675" y1="79" y2="94"/>
+    <path d="M9,86 L14,89 L14,83 L9,86" fill="#000"/>
+    <path d="M52.675,86 L47.675,89 L47.675,83 L52.675,86" fill="#000"/>
+  </g>
+</svg>

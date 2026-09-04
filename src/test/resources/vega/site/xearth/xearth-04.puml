@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+xearth(300,300)
+gridP = true
+gridDivision = 9
+gridPixelDivision = 8
+@enduml

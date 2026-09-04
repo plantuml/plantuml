@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startpacketdiag
+packetdiag {
+   0-7: Source Port
+   8-15: Destination Port
+   16-31: Sequence Number
+   32-47: Acknowledgment Number
+}
+@endpacketdiag

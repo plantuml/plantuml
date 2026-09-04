@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="431px" preserveAspectRatio="none" style="width:605px;height:431px;background:#FFFFFF;" version="1.1" viewBox="0 0 605 431" width="605px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="70" y1="60" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="360" y2="360"/>
+    <text fill="#000" font-size="14" x="52.213" y="363.889">0</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="317.143" y2="317.143"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="321.032">20</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="274.286" y2="274.286"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="278.175">40</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="231.429" y2="231.429"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="235.317">60</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="188.571" y2="188.571"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="192.46">80</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="145.714" y2="145.714"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="36.637" y="149.603">100</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="102.857" y2="102.857"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="36.637" y="106.746">120</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="60" y2="60"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="36.637" y="63.889">140</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="360" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="103.333" x2="103.333" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="22.575" x="92.046" y="380.889">Jan</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="170" x2="170" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="24.15" x="157.925" y="380.889">Feb</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="236.667" x2="236.667" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="24.063" x="224.635" y="380.889">Mar</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="303.333" x2="303.333" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="21.788" x="292.44" y="380.889">Apr</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="370" x2="370" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="26.425" x="356.788" y="380.889">May</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="436.667" x2="436.667" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="22.575" x="425.379" y="380.889">Jun</text>
+    <polygon fill="#3498DB" points="103.333,263.571,170,227.143,236.667,235.714,303.333,210,370,182.143,436.667,192.857,436.667,360,370,360,303.333,360,236.667,360,170,360,103.333,360" style="stroke:#3498DB;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#3498DB;stroke-width:2;" x1="103.333" x2="170" y1="263.571" y2="227.143"/>
+    <line style="stroke:#3498DB;stroke-width:2;" x1="170" x2="236.667" y1="227.143" y2="235.714"/>
+    <line style="stroke:#3498DB;stroke-width:2;" x1="236.667" x2="303.333" y1="235.714" y2="210"/>
+    <line style="stroke:#3498DB;stroke-width:2;" x1="303.333" x2="370" y1="210" y2="182.143"/>
+    <line style="stroke:#3498DB;stroke-width:2;" x1="370" x2="436.667" y1="182.143" y2="192.857"/>
+    <polygon fill="#2ECC71" points="103.333,210,170,152.143,236.667,145.714,303.333,128.571,370,85.714,436.667,107.143,436.667,192.857,370,182.143,303.333,210,236.667,235.714,170,227.143,103.333,263.571" style="stroke:#2ECC71;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#2ECC71;stroke-width:2;" x1="103.333" x2="170" y1="210" y2="152.143"/>
+    <line style="stroke:#2ECC71;stroke-width:2;" x1="170" x2="236.667" y1="152.143" y2="145.714"/>
+    <line style="stroke:#2ECC71;stroke-width:2;" x1="236.667" x2="303.333" y1="145.714" y2="128.571"/>
+    <line style="stroke:#2ECC71;stroke-width:2;" x1="303.333" x2="370" y1="128.571" y2="85.714"/>
+    <line style="stroke:#2ECC71;stroke-width:2;" x1="370" x2="436.667" y1="85.714" y2="107.143"/>
+    <rect fill="#3498DB" height="12" style="stroke:#3498DB;stroke-width:1;" width="12" x="480" y="60"/>
+    <text fill="#000" font-size="14" textLength="57.575" x="497" y="70.889">Product A</text>
+    <rect fill="#2ECC71" height="12" style="stroke:#2ECC71;stroke-width:1;" width="12" x="480" y="89"/>
+    <text fill="#000" font-size="14" textLength="57.575" x="497" y="99.889">Product B</text>
+  </g>
+</svg>

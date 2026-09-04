@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+robust "Web Browser" as WB
+concise "Web User" as WU
+
+@0
+WU is Idle
+WB is Idle
+
+@100
+WU is Waiting
+WB is Processing
+note top of WU : first note\non several\nlines
+note bottom of WU : second note\non several\nlines
+
+@300
+WB is Waiting
+@enduml

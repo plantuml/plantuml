@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="238px" preserveAspectRatio="none" style="width:206px;height:238px;background:#FFFFFF;" version="1.1" viewBox="0 0 206 238" width="206px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Experience-->
+    <g class="cluster" data-qualified-name="Experience" data-source-line="140" id="ent0001">
+      <rect fill="#FFE0EB" height="210" rx="25" ry="25" style="stroke:#FF73A4;stroke-width:3;stroke-dasharray:5,5;" width="184" x="14" y="4"/>
+      <path d="M111.167,9.282 C108.787,9.282 107.223,10.084 106,11.153 C104.777,10.083 103.213,9.282 100.833,9.282 C100.448,9.282 100.04,9.303 99.619,9.344 C97.953,9.507 96.353,10.325 95.113,11.647 C93.75,13.1 92.936,15.046 92.757,17.275 L92.751,17.355 L92.751,18.235 L92.757,18.313 C92.923,20.442 93.978,22.595 96.176,25.296 C98.051,27.6 100.678,30.225 104.002,33.548 L104.586,34.132 L106,35.546 L107.414,34.132 L108.001,33.545 C111.325,30.223 113.95,27.598 115.825,25.295 C118.023,22.595 119.078,20.441 119.244,18.313 L119.25,18.235 L119.25,17.355 L119.244,17.275 C119.065,15.047 118.25,13.101 116.887,11.647 C115.647,10.324 114.046,9.506 112.38,9.344 C111.96,9.303 111.551,9.282 111.167,9.282 L111.167,9.282" fill="#FFF"/>
+      <path d="M111.167,11.282 C111.485,11.282 111.824,11.299 112.186,11.334 C114.39,11.549 116.939,13.567 117.25,17.435 L117.25,18.157 C116.961,21.858 112.921,25.796 106,32.717 C99.079,25.796 95.039,21.858 94.75,18.157 L94.75,17.435 C95.06,13.568 97.609,11.549 99.813,11.334 C100.175,11.299 100.514,11.282 100.832,11.282 C103.379,11.282 104.601,12.383 105.999,14.049 C107.398,12.382 108.619,11.282 111.166,11.282" fill="#FF0056"/>
+      <text fill="#101010" font-size="14" font-weight="700" textLength="70.087" x="70.956" y="48.889">Experience</text>
+    </g>
+    <!--entity task-->
+    <g class="entity" data-qualified-name="Experience.task" data-source-line="145" id="ent0002">
+      <rect fill="#FF73A4" height="34" rx="12.5" ry="12.5" style="stroke:#FFF;stroke-width:2;" width="50.363" x="30" y="77"/>
+      <text fill="#101010" font-size="14" textLength="30.363" x="40" y="97.889">Task</text>
+    </g>
+    <!--entity journey-->
+    <g class="entity" data-qualified-name="Experience.journey" data-source-line="143" id="ent0003">
+      <polygon fill="#FF73A4" points="102,77,171.788,77,181.788,94,171.788,111,102,111" style="stroke:#FFF;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#101010" font-size="14" textLength="49.788" x="112" y="97.889">Journey</text>
+    </g>
+    <!--entity channel-->
+    <g class="entity" data-qualified-name="Experience.channel" data-source-line="145" id="ent0004">
+      <rect fill="#FF73A4" height="34" style="stroke:#FFF;stroke-width:2;" width="72.238" x="55" y="164"/>
+      <text fill="#101010" font-size="14" textLength="52.238" x="65" y="184.889">Channel</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="association" id="lnk5">
+      <path d="M80.164,94 C86.989,94 94.551,94 101.977,94" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="91" y="86.111"> </text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="association" id="lnk6">
+      <path d="M61.941,111.389 C68.357,126.537 77.833,148.911 84.202,163.95" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="78" y="141.111"> </text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="association" id="lnk7">
+      <path d="M132.167,111.389 C123.078,126.537 109.654,148.911 100.63,163.95" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="123" y="141.111"> </text>
+    </g>
+  </g>
+</svg>

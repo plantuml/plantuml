@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+!pragma teoz true
+
+S1 ->(30) S2: msg 1\n
+& S2 ->(30) S1: msg 2
+
+note left S1: msg\nS2 to S1
+& note right S2: msg\nS1 to S2
+@enduml

@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+skinparam roundcorner 25
+rectangle "Capture Information"  as CI <<$archimate/business-process>> #Business
+@enduml

@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+start
+:You can have horizontal line
+----
+Or double line
+====
+Or strong line
+____
+Or dotted line
+..My title..
+Or dotted title
+//and title... //
+==Title==
+Or double-line title
+--Another title--
+Or single-line title
+Enjoy!;
+stop
+@enduml

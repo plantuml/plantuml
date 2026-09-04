@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="208.333px" preserveAspectRatio="none" style="width:325px;height:208px;" version="1.1" viewBox="0 0 325 208" width="325px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="gg5nhsisokwbh0" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#F18E3E"/>
+      <stop offset="100%" stop-color="#EC7211"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="user1" data-source-line="5" id="ent0001">
+      <rect fill="url(#gg5nhsisokwbh0)" height="46.875" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="95.501" x="6.25" y="12.5"/>
+      <path d="M10.417,12.5 L97.585,12.5 A4.167,4.167 0 0 1 101.751,16.667 L101.751,28.125 L6.25,28.125 L6.25,16.667 A4.167,4.167 0 0 1 10.417,12.5" fill="url(#gg5nhsisokwbh0)" style="stroke:#EC7211;stroke-width:1.042;"/>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="28.646" x="39.678" y="23.495">user1</text>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="7.292" x2="100.71" y1="28.125" y2="28.125"/>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="83.001" x="12.5" y="41.204">name = "Dummy"</text>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="34.805" x="12.5" y="52.662">id = 123</text>
+    </g>
+    <g class="entity" data-qualified-name="user2" data-source-line="9" id="ent0002">
+      <rect fill="url(#gg5nhsisokwbh0)" height="46.875" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="95.501" x="120.833" y="12.5"/>
+      <path d="M125,12.5 L212.168,12.5 A4.167,4.167 0 0 1 216.335,16.667 L216.335,28.125 L120.833,28.125 L120.833,16.667 A4.167,4.167 0 0 1 125,12.5" fill="url(#gg5nhsisokwbh0)" style="stroke:#EC7211;stroke-width:1.042;"/>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="28.646" x="154.261" y="23.495">user2</text>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="121.875" x2="215.293" y1="28.125" y2="28.125"/>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="83.001" x="127.083" y="41.204">name = "Dummy"</text>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="34.805" x="127.083" y="52.662">id = 123</text>
+    </g>
+    <g class="entity" data-qualified-name="o1" data-source-line="14" id="ent0003">
+      <rect fill="url(#gg5nhsisokwbh0)" height="32.292" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="27.331" x="235.417" y="19.792"/>
+      <path d="M239.583,19.792 L258.581,19.792 A4.167,4.167 0 0 1 262.747,23.958 L262.747,35.417 L235.417,35.417 L235.417,23.958 A4.167,4.167 0 0 1 239.583,19.792" fill="url(#gg5nhsisokwbh0)" style="stroke:#EC7211;stroke-width:1.042;"/>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="12.747" x="242.708" y="30.787">o1</text>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="236.458" x2="261.706" y1="35.417" y2="35.417"/>
+    </g>
+    <g class="entity" data-qualified-name="o2" data-source-line="15" id="ent0004">
+      <rect fill="url(#gg5nhsisokwbh0)" height="32.292" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="27.331" x="281.25" y="19.792"/>
+      <path d="M285.417,19.792 L304.414,19.792 A4.167,4.167 0 0 1 308.581,23.958 L308.581,35.417 L281.25,35.417 L281.25,23.958 A4.167,4.167 0 0 1 285.417,19.792" fill="url(#gg5nhsisokwbh0)" style="stroke:#EC7211;stroke-width:1.042;"/>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="12.747" x="288.542" y="30.787">o2</text>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="282.292" x2="307.539" y1="35.417" y2="35.417"/>
+    </g>
+    <g class="entity" data-qualified-name="dia" id="ent0005">
+      <polygon fill="#EEE" points="271.875,96.875,284.375,109.375,271.875,121.875,259.375,109.375,271.875,96.875" style="stroke:#BEBEBE;stroke-width:0.521;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <g class="entity" data-qualified-name="o3" data-source-line="17" id="ent0006">
+      <rect fill="url(#gg5nhsisokwbh0)" height="32.292" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="27.331" x="258.333" y="159.375"/>
+      <path d="M262.5,159.375 L281.497,159.375 A4.167,4.167 0 0 1 285.664,163.542 L285.664,175 L258.333,175 L258.333,163.542 A4.167,4.167 0 0 1 262.5,159.375" fill="url(#gg5nhsisokwbh0)" style="stroke:#EC7211;stroke-width:1.042;"/>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="12.747" x="265.625" y="170.37">o3</text>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="259.375" x2="284.622" y1="175" y2="175"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="dependency" id="lnk7">
+      <polygon fill="#EC7211" points="268.081,96.521,269.181,86.321,266.489,91.562,261.247,88.869,268.081,96.521" style="stroke:#EC7211;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M253.818,52.112 C258.075,65.366 262.583,79.401 266.489,91.562" fill="none" style="stroke:#EC7211;stroke-width:3.125;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="dependency" id="lnk8">
+      <polygon fill="#EC7211" points="275.669,96.521,282.503,88.869,277.261,91.562,274.569,86.321,275.669,96.521" style="stroke:#EC7211;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M289.932,52.112 C285.675,65.366 281.167,79.401 277.261,91.562" fill="none" style="stroke:#EC7211;stroke-width:3.125;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0006" data-link-type="dependency" id="lnk9">
+      <polygon fill="#EC7211" points="271.875,159.175,276.042,149.8,271.875,153.967,267.708,149.8,271.875,159.175" style="stroke:#EC7211;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M271.875,122.167 C271.875,132.57 271.875,142.613 271.875,153.967" fill="none" style="stroke:#EC7211;stroke-width:3.125;"/>
+    </g>
+  </g>
+</svg>

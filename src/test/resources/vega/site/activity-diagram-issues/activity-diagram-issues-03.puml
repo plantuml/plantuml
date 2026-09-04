@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+|#AntiqueWhite|Sistem|
+|Admin|
+repeat :Generate Again;
+:Generate Foo;
+|Sistem|
+:Bar;
+backward: Do bar;
+repeat while (Is foo?)  is (yes)
+->no;
+:finish foo;
+stop
+@enduml

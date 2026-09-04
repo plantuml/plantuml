@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="104.167px" preserveAspectRatio="none" style="width:132px;height:104px;" version="1.1" viewBox="0 0 132 104" width="132.292px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="g2bcv4kmvmngt0" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#7C9AB9"/>
+      <stop offset="100%" stop-color="#304D6D"/>
+    </linearGradient>
+    <linearGradient id="g2bcv4kmvmngt1" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#7C9AB9"/>
+      <stop offset="100%" stop-color="#446E9B"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Example-->
+    <g class="entity" data-qualified-name="Example" data-source-line="2" id="ent0001">
+      <rect fill="url(#g2bcv4kmvmngt0)" height="59.375" rx="4.167" ry="4.167" style="stroke:#304D6D;stroke-width:1.042;" width="94.069" x="16.667" y="22.917"/>
+      <rect fill="url(#g2bcv4kmvmngt1)" height="31.25" rx="4.167" ry="4.167" style="stroke:url(#g2bcv4kmvmngt1);stroke-width:1.042;" width="94.069" x="16.667" y="22.917"/>
+      <rect fill="url(#g2bcv4kmvmngt1)" height="4.167" style="stroke:url(#g2bcv4kmvmngt1);stroke-width:1.042;" width="94.069" x="16.667" y="50"/>
+      <rect fill="none" height="59.375" rx="4.167" ry="4.167" style="stroke:#304D6D;stroke-width:1.042;" width="94.069" x="16.667" y="22.917"/>
+      <ellipse cx="39.441" cy="38.542" fill="#B8B8B8" rx="10.417" ry="10.417" style="stroke:#6B6B6B;stroke-width:1.042;"/>
+      <text fill="#FFF" font-family="monospace" font-size="14.583" x="34.233" y="43.75">C</text>
+      <text fill="#EEE" font-family="'Verdana'" font-size="11.458" textLength="44.616" x="54.803" y="41.725">Example</text>
+      <line style="stroke:#304D6D;stroke-width:1.042;" x1="17.708" x2="109.694" y1="54.167" y2="54.167"/>
+      <text fill="#EEE" font-family="'Verdana'" font-size="11.458" textLength="81.569" x="22.917" y="67.245">Theme spacelab</text>
+      <line style="stroke:#304D6D;stroke-width:1.042;" x1="17.708" x2="109.694" y1="73.958" y2="73.958"/>
+    </g>
+  </g>
+</svg>

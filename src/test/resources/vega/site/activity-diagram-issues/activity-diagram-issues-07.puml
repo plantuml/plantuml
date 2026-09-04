@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+title Example of QA-1626
+:foo1;
+label lab1
+:foo2;
+if (some test) then
+  :foo3;
+  goto lab1
+else
+  :foo4;
+endif
+stop
+@enduml

@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+<style>
+.s2n {
+    backgroundcolor green
+    Linecolor red
+    LineThickness 2
+}
+</style>
+
+:a;
+floating note left <<s2n>>: This is a note
+:b;
+note right <<s2n>>
+  This note is on several
+  //lines// and can
+  contain <b>HTML</b>
+end note
+
+@enduml

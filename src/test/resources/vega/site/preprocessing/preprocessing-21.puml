@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+!procedure $go($txt)
+  Bob -> Alice : $txt
+!endprocedure
+
+%invoke_procedure("$go", "hello from Bob...")
+@enduml

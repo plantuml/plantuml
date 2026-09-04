@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+:action;
+:object; <<object>>
+
+:ObjectNode
+typed by signal; <<objectSignal>>
+
+:AcceptEventAction
+without TimeEvent trigger; <<acceptEvent>>
+
+:SendSignalAction; <<sendSignal>>
+
+:SendObjectAction
+with signal type; <<sendSignal>>
+
+:Trigger; <<trigger>>
+
+:\t\t\t\t\t\tAcceptEventAction
+\t\t\t\t\t\twith TimeEvent trigger; <<timeEvent>>
+:an action;
+@enduml

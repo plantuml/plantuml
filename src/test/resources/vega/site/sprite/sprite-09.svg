@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="144px" preserveAspectRatio="none" style="width:342px;height:144px;background:#FFFFFF;" version="1.1" viewBox="0 0 342 144" width="342px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="20">
+      <text fill="#000" font-size="14" font-weight="700" textLength="82.425" x="100.115" y="23.043">Use of sprites (</text>
+      <image height="16" width="16" x="182.54" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABvklEQVR4Xp2TS0sCURSA74+INv6HNkK7Fq1bFEl/IIRo4wsZ3AgRtBA3vop0xI0LFxoIvgJBkRRfoA6+FhKijs/AN4q5uJ07IExqZl34uMzhzHfPOXMHYYzRCpZlnyuVSnqdVqul4efx+fZABKPR6GK5XB6uqNfr0ng83qhWq75ms/m4U5DJZF57vd45PzYYDETlcpkpFAqlUCg0SKVSwR8FyWQy3Ol0LvkxqOJgNpsJp9PpcaPRuA6Hw+yvglqtdhuJRF58Ph8HWbDfj8fjow1BPp+3QJA2m8005LWIoN/vn8DwxFA2Ry6XI/sZEXg8nqnRaKSDwSDNMAyN7HY7TiQSD263m/J6ve9E0G63RTAPTSwW44ADNNFo9IYI/H7/0Ol0Uul0mnI4HENkMBjwZDIR8FvYJeC3YLPZ2A1BsVh8gmGJtwFt3W0VdLvdK5CcZrPZN1j9XUC7FZJLsFqtH5wABsms3759sFgsC6TVav8tMJlMCySRSDAMqgTlM39FpVJ9IplMholEKpX+CfKOXC7HCL49pigKk1b0ev1e6HQ6TuJyuTCaz+eCQCDQVqvVWKFQ7IVSqcRwazH8aMIv5vDzTx8fdCMAAAAASUVORK5CYII=" y="10"/>
+      <text fill="#000" font-size="14" font-weight="700" x="198.694" y="23.043">,</text>
+      <image height="16" width="16" x="202.544" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACTUlEQVR4Xo2SS2taQRTHXbWU0kJ3/QTd9BN059qF0EBARXxgsAiulGgbCYovVPARBRW1Rg0+QUxBTTTKRSW6EBeKgouowdouLLaBFC1UmZ4RFL01pYs/c++ZOb//mXOGghCibEqlUiUzmcwBOf6Q/gpgQDabXQOKxSLLYrF4yed2Aur1+kcej3en1+s/9/t9Po5hGIaSE9cAiURCSKXSpVgs1g86nY64XC5yu909p9NJyOXybjqdfhhQLpffViqVPYfDcQsAnPgJXFNQ9ojD4SAmk4n8fn+y1+u9Pjw8TGq1Ws8WYPUxGo32sBtOTiaTxdPT0xys57FYrH52dlY4OTlJKxQKdHx8/NNsNnux7u/vX1A8Ho/B6/UaJ5PJy1AoRFit1i+BQOCy0Wgcjcfjd8Ph0FKtVq8hjsAdJRKJO4DKsKbT6bM1IBKJfIBm9fD9wTmFkweDwVGz2cy2Wq3bfD6/BNhsttHOKwSDQSWNRvsKQrhs7NxutyO5XO7bxcUFgj6heDyOG/w9lUod4OnMZrOnWx0VCoUEm81GLpfrBpfd7XavCYK48fl8y+RwOIz29/cRNHuuVCrPC4UCewsgEokInU6HZDIZwisue+VsMBiQyWRC8E5+lUqly8Vi8VitVic2p/BKo9HEYGRNaFgTDo5hKigajS6djUYjYjAYM0i62tkDcL3qdDpvVv92u91IpVKXJfP5/KlAIBjhM5vJWwCyMEAsFv+GiUxrtVqUvP9fABiZeT6fP4H7PiLv/xMAb8ME7+I9vLTn5D2y/gApA7uycHmDlgAAAABJRU5ErkJggg==" y="10"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="16.188" x="218.698" y="23.043">...)</text>
+    </g>
+    <!--class Example-->
+    <g class="entity" data-qualified-name="Example" data-source-line="22" id="ent0001">
+      <rect fill="#F1F1F1" height="79.231" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="145.666" x="180" y="49.154"/>
+      <ellipse cx="221.619" cy="65.154" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="216.619" y="70.154">C</text>
+      <text fill="#000" font-size="14" textLength="54.513" x="241.535" y="69.043">Example</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="181" x2="324.666" y1="81.154" y2="81.154"/>
+      <text fill="#000" font-size="14" textLength="117.513" x="186" y="98.197">Can have some bug :</text>
+      <image height="16" width="16" x="303.513" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACQ0lEQVR4Xo2Sz4tSURTHXRURBe36C9r0F7Rwq+DOQUX8gQhiK1EXNvmbceEvTERF0fwJYuH4EyUVE0UYRXOjgriYESGTwUBHiClo4HbuA0VfTvTgy3vv3vv9nHPPOZTNZkPZl1qtzpyfn0vI6/fprwWNRpNJp9M7QLFY5JnN5vfkc0cBzWYzLBAIboxG49fhcCjGaxiGoWTjDiCTyRpbsdnsNYPBQDweD7lcriun09lQKpWTVCp1P6BSqTBBJw6HY8bhcLCxAFFzFotljkEART6fLzMYDF7K5fKMXq8PHgC2H5PJ5ARHw+ZEIlH3+/1VeOej0eiXYDD42WazlVQqFTo9Pf2Ba4K1WCyeUdxut9Xj8dhms9nzQCDQgMjfwFxptVqa6XT6ejweO2u12gWsI4PBgOLx+A1A32BdX18/2QHC4bAainWF04bIOWwejUaadrv9qdPpzPL5PAGATOZHrwDRjTQabUGn0xFOG0fudrvJXC73PZvNomq1imKxGC7wKplMSnB3lsvl44OKisXiBpfLxYW8xGn3+/2LUql06fV6CXMoFEJMJhNBse9g4PKFQkFwAJBIJA2cpkKhINLFaUOHCPPZ2RkymUwI5uRXuVyurNfrh1qtNrXfhRfQoo/QsoHVah3w+fwldAVFIhEiMjazWKyfOp2udrQGELXW6/Vebf/tdruNSqUSKQuFwluRSDTHZ/bNBwCyMEAqlf6GjtzW6/UP5P3/AsDzbrVaPYL7PiDv/xMAs2GHuXgLk/aUvEfWH91Hm8xuxwj7AAAAAElFTkSuQmCC" y="85.154"/>
+      <text fill="#000" font-size="14" textLength="46.025" x="186" y="113.274">Click on</text>
+      <image height="15" width="16" x="232.025" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAPCAYAAADtc08vAAAChklEQVR4XnWTzUvacRzH/QfGtnPXOrqLR4lZWZDSgw84sRCjR7GiJ+1iizJaaGGFB40ORWQZpUQSCJqwQxeZ9KsUvAhrg9Qo8OLYoN77fL8yo1qH9+XL7/36PL1/osPDQzzXzs4ONjc34fP5sLKywrW0tISZmRlMT09jdHSU6/LyUi9ihlgsll5fX/9FD9pCoVCVz+ercrkc1/X1dUXJZFLe09OD7u5urouLizIgHo8La2trpUwmIysWi6LXlEqlPqhUKkilUmg0Gpyfn+tF29vbODk5EZaXl0vpdPpVwN3d3ZtEIvFJq9VicHAQarW6DGCzMsDi4mKJKvwXcHt7+/bq6upjNBp1KZVKWK3Wl4C5ubkSPbwAkPkdM9O8n0OhULypqQkjIyOPAK/Xy5Yo0HZLgiA8AZD5/T/z6elpOBAIpGpra9Hf3/8IYCei1gQClfx+vzcYDNqY9vb2bFtbW1/oPeByuRLU4c+JiYm8QqGAyWQCG4UK6kVOpxPHx8c/jo6Ofi8sLMBms4E+hMViATuZ0WgEW1x7ezuam5u52WAwoL6+HmdnZ3oRC8f+/j4ODg6wsbGB+fl52O12TE5OYmxsDMPDwzCbzVzM3NHRwWEVwNTUFHZ3d7nZ4/Ggr68PjY2NaGhoQGdnZ5ES931oaOiGBYeZWQ5aWlpQV1dXBrBIUgq52e12o7e3FzU1NaiurobD4fhK6bSHw2H/wMAAWltbK+YnAEohVldXec5ZFblczmenfyKUzWY1kUjE2dXVVTE+AYyPj99TiDA7O8vbE4vFfH66BKhyji6UpO6yz80ymawMoBB9oxn/6HQ6Dmhra+M3Zpunlh8oOPfU0cNzs0QiAf1c+r9RIlFLMFzJPQAAAABJRU5ErkJggg==" y="101.308"/>
+      <text fill="#000" font-size="14" textLength="41.213" x="248.179" y="113.274">to save</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="181" x2="324.666" y1="120.385" y2="120.385"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="27" id="ent0003">
+      <path d="M6,76.154 L6,101.154 A0,0 0 0 0 6,101.154 L162.087,101.154 A0,0 0 0 0 162.087,101.154 L162.087,94.154 L179.957,88.654 L162.087,86.154 L162.087,86.154 L152.087,76.154 L6,76.154 A0,0 0 0 0 6,76.154" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M152.087,76.154 L152.087,86.154 L162.087,86.154 L152.087,76.154" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="59.231" x="12" y="93.265">The printer</text>
+      <image height="15" width="15" x="71.231" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAjElEQVR4XmP49/8uAwzfur3vNDaMrAYZo3CwKdy2fd5/XIZgKERXANMIkkOXJ6gZnzxWSRA9aVI9HOfmxcPFUTTDFHp6OmA4Cx2D5EHqQOpBbAYQgxybQeJYNePCBDUTwhia0RMFMZhyzaDAQJcgBoP0gTWTi8GBBGIgRw0hDFIPjmdYKKObig/DQh0AHUh+hw/7s98AAAAASUVORK5CYII=" y="81.154"/>
+      <text fill="#000" font-size="13" textLength="60.856" x="86.231" y="93.265">is available</text>
+    </g>
+  </g>
+</svg>

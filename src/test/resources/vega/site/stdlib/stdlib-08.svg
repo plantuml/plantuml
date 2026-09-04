@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="236px" preserveAspectRatio="none" style="width:769px;height:236px;background:#FFFFFF;" version="1.1" viewBox="0 0 769 236" width="769px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Basic elements-->
+    <g class="cluster" data-qualified-name="Basic elements" data-source-line="140" id="ent0001">
+      <rect fill="#F2F2F2" height="208" rx="25" ry="25" style="stroke:#D9D9D9;stroke-width:3;stroke-dasharray:5,5;" width="747" x="14" y="4"/>
+      <text fill="#101010" font-size="14" font-weight="700" textLength="91.088" x="341.956" y="16.889">Basic elements</text>
+    </g>
+    <!--entity People-->
+    <g class="entity" data-qualified-name="Basic elements.People" data-source-line="147" id="ent0002">
+      <rect fill="none" height="66" rx="2.5" ry="2.5" style="stroke:none;" width="63.663" x="628" y="45"/>
+      <path d="M659.831,74 C656.523,74 653.831,71.308 653.831,68 L653.831,64 C653.831,60.692 656.523,58 659.831,58 C663.139,58 665.831,60.692 665.831,64 L665.831,68 C665.831,71.308 663.139,74 659.831,74 M659.831,60 C657.625,60 655.831,61.794 655.831,64 L655.831,68 C655.831,70.206 657.625,72 659.831,72 C662.037,72 663.831,70.206 663.831,68 L663.831,64 C663.831,61.794 662.037,60 659.831,60" fill="#262626"/>
+      <path d="M659.831,60 C657.625,60 655.831,61.794 655.831,64 L655.831,68 C655.831,70.206 657.625,72 659.831,72 C662.037,72 663.831,70.206 663.831,68 L663.831,64 C663.831,61.794 662.037,60 659.831,60" fill="#FFF"/>
+      <path d="M647.831,84 L647.831,81.5 C647.831,78.75 650.081,76.5 652.831,76.5 L666.831,76.5 C669.581,76.5 671.831,78.75 671.831,81.5 L671.831,84 L647.831,84" fill="#FFF"/>
+      <path d="M672.831,85 L646.831,85 L646.831,81.5 A6.01,6.01 0 0 1 652.831,75.5 L666.831,75.5 A6.01,6.01 0 0 1 672.831,81.5 L672.831,85 M648.831,83 L670.831,83 L670.831,81.5 C670.831,79.294 669.037,77.5 666.831,77.5 L652.831,77.5 C650.625,77.5 648.831,79.294 648.831,81.5 L648.831,83" fill="#262626"/>
+      <text fill="#000" font-size="14" textLength="43.663" x="638" y="97.889">People</text>
+    </g>
+    <g class="entity" data-qualified-name="Basic elements.GMN3" data-source-line="7" id="ent0004">
+      <path d="M575.5,147 L575.5,196 A0,0 0 0 0 575.5,196 L744.05,196 A0,0 0 0 0 744.05,196 L744.05,157 L734.05,147 L664,147 L660,111.002 L656,147 L575.5,147 A0,0 0 0 0 575.5,147" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M734.05,147 L734.05,157 L744.05,157 L734.05,147" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="147.55" x="581.5" y="162.111">The individuals co-creating</text>
+      <text fill="#000" font-size="13" textLength="118.463" x="581.5" y="175.111">the enterprise or using</text>
+      <text fill="#000" font-size="13" textLength="53.381" x="581.5" y="188.111">products.</text>
+    </g>
+    <!--entity Outcome-->
+    <g class="entity" data-qualified-name="Basic elements.Outcome" data-source-line="145" id="ent0006">
+      <rect fill="#FFF" height="34" rx="12.5" ry="12.5" style="stroke:#000;stroke-width:2;" width="76.7" x="434.5" y="61"/>
+      <text fill="#101010" font-size="14" textLength="56.7" x="444.5" y="81.889">Outcome</text>
+    </g>
+    <g class="entity" data-qualified-name="Basic elements.GMN7" data-source-line="14" id="ent0008">
+      <path d="M388.5,147 L388.5,196 A0,0 0 0 0 388.5,196 L557.619,196 A0,0 0 0 0 557.619,196 L557.619,157 L547.619,147 L477,147 L473,95.358 L469,147 L388.5,147 A0,0 0 0 0 388.5,147" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M547.619,147 L547.619,157 L557.619,157 L547.619,147" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="116.269" x="394.5" y="162.111">A result or change that</text>
+      <text fill="#000" font-size="13" textLength="148.119" x="394.5" y="175.111">occurs within our enterprise</text>
+      <text fill="#000" font-size="13" textLength="90.188" x="394.5" y="188.111">or its ecosystem.</text>
+    </g>
+    <!--entity Activity-->
+    <g class="entity" data-qualified-name="Basic elements.Activity" data-source-line="143" id="ent0010">
+      <polygon fill="#FFF" points="251,61,315.363,61,325.363,78,315.363,95,251,95" style="stroke:#000;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#101010" font-size="14" textLength="44.363" x="261" y="81.889">Activity</text>
+    </g>
+    <g class="entity" data-qualified-name="Basic elements.GMN11" data-source-line="21" id="ent0012">
+      <path d="M205.5,147 L205.5,196 A0,0 0 0 0 205.5,196 L370.394,196 A0,0 0 0 0 370.394,196 L370.394,157 L360.394,147 L292,147 L288,95.358 L284,147 L205.5,147 A0,0 0 0 0 205.5,147" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M360.394,147 L360.394,157 L370.394,157 L360.394,147" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="143.894" x="211.5" y="162.111">What is being done or going</text>
+      <text fill="#000" font-size="13" textLength="125.694" x="211.5" y="175.111">on in our enterprise or its</text>
+      <text fill="#000" font-size="13" textLength="65.65" x="211.5" y="188.111">ecosystem.</text>
+    </g>
+    <!--entity Object-->
+    <g class="entity" data-qualified-name="Basic elements.Object" data-source-line="145" id="ent0014">
+      <rect fill="#FFF" height="34" style="stroke:#000;stroke-width:2;" width="60.425" x="79" y="61"/>
+      <text fill="#101010" font-size="14" textLength="40.425" x="89" y="81.889">Object</text>
+    </g>
+    <g class="entity" data-qualified-name="Basic elements.GMN15" data-source-line="28" id="ent0016">
+      <path d="M30.5,153.5 L30.5,189.5 A0,0 0 0 0 30.5,189.5 L187.919,189.5 A0,0 0 0 0 187.919,189.5 L187.919,163.5 L177.919,153.5 L113,153.5 L109,95.358 L105,153.5 L30.5,153.5 A0,0 0 0 0 30.5,153.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M177.919,153.5 L177.919,163.5 L187.919,163.5 L177.919,153.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="90.188" x="36.5" y="168.611">A structure that is</text>
+      <text fill="#000" font-size="13" textLength="136.419" x="36.5" y="181.611">relevant to the enterprise.</text>
+    </g>
+  </g>
+</svg>

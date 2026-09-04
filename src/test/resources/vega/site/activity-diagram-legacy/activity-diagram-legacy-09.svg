@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="192px" preserveAspectRatio="none" style="width:375px;height:192px;background:#FFFFFF;" version="1.1" viewBox="0 0 375 192" width="375px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name="start" data-source-line="2" id="ent0001">
+      <ellipse cx="130.5" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="83.375" x="89" y="72"/>
+    <text fill="#000" font-size="12" textLength="63.375" x="99" y="91.333">Some action</text>
+    <g class="entity" data-qualified-name="GN4" data-source-line="3" id="ent0005">
+      <path d="M190,76 L190,84 L172.125,88 L190,92 L190,99 A0,0 0 0 0 190,99 L359.2,99 A0,0 0 0 0 359.2,99 L359.2,86 L349.2,76 L190,76 A0,0 0 0 0 190,76" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M349.2,76 L349.2,86 L359.2,86 L349.2,76" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="148.2" x="196" y="91.111">This action has to be defined</text>
+    </g>
+    <g class="end_entity" data-qualified-name="end" data-source-line="4" id="ent0007">
+      <ellipse cx="130.5" cy="157" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1.5;"/>
+      <ellipse cx="130.5" cy="157" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN9" data-source-line="6" id="ent0010">
+      <path d="M6,140 L6,176 A0,0 0 0 0 6,176 L100.775,176 A0,0 0 0 0 100.775,176 L100.775,162 L119.446,158 L100.775,154 L100.775,150 L90.775,140 L6,140 A0,0 0 0 0 6,140" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M90.775,140 L90.775,150 L100.775,150 L90.775,140" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="73.775" x="12" y="155.111">This note is on</text>
+      <text fill="#000" font-size="13" textLength="68.738" x="12" y="168.111">several lines</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="130.5,71.587,134.5,62.587,130.5,66.587,126.5,62.587,130.5,71.587" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M130.5,36.084 C130.5,45.976 130.5,55.56 130.5,66.587" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="130.5,145.966,134.5,136.966,130.5,140.966,126.5,136.966,130.5,145.966" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M130.5,104.091 C130.5,116.769 130.5,129.589 130.5,140.966" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

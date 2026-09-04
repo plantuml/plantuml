@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+<style>
+circle {
+  Backgroundcolor palegreen
+  LineColor green
+  LineThickness 2
+}
+</style>
+
+(1)
+:a;
+(A)
+@enduml

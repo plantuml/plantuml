@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+:hyperlinkColor setting, by default;
+:[[http://plantuml.com]];
+@enduml

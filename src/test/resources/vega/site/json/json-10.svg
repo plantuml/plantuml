@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="184px" preserveAspectRatio="none" style="width:298px;height:184px;background:#FFFFFF;" version="1.1" viewBox="0 0 298 184" width="298px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="205.238" x="10" y="82"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="100.45" x="15" y="94.889">DecimalNumber</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="210.238" y="94.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="205.238" x2="205.238" y1="82" y2="100"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="215.238" y1="100" y2="100"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="139.388" x="15" y="112.889">DecimalNumber . Digits</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="210.238" y="112.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="205.238" x2="205.238" y1="100" y2="118"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="215.238" y1="118" y2="118"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="185.238" x="15" y="130.889">DecimalNumber ExponentPart</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="210.238" y="130.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="205.238" x2="205.238" y1="118" y2="136"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="205.238" x="10" y="82"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="22.425" x="258.5" y="10"/>
+    <text fill="#000" font-size="14" textLength="12.425" x="263.5" y="22.889">-1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="258.5" x2="280.925" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" x="263.5" y="40.889">0</text>
+    <line style="stroke:#000;stroke-width:1;" x1="258.5" x2="280.925" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" x="263.5" y="58.889">1</text>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="22.425" x="258.5" y="10"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="34.063" x="252.5" y="82"/>
+    <text fill="#000" font-size="14" textLength="24.063" x="257.5" y="94.889">-1.1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="252.5" x2="286.563" y1="100" y2="100"/>
+    <text fill="#000" font-size="14" textLength="19.425" x="257.5" y="112.889">0.1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="252.5" x2="286.563" y1="118" y2="118"/>
+    <text fill="#000" font-size="14" textLength="19.425" x="257.5" y="130.889">1.1</text>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="34.063" x="252.5" y="82"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="34.938" x="252" y="154"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="257" y="166.889">1E5</text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="34.938" x="252" y="154"/>
+    <path d="M210,94 L210,81 C210,60.057 234.184,47.896 251.585,41.855" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M252.526,44.818 L253.807,41.149 L250.643,38.893 L258.991,39.501 L252.526,44.818" fill="#000"/>
+    <ellipse cx="210" cy="94" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M203,109 L216,109 C225.536,109 236.038,109 245.16,109" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M245.16,112.041 L247.441,109 L245.16,105.959 L252.763,109 L245.16,112.041" fill="#000"/>
+    <ellipse cx="203" cy="109" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M203,127 L216,127 C224.146,127 240.32,138.785 252.669,148.869" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M250.651,151.287 L254.483,150.383 L254.688,146.45 L258.716,153.916 L250.651,151.287" fill="#000"/>
+    <ellipse cx="203" cy="127" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

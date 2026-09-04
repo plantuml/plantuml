@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+start
+partition #lightGreen "Input Interface" {
+    :read config file;
+    :init internal variable;
+}
+partition Running {
+    :wait for user interaction;
+    :print information;
+}
+stop
+@enduml

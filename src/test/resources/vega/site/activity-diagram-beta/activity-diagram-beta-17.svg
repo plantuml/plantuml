@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="331px" preserveAspectRatio="none" style="width:274px;height:331px;background:#FFFFFF;" version="1.1" viewBox="0 0 274 331" width="274px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <ellipse cx="74.338" cy="25" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="67.325" x="40.675" y="107"/>
+    <text fill="#000" font-size="12" textLength="47.325" x="50.675" y="126.333">read data</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="116.675" x="16" y="174"/>
+    <text fill="#000" font-size="12" textLength="96.675" x="26" y="193.333">generate diagrams</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="114.05" x="17.313" y="55"/>
+    <text fill="#000" font-size="12" textLength="94.05" x="27.313" y="74.333">foo as starting label</text>
+    <polygon fill="#F1F1F1" points="48.075,226,100.6,226,112.6,238,100.6,250,48.075,250,36.075,238,48.075,226" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="11" textLength="52.525" x="48.075" y="241.056">more data?</text>
+    <text fill="#000" font-size="11" textLength="17.119" x="112.6" y="235.556">yes</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="102.8" x="151.363" y="136.5"/>
+    <text fill="#000" font-size="12" textLength="82.8" x="161.363" y="155.833">This is backward</text>
+    <ellipse cx="74.338" cy="300.444" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+    <ellipse cx="74.338" cy="300.444" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="74.338" x2="74.338" y1="139" y2="174"/>
+    <polygon fill="#181818" points="70.338,164,74.338,174,78.338,164,74.338,168" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="74.338" x2="74.338" y1="87" y2="107"/>
+    <polygon fill="#181818" points="70.338,97,74.338,107,78.338,97,74.338,101" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="112.6" x2="202.763" y1="238" y2="238"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="202.763" x2="202.763" y1="168.5" y2="238"/>
+    <polygon fill="#181818" points="198.763,178.5,202.763,168.5,206.763,178.5,202.763,174.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="202.763" x2="202.763" y1="71" y2="136.5"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="202.763" x2="131.363" y1="71" y2="71"/>
+    <polygon fill="#181818" points="141.363,67,131.363,71,141.363,75,137.363,71" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="74.338" x2="74.338" y1="206" y2="226"/>
+    <polygon fill="#181818" points="70.338,216,74.338,226,78.338,216,74.338,220" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="74.338" x2="74.338" y1="35" y2="55"/>
+    <polygon fill="#181818" points="70.338,45,74.338,55,78.338,45,74.338,49" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="74.338" x2="74.338" y1="250" y2="289.444"/>
+    <polygon fill="#181818" points="70.338,279.444,74.338,289.444,78.338,279.444,74.338,283.444" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="11" textLength="12.238" x="78.338" y="269.5">no</text>
+  </g>
+</svg>

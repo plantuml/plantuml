@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="53px" preserveAspectRatio="none" style="width:181px;height:53px;background:#FFFFFF;" version="1.1" viewBox="0 0 181 53" width="181px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="48.075" x="76.1" y="15.333">Column 2</text>
+    <text fill="#000" font-size="12" textLength="48.075" x="126.175" y="15.333">Column 3</text>
+    <text fill="#000" font-size="12" textLength="68.1" x="6" y="29.333">Row header 1</text>
+    <text fill="#000" font-size="12" textLength="35.4" x="76.1" y="29.333">value 1</text>
+    <text fill="#000" font-size="12" textLength="35.4" x="126.175" y="29.333">value 2</text>
+    <text fill="#000" font-size="12" textLength="68.1" x="6" y="43.333">Row header 2</text>
+    <text fill="#000" font-size="12" textLength="48.825" x="76.1" y="43.333">A long cell</text>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="75.1" y1="5" y2="5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="75.1" x2="125.175" y1="19" y2="19"/>
+    <line style="stroke:#000;stroke-width:1;" x1="125.175" x2="175.25" y1="33" y2="33"/>
+    <line style="stroke:#000;stroke-width:1;" x1="75.1" x2="125.175" y1="5" y2="5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="125.175" x2="175.25" y1="19" y2="19"/>
+    <line style="stroke:#000;stroke-width:1;" x1="125.175" x2="175.25" y1="5" y2="5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="75.1" y1="47" y2="47"/>
+    <line style="stroke:#000;stroke-width:1;" x1="75.1" x2="125.175" y1="47" y2="47"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="75.1" y1="33" y2="33"/>
+    <line style="stroke:#000;stroke-width:1;" x1="125.175" x2="175.25" y1="47" y2="47"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="75.1" y1="19" y2="19"/>
+    <line style="stroke:#000;stroke-width:1;" x1="75.1" x2="125.175" y1="33" y2="33"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="5" y1="5" y2="19"/>
+    <line style="stroke:#000;stroke-width:1;" x1="75.1" x2="75.1" y1="19" y2="33"/>
+    <line style="stroke:#000;stroke-width:1;" x1="175.25" x2="175.25" y1="33" y2="47"/>
+    <line style="stroke:#000;stroke-width:1;" x1="75.1" x2="75.1" y1="5" y2="19"/>
+    <line style="stroke:#000;stroke-width:1;" x1="125.175" x2="125.175" y1="19" y2="33"/>
+    <line style="stroke:#000;stroke-width:1;" x1="175.25" x2="175.25" y1="19" y2="33"/>
+    <line style="stroke:#000;stroke-width:1;" x1="125.175" x2="125.175" y1="5" y2="19"/>
+    <line style="stroke:#000;stroke-width:1;" x1="175.25" x2="175.25" y1="5" y2="19"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="5" y1="33" y2="47"/>
+    <line style="stroke:#000;stroke-width:1;" x1="5" x2="5" y1="19" y2="33"/>
+    <line style="stroke:#000;stroke-width:1;" x1="75.1" x2="75.1" y1="33" y2="47"/>
+  </g>
+</svg>

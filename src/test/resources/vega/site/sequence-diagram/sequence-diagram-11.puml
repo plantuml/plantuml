@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+actor Alice
+actor Bob
+Alice -> Bob : hello
+hide footbox
+@enduml

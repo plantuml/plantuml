@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startebnf
+CompilationUnit = OrdinaryCompilationUnit | ModularCompilationUnit;
+OrdinaryCompilationUnit = [PackageDeclaration], {ImportDeclaration}, {TopLevelClassOrInterfaceDeclaration};
+ModularCompilationUnit = {ImportDeclaration}, ModuleDeclaration;
+PackageDeclaration = {PackageModifier}, "package", Identifier, {Identifier}, ";";
+PackageModifier = Annotation;
+ImportDeclaration = SingleTypeImportDeclaration | TypeImportOnDemandDeclaration | SingleStaticImportDeclaration | StaticImportOnDemandDeclaration;
+SingleTypeImportDeclaration = "import", TypeName, ";";
+TypeImportOnDemandDeclaration = "import", PackageOrTypeName, ".*", ";";
+SingleStaticImportDeclaration = "import", "static", TypeName, ".", Identifier, ";";
+StaticImportOnDemandDeclaration = "import", "static", TypeName, ".*", ";";
+TopLevelClassOrInterfaceDeclaration = (ClassDeclaration | InterfaceDeclaration), ";";
+ModuleDeclaration = {Annotation}, [open], "module", Identifier, {Identifier}, "{", {ModuleDirective}, "}";
+ModuleDirective = ("requires", {RequiresModifier}, ModuleName, ";") | ("exports", PackageName, ["to", ModuleName, {",", ModuleName}], ";") | ("opens", PackageName, ["to", ModuleName, {",", ModuleName}], ";") | ("uses", TypeName, ";") | ("provides", TypeName, "with", TypeName, {",", TypeName}, ";");
+RequiresModifier = "transitive" | "static";
+@endebnf

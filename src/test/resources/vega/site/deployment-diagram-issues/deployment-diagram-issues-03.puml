@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+hexagon h [
+more
+and
+more
+combinatorial
+]
+@enduml

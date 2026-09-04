@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startmindmap
+* root
+!foreach $item in ["abc", "def", "ghi"]
+  ** $item
+!endfor
+@endmindmap

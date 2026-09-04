@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startchart
+title Performance
+h-axis [Q1, Q2, Q3, Q4]
+v-axis 0 --> 100 ticks [0:"Poor", 50:"Average", 100:"Excellent"]
+bar [30, 60, 85, 95] #3498db
+@endchart

@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+mode compact
+robust "Web Browser" as WB
+concise "Web User" as WU
+robust "Web Browser2" as WB2
+
+@0
+WU is Waiting
+WB is Idle
+WB2 is Idle
+
+@200
+WB is Proc.
+
+@300
+WB is Waiting
+WB2 is Waiting
+
+@500
+WU is ok
+
+@700
+WB is Idle
+@enduml

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="82px" preserveAspectRatio="none" style="width:162px;height:82px;background:#FFFFFF;" version="1.1" viewBox="0 0 162 82" width="162px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity CI-->
+    <g class="entity" data-qualified-name="CI" data-source-line="2" id="ent0001">
+      <rect fill="#FFC" height="54" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="139.7" x="6" y="12"/>
+      <path d="M79.579,25.5 A0.5,0.5 0 0 0 79.251,25.975 L79.276,28.611 L66.719,28.615 A0.5,0.5 0 0 0 66.219,29.115 L66.215,35.164 A0.5,0.5 0 0 0 66.717,35.664 L79.246,35.617 L79.246,37.943 A0.5,0.5 0 0 0 80.129,38.264 L85.123,32.311 A0.5,0.5 0 0 0 85.125,31.67 L80.135,25.65 A0.5,0.5 0 0 0 79.578,25.5 M80.265,27.373 L84.091,31.988 L80.247,36.568 L80.247,35.115 A0.5,0.5 0 0 0 79.745,34.615 L67.216,34.662 L67.22,29.615 L79.781,29.611 A0.5,0.5 0 0 0 80.281,29.107" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="119.7" x="16" y="52.889">Capture Information</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="EBNF" height="362px" preserveAspectRatio="none" style="width:229px;height:362px;background:#FFFFFF;" version="1.1" viewBox="0 0 229 362" width="229px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="80.084" y="30.889">Comments</text>
+    </g>
+    <path d="M10,50 L10,73 L114.119,73 L114.119,60 L104.119,50 L10,50" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M104.119,50 L104.119,60 L114.119,60 L104.119,50" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="83.119" x="16" y="65.111">Notes for Rule1</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="36.663" x="10" y="98.889">Rule1</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="40" x2="188.806" y1="122" y2="122"/>
+    <path d="M97.523,122 L97.523,119 L103.523,122 L97.523,125 L97.523,122" fill="#181818"/>
+    <path d="M40,122 C49,122 52,130 52,139 C52,148 55,156 64,156" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M164.806,156 C173.806,156 176.806,148 176.806,139 C176.806,130 179.806,122 188.806,122" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M72,148 C72,154 74,156 80,156" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="72" x2="72" y1="145" y2="148"/>
+    <path d="M72,145 C72,139 74,137 80,137" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="79" x2="149.806" y1="137" y2="137"/>
+    <path d="M119.484,137 L119.484,134 L113.484,137 L119.484,140 L119.484,137" fill="#181818"/>
+    <path d="M156.806,148 C156.806,154 154.806,156 148.806,156" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="156.806" x2="156.806" y1="145" y2="148"/>
+    <path d="M148.806,137 C154.806,137 156.806,139 156.806,145" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="64" x2="79" y1="156" y2="156"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="149.806" x2="164.806" y1="156" y2="156"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="29.425" x="99.691" y="144"/>
+    <text fill="#000" font-size="14" textLength="19.425" x="104.691" y="159.889">a-z</text>
+    <path d="M79,188 L79,211 A0,0 0 0 0 79,211 L149.806,211 A0,0 0 0 0 149.806,211 L149.806,198 L139.806,188 L118.403,188 L114.403,168 L110.403,188 L79,188 A0,0 0 0 0 79,188" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M139.806,188 L139.806,198 L149.806,198 L139.806,188" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="49.806" x="85" y="203.111">any letter</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="79" x2="99.691" y1="156" y2="156"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="129.116" x2="149.806" y1="156" y2="156"/>
+    <ellipse cx="14" cy="122" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="218.806" cy="122" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="122" y2="122"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="188.806" x2="214.806" y1="122" y2="122"/>
+    <path d="M199.806,122 L199.806,119 L205.806,122 L199.806,125 L199.806,122" fill="#181818"/>
+    <path d="M10,231 L10,254 L114.119,254 L114.119,241 L104.119,231 L10,231" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M104.119,231 L104.119,241 L114.119,241 L104.119,231" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="83.119" x="16" y="246.111">Notes for Rule2</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="36.663" x="10" y="279.889">Rule2</text>
+    <ellipse cx="14" cy="293" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="70" cy="293" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="293" y2="293"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="40" x2="66" y1="293" y2="293"/>
+    <path d="M51,293 L51,290 L57,293 L51,296 L51,293" fill="#181818"/>
+    <path d="M10,313 L10,336 L203.006,336 L203.006,323 L193.006,313 L10,313" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M193.006,313 L193.006,323 L203.006,323 L193.006,313" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="172.006" x="16" y="328.111">Additional notes and references</text>
+  </g>
+</svg>

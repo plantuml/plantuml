@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WIRE" height="1271px" preserveAspectRatio="none" style="width:676px;height:1271px;background:#FFFFFF;" version="1.1" viewBox="0 0 676 1271" width="676px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="none" height="70" style="stroke:#000;stroke-width:1;" width="70" x="10" y="380"/>
+    <text fill="#000" font-size="12" textLength="39.45" x="15" y="389.333">DDR3L</text>
+    <rect fill="none" height="70" style="stroke:#000;stroke-width:1;" width="70" x="10" y="470"/>
+    <text fill="#000" font-size="12" textLength="57.525" x="15" y="479.333">SLC NAND</text>
+    <rect fill="none" height="30" style="stroke:#000;stroke-width:1;" width="70" x="10" y="560"/>
+    <text fill="#000" font-size="12" textLength="56.7" x="15" y="569.333">TestPoints</text>
+    <rect fill="none" height="130" style="stroke:#000;stroke-width:1;" width="70" x="10" y="610"/>
+    <text fill="#000" font-size="12" textLength="42.075" x="15" y="619.333">PF3000</text>
+    <rect fill="none" height="30" style="stroke:#000;stroke-width:1;" width="70" x="10" y="760"/>
+    <text fill="#000" font-size="12" textLength="52.05" x="15" y="769.333">EEPROM</text>
+    <rect fill="none" height="1210" style="stroke:#000;stroke-width:1;" width="215" x="160" y="30"/>
+    <rect fill="none" height="70" style="stroke:#000;stroke-width:1;" width="70" x="170" y="50"/>
+    <text fill="#000" font-size="12" textLength="39.375" x="175" y="59.333">2x ARM</text>
+    <rect fill="none" height="70" style="stroke:#000;stroke-width:1;" width="70" x="170" y="140"/>
+    <text fill="#000" font-size="12" textLength="26.7" x="175" y="149.333">ARM</text>
+    <rect fill="none" height="70" style="stroke:#000;stroke-width:1;" width="70" x="170" y="230"/>
+    <text fill="#000" font-size="12" textLength="24.075" x="175" y="239.333">PXP</text>
+    <rect fill="none" height="30" style="stroke:#000;stroke-width:1;" width="70" x="170" y="320"/>
+    <text fill="#000" font-size="12" textLength="35.325" x="175" y="329.333">Crypto</text>
+    <rect fill="none" height="70" style="stroke:#000;stroke-width:1;" width="70" x="170" y="370"/>
+    <text fill="#000" font-size="12" textLength="32.775" x="175" y="379.333">DDR3</text>
+    <rect fill="none" height="30" style="stroke:#000;stroke-width:1;" width="70" x="170" y="550"/>
+    <text fill="#000" font-size="12" textLength="30.675" x="175" y="559.333">JTAG</text>
+    <rect fill="none" height="770" style="stroke:#000;stroke-width:1;" width="105" x="260" y="50"/>
+    <rect fill="none" height="20" style="stroke:#000;stroke-width:1;" width="85" x="270" y="70"/>
+    <text fill="#000" font-size="12" textLength="63.45" x="275" y="79.333">24 bit display</text>
+    <rect fill="none" height="20" style="stroke:#000;stroke-width:1;" width="85" x="270" y="110"/>
+    <text fill="#000" font-size="12" textLength="66" x="275" y="119.333">24 bit camera</text>
+    <rect fill="none" height="20" style="stroke:#000;stroke-width:1;" width="85" x="270" y="150"/>
+    <text fill="#000" font-size="12" textLength="58.725" x="275" y="159.333">2x DS DSIO</text>
+    <rect fill="none" height="20" style="stroke:#000;stroke-width:1;" width="85" x="270" y="190"/>
+    <text fill="#000" font-size="12" textLength="55.95" x="275" y="199.333">124x GPIO</text>
+    <rect fill="none" height="20" style="stroke:#000;stroke-width:1;" width="85" x="270" y="230"/>
+    <text fill="#000" font-size="12" textLength="34.725" x="275" y="239.333">4x 12C</text>
+    <rect fill="none" height="20" style="stroke:#000;stroke-width:1;" width="85" x="270" y="270"/>
+    <text fill="#000" font-size="12" textLength="34.05" x="275" y="279.333">3x 12S</text>
+    <rect fill="none" height="20" style="stroke:#000;stroke-width:1;" width="85" x="270" y="310"/>
+    <text fill="#000" font-size="12" textLength="45.45" x="275" y="319.333">7x UART</text>
+    <rect fill="none" height="20" style="stroke:#000;stroke-width:1;" width="85" x="270" y="350"/>
+    <text fill="#000" font-size="12" textLength="61.35" x="275" y="359.333">2x QuadSPI</text>
+    <rect fill="none" height="20" style="stroke:#000;stroke-width:1;" width="85" x="270" y="390"/>
+    <text fill="#000" font-size="12" textLength="47.4" x="275" y="399.333">4x eCSPI</text>
+    <rect fill="none" height="20" style="stroke:#000;stroke-width:1;" width="85" x="270" y="430"/>
+    <text fill="#000" font-size="12" textLength="38.1" x="275" y="439.333">2x CAN</text>
+    <rect fill="none" height="20" style="stroke:#000;stroke-width:1;" width="85" x="270" y="470"/>
+    <text fill="#000" font-size="12" textLength="43.35" x="275" y="479.333">4x Timer</text>
+    <rect fill="none" height="20" style="stroke:#000;stroke-width:1;" width="85" x="270" y="510"/>
+    <text fill="#000" font-size="12" textLength="48.075" x="275" y="519.333">Local bus</text>
+    <rect fill="none" height="20" style="stroke:#000;stroke-width:1;" width="85" x="270" y="550"/>
+    <text fill="#000" font-size="12" textLength="30.6" x="275" y="559.333">GPMI</text>
+    <rect fill="none" height="20" style="stroke:#000;stroke-width:1;" width="85" x="270" y="590"/>
+    <text fill="#000" font-size="12" textLength="61.35" x="275" y="599.333">2x Gbit MAC</text>
+    <rect fill="none" height="20" style="stroke:#000;stroke-width:1;" width="85" x="270" y="630"/>
+    <text fill="#000" font-size="12" textLength="62.025" x="275" y="639.333">6x6 keypard</text>
+    <rect fill="none" height="20" style="stroke:#000;stroke-width:1;" width="85" x="270" y="670"/>
+    <text fill="#000" font-size="12" textLength="42" x="275" y="679.333">4x PWM</text>
+    <rect fill="none" height="20" style="stroke:#000;stroke-width:1;" width="85" x="270" y="710"/>
+    <text fill="#000" font-size="12" textLength="70.65" x="275" y="719.333">2x SmartCard</text>
+    <rect fill="none" height="20" style="stroke:#000;stroke-width:1;" width="85" x="270" y="750"/>
+    <text fill="#000" font-size="12" textLength="66.675" x="275" y="759.333">4x Watchdog</text>
+    <rect fill="none" height="20" style="stroke:#000;stroke-width:1;" width="85" x="270" y="790"/>
+    <text fill="#000" font-size="12" textLength="27.3" x="275" y="799.333">MQS</text>
+    <text fill="#000" font-size="12" textLength="37.425" x="265" y="59.333">signals</text>
+    <rect fill="none" height="30" style="stroke:#000;stroke-width:1;" width="70" x="295" y="850"/>
+    <text fill="#000" font-size="12" textLength="32.1" x="300" y="859.333">ADC1</text>
+    <rect fill="none" height="30" style="stroke:#000;stroke-width:1;" width="70" x="295" y="900"/>
+    <text fill="#000" font-size="12" textLength="32.1" x="300" y="909.333">ADC2</text>
+    <rect fill="none" height="30" style="stroke:#000;stroke-width:1;" width="70" x="295" y="950"/>
+    <text fill="#000" font-size="12" textLength="44.625" x="300" y="959.333">MIPI DSI</text>
+    <rect fill="none" height="30" style="stroke:#000;stroke-width:1;" width="70" x="295" y="1000"/>
+    <text fill="#000" font-size="12" textLength="26.7" x="300" y="1009.333">PCIe</text>
+    <rect fill="none" height="30" style="stroke:#000;stroke-width:1;" width="70" x="295" y="1050"/>
+    <text fill="#000" font-size="12" textLength="38.1" x="300" y="1059.333">USB2 0</text>
+    <rect fill="none" height="30" style="stroke:#000;stroke-width:1;" width="70" x="295" y="1100"/>
+    <text fill="#000" font-size="12" textLength="38.1" x="300" y="1109.333">USB2 0</text>
+    <rect fill="none" height="30" style="stroke:#000;stroke-width:1;" width="70" x="295" y="1150"/>
+    <text fill="#000" font-size="12" textLength="38.1" x="300" y="1159.333">USB2 0</text>
+    <rect fill="none" height="30" style="stroke:#000;stroke-width:1;" width="70" x="295" y="1200"/>
+    <text fill="#000" font-size="12" textLength="44.625" x="300" y="1209.333">MIPI CSI</text>
+    <text fill="#000" font-size="12" textLength="50.775" x="165" y="39.333">i MX7 SoC</text>
+    <rect fill="none" height="30" style="stroke:#000;stroke-width:1;" width="100" x="435" y="510"/>
+    <text fill="#000" font-size="12" textLength="50.1" x="440" y="519.333">WLAN BT</text>
+    <rect fill="none" height="30" style="stroke:#000;stroke-width:1;" width="100" x="435" y="560"/>
+    <text fill="#000" font-size="12" textLength="53.4" x="440" y="569.333">1Gbit PHY</text>
+    <rect fill="none" height="30" style="stroke:#000;stroke-width:1;" width="100" x="435" y="610"/>
+    <text fill="#000" font-size="12" textLength="53.4" x="440" y="619.333">1Gbit PHY</text>
+    <rect fill="none" height="30" style="stroke:#000;stroke-width:1;" width="100" x="435" y="780"/>
+    <text fill="#000" font-size="12" textLength="54.675" x="440" y="789.333">WM 8731L</text>
+    <rect fill="none" height="30" style="stroke:#000;stroke-width:1;" width="80" x="395" y="840"/>
+    <text fill="#000" font-size="12" textLength="58.125" x="400" y="849.333">SPI FLASH</text>
+    <rect fill="none" height="30" style="stroke:#000;stroke-width:1;" width="80" x="505" y="840"/>
+    <text fill="#000" font-size="12" textLength="48.75" x="510" y="849.333">Resistive</text>
+    <rect fill="none" height="30" style="stroke:#000;stroke-width:1;" width="100" x="415" y="970"/>
+    <text fill="#000" font-size="12" textLength="61.425" x="420" y="979.333">DSI to LVDS</text>
+    <rect fill="none" height="30" style="stroke:#000;stroke-width:1;" width="100" x="415" y="1080"/>
+    <text fill="#000" font-size="12" textLength="38.1" x="420" y="1089.333">USB2 0</text>
+    <rect fill="none" height="1220" style="stroke:#000;stroke-width:1;" width="50" x="605" y="30"/>
+    <text fill="#000" font-size="12" textLength="36.075" x="610" y="39.333">240pin</text>
+    <text fill="#000" font-size="12" x="15" y="19.333"> </text>
+    <path d="M81,405 L154,405 L154,400 L169,410 L154,420 L154,415 L81,415 L81,405" fill="#FFF" style="stroke:#000;stroke-width:1;"/>
+    <path d="M258,475 L253,470 L253,480 L258,475" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="81" x2="259" y1="475" y2="475"/>
+    <path d="M258,520 L253,515 L253,525 L258,520" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="81" x2="259" y1="520" y2="520"/>
+    <path d="M168,565 L163,560 L163,570 L168,565" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="81" x2="169" y1="565" y2="565"/>
+    <path d="M81,615 L144,615 L144,610 L159,620 L144,630 L144,625 L81,625 L81,615" fill="#FFF" style="stroke:#00F;stroke-width:1;"/>
+    <path d="M81,640 L144,640 L144,635 L159,645 L144,655 L144,650 L81,650 L81,640" fill="#FFF" style="stroke:#000;stroke-width:1;"/>
+    <path d="M81,665 L144,665 L144,660 L159,670 L144,680 L144,675 L81,675 L81,665" fill="#FFF" style="stroke:#000;stroke-width:1;"/>
+    <path d="M366,75 L589,75 L589,70 L604,80 L589,90 L589,85 L366,85 L366,75" fill="#FFF" style="stroke:#000;stroke-width:1;"/>
+    <path d="M366,115 L589,115 L589,110 L604,120 L589,130 L589,125 L366,125 L366,115" fill="#FFF" style="stroke:#000;stroke-width:1;"/>
+    <path d="M603,140 L598,135 L598,145 L603,140" fill="#F00"/>
+    <line style="stroke:#F00;stroke-width:1;" x1="366" x2="604" y1="140" y2="140"/>
+    <path d="M603,155 L598,150 L598,160 L603,155" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="366" x2="604" y1="155" y2="155"/>
+    <path d="M603,170 L598,165 L598,175 L603,170" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="366" x2="604" y1="170" y2="170"/>
+    <path d="M603,185 L598,180 L598,190 L603,185" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="366" x2="604" y1="185" y2="185"/>
+    <path d="M603,200 L598,195 L598,205 L603,200" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="366" x2="604" y1="200" y2="200"/>
+    <path d="M603,215 L598,210 L598,220 L603,215" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="366" x2="604" y1="215" y2="215"/>
+    <path d="M603,230 L598,225 L598,235 L603,230" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="366" x2="604" y1="230" y2="230"/>
+    <path d="M603,245 L598,240 L598,250 L603,245" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="366" x2="604" y1="245" y2="245"/>
+    <path d="M603,260 L598,255 L598,265 L603,260" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="366" x2="604" y1="260" y2="260"/>
+    <path d="M603,275 L598,270 L598,280 L603,275" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="366" x2="604" y1="275" y2="275"/>
+    <path d="M603,290 L598,285 L598,295 L603,290" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="366" x2="604" y1="290" y2="290"/>
+    <path d="M603,305 L598,300 L598,310 L603,305" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="366" x2="604" y1="305" y2="305"/>
+    <path d="M603,320 L598,315 L598,325 L603,320" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="366" x2="604" y1="320" y2="320"/>
+    <path d="M603,335 L598,330 L598,340 L603,335" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="366" x2="604" y1="335" y2="335"/>
+    <path d="M603,350 L598,345 L598,355 L603,350" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="366" x2="604" y1="350" y2="350"/>
+    <path d="M603,365 L598,360 L598,370 L603,365" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="366" x2="604" y1="365" y2="365"/>
+    <path d="M433,515 L428,510 L428,520 L433,515" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="356" x2="434" y1="515" y2="515"/>
+  </g>
+</svg>

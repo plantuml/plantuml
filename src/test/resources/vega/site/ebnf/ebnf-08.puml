@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startebnf
+title Title
+not_styled_ebnf = {"a", c , "a" (* Note on a *)}
+| ? special ?
+| "repetition", 4 * '2';
+(* Global End Note *)
+@endebnf

@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startnwdiag
+<style>
+root {
+ shadowing 0
+}
+</style>
+nwdiag {
+  network nw {
+    server;
+    internet;
+  }
+  internet [shape = cloud];
+}
+@endnwdiag

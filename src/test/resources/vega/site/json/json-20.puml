@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+allowmixing
+
+agent Agent
+stack {
+  json "JSON_file.json" as J {
+    "fruit":"Apple",
+    "size":"Large",
+    "color": ["Red", "Green"]
+  }
+}
+database Database
+
+Agent -> J
+J -> Database
+@enduml

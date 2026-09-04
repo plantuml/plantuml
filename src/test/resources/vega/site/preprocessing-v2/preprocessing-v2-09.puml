@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+!preprocessorV2
+Alice -> Bob : Hello
+!assert %strpos("abcdef", "cd")==3 : "This always fail"
+@enduml

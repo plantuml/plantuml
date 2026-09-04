@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+object user {
+You can have horizontal line
+----
+Or double line
+====
+Or strong line
+____
+Or dotted line
+..My title..
+//and title... //
+==Title==
+--Another title--
+Enjoy!
+}
+
+@enduml

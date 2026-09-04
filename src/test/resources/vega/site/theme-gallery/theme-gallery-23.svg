@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="566.667px" preserveAspectRatio="none" style="width:291px;height:566px;" version="1.1" viewBox="0 0 291 566" width="291.667px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="gyfkpdspkvhq00" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#F18E3E"/>
+      <stop offset="100%" stop-color="#EC7211"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="choice1" id="ent0001">
+      <polygon fill="#EEE" points="193.75,104.167,206.25,116.667,193.75,129.167,181.25,116.667,193.75,104.167" style="stroke:#BEBEBE;stroke-width:0.521;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#1D8102" height="8.333" style="stroke:none;" width="83.333" x="71.875" y="195.833"/>
+    <rect fill="#1D8102" height="8.333" style="stroke:none;" width="83.333" x="81.25" y="419.792"/>
+    <g class="end_entity" data-qualified-name="end3" data-source-line="7" id="ent0004">
+      <ellipse cx="234.375" cy="207.292" fill="none" rx="11.458" ry="11.458" style="stroke:#0073BB;stroke-width:1.042;"/>
+      <ellipse cx="234.375" cy="207.292" fill="#222" rx="6.25" ry="6.25" style="stroke:#0073BB;stroke-width:1.042;"/>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="9" id="ent0005">
+      <ellipse cx="193.75" cy="22.917" fill="#0073BB" rx="10.417" ry="10.417" style="stroke:#222;stroke-width:1.042;"/>
+    </g>
+    <g class="entity" data-qualified-name="State1" data-source-line="14" id="ent0010">
+      <path d="M10.417,406.25 L56.003,406.25 A4.167,4.167 0 0 1 60.169,410.417 L60.169,428.125 L6.25,428.125 L6.25,410.417 A4.167,4.167 0 0 1 10.417,406.25" fill="url(#gyfkpdspkvhq00)" style="stroke:url(#gyfkpdspkvhq00);stroke-width:1.042;"/>
+      <path d="M6.25,428.125 L60.169,428.125 L60.169,454.167 A4.167,4.167 0 0 1 56.003,458.333 L10.417,458.333 A4.167,4.167 0 0 1 6.25,454.167 L6.25,428.125" fill="url(#gyfkpdspkvhq00)" style="stroke:url(#gyfkpdspkvhq00);stroke-width:1.042;"/>
+      <rect fill="none" height="52.083" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:0.521;" width="53.919" x="6.25" y="406.25"/>
+      <line style="stroke:#EC7211;stroke-width:0.521;" x1="6.25" x2="60.169" y1="428.125" y2="428.125"/>
+      <line style="stroke:#EC7211;stroke-width:0.521;" x1="6.25" x2="60.169" y1="428.125" y2="428.125"/>
+      <text fill="#4E5D6C" font-family="'Verdana'" font-size="11.458" textLength="33.086" x="16.667" y="420.37">State1</text>
+    </g>
+    <g class="entity" data-qualified-name="State2" data-source-line="15" id="ent0012">
+      <path d="M102.083,287.5 L147.669,287.5 A4.167,4.167 0 0 1 151.836,291.667 L151.836,309.375 L97.917,309.375 L97.917,291.667 A4.167,4.167 0 0 1 102.083,287.5" fill="url(#gyfkpdspkvhq00)" style="stroke:url(#gyfkpdspkvhq00);stroke-width:1.042;"/>
+      <path d="M97.917,309.375 L151.836,309.375 L151.836,335.417 A4.167,4.167 0 0 1 147.669,339.583 L102.083,339.583 A4.167,4.167 0 0 1 97.917,335.417 L97.917,309.375" fill="url(#gyfkpdspkvhq00)" style="stroke:url(#gyfkpdspkvhq00);stroke-width:1.042;"/>
+      <rect fill="none" height="52.083" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:0.521;" width="53.919" x="97.917" y="287.5"/>
+      <line style="stroke:#EC7211;stroke-width:0.521;" x1="97.917" x2="151.836" y1="309.375" y2="309.375"/>
+      <line style="stroke:#EC7211;stroke-width:0.521;" x1="97.917" x2="151.836" y1="309.375" y2="309.375"/>
+      <text fill="#4E5D6C" font-family="'Verdana'" font-size="11.458" textLength="33.086" x="108.333" y="301.62">State2</text>
+    </g>
+    <g class="end_entity" data-qualified-name=".end." data-source-line="18" id="ent0015">
+      <ellipse cx="79.167" cy="536.458" fill="none" rx="11.458" ry="11.458" style="stroke:#0073BB;stroke-width:1.042;"/>
+      <ellipse cx="79.167" cy="536.458" fill="#222" rx="6.25" ry="6.25" style="stroke:#0073BB;stroke-width:1.042;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0001" data-link-type="dependency" id="lnk6">
+      <polygon fill="#EC7211" points="193.75,103.911,197.917,94.536,193.75,98.702,189.583,94.536,193.75,103.911" style="stroke:#EC7211;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M193.75,37.753 C193.75,54.922 193.75,81.532 193.75,98.702" fill="none" style="stroke:#EC7211;stroke-width:3.125;"/>
+      <text fill="#4E5D6C" font-family="'Verdana'" font-size="12.5" textLength="49.141" x="195.833" y="68.056">from start</text>
+      <text fill="#4E5D6C" font-family="'Verdana'" font-size="12.5" textLength="46.563" x="197.122" y="80.556">to choice</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk7">
+      <polygon fill="#EC7211" points="110.192,195.63,112.157,185.561,109.028,190.554,104.035,187.424,110.192,195.63" style="stroke:#EC7211;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M180.983,118.384 C162.753,120.113 129.794,126.242 114.583,147.917 C104.752,161.926 106.068,177.656 109.028,190.554" fill="none" style="stroke:#EC7211;stroke-width:3.125;"/>
+      <text fill="#4E5D6C" font-family="'Verdana'" font-size="12.5" textLength="61.094" x="116.667" y="159.722">from choice</text>
+      <text fill="#4E5D6C" font-family="'Verdana'" font-size="12.5" textLength="31.172" x="131.628" y="172.222">to fork</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk8">
+      <polygon fill="#EC7211" points="145.824,419.725,155.997,418.395,150.269,417.01,151.654,411.283,145.824,419.725" style="stroke:#EC7211;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M196.344,129.375 C204.424,168.581 225.905,298.134 179.167,387.5 C171.885,401.423 162.43,409.584 150.269,417.01" fill="none" style="stroke:#EC7211;stroke-width:3.125;"/>
+      <text fill="#4E5D6C" font-family="'Verdana'" font-size="12.5" textLength="61.094" x="210.417" y="251.389">from choice</text>
+      <text fill="#4E5D6C" font-family="'Verdana'" font-size="12.5" textLength="29.922" x="226.003" y="263.889">to join</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="dependency" id="lnk9">
+      <polygon fill="#EC7211" points="229.313,195.406,229.448,185.148,227.261,190.62,221.789,188.432,229.313,195.406" style="stroke:#EC7211;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M199.529,129.425 C202.249,135.003 205.508,141.781 208.333,147.917 C215.866,164.275 222.103,178.592 227.261,190.62" fill="none" style="stroke:#EC7211;stroke-width:3.125;"/>
+      <text fill="#4E5D6C" font-family="'Verdana'" font-size="12.5" textLength="61.094" x="222.917" y="159.722">from choice</text>
+      <text fill="#4E5D6C" font-family="'Verdana'" font-size="12.5" textLength="31.25" x="237.839" y="172.222">to end</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0010" data-link-type="dependency" id="lnk11">
+      <polygon fill="#EC7211" points="29.302,406.196,32.296,396.383,28.668,401.026,24.025,397.398,29.302,406.196" style="stroke:#EC7211;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M97.03,220.968 C79.184,234.578 51.678,258.952 39.583,287.5 C23.115,326.372 25.032,371.398 28.668,401.026" fill="none" style="stroke:#EC7211;stroke-width:3.125;"/>
+      <text fill="#4E5D6C" font-family="'Verdana'" font-size="12.5" textLength="45.703" x="41.667" y="310.764">from fork</text>
+      <text fill="#4E5D6C" font-family="'Verdana'" font-size="12.5" textLength="37.422" x="45.807" y="323.264">to state</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0012" data-link-type="dependency" id="lnk13">
+      <polygon fill="#EC7211" points="122.176,287.087,125.282,277.309,121.601,281.911,117,278.229,122.176,287.087" style="stroke:#EC7211;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M114.856,221.205 C116.631,237.182 119.266,260.898 121.601,281.911" fill="none" style="stroke:#EC7211;stroke-width:3.125;"/>
+      <text fill="#4E5D6C" font-family="'Verdana'" font-size="12.5" textLength="45.703" x="122.917" y="251.389">from fork</text>
+      <text fill="#4E5D6C" font-family="'Verdana'" font-size="12.5" textLength="37.422" x="127.057" y="263.889">to state</text>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0003" data-link-type="dependency" id="lnk14">
+      <polygon fill="#EC7211" points="123.052,419.377,127.33,410.053,123.114,414.17,118.997,409.953,123.052,419.377" style="stroke:#EC7211;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M124.353,340.03 C124.212,346.032 124.071,352.408 123.958,358.333 C123.548,379.852 123.286,399.738 123.114,414.17" fill="none" style="stroke:#EC7211;stroke-width:3.125;"/>
+      <text fill="#4E5D6C" font-family="'Verdana'" font-size="12.5" textLength="51.953" x="126.042" y="370.139">from state</text>
+      <text fill="#4E5D6C" font-family="'Verdana'" font-size="12.5" textLength="29.922" x="137.057" y="382.639">to join</text>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0015" data-link-type="dependency" id="lnk16">
+      <polygon fill="#EC7211" points="67.349,531.453,60.787,523.567,62.679,529.147,57.099,531.039,67.349,531.453" style="stroke:#EC7211;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M29.622,458.426 C28.642,473.209 29.593,491.786 37.5,506.25 C44.014,518.167 52.812,524.277 62.679,529.147" fill="none" style="stroke:#EC7211;stroke-width:3.125;"/>
+      <text fill="#4E5D6C" font-family="'Verdana'" font-size="12.5" textLength="51.953" x="39.583" y="488.889">from state</text>
+      <text fill="#4E5D6C" font-family="'Verdana'" font-size="12.5" textLength="31.25" x="49.935" y="501.389">to end</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0015" data-link-type="dependency" id="lnk17">
+      <polygon fill="#EC7211" points="86.587,524.97,95.04,519.157,89.31,520.53,87.937,514.8,86.587,524.97" style="stroke:#EC7211;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M119.503,444.966 C115.047,459.585 106.652,485.298 96.875,506.25 C93.893,512.64 92.701,515.002 89.31,520.53" fill="none" style="stroke:#EC7211;stroke-width:3.125;"/>
+      <text fill="#4E5D6C" font-family="'Verdana'" font-size="12.5" textLength="44.453" x="110.417" y="488.889">from join</text>
+      <text fill="#4E5D6C" font-family="'Verdana'" font-size="12.5" textLength="31.25" x="117.018" y="501.389">to end</text>
+    </g>
+  </g>
+</svg>

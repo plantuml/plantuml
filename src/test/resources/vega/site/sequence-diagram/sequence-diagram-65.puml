@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+
+!pragma teoz true
+box "Internal Service" #LightBlue
+participant Bob
+box "Subteam"
+participant Alice
+participant John
+end box
+
+end box
+participant Other
+
+Bob -> Alice : hello
+Alice -> John : hello
+John -> Other: Hello
+
+@enduml

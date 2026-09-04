@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="90px" preserveAspectRatio="none" style="width:381px;height:90px;background:#FFFFFF;" version="1.1" viewBox="0 0 381 90" width="381px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="3">
+      <text fill="#000" font-size="14" font-weight="700" textLength="106.575" x="136.275" y="20.889">Foot Box removed</text>
+    </g>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="120.125" y1="35" y2="35"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="120.125" y1="51" y2="51"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="120.125" y1="81" y2="81"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="35" y2="81"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="33.375" x2="33.375" y1="35" y2="81"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="72.313" x2="72.313" y1="35" y2="81"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="120.125" x2="120.125" y1="35" y2="81"/>
+    <text fill="#000" font-size="10" textLength="21.063" x="5" y="45.778">Start</text>
+    <text fill="#000" font-size="10" textLength="17.813" x="38.375" y="45.778">End</text>
+    <text fill="#000" font-size="10" textLength="37.813" x="77.313" y="45.778">Duration</text>
+    <text fill="#000" font-size="10" textLength="23.375" x="5" y="61.278">Day 1</text>
+    <text fill="#000" font-size="10" textLength="28.938" x="38.375" y="61.278">Day 15</text>
+    <text fill="#000" font-size="10" textLength="32.25" x="77.313" y="61.278">15 days</text>
+    <text fill="#000" font-size="10" textLength="23.375" x="5" y="76.278">Day 1</text>
+    <text fill="#000" font-size="10" textLength="28.938" x="38.375" y="76.278">Day 10</text>
+    <text fill="#000" font-size="10" textLength="32.25" x="77.313" y="76.278">10 days</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="120.125" x2="120.125" y1="41" y2="89"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="136.125" x2="136.125" y1="41" y2="89"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="152.125" x2="152.125" y1="41" y2="89"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="168.125" x2="168.125" y1="41" y2="89"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="184.125" x2="184.125" y1="41" y2="89"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="200.125" x2="200.125" y1="41" y2="89"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="216.125" x2="216.125" y1="41" y2="89"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="232.125" x2="232.125" y1="41" y2="89"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="248.125" x2="248.125" y1="41" y2="89"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="264.125" x2="264.125" y1="41" y2="89"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="280.125" x2="280.125" y1="41" y2="89"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="296.125" x2="296.125" y1="41" y2="89"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="312.125" x2="312.125" y1="41" y2="89"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="328.125" x2="328.125" y1="41" y2="89"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="344.125" x2="344.125" y1="41" y2="89"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="360.125" x2="360.125" y1="41" y2="89"/>
+    <text fill="#000" font-size="10" x="125.344" y="42.778">1</text>
+    <text fill="#000" font-size="10" x="141.344" y="42.778">2</text>
+    <text fill="#000" font-size="10" x="157.344" y="42.778">3</text>
+    <text fill="#000" font-size="10" x="173.344" y="42.778">4</text>
+    <text fill="#000" font-size="10" x="189.344" y="42.778">5</text>
+    <text fill="#000" font-size="10" x="205.344" y="42.778">6</text>
+    <text fill="#000" font-size="10" x="221.344" y="42.778">7</text>
+    <text fill="#000" font-size="10" x="237.344" y="42.778">8</text>
+    <text fill="#000" font-size="10" x="253.344" y="42.778">9</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="266.563" y="42.778">10</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="282.563" y="42.778">11</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="298.563" y="42.778">12</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="314.563" y="42.778">13</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="330.563" y="42.778">14</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="346.563" y="42.778">15</text>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="236" x="122.125" y="53"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="236" x="122.125" y="53"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="156" x="122.125" y="68"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="156" x="122.125" y="68"/>
+    <text fill="#000" font-size="11" textLength="79.475" x="126.125" y="61.556">Prototype design</text>
+    <text fill="#000" font-size="11" textLength="67.169" x="126.125" y="76.556">Test prototype</text>
+  </g>
+</svg>

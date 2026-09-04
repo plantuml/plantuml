@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="NWDIAG" height="157px" preserveAspectRatio="none" style="width:767px;height:157px;background:#FFFFFF;" version="1.1" viewBox="0 0 767 157" width="767px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" textLength="44.025" x="5" y="14.333">Network</text>
+    <rect fill="#E2E2F0" height="5" style="stroke:#181818;stroke-width:1;" width="706.25" x="54.025" y="8.5"/>
+    <path d="M85.012,13.5 L85.012,43.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M154.675,13.5 L154.675,63.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M243.988,13.5 L243.988,62" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M333.313,13.5 L333.313,57.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M412.013,13.5 L412.013,70.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M495.737,13.5 L495.737,58.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M595.85,13.5 L595.85,63.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M706.263,13.5 L706.263,63.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <ellipse cx="83.012" cy="52" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M83.012,60 L83.012,87 M70.012,68 L96.012,68 M83.012,87 L70.012,102 M83.012,87 L96.012,102" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="12" textLength="27.975" x="69.025" y="112.833">Actor</text>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="51.35" x="127" y="63.5"/>
+    <text fill="#000" font-size="12" textLength="31.35" x="137" y="82.833">Agent</text>
+    <rect fill="#F1F1F1" height="35" style="stroke:#181818;stroke-width:0.5;" width="67.275" x="208.35" y="62"/>
+    <polygon fill="#F1F1F1" points="258.625,67,258.625,81,270.625,81,270.625,73,264.625,67,258.625,67" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="264.625" x2="264.625" y1="67" y2="73"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="270.625" x2="264.625" y1="73" y2="73"/>
+    <text fill="#000" font-size="12" textLength="37.275" x="218.35" y="84.333">Artifact</text>
+    <path d="M310.813,61.5 L310.813,85.5 M310.813,73.5 L327.813,73.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="339.813" cy="73.5" fill="#F1F1F1" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="12" textLength="51.375" x="305.625" y="98.833">Boundary</text>
+    <rect fill="#F1F1F1" height="18" style="stroke:#181818;stroke-width:0.5;" width="46.025" x="387" y="70.5"/>
+    <text fill="#000" font-size="12" textLength="26.025" x="397" y="82.833">Card</text>
+    <path d="M471.836,68.225 C473.869,61.058 479.419,59.811 484.381,65.328 C486.324,58.952 490.898,58.355 495.597,62.345 C500.964,57.838 504.528,59.252 506.129,65.9 C510.012,60.901 514.501,62.214 516.682,67.626 C524.658,68.735 526.122,74.718 521.491,80.527 C527.645,86.696 525.044,93.075 516.673,94.081 C514.622,99.455 509.228,100.133 505.51,96.047 C502.513,101.534 498.623,102.589 493.947,97.967 C489.228,102.053 486.44,100.818 484.265,95.381 C479.586,100.209 474.519,98.803 472.57,92.51 C464.671,91.969 462.875,87.172 466.865,80.826 C462.448,74.868 464.729,69.637 471.836,68.225" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="12" textLength="31.425" x="478.025" y="82.833">Cloud</text>
+    <rect fill="#F1F1F1" height="28" style="stroke:#181818;stroke-width:0.5;" width="74.8" x="558.45" y="67.5"/>
+    <rect fill="#F1F1F1" height="28" style="stroke:#181818;stroke-width:0.5;" width="74.8" x="554.45" y="63.5"/>
+    <text fill="#000" font-size="12" textLength="58.8" x="562.45" y="80.833">Collections</text>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="82.025" x="663.25" y="63.5"/>
+    <text fill="#000" font-size="12" textLength="62.025" x="673.25" y="82.833">Component</text>
+  </g>
+</svg>

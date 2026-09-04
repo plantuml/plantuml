@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startsalt
+<style>
+saltDiagram {
+  Fontname Monospaced
+  FontSize 10
+  FontStyle italic
+  LineThickness 0.5
+  LineColor red
+}
+</style>
+{+
+  Login    | "MyName   "
+  Password | "****     "
+  [Cancel] | [  OK   ]
+}
+@endsalt

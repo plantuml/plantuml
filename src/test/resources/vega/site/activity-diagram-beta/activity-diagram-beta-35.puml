@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+start
+split
+   :A;
+   kill
+split again
+   :b;
+   :c;
+   detach
+split again
+   (Z)
+   detach
+split again
+   end
+split again
+   stop
+end split
+@enduml

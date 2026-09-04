@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="398.958px" preserveAspectRatio="none" style="width:690px;height:398px;" version="1.1" viewBox="0 0 690 398" width="690.625px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="goh5trcdju61e0" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#4DABF5"/>
+      <stop offset="100%" stop-color="#2196F3"/>
+    </linearGradient>
+    <filter height="300%" id="foh5trcdju61e" width="300%" x="-1" y="-1">
+      <feGaussianBlur result="blurOut" stdDeviation="2.083"/>
+      <feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/>
+      <feOffset dx="4.167" dy="4.167" in="blurOut2" result="blurOut3"/>
+      <feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/>
+    </filter>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Participant</title>
+      <rect fill="#000" fill-opacity="0" height="208.333" width="8.333" x="105.573" y="94.792"/>
+      <line style="stroke:#CCC;stroke-width:1.042;stroke-dasharray:5.208,5.208;" x1="109.219" x2="109.219" y1="94.792" y2="303.125"/>
+    </g>
+    <g>
+      <title>Actor</title>
+      <rect fill="#000" fill-opacity="0" height="208.333" width="8.333" x="227.279" y="94.792"/>
+      <line style="stroke:#CCC;stroke-width:1.042;stroke-dasharray:5.208,5.208;" x1="230.924" x2="230.924" y1="94.792" y2="303.125"/>
+    </g>
+    <g>
+      <title>Boundary</title>
+      <rect fill="#000" fill-opacity="0" height="208.333" width="8.333" x="285.273" y="94.792"/>
+      <line style="stroke:#CCC;stroke-width:1.042;stroke-dasharray:5.208,5.208;" x1="288.919" x2="288.919" y1="94.792" y2="303.125"/>
+    </g>
+    <g>
+      <title>Control</title>
+      <rect fill="#000" fill-opacity="0" height="208.333" width="8.333" x="348.854" y="94.792"/>
+      <line style="stroke:#CCC;stroke-width:1.042;stroke-dasharray:5.208,5.208;" x1="352.5" x2="352.5" y1="94.792" y2="303.125"/>
+    </g>
+    <g>
+      <title>Entity</title>
+      <rect fill="#000" fill-opacity="0" height="208.333" width="8.333" x="401.302" y="94.792"/>
+      <line style="stroke:#CCC;stroke-width:1.042;stroke-dasharray:5.208,5.208;" x1="404.948" x2="404.948" y1="94.792" y2="303.125"/>
+    </g>
+    <g>
+      <title>Database</title>
+      <rect fill="#000" fill-opacity="0" height="208.333" width="8.333" x="460.352" y="94.792"/>
+      <line style="stroke:#CCC;stroke-width:1.042;stroke-dasharray:5.208,5.208;" x1="463.997" x2="463.997" y1="94.792" y2="303.125"/>
+    </g>
+    <g>
+      <title>Collections</title>
+      <rect fill="#000" fill-opacity="0" height="208.333" width="8.333" x="551.589" y="94.792"/>
+      <line style="stroke:#CCC;stroke-width:1.042;stroke-dasharray:5.208,5.208;" x1="555.234" x2="555.234" y1="94.792" y2="303.125"/>
+    </g>
+    <g>
+      <title>Queue</title>
+      <rect fill="#000" fill-opacity="0" height="208.333" width="8.333" x="642.109" y="94.792"/>
+      <line style="stroke:#CCC;stroke-width:1.042;stroke-dasharray:5.208,5.208;" x1="645.755" x2="645.755" y1="94.792" y2="303.125"/>
+    </g>
+    <rect fill="url(#goh5trcdju61e0)" filter="url(#foh5trcdju61e)" height="43.75" rx="4.167" ry="4.167" style="stroke:#2196F3;stroke-width:1.042;" width="100.729" x="57.292" y="41.667"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" textLength="59.063" x="78.125" y="67.014">Participant</text>
+    <text fill="#222" font-family="'Verdana'" font-size="12.5" textLength="29.141" x="213.229" y="92.014">Actor</text>
+    <ellipse cx="230.924" cy="25" fill="url(#goh5trcdju61e0)" filter="url(#foh5trcdju61e)" rx="8.333" ry="8.333" style="stroke:#2196F3;stroke-width:1.042;"/>
+    <path d="M230.924,33.333 L230.924,61.458 M217.383,41.667 L244.466,41.667 M230.924,61.458 L217.383,77.083 M230.924,61.458 L244.466,77.083" fill="none" filter="url(#foh5trcdju61e)" style="stroke:#2196F3;stroke-width:1.042;"/>
+    <text fill="#222" font-family="'Verdana'" font-size="12.5" textLength="53.516" x="259.036" y="92.014">Boundary</text>
+    <path d="M267.565,53.125 L267.565,78.125 M267.565,65.625 L285.273,65.625" fill="none" filter="url(#foh5trcdju61e)" style="stroke:#2196F3;stroke-width:1.042;"/>
+    <ellipse cx="297.773" cy="65.625" fill="url(#goh5trcdju61e0)" filter="url(#foh5trcdju61e)" rx="12.5" ry="12.5" style="stroke:#2196F3;stroke-width:1.042;"/>
+    <text fill="#222" font-family="'Verdana'" font-size="12.5" textLength="40.313" x="329.219" y="92.014">Control</text>
+    <ellipse cx="352.5" cy="65.625" fill="url(#goh5trcdju61e0)" filter="url(#foh5trcdju61e)" rx="12.5" ry="12.5" style="stroke:#2196F3;stroke-width:1.042;"/>
+    <polygon fill="#2196F3" points="348.333,53.125,354.583,47.917,352.5,53.125,354.583,58.333,348.333,53.125" style="stroke:#2196F3;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#222" font-family="'Verdana'" font-size="12.5" textLength="31.25" x="386.198" y="92.014">Entity</text>
+    <ellipse cx="404.948" cy="65.625" fill="url(#goh5trcdju61e0)" filter="url(#foh5trcdju61e)" rx="12.5" ry="12.5" style="stroke:#2196F3;stroke-width:1.042;"/>
+    <line style="stroke:#2196F3;stroke-width:1.042;" x1="392.448" x2="417.448" y1="80.208" y2="80.208"/>
+    <text fill="#222" font-family="'Verdana'" font-size="12.5" textLength="53.516" x="434.115" y="92.014">Database</text>
+    <path d="M445.247,44.792 C445.247,34.375 463.997,34.375 463.997,34.375 C463.997,34.375 482.747,34.375 482.747,44.792 L482.747,71.875 C482.747,82.292 463.997,82.292 463.997,82.292 C463.997,82.292 445.247,82.292 445.247,71.875 L445.247,44.792" fill="url(#goh5trcdju61e0)" filter="url(#foh5trcdju61e)" style="stroke:#2196F3;stroke-width:1.042;"/>
+    <path d="M445.247,44.792 C445.247,55.208 463.997,55.208 463.997,55.208 C463.997,55.208 482.747,55.208 482.747,44.792" fill="none" style="stroke:#2196F3;stroke-width:1.042;"/>
+    <rect fill="url(#goh5trcdju61e0)" filter="url(#foh5trcdju61e)" height="25" rx="4.167" ry="4.167" style="stroke:#2196F3;stroke-width:1.042;" width="73.75" x="518.88" y="51.042"/>
+    <rect fill="url(#goh5trcdju61e0)" filter="url(#foh5trcdju61e)" height="25" rx="4.167" ry="4.167" style="stroke:#2196F3;stroke-width:1.042;" width="73.75" x="514.714" y="55.208"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" textLength="61.25" x="520.964" y="71.181">Collections</text>
+    <path d="M621.797,71.875 L669.714,71.875 C674.922,71.875 674.922,83.333 674.922,83.333 C674.922,83.333 674.922,94.792 669.714,94.792 L621.797,94.792 C616.589,94.792 616.589,83.333 616.589,83.333 C616.589,83.333 616.589,71.875 621.797,71.875" fill="url(#goh5trcdju61e0)" filter="url(#foh5trcdju61e)" style="stroke:#2196F3;stroke-width:1.042;"/>
+    <path d="M669.714,71.875 C664.505,71.875 664.505,83.333 664.505,83.333 C664.505,94.792 669.714,94.792 669.714,94.792" fill="none" style="stroke:#2196F3;stroke-width:1.042;"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" textLength="37.5" x="621.797" y="86.806">Queue</text>
+    <rect fill="url(#goh5trcdju61e0)" filter="url(#foh5trcdju61e)" height="43.75" rx="4.167" ry="4.167" style="stroke:#2196F3;stroke-width:1.042;" width="100.729" x="57.292" y="308.333"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" textLength="59.063" x="78.125" y="333.681">Participant</text>
+    <text fill="#222" font-family="'Verdana'" font-size="12.5" textLength="29.141" x="213.229" y="312.847">Actor</text>
+    <ellipse cx="230.924" cy="325" fill="url(#goh5trcdju61e0)" filter="url(#foh5trcdju61e)" rx="8.333" ry="8.333" style="stroke:#2196F3;stroke-width:1.042;"/>
+    <path d="M230.924,333.333 L230.924,361.458 M217.383,341.667 L244.466,341.667 M230.924,361.458 L217.383,377.083 M230.924,361.458 L244.466,377.083" fill="none" filter="url(#foh5trcdju61e)" style="stroke:#2196F3;stroke-width:1.042;"/>
+    <text fill="#222" font-family="'Verdana'" font-size="12.5" textLength="53.516" x="259.036" y="312.847">Boundary</text>
+    <path d="M267.565,319.792 L267.565,344.792 M267.565,332.292 L285.273,332.292" fill="none" filter="url(#foh5trcdju61e)" style="stroke:#2196F3;stroke-width:1.042;"/>
+    <ellipse cx="297.773" cy="332.292" fill="url(#goh5trcdju61e0)" filter="url(#foh5trcdju61e)" rx="12.5" ry="12.5" style="stroke:#2196F3;stroke-width:1.042;"/>
+    <text fill="#222" font-family="'Verdana'" font-size="12.5" textLength="40.313" x="329.219" y="312.847">Control</text>
+    <ellipse cx="352.5" cy="332.292" fill="url(#goh5trcdju61e0)" filter="url(#foh5trcdju61e)" rx="12.5" ry="12.5" style="stroke:#2196F3;stroke-width:1.042;"/>
+    <polygon fill="#2196F3" points="348.333,319.792,354.583,314.583,352.5,319.792,354.583,325,348.333,319.792" style="stroke:#2196F3;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#222" font-family="'Verdana'" font-size="12.5" textLength="31.25" x="386.198" y="312.847">Entity</text>
+    <ellipse cx="404.948" cy="332.292" fill="url(#goh5trcdju61e0)" filter="url(#foh5trcdju61e)" rx="12.5" ry="12.5" style="stroke:#2196F3;stroke-width:1.042;"/>
+    <line style="stroke:#2196F3;stroke-width:1.042;" x1="392.448" x2="417.448" y1="346.875" y2="346.875"/>
+    <text fill="#222" font-family="'Verdana'" font-size="12.5" textLength="53.516" x="434.115" y="312.847">Database</text>
+    <path d="M445.247,326.042 C445.247,315.625 463.997,315.625 463.997,315.625 C463.997,315.625 482.747,315.625 482.747,326.042 L482.747,353.125 C482.747,363.542 463.997,363.542 463.997,363.542 C463.997,363.542 445.247,363.542 445.247,353.125 L445.247,326.042" fill="url(#goh5trcdju61e0)" filter="url(#foh5trcdju61e)" style="stroke:#2196F3;stroke-width:1.042;"/>
+    <path d="M445.247,326.042 C445.247,336.458 463.997,336.458 463.997,336.458 C463.997,336.458 482.747,336.458 482.747,326.042" fill="none" style="stroke:#2196F3;stroke-width:1.042;"/>
+    <rect fill="url(#goh5trcdju61e0)" filter="url(#foh5trcdju61e)" height="25" rx="4.167" ry="4.167" style="stroke:#2196F3;stroke-width:1.042;" width="73.75" x="518.88" y="313.542"/>
+    <rect fill="url(#goh5trcdju61e0)" filter="url(#foh5trcdju61e)" height="25" rx="4.167" ry="4.167" style="stroke:#2196F3;stroke-width:1.042;" width="73.75" x="514.714" y="317.708"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" textLength="61.25" x="520.964" y="333.681">Collections</text>
+    <path d="M621.797,303.125 L669.714,303.125 C674.922,303.125 674.922,314.583 674.922,314.583 C674.922,314.583 674.922,326.042 669.714,326.042 L621.797,326.042 C616.589,326.042 616.589,314.583 616.589,314.583 C616.589,314.583 616.589,303.125 621.797,303.125" fill="url(#goh5trcdju61e0)" filter="url(#foh5trcdju61e)" style="stroke:#2196F3;stroke-width:1.042;"/>
+    <path d="M669.714,303.125 C664.505,303.125 664.505,314.583 664.505,314.583 C664.505,326.042 669.714,326.042 669.714,326.042" fill="none" style="stroke:#2196F3;stroke-width:1.042;"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" textLength="37.5" x="621.797" y="318.056">Queue</text>
+    <polygon fill="#2196F3" points="218.424,117.708,228.841,121.875,218.424,126.042,222.591,121.875" style="stroke:#2196F3;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#2196F3;stroke-width:3.125;" x1="109.219" x2="224.674" y1="121.875" y2="121.875"/>
+    <text fill="#222" font-family="'Verdana'" font-size="12.5" textLength="42.344" x="116.51" y="117.014">To actor</text>
+    <polygon fill="#2196F3" points="276.419,144.792,286.836,148.958,276.419,153.125,280.586,148.958" style="stroke:#2196F3;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#2196F3;stroke-width:3.125;" x1="109.219" x2="282.669" y1="148.958" y2="148.958"/>
+    <text fill="#222" font-family="'Verdana'" font-size="12.5" textLength="66.719" x="116.51" y="144.097">To boundary</text>
+    <polygon fill="#2196F3" points="340,171.875,350.417,176.042,340,180.208,344.167,176.042" style="stroke:#2196F3;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#2196F3;stroke-width:3.125;" x1="109.219" x2="346.25" y1="176.042" y2="176.042"/>
+    <text fill="#222" font-family="'Verdana'" font-size="12.5" textLength="52.109" x="116.51" y="171.181">To control</text>
+    <polygon fill="#2196F3" points="392.448,198.958,402.865,203.125,392.448,207.292,396.615,203.125" style="stroke:#2196F3;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#2196F3;stroke-width:3.125;" x1="109.219" x2="398.698" y1="203.125" y2="203.125"/>
+    <text fill="#222" font-family="'Verdana'" font-size="12.5" textLength="44.453" x="116.51" y="198.264">To entity</text>
+    <polygon fill="#2196F3" points="451.497,226.042,461.914,230.208,451.497,234.375,455.664,230.208" style="stroke:#2196F3;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#2196F3;stroke-width:3.125;" x1="109.219" x2="457.747" y1="230.208" y2="230.208"/>
+    <text fill="#222" font-family="'Verdana'" font-size="12.5" textLength="66.016" x="116.51" y="225.347">To database</text>
+    <polygon fill="#2196F3" points="542.734,253.125,553.151,257.292,542.734,261.458,546.901,257.292" style="stroke:#2196F3;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#2196F3;stroke-width:3.125;" x1="109.219" x2="548.984" y1="257.292" y2="257.292"/>
+    <text fill="#222" font-family="'Verdana'" font-size="12.5" textLength="73.047" x="116.51" y="252.431">To collections</text>
+    <polygon fill="#2196F3" points="633.255,280.208,643.672,284.375,633.255,288.542,637.422,284.375" style="stroke:#2196F3;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#2196F3;stroke-width:3.125;" x1="109.219" x2="639.505" y1="284.375" y2="284.375"/>
+    <text fill="#222" font-family="'Verdana'" font-size="12.5" textLength="49.375" x="116.51" y="279.514">To queue</text>
+  </g>
+</svg>

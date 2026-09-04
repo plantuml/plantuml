@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startdot
+digraph foo {
+ PlantUML -> Dot [label=use];
+}
+@enddot

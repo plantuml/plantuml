@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="216px" preserveAspectRatio="none" style="width:191px;height:216px;background:#FFFFFF;" version="1.1" viewBox="0 0 191 216" width="191px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class TaskRunner-->
+    <g class="entity" data-qualified-name="TaskRunner" data-source-line="10" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="169.238" x="6" y="12"/>
+      <ellipse cx="48.422" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="43.422" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="76.3" x="68.516" y="31.889">TaskRunner</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="174.238" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="174.238" y1="52" y2="52"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="64.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="79.363" x="26" y="66.889">executeTask</text>
+      <g data-visibility-modifier="PROTECTED_METHOD">
+        <polygon fill="#B8860B" points="17,73.5,21,77.5,17,81.5,13,77.5" style="stroke:#B8860B;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="143.238" x="26" y="80.889">executeForAllSubtasks</text>
+    </g>
+    <!--class MetadataInspector-->
+    <g class="entity" data-qualified-name="MetadataInspector" data-source-line="15" id="ent0002">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="169.063" x="6" y="124"/>
+      <ellipse cx="30.585" cy="140" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="25.585" y="145">C</text>
+      <text fill="#000" font-size="14" textLength="115.763" x="46.715" y="143.889">MetadataInspector</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="174.063" y1="156" y2="156"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="174.063" y1="164" y2="164"/>
+      <g data-visibility-modifier="PROTECTED_METHOD">
+        <polygon fill="#B8860B" points="17,171.5,21,175.5,17,179.5,13,175.5" style="stroke:#B8860B;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="137.725" x="26" y="178.889">inspectClassMetadata</text>
+      <g data-visibility-modifier="PROTECTED_METHOD">
+        <polygon fill="#B8860B" points="17,185.5,21,189.5,17,193.5,13,189.5" style="stroke:#B8860B;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="143.063" x="26" y="192.889">inspectFooterMetadata</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="90.5,88.241,84.5,106.241,96.5,106.241,90.5,88.241" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M90.5,106.241 C90.5,117.709 90.5,112.332 90.5,123.797" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

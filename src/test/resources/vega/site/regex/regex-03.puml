@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startregex
+title litteralCharacterSequence
+\Qfoo\E
+@endregex

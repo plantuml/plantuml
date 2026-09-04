@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+label l [
+<#ccc>|= String_value |= <U+0025>get_json_type(<U+0025>str2json(String_value)) |
+| [1, 2, 3]           | %get_json_type(%str2json('[1, 2, 3]'))                 |
+| {"a":1, "b":2}      | %get_json_type(%str2json('{"a":1, "b":2}'))            |
+| true                | %get_json_type(%str2json('true'))                      |
+| null                | %get_json_type(%str2json('null'))                      |
+| it's a string       | %get_json_type(%str2json("it's a string"))             |
+| 42                  | %get_json_type(%str2json('42'))                        |
+]
+@enduml

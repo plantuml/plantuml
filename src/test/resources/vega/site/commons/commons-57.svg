@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="NWDIAG" height="310px" preserveAspectRatio="none" style="width:163px;height:310px;background:#FFFFFF;" version="1.1" viewBox="0 0 163 310" width="163px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="header" data-source-line="2">
+      <text fill="#888" font-size="10" textLength="55.563" x="106.188" y="7.778">some header</text>
+    </g>
+    <g class="title" data-source-line="6">
+      <text fill="#000" font-size="14" font-weight="700" textLength="40.425" x="60.662" y="31.889">My title</text>
+    </g>
+    <rect fill="#FFF" height="166.5" style="stroke:#181818;stroke-width:1.5;" width="152.75" x="5" y="56"/>
+    <path d="M125.513,56 L125.513,63 L115.513,73 L5,73" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="44.45" x="8" y="67.889">This is a</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="66.063" x="52.45" y="67.889">mainframe</text>
+    <text fill="#000" font-size="12" textLength="19.35" x="15" y="95.333">inet</text>
+    <rect fill="#E2E2F0" height="5" style="stroke:#181818;stroke-width:1;" width="95.4" x="39.35" y="89.5"/>
+    <path d="M89.05,94.5 L89.05,124.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M62.453,132.644 C64.558,126.712 70.539,125.378 74.784,130.188 C78.064,122.928 83.846,123.358 88.231,129.039 C92.454,124.592 96.916,124.449 100.039,130.301 C105.719,126.091 110.229,125.388 113.058,133.35 C119.431,135.596 121.279,141.68 115.742,146.38 C121.436,152.246 119.215,157.575 112.466,160.568 C109.691,166.396 105.163,168.922 100.095,162.979 C97.794,170.097 93.37,169.896 88.258,166.001 C82.637,171.264 77.256,170.781 74.982,162.677 C69.003,167.739 65.688,165.146 63.25,158.978 C56.013,158.545 51.984,152.446 56.387,145.904 C51.866,138.657 53.272,133.623 62.453,132.644" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="12" textLength="35.4" x="69.35" y="148.833">web01</text>
+    <g class="legend" data-source-line="10">
+      <rect fill="#DDD" height="24" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="76.238" x="42.756" y="244.5"/>
+      <text fill="#000" font-size="14" textLength="66.238" x="47.756" y="260.389">The legend</text>
+    </g>
+    <g class="caption" data-source-line="8">
+      <text fill="#000" font-size="14" textLength="81.813" x="39.969" y="293.389">This is caption</text>
+    </g>
+    <g class="footer" data-source-line="4">
+      <text fill="#888" font-size="10" textLength="49.938" x="55.906" y="306.278">some footer</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="YAML" height="112px" preserveAspectRatio="none" style="width:132px;height:112px;background:#FFFFFF;" version="1.1" viewBox="0 0 132 112" width="132px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="90" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="110.388" x="10" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="37.538" x="15" y="22.889">@fruit</text>
+    <text fill="#000" font-size="14" textLength="35.875" x="64.725" y="22.889">Apple</text>
+    <line style="stroke:#000;stroke-width:1;" x1="59.725" x2="59.725" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="120.388" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="32.725" x="15" y="40.889">$size</text>
+    <text fill="#000" font-size="14" textLength="35.788" x="64.725" y="40.889">Large</text>
+    <line style="stroke:#000;stroke-width:1;" x1="59.725" x2="59.725" y1="28" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="120.388" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="39.725" x="15" y="58.889">&amp;color</text>
+    <text fill="#000" font-size="14" textLength="25.725" x="64.725" y="58.889">Red</text>
+    <line style="stroke:#000;stroke-width:1;" x1="59.725" x2="59.725" y1="46" y2="64"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="120.388" y1="64" y2="64"/>
+    <text fill="#000" font-size="14" font-weight="700" x="15" y="76.889">❤</text>
+    <text fill="#000" font-size="14" textLength="34.212" x="64.725" y="76.889">Heart</text>
+    <line style="stroke:#000;stroke-width:1;" x1="59.725" x2="59.725" y1="64" y2="82"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="120.388" y1="82" y2="82"/>
+    <text fill="#000" font-size="14" font-weight="700" x="15" y="94.889">‰</text>
+    <text fill="#000" font-size="14" textLength="50.663" x="64.725" y="94.889">Per mille</text>
+    <line style="stroke:#000;stroke-width:1;" x1="59.725" x2="59.725" y1="82" y2="100"/>
+    <rect fill="none" height="90" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="110.388" x="10" y="10"/>
+  </g>
+</svg>

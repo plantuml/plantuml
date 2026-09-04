@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="268px" preserveAspectRatio="none" style="width:323px;height:268px;background:#FFFFFF;" version="1.1" viewBox="0 0 323 268" width="323px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="99" width="8" x="21.969" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="25.469" x2="25.469" y1="84" y2="183"/>
+    </g>
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="99" width="8" x="186.938" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="190.438" x2="190.438" y1="84" y2="183"/>
+    </g>
+    <g>
+      <title>I have a really</title>
+      <rect fill="#000" fill-opacity="0" height="99" width="8" x="263.919" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="267.419" x2="267.419" y1="84" y2="183"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="24.938" x="10" y="80.889">Bob</text>
+    <ellipse cx="25.469" cy="18.5" fill="#F00" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M25.469,26.5 L25.469,53.5 M12.469,34.5 L38.469,34.5 M25.469,53.5 L12.469,68.5 M25.469,53.5 L38.469,68.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="168.213" y="55"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="175.213" y="72.889">Alice</text>
+    <rect fill="#9F9" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="89.512" x="222.663" y="41"/>
+    <text fill="#000" font-size="14" textLength="75.512" x="229.663" y="58.889">I have a really</text>
+    <text fill="#000" font-size="14" textLength="61.512" x="236.663" y="72.889">long name</text>
+    <text fill="#000" font-size="14" textLength="24.938" x="10" y="193.889">Bob</text>
+    <ellipse cx="25.469" cy="205.5" fill="#F00" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M25.469,213.5 L25.469,240.5 M12.469,221.5 L38.469,221.5 M25.469,240.5 L12.469,255.5 M25.469,240.5 L38.469,255.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="168.213" y="183"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="175.213" y="200.889">Alice</text>
+    <rect fill="#9F9" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="89.512" x="222.663" y="183"/>
+    <text fill="#000" font-size="14" textLength="75.512" x="229.663" y="200.889">I have a really</text>
+    <text fill="#000" font-size="14" textLength="61.512" x="236.663" y="214.889">long name</text>
+    <polygon fill="#181818" points="36.469,107,26.469,111,36.469,115,32.469,111" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="30.469" x2="189.438" y1="111" y2="111"/>
+    <text fill="#000" font-size="13" textLength="130.813" x="42.469" y="106.111">Authentication Request</text>
+    <polygon fill="#181818" points="178.438,134,188.438,138,178.438,142,182.438,138" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="25.469" x2="184.438" y1="138" y2="138"/>
+    <text fill="#000" font-size="13" textLength="140.969" x="32.469" y="133.111">Authentication Response</text>
+    <polygon fill="#181818" points="255.419,161,265.419,165,255.419,169,259.419,165" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="25.469" x2="261.419" y1="165" y2="165"/>
+    <text fill="#000" font-size="13" textLength="85.231" x="32.469" y="160.111">Log transaction</text>
+  </g>
+</svg>

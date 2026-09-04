@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+skinparam useBetaStyle true
+title Styling example
+<style>
+root {
+  FontColor blue
+}
+element {
+  FontColor green
+}
+actor {
+  FontColor red
+}
+sequenceDiagram {
+  FontColor purple
+}
+</style>
+' In that case, actor from sequence diagrams will be in purple, because purple is defined after red.
+actor Alice
+Alice -> Bob : hello
+@enduml

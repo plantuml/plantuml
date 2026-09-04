@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="140px" preserveAspectRatio="none" style="width:106px;height:140px;background:#FFFFFF;" version="1.1" viewBox="0 0 106 140" width="106px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="24.725" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="28.225" x2="28.225" y1="84" y2="129"/>
+    </g>
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="76.269" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="79.769" x2="79.769" y1="84" y2="129"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="30.45" x="10" y="80.889">Alice</text>
+    <ellipse cx="28.225" cy="18.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M28.225,26.5 L28.225,53.5 M15.225,34.5 L41.225,34.5 M28.225,53.5 L15.225,68.5 M28.225,53.5 L41.225,68.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="64.3" y="80.889">Bob</text>
+    <ellipse cx="79.769" cy="18.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M79.769,26.5 L79.769,53.5 M66.769,34.5 L92.769,34.5 M79.769,53.5 L66.769,68.5 M79.769,53.5 L92.769,68.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <polygon fill="#181818" points="67.769,107,77.769,111,67.769,115,71.769,111" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="28.225" x2="73.769" y1="111" y2="111"/>
+    <text fill="#000" font-size="13" textLength="27.544" x="35.225" y="106.111">hello</text>
+  </g>
+</svg>

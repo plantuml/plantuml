@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="169px" preserveAspectRatio="none" style="width:415px;height:169px;background:#FFFFFF;" version="1.1" viewBox="0 0 415 169" width="415px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="2">
+      <path d="M128.275,11.167 L128.275,20.5 L132.942,15.833 L128.275,11.167" fill="#000"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="135.45" x="136.275" y="20.889">Problem Diagram R1-2</text>
+      <path d="M279.725,11.167 L275.058,15.833 L279.725,20.5 L279.725,11.167" fill="#000"/>
+    </g>
+    <ellipse cx="316.523" cy="100.905" fill="#FFF" rx="82.523" ry="18.905" style="stroke:#000;stroke-width:1.5;stroke-dasharray:7,7;"/>
+    <text fill="#000" font-size="14" textLength="130.813" x="251.116" y="102.793">Display paths on a map</text>
+    <rect fill="#FFF" height="44" style="stroke:#000;stroke-width:1.5;" width="50.775" x="136" y="47"/>
+    <text fill="#000" font-size="12" textLength="24.675" x="149.05" y="64.333">Path</text>
+    <rect fill="none" height="16" style="stroke:#000;stroke-width:1;" width="16" x="170.775" y="75"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="173.775" y="88">X</text>
+    <rect fill="#FFF" height="44" style="stroke:#000;stroke-width:1.5;" width="50.775" x="136" y="109"/>
+    <text fill="#000" font-size="12" textLength="23.325" x="149.725" y="126.333">Map</text>
+    <rect fill="none" height="16" style="stroke:#000;stroke-width:1;" width="16" x="170.775" y="137"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="173.775" y="150">C</text>
+    <rect fill="#FFF" height="28" style="stroke:#000;stroke-width:1.5;" width="76.025" x="6" y="84"/>
+    <rect fill="#FFF" height="28" style="stroke:#000;stroke-width:1.5;" width="4" x="10" y="84"/>
+    <text fill="#000" font-size="12" textLength="62.025" x="18" y="101.333">Google Map</text>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="association" id="lnk5">
+      <path d="M82.181,88.665 C99.722,84.26 120.176,79.125 135.782,75.206" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="14.463" x="102" y="76.111">d1</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="association" id="lnk6">
+      <path d="M187.082,74.141 C200.006,76.844 216.674,80.33 233.693,83.89" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" x="207" y="74.111">d</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="187.082,126.18,196.684,128.374,191.989,125.218,195.144,120.523,187.082,126.18" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M191.989,125.218 C204.913,122.684 216.674,120.378 233.693,117.041" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" x="207.5" y="117.111">c</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0003" data-link-type="association" id="lnk8">
+      <path d="M82.181,108.623 C99.722,113.635 120.176,119.479 135.782,123.938" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="13.731" x="102.5" y="110.111">c1</text>
+    </g>
+  </g>
+</svg>

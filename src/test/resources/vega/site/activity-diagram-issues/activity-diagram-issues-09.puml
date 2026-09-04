@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+<style>
+activityDiagram {
+  MaximumWidth 100
+}
+</style>
+switch (Long long long Long long long condition?)
+case (Long long long long long long long long long case 1)
+   :Action  1;
+case (<b><color:red>Arrow Error\nLong long long long long long long long long case 2)
+   :Action  2;
+endswitch
+footer \nObserved on:   1.2022.3b2\n(current version: %version())
+@enduml

@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+usecase UC1 as "
+= Extra-large heading
+Some text
+== Large heading
+Other text
+=== Medium heading
+Information
+....
+==== Small heading"
+@enduml

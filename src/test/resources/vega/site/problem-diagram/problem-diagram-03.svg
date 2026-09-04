@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="273px" preserveAspectRatio="none" style="width:326px;height:273px;background:#FFFFFF;" version="1.1" viewBox="0 0 326 273" width="326px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="none" height="79" style="stroke:#000;stroke-width:1.5;" width="253.625" x="53.15" y="105"/>
+    <g>
+      <title>Onboard LiveBox</title>
+      <rect fill="#000" fill-opacity="0" height="223" width="8" x="65.65" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="69.15" x2="69.15" y1="39" y2="262"/>
+    </g>
+    <g>
+      <title>Drone</title>
+      <rect fill="#000" fill-opacity="0" height="223" width="8" x="229.806" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="233.306" x2="233.306" y1="39" y2="262"/>
+    </g>
+    <g>
+      <title>Path</title>
+      <rect fill="#000" fill-opacity="0" height="223" width="8" x="287.275" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="290.775" x2="290.775" y1="39" y2="262"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="118.3" x="10" y="10"/>
+    <text fill="#000" font-size="14" textLength="104.3" x="17" y="27.889">Onboard LiveBox</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="52.15" x="207.231" y="10"/>
+    <text fill="#000" font-size="14" textLength="38.15" x="214.231" y="27.889">Drone</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.787" x="269.381" y="10"/>
+    <text fill="#000" font-size="14" textLength="28.787" x="276.381" y="27.889">Path</text>
+    <polygon fill="#181818" points="80.15,62,70.15,66,80.15,70,76.15,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="74.15" x2="232.306" y1="66" y2="66"/>
+    <text fill="#000" font-size="13" textLength="140.156" x="86.15" y="61.111">d2: takeoff(initial location)</text>
+    <polygon fill="#181818" points="278.775,89,288.775,93,278.775,97,282.775,93" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="69.15" x2="284.775" y1="93" y2="93"/>
+    <text fill="#000" font-size="13" textLength="128.7" x="76.15" y="88.111">e1: save(initial location)</text>
+    <path d="M53.15,105 L122.769,105 L122.769,110 L112.769,120 L53.15,120 L53.15,105" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="79" style="stroke:#000;stroke-width:1.5;" width="253.625" x="53.15" y="105"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="24.619" x="68.15" y="116.111">loop</text>
+    <polygon fill="#181818" points="80.15,145,70.15,149,80.15,153,76.15,149" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="74.15" x2="232.306" y1="149" y2="149"/>
+    <text fill="#000" font-size="13" textLength="99.694" x="86.15" y="144.111">d2: send(location)</text>
+    <polygon fill="#181818" points="278.775,172,288.775,176,278.775,180,282.775,176" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="69.15" x2="284.775" y1="176" y2="176"/>
+    <text fill="#000" font-size="13" textLength="98.963" x="76.15" y="171.111">e1: save(location)</text>
+    <polygon fill="#181818" points="80.15,213,70.15,217,80.15,221,76.15,217" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="74.15" x2="232.306" y1="217" y2="217"/>
+    <text fill="#000" font-size="13" textLength="137.394" x="86.15" y="212.111">d2: landing(final location)</text>
+    <polygon fill="#181818" points="278.775,240,288.775,244,278.775,248,282.775,244" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="69.15" x2="284.775" y1="244" y2="244"/>
+    <text fill="#000" font-size="13" textLength="122.85" x="76.15" y="239.111">e1: save(final location)</text>
+  </g>
+</svg>

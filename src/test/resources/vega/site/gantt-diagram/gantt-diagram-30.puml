@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startgantt
+projectscale yearly
+Project starts the 1st of october 2020
+[Prototype design] as [TASK1] requires 700 days
+[TASK1] is colored in Lavender/LightBlue
+[Testing] requires 200 days
+[TASK1]->[Testing]
+
+2021-01-18 to 2021-03-22 are colored in salmon
+@endgantt

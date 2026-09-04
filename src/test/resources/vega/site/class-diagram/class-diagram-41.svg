@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="149.02px" preserveAspectRatio="none" style="width:750px;height:149px;background:#FFFFFF;" version="1.1" viewBox="0 0 750 149" width="750.98px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster foo1-->
+    <g class="cluster" data-qualified-name="foo1" data-source-line="2" id="ent0001">
+      <polygon fill="none" points="13.725,19.608,23.529,9.804,127.451,9.804,127.451,115.686,117.647,125.49,13.725,125.49,13.725,19.608" style="stroke:#181818;stroke-width:0.98;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.98;" x1="117.647" x2="127.451" y1="19.608" y2="9.804"/>
+      <line style="stroke:#181818;stroke-width:0.98;" x1="13.725" x2="117.647" y1="19.608" y2="19.608"/>
+      <line style="stroke:#181818;stroke-width:0.98;" x1="117.647" x2="117.647" y1="19.608" y2="125.49"/>
+      <text fill="#000" font-size="13.725" font-weight="700" textLength="26.679" x="53.327" y="33.224">foo1</text>
+    </g>
+    <!--cluster foo2-->
+    <g class="cluster" data-qualified-name="foo2" data-source-line="6" id="ent0003">
+      <rect fill="none" height="102.941" rx="2.451" ry="2.451" style="stroke:#181818;stroke-width:0.98;" width="105.882" x="143.137" y="18.627"/>
+      <text fill="#000" font-size="13.725" font-weight="700" textLength="26.679" x="182.739" y="31.264">foo2</text>
+    </g>
+    <!--cluster foo3-->
+    <g class="cluster" data-qualified-name="foo3" data-source-line="10" id="ent0005">
+      <path d="M267.157,18.627 L294.816,18.627 A3.676,3.676 0 0 1 297.267,21.078 L304.13,38.235 L368.137,38.235 A2.451,2.451 0 0 1 370.588,40.686 L370.588,119.118 A2.451,2.451 0 0 1 368.137,121.569 L267.157,121.569 A2.451,2.451 0 0 1 264.706,119.118 L264.706,21.078 A2.451,2.451 0 0 1 267.157,18.627" fill="none" style="stroke:#000;stroke-width:1.471;"/>
+      <line style="stroke:#000;stroke-width:1.471;" x1="264.706" x2="304.13" y1="38.235" y2="38.235"/>
+      <text fill="#000" font-size="13.725" font-weight="700" textLength="26.679" x="268.627" y="31.264">foo3</text>
+    </g>
+    <!--cluster foo4-->
+    <g class="cluster" data-qualified-name="foo4" data-source-line="14" id="ent0007">
+      <rect fill="none" height="102.941" rx="2.451" ry="2.451" style="stroke:#181818;stroke-width:0.98;" width="105.882" x="386.275" y="18.627"/>
+      <path d="M422.757,18.627 L422.757,25.49 L412.953,35.294 L386.275,35.294" fill="none" style="stroke:#181818;stroke-width:0.98;"/>
+      <text fill="#000" font-size="13.725" font-weight="700" textLength="26.679" x="389.216" y="30.283">foo4</text>
+    </g>
+    <!--cluster foo5-->
+    <g class="cluster" data-qualified-name="foo5" data-source-line="18" id="ent0009">
+      <path d="M524.399,27.068 C527.029,21.383 531.556,19.766 536.108,25.008 C538.521,17.526 543.058,16.191 548.84,21.71 C551.256,15.312 556.988,12.57 562.407,18.368 C567.448,12.916 573.331,13.513 575.485,21.234 C580.29,16.879 584.271,17.238 586.499,23.827 C596.317,16.16 605.093,22.592 605.882,33.333 C606.506,33.575 606.553,34.159 606.106,34.591 C611.697,37.387 611.888,41.966 607.547,46.015 C615.125,48.991 615.331,55.394 608.564,59.455 C614.323,62.348 615.969,66.85 610.184,71.32 C616.223,75.128 614.851,78.914 609.96,82.504 C615.037,87.625 614.687,93.174 607.135,95.564 C613.909,105.969 610.453,111.457 599.02,113.725 C599.831,113.138 600.584,113.405 600.648,114.464 C596.649,120.804 592.727,123.227 586.872,116.407 C583.099,123.745 578.8,123.518 573.831,117.58 C570.345,124.329 566.329,125.326 561.001,119.452 C556.777,126.071 551.425,125.336 548.281,118.435 C544.271,123.27 539.438,121.933 537.327,116.423 C526.599,124.844 517.267,119.146 515.686,106.863 C516.905,107.36 516.884,108.249 515.961,109.019 C508.593,104.837 508.874,100.458 515.032,95.356 C508.797,92.39 509.24,86.146 514.215,82.47 C508.739,79.953 508.496,75.6 513.252,72.131 C506.335,67.621 507.218,61.096 514.861,58.277 C510.1,54.696 510.209,50.308 515.131,46.959 C507.215,36.307 511.557,30.276 522.549,26.471 C523.282,25.887 524.217,25.947 524.399,27.068" fill="none" style="stroke:#181818;stroke-width:0.98;"/>
+      <text fill="#000" font-size="13.725" font-weight="700" textLength="26.679" x="547.445" y="42.048">foo5</text>
+    </g>
+    <!--cluster foo6-->
+    <g class="cluster" data-qualified-name="foo6" data-source-line="22" id="ent0011">
+      <path d="M629.412,13.725 C629.412,3.922 682.353,3.922 682.353,3.922 C682.353,3.922 735.294,3.922 735.294,13.725 L735.294,111.765 C735.294,121.569 682.353,121.569 682.353,121.569 C682.353,121.569 629.412,121.569 629.412,111.765 L629.412,13.725" fill="none" style="stroke:#181818;stroke-width:0.98;"/>
+      <path d="M629.412,13.725 C629.412,23.529 682.353,23.529 682.353,23.529 C682.353,23.529 735.294,23.529 735.294,13.725" fill="none" style="stroke:#181818;stroke-width:0.98;"/>
+      <text fill="#000" font-size="13.725" font-weight="700" textLength="26.679" x="669.013" y="36.166">foo6</text>
+    </g>
+    <!--class Class1-->
+    <g class="entity" data-qualified-name="foo1.Class1" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="47.059" rx="2.451" ry="2.451" style="stroke:#181818;stroke-width:0.49;" width="73.407" x="33.824" y="58.824"/>
+      <ellipse cx="48.529" cy="74.51" fill="#ADD1B2" rx="10.784" ry="10.784" style="stroke:#181818;stroke-width:0.98;"/>
+      <text fill="#000" font-family="monospace" font-size="13.725" x="43.627" y="79.412">C</text>
+      <text fill="#000" font-size="13.725" textLength="42.034" x="62.255" y="78.322">Class1</text>
+      <line style="stroke:#181818;stroke-width:0.49;" x1="34.804" x2="106.25" y1="90.196" y2="90.196"/>
+      <line style="stroke:#181818;stroke-width:0.49;" x1="34.804" x2="106.25" y1="98.039" y2="98.039"/>
+    </g>
+    <!--class Class2-->
+    <g class="entity" data-qualified-name="foo2.Class2" data-source-line="7" id="ent0004">
+      <rect fill="#F1F1F1" height="47.059" rx="2.451" ry="2.451" style="stroke:#181818;stroke-width:0.49;" width="73.407" x="159.314" y="58.824"/>
+      <ellipse cx="174.02" cy="74.51" fill="#ADD1B2" rx="10.784" ry="10.784" style="stroke:#181818;stroke-width:0.98;"/>
+      <text fill="#000" font-family="monospace" font-size="13.725" x="169.118" y="79.412">C</text>
+      <text fill="#000" font-size="13.725" textLength="42.034" x="187.745" y="78.322">Class2</text>
+      <line style="stroke:#181818;stroke-width:0.49;" x1="160.294" x2="231.74" y1="90.196" y2="90.196"/>
+      <line style="stroke:#181818;stroke-width:0.49;" x1="160.294" x2="231.74" y1="98.039" y2="98.039"/>
+    </g>
+    <!--class Class3-->
+    <g class="entity" data-qualified-name="foo3.Class3" data-source-line="11" id="ent0006">
+      <rect fill="#F1F1F1" height="47.059" rx="2.451" ry="2.451" style="stroke:#181818;stroke-width:0.49;" width="73.407" x="280.882" y="58.824"/>
+      <ellipse cx="295.588" cy="74.51" fill="#ADD1B2" rx="10.784" ry="10.784" style="stroke:#181818;stroke-width:0.98;"/>
+      <text fill="#000" font-family="monospace" font-size="13.725" x="290.686" y="79.412">C</text>
+      <text fill="#000" font-size="13.725" textLength="42.034" x="309.314" y="78.322">Class3</text>
+      <line style="stroke:#181818;stroke-width:0.49;" x1="281.863" x2="353.309" y1="90.196" y2="90.196"/>
+      <line style="stroke:#181818;stroke-width:0.49;" x1="281.863" x2="353.309" y1="98.039" y2="98.039"/>
+    </g>
+    <!--class Class4-->
+    <g class="entity" data-qualified-name="foo4.Class4" data-source-line="15" id="ent0008">
+      <rect fill="#F1F1F1" height="47.059" rx="2.451" ry="2.451" style="stroke:#181818;stroke-width:0.49;" width="73.407" x="402.451" y="58.824"/>
+      <ellipse cx="417.157" cy="74.51" fill="#ADD1B2" rx="10.784" ry="10.784" style="stroke:#181818;stroke-width:0.98;"/>
+      <text fill="#000" font-family="monospace" font-size="13.725" x="412.255" y="79.412">C</text>
+      <text fill="#000" font-size="13.725" textLength="42.034" x="430.882" y="78.322">Class4</text>
+      <line style="stroke:#181818;stroke-width:0.49;" x1="403.431" x2="474.877" y1="90.196" y2="90.196"/>
+      <line style="stroke:#181818;stroke-width:0.49;" x1="403.431" x2="474.877" y1="98.039" y2="98.039"/>
+    </g>
+    <!--class Class5-->
+    <g class="entity" data-qualified-name="foo5.Class5" data-source-line="19" id="ent0010">
+      <rect fill="#F1F1F1" height="47.059" rx="2.451" ry="2.451" style="stroke:#181818;stroke-width:0.49;" width="73.407" x="524.02" y="58.824"/>
+      <ellipse cx="538.725" cy="74.51" fill="#ADD1B2" rx="10.784" ry="10.784" style="stroke:#181818;stroke-width:0.98;"/>
+      <text fill="#000" font-family="monospace" font-size="13.725" x="533.824" y="79.412">C</text>
+      <text fill="#000" font-size="13.725" textLength="42.034" x="552.451" y="78.322">Class5</text>
+      <line style="stroke:#181818;stroke-width:0.49;" x1="525" x2="596.446" y1="90.196" y2="90.196"/>
+      <line style="stroke:#181818;stroke-width:0.49;" x1="525" x2="596.446" y1="98.039" y2="98.039"/>
+    </g>
+    <!--class Class6-->
+    <g class="entity" data-qualified-name="foo6.Class6" data-source-line="23" id="ent0012">
+      <rect fill="#F1F1F1" height="47.059" rx="2.451" ry="2.451" style="stroke:#181818;stroke-width:0.49;" width="73.407" x="645.588" y="58.824"/>
+      <ellipse cx="660.294" cy="74.51" fill="#ADD1B2" rx="10.784" ry="10.784" style="stroke:#181818;stroke-width:0.98;"/>
+      <text fill="#000" font-family="monospace" font-size="13.725" x="655.392" y="79.412">C</text>
+      <text fill="#000" font-size="13.725" textLength="42.034" x="674.02" y="78.322">Class6</text>
+      <line style="stroke:#181818;stroke-width:0.49;" x1="646.569" x2="718.015" y1="90.196" y2="90.196"/>
+      <line style="stroke:#181818;stroke-width:0.49;" x1="646.569" x2="718.015" y1="98.039" y2="98.039"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,31 @@
+---
+output: svg
+---
+@startuml
+'Source: QA-10113
+!unquoted function DRAW($x) return %set_variable_value($x, 1)
+!procedure noteMember($part, $direction, $class, $member, $note)
+  !if %variable_exists($part)
+    note $direction of $class::"$member"
+    $note
+    end note
+  !endif
+!endprocedure
+
+DRAW(PART1)
+
+!ifdef PART1
+title Elements and Notes Part1
+!endif
+
+class elementArray <<(E,#32DC32)element>> {
+  name : someId
+  name : MemberA
+  name : MemberB
+  name : MemberC
+  name : MemberD
+  name : MemberE
+}
+
+noteMember("PART1", "left", "elementArray", "name : MemberB", "Member of Interest")
+@enduml

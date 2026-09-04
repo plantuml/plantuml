@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="165px" preserveAspectRatio="none" style="width:97px;height:165px;background:#FFFFFF;" version="1.1" viewBox="0 0 97 165" width="97px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity a-->
+    <g class="entity" data-qualified-name="a" data-source-line="1" id="ent0001">
+      <ellipse cx="19.5" cy="22" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M19.5,30 L19.5,57 M6.5,38 L32.5,38 M19.5,57 L6.5,72 M19.5,57 L32.5,72" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="15.606" y="84.389">a</text>
+    </g>
+    <!--entity b-->
+    <g class="entity" data-qualified-name="b" data-source-line="2" id="ent0002">
+      <ellipse cx="66.5" cy="22" fill="#FFC0CB" rx="8" ry="8" style="stroke:#F00;stroke-width:2;"/>
+      <path d="M66.5,30 L66.5,57 M53.5,38 L79.5,38 M66.5,57 L53.5,72 M66.5,57 L79.5,72" fill="none" style="stroke:#F00;stroke-width:2;"/>
+      <text fill="#F00" font-size="14" x="62.606" y="85.889">b</text>
+    </g>
+    <!--entity c-->
+    <g class="entity" data-qualified-name="c" data-source-line="3" id="ent0003">
+      <ellipse cx="19.424" cy="135.539" fill="#98FB98" rx="12.424" ry="10.539" style="stroke:#008000;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#008000" font-size="14" x="15.924" y="139.039">c</text>
+    </g>
+    <!--entity d-->
+    <g class="entity" data-qualified-name="d" data-source-line="4" id="ent0004">
+      <ellipse cx="62.577" cy="135.662" fill="#F0F8FF" rx="12.577" ry="10.662" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#00F" font-size="14" x="58.684" y="139.162">d</text>
+    </g>
+  </g>
+</svg>

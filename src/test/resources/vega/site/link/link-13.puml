@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+Bob -> Alice : ok
+url of Bob is [[http://www.google.com]]
+@enduml

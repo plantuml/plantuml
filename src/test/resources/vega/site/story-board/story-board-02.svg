@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="BOARD" height="463px" preserveAspectRatio="none" style="width:1392px;height:463px;background:#FFFFFF;" version="1.1" viewBox="0 0 1392 463" width="1392px" zoomAndPan="magnify">
+  <defs>
+    <filter height="300%" id="frg1hv77n0zn6" width="300%" x="-1" y="-1">
+      <feGaussianBlur result="blurOut" stdDeviation="2"/>
+      <feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/>
+      <feOffset dx="4" dy="4" in="blurOut2" result="blurOut3"/>
+      <feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/>
+    </filter>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#C0C0C0" filter="url(#frg1hv77n0zn6)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="10" y="10"/>
+    <text fill="#000" font-size="14" textLength="52.15" x="13" y="23.889">Activity 1</text>
+    <rect fill="#C0C0C0" filter="url(#frg1hv77n0zn6)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="10" y="10"/>
+    <text fill="#000" font-size="14" textLength="52.15" x="13" y="23.889">Activity 1</text>
+    <rect fill="#C0C0C0" filter="url(#frg1hv77n0zn6)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="10" y="100"/>
+    <text fill="#000" font-size="14" textLength="75.513" x="13" y="113.889">User Task 1a</text>
+    <rect fill="#C0C0C0" filter="url(#frg1hv77n0zn6)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="10" y="190"/>
+    <text fill="#000" font-size="14" textLength="99.663" x="13" y="203.889">Story 1 Release 1</text>
+    <rect fill="#C0C0C0" filter="url(#frg1hv77n0zn6)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="180" y="190"/>
+    <text fill="#000" font-size="14" textLength="99.663" x="183" y="203.889">Story 2 Release 1</text>
+    <rect fill="#C0C0C0" filter="url(#frg1hv77n0zn6)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="350" y="100"/>
+    <text fill="#000" font-size="14" textLength="75.513" x="353" y="113.889">User Task 1b</text>
+    <rect fill="#C0C0C0" filter="url(#frg1hv77n0zn6)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="350" y="190"/>
+    <text fill="#000" font-size="14" textLength="99.663" x="353" y="203.889">Story 3 Release 1</text>
+    <rect fill="#C0C0C0" filter="url(#frg1hv77n0zn6)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="350" y="280"/>
+    <text fill="#000" font-size="14" textLength="99.663" x="353" y="293.889">Story 4 Release 1</text>
+    <rect fill="#C0C0C0" filter="url(#frg1hv77n0zn6)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="350" y="370"/>
+    <text fill="#000" font-size="14" textLength="99.663" x="353" y="383.889">Story 5 Release 2</text>
+    <rect fill="#C0C0C0" filter="url(#frg1hv77n0zn6)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="520" y="10"/>
+    <text fill="#000" font-size="14" textLength="52.15" x="523" y="23.889">Activity 2</text>
+    <rect fill="#C0C0C0" filter="url(#frg1hv77n0zn6)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="520" y="10"/>
+    <text fill="#000" font-size="14" textLength="52.15" x="523" y="23.889">Activity 2</text>
+    <rect fill="#C0C0C0" filter="url(#frg1hv77n0zn6)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="520" y="100"/>
+    <text fill="#000" font-size="14" textLength="67.725" x="523" y="113.889">User Task 2</text>
+    <rect fill="#C0C0C0" filter="url(#frg1hv77n0zn6)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="520" y="280"/>
+    <text fill="#000" font-size="14" textLength="99.663" x="523" y="293.889">Story 6 Release 1</text>
+    <rect fill="#C0C0C0" filter="url(#frg1hv77n0zn6)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="690" y="280"/>
+    <text fill="#000" font-size="14" textLength="99.663" x="693" y="293.889">Story 7 Release 1</text>
+    <rect fill="#C0C0C0" filter="url(#frg1hv77n0zn6)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="860" y="280"/>
+    <text fill="#000" font-size="14" textLength="99.663" x="863" y="293.889">Story 8 Release 2</text>
+    <rect fill="#C0C0C0" filter="url(#frg1hv77n0zn6)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="1030" y="10"/>
+    <text fill="#000" font-size="14" textLength="52.15" x="1033" y="23.889">Activity 3</text>
+    <rect fill="#C0C0C0" filter="url(#frg1hv77n0zn6)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="1030" y="10"/>
+    <text fill="#000" font-size="14" textLength="52.15" x="1033" y="23.889">Activity 3</text>
+    <rect fill="#C0C0C0" filter="url(#frg1hv77n0zn6)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="1030" y="100"/>
+    <text fill="#000" font-size="14" textLength="67.725" x="1033" y="113.889">User Task 3</text>
+    <rect fill="#C0C0C0" filter="url(#frg1hv77n0zn6)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="1030" y="370"/>
+    <text fill="#000" font-size="14" textLength="99.663" x="1033" y="383.889">Story 9 Release 2</text>
+    <rect fill="#C0C0C0" filter="url(#frg1hv77n0zn6)" height="70" style="stroke:#000;stroke-width:1;" width="150" x="1200" y="370"/>
+    <text fill="#000" font-size="14" textLength="107.45" x="1203" y="383.889">Story 10 Release 3</text>
+    <line style="stroke:#000;stroke-width:0.5;stroke-dasharray:5,5;" x1="10" x2="1370" y1="90" y2="90"/>
+    <line style="stroke:#000;stroke-width:0.5;stroke-dasharray:5,5;" x1="10" x2="1370" y1="180" y2="180"/>
+    <line style="stroke:#000;stroke-width:0.5;stroke-dasharray:5,5;" x1="10" x2="1370" y1="270" y2="270"/>
+    <line style="stroke:#000;stroke-width:0.5;stroke-dasharray:5,5;" x1="10" x2="1370" y1="360" y2="360"/>
+  </g>
+</svg>

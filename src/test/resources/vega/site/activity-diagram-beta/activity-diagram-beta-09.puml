@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+if (counter?) equals (5) then
+:print 5;
+else
+:print not 5;
+endif
+@enduml

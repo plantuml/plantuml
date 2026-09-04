@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="127px" preserveAspectRatio="none" style="width:141px;height:127px;background:#FFFFFF;" version="1.1" viewBox="0 0 141 127" width="141px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <ellipse cx="68.375" cy="25" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="30.013" x2="106.4" y1="55" y2="55"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="28.025" x="16" y="75"/>
+    <text fill="#000" font-size="12" x="26" y="94.333">A</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="28.025" x="54.025" y="75"/>
+    <text fill="#000" font-size="12" x="64.025" y="94.333">B</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="28.7" x="92.05" y="75"/>
+    <text fill="#000" font-size="12" x="102.05" y="94.333">C</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="30.013" x2="30.013" y1="56.5" y2="75"/>
+    <polygon fill="#181818" points="26.013,65,30.013,75,34.013,65,30.013,69" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="68.038" x2="68.038" y1="56.5" y2="75"/>
+    <polygon fill="#181818" points="64.038,65,68.038,75,72.038,65,68.038,69" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="106.4" x2="106.4" y1="56.5" y2="75"/>
+    <polygon fill="#181818" points="102.4,65,106.4,75,110.4,65,106.4,69" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="68.375" x2="68.375" y1="35" y2="55"/>
+    <polygon fill="#181818" points="64.375,45,68.375,55,72.375,45,68.375,49" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

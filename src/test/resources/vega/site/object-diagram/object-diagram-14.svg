@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="264px" preserveAspectRatio="none" style="width:546px;height:264px;background:#FFFFFF;" version="1.1" viewBox="0 0 546 264" width="546px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="4">
+      <text fill="#000" font-size="14" font-weight="700" textLength="122.238" x="208.381" y="20.889">PERT: Project Name</text>
+    </g>
+    <!--cluster Kick-->
+    <g class="cluster" data-qualified-name="Kick" id="ent0014">
+      <path d="M16.5,99 L44.012,99 A3.75,3.75 0 0 1 46.512,101.5 L53.512,119 L106.5,119 A2.5,2.5 0 0 1 109,121.5 L109,177.5 A2.5,2.5 0 0 1 106.5,180 L16.5,180 A2.5,2.5 0 0 1 14,177.5 L14,101.5 A2.5,2.5 0 0 1 16.5,99" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="53.512" y1="119" y2="119"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.512" x="18" y="111.889">Kick</text>
+    </g>
+    <!--cluster task-->
+    <g class="cluster" data-qualified-name="task" id="ent0015">
+      <path d="M170.5,39 L197.138,39 A3.75,3.75 0 0 1 199.638,41.5 L206.638,59 L535.5,59 A2.5,2.5 0 0 1 538,61.5 L538,237.5 A2.5,2.5 0 0 1 535.5,240 L170.5,240 A2.5,2.5 0 0 1 168,237.5 L168,41.5 A2.5,2.5 0 0 1 170.5,39" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="168" x2="206.638" y1="59" y2="59"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="25.638" x="172" y="51.889">task</text>
+    </g>
+    <g class="entity" data-qualified-name="Kick.Off" data-source-line="6" id="ent0001">
+      <rect fill="#F1F1F1" height="18" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="62.912" x="30" y="140"/>
+      <text fill="#000" font-size="14" textLength="48.912" x="37" y="152.889">Kick.Off</text>
+    </g>
+    <g class="entity" data-qualified-name="task.1" data-source-line="8" id="ent0002">
+      <rect fill="#F1F1F1" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="74.425" x="184" y="80"/>
+      <text fill="#000" font-size="14" textLength="37.275" x="202.575" y="92.889">task.1</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="184" x2="258.425" y1="98" y2="98"/>
+      <text fill="#000" font-size="14" textLength="29.488" x="189" y="110.889">Start</text>
+      <text fill="#000" font-size="14" textLength="24.938" x="228.488" y="110.889">End</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="223.488" x2="223.488" y1="98" y2="116"/>
+    </g>
+    <g class="entity" data-qualified-name="task.2" data-source-line="11" id="ent0003">
+      <rect fill="#F1F1F1" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="74.425" x="184" y="134"/>
+      <text fill="#000" font-size="14" textLength="37.275" x="202.575" y="146.889">task.2</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="184" x2="258.425" y1="152" y2="152"/>
+      <text fill="#000" font-size="14" textLength="29.488" x="189" y="164.889">Start</text>
+      <text fill="#000" font-size="14" textLength="24.938" x="228.488" y="164.889">End</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="223.488" x2="223.488" y1="152" y2="170"/>
+    </g>
+    <g class="entity" data-qualified-name="task.3" data-source-line="14" id="ent0004">
+      <rect fill="#F1F1F1" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="74.425" x="184" y="188"/>
+      <text fill="#000" font-size="14" textLength="37.275" x="202.575" y="200.889">task.3</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="184" x2="258.425" y1="206" y2="206"/>
+      <text fill="#000" font-size="14" textLength="29.488" x="189" y="218.889">Start</text>
+      <text fill="#000" font-size="14" textLength="24.938" x="228.488" y="218.889">End</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="223.488" x2="223.488" y1="206" y2="224"/>
+    </g>
+    <g class="entity" data-qualified-name="task.4" data-source-line="17" id="ent0005">
+      <rect fill="#F1F1F1" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="74.425" x="295" y="134"/>
+      <text fill="#000" font-size="14" textLength="37.275" x="313.575" y="146.889">task.4</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="295" x2="369.425" y1="152" y2="152"/>
+      <text fill="#000" font-size="14" textLength="29.488" x="300" y="164.889">Start</text>
+      <text fill="#000" font-size="14" textLength="24.938" x="339.488" y="164.889">End</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="334.488" x2="334.488" y1="152" y2="170"/>
+    </g>
+    <g class="entity" data-qualified-name="task.5" data-source-line="20" id="ent0006">
+      <rect fill="#F1F1F1" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="74.425" x="448" y="134"/>
+      <text fill="#000" font-size="14" textLength="37.275" x="466.575" y="146.889">task.5</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="448" x2="522.425" y1="152" y2="152"/>
+      <text fill="#000" font-size="14" textLength="29.488" x="453" y="164.889">Start</text>
+      <text fill="#000" font-size="14" textLength="24.938" x="492.488" y="164.889">End</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="487.488" x2="487.488" y1="152" y2="170"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="183.602,109.099,173.819,107.961,178.829,110.588,176.202,115.598,183.602,109.099" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M92.939,139.915 C100.748,136.912 109.158,133.764 117,131 C138.959,123.259 159.038,116.764 178.829,110.588" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="39.081" x="119" y="112.111">Label 1</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="183.815,152,174.815,148,178.815,152,174.815,156,183.815,152" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M93.241,152 C119.203,152 151.421,152 178.815,152" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="39.081" x="119" y="147.111">Label 2</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="183.602,194.901,176.202,188.402,178.829,193.412,173.819,196.039,183.602,194.901" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M92.939,164.085 C100.748,167.088 109.158,170.236 117,173 C138.959,180.741 159.038,187.236 178.829,193.412" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="39.081" x="119" y="168.111">Label 3</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="294.863,134.097,288.574,126.518,290.383,131.878,285.023,133.686,294.863,134.097" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M258.295,115.981 C270.062,121.811 278.628,126.054 290.383,131.878" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="294.863,152,285.863,148,289.863,152,285.863,156,294.863,152" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M258.295,152 C270.062,152 278.108,152 289.863,152" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="294.863,169.903,285.023,170.314,290.383,172.122,288.574,177.482,294.863,169.903" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M258.295,188.019 C270.062,182.189 278.628,177.946 290.383,172.122" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0006" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="447.865,152,438.865,148,442.865,152,438.865,156,447.865,152" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M369.168,152 C392.988,152 419.053,152 442.865,152" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="39.081" x="389" y="147.111">Label 4</text>
+    </g>
+  </g>
+</svg>

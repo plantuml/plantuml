@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+Alice -> Bob : Hello <:1f600:>
+return <:innocent:>
+Alice -> Bob : Without color: <#0:sunglasses:>
+Alice -> Bob : Change color: <#green:sunny:>
+@enduml

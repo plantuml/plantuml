@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startgantt
+' This is a comment
+
+[T1] requires 3 days
+
+/' this comment
+is on several lines '/
+
+[T2] starts at [T1]'s end and requires 1 day
+@endgantt

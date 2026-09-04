@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+skinparam conditionStyle foo1
+start
+repeat
+  :act1;
+  :act2;
+repeatwhile (<b>end)
+:act3;
+@enduml

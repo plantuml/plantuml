@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="151px" preserveAspectRatio="none" style="width:271px;height:151px;background:#FFFFFF;" version="1.1" viewBox="0 0 271 151" width="271px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity First Interface-->
+    <g class="entity" data-qualified-name="First Interface" data-source-line="2" id="ent0001">
+      <ellipse cx="80.106" cy="21" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="81.55" x="39.331" y="48.889">First Interface</text>
+    </g>
+    <!--entity Interf2-->
+    <g class="entity" data-qualified-name="Interf2" data-source-line="3" id="ent0002">
+      <ellipse cx="116.106" cy="21" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="102.638" x="64.787" y="48.889">Another interface</text>
+    </g>
+    <!--entity Interf3-->
+    <g class="entity" data-qualified-name="Interf3" data-source-line="4" id="ent0003">
+      <ellipse cx="152.106" cy="21" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="39.55" x="132.331" y="48.889">Interf3</text>
+    </g>
+    <!--entity Interf4-->
+    <g class="entity" data-qualified-name="Interf4" data-source-line="5" id="ent0004">
+      <ellipse cx="80.106" cy="91" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="26.425" x="53.287" y="118.889">Last</text>
+      <text fill="#000" font-size="14" textLength="53.637" x="53.287" y="132.889">interface</text>
+    </g>
+    <!--entity component-->
+    <g class="entity" data-qualified-name="component" data-source-line="7" id="ent0005">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="109.213" x="107.606" y="72"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="196.819" y="77"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="194.819" y="79"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="194.819" y="83"/>
+      <text fill="#000" font-size="14" textLength="69.213" x="122.606" y="102.889">component</text>
+    </g>
+    <g class="footer" data-source-line="8">
+      <text fill="#888" font-size="10" font-style="italic" textLength="179.375" x="0" y="142.167">Adding "component" to force diagram to be a</text>
+      <text fill="#888" font-size="10" font-style="italic" font-weight="700" textLength="85.563" x="179.375" y="142.167">component diagram</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="EBNF" height="139px" preserveAspectRatio="none" style="width:450px;height:139px;background:#FFFFFF;" version="1.1" viewBox="0 0 450 139" width="450px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="268.625" x="90.125" y="30.889">Could you put 'arrow head' on all rerouted lines?</text>
+    </g>
+    <text fill="#000" font-size="14" font-weight="700" textLength="22.488" x="10" y="55.889">test</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="40" x2="40" y1="79" y2="79"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="40" x2="105.788" y1="79" y2="79"/>
+    <path d="M64.315,79 L64.315,76 L70.315,79 L64.315,82 L64.315,79" fill="#181818"/>
+    <path d="M40,79 C49,79 52,81 52,90 C52,99 55,101 64,101" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M81.788,101 C90.788,101 93.788,99 93.788,90 C93.788,81 96.788,79 105.788,79" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="17.788" x="64" y="89"/>
+    <text fill="#000" font-size="14" x="69" y="104.889">1</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="105.788" x2="125.788" y1="79" y2="79"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="125.788" x2="199.363" y1="79" y2="79"/>
+    <path d="M153.218,79 L153.218,76 L159.218,79 L153.218,82 L153.218,79" fill="#181818"/>
+    <path d="M125.788,79 C134.788,79 137.788,81 137.788,90 C137.788,99 140.788,101 149.788,101" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M175.363,101 C184.363,101 187.363,99 187.363,90 C187.363,81 190.363,79 199.363,79" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="25.575" x="149.788" y="89"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="154.788" y="104.889">12</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="199.363" x2="219.363" y1="79" y2="79"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="219.363" x2="300.725" y1="79" y2="79"/>
+    <path d="M249.908,79 L249.908,76 L255.908,79 L249.908,82 L249.908,79" fill="#181818"/>
+    <path d="M219.363,79 C228.363,79 231.363,81 231.363,90 C231.363,99 234.363,101 243.363,101" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M276.725,101 C285.725,101 288.725,99 288.725,90 C288.725,81 291.725,79 300.725,79" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="33.363" x="243.363" y="89"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="248.363" y="104.889">123</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="300.725" x2="320.725" y1="79" y2="79"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="320.725" x2="409.875" y1="79" y2="79"/>
+    <path d="M354.385,79 L354.385,76 L360.385,79 L354.385,82 L354.385,79" fill="#181818"/>
+    <path d="M320.725,79 C329.725,79 332.725,81 332.725,90 C332.725,99 335.725,101 344.725,101" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <path d="M385.875,101 C394.875,101 397.875,99 397.875,90 C397.875,81 400.875,79 409.875,79" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="41.15" x="344.725" y="89"/>
+    <text fill="#000" font-size="14" textLength="31.15" x="349.725" y="104.889">1234</text>
+    <ellipse cx="14" cy="79" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:2;"/>
+    <ellipse cx="439.875" cy="79" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="18" x2="40" y1="79" y2="79"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="409.875" x2="435.875" y1="79" y2="79"/>
+    <path d="M420.875,79 L420.875,76 L426.875,79 L420.875,82 L420.875,79" fill="#181818"/>
+  </g>
+</svg>

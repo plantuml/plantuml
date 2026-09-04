@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="336px" preserveAspectRatio="none" style="width:340px;height:336px;background:#FFFFFF;" version="1.1" viewBox="0 0 340 336" width="340px" zoomAndPan="magnify">
+  <defs>
+    <style type="text/css">/* Source (unminified): https://github.com/plantuml/plantuml/blob/master/src/main/resources/svg/default.css */
+svg .entity{cursor:pointer}svg.mouseover-active&gt;g&gt;*{opacity:0.2 !important}svg.mouseover-active&gt;g&gt;g.mouseover-highlighted{opacity:1.0 !important}svg.click-active&gt;g&gt;*{opacity:0.3}svg.click-active&gt;g&gt;g.click-highlighted{opacity:1.0}
+</style>
+    <script>/* Source (unminified): https://github.com/plantuml/plantuml/blob/master/src/main/resources/svg/default.js */
+!function(){function e(e){return e?.replaceAll("\\","\\\\")?.replaceAll('"','\\"')}function t(){a.classList.contains("click-active")&amp;&amp;this.classList.contains("click-selected")?d("click"):s(this,"click")}function c(){var t,c;a.classList.contains("click-active")&amp;&amp;this.classList.contains("click-selected")?d("click"):(t=this,c="click",a.querySelectorAll(`.${c}-selected, .${c}-highlighted`).forEach(e=&gt;{e.classList.remove(`${c}-selected`,`${c}-highlighted`)}),a.classList.add(`${c}-active`),t.classList.add(`${c}-selected`,`${c}-highlighted`),function(t){function c(t,i,n=new Set){n.add(t);const s=e(t.id),d=i?2:1,l=i?1:2;return a.querySelectorAll(`.link[data-entity-${l}="${s}"]`).forEach(t=&gt;{if(!n.has(t)){n.add(t);const s=t.getAttribute(`data-entity-${d}`),l=a.querySelector(`[id="${e(s)}"]`);n.has(l)||(n.add(l),c(l,i,n))}}),n}const i=c(t,!1),n=c(t,!0);return i.union(n)}(t).forEach(e=&gt;{e.classList.add(`${c}-highlighted`)}))}function i(){s(this,"mouseover")}function n(){d("mouseover")}function s(t,c){a.querySelectorAll(`.${c}-selected, .${c}-highlighted`).forEach(e=&gt;{e.classList.remove(`${c}-selected`,`${c}-highlighted`)}),a.classList.add(`${c}-active`),t.classList.add(`${c}-selected`,`${c}-highlighted`),function(t){const c=t.id,i=e(c);let n=new Set;return a.querySelectorAll(`.link[data-entity-1="${i}"], .link[data-entity-2="${i}"]`).forEach(t=&gt;{const i=t.getAttribute("data-entity-1"),s=t.getAttribute("data-entity-2");i===c?(n.add(a.querySelector(`[id="${e(s)}"]`)),n.add(t)):s===c&amp;&amp;(n.add(a.querySelector(`[id="${e(i)}"]`)),n.add(t))}),n}(t).forEach(e=&gt;{e.classList.add(`${c}-highlighted`)})}function d(e){a.classList.remove(`${e}-active`)}const a=function(e,t){for(;e&amp;&amp;e.nodeName.toLowerCase()!==t;)e=e.parentElement;return e}(document.currentScript,"svg");document.addEventListener("DOMContentLoaded",()=&gt;{a.querySelectorAll("g.entity").forEach(e=&gt;{e.addEventListener("mouseover",i),e.addEventListener("mouseout",n),e.addEventListener("click",t),e.addEventListener("dblclick",c)}),a.addEventListener("keydown",e=&gt;{"Escape"===e.code&amp;&amp;d("click")})})}();
+</script>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Professional-->
+    <g class="cluster" data-qualified-name="Professional" data-source-line="6" id="ent0002">
+      <path d="M230.5,86 L308.588,86 A3.75,3.75 0 0 1 311.088,88.5 L318.088,106 L321.5,106 A2.5,2.5 0 0 1 324,108.5 L324,309.5 A2.5,2.5 0 0 1 321.5,312 L230.5,312 A2.5,2.5 0 0 1 228,309.5 L228,88.5 A2.5,2.5 0 0 1 230.5,86" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="228" x2="318.088" y1="106" y2="106"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="77.088" x="232" y="98.889">Professional</text>
+    </g>
+    <!--cluster Restaurant-->
+    <g class="cluster" data-qualified-name="Restaurant" data-source-line="10" id="ent0005">
+      <path d="M83.5,4 L152.925,4 A3.75,3.75 0 0 1 155.425,6.5 L162.425,24 L217.5,24 A2.5,2.5 0 0 1 220,26.5 L220,260.5 A2.5,2.5 0 0 1 217.5,263 L83.5,263 A2.5,2.5 0 0 1 81,260.5 L81,6.5 A2.5,2.5 0 0 1 83.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="81" x2="162.425" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="68.425" x="85" y="16.889">Restaurant</text>
+    </g>
+    <!--entity g-->
+    <g class="entity" data-qualified-name="g" data-source-line="5" id="ent0001">
+      <ellipse cx="33.5" cy="81" fill="#F1F1F1" rx="16" ry="16" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M33.5,101 C37.5,101 40.5,101 44.5,97 C52.5,97 60.5,105 60.5,113 L60.5,117 C60.5,121 56.5,125 52.5,125 L14.5,125 C10.5,125 6.5,121 6.5,117 L6.5,113 C6.5,105 14.5,97 22.5,97 C26.5,101 29.5,101 33.5,101" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="37.275" x="14.863" y="136.389">Guest</text>
+    </g>
+    <!--entity c-->
+    <g class="entity" data-qualified-name="Professional.c" data-source-line="7" id="ent0003">
+      <ellipse cx="276" cy="144" fill="#F1F1F1" rx="16" ry="16" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M276,164 C280,164 283,164 287,160 C295,160 303,168 303,176 L303,180 C303,184 299,188 295,188 L257,188 C253,188 249,184 249,180 L249,176 C249,168 257,160 265,160 C269,164 272,164 276,164" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="29.575" x="261.213" y="199.389">Chef</text>
+    </g>
+    <!--entity fc-->
+    <g class="entity" data-qualified-name="Professional.fc" data-source-line="8" id="ent0004">
+      <ellipse cx="275.938" cy="237" fill="#F1F1F1" rx="16" ry="16" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M275.938,257 C279.938,257 282.938,257 286.938,253 C294.938,253 302.938,261 302.938,269 L302.938,273 C302.938,277 298.938,281 294.938,281 L256.938,281 C252.938,281 248.938,277 248.938,273 L248.938,269 C248.938,261 256.938,253 264.938,253 C268.938,257 271.938,257 275.938,257" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="63.875" x="244" y="292.389">Food Critic</text>
+    </g>
+    <!--entity UC1-->
+    <g class="entity" data-qualified-name="Restaurant.UC1" data-source-line="11" id="ent0006">
+      <ellipse cx="150.432" cy="145.899" fill="#F1F1F1" rx="40.432" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="52.937" x="123.964" y="149.399">Eat Food</text>
+    </g>
+    <!--entity UC2-->
+    <g class="entity" data-qualified-name="Restaurant.UC2" data-source-line="12" id="ent0007">
+      <ellipse cx="150.34" cy="58.068" fill="#F1F1F1" rx="53.34" ry="13.068" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="72.363" x="114.158" y="61.568">Pay for Food</text>
+    </g>
+    <!--entity UC3-->
+    <g class="entity" data-qualified-name="Restaurant.UC3" data-source-line="13" id="ent0008">
+      <ellipse cx="150.64" cy="101.899" fill="#F1F1F1" rx="26.14" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="32.725" x="134.278" y="105.399">Drink</text>
+    </g>
+    <!--entity UC4-->
+    <g class="entity" data-qualified-name="Restaurant.UC4" data-source-line="14" id="ent0009">
+      <ellipse cx="150.545" cy="233.899" fill="#F1F1F1" rx="35.545" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="46.025" x="127.532" y="237.399">Review</text>
+    </g>
+    <!--entity UC5-->
+    <g class="entity" data-qualified-name="Restaurant.UC5" data-source-line="15" id="ent0010">
+      <ellipse cx="150.64" cy="189.899" fill="#F1F1F1" rx="26.14" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="32.725" x="134.278" y="193.399">Cook</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0006" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="109.705,134.193,102.381,127.608,104.949,132.648,99.909,135.217,109.705,134.193" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M61.284,115.404 C67.674,118.397 74.521,121.44 81,124 C90.177,127.627 95.458,129.565 104.949,132.648" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0007" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="105.712,71.117,95.91,70.154,100.966,72.692,98.429,77.748,105.712,71.117" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M61.284,88.596 C67.674,85.603 74.521,82.56 81,80 C88.899,76.878 92.689,75.437 100.966,72.692" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0008" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="124.156,102,115.156,98,119.156,102,115.156,106,124.156,102" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M61.172,102 C80.149,102 100.486,102 119.156,102" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0004" data-link-type="dependency" id="lnk15">
+      <polygon fill="#181818" points="186.23,240.749,194.302,246.393,191.138,241.703,195.828,238.54,186.23,240.749" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M191.138,241.703 C209.26,245.225 226.34,248.544 243.899,251.956" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0003" data-link-type="dependency" id="lnk17">
+      <polygon fill="#181818" points="176.79,184.881,186.405,187.015,181.691,183.889,184.818,179.174,176.79,184.881" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M181.691,183.889 C202.579,179.66 227.239,174.668 248.463,170.372" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

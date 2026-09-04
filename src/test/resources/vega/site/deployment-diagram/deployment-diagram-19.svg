@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="189px" preserveAspectRatio="none" style="width:508px;height:189px;background:#FFFFFF;" version="1.1" viewBox="0 0 508 189" width="508px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Foo1-->
+    <g class="cluster" data-qualified-name="Foo1" data-source-line="1" id="ent0001">
+      <rect fill="none" height="109" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="102" x="14" y="45"/>
+      <polygon fill="none" points="99,50,99,64,111,64,111,56,105,50,99,50" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="105" x2="105" y1="50" y2="56"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="111" x2="105" y1="56" y2="56"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="31.938" x="49.031" y="57.889">Foo1</text>
+    </g>
+    <!--cluster Foo3-->
+    <g class="cluster" data-qualified-name="Foo3" data-source-line="5" id="ent0003">
+      <path d="M134.5,52.5 L167.438,52.5 A3.75,3.75 0 0 1 169.938,55 L176.938,72.5 L223.5,72.5 A2.5,2.5 0 0 1 226,75 L226,144 A2.5,2.5 0 0 1 223.5,146.5 L134.5,146.5 A2.5,2.5 0 0 1 132,144 L132,55 A2.5,2.5 0 0 1 134.5,52.5" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="132" x2="176.938" y1="72.5" y2="72.5"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="31.938" x="136" y="65.389">Foo3</text>
+    </g>
+    <!--cluster Foo5-->
+    <g class="cluster" data-qualified-name="Foo5" data-source-line="9" id="ent0005">
+      <rect fill="none" height="100" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="84" x="242" y="49.5"/>
+      <path d="M283.938,49.5 L283.938,56.5 L273.938,66.5 L242,66.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="31.938" x="245" y="61.389">Foo5</text>
+    </g>
+    <!--cluster vpc-->
+    <g class="cluster" data-qualified-name="vpc" data-source-line="13" id="ent0007">
+      <path d="M359.013,13.829 C361.273,7.074 365.808,5.597 370.823,11.195 C375.22,5.554 380.482,6.264 383.794,12.391 C386.62,5.507 391.871,5.094 395.937,11.235 C399.228,5.281 403.404,5.314 407.765,10.051 C411.008,2.495 416.718,3.282 421.436,8.47 C424.862,2.793 430.147,2.775 432.814,9.186 C438.049,4.242 443.735,3.18 446.825,11.458 C449.825,4.749 454.796,5.953 458.721,10.478 C463.483,5.414 467.958,5.28 471.957,11.382 C480.681,3.682 488.647,9.242 490,19 C490.907,18.482 491.661,19.032 491.64,20.015 C497.432,22.884 498.252,28.717 492.863,32.667 C499.845,35.505 499.827,41.55 494.145,45.639 C499.624,50.126 501.236,54.094 494.352,58.777 C502.222,61.493 501.894,68.539 496.205,73.019 C501.536,76.523 500.833,81.692 495.745,84.789 C501.737,88.543 501.95,94.846 495.753,98.607 C500.948,103.057 499.844,108.226 494.021,111.155 C500.183,116.594 499.355,121.605 492.711,125.907 C497.698,129.033 499.629,134.576 493.077,138.05 C497.957,148.698 495.407,155.544 483,157 C484.331,156.684 485.219,157.137 484.912,158.683 C481.184,165.159 477.021,164.655 472.273,159.823 C468.749,166.27 461.736,167.107 458.028,160.016 C455.188,166.168 449.124,165.944 445.538,160.846 C442.691,166.769 437.226,166.095 433.759,161.543 C429.967,166.583 425.519,166.622 421.773,161.489 C416.901,167.504 412.089,168.456 407.567,161.117 C402.723,167.468 398.669,167.014 394.937,160.061 C390.601,164.5 386.772,164.644 383.222,159.135 C378.625,165.804 374.427,165.529 370.339,158.651 C360.993,164.536 351.414,162.763 350,150 C350.787,150.18 350.999,150.683 350.628,151.387 C345.672,148.81 344.03,145.269 348.818,140.995 C343.63,138.278 342.564,133.706 347.864,130.073 C342.388,127.501 341.895,123.832 345.7,119.38 C340.562,116.177 339.918,112.495 344.579,108.3 C338.706,106.068 337.391,101.686 342.608,97.441 C337.138,94.324 335.866,89.853 341.925,86.045 C336.024,81.209 337.25,77.405 343.146,73.738 C339.419,69.671 340.566,66.564 345.152,64.256 C339.014,60.017 339.825,54.877 346.52,52.08 C341.928,48.463 342.244,43.388 347.937,41.099 C343.152,38.066 343.525,33.151 349.038,31.272 C342.393,20.803 345.576,15.004 357,12 C358.387,11.714 359.173,12.412 359.013,13.829" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="21.787" x="409.106" y="27.889">vpc</text>
+    </g>
+    <!--cluster ec2-->
+    <g class="cluster" data-qualified-name="vpc.ec2" data-source-line="14" id="ent0008">
+      <polygon fill="none" points="358,55,368,45,482,45,482,139,472,149,358,149,358,55" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="472" x2="482" y1="55" y2="45"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="358" x2="472" y1="55" y2="55"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="472" x2="472" y1="55" y2="149"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="22.575" x="404.713" y="68.889">ec2</text>
+    </g>
+    <!--entity Foo2-->
+    <g class="entity" data-qualified-name="Foo1.Foo2" data-source-line="2" id="ent0002">
+      <path d="M32.5,86 L73.5,86 A3.75,3.75 0 0 1 76,88.5 L83,107 L97.5,107 A2.5,2.5 0 0 1 100,109.5 L100,135.5 A2.5,2.5 0 0 1 97.5,138 L32.5,138 A2.5,2.5 0 0 1 30,135.5 L30,88.5 A2.5,2.5 0 0 1 32.5,86" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="30" x2="83" y1="107" y2="107"/>
+      <text fill="#000" font-size="14" textLength="31.938" x="40" y="124.889">Foo2</text>
+    </g>
+    <!--entity Foo4-->
+    <g class="entity" data-qualified-name="Foo3.Foo4" data-source-line="6" id="ent0004">
+      <rect fill="#F1F1F1" height="37" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="61.938" x="148" y="93.5"/>
+      <polygon fill="#F1F1F1" points="192.938,98.5,192.938,112.5,204.938,112.5,204.938,104.5,198.938,98.5,192.938,98.5" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="198.938" x2="198.938" y1="98.5" y2="104.5"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="204.938" x2="198.938" y1="104.5" y2="104.5"/>
+      <text fill="#000" font-size="14" textLength="31.938" x="158" y="117.389">Foo4</text>
+    </g>
+    <!--entity Foo6-->
+    <g class="entity" data-qualified-name="Foo5.Foo6" data-source-line="10" id="ent0006">
+      <path d="M258,100.5 C258,90.5 283.969,90.5 283.969,90.5 C283.969,90.5 309.938,90.5 309.938,100.5 L309.938,123.5 C309.938,133.5 283.969,133.5 283.969,133.5 C283.969,133.5 258,133.5 258,123.5 L258,100.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M258,100.5 C258,110.5 283.969,110.5 283.969,110.5 C283.969,110.5 309.938,110.5 309.938,100.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="31.938" x="268" y="125.389">Foo6</text>
+    </g>
+    <!--entity stack-->
+    <g class="entity" data-qualified-name="vpc.ec2.stack" data-source-line="15" id="ent0009">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:none;" width="52.637" x="393.5" y="95"/>
+      <path d="M378.5,95 L391,95 A2.5,2.5 0 0 1 393.5,97.5 L393.5,126.5 A2.5,2.5 0 0 0 396,129 L443.638,129 A2.5,2.5 0 0 0 446.138,126.5 L446.138,97.5 A2.5,2.5 0 0 1 448.638,95 L461.138,95" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="32.637" x="403.5" y="115.889">stack</text>
+    </g>
+  </g>
+</svg>

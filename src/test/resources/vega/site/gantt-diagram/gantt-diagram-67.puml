@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startgantt
+[Task1] requires 20 days
+note bottom
+  memo1 ...
+  memo2 ...
+  explanations1 ...
+  explanations2 ...
+end note
+[Task2] requires 4 days
+[Task1] -> [Task2]
+-- Separator title --
+[M1] happens on 5 days after [Task1]'s end
+-- end --
+@endgantt

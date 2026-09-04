@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+class Dummy {
+  {static} String id
+  {abstract} void methods()
+}
+@enduml

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="82px" preserveAspectRatio="none" style="width:248px;height:82px;background:#FFFFFF;" version="1.1" viewBox="0 0 248 82" width="248px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="user1" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="104.138" x="6" y="12"/>
+      <text fill="#000" font-size="14" textLength="35" x="40.569" y="24.889">user1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="109.138" y1="30" y2="30"/>
+      <text fill="#000" font-size="14" textLength="92.138" x="12" y="44.889">name = "User A"</text>
+      <text fill="#000" font-size="14" textLength="42.525" x="12" y="58.889">id = 123</text>
+    </g>
+    <g class="entity" data-qualified-name="user2" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="104.138" x="128" y="12"/>
+      <text fill="#000" font-size="14" textLength="35" x="162.569" y="24.889">user2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="129" x2="231.138" y1="30" y2="30"/>
+      <text fill="#000" font-size="14" textLength="92.138" x="134" y="44.889">name = "User B"</text>
+      <text fill="#000" font-size="14" textLength="42.525" x="134" y="58.889">id = 456</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,31 @@
+---
+output: svg
+---
+@startwbs
+<style>
+wbsDiagram {
+  :depth(1) {
+    // Targets top-level nodes like America and Europe
+    BackGroundColor white
+  }
+
+  .americaStyle * {
+      FontColor red
+      :depth(2) {
+        BackGroundColor blue
+      }
+  }
+}
+</style>
+
+* World
+** America <<americaStyle>>
+*** Canada
+*** Mexico
+*** USA
+**** Texas
+** Europe <<europeStyle>>
+*** England
+*** Germany
+*** Spain
+@endwbs

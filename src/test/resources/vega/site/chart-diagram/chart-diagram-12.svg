@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="431px" preserveAspectRatio="none" style="width:501px;height:431px;background:#FFFFFF;" version="1.1" viewBox="0 0 501 431" width="501px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="70" y1="60" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="360" y2="360"/>
+    <text fill="#000" font-size="14" x="52.213" y="363.889">0</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="300" y2="300"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="303.889">20</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="240" y2="240"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="243.889">40</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="180" y2="180"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="183.889">60</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="120" y2="120"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="123.889">80</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="60" y2="60"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="36.637" y="63.889">100</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="360" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="103.333" x2="103.333" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="22.575" x="92.046" y="380.889">Jan</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="236.667" x2="236.667" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="24.063" x="224.635" y="380.889">Mar</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="370" x2="370" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="26.425" x="356.788" y="380.889">May</text>
+    <rect fill="#3498DB" height="135" style="stroke:#181818;stroke-width:0.5;" width="40" x="83.333" y="225"/>
+    <rect fill="#3498DB" height="186" style="stroke:#181818;stroke-width:0.5;" width="40" x="150" y="174"/>
+    <rect fill="#3498DB" height="174" style="stroke:#181818;stroke-width:0.5;" width="40" x="216.667" y="186"/>
+    <rect fill="#3498DB" height="210" style="stroke:#181818;stroke-width:0.5;" width="40" x="283.333" y="150"/>
+    <rect fill="#3498DB" height="249" style="stroke:#181818;stroke-width:0.5;" width="40" x="350" y="111"/>
+    <rect fill="#3498DB" height="234" style="stroke:#181818;stroke-width:0.5;" width="40" x="416.667" y="126"/>
+  </g>
+</svg>

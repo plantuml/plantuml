@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="356px" preserveAspectRatio="none" style="width:194px;height:356px;background:#FFFFFF;" version="1.1" viewBox="0 0 194 356" width="194px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class a-->
+    <g class="entity" data-qualified-name="a" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="244" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="172.475" x="6" y="12"/>
+      <ellipse cx="84.094" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="79.094" y="33">C</text>
+      <text fill="#000" font-size="14" x="104.594" y="31.889">a</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="177.475" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="160.475" x="12" y="58.889">You can have horizontal line</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="177.475" y1="66" y2="66"/>
+      <text fill="#000" font-size="14" textLength="79.45" x="12" y="80.889">Or double line</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="177.475" y1="88" y2="88"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="177.475" y1="90" y2="90"/>
+      <text fill="#000" font-size="14" textLength="76.212" x="12" y="102.889">Or strong line</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="177.475" y1="110" y2="110"/>
+      <text fill="#000" font-size="14" textLength="76.212" x="12" y="124.889">Or dotted line</text>
+      <text fill="#000" font-size="14" textLength="76.125" x="12" y="156.889">Or dotted title</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="56.7" x="12" y="170.889">and title...</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="7" x2="72.025" y1="139" y2="139"/>
+      <text fill="#000" font-size="14" textLength="40.425" x="72.025" y="142.389">My title</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="112.45" x2="177.475" y1="139" y2="139"/>
+      <text fill="#000" font-size="14" textLength="105.875" x="12" y="202.889">Or double-line title</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="78.981" y1="185" y2="185"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="78.981" y1="187" y2="187"/>
+      <text fill="#000" font-size="14" textLength="26.513" x="78.981" y="188.389">Title</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="105.494" x2="177.475" y1="185" y2="185"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="105.494" x2="177.475" y1="187" y2="187"/>
+      <text fill="#000" font-size="14" textLength="100.45" x="12" y="234.889">Or single-line title</text>
+      <text fill="#000" font-size="14" textLength="38.938" x="12" y="248.889">Enjoy!</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="56.844" y1="217" y2="217"/>
+      <text fill="#000" font-size="14" textLength="70.788" x="56.844" y="220.389">Another title</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="127.631" x2="177.475" y1="217" y2="217"/>
+    </g>
+    <!--class b-->
+    <g class="entity" data-qualified-name="b" data-source-line="20" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="39.788" x="72" y="292"/>
+      <ellipse cx="87" cy="308" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="82" y="313">C</text>
+      <text fill="#000" font-size="14" x="101" y="311.889">b</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="73" x2="110.788" y1="324" y2="324"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="73" x2="110.788" y1="332" y2="332"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M92,256.061 C92,269.543 92,281.966 92,291.894" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

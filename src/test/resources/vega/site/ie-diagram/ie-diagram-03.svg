@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="118px" preserveAspectRatio="none" style="width:191px;height:118px;background:#FFFFFF;" version="1.1" viewBox="0 0 191 118" width="191px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Entity01-->
+    <g class="entity" data-qualified-name="Entity01" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="169.063" x="6" y="12"/>
+      <ellipse cx="60.994" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="55.994" y="33">E</text>
+      <text fill="#000" font-size="14" textLength="50.575" x="81.494" y="31.889">Entity01</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="174.063" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="99.575" x="26" y="58.889">optional attribute</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="126.088" x="26" y="72.889">optional bold attribute</text>
+      <g data-visibility-modifier="IE_MANDATORY">
+        <ellipse cx="17" cy="84.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" font-weight="700" textLength="143.063" x="26" y="86.889">mandatory bold attribute</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="174.063" y1="94" y2="94"/>
+    </g>
+  </g>
+</svg>

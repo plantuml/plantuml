@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+start
+fork
+  :action 1;
+fork again
+  :action 2;
+fork again
+  :action 3;
+fork again
+  :action 4;
+end merge
+stop
+@enduml

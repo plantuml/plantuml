@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="328px" preserveAspectRatio="none" style="width:162px;height:328px;background:#FFFFFF;" version="1.1" viewBox="0 0 162 328" width="162px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class a-->
+    <g class="entity" data-qualified-name="a" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="216" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="139.575" x="6" y="12"/>
+      <ellipse cx="67.644" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="62.644" y="33">C</text>
+      <text fill="#000" font-size="14" x="88.144" y="31.889">a</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="144.575" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="47.425" x="26" y="58.889">test list 1</text>
+      <g data-visibility-modifier="IE_MANDATORY">
+        <ellipse cx="17" cy="70.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.238" x="26" y="72.889">Bullet list</text>
+      <g data-visibility-modifier="IE_MANDATORY">
+        <ellipse cx="17" cy="84.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="73.938" x="26" y="86.889">Second item</text>
+      <text fill="#000" font-size="14" textLength="62.212" x="26" y="100.889">** Sub item</text>
+      <text fill="#000" font-size="14" textLength="90.213" x="26" y="114.889">*** Sub sub item</text>
+      <g data-visibility-modifier="IE_MANDATORY">
+        <ellipse cx="17" cy="126.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="58.363" x="26" y="128.889">Third item</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="144.575" y1="136" y2="136"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="47.425" x="26" y="150.889">test list 2</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="17,157.5,21,161.5,17,165.5,13,161.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="82.513" x="26" y="164.889">Numbered list</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="17,171.5,21,175.5,17,179.5,13,175.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="73.938" x="26" y="178.889">Second item</text>
+      <text fill="#000" font-size="14" textLength="66.938" x="26" y="192.889">## Sub item</text>
+      <text fill="#000" font-size="14" textLength="113.575" x="26" y="206.889">## Another sub item</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="17,213.5,21,217.5,17,221.5,13,217.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="58.363" x="26" y="220.889">Third item</text>
+    </g>
+    <!--class b-->
+    <g class="entity" data-qualified-name="b" data-source-line="18" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="39.788" x="56" y="264"/>
+      <ellipse cx="71" cy="280" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="66" y="285">C</text>
+      <text fill="#000" font-size="14" x="85" y="283.889">b</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="57" x2="94.788" y1="296" y2="296"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="57" x2="94.788" y1="304" y2="304"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M76,228.007 C76,241.433 76,253.941 76,263.954" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

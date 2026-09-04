@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="279px" preserveAspectRatio="none" style="width:224px;height:279px;background:#FFFFFF;" version="1.1" viewBox="0 0 224 279" width="224px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster foo1-->
+    <g class="cluster" data-qualified-name="foo1" data-source-line="8" id="ent0004">
+      <rect fill="none" height="251" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:1.5;" width="202" x="14" y="4"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="101.394" y="16.889">foo1</text>
+    </g>
+    <!--cluster foo2-->
+    <g class="cluster" data-qualified-name="foo1.foo2" data-source-line="4" id="ent0001">
+      <rect fill="none" height="194" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:1.5;" width="170" x="30" y="45"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="101.394" y="57.889">foo2</text>
+    </g>
+    <!--cluster foo3-->
+    <g class="cluster" data-qualified-name="foo1.foo2.foo3" data-source-line="7" id="ent0002">
+      <rect fill="none" height="105" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:1.5;" width="138" x="46" y="118"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="101.394" y="130.889">foo3</text>
+    </g>
+    <!--class Object-->
+    <g class="entity" data-qualified-name="foo1.foo2.foo3.Object" data-source-line="8" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="72.425" x="96" y="159"/>
+      <ellipse cx="111" cy="175" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="106" y="180">C</text>
+      <text fill="#000" font-size="14" textLength="40.425" x="125" y="178.889">Object</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="97" x2="167.425" y1="191" y2="191"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="97" x2="167.425" y1="199" y2="199"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="nested" id="lnk5">
+      <ellipse cx="70" cy="118.194" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="70" x2="70" y1="126.194" y2="110.194"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="62" x2="78" y1="118.194" y2="118.194"/>
+      <path d="M70,126.194 C70,126.487 70,117.32 70,117.618 C70,117.693 70,117.767 70,117.842" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

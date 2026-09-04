@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="112px" preserveAspectRatio="none" style="width:407px;height:112px;background:#FFFFFF;" version="1.1" viewBox="0 0 407 112" width="407px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="47.213" x="10" y="37"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="15" y="49.889">$foo</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="52.213" y="49.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="47.213" x2="47.213" y1="37" y2="55"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="47.213" x="10" y="37"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="130.513" x="94" y="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="99" y="40.889">company</text>
+    <text fill="#000" font-size="14" textLength="42.788" x="176.725" y="40.889">Skynet</text>
+    <line style="stroke:#000;stroke-width:1;" x1="171.725" x2="171.725" y1="28" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="94" x2="224.513" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.725" x="99" y="58.889">employees</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="176.725" y="58.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="171.725" x2="171.725" y1="46" y2="64"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="130.513" x="94" y="28"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="262" y="37"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="267" y="49.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="262" x2="272" y1="55" y2="55"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="267" y="67.889">   </text>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="262" y="37"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="86.238" x="309" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="314" y="22.889">name</text>
+    <text fill="#000" font-size="14" textLength="28.875" x="361.363" y="22.889">alice</text>
+    <line style="stroke:#000;stroke-width:1;" x1="356.363" x2="356.363" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="309" x2="395.238" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="37.363" x="314" y="40.889">salary</text>
+    <text fill="#000" font-size="14" textLength="23.363" x="361.363" y="40.889">100</text>
+    <line style="stroke:#000;stroke-width:1;" x1="356.363" x2="356.363" y1="28" y2="46"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="86.238" x="309" y="10"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="80.725" x="311.5" y="64"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="316.5" y="76.889">name</text>
+    <text fill="#000" font-size="14" textLength="23.363" x="363.863" y="76.889">bob</text>
+    <line style="stroke:#000;stroke-width:1;" x1="358.863" x2="358.863" y1="64" y2="82"/>
+    <line style="stroke:#000;stroke-width:1;" x1="311.5" x2="392.225" y1="82" y2="82"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="37.363" x="316.5" y="94.889">salary</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="363.863" y="94.889">50</text>
+    <line style="stroke:#000;stroke-width:1;" x1="358.863" x2="358.863" y1="82" y2="100"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="80.725" x="311.5" y="64"/>
+    <path d="M260,46 L273,46 C282.378,46 292.23,44.764 301.665,42.941" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M302.295,45.925 L303.902,42.468 L301.034,39.957 L309.124,41.365 L302.295,45.925" fill="#000"/>
+    <ellipse cx="260" cy="46" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M260,64 L273,64 C283.351,64 294.28,65.505 304.588,67.645" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M303.924,70.597 L306.801,68.143 L305.251,64.694 L311.966,69.303 L303.924,70.597" fill="#000"/>
+    <ellipse cx="260" cy="64" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M213,55 L226,55 C235.604,55 246.49,55 254.555,55" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M254.555,58.075 L256.861,55 L254.555,51.925 L262.243,55 L254.555,58.075" fill="#000"/>
+    <ellipse cx="213" cy="55" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M45,46 L58,46 C67.27,46 77.019,46 86.653,46" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M86.653,49.076 L88.96,46 L86.653,42.924 L94.344,46 L86.653,49.076" fill="#000"/>
+    <ellipse cx="45" cy="46" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

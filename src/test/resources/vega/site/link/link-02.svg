@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="286px" preserveAspectRatio="none" style="width:438px;height:286px;background:#FFFFFF;" version="1.1" viewBox="0 0 438 286" width="438px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="117" width="8" x="198.05" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="201.55" x2="201.55" y1="84" y2="201"/>
+    </g>
+    <g>
+      <title>This is ..http...plantuml.com.sequence Alice.. actor</title>
+      <rect fill="#000" fill-opacity="0" height="117" width="8" x="324.1" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="327.6" x2="327.6" y1="84" y2="201"/>
+    </g>
+    <a href="http://plantuml.com/sequence" target="_top" title="http://plantuml.com/sequence" xlink:actuate="onRequest" xlink:href="http://plantuml.com/sequence" xlink:show="new" xlink:title="http://plantuml.com/sequence" xlink:type="simple">
+      <text fill="#000" font-size="14" textLength="24.938" x="186.081" y="80.889">Bob</text>
+      <ellipse cx="201.55" cy="18.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M201.55,26.5 L201.55,53.5 M188.55,34.5 L214.55,34.5 M201.55,53.5 L188.55,68.5 M201.55,53.5 L214.55,68.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    </a>
+    <text fill="#000" font-size="14" textLength="36.663" x="275.513" y="80.889">This is</text>
+    <a href="http://plantuml.com/sequence" target="_top" title="http://plantuml.com/sequence" xlink:actuate="onRequest" xlink:href="http://plantuml.com/sequence" xlink:show="new" xlink:title="http://plantuml.com/sequence" xlink:type="simple">
+      <text fill="#00F" font-size="14" text-decoration="underline" textLength="30.45" x="312.175" y="80.889">Alice</text>
+    </a>
+    <text fill="#000" font-size="14" textLength="31.062" x="342.625" y="80.889">actor</text>
+    <ellipse cx="327.6" cy="18.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M327.6,26.5 L327.6,53.5 M314.6,34.5 L340.6,34.5 M327.6,53.5 L314.6,68.5 M327.6,53.5 L340.6,68.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <a href="http://plantuml.com/sequence" target="_top" title="http://plantuml.com/sequence" xlink:actuate="onRequest" xlink:href="http://plantuml.com/sequence" xlink:show="new" xlink:title="http://plantuml.com/sequence" xlink:type="simple">
+      <text fill="#000" font-size="14" textLength="24.938" x="186.081" y="211.889">Bob</text>
+      <ellipse cx="201.55" cy="223.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M201.55,231.5 L201.55,258.5 M188.55,239.5 L214.55,239.5 M201.55,258.5 L188.55,273.5 M201.55,258.5 L214.55,273.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    </a>
+    <text fill="#000" font-size="14" textLength="36.663" x="275.513" y="211.889">This is</text>
+    <a href="http://plantuml.com/sequence" target="_top" title="http://plantuml.com/sequence" xlink:actuate="onRequest" xlink:href="http://plantuml.com/sequence" xlink:show="new" xlink:title="http://plantuml.com/sequence" xlink:type="simple">
+      <text fill="#00F" font-size="14" text-decoration="underline" textLength="30.45" x="312.175" y="211.889">Alice</text>
+    </a>
+    <text fill="#000" font-size="14" textLength="31.062" x="342.625" y="211.889">actor</text>
+    <ellipse cx="327.6" cy="223.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M327.6,231.5 L327.6,258.5 M314.6,239.5 L340.6,239.5 M327.6,258.5 L314.6,273.5 M327.6,258.5 L340.6,273.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <polygon fill="#181818" points="315.6,107,325.6,111,315.6,115,319.6,111" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="201.55" x2="321.6" y1="111" y2="111"/>
+    <text fill="#000" font-size="13" textLength="27.544" x="208.55" y="106.111">hello</text>
+    <path d="M93.081,97 L93.081,120 L196.081,120 L196.081,107 L186.081,97 L93.081,97" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M186.081,97 L186.081,107 L196.081,107 L186.081,97" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="82.469" x="99.081" y="112.111">a note with a link</text>
+    <polygon fill="#181818" points="212.55,140,202.55,144,212.55,148,208.55,144" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="206.55" x2="326.6" y1="144" y2="144"/>
+    <text fill="#000" font-size="13" textLength="50.7" x="218.55" y="139.111">hello with</text>
+    <a href="http://plantuml.com/start" target="_top" title="Tooltip for message" xlink:actuate="onRequest" xlink:href="http://plantuml.com/start" xlink:show="new" xlink:title="Tooltip for message" xlink:type="simple">
+      <text fill="#00F" font-size="13" text-decoration="underline" textLength="51.35" x="269.25" y="139.111">some link</text>
+    </a>
+    <path d="M332.6,130 L332.6,153 L422.6,153 L422.6,140 L412.6,130 L332.6,130" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M412.6,130 L412.6,140 L422.6,140 L412.6,130" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="69.306" x="338.6" y="145.111">another note</text>
+    <path d="M15,163 L15,186 L196,186 L196,173 L186,163 L15,163" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M186,163 L186,173 L196,173 L186,163" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="65.081" x="21" y="178.111">You can use</text>
+    <a href="http://plantuml.com/start" target="_top" title="http://plantuml.com/start" xlink:actuate="onRequest" xlink:href="http://plantuml.com/start" xlink:show="new" xlink:title="http://plantuml.com/start" xlink:type="simple">
+      <text fill="#00F" font-size="13" text-decoration="underline" textLength="68.006" x="86.081" y="178.111">links in notes</text>
+    </a>
+    <text fill="#000" font-size="13" textLength="27.463" x="154.088" y="178.111">also.</text>
+  </g>
+</svg>

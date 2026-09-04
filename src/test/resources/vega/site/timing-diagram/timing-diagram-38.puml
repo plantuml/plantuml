@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+analog "Vcore" as VDD
+analog "VCC" as VCC
+
+@0
+VDD is 0
+VCC is 3
+@2
+VDD is 0
+@3
+VDD is 6
+VCC is 6
+VDD@1 -> VCC@2 : "test"
+@enduml

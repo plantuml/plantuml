@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+<style>
+arrow {
+  LineColor #Green
+  FontColor #Green
+  LineStyle 10-5
+
+  .critical {
+      LineColor #Red
+      FontColor #Red
+  }
+  .supporting {
+      LineColor #Blue
+  }
+}
+</style>
+
+[Order_Service]
+
+Order_Service --> Payment_Processor <<critical>> : Handles payment validation
+Order_Service --> Inventory_Service <<supporting>> : Checks stock levels
+@enduml

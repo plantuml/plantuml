@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="YAML" height="641px" preserveAspectRatio="none" style="width:399px;height:641px;background:#FFFFFF;" version="1.1" viewBox="0 0 399 641" width="399px" zoomAndPan="magnify">
+  <defs>
+    <filter height="1" id="b1jq510lpyk2r10" width="1" x="0" y="0">
+      <feFlood flood-color="#FFA500" result="flood"/>
+      <feComposite in="SourceGraphic" in2="flood" operator="over"/>
+    </filter>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="99.45" x="10" y="256"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="41.3" x="15" y="268.889">Creole</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="104.45" y="268.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="99.45" x2="99.45" y1="256" y2="274"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="109.45" y1="274" y2="274"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="79.45" x="15" y="286.889">HTML Creole</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="104.45" y="286.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="99.45" x2="99.45" y1="274" y2="292"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="109.45" y1="292" y2="292"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="49" x="15" y="304.889">Graphic</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="104.45" y="304.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="99.45" x2="99.45" y1="292" y2="310"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="99.45" x="10" y="256"/>
+    <rect fill="#F1F1F1" height="144" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="238.838" x="147.5" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="32.725" x="152.5" y="22.889">wave</text>
+    <text fill="#000" font-size="14" text-decoration="wavy underline" textLength="32.725" x="265.313" y="22.889">wave</text>
+    <line style="stroke:#000;stroke-width:1;" x1="260.313" x2="260.313" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="147.5" x2="386.338" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="26.513" x="152.5" y="40.889">bold</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="26.513" x="265.313" y="40.889">bold</text>
+    <line style="stroke:#000;stroke-width:1;" x1="260.313" x2="260.313" y1="28" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="147.5" x2="386.338" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35.088" x="152.5" y="58.889">italics</text>
+    <text fill="#000" font-size="14" font-style="italic" textLength="35.088" x="265.313" y="58.889">italics</text>
+    <line style="stroke:#000;stroke-width:1;" x1="260.313" x2="260.313" y1="46" y2="64"/>
+    <line style="stroke:#000;stroke-width:1;" x1="147.5" x2="386.338" y1="64" y2="64"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="80.15" x="152.5" y="76.889">monospaced</text>
+    <text fill="#000" font-size="14" textLength="90.125" x="265.313" y="76.889">"monospaced"</text>
+    <line style="stroke:#000;stroke-width:1;" x1="260.313" x2="260.313" y1="64" y2="82"/>
+    <line style="stroke:#000;stroke-width:1;" x1="147.5" x2="386.338" y1="82" y2="82"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="72.275" x="152.5" y="94.889">stricken-out</text>
+    <text fill="#000" font-size="14" text-decoration="line-through" textLength="72.275" x="265.313" y="94.889">stricken-out</text>
+    <line style="stroke:#000;stroke-width:1;" x1="260.313" x2="260.313" y1="82" y2="100"/>
+    <line style="stroke:#000;stroke-width:1;" x1="147.5" x2="386.338" y1="100" y2="100"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="65.45" x="152.5" y="112.889">underlined</text>
+    <text fill="#000" font-size="14" textLength="96.6" x="265.313" y="112.889">__underlined__</text>
+    <line style="stroke:#000;stroke-width:1;" x1="260.313" x2="260.313" y1="100" y2="118"/>
+    <line style="stroke:#000;stroke-width:1;" x1="147.5" x2="386.338" y1="118" y2="118"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="89.513" x="152.5" y="130.889">not-underlined</text>
+    <text fill="#000" font-size="14" textLength="116.025" x="265.313" y="130.889">__not underlined__</text>
+    <line style="stroke:#000;stroke-width:1;" x1="260.313" x2="260.313" y1="118" y2="136"/>
+    <line style="stroke:#000;stroke-width:1;" x1="147.5" x2="386.338" y1="136" y2="136"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="102.813" x="152.5" y="148.889">wave-underlined</text>
+    <text fill="#000" font-size="14" text-decoration="wavy underline" textLength="102.813" x="265.313" y="148.889">wave-underlined</text>
+    <line style="stroke:#000;stroke-width:1;" x1="260.313" x2="260.313" y1="136" y2="154"/>
+    <rect fill="none" height="144" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="238.838" x="147.5" y="10"/>
+    <rect fill="#F1F1F1" height="222" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="230.088" x="152" y="172"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="26.513" x="157" y="184.889">bold</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="26.513" x="257.3" y="184.889">bold</text>
+    <line style="stroke:#000;stroke-width:1;" x1="252.3" x2="252.3" y1="172" y2="190"/>
+    <line style="stroke:#000;stroke-width:1;" x1="152" x2="382.088" y1="190" y2="190"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35.088" x="157" y="202.889">italics</text>
+    <text fill="#000" font-size="14" font-style="italic" textLength="35.088" x="257.3" y="202.889">italics</text>
+    <line style="stroke:#000;stroke-width:1;" x1="252.3" x2="252.3" y1="190" y2="208"/>
+    <line style="stroke:#000;stroke-width:1;" x1="152" x2="382.088" y1="208" y2="208"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="80.15" x="157" y="220.889">monospaced</text>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="80.15" x="257.3" y="220.889">monospaced</text>
+    <line style="stroke:#000;stroke-width:1;" x1="252.3" x2="252.3" y1="208" y2="226"/>
+    <line style="stroke:#000;stroke-width:1;" x1="152" x2="382.088" y1="226" y2="226"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.85" x="157" y="238.889">stroked</text>
+    <text fill="#000" font-size="14" text-decoration="line-through" textLength="45.85" x="257.3" y="238.889">stroked</text>
+    <line style="stroke:#000;stroke-width:1;" x1="252.3" x2="252.3" y1="226" y2="244"/>
+    <line style="stroke:#000;stroke-width:1;" x1="152" x2="382.088" y1="244" y2="244"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="65.45" x="157" y="256.889">underlined</text>
+    <text fill="#000" font-size="14" text-decoration="underline" textLength="65.45" x="257.3" y="256.889">underlined</text>
+    <line style="stroke:#000;stroke-width:1;" x1="252.3" x2="252.3" y1="244" y2="262"/>
+    <line style="stroke:#000;stroke-width:1;" x1="152" x2="382.088" y1="262" y2="262"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="40.512" x="157" y="274.889">waved</text>
+    <text fill="#000" font-size="14" text-decoration="wavy underline" textLength="40.512" x="257.3" y="274.889">waved</text>
+    <line style="stroke:#000;stroke-width:1;" x1="252.3" x2="252.3" y1="262" y2="280"/>
+    <line style="stroke:#000;stroke-width:1;" x1="152" x2="382.088" y1="280" y2="280"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="86.275" x="157" y="292.889">green-stroked</text>
+    <text fill="#000" font-size="14" textLength="45.85" x="257.3" y="292.889">stroked</text>
+    <line style="stroke:#008000;stroke-width:0.5;" x1="257.3" x2="303.15" y1="289.389" y2="289.389"/>
+    <line style="stroke:#000;stroke-width:1;" x1="252.3" x2="252.3" y1="280" y2="298"/>
+    <line style="stroke:#000;stroke-width:1;" x1="152" x2="382.088" y1="298" y2="298"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="90.3" x="157" y="310.889">red-underlined</text>
+    <text fill="#000" font-size="14" textLength="65.45" x="257.3" y="310.889">underlined</text>
+    <line style="stroke:#F00;stroke-width:0.5;" x1="257.3" x2="322.75" y1="311.889" y2="311.889"/>
+    <line style="stroke:#000;stroke-width:1;" x1="252.3" x2="252.3" y1="298" y2="316"/>
+    <line style="stroke:#000;stroke-width:1;" x1="152" x2="382.088" y1="316" y2="316"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="71.663" x="157" y="328.889">blue-waved</text>
+    <text fill="#000" font-size="14" text-decoration="wavy underline" textLength="40.512" x="257.3" y="328.889">waved</text>
+    <line style="stroke:#000;stroke-width:1;" x1="252.3" x2="252.3" y1="316" y2="334"/>
+    <line style="stroke:#000;stroke-width:1;" x1="152" x2="382.088" y1="334" y2="334"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="28.088" x="157" y="346.889">Blue</text>
+    <text fill="#00F" font-size="14" textLength="28.088" x="257.3" y="346.889">Blue</text>
+    <line style="stroke:#000;stroke-width:1;" x1="252.3" x2="252.3" y1="334" y2="352"/>
+    <line style="stroke:#000;stroke-width:1;" x1="152" x2="382.088" y1="352" y2="352"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="46.637" x="157" y="364.889">Orange</text>
+    <text fill="#000" filter="url(#b1jq510lpyk2r10)" font-size="14" textLength="119.788" x="257.3" y="364.889">Orange background</text>
+    <line style="stroke:#000;stroke-width:1;" x1="252.3" x2="252.3" y1="352" y2="370"/>
+    <line style="stroke:#000;stroke-width:1;" x1="152" x2="382.088" y1="370" y2="370"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="18.725" x="157" y="382.889">big</text>
+    <text fill="#000" font-size="20" textLength="26.75" x="257.3" y="387.556">big</text>
+    <line style="stroke:#000;stroke-width:1;" x1="252.3" x2="252.3" y1="370" y2="394"/>
+    <rect fill="none" height="222" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="230.088" x="152" y="172"/>
+    <rect fill="#F1F1F1" height="217.75" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="241.788" x="146" y="412"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="70.788" x="151" y="424.889">OpenIconic</text>
+    <text fill="#000" font-size="14" textLength="83.3" x="231.788" y="424.889">account-login</text>
+    <path d="M319.588,415.167 L319.588,416.333 L324.254,416.333 L324.254,422.167 L319.588,422.167 L319.588,423.333 L325.421,423.333 L325.421,415.167 L319.588,415.167 M320.754,417.5 L320.754,418.667 L316.088,418.667 L316.088,419.833 L320.754,419.833 L320.754,421 L323.088,419.25 L320.754,417.5" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="226.788" x2="226.788" y1="412" y2="430"/>
+    <line style="stroke:#000;stroke-width:1;" x1="146" x2="387.788" y1="430" y2="430"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="51.45" x="151" y="442.889">Unicode</text>
+    <text fill="#000" font-size="14" textLength="73.15" x="231.788" y="442.889">This is ∞ long</text>
+    <line style="stroke:#000;stroke-width:1;" x1="226.788" x2="226.788" y1="430" y2="448"/>
+    <line style="stroke:#000;stroke-width:1;" x1="146" x2="387.788" y1="448" y2="448"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35.088" x="151" y="460.889">Emoji</text>
+    <path d="M252.204,468.667 C252.204,469.955 251.159,471 249.871,471 L234.704,471 C233.416,471 232.371,469.955 232.371,468.667 L232.371,454.667 C232.371,453.378 233.416,452.333 234.704,452.333 L249.871,452.333 C251.159,452.333 252.204,453.378 252.204,454.667 L252.204,468.667" fill="#292F33"/>
+    <path d="M251.038,468.667 C251.038,469.311 250.515,469.833 249.871,469.833 L234.704,469.833 C234.06,469.833 233.538,469.311 233.538,468.667 L233.538,457 C233.538,456.356 234.06,455.833 234.704,455.833 L249.871,455.833 C250.515,455.833 251.038,456.356 251.038,457 L251.038,468.667" fill="#E1E8ED"/>
+    <path d="M245.271,461.949 L242.235,461.949 C241.594,461.949 241.358,461.534 241.358,461.131 C241.358,460.715 241.583,460.312 242.235,460.312 L246.529,460.312 C247.135,460.312 247.384,460.858 247.384,461.166 C247.384,461.404 247.253,461.653 247.111,461.949 L244.169,467.928 C243.837,468.593 243.706,468.829 243.172,468.829 C242.52,468.829 242.188,468.331 242.188,467.987 C242.188,467.845 242.223,467.738 242.307,467.572 L245.271,461.949 M238.572,461.886 L238.309,461.886 C237.74,461.886 237.502,461.502 237.502,461.099 C237.502,460.684 237.799,460.312 238.309,460.312 L239.367,460.312 C239.877,460.312 240.161,460.68 240.161,461.155 L240.161,467.905 C240.161,468.498 239.868,468.83 239.359,468.83 C238.849,468.83 238.572,468.498 238.572,467.905 L238.572,461.886" fill="#66757F"/>
+    <path d="M251.038,459.333 L233.538,459.333 L233.538,454.667 C233.538,454.023 234.06,453.5 234.704,453.5 L249.871,453.5 C250.515,453.5 251.038,454.023 251.038,454.667 L251.038,459.333" fill="#DD2E44"/>
+    <path d="M240.689,455.602 C240.689,455.311 240.864,455.147 241.099,455.147 C241.333,455.147 241.508,455.311 241.508,455.602 L241.508,457.946 L242.479,457.946 C242.757,457.946 242.877,458.167 242.871,458.366 C242.86,458.558 242.719,458.75 242.479,458.75 L241.115,458.75 C240.848,458.75 240.689,458.564 240.689,458.272 L240.689,455.602 M236.918,455.602 C236.918,455.311 237.092,455.147 237.327,455.147 C237.562,455.147 237.736,455.311 237.736,455.602 L237.736,457.054 C237.736,457.59 238.058,458.016 238.576,458.016 C239.072,458.016 239.41,457.567 239.41,457.054 L239.41,455.602 C239.41,455.311 239.585,455.147 239.82,455.147 C240.055,455.147 240.229,455.311 240.229,455.602 L240.229,457.1 C240.229,458.08 239.476,458.821 238.576,458.821 C237.666,458.821 236.918,458.091 236.918,457.1 L236.918,455.602 M236.492,457.584 C236.492,458.563 235.908,458.82 235.412,458.82 C235.035,458.82 234.408,458.663 234.408,458.155 C234.408,457.998 234.534,457.8 234.713,457.8 C234.932,457.8 235.123,458.016 235.368,458.016 C235.674,458.016 235.674,457.712 235.674,457.526 L235.674,455.602 C235.674,455.311 235.848,455.147 236.082,455.147 C236.317,455.147 236.492,455.311 236.492,455.602 L236.492,457.584" fill="#F5F8FA"/>
+    <path d="M249.288,458.167 C249.288,458.489 249.548,458.75 249.871,458.75 C250.193,458.75 250.454,458.489 250.454,458.167 C250.454,457.845 250.193,457.583 249.871,457.583 C249.548,457.583 249.288,457.845 249.288,458.167 M247.538,458.167 C247.538,458.489 247.798,458.75 248.121,458.75 C248.443,458.75 248.704,458.489 248.704,458.167 C248.704,457.845 248.443,457.583 248.121,457.583 C247.798,457.583 247.538,457.845 247.538,458.167 M245.788,458.167 C245.788,458.489 246.048,458.75 246.371,458.75 C246.693,458.75 246.954,458.489 246.954,458.167 C246.954,457.845 246.693,457.583 246.371,457.583 C246.048,457.583 245.788,457.845 245.788,458.167 M245.788,456.417 C245.788,456.739 246.048,457 246.371,457 C246.693,457 246.954,456.739 246.954,456.417 C246.954,456.095 246.693,455.833 246.371,455.833 C246.048,455.833 245.788,456.095 245.788,456.417 M247.538,456.417 C247.538,456.739 247.798,457 248.121,457 C248.443,457 248.704,456.739 248.704,456.417 C248.704,456.095 248.443,455.833 248.121,455.833 C247.798,455.833 247.538,456.095 247.538,456.417 M249.288,456.417 C249.288,456.739 249.548,457 249.871,457 C250.193,457 250.454,456.739 250.454,456.417 C250.454,456.095 250.193,455.833 249.871,455.833 C249.548,455.833 249.288,456.095 249.288,456.417" fill="#F4ABBA"/>
+    <path d="M238.204,454.083 C238.204,454.405 237.943,454.667 237.621,454.667 C237.299,454.667 237.038,454.405 237.038,454.083 L237.038,450.583 C237.038,450.261 237.299,450 237.621,450 C237.943,450 238.204,450.261 238.204,450.583 L238.204,454.083 M247.538,454.083 C247.538,454.405 247.277,454.667 246.954,454.667 C246.632,454.667 246.371,454.405 246.371,454.083 L246.371,450.583 C246.371,450.261 246.632,450 246.954,450 C247.277,450 247.538,450.261 247.538,450.583 L247.538,454.083" fill="#99AAB5"/>
+    <text fill="#000" font-size="14" textLength="56.875" x="252.788" y="469.639">Calendar</text>
+    <line style="stroke:#000;stroke-width:1;" x1="226.788" x2="226.788" y1="448" y2="474.75"/>
+    <line style="stroke:#000;stroke-width:1;" x1="146" x2="387.788" y1="474.75" y2="474.75"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="38.85" x="151" y="487.639">Image</text>
+    <image height="151" width="151" x="231.788" xlink:href="data:image/png;base64,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" y="476.75"/>
+    <line style="stroke:#000;stroke-width:1;" x1="226.788" x2="226.788" y1="474.75" y2="629.75"/>
+    <rect fill="none" height="217.75" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="241.788" x="146" y="412"/>
+    <path d="M104,268 L104,255 C104,210.052 116.919,197.273 146,163 C146.869,161.976 147.754,160.959 148.654,159.95" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M150.931,162.075 L150.247,158.242 L146.377,157.826 L153.965,154.257 L150.931,162.075" fill="#000"/>
+    <ellipse cx="104" cy="268" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M97,283 L110,283 C121.255,283 132.966,283 144.69,283" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M144.69,286.081 L147.001,283 L144.69,279.919 L152.392,283 L144.69,286.081" fill="#000"/>
+    <ellipse cx="97" cy="283" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M104,298 L104,311 C104,347.905 119.891,382.264 141.735,412.062" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M139.219,413.961 L143.159,413.948 L144.25,410.163 L146.483,418.35 L139.219,413.961" fill="#000"/>
+    <ellipse cx="104" cy="298" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

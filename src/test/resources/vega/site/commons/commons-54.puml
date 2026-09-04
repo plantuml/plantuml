@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startgantt
+mainframe This is a **mainframe**
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+
+[t] lasts 5 days
+
+@endgantt

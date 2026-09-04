@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="231px" preserveAspectRatio="none" style="width:277px;height:231px;background:#FFFFFF;" version="1.1" viewBox="0 0 277 231" width="277px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster checkout-->
+    <g class="cluster" data-qualified-name="checkout" data-source-line="5" id="ent0003">
+      <rect fill="none" height="203" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="114" x="90" y="4"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="56" x="119" y="16.889">checkout</text>
+    </g>
+    <!--entity customer-->
+    <g class="entity" data-qualified-name="customer" data-source-line="3" id="ent0001">
+      <ellipse cx="34.744" cy="89.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M34.744,97.5 L34.744,124.5 M21.744,105.5 L47.744,105.5 M34.744,124.5 L21.744,139.5 M34.744,124.5 L47.744,139.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="57.488" x="6" y="151.889">customer</text>
+    </g>
+    <!--entity clerk-->
+    <g class="entity" data-qualified-name="clerk" data-source-line="4" id="ent0002">
+      <ellipse cx="245.788" cy="89.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M245.788,97.5 L245.788,124.5 M232.788,105.5 L258.788,105.5 M245.788,124.5 L232.788,139.5 M245.788,124.5 L258.788,139.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="29.575" x="231" y="151.889">clerk</text>
+    </g>
+    <!--entity payment-->
+    <g class="entity" data-qualified-name="checkout.payment" data-source-line="7" id="ent0005">
+      <ellipse cx="146.927" cy="57.899" fill="#F1F1F1" rx="40.927" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="53.637" x="120.109" y="61.399">payment</text>
+    </g>
+    <!--entity help-->
+    <g class="entity" data-qualified-name="checkout.help" data-source-line="8" id="ent0007">
+      <ellipse cx="147.247" cy="177.899" fill="#F1F1F1" rx="21.747" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="26.513" x="133.991" y="181.399">help</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="association" id="lnk4">
+      <path d="M63.099,118 C69.363,118 76.267,118 83.336,118 C85.103,118 86.88,118 88.66,118 C89.106,118 89.551,118 89.996,118" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="147,71.377,143,80.377,147,76.377,151,80.377,147,71.377" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M147,105.858 C147,95.859 147,86.699 147,76.377" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="41.275" x="115" y="92.111">include</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0003" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="147,130.176,143,139.176,147,135.176,151,139.176,147,130.176" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M147,164.981 C147,154.641 147,145.289 147,135.176" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="45.5" x="113" y="151.111">extends</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="association" id="lnk9">
+      <path d="M204.304,118 C204.415,118 204.526,118 204.636,118 C205.521,118 206.403,118 207.279,118 C209.033,118 210.766,118 212.47,118 C219.284,118 225.626,118 230.866,118" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

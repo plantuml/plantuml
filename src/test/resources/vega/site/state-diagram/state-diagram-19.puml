@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+state a
+
+a -> b : ->
+c x-> d : x->
+e ->o f : <U+0020>->o
+g x->o h : x->o
+@enduml

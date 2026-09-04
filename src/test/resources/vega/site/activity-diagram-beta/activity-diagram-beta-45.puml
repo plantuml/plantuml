@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+start
+:The connector below
+wishes he was blue;
+#blue:(B)
+:This next connector
+feels that she would
+be better off green;
+#green:(G)
+stop
+@enduml

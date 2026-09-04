@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+User -> Wiki : document, document, document...
+@enduml

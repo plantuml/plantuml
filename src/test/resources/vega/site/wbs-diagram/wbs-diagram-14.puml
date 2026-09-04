@@ -1,0 +1,54 @@
+---
+output: svg
+---
+@startwbs
+<style>
+wbsDiagram {
+  // all lines (meaning connector and borders, there are no other lines in WBS) are black by default
+  Linecolor black
+  arrow {
+    // note that connector are actually "arrow" even if they don't look like as arrow
+    // This is to be consistent with other UML diagrams. Not 100% sure that it's a good idea
+    // So now connector are green
+    LineColor green
+  }
+  :depth(0) {
+      // will target root node
+      BackgroundColor White
+      RoundCorner 10
+      LineColor red
+      // Because we are targetting depth(0) for everything, border and connector for level 0 will be red
+  }
+  arrow {
+    :depth(2) {
+      // Targetting only connector between Mexico-Chihuahua and USA-Texas
+      LineColor blue
+      LineStyle 4
+      LineThickness .5
+    }
+  }
+  node {
+    :depth(2) {
+      LineStyle 2
+      LineThickness 2.5
+    }
+  }
+  boxless {
+    // will target boxless node with '_'
+    FontColor darkgreen
+  }
+}
+</style>
+* World
+** America
+*** Canada
+*** Mexico
+**** Chihuahua
+*** USA
+**** Texas
+***< New York
+** Europe
+***_  England
+***_  Germany
+***_  Spain
+@endwbs

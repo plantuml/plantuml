@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="110px" preserveAspectRatio="none" style="width:269px;height:110px;background:#FFFFFF;" version="1.1" viewBox="0 0 269 110" width="269px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="120.125" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="120.125" y1="39" y2="39"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="120.125" y1="69" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="33.375" x2="33.375" y1="0" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="72.313" x2="72.313" y1="0" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="120.125" x2="120.125" y1="0" y2="69"/>
+    <text fill="#000" font-size="10" textLength="21.063" x="5" y="22.278">Start</text>
+    <text fill="#000" font-size="10" textLength="17.813" x="38.375" y="22.278">End</text>
+    <text fill="#000" font-size="10" textLength="37.813" x="77.313" y="22.278">Duration</text>
+    <text fill="#000" font-size="10" textLength="23.375" x="5" y="49.278">Nov 9</text>
+    <text fill="#000" font-size="10" textLength="28.938" x="38.375" y="49.278">Nov 15</text>
+    <text fill="#000" font-size="10" textLength="26.688" x="77.313" y="49.278">7 days</text>
+    <text fill="#000" font-size="10" textLength="23.375" x="5" y="64.278">Nov 9</text>
+    <text fill="#000" font-size="10" textLength="28.938" x="38.375" y="64.278">Nov 15</text>
+    <text fill="#000" font-size="10" textLength="26.688" x="77.313" y="64.278">7 days</text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="82.05" x="143.1" y="9.333">November 2020</text>
+    <text fill="#000" font-size="10" textLength="12.25" x="122" y="21.778">Su</text>
+    <text fill="#000" font-size="10" textLength="13.875" x="137.188" y="21.778">Mo</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="154.281" y="21.778">Tu</text>
+    <text fill="#000" font-size="10" textLength="15" x="168.625" y="21.778">We</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="186.281" y="21.778">Th</text>
+    <text fill="#000" font-size="10" textLength="9.438" x="203.406" y="21.778">Fr</text>
+    <text fill="#000" font-size="10" textLength="12.25" x="218" y="21.778">Sa</text>
+    <text fill="#000" font-size="10" textLength="12.25" x="234" y="21.778">Su</text>
+    <text fill="#000" font-size="10" x="125.344" y="33.778">8</text>
+    <text fill="#000" font-size="10" x="141.344" y="33.778">9</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="154.563" y="33.778">10</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="170.563" y="33.778">11</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="186.563" y="33.778">12</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="202.563" y="33.778">13</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="218.563" y="33.778">14</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="234.563" y="33.778">15</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="120.125" x2="120.125" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="136.125" x2="136.125" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="152.125" x2="152.125" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="168.125" x2="168.125" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="184.125" x2="184.125" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="200.125" x2="200.125" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="216.125" x2="216.125" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="232.125" x2="232.125" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="248.125" x2="248.125" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="120.125" x2="248.125" y1="39" y2="39"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="120.125" x2="248.125" y1="69" y2="69"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="108" x="138.125" y="41"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="108" x="138.125" y="41"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="108" x="138.125" y="56"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="108" x="138.125" y="56"/>
+    <text fill="#000" font-size="11" textLength="53.213" x="142.125" y="49.556">Task 7 days</text>
+    <text fill="#000" font-size="11" textLength="53.213" x="142.125" y="64.556">Task 7 days</text>
+    <text fill="#000" font-size="10" textLength="12.25" x="122" y="76.778">Su</text>
+    <text fill="#000" font-size="10" textLength="13.875" x="137.188" y="76.778">Mo</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="154.281" y="76.778">Tu</text>
+    <text fill="#000" font-size="10" textLength="15" x="168.625" y="76.778">We</text>
+    <text fill="#000" font-size="10" textLength="11.688" x="186.281" y="76.778">Th</text>
+    <text fill="#000" font-size="10" textLength="9.438" x="203.406" y="76.778">Fr</text>
+    <text fill="#000" font-size="10" textLength="12.25" x="218" y="76.778">Sa</text>
+    <text fill="#000" font-size="10" textLength="12.25" x="234" y="76.778">Su</text>
+    <text fill="#000" font-size="10" x="125.344" y="90.778">8</text>
+    <text fill="#000" font-size="10" x="141.344" y="90.778">9</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="154.563" y="90.778">10</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="170.563" y="90.778">11</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="186.563" y="90.778">12</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="202.563" y="90.778">13</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="218.563" y="90.778">14</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="234.563" y="90.778">15</text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="82.05" x="143.1" y="105.333">November 2020</text>
+  </g>
+</svg>

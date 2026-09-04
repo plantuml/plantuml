@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startregex
+title repetitionEquivalance
+a{0,1}b{1,} is the same as a?b+
+@endregex
+@enduml

@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+class Class
+object Object
+json JSON {
+   "fruit":"Apple",
+   "size":"Large",
+   "color": ["Red", "Green"]
+}
+@enduml

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="REGEX" height="90px" preserveAspectRatio="none" style="width:203px;height:90px;background:#FFFFFF;" version="1.1" viewBox="0 0 203 90" width="203px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="161.875" x="20" y="30.889">litteralCharacterSequence</text>
+    </g>
+    <line style="stroke:#181818;stroke-width:1;" x1="42.769" x2="42.769" y1="62" y2="62"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="24.7" x="42.769" y="50"/>
+    <text fill="#000" font-size="14" textLength="14.7" x="47.769" y="65.889">\Q</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="67.469" x2="87.469" y1="62" y2="62"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="29.425" x="87.469" y="50"/>
+    <text fill="#000" font-size="14" textLength="19.425" x="92.469" y="65.889">foo</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="116.894" x2="136.894" y1="62" y2="62"/>
+    <rect fill="#F1F1F1" height="24" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;" width="23.213" x="136.894" y="50"/>
+    <text fill="#000" font-size="14" textLength="13.213" x="141.894" y="65.889">\E</text>
+  </g>
+</svg>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="REGEX" height="117px" preserveAspectRatio="none" style="width:140px;height:117px;background:#FFFFFF;" version="1.1" viewBox="0 0 140 117" width="140px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="98.875" x="20" y="30.889">rangeRepetition</text>
+    </g>
+    <line style="stroke:#181818;stroke-width:1;" x1="27.15" x2="27.15" y1="89" y2="89"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="17.788" x="27.15" y="77"/>
+    <text fill="#000" font-size="14" x="32.15" y="92.889">a</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="44.938" x2="64.938" y1="89" y2="89"/>
+    <path d="M72.938,81 C72.938,87 74.938,89 80.938,89" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="72.938" x2="72.938" y1="78" y2="81"/>
+    <path d="M72.938,78 C72.938,72 74.938,70 80.938,70" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="79.938" x2="97.725" y1="70" y2="70"/>
+    <path d="M88.61,70 L88.61,67 L82.61,70 L88.61,73 L88.61,70" fill="#181818"/>
+    <path d="M104.725,81 C104.725,87 102.725,89 96.725,89" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="104.725" x2="104.725" y1="78" y2="81"/>
+    <path d="M96.725,70 C102.725,70 104.725,72 104.725,78" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="64.938" x2="79.938" y1="89" y2="89"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="97.725" x2="112.725" y1="89" y2="89"/>
+    <rect fill="none" height="24" style="stroke:#181818;stroke-width:0.5;" width="17.788" x="79.938" y="77"/>
+    <text fill="#000" font-size="14" x="84.938" y="92.889">b</text>
+    <path d="M64.938,65 C64.938,61.25 66.188,60 69.938,60" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M88.831,55 C88.831,58.75 87.581,60 83.831,60" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M88.831,55 C88.831,58.75 90.081,60 93.831,60" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M107.725,60 C111.475,60 112.725,61.25 112.725,65" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="69.938" x2="83.831" y1="60" y2="60"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="93.831" x2="107.725" y1="60" y2="60"/>
+    <text fill="#000" font-size="12" textLength="24.6" x="76.531" y="52.667">{1,2}</text>
+  </g>
+</svg>

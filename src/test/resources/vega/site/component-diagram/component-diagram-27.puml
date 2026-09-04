@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+component C1 $tag13
+component C2
+component C3 $tag13
+C1 -- C2
+
+hide $tag13
+@enduml

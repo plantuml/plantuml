@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="129px" preserveAspectRatio="none" style="width:396px;height:129px;background:#FFFFFF;" version="1.1" viewBox="0 0 396 129" width="396px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="93.15" x="10" y="47"/>
+    <text fill="#000" font-size="14" textLength="73.15" x="20" y="67.889">The salary of</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="48.875" x="153.15" y="20"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="28.875" x="163.15" y="40.889">alice</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="30.15" x="252.025" y="20"/>
+    <text fill="#000" font-size="14" textLength="10.15" x="262.025" y="40.889">is</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="43.363" x="332.175" y="20"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="342.175" y="40.889">100</text>
+    <path d="M282.175,37 L292.175,37 C307.175,37 307.175,37 322.175,37 L332.175,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M202.025,37 L212.025,37 C227.025,37 227.025,37 242.025,37 L252.025,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M103.15,64 L113.15,64 C128.15,64 128.15,37 143.15,37 L153.15,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="43.363" x="153.15" y="74"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="163.15" y="94.889">bob</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="30.15" x="246.513" y="74"/>
+    <text fill="#000" font-size="14" textLength="10.15" x="256.513" y="94.889">is</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="35.575" x="326.663" y="74"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="15.575" x="336.663" y="94.889">50</text>
+    <path d="M276.663,91 L286.663,91 C301.663,91 301.663,91 316.663,91 L326.663,91" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M196.513,91 L206.513,91 C221.513,91 221.513,91 236.513,91 L246.513,91" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M103.15,64 L113.15,64 C128.15,64 128.15,91 143.15,91 L153.15,91" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

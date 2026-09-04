@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+v-axis "Revenue ($M)" 0 --> 100
+bar [45, 62, 58, 70] #3498db
+@endchart

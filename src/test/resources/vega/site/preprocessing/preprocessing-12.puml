@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+!procedure defaulttest($x, $y="DefaultY", $z="DefaultZ")
+note over Alice
+  x = $x
+  y = $y
+  z = $z
+end note
+!endprocedure
+
+defaulttest(1, 2, 3)
+defaulttest(1, 2)
+defaulttest(1)
+@enduml

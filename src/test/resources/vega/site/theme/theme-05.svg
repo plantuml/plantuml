@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="269.792px" preserveAspectRatio="none" style="width:341px;height:269px;" version="1.1" viewBox="0 0 341 269" width="341.667px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="g1u5jn9jdl4o9p0" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#7C9AB9"/>
+      <stop offset="100%" stop-color="#304D6D"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="127.083" width="8.333" x="85.612" y="70.833"/>
+      <line style="stroke:#999;stroke-width:1.042;stroke-dasharray:5.208,5.208;" x1="89.258" x2="89.258" y1="70.833" y2="197.917"/>
+    </g>
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="127.083" width="8.333" x="245.755" y="70.833"/>
+      <line style="stroke:#999;stroke-width:1.042;stroke-dasharray:5.208,5.208;" x1="249.401" x2="249.401" y1="70.833" y2="197.917"/>
+    </g>
+    <rect fill="url(#g1u5jn9jdl4o9p0)" height="43.75" rx="4.167" ry="4.167" style="stroke:#304D6D;stroke-width:1.042;" width="63.932" x="57.292" y="20.833"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" textLength="22.266" x="78.125" y="46.181">Bob</text>
+    <rect fill="url(#g1u5jn9jdl4o9p0)" height="43.75" rx="4.167" ry="4.167" style="stroke:#304D6D;stroke-width:1.042;" width="68.854" x="214.974" y="20.833"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" textLength="27.188" x="235.807" y="46.181">Alice</text>
+    <rect fill="url(#g1u5jn9jdl4o9p0)" height="43.75" rx="4.167" ry="4.167" style="stroke:#304D6D;stroke-width:1.042;" width="63.932" x="57.292" y="203.125"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" textLength="22.266" x="78.125" y="228.472">Bob</text>
+    <rect fill="url(#g1u5jn9jdl4o9p0)" height="43.75" rx="4.167" ry="4.167" style="stroke:#304D6D;stroke-width:1.042;" width="68.854" x="214.974" y="203.125"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" textLength="27.188" x="235.807" y="228.472">Alice</text>
+    <polygon fill="#446E9B" points="236.901,93.75,247.318,97.917,236.901,102.083,241.068,97.917" style="stroke:#446E9B;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#446E9B;stroke-width:3.125;" x1="89.258" x2="243.151" y1="97.917" y2="97.917"/>
+    <text fill="#FFF" font-family="'Verdana'" font-size="12.5" textLength="26.484" x="96.549" y="93.056">hello</text>
+    <polygon fill="#446E9B" points="100.716,120.833,90.299,125,100.716,129.167,96.549,125" style="stroke:#446E9B;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#446E9B;stroke-width:3.125;" x1="94.466" x2="248.359" y1="125" y2="125"/>
+    <text fill="#3CB521" font-family="'Verdana'" font-size="12.5" font-weight="700" textLength="86.875" x="106.966" y="120.139">success: hello B.</text>
+    <line style="stroke:#446E9B;stroke-width:2.083;" x1="230.651" x2="241.068" y1="146.875" y2="157.292"/>
+    <line style="stroke:#446E9B;stroke-width:2.083;" x1="230.651" x2="241.068" y1="157.292" y2="146.875"/>
+    <line style="stroke:#446E9B;stroke-width:3.125;" x1="89.258" x2="235.859" y1="152.083" y2="152.083"/>
+    <text fill="#CD0200" font-family="'Verdana'" font-size="12.5" font-weight="700" textLength="34.063" x="96.549" y="147.222">failure</text>
+    <line style="stroke:#446E9B;stroke-width:3.125;" x1="247.318" x2="236.901" y1="179.167" y2="175"/>
+    <line style="stroke:#446E9B;stroke-width:3.125;" x1="247.318" x2="236.901" y1="179.167" y2="183.333"/>
+    <line style="stroke:#446E9B;stroke-width:3.125;" x1="89.258" x2="248.359" y1="179.167" y2="179.167"/>
+    <text fill="#D47500" font-family="'Verdana'" font-size="12.5" font-weight="700" textLength="43.828" x="96.549" y="174.306">warning</text>
+  </g>
+</svg>

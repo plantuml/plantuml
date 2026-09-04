@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+mainframe This is a **mainframe**
+
+start
+:Hello world;
+:This is defined on
+several **lines**;
+stop
+@enduml

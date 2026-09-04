@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHEN_EER" height="230px" preserveAspectRatio="none" style="width:559px;height:230px;background:#FFFFFF;" version="1.1" viewBox="0 0 559 230" width="559px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="100.238" x="43.5" y="12"/>
+      <text fill="#000" font-size="14" textLength="80.238" x="53.5" y="32.889">CUSTOMER</text>
+    </g>
+    <g>
+      <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="76.963" x="6" y="180"/>
+      <text fill="#000" font-size="14" textLength="56.963" x="16" y="200.889">PARENT</text>
+    </g>
+    <g>
+      <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="81.512" x="101.5" y="180"/>
+      <text fill="#000" font-size="14" textLength="61.512" x="111.5" y="200.889">MEMBER</text>
+    </g>
+    <g>
+      <ellipse cx="93.5" cy="94.5" fill="#F1F1F1" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="89.606" y="98.389">o</text>
+    </g>
+    <g>
+      <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="62.088" x="336.5" y="12"/>
+      <text fill="#000" font-size="14" textLength="42.088" x="346.5" y="32.889">CHILD</text>
+    </g>
+    <g>
+      <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="87.025" x="202" y="180"/>
+      <text fill="#000" font-size="14" textLength="67.025" x="212" y="200.889">TODDLER</text>
+    </g>
+    <g>
+      <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="121.238" x="307" y="180"/>
+      <text fill="#000" font-size="14" textLength="101.238" x="317" y="200.889">PRIMARY_AGE</text>
+    </g>
+    <g>
+      <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="97.175" x="446" y="180"/>
+      <text fill="#000" font-size="14" textLength="77.175" x="456" y="200.889">TEENAGER</text>
+    </g>
+    <g>
+      <ellipse cx="367.5" cy="94.5" fill="#F1F1F1" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="363.606" y="98.389">d</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="association" id="lnk5">
+      <path d="M93.5,46.024 C93.5,57.193 93.5,71.836 93.5,81.89" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="association" id="lnk6">
+      <path d="M87.879,107.029 C79.131,124.971 62.235,159.626 52.308,179.985" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0003" data-link-type="association" id="lnk7">
+      <path d="M99.121,107.029 C107.869,124.971 124.765,159.626 134.692,179.985" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0012" data-link-type="association" id="lnk13">
+      <path d="M367.5,46.024 C367.5,57.193 367.5,71.836 367.5,81.89" fill="none" style="stroke:#181818;stroke-width:2;"/>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0009" data-link-type="association" id="lnk14">
+      <path d="M354.903,105.877 C333.595,123.43 290.295,159.099 265.027,179.914" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0010" data-link-type="association" id="lnk15">
+      <path d="M367.5,107.029 C367.5,124.971 367.5,159.626 367.5,179.985" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0011" data-link-type="association" id="lnk16">
+      <path d="M380.142,105.504 C402.101,122.881 447.477,158.789 473.994,179.773" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

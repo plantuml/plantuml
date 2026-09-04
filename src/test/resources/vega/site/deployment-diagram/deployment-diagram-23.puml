@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+skinparam rectangle {
+    roundCorner<<Concept>> 25
+}
+
+rectangle "Concept Model" <<Concept>> {
+rectangle "Example 1" <<Concept>> as ex1
+rectangle "Another rectangle"
+}
+@enduml

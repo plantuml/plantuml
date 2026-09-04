@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="482px" preserveAspectRatio="none" style="width:581px;height:482px;background:#FFFFFF;" version="1.1" viewBox="0 0 581 482" width="581px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <polygon fill="#D2691E" points="311.769,270,259.808,300,207.846,270,207.846,210,259.808,180,311.769,210" style="stroke:#D2691E;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#FFF" font-size="14" font-weight="700" textLength="63.087" x="228.264" y="243.889">Chocolate</text>
+    <polygon fill="#CD5C5C" points="415.692,270,363.731,300,311.769,270,311.769,210,363.731,180,415.692,210" style="stroke:#CD5C5C;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#FFF" font-size="14" font-weight="700" textLength="63.875" x="331.793" y="243.889">IndianRed</text>
+    <polygon fill="#D87093" points="363.731,360,311.769,390,259.808,360,259.808,300,311.769,270,363.731,300" style="stroke:#D87093;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="88.9" x="267.319" y="333.889">PaleVioletRed</text>
+    <polygon fill="#FF6347" points="259.808,360,207.846,390,155.885,360,155.885,300,207.846,270,259.808,300" style="stroke:#FF6347;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="47.425" x="184.134" y="333.889">Tomato</text>
+    <polygon fill="#CD853F" points="207.846,270,155.885,300,103.923,270,103.923,210,155.885,180,207.846,210" style="stroke:#CD853F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="29.575" x="141.097" y="243.889">Peru</text>
+    <polygon fill="#B8860B" points="259.808,180,207.846,210,155.885,180,155.885,120,207.846,90,259.808,120" style="stroke:#B8860B;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="100.45" x="157.621" y="153.889">DarkGoldenRod</text>
+    <polygon fill="#DA70D6" points="363.731,180,311.769,210,259.808,180,259.808,120,311.769,90,363.731,120" style="stroke:#DA70D6;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="41.213" x="291.163" y="153.889">Orchid</text>
+    <polygon fill="#A0522D" points="519.615,270,467.654,300,415.692,270,415.692,210,467.654,180,519.615,210" style="stroke:#A0522D;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#FFF" font-size="14" font-weight="700" textLength="43.663" x="445.822" y="243.889">Sienna</text>
+    <polygon fill="#FF69B4" points="467.654,360,415.692,390,363.731,360,363.731,300,415.692,270,467.654,300" style="stroke:#FF69B4;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="49.087" x="391.148" y="333.889">HotPink</text>
+    <polygon fill="#FF7F50" points="415.692,450,363.731,480,311.769,450,311.769,390,363.731,360,415.692,390" style="stroke:#FF7F50;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="33.513" x="346.974" y="423.889">Coral</text>
+    <polygon fill="#F08080" points="311.769,450,259.808,480,207.846,450,207.846,390,259.808,360,311.769,390" style="stroke:#F08080;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="63.875" x="227.87" y="423.889">LightCoral</text>
+    <polygon fill="#FA8072" points="207.846,450,155.885,480,103.923,450,103.923,390,155.885,360,207.846,390" style="stroke:#FA8072;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="47.512" x="132.128" y="423.889">Salmon</text>
+    <polygon fill="#FF8C00" points="155.885,360,103.923,390,51.962,360,51.962,300,103.923,270,155.885,300" style="stroke:#FF8C00;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="73.15" x="67.348" y="333.889">Darkorange</text>
+    <polygon fill="#DAA520" points="103.923,270,51.962,300,-0,270,-0,210,51.962,180,103.923,210" style="stroke:#DAA520;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="70.875" x="16.524" y="243.889">GoldenRod</text>
+    <polygon fill="#FF4500" points="155.885,180,103.923,210,51.962,180,51.962,120,103.923,90,155.885,120" style="stroke:#FF4500;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#FFF" font-size="14" font-weight="700" textLength="72.363" x="67.742" y="153.889">OrangeRed</text>
+    <polygon fill="#BA55D3" points="207.846,90,155.885,120,103.923,90,103.923,30,155.885,0,207.846,30" style="stroke:#BA55D3;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="91" x="110.385" y="63.889">MediumOrchid</text>
+    <polygon fill="#696969" points="311.769,90,259.808,120,207.846,90,207.846,30,259.808,0,311.769,30" style="stroke:#696969;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#FFF" font-size="14" font-weight="700" textLength="55.212" x="232.201" y="63.889">DimGrey</text>
+    <polygon fill="#556B2F" points="415.692,90,363.731,120,311.769,90,311.769,30,363.731,0,415.692,30" style="stroke:#556B2F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#FFF" font-size="14" font-weight="700" textLength="100.363" x="313.549" y="63.889">DarkOliveGreen</text>
+    <polygon fill="#808000" points="467.654,180,415.692,210,363.731,180,363.731,120,415.692,90,467.654,120" style="stroke:#808000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#FFF" font-size="14" font-weight="700" textLength="31.938" x="399.723" y="153.889">Olive</text>
+  </g>
+</svg>

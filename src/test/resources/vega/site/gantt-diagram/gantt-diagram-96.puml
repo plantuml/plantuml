@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startgantt
+title Today is %date("YYYY-MM-dd")
+!$now = %now()
+!$past = %date("YYYY-MM-dd", $now - 14*24*3600)
+Project starts $past
+today is colored in pink
+[foo] requires 10 days
+[bar] requires 5 days and starts %date("YYYY-MM-dd", $now + 4*24*3600)
+[Tomorrow] happens %date("YYYY-MM-dd", $now + 1*24*3600)
+@endgantt

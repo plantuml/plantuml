@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+left to right direction
+foo -left-> dummyLeft
+foo -right-> dummyRight
+foo -up-> dummyUp
+foo -down-> dummyDown
+@enduml

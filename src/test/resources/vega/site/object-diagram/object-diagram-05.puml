@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+
+object user1
+object user2
+
+user1 : name = "User A"
+user2 : name = "User B"
+
+user1 : id = 123
+user2 : id = 456
+
+@enduml

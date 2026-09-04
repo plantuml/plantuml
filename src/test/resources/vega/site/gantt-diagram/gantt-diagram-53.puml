@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startgantt
+
+saturday are closed
+sunday are closed
+2022-07-04 to 2022-07-15 is closed
+
+Project starts 2022-06-27
+[task1] starts at 2022-06-27 and requires 1 week
+[task2] starts 2 working days after [task1]'s end and requires 3 days
+
+@endgantt

@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startnwdiag
+nwdiag {
+    internet [ shape = cloud];
+    internet -- router;
+
+    network proxy {
+        router;
+        app;
+    }
+    network default {
+    	app;
+        db;
+    }
+    group {
+      color = "pink";
+      app;
+      db;
+    }
+}
+@endnwdiag

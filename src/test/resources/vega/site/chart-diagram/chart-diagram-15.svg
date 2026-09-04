@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="431px" preserveAspectRatio="none" style="width:501px;height:431px;background:#FFFFFF;" version="1.1" viewBox="0 0 501 431" width="501px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="70" y1="60" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="360" y2="360"/>
+    <text fill="#000" font-size="14" x="52.213" y="363.889">0</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="285" y2="285"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="288.889">25</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="210" y2="210"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="213.889">50</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="135" y2="135"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="138.889">75</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="60" y2="60"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="36.637" y="63.889">100</text>
+    <text fill="#000" font-size="14" textLength="82.513" transform="rotate(-90 27 251.256)" x="27" y="251.256">Revenue ($K)</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="360" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="120" x2="120" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="110.681" y="380.889">Q1</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="220" x2="220" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="210.681" y="380.889">Q2</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="320" x2="320" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="310.681" y="380.889">Q3</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="420" x2="420" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="410.681" y="380.889">Q4</text>
+    <rect fill="#3498DB" height="135" style="stroke:#181818;stroke-width:0.5;" width="60" x="90" y="225"/>
+    <rect fill="#3498DB" height="186" style="stroke:#181818;stroke-width:0.5;" width="60" x="190" y="174"/>
+    <rect fill="#3498DB" height="174" style="stroke:#181818;stroke-width:0.5;" width="60" x="290" y="186"/>
+    <rect fill="#3498DB" height="210" style="stroke:#181818;stroke-width:0.5;" width="60" x="390" y="150"/>
+  </g>
+</svg>

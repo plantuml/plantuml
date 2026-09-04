@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startwire
+* foo
+@endwire

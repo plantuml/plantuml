@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startuml
+title
+<#LightBlue>|= |=  $a |=  $b |=  <U+0025>string($a + $b)|
+<#LightGray>| type | str | str | str (concatenation) |
+| example |= "a" |= "b" |= %string("a" + "b") |
+<#LightGray>| type | str | int | str (concatenation) |
+| ex.|= "a" |=  2  |= %string("a" + 2)   |
+<#LightGray>| type | str | int | str (concatenation) |
+| ex.|=  1  |= "b" |= %string(1 + "b")   |
+<#LightGray>| type | bool | str | str (concatenation) |
+| ex.|= <U+0025>true() |= "b" |= %string(%true() + "b") |
+<#LightGray>| type | str | bool | str (concatenation) |
+| ex.|= "a" |= <U+0025>false() |= %string("a" + %false()) |
+<#LightGray>| type |  int  |  int | int (addition of int) |
+| ex.|=  1  |=  2  |= %string(1 + 2)     |
+<#LightGray>| type |  bool  |  int | int (addition) |
+| ex.|= <U+0025>true() |= 2 |= %string(%true() + 2) |
+<#LightGray>| type |  int  |  bool | int (addition) |
+| ex.|=  1  |= <U+0025>false() |= %string(1 + %false()) |
+<#LightGray>| type |  int  |  int | int (addition) |
+| ex.|=  1  |=  <U+0025>intval("2")  |= %string(1 + %intval("2")) |
+end title
+@enduml

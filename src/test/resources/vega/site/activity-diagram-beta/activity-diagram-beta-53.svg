@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="461px" preserveAspectRatio="none" style="width:553px;height:461px;background:#FFFFFF;" version="1.1" viewBox="0 0 553 461" width="553px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="none" height="18" style="stroke:none;" width="506.769" x="20" y="17.5"/>
+    <rect fill="#FFC0CB" height="423" style="stroke:#FFC0CB;stroke-width:1;" width="152.644" x="20" y="17.5"/>
+    <ellipse cx="109.512" cy="50.5" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    <polygon fill="#F1F1F1" points="94.525,80.5,124.5,80.5,136.5,92.5,124.5,104.5,94.525,104.5,82.525,92.5,94.525,80.5" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="11" textLength="29.975" x="94.525" y="95.556">color?</text>
+    <text fill="#000" font-size="11" textLength="15.881" x="66.644" y="90.056">red</text>
+    <text fill="#000" font-size="11" textLength="31.144" x="136.5" y="90.056">not red</text>
+    <rect fill="#FFC0CB" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="69.35" x="26" y="124.5"/>
+    <text fill="#000" font-size="12" font-weight="700" textLength="49.35" x="36" y="143.833">action red</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="43.325" x="39.012" y="176.5"/>
+    <text fill="#000" font-size="12" textLength="23.325" x="49.012" y="195.833">foo1</text>
+    <polygon fill="#F1F1F1" points="109.512,218.5,121.512,230.5,109.512,242.5,97.512,230.5,109.512,218.5" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="20" x2="20" y1="17.5" y2="440.5"/>
+    <rect fill="#D3D3D3" height="423" style="stroke:#D3D3D3;stroke-width:1;" width="155.013" x="172.644" y="17.5"/>
+    <rect fill="#D3D3D3" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="86" x="208.15" y="124.5"/>
+    <text fill="#000" font-size="12" font-weight="700" textLength="66" x="218.15" y="143.833">action not red</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="43.325" x="229.488" y="176.5"/>
+    <text fill="#000" font-size="12" textLength="23.325" x="239.488" y="195.833">foo2</text>
+    <line style="stroke:#000;stroke-width:1.5;" x1="172.644" x2="172.644" y1="17.5" y2="440.5"/>
+    <rect fill="#ADD8E6" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="43.325" x="356.488" y="262.5"/>
+    <text fill="#000" font-size="12" textLength="23.325" x="366.488" y="281.833">foo3</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="43.325" x="356.488" y="314.5"/>
+    <text fill="#000" font-size="12" textLength="23.325" x="366.488" y="333.833">foo4</text>
+    <line style="stroke:#000;stroke-width:1.5;" x1="327.656" x2="327.656" y1="17.5" y2="440.5"/>
+    <rect fill="#98FB98" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="43.325" x="456.544" y="366.5"/>
+    <text fill="#000" font-size="12" textLength="23.325" x="466.544" y="385.833">foo5</text>
+    <ellipse cx="478.206" cy="429.5" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+    <ellipse cx="478.206" cy="429.5" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="426.644" x2="426.644" y1="17.5" y2="440.5"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="527.769" x2="527.769" y1="17.5" y2="440.5"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="60.675" x2="60.675" y1="156.5" y2="176.5"/>
+    <polygon fill="#181818" points="56.675,166.5,60.675,176.5,64.675,166.5,60.675,170.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="82.525" x2="60.675" y1="92.5" y2="92.5"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="60.675" x2="60.675" y1="92.5" y2="124.5"/>
+    <polygon fill="#181818" points="56.675,114.5,60.675,124.5,64.675,114.5,60.675,118.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="60.675" x2="60.675" y1="208.5" y2="230.5"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="60.675" x2="97.512" y1="230.5" y2="230.5"/>
+    <polygon fill="#181818" points="87.512,226.5,97.512,230.5,87.512,234.5,91.512,230.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="109.512" x2="109.512" y1="60.5" y2="80.5"/>
+    <polygon fill="#181818" points="105.512,70.5,109.512,80.5,113.512,70.5,109.512,74.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="251.15" x2="251.15" y1="156.5" y2="176.5"/>
+    <polygon fill="#181818" points="247.15,166.5,251.15,176.5,255.15,166.5,251.15,170.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="378.15" x2="378.15" y1="294.5" y2="314.5"/>
+    <polygon fill="#181818" points="374.15,304.5,378.15,314.5,382.15,304.5,378.15,308.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="478.206" x2="478.206" y1="398.5" y2="418.5"/>
+    <polygon fill="#181818" points="474.206,408.5,478.206,418.5,482.206,408.5,478.206,412.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="136.5" x2="251.15" y1="92.5" y2="92.5"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="251.15" x2="251.15" y1="92.5" y2="124.5"/>
+    <polygon fill="#181818" points="247.15,114.5,251.15,124.5,255.15,114.5,251.15,118.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="251.15" x2="251.15" y1="208.5" y2="230.5"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="251.15" x2="121.512" y1="230.5" y2="230.5"/>
+    <polygon fill="#181818" points="131.513,226.5,121.512,230.5,131.513,234.5,127.512,230.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="109.512" x2="109.512" y1="242.5" y2="247.5"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="109.512" x2="378.15" y1="247.5" y2="247.5"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="378.15" x2="378.15" y1="247.5" y2="262.5"/>
+    <polygon fill="#181818" points="374.15,252.5,378.15,262.5,382.15,252.5,378.15,256.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="378.15" x2="378.15" y1="346.5" y2="351.5"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="378.15" x2="478.206" y1="351.5" y2="351.5"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="478.206" x2="478.206" y1="351.5" y2="366.5"/>
+    <polygon fill="#181818" points="474.206,356.5,478.206,366.5,482.206,356.5,478.206,360.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="18" textLength="114.975" x="38.834" y="31.5">Actor_For_red</text>
+    <text fill="#000" font-size="18" textLength="145.013" x="177.644" y="31.5">Actor_For_no_red</text>
+    <text fill="#000" font-size="18" textLength="88.988" x="332.656" y="31.5">Next_Actor</text>
+    <text fill="#000" font-size="18" textLength="91.125" x="431.644" y="31.5">Final_Actor</text>
+  </g>
+</svg>

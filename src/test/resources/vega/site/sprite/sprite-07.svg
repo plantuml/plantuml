@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="145px" preserveAspectRatio="none" style="width:180px;height:145px;background:#FFFFFF;" version="1.1" viewBox="0 0 180 145" width="180px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="66" width="8" x="28.725" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="32.225" x2="32.225" y1="39" y2="105"/>
+    </g>
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="66" width="8" x="146.381" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="149.881" x2="149.881" y1="39" y2="105"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="10" y="10"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="17" y="27.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="130.413" y="10"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="137.413" y="27.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="10" y="105"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="17" y="122.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="130.413" y="105"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="137.413" y="122.889">Bob</text>
+    <polygon fill="#181818" points="137.881,83,147.881,87,137.881,91,141.881,87" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="32.225" x2="143.881" y1="87" y2="87"/>
+    <text fill="#000" font-size="13" textLength="42.656" x="39.225" y="82.111">Testing</text>
+    <image height="34" width="51" x="81.881" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAiCAYAAADyK+EUAAAChklEQVR4Xu3YWUhUYRyGcSGIkGijrND2fRGtrEykBaQFKmgxDCoospCksEgqI6xIoYsWkiKKupBSKzNNnVEnl1wal3Ft0tytYcLEpVIsbHz6H44QlLddNHwXz80wcM7v/c7V58IjF5wllz9/+J/7jXky5gsvZraQvqycTP9CMv1KyFhTToZvDcbVdRhXNWLwacOwwo5heYf8r5t0717SvfpJ8xwgbekgaUsgdTG8XCQtlOZDyjxpLiTPkWYjz5BmSNMhaZrkAc/dpamQOEWaDM/cpEnSRGkCPB0vjZN3HKu9JySMhnhXiBsJj0cMg9Eg2ZuMWE7cwBp1nprL0VRfvEnVhftURsRRcTaZ8nATllNFWMKqKDveSOkxOyUhXRQf6cN82MGbg1B0QNoHhXuhYA/k74bXOyBvO+Ruhewt8GqjFACmDZC1FhkPGQ4ZDRkMGUryQgaScbRhFgwNMksfQhsg0U2HaaC/MNqJlAnkQ+JOuip96CwLoMMcyOeCYNpzT/PJFIXdeBtbahwfkwy0PTXTGldLc6yNpoc9NNxzUH8H6m5B7TWwXoW3UVB9CRkEKs9BRThYTiJDQGkIFAeDWRtgv47PD9ThudsgZ/MQeP0Q1lewGtRbR2onrYESXIfBZPrnY40+Q3e1J4OOUTi+ezDwzZsfXQH0twfRZwultyWSr/Ux9FjjBWyis7SCjqJm2vM6BfsTuwFsKcgg0BoPLbHQ9AAa7sL7GEFeh3ca8oogIwUYMQQME1yo4I4K7pCOKwgS2C79RHO00xRY1jpB+Qlqpf45J7nrn5zCKIzCKIzCKIzCKIzCKIzCKIzCKIzCKIzCKMy/wjjVJaBTXc861cW5E+RUmF8OSMuLHlwHywAAAABJRU5ErkJggg==" y="51"/>
+  </g>
+</svg>

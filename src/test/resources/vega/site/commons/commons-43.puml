@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startmindmap
+mainframe This is a **mainframe**
+
+* r
+** d1
+** d2
+@endmindmap

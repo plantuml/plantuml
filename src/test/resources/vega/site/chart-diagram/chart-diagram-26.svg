@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="431px" preserveAspectRatio="none" style="width:501px;height:431px;background:#FFFFFF;" version="1.1" viewBox="0 0 501 431" width="501px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="70" y1="60" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="360" y2="360"/>
+    <text fill="#000" font-size="14" x="52.213" y="363.889">0</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="300" y2="300"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="303.889">20</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="240" y2="240"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="243.889">40</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="180" y2="180"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="183.889">60</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="120" y2="120"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="123.889">80</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="60" y2="60"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="36.637" y="63.889">100</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="360" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="70" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" x="66.106" y="380.889">0</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="110" x2="110" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="102.213" y="380.889">10</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="150" x2="150" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="142.213" y="380.889">20</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="190" x2="190" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="182.213" y="380.889">30</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="230" x2="230" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="222.213" y="380.889">40</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="270" x2="270" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="262.213" y="380.889">50</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="310" x2="310" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="302.213" y="380.889">60</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="350" x2="350" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="342.213" y="380.889">70</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="390" x2="390" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="382.213" y="380.889">80</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="430" x2="430" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="422.213" y="380.889">90</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="470" x2="470" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="458.319" y="380.889">100</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="360" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="330" y2="330"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="300" y2="300"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="270" y2="270"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="240" y2="240"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="210" y2="210"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="180" y2="180"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="150" y2="150"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="120" y2="120"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="90" y2="90"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="60" y2="60"/>
+    <ellipse cx="110" cy="225" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>
+    <ellipse cx="170" cy="174" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>
+    <ellipse cx="230" cy="186" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>
+    <ellipse cx="290" cy="150" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

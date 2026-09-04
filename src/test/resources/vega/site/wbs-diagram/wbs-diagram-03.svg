@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="380px" preserveAspectRatio="none" style="width:649px;height:380px;background:#FFFFFF;" version="1.1" viewBox="0 0 649 380" width="649px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:1.5;" x1="177.925" x2="177.925" y1="72" y2="92"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="164.825" x="95.512" y="92"/>
+    <text fill="#000" font-size="12" textLength="144.825" x="105.512" y="111.333">Decide on Job Requirements</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="167.925" x2="177.925" y1="155" y2="155"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="68.75" x="99.175" y="139"/>
+    <text fill="#000" font-size="12" textLength="48.75" x="109.175" y="158.333">Checklist</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="123.55" x2="133.55" y1="202" y2="202"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="103.55" x="20" y="186"/>
+    <text fill="#000" font-size="12" textLength="83.55" x="30" y="205.333">Responsibilities</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="123.55" x2="133.55" y1="249" y2="249"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="65.375" x="58.175" y="233"/>
+    <text fill="#000" font-size="12" textLength="45.375" x="68.175" y="252.333">Location</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="133.55" x2="133.55" y1="171" y2="249"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="177.925" x2="187.925" y1="155" y2="155"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="84.65" x="187.925" y="139"/>
+    <text fill="#000" font-size="12" textLength="64.65" x="197.925" y="158.333">Identity gaps</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="177.925" x2="187.925" y1="202" y2="202"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="80.15" x="187.925" y="186"/>
+    <text fill="#000" font-size="12" textLength="60.15" x="197.925" y="205.333">Review JDs</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="228" x2="238" y1="249" y2="249"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="119.375" x="238" y="233"/>
+    <text fill="#000" font-size="12" textLength="99.375" x="248" y="252.333">Sign-Up for courses</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="228" x2="238" y1="296" y2="296"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="71.375" x="238" y="280"/>
+    <text fill="#000" font-size="12" textLength="51.375" x="248" y="299.333">Volunteer</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="228" x2="238" y1="343" y2="343"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="64.775" x="238" y="327"/>
+    <text fill="#000" font-size="12" textLength="44.775" x="248" y="346.333">Reading</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="228" x2="228" y1="218" y2="343"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="177.925" x2="177.925" y1="124" y2="202"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="429.15" x2="429.15" y1="72" y2="92"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="103.55" x="377.375" y="92"/>
+    <text fill="#000" font-size="12" textLength="83.55" x="387.375" y="111.333">CV Upload Done</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="429.15" x2="456.225" y1="155" y2="155"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="82.1" x="456.225" y="139"/>
+    <text fill="#000" font-size="12" textLength="62.1" x="466.225" y="158.333">CV Updated</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="487.275" x2="497.275" y1="202" y2="202"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="48.125" x="439.15" y="186"/>
+    <text fill="#000" font-size="12" textLength="28.125" x="449.15" y="205.333">Skills</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="497.275" x2="507.275" y1="202" y2="202"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="121.4" x="507.275" y="186"/>
+    <text fill="#000" font-size="12" textLength="101.4" x="517.275" y="205.333">Spelling &amp; Grammar</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="497.275" x2="507.275" y1="249" y2="249"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="83.375" x="507.275" y="233"/>
+    <text fill="#000" font-size="12" textLength="63.375" x="517.275" y="252.333">Check dates</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="497.275" x2="497.275" y1="171" y2="249"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="429.15" x2="439.15" y1="296" y2="296"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="148.025" x="439.15" y="280"/>
+    <text fill="#000" font-size="12" textLength="128.025" x="449.15" y="299.333">Recruitment sites chosen</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="429.15" x2="429.15" y1="124" y2="296"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="177.925" x2="429.15" y1="72" y2="72"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="63.425" x="271.825" y="20"/>
+    <text fill="#000" font-size="12" textLength="43.425" x="281.825" y="39.333">New Job</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="303.537" x2="303.537" y1="52" y2="72"/>
+  </g>
+</svg>

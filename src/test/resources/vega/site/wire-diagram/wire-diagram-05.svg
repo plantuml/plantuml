@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WIRE" height="251px" preserveAspectRatio="none" style="width:361px;height:251px;background:#FFFFFF;" version="1.1" viewBox="0 0 361 251" width="361px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="none" height="200" style="stroke:#000;stroke-width:1;" width="100" x="20" y="30"/>
+    <text fill="#000" font-size="12" textLength="32.775" x="25" y="39.333">DDR3</text>
+    <rect fill="none" height="200" style="stroke:#000;stroke-width:1;" width="100" x="240" y="30"/>
+    <text fill="#000" font-size="12" textLength="57.525" x="245" y="39.333">SLC NAND</text>
+    <text fill="#000" font-size="12" x="15" y="19.333"> </text>
+    <path d="M238,35 L233,30 L233,40 L238,35" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="121" x2="239" y1="35" y2="35"/>
+    <rect fill="#FFF" height="10" style="stroke:#FFF;stroke-width:1;" width="21.688" x="124" y="30"/>
+    <text fill="#000" font-size="10" textLength="21.688" x="124" y="37.778">abcd</text>
+    <path d="M238,50 L233,45 L233,55 L238,50" fill="#000"/>
+    <path d="M121,50 L126,45 L126,55 L121,50" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="121" x2="239" y1="50" y2="50"/>
+    <rect fill="#FFF" height="10" style="stroke:#FFF;stroke-width:1;" width="21.688" x="169.156" y="45"/>
+    <text fill="#000" font-size="10" textLength="21.688" x="169.156" y="52.778">abcd</text>
+    <path d="M121,65 L126,60 L126,70 L121,65" fill="#000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="121" x2="239" y1="65" y2="65"/>
+    <rect fill="#FFF" height="10" style="stroke:#FFF;stroke-width:1;" width="21.688" x="214.313" y="60"/>
+    <text fill="#000" font-size="10" textLength="21.688" x="214.313" y="67.778">abcd</text>
+    <line style="stroke:#000;stroke-width:1;" x1="121" x2="239" y1="80" y2="80"/>
+    <rect fill="#FFF" height="10" style="stroke:#FFF;stroke-width:1;" width="21.688" x="169.156" y="75"/>
+    <text fill="#000" font-size="10" textLength="21.688" x="169.156" y="82.778">abcd</text>
+    <path d="M121,95 L224,95 L224,90 L239,100 L224,110 L224,105 L121,105 L121,95" fill="#FFF" style="stroke:#000;stroke-width:1;"/>
+    <text fill="#000" font-size="10" textLength="21.688" x="124" y="102.778">abcd</text>
+    <path d="M121,125 L136,115 L136,120 L224,120 L224,115 L239,125 L224,135 L224,130 L136,130 L136,135 L121,125" fill="#FFF" style="stroke:#F00;stroke-width:1;"/>
+    <text fill="#F00" font-size="10" textLength="21.688" x="169.156" y="127.778">abcd</text>
+    <path d="M121,150 L136,140 L136,145 L239,145 L239,155 L136,155 L136,160 L121,150" fill="#FFF" style="stroke:#000;stroke-width:1;"/>
+    <text fill="#000" font-size="10" textLength="21.688" x="214.313" y="152.778">abcd</text>
+    <path d="M121,170 L239,170 L239,180 L121,180 L121,170" fill="#FFF" style="stroke:#000;stroke-width:1;"/>
+    <text fill="#000" font-size="10" textLength="21.688" x="169.156" y="177.778">abcd</text>
+  </g>
+</svg>

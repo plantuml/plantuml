@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="436px" preserveAspectRatio="none" style="width:114px;height:436px;background:#AAFFFF;" version="1.1" viewBox="0 0 114 436" width="114px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#AFF" height="436" style="stroke:none;" width="114" x="0" y="0"/>
+    <g class="start_entity" data-qualified-name="start" data-source-line="2" id="ent0001">
+      <ellipse cx="52" cy="22" fill="#F00" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#CD853F" height="32" rx="12.5" ry="12.5" style="stroke:#CD853F;stroke-width:0.5;" width="56" x="24" y="72"/>
+    <text fill="#000" font-size="12" textLength="36" x="34" y="91.333">膩平台</text>
+    <rect fill="#8B4513" height="8" style="stroke:none;" width="80" x="12" y="140"/>
+    <rect fill="#CD853F" height="32" rx="12.5" ry="12.5" style="stroke:#CD853F;stroke-width:0.5;" width="80" x="12" y="200"/>
+    <text fill="#000" font-size="12" textLength="60" x="22" y="219.333">鞠躬向公眾</text>
+    <rect fill="#8B4513" height="8" style="stroke:none;" width="80" x="12" y="268"/>
+    <rect fill="#CD853F" height="32" rx="12.5" ry="12.5" style="stroke:#CD853F;stroke-width:0.5;" width="92" x="6" y="328"/>
+    <text fill="#000" font-size="12" textLength="72" x="16" y="347.333">這傢伙波武器</text>
+    <g class="end_entity" data-qualified-name="end" data-source-line="7" id="ent0012">
+      <ellipse cx="52" cy="407" fill="none" rx="11" ry="11" style="stroke:#C0C0C0;stroke-width:1.5;"/>
+      <ellipse cx="52" cy="407" fill="#222" rx="6" ry="6" style="stroke:#C0C0C0;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="52,71.587,56,62.587,52,66.587,48,62.587,52,71.587" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M52,36.084 C52,45.976 52,55.56 52,66.587" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="52,139.822,56,130.822,52,134.822,48,130.822,52,139.822" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M52,104.008 C52,115.047 52,124.81 52,134.822" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0006" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="52,199.587,56,190.587,52,194.587,48,190.587,52,199.587" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M52,164.084 C52,173.976 52,183.56 52,194.587" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0008" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="52,267.822,56,258.822,52,262.822,48,258.822,52,267.822" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M52,232.008 C52,243.047 52,252.81 52,262.822" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0010" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="52,327.587,56,318.587,52,322.587,48,318.587,52,327.587" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M52,292.084 C52,301.976 52,311.56 52,322.587" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0012" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="52,395.822,56,386.822,52,390.822,48,386.822,52,395.822" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M52,360.008 C52,371.047 52,380.81 52,390.822" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

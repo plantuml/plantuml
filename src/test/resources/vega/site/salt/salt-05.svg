@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="45px" preserveAspectRatio="none" style="width:689px;height:45px;background:#FFFFFF;" version="1.1" viewBox="0 0 689 45" width="689px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#EEE" height="15" style="stroke:#000;stroke-width:1;" width="215" x="6" y="6"/>
+    <text fill="#000" font-size="12" textLength="111.525" x="8" y="17.333">This is a closed droplist</text>
+    <line style="stroke:#000;stroke-width:1;" x1="210" x2="210" y1="6" y2="21"/>
+    <polygon fill="#000" points="213,12,219,12,216,16" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <rect fill="#EEE" height="15" style="stroke:#000;stroke-width:1;" width="207" x="224" y="6"/>
+    <text fill="#000" font-size="12" textLength="110.175" x="226" y="17.333">This is an open droplist</text>
+    <line style="stroke:#000;stroke-width:1;" x1="420" x2="420" y1="6" y2="21"/>
+    <polygon fill="#000" points="423,12,429,12,426,16" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <rect fill="#EEE" height="23" style="stroke:#000;stroke-width:1;" width="206" x="224" y="21"/>
+    <text fill="#000" font-size="12" textLength="29.325" x="224" y="30.333">item 1</text>
+    <text fill="#000" font-size="12" textLength="29.325" x="224" y="42.333">item 2</text>
+    <rect fill="#EEE" height="15" style="stroke:#000;stroke-width:1;" width="247" x="434" y="6"/>
+    <text fill="#000" font-size="12" textLength="137.475" x="436" y="17.333">This is another open droplist</text>
+    <line style="stroke:#000;stroke-width:1;" x1="670" x2="670" y1="6" y2="21"/>
+    <polygon fill="#000" points="673,12,679,12,676,16" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <rect fill="#EEE" height="23" style="stroke:#000;stroke-width:1;" width="246" x="434" y="21"/>
+    <text fill="#000" font-size="12" textLength="29.325" x="434" y="30.333">item 1</text>
+    <text fill="#000" font-size="12" textLength="29.325" x="434" y="42.333">item 2</text>
+    <rect fill="#EEE" height="23" style="stroke:#000;stroke-width:1;" width="206" x="224" y="21"/>
+    <text fill="#000" font-size="12" textLength="29.325" x="224" y="30.333">item 1</text>
+    <text fill="#000" font-size="12" textLength="29.325" x="224" y="42.333">item 2</text>
+    <rect fill="#EEE" height="23" style="stroke:#000;stroke-width:1;" width="246" x="434" y="21"/>
+    <text fill="#000" font-size="12" textLength="29.325" x="434" y="30.333">item 1</text>
+    <text fill="#000" font-size="12" textLength="29.325" x="434" y="42.333">item 2</text>
+  </g>
+</svg>

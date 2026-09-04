@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+analog "Vcore" as VDD
+analog "VCC" between -4.5 and 6.5 as VCC
+VCC ticks num on multiple 3
+VCC is 200 pixels height
+
+@0
+VDD is 0
+VCC is 3
+@2
+VDD is 0
+@3
+VDD is 6
+VCC is 6
+VDD@1 -> VCC@2 : "test"
+@enduml

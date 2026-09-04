@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+node Mamal
+component Dog
+
+url of Mamal is [[http://www.google.com]]
+url of Dog is [[http://www.yahoo.com{This is Dog}]]
+@enduml

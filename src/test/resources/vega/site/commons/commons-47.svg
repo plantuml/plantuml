@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="TIMING" height="249px" preserveAspectRatio="none" style="width:342px;height:249px;background:#FFFFFF;" version="1.1" viewBox="0 0 342 249" width="342px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFF" height="208" style="stroke:#181818;stroke-width:1.5;" width="311.4" x="15" y="20"/>
+    <path d="M135.513,20 L135.513,27 L125.513,37 L15,37" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="44.45" x="18" y="31.889">This is a</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="66.063" x="62.45" y="31.889">mainframe</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="30" x2="30" y1="55" y2="192"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="299.4" x2="299.4" y1="55" y2="192"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="94.4" x2="94.4" y1="55" y2="192"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="144.4" x2="144.4" y1="55" y2="192"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="194.4" x2="194.4" y1="55" y2="192"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="244.4" x2="244.4" y1="55" y2="192"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="294.4" x2="294.4" y1="55" y2="192"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="30" x2="299.4" y1="55" y2="55"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="80.15" x="35" y="65.889">Web Browser</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="30" x2="116.15" y1="70" y2="70"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="116.15" x2="126.15" y1="70" y2="55"/>
+    <text fill="#333" font-size="12" textLength="19.35" x="35" y="124.333">Idle</text>
+    <text fill="#333" font-size="12" textLength="59.4" x="35" y="104.333">Processing</text>
+    <text fill="#333" font-size="12" textLength="40.05" x="35" y="84.333">Waiting</text>
+    <line style="stroke:#006400;stroke-width:2;" x1="94.4" x2="144.4" y1="120" y2="120"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="144.4" x2="244.4" y1="100" y2="100"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="244.4" x2="294.4" y1="80" y2="80"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="144.4" x2="144.4" y1="100" y2="120"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="244.4" x2="244.4" y1="80" y2="100"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="30" x2="299.4" y1="138" y2="138"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="58.363" x="35" y="148.889">Web User</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="30" x2="94.363" y1="153" y2="153"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="94.363" x2="104.363" y1="153" y2="138"/>
+    <polygon fill="#E2E2F0" points="106.4,158,132.4,158,144.4,170,132.4,182,106.4,182,94.4,170" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="156.4,158,294.4,158,294.4,182,156.4,182,144.4,170" style="stroke:#E2E2F0;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M294.4,158 L156.4,158 L144.4,170 L156.4,182 L294.4,182" fill="#E2E2F0" style="stroke:#006400;stroke-width:1.5;"/>
+    <text fill="#333" font-size="12" font-weight="700" textLength="19.35" x="109.725" y="173.333">Idle</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="40.05" x="156.4" y="173.333">Waiting</text>
+    <line style="stroke:#333;stroke-width:2;" x1="94.4" x2="94.4" y1="192" y2="197"/>
+    <line style="stroke:#333;stroke-width:2;" x1="144.4" x2="144.4" y1="192" y2="197"/>
+    <line style="stroke:#333;stroke-width:2;" x1="194.4" x2="194.4" y1="192" y2="197"/>
+    <line style="stroke:#333;stroke-width:2;" x1="244.4" x2="244.4" y1="192" y2="197"/>
+    <line style="stroke:#333;stroke-width:2;" x1="294.4" x2="294.4" y1="192" y2="197"/>
+    <line style="stroke:#333;stroke-width:2;" x1="94.4" x2="294.4" y1="192" y2="192"/>
+    <text fill="#333" font-size="11" x="91.341" y="206.556">0</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="135.222" y="206.556">100</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="235.222" y="206.556">300</text>
+  </g>
+</svg>

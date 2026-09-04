@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="120px" preserveAspectRatio="none" style="width:380px;height:120px;background:#FFFFFF;" version="1.1" viewBox="0 0 380 120" width="380px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Parent Activity-->
+    <g class="cluster" data-qualified-name="Parent Activity" data-source-line="143" id="ent0001">
+      <polygon fill="#FFF" points="14,4,354,4,364,50,354,96,14,96" style="stroke:#000;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#101010" font-size="14" font-weight="700" textLength="85.575" x="146.213" y="16.889">Parent Activity</text>
+    </g>
+    <!--entity child1-->
+    <g class="entity" data-qualified-name="Parent Activity.child1" data-source-line="143" id="ent0002">
+      <polygon fill="#FFF" points="30,45,95.85,45,105.85,62,95.85,79,30,79" style="stroke:#000;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#101010" font-size="14" textLength="45.85" x="40" y="65.889">Brother</text>
+    </g>
+    <!--entity child2-->
+    <g class="entity" data-qualified-name="Parent Activity.child2" data-source-line="143" id="ent0003">
+      <polygon fill="#FFF" points="146,45,201.788,45,211.788,62,201.788,79,146,79" style="stroke:#000;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#101010" font-size="14" textLength="35.787" x="156" y="65.889">Sister</text>
+    </g>
+    <!--entity child3-->
+    <g class="entity" data-qualified-name="Parent Activity.child3" data-source-line="143" id="ent0004">
+      <polygon fill="#FFF" points="252,45,338.063,45,348.063,62,338.063,79,252,79" style="stroke:#000;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#101010" font-size="14" textLength="66.063" x="262" y="65.889">Latecomer</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="145.693,62,136.693,58,140.693,62,136.693,66,145.693,62" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M106.207,62 C119.035,62 128.289,62 140.693,62" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="126" y="57.111"> </text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="251.573,62,242.573,58,246.573,62,242.573,66,251.573,62" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M212.203,62 C224.318,62 233.36,62 246.573,62" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="232" y="57.111"> </text>
+    </g>
+  </g>
+</svg>

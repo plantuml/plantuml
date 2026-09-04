@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="143px" preserveAspectRatio="none" style="width:133px;height:143px;background:#FFFFFF;" version="1.1" viewBox="0 0 133 143" width="133px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="g15k3maoum4dpa0" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#F00"/>
+      <stop offset="100%" stop-color="#FFF"/>
+    </linearGradient>
+    <linearGradient id="g15k3maoum4dpa1" x1="0%" x2="100%" y1="100%" y2="0%">
+      <stop offset="0%" stop-color="#00F"/>
+      <stop offset="100%" stop-color="#008000"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <ellipse cx="64.65" cy="25" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    <rect fill="url(#g15k3maoum4dpa0)" height="78" style="stroke:#000;stroke-width:1.5;" width="97.3" x="16" y="45.611"/>
+    <path d="M99.85,45.611 L99.85,52.611 L89.85,62.611 L16,62.611" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="73.85" x="19" y="57.5">testPartition</text>
+    <rect fill="url(#g15k3maoum4dpa1)" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="77.3" x="26" y="79.611"/>
+    <text fill="#000" font-size="12" textLength="57.3" x="36" y="98.944">testActivity</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="64.65" x2="64.65" y1="35" y2="79.611"/>
+    <polygon fill="#181818" points="60.65,69.611,64.65,79.611,68.65,69.611,64.65,73.611" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

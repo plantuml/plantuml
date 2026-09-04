@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+usecase direct as "this is ∞ long"
+usecase ampHash as "this is also ∞ long"
+usecase angleBrackets as "this is also <U+221E> long"
+@enduml

@@ -1,0 +1,36 @@
+---
+output: svg
+---
+@startuml
+class StatsUtil {
+{static} +Stats getStats()
+}
+interface Stats {
++StatsTable getLastSessions()
++StatsTable getCurrentSessionByDiagramType()
++StatsTable getCurrentSessionByFormat()
++StatsTable getAllByDiagramType()
++StatsTable getAllByFormat()
+}
+StatsUtil -> Stats: build
+Stats o--> "5" StatsTable: contains
+enum StatsColumn {
+SESSION_ID
+VERSION
+PARSED_COUNT
+...
+}
+interface StatsTable {
++ Collection<StatsColumn> getColumnHeaders()
++ List<StatsLine> getLines()
+}
+StatsTable o-> StatsColumn: headers
+StatsTable *--> StatsLine: contains
+interface StatsLine {
+}
+interface StatsLine {
++Collection<StatsColumn> getColumnHeaders()
++Object getValue(StatsColumn column)
+}
+StatsLine o--> StatsColumn: headers
+@enduml

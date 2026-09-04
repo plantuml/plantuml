@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHEN_EER" height="194px" preserveAspectRatio="none" style="width:486px;height:194px;background:#FFFFFF;" version="1.1" viewBox="0 0 486 194" width="486px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="93.238" x="141.5" y="144"/>
+      <text fill="#000" font-size="14" textLength="73.238" x="151.5" y="164.889">DIRECTOR</text>
+    </g>
+    <g>
+      <ellipse cx="82.919" cy="90.899" fill="#F1F1F1" rx="29.419" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="37.363" x="64.238" y="94.889">Name</text>
+    </g>
+    <g>
+      <ellipse cx="39.812" cy="24.899" fill="#F1F1F1" rx="33.812" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="43.575" x="18.025" y="28.889">Fname</text>
+    </g>
+    <g>
+      <ellipse cx="125.755" cy="24.899" fill="#F1F1F1" rx="33.255" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="42.788" x="104.362" y="28.889">Lname</text>
+    </g>
+    <g>
+      <ellipse cx="154.913" cy="90.899" fill="#F1F1F1" rx="23.913" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="29.575" x="140.125" y="94.889">Born</text>
+    </g>
+    <g>
+      <ellipse cx="220.918" cy="90.899" fill="#F1F1F1" rx="23.418" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="28.875" x="206.48" y="94.889">Died</text>
+    </g>
+    <g>
+      <ellipse cx="283.133" cy="90.899" fill="#F1F1F1" rx="20.633" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="24.938" x="270.665" y="94.889">Age</text>
+    </g>
+    <g>
+      <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="65.063" x="321.5" y="74"/>
+      <text fill="#000" font-size="14" textLength="45.063" x="331.5" y="94.889">MOVIE</text>
+    </g>
+    <g>
+      <ellipse cx="269.247" cy="24.899" fill="#F1F1F1" rx="21.747" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="26.513" x="255.991" y="28.889">Title</text>
+    </g>
+    <g>
+      <ellipse cx="353.887" cy="24.899" fill="#F1F1F1" rx="44.887" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="59.238" x="324.268" y="28.889">Released</text>
+    </g>
+    <g>
+      <ellipse cx="444.197" cy="24.899" fill="#F1F1F1" rx="26.697" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="33.512" x="427.441" y="28.889">Code</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="association" id="lnk3">
+      <path d="M101.772,104.157 C118.878,115.235 144.27,131.679 163.073,143.857" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="association" id="lnk5">
+      <path d="M48.088,38.038 C55.678,49.335 66.982,66.159 74.655,77.58" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0002" data-link-type="association" id="lnk7">
+      <path d="M117.912,38.038 C110.322,49.335 99.018,66.159 91.345,77.58" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0001" data-link-type="association" id="lnk9">
+      <path d="M160.9,104.157 C166.239,115.159 174.146,131.453 180.043,143.604" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0001" data-link-type="association" id="lnk11">
+      <path d="M215.1,104.157 C209.761,115.159 201.854,131.453 195.957,143.604" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0001" data-link-type="association" id="lnk13">
+      <path d="M266.016,104.157 C250.539,115.235 227.565,131.679 210.553,143.857" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0015" data-entity-2="ent0014" data-link-type="association" id="lnk16">
+      <path d="M284.988,38.038 C298.453,48.177 317.83,62.766 332.626,73.907" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0017" data-entity-2="ent0014" data-link-type="association" id="lnk18">
+      <path d="M354,38.038 C354,48.177 354,62.766 354,73.907" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0019" data-entity-2="ent0014" data-link-type="association" id="lnk20">
+      <path d="M427.072,38.038 C412.814,48.177 392.297,62.766 376.631,73.907" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

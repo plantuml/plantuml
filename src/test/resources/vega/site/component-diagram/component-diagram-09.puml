@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+[Component] --> Interface1
+[Component] -> Interface2
+@enduml

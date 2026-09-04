@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="TIMING" height="202px" preserveAspectRatio="none" style="width:291px;height:202px;background:#FFFFFF;" version="1.1" viewBox="0 0 291 202" width="291px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="159.425" x="64.787" y="30.889">Between 0-max (by default)</text>
+    </g>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="20" y1="55" y2="170"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="270" x2="270" y1="55" y2="170"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="65" x2="65" y1="55" y2="170"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="115" x2="115" y1="55" y2="170"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="165" x2="165" y1="55" y2="170"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="215" x2="215" y1="55" y2="170"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="265" x2="265" y1="55" y2="170"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="270" y1="55" y2="55"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="43.663" x="25" y="65.889">Analog</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="69.663" y1="70" y2="70"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="69.663" x2="79.663" y1="70" y2="55"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="19.425" x="43.575" y="165.889">0.0</text>
+    <text fill="#333" font-size="14" font-weight="700" textLength="35" x="28" y="81.889">450.0</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="65" x2="65" y1="96.667" y2="96.667"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="65" x2="115" y1="96.667" y2="78"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="115" x2="215" y1="78" y2="96.667"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="215" x2="265" y1="96.667" y2="96.667"/>
+    <line style="stroke:#333;stroke-width:2;" x1="65" x2="65" y1="170" y2="175"/>
+    <line style="stroke:#333;stroke-width:2;" x1="115" x2="115" y1="170" y2="175"/>
+    <line style="stroke:#333;stroke-width:2;" x1="165" x2="165" y1="170" y2="175"/>
+    <line style="stroke:#333;stroke-width:2;" x1="215" x2="215" y1="170" y2="175"/>
+    <line style="stroke:#333;stroke-width:2;" x1="265" x2="265" y1="170" y2="175"/>
+    <line style="stroke:#333;stroke-width:2;" x1="65" x2="265" y1="170" y2="170"/>
+    <text fill="#333" font-size="11" x="61.941" y="184.556">0</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="105.822" y="184.556">100</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="205.822" y="184.556">300</text>
+  </g>
+</svg>

@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+node Car
+Car *-- Wheel [[http://plantuml.com/deployment-diagram]] : has some
+@enduml

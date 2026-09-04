@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="209px" preserveAspectRatio="none" style="width:372px;height:209px;background:#FFFFFF;" version="1.1" viewBox="0 0 372 209" width="372px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Source</title>
+      <rect fill="#000" fill-opacity="0" height="159" width="8" x="102.031" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="105.531" x2="105.531" y1="39" y2="198"/>
+    </g>
+    <g>
+      <title>Output</title>
+      <rect fill="#000" fill-opacity="0" height="159" width="8" x="277.819" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="281.319" x2="281.319" y1="39" y2="198"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58.363" x="76.35" y="10"/>
+    <text fill="#000" font-size="14" textLength="44.363" x="83.35" y="27.889">Source</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="55.913" x="253.363" y="10"/>
+    <text fill="#000" font-size="14" textLength="41.913" x="260.363" y="27.889">Output</text>
+    <path d="M15,52 L15,179 L196,179 L196,62 L186,52 L15,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M186,52 L186,62 L196,62 L186,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="78.813" x="21" y="67.111">This is **bold**</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="80.925" x="21" y="80.111">This is //italics//</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="126.994" x="21" y="93.111">This is ""monospaced""</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="118.381" x="21" y="106.111">This is --stricken-out--</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="123.744" x="21" y="119.111">This is __underlined__</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="160.063" x="21" y="132.111">This is ~~wave-underlined~~</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="137.963" x="21" y="145.111">--test Unicode and icons--</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="121.388" x="21" y="158.111">This is &lt;U+221E&gt; long</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="117.325" x="21" y="171.111">This is a &lt;&amp;code&gt; icon</text>
+    <path d="M206.063,52 L206.063,183 L356.063,183 L356.063,62 L346.063,52 L206.063,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M346.063,52 L346.063,62 L356.063,62 L346.063,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="34.044" x="212.063" y="67.111">This is</text>
+    <text fill="#000" font-size="13" font-weight="700" textLength="24.619" x="246.106" y="67.111">bold</text>
+    <text fill="#000" font-size="13" textLength="34.044" x="212.063" y="80.111">This is</text>
+    <text fill="#000" font-size="13" font-style="italic" textLength="32.581" x="246.106" y="80.111">italics</text>
+    <text fill="#000" font-size="13" textLength="34.044" x="212.063" y="93.111">This is</text>
+    <text fill="#000" font-family="monospace" font-size="13" textLength="74.425" x="246.106" y="93.111">monospaced</text>
+    <text fill="#000" font-size="13" textLength="34.044" x="212.063" y="106.111">This is</text>
+    <text fill="#000" font-size="13" text-decoration="line-through" textLength="67.113" x="246.106" y="106.111">stricken-out</text>
+    <text fill="#000" font-size="13" textLength="34.044" x="212.063" y="119.111">This is</text>
+    <text fill="#000" font-size="13" text-decoration="underline" textLength="60.775" x="246.106" y="119.111">underlined</text>
+    <text fill="#000" font-size="13" textLength="34.044" x="212.063" y="132.111">This is</text>
+    <text fill="#000" font-size="13" text-decoration="wavy underline" textLength="95.469" x="246.106" y="132.111">wave-underlined</text>
+    <text fill="#000" font-size="13" textLength="67.925" x="212.063" y="158.111">This is ∞ long</text>
+    <text fill="#000" font-size="13" textLength="41.275" x="212.063" y="171.111">This is a</text>
+    <path d="M259.754,163.167 L256.504,169.667 L257.588,169.667 L260.838,163.167 L259.754,163.167 M255.421,164.25 L254.338,166.417 L255.421,168.583 L256.504,168.583 L255.421,166.417 L256.504,164.25 L255.421,164.25 M260.838,164.25 L261.921,166.417 L260.838,168.583 L261.921,168.583 L263.004,166.417 L261.921,164.25 L260.838,164.25" fill="#000"/>
+    <text fill="#000" font-size="13" textLength="23.888" x="264.004" y="171.111">icon</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="207.063" x2="220.95" y1="141.5" y2="141.5"/>
+    <text fill="#000" font-size="13" textLength="120.738" x="220.95" y="144.611">test Unicode and icons</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="341.688" x2="355.575" y1="141.5" y2="141.5"/>
+  </g>
+</svg>

@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+skinparam useBetaStyle true
+style message  {
+  FontColor blue
+}
+Alice -> Bob : this is printed in blue
+style message  {
+  FontColor red
+}
+Alice -> Bob : this is printed in red
+@enduml

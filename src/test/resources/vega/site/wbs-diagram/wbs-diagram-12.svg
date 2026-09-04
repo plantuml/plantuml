@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="157px" preserveAspectRatio="none" style="width:480px;height:157px;background:#FFFFFF;" version="1.1" viewBox="0 0 480 157" width="480px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:1.5;" x1="87.038" x2="87.038" y1="72" y2="92"/>
+    <rect fill="#FFC0CB" height="32" style="stroke:#181818;stroke-width:1.5;" width="134.075" x="20" y="92"/>
+    <text fill="#000" font-size="12" textLength="114.075" x="30" y="111.333">this is my workpackage</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="227.163" x2="227.163" y1="72" y2="92"/>
+    <rect fill="#FFC0CB" height="44" style="stroke:#181818;stroke-width:1.5;" width="106.175" x="174.075" y="92"/>
+    <text fill="#000" font-size="12" textLength="86.175" x="184.075" y="111.333">This is on multiple</text>
+    <text fill="#000" font-size="12" textLength="24.75" x="184.075" y="123.333">lines</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="379.625" x2="379.625" y1="72" y2="92"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="158.75" x="300.25" y="92"/>
+    <text fill="#000" font-size="12" textLength="138.75" x="310.25" y="111.333">this is another workpackage</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="87.038" x2="379.625" y1="72" y2="72"/>
+    <rect fill="#87CEEB" height="32" style="stroke:#181818;stroke-width:1.5;" width="172.7" x="146.981" y="20"/>
+    <text fill="#000" font-size="12" textLength="152.7" x="156.981" y="39.333">this is the partner workpackage</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="233.331" x2="233.331" y1="52" y2="72"/>
+  </g>
+</svg>

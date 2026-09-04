@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+'!preprocessorV2
+
+!unquoted function id($text1, $text2="FOO") return $text1 + $text2
+
+alice -> bob : id(aa)
+alice -> bob : id(ab,cd)
+@enduml

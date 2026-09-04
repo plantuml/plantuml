@@ -1,0 +1,37 @@
+---
+output: svg
+---
+@startnwdiag
+nwdiag {
+  // define group at outside network definitions
+  group {
+    color = "#7777FF";
+
+    web01;
+    web02;
+    db01;
+  }
+
+  network dmz {
+    color = "pink"
+
+    web01;
+    web02;
+  }
+
+  network internal {
+    web01;
+    web02;
+    db01 [shape = database ];
+  }
+
+  network internal2 {
+    color = "LightBlue";
+
+    web01;
+    web02;
+    db01;
+  }
+
+}
+@endnwdiag

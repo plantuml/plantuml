@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startsalt
+<style>
+saltDiagram {
+  BackgroundColor palegreen
+}
+</style>
+{+
+  Login    | "MyName   "
+  Password | "****     "
+  [Cancel] | [  OK   ]
+}
+@endsalt

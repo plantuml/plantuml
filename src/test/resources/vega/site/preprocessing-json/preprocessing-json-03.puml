@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+!$foo = { "name": "John", "age" : 30 }
+Alice -> Bob : Do you know **$foo.name** ?
+@enduml

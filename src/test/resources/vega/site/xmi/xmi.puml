@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+class class1 {
+  field
+}
+class1 - class2
+class2 - class3
+@enduml

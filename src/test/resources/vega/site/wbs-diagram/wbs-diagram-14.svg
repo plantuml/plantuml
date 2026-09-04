@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="380px" preserveAspectRatio="none" style="width:358px;height:380px;background:#FFFFFF;" version="1.1" viewBox="0 0 358 380" width="358px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#F00;stroke-width:1.5;" x1="98.75" x2="98.75" y1="72" y2="92"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#000;stroke-width:1.5;" width="64.025" x="66.738" y="92"/>
+    <text fill="#000" font-size="12" textLength="44.025" x="76.738" y="111.333">America</text>
+    <line style="stroke:#008000;stroke-width:1.5;" x1="88.75" x2="98.75" y1="155" y2="155"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#000;stroke-width:2.5;stroke-dasharray:2,2;" width="68.75" x="20" y="139"/>
+    <text fill="#000" font-size="12" textLength="48.75" x="30" y="158.333">New York</text>
+    <line style="stroke:#008000;stroke-width:1.5;" x1="98.75" x2="108.75" y1="155" y2="155"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#000;stroke-width:2.5;stroke-dasharray:2,2;" width="62.075" x="108.75" y="139"/>
+    <text fill="#000" font-size="12" textLength="42.075" x="118.75" y="158.333">Canada</text>
+    <line style="stroke:#008000;stroke-width:1.5;" x1="98.75" x2="108.75" y1="202" y2="202"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#000;stroke-width:2.5;stroke-dasharray:2,2;" width="58.025" x="108.75" y="186"/>
+    <text fill="#000" font-size="12" textLength="38.025" x="118.75" y="205.333">Mexico</text>
+    <line style="stroke:#00F;stroke-width:0.5;stroke-dasharray:4,4;" x1="137.763" x2="147.763" y1="249" y2="249"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#000;stroke-width:1.5;" width="78.125" x="147.763" y="233"/>
+    <text fill="#000" font-size="12" textLength="58.125" x="157.763" y="252.333">Chihuahua</text>
+    <line style="stroke:#00F;stroke-width:0.5;stroke-dasharray:4,4;" x1="137.763" x2="137.763" y1="218" y2="249"/>
+    <line style="stroke:#008000;stroke-width:1.5;" x1="98.75" x2="108.75" y1="296" y2="296"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#000;stroke-width:2.5;stroke-dasharray:2,2;" width="44.75" x="108.75" y="280"/>
+    <text fill="#000" font-size="12" textLength="24.75" x="118.75" y="299.333">USA</text>
+    <line style="stroke:#00F;stroke-width:0.5;stroke-dasharray:4,4;" x1="131.125" x2="141.125" y1="343" y2="343"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#000;stroke-width:1.5;" width="52.7" x="141.125" y="327"/>
+    <text fill="#000" font-size="12" textLength="32.7" x="151.125" y="346.333">Texas</text>
+    <line style="stroke:#00F;stroke-width:0.5;stroke-dasharray:4,4;" x1="131.125" x2="131.125" y1="312" y2="343"/>
+    <line style="stroke:#008000;stroke-width:1.5;" x1="98.75" x2="98.75" y1="124" y2="296"/>
+    <line style="stroke:#F00;stroke-width:1.5;" x1="275.237" x2="275.237" y1="72" y2="92"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#000;stroke-width:1.5;" width="58.7" x="245.888" y="92"/>
+    <text fill="#000" font-size="12" textLength="38.7" x="255.888" y="111.333">Europe</text>
+    <line style="stroke:#008000;stroke-width:1.5;" x1="275.238" x2="285.238" y1="146" y2="146"/>
+    <text fill="#006400" font-size="12" textLength="44.1" x="285.238" y="149.333">England</text>
+    <line style="stroke:#008000;stroke-width:1.5;" x1="275.238" x2="285.238" y1="175" y2="175"/>
+    <text fill="#006400" font-size="12" textLength="49.275" x="285.238" y="178.333">Germany</text>
+    <line style="stroke:#008000;stroke-width:1.5;" x1="275.238" x2="285.238" y1="204" y2="204"/>
+    <text fill="#006400" font-size="12" textLength="30.75" x="285.238" y="207.333">Spain</text>
+    <line style="stroke:#008000;stroke-width:1.5;" x1="275.238" x2="275.238" y1="124" y2="204"/>
+    <line style="stroke:#F00;stroke-width:1.5;" x1="98.75" x2="275.237" y1="72" y2="72"/>
+    <rect fill="#FFF" height="32" rx="5" ry="5" style="stroke:#F00;stroke-width:1.5;" width="51.35" x="161.319" y="20"/>
+    <text fill="#000" font-size="12" textLength="31.35" x="171.319" y="39.333">World</text>
+    <line style="stroke:#F00;stroke-width:1.5;" x1="186.994" x2="186.994" y1="52" y2="72"/>
+  </g>
+</svg>

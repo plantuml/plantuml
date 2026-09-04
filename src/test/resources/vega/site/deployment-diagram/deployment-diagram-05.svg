@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="122px" preserveAspectRatio="none" style="width:149px;height:122px;background:#FFFFFF;" version="1.1" viewBox="0 0 149 122" width="149px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity interface1-->
+    <g class="entity" data-qualified-name="interface1" data-source-line="2" id="ent0001">
+      <ellipse cx="69.5" cy="21" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="61.425" x="38.787" y="48.889">interface1</text>
+    </g>
+    <!--entity interface2-->
+    <g class="entity" data-qualified-name="interface2" data-source-line="3" id="ent0002">
+      <ellipse cx="105.5" cy="21" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="61.425" x="74.788" y="48.889">interface2</text>
+    </g>
+    <!--entity //interface example//-->
+    <g class="entity" data-qualified-name="..interface example.." data-source-line="5" id="ent0003">
+      <text fill="#000" font-size="14" font-style="italic" textLength="106.575" x="16" y="92.889">interface example</text>
+    </g>
+  </g>
+</svg>

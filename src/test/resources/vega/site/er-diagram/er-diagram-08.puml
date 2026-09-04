@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startchen
+
+entity PARENT {
+  Number <<key>>
+  Name
+}
+
+entity CHILD <<weak>> {
+  Name <<key>>
+  Age
+}
+
+relationship PARENT_OF <<identifying>> {
+}
+
+PARENT_OF -1- PARENT
+PARENT_OF =N= CHILD
+
+@endchen

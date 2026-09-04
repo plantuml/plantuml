@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="NWDIAG" height="433px" preserveAspectRatio="none" style="width:152px;height:433px;background:#FFFFFF;" version="1.1" viewBox="0 0 152 433" width="152px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="12" x="41" y="14.333"> </text>
+    <text fill="#000" font-size="12" x="41" y="126.333"> </text>
+    <text fill="#000" font-size="12" textLength="29.325" x="11.675" y="228.333">proxy</text>
+    <text fill="#000" font-size="12" textLength="36" x="5" y="330.333">default</text>
+    <rect fill="#E2E2F0" height="5" style="stroke:#181818;stroke-width:1;" width="99.975" x="46" y="222.5"/>
+    <rect fill="#E2E2F0" height="5" style="stroke:#181818;stroke-width:1;" width="99.975" x="46" y="324.5"/>
+    <path d="M95.988,85.5 L95.988,120.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M95.988,120.5 L95.988,155.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M93.988,187.5 L93.988,222.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M97.988,227.5 L97.988,257.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M97.988,289.5 L97.988,324.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M93.988,329.5 L93.988,359.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M70.595,52.263 C73.674,45.419 77.705,44.443 82.862,50.247 C84.565,41.838 91.072,41.308 96.49,46.533 C101.913,41.83 107.115,43.552 109.725,49.901 C114.712,44.685 120.09,45.423 123.158,52.073 C131.528,54.122 132.918,58.22 128.118,65.232 C133.647,71.778 131.055,75.173 124.185,77.856 C122.117,87.002 117.856,88.254 110.454,82.91 C107.688,90.986 102.829,93.226 95.993,87.035 C90.961,91.406 84.831,89.709 83.375,82.972 C77.153,87.91 71.114,87.112 69.254,78.445 C61.141,78.437 58.15,73.514 61.234,66.182 C56.499,57.812 61.381,51.251 70.595,52.263" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="12" textLength="39.975" x="76" y="67.833">internet</text>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="51.275" x="70.35" y="155.5"/>
+    <text fill="#000" font-size="12" textLength="31.275" x="80.35" y="174.833">router</text>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="40.025" x="75.975" y="257.5"/>
+    <text fill="#000" font-size="12" textLength="20.025" x="85.975" y="276.833">app</text>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:0.5;" width="33.35" x="79.313" y="359.5"/>
+    <text fill="#000" font-size="12" textLength="13.35" x="89.313" y="378.833">db</text>
+  </g>
+</svg>

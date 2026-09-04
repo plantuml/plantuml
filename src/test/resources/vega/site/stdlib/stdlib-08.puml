@@ -1,0 +1,36 @@
+---
+output: svg
+---
+@startuml
+!include <edgy/edgy>
+
+$baseFacet("Basic elements") {
+
+  $people("People")
+  note bottom
+    The individuals co-creating
+    the enterprise or using
+    products.
+  end note
+
+  $outcome("Outcome")
+  note bottom
+    A result or change that
+    occurs within our enterprise
+    or its ecosystem.
+  end note
+
+  $activity("Activity")
+  note bottom
+   What is being done or going
+   on in our enterprise or its
+   ecosystem.
+  end note
+
+  $object("Object")
+  note bottom
+    A structure that is
+    relevant to the enterprise.
+  end note
+}
+@enduml

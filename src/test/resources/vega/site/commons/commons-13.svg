@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="195px" preserveAspectRatio="none" style="width:182px;height:195px;background:#FFFFFF;" version="1.1" viewBox="0 0 182 195" width="182px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="header" data-source-line="1">
+      <text fill="#888" font-size="10" textLength="55.563" x="119.938" y="7.778">some header</text>
+    </g>
+    <g class="title" data-source-line="5">
+      <text fill="#000" font-size="14" font-weight="700" textLength="40.425" x="67.538" y="31.889">My title</text>
+    </g>
+    <!--entity n-->
+    <g class="entity" data-qualified-name="n" data-source-line="13" id="ent0001">
+      <polygon fill="#F1F1F1" points="10,68,20,58,57.788,58,57.788,92,47.788,102,10,102,10,68" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="47.788" x2="57.788" y1="68" y2="58"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10" x2="47.788" y1="68" y2="68"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="47.788" x2="47.788" y1="68" y2="102"/>
+      <text fill="#000" font-size="14" x="25" y="88.889">n</text>
+    </g>
+    <!--entity u-->
+    <g class="entity" data-qualified-name="u" data-source-line="14" id="ent0002">
+      <ellipse cx="89.077" cy="78.662" fill="#F1F1F1" rx="12.577" ry="10.662" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="85.184" y="82.162">u</text>
+    </g>
+    <!--entity c-->
+    <g class="entity" data-qualified-name="c" data-source-line="14" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="47" x="119.5" y="58"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="146.5" y="63"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="144.5" y="65"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="144.5" y="69"/>
+      <text fill="#000" font-size="14" x="134.5" y="88.889">c</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="119.421,80,110.421,76,114.421,80,110.421,84,119.421,80" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M101.656,80 C107.578,80 108.5,80 114.421,80" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="legend" data-source-line="9">
+      <rect fill="#DDD" height="24" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="76.238" x="49.631" y="124"/>
+      <text fill="#000" font-size="14" textLength="66.238" x="54.631" y="139.889">The legend</text>
+    </g>
+    <g class="caption" data-source-line="7">
+      <text fill="#000" font-size="14" textLength="81.813" x="46.844" y="172.889">This is caption</text>
+    </g>
+    <g class="footer" data-source-line="3">
+      <text fill="#888" font-size="10" textLength="49.938" x="62.781" y="185.778">some footer</text>
+    </g>
+  </g>
+</svg>

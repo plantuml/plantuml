@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startgantt
+[Prototype design] requires 15 days
+[Test prototype] requires  10 days
+
+[Prototype design] starts D+0
+[Test prototype] starts D+15
+@endgantt

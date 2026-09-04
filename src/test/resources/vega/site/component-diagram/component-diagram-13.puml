@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+
+interface "Data Access" as DA
+
+DA - [First Component]
+[First Component] ..> HTTP : use
+
+@enduml

@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startgantt
+[Prototype design] requires 13 days and is colored in Lavender/LightBlue
+[Test prototype] requires 9 days and is colored in Coral/Green and starts 3 days after [Prototype design]'s end
+[Write tests] requires 5 days and ends at [Prototype design]'s end
+[Hire tests writers] requires 6 days and ends at [Write tests]'s start
+[Init and write tests report] is colored in Coral/Green
+[Init and write tests report] starts 1 day before [Test prototype]'s start and ends at [Test prototype]'s end
+@endgantt

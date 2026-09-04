@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+label l [
+<#ccc>|= String_value |= <U+0025>get_json_type(<U+0025>str2json(String_value)) |
+!foreach $item in ["[1, 2, 3]", "{\"a\":1, \"b\":2}", "true", "null", "it's a string", "42"]
+| $item | %get_json_type(%str2json($item)) |
+!endfor
+]
+@enduml

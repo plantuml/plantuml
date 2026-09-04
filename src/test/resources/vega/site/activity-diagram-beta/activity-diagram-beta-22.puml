@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+while (check filesize ?) is (not empty)
+  :read file;
+  backward:log;
+endwhile (empty)
+:close file;
+@enduml

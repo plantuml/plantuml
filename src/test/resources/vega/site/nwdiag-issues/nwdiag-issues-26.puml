@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+nwdiag {
+network nw {
+  a;
+  b;
+}
+c1 [ shape = cloud];
+c2 [ shape = cloud];
+a -- c1;
+b -- c2;
+}
+@enduml

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="303px" preserveAspectRatio="none" style="width:167px;height:303px;background:#FFFFFF;" version="1.1" viewBox="0 0 167 303" width="167px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="122.15" x="21.862" y="30.889">Example of QA-1626</text>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="43.325" x="60.275" y="51"/>
+    <text fill="#000" font-size="12" textLength="23.325" x="70.275" y="70.333">foo1</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="43.325" x="60.275" y="103"/>
+    <text fill="#000" font-size="12" textLength="23.325" x="70.275" y="122.333">foo2</text>
+    <polygon fill="#F1F1F1" points="59.663,155,104.213,155,116.213,167,104.213,179,59.663,179,47.663,167,59.663,155" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="11" textLength="44.55" x="59.663" y="170.056">some test</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="43.325" x="16" y="189"/>
+    <text fill="#000" font-size="12" textLength="23.325" x="26" y="208.333">foo3</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="37.663" x2="81.938" y1="241" y2="241"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="81.938" x2="81.938" y1="88" y2="241"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="43.325" x="104.55" y="189"/>
+    <text fill="#000" font-size="12" textLength="23.325" x="114.55" y="208.333">foo4</text>
+    <ellipse cx="81.938" cy="272" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+    <ellipse cx="81.938" cy="272" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="81.938" x2="81.938" y1="83" y2="103"/>
+    <polygon fill="#181818" points="77.938,93,81.938,103,85.938,93,81.938,97" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="37.663" x2="37.663" y1="221" y2="241"/>
+    <polygon fill="#181818" points="33.663,231,37.663,241,41.663,231,37.663,235" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="47.663" x2="37.663" y1="167" y2="167"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="37.663" x2="37.663" y1="167" y2="189"/>
+    <polygon fill="#181818" points="33.663,179,37.663,189,41.663,179,37.663,183" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="116.213" x2="126.213" y1="167" y2="167"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="126.213" x2="126.213" y1="167" y2="189"/>
+    <polygon fill="#181818" points="122.213,179,126.213,189,130.213,179,126.213,183" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="126.213" x2="126.213" y1="221" y2="246"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="126.213" x2="81.938" y1="246" y2="246"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="81.938" x2="81.938" y1="246" y2="261"/>
+    <polygon fill="#181818" points="77.938,251,81.938,261,85.938,251,81.938,255" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="81.938" x2="81.938" y1="135" y2="155"/>
+    <polygon fill="#181818" points="77.938,145,81.938,155,85.938,145,81.938,149" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="YAML" height="74px" preserveAspectRatio="none" style="width:262px;height:74px;background:#FFFFFF;" version="1.1" viewBox="0 0 262 74" width="262px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title">
+      <text fill="#000" font-size="14" font-weight="700" textLength="219.363" x="20.406" y="30.889">"Auto Insurance Application Process"</text>
+    </g>
+    <text fill="#000" font-family="monospace" font-size="14" textLength="231.175" x="15" y="57.889">Your data does not sound like YAML data</text>
+  </g>
+</svg>

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="178px" preserveAspectRatio="none" style="width:389px;height:178px;background:#FFFFFF;" version="1.1" viewBox="0 0 389 178" width="389px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>A</title>
+      <rect fill="#000" fill-opacity="0" height="99" width="8" x="18.181" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="21.681" x2="21.681" y1="39" y2="138"/>
+    </g>
+    <g>
+      <title>B</title>
+      <rect fill="#000" fill-opacity="0" height="99" width="8" x="113.681" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="117.181" x2="117.181" y1="39" y2="138"/>
+    </g>
+    <g>
+      <title>C</title>
+      <rect fill="#000" fill-opacity="0" height="99" width="8" x="228.763" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="232.263" x2="232.263" y1="39" y2="138"/>
+    </g>
+    <g>
+      <title>D</title>
+      <rect fill="#000" fill-opacity="0" height="99" width="8" x="262.913" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="266.413" x2="266.413" y1="39" y2="138"/>
+    </g>
+    <g>
+      <title>E</title>
+      <rect fill="#000" fill-opacity="0" height="99" width="8" x="363.531" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="367.031" x2="367.031" y1="39" y2="138"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="10" y="10"/>
+    <text fill="#000" font-size="14" x="17" y="27.889">A</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="105.5" y="10"/>
+    <text fill="#000" font-size="14" x="112.5" y="27.889">B</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="24.15" x="220.188" y="10"/>
+    <text fill="#000" font-size="14" x="227.188" y="27.889">C</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="24.15" x="254.338" y="10"/>
+    <text fill="#000" font-size="14" x="261.338" y="27.889">D</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="355.35" y="10"/>
+    <text fill="#000" font-size="14" x="362.35" y="27.889">E</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="10" y="138"/>
+    <text fill="#000" font-size="14" x="17" y="155.889">A</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="105.5" y="138"/>
+    <text fill="#000" font-size="14" x="112.5" y="155.889">B</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="24.15" x="220.188" y="138"/>
+    <text fill="#000" font-size="14" x="227.188" y="155.889">C</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="24.15" x="254.338" y="138"/>
+    <text fill="#000" font-size="14" x="261.338" y="155.889">D</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="355.35" y="138"/>
+    <text fill="#000" font-size="14" x="362.35" y="155.889">E</text>
+    <polygon fill="#181818" points="105.181,62,115.181,66,105.181,70,109.181,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="21.681" x2="111.181" y1="66" y2="66"/>
+    <text fill="#000" font-size="13" textLength="71.5" x="28.681" y="61.111">AB-First step</text>
+    <polygon fill="#181818" points="220.263,89,230.263,93,220.263,97,224.263,93" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="117.181" x2="226.263" y1="93" y2="93"/>
+    <text fill="#000" font-size="13" textLength="91.081" x="124.181" y="88.111">BC-Second step</text>
+    <polygon fill="#181818" points="355.031,116,365.031,120,355.031,124,359.031,120" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="266.413" x2="361.031" y1="120" y2="120"/>
+    <text fill="#000" font-size="13" textLength="76.619" x="273.413" y="115.111">DE-Third step</text>
+  </g>
+</svg>

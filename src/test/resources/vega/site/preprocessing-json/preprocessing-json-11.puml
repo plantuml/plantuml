@@ -1,0 +1,37 @@
+---
+output: svg
+---
+@startuml
+!unquoted function DRAW($x) return %set_variable_value($x, 1)
+
+!procedure addComponent($part, $component, $as)
+    !if %variable_exists($part)
+        participant "$component" as $as
+    !endif
+!end procedure
+
+!procedure addBox2($part, $box, $colour, $data)
+    !if %variable_exists($part)
+        box "$box" #$colour
+            !foreach $item in $data.participants
+                addComponent($part, $item.name, $item.as)
+            !endfor
+        end box
+    !endif
+!end procedure
+
+DRAW(PART25)
+
+!ifdef PART25
+title  TESTING  (Boxes & Participants)  //Part25//
+!endif
+
+!$data={
+  "participants": [
+    {"name": "XYZ", "as": "xyz"},
+    {"name": "RST", "as": "rst"},
+    {"name": "UVW", "as": "uvw"}]
+}
+
+addBox2("PART25", "New Box", "white", $data)
+@enduml

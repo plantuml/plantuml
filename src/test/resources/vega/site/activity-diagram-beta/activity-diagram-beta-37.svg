@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="261px" preserveAspectRatio="none" style="width:262px;height:261px;background:#FFFFFF;" version="1.1" viewBox="0 0 262 261" width="262px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <ellipse cx="52.331" cy="25" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="57.35" x="23.656" y="107"/>
+    <text fill="#000" font-size="12" textLength="37.35" x="33.656" y="126.333">Submit</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="71.975" x="16.344" y="55"/>
+    <text fill="#000" font-size="12" textLength="51.975" x="26.344" y="74.333">Enter data</text>
+    <polygon fill="#F1F1F1" points="37,165,67.663,165,79.663,177,67.663,189,37,189,25,177,37,165" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="11" textLength="18.975" x="56.331" y="197.556">Yes</text>
+    <text fill="#000" font-size="11" textLength="30.663" x="37" y="180.056">Valid?</text>
+    <text fill="#000" font-size="11" textLength="14.094" x="79.663" y="174.556">No</text>
+    <path d="M193.019,107.5 L193.019,115 L173.019,119 L193.019,123 L193.019,130.5 A0,0 0 0 0 193.019,130.5 L241.481,130.5 A0,0 0 0 0 241.481,130.5 L241.481,117.5 L231.481,107.5 L193.019,107.5 A0,0 0 0 0 193.019,107.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M231.481,107.5 L231.481,117.5 L241.481,117.5 L231.481,107.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="27.463" x="199.019" y="122.611">Note</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="64.7" x="108.319" y="103"/>
+    <text fill="#000" font-size="12" textLength="44.7" x="118.319" y="122.333">Warning</text>
+    <ellipse cx="52.331" cy="230.056" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+    <ellipse cx="52.331" cy="230.056" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="52.331" x2="52.331" y1="87" y2="107"/>
+    <polygon fill="#181818" points="48.331,97,52.331,107,56.331,97,52.331,101" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="79.663" x2="140.669" y1="177" y2="177"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="140.669" x2="140.669" y1="135" y2="177"/>
+    <polygon fill="#181818" points="136.669,145,140.669,135,144.669,145,140.669,141" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="140.669" x2="140.669" y1="71" y2="103"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="140.669" x2="88.319" y1="71" y2="71"/>
+    <polygon fill="#181818" points="98.319,67,88.319,71,98.319,75,94.319,71" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="52.331" x2="52.331" y1="139" y2="165"/>
+    <polygon fill="#181818" points="48.331,155,52.331,165,56.331,155,52.331,159" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="52.331" x2="52.331" y1="35" y2="55"/>
+    <polygon fill="#181818" points="48.331,45,52.331,55,56.331,45,52.331,49" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="52.331" x2="52.331" y1="189" y2="219.056"/>
+    <polygon fill="#181818" points="48.331,209.056,52.331,219.056,56.331,209.056,52.331,213.056" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

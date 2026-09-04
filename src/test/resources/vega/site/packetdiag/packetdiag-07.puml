@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startpacketdiag
+colwidth = 32
+
+* Source Port [len = 16]
+* Destination Port [len = 16]
+* Sequence Number [len = 32]
+* Acknowledgement Number [len = 32]
+* Data Offset [len = 4]
+* Reserved [len = 6]
+* URG [rotate = 270]
+* ACK [rotate = 270]
+* PSH [rotate = 270]
+* RST [rotate = 270]
+* SYN [rotate = 270]
+* FIN [rotate = 270]
+* Window [len = 16]
+* Checksum [len = 16]
+* Urgent Pointer [len = 16]
+* (Options and Padding) [len = 32]
+* data [len = 32, height = 3]
+@endpacketdiag

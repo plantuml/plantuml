@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+start
+:Some activity;
+(A)
+detach
+(A)
+:Other activity;
+@enduml

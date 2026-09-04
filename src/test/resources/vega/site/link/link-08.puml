@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+state state1 [[http://plantuml.com/link]]
+state state2 [[http://plantuml.com/state{this is a tooltip\nand a link to "plantuml/state"}]]
+state2 : a global link\nand a tooltip
+note left [[http://plantuml.com]]
+a note
+and a link
+to ""plantuml.com""
+end note
+state3 : a local link to [[http://plantuml.com plantuml]]
+
+state1 --> state2
+state2 --> state3
+@enduml

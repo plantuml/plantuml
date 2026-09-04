@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="145px" preserveAspectRatio="none" style="width:353px;height:145px;background:#FFFFFF;" version="1.1" viewBox="0 0 353 145" width="353px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:1.5;" x1="87.038" x2="87.038" y1="72" y2="92"/>
+    <rect fill="#FFC0CB" height="32" style="stroke:#181818;stroke-width:1.5;" width="134.075" x="20" y="92"/>
+    <text fill="#000" font-size="12" textLength="114.075" x="30" y="111.333">this is my workpackage</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="253.45" x2="253.45" y1="72" y2="92"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="158.75" x="174.075" y="92"/>
+    <text fill="#000" font-size="12" textLength="138.75" x="184.075" y="111.333">this is another workpackage</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="87.038" x2="253.45" y1="72" y2="72"/>
+    <rect fill="#87CEEB" height="32" style="stroke:#181818;stroke-width:1.5;" width="172.7" x="83.894" y="20"/>
+    <text fill="#000" font-size="12" textLength="152.7" x="93.894" y="39.333">this is the partner workpackage</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="170.244" x2="170.244" y1="52" y2="72"/>
+  </g>
+</svg>
