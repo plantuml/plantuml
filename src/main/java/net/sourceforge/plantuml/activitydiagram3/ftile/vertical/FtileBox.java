@@ -100,6 +100,10 @@ public class FtileBox extends AbstractFtile {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity);
 	}
 
+	static public StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity));
+	}
+
 	static public StyleQuery getStyleSignatureArrow() {
 		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
 	}
@@ -145,7 +149,7 @@ public class FtileBox extends AbstractFtile {
 		if (styleBuilder == null)
 			styleBuilder = skinParam.getCurrentStyleBuilder();
 
-		final Style style = getStyleSignature().withTOBECHANGED(stereotype).getMergedStyleREMOVEME(styleBuilder);
+		final Style style = styleBuilder.getMergedStyle(getStyleQuery().withTOBECHANGED(stereotype));
 		final Style styleArrow = styleBuilder.getMergedStyle(getStyleSignatureArrow());
 		return new FtileBox(skinParam, label, swimlane, boxStyle, style, styleArrow);
 	}
