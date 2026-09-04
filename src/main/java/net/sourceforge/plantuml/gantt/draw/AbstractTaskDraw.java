@@ -65,7 +65,6 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.url.Url;
@@ -116,7 +115,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 
 	}
 
-	abstract StyleSignature getStyleSignature();
+	abstract StyleQuery getStyleQuery();
 
 	private StyleQuery getStyleSignatureUnstarted() {
 		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.task, SName.unstarted));
@@ -141,11 +140,11 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	}
 
 	final protected Style getStyle() {
-		return getStyleSignature().getMergedStyleREMOVEME(styleBuilder);
+		return styleBuilder.getMergedStyle(getStyleQuery());
 	}
 
 	final public double getTitleWidth(StringBounder stringBounder) {
-		final Style style = getStyleSignature().getMergedStyleREMOVEME(getStyleBuilder());
+		final Style style = getStyleBuilder().getMergedStyle(getStyleQuery());
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
 		return margin.getLeft() + getTitle().calculateDimension(stringBounder).getWidth() + margin.getRight();
 	}
@@ -215,8 +214,9 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	}
 
 	protected Opale getOpaleNote() {
-		final Style style = StyleSignature.ofSName0(SName.root, SName.element, SName.ganttDiagram, SName.note)
-				.withTOBECHANGED(noteStereotype).getMergedStyleREMOVEME(getStyleBuilder());
+		final Style style = getStyleBuilder().getMergedStyle(StyleQuery
+				.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.note))
+				.withTOBECHANGED(noteStereotype));
 
 		final FontConfiguration fc = style.getFontConfiguration(getColorSet());
 

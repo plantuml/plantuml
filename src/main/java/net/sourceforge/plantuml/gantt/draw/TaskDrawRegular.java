@@ -71,7 +71,6 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class TaskDrawRegular extends AbstractTaskDraw {
@@ -111,7 +110,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final XDimension2D dim = title.calculateDimension(stringBounder);
 
-		final Style style = getStyleSignature().getMergedStyleREMOVEME(getStyleBuilder());
+		final Style style = getStyleBuilder().getMergedStyle(getStyleQuery());
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
 		final ClockwiseTopRightBottomLeft padding = style.getPadding();
 
@@ -185,8 +184,8 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 	}
 
 	@Override
-	StyleSignature getStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.ganttDiagram, SName.task)
+	StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.task))
 				.withTOBECHANGED(getTask().getStereotype());
 	}
 
@@ -258,7 +257,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 			throw new IllegalArgumentException();
 
 		if (arrowType == GArrowType.OUTGOING) {
-			final Style style = getStyleSignature().getMergedStyleREMOVEME(getStyleBuilder());
+			final Style style = getStyleBuilder().getMergedStyle(getStyleQuery());
 			final ClockwiseTopRightBottomLeft margin = style.getMargin();
 			if (side == GSide.LEFT)
 				x += margin.getLeft();
@@ -271,7 +270,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 
 	public void drawShape(UGraphic ug) {
 		ug = applyColors(ug);
-		final Style style = getStyleSignature().getMergedStyleREMOVEME(getStyleBuilder());
+		final Style style = getStyleBuilder().getMergedStyle(getStyleQuery());
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
 
 		final double startPos = timeScale.getPosition(start) + margin.getLeft();

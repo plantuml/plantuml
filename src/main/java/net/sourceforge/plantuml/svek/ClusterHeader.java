@@ -208,9 +208,11 @@ public final class ClusterHeader {
 		if (visibleStereotypes == null || visibleStereotypes.isEmpty())
 			return TextBlockUtils.empty(0, 0);
 
-		final Style style = Cluster
-				.getDefaultStyleDefinition(skinParam.getDiagramType().getStyleName(), g.getUSymbol(), g.getGroupType())
-				.forStereotypeItself(g.getStereotype()).getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style style = skinParam.getCurrentStyleBuilder()
+				.getMergedStyle(Cluster
+						.getDefaultStyleDefinition(skinParam.getDiagramType().getStyleName(), g.getUSymbol(),
+								g.getGroupType())
+						.forStereotypeItself(g.getStereotype()));
 
 		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 		final HorizontalAlignment horizontalAlignment = getTitleHorizontalAlignment();

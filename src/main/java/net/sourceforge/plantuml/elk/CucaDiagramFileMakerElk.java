@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.elk;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.LinkedHashMap;
@@ -113,7 +114,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.ClusterHeader;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.svek.GeneralImageBuilder;
@@ -145,8 +146,8 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 	}
 
 	// Duplication from SvekEdge
-	final public StyleSignature getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
-		StyleSignature result = StyleSignature.ofSName0(SName.root, SName.element, styleName, SName.arrow);
+	final public StyleQuery getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
+		StyleQuery result = StyleQuery.of(Arrays.asList(SName.root, SName.element, styleName, SName.arrow));
 		if (stereotype != null)
 			result = result.withTOBECHANGED(stereotype);
 
@@ -156,8 +157,8 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 	private FontConfiguration getFontForLink(Link link, final ISkinParam skinParam) {
 		final SName styleName = skinParam.getDiagramType().getStyleName();
 
-		final Style style = getDefaultStyleDefinitionArrow(link.getStereotype(), styleName)
-				.getMergedStyleREMOVEME(link.getStyleBuilder());
+		final Style style = link.getStyleBuilder()
+				.getMergedStyle(getDefaultStyleDefinitionArrow(link.getStereotype(), styleName));
 		return style.getFontConfiguration(skinParam.getIHtmlColorSet());
 	}
 
@@ -213,8 +214,8 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 			// block = StringWithArrow.addSeveralMagicArrows(link.getLabel(), this, font,
 			// alignment, skinParam);
 			// else
-			final Style arrowStyle = getDefaultStyleDefinitionArrow(link.getStereotype(),
-					skinParam.getDiagramType().getStyleName()).getMergedStyleREMOVEME(link.getStyleBuilder());
+			final Style arrowStyle = link.getStyleBuilder().getMergedStyle(getDefaultStyleDefinitionArrow(
+					link.getStereotype(), skinParam.getDiagramType().getStyleName()));
 			final LineBreakStrategy styleWidth = arrowStyle.wrapWidth();
 			final LineBreakStrategy wrapWidth = styleWidth.getMaxWidth() > 0 ? styleWidth : skinParam.maxMessageSize();
 			block = link.getLabel().create0(font, alignment, skinParam, wrapWidth, CreoleMode.SIMPLE_LINE, null, null);
