@@ -130,7 +130,7 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 
 		LineBreakStrategy lineBreak = LineBreakStrategy.NONE;
 
-		final Style style = getDefaultStyleDefinitionDiamond().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder());
+		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionDiamond());
 		lineBreak = style.wrapWidth();
 		final FontConfiguration fcDiamond = style.getFontConfiguration(skinParam().getIHtmlColorSet());
 		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());
@@ -150,7 +150,7 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 
 	private Ftile getDiamond2(Swimlane swimlane, Branch branch0, Colors endColors) {
 
-		final Style style = getDefaultStyleDefinitionDiamond().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder());
+		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionDiamond());
 		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());
 		final HColor backColor = branch0.getColor() == null
 				? endColors.getColor(style, PName.BackGroundColor, skinParam().getIHtmlColorSet())

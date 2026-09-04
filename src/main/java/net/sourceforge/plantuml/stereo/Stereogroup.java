@@ -58,8 +58,8 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleLoader;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class Stereogroup {
@@ -150,9 +150,9 @@ public class Stereogroup {
 		return style.eventuallyOverride(getInnerColors(colorSet));
 	}
 
-	public HColor getHColor(StyleSignature styleSignature, PName pname, StyleBuilder styleBuilder, HColorSet colorSet)
+	public HColor getHColor(StyleQuery styleQuery, PName pname, StyleBuilder styleBuilder, HColorSet colorSet)
 			throws NoSuchColorException {
-		final Style style = styleSignature.withTOBECHANGED(this).getMergedStyleREMOVEME(styleBuilder);
+		final Style style = styleBuilder.getMergedStyle(styleQuery.withTOBECHANGED(this));
 		final Colors colors = getInnerColors(colorSet);
 		return colors.getColor(style, pname, colorSet);
 	}
