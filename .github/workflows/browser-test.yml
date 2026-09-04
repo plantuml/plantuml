@@ -62,7 +62,7 @@ jobs:
         run: |
           cd tools/browser-test
           npm ci
-          npx playwright install --with-deps chromium
+          npx playwright install --with-deps --only-shell chromium
 
       - name: Check themes
         run: node tools/browser-test/check-themes.js target=plantuml-mit/build/npm-plantuml

@@ -64,7 +64,7 @@ way with `node check-viz-missing.js target=...`.
 
 ```
 gradlew :plantuml-mit:npmPackage -Pci
-cd tools/browser-test && npm ci && npx playwright install --with-deps chromium
+cd tools/browser-test && npm ci && npx playwright install --with-deps --only-shell chromium
 node check-themes.js target=../../plantuml-mit/build/npm-plantuml
 ```
 
