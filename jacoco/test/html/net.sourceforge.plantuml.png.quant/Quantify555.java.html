@@ -209,52 +209,53 @@ import net.sourceforge.plantuml.utils.Log;
 	/**
 	 * Builds an indexed image from the set of populated cubes.
 	 *
-	 * @param src   original ARGB image
-	 * @param cubes array of Cube555 (null for empty cubes)
+	 * @param src    original ARGB image
+	 * @param cubes  array of Cube555 (null for empty cubes)
+	 * @param pixels source ARGB pixels in row-major order
 	 * @return an indexed (8-bit) {@link BufferedImage}
 	 */
 	private static BufferedImage buildIndexedImageFromCubes(BufferedImage src, Cube555[] cubes, int[] pixels) {
-<span class="fc" id="L217">		final int w = src.getWidth();</span>
-<span class="fc" id="L218">		final int h = src.getHeight();</span>
+<span class="fc" id="L218">		final int w = src.getWidth();</span>
+<span class="fc" id="L219">		final int h = src.getHeight();</span>
 
 		// Step 1: Build the palette from all non-empty cubes
-<span class="fc" id="L221">		final int[] cubeToPal = new int[TOTAL_CUBE_SLOTS];</span>
-<span class="fc" id="L222">		Arrays.fill(cubeToPal, -1);</span>
+<span class="fc" id="L222">		final int[] cubeToPal = new int[TOTAL_CUBE_SLOTS];</span>
+<span class="fc" id="L223">		Arrays.fill(cubeToPal, -1);</span>
 
-<span class="fc" id="L224">		final int[] palARGB = new int[256];</span>
-<span class="fc" id="L225">		int palSize = 0;</span>
+<span class="fc" id="L225">		final int[] palARGB = new int[256];</span>
+<span class="fc" id="L226">		int palSize = 0;</span>
 
-<span class="fc bfc" id="L227" title="All 2 branches covered.">		for (Cube555 c : cubes) {</span>
-<span class="fc bfc" id="L228" title="All 2 branches covered.">			if (c == null)</span>
-<span class="fc" id="L229">				continue;</span>
-<span class="fc" id="L230">			final int sub = c.best(); // most frequent sub-color (0..511)</span>
-<span class="fc" id="L231">			final int argb = representativeARGB(c.rgb555, sub);</span>
-<span class="fc" id="L232">			cubeToPal[c.rgb555] = palSize;</span>
-<span class="fc" id="L233">			palARGB[palSize++] = argb;</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">		for (Cube555 c : cubes) {</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">			if (c == null)</span>
+<span class="fc" id="L230">				continue;</span>
+<span class="fc" id="L231">			final int sub = c.best(); // most frequent sub-color (0..511)</span>
+<span class="fc" id="L232">			final int argb = representativeARGB(c.rgb555, sub);</span>
+<span class="fc" id="L233">			cubeToPal[c.rgb555] = palSize;</span>
+<span class="fc" id="L234">			palARGB[palSize++] = argb;</span>
 		}
 
-<span class="pc bpc" id="L236" title="1 of 2 branches missed.">		if (palSize == 0)</span>
-<span class="nc" id="L237">			throw new IllegalStateException();</span>
+<span class="pc bpc" id="L237" title="1 of 2 branches missed.">		if (palSize == 0)</span>
+<span class="nc" id="L238">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L239">		final IndexColorModel icm = buildICM(palARGB, palSize);</span>
+<span class="fc" id="L240">		final IndexColorModel icm = buildICM(palARGB, palSize);</span>
 
 		// Step 2: Create output indexed image
-<span class="fc" id="L242">		final BufferedImage dst = new BufferedImage(w, h, BufferedImage.TYPE_BYTE_INDEXED, icm);</span>
-<span class="fc" id="L243">		final WritableRaster raster = dst.getRaster();</span>
+<span class="fc" id="L243">		final BufferedImage dst = new BufferedImage(w, h, BufferedImage.TYPE_BYTE_INDEXED, icm);</span>
+<span class="fc" id="L244">		final WritableRaster raster = dst.getRaster();</span>
 
 		// Step 3: Replace each pixel in the source with its palette index
-<span class="fc bfc" id="L246" title="All 2 branches covered.">		for (int y = 0; y &lt; h; y++) {</span>
-<span class="fc bfc" id="L247" title="All 2 branches covered.">			for (int x = 0; x &lt; w; x++) {</span>
-<span class="fc" id="L248">				final int argb = pixels[y * w + x];</span>
-<span class="fc" id="L249">				final int cubeIndex = getCubeIndex(argb);</span>
-<span class="fc" id="L250">				final int p = cubeToPal[cubeIndex];</span>
-<span class="pc bpc" id="L251" title="1 of 2 branches missed.">				if (p &lt; 0)</span>
-<span class="nc" id="L252">					throw new IllegalStateException();</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">		for (int y = 0; y &lt; h; y++) {</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">			for (int x = 0; x &lt; w; x++) {</span>
+<span class="fc" id="L249">				final int argb = pixels[y * w + x];</span>
+<span class="fc" id="L250">				final int cubeIndex = getCubeIndex(argb);</span>
+<span class="fc" id="L251">				final int p = cubeToPal[cubeIndex];</span>
+<span class="pc bpc" id="L252" title="1 of 2 branches missed.">				if (p &lt; 0)</span>
+<span class="nc" id="L253">					throw new IllegalStateException();</span>
 
-<span class="fc" id="L254">				raster.setSample(x, y, 0, p);</span>
+<span class="fc" id="L255">				raster.setSample(x, y, 0, p);</span>
 			}
 		}
-<span class="fc" id="L257">		return dst;</span>
+<span class="fc" id="L258">		return dst;</span>
 	}
 
 	/**
@@ -265,20 +266,20 @@ import net.sourceforge.plantuml.utils.Log;
 	 * @return an {@link IndexColorModel} suitable for TYPE_BYTE_INDEXED
 	 */
 	public static IndexColorModel buildICM(final int[] palARGB, final int palSize) {
-<span class="fc" id="L268">		final byte[] r = new byte[palSize];</span>
-<span class="fc" id="L269">		final byte[] g = new byte[palSize];</span>
-<span class="fc" id="L270">		final byte[] b = new byte[palSize];</span>
-<span class="fc" id="L271">		final byte[] a = new byte[palSize];</span>
+<span class="fc" id="L269">		final byte[] r = new byte[palSize];</span>
+<span class="fc" id="L270">		final byte[] g = new byte[palSize];</span>
+<span class="fc" id="L271">		final byte[] b = new byte[palSize];</span>
+<span class="fc" id="L272">		final byte[] a = new byte[palSize];</span>
 
-<span class="fc bfc" id="L273" title="All 2 branches covered.">		for (int i = 0; i &lt; palSize; i++) {</span>
-<span class="fc" id="L274">			final int argb = palARGB[i];</span>
-<span class="fc" id="L275">			a[i] = (byte) ((argb &gt;&gt;&gt; 24) &amp; 0xFF);</span>
-<span class="fc" id="L276">			r[i] = (byte) ((argb &gt;&gt;&gt; 16) &amp; 0xFF);</span>
-<span class="fc" id="L277">			g[i] = (byte) ((argb &gt;&gt;&gt; 8) &amp; 0xFF);</span>
-<span class="fc" id="L278">			b[i] = (byte) (argb &amp; 0xFF);</span>
+<span class="fc bfc" id="L274" title="All 2 branches covered.">		for (int i = 0; i &lt; palSize; i++) {</span>
+<span class="fc" id="L275">			final int argb = palARGB[i];</span>
+<span class="fc" id="L276">			a[i] = (byte) ((argb &gt;&gt;&gt; 24) &amp; 0xFF);</span>
+<span class="fc" id="L277">			r[i] = (byte) ((argb &gt;&gt;&gt; 16) &amp; 0xFF);</span>
+<span class="fc" id="L278">			g[i] = (byte) ((argb &gt;&gt;&gt; 8) &amp; 0xFF);</span>
+<span class="fc" id="L279">			b[i] = (byte) (argb &amp; 0xFF);</span>
 		}
 
-<span class="fc" id="L281">		return new IndexColorModel(8, palSize, r, g, b, a);</span>
+<span class="fc" id="L282">		return new IndexColorModel(8, palSize, r, g, b, a);</span>
 	}
 
 	/**
@@ -294,22 +295,22 @@ import net.sourceforge.plantuml.utils.Log;
 	 */
 	private static int representativeARGB(int cubeIndex, int sub512) {
 
-<span class="pc bpc" id="L297" title="1 of 2 branches missed.">		if (cubeIndex == TRANSPARENT_CUBE)</span>
-<span class="nc" id="L298">			return 0x00000000; // fully transparent black</span>
+<span class="pc bpc" id="L298" title="1 of 2 branches missed.">		if (cubeIndex == TRANSPARENT_CUBE)</span>
+<span class="nc" id="L299">			return 0x00000000; // fully transparent black</span>
 
-<span class="fc" id="L300">		final int r5 = (cubeIndex &gt;&gt;&gt; 10) &amp; 0x1F;</span>
-<span class="fc" id="L301">		final int g5 = (cubeIndex &gt;&gt;&gt; 5) &amp; 0x1F;</span>
-<span class="fc" id="L302">		final int b5 = cubeIndex &amp; 0x1F;</span>
+<span class="fc" id="L301">		final int r5 = (cubeIndex &gt;&gt;&gt; 10) &amp; 0x1F;</span>
+<span class="fc" id="L302">		final int g5 = (cubeIndex &gt;&gt;&gt; 5) &amp; 0x1F;</span>
+<span class="fc" id="L303">		final int b5 = cubeIndex &amp; 0x1F;</span>
 
-<span class="fc" id="L304">		final int rLow3 = (sub512 &gt;&gt;&gt; 6) &amp; 0x07;</span>
-<span class="fc" id="L305">		final int gLow3 = (sub512 &gt;&gt;&gt; 3) &amp; 0x07;</span>
-<span class="fc" id="L306">		final int bLow3 = sub512 &amp; 0x07;</span>
+<span class="fc" id="L305">		final int rLow3 = (sub512 &gt;&gt;&gt; 6) &amp; 0x07;</span>
+<span class="fc" id="L306">		final int gLow3 = (sub512 &gt;&gt;&gt; 3) &amp; 0x07;</span>
+<span class="fc" id="L307">		final int bLow3 = sub512 &amp; 0x07;</span>
 
-<span class="fc" id="L308">		final int r8 = (r5 &lt;&lt; 3) | rLow3;</span>
-<span class="fc" id="L309">		final int g8 = (g5 &lt;&lt; 3) | gLow3;</span>
-<span class="fc" id="L310">		final int b8 = (b5 &lt;&lt; 3) | bLow3;</span>
+<span class="fc" id="L309">		final int r8 = (r5 &lt;&lt; 3) | rLow3;</span>
+<span class="fc" id="L310">		final int g8 = (g5 &lt;&lt; 3) | gLow3;</span>
+<span class="fc" id="L311">		final int b8 = (b5 &lt;&lt; 3) | bLow3;</span>
 
-<span class="fc" id="L312">		return (0xFF &lt;&lt; 24) | (r8 &lt;&lt; 16) | (g8 &lt;&lt; 8) | b8;</span>
+<span class="fc" id="L313">		return (0xFF &lt;&lt; 24) | (r8 &lt;&lt; 16) | (g8 &lt;&lt; 8) | b8;</span>
 	}
 
 	/**
@@ -325,31 +326,31 @@ import net.sourceforge.plantuml.utils.Log;
 	 */
 	private static long cubeAndSub(int argb) {
 
-<span class="pc bpc" id="L328" title="1 of 2 branches missed.">		if (isTransparent(argb))</span>
-<span class="nc" id="L329">			return ((long) TRANSPARENT_CUBE &lt;&lt; 32);</span>
+<span class="pc bpc" id="L329" title="1 of 2 branches missed.">		if (isTransparent(argb))</span>
+<span class="nc" id="L330">			return ((long) TRANSPARENT_CUBE &lt;&lt; 32);</span>
 
-<span class="fc" id="L331">		final int r8 = (argb &gt;&gt;&gt; 16) &amp; 0xFF;</span>
-<span class="fc" id="L332">		final int g8 = (argb &gt;&gt;&gt; 8) &amp; 0xFF;</span>
-<span class="fc" id="L333">		final int b8 = argb &amp; 0xFF;</span>
+<span class="fc" id="L332">		final int r8 = (argb &gt;&gt;&gt; 16) &amp; 0xFF;</span>
+<span class="fc" id="L333">		final int g8 = (argb &gt;&gt;&gt; 8) &amp; 0xFF;</span>
+<span class="fc" id="L334">		final int b8 = argb &amp; 0xFF;</span>
 
 		// Upper 5 bits of each channel -&gt; cube index (15-bit RGB555)
-<span class="fc" id="L336">		final int cubeIndex = ((r8 &gt;&gt;&gt; 3) &lt;&lt; 10) | ((g8 &gt;&gt;&gt; 3) &lt;&lt; 5) | (b8 &gt;&gt;&gt; 3);</span>
+<span class="fc" id="L337">		final int cubeIndex = ((r8 &gt;&gt;&gt; 3) &lt;&lt; 10) | ((g8 &gt;&gt;&gt; 3) &lt;&lt; 5) | (b8 &gt;&gt;&gt; 3);</span>
 
 		// Lower 3 bits of each channel -&gt; sub-color index (9-bit)
-<span class="fc" id="L339">		final int sub = ((r8 &amp; 0x07) &lt;&lt; 6) | ((g8 &amp; 0x07) &lt;&lt; 3) | (b8 &amp; 0x07);</span>
+<span class="fc" id="L340">		final int sub = ((r8 &amp; 0x07) &lt;&lt; 6) | ((g8 &amp; 0x07) &lt;&lt; 3) | (b8 &amp; 0x07);</span>
 
-<span class="fc" id="L341">		return ((long) cubeIndex &lt;&lt; 32) | sub;</span>
+<span class="fc" id="L342">		return ((long) cubeIndex &lt;&lt; 32) | sub;</span>
 	}
 
 	private static int getCubeIndex(int argb) {
 
-<span class="pc bpc" id="L346" title="1 of 2 branches missed.">		if (isTransparent(argb))</span>
-<span class="nc" id="L347">			return TRANSPARENT_CUBE;</span>
+<span class="pc bpc" id="L347" title="1 of 2 branches missed.">		if (isTransparent(argb))</span>
+<span class="nc" id="L348">			return TRANSPARENT_CUBE;</span>
 
-<span class="fc" id="L349">		final int r5 = (argb &gt;&gt;&gt; 19) &amp; 0x1F; // bits 23..19</span>
-<span class="fc" id="L350">		final int g5 = (argb &gt;&gt;&gt; 11) &amp; 0x1F; // bits 15..11</span>
-<span class="fc" id="L351">		final int b5 = (argb &gt;&gt;&gt; 3) &amp; 0x1F; // bits 7..3</span>
-<span class="fc" id="L352">		return (r5 &lt;&lt; 10) | (g5 &lt;&lt; 5) | b5;</span>
+<span class="fc" id="L350">		final int r5 = (argb &gt;&gt;&gt; 19) &amp; 0x1F; // bits 23..19</span>
+<span class="fc" id="L351">		final int g5 = (argb &gt;&gt;&gt; 11) &amp; 0x1F; // bits 15..11</span>
+<span class="fc" id="L352">		final int b5 = (argb &gt;&gt;&gt; 3) &amp; 0x1F; // bits 7..3</span>
+<span class="fc" id="L353">		return (r5 &lt;&lt; 10) | (g5 &lt;&lt; 5) | b5;</span>
 	}
 
 }

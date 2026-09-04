@@ -362,12 +362,13 @@ public abstract class NGMTask {
 	 *
 	 * @param allocation  the constant full-time-equivalent allocation applied to
 	 *                    the task
+	 * @param start       the start instant of the task
 	 * @param totalEffort the intrinsic amount of work required for this task
 	 * @return a new fixed-total-effort task (when implemented)
 	 */
 	public static NGMTask withFixedTotalEffort(NGMAllocation allocation, LocalDateTime start,
 			Load totalEffort) {
-<span class="fc" id="L370">		return new NGMTaskFixedTotalEffort(allocation, start, totalEffort);</span>
+<span class="fc" id="L371">		return new NGMTaskFixedTotalEffort(allocation, start, totalEffort);</span>
 	}
 
 }
