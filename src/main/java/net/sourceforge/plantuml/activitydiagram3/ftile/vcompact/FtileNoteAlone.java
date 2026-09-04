@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
@@ -65,6 +66,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.Styleable;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.image.Opale;
 
 public class FtileNoteAlone extends AbstractFtile implements Stencil, Styleable {
@@ -73,8 +75,14 @@ public class FtileNoteAlone extends AbstractFtile implements Stencil, Styleable 
 	private final boolean withOutPoint;
 	private final Swimlane swimlane;
 
+	@Override
 	public StyleSignature getStyleSignatureTOBEREMOVED() {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.note);
+	}
+	
+	@Override
+	public StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.note));
 	}
 
 	@Override

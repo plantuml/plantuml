@@ -125,8 +125,14 @@ public class Swimlanes implements TextBlock, Styleable {
 		return Collections.unmodifiableList(swimlanesSpecial);
 	}
 
+	@Override
 	public StyleSignature getStyleSignatureTOBEREMOVED() {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.swimlane);
+	}
+	
+	@Override
+	public StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.swimlane));
 	}
 
 	public Swimlanes(ISkinParam skinParam, Pragma pragma) {

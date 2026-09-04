@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
+import java.util.Arrays;
 import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
@@ -63,6 +64,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.Styleable;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.image.Opale;
 
 public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Styleable {
@@ -80,9 +82,16 @@ public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Stylea
 	private final XDimension2D dimNote;
 	private final XDimension2D dimTile;
 
+	@Override
 	public StyleSignature getStyleSignatureTOBEREMOVED() {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.note);
 	}
+	
+	@Override
+	public StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.note));
+	}
+
 
 	@Override
 	public Swimlane getSwimlane(String point) {

@@ -35,9 +35,12 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.Styleable;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public enum LifeEventType implements Styleable {
 	ACTIVATE, DEACTIVATE, DESTROY, CREATE;
@@ -45,10 +48,22 @@ public enum LifeEventType implements Styleable {
 	@Override
 	public StyleSignature getStyleSignatureTOBEREMOVED() {
 		if (this == DESTROY)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.destroy);
-		
+			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine,
+					SName.destroy);
+
 		// To be completed
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public StyleQuery getStyleQuery() {
+		if (this == DESTROY)
+			return StyleQuery
+					.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.destroy));
+
+		// To be completed
+		throw new UnsupportedOperationException();
+
 	}
 
 }
