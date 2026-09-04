@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public abstract class AbstractComponent implements Component {
 
@@ -58,7 +59,13 @@ public abstract class AbstractComponent implements Component {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public StyleSignature getStyleSignatureTOBEREMOVED() {
+		throw new UnsupportedOperationException();
+	}
+	
+	@Override
+	public StyleQuery getStyleQuery() {
 		throw new UnsupportedOperationException();
 	}
 

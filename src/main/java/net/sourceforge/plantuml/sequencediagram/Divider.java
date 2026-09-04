@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class Divider extends AbstractEvent implements Event, WithStyle, EventWithDeactivate {
 
@@ -48,9 +49,16 @@ public class Divider extends AbstractEvent implements Event, WithStyle, EventWit
 
 	final private Style style;
 
+	@Override
 	public StyleSignature getStyleSignatureTOBEREMOVED() {
 		return ComponentType.DIVIDER.getStyleSignatureTOBEREMOVED();
 	}
+	
+	@Override
+	public StyleQuery getStyleQuery() {
+		return ComponentType.DIVIDER.getStyleQuery();
+	}
+
 
 	public Style[] getUsedStyles() {
 		return new Style[] { style };

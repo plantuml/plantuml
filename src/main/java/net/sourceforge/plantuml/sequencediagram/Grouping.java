@@ -59,15 +59,24 @@ public abstract class Grouping extends AbstractEvent implements Event, WithStyle
 	final private Style style;
 	final private Style styleHeader;
 
+	@Override
 	final public StyleSignature getStyleSignatureTOBEREMOVED() {
 		if (type == GroupingType.START_PARTITION)
 			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.partition);
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.group);
 	}
 
+	@Override
+	public StyleQuery getStyleQuery() {
+		if (type == GroupingType.START_PARTITION)
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.partition));
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.group));
+	}
+
 	final private StyleQuery getHeaderStyleDefinition() {
 		if (type == GroupingType.START_PARTITION)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.partition, SName.header));
+			return StyleQuery
+					.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.partition, SName.header));
 		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.groupHeader));
 	}
 
@@ -80,7 +89,8 @@ public abstract class Grouping extends AbstractEvent implements Event, WithStyle
 	// every existing diagram styling `groupHeader` directly keeps working
 	// unchanged: only diagrams that opt into the new nested form are affected.
 	final private StyleQuery getNestedHeaderStyleDefinition() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.group, SName.header));
+		return StyleQuery
+				.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.group, SName.header));
 	}
 
 	private Style computeStyleHeader(StyleBuilder styleBuilder) {

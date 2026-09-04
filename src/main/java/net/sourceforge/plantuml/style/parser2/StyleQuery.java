@@ -40,13 +40,16 @@ import java.util.Collections;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.url.Url;
 
 /**
- * What a {@link StyleAtomTrie} is asked to resolve: the element's tags (its {@link SName} set
- * plus any stereotypes, e.g. what the legacy {@code StyleSignatureBasic} calls
- * {@code snames}/{@code stereotypes}) and its {@link LevelConstraint} (its mindmap/wbs depth
- * and whether this is an ancestor-inheritance lookup -- see {@link LevelConstraint}).
+ * What a {@link StyleAtomTrie} is asked to resolve: the element's tags (its
+ * {@link SName} set plus any stereotypes, e.g. what the legacy
+ * {@code StyleSignatureBasic} calls {@code snames}/{@code stereotypes}) and its
+ * {@link LevelConstraint} (its mindmap/wbs depth and whether this is an
+ * ancestor-inheritance lookup -- see {@link LevelConstraint}).
  */
 public final class StyleQuery {
 
@@ -73,25 +76,39 @@ public final class StyleQuery {
 	}
 
 	public static StyleQuery of(Collection<SName> names) {
-		return of(names, Collections.<String> emptySet(), LevelConstraint.none());
+		return of(names, Collections.<String>emptySet(), LevelConstraint.none());
 	}
 
 	/**
-	 * This same query, additionally requiring {@code stereotype} -- e.g. so a "frequent use"
-	 * factory that starts from a plain, stereotype-less query (the common case, since most such
-	 * factories are called with no stereotype in hand yet) can still fold one in once the caller
-	 * has it, the way {@code StyleSignature.addStereotype} does for the legacy signature.
-	 * {@code stereotype} is cleaned exactly as {@link StyleAtom#ofStereotype} cleans it (see
-	 * there for why), so passing it in raw, un-lower-cased text is fine. Requiring several
-	 * stereotypes at once (an element tagged with more than one, e.g. {@code <<foo>><<bar>>}) is
-	 * just calling this again on the result, since a {@link TreeSet} silently dedupes a
-	 * stereotype already present.
+	 * This same query, additionally requiring {@code stereotype} -- e.g. so a
+	 * "frequent use" factory that starts from a plain, stereotype-less query (the
+	 * common case, since most such factories are called with no stereotype in hand
+	 * yet) can still fold one in once the caller has it, the way
+	 * {@code StyleSignature.addStereotype} does for the legacy signature.
+	 * {@code stereotype} is cleaned exactly as {@link StyleAtom#ofStereotype}
+	 * cleans it (see there for why), so passing it in raw, un-lower-cased text is
+	 * fine. Requiring several stereotypes at once (an element tagged with more than
+	 * one, e.g. {@code <<foo>><<bar>>}) is just calling this again on the result,
+	 * since a {@link TreeSet} silently dedupes a stereotype already present.
 	 */
 	public StyleQuery withStereotype(String stereotype) {
 		final SortedSet<StyleAtom> result = new TreeSet<StyleAtom>(atoms);
 		result.add(StyleAtom.ofStereotype(stereotype));
 		return new StyleQuery(result, levelConstraint);
 	}
+
+	public StyleQuery withTOBECHANGED(Stereotype stereotype) {
+		StyleQuery result = this;
+		for (String s : stereotype.getMultipleLabels())
+			result = result.withStereotype(s);
+		return result;
+	}
+	
+	public StyleQuery addClickable(Url url) {
+		throw new UnsupportedOperationException();
+	}
+
+
 
 	public SortedSet<StyleAtom> getAtoms() {
 		return atoms;
