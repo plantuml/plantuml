@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class ComponentRoseGroupingSpace implements Component {
@@ -51,11 +50,6 @@ public class ComponentRoseGroupingSpace implements Component {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public StyleSignature getStyleSignatureTOBEREMOVED() {
-		throw new UnsupportedOperationException();
-	}
-	
 	@Override
 	public StyleQuery getStyleQuery() {
 		throw new UnsupportedOperationException();

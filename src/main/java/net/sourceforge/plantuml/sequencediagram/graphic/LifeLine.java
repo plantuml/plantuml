@@ -111,9 +111,12 @@ public class LifeLine {
 		events.add(new Variation(type, y, colors, styleBuilder));
 		final int currentLevel = type.apply(stairs.getLastValue());
 		stairs.addStep(y, currentLevel);
-		if (TeaVM.a()) assert getLevel(y) == stairs.getValue(y);
-		if (TeaVM.a()) assert currentLevel == stairs.getValue(y);
-		if (TeaVM.a()) assert getLevel(y) == currentLevel;
+		if (TeaVM.a())
+			assert getLevel(y) == stairs.getValue(y);
+		if (TeaVM.a())
+			assert currentLevel == stairs.getValue(y);
+		if (TeaVM.a())
+			assert getLevel(y) == currentLevel;
 		maxLevel = Math.max(getLevel(y), maxLevel);
 	}
 
@@ -236,8 +239,8 @@ public class LifeLine {
 				if (currentStyleBuilder == null)
 					currentStyleBuilder = skinParam2.getCurrentStyleBuilder();
 
-				Style style = type.getStyleSignatureTOBEREMOVED().withTOBECHANGED(participant.getStereotype())
-						.getMergedStyleREMOVEME(currentStyleBuilder);
+				Style style = currentStyleBuilder
+						.getMergedStyle(type.getStyleQuery().withTOBECHANGED(participant.getStereotype()));
 
 				if (style != null) {
 					style = style.eventuallyOverride(PName.BackGroundColor, specificBackColor);

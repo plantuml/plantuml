@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class LifeEventTile extends AbstractTile {
 
@@ -100,12 +101,12 @@ public class LifeEventTile extends AbstractTile {
 		return yGauge;
 	}
 
-	private StyleSignature getStyleSignature() {
-		return ComponentType.DESTROY.getStyleSignatureTOBEREMOVED();
+	public StyleQuery getStyleQuery() {
+		return ComponentType.DESTROY.getStyleQuery();
 	}
 
     private Style[] getUsedStyle() {
-        final Style style = getStyleSignature().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+        final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getStyleQuery());
 		return new Style[] { style };
     }	
 

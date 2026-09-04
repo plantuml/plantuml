@@ -39,7 +39,6 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
 import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
@@ -49,11 +48,6 @@ public class Delay extends AbstractEvent implements Event, WithStyle {
 
 	final private Style style;
 
-	@Override
-	public StyleSignature getStyleSignatureTOBEREMOVED() {
-		return ComponentType.DELAY_TEXT.getStyleSignatureTOBEREMOVED();
-	}
-	
 	@Override
 	public StyleQuery getStyleQuery() {
 		return ComponentType.DELAY_TEXT.getStyleQuery();
@@ -65,7 +59,7 @@ public class Delay extends AbstractEvent implements Event, WithStyle {
 
 	public Delay(Display text, StyleBuilder styleBuilder) {
 		this.text = text;
-		this.style = getStyleSignatureTOBEREMOVED().getMergedStyleREMOVEME(styleBuilder);
+		this.style = styleBuilder.getMergedStyle(getStyleQuery());
 	}
 
 	public final Display getText() {

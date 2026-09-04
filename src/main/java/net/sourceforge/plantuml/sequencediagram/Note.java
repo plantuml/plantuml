@@ -70,16 +70,12 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 	private Stereotype stereotype;
 
 	@Override
-	public StyleSignature getStyleSignatureTOBEREMOVED() {
-		return noteStyle.getDefaultStyleDefinition();
-	}
-	
-	@Override
 	public StyleQuery getStyleQuery() {
 		return noteStyle.getStyleQuery();
 	}
 
 	public Style[] getUsedStyles() {
+		StyleQuery styleQuery = getStyleQuery();
 		StyleSignature styleSignature = getStyleSignatureTOBEREMOVED();
 		if (stereotype != null)
 			styleSignature = styleSignature.mergeWith(stereotype.getStyles(styleBuilder));

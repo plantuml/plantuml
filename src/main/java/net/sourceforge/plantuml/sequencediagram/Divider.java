@@ -50,15 +50,9 @@ public class Divider extends AbstractEvent implements Event, WithStyle, EventWit
 	final private Style style;
 
 	@Override
-	public StyleSignature getStyleSignatureTOBEREMOVED() {
-		return ComponentType.DIVIDER.getStyleSignatureTOBEREMOVED();
-	}
-	
-	@Override
 	public StyleQuery getStyleQuery() {
 		return ComponentType.DIVIDER.getStyleQuery();
 	}
-
 
 	public Style[] getUsedStyles() {
 		return new Style[] { style };
@@ -66,7 +60,7 @@ public class Divider extends AbstractEvent implements Event, WithStyle, EventWit
 
 	public Divider(Display text, StyleBuilder styleBuilder) {
 		this.text = text;
-		this.style = getStyleSignatureTOBEREMOVED().getMergedStyleREMOVEME(styleBuilder);
+		this.style = styleBuilder.getMergedStyle(getStyleQuery());
 	}
 
 	public final Display getText() {

@@ -93,11 +93,6 @@ public class PartitionTile extends GroupingTile {
 		return new Component() {
 
 			@Override
-			public StyleSignature getStyleSignatureTOBEREMOVED() {
-				throw new UnsupportedOperationException();
-			}
-
-			@Override
 			public StyleQuery getStyleQuery() {
 				throw new UnsupportedOperationException();
 			}

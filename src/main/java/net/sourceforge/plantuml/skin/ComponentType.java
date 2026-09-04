@@ -109,39 +109,4 @@ public enum ComponentType implements Styleable {
 
 		throw new UnsupportedOperationException(toString());
 	}
-
-	public StyleSignature getStyleSignatureTOBEREMOVED() {
-		if (this == PARTICIPANT_HEAD || this == PARTICIPANT_TAIL)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.participant);
-
-		if (this == PARTICIPANT_LINE /*|| this == CONTINUE_LINE*/)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine);
-
-		if (this == ACTIVATION_BOX_CLOSE_CLOSE || this == ACTIVATION_BOX_CLOSE_OPEN || this == ACTIVATION_BOX_OPEN_CLOSE
-				|| this == ACTIVATION_BOX_OPEN_OPEN)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.activationBox);
-
-		if (this == DESTROY)
-			return LifeEventType.DESTROY.getStyleSignatureTOBEREMOVED();
-
-		if (this == DIVIDER)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.separator);
-
-		if (this == ENGLOBER)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.box);
-
-		if (this == NEWPAGE)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.newpage);
-
-		if (this == NOTE)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.note);
-
-		if (this == DELAY_TEXT)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.delay);
-
-		if (this == DELAY_LINE)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.delay);
-
-		throw new UnsupportedOperationException(toString());
-	}
 }

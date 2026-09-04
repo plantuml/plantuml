@@ -75,19 +75,12 @@ abstract class FtileDiamondWIP extends AbstractFtile implements Styleable {
 	}
 
 	@Override
-	final public StyleSignature getStyleSignatureTOBEREMOVED() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
-	}
-	
-	@Override
 	public StyleQuery getStyleQuery() {
 		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));
 	}
 
-
-
 	final public Style getStyle() {
-		return getStyleSignatureTOBEREMOVED().getMergedStyleREMOVEME(skinParam().getCurrentStyleBuilder());
+		return skinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery());
 	}
 
 	@Override
@@ -98,7 +91,7 @@ abstract class FtileDiamondWIP extends AbstractFtile implements Styleable {
 	protected FtileDiamondWIP(TextBlock label, ISkinParam skinParam, HColor backColor, HColor borderColor,
 			Swimlane swimlane, TextBlock north, TextBlock south, TextBlock east, TextBlock west) {
 		super(skinParam);
-		final Style style = getStyleSignatureTOBEREMOVED().getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		final Style style = getStyle();
 		this.borderColor = borderColor;
 		this.backColor = backColor;
 		this.shadowing = style.getShadowing();
