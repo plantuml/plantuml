@@ -77,7 +77,11 @@ public class FtileBoxEmoji extends AbstractFtile {
 	static public StyleSignature getStyleSignature() {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity);
 	}
-
+	
+	static public StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity));
+	}
+	
 	static public StyleQuery getStyleSignatureArrow() {
 		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
 	}
@@ -107,7 +111,7 @@ public class FtileBoxEmoji extends AbstractFtile {
 		if (styleBuilder == null)
 			styleBuilder = skinParam.getCurrentStyleBuilder();
 
-		final Style style = getStyleSignature().withTOBECHANGED(stereotype).getMergedStyleREMOVEME(styleBuilder);
+		final Style style = styleBuilder.getMergedStyle(getStyleQuery().withTOBECHANGED(stereotype));
 		final Style styleArrow = styleBuilder.getMergedStyle(getStyleSignatureArrow());
 		return new FtileBoxEmoji(skinParam, label, swimlane, style, styleArrow);
 	}
