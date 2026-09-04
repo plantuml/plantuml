@@ -140,7 +140,7 @@ public final class DiagramChromeFactory {
 
 	/**
 	 * ASCII counterpart of
-	 * {@link #create(TextBlock, Annotated, ISkinParam, Collection)}.
+	 * {@link #create(TextBlock, Annotated, ISkinParam, Collection, DisplayPositioned)}.
 	 * SequenceDiagram.exportTxt() draws its {@link AsciiBlock} straight to the
 	 * InfinitePlan, bypassing this class entirely, so none of the chrome elements
 	 * below ever reached -ttxt/-tutxt output. For now this only reattaches the
