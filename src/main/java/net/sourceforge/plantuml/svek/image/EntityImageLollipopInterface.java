@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.klimt.UGroup;
@@ -52,7 +54,7 @@ import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.url.Url;
@@ -65,8 +67,8 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 	private final Url url;
 
 	@Override
-	public StyleSignature getStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, getStyleName(), SName.circle)
+	public StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, getStyleName(), SName.circle))
 				.withTOBECHANGED(getStereo());
 	}
 
@@ -78,7 +80,7 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 		super(entity);
 
 		final FontConfiguration fc = FontConfiguration.create(getSkinParam(),
-				getStyleSignature().getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder()));
+				getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery()));
 
 		this.desc = entity.getDisplay().create(fc, HorizontalAlignment.CENTER, getSkinParam());
 		this.url = entity.getUrl99();
@@ -92,7 +94,7 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 
 	final public void drawU(UGraphic ug) {
 
-		final Style style = getStyleSignature().getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
+		final Style style = getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery());
 		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 		final double shadow = style.getShadowing();

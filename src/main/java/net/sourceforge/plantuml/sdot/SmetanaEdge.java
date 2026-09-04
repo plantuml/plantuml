@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.sdot;
 
+import java.util.Arrays;
+
 import h.ST_Agedge_s;
 import h.ST_Agedgeinfo_t;
 import h.ST_bezier;
@@ -67,7 +69,7 @@ import net.sourceforge.plantuml.skin.LineParam;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.extremity.Extremity;
@@ -252,10 +254,10 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 	}
 
 	private Style getStyle() {
-		final StyleSignature result = StyleSignature
-				.ofSName0(SName.root, SName.element, diagramType().getStyleName(), SName.arrow)
+		final StyleQuery query = StyleQuery
+				.of(Arrays.asList(SName.root, SName.element, diagramType().getStyleName(), SName.arrow))
 				.withTOBECHANGED(link.getStereotype());
-		return result.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);
 	}
 
 	public XPoint2D getStartPoint() {
