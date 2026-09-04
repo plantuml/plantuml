@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.mindmap;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -49,6 +50,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.wbs.WElement;
 
 class Idea {
@@ -111,10 +113,10 @@ class Idea {
 	}
 
 	public Style getStyleArrow() {
-		final StyleSignature defaultStyleDefinitionArrow = StyleSignature
-				.ofSName0(SName.root, SName.element, SName.mindmapDiagram, SName.arrow).addStereotype(stereotype)
-				.addLevel(level);
-		return defaultStyleDefinitionArrow.getMergedStyleREMOVEME(styleBuilder);
+		final StyleQuery defaultStyleDefinitionArrow = StyleQuery
+				.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.arrow))
+				.withTOBECHANGED(stereotype).addLevel(level);
+		return styleBuilder.getMergedStyle(defaultStyleDefinitionArrow);
 	}
 
 	public static Idea createIdeaSimple(StyleBuilder styleBuilder, HColor backColor, Display label, IdeaShape shape,

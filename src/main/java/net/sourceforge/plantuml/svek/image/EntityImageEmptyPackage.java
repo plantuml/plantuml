@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityPortion;
@@ -59,7 +61,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ClusterDecoration;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -83,13 +85,12 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 	private final HColor back;
 
 	@Override
-	public StyleSignature getStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, getStyleName(), SName.package_, SName.title);
+	public StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, getStyleName(), SName.package_, SName.title));
 	}
 
 	private Style getStyle() {
-		return getStyleSignature().withTOBECHANGED(stereotype)
-				.getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
+		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery().withTOBECHANGED(stereotype));
 	}
 
 	public EntityImageEmptyPackage(Entity entity, PortionShower portionShower) {

@@ -163,6 +163,14 @@ public final class StyleQuery {
 		return result;
 	}
 
+	/**
+	 * This same query, additionally constrained to depth {@code level} (an exact match unless the
+	 * query was already starred) -- mirroring {@code StyleSignature.addLevel(int)}.
+	 */
+	public StyleQuery addLevel(int level) {
+		return new StyleQuery(atoms, LevelConstraint.of(level, levelConstraint.isStar()));
+	}
+
 	public StyleQuery addClickable(Url url) {
 		if (url == null)
 			return this;
