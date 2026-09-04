@@ -443,10 +443,10 @@ tasks.register<JdependHtmlTask>("jdependHtml") {
     jdependClasspath.from(jdependConfig)
 	xmlReport.set(file("$outputDir/jdepend-report.xml"))
 
-    xsltFile.set(file("tools/jdepend-report.xsl"))
+    xsltFile.set(file("tools/jdepend/jdepend-report.xsl"))
     htmlReport.set(file("$outputDir/jdepend-report.html"))
     
-    pumlXsltFile.set(file("tools/jdepend2puml.xsl"))
+    pumlXsltFile.set(file("tools/jdepend/jdepend2puml.xsl"))
     pumlReport.set(file("$outputDir/jdepend-report.puml"))
 }
 
