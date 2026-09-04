@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -108,6 +109,18 @@ public final class StyleQuery {
 		for (String s : stereotype.getMultipleLabels())
 			result = result.withStereotype(s);
 		return result;
+	}
+
+	/**
+	 * This same query, additionally requiring every one of {@code stereogroup}'s own stereotype's
+	 * labels at once, the same way {@link #withTOBECHANGED(Stereotype)} does -- mirroring
+	 * {@code StyleSignature.withTOBECHANGED(Stereogroup)}.
+	 */
+	public StyleQuery withTOBECHANGED(Stereogroup stereogroup) {
+		if (stereogroup == null)
+			return this;
+
+		return withTOBECHANGED(stereogroup.buildStereotype());
 	}
 
 	/**

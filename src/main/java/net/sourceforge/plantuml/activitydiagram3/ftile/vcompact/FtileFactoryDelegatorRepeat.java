@@ -92,7 +92,7 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 		final HColorSet colorSet = skinParam().getIHtmlColorSet();
 
 		final Style styleArrow = currentStyleBuilder.getMergedStyle(getDefaultStyleDefinitionArrow());
-		final Style styleDiamond = getDefaultStyleDefinitionDiamond().getMergedStyleREMOVEME(currentStyleBuilder);
+		final Style styleDiamond = currentStyleBuilder.getMergedStyle(getDefaultStyleDefinitionDiamond());
 
 		final HColor borderColor = styleDiamond.value(PName.LineColor).asColor(colorSet);
 
