@@ -42,6 +42,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.plantuml.stereo.Stereogroup;
+import net.sourceforge.plantuml.stereo.Stereostyles;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -142,6 +143,21 @@ public final class StyleQuery {
 		withStereotypeTag.add(StyleAtom.of(SName.stereotype));
 		StyleQuery result = new StyleQuery(withStereotypeTag, levelConstraint);
 		for (String name : labels)
+			result = result.withStereotype(name);
+
+		return result;
+	}
+
+	/**
+	 * This same query, additionally requiring every stereo-style name in {@code stereostyles} --
+	 * mirroring {@code StyleSignature.with(Stereostyles)}.
+	 */
+	public StyleQuery with(Stereostyles stereostyles) {
+		if (stereostyles.isEmpty())
+			return this;
+
+		StyleQuery result = this;
+		for (String name : stereostyles.getStyleNames())
 			result = result.withStereotype(name);
 
 		return result;

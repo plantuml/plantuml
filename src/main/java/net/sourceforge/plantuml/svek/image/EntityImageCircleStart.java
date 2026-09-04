@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
@@ -43,7 +45,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 
@@ -52,14 +54,14 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 	private final CircleStart circle;
 
 	@Override
-	public StyleSignature getStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, getSkinParam().getDiagramType().getStyleName(),
-				SName.circle, SName.start);
+	public StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, getSkinParam().getDiagramType().getStyleName(),
+				SName.circle, SName.start));
 	}
 
 	public EntityImageCircleStart(Entity entity) {
 		super(entity);
-		final Style style = getStyleSignature().getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
+		final Style style = getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery());
 		this.circle = new CircleStart(getSkinParam(), style, entity.getColors());
 	}
 

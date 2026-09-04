@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -45,7 +47,7 @@ import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 
@@ -63,11 +65,12 @@ public class EntityImageAssociation extends AbstractEntityImage {
 	}
 
 	private Style getStyle() {
-		return getStyleSignature().getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
+		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery());
 	}
 
-	public StyleSignature getStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, getStyleName(), SName.diamond);
+	@Override
+	public StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, getStyleName(), SName.diamond));
 	}
 
 	final public void drawU(UGraphic ug) {
