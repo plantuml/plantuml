@@ -224,13 +224,17 @@ def fetch_cached(
 
 
 def slug_cache_file(cache_dir: Path, slug: str) -> Path:
-    """Where the raw markdown for a given page slug is cached."""
-    return cache_dir / "pages" / f"{slug}.html"
+    """Where the raw markdown for a given page slug is cached.
+
+    Using a ``.tmp`` extension (rather than e.g. ``.html``) keeps IDEs from
+    trying to interpret/index these as real HTML files.
+    """
+    return cache_dir / "pages" / f"{slug}.tmp"
 
 
 def toc_cache_file(cache_dir: Path) -> Path:
-    """Where the raw TOC page is cached."""
-    return cache_dir / "toc.html"
+    """Where the raw TOC page is cached (see :func:`slug_cache_file`)."""
+    return cache_dir / "toc.tmp"
 
 
 # ---------------------------------------------------------------------------
