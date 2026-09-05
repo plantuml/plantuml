@@ -1,0 +1,31 @@
+---
+output: svg
+---
+@startwbs
+<style>
+wbsDiagram {
+  node {
+    BackGroundColor lightgray
+    LineColor black
+  }
+  rootNode {
+    BackGroundColor gold
+  }
+  leafNode {
+    BackGroundColor lightblue
+  }
+  boxless {
+    FontColor red
+    LineColor transparent
+  }
+}
+</style>
+*_ Program
+** Planning
+*** Define scope
+*** Set milestones
+**_ Execution
+*** Build
+***_ Ship
+** Closure
+@endwbs

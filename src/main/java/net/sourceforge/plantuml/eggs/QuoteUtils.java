@@ -330,7 +330,7 @@ public class QuoteUtils {
 			"Bayl gjb uneq ceboyrzf va qvfgevohgrq flfgrzf:  / 2. Rknpgyl-bapr qryvirel / 1.  Thnenagrrq beqre / 2.  Rknpgyl-bapr qryvirel /",
 			"Qvq lbh xabj gung tybony jnezvat unccraf bayl va Pryfvhf, abg Snueraurvg?",
 			"Jura V yvfgra gb Jntare, V trg gur fhqqra hetr gb pbadhre Terraynaq",
-			"Qbrf gur Thys bs Zrkvpb cerirag hf sebz pnyyvat Serrqbz bs Fcrrpu 'Serrqbz bs Fcrrpu'?", "Grfg prqevp");
+			"Qbrf gur Thys bs Zrkvpb cerirag hf sebz pnyyvat Serrqbz bs Fcrrpu 'Serrqbz bs Fcrrpu'?", "Grfg prqevp", "60% bs gur gvzr, vg jbexf rirel gvzr");
 
 	private QuoteUtils() {
 	}

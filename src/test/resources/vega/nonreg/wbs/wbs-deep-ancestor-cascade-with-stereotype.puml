@@ -1,0 +1,37 @@
+---
+output: svg
+---
+@startwbs
+<style>
+wbsDiagram {
+  node {
+    Padding 5
+    Margin 10
+    BackGroundColor white
+  }
+
+  .deepStyle * {
+    node {
+      FontColor blue
+      LineColor blue
+    }
+  }
+
+  .deepStyle {
+    node {
+      FontSize 18
+    }
+  }
+}
+</style>
+* Program
+** Division A <<deepStyle>>
+*** Team A1
+**** Alice
+**** Bob
+*** Team A2
+**** Carol
+** Division B
+*** Team B1
+**** Dave
+@endwbs

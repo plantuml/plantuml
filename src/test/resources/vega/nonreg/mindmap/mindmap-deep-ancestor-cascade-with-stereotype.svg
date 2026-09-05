@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="197px" preserveAspectRatio="none" style="width:436px;height:197px;background:#FFFFFF;" version="1.1" viewBox="0 0 436 197" width="436px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFF" height="24" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="63.637" x="10" y="86"/>
+    <text fill="#000" font-size="14" textLength="53.637" x="15" y="101.889">Program</text>
+    <rect fill="#FFF" height="28" rx="12.5" ry="12.5" style="stroke:#00F;stroke-width:1.5;" width="85.262" x="123.637" y="62"/>
+    <text fill="#00F" font-size="18" textLength="75.262" x="128.638" y="81">Division A</text>
+    <rect fill="#FFF" height="24" rx="12.5" ry="12.5" style="stroke:#00F;stroke-width:1.5;" width="62.938" x="258.9" y="42"/>
+    <text fill="#00F" font-size="14" textLength="52.938" x="263.9" y="57.889">Team A1</text>
+    <rect fill="#FFF" height="24" rx="12.5" ry="12.5" style="stroke:#00F;stroke-width:1.5;" width="40.45" x="371.838" y="20"/>
+    <text fill="#00F" font-size="14" textLength="30.45" x="376.838" y="35.889">Alice</text>
+    <path d="M321.838,54 L331.838,54 C346.838,54 346.838,32 361.838,32 L371.838,32" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#FFF" height="24" rx="12.5" ry="12.5" style="stroke:#00F;stroke-width:1.5;" width="34.938" x="371.838" y="64"/>
+    <text fill="#00F" font-size="14" textLength="24.938" x="376.838" y="79.889">Bob</text>
+    <path d="M321.838,54 L331.838,54 C346.838,54 346.838,76 361.838,76 L371.838,76" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M208.9,76 L218.9,76 C233.9,76 233.9,54 248.9,54 L258.9,54" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#FFF" height="24" rx="12.5" ry="12.5" style="stroke:#00F;stroke-width:1.5;" width="62.938" x="258.9" y="108"/>
+    <text fill="#00F" font-size="14" textLength="52.938" x="263.9" y="123.889">Team A2</text>
+    <rect fill="#FFF" height="24" rx="12.5" ry="12.5" style="stroke:#00F;stroke-width:1.5;" width="43.513" x="371.838" y="108"/>
+    <text fill="#00F" font-size="14" textLength="33.513" x="376.838" y="123.889">Carol</text>
+    <path d="M321.838,120 L331.838,120 C346.838,120 346.838,120 361.838,120 L371.838,120" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M208.9,76 L218.9,76 C233.9,76 233.9,120 248.9,120 L258.9,120" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M73.637,98 L83.637,98 C98.637,98 98.637,76 113.637,76 L123.637,76" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#FFF" height="24" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="68.538" x="123.637" y="152"/>
+    <text fill="#000" font-size="14" textLength="58.537" x="128.638" y="167.889">Division B</text>
+    <rect fill="#FFF" height="24" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="62.938" x="242.175" y="152"/>
+    <text fill="#000" font-size="14" textLength="52.938" x="247.175" y="167.889">Team B1</text>
+    <rect fill="#FFF" height="24" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="42.725" x="355.112" y="152"/>
+    <text fill="#000" font-size="14" textLength="32.725" x="360.112" y="167.889">Dave</text>
+    <path d="M305.113,164 L315.112,164 C330.112,164 330.112,164 345.112,164 L355.112,164" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M192.175,164 L202.175,164 C217.175,164 217.175,164 232.175,164 L242.175,164" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M73.637,98 L83.637,98 C98.637,98 98.637,164 113.637,164 L123.637,164" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

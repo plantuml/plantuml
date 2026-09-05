@@ -1,0 +1,31 @@
+---
+output: svg
+---
+@startmindmap
+<style>
+mindmapDiagram {
+  node {
+    BackGroundColor lightgray
+    LineColor black
+  }
+  rootNode {
+    BackGroundColor gold
+  }
+  leafNode {
+    BackGroundColor lightblue
+  }
+  boxless {
+    FontColor red
+    LineColor transparent
+  }
+}
+</style>
+*_ Program
+** Planning
+*** Define scope
+*** Set milestones
+**_ Execution
+*** Build
+***_ Ship
+** Closure
+@endmindmap
