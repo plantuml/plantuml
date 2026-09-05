@@ -468,13 +468,16 @@ public class Cluster implements Moveable {
 		HColor centerBackColor = northBackcolor;
 		HColor southBackcolor = northBackcolor;
 		if (northBackcolor == null) {
-			northBackcolor = EntityImageStateCommon.STYLE.addSName(SName.name).withTOBECHANGED(group.getStereotype())
-					.getMergedStyleREMOVEME(styleBuilder).value(PName.BackGroundColor).asColor(colorSet);
-			centerBackColor = EntityImageStateCommon.STYLE.addSName(SName.description)
-					.withTOBECHANGED(group.getStereotype()).getMergedStyleREMOVEME(styleBuilder).value(PName.BackGroundColor)
-					.asColor(colorSet);
-			southBackcolor = EntityImageStateCommon.STYLE.addSName(SName.body).withTOBECHANGED(group.getStereotype())
-					.getMergedStyleREMOVEME(styleBuilder).value(PName.BackGroundColor).asColor(colorSet);
+			northBackcolor = styleBuilder
+					.getMergedStyle(
+							EntityImageStateCommon.STYLE.addSName(SName.name).withTOBECHANGED(group.getStereotype()))
+					.value(PName.BackGroundColor).asColor(colorSet);
+			centerBackColor = styleBuilder.getMergedStyle(EntityImageStateCommon.STYLE.addSName(SName.description)
+					.withTOBECHANGED(group.getStereotype())).value(PName.BackGroundColor).asColor(colorSet);
+			southBackcolor = styleBuilder
+					.getMergedStyle(
+							EntityImageStateCommon.STYLE.addSName(SName.body).withTOBECHANGED(group.getStereotype()))
+					.value(PName.BackGroundColor).asColor(colorSet);
 		}
 
 		final TextBlock attribute = ((Entity) group).getStateDescription(skinParam);

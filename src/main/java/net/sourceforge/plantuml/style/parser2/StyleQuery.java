@@ -175,6 +175,16 @@ public final class StyleQuery {
 		return new StyleQuery(atoms, LevelConstraint.of(level, levelConstraint.isStar()));
 	}
 
+	/**
+	 * This same query, additionally requiring {@code name} -- mirroring
+	 * {@code StyleSignature.addSName(SName)}.
+	 */
+	public StyleQuery addSName(SName name) {
+		final SortedSet<StyleAtom> result = new TreeSet<StyleAtom>(atoms);
+		result.add(StyleAtom.of(name));
+		return new StyleQuery(result, levelConstraint);
+	}
+
 	public StyleQuery addClickable(Url url) {
 		if (url == null)
 			return this;

@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
+import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.abel.Entity;
@@ -69,7 +70,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.text.Guillemet;
@@ -194,17 +195,17 @@ public class EntityImageUseCase extends AbstractEntityImage {
 	}
 
 	private Style getStyle() {
-		return getStyleSignature().getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
+		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery());
 	}
 
 	@Override
-	public StyleSignature getStyleSignature() {
+	public StyleQuery getStyleQuery() {
 		final LeafType type = getEntity().getLeafType();
 		if (type == LeafType.USECASE_BUSINESS)
-			return StyleSignature
-					.ofSName0(SName.root, SName.element, SName.componentDiagram, SName.usecase, SName.business)
+			return StyleQuery
+					.of(Arrays.asList(SName.root, SName.element, SName.componentDiagram, SName.usecase, SName.business))
 					.withTOBECHANGED(getStereo());
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.componentDiagram, SName.usecase)
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.componentDiagram, SName.usecase))
 				.withTOBECHANGED(getStereo());
 	}
 
