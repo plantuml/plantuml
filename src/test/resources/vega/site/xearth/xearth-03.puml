@@ -1,9 +1,0 @@
----
-output: svg
----
-@startuml
-xearth(300,300)
-viewPositionType = Sun-relative
-sunPosRelLat = -10
-sunPosRelLong = 40
-@enduml

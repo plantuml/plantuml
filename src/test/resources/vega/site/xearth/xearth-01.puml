@@ -1,6 +1,0 @@
----
-output: svg
----
-@startuml
-xearth
-@enduml
