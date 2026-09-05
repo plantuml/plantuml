@@ -39,7 +39,6 @@ import java.util.Arrays;
 
 import net.sourceforge.plantuml.sequencediagram.LifeEventType;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.Styleable;
 import net.sourceforge.plantuml.style.parser2.StyleQuery;
 

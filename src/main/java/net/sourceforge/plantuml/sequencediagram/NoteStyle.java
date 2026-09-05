@@ -39,7 +39,6 @@ import java.util.Arrays;
 
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public enum NoteStyle {
@@ -64,16 +63,6 @@ public enum NoteStyle {
 			return ComponentType.NOTE_BOX;
 
 		return ComponentType.NOTE;
-	}
-
-	public StyleSignature getDefaultStyleDefinition() {
-		if (this == NoteStyle.HEXAGONAL)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.note, SName.hnote);
-
-		if (this == NoteStyle.BOX)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.note, SName.rnote);
-
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.sequenceDiagram, SName.note);
 	}
 
 	public StyleQuery getStyleQuery() {
