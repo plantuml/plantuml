@@ -246,13 +246,6 @@ public class StyleSignature {
 		return new StyleSignature(key.mergeWith(other.key), result2);
 	}
 
-	public Style getMergedStyleREMOVEME(StyleBuilder styleBuilder) {
-		if (styleBuilder == null)
-			return null;
-
-		return styleBuilder.getMergedStyleTOBEREMOVED(this);
-	}
-
 	public final boolean isWithDot() {
 		return stereotypes.size() > 0;
 	}
