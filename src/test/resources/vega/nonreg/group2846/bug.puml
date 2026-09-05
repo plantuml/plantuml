@@ -1,0 +1,15 @@
+---
+output: png
+expected-description: (1 entities)
+---
+
+@startuml
++package uid as "Hello" <<Frame>> {
+  class World
+}
+@enduml
+
+/' Issue #2846 - this was the code that had
+produced the bug. The output for this
+(now corrected code) is in bug.png
+'/
