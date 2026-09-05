@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontFace;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import test.utils.PlantUmlTestUtils;
 
 /**
@@ -53,7 +54,7 @@ class StyleFontWeightTest {
 			final String rawValue = (String) nameValuePairs[i + 1];
 			map.put(name, ValueImpl.regular(rawValue, COUNTER));
 		}
-		return new Style(StyleSignature.empty(), map);
+		return new Style(StyleQuery.empty(), map);
 	}
 
 	// -----------------------------------------------------------------------

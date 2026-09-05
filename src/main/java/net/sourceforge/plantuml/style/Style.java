@@ -58,25 +58,22 @@ import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class Style {
 
 	public static final String STAR = "*";
 
 	private final Map<PName, Value> map;
-	private final StyleSignature signature;
+	private final StyleQuery signature;
 
-	// To be used instead of StyleSignature
-//	private final Set<String> stereotypes;
-//	private final StyleKey key;
-
-	public Style(StyleSignature signature, Map<PName, Value> map) {
+	public Style(StyleQuery signature, Map<PName, Value> map) {
 		this.map = map;
 		this.signature = signature;
 	}
 
 	public Style withAncestorRank(int rank) {
-		if (signature.isStarred() == false)
+		if (signature.getLevelConstraint().isStar() == false)
 			throw new UnsupportedOperationException();
 
 		final EnumMap<PName, Value> copy = new EnumMap<PName, Value>(PName.class);
@@ -228,7 +225,7 @@ public class Style {
 		return result;
 	}
 
-	public StyleSignature getSignature() {
+	public StyleQuery getSignature() {
 		return signature;
 	}
 

@@ -77,7 +77,7 @@ public class StyleBuilder implements AutomaticCounter {
 			throw new IllegalArgumentException();
 
 		name = name.toLowerCase();
-		final StyleSignature signature = StyleSignature.createStereotype(name);
+		final StyleQuery signature = StyleQuery.empty().withStereotype(name);
 
 		// An exact-signature lookup, not a cascade: only a bare ".name { ... }" declared with
 		// no SName scoping at all can ever match. Several such declarations (repeated in the
@@ -101,8 +101,8 @@ public class StyleBuilder implements AutomaticCounter {
 		return result;
 	}
 
-	public void loadInternal(StyleSignature signature, Style newStyle) {
-		if (signature.isStarred())
+	public void loadInternal(StyleQuery signature, Style newStyle) {
+		if (signature.getLevelConstraint().isStar())
 			throw new IllegalArgumentException();
 
 		this.index = this.index.withLoaded(newStyle);
@@ -124,10 +124,10 @@ public class StyleBuilder implements AutomaticCounter {
 
 		Style mergedStyle = null;
 		for (Style style : index.findMatching(query)) {
-			final StyleSignature key = style.getSignature();
+			final StyleQuery key = style.getSignature();
 
 			Style tmp = style;
-			if (key.isStarred())
+			if (key.getLevelConstraint().isStar())
 				tmp = tmp.withAncestorRank(ancestorRank);
 
 			if (mergedStyle == null)
