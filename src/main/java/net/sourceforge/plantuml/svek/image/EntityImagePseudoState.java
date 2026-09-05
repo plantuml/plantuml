@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -51,7 +53,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 
@@ -66,16 +68,15 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 	}
 
 	@Override
-	public StyleSignature getStyleSignature() {
-		return StyleSignature.ofSName0(SName.root, SName.element, getStyleName(), SName.diamond);
+	public StyleQuery getStyleQuery() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, getStyleName(), SName.diamond));
 	}
 
 	public EntityImagePseudoState(Entity entity, String historyText) {
 		super(entity);
 		final Stereotype stereotype = entity.getStereotype();
 
-		this.style = getStyleSignature().withTOBECHANGED(stereotype)
-				.getMergedStyleREMOVEME(getSkinParam().getCurrentStyleBuilder());
+		this.style = getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery().withTOBECHANGED(stereotype));
 
 		final FontConfiguration fontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 
