@@ -38,7 +38,9 @@ package net.sourceforge.plantuml.style.parser2;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -87,6 +89,11 @@ public final class StyleQuery {
 
 	public static StyleQuery of(Collection<SName> names) {
 		return of(names, Collections.<String>emptySet(), LevelConstraint.none());
+	}
+
+	/** No tag, no depth constraint -- mirroring {@code StyleSignature.empty()}. */
+	public static StyleQuery empty() {
+		return of(Collections.<SName>emptySet());
 	}
 
 	/**
@@ -225,13 +232,12 @@ public final class StyleQuery {
 
 	/**
 	 * This query, unioned in turn with each of {@code others}'s own signature -- mirroring
-	 * {@code StyleSignature.mergeWith(List<Style>)}, via {@code StyleSignature.toQuery()} since a
-	 * {@link Style}'s signature is still the legacy type.
+	 * {@code StyleSignature.mergeWith(List<Style>)}.
 	 */
 	public StyleQuery mergeWith(List<Style> others) {
 		StyleQuery result = this;
 		for (Style other : others)
-			result = result.mergeWith(other.getSignature().toQuery());
+			result = result.mergeWith(other.getSignature());
 
 		return result;
 	}
@@ -242,6 +248,31 @@ public final class StyleQuery {
 
 	public LevelConstraint getLevelConstraint() {
 		return levelConstraint;
+	}
+
+	/**
+	 * Every stereotype atom this query carries, in ascending order -- mirroring
+	 * {@code StyleSignature.getStereotypes()}.
+	 */
+	public Set<String> getStereotypes() {
+		final Set<String> result = new LinkedHashSet<String>();
+		for (StyleAtom atom : atoms)
+			if (atom.isName() == false)
+				result.add(atom.getStereotype());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof StyleQuery == false)
+			return false;
+		final StyleQuery other = (StyleQuery) obj;
+		return this.atoms.equals(other.atoms) && this.levelConstraint.equals(other.levelConstraint);
+	}
+
+	@Override
+	public int hashCode() {
+		return atoms.hashCode() * 31 + levelConstraint.hashCode();
 	}
 
 	@Override

@@ -43,6 +43,8 @@ import java.util.EnumSet;
 
 import org.junit.jupiter.api.Test;
 
+import net.sourceforge.plantuml.style.parser2.StyleAtom;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 /**
@@ -66,6 +68,16 @@ class StyleLoaderParseStyleTextTest {
 	private static Style theOneStyle(Collection<Style> styles) {
 		assertEquals(1, styles.size(), () -> "expected exactly one Style, got " + styles);
 		return styles.iterator().next();
+	}
+
+	/** Every {@link SName} tag {@code query} carries -- the {@code StyleQuery} counterpart of the
+	 * legacy {@code StyleSignature.getKey().snames}. */
+	private static EnumSet<SName> snamesOf(StyleQuery query) {
+		final EnumSet<SName> result = EnumSet.noneOf(SName.class);
+		for (StyleAtom atom : query.getAtoms())
+			if (atom.isName())
+				result.add(atom.getSName());
+		return result;
 	}
 
 	@Test
@@ -102,7 +114,7 @@ class StyleLoaderParseStyleTextTest {
 		final Style style = theOneStyle(
 				StyleLoader.parseStyleText(BlocLines.getWithNewlines(text), new AutomaticCounterBasic()));
 
-		assertEquals(EnumSet.noneOf(SName.class), style.getSignature().getKey().snames);
+		assertEquals(EnumSet.noneOf(SName.class), snamesOf(style.getSignature()));
 		assertEquals("green/null (1,stereo=1)", style.value(PName.FontColor).toString());
 	}
 
@@ -113,8 +125,8 @@ class StyleLoaderParseStyleTextTest {
 		final Style style = theOneStyle(
 				StyleLoader.parseStyleText(BlocLines.getWithNewlines(text), new AutomaticCounterBasic()));
 
-		assertEquals(2, style.getSignature().getKey().level);
-		assertEquals(true, style.getSignature().isStarred());
+		assertEquals(2, style.getSignature().getLevelConstraint().getLevel());
+		assertEquals(true, style.getSignature().getLevelConstraint().isStar());
 	}
 
 	@Test
@@ -162,6 +174,10 @@ class StyleLoaderParseStyleTextTest {
 		// StyleParser tokenizer is gone, there is nothing left to recompute the "legacy" side
 		// from: the expected toString() below is exactly what that comparison last confirmed,
 		// frozen in place as a plain pinned/golden assertion instead of a live cross-check.
+		// Re-pinned to Style#toString()'s new StyleQuery-backed shape (a single merged
+		// SName+stereotype atom set followed by its LevelConstraint, instead of the legacy
+		// StyleSignature's separate "[snames]  [stereotypes]" pair) once Style stopped carrying
+		// a StyleSignature -- purely a debug-format change, not a resolution behavior change.
 		final String[] samples = { //
 				"root { FontColor black }\n@media (prefers-color-scheme:dark) {\n root { FontColor white }\n}\n", //
 				"class {\n .myStereo {\n  FontColor red\n }\n}\n", //
@@ -169,10 +185,10 @@ class StyleLoaderParseStyleTextTest {
 				"mindmapDiagram {}\nmindmapDiagram { node {\n RoundCorner 25\n} }\n", //
 		};
 		final String[] expected = { //
-				"[root]  [] {FontColor=black/white (1)}", //
-				"[class_]  [mystereo] {FontColor=red/null (1,stereo=1)}", //
-				"[node, wbsDiagram]  2 (*) [] {FontColor=blue/null (1)}", //
-				"[mindmapDiagram, node]  [] {RoundCorner=25/null (1)}", //
+				"[root]  {FontColor=black/white (1)}", //
+				"[class_, .mystereo]  {FontColor=red/null (1,stereo=1)}", //
+				"[node, wbsDiagram] depth(2)* {FontColor=blue/null (1)}", //
+				"[mindmapDiagram, node]  {RoundCorner=25/null (1)}", //
 		};
 
 		for (int i = 0; i < samples.length; i++) {
@@ -232,7 +248,7 @@ class StyleLoaderParseStyleTextTest {
 		Style starred = null;
 		Style plain = null;
 		for (Style style : styles)
-			if (style.getSignature().isStarred())
+			if (style.getSignature().getLevelConstraint().isStar())
 				starred = style;
 			else
 				plain = style;

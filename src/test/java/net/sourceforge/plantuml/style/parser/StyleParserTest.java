@@ -26,7 +26,7 @@ class StyleParserTest {
 		// the way Stereogroup#getInnerColors does for this very same shape of text (see
 		// StereogroupTest#testGetInnerColorsFromASemicolonSeparatedPropertyList). The wrapper
 		// name ends up folded into the resulting Style's signature as a stereotype tag -- see
-		// the "[wrapper]" below -- which the original, signature-less legacy result never had;
+		// the "[.wrapper]" below -- which the original, signature-less legacy result never had;
 		// nothing that reads this Style (Colors#applyStyle, and this test itself) ever looks at
 		// its signature, only at its property values.
 		final Collection<Style> styles = StyleLoader.parseStyleText(
@@ -36,7 +36,11 @@ class StyleParserTest {
 		assertEquals(1, styles.size());
 		final Style style = styles.iterator().next();
 
-		assertEquals("[]  [wrapper] {FontColor=red/null (2,stereo=1), BackGroundColor=lightblue/null (1,stereo=1)}",
+		// Re-pinned to Style#toString()'s new StyleQuery-backed shape (a single merged
+		// SName+stereotype atom set instead of the legacy StyleSignature's separate
+		// "[snames]  [stereotypes]" pair) once Style stopped carrying a StyleSignature --
+		// purely a debug-format change, not a resolution behavior change.
+		assertEquals("[.wrapper]  {FontColor=red/null (2,stereo=1), BackGroundColor=lightblue/null (1,stereo=1)}",
 				style.toString());
 
 		assertEquals("red", style.value(PName.FontColor).asString());

@@ -227,14 +227,6 @@ public class StyleSignature {
 		return sb.toString();
 	}
 
-	public StyleSignature mergeWith(List<Style> others) {
-		StyleSignature result = this;
-		for (Style other : others)
-			result = result.mergeWith(other.getSignature());
-
-		return result;
-	}
-
 	public StyleSignature mergeWith(StyleSignature other) {
 
 		final Set<String> result2 = new HashSet<>(stereotypes);

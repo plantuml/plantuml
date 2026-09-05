@@ -36,12 +36,15 @@
 package net.sourceforge.plantuml.style;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class FromSkinparamToStyle {
 	// ::remove file when __HAXE__
@@ -396,12 +399,12 @@ public class FromSkinparamToStyle {
 	private void addStyle(PName propertyName, Value value, SName... styleNames) {
 		Map<PName, Value> map = new EnumMap<PName, Value>(PName.class);
 		map.put(propertyName, value);
-		StyleSignature sig = StyleSignature.ofSName0(styleNames);
+		StyleQuery sig = StyleQuery.of(Arrays.asList(styleNames));
 		if (stereo != null) {
 			final String[] names = stereo.split("\\&");
 			map = StyleLoader.addStereotypeCount(map, names.length);
 			for (String s : names)
-				sig = sig.addStereotype(s);
+				sig = sig.withStereotype(s);
 		}
 
 		final Style style = new Style(sig, map);
