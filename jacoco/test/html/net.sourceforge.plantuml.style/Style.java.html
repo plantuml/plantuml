@@ -70,14 +70,14 @@ public class Style {
 <span class="fc" id="L70">	}</span>
 
 	public Style deltaPriority(int delta) {
-<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (signature.isStarred() == false)</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (signature.isStarred() == false)</span>
 <span class="nc" id="L74">			throw new UnsupportedOperationException();</span>
 
-<span class="nc" id="L76">		final EnumMap&lt;PName, Value&gt; copy = new EnumMap&lt;PName, Value&gt;(PName.class);</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		for (Entry&lt;PName, Value&gt; ent : this.map.entrySet())</span>
-<span class="nc" id="L78">			copy.put(ent.getKey(), ((ValueImpl) ent.getValue()).addPriority(delta));</span>
+<span class="fc" id="L76">		final EnumMap&lt;PName, Value&gt; copy = new EnumMap&lt;PName, Value&gt;(PName.class);</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		for (Entry&lt;PName, Value&gt; ent : this.map.entrySet())</span>
+<span class="fc" id="L78">			copy.put(ent.getKey(), ((ValueImpl) ent.getValue()).addPriority(delta));</span>
 
-<span class="nc" id="L80">		return new Style(this.signature, copy);</span>
+<span class="fc" id="L80">		return new Style(this.signature, copy);</span>
 
 	}
 

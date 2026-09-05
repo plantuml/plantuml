@@ -105,12 +105,12 @@ abstract class WBSTextBlock extends TextBlockMemoized implements AsciiBlock {
 <span class="fc bfc" id="L105" title="All 2 branches covered.">		if (idea.getShape() == IdeaShape.PSEUDO)</span>
 <span class="fc" id="L106">			return TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
 
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (idea.getShape() == IdeaShape.BOX)</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		if (idea.getShape() == IdeaShape.BOX)</span>
 <span class="fc" id="L109">			return FtileBoxOld.createWbs(style, idea.withBackColor(skinParam), label);</span>
 
-<span class="nc" id="L111">		final TextBlock text = label.create0(style.getFontConfiguration(skinParam.getIHtmlColorSet()),</span>
-<span class="nc" id="L112">				style.getHorizontalAlignment(), skinParam, style.wrapWidth(), CreoleMode.FULL, null, null);</span>
-<span class="nc" id="L113">		return TextBlockUtils.withMargin(text, 0, 3, 1, 1);</span>
+<span class="fc" id="L111">		final TextBlock text = label.create0(style.getFontConfiguration(skinParam.getIHtmlColorSet()),</span>
+<span class="fc" id="L112">				style.getHorizontalAlignment(), skinParam, style.wrapWidth(), CreoleMode.FULL, null, null);</span>
+<span class="fc" id="L113">		return TextBlockUtils.withMargin(text, 0, 3, 1, 1);</span>
 	}
 
 	@Override

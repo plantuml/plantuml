@@ -73,9 +73,9 @@ class Context {
 
 <span class="fc" id="L74">		boolean star = false;</span>
 
-<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if (newString.endsWith(StyleSignatureBasic.STAR)) {</span>
-<span class="nc" id="L77">			newString = newString.substring(0, newString.length() - 1).trim();</span>
-<span class="nc" id="L78">			star = true;</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		if (newString.endsWith(StyleSignatureBasic.STAR)) {</span>
+<span class="fc" id="L77">			newString = newString.substring(0, newString.length() - 1).trim();</span>
+<span class="fc" id="L78">			star = true;</span>
 		}
 
 <span class="fc bfc" id="L81" title="All 2 branches covered.">		for (String s : newString.split(&quot;,&quot;))</span>
@@ -92,8 +92,8 @@ class Context {
 <span class="fc" id="L92">						ssb = ssb.addSName(sname);</span>
 				}
 
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">				if (star)</span>
-<span class="nc" id="L96">					ssb = ssb.addStar();</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">				if (star)</span>
+<span class="fc" id="L96">					ssb = ssb.addStar();</span>
 
 <span class="fc" id="L98">				result.signatures.add(ssb);</span>
 <span class="fc" id="L99">			}</span>

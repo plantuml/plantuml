@@ -69,14 +69,14 @@ class ITFLeaf implements TextBlock, ITF, AsciiBlock {
 <span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (shape == IdeaShape.PSEUDO) {</span>
 <span class="nc" id="L70">			this.fbox = null;</span>
 <span class="nc" id="L71">			this.box = TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		} else if (shape == IdeaShape.BOX) {</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		} else if (shape == IdeaShape.BOX) {</span>
 <span class="fc" id="L73">			this.fbox = FtileBoxOld.createWbs(style, skinParam, label);</span>
 <span class="fc" id="L74">			this.box = this.fbox;</span>
 		} else {
-<span class="nc" id="L76">			this.fbox = null;</span>
-<span class="nc" id="L77">			final TextBlock text = label.create0(style.getFontConfiguration(skinParam.getIHtmlColorSet()),</span>
-<span class="nc" id="L78">					style.getHorizontalAlignment(), skinParam, style.wrapWidth(), CreoleMode.FULL, null, null);</span>
-<span class="nc" id="L79">			this.box = TextBlockUtils.withMargin(text, 0, 3, 1, 1);</span>
+<span class="fc" id="L76">			this.fbox = null;</span>
+<span class="fc" id="L77">			final TextBlock text = label.create0(style.getFontConfiguration(skinParam.getIHtmlColorSet()),</span>
+<span class="fc" id="L78">					style.getHorizontalAlignment(), skinParam, style.wrapWidth(), CreoleMode.FULL, null, null);</span>
+<span class="fc" id="L79">			this.box = TextBlockUtils.withMargin(text, 0, 3, 1, 1);</span>
 		}
 <span class="fc" id="L81">	}</span>
 
@@ -99,7 +99,7 @@ class ITFLeaf implements TextBlock, ITF, AsciiBlock {
 	@Fast
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 <span class="fc" id="L101">		final XDimension2D dim = box.calculateDimension(stringBounder);</span>
-<span class="pc bpc" id="L102" title="3 of 4 branches missed.">		if (fbox == null &amp;&amp; forcedMinWidth &gt; dim.getWidth())</span>
+<span class="pc bpc" id="L102" title="1 of 4 branches missed.">		if (fbox == null &amp;&amp; forcedMinWidth &gt; dim.getWidth())</span>
 <span class="nc" id="L103">			return new XDimension2D(forcedMinWidth, dim.getHeight());</span>
 <span class="fc" id="L104">		return dim;</span>
 	}
@@ -109,7 +109,7 @@ class ITFLeaf implements TextBlock, ITF, AsciiBlock {
 <span class="fc" id="L109">			final UTranslate translate = ((AbstractCommonUGraphic) ug).getTranslate();</span>
 <span class="fc" id="L110">			idea.setGeometry(translate, calculateDimension(ug.getStringBounder()));</span>
 		}
-<span class="pc bpc" id="L112" title="3 of 4 branches missed.">		if (fbox == null &amp;&amp; forcedMinWidth &gt; 0) {</span>
+<span class="pc bpc" id="L112" title="1 of 4 branches missed.">		if (fbox == null &amp;&amp; forcedMinWidth &gt; 0) {</span>
 <span class="nc" id="L113">			final XDimension2D boxDim = box.calculateDimension(ug.getStringBounder());</span>
 <span class="nc bnc" id="L114" title="All 2 branches missed.">			if (forcedMinWidth &gt; boxDim.getWidth()) {</span>
 <span class="nc" id="L115">				final double dx = (forcedMinWidth - boxDim.getWidth()) / 2;</span>

@@ -146,9 +146,9 @@ public class WBSDiagram extends TitledDiagram implements TextBlock {
 			IdeaShape shape) {
 <span class="fc" id="L147">		final Matcher2 m = patternStereotype.matcher(label, 0);</span>
 <span class="fc" id="L148">		String stereotype = null;</span>
-<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		if (m.matches()) {</span>
-<span class="nc" id="L150">			label = m.group(1);</span>
-<span class="nc" id="L151">			stereotype = m.group(2);</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">		if (m.matches()) {</span>
+<span class="fc" id="L150">			label = m.group(1);</span>
+<span class="fc" id="L151">			stereotype = m.group(2);</span>
 		}
 <span class="fc" id="L153">		final Display display = Display.getWithNewlines(getPragma(), label);</span>
 <span class="fc" id="L154">		return addIdea(code, backColor, level, display, Stereotype.build(stereotype), direction, shape);</span>

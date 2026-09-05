@@ -65,23 +65,23 @@ class Idea {
 	@DuplicateCode(reference = &quot;WElement&quot;)
 	private StyleSignatureBasic getDefaultStyleDefinitionNode(int level) {
 <span class="fc bfc" id="L67" title="All 2 branches covered.">		if (level == 0)</span>
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">			if (shape == IdeaShape.NONE)</span>
-<span class="nc" id="L69">				return StyleSignatureBasic</span>
-<span class="nc" id="L70">						.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode, SName.boxless)</span>
-<span class="nc" id="L71">						.addStereotype(stereotype).addLevel(level);</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">			if (shape == IdeaShape.NONE)</span>
+<span class="fc" id="L69">				return StyleSignatureBasic</span>
+<span class="fc" id="L70">						.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode, SName.boxless)</span>
+<span class="fc" id="L71">						.addStereotype(stereotype).addLevel(level);</span>
 			else
 <span class="fc" id="L73">				return StyleSignatureBasic</span>
 <span class="fc" id="L74">						.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode)</span>
 <span class="fc" id="L75">						.addStereotype(stereotype).addLevel(level);</span>
 
-<span class="pc bpc" id="L77" title="3 of 4 branches missed.">		if (shape == IdeaShape.NONE &amp;&amp; children.size() == 0)</span>
-<span class="nc" id="L78">			return StyleSignatureBasic</span>
-<span class="nc" id="L79">					.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode, SName.boxless)</span>
-<span class="nc" id="L80">					.addStereotype(stereotype).addLevel(level);</span>
+<span class="fc bfc" id="L77" title="All 4 branches covered.">		if (shape == IdeaShape.NONE &amp;&amp; children.size() == 0)</span>
+<span class="fc" id="L78">			return StyleSignatureBasic</span>
+<span class="fc" id="L79">					.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode, SName.boxless)</span>
+<span class="fc" id="L80">					.addStereotype(stereotype).addLevel(level);</span>
 
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (shape == IdeaShape.NONE)</span>
-<span class="nc" id="L83">			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.boxless)</span>
-<span class="nc" id="L84">					.addStereotype(stereotype).addLevel(level);</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		if (shape == IdeaShape.NONE)</span>
+<span class="fc" id="L83">			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.boxless)</span>
+<span class="fc" id="L84">					.addStereotype(stereotype).addLevel(level);</span>
 
 <span class="fc bfc" id="L86" title="All 2 branches covered.">		if (children.size() == 0)</span>
 <span class="fc" id="L87">			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode)</span>
