@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -50,6 +51,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class GtileRepeat extends GtileTopDown3 {
 
@@ -66,7 +68,7 @@ public class GtileRepeat extends GtileTopDown3 {
 
 	private static Gtile getShape1(Swimlane swimlane, HColor color, StringBounder stringBounder, ISkinParam skinParam) {
 		final AbstractGtileRoot tmp = Gtiles.diamondEmpty(swimlane, stringBounder, skinParam,
-				getDefaultStyleDefinitionDiamond().toQuery(), color);
+				getDefaultStyleDefinitionDiamond(), color);
 		return Gtiles.withSouthMargin(tmp, 20);
 //		GtileHexagonInside tmp = Gtiles.hexagonInside(stringBounder, skinParam, swimlane,
 //				getDefaultStyleDefinitionDiamond(), branch0);
@@ -77,7 +79,7 @@ public class GtileRepeat extends GtileTopDown3 {
 	private static Gtile getShape2(Swimlane swimlane, HColor color, StringBounder stringBounder, ISkinParam skinParam,
 			Display test) {
 		final AbstractGtileRoot tmp = Gtiles.hexagonInside(swimlane, stringBounder, skinParam,
-				getDefaultStyleDefinitionDiamond().toQuery(), color, test);
+				getDefaultStyleDefinitionDiamond(), color, test);
 		return Gtiles.withNorthMargin(tmp, 20);
 	}
 
@@ -85,8 +87,8 @@ public class GtileRepeat extends GtileTopDown3 {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity);
 	}
 
-	final static public StyleSignature getDefaultStyleDefinitionDiamond() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
+	final static public StyleQuery getDefaultStyleDefinitionDiamond() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));
 	}
 
 	final public StyleSignature getDefaultStyleDefinitionArrow() {

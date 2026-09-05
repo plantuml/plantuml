@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class GtileIfAlone extends GtileTopDown3 {
 
@@ -62,14 +63,14 @@ public class GtileIfAlone extends GtileTopDown3 {
 	private static Gtile getShape1(Swimlane swimlane, Branch branch0, StringBounder stringBounder,
 			ISkinParam skinParam) {
 		GtileHexagonInside tmp = Gtiles.hexagonInside(swimlane, stringBounder, skinParam,
-				getDefaultStyleDefinitionDiamond().toQuery(), branch0.getColor(), branch0.getLabelTest());
+				getDefaultStyleDefinitionDiamond(), branch0.getColor(), branch0.getLabelTest());
 		final TextBlock tmp0 = branch0.getTextBlockPositive();
 		return Gtiles.withSouthMargin(tmp.withSouthLabel(tmp0), 20);
 	}
 
 	private static Gtile getShape2(Swimlane swimlane, HColor color, StringBounder stringBounder, ISkinParam skinParam) {
 		final AbstractGtileRoot tmp = Gtiles.diamondEmpty(swimlane, stringBounder, skinParam,
-				getDefaultStyleDefinitionDiamond().toQuery(), color);
+				getDefaultStyleDefinitionDiamond(), color);
 		return Gtiles.withNorthMargin(tmp, 20);
 	}
 
@@ -77,8 +78,8 @@ public class GtileIfAlone extends GtileTopDown3 {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity);
 	}
 
-	final static public StyleSignature getDefaultStyleDefinitionDiamond() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
+	final static public StyleQuery getDefaultStyleDefinitionDiamond() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));
 	}
 
 	final public StyleSignature getDefaultStyleDefinitionArrow() {
