@@ -237,7 +237,7 @@ public final class StyleQuery {
 	public StyleQuery mergeWith(List<Style> others) {
 		StyleQuery result = this;
 		for (Style other : others)
-			result = result.mergeWith(other.getSignature());
+			result = result.mergeWith(other.getQuery());
 
 		return result;
 	}

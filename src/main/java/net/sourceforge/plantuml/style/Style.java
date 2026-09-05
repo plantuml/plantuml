@@ -65,22 +65,22 @@ public class Style {
 	public static final String STAR = "*";
 
 	private final Map<PName, Value> map;
-	private final StyleQuery signature;
+	private final StyleQuery query;
 
-	public Style(StyleQuery signature, Map<PName, Value> map) {
+	public Style(StyleQuery query, Map<PName, Value> map) {
 		this.map = map;
-		this.signature = signature;
+		this.query = query;
 	}
 
 	public Style withAncestorRank(int rank) {
-		if (signature.getLevelConstraint().isStar() == false)
+		if (query.getLevelConstraint().isStar() == false)
 			throw new UnsupportedOperationException();
 
 		final EnumMap<PName, Value> copy = new EnumMap<PName, Value>(PName.class);
 		for (Entry<PName, Value> ent : this.map.entrySet())
 			copy.put(ent.getKey(), ((ValueImpl) ent.getValue()).withAncestorRank(rank));
 
-		return new Style(this.signature, copy);
+		return new Style(this.query, copy);
 
 	}
 
@@ -88,7 +88,7 @@ public class Style {
 		if (map.size() == 0)
 			return;
 
-		System.err.println(signature + " {");
+		System.err.println(query + " {");
 		for (Entry<PName, Value> ent : map.entrySet())
 			System.err.println("  " + ent.getKey() + ": " + ent.getValue().asString());
 
@@ -98,7 +98,7 @@ public class Style {
 
 	@Override
 	public String toString() {
-		return signature + " " + map;
+		return query + " " + map;
 	}
 
 	public Value value(PName name) {
@@ -134,7 +134,7 @@ public class Style {
 			final PName key = ent.getKey();
 			both.put(key, ((ValueImpl) ent.getValue()).mergeWith(previous));
 		}
-		return new Style(this.signature.mergeWith(other.getSignature()), both);
+		return new Style(this.query.mergeWith(other.getQuery()), both);
 	}
 
 	/**
@@ -172,7 +172,7 @@ public class Style {
 		if (divergentOnly.isEmpty())
 			return this;
 
-		return this.mergeWith(new Style(nested.signature, divergentOnly), strategy);
+		return this.mergeWith(new Style(nested.query, divergentOnly), strategy);
 	}
 
 	public Style eventuallyOverride(PName param, HColor color) {
@@ -182,7 +182,7 @@ public class Style {
 		final EnumMap<PName, Value> result = new EnumMap<PName, Value>(this.map);
 		final Value old = result.get(param);
 		result.put(param, new ValueColor(color, old.getSpecificity()));
-		return new Style(this.signature, result);
+		return new Style(this.query, result);
 	}
 
 	public Style eventuallyOverride(PName param, double value) {
@@ -192,7 +192,7 @@ public class Style {
 	public Style eventuallyOverride(PName param, String value) {
 		final EnumMap<PName, Value> result = new EnumMap<PName, Value>(this.map);
 		result.put(param, ValueImpl.regular(value, Specificity.forcedOverride()));
-		return new Style(this.signature, result);
+		return new Style(this.query, result);
 	}
 
 	public Style eventuallyOverride(Colors colors) {
@@ -225,8 +225,8 @@ public class Style {
 		return result;
 	}
 
-	public StyleQuery getSignature() {
-		return signature;
+	public StyleQuery getQuery() {
+		return query;
 	}
 
 	/**

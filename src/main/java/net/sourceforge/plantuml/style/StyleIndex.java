@@ -149,9 +149,9 @@ public final class StyleIndex {
 	 * or appends it as a new entry when no such element exists yet.
 	 */
 	private static void mergeOrAppend(List<Style> list, Style newStyle) {
-		final StyleQuery signature = newStyle.getSignature();
+		final StyleQuery signature = newStyle.getQuery();
 		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).getSignature().equals(signature)) {
+			if (list.get(i).getQuery().equals(signature)) {
 				list.set(i, list.get(i).mergeWith(newStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE));
 				return;
 			}
@@ -164,7 +164,7 @@ public final class StyleIndex {
 		if (result == null) {
 			result = new StyleAtomTrie<Style>();
 			for (Style style : allStyles) {
-				final StyleQuery asDeclaration = style.getSignature();
+				final StyleQuery asDeclaration = style.getQuery();
 				result.insert(asDeclaration.getAtoms(), asDeclaration.getLevelConstraint(), style);
 			}
 			trieCache = result;

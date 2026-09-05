@@ -137,7 +137,7 @@ public final class StyleLoader {
 			throw new StyleParsingException("No style found in " + filename);
 
 		for (Style newStyle : styles)
-			styleBuilder.loadInternal(newStyle.getSignature(), newStyle);
+			styleBuilder.loadInternal(newStyle.getQuery(), newStyle);
 
 		return styleBuilder;
 	}
