@@ -79,5 +79,8 @@ jobs:
       - name: Check viz missing
         run: node tools/browser-test/check-viz-missing.js target=plantuml-mit/build/npm-plantuml
 
+      - name: Check stdlib loader
+        run: node tools/browser-test/check-stdlib-loader.js target=plantuml-mit/build/npm-plantuml
+
       - name: Add Gradle title to Summary
         run: echo "## Gradle" >> $GITHUB_STEP_SUMMARY

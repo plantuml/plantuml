@@ -203,6 +203,58 @@ Sent from the iframe back to `github.com`.
 - **Self-contained.** Two JS files (`plantuml.js` + `viz-global.js`) with no
   additional dependencies.
 
+## Standard Library and Support Scripts
+
+`!include <C4/C4_Context>` and friends lazy-load one bundle per library
+(`c4.min.js`, `azure.min.js`, ...). Themes, emoji and OpenIconic sprites are
+lazy-loaded the same way (`themes.js`, `emoji.js`, `openiconic.js`). The
+loader injects a script tag with a **relative** URL, which resolves against
+the hosting page, so out of the box these features only work when those
+files sit next to the page. Two globals, set before rendering, change that:
+
+```html
+<script>
+  // Where the bundles live. One line gives a page that imports the engine
+  // from a CDN the entire stdlib (and themes/emoji), fetched on demand.
+  // The value is a plain URL prefix: note the trailing slash.
+  window.PLANTUML_STDLIB_BASE = "https://plantuml.github.io/plantuml/js-plantuml/";
+</script>
+```
+
+For production, self-host the files your diagrams use and point the base at
+your own assets instead of a third-party origin.
+
+Hosts that cannot load scripts at all set a loader callback instead:
+
+```html
+<script>
+  // Deliver bundles as data (no script execution): fetch <lib>.json,
+  // populate the engine's globals, call ok(). Return false to decline a
+  // URL (themes.js, emoji.js, ...) and let the script tag handle it.
+  window.PLANTUML_STDLIB_LOADER = function (url, ok, err) {
+    if (!/\.min\.js$/.test(url)) return false;
+    var lib = url.replace(/\.min\.js$/, "");
+    fetch("/stdlib-json/" + lib + ".json")
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(function (d) {
+        window.PLANTUML_STDLIB = window.PLANTUML_STDLIB || {};
+        window.PLANTUML_STDLIB[lib] = d.files;
+        window.PLANTUML_STDLIB_JSON = window.PLANTUML_STDLIB_JSON || {};
+        window.PLANTUML_STDLIB_JSON[lib] = d.json || {};
+        window.PLANTUML_STDLIB_INFO = window.PLANTUML_STDLIB_INFO || {};
+        window.PLANTUML_STDLIB_INFO[lib] = d.info;
+        ok();
+      })
+      .catch(function (e) { err(String(e)); });
+  };
+</script>
+```
+
+This is the path for a browser extension (store rules allow fetching remote
+data but not executing remote code) and for a Web Worker (no document to
+append a script tag to). With neither global set, behaviour is unchanged.
+`tools/browser-test/check-stdlib-loader.js` pins the whole contract.
+
 ## Multiple Diagrams per Page
 
 Each ` ```plantuml ` block gets its own iframe and its own `requestId`.
