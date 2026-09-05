@@ -116,19 +116,6 @@ public class StyleBuilder implements AutomaticCounter {
 		return ++counter;
 	}
 
-	public Style getMergedStyleTOBEREMOVED(StyleSignature signature) {
-//		boolean added = this.printedForLog.add(signature);
-//		if (added)
-//			Log.info(() -> "Using style " + signature);
-
-		// The actual computation -- and its memoization -- now live on the (immutable, often
-		// shared-across-diagrams) StyleIndex itself; see StyleIndex#getMergedStyle's javadoc.
-		// printedForLog stays here since it is deliberately per-builder (one diagram's log
-		// should not suppress the very same "Using style ..." line for the next diagram just
-		// because they share an index).
-		return index.getMergedStyle(signature);
-	}
-
 	public Style getMergedStyle(StyleQuery query) {
 		return index.getMergedStyle(query);
 	}
