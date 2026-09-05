@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class GtileWhile extends GtileTopDown3 {
 
@@ -52,13 +52,13 @@ public class GtileWhile extends GtileTopDown3 {
 		super(tile1, tile2, tile3);
 	}
 
-	private static StyleSignature getDefaultStyleDefinitionDiamond() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
+	private static StyleQuery getDefaultStyleDefinitionDiamond() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));
 	}
 
 	private static Gtile getShape1(Gtile toto, Swimlane swimlane, Display test, Display yes) {
 		GtileHexagonInside tmp0 = Gtiles.hexagonInside(swimlane, toto.getStringBounder(), toto.skinParam(),
-				getDefaultStyleDefinitionDiamond().toQuery(), HColors.BLUE, test);
+				getDefaultStyleDefinitionDiamond(), HColors.BLUE, test);
 
 //		final TextBlock tmp0 = branches.get(0).getTextBlockPositive();
 //		return Gtiles.withSouthMargin(tmp.withSouthLabel(tmp0), 10);

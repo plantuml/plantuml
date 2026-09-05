@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class GtileIfHexagon extends GtileColumns {
 
@@ -80,7 +81,7 @@ public class GtileIfHexagon extends GtileColumns {
 
 		this.shape1 = getShape1(swimlane);
 		this.shape2 = Gtiles.diamondEmpty(swimlane, getStringBounder(), skinParam(),
-				getDefaultStyleDefinitionDiamond().toQuery(), branches.get(0).getColor());
+				getDefaultStyleDefinitionDiamond(), branches.get(0).getColor());
 
 		final XDimension2D dimShape1 = shape1.calculateDimension(stringBounder);
 		this.pushDown(dimShape1.getHeight());
@@ -145,7 +146,7 @@ public class GtileIfHexagon extends GtileColumns {
 
 	private Gtile getShape1(Swimlane swimlane) {
 		GtileHexagonInside tmp = Gtiles.hexagonInside(swimlane, getStringBounder(), skinParam(),
-				getDefaultStyleDefinitionDiamond().toQuery(), branches.get(0).getColor(),
+				getDefaultStyleDefinitionDiamond(), branches.get(0).getColor(),
 				branches.get(0).getLabelTest());
 
 		final TextBlock tmp0 = branches.get(0).getTextBlockPositive();
@@ -181,8 +182,8 @@ public class GtileIfHexagon extends GtileColumns {
 		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity);
 	}
 
-	final public StyleSignature getDefaultStyleDefinitionDiamond() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
+	final public StyleQuery getDefaultStyleDefinitionDiamond() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));
 	}
 
 	final public StyleSignature getDefaultStyleDefinitionArrow() {
