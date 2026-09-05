@@ -61,8 +61,14 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 
 public class Style {
 
+	public static final String STAR = "*";
+
 	private final Map<PName, Value> map;
 	private final StyleSignature signature;
+
+	// To be used instead of StyleSignature
+//	private final Set<String> stereotypes;
+//	private final StyleKey key;
 
 	public Style(StyleSignature signature, Map<PName, Value> map) {
 		this.map = map;
