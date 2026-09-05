@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.svek;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -54,7 +56,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.utils.Direction;
 
 public class Kal implements UDrawable {
@@ -90,11 +92,10 @@ public class Kal implements UDrawable {
 		this.entity = entity;
 		this.link = link;
 		this.skinParam = skinParam;
-		this.style = StyleSignature
-				.ofSName0(SName.root, SName.element, SName.classDiagram, SName.class_, SName.qualified) //
+		this.style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQuery
+				.of(Arrays.asList(SName.root, SName.element, SName.classDiagram, SName.class_, SName.qualified)) //
 				.withTOBECHANGED(entity.getStereotype()) //
-				.with(entity.getStereostyles()) //
-				.getMergedStyleREMOVEME(skinParam.getCurrentStyleBuilder());
+				.with(entity.getStereostyles()));
 
 		final FontConfiguration font = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 

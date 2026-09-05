@@ -81,7 +81,6 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.image.EntityImageClass;
 import net.sourceforge.plantuml.svek.image.EntityImageNote;
@@ -114,17 +113,17 @@ public final class GraphvizImageBuilder {
 
 	}
 
-	final public StyleSignature getDefaultStyleDefinitionArrow(Stereotype stereotype) {
-		StyleSignature result = StyleSignature.ofSName0(SName.root, SName.element, styleName, SName.arrow);
+	final public StyleQuery getDefaultStyleDefinitionArrow(Stereotype stereotype) {
+		StyleQuery result = StyleQuery.of(Arrays.asList(SName.root, SName.element, styleName, SName.arrow));
 		if (stereotype != null)
 			result = result.withTOBECHANGED(stereotype);
 
 		return result;
 	}
 
-	final public StyleSignature getStyleArrowCardinality(Stereotype stereotype) {
-		StyleSignature result = StyleSignature.ofSName0(SName.root, SName.element, styleName, SName.arrow,
-				SName.cardinality);
+	final public StyleQuery getStyleArrowCardinality(Stereotype stereotype) {
+		StyleQuery result = StyleQuery
+				.of(Arrays.asList(SName.root, SName.element, styleName, SName.arrow, SName.cardinality));
 		if (stereotype != null)
 			result = result.withTOBECHANGED(stereotype);
 
@@ -233,10 +232,12 @@ public final class GraphvizImageBuilder {
 
 			try {
 				final ISkinParam skinParam = dotData.getSkinParam();
-				final FontConfiguration labelFont = getDefaultStyleDefinitionArrow(link.getStereotype())
-						.getMergedStyleREMOVEME(link.getStyleBuilder()).getFontConfiguration(skinParam.getIHtmlColorSet());
-				final FontConfiguration cardinalityFont = getStyleArrowCardinality(link.getStereotype())
-						.getMergedStyleREMOVEME(link.getStyleBuilder()).getFontConfiguration(skinParam.getIHtmlColorSet());
+				final FontConfiguration labelFont = link.getStyleBuilder()
+						.getMergedStyle(getDefaultStyleDefinitionArrow(link.getStereotype()))
+						.getFontConfiguration(skinParam.getIHtmlColorSet());
+				final FontConfiguration cardinalityFont = link.getStyleBuilder()
+						.getMergedStyle(getStyleArrowCardinality(link.getStereotype()))
+						.getFontConfiguration(skinParam.getIHtmlColorSet());
 
 				final SvekEdge line = new SvekEdge(link, skinParam, stringBounder, labelFont, cardinalityFont,
 						dotStringFactory.getBibliotekon(), pragma, dotStringFactory.getGraphvizVersion());

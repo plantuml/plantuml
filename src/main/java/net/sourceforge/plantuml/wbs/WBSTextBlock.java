@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.wbs;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBoxOld;
 import net.sourceforge.plantuml.asciiverse.ATable;
 import net.sourceforge.plantuml.asciiverse.AsciiBlock;
@@ -55,7 +57,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 abstract class WBSTextBlock extends TextBlockMemoized implements AsciiBlock {
 
@@ -83,10 +85,9 @@ abstract class WBSTextBlock extends TextBlockMemoized implements AsciiBlock {
 	}
 
 	private Style getStyleUsed() {
-		final StyleSignature signature = StyleSignature
-				.ofSName0(SName.root, SName.element, SName.wbsDiagram, SName.arrow).addLevel(level)
-				.withTOBECHANGED(stereotype);
-		return signature.getMergedStyleREMOVEME(styleBuilder);
+		final StyleQuery signature = StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.arrow))
+				.addLevel(level).withTOBECHANGED(stereotype);
+		return styleBuilder.getMergedStyle(signature);
 	}
 
 	final protected void drawLine(UGraphic ug, double x1, double y1, double x2, double y2) {

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.wbs;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +72,7 @@ import net.sourceforge.plantuml.style.NoStyleAvailableException;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.Direction;
 
@@ -244,8 +245,9 @@ public class WBSDiagram extends TitledDiagram implements TextBlock {
 		HColor color = colors.getColor(ColorType.LINE);
 
 		if (color == null) {
-			final Style style = StyleSignature.ofSName0(SName.root, SName.element, SName.wbsDiagram, SName.arrow)
-					.withTOBECHANGED(stereotype).getMergedStyleREMOVEME(getCurrentStyleBuilder());
+			final Style style = getCurrentStyleBuilder().getMergedStyle(StyleQuery
+					.of(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.arrow))
+					.withTOBECHANGED(stereotype));
 
 			color = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 		}
