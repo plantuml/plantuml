@@ -1,9 +1,0 @@
----
-output: svg
----
-@startuml
-nwdiag {
-  web1 [shape = cloud]
-  web2 [shape = cloud]
-}
-@enduml

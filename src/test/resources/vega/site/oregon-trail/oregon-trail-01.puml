@@ -1,6 +1,0 @@
----
-output: svg
----
-@startuml
-run oregon trail
-@enduml

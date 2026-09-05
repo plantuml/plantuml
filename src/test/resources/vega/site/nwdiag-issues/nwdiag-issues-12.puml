@@ -1,9 +1,0 @@
----
-output: svg
----
-@startuml
-nwdiag {
-  a
-  b
-}
-@enduml
