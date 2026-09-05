@@ -52,8 +52,6 @@ import net.sourceforge.plantuml.url.Url;
 
 public class StyleSignature {
 
-	public static final String STAR = "*";
-
 	private final Set<String> stereotypes;
 	private final StyleKey key;
 

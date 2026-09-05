@@ -37,11 +37,8 @@ package net.sourceforge.plantuml.style;
 
 import java.util.Collection;
 import java.util.EnumMap;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 import net.sourceforge.plantuml.style.parser2.StyleQuery;
-import net.sourceforge.plantuml.utils.Log;
 
 public class StyleBuilder implements AutomaticCounter {
 
@@ -76,7 +73,7 @@ public class StyleBuilder implements AutomaticCounter {
 	}
 
 	public Style createStyleStereotype(String name) {
-		if (name.contains(StyleSignature.STAR))
+		if (name.contains(Style.STAR))
 			throw new IllegalArgumentException();
 
 		name = name.toLowerCase();
