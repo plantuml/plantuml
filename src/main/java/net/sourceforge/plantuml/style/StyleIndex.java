@@ -179,19 +179,6 @@ public final class StyleIndex {
 		return trie().findMatching(query);
 	}
 
-	/**
-	 * Every style matching {@code signature} (see {@link #findMatching(StyleSignature)}),
-	 * folded together into one {@link Style} in match order using
-	 * {@link MergeStrategy#OVERWRITE_EXISTING_VALUE} -- {@link StyleBuilder#getMergedStyle}'s
-	 * actual computation, moved here so its result can be memoized once per index instance
-	 * rather than once per {@link StyleBuilder} clone (see this class's own javadoc for why that
-	 * distinction is what makes the caching worth having across diagrams sharing a skin).
-	 */
-	// This method is to be deleted
-	Style getMergedStyle(StyleSignature signature) {
-		return mergedStyleCache.computeIfAbsent(signature, sig -> computeMergedStyle(sig.toQuery()));
-	}
-
 	Style getMergedStyle(StyleQuery query) {
 		return computeMergedStyle(query);
 	}
