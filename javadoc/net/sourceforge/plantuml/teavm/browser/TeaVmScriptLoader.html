@@ -212,7 +212,36 @@ loadScripts(document, 'script');</script>
  <a href="TeaVmScriptLoader.Ok.html" title="interface in net.sourceforge.plantuml.teavm.browser">TeaVmScriptLoader.Ok</a>&nbsp;onOk,
  <a href="TeaVmScriptLoader.Err.html" title="interface in net.sourceforge.plantuml.teavm.browser">TeaVmScriptLoader.Err</a>&nbsp;onErr)</span></div>
 <div class="block">Loads a JS file once. Multiple concurrent calls are coalesced. The state is
- stored on window.</div>
+ stored on the global object.
+ <p>
+ Every lazily loaded support script comes through here: the stdlib bundles
+ (<code>&lt;lib&gt;.min.js</code>) and also <code>themes.js</code>, <code>emoji.js</code> and
+ <code>openiconic.js</code>, which all have the same problem this method's two
+ host-provided globals solve. They are checked in this order:
+ <ul>
+ <li><code>PLANTUML_STDLIB_LOADER</code>: a function <code>(url, onOk, onErr)</code>
+ that delivers the script's content itself, in whatever way fits the host.
+ For a stdlib bundle it populates <code>PLANTUML_STDLIB</code> /
+ <code>PLANTUML_STDLIB_JSON</code> / <code>PLANTUML_STDLIB_INFO</code> for the
+ library before calling <code>onOk</code>, or calls <code>onErr</code> with a
+ message. Returning <code>false</code> (strictly) declines the URL, and loading
+ proceeds through the script tag as if no hook were set, so a host that
+ only handles stdlib bundles can decline <code>themes.js</code> and friends.
+ The hook is the only way to load these files where a script tag cannot
+ work: a Web Worker (no document), a browser extension that may fetch
+ remote data but not execute remote code, or a non-browser runtime.
+ Mirrors how a host can pre-populate <code>PLANTUML_THEMES</code> for
+ <a href="#getTheme(java.lang.String)"><code>getTheme(String)</code></a>.</li>
+ <li><code>PLANTUML_STDLIB_BASE</code>: a URL prefix for the script tag, so a
+ page that imports the engine from a CDN can point the loading of all of
+ these files at wherever they are hosted. Without it the URL stays
+ relative, which resolves against the consuming document, not the
+ engine's location.</li>
+ </ul>
+ A host may instead pre-populate the globals a script would have set and
+ mark <code>__pl_script_state[url] = { state: 'loaded' }</code>; the fast path
+ then skips loading entirely. With neither global set, the behaviour is
+ exactly what it always was.</div>
 </section>
 </li>
 <li>
