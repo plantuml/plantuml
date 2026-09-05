@@ -45,9 +45,6 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.ULine;
-import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignature;
-
 public class GtileSplit extends GtileColumns {
 
 	private final HColor lineColor;
@@ -56,18 +53,6 @@ public class GtileSplit extends GtileColumns {
 		super(gtiles, singleSwimlane, 20);
 		this.lineColor = lineColor;
 
-	}
-
-	final public StyleSignature getDefaultStyleDefinitionActivity() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity);
-	}
-
-	final static public StyleSignature getDefaultStyleDefinitionDiamond() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
-	}
-
-	final public StyleSignature getDefaultStyleDefinitionArrow() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
 	@Override

@@ -41,7 +41,6 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FloatingNote;
-import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileGroup;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -61,7 +60,6 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.utils.MathUtils;
 
 public class GtileGroup extends AbstractGtileRoot {
@@ -76,10 +74,6 @@ public class GtileGroup extends AbstractGtileRoot {
 	private final UStroke stroke;
 	private final USymbol type;
 	private final double roundCorner;
-
-	final public StyleSignature getStyleSignature() {
-		return FtileGroup.getStyleSignature(type);
-	}
 
 	private double suppWidth(StringBounder stringBounder) {
 		final XDimension2D orig = inner.calculateDimension(stringBounder);

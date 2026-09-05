@@ -48,10 +48,8 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
 
 public class GanttArrow implements UDrawable {
 
@@ -167,9 +165,5 @@ public class GanttArrow implements UDrawable {
 
 		arrows.drawU(ug);
 
-	}
-
-	private StyleSignature getStyleSignatureTask() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.ganttDiagram, SName.task);
 	}
 }

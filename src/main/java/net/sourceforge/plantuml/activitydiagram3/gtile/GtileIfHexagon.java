@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class GtileIfHexagon extends GtileColumns {
@@ -178,16 +177,8 @@ public class GtileIfHexagon extends GtileColumns {
 		return nude.delta(0, height2 + 30);
 	}
 
-	final public StyleSignature getDefaultStyleDefinitionActivity() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.activity);
-	}
-
 	final public StyleQuery getDefaultStyleDefinitionDiamond() {
 		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));
-	}
-
-	final public StyleSignature getDefaultStyleDefinitionArrow() {
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
 	@Override
