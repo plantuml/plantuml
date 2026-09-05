@@ -120,13 +120,13 @@ public class StyleBuilder implements AutomaticCounter {
 		return index.getMergedStyle(query);
 	}
 
-	public Style getMergedStyleSpecial(StyleSignature signature, int ancestorRank) {
-//		boolean added = this.printedForLog.add(signature);
+	public Style getMergedStyleSpecial(StyleQuery query, int ancestorRank) {
+//		boolean added = this.printedForLog.add(query);
 //		if (added)
-//			Log.info(() -> "Using style " + signature);
+//			Log.info(() -> "Using style " + query);
 
 		Style mergedStyle = null;
-		for (Style style : index.findMatching(signature.toQuery())) {
+		for (Style style : index.findMatching(query)) {
 			final StyleSignature key = style.getSignature();
 
 			Style tmp = style;

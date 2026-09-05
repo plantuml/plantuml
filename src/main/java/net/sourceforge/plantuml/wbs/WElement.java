@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.wbs;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -55,7 +56,7 @@ import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.utils.Direction;
 
 final public class WElement {
@@ -73,31 +74,35 @@ final public class WElement {
 	private XDimension2D dimension;
 
 	@DuplicateCode(reference = "Idea")
-	private StyleSignature getDefaultStyleDefinitionNode(int level) {
+	private StyleQuery getDefaultStyleDefinitionNode(int level) {
 		if (level == 0)
 			if (shape == IdeaShape.NONE)
-				return StyleSignature
-						.ofSName0(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode, SName.boxless)
-						.addStereotype(stereotype).addLevel(level);
+				return StyleQuery
+						.of(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode,
+								SName.boxless))
+						.withTOBECHANGED(stereotype).addLevel(level);
 			else
-				return StyleSignature.ofSName0(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode)
-						.addStereotype(stereotype).addLevel(level);
+				return StyleQuery
+						.of(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode))
+						.withTOBECHANGED(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE && isLeaf())
-			return StyleSignature
-					.ofSName0(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode, SName.boxless)
-					.addStereotype(stereotype).addLevel(level);
+			return StyleQuery
+					.of(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode,
+							SName.boxless))
+					.withTOBECHANGED(stereotype).addLevel(level);
 
 		if (isLeaf())
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode)
-					.addStereotype(stereotype).addLevel(level);
+			return StyleQuery
+					.of(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode))
+					.withTOBECHANGED(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.boxless)
-					.addStereotype(stereotype).addLevel(level);
+			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.boxless))
+					.withTOBECHANGED(stereotype).addLevel(level);
 
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.wbsDiagram, SName.node).addStereotype(stereotype)
-				.addLevel(level);
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.node))
+				.withTOBECHANGED(stereotype).addLevel(level);
 	}
 
 	public ISkinParam withBackColor(ISkinParam skinParam) {
@@ -118,7 +123,7 @@ final public class WElement {
 		int ancestorRank = 0;
 		Style result = styleBuilder.getMergedStyleSpecial(getDefaultStyleDefinitionNode(level), ancestorRank);
 		for (WElement up = parent; up != null; up = up.parent) {
-			final StyleSignature ss = up.getDefaultStyleDefinitionNode(level).addStar();
+			final StyleQuery ss = up.getDefaultStyleDefinitionNode(level).addStar();
 			ancestorRank--;
 			final Style styleParent = styleBuilder.getMergedStyleSpecial(ss, ancestorRank);
 			result = result.mergeWith(styleParent, MergeStrategy.OVERWRITE_EXISTING_VALUE);

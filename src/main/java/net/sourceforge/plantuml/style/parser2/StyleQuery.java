@@ -181,6 +181,15 @@ public final class StyleQuery {
 	}
 
 	/**
+	 * This same query, additionally starred (an ancestor-inheritance lookup, matching only
+	 * declarations that are themselves starred) while keeping whatever depth was already set --
+	 * mirroring {@code StyleSignature.addStar()} / {@code StyleKey.addStar()}.
+	 */
+	public StyleQuery addStar() {
+		return new StyleQuery(atoms, LevelConstraint.of(levelConstraint.getLevel(), true));
+	}
+
+	/**
 	 * This same query, additionally requiring {@code name} -- mirroring
 	 * {@code StyleSignature.addSName(SName)}.
 	 */
