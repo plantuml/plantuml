@@ -55,7 +55,6 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public final class SvekResult implements IEntityImage {
@@ -74,8 +73,8 @@ public final class SvekResult implements IEntityImage {
 			if (cluster.getGroup().isPacked() == false)
 				cluster.drawU(ug);
 
-		final Style style2 = getDefaultStyleDefinition(null)
-				.getMergedStyleREMOVEME(dotData.getSkinParam().getCurrentStyleBuilder());
+		final Style style2 = dotData.getSkinParam().getCurrentStyleBuilder()
+				.getMergedStyle(getDefaultStyleDefinition(null));
 
 		final HColor borderColor = HColors
 				.noGradient(style2.value(PName.LineColor).asColor(dotData.getSkinParam().getIHtmlColorSet()));
@@ -109,9 +108,9 @@ public final class SvekResult implements IEntityImage {
 			node.fixOverlap();
 	}
 
-	private StyleSignature getDefaultStyleDefinition(Stereotype stereotype) {
-		StyleSignature result = StyleSignature.ofSName0(SName.root, SName.element,
-				dotData.geDiagramType().getStyleName(), SName.arrow);
+	private StyleQuery getDefaultStyleDefinition(Stereotype stereotype) {
+		StyleQuery result = StyleQuery
+				.of(Arrays.asList(SName.root, SName.element, dotData.geDiagramType().getStyleName(), SName.arrow));
 
 		return result.withTOBECHANGED(stereotype);
 	}

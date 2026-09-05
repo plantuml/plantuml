@@ -37,11 +37,13 @@ package net.sourceforge.plantuml.style;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
 
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 /**
@@ -86,12 +88,12 @@ class StyleSignatureStereotypeFanOutTest {
 				+ ".foo {\n  BackGroundColor red\n}\n" //
 				+ ".bar {\n  BackGroundColor blue\n}\n"; // declared later, so it wins any tie
 		final StyleBuilder builder = builderFrom(skin);
-		final StyleSignature base = StyleSignature.ofSName0(SName.root);
+		final StyleQuery base = StyleQuery.of(Arrays.asList(SName.root));
 
-		final Style fooLabelFirst = base.withTOBECHANGED(Stereotype.build("<<foo>><<bar>>")).getMergedStyleREMOVEME(builder);
+		final Style fooLabelFirst = builder.getMergedStyle(base.withTOBECHANGED(Stereotype.build("<<foo>><<bar>>")));
 		assertEquals("blue", fooLabelFirst.value(PName.BackGroundColor).asString());
 
-		final Style barLabelFirst = base.withTOBECHANGED(Stereotype.build("<<bar>><<foo>>")).getMergedStyleREMOVEME(builder);
+		final Style barLabelFirst = builder.getMergedStyle(base.withTOBECHANGED(Stereotype.build("<<bar>><<foo>>")));
 		assertEquals("blue", barLabelFirst.value(PName.BackGroundColor).asString());
 	}
 
@@ -102,14 +104,14 @@ class StyleSignatureStereotypeFanOutTest {
 				+ ".bar {\n  BackGroundColor blue\n}\n" //
 				+ ".foo {\n  .bar {\n    BackGroundColor green\n  }\n}\n";
 		final StyleBuilder builder = builderFrom(skin);
-		final StyleSignature base = StyleSignature.ofSName0(SName.root);
+		final StyleQuery base = StyleQuery.of(Arrays.asList(SName.root));
 
 		// "green" (the {foo, bar} declaration) always wins now, whatever the label order on the
 		// element and whatever file order the three declarations were in.
-		final Style result = base.withTOBECHANGED(Stereotype.build("<<foo>><<bar>>")).getMergedStyleREMOVEME(builder);
+		final Style result = builder.getMergedStyle(base.withTOBECHANGED(Stereotype.build("<<foo>><<bar>>")));
 		assertEquals("green", result.value(PName.BackGroundColor).asString());
 
-		final Style resultReversed = base.withTOBECHANGED(Stereotype.build("<<bar>><<foo>>")).getMergedStyleREMOVEME(builder);
+		final Style resultReversed = builder.getMergedStyle(base.withTOBECHANGED(Stereotype.build("<<bar>><<foo>>")));
 		assertEquals("green", resultReversed.value(PName.BackGroundColor).asString());
 	}
 
