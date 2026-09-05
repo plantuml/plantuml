@@ -85,7 +85,7 @@ public class StyleBuilder implements AutomaticCounter {
 		// no longer deduplicates by exact signature as it is populated -- see StyleIndex.
 		Style result = null;
 		for (Style style : index.getAllStyles())
-			if (style.getSignature().equals(signature))
+			if (style.getQuery().equals(signature))
 				result = result == null ? style : result.mergeWith(style, MergeStrategy.OVERWRITE_EXISTING_VALUE);
 
 		if (result == null)
@@ -124,7 +124,7 @@ public class StyleBuilder implements AutomaticCounter {
 
 		Style mergedStyle = null;
 		for (Style style : index.findMatching(query)) {
-			final StyleQuery key = style.getSignature();
+			final StyleQuery key = style.getQuery();
 
 			Style tmp = style;
 			if (key.getLevelConstraint().isStar())

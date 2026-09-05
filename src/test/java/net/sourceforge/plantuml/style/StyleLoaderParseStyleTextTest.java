@@ -114,7 +114,7 @@ class StyleLoaderParseStyleTextTest {
 		final Style style = theOneStyle(
 				StyleLoader.parseStyleText(BlocLines.getWithNewlines(text), new AutomaticCounterBasic()));
 
-		assertEquals(EnumSet.noneOf(SName.class), snamesOf(style.getSignature()));
+		assertEquals(EnumSet.noneOf(SName.class), snamesOf(style.getQuery()));
 		assertEquals("green/null (1,stereo=1)", style.value(PName.FontColor).toString());
 	}
 
@@ -125,8 +125,8 @@ class StyleLoaderParseStyleTextTest {
 		final Style style = theOneStyle(
 				StyleLoader.parseStyleText(BlocLines.getWithNewlines(text), new AutomaticCounterBasic()));
 
-		assertEquals(2, style.getSignature().getLevelConstraint().getLevel());
-		assertEquals(true, style.getSignature().getLevelConstraint().isStar());
+		assertEquals(2, style.getQuery().getLevelConstraint().getLevel());
+		assertEquals(true, style.getQuery().getLevelConstraint().isStar());
 	}
 
 	@Test
@@ -248,7 +248,7 @@ class StyleLoaderParseStyleTextTest {
 		Style starred = null;
 		Style plain = null;
 		for (Style style : styles)
-			if (style.getSignature().getLevelConstraint().isStar())
+			if (style.getQuery().getLevelConstraint().isStar())
 				starred = style;
 			else
 				plain = style;
@@ -303,7 +303,7 @@ class StyleLoaderParseStyleTextTest {
 		Style staticLib = null;
 		Style sharedLib = null;
 		for (Style style : styles) {
-			final String stereotype = style.getSignature().getStereotypes().toString();
+			final String stereotype = style.getQuery().getStereotypes().toString();
 			if (stereotype.contains("static"))
 				staticLib = style;
 			else if (stereotype.contains("shared"))
