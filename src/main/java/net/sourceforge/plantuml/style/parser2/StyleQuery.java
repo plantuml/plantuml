@@ -103,11 +103,15 @@ public final class StyleQuery {
 	}
 
 	public StyleQuery withTOBECHANGED(Stereotype stereotype) {
-		if (stereotype == null)
+		if (stereotype == null || stereotype.getStyleNames().size() == 0)
+			return this;
+
+		final List<String> labels = stereotype.getLabels(Guillemet.NONE);
+		if (labels.size() == 0)
 			return this;
 
 		StyleQuery result = this;
-		for (String s : stereotype.getMultipleLabels())
+		for (String s : labels)
 			result = result.withStereotype(s);
 		return result;
 	}

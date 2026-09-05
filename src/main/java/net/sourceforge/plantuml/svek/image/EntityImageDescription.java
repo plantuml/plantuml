@@ -160,6 +160,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		final List<SName> namesStereo = new ArrayList<>(Arrays.asList(SName.root, SName.element, getStyleName()));
 		namesStereo.addAll(Arrays.asList(symbol.getSNames()));
+		namesStereo.add(SName.stereotype);
 		final Style styleStereo = getEntity().getCurrentStyleBuilder()
 				.getMergedStyle(StyleQuery.of(namesStereo).forStereotypeItself(stereotype));
 
