@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.style.parser2;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -64,6 +65,10 @@ public final class StyleQuery {
 	private StyleQuery(SortedSet<StyleAtom> atoms, LevelConstraint levelConstraint) {
 		this.atoms = atoms;
 		this.levelConstraint = levelConstraint;
+	}
+	
+	public static StyleQuery activityArrow() {
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.arrow));
 	}
 
 	public static StyleQuery of(Collection<SName> names, Collection<String> stereotypes,
