@@ -49,7 +49,6 @@ import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.wbs.WElement;
 
@@ -65,32 +64,36 @@ class Idea {
 	private final Stereotype stereotype;
 
 	@DuplicateCode(reference = "WElement")
-	private StyleSignature getDefaultStyleDefinitionNode(int level) {
+	private StyleQuery getDefaultStyleDefinitionNode(int level) {
 		if (level == 0)
 			if (shape == IdeaShape.NONE)
-				return StyleSignature
-						.ofSName0(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode, SName.boxless)
-						.addStereotype(stereotype).addLevel(level);
+				return StyleQuery
+						.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode,
+								SName.boxless))
+						.withTOBECHANGED(stereotype).addLevel(level);
 			else
-				return StyleSignature
-						.ofSName0(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode)
-						.addStereotype(stereotype).addLevel(level);
+				return StyleQuery
+						.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode))
+						.withTOBECHANGED(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE && children.size() == 0)
-			return StyleSignature
-					.ofSName0(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode, SName.boxless)
-					.addStereotype(stereotype).addLevel(level);
+			return StyleQuery
+					.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode,
+							SName.boxless))
+					.withTOBECHANGED(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.boxless)
-					.addStereotype(stereotype).addLevel(level);
+			return StyleQuery
+					.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.boxless))
+					.withTOBECHANGED(stereotype).addLevel(level);
 
 		if (children.size() == 0)
-			return StyleSignature.ofSName0(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode)
-					.addStereotype(stereotype).addLevel(level);
+			return StyleQuery
+					.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode))
+					.withTOBECHANGED(stereotype).addLevel(level);
 
-		return StyleSignature.ofSName0(SName.root, SName.element, SName.mindmapDiagram, SName.node)
-				.addStereotype(stereotype).addLevel(level);
+		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.node))
+				.withTOBECHANGED(stereotype).addLevel(level);
 	}
 
 	/**
@@ -104,7 +107,7 @@ class Idea {
 		int ancestorRank = 0;
 		Style result = styleBuilder.getMergedStyleSpecial(getDefaultStyleDefinitionNode(level), ancestorRank);
 		for (Idea up = parent; up != null; up = up.parent) {
-			final StyleSignature ss = up.getDefaultStyleDefinitionNode(level).addStar();
+			final StyleQuery ss = up.getDefaultStyleDefinitionNode(level).addStar();
 			ancestorRank--;
 			final Style styleParent = styleBuilder.getMergedStyleSpecial(ss, ancestorRank);
 			result = result.mergeWith(styleParent, MergeStrategy.OVERWRITE_EXISTING_VALUE);
