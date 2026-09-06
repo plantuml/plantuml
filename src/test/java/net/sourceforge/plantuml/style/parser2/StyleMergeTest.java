@@ -42,21 +42,20 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
 import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Specificity;
 
 /**
- * Pins {@link StyleMerge} against the legacy priority mechanics it replaces: plain
- * {@code Style#mergeWith} (priority-wins, with its exact tie-break, and its light/dark
+ * Pins {@link StyleMerge} against the legacy mechanics it replaces: plain
+ * {@code Style#mergeWith} ({@link Specificity}-wins, with its exact tie-break, and its light/dark
  * combining via {@code DarkString#mergeWith}), and
- * {@code StyleBuilder#getMergedStyleSpecial}'s delta-shift-for-starred-declarations, which is
- * how a mindmap/wbs ancestor cascade lets a closer ancestor's catch-all rule beat a farther
- * one, or an element's own explicit declaration beat both.
+ * {@code StyleBuilder#getMergedStyleSpecial}'s ancestor-rank cascade, which is how a mindmap/wbs
+ * ancestor cascade lets a closer ancestor's catch-all rule beat a farther one.
  */
 class StyleMergeTest {
 
@@ -69,22 +68,22 @@ class StyleMergeTest {
 	@Test
 	void higherPriorityWinsRegardlessOfArgumentOrder() {
 		final Map<PName, PrioritizedValue> accumulated = new EnumMap<PName, PrioritizedValue>(PName.class);
-		accumulated.put(PName.FontColor, PrioritizedValue.light("black", 10));
+		accumulated.put(PName.FontColor, PrioritizedValue.light("black", Specificity.atOrder(10)));
 		final Map<PName, PrioritizedValue> incoming = new EnumMap<PName, PrioritizedValue>(PName.class);
-		incoming.put(PName.FontColor, PrioritizedValue.light("red", 20));
+		incoming.put(PName.FontColor, PrioritizedValue.light("red", Specificity.atOrder(20)));
 
 		final Map<PName, PrioritizedValue> merged = StyleMerge.mergeInto(accumulated, incoming,
 				MergeStrategy.OVERWRITE_EXISTING_VALUE);
 		assertEquals("red", merged.get(PName.FontColor).getValue());
-		assertEquals(20, merged.get(PName.FontColor).getPriority());
+		assertEquals(0, merged.get(PName.FontColor).getSpecificity().compareTo(Specificity.atOrder(20)));
 	}
 
 	@Test
 	void lowerIncomingPriorityLosesToWhatIsAlreadyAccumulated() {
 		final Map<PName, PrioritizedValue> accumulated = new EnumMap<PName, PrioritizedValue>(PName.class);
-		accumulated.put(PName.FontColor, PrioritizedValue.light("black", 20));
+		accumulated.put(PName.FontColor, PrioritizedValue.light("black", Specificity.atOrder(20)));
 		final Map<PName, PrioritizedValue> incoming = new EnumMap<PName, PrioritizedValue>(PName.class);
-		incoming.put(PName.FontColor, PrioritizedValue.light("red", 10));
+		incoming.put(PName.FontColor, PrioritizedValue.light("red", Specificity.atOrder(10)));
 
 		final Map<PName, PrioritizedValue> merged = StyleMerge.mergeInto(accumulated, incoming,
 				MergeStrategy.OVERWRITE_EXISTING_VALUE);
@@ -97,9 +96,9 @@ class StyleMergeTest {
 		// exact tie falls through to "other", i.e. the value already accumulated -- not the
 		// incoming one.
 		final Map<PName, PrioritizedValue> accumulated = new EnumMap<PName, PrioritizedValue>(PName.class);
-		accumulated.put(PName.FontColor, PrioritizedValue.light("black", 15));
+		accumulated.put(PName.FontColor, PrioritizedValue.light("black", Specificity.atOrder(15)));
 		final Map<PName, PrioritizedValue> incoming = new EnumMap<PName, PrioritizedValue>(PName.class);
-		incoming.put(PName.FontColor, PrioritizedValue.light("red", 15));
+		incoming.put(PName.FontColor, PrioritizedValue.light("red", Specificity.atOrder(15)));
 
 		final Map<PName, PrioritizedValue> merged = StyleMerge.mergeInto(accumulated, incoming,
 				MergeStrategy.OVERWRITE_EXISTING_VALUE);
@@ -111,8 +110,8 @@ class StyleMergeTest {
 		// The core of the light/dark fix: merging a light-only value with a dark-only one for
 		// the very same property does not pick a winner, it folds them into one value carrying
 		// both -- whichever order they are merged in.
-		final PrioritizedValue light = PrioritizedValue.light("black", 5);
-		final PrioritizedValue dark = PrioritizedValue.dark("white", 50);
+		final PrioritizedValue light = PrioritizedValue.light("black", Specificity.atOrder(5));
+		final PrioritizedValue dark = PrioritizedValue.dark("white", Specificity.atOrder(50));
 
 		final PrioritizedValue lightThenDark = dark.mergeWith(light);
 		assertEquals("black", lightThenDark.getLight());
@@ -125,7 +124,8 @@ class StyleMergeTest {
 
 	@Test
 	void twoLightValuesNeverCombineOnlyThePriorityWinnerSurvives() {
-		final PrioritizedValue merged = PrioritizedValue.light("red", 99).mergeWith(PrioritizedValue.light("black", 1));
+		final PrioritizedValue merged = PrioritizedValue.light("red", Specificity.atOrder(99))
+				.mergeWith(PrioritizedValue.light("black", Specificity.atOrder(1)));
 		assertEquals("red", merged.getLight());
 		assertNull(merged.getDark());
 	}
@@ -133,16 +133,18 @@ class StyleMergeTest {
 	@Test
 	void keepExistingValueOfStereotypeProtectsABoostedValueEvenFromAHigherIncomingPriority() {
 		final Map<PName, PrioritizedValue> accumulated = new EnumMap<PName, PrioritizedValue>(PName.class);
-		accumulated.put(PName.FontColor, PrioritizedValue.light("black", StyleMerge.DELTA_PRIORITY_FOR_STEREOTYPE + 500));
+		accumulated.put(PName.FontColor,
+				PrioritizedValue.light("black", Specificity.atOrder(500).withStereotypeCount(1)));
 		final Map<PName, PrioritizedValue> incoming = new EnumMap<PName, PrioritizedValue>(PName.class);
 		incoming.put(PName.FontColor,
-				PrioritizedValue.light("red", StyleMerge.DELTA_PRIORITY_FOR_STEREOTYPE + 999999));
+				PrioritizedValue.light("red", Specificity.atOrder(999999).withStereotypeCount(1)));
 
 		final Map<PName, PrioritizedValue> kept = StyleMerge.mergeInto(accumulated, incoming,
 				MergeStrategy.KEEP_EXISTING_VALUE_OF_STEREOTYPE);
 		assertEquals("black", kept.get(PName.FontColor).getValue());
 
-		// The same pair, with the plain strategy, lets the higher raw priority win as usual.
+		// The same pair, with the plain strategy: both require a stereotype, so that tier ties
+		// and the higher order wins as usual.
 		final Map<PName, PrioritizedValue> overwritten = StyleMerge.mergeInto(accumulated, incoming,
 				MergeStrategy.OVERWRITE_EXISTING_VALUE);
 		assertEquals("red", overwritten.get(PName.FontColor).getValue());
@@ -150,12 +152,12 @@ class StyleMergeTest {
 
 	@Test
 	void keepExistingValueOfStereotypeDoesNotProtectAnUnboostedValue() {
-		// Below the threshold: the strategy does not kick in, ordinary priority comparison
-		// applies and the higher incoming priority wins.
+		// The accumulated value requires no stereotype at all: the strategy does not kick in,
+		// ordinary specificity comparison applies and the higher incoming order wins.
 		final Map<PName, PrioritizedValue> accumulated = new EnumMap<PName, PrioritizedValue>(PName.class);
-		accumulated.put(PName.FontColor, PrioritizedValue.light("black", StyleMerge.DELTA_PRIORITY_FOR_STEREOTYPE - 1));
+		accumulated.put(PName.FontColor, PrioritizedValue.light("black", Specificity.atOrder(1)));
 		final Map<PName, PrioritizedValue> incoming = new EnumMap<PName, PrioritizedValue>(PName.class);
-		incoming.put(PName.FontColor, PrioritizedValue.light("red", StyleMerge.DELTA_PRIORITY_FOR_STEREOTYPE + 1));
+		incoming.put(PName.FontColor, PrioritizedValue.light("red", Specificity.atOrder(2)));
 
 		final Map<PName, PrioritizedValue> merged = StyleMerge.mergeInto(accumulated, incoming,
 				MergeStrategy.KEEP_EXISTING_VALUE_OF_STEREOTYPE);
@@ -168,9 +170,9 @@ class StyleMergeTest {
 		// list, which is exactly the case a plain Map#putAll loop over trie-visit order would
 		// get wrong.
 		final CompiledStyleRule earlyButHigherPriority = rule(LevelConstraint.none(), PName.FontColor,
-				PrioritizedValue.light("red", 50));
+				PrioritizedValue.light("red", Specificity.atOrder(50)));
 		final CompiledStyleRule laterButLowerPriority = rule(LevelConstraint.none(), PName.FontColor,
-				PrioritizedValue.light("blue", 5));
+				PrioritizedValue.light("blue", Specificity.atOrder(5)));
 
 		final Map<PName, PrioritizedValue> merged = StyleMerge.mergeAll(
 				Arrays.asList(earlyButHigherPriority, laterButLowerPriority), MergeStrategy.OVERWRITE_EXISTING_VALUE);
@@ -180,9 +182,9 @@ class StyleMergeTest {
 	@Test
 	void mergeAllCombinesALightMatchAndADarkMatchForTheSameProperty() {
 		final CompiledStyleRule lightMatch = rule(LevelConstraint.none(), PName.FontColor,
-				PrioritizedValue.light("black", 1));
+				PrioritizedValue.light("black", Specificity.atOrder(1)));
 		final CompiledStyleRule darkMatch = rule(LevelConstraint.none(), PName.FontColor,
-				PrioritizedValue.dark("white", 2));
+				PrioritizedValue.dark("white", Specificity.atOrder(2)));
 
 		final Map<PName, PrioritizedValue> merged = StyleMerge.mergeAll(Arrays.asList(lightMatch, darkMatch),
 				MergeStrategy.OVERWRITE_EXISTING_VALUE);
@@ -191,102 +193,65 @@ class StyleMergeTest {
 	}
 
 	@Test
-	void shiftPriorityMovesEveryValueByDeltaButKeepsTheProperties() {
-		final Map<PName, PrioritizedValue> values = new EnumMap<PName, PrioritizedValue>(PName.class);
-		values.put(PName.FontColor, PrioritizedValue.light("red", 10));
-		values.put(PName.BackGroundColor, PrioritizedValue.light("yellow", 20));
-
-		final Map<PName, PrioritizedValue> shifted = StyleMerge.shiftPriority(values, -1000);
-		assertEquals(-990, shifted.get(PName.FontColor).getPriority());
-		assertEquals(-980, shifted.get(PName.BackGroundColor).getPriority());
-		assertEquals("red", shifted.get(PName.FontColor).getValue());
-	}
-
-	@Test
-	void deltaForStarredOnlyShiftsStarredMatches() {
+	void ancestorRankOnlyAppliesToStarredMatches() {
+		// The element's own (non-starred) declaration, at a much higher file-order than the
+		// catch-all -- with the old int-priority scheme this would have won outright. Once the
+		// catch-all is promoted into the ancestor cascade, though, it always outranks a
+		// non-cascaded declaration whatever the latter's own order (see Specificity's own
+		// javadoc): the ancestor-cascade tier is strictly more significant than order.
 		final CompiledStyleRule ownDeclaration = rule(LevelConstraint.none(), PName.FontColor,
-				PrioritizedValue.light("black", 100));
+				PrioritizedValue.light("black", Specificity.atOrder(1000000)));
 		final CompiledStyleRule catchAll = rule(LevelConstraint.of(2, true), PName.FontColor,
-				PrioritizedValue.light("red", 100));
+				PrioritizedValue.light("red", Specificity.atOrder(1)));
 
-		final Map<PName, PrioritizedValue> merged = StyleMerge.mergeAllWithDeltaForStarred(
-				Arrays.asList(ownDeclaration, catchAll), -50, MergeStrategy.OVERWRITE_EXISTING_VALUE);
+		final Map<PName, PrioritizedValue> merged = StyleMerge.mergeAllWithAncestorRank(
+				Arrays.asList(ownDeclaration, catchAll), -1, MergeStrategy.OVERWRITE_EXISTING_VALUE);
 
-		// Same starting priority (100), but the starred one was shifted down to 50: the
-		// non-starred, unshifted declaration wins.
-		assertEquals("black", merged.get(PName.FontColor).getValue());
+		assertEquals("red", merged.get(PName.FontColor).getValue());
 	}
 
 	@Test
 	void ancestorCascadeLetsACloserAncestorsCatchAllBeatAFartherOne() {
-		// Reproduces Idea#getStyle(): one query per ancestor level, each folded with its own
-		// (decreasing) delta, the partial results then merged together.
-		final int stepByParent = 1000;
+		// Reproduces Idea#getStyle(): one query per ancestor level, each resolved at its own
+		// ancestor rank (0 = the element's own level, more negative = farther up), the partial
+		// results then merged together with a plain, non-cascading mergeInto.
+		final CompiledStyleRule parentCatchAll = rule(LevelConstraint.of(0, true), PName.FontColor,
+				PrioritizedValue.light("blue", Specificity.atOrder(5)));
+		final Map<PName, PrioritizedValue> parentResolved = StyleMerge.mergeAllWithAncestorRank(
+				Arrays.asList(parentCatchAll), -1, MergeStrategy.OVERWRITE_EXISTING_VALUE);
 
-		// The element's own declaration (non-star), declared early in the file (priority 1).
-		final CompiledStyleRule self = rule(LevelConstraint.none(), PName.FontColor, PrioritizedValue.light("black", 1));
-		final Map<PName, PrioritizedValue> selfResolved = StyleMerge.mergeAllWithDeltaForStarred(
-				Arrays.asList(self), stepByParent * 1, MergeStrategy.OVERWRITE_EXISTING_VALUE);
+		// Declared much later (order 9), so it would win on file order alone -- but it is
+		// farther away, so it must lose once both ancestor ranks are taken into account.
+		final CompiledStyleRule grandParentCatchAll = rule(LevelConstraint.of(0, true), PName.FontColor,
+				PrioritizedValue.light("green", Specificity.atOrder(9)));
+		final Map<PName, PrioritizedValue> grandParentResolved = StyleMerge.mergeAllWithAncestorRank(
+				Arrays.asList(grandParentCatchAll), -2, MergeStrategy.OVERWRITE_EXISTING_VALUE);
 
-		// The immediate parent's catch-all (depth(0)*), declared later (priority 5): closer,
-		// so it gets the larger remaining delta.
-		final CompiledStyleRule parent = rule(LevelConstraint.of(0, true), PName.FontColor,
-				PrioritizedValue.light("blue", 5));
-		final Map<PName, PrioritizedValue> parentResolved = StyleMerge.mergeAllWithDeltaForStarred(
-				Arrays.asList(parent), stepByParent * 1, MergeStrategy.OVERWRITE_EXISTING_VALUE);
-
-		// The grandparent's catch-all, declared even later (priority 9), so it would win on raw
-		// priority alone -- but it is farther away, so it must lose once both deltas are applied.
-		final CompiledStyleRule grandParent = rule(LevelConstraint.of(0, true), PName.FontColor,
-				PrioritizedValue.light("green", 9));
-		final Map<PName, PrioritizedValue> grandParentResolved = StyleMerge.mergeAllWithDeltaForStarred(
-				Arrays.asList(grandParent), stepByParent * 0, MergeStrategy.OVERWRITE_EXISTING_VALUE);
-
-		Map<PName, PrioritizedValue> result = selfResolved;
-		result = StyleMerge.mergeInto(result, parentResolved, MergeStrategy.OVERWRITE_EXISTING_VALUE);
-		result = StyleMerge.mergeInto(result, grandParentResolved, MergeStrategy.OVERWRITE_EXISTING_VALUE);
+		final Map<PName, PrioritizedValue> result = StyleMerge.mergeInto(parentResolved, grandParentResolved,
+				MergeStrategy.OVERWRITE_EXISTING_VALUE);
 
 		assertEquals("blue", result.get(PName.FontColor).getValue());
 	}
 
 	@Test
-	void ancestorCascadeStillLetsTheElementsOwnDeclarationWinWhenItsPriorityIsHighEnough() {
-		final int stepByParent = 1000;
-
-		// The element's own declaration, declared very late in the file (priority 999).
-		final CompiledStyleRule self = rule(LevelConstraint.none(), PName.FontColor,
-				PrioritizedValue.light("black", 999));
-		final Map<PName, PrioritizedValue> selfResolved = StyleMerge.mergeAllWithDeltaForStarred(
-				Arrays.asList(self), stepByParent * 1, MergeStrategy.OVERWRITE_EXISTING_VALUE);
-
-		// The parent's catch-all, declared early (priority 1), shifted down further still.
-		final CompiledStyleRule parent = rule(LevelConstraint.of(0, true), PName.FontColor,
-				PrioritizedValue.light("blue", 1));
-		final Map<PName, PrioritizedValue> parentResolved = StyleMerge.mergeAllWithDeltaForStarred(
-				Arrays.asList(parent), 0, MergeStrategy.OVERWRITE_EXISTING_VALUE);
-
-		final Map<PName, PrioritizedValue> result = StyleMerge.mergeInto(selfResolved, parentResolved,
-				MergeStrategy.OVERWRITE_EXISTING_VALUE);
-		assertEquals("black", result.get(PName.FontColor).getValue());
-	}
-
-	@Test
-	void mergeAllWithDeltaLeavesNonStarredMatchesAtTheirOwnPriority() {
+	void mergeAllWithAncestorRankLeavesNonStarredMatchesUncascaded() {
 		final CompiledStyleRule nonStarred = rule(LevelConstraint.of(3, false), PName.FontColor,
-				PrioritizedValue.light("black", 42));
-		final List<CompiledStyleRule> matches = Arrays.asList(nonStarred);
+				PrioritizedValue.light("black", Specificity.atOrder(42)));
 
-		final Map<PName, PrioritizedValue> merged = StyleMerge.mergeAllWithDeltaForStarred(matches, 12345,
-				MergeStrategy.OVERWRITE_EXISTING_VALUE);
-		assertEquals(42, merged.get(PName.FontColor).getPriority());
+		final Map<PName, PrioritizedValue> merged = StyleMerge.mergeAllWithAncestorRank(Arrays.asList(nonStarred),
+				12345, MergeStrategy.OVERWRITE_EXISTING_VALUE);
+
+		// Untouched: still exactly Specificity.atOrder(42), not promoted into the ancestor
+		// cascade and not given any stereotype count.
+		assertEquals(0, merged.get(PName.FontColor).getSpecificity().compareTo(Specificity.atOrder(42)));
 	}
 
 	@Test
 	void mergeIntoDoesNotMutateTheAccumulatedMapPassedIn() {
 		final Map<PName, PrioritizedValue> accumulated = new LinkedHashMap<PName, PrioritizedValue>();
-		accumulated.put(PName.FontColor, PrioritizedValue.light("black", 1));
+		accumulated.put(PName.FontColor, PrioritizedValue.light("black", Specificity.atOrder(1)));
 		final Map<PName, PrioritizedValue> incoming = new LinkedHashMap<PName, PrioritizedValue>();
-		incoming.put(PName.FontColor, PrioritizedValue.light("red", 99));
+		incoming.put(PName.FontColor, PrioritizedValue.light("red", Specificity.atOrder(99)));
 
 		StyleMerge.mergeInto(accumulated, incoming, MergeStrategy.OVERWRITE_EXISTING_VALUE);
 		assertFalse("red".equals(accumulated.get(PName.FontColor).getValue()));

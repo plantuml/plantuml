@@ -35,11 +35,16 @@
  */
 package net.sourceforge.plantuml.style.parser2;
 
+import java.util.EnumMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.Value;
+import net.sourceforge.plantuml.style.ValueImpl;
 
 /**
  * The compiled, queryable counterpart of a {@link MergedStyleSheet}: a single
@@ -91,6 +96,51 @@ public final class CompiledStyleSheet {
 		for (Map.Entry<PName, PrioritizedValue> ent : resolved.entrySet())
 			result.put(ent.getKey(), ent.getValue().getValue());
 		return result;
+	}
+
+	/**
+	 * {@link #resolve(StyleQuery)}, converted to the legacy {@link Style} shape
+	 * {@code net.sourceforge.plantuml.style.StyleIndex} still hands its own callers -- every
+	 * property's {@link PrioritizedValue} becomes a {@link Value} via {@link ValueImpl#of}, no
+	 * light/dark fold redone (already done by {@link MergedStyleNode#mergeRule}) and no
+	 * stereotype count reapplied (already baked in by {@link StyleAtomTrie#compile} at compile
+	 * time, unlike the legacy {@code LegacyStyleFlattener#toValueMap}, which only learns a node's
+	 * stereotype count while flattening). {@code query} becomes the resulting {@code Style}'s own
+	 * signature -- not the (possibly narrower) union of every match's own declaration path the
+	 * legacy cascade accumulates, since nothing downstream reads a resolved style's signature back
+	 * out for anything but debugging.
+	 *
+	 * <p>
+	 * Null, exactly like the legacy {@code StyleIndex#computeMergedStyle}, when nothing matched at
+	 * all -- as opposed to a {@code Style} with an empty property map.
+	 */
+	public Style resolveAsStyle(StyleQuery query) {
+		return toStyleOrNull(query, resolve(query));
+	}
+
+	/**
+	 * Same as {@link #resolveAsStyle(StyleQuery)}, but first applies
+	 * {@link StyleMerge#mergeAllWithAncestorRank} instead of a plain {@link StyleMerge#mergeAll}
+	 * -- the counterpart of {@code StyleBuilder#getMergedStyleSpecial}'s per-match
+	 * {@code withAncestorRank} loop, for the mindmap/wbs ancestor-inheritance cascade.
+	 */
+	public Style resolveWithAncestorRank(StyleQuery query, int ancestorRank) {
+		final List<CompiledStyleRule> matches = base.findMatching(query);
+		final Map<PName, PrioritizedValue> resolved = StyleMerge.mergeAllWithAncestorRank(matches, ancestorRank,
+				MergeStrategy.OVERWRITE_EXISTING_VALUE);
+		return toStyleOrNull(query, resolved);
+	}
+
+	private static Style toStyleOrNull(StyleQuery query, Map<PName, PrioritizedValue> resolved) {
+		if (resolved.isEmpty())
+			return null;
+
+		final Map<PName, Value> values = new EnumMap<PName, Value>(PName.class);
+		for (Map.Entry<PName, PrioritizedValue> ent : resolved.entrySet()) {
+			final PrioritizedValue pv = ent.getValue();
+			values.put(ent.getKey(), ValueImpl.of(pv.getLight(), pv.getDark(), pv.getSpecificity()));
+		}
+		return new Style(query, values);
 	}
 
 }

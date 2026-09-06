@@ -36,12 +36,14 @@
 package net.sourceforge.plantuml.style.parser2;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 
 /**
@@ -151,8 +153,16 @@ public final class StyleAtomTrie<T> {
 
 	private static void compileNode(MergedStyleNode node, TreeSet<StyleAtom> pathAtoms, LevelConstraint inherited,
 			StyleAtomTrie<CompiledStyleRule> target) {
-		if (node.getProperties().isEmpty() == false)
-			target.insert(pathAtoms, inherited, new CompiledStyleRule(inherited, node.getProperties()));
+		if (node.getProperties().isEmpty() == false) {
+			// Mirrors what LegacyStyleFlattener#toValueMap does with pathSoFar.getStereotypes()
+			// .size() at flatten time: a declaration's Specificity needs to know how many
+			// stereotypes its own selector required (see Specificity's own javadoc on that tier),
+			// and the trie path accumulated so far is exactly that selector, one atom per
+			// ancestor selector step.
+			final int stereotypeCount = countStereotypes(pathAtoms);
+			target.insert(pathAtoms, inherited,
+					new CompiledStyleRule(inherited, withStereotypeCount(node.getProperties(), stereotypeCount)));
+		}
 
 		// A selector declared once plain and once starred lives in two separate MergedStyleNode
 		// child slots, never one -- see MergedStyleNode's own javadoc -- so each child kind is
@@ -213,6 +223,24 @@ public final class StyleAtomTrie<T> {
 
 	private static int parseDepthKey(String key) {
 		return Integer.parseInt(key.substring("depth(".length(), key.length() - 1));
+	}
+
+	private static int countStereotypes(SortedSet<StyleAtom> atoms) {
+		int count = 0;
+		for (StyleAtom atom : atoms)
+			if (atom.isName() == false)
+				count++;
+		return count;
+	}
+
+	private static Map<PName, PrioritizedValue> withStereotypeCount(Map<PName, PrioritizedValue> values, int count) {
+		if (count == 0)
+			return values;
+
+		final Map<PName, PrioritizedValue> result = new EnumMap<PName, PrioritizedValue>(PName.class);
+		for (Map.Entry<PName, PrioritizedValue> ent : values.entrySet())
+			result.put(ent.getKey(), ent.getValue().withStereotypeCount(count));
+		return result;
 	}
 
 }

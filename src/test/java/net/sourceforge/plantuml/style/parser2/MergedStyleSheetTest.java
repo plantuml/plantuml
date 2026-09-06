@@ -48,6 +48,7 @@ import org.junit.jupiter.api.Test;
 
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Specificity;
 import net.sourceforge.plantuml.style.StyleLoader;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocationImpl;
@@ -123,7 +124,8 @@ class MergedStyleSheetTest {
 		assertEquals("bold", packageTitle.getProperty(PName.FontStyle).getValue());
 
 		// They must be independent nodes, not the same one reached twice.
-		compositeTitle.getProperties().put(PName.FontSize, PrioritizedValue.light("999", Integer.MAX_VALUE));
+		compositeTitle.getProperties().put(PName.FontSize,
+				PrioritizedValue.light("999", Specificity.atOrder(Integer.MAX_VALUE)));
 		assertNull(packageTitle.getProperty(PName.FontSize));
 	}
 

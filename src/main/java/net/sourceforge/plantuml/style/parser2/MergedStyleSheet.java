@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.style.parser2;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,18 +92,36 @@ public final class MergedStyleSheet {
 	}
 
 	public static MergedStyleSheet build(RawStyleSheet raw) {
+		return build(raw, new AutomaticCounterBasic());
+	}
+
+	/**
+	 * Same as {@link #build(RawStyleSheet)}, but drawing declaration order (see
+	 * {@code net.sourceforge.plantuml.style.Specificity#atOrder(int)}) from {@code counter}
+	 * instead of a fresh one private to this call -- so a base sheet built this way and a later
+	 * overlay parsed against the very same counter (e.g. {@code StyleBuilder} itself, an
+	 * {@code AutomaticCounter}) stay numbered on one continuous scale, exactly like
+	 * {@link #mute(RawStyleSheet)} already continues a sheet's own counter. Used by
+	 * {@code StyleBuilder#forBaseStyleText} so a base .skin file compiled straight into a
+	 * {@code net.sourceforge.plantuml.style.StyleIndex} (no intermediate flattening) still leaves
+	 * the builder's counter exactly where the old per-{@code Style} loading loop would have.
+	 */
+	public static MergedStyleSheet build(RawStyleSheet raw, AutomaticCounter counter) {
 		rejectStarredRules(raw.getRules());
 
 		final MergedStyleNode base = MergedStyleNode.newTopLevelContainer();
-
-		// One counter for the whole sheet, @media content included -- exactly like the legacy
-		// StyleBuilder is itself a single AutomaticCounter shared across a whole load, so
-		// priorities stay comparable across every declaration in the file.
-		final AutomaticCounter counter = new AutomaticCounterBasic();
 		mergeInto(base, raw, counter);
 
 		return new MergedStyleSheet(raw.getVariables(), base, counter);
 	}
+
+	/** No declaration at all -- mirroring {@code net.sourceforge.plantuml.style.StyleIndex#empty()}. */
+	public static MergedStyleSheet empty() {
+		return EMPTY;
+	}
+
+	private static final MergedStyleSheet EMPTY = new MergedStyleSheet(Collections.<String, String> emptyMap(),
+			MergedStyleNode.newTopLevelContainer(), new AutomaticCounterBasic());
 
 	/**
 	 * Folds {@code overlay} on top of a copy of this sheet, continuing this sheet's own

@@ -120,24 +120,22 @@ public final class StyleLoader {
 	}
 
 	private static StyleBuilder loadSkinSlow(String filename) throws IOException, StyleParsingException {
-		final StyleBuilder styleBuilder = new StyleBuilder();
-
 		final InputStream internalIs = getInputStreamForStyle(filename);
 		if (internalIs == null) {
 			Log.error("No .skin file seems to be available");
 			throw new NoStyleAvailableException();
 		}
 		final BlocLines lines2 = BlocLines.load(internalIs, new LineLocationImpl(filename, null));
-		final Collection<Style> styles = parseStyleText(lines2, styleBuilder);
+		// Compiles the whole file's tree once, straight into the StyleBuilder's index -- see
+		// StyleBuilder#forBaseStyleText and StyleIndex's own documentation for why this replaced
+		// the old parseStyleText-then-loadInternal-one-Style-at-a-time loop.
+		final StyleBuilder styleBuilder = StyleBuilder.forBaseStyleText(lines2);
 		// A file that parses without any error but that defines no style at all is not
 		// a style sheet: this happens with legacy skinparam files, where every line is
 		// silently ignored because the key is unknown. Accepting it here would give an
 		// empty StyleBuilder, and every later getStyle() would return null.
-		if (styles.isEmpty())
+		if (styleBuilder.isEmpty())
 			throw new StyleParsingException("No style found in " + filename);
-
-		for (Style newStyle : styles)
-			styleBuilder.loadInternal(newStyle.getQuery(), newStyle);
 
 		return styleBuilder;
 	}
@@ -207,10 +205,6 @@ public final class StyleLoader {
 
 		return Collections.unmodifiableList(result);
 	}
-
-	// Kept only for net.sourceforge.plantuml.style.parser2.StyleMerge, whose own
-	// int-priority-based scheme is out of scope for this refactor.
-	public static final int DELTA_PRIORITY_FOR_STEREOTYPE = 1000;
 
 	public static Map<PName, Value> addStereotypeCount(Map<PName, Value> tmp, int count) {
 		final Map<PName, Value> result = new EnumMap<>(PName.class);

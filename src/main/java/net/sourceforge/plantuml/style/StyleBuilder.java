@@ -38,15 +38,21 @@ package net.sourceforge.plantuml.style;
 import java.util.Collection;
 import java.util.EnumMap;
 
+import net.sourceforge.plantuml.style.parser.StyleParsingException;
+import net.sourceforge.plantuml.style.parser2.MergedStyleSheet;
+import net.sourceforge.plantuml.style.parser2.RawStyleParser;
+import net.sourceforge.plantuml.style.parser2.RawStyleSheet;
 import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.utils.BlocLines;
 
 public class StyleBuilder implements AutomaticCounter {
 
 	// The trie-backed replacement for the old, plain-linear-scan StyleStorage -- see
 	// StyleIndex's own documentation for why: resolving a style is by far the hottest path
 	// through this class (once per diagram element, not once per file), so this is the part
-	// that actually had to change; how styles are parsed into Style objects in the first
-	// place (loadInternal/muteStyle's callers) is untouched.
+	// that actually had to change. A whole base .skin file is compiled straight into it (see
+	// forBaseStyleText); loadInternal/muteStyle still hand it flat Style objects one at a time
+	// or in small batches, exactly as before.
 	private StyleIndex index = StyleIndex.empty();
 	// private final Set<StyleSignature> printedForLog;
 	private int counter;
@@ -70,6 +76,37 @@ public class StyleBuilder implements AutomaticCounter {
 		result.counter = this.counter;
 		return result;
 
+	}
+
+	/**
+	 * Builds a {@link StyleBuilder} straight from a whole .skin file's text -- the counterpart of
+	 * the old {@code StyleLoader#loadSkinSlow} loop that parsed the file into flat {@link Style}
+	 * objects first (through {@code StyleLoader#parseStyleText}) and then loaded them one at a
+	 * time via {@link #loadInternal(StyleQuery, Style)}, each call re-scanning what had already
+	 * been loaded (see the old {@code StyleIndex#mergeOrAppend}) and, on top of that, forcing
+	 * every query afterwards to re-derive {@code StyleAtom} paths from those flattened
+	 * {@link Style} objects instead of the tree they came from. This compiles that tree exactly
+	 * once, directly, via {@link StyleIndex#forBase(MergedStyleSheet)} -- see that class's own
+	 * documentation.
+	 *
+	 * <p>
+	 * {@code this} is passed as the {@link net.sourceforge.plantuml.style.AutomaticCounter} to
+	 * {@link MergedStyleSheet#build(RawStyleSheet, net.sourceforge.plantuml.style.AutomaticCounter)}
+	 * so the returned builder's own counter ends up exactly where the old per-{@link Style} loop
+	 * would have left it: a later {@link #muteStyle(Collection)} overlay, which continues this
+	 * same counter, is still guaranteed to always outrank every declaration in this base,
+	 * whatever their relative specificity would otherwise have been.
+	 */
+	public static StyleBuilder forBaseStyleText(BlocLines lines) throws StyleParsingException {
+		final StyleBuilder result = new StyleBuilder();
+		final RawStyleSheet raw = RawStyleParser.parse(lines);
+		result.index = StyleIndex.forBase(MergedStyleSheet.build(raw, result));
+		return result;
+	}
+
+	/** Whether this builder has no style at all loaded or muted into it. */
+	public boolean isEmpty() {
+		return index.isEmpty();
 	}
 
 	public Style createStyleStereotype(String name) {
@@ -122,21 +159,7 @@ public class StyleBuilder implements AutomaticCounter {
 //		if (added)
 //			Log.info(() -> "Using style " + query);
 
-		Style mergedStyle = null;
-		for (Style style : index.findMatching(query)) {
-			final StyleQuery key = style.getQuery();
-
-			Style tmp = style;
-			if (key.getLevelConstraint().isStar())
-				tmp = tmp.withAncestorRank(ancestorRank);
-
-			if (mergedStyle == null)
-				mergedStyle = tmp;
-			else
-				mergedStyle = mergedStyle.mergeWith(tmp, MergeStrategy.OVERWRITE_EXISTING_VALUE);
-
-		}
-		return mergedStyle;
+		return index.getMergedStyleSpecial(query, ancestorRank);
 	}
 
 }

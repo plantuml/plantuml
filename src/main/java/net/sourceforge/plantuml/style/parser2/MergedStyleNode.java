@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.style.parser2;
 
+import java.util.Collection;
 import java.util.EnumMap;
 import java.util.IdentityHashMap;
 import java.util.LinkedHashMap;
@@ -43,6 +44,7 @@ import java.util.Map;
 import net.sourceforge.plantuml.style.AutomaticCounter;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Specificity;
 
 /**
  * One node of the canonical, merged style tree: unlike {@link RawStyleRule}, there is at
@@ -164,9 +166,9 @@ public final class MergedStyleNode {
 		if (ownValues == null) {
 			ownValues = new EnumMap<PName, PrioritizedValue>(PName.class);
 			for (Map.Entry<PName, String> ent : rule.getProperties().entrySet()) {
-				final int priority = counter.getNextInt();
-				ownValues.put(ent.getKey(), dark ? PrioritizedValue.dark(ent.getValue(), priority)
-						: PrioritizedValue.light(ent.getValue(), priority));
+				final Specificity specificity = Specificity.atOrder(counter.getNextInt());
+				ownValues.put(ent.getKey(), dark ? PrioritizedValue.dark(ent.getValue(), specificity)
+						: PrioritizedValue.light(ent.getValue(), specificity));
 			}
 			ownValuesCache.put(rule, ownValues);
 		}
@@ -272,6 +274,27 @@ public final class MergedStyleNode {
 
 	public boolean isStar() {
 		return star;
+	}
+
+	/**
+	 * Whether this node, and every node under it, declares no property at all -- used to tell a
+	 * genuinely empty style sheet (see {@code StyleLoader#loadSkinSlow}'s own "no style found"
+	 * guard) from one that merely has not been flattened yet, without paying for a full
+	 * {@code LegacyStyleFlattener#flatten} just to answer that one question.
+	 */
+	public boolean isEmpty() {
+		if (properties.isEmpty() == false)
+			return false;
+
+		return allEmpty(namedChildren.values()) && allEmpty(starredNamedChildren.values())
+				&& allEmpty(otherChildren.values()) && allEmpty(starredOtherChildren.values());
+	}
+
+	private static boolean allEmpty(Collection<MergedStyleNode> children) {
+		for (MergedStyleNode child : children)
+			if (child.isEmpty() == false)
+				return false;
+		return true;
 	}
 
 	/**

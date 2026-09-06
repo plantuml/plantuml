@@ -139,7 +139,7 @@ final class LegacyStyleFlattener {
 		final Map<PName, Value> result = new EnumMap<PName, Value>(PName.class);
 		for (Map.Entry<PName, PrioritizedValue> ent : properties.entrySet()) {
 			final PrioritizedValue pv = ent.getValue();
-			final Specificity specificity = Specificity.atOrder(pv.getPriority()).withStereotypeCount(stereotypeCount);
+			final Specificity specificity = pv.getSpecificity().withStereotypeCount(stereotypeCount);
 			result.put(ent.getKey(), ValueImpl.of(pv.getLight(), pv.getDark(), specificity));
 		}
 		return result;

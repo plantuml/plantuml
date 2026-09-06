@@ -35,11 +35,23 @@
  */
 package net.sourceforge.plantuml.style.parser2;
 
+import net.sourceforge.plantuml.style.Specificity;
+
 /**
- * One property value, together with the priority it was assigned when merged in (see
+ * One property value, together with the {@link Specificity} it was assigned when merged in (see
  * {@link MergedStyleNode#mergeRule}) -- the direct counterpart of the legacy
  * {@code net.sourceforge.plantuml.style.DarkString}, kept under the same name it had before
  * this class grew a dark half.
+ *
+ * This carries a full {@link Specificity} rather than a bare {@code int} priority on purpose:
+ * an earlier version of this class (and of {@code net.sourceforge.plantuml.style.StyleMerge})
+ * used a single {@code int}, boosted by a flat constant for a stereotype match and shifted by a
+ * second, much larger one for the mindmap/wbs ancestor cascade -- exactly the design
+ * {@link Specificity}'s own javadoc explains was replaced for silently overflowing. Sharing that
+ * same tiered type here (rather than reinventing an equivalent) means a value resolved through
+ * this {@code parser2} engine and one resolved through the legacy
+ * {@code net.sourceforge.plantuml.style.StyleBuilder} path compare exactly the same way, however
+ * they got combined.
  *
  * A property can carry a {@link #getLight()} value, a {@link #getDark()} one, or both: a
  * plain declaration (outside any {@code @media} block) sets only {@link #getLight()}: a
@@ -56,20 +68,20 @@ public final class PrioritizedValue {
 
 	private final String light;
 	private final String dark;
-	private final int priority;
+	private final Specificity specificity;
 
-	private PrioritizedValue(String light, String dark, int priority) {
+	private PrioritizedValue(String light, String dark, Specificity specificity) {
 		this.light = light;
 		this.dark = dark;
-		this.priority = priority;
+		this.specificity = specificity;
 	}
 
-	public static PrioritizedValue light(String value, int priority) {
-		return new PrioritizedValue(value, null, priority);
+	public static PrioritizedValue light(String value, Specificity specificity) {
+		return new PrioritizedValue(value, null, specificity);
 	}
 
-	public static PrioritizedValue dark(String value, int priority) {
-		return new PrioritizedValue(null, value, priority);
+	public static PrioritizedValue dark(String value, Specificity specificity) {
+		return new PrioritizedValue(null, value, specificity);
 	}
 
 	/** Null if this value was never given a light (regular) declaration. */
@@ -91,8 +103,8 @@ public final class PrioritizedValue {
 		return light != null ? light : dark;
 	}
 
-	public int getPriority() {
-		return priority;
+	public Specificity getSpecificity() {
+		return specificity;
 	}
 
 	/**
@@ -100,10 +112,10 @@ public final class PrioritizedValue {
 	 * property), mirroring {@code DarkString#mergeWith} exactly:
 	 * <ul>
 	 * <li>if both are the same kind (both light-only, or both dark-only) -- or either one is
-	 * already a combined light+dark value -- the strictly higher priority wins outright, and on
+	 * already a combined light+dark value -- the strictly more specific one wins outright, and on
 	 * an exact tie {@code existing} wins, not the incoming value;</li>
 	 * <li>if one is light-only and the other is dark-only, they combine into one value carrying
-	 * both, keeping whichever priority belonged to the light-only side of the pair.</li>
+	 * both, keeping whichever specificity belonged to the light-only side of the pair.</li>
 	 * </ul>
 	 * {@code existing} may be null (nothing accumulated yet), in which case this value is
 	 * returned unconditionally.
@@ -113,28 +125,37 @@ public final class PrioritizedValue {
 			return this;
 
 		if ((this.dark == null && existing.dark == null) || (this.light == null && existing.light == null))
-			return isBigger(this.priority, existing.priority) ? this : existing;
+			return this.specificity.isBiggerThan(existing.specificity) ? this : existing;
 
 		if (this.dark == null && existing.light == null)
-			return new PrioritizedValue(this.light, existing.dark, this.priority);
+			return new PrioritizedValue(this.light, existing.dark, this.specificity);
 
 		if (existing.dark == null && this.light == null)
-			return new PrioritizedValue(existing.light, this.dark, existing.priority);
+			return new PrioritizedValue(existing.light, this.dark, existing.specificity);
 
-		return isBigger(this.priority, existing.priority) ? this : existing;
+		return this.specificity.isBiggerThan(existing.specificity) ? this : existing;
 	}
 
-	private static boolean isBigger(int a, int b) {
-		return a > b;
+	/**
+	 * This same value, but applied through the mindmap/wbs ancestor-inheritance cascade at
+	 * ancestor rank {@code rank} -- mirroring {@code ValueImpl#withAncestorRank}/
+	 * {@code DarkString#withAncestorRank} exactly, via {@link Specificity#withAncestorRank(int)}.
+	 */
+	public PrioritizedValue withAncestorRank(int rank) {
+		return new PrioritizedValue(light, dark, specificity.withAncestorRank(rank));
 	}
 
-	public PrioritizedValue shiftPriority(int delta) {
-		return new PrioritizedValue(light, dark, priority + delta);
+	/**
+	 * This same value, but requiring {@code count} stereotypes -- mirroring
+	 * {@code ValueImpl#withStereotypeCount}, via {@link Specificity#withStereotypeCount(int)}.
+	 */
+	public PrioritizedValue withStereotypeCount(int count) {
+		return new PrioritizedValue(light, dark, specificity.withStereotypeCount(count));
 	}
 
 	@Override
 	public String toString() {
-		return light + "/" + dark + " (" + priority + ")";
+		return light + "/" + dark + " (" + specificity + ")";
 	}
 
 }
