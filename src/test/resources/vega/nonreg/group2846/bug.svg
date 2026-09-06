@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="134px" preserveAspectRatio="none" style="width:124px;height:134px;background:#FFFFFF;" version="1.1" viewBox="0 0 124 134" width="124px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster uid-->
+    <g class="cluster" data-qualified-name="uid" data-source-line="2" id="ent0001">
+      <rect fill="none" height="106" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="102" x="14" y="4"/>
+      <path d="M67.025,4 L67.025,12 L57.025,22 L14,22" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="22" cy="14" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" font-weight="700" textLength="32.025" x="28" y="16.389">Hello</text>
+    </g>
+    <!--class World-->
+    <g class="entity" data-qualified-name="uid.World" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="68.575" x="30.5" y="46"/>
+      <ellipse cx="45.5" cy="62" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="40.5" y="67">C</text>
+      <text fill="#000" font-size="14" textLength="36.575" x="59.5" y="65.889">World</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="31.5" x2="98.075" y1="78" y2="78"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="31.5" x2="98.075" y1="86" y2="86"/>
+    </g>
+  </g>
+</svg>
