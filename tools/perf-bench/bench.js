@@ -191,8 +191,8 @@ function graph(rows, target, ref) {
   const lines = [];
   const lines_target = [];
   const lines_ref = [];
-  lines.push('| diagram | target ms (IQR) | ' + (hasRef ? 'reference ms (IQR) | ratio | band | ' : '') + 'output |');
-  lines.push('|---|---|' + (hasRef ? '---|---|---|' : '') + '---|');
+  lines.push('| diagram | target ms (IQR) | ' + (hasRef ? 'reference ms (IQR) | ratio | icon | band | ' : '') + 'output |');
+  lines.push('|---|---|' + (hasRef ? '---|---|:---:|---|' : '') + '---|');
   for (const row of rows) {
     const t = agg[row].target, r = hasRef ? agg[row].reference : null;
     const fmt = x => x.err ? (x.err.includes('too large') ? 'size-limited (no maxSvgSize)' : 'ERROR')
@@ -202,10 +202,10 @@ function graph(rows, target, ref) {
       const q = t.medianMs / r.medianMs;
       ratio = q.toFixed(2);
       const b = bands[row];
-      if (t.truncated || r.truncated) band = 'n/a (truncated)';
-      else if (b) band = Math.abs(q - b.ratio) <= b.tol ? 'OK'
-        : (q > b.ratio ? `SLOWER than band by ${((q - b.ratio - b.tol) * 100).toFixed(0)}pp` : `faster than band by ${((b.ratio - b.tol - q) * 100).toFixed(0)}pp`);
-      else band = 'no band';
+      if (t.truncated || r.truncated) band = '🚧 | n/a (truncated)';
+      else if (b) band = Math.abs(q - b.ratio) <= b.tol ? '= | OK'
+        : (q > b.ratio ? `🐌 | SLOWER than band by ${((q - b.ratio - b.tol) * 100).toFixed(0)}pp` : `💨 | faster than band by ${((b.ratio - b.tol - q) * 100).toFixed(0)}pp`);
+      else band = '⛔ | no band';
     }
     if (t.sha8) {
       output = '`' + t.sha8 + '`';
