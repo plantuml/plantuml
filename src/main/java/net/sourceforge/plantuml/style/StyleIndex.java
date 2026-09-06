@@ -39,6 +39,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import net.sourceforge.plantuml.style.parser2.StyleAtomTrie;
 import net.sourceforge.plantuml.style.parser2.StyleQuery;
@@ -74,6 +76,18 @@ public final class StyleIndex {
 	// only risks the harmless case of building it twice, since every build from the same
 	// (immutable) allStyles produces an equally valid trie.
 	private volatile StyleAtomTrie<Style> trieCache;
+
+	// Memoizes getMergedStyle by query, exactly like the old StyleBuilder#mergedStyleCache
+	// used to before this index existed: getMergedStyle is called from some 300 sites across
+	// the diagram packages, essentially once per rendered element, but any given element kind
+	// (e.g. "root document sequenceDiagram message arrow") shares the same StyleQuery across
+	// every one of its occurrences in a diagram -- so without this, resolving it (a trie walk
+	// down findMatching plus the Style#mergeWith cascade over whatever it finds) is redone
+	// from scratch for every single occurrence instead of once. Safe to key by StyleQuery
+	// as-is (it is immutable with proper equals/hashCode) and safe to keep for this index's
+	// whole lifetime (this index itself is immutable -- withLoaded/withMuted always return a
+	// new one -- so there is no later mutation this cache could ever go stale against).
+	private final Map<StyleQuery, Style> mergedStyleCache = new ConcurrentHashMap<StyleQuery, Style>();
 
 	private StyleIndex(List<Style> allStyles) {
 		this.allStyles = allStyles;
@@ -163,7 +177,21 @@ public final class StyleIndex {
 	}
 
 	Style getMergedStyle(StyleQuery query) {
-		return computeMergedStyle(query);
+		final Style cached = mergedStyleCache.get(query);
+		if (cached != null)
+			return cached;
+
+		// Not computeIfAbsent: computeMergedStyle legitimately returns null when nothing
+		// matches (see below), and computeIfAbsent never records a null result, so a
+		// no-match query would otherwise be recomputed on every single call forever. A
+		// plain get/put pair costs one extra (harmless, idempotent) recomputation on a
+		// race between two callers instead -- still infinitely better than never caching
+		// a hit at all.
+		final Style computed = computeMergedStyle(query);
+		if (computed != null)
+			mergedStyleCache.put(query, computed);
+
+		return computed;
 	}
 
 	private Style computeMergedStyle(StyleQuery query) {
