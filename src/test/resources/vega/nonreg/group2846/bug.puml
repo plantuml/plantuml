@@ -1,6 +1,5 @@
 ---
-output: png
-expected-description: (1 entities)
+output: svg
 ---
 
 @startuml
