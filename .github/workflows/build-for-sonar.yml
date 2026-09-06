@@ -1,6 +1,8 @@
 name: Build and analyse by SonarQube
 
 on:
+  schedule:
+    - cron: '45 2 * * 4'   # every Thursday at 02:45 UTC
   workflow_dispatch:
 
 jobs:
@@ -11,39 +13,54 @@ jobs:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
       - name: Set environment variable
         run: echo "GPL_ONLY=true" >> $GITHUB_ENV
+
       - name: Set up Java JDK 
         uses: actions/setup-java@v6
         with:
           java-version: 21
           distribution: temurin
           cache: gradle
+
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6.3.0
+
       - name: Cache SonarQube packages
         uses: actions/cache@v6
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
+
       - name: Cache Gradle packages
         uses: actions/cache@v6
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
-      - name: Save 'settings.gradle.kts' file
-        run: mv settings.gradle.kts settings.gradle.old.kts
-      - name: Rename 'settings.gradle.kts.sonar' file
-        run: mv settings.gradle.kts.sonar settings.gradle.kts
+
       - name: Save 'build.gradle.kts' file
         run: mv build.gradle.kts build.gradle.old.kts
+
       - name: Rename 'build.gradle.kts.sonar' file
         run: mv build.gradle.kts.sonar build.gradle.kts
+
       - name: Build
         run: gradle build --info
+
       - name: Analyze by Sonar
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: gradle sonar --info
+
+      - name: Add Sonar and Gradle title to Summary
+        run: |
+          {
+            echo "## Sonar"
+            echo "See result here:"
+            echo "- [Plantuml SonarQube dashboard](https://sonarcloud.io/dashboard?id=plantuml_plantuml)"
+            echo ""
+            echo "## Gradle" 
+          } >> "$GITHUB_STEP_SUMMARY"

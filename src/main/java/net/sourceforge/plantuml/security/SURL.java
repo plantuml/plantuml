@@ -517,6 +517,7 @@ public class SURL {
 	 * @param url            URL to request via POST method
 	 * @param proxy          proxy to apply
 	 * @param authentication the authentication to use
+	 * @param data           POST body (form or JSON)
 	 * @param headers        additional headers, if needed
 	 * @return the callable handler.
 	 */
@@ -678,6 +679,7 @@ public class SURL {
 	/**
 	 * Set the headers for a URL connection
 	 *
+	 * @param http    the connection to add headers to
 	 * @param headers map Keys with values (can be String or list of String)
 	 */
 	private static void applyAdditionalHeaders(URLConnection http, Map<String, Object> headers) {

@@ -75,8 +75,9 @@ public interface PiecewiseConstant {
 	 * depending on the underlying workload rules.
 	 * </p>
 	 *
-	 * @param instant the instant from which to begin iteration; the first segment
-	 *                returned will be the one containing this instant
+	 * @param instant   the instant from which to begin iteration; the first segment
+	 *                  returned will be the one containing this instant
+	 * @param direction whether to walk forward or backward from that segment
 	 * @return an iterator over segments containing and following the given instant
 	 */
 	Iterator<Segment> iterateSegmentsFrom(LocalDateTime instant, TimeDirection direction);

@@ -99,7 +99,7 @@ jobs:
           fi
 
       - name: Set up Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -109,7 +109,7 @@ jobs:
         run: |
           cd tools/perf-bench
           npm ci
-          npx playwright install --with-deps chromium
+          npx playwright install --with-deps --only-shell chromium
 
       - name: Run benchmark
         run: |

@@ -362,6 +362,7 @@ public abstract class NGMTask {
 	 *
 	 * @param allocation  the constant full-time-equivalent allocation applied to
 	 *                    the task
+	 * @param start       the start instant of the task
 	 * @param totalEffort the intrinsic amount of work required for this task
 	 * @return a new fixed-total-effort task (when implemented)
 	 */

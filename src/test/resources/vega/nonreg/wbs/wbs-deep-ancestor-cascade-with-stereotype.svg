@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="291px" preserveAspectRatio="none" style="width:305px;height:291px;background:#FFFFFF;" version="1.1" viewBox="0 0 305 291" width="305px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:1.5;" x1="62.631" x2="62.631" y1="62" y2="82"/>
+    <rect fill="#FFF" height="28" style="stroke:#00F;stroke-width:1.5;" width="85.262" x="20" y="82"/>
+    <text fill="#00F" font-size="18" textLength="75.262" x="25" y="101">Division A</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="62.631" x2="72.631" y1="131" y2="131"/>
+    <rect fill="#FFF" height="22" style="stroke:#00F;stroke-width:1.5;" width="55.375" x="72.631" y="120"/>
+    <text fill="#00F" font-size="12" textLength="45.375" x="77.631" y="134.333">Team A1</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="100.319" x2="110.319" y1="163" y2="163"/>
+    <rect fill="#FFF" height="22" style="stroke:#00F;stroke-width:1.5;" width="36.1" x="110.319" y="152"/>
+    <text fill="#00F" font-size="12" textLength="26.1" x="115.319" y="166.333">Alice</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="100.319" x2="110.319" y1="195" y2="195"/>
+    <rect fill="#FFF" height="22" style="stroke:#00F;stroke-width:1.5;" width="31.375" x="110.319" y="184"/>
+    <text fill="#00F" font-size="12" textLength="21.375" x="115.319" y="198.333">Bob</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="100.319" x2="100.319" y1="142" y2="195"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="62.631" x2="72.631" y1="227" y2="227"/>
+    <rect fill="#FFF" height="22" style="stroke:#00F;stroke-width:1.5;" width="55.375" x="72.631" y="216"/>
+    <text fill="#00F" font-size="12" textLength="45.375" x="77.631" y="230.333">Team A2</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="100.319" x2="110.319" y1="259" y2="259"/>
+    <rect fill="#FFF" height="22" style="stroke:#00F;stroke-width:1.5;" width="38.725" x="110.319" y="248"/>
+    <text fill="#00F" font-size="12" textLength="28.725" x="115.319" y="262.333">Carol</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="100.319" x2="100.319" y1="238" y2="259"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="62.631" x2="62.631" y1="110" y2="227"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="199.131" x2="199.131" y1="62" y2="82"/>
+    <rect fill="#FFF" height="22" style="stroke:#181818;stroke-width:1.5;" width="60.175" x="169.044" y="82"/>
+    <text fill="#000" font-size="12" textLength="50.175" x="174.044" y="96.333">Division B</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="199.131" x2="209.131" y1="125" y2="125"/>
+    <rect fill="#FFF" height="22" style="stroke:#181818;stroke-width:1.5;" width="55.375" x="209.131" y="114"/>
+    <text fill="#000" font-size="12" textLength="45.375" x="214.131" y="128.333">Team B1</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="236.819" x2="246.819" y1="157" y2="157"/>
+    <rect fill="#FFF" height="22" style="stroke:#181818;stroke-width:1.5;" width="38.05" x="246.819" y="146"/>
+    <text fill="#000" font-size="12" textLength="28.05" x="251.819" y="160.333">Dave</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="236.819" x2="236.819" y1="136" y2="157"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="199.131" x2="199.131" y1="104" y2="125"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="62.631" x2="199.131" y1="62" y2="62"/>
+    <rect fill="#FFF" height="22" style="stroke:#181818;stroke-width:1.5;" width="55.975" x="102.894" y="20"/>
+    <text fill="#000" font-size="12" textLength="45.975" x="107.894" y="34.333">Program</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="130.881" x2="130.881" y1="42" y2="62"/>
+  </g>
+</svg>

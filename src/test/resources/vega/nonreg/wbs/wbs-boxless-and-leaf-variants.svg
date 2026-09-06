@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="221px" preserveAspectRatio="none" style="width:365px;height:221px;background:#FFFFFF;" version="1.1" viewBox="0 0 365 221" width="365px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:1.5;" x1="53.4" x2="53.4" y1="54" y2="74"/>
+    <rect fill="#D3D3D3" height="32" style="stroke:#000;stroke-width:1.5;" width="66.8" x="20" y="74"/>
+    <text fill="#000" font-size="12" textLength="46.8" x="30" y="93.333">Planning</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="53.4" x2="63.4" y1="137" y2="137"/>
+    <rect fill="#ADD8E6" height="32" style="stroke:#000;stroke-width:1.5;" width="86.75" x="63.4" y="121"/>
+    <text fill="#000" font-size="12" textLength="66.75" x="73.4" y="140.333">Define scope</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="53.4" x2="63.4" y1="184" y2="184"/>
+    <rect fill="#ADD8E6" height="32" style="stroke:#000;stroke-width:1.5;" width="95.375" x="63.4" y="168"/>
+    <text fill="#000" font-size="12" textLength="75.375" x="73.4" y="187.333">Set milestones</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="53.4" x2="53.4" y1="106" y2="184"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="206.638" x2="206.638" y1="54" y2="74"/>
+    <text fill="#F00" font-size="12" textLength="52.725" x="178.775" y="84.333">Execution</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="206.638" x2="216.638" y1="119" y2="119"/>
+    <rect fill="#ADD8E6" height="32" style="stroke:#000;stroke-width:1.5;" width="46.775" x="216.638" y="103"/>
+    <text fill="#000" font-size="12" textLength="26.775" x="226.638" y="122.333">Build</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="206.638" x2="216.638" y1="157" y2="157"/>
+    <text fill="#F00" font-size="12" textLength="24.075" x="216.638" y="160.333">Ship</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="206.638" x2="206.638" y1="88" y2="157"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="314.113" x2="314.113" y1="54" y2="74"/>
+    <rect fill="#ADD8E6" height="32" style="stroke:#000;stroke-width:1.5;" width="61.4" x="283.413" y="74"/>
+    <text fill="#000" font-size="12" textLength="41.4" x="293.413" y="93.333">Closure</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="53.4" x2="314.113" y1="54" y2="54"/>
+    <text fill="#F00" font-size="12" textLength="45.975" x="159.269" y="30.333">Program</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="183.756" x2="183.756" y1="34" y2="54"/>
+  </g>
+</svg>

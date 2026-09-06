@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="226px" preserveAspectRatio="none" style="width:370px;height:226px;background:#FFFFFF;" version="1.1" viewBox="0 0 370 226" width="370px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#F00" font-size="14" textLength="53.637" x="13" y="116.389">Program</text>
+    <rect fill="#D3D3D3" height="34" rx="12.5" ry="12.5" style="stroke:#000;stroke-width:1.5;" width="74.6" x="116.637" y="47"/>
+    <text fill="#000" font-size="14" textLength="54.6" x="126.637" y="67.889">Planning</text>
+    <rect fill="#ADD8E6" height="34" rx="12.5" ry="12.5" style="stroke:#000;stroke-width:1.5;" width="97.875" x="241.237" y="20"/>
+    <text fill="#000" font-size="14" textLength="77.875" x="251.237" y="40.889">Define scope</text>
+    <path d="M191.237,64 L201.237,64 C216.237,64 216.237,37 231.237,37 L241.237,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#ADD8E6" height="34" rx="12.5" ry="12.5" style="stroke:#000;stroke-width:1.5;" width="107.938" x="241.237" y="74"/>
+    <text fill="#000" font-size="14" textLength="87.938" x="251.237" y="94.889">Set milestones</text>
+    <path d="M191.237,64 L201.237,64 C216.237,64 216.237,91 231.237,91 L241.237,91" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M66.637,112.5 L76.637,112.5 C91.637,112.5 91.637,64 106.637,64 L116.637,64" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#F00" font-size="14" textLength="61.512" x="119.637" y="156.889">Execution</text>
+    <rect fill="#ADD8E6" height="34" rx="12.5" ry="12.5" style="stroke:#000;stroke-width:1.5;" width="51.238" x="231.15" y="128"/>
+    <text fill="#000" font-size="14" textLength="31.238" x="241.15" y="148.889">Build</text>
+    <path d="M181.15,153 L191.15,153 C206.15,153 206.15,145 221.15,145 L231.15,145" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#F00" font-size="14" textLength="28.088" x="234.15" y="183.889">Ship</text>
+    <path d="M181.15,153 L191.15,153 C206.15,153 206.15,180 221.15,180 L231.15,180" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M66.637,112.5 L76.637,112.5 C91.637,112.5 91.637,153 106.637,153 L116.637,153" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#ADD8E6" height="34" rx="12.5" ry="12.5" style="stroke:#000;stroke-width:1.5;" width="68.3" x="116.637" y="171"/>
+    <text fill="#000" font-size="14" textLength="48.3" x="126.637" y="191.889">Closure</text>
+    <path d="M66.637,112.5 L76.637,112.5 C91.637,112.5 91.637,188 106.637,188 L116.637,188" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

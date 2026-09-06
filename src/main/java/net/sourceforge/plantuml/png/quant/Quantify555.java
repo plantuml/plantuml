@@ -209,8 +209,9 @@ public final class Quantify555 {
 	/**
 	 * Builds an indexed image from the set of populated cubes.
 	 *
-	 * @param src   original ARGB image
-	 * @param cubes array of Cube555 (null for empty cubes)
+	 * @param src    original ARGB image
+	 * @param cubes  array of Cube555 (null for empty cubes)
+	 * @param pixels source ARGB pixels in row-major order
 	 * @return an indexed (8-bit) {@link BufferedImage}
 	 */
 	private static BufferedImage buildIndexedImageFromCubes(BufferedImage src, Cube555[] cubes, int[] pixels) {
