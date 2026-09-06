@@ -36,10 +36,10 @@
 package net.sourceforge.plantuml.style.parser2;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 import net.sourceforge.plantuml.style.SName;
@@ -68,7 +68,13 @@ public final class StyleAtomTrie<T> {
 	private final TrieNode<T> root = new TrieNode<T>();
 
 	private static final class TrieNode<T> {
-		private final Map<StyleAtom, TrieNode<T>> children = new TreeMap<StyleAtom, TrieNode<T>>();
+		// A plain hash map, not a TreeMap: insert()/collect() only ever do point get()/put()
+		// lookups on this map, keyed by one StyleAtom at a time -- neither walks it in key
+		// order, so StyleAtom's Comparable ordering (which the query-side sort in
+		// findMatching still relies on) buys nothing here, only an O(log n) comparison
+		// (a string compare, for stereotype atoms) on every edge traversal instead of an
+		// O(1) hash lookup.
+		private final Map<StyleAtom, TrieNode<T>> children = new HashMap<StyleAtom, TrieNode<T>>();
 		private final List<Stored<T>> rulesHere = new ArrayList<Stored<T>>();
 	}
 
