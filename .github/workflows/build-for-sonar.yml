@@ -1,13 +1,68 @@
 name: Build and analyse by SonarQube
 
 on:
+  push:
+    branches: [ master ]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
   schedule:
-    - cron: '45 2 * * 4'   # every Thursday at 02:45 UTC
+    - cron: '45 2 * * 4'   # every Thursday at 02:45 UTC (safety net in case there's no push all week)
   workflow_dispatch:
+  # called from ci.yml when a release is being made (do_release == 'true')
+  workflow_call:
+
+permissions:
+  actions: read
+  contents: read
 
 jobs:
+  check_throttle:
+    name: Check if Sonar already ran recently
+    runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.check.outputs.should_run }}
+    steps:
+      # Only plain 'push' triggers are throttled: manual runs, the weekly
+      # schedule, and release-triggered calls (from ci.yml) always run.
+      - name: Decide whether to run
+        id: check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          if [[ "${EVENT_NAME}" != "push" ]]; then
+            echo "Trigger is '${EVENT_NAME}' (not 'push') -- always run"
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          LAST_RUN=$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/build-for-sonar.yml/runs?status=success&per_page=1" \
+            --jq '.workflow_runs[0].created_at // empty')
+
+          if [[ -z "${LAST_RUN}" ]]; then
+            echo "No previous successful run found -- running"
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          LAST_RUN_EPOCH=$(date -u -d "${LAST_RUN}" +%s)
+          NOW_EPOCH=$(date -u +%s)
+          HOURS_SINCE=$(( (NOW_EPOCH - LAST_RUN_EPOCH) / 3600 ))
+
+          echo "Last successful Sonar run: ${LAST_RUN} (${HOURS_SINCE}h ago)"
+
+          if (( HOURS_SINCE >= 24 )); then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice title=Sonar skipped::Last analysis was only ${HOURS_SINCE}h ago (< 24h) -- skipping"
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+          fi
+
   build:
     name: Build and analyze
+    needs: check_throttle
+    if: needs.check_throttle.outputs.should_run == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -17,7 +72,7 @@ jobs:
       - name: Set environment variable
         run: echo "GPL_ONLY=true" >> $GITHUB_ENV
 
-      - name: Set up Java JDK 
+      - name: Set up Java JDK
         uses: actions/setup-java@v6
         with:
           java-version: 21
@@ -62,5 +117,5 @@ jobs:
             echo "See result here:"
             echo "- [Plantuml SonarQube dashboard](https://sonarcloud.io/dashboard?id=plantuml_plantuml)"
             echo ""
-            echo "## Gradle" 
+            echo "## Gradle"
           } >> "$GITHUB_STEP_SUMMARY"
