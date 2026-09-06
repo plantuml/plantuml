@@ -212,18 +212,6 @@ public final class MergedStyleNode {
 		return child;
 	}
 
-	/** The plain (non-starred) child at this name, if any; the starred one otherwise, if any. */
-	public MergedStyleNode getChild(SName name) {
-		final MergedStyleNode plain = namedChildren.get(name);
-		return plain != null ? plain : starredNamedChildren.get(name);
-	}
-
-	/** The plain (non-starred) child at this key, if any; the starred one otherwise, if any. */
-	public MergedStyleNode getOtherChild(String canonicalKey) {
-		final MergedStyleNode plain = otherChildren.get(canonicalKey);
-		return plain != null ? plain : starredOtherChildren.get(canonicalKey);
-	}
-
 	/**
 	 * Which {@link RawSelector.Kind} produced the "other" child stored under this canonical
 	 * key -- {@code STEREOTYPE}, {@code DEPTH} or {@code UNKNOWN} -- so a later compilation
@@ -295,29 +283,6 @@ public final class MergedStyleNode {
 			if (child.isEmpty() == false)
 				return false;
 		return true;
-	}
-
-	/**
-	 * A deep, fully independent copy of this node and everything under it -- so that
-	 * {@link MergedStyleSheet#mute(RawStyleSheet)} can merge an overlay on top of a copy of
-	 * the tree without disturbing the original, exactly the way the legacy
-	 * {@code StyleBuilder#muteStyle} builds a brand new {@code StyleBuilder} (copying the
-	 * storage first) rather than mutating the one it was called on. {@link PrioritizedValue}
-	 * is itself immutable, so its instances are shared rather than copied.
-	 */
-	public MergedStyleNode copy() {
-		final MergedStyleNode result = new MergedStyleNode(this.star);
-		result.properties.putAll(this.properties);
-		result.otherChildKinds.putAll(this.otherChildKinds);
-		for (Map.Entry<SName, MergedStyleNode> ent : namedChildren.entrySet())
-			result.namedChildren.put(ent.getKey(), ent.getValue().copy());
-		for (Map.Entry<SName, MergedStyleNode> ent : starredNamedChildren.entrySet())
-			result.starredNamedChildren.put(ent.getKey(), ent.getValue().copy());
-		for (Map.Entry<String, MergedStyleNode> ent : otherChildren.entrySet())
-			result.otherChildren.put(ent.getKey(), ent.getValue().copy());
-		for (Map.Entry<String, MergedStyleNode> ent : starredOtherChildren.entrySet())
-			result.starredOtherChildren.put(ent.getKey(), ent.getValue().copy());
-		return result;
 	}
 
 	@Override

@@ -66,8 +66,15 @@ public final class CompiledStyleSheet {
 		this.base = base;
 	}
 
-	public static CompiledStyleSheet compile(MergedStyleSheet sheet) {
-		return new CompiledStyleSheet(StyleAtomTrie.compile(sheet.getBase()));
+	/**
+	 * Compiles {@code base} -- typically {@code someSheet.getBase()} -- into a queryable trie.
+	 * Takes the tree directly rather than a whole {@link MergedStyleSheet}: nothing here needs
+	 * that wrapper's own counter, so a tree assembled by hand (e.g. by calling
+	 * {@link MergedStyleSheet#mergeInto} more than once against a shared counter) compiles just
+	 * as well as one built through {@link MergedStyleSheet#build}.
+	 */
+	public static CompiledStyleSheet compile(MergedStyleNode base) {
+		return new CompiledStyleSheet(StyleAtomTrie.compile(base));
 	}
 
 	public StyleAtomTrie<CompiledStyleRule> getBase() {

@@ -49,6 +49,8 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
+import net.sourceforge.plantuml.style.AutomaticCounter;
+import net.sourceforge.plantuml.style.AutomaticCounterBasic;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleLoader;
@@ -72,7 +74,7 @@ class CompiledStyleSheetTest {
 		final InputStream is = StyleLoader.getInputStreamForStyle("plantuml.skin");
 		final BlocLines lines = BlocLines.load(is, new LineLocationImpl("plantuml.skin", null));
 		final RawStyleSheet raw = RawStyleParser.parse(lines);
-		return CompiledStyleSheet.compile(MergedStyleSheet.build(raw));
+		return CompiledStyleSheet.compile(MergedStyleSheet.build(raw).getBase());
 	}
 
 	private static EnumSet<SName> setOf(SName... names) {
@@ -173,7 +175,7 @@ class CompiledStyleSheetTest {
 
 		final RawStyleSheet raw = new RawStyleSheet(Collections.<String, String> emptyMap(),
 				Arrays.asList(mediaBlock, baseRoot));
-		final CompiledStyleSheet sheet = CompiledStyleSheet.compile(MergedStyleSheet.build(raw));
+		final CompiledStyleSheet sheet = CompiledStyleSheet.compile(MergedStyleSheet.build(raw).getBase());
 
 		final Map<PName, PrioritizedValue> resolved = sheet.resolve(StyleQuery.of(setOf(SName.root)));
 		assertEquals("black", resolved.get(PName.FontColor).getLight());
@@ -184,20 +186,28 @@ class CompiledStyleSheetTest {
 	void aHandWrittenDepthStarOverlayResolvesAsAnAncestorCascadeCatchAllWould() throws Exception {
 		// The real usage this exercises: a "<style> wbsDiagram { node { depth(2)* { ... } } }
 		// </style>" block, written by hand in a diagram and folded on top of an already-loaded
-		// sheet via MergedStyleSheet#mute -- the muteStyle counterpart, which (unlike build())
-		// accepts a starred selector.
-		final MergedStyleSheet base = MergedStyleSheet.build(RawStyleParser
-				.parse(BlocLines.getWithNewlines("wbsDiagram {\n  node {\n    FontColor black\n  }\n}\n")));
-		final RawStyleSheet overlay = RawStyleParser.parse(BlocLines
-				.getWithNewlines("wbsDiagram { node { depth(2)* {\n  FontColor red\n} } }\n"));
+		// sheet -- exactly what StyleLoader#parseStyleText's overlay path does with
+		// MergedStyleSheet#mergeInto, which (unlike #build()) accepts a starred selector. Built
+		// directly against a shared MergedStyleNode/counter rather than through
+		// MergedStyleSheet#build twice, since build() itself rejects a starred selector anywhere
+		// in the tree it is given (a real base .skin file never has one -- see
+		// MergedStyleSheetTest#buildRejectsATopLevelStarredSelector).
+		final MergedStyleNode root = MergedStyleNode.newTopLevelContainer();
+		final AutomaticCounter counter = new AutomaticCounterBasic();
+		MergedStyleSheet.mergeInto(root,
+				RawStyleParser.parse(BlocLines.getWithNewlines("wbsDiagram {\n  node {\n    FontColor black\n  }\n}\n")),
+				counter);
+		MergedStyleSheet.mergeInto(root,
+				RawStyleParser.parse(BlocLines.getWithNewlines("wbsDiagram { node { depth(2)* {\n  FontColor red\n} } }\n")),
+				counter);
 
-		final CompiledStyleSheet sheet = CompiledStyleSheet.compile(base.mute(overlay));
+		final CompiledStyleSheet sheet = CompiledStyleSheet.compile(root);
 
 		final EnumSet<SName> wbsNode = setOf(SName.wbsDiagram, SName.node);
 
 		// A plain, non-inheritance query for the element itself, three levels deep: a
 		// depth(2)* declaration is a genuine "matches this level or any deeper one" rule, so
-		// it answers directly here too, and -- coming from the later mute() call -- outranks
+		// it answers directly here too, and -- coming from the later mergeInto() call -- outranks
 		// the plain "node { FontColor black }" declaration.
 		final Map<PName, PrioritizedValue> ownLevelDeep = sheet
 				.resolve(StyleQuery.of(wbsNode, Collections.<String> emptySet(), LevelConstraint.of(3, false)));

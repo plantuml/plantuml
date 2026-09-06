@@ -35,10 +35,7 @@
  */
 package net.sourceforge.plantuml.style.parser2;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import net.sourceforge.plantuml.style.AutomaticCounter;
 import net.sourceforge.plantuml.style.AutomaticCounterBasic;
@@ -56,37 +53,36 @@ import net.sourceforge.plantuml.style.AutomaticCounterBasic;
  * pipeline picks it as late as {@code ValueImpl#asColor}/{@code HColor#withDark}), not decided
  * once and for all here.
  *
- * Two ways to bring rules in, mirroring the legacy {@code StyleBuilder}'s two loading paths
- * exactly:
- * <ul>
- * <li>{@link #build(RawStyleSheet)} is the counterpart of {@code StyleBuilder#loadInternal},
- * used to load a whole base .skin file. Like {@code loadInternal}, it rejects a starred
- * selector outright: a real .skin file never needs one (none of the bundled skins declare
- * one), so seeing one there is almost certainly a mistake, not a deliberate ancestor-cascade
- * catch-all.</li>
- * <li>{@link #mute(RawStyleSheet)} is the counterpart of {@code StyleBuilder#muteStyle}, used
- * to fold a hand-written {@code <style>...</style>} block (or an imported style sheet, or a
- * single-line {@code <style>...</style>}) on top of an already-loaded sheet. Unlike
- * {@link #build}, it happily accepts a starred selector -- {@code depth(2)* { ... }} written
- * by hand is exactly the real-world case a mindmap/wbs ancestor cascade needs -- and, like
- * {@code muteStyle}, it never mutates the sheet it is called on: it returns a new one, built
- * from a copy of this sheet's tree, so the original stays reusable for the next diagram.</li>
- * </ul>
+ * {@link #build(RawStyleSheet)} is the counterpart of {@code StyleBuilder#loadInternal}, used
+ * to load a whole base .skin file straight into a queryable tree (see
+ * {@code net.sourceforge.plantuml.style.StyleBuilder#forBaseStyleText} and
+ * {@code net.sourceforge.plantuml.style.StyleIndex}). Like {@code loadInternal}, it rejects a
+ * starred selector outright: a real .skin file never needs one (none of the bundled skins
+ * declare one), so seeing one there is almost certainly a mistake, not a deliberate
+ * ancestor-cascade catch-all.
+ *
+ * An overlay ({@code <style>...</style>}, an imported style sheet, a single-line
+ * {@code <style>...</style>}) is not built into a second {@link MergedStyleSheet} on top of
+ * this one: it stays on the legacy, flattened path instead (see
+ * {@code net.sourceforge.plantuml.style.StyleLoader#parseStyleText} and
+ * {@code net.sourceforge.plantuml.style.StyleIndex#withMuted}) -- an overlay is small and
+ * never cached across diagrams the way a base skin is, and it can carry {@code Style}
+ * capabilities (programmatic forced overrides, {@code ValueColor}) that this tree's
+ * {@link PrioritizedValue} does not represent.
  */
 public final class MergedStyleSheet {
 
-	private final Map<String, String> variables;
 	private final MergedStyleNode base;
 
-	// The very same counter used to build (or last mute) this sheet, kept around so that a
-	// later mute() continues numbering from where this sheet left off, instead of starting
-	// over at 1 -- exactly like StyleBuilder#muteStyle carries its own counter field forward
-	// (result.counter = this.counter) rather than each mute getting a fresh one. Without this,
-	// an overlay's priorities could collide with (or even lose to) the base sheet's.
+	// The very same counter used to build this sheet, kept around so that a later overlay
+	// parsed against it (see net.sourceforge.plantuml.style.StyleBuilder#forBaseStyleText)
+	// keeps numbering from where this sheet left off, instead of starting over at 1 --
+	// exactly like the legacy StyleBuilder#muteStyle carries its own counter field forward
+	// (result.counter = this.counter). Without this, an overlay's priorities could collide
+	// with (or even lose to) the base sheet's.
 	private final AutomaticCounter counter;
 
-	private MergedStyleSheet(Map<String, String> variables, MergedStyleNode base, AutomaticCounter counter) {
-		this.variables = variables;
+	private MergedStyleSheet(MergedStyleNode base, AutomaticCounter counter) {
 		this.base = base;
 		this.counter = counter;
 	}
@@ -100,8 +96,7 @@ public final class MergedStyleSheet {
 	 * {@code net.sourceforge.plantuml.style.Specificity#atOrder(int)}) from {@code counter}
 	 * instead of a fresh one private to this call -- so a base sheet built this way and a later
 	 * overlay parsed against the very same counter (e.g. {@code StyleBuilder} itself, an
-	 * {@code AutomaticCounter}) stay numbered on one continuous scale, exactly like
-	 * {@link #mute(RawStyleSheet)} already continues a sheet's own counter. Used by
+	 * {@code AutomaticCounter}) stay numbered on one continuous scale. Used by
 	 * {@code StyleBuilder#forBaseStyleText} so a base .skin file compiled straight into a
 	 * {@code net.sourceforge.plantuml.style.StyleIndex} (no intermediate flattening) still leaves
 	 * the builder's counter exactly where the old per-{@code Style} loading loop would have.
@@ -112,7 +107,7 @@ public final class MergedStyleSheet {
 		final MergedStyleNode base = MergedStyleNode.newTopLevelContainer();
 		mergeInto(base, raw, counter);
 
-		return new MergedStyleSheet(raw.getVariables(), base, counter);
+		return new MergedStyleSheet(base, counter);
 	}
 
 	/** No declaration at all -- mirroring {@code net.sourceforge.plantuml.style.StyleIndex#empty()}. */
@@ -120,37 +115,17 @@ public final class MergedStyleSheet {
 		return EMPTY;
 	}
 
-	private static final MergedStyleSheet EMPTY = new MergedStyleSheet(Collections.<String, String> emptyMap(),
-			MergedStyleNode.newTopLevelContainer(), new AutomaticCounterBasic());
-
-	/**
-	 * Folds {@code overlay} on top of a copy of this sheet, continuing this sheet's own
-	 * priority counter so every property {@code overlay} sets outranks whatever this sheet
-	 * already had for it -- the same "last loaded wins" rule {@link MergedStyleNode#mergeRule}
-	 * already applies within one sheet, just carried across two. Starred selectors are
-	 * allowed here, unlike {@link #build(RawStyleSheet)}; see the class documentation.
-	 *
-	 * This sheet itself is left untouched: {@code this.getBase()} still resolves exactly as it
-	 * did before the call, so it can be muted again independently for another diagram.
-	 */
-	public MergedStyleSheet mute(RawStyleSheet overlay) {
-		final MergedStyleNode copy = base.copy();
-		mergeInto(copy, overlay, counter);
-
-		final Map<String, String> mergedVariables = new LinkedHashMap<String, String>(variables);
-		mergedVariables.putAll(overlay.getVariables());
-
-		return new MergedStyleSheet(mergedVariables, copy, counter);
-	}
+	private static final MergedStyleSheet EMPTY = new MergedStyleSheet(MergedStyleNode.newTopLevelContainer(),
+			new AutomaticCounterBasic());
 
 	/**
 	 * Folds every rule in {@code raw} into {@code root}, {@code @media} content dispatched to its
-	 * dark half exactly as {@link #build(RawStyleSheet)} and {@link #mute(RawStyleSheet)} do --
-	 * exposed (rather than kept private to those two) so that a caller needing a one-shot tree
-	 * that is immediately flattened back to legacy {@code net.sourceforge.plantuml.style.Style}
-	 * objects (see {@code net.sourceforge.plantuml.style.StyleLoader#parseStyleText}) can reuse
-	 * this exact merging logic against an external {@link AutomaticCounter} -- a plain
-	 * {@link MergedStyleSheet} cannot be used there since it always manages its own counter.
+	 * dark half exactly as {@link #build(RawStyleSheet)} does -- exposed (rather than kept private
+	 * to it) so that a caller needing a one-shot tree that is immediately flattened back to legacy
+	 * {@code net.sourceforge.plantuml.style.Style} objects (see
+	 * {@code net.sourceforge.plantuml.style.StyleLoader#parseStyleText}) can reuse this exact
+	 * merging logic against an external {@link AutomaticCounter} -- a plain {@link MergedStyleSheet}
+	 * cannot be used there since it always manages its own counter.
 	 */
 	public static void mergeInto(MergedStyleNode root, RawStyleSheet raw, AutomaticCounter counter) {
 		for (RawStyleRule rule : raw.getRules()) {
@@ -176,15 +151,10 @@ public final class MergedStyleSheet {
 			if (rule.isMediaBlock() == false && rule.isStar())
 				throw new IllegalArgumentException("A base style sheet cannot declare a starred selector ("
 						+ rule.getSelectors() + "*): that mirrors the legacy StyleBuilder#loadInternal guard -- "
-						+ "only an inline <style> override merged with MergedStyleSheet#mute (the counterpart of "
-						+ "StyleBuilder#muteStyle) may use one.");
+						+ "only an inline <style> override (parsed through parseStyleText, not this class) may use one.");
 
 			rejectStarredRules(rule.getChildren());
 		}
-	}
-
-	public Map<String, String> getVariables() {
-		return variables;
 	}
 
 	/** The one merged tree for every declaration, light and dark alike. */
@@ -194,7 +164,7 @@ public final class MergedStyleSheet {
 
 	@Override
 	public String toString() {
-		return "variables=" + variables + '\n' + base;
+		return base.toString();
 	}
 
 }

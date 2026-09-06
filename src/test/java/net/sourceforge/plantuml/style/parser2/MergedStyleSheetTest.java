@@ -46,6 +46,8 @@ import java.io.InputStream;
 
 import org.junit.jupiter.api.Test;
 
+import net.sourceforge.plantuml.style.AutomaticCounter;
+import net.sourceforge.plantuml.style.AutomaticCounterBasic;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Specificity;
@@ -60,11 +62,13 @@ import net.sourceforge.plantuml.utils.LineLocationImpl;
  * declaration into the very same node as its light counterpart -- using the bundled
  * plantuml.skin, which exercises all three.
  *
- * Also checks {@link MergedStyleSheet}'s two loading paths -- {@link MergedStyleSheet#build}
- * and {@link MergedStyleSheet#mute} -- against the legacy pair they mirror,
- * {@code StyleBuilder#loadInternal} and {@code StyleBuilder#muteStyle}: only the latter may
- * declare a starred selector, and only the latter is guaranteed not to disturb whatever it
- * was called on.
+ * Also checks {@link MergedStyleSheet#build} against the legacy loading path it mirrors,
+ * {@code StyleBuilder#loadInternal}: a base style sheet may never declare a starred selector.
+ * An overlay ({@code <style>} block) does not go through {@link MergedStyleSheet} at all -- see
+ * {@code net.sourceforge.plantuml.style.StyleLoader#parseStyleText} -- but it reuses the very
+ * same {@link MergedStyleSheet#mergeInto} merging logic {@link #build} is built on, which a few
+ * tests below exercise directly against a bare {@link MergedStyleNode}, exactly the way
+ * {@code parseStyleText} does.
  */
 class MergedStyleSheetTest {
 
@@ -86,7 +90,7 @@ class MergedStyleSheetTest {
 	@Test
 	void rootPropertiesAreReadable() throws Exception {
 		final MergedStyleSheet sheet = loadPlantumlSkin();
-		final MergedStyleNode root = sheet.getBase().getChild(SName.root);
+		final MergedStyleNode root = sheet.getBase().getNamedChildren().get(SName.root);
 
 		assertNotNull(root);
 		assertEquals("SansSerif", root.getProperty(PName.FontName).getValue());
@@ -99,12 +103,12 @@ class MergedStyleSheetTest {
 		// plantuml.skin declares "mindmapDiagram {}" once, empty, and later
 		// "mindmapDiagram { node {...} arrow {...} }": both must land on the same node.
 		final MergedStyleSheet sheet = loadPlantumlSkin();
-		final MergedStyleNode mindmap = sheet.getBase().getChild(SName.mindmapDiagram);
+		final MergedStyleNode mindmap = sheet.getBase().getNamedChildren().get(SName.mindmapDiagram);
 
 		assertNotNull(mindmap);
-		assertNotNull(mindmap.getChild(SName.node));
-		assertNotNull(mindmap.getChild(SName.arrow));
-		assertEquals("25", mindmap.getChild(SName.node).getProperty(PName.RoundCorner).getValue());
+		assertNotNull(mindmap.getNamedChildren().get(SName.node));
+		assertNotNull(mindmap.getNamedChildren().get(SName.arrow));
+		assertEquals("25", mindmap.getNamedChildren().get(SName.node).getProperty(PName.RoundCorner).getValue());
 	}
 
 	@Test
@@ -112,11 +116,13 @@ class MergedStyleSheetTest {
 		// "element { composite,package { title { FontStyle bold ... } } }": both
 		// "composite" and "package" must end up with their own independent "title" child.
 		final MergedStyleSheet sheet = loadPlantumlSkin();
-		final MergedStyleNode element = sheet.getBase().getChild(SName.element);
+		final MergedStyleNode element = sheet.getBase().getNamedChildren().get(SName.element);
 		assertNotNull(element);
 
-		final MergedStyleNode compositeTitle = element.getChild(SName.composite).getChild(SName.title);
-		final MergedStyleNode packageTitle = element.getChild(SName.package_).getChild(SName.title);
+		final MergedStyleNode compositeTitle = element.getNamedChildren().get(SName.composite).getNamedChildren()
+				.get(SName.title);
+		final MergedStyleNode packageTitle = element.getNamedChildren().get(SName.package_).getNamedChildren()
+				.get(SName.title);
 
 		assertNotNull(compositeTitle);
 		assertNotNull(packageTitle);
@@ -141,15 +147,16 @@ class MergedStyleSheetTest {
 		// with only the property its own declaration set.
 		// A starred selector may only appear in an inline <style> overlay, never in a base .skin
 		// file (see buildRejectsATopLevelStarredSelector below) -- exactly the real shape of the
-		// regression: a hand-written "<style>...</style>" block inside a .puml file, which goes
-		// through mute(), not build().
-		final MergedStyleSheet base = MergedStyleSheet.build(parse("wbsDiagram {\n  FontColor black\n}\n"));
-		final RawStyleSheet overlay = parse("wbsDiagram {\n" //
+		// regression: a hand-written "<style>...</style>" block inside a .puml file, merged via
+		// MergedStyleSheet#mergeInto exactly like StyleLoader#parseStyleText does, not #build().
+		final MergedStyleNode root = MergedStyleNode.newTopLevelContainer();
+		final AutomaticCounter counter = new AutomaticCounterBasic();
+		MergedStyleSheet.mergeInto(root, parse("wbsDiagram {\n  FontColor black\n}\n"), counter);
+		MergedStyleSheet.mergeInto(root, parse("wbsDiagram {\n" //
 				+ "  .europeStyle * {\n    node {\n      FontColor red\n    }\n  }\n" //
 				+ "  .europeStyle {\n    node {\n      FontSize 20\n    }\n  }\n" //
-				+ "}\n");
-		final MergedStyleSheet sheet = base.mute(overlay);
-		final MergedStyleNode wbsDiagram = sheet.getBase().getChild(SName.wbsDiagram);
+				+ "}\n"), counter);
+		final MergedStyleNode wbsDiagram = root.getNamedChildren().get(SName.wbsDiagram);
 
 		final MergedStyleNode plain = wbsDiagram.getOtherChildren().get("europestyle");
 		final MergedStyleNode starred = wbsDiagram.getStarredOtherChildren().get("europestyle");
@@ -159,11 +166,11 @@ class MergedStyleSheetTest {
 		assertFalse(plain.isStar());
 		assertTrue(starred.isStar());
 
-		assertNull(plain.getChild(SName.node).getProperty(PName.FontColor));
-		assertEquals("20", plain.getChild(SName.node).getProperty(PName.FontSize).getValue());
+		assertNull(plain.getNamedChildren().get(SName.node).getProperty(PName.FontColor));
+		assertEquals("20", plain.getNamedChildren().get(SName.node).getProperty(PName.FontSize).getValue());
 
-		assertEquals("red", starred.getChild(SName.node).getProperty(PName.FontColor).getValue());
-		assertNull(starred.getChild(SName.node).getProperty(PName.FontSize));
+		assertEquals("red", starred.getNamedChildren().get(SName.node).getProperty(PName.FontColor).getValue());
+		assertNull(starred.getNamedChildren().get(SName.node).getProperty(PName.FontSize));
 	}
 
 	@Test
@@ -172,7 +179,7 @@ class MergedStyleSheetTest {
 		// there is no second tree any more -- both land on the very same "root" node, combined
 		// into one value carrying both, exactly like the legacy DarkString does.
 		final MergedStyleSheet sheet = loadPlantumlSkin();
-		final MergedStyleNode root = sheet.getBase().getChild(SName.root);
+		final MergedStyleNode root = sheet.getBase().getNamedChildren().get(SName.root);
 		final PrioritizedValue fontColor = root.getProperty(PName.FontColor);
 
 		assertNotNull(fontColor);
@@ -199,62 +206,20 @@ class MergedStyleSheetTest {
 	}
 
 	@Test
-	void muteAcceptsAStarredSelectorThatBuildWouldReject() throws Exception {
+	void mergeIntoAcceptsAStarredSelectorThatBuildWouldReject() throws Exception {
 		// The real-world case: a hand-written "depth(n)*" ancestor-cascade catch-all, exactly
 		// as it would come from a "<style> wbsDiagram { node { depth(2)* { ... } } } </style>"
-		// block -- muteStyle's counterpart must accept what loadInternal's counterpart refuses.
-		final MergedStyleSheet base = MergedStyleSheet.build(parse("wbsDiagram {\n  FontColor black\n}\n"));
-		final RawStyleSheet overlay = parse("wbsDiagram { node { depth(2)* {\n  FontColor red\n} } }\n");
+		// block -- parseStyleText's mergeInto call must accept what build() refuses.
+		final MergedStyleNode root = MergedStyleNode.newTopLevelContainer();
+		final AutomaticCounter counter = new AutomaticCounterBasic();
+		MergedStyleSheet.mergeInto(root, parse("wbsDiagram {\n  FontColor black\n}\n"), counter);
+		MergedStyleSheet.mergeInto(root, parse("wbsDiagram { node { depth(2)* {\n  FontColor red\n} } }\n"), counter);
 
-		final MergedStyleSheet muted = base.mute(overlay);
-
-		final MergedStyleNode depthNode = muted.getBase().getChild(SName.wbsDiagram).getChild(SName.node)
-				.getOtherChild("depth(2)");
+		final MergedStyleNode depthNode = root.getNamedChildren().get(SName.wbsDiagram).getNamedChildren()
+				.get(SName.node).getStarredOtherChildren().get("depth(2)");
 		assertNotNull(depthNode);
 		assertTrue(depthNode.isStar());
 		assertEquals("red", depthNode.getProperty(PName.FontColor).getValue());
-	}
-
-	@Test
-	void muteDoesNotMutateTheSheetItWasCalledOn() throws Exception {
-		// Like StyleBuilder#muteStyle, mute() must return a brand new sheet: the one it was
-		// called on has to stay usable as-is for whatever else was built from it (the legacy
-		// code relies on this to keep a cached, per-filename StyleBuilder pristine).
-		final MergedStyleSheet base = MergedStyleSheet.build(parse("root {\n  FontColor black\n}\n"));
-		final RawStyleSheet overlay = parse("root* {\n  FontColor red\n}\n");
-
-		base.mute(overlay);
-
-		assertEquals("black", base.getBase().getChild(SName.root).getProperty(PName.FontColor).getValue());
-		assertFalse(base.getBase().getChild(SName.root).isStar());
-	}
-
-	@Test
-	void muteLetsTheOverlayOutrankAnAlreadyLoadedDeclarationOfTheSamePriorityShape() throws Exception {
-		// mute() continues the base sheet's own priority counter (see MergedStyleSheet's
-		// class documentation): a plain re-declaration in the overlay must win over the base
-		// one even though neither is starred and neither is a stereotype -- simply because it
-		// was loaded later, exactly like a second .skin declaration overwrites the first one.
-		final MergedStyleSheet base = MergedStyleSheet.build(parse("root {\n  FontColor black\n}\n"));
-		final MergedStyleSheet muted = base.mute(parse("root {\n  FontColor red\n}\n"));
-
-		assertEquals("red", muted.getBase().getChild(SName.root).getProperty(PName.FontColor).getValue());
-		// ... and, per the previous test, the base sheet itself is unaffected.
-		assertEquals("black", base.getBase().getChild(SName.root).getProperty(PName.FontColor).getValue());
-	}
-
-	@Test
-	void muteCanItselfBeMutedAgainWithPrioritiesStillIncreasing() throws Exception {
-		// Two <style> blocks in the same diagram, one after the other: the second must still
-		// outrank the first, which must still outrank the base -- the shared counter has to
-		// survive being carried through more than one mute() call.
-		final MergedStyleSheet base = MergedStyleSheet.build(parse("root {\n  FontColor black\n}\n"));
-		final MergedStyleSheet first = base.mute(parse("root {\n  FontColor red\n}\n"));
-		final MergedStyleSheet second = first.mute(parse("root {\n  FontColor blue\n}\n"));
-
-		assertEquals("blue", second.getBase().getChild(SName.root).getProperty(PName.FontColor).getValue());
-		assertEquals("red", first.getBase().getChild(SName.root).getProperty(PName.FontColor).getValue());
-		assertEquals("black", base.getBase().getChild(SName.root).getProperty(PName.FontColor).getValue());
 	}
 
 }

@@ -215,7 +215,7 @@ public final class StyleIndex {
 	private CompiledStyleSheet compiledBase() {
 		CompiledStyleSheet result = compiledBaseCache;
 		if (result == null) {
-			result = CompiledStyleSheet.compile(baseSheet);
+			result = CompiledStyleSheet.compile(baseSheet.getBase());
 			compiledBaseCache = result;
 		}
 		return result;
