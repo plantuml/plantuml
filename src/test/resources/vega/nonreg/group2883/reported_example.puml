@@ -1,0 +1,10 @@
+---
+output: svg
+expected-description: (4 participants)
+---
+@startuml
+rnote over U : Configure CR\nMake sure this is posisible
+& hnote over O : text
+& note over ml : other text
+& note over sl : more text
+@enduml

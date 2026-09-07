@@ -1,0 +1,10 @@
+---
+output: svg
+expected-description: (2 participants)
+---
+@startuml
+!pragma teoz true
+note left of U : first note quite wide here
+& note right of U : second note also fairly wide
+& note over O : third one
+@enduml

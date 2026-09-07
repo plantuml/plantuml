@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import java.util.Set;
+
 import net.sourceforge.plantuml.real.Real;
 
 public final class YGauge {
@@ -49,16 +51,43 @@ public final class YGauge {
 	// the legacy TileParallel behavior where the whole group is anchored at
 	// the group top and members are shifted DOWN to align contact points.
 	private final Real origin;
+	// Optional companion to contact/origin: the footprints -- opaque keys,
+	// built and interpreted only by NoteTile as (participant, position) --
+	// already claimed by a "& note ..." within the CURRENT contact-line run.
+	// Populated and consulted only by NoteTile (see its constructor), so that
+	// a later "& note ..." reusing a footprint already used earlier in the
+	// same run can be detected and stacked below instead of contact-aligned
+	// on top of it -- createParallel's alignment assumes members occupy
+	// DIFFERENT X footprints (issue: two notes "over" the SAME participant),
+	// which is false here. Always null for every other tile kind (messages,
+	// groupings, ...), which neither read nor write it, so they are
+	// unaffected by this field.
+	private final Set<Object> noteAnchorsInRun;
 
 	public YGauge(Real min, Real max) {
-		this(min, max, null, null);
+		this(min, max, null, null, null);
 	}
 
 	public YGauge(Real min, Real max, Real contact, Real origin) {
+		this(min, max, contact, origin, null);
+	}
+
+	private YGauge(Real min, Real max, Real contact, Real origin, Set<Object> noteAnchorsInRun) {
 		this.min = min;
 		this.max = max;
 		this.contact = contact;
 		this.origin = origin;
+		this.noteAnchorsInRun = noteAnchorsInRun;
+	}
+
+	// Wither: same gauge, only the note-anchor bookkeeping changes. See
+	// NoteTile's constructor for the only caller.
+	YGauge withNoteAnchorsInRun(Set<Object> noteAnchorsInRun) {
+		return new YGauge(min, max, contact, origin, noteAnchorsInRun);
+	}
+
+	Set<Object> getNoteAnchorsInRun() {
+		return noteAnchorsInRun;
 	}
 
 	@Override

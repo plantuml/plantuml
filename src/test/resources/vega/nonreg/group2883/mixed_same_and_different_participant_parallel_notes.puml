@@ -1,0 +1,15 @@
+---
+output: svg
+expected-description: (3 participants)
+---
+@startuml
+!pragma teoz true
+participant A
+participant B
+participant C
+A -> B: hello
+note over A: n1
+& note over B: n2
+& note over A: n3
+& note over C: n4
+@enduml

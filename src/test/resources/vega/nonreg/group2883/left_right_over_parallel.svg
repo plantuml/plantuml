@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="130px" preserveAspectRatio="none" style="width:433px;height:130px;background:#FFFFFF;" version="1.1" viewBox="0 0 433 130" width="433px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>U</title>
+      <rect fill="#000" fill-opacity="0" height="51" width="8" x="164.656" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="168.156" x2="168.156" y1="39" y2="90"/>
+    </g>
+    <g>
+      <title>O</title>
+      <rect fill="#000" fill-opacity="0" height="51" width="8" x="379.994" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="383.494" x2="383.494" y1="39" y2="90"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="24.15" x="156.081" y="10"/>
+    <text fill="#000" font-size="14" x="163.081" y="27.889">U</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="24.85" x="371.069" y="10"/>
+    <text fill="#000" font-size="14" x="378.069" y="27.889">O</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="24.15" x="156.081" y="90"/>
+    <text fill="#000" font-size="14" x="163.081" y="107.889">U</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="24.85" x="371.069" y="90"/>
+    <text fill="#000" font-size="14" x="378.069" y="107.889">O</text>
+    <path d="M15,52 L15,75 L163,75 L163,62 L153,52 L15,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M153,52 L153,62 L163,62 L153,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="127.156" x="21" y="67.111">first note quite wide here</text>
+    <path d="M173.156,52 L173.156,75 L339.156,75 L339.156,62 L329.156,52 L173.156,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M329.156,52 L329.156,62 L339.156,62 L329.156,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="145.356" x="179.156" y="67.111">second note also fairly wide</text>
+    <path d="M349.513,52 L349.513,75 L416.513,75 L416.513,62 L406.513,52 L349.513,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M406.513,52 L406.513,62 L416.513,62 L406.513,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="46.963" x="355.513" y="67.111">third one</text>
+  </g>
+</svg>

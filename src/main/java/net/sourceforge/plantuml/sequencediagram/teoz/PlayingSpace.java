@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.drawing.LimitFinder;
@@ -47,6 +48,8 @@ import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.LinkAnchor;
 import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
+import net.sourceforge.plantuml.sequencediagram.Note;
+import net.sourceforge.plantuml.sequencediagram.Notes;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.style.ISkinParam;
 
@@ -271,8 +274,25 @@ public class PlayingSpace implements Bordered {
 	// the tile, since it's only used as a safe stand-in for "where is this
 	// tile, roughly" (see the caching-safety comment on ensureDisjoint()
 	// above). Returns null for tile kinds that don't carry a directly
-	// resolvable participant (notes, dividers, references, ...) or an empty
-	// group -- callers must treat null as "can't safely tell, skip".
+	// resolvable participant (dividers, references, ...) or an empty group --
+	// callers must treat null as "can't safely tell, skip".
+	//
+	// A standalone "& note over X : ..." (NoteTile, wrapping a single Note)
+	// and a "& note over X,Y : ..." / VMERGE-stacked group (NotesTile,
+	// wrapping a Notes) both used to fall through to the final `return null`
+	// below, same as dividers/references -- which meant TWO parallel notes on
+	// different participants never got an ensureDisjoint() pass at all, and
+	// nothing else in the layout keeps their footprints from overlapping (see
+	// the ensureDisjoint() comment above): a note's own X position is derived
+	// straight from its participant's LivingSpace.getPosC(), and a note is
+	// free to be wider than the gap between two neighbouring participants,
+	// which is fixed independently of note width. That silent skip, not the
+	// note-vs-note X math itself, was the actual bug behind issue #2883's
+	// "notes overlap" report with `&`. Resolving to the anchoring
+	// participant here - the first one for a Notes group, mirroring how
+	// NotesTile itself has no single LivingSpace field either - lets these
+	// two tile kinds join the same disjointness pass every parallel Message
+	// already got.
 	private LivingSpace findAnchorLivingSpace(Tile tile) {
 		final Event event = tile.getEvent();
 		if (event instanceof Message)
@@ -280,6 +300,15 @@ public class PlayingSpace implements Bordered {
 
 		if (event instanceof MessageExo)
 			return livingSpaces.get(((MessageExo) event).getParticipant());
+
+		if (event instanceof Note)
+			return livingSpaces.get(((Note) event).getParticipant());
+
+		if (event instanceof Notes) {
+			final Iterator<Note> it = ((Notes) event).iterator();
+			if (it.hasNext())
+				return livingSpaces.get(it.next().getParticipant());
+		}
 
 		if (tile instanceof GroupingTile)
 			for (Tile child : ((GroupingTile) tile).getChildTilesForAnchor()) {

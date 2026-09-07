@@ -34,6 +34,32 @@ class SyntaxCheckerTest {
 		assertEquals("[Please use '!option handwritten true' to enable handwritten ]", result.getWarnings().toString());
 	}
 
+	// The leading '/' (VMERGE) note-merge syntax predates the Teoz engine
+	// (see issue #2883's follow-up discussion) and is deprecated in favor of
+	// '&', which -- since NoteTile stacks same-participant notes instead of
+	// overlapping them -- now covers the "same time step" use case '/' was
+	// historically used for.
+	@Test
+	void test_vmerge_note_syntax_is_deprecated() throws IOException {
+		final String source = "@startuml\n!pragma teoz true\nnote over Alice: first\n/ note over Bob: second\n@enduml";
+		final McpResult result = checker.check(source);
+		assertNotNull(result);
+		assertTrue(result.isOk());
+		assertEquals(1, result.getWarnings().size());
+		assertEquals(
+				"[The leading '/' note-merge syntax is deprecated; use '&' to place notes on the same row instead.]",
+				result.getWarnings().toString());
+	}
+
+	@Test
+	void test_parallel_note_syntax_alone_is_not_deprecated() throws IOException {
+		final String source = "@startuml\n!pragma teoz true\nnote over Alice: first\n& note over Bob: second\n@enduml";
+		final McpResult result = checker.check(source);
+		assertNotNull(result);
+		assertTrue(result.isOk());
+		assertEquals(0, result.getWarnings().size());
+	}
+
 	// --- Valid diagrams ---
 
 	@Test

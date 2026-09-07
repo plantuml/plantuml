@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="223px" preserveAspectRatio="none" style="width:133px;height:223px;background:#FFFFFF;" version="1.1" viewBox="0 0 133 223" width="133px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>A</title>
+      <rect fill="#000" fill-opacity="0" height="144" width="8" x="55.597" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="59.097" x2="59.097" y1="39" y2="183"/>
+    </g>
+    <g>
+      <title>B</title>
+      <rect fill="#000" fill-opacity="0" height="144" width="8" x="107.141" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="110.641" x2="110.641" y1="39" y2="183"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="47.416" y="10"/>
+    <text fill="#000" font-size="14" x="54.416" y="27.889">A</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="98.959" y="10"/>
+    <text fill="#000" font-size="14" x="105.959" y="27.889">B</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="47.416" y="183"/>
+    <text fill="#000" font-size="14" x="54.416" y="200.889">A</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="98.959" y="183"/>
+    <text fill="#000" font-size="14" x="105.959" y="200.889">B</text>
+    <polygon fill="#181818" points="98.641,62,108.641,66,98.641,70,102.641,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="59.097" x2="104.641" y1="66" y2="66"/>
+    <text fill="#000" font-size="13" textLength="27.544" x="66.097" y="61.111">hello</text>
+    <path d="M25.522,79 L25.522,102 L92.522,102 L92.522,89 L82.522,79 L25.522,79" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M82.522,79 L82.522,89 L92.522,89 L82.522,79" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="46.15" x="31.522" y="94.111">first note</text>
+    <path d="M15,112 L15,135 L103,135 L103,122 L93,112 L15,112" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M93,112 L93,122 L103,122 L93,112" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="67.194" x="21" y="127.111">second note</text>
+    <path d="M23.328,145 L23.328,168 L94.328,168 L94.328,155 L84.328,145 L23.328,145" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M84.328,145 L84.328,155 L94.328,155 L84.328,145" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="50.537" x="29.328" y="160.111">third note</text>
+  </g>
+</svg>

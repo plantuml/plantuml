@@ -36,7 +36,10 @@
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -89,12 +92,41 @@ public class NoteTile extends AbstractTile implements Tile {
 		// getContactPointRelative below), mirroring how the legacy TileParallel
 		// aligned notes against message arrows by their respective
 		// contact points.
+		//
+		// EXCEPT when this note's own footprint was already claimed by an
+		// earlier note in the same "&" run (e.g. "note over A & note over A"):
+		// contact-point alignment centers both on the very same line, which,
+		// since they occupy the same side of the same participant, means the
+		// same X footprint too -- i.e. they would be drawn directly on top of
+		// one another. In that case fall back to createPropagating(): it
+		// stacks this note below everything drawn so far in the run (like a
+		// LifeEventTile passing through the run without joining the alignment
+		// itself) while still forwarding the run's contact/origin, so a LATER
+		// sibling on a genuinely different footprint still aligns against the
+		// original line (see issue #2883's follow-up: notes on different
+		// participants were fixed there, same-participant notes were an
+		// explicit out-of-scope limitation, closed here).
+		//
+		// The footprint key is (participant, position), not just the
+		// participant: "note left of U" and "note right of U" both resolve to
+		// livingSpace1 == U, but extend away from U in opposite directions and
+		// never actually overlap -- only two notes on the very same side (or
+		// both plain OVER) do.
 		final double contactRelative = getContactPointRelative();
 		final double height = getPreferredHeight();
-		if (note.isParallel())
-			this.yGauge = YGauge.createParallel(currentY, contactRelative, height);
-		else
-			this.yGauge = YGauge.createWithContact(currentY, contactRelative, height);
+		final Object footprint = Arrays.asList(livingSpace1, note.getPosition());
+		final Set<Object> anchorsInRun = currentY.getNoteAnchorsInRun();
+		if (note.isParallel() && anchorsInRun != null && anchorsInRun.contains(footprint)) {
+			this.yGauge = YGauge.createPropagating(currentY, height).withNoteAnchorsInRun(anchorsInRun);
+		} else if (note.isParallel()) {
+			final Set<Object> grown = anchorsInRun == null ? new HashSet<Object>() : new HashSet<>(anchorsInRun);
+			grown.add(footprint);
+			this.yGauge = YGauge.createParallel(currentY, contactRelative, height).withNoteAnchorsInRun(grown);
+		} else {
+			final Set<Object> fresh = new HashSet<>();
+			fresh.add(footprint);
+			this.yGauge = YGauge.createWithContact(currentY, contactRelative, height).withNoteAnchorsInRun(fresh);
+		}
 	}
 
 	@Override

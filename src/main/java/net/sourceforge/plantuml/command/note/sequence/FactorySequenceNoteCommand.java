@@ -69,6 +69,7 @@ import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.warning.Warning;
 
 public final class FactorySequenceNoteCommand implements SingleMultiFactoryCommand<SequenceDiagram> {
 	// ::remove folder when __HAXE__
@@ -249,6 +250,20 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 			if (parallel) {
 				note.goParallel();
 			}
+			// The leading '/' (VMERGE) is a pre-Teoz relic (present since this
+			// command's creation in 2013, over a year before the Teoz engine
+			// itself existed): it glues this note to the previous one at the
+			// display/model level, regardless of engine. '&' (PARALLEL, added
+			// to notes in 2019) is the Teoz-native way to place notes on the
+			// same row, and since it now stacks same-participant notes instead
+			// of overlapping them (see NoteTile), it covers the same "notes at
+			// the same time step" need without the older, engine-agnostic
+			// merge trick. Warn so existing diagrams keep working unchanged
+			// while pointing authors at the newer syntax.
+			if (tryMerge)
+				diagram.addWarning(new Warning(
+						"The leading '/' note-merge syntax is deprecated; use '&' to place notes on the same row instead."));
+
 			diagram.addNote(note, tryMerge);
 		}
 		return CommandExecutionResult.ok();

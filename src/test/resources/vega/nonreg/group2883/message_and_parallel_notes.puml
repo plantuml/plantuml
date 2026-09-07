@@ -1,0 +1,10 @@
+---
+output: svg
+expected-description: (4 participants)
+---
+@startuml
+!pragma teoz true
+U -> O : hello
+& note over ml : parallel note
+& note over sl : another parallel note
+@enduml
