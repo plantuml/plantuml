@@ -107,6 +107,53 @@ To skip tests and javadoc, use :
 gradlew build -x test -x javadoc
 ```
 
+### Building a native image
+
+The `plantuml-natif` subproject builds a GraalVM native binary of the same code as `plantuml.jar` (headless CLI). That is the task CI uses for Windows, Linux, and macOS native releases.
+
+Do not use `:plantuml-gplv2:nativeFullCompile`. Published native images come from `:plantuml-natif:nativeCompile`.
+
+#### Prerequisites
+
+- JDK 11 or newer so Gradle includes `plantuml-natif`. CI builds with GraalVM / Liberica Native Image Kit **21**.
+- `JAVA_HOME` must point at a JDK that ships `native-image` (GraalVM or Liberica NIK). `plantuml-natif` turns toolchain detection off, so a plain JDK leaves `javaLauncher` empty and the compile fails with `Cannot query the value of property 'javaLauncher'`. Setting `GRAALVM_HOME` is optional if `JAVA_HOME` already points at that JDK.
+- On Windows, install Visual Studio (2022 Community is enough) with the **Desktop development with C++** workload. Run Gradle from an x64 Native Tools / MSVC developer prompt so `cl.exe` is on `PATH`. GraalVM `native-image` needs that toolchain.
+
+#### Build
+
+From the repository root. `--no-daemon` matches CI.
+
+Linux / macOS:
+
+```
+./gradlew --no-daemon :plantuml-natif:nativeCompile -x test
+```
+
+Windows (cmd):
+
+```
+.\gradlew --no-daemon :plantuml-natif:nativeCompile -x test
+```
+
+The binary lands in:
+
+- Linux / macOS: `plantuml-natif/build/native/nativeCompile/plantuml`
+- Windows: `plantuml-natif/build/native/nativeCompile/plantuml.exe`
+
+#### Smoke test (ASCII)
+
+Linux / macOS:
+
+```
+echo "Alice -> Bob : it works!" | ./plantuml-natif/build/native/nativeCompile/plantuml -pipe -ttxt
+```
+
+Windows (PowerShell):
+
+```
+"Alice -> Bob : it works!" | .\plantuml-natif\build\native\nativeCompile\plantuml.exe -pipe -ttxt
+```
+
 ### Contributing
 
 After successfully building the project, you are ready to start contributing to PlantUML! If you have any changes to contribute, please submit a pull request through the [PlantUML GitHub repository](https://github.com/plantuml/plantuml).
