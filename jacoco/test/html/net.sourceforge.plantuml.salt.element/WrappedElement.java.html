@@ -55,5 +55,10 @@ public class WrappedElement implements Element {
 <span class="nc" id="L55">		wrapped.drawU(ug, zIndex, dimToUse);</span>
 <span class="nc" id="L56">	}</span>
 
+	@Override
+	public boolean mayDrawBeyondPreferredDimension() {
+<span class="nc" id="L60">		return wrapped.mayDrawBeyondPreferredDimension();</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

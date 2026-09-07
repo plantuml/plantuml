@@ -55,8 +55,11 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.salt.element.Element;
@@ -91,91 +94,130 @@ public class PSystemSalt extends TitledDiagram {
 
 	@Deprecated
 	public PSystemSalt(UmlSource source, List&lt;String&gt; data, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L94">		super(source, DiagramType.SALT, null, preprocessing);</span>
-<span class="fc" id="L95">		this.dictionary = new SaltDictionary(source.getPathSystem(), preprocessing.getOption());</span>
-<span class="fc" id="L96">		this.data = data;</span>
-<span class="fc" id="L97">	}</span>
+<span class="fc" id="L97">		super(source, DiagramType.SALT, null, preprocessing);</span>
+<span class="fc" id="L98">		this.dictionary = new SaltDictionary(source.getPathSystem(), preprocessing.getOption());</span>
+<span class="fc" id="L99">		this.data = data;</span>
+<span class="fc" id="L100">	}</span>
 
 	public PSystemSalt(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L100">		this(source, new ArrayList&lt;String&gt;(), preprocessing);</span>
-<span class="fc" id="L101">	}</span>
+<span class="fc" id="L103">		this(source, new ArrayList&lt;String&gt;(), preprocessing);</span>
+<span class="fc" id="L104">	}</span>
 
 	public void add(String s) {
-<span class="fc" id="L104">		data.addAll(StringLocated.expandsNewline(s));</span>
-<span class="fc" id="L105">	}</span>
+<span class="fc" id="L107">		data.addAll(StringLocated.expandsNewline(s));</span>
+<span class="fc" id="L108">	}</span>
 
 	public int size() {
-<span class="fc" id="L108">		return data.size();</span>
+<span class="fc" id="L111">		return data.size();</span>
 	}
 
 	@Override
 	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
-<span class="fc" id="L113">		final Element salt = createElement(manageSprite());</span>
-<span class="fc" id="L114">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam(), getPragma());</span>
-<span class="fc" id="L115">		final XDimension2D size = salt.getPreferredDimension(stringBounder, 0, 0);</span>
-<span class="fc" id="L116">		return new TextBlock() {</span>
+<span class="fc" id="L116">		final Element salt = createElement(manageSprite());</span>
+<span class="fc" id="L117">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam(), getPragma());</span>
+<span class="fc" id="L118">		final XDimension2D preferred = salt.getPreferredDimension(stringBounder, 0, 0);</span>
+		// Only pay for the extra dry-run pass - and only let it influence the
+		// final size - when something in the tree can actually draw beyond
+		// its own preferred dimension. It measures via LimitFinder, a
+		// different (UText-based) code path than getPreferredDimension's own
+		// (creole-aware) text measurement, so it is not always pixel-for-
+		// pixel identical even when nothing truly overflows; gating it here
+		// keeps every ordinary salt diagram byte-identical to before this
+		// existed instead of picking up a stray pixel or two of margin.
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		final XDimension2D size = salt.mayDrawBeyondPreferredDimension() ? withActualExtent(salt, preferred, stringBounder)</span>
+<span class="fc" id="L128">				: preferred;</span>
+<span class="fc" id="L129">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L119">				ug = ug.apply(getBlack());</span>
-<span class="fc" id="L120">				salt.drawU(ug, 0, new XDimension2D(size.getWidth(), size.getHeight()));</span>
-<span class="fc" id="L121">				salt.drawU(ug, 1, new XDimension2D(size.getWidth(), size.getHeight()));</span>
-<span class="fc" id="L122">			}</span>
+<span class="fc" id="L132">				ug = ug.apply(getBlack());</span>
+<span class="fc" id="L133">				salt.drawU(ug, 0, new XDimension2D(size.getWidth(), size.getHeight()));</span>
+<span class="fc" id="L134">				salt.drawU(ug, 1, new XDimension2D(size.getWidth(), size.getHeight()));</span>
+<span class="fc" id="L135">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L125">				return size;</span>
+<span class="fc" id="L138">				return size;</span>
 			}
 
 			public HColor getBackcolor() {
-<span class="nc" id="L129">				return getSkinParam().getBackgroundColor();</span>
+<span class="nc" id="L142">				return getSkinParam().getBackgroundColor();</span>
 			}
 		};
 	}
 
+	// Some elements (an open salt droplist - see ElementDroplist - is the
+	// current example) deliberately draw beyond their own preferred
+	// dimension, so they can float over / overlap whatever the layout put
+	// after them instead of pushing it down, the way a real UI drop-down
+	// covers whatever is under it. getPreferredDimension() has to stay
+	// unaware of that overflow, since it is also what every grid/row/column
+	// in the diagram is sized from (see ElementPyramid#init) - growing it
+	// would reserve room for the overflow and defeat the &quot;floats over&quot;
+	// behavior. But it means getPreferredDimension() alone is not always
+	// large enough to size the final image: whatever gets drawn past its
+	// edge is clipped outright by raster formats such as PNG, because their
+	// canvas is allocated at exactly that size (see TextBlockExporter);
+	// SVG happens to auto-grow its declared viewBox from the shapes it
+	// actually draws instead, which is why this was never visible there
+	// (see issue #2882). Do a dry run of the real drawU() calls - which,
+	// unlike getPreferredDimension(), walks actual absolute positions - and
+	// grow the canvas to whatever that dry run really touched, without
+	// changing how any element itself gets laid out.
+	private static XDimension2D withActualExtent(final Element salt, final XDimension2D preferred,
+			StringBounder stringBounder) {
+<span class="fc" id="L167">		final MinMax minmax = TextBlockUtils.getMinMax(new UDrawable() {</span>
+			public void drawU(UGraphic ug) {
+<span class="fc" id="L169">				salt.drawU(ug, 0, preferred);</span>
+<span class="fc" id="L170">				salt.drawU(ug, 1, preferred);</span>
+<span class="fc" id="L171">			}</span>
+		}, stringBounder, true);
+<span class="fc" id="L173">		return preferred.atLeast(minmax.getMaxX(), minmax.getMaxY());</span>
+	}
+
 	public DiagramDescription getDescription() {
-<span class="fc" id="L135">		return new DiagramDescription(&quot;(Salt)&quot;);</span>
+<span class="fc" id="L177">		return new DiagramDescription(&quot;(Salt)&quot;);</span>
 	}
 
 	public void addSprite(String name, Sprite sprite) {
-<span class="nc" id="L139">		dictionary.addSprite(name, sprite);</span>
-<span class="nc" id="L140">	}</span>
+<span class="nc" id="L181">		dictionary.addSprite(name, sprite);</span>
+<span class="nc" id="L182">	}</span>
 
 	private List&lt;String&gt; manageSprite() {
 
-<span class="fc" id="L144">		final Command&lt;TitledDiagram&gt; cmd = CommandFactorySprite.ME.createMultiLine(false);</span>
+<span class="fc" id="L186">		final Command&lt;TitledDiagram&gt; cmd = CommandFactorySprite.ME.createMultiLine(false);</span>
 
-<span class="fc" id="L146">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L147" title="All 2 branches covered.">		for (Iterator&lt;String&gt; it = data.iterator(); it.hasNext();) {</span>
-<span class="fc" id="L148">			String s = it.next();</span>
-<span class="pc bpc" id="L149" title="1 of 2 branches missed.">			if (s.equals(&quot;hide stereotype&quot;)) {</span>
+<span class="fc" id="L188">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">		for (Iterator&lt;String&gt; it = data.iterator(); it.hasNext();) {</span>
+<span class="fc" id="L190">			String s = it.next();</span>
+<span class="pc bpc" id="L191" title="1 of 2 branches missed.">			if (s.equals(&quot;hide stereotype&quot;)) {</span>
 				// System.err.println(&quot;skipping &quot; + s);
-<span class="pc bpc" id="L151" title="1 of 2 branches missed.">			} else if (s.startsWith(&quot;skinparam &quot;)) {</span>
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">			} else if (s.startsWith(&quot;skinparam &quot;)) {</span>
 				// System.err.println(&quot;skipping &quot; + s);
-<span class="pc bpc" id="L153" title="1 of 2 branches missed.">			} else if (s.startsWith(&quot;scale &quot;)) {</span>
-<span class="nc" id="L154">				final double scale = Double.parseDouble(s.substring(&quot;scale &quot;.length()));</span>
-<span class="nc" id="L155">				this.setScale(new ScaleSimple(scale));</span>
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">			} else if (s.startsWith(&quot;scale &quot;)) {</span>
+<span class="nc" id="L196">				final double scale = Double.parseDouble(s.substring(&quot;scale &quot;.length()));</span>
+<span class="nc" id="L197">				this.setScale(new ScaleSimple(scale));</span>
 				// System.err.println(&quot;skipping &quot; + s);
-<span class="pc bpc" id="L157" title="1 of 2 branches missed.">			} else if (s.startsWith(&quot;sprite $&quot;)) {</span>
-<span class="nc" id="L158">				BlocLines block = BlocLines.singleString(s);</span>
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">			} else if (s.startsWith(&quot;sprite $&quot;)) {</span>
+<span class="nc" id="L200">				BlocLines block = BlocLines.singleString(s);</span>
 				do {
-<span class="nc" id="L160">					s = it.next();</span>
-<span class="nc" id="L161">					block = block.addString(s);</span>
-<span class="nc bnc" id="L162" title="All 2 branches missed.">				} while (s.equals(&quot;}&quot;) == false);</span>
+<span class="nc" id="L202">					s = it.next();</span>
+<span class="nc" id="L203">					block = block.addString(s);</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">				} while (s.equals(&quot;}&quot;) == false);</span>
 				try {
-<span class="nc" id="L164">					final CommandExecutionResult cmdResult = cmd.execute(this, block, ParserPass.ONE);</span>
-<span class="nc" id="L165">				} catch (NoSuchColorException e) {</span>
-<span class="nc" id="L166">				}</span>
-<span class="nc" id="L167">			} else {</span>
-<span class="fc" id="L168">				result.add(s);</span>
+<span class="nc" id="L206">					final CommandExecutionResult cmdResult = cmd.execute(this, block, ParserPass.ONE);</span>
+<span class="nc" id="L207">				} catch (NoSuchColorException e) {</span>
+<span class="nc" id="L208">				}</span>
+<span class="nc" id="L209">			} else {</span>
+<span class="fc" id="L210">				result.add(s);</span>
 			}
-<span class="fc" id="L170">		}</span>
-<span class="fc" id="L171">		return result;</span>
+<span class="fc" id="L212">		}</span>
+<span class="fc" id="L213">		return result;</span>
 	}
 
 	private Element createElement(List&lt;String&gt; data) {
 
-<span class="fc" id="L176">		final DataSourceImpl source = new DataSourceImpl(data);</span>
+<span class="fc" id="L218">		final DataSourceImpl source = new DataSourceImpl(data);</span>
 
-<span class="fc" id="L178">		final Collection&lt;AbstractElementFactoryComplex&gt; cpx = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L220">		final Collection&lt;AbstractElementFactoryComplex&gt; cpx = new ArrayList&lt;&gt;();</span>
 
 		// A single, shared ElementFactoryTree instance, reused everywhere a tree
 		// table can appear (top-level, and as a child of Pyramid/Scroll/Border/
@@ -185,62 +227,62 @@ public class PSystemSalt extends TitledDiagram {
 		// given &quot;{T#...}&quot; block needs its own factories wired up exactly like
 		// Pyramid/Scroll/Border do; sharing one instance guarantees that instead
 		// of leaving every other copy with an empty, unusable factory list.
-<span class="fc" id="L188">		final ElementFactoryTree treeFactory = new ElementFactoryTree(source, dictionary);</span>
+<span class="fc" id="L230">		final ElementFactoryTree treeFactory = new ElementFactoryTree(source, dictionary);</span>
 
 		// cpx.add(new ElementFactorySimpleFrame(source, dictionnary));
-<span class="fc" id="L191">		cpx.add(new ElementFactoryPyramid(source, dictionary));</span>
-<span class="fc" id="L192">		cpx.add(new ElementFactoryScroll(source, dictionary));</span>
-<span class="fc" id="L193">		cpx.add(new ElementFactoryBorder(source, dictionary));</span>
+<span class="fc" id="L233">		cpx.add(new ElementFactoryPyramid(source, dictionary));</span>
+<span class="fc" id="L234">		cpx.add(new ElementFactoryScroll(source, dictionary));</span>
+<span class="fc" id="L235">		cpx.add(new ElementFactoryBorder(source, dictionary));</span>
 		// A tree table (&quot;{T#...}&quot;) must be a top-level candidate too, not only
 		// something reachable once already inside a Pyramid/Scroll/Border body -
 		// otherwise a bare tree table needs a useless extra wrapping &quot;{ ... }&quot;
 		// to render at all (see issue #2730).
-<span class="fc" id="L198">		cpx.add(treeFactory);</span>
+<span class="fc" id="L240">		cpx.add(treeFactory);</span>
 
-<span class="fc bfc" id="L200" title="All 2 branches covered.">		for (AbstractElementFactoryComplex f : cpx)</span>
-<span class="fc" id="L201">			addSimpleFactory(f, source, dictionary, treeFactory);</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">		for (AbstractElementFactoryComplex f : cpx)</span>
+<span class="fc" id="L243">			addSimpleFactory(f, source, dictionary, treeFactory);</span>
 
-<span class="fc bfc" id="L203" title="All 2 branches covered.">		for (AbstractElementFactoryComplex f1 : cpx)</span>
-<span class="fc bfc" id="L204" title="All 2 branches covered.">			for (AbstractElementFactoryComplex f2 : cpx)</span>
-<span class="fc" id="L205">				f1.addFactory(f2);</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">		for (AbstractElementFactoryComplex f1 : cpx)</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">			for (AbstractElementFactoryComplex f2 : cpx)</span>
+<span class="fc" id="L247">				f1.addFactory(f2);</span>
 
-<span class="pc bpc" id="L207" title="1 of 2 branches missed.">		for (ElementFactory f : cpx) {</span>
-<span class="fc bfc" id="L208" title="All 2 branches covered.">			if (f.ready()) {</span>
-<span class="pc" id="L209">				Log.info(() -&gt; &quot;Using &quot; + f);</span>
-<span class="fc" id="L210">				return f.create().getElement();</span>
+<span class="pc bpc" id="L249" title="1 of 2 branches missed.">		for (ElementFactory f : cpx) {</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">			if (f.ready()) {</span>
+<span class="pc" id="L251">				Log.info(() -&gt; &quot;Using &quot; + f);</span>
+<span class="fc" id="L252">				return f.create().getElement();</span>
 			}
-<span class="fc" id="L212">		}</span>
+<span class="fc" id="L254">		}</span>
 
-<span class="nc" id="L214">		Log.println(&quot;data=&quot; + data);</span>
-<span class="nc" id="L215">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L256">		Log.println(&quot;data=&quot; + data);</span>
+<span class="nc" id="L257">		throw new IllegalArgumentException();</span>
 
 	}
 
 	private static void addSimpleFactory(final AbstractElementFactoryComplex cpxFactory, final DataSource source,
 			SaltDictionary dictionary, ElementFactoryTree treeFactory) {
-<span class="fc" id="L221">		cpxFactory.addFactory(new ElementFactoryMenu(source, dictionary));</span>
-<span class="fc" id="L222">		cpxFactory.addFactory(treeFactory);</span>
-<span class="fc" id="L223">		cpxFactory.addFactory(new ElementFactoryTab(source, dictionary));</span>
-<span class="fc" id="L224">		cpxFactory.addFactory(new ElementFactoryLine(source));</span>
-<span class="fc" id="L225">		cpxFactory.addFactory(new ElementFactoryTextField(source, dictionary));</span>
-<span class="fc" id="L226">		cpxFactory.addFactory(new ElementFactoryCheckboxOn(source, dictionary));</span>
-<span class="fc" id="L227">		cpxFactory.addFactory(new ElementFactoryCheckboxOff(source, dictionary));</span>
-<span class="fc" id="L228">		cpxFactory.addFactory(new ElementFactoryButton(source, dictionary));</span>
-<span class="fc" id="L229">		cpxFactory.addFactory(new ElementFactoryDroplist(source, dictionary));</span>
-<span class="fc" id="L230">		cpxFactory.addFactory(new ElementFactoryRadioOn(source, dictionary));</span>
-<span class="fc" id="L231">		cpxFactory.addFactory(new ElementFactoryRadioOff(source, dictionary));</span>
-<span class="fc" id="L232">		cpxFactory.addFactory(new ElementFactoryImage(source, dictionary));</span>
-<span class="fc" id="L233">		cpxFactory.addFactory(new ElementFactoryRetrieveFromDictonnary(source, dictionary));</span>
-<span class="fc" id="L234">		cpxFactory.addFactory(new ElementFactoryText(source, dictionary));</span>
-<span class="fc" id="L235">	}</span>
+<span class="fc" id="L263">		cpxFactory.addFactory(new ElementFactoryMenu(source, dictionary));</span>
+<span class="fc" id="L264">		cpxFactory.addFactory(treeFactory);</span>
+<span class="fc" id="L265">		cpxFactory.addFactory(new ElementFactoryTab(source, dictionary));</span>
+<span class="fc" id="L266">		cpxFactory.addFactory(new ElementFactoryLine(source));</span>
+<span class="fc" id="L267">		cpxFactory.addFactory(new ElementFactoryTextField(source, dictionary));</span>
+<span class="fc" id="L268">		cpxFactory.addFactory(new ElementFactoryCheckboxOn(source, dictionary));</span>
+<span class="fc" id="L269">		cpxFactory.addFactory(new ElementFactoryCheckboxOff(source, dictionary));</span>
+<span class="fc" id="L270">		cpxFactory.addFactory(new ElementFactoryButton(source, dictionary));</span>
+<span class="fc" id="L271">		cpxFactory.addFactory(new ElementFactoryDroplist(source, dictionary));</span>
+<span class="fc" id="L272">		cpxFactory.addFactory(new ElementFactoryRadioOn(source, dictionary));</span>
+<span class="fc" id="L273">		cpxFactory.addFactory(new ElementFactoryRadioOff(source, dictionary));</span>
+<span class="fc" id="L274">		cpxFactory.addFactory(new ElementFactoryImage(source, dictionary));</span>
+<span class="fc" id="L275">		cpxFactory.addFactory(new ElementFactoryRetrieveFromDictonnary(source, dictionary));</span>
+<span class="fc" id="L276">		cpxFactory.addFactory(new ElementFactoryText(source, dictionary));</span>
+<span class="fc" id="L277">	}</span>
 
 	@Override
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-<span class="fc" id="L239">		return ClockwiseTopRightBottomLeft.same(5);</span>
+<span class="fc" id="L281">		return ClockwiseTopRightBottomLeft.same(5);</span>
 	}
 
 	private HColor getBlack() {
-<span class="fc" id="L243">		return HColors.BLACK;</span>
+<span class="fc" id="L285">		return HColors.BLACK;</span>
 	}
 
 }

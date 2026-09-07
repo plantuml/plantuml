@@ -13685,14 +13685,14 @@
 
         <Package name="net.sourceforge.plantuml.salt">
             <Stats>
-                <TotalClasses>8</TotalClasses>
-                <ConcreteClasses>7</ConcreteClasses>
+                <TotalClasses>9</TotalClasses>
+                <ConcreteClasses>8</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>2</Ca>
                 <Ce>21</Ce>
-                <A>0.12</A>
+                <A>0.11</A>
                 <I>0.91</I>
-                <D>0.04</D>
+                <D>0.02</D>
                 <V>1</V>
             </Stats>
 
@@ -13708,6 +13708,9 @@
                 </Class>
                 <Class sourceFile="PSystemSalt.java">
                     net.sourceforge.plantuml.salt.PSystemSalt$1
+                </Class>
+                <Class sourceFile="PSystemSalt.java">
+                    net.sourceforge.plantuml.salt.PSystemSalt$2
                 </Class>
                 <Class sourceFile="PSystemSaltFactory.java">
                     net.sourceforge.plantuml.salt.PSystemSaltFactory

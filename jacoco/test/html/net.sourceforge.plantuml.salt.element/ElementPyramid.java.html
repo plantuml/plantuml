@@ -173,5 +173,14 @@ public class ElementPyramid extends AbstractElement {
 <span class="nc" id="L173">		return cols + 1;</span>
 	}
 
+	@Override
+	public boolean mayDrawBeyondPreferredDimension() {
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		for (Element elt : positions1.keySet())</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">			if (elt.mayDrawBeyondPreferredDimension())</span>
+<span class="fc" id="L180">				return true;</span>
+
+<span class="fc" id="L182">		return false;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -55,65 +55,87 @@ import net.sourceforge.plantuml.style.ISkinSimple;
 
 public class ElementDroplist extends AbstractElementText implements Element {
 
-<span class="nc" id="L58">	private final int box = 12;</span>
+<span class="fc" id="L58">	private final int box = 12;</span>
 	private final TextBlock openDrop;
 
 	public ElementDroplist(String text, UFont font, ISkinSimple spriteContainer) {
-<span class="nc" id="L62">		super(extract(text), font, true, spriteContainer);</span>
-<span class="nc" id="L63">		final StringTokenizer st = new StringTokenizer(text, &quot;^&quot;);</span>
-<span class="nc" id="L64">		final List&lt;String&gt; drop = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		while (st.hasMoreTokens()) {</span>
-<span class="nc" id="L66">			drop.add(st.nextToken());</span>
+<span class="fc" id="L62">		super(extract(text), font, true, spriteContainer);</span>
+<span class="fc" id="L63">		final StringTokenizer st = new StringTokenizer(text, &quot;^&quot;);</span>
+<span class="fc" id="L64">		final List&lt;String&gt; drop = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">		while (st.hasMoreTokens()) {</span>
+<span class="fc" id="L66">			drop.add(st.nextToken());</span>
 		}
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (drop.size() &gt; 0) {</span>
-<span class="nc" id="L69">			drop.remove(0);</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (drop.size() &gt; 0) {</span>
+<span class="fc" id="L69">			drop.remove(0);</span>
 		}
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (drop.size() == 0) {</span>
-<span class="nc" id="L72">			this.openDrop = null;</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		if (drop.size() == 0) {</span>
+<span class="fc" id="L72">			this.openDrop = null;</span>
 		} else {
-<span class="nc" id="L74">			this.openDrop = Display.create(drop).create(getConfig(), HorizontalAlignment.LEFT, spriteContainer);</span>
+<span class="fc" id="L74">			this.openDrop = Display.create(drop).create(getConfig(), HorizontalAlignment.LEFT, spriteContainer);</span>
 		}
-<span class="nc" id="L76">	}</span>
+<span class="fc" id="L76">	}</span>
 
 	private static String extract(String text) {
-<span class="nc" id="L79">		final int idx = text.indexOf('^');</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (idx == -1) {</span>
-<span class="nc" id="L81">			return text;</span>
+<span class="fc" id="L79">		final int idx = text.indexOf('^');</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">		if (idx == -1) {</span>
+<span class="fc" id="L81">			return text;</span>
 		}
-<span class="nc" id="L83">		return text.substring(0, idx);</span>
+<span class="fc" id="L83">		return text.substring(0, idx);</span>
 	}
 
+	@Override
+	public boolean mayDrawBeyondPreferredDimension() {
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		return openDrop != null;</span>
+	}
+
+	// This is deliberately the closed &quot;head&quot; only - the label box with its
+	// arrow - and never grows to cover an open drop-down list. An open
+	// droplist is meant to float over / overlap whatever comes after it in
+	// the grid, the way a real UI drop-down does, instead of pushing the
+	// rest of the layout down; ElementPyramid sizes grid rows/columns from
+	// this method (see its init()), so growing it here would reserve extra
+	// row height and make every following row shift down instead. Sizing the
+	// final image large enough to actually show the open list without
+	// cropping it is handled separately, from the *drawn* extent rather than
+	// this preferred one - see PSystemSalt#getTextBlock (issue #2882).
 	public XDimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
-<span class="nc" id="L87">		final XDimension2D dim = getTextDimensionAt(stringBounder, x + 2);</span>
-<span class="nc" id="L88">		return dim.delta((4 + box), 4);</span>
+<span class="fc" id="L102">		final XDimension2D dim = getTextDimensionAt(stringBounder, x + 2);</span>
+<span class="fc" id="L103">		return dim.delta((4 + box), 4);</span>
 	}
 
 	public void drawU(UGraphic ug, int zIndex, XDimension2D dimToUse) {
-<span class="nc" id="L92">		final XDimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);</span>
-<span class="nc" id="L93">		ug = ug.apply(getBlack());</span>
+<span class="fc" id="L107">		final XDimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);</span>
+<span class="fc" id="L108">		ug = ug.apply(getBlack());</span>
 
-<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (zIndex == 0) {</span>
-<span class="nc" id="L96">			ug.apply(getColorEE().bg()).draw(URectangle.build(dim.getWidth() - 1, dim.getHeight() - 1));</span>
-<span class="nc" id="L97">			drawText(ug, 2, 2);</span>
-<span class="nc" id="L98">			final double xline = dim.getWidth() - box;</span>
-<span class="nc" id="L99">			ug.apply(UTranslate.dx(xline)).draw(ULine.vline(dim.getHeight() - 1));</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">		if (zIndex == 0) {</span>
+<span class="fc" id="L111">			ug.apply(getColorEE().bg()).draw(URectangle.build(dim.getWidth() - 1, dim.getHeight() - 1));</span>
+<span class="fc" id="L112">			drawText(ug, 2, 2);</span>
+<span class="fc" id="L113">			final double xline = dim.getWidth() - box;</span>
+<span class="fc" id="L114">			ug.apply(UTranslate.dx(xline)).draw(ULine.vline(dim.getHeight() - 1));</span>
 
-<span class="nc" id="L101">			final UPolygon poly = new UPolygon();</span>
-<span class="nc" id="L102">			poly.addPoint(0, 0);</span>
-<span class="nc" id="L103">			poly.addPoint(box - 6, 0);</span>
-<span class="nc" id="L104">			final XDimension2D dimText = getPureTextDimension(ug.getStringBounder());</span>
-<span class="nc" id="L105">			poly.addPoint((box - 6) / 2, dimText.getHeight() - 8);</span>
+<span class="fc" id="L116">			final UPolygon poly = new UPolygon();</span>
+<span class="fc" id="L117">			poly.addPoint(0, 0);</span>
+<span class="fc" id="L118">			poly.addPoint(box - 6, 0);</span>
+<span class="fc" id="L119">			final XDimension2D dimText = getPureTextDimension(ug.getStringBounder());</span>
+<span class="fc" id="L120">			poly.addPoint((box - 6) / 2, dimText.getHeight() - 8);</span>
 
-<span class="nc" id="L107">			ug.apply(HColors.changeBack(ug)).apply(new UTranslate(xline + 3, 6)).draw(poly);</span>
+<span class="fc" id="L122">			ug.apply(HColors.changeBack(ug)).apply(new UTranslate(xline + 3, 6)).draw(poly);</span>
 		}
 
-<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (openDrop != null) {</span>
-<span class="nc" id="L111">			final XDimension2D dimOpen = openDrop.calculateDimension(ug.getStringBounder()).atLeast(dim.getWidth() - 1,</span>
+		// Drawn once, on the second (top) pass only - like ElementMenuPopup does
+		// for menu popups - because the open list can extend past this cell's
+		// own row and must be painted above whatever the rest of the diagram
+		// already drew at zIndex 0. Drawing it unconditionally here (the
+		// previous code had no zIndex guard at all) painted it a second time
+		// during the zIndex 0 pass too, which duplicated every open item in the
+		// output (visible as doubled rects/text in the SVG for issue #2882).
+<span class="fc bfc" id="L132" title="All 4 branches covered.">		if (openDrop != null &amp;&amp; zIndex == 1) {</span>
+<span class="fc" id="L133">			final XDimension2D dimOpen = openDrop.calculateDimension(ug.getStringBounder()).atLeast(dim.getWidth() - 1,</span>
 					0);
-<span class="nc" id="L113">			ug = ug.apply(UTranslate.dy(dim.getHeight() - 1));</span>
-<span class="nc" id="L114">			ug.apply(getColorEE().bg()).draw(URectangle.build(dimOpen.getWidth() - 1, dimOpen.getHeight() - 1));</span>
-<span class="nc" id="L115">			openDrop.drawU(ug);</span>
+<span class="fc" id="L135">			ug = ug.apply(UTranslate.dy(dim.getHeight() - 1));</span>
+<span class="fc" id="L136">			ug.apply(getColorEE().bg()).draw(URectangle.build(dimOpen.getWidth() - 1, dimOpen.getHeight() - 1));</span>
+<span class="fc" id="L137">			openDrop.drawU(ug);</span>
 		}
-<span class="nc" id="L117">	}</span>
+<span class="fc" id="L139">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

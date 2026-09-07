@@ -101,7 +101,7 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button><button id="method-summary-table-tab5" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab5', 3)" class="table-tab">Default Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
@@ -117,6 +117,12 @@ loadScripts(document, 'script');</script>
  double&nbsp;x,
  double&nbsp;y)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#mayDrawBeyondPreferredDimension()" class="member-name-link">mayDrawBeyondPreferredDimension</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Whether this element - or any element reachable through it - may draw
+ content that extends past its own <a href="#getPreferredDimension(net.sourceforge.plantuml.klimt.font.StringBounder,double,double)"><code>getPreferredDimension(net.sourceforge.plantuml.klimt.font.StringBounder, double, double)</code></a>.</div>
+</div>
 </div>
 </div>
 </div>
@@ -145,6 +151,31 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">drawU</span><wbr><span class="parameters">(<a href="../../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
  int&nbsp;zIndex,
  <a href="../../klimt/geom/XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a>&nbsp;dimToUse)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="mayDrawBeyondPreferredDimension()">
+<h3>mayDrawBeyondPreferredDimension</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">mayDrawBeyondPreferredDimension</span>()</div>
+<div class="block">Whether this element - or any element reachable through it - may draw
+ content that extends past its own <a href="#getPreferredDimension(net.sourceforge.plantuml.klimt.font.StringBounder,double,double)"><code>getPreferredDimension(net.sourceforge.plantuml.klimt.font.StringBounder, double, double)</code></a>. An
+ open salt droplist (see ElementDroplist) is the current example: its
+ drop-down list is meant to float over / overlap whatever the layout put
+ after it instead of reserving room for itself, so
+ <code>getPreferredDimension</code> deliberately stays unaware of it - every
+ grid/row/column in a salt diagram is sized from that method (see
+ ElementPyramid#init), and growing it would defeat the "floats over"
+ behavior.
+
+ <p>
+ That is fine for layout, but it means <code>getPreferredDimension</code>
+ alone is not always enough to size the final image without clipping
+ (see PSystemSalt#getTextBlock, issue #2882): PSystemSalt only pays for
+ the more expensive - and not pixel-identical, see the caller - actual
+ drawn-extent measurement when this returns <code>true</code> somewhere in
+ the tree, so a diagram with nothing that overflows renders exactly as
+ it did before this method existed. Composite elements must delegate to
+ their children; the default is <code>false</code>.</div>
 </section>
 </li>
 </ul>
