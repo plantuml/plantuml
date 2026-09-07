@@ -2,10 +2,10 @@
 output: svg
 ---
 @startuml
-' issue #2622: CSS "Padding" has no effect on the "node" symbol used in
-' component/deployment diagrams, unlike "skinparam padding". This
-' currently renders identically to a plain "node N" with no style at all
-' - pinning that gap so a fix shows up as an intentional diff here.
+' issue #2622: CSS "Padding" now enlarges the "node" symbol used in
+' component/deployment diagrams (EntityImageDescription), matching the
+' already-working "skinparam padding" behaviour. Pins this so a
+' regression can be caught if CSS Padding stops applying here.
 <style>
 node {
   Padding: 30

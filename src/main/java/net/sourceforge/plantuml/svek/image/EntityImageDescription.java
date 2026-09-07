@@ -70,7 +70,9 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UComment;
+import net.sourceforge.plantuml.skin.Padder;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -181,14 +183,27 @@ public class EntityImageDescription extends AbstractEntityImage {
 				diagonalCorner);
 
 		final Display codeDisplay = Display.getWithNewlines(getSkinParam().getPragma(), entity.getName());
+		final TextBlock descBeforePadding;
 		if ((entity.getDisplay().equalsLike(codeDisplay) && symbol.getSNames()[0] == SName.package_)
 				|| entity.getDisplay().isWhite())
-			desc = TextBlockUtils.empty(style.value(PName.MinimumWidth).asDouble(), 0);
+			descBeforePadding = TextBlockUtils.empty(style.value(PName.MinimumWidth).asDouble(), 0);
 		else if (entity.getDisplay().equalsLike(codeDisplay))
-			desc = BodyFactory.create3(entity.getDisplay(), getSkinParam(), defaultAlign, fcTitle, style.wrapWidth(),
-					styleTitle);
+			descBeforePadding = BodyFactory.create3(entity.getDisplay(), getSkinParam(), defaultAlign, fcTitle,
+					style.wrapWidth(), styleTitle);
 		else
-			desc = BodyFactory.create3(entity.getDisplay(), getSkinParam(), defaultAlign, fc, style.wrapWidth(), style);
+			descBeforePadding = BodyFactory.create3(entity.getDisplay(), getSkinParam(), defaultAlign, fc,
+					style.wrapWidth(), style);
+
+		// issue #2622: CSS "Padding" had no effect on symbols such as file/database/node/cloud
+		// because their content ("desc") was only ever sized/inflated by the legacy global
+		// "skinparam padding" (via Display/SheetBlock1), never by the per-element style. This
+		// adds true padding (border-inclusive: the surrounding shape grows to contain it)
+		// driven by the merged style, on top of whatever the legacy mechanism already
+		// contributes -- so it is a no-op unless a "Padding" is explicitly declared for this
+		// element's style (root.element.<style>.<symbol>), matching how participant/object
+		// were migrated in 66870e1f8 / f967b0092.
+		final ClockwiseTopRightBottomLeft descPadding = style.getPadding();
+		desc = descPadding.isZero() ? descBeforePadding : Padder.NONE.withPadding(descPadding).apply(descBeforePadding);
 
 		final List<String> stereotypeLabels = portionShower.getVisibleStereotypeLabels(entity);
 		if (stereotype != null && stereotype.getSprite(getSkinParam()) != null)
