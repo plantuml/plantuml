@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SALT" height="37px" preserveAspectRatio="none" style="width:306px;height:37px;background:#FFFFFF;" version="1.1" viewBox="0 0 306 37" width="306px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#EEE" height="15" style="stroke:#000;stroke-width:1;" width="55" x="6" y="6"/>
+    <text fill="#000" font-size="12" textLength="30.075" x="8" y="17.333">Small</text>
+    <line style="stroke:#000;stroke-width:1;" x1="50" x2="50" y1="6" y2="21"/>
+    <polygon fill="#000" points="53,12,59,12,56,16" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <rect fill="#EEE" height="11" style="stroke:#000;stroke-width:1;" width="293.075" x="6" y="21"/>
+    <text fill="#000" font-size="12" textLength="294.075" x="6" y="30.333">this is a very very very very long item that is wider than the head</text>
+  </g>
+</svg>

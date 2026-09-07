@@ -83,6 +83,21 @@ public class ElementDroplist extends AbstractElementText implements Element {
 		return text.substring(0, idx);
 	}
 
+	@Override
+	public boolean mayDrawBeyondPreferredDimension() {
+		return openDrop != null;
+	}
+
+	// This is deliberately the closed "head" only - the label box with its
+	// arrow - and never grows to cover an open drop-down list. An open
+	// droplist is meant to float over / overlap whatever comes after it in
+	// the grid, the way a real UI drop-down does, instead of pushing the
+	// rest of the layout down; ElementPyramid sizes grid rows/columns from
+	// this method (see its init()), so growing it here would reserve extra
+	// row height and make every following row shift down instead. Sizing the
+	// final image large enough to actually show the open list without
+	// cropping it is handled separately, from the *drawn* extent rather than
+	// this preferred one - see PSystemSalt#getTextBlock (issue #2882).
 	public XDimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
 		final XDimension2D dim = getTextDimensionAt(stringBounder, x + 2);
 		return dim.delta((4 + box), 4);
@@ -107,7 +122,14 @@ public class ElementDroplist extends AbstractElementText implements Element {
 			ug.apply(HColors.changeBack(ug)).apply(new UTranslate(xline + 3, 6)).draw(poly);
 		}
 
-		if (openDrop != null) {
+		// Drawn once, on the second (top) pass only - like ElementMenuPopup does
+		// for menu popups - because the open list can extend past this cell's
+		// own row and must be painted above whatever the rest of the diagram
+		// already drew at zIndex 0. Drawing it unconditionally here (the
+		// previous code had no zIndex guard at all) painted it a second time
+		// during the zIndex 0 pass too, which duplicated every open item in the
+		// output (visible as doubled rects/text in the SVG for issue #2882).
+		if (openDrop != null && zIndex == 1) {
 			final XDimension2D dimOpen = openDrop.calculateDimension(ug.getStringBounder()).atLeast(dim.getWidth() - 1,
 					0);
 			ug = ug.apply(UTranslate.dy(dim.getHeight() - 1));

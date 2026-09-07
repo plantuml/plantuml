@@ -103,4 +103,11 @@ public class ElementBorder extends AbstractElement {
 		return new XDimension2D(width, height);
 	}
 
+	@Override
+	public boolean mayDrawBeyondPreferredDimension() {
+		return north.mayDrawBeyondPreferredDimension() || south.mayDrawBeyondPreferredDimension()
+				|| east.mayDrawBeyondPreferredDimension() || west.mayDrawBeyondPreferredDimension()
+				|| center.mayDrawBeyondPreferredDimension();
+	}
+
 }

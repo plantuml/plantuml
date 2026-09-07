@@ -55,4 +55,9 @@ public class WrappedElement implements Element {
 		wrapped.drawU(ug, zIndex, dimToUse);
 	}
 
+	@Override
+	public boolean mayDrawBeyondPreferredDimension() {
+		return wrapped.mayDrawBeyondPreferredDimension();
+	}
+
 }

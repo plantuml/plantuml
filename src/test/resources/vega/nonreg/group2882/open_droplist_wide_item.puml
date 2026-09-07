@@ -1,0 +1,9 @@
+---
+output: svg
+expected-description: (Salt)
+---
+@startsalt
+{
+  ^Small^^ this is a very very very very long item that is wider than the head^
+}
+@endsalt

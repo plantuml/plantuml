@@ -45,4 +45,29 @@ public interface Element {
 
 	public void drawU(UGraphic ug, int zIndex, XDimension2D dimToUse);
 
+	/**
+	 * Whether this element - or any element reachable through it - may draw
+	 * content that extends past its own {@link #getPreferredDimension}. An
+	 * open salt droplist (see ElementDroplist) is the current example: its
+	 * drop-down list is meant to float over / overlap whatever the layout put
+	 * after it instead of reserving room for itself, so
+	 * {@code getPreferredDimension} deliberately stays unaware of it - every
+	 * grid/row/column in a salt diagram is sized from that method (see
+	 * ElementPyramid#init), and growing it would defeat the "floats over"
+	 * behavior.
+	 *
+	 * <p>
+	 * That is fine for layout, but it means {@code getPreferredDimension}
+	 * alone is not always enough to size the final image without clipping
+	 * (see PSystemSalt#getTextBlock, issue #2882): PSystemSalt only pays for
+	 * the more expensive - and not pixel-identical, see the caller - actual
+	 * drawn-extent measurement when this returns {@code true} somewhere in
+	 * the tree, so a diagram with nothing that overflows renders exactly as
+	 * it did before this method existed. Composite elements must delegate to
+	 * their children; the default is {@code false}.
+	 */
+	default boolean mayDrawBeyondPreferredDimension() {
+		return false;
+	}
+
 }

@@ -173,4 +173,13 @@ public class ElementPyramid extends AbstractElement {
 		return cols + 1;
 	}
 
+	@Override
+	public boolean mayDrawBeyondPreferredDimension() {
+		for (Element elt : positions1.keySet())
+			if (elt.mayDrawBeyondPreferredDimension())
+				return true;
+
+		return false;
+	}
+
 }

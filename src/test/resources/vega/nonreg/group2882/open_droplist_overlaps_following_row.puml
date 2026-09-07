@@ -1,0 +1,10 @@
+---
+output: svg
+expected-description: (Salt)
+---
+@startsalt
+{
+  ^Open droplist^^ item 1^^ item 2^
+  Next row here | more | stuff
+}
+@endsalt
