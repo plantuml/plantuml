@@ -126,8 +126,11 @@ jobs:
           {
             echo "## perf-bench"
             echo ""
-            echo "target: \`$(git -C target rev-parse --short HEAD)\` (${{ inputs.ref || github.ref_name }})"
-            echo "reference: $COMPARE_LABEL"
+            echo "|||"
+            echo "|---|---|"
+            echo "| **target** | \`$(git -C target rev-parse --short HEAD)\` (${{ inputs.ref || github.ref_name }}) |"
+            echo "| **reference** | $COMPARE_LABEL |"
+            echo "|||"
             echo ""
             cat results/summary.md 2>/dev/null || echo "no results produced"
           } >> "$GITHUB_STEP_SUMMARY"
