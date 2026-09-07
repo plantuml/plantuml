@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import net.sourceforge.plantuml.StringUtils;
@@ -54,6 +55,7 @@ import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
@@ -66,6 +68,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.skin.ActorStyle;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
+import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -235,9 +238,14 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		if (arg.get("INSIDE", 0) != null)
 			sb.append(", with a middle circle");
 
+		// The 'node' keyword in the style asks for the label to be drawn as an
+		// intermediate entity (see shouldUseNodeStyle).
 		final String style = arg.getLazzy("ARROW_STYLE", 0);
-		if (style != null)
+		if (style != null) {
 			sb.append(", with style '").append(style).append("'");
+			if (containsNodeKeyword(style))
+				sb.append(" (the label is drawn as an intermediate node)");
+		}
 
 		final String firstLabel = arg.get("FIRST_LABEL", 0);
 		if (firstLabel != null)
@@ -325,8 +333,16 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 			cl1 = getDummy(location, diagram, ent1);
 			cl2 = getDummy(location, diagram, ent2);
 		}
-		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(diagram.getPragma(), labels.getLabelLink()),
-				queue.length(), diagram.getSkinParam().classAttributeIconSize() > 0);
+		final Display labelLink = Display.getWithNewlines(diagram.getPragma(), labels.getLabelLink());
+
+		// When the label has to be drawn as a node, the link is split in two around
+		// an intermediate entity holding the label (see createLinkWithLabelNode).
+		if (isLabelDrawnAsNode(labelLink) && shouldUseNodeStyle(diagram, arg))
+			return createLinkWithLabelNode(diagram, location, arg, cl1, cl2, labelLink, linkType, queue.length(), dir,
+					labels);
+
+		final LinkArg linkArg = LinkArg.build(labelLink, queue.length(),
+				diagram.getSkinParam().classAttributeIconSize() > 0);
 		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType,
 				linkArg.withQuantifier(labels.getFirstLabel(), labels.getSecondLabel())
 						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));
@@ -342,6 +358,99 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		}
 		diagram.addLink(link);
 		return CommandExecutionResult.ok();
+	}
+
+	private static boolean isLabelDrawnAsNode(Display label) {
+		return Display.isNull(label) == false && label.toString().trim().isEmpty() == false;
+	}
+
+	private static boolean shouldUseNodeStyle(DescriptionDiagram diagram, RegexResult arg) {
+		final String arrowStyle = arg.getLazzy("ARROW_STYLE", 0);
+
+		// An invisible link must not leave a visible label behind
+		if (containsKeyword(arrowStyle, "hidden"))
+			return false;
+
+		// The 'node' keyword in the arrow style is a per-link override
+		if (containsNodeKeyword(arrowStyle))
+			return true;
+
+		// ...otherwise the diagram wide setting applies
+		return "node".equalsIgnoreCase(diagram.getSkinParam().getValue("componentdiagramedgelabelstyle"));
+	}
+
+	private static boolean containsNodeKeyword(String arrowStyle) {
+		return containsKeyword(arrowStyle, "node");
+	}
+
+	private static boolean containsKeyword(String arrowStyle, String keyword) {
+		if (arrowStyle == null)
+			return false;
+
+		for (String part : arrowStyle.split("[,;]"))
+			if (StringUtils.trin(part).equalsIgnoreCase(keyword))
+				return true;
+
+		return false;
+	}
+
+	// Replaces a single 'cl1 --> cl2 : label' link by 'cl1 -- label -> cl2', the
+	// label becoming a real entity that dot has to make room for. The decorations
+	// stay on the outer ends of the chain and both links are given a high weight so
+	// that dot keeps them aligned.
+	private CommandExecutionResult createLinkWithLabelNode(DescriptionDiagram diagram, LineLocation location,
+			RegexResult arg, Entity cl1, Entity cl2, Display label, LinkType linkType, int length, Direction dir,
+			Labels labels) throws NoSuchColorException {
+
+		final Entity labelNode = createLabelNode(diagram, location, label);
+
+		final boolean manageVisibility = diagram.getSkinParam().classAttributeIconSize() > 0;
+		final LinkArg firstArg = LinkArg.build(Display.NULL, length, manageVisibility)
+				.withQuantifier(labels.getFirstLabel(), null)
+				.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle());
+		final LinkArg secondArg = LinkArg.build(Display.NULL, length, manageVisibility)
+				.withQuantifier(null, labels.getSecondLabel())
+				.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle());
+
+		// getDecor1() is the decoration on the cl2 side and getDecor2() the one on the
+		// cl1 side, so each half keeps only the decoration of the end it still touches.
+		final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();
+		Link first = new Link(location, diagram, styleBuilder, cl1, labelNode, linkType.withoutDecors1(), firstArg);
+		Link second = new Link(location, diagram, styleBuilder, labelNode, cl2, linkType.withoutDecors2(), secondArg);
+
+		if (dir == Direction.LEFT || dir == Direction.UP) {
+			first = first.getInv();
+			second = second.getInv();
+		}
+
+		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+		final String arrowStyle = arg.getLazzy("ARROW_STYLE", 0);
+		final Stereotype stereotype = arg.get("STEREOTYPE", 0) == null ? null
+				: Stereotype.build(arg.get("STEREOTYPE", 0));
+
+		for (Link link : Arrays.asList(first, second)) {
+			// Keep the two halves on a straight line through the label node
+			link.setWeight(10.0);
+			link.setLinkArrow(labels.getLinkArrow());
+			link.setColors(colors);
+			link.applyStyle(arrowStyle);
+			if (stereotype != null)
+				link.setStereotype(stereotype);
+			diagram.addLink(link);
+		}
+
+		return CommandExecutionResult.ok();
+	}
+
+	private Entity createLabelNode(DescriptionDiagram diagram, LineLocation location, Display label) {
+		// The name is only there to give the entity an identity: loop until an unused
+		// one is found so that a user entity cannot be silently reused.
+		while (true) {
+			final String name = diagram.getUniqueSequence("edge_label_");
+			final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(name));
+			if (quark.getData() == null)
+				return diagram.reallyCreateLeaf(location, quark, label, LeafType.STATE_TRANSITION_LABEL, null);
+		}
 	}
 
 //	private String removeStartingParenthesis(String s) {
