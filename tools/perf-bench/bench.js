@@ -108,10 +108,10 @@ async function renderOnce(page, lines) {
 
 function median(v) { const s = [...v].sort((a, b) => a - b); return s.length ? s[Math.floor(s.length / 2)] : null; }
 function iqr(v) { const s = [...v].sort((a, b) => a - b); return s.length ? [s[Math.floor(s.length / 4)], s[Math.floor(3 * s.length / 4)]] : [null, null]; }
-function graph(rows, target, ref) {
-  const hdr = '\n```mermaid\n---\nconfig:\n  themeVariables:\n    xyChart:\n      plotColorPalette: "#0000FF, #FF0000"\n---\nxychart\n  title "target ms VS ref ms"\n  y-axis ms\n  ';
+function graph(target, ref) {
+  const hdr = '\n```mermaid\n---\nconfig:\n  themeVariables:\n    xyChart:\n      plotColorPalette: "#0000FF, #FF0000"\n---\nxychart\n  title "target VS ref"\n  y-axis ms\n  ';
   const ftr = '\n```\n\n';
-  return(hdr + 'x-axis tests [' + rows.join(', ') + ']\n  line target [' + target.join(', ') + ']\n  line ref [' + ref.join(', ') + ']' + ftr);
+  return(hdr + 'x-axis "# test"\n  line target [' + target.join(', ') + ']\n  line ref [' + ref.join(', ') + ']' + ftr);
 }
 
 (async () => {
@@ -191,9 +191,11 @@ function graph(rows, target, ref) {
   const lines = [];
   const lines_target = [];
   const lines_ref = [];
-  lines.push('| diagram | target ms (IQR) | ' + (hasRef ? 'reference ms (IQR) | ratio | icon | band | ' : '') + 'output |');
-  lines.push('|---|---|' + (hasRef ? '---|---|:---:|---|' : '') + '---|');
+  lines.push('| # | diagram | target ms (IQR) | ' + (hasRef ? 'reference ms (IQR) | ratio | icon | band | ' : '') + 'output |');
+  lines.push('|:---:|---|---|' + (hasRef ? '---|---|:---:|---|' : '') + '---|');
+  let i = 0;
   for (const row of rows) {
+    i += 1;
     const t = agg[row].target, r = hasRef ? agg[row].reference : null;
     const fmt = x => x.err ? (x.err.includes('too large') ? 'size-limited (no maxSvgSize)' : 'ERROR')
       : (x.medianMs === null ? '-' : `${x.medianMs}${x.iqr[0] !== null ? ` (${x.iqr[0]}-${x.iqr[1]})` : ''}${x.truncated ? ' (truncated)' : ''}`);
@@ -211,7 +213,7 @@ function graph(rows, target, ref) {
       output = '`' + t.sha8 + '`';
       if (hasRef && r.sha8) output += t.sha8 === r.sha8 ? ' = ref' : ' != ref';
     }
-    lines.push(`| ${row} | ${fmt(t)} | ` + (hasRef ? `${fmt(r)} | ${ratio} | ${band} | ` : '') + `${output} |`);
+    lines.push(`| ${i} | ${row} | ${fmt(t)} | ` + (hasRef ? `${fmt(r)} | ${ratio} | ${band} | ` : '') + `${output} |`);
     lines_target.push(t.medianMs);
     lines_ref.push(hasRef ? r.medianMs : 0);
   }
@@ -224,7 +226,7 @@ function graph(rows, target, ref) {
   const outDir = path.resolve(opt.out);
   fs.mkdirSync(outDir, { recursive: true });
   fs.writeFileSync(path.join(outDir, 'results.json'), JSON.stringify({ opt, engines: engineInfo, reps, env: { cpu: os.cpus()[0].model, cores: os.cpus().length, node: process.versions.node, chromium: browserVersion, platform: os.platform() } }, null, 1));
-  fs.writeFileSync(path.join(outDir, 'summary.md'), graph(rows, lines_target, lines_ref) + lines.join('\n') + '\n');
+  fs.writeFileSync(path.join(outDir, 'summary.md'), graph(lines_target, lines_ref) + lines.join('\n') + '\n');
   console.log(lines.join('\n'));
   process.exit(0); // non-blocking by design: results are informational
 })().catch(e => { console.error('FATAL', e && e.stack || e); process.exit(1); });
