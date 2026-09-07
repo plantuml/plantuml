@@ -95,8 +95,8 @@ public class CommandSkinParam extends SingleLineCommand2&lt;TitledDiagram&gt; {
 <span class="pc bpc" id="L95" title="1 of 2 branches missed.">			if (&quot;ParticipantPadding&quot;.equalsIgnoreCase(name))</span>
 <span class="nc" id="L96">				diagram.addWarning(new Warning(&quot;Please use CSS style instead of skinparam ParticipantPadding&quot;));</span>
 
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">			if (&quot;padding&quot;.equalsIgnoreCase(name))</span>
-<span class="nc" id="L99">				diagram.addWarning(new Warning(&quot;Please use CSS style instead of skinparam padding&quot;));</span>
+//			if (&quot;padding&quot;.equalsIgnoreCase(name))
+//				diagram.addWarning(new Warning(&quot;Please use CSS style instead of skinparam padding&quot;));
 
 <span class="fc" id="L101">			diagram.setParam(name, arg.get(&quot;VALUE&quot;, 0));</span>
 <span class="fc" id="L102">			diagram.setSkinParamUsed(true);</span>

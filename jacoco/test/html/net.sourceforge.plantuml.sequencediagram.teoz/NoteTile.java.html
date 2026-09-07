@@ -36,7 +36,10 @@
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -65,22 +68,22 @@ public class NoteTile extends AbstractTile implements Tile {
 	private final YGauge yGauge;
 
 	public Event getEvent() {
-<span class="fc" id="L68">		return note;</span>
+<span class="fc" id="L71">		return note;</span>
 	}
 
 	@Override
 	public double getContactPointRelative() {
-<span class="fc" id="L73">		return getComponent(getStringBounder()).getPreferredHeight(getStringBounder()) / 2;</span>
+<span class="fc" id="L76">		return getComponent(getStringBounder()).getPreferredHeight(getStringBounder()) / 2;</span>
 	}
 
 	public NoteTile(StringBounder stringBounder, LivingSpace livingSpace1, LivingSpace livingSpace2, Note note,
 			Rose skin, ISkinParam skinParam, YGauge currentY) {
-<span class="fc" id="L78">		super(stringBounder, currentY);</span>
-<span class="fc" id="L79">		this.livingSpace1 = livingSpace1;</span>
-<span class="fc" id="L80">		this.livingSpace2 = livingSpace2;</span>
-<span class="fc" id="L81">		this.note = note;</span>
-<span class="fc" id="L82">		this.skin = skin;</span>
-<span class="fc" id="L83">		this.skinParam = skinParam;</span>
+<span class="fc" id="L81">		super(stringBounder, currentY);</span>
+<span class="fc" id="L82">		this.livingSpace1 = livingSpace1;</span>
+<span class="fc" id="L83">		this.livingSpace2 = livingSpace2;</span>
+<span class="fc" id="L84">		this.note = note;</span>
+<span class="fc" id="L85">		this.skin = skin;</span>
+<span class="fc" id="L86">		this.skinParam = skinParam;</span>
 
 		// Same chaining as CommunicationTile: a standalone note published via
 		// &quot;&amp; note ...&quot; must share the previous tile's contact line (top-aligned
@@ -89,17 +92,46 @@ public class NoteTile extends AbstractTile implements Tile {
 		// getContactPointRelative below), mirroring how the legacy TileParallel
 		// aligned notes against message arrows by their respective
 		// contact points.
-<span class="fc" id="L92">		final double contactRelative = getContactPointRelative();</span>
-<span class="fc" id="L93">		final double height = getPreferredHeight();</span>
-<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (note.isParallel())</span>
-<span class="fc" id="L95">			this.yGauge = YGauge.createParallel(currentY, contactRelative, height);</span>
-		else
-<span class="fc" id="L97">			this.yGauge = YGauge.createWithContact(currentY, contactRelative, height);</span>
-<span class="fc" id="L98">	}</span>
+		//
+		// EXCEPT when this note's own footprint was already claimed by an
+		// earlier note in the same &quot;&amp;&quot; run (e.g. &quot;note over A &amp; note over A&quot;):
+		// contact-point alignment centers both on the very same line, which,
+		// since they occupy the same side of the same participant, means the
+		// same X footprint too -- i.e. they would be drawn directly on top of
+		// one another. In that case fall back to createPropagating(): it
+		// stacks this note below everything drawn so far in the run (like a
+		// LifeEventTile passing through the run without joining the alignment
+		// itself) while still forwarding the run's contact/origin, so a LATER
+		// sibling on a genuinely different footprint still aligns against the
+		// original line (see issue #2883's follow-up: notes on different
+		// participants were fixed there, same-participant notes were an
+		// explicit out-of-scope limitation, closed here).
+		//
+		// The footprint key is (participant, position), not just the
+		// participant: &quot;note left of U&quot; and &quot;note right of U&quot; both resolve to
+		// livingSpace1 == U, but extend away from U in opposite directions and
+		// never actually overlap -- only two notes on the very same side (or
+		// both plain OVER) do.
+<span class="fc" id="L115">		final double contactRelative = getContactPointRelative();</span>
+<span class="fc" id="L116">		final double height = getPreferredHeight();</span>
+<span class="fc" id="L117">		final Object footprint = Arrays.asList(livingSpace1, note.getPosition());</span>
+<span class="fc" id="L118">		final Set&lt;Object&gt; anchorsInRun = currentY.getNoteAnchorsInRun();</span>
+<span class="fc bfc" id="L119" title="All 6 branches covered.">		if (note.isParallel() &amp;&amp; anchorsInRun != null &amp;&amp; anchorsInRun.contains(footprint)) {</span>
+<span class="fc" id="L120">			this.yGauge = YGauge.createPropagating(currentY, height).withNoteAnchorsInRun(anchorsInRun);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		} else if (note.isParallel()) {</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">			final Set&lt;Object&gt; grown = anchorsInRun == null ? new HashSet&lt;Object&gt;() : new HashSet&lt;&gt;(anchorsInRun);</span>
+<span class="fc" id="L123">			grown.add(footprint);</span>
+<span class="fc" id="L124">			this.yGauge = YGauge.createParallel(currentY, contactRelative, height).withNoteAnchorsInRun(grown);</span>
+<span class="fc" id="L125">		} else {</span>
+<span class="fc" id="L126">			final Set&lt;Object&gt; fresh = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L127">			fresh.add(footprint);</span>
+<span class="fc" id="L128">			this.yGauge = YGauge.createWithContact(currentY, contactRelative, height).withNoteAnchorsInRun(fresh);</span>
+		}
+<span class="fc" id="L130">	}</span>
 
 	@Override
 	public YGauge getYGauge() {
-<span class="fc" id="L102">		return yGauge;</span>
+<span class="fc" id="L134">		return yGauge;</span>
 	}
 
 	// The component only depends on the tile's fixed data, not on the string
@@ -107,81 +139,81 @@ public class NoteTile extends AbstractTile implements Tile {
 	private Component cachedComponent;
 
 	private Component getComponent(StringBounder stringBounder) {
-<span class="fc bfc" id="L110" title="All 2 branches covered.">		if (cachedComponent == null)</span>
-<span class="fc" id="L111">			cachedComponent = skin.createComponentNote(note.getUsedStyles(),</span>
-<span class="fc" id="L112">					getNoteComponentType(note.getNoteStyle()), note.getSkinParamBackcolored(skinParam),</span>
-<span class="fc" id="L113">					note.getDisplay(), note.getColors(), note.getPosition());</span>
-<span class="fc" id="L114">		return cachedComponent;</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">		if (cachedComponent == null)</span>
+<span class="fc" id="L143">			cachedComponent = skin.createComponentNote(note.getUsedStyles(),</span>
+<span class="fc" id="L144">					getNoteComponentType(note.getNoteStyle()), note.getSkinParamBackcolored(skinParam),</span>
+<span class="fc" id="L145">					note.getDisplay(), note.getColors(), note.getPosition());</span>
+<span class="fc" id="L146">		return cachedComponent;</span>
 	}
 
 	protected static ComponentType getNoteComponentType(NoteStyle noteStyle) {
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (noteStyle == NoteStyle.HEXAGONAL)</span>
-<span class="nc" id="L119">			return ComponentType.NOTE_HEXAGONAL;</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">		if (noteStyle == NoteStyle.HEXAGONAL)</span>
+<span class="fc" id="L151">			return ComponentType.NOTE_HEXAGONAL;</span>
 
-<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (noteStyle == NoteStyle.BOX)</span>
-<span class="nc" id="L122">			return ComponentType.NOTE_BOX;</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		if (noteStyle == NoteStyle.BOX)</span>
+<span class="fc" id="L154">			return ComponentType.NOTE_BOX;</span>
 
-<span class="fc" id="L124">		return ComponentType.NOTE;</span>
+<span class="fc" id="L156">		return ComponentType.NOTE;</span>
 	}
 
 	public void drawU(UGraphic ug) {
 		// Self-translate prologue: absolute gauge position
-<span class="fc" id="L129">		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));</span>
-<span class="fc" id="L130">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L131">		final Component comp = getComponent(stringBounder);</span>
-<span class="fc" id="L132">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
-<span class="fc" id="L133">		final double x = getX(stringBounder).getCurrentValue();</span>
-<span class="fc" id="L134">		final Area area = Area.create(getUsedWidth(stringBounder), dim.getHeight());</span>
+<span class="fc" id="L161">		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));</span>
+<span class="fc" id="L162">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L163">		final Component comp = getComponent(stringBounder);</span>
+<span class="fc" id="L164">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
+<span class="fc" id="L165">		final double x = getX(stringBounder).getCurrentValue();</span>
+<span class="fc" id="L166">		final Area area = Area.create(getUsedWidth(stringBounder), dim.getHeight());</span>
 
-<span class="fc" id="L136">		ug = ug.apply(UTranslate.dx(x));</span>
-<span class="fc" id="L137">		comp.drawU(ug, area, (Context2D) ug);</span>
-<span class="fc" id="L138">	}</span>
+<span class="fc" id="L168">		ug = ug.apply(UTranslate.dx(x));</span>
+<span class="fc" id="L169">		comp.drawU(ug, area, (Context2D) ug);</span>
+<span class="fc" id="L170">	}</span>
 
 	private double getUsedWidth(StringBounder stringBounder) {
-<span class="fc" id="L141">		final Component comp = getComponent(stringBounder);</span>
-<span class="fc" id="L142">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
-<span class="fc" id="L143">		final double width = dim.getWidth();</span>
-<span class="fc bfc" id="L144" title="All 2 branches covered.">		if (note.getPosition() == NotePosition.OVER_SEVERAL) {</span>
-<span class="fc" id="L145">			final double x1 = livingSpace1.getPosB(stringBounder).getCurrentValue();</span>
-<span class="fc" id="L146">			final double x2 = livingSpace2.getPosD(stringBounder).getCurrentValue();</span>
-<span class="fc" id="L147">			final double w = x2 - x1;</span>
-<span class="fc bfc" id="L148" title="All 2 branches covered.">			if (width &lt; w)</span>
-<span class="fc" id="L149">				return w;</span>
+<span class="fc" id="L173">		final Component comp = getComponent(stringBounder);</span>
+<span class="fc" id="L174">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
+<span class="fc" id="L175">		final double width = dim.getWidth();</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">		if (note.getPosition() == NotePosition.OVER_SEVERAL) {</span>
+<span class="fc" id="L177">			final double x1 = livingSpace1.getPosB(stringBounder).getCurrentValue();</span>
+<span class="fc" id="L178">			final double x2 = livingSpace2.getPosD(stringBounder).getCurrentValue();</span>
+<span class="fc" id="L179">			final double w = x2 - x1;</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">			if (width &lt; w)</span>
+<span class="fc" id="L181">				return w;</span>
 
 		}
-<span class="fc" id="L152">		return width;</span>
+<span class="fc" id="L184">		return width;</span>
 	}
 
 	private Real getX(StringBounder stringBounder) {
-<span class="fc" id="L156">		final NotePosition position = note.getPosition();</span>
-<span class="fc" id="L157">		final double width = getUsedWidth(stringBounder);</span>
-<span class="fc bfc" id="L158" title="All 2 branches covered.">		if (position == NotePosition.LEFT) {</span>
-<span class="fc" id="L159">			return livingSpace1.getPosC(stringBounder).addFixed(-width);</span>
-<span class="fc bfc" id="L160" title="All 2 branches covered.">		} else if (position == NotePosition.RIGHT) {</span>
-<span class="fc" id="L161">			final int level = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
-<span class="fc" id="L162">			final double dx = level * CommunicationTile.LIVE_DELTA_SIZE;</span>
-<span class="fc" id="L163">			return livingSpace1.getPosC(stringBounder).addFixed(dx);</span>
-<span class="fc bfc" id="L164" title="All 2 branches covered.">		} else if (position == NotePosition.OVER_SEVERAL) {</span>
-<span class="fc" id="L165">			final Real x1 = livingSpace1.getPosC(stringBounder);</span>
-<span class="fc" id="L166">			final Real x2 = livingSpace2.getPosC(stringBounder);</span>
-<span class="fc" id="L167">			return RealUtils.middle(x1, x2).addFixed(-width / 2);</span>
-<span class="pc bpc" id="L168" title="1 of 2 branches missed.">		} else if (position == NotePosition.OVER) {</span>
-<span class="fc" id="L169">			return livingSpace1.getPosC(stringBounder).addFixed(-width / 2);</span>
+<span class="fc" id="L188">		final NotePosition position = note.getPosition();</span>
+<span class="fc" id="L189">		final double width = getUsedWidth(stringBounder);</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">		if (position == NotePosition.LEFT) {</span>
+<span class="fc" id="L191">			return livingSpace1.getPosC(stringBounder).addFixed(-width);</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">		} else if (position == NotePosition.RIGHT) {</span>
+<span class="fc" id="L193">			final int level = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
+<span class="fc" id="L194">			final double dx = level * CommunicationTile.LIVE_DELTA_SIZE;</span>
+<span class="fc" id="L195">			return livingSpace1.getPosC(stringBounder).addFixed(dx);</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">		} else if (position == NotePosition.OVER_SEVERAL) {</span>
+<span class="fc" id="L197">			final Real x1 = livingSpace1.getPosC(stringBounder);</span>
+<span class="fc" id="L198">			final Real x2 = livingSpace2.getPosC(stringBounder);</span>
+<span class="fc" id="L199">			return RealUtils.middle(x1, x2).addFixed(-width / 2);</span>
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">		} else if (position == NotePosition.OVER) {</span>
+<span class="fc" id="L201">			return livingSpace1.getPosC(stringBounder).addFixed(-width / 2);</span>
 		} else {
-<span class="nc" id="L171">			throw new UnsupportedOperationException(position.toString());</span>
+<span class="nc" id="L203">			throw new UnsupportedOperationException(position.toString());</span>
 		}
 	}
 
 	@Override
 	public double getPreferredHeight() {
-<span class="fc" id="L177">		final Component comp = getComponent(getStringBounder());</span>
-<span class="fc" id="L178">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
-<span class="fc" id="L179">		return dim.getHeight();</span>
+<span class="fc" id="L209">		final Component comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L210">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L211">		return dim.getHeight();</span>
 	}
 
 	public void addConstraints() {
-<span class="fc" id="L183">		ensureOwnBoxClearsNote();</span>
-<span class="fc" id="L184">	}</span>
+<span class="fc" id="L215">		ensureOwnBoxClearsNote();</span>
+<span class="fc" id="L216">	}</span>
 
 	// See CommunicationTileSelf.ensureOwnBoxClearsLoop() (issue #2791): a `box
 	// &quot;...&quot; ... endbox` grouping draws its rectangle purely from its first/last
@@ -202,20 +234,20 @@ public class NoteTile extends AbstractTile implements Tile {
 	// &quot;wrong side&quot; of the pair is always a no-op (overflow &lt;= 0) without
 	// needing to branch on note.getPosition() here.
 	private void ensureOwnBoxClearsNote() {
-<span class="fc" id="L205">		final StringBounder stringBounder = getStringBounder();</span>
+<span class="fc" id="L237">		final StringBounder stringBounder = getStringBounder();</span>
 
-<span class="fc" id="L207">		final double overflowLeft = livingSpace1.getPosB(stringBounder).getCurrentValue()</span>
-<span class="fc" id="L208">				- getMinX().getCurrentValue();</span>
-<span class="fc bfc" id="L209" title="All 2 branches covered.">		if (overflowLeft &gt; 0)</span>
-<span class="fc" id="L210">			livingSpace1.ensureMarginBefore(overflowLeft);</span>
+<span class="fc" id="L239">		final double overflowLeft = livingSpace1.getPosB(stringBounder).getCurrentValue()</span>
+<span class="fc" id="L240">				- getMinX().getCurrentValue();</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">		if (overflowLeft &gt; 0)</span>
+<span class="fc" id="L242">			livingSpace1.ensureMarginBefore(overflowLeft);</span>
 
-<span class="fc bfc" id="L212" title="All 2 branches covered.">		final LivingSpace rightAnchor = note.getPosition() == NotePosition.OVER_SEVERAL ? livingSpace2</span>
-<span class="fc" id="L213">				: livingSpace1;</span>
-<span class="fc" id="L214">		final double overflowRight = getMaxX().getCurrentValue()</span>
-<span class="fc" id="L215">				- rightAnchor.getPosD(stringBounder).getCurrentValue();</span>
-<span class="fc bfc" id="L216" title="All 2 branches covered.">		if (overflowRight &gt; 0)</span>
-<span class="fc" id="L217">			rightAnchor.ensureMarginAfter(overflowRight);</span>
-<span class="fc" id="L218">	}</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">		final LivingSpace rightAnchor = note.getPosition() == NotePosition.OVER_SEVERAL ? livingSpace2</span>
+<span class="fc" id="L245">				: livingSpace1;</span>
+<span class="fc" id="L246">		final double overflowRight = getMaxX().getCurrentValue()</span>
+<span class="fc" id="L247">				- rightAnchor.getPosD(stringBounder).getCurrentValue();</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">		if (overflowRight &gt; 0)</span>
+<span class="fc" id="L249">			rightAnchor.ensureMarginAfter(overflowRight);</span>
+<span class="fc" id="L250">	}</span>
 
 	// The right edges this note is built on, broken back down into Reals that are
 	// each safe to hand to Real.ensureBiggerThan() -- i.e. plain delta chains,
@@ -237,27 +269,27 @@ public class NoteTile extends AbstractTile implements Tile {
 	// push -- the harmless direction: a little too much room rather than a
 	// participant back under the frame.
 	LivingSpace getLeftAnchor() {
-<span class="fc" id="L240">		return livingSpace1;</span>
+<span class="fc" id="L272">		return livingSpace1;</span>
 	}
 
 	double getLeftOverhang() {
-<span class="fc" id="L244">		final NotePosition position = note.getPosition();</span>
-<span class="fc bfc" id="L245" title="All 2 branches covered.">		if (position == NotePosition.LEFT)</span>
-<span class="fc" id="L246">			return getUsedWidth(getStringBounder());</span>
+<span class="fc" id="L276">		final NotePosition position = note.getPosition();</span>
+<span class="fc bfc" id="L277" title="All 2 branches covered.">		if (position == NotePosition.LEFT)</span>
+<span class="fc" id="L278">			return getUsedWidth(getStringBounder());</span>
 
-<span class="pc bpc" id="L248" title="1 of 2 branches missed.">		if (position == NotePosition.OVER)</span>
-<span class="fc" id="L249">			return getUsedWidth(getStringBounder()) / 2;</span>
+<span class="pc bpc" id="L280" title="1 of 2 branches missed.">		if (position == NotePosition.OVER)</span>
+<span class="fc" id="L281">			return getUsedWidth(getStringBounder()) / 2;</span>
 
-<span class="nc" id="L251">		return 0;</span>
+<span class="nc" id="L283">		return 0;</span>
 	}
 
 	List&lt;Real&gt; getStableMaxX() {
-<span class="fc" id="L255">		final List&lt;Real&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L256">		result.add(getX(getStringBounder()).addFixed(getUsedWidth(getStringBounder())));</span>
-<span class="fc bfc" id="L257" title="All 2 branches covered.">		if (note.getPosition() == NotePosition.OVER_SEVERAL)</span>
-<span class="fc" id="L258">			result.add(livingSpace2.getPosD(getStringBounder()));</span>
+<span class="fc" id="L287">		final List&lt;Real&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L288">		result.add(getX(getStringBounder()).addFixed(getUsedWidth(getStringBounder())));</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">		if (note.getPosition() == NotePosition.OVER_SEVERAL)</span>
+<span class="fc" id="L290">			result.add(livingSpace2.getPosD(getStringBounder()));</span>
 
-<span class="fc" id="L260">		return result;</span>
+<span class="fc" id="L292">		return result;</span>
 	}
 
 	// Left-side mirror of getStableMaxX(): the left edges this note is built
@@ -267,32 +299,32 @@ public class NoteTile extends AbstractTile implements Tile {
 	// GroupingTile.ensureFollowingParticipantClearsFrame()), so that case is
 	// split back into its two plain halves here too.
 	List&lt;Real&gt; getStableMinX() {
-<span class="fc" id="L270">		final List&lt;Real&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L271">		result.add(getX(getStringBounder()));</span>
-<span class="fc bfc" id="L272" title="All 2 branches covered.">		if (note.getPosition() == NotePosition.OVER_SEVERAL)</span>
-<span class="fc" id="L273">			result.add(livingSpace1.getPosB(getStringBounder()));</span>
+<span class="fc" id="L302">		final List&lt;Real&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L303">		result.add(getX(getStringBounder()));</span>
+<span class="fc bfc" id="L304" title="All 2 branches covered.">		if (note.getPosition() == NotePosition.OVER_SEVERAL)</span>
+<span class="fc" id="L305">			result.add(livingSpace1.getPosB(getStringBounder()));</span>
 
-<span class="fc" id="L275">		return result;</span>
+<span class="fc" id="L307">		return result;</span>
 	}
 
 	@Override
 	public Real getMinX() {
-<span class="fc" id="L280">		final Real result = getX(getStringBounder());</span>
-<span class="fc bfc" id="L281" title="All 2 branches covered.">		if (note.getPosition() == NotePosition.OVER_SEVERAL) {</span>
-<span class="fc" id="L282">			final Real x1 = livingSpace1.getPosB(getStringBounder());</span>
-<span class="fc" id="L283">			return RealUtils.min(result, x1);</span>
+<span class="fc" id="L312">		final Real result = getX(getStringBounder());</span>
+<span class="fc bfc" id="L313" title="All 2 branches covered.">		if (note.getPosition() == NotePosition.OVER_SEVERAL) {</span>
+<span class="fc" id="L314">			final Real x1 = livingSpace1.getPosB(getStringBounder());</span>
+<span class="fc" id="L315">			return RealUtils.min(result, x1);</span>
 		}
-<span class="fc" id="L285">		return result;</span>
+<span class="fc" id="L317">		return result;</span>
 	}
 
 	@Override
 	public Real getMaxX() {
-<span class="fc" id="L290">		final Real result = getX(getStringBounder()).addFixed(getUsedWidth(getStringBounder()));</span>
-<span class="fc bfc" id="L291" title="All 2 branches covered.">		if (note.getPosition() == NotePosition.OVER_SEVERAL) {</span>
-<span class="fc" id="L292">			final Real x2 = livingSpace2.getPosD(getStringBounder());</span>
-<span class="fc" id="L293">			return RealUtils.max(result, x2);</span>
+<span class="fc" id="L322">		final Real result = getX(getStringBounder()).addFixed(getUsedWidth(getStringBounder()));</span>
+<span class="fc bfc" id="L323" title="All 2 branches covered.">		if (note.getPosition() == NotePosition.OVER_SEVERAL) {</span>
+<span class="fc" id="L324">			final Real x2 = livingSpace2.getPosD(getStringBounder());</span>
+<span class="fc" id="L325">			return RealUtils.max(result, x2);</span>
 		}
-<span class="fc" id="L295">		return result;</span>
+<span class="fc" id="L327">		return result;</span>
 	}
 
 }

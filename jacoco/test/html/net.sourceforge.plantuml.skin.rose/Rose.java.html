@@ -111,15 +111,15 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 <span class="fc" id="L111">			position = textAlign;</span>
 		}
 
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (type == ComponentType.NOTE)</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		if (type == ComponentType.NOTE)</span>
 <span class="fc" id="L115">			return new ComponentRoseNote(styles[0], stringsToDisplay, paddingX, paddingY, param, textAlign, position,</span>
 					colors);
 
-<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (type == ComponentType.NOTE_HEXAGONAL)</span>
-<span class="nc" id="L119">			return new ComponentRoseNoteHexagonal(styles[0], stringsToDisplay, param, colors);</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		if (type == ComponentType.NOTE_HEXAGONAL)</span>
+<span class="fc" id="L119">			return new ComponentRoseNoteHexagonal(styles[0], stringsToDisplay, param, colors);</span>
 
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (type == ComponentType.NOTE_BOX)</span>
-<span class="nc" id="L122">			return new ComponentRoseNoteBox(styles[0], stringsToDisplay, param, colors);</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (type == ComponentType.NOTE_BOX)</span>
+<span class="fc" id="L122">			return new ComponentRoseNoteBox(styles[0], stringsToDisplay, param, colors);</span>
 
 <span class="nc" id="L124">		throw new UnsupportedOperationException(type.toString());</span>
 	}

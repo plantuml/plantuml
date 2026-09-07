@@ -174,26 +174,26 @@ public final class DiagramChromeFactory {
 	// -----------------------------------------------------------------------
 
 	private static TextBlock addWarnings(TextBlock original, Collection&lt;Warning&gt; warnings) {
-<span class="pc bpc" id="L177" title="2 of 4 branches missed.">		if (warnings == null || warnings.isEmpty())</span>
+<span class="pc bpc" id="L177" title="1 of 4 branches missed.">		if (warnings == null || warnings.isEmpty())</span>
 <span class="fc" id="L178">			return original;</span>
 
-<span class="nc" id="L180">		final WarningBannerBlock warningBanner = new WarningBannerBlock(warnings);</span>
+<span class="fc" id="L180">		final WarningBannerBlock warningBanner = new WarningBannerBlock(warnings);</span>
 
-<span class="nc" id="L182">		return new TextBlock() {</span>
+<span class="fc" id="L182">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L185">				final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L186">				final double totalWidth = calculateDimension(stringBounder).getWidth();</span>
-<span class="nc" id="L187">				warningBanner.drawU(ug, totalWidth);</span>
-<span class="nc" id="L188">				final double bannerHeight = warningBanner.calculateDimension(stringBounder).getHeight();</span>
-<span class="nc" id="L189">				original.drawU(ug.apply(UTranslate.dy(bannerHeight)));</span>
-<span class="nc" id="L190">			}</span>
+<span class="fc" id="L185">				final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L186">				final double totalWidth = calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L187">				warningBanner.drawU(ug, totalWidth);</span>
+<span class="fc" id="L188">				final double bannerHeight = warningBanner.calculateDimension(stringBounder).getHeight();</span>
+<span class="fc" id="L189">				original.drawU(ug.apply(UTranslate.dy(bannerHeight)));</span>
+<span class="fc" id="L190">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L193">				final XDimension2D dimBanner = warningBanner.calculateDimension(stringBounder);</span>
-<span class="nc" id="L194">				final XDimension2D dimOriginal = original.calculateDimension(stringBounder);</span>
-<span class="nc" id="L195">				return new XDimension2D(Math.max(dimBanner.getWidth(), dimOriginal.getWidth()),</span>
-<span class="nc" id="L196">						dimBanner.getHeight() + dimOriginal.getHeight());</span>
+<span class="fc" id="L193">				final XDimension2D dimBanner = warningBanner.calculateDimension(stringBounder);</span>
+<span class="fc" id="L194">				final XDimension2D dimOriginal = original.calculateDimension(stringBounder);</span>
+<span class="fc" id="L195">				return new XDimension2D(Math.max(dimBanner.getWidth(), dimOriginal.getWidth()),</span>
+<span class="fc" id="L196">						dimBanner.getHeight() + dimOriginal.getHeight());</span>
 			}
 
 			public HColor getBackcolor() {
@@ -213,9 +213,9 @@ public final class DiagramChromeFactory {
 
 		private final Collection&lt;Warning&gt; warnings;
 
-<span class="nc" id="L216">		WarningBannerBlock(Collection&lt;Warning&gt; warnings) {</span>
-<span class="nc" id="L217">			this.warnings = warnings;</span>
-<span class="nc" id="L218">		}</span>
+<span class="fc" id="L216">		WarningBannerBlock(Collection&lt;Warning&gt; warnings) {</span>
+<span class="fc" id="L217">			this.warnings = warnings;</span>
+<span class="fc" id="L218">		}</span>
 
 		@Override
 		public void drawU(UGraphic ug) {
@@ -223,46 +223,46 @@ public final class DiagramChromeFactory {
 <span class="nc" id="L223">		}</span>
 
 		public void drawU(UGraphic ug, double forceWidth) {
-<span class="nc" id="L226">			final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L227">			final XDimension2D dim = calculateDimension(stringBounder);</span>
-<span class="nc" id="L228">			final double effectiveWidth = Math.max(dim.getWidth(), forceWidth);</span>
+<span class="fc" id="L226">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L227">			final XDimension2D dim = calculateDimension(stringBounder);</span>
+<span class="fc" id="L228">			final double effectiveWidth = Math.max(dim.getWidth(), forceWidth);</span>
 
-<span class="nc" id="L230">			final HColorSet set = HColorSet.instance();</span>
-<span class="nc" id="L231">			final HColor back = set.getColorOrWhite(&quot;ffffcc&quot;).withDark(set.getColorOrWhite(&quot;774400&quot;));</span>
-<span class="nc" id="L232">			final HColor border = set.getColorOrWhite(&quot;ffdd88&quot;).withDark(set.getColorOrWhite(&quot;aa5500&quot;));</span>
+<span class="fc" id="L230">			final HColorSet set = HColorSet.instance();</span>
+<span class="fc" id="L231">			final HColor back = set.getColorOrWhite(&quot;ffffcc&quot;).withDark(set.getColorOrWhite(&quot;774400&quot;));</span>
+<span class="fc" id="L232">			final HColor border = set.getColorOrWhite(&quot;ffdd88&quot;).withDark(set.getColorOrWhite(&quot;aa5500&quot;));</span>
 
-<span class="nc" id="L234">			final URectangle rect = URectangle.build(effectiveWidth - 10, dim.getHeight() - 5).rounded(CORNER_RADIUS);</span>
-<span class="nc" id="L235">			ug.apply(back.bg()).apply(border).apply(UStroke.withThickness(3)).apply(new UTranslate(3, 3)).draw(rect);</span>
+<span class="fc" id="L234">			final URectangle rect = URectangle.build(effectiveWidth - 10, dim.getHeight() - 5).rounded(CORNER_RADIUS);</span>
+<span class="fc" id="L235">			ug.apply(back.bg()).apply(border).apply(UStroke.withThickness(3)).apply(new UTranslate(3, 3)).draw(rect);</span>
 
-<span class="nc" id="L237">			UGraphic ugText = ug.apply(HColors.BLACK).apply(new UTranslate(10, 2));</span>
-<span class="nc bnc" id="L238" title="All 2 branches missed.">			for (Warning w : warnings) {</span>
-<span class="nc bnc" id="L239" title="All 2 branches missed.">				for (String s : w.getMessage()) {</span>
-<span class="nc" id="L240">					final UText text = UText.build(s, WARNING_FC);</span>
-<span class="nc" id="L241">					final double height = text.calculateDimension(stringBounder).getHeight();</span>
-<span class="nc" id="L242">					ugText = ugText.apply(UTranslate.dy(height));</span>
-<span class="nc" id="L243">					ugText.draw(text);</span>
-<span class="nc" id="L244">				}</span>
-<span class="nc" id="L245">				ugText = ugText.apply(UTranslate.dy(LINE_SPACING));</span>
-<span class="nc" id="L246">			}</span>
-<span class="nc" id="L247">		}</span>
+<span class="fc" id="L237">			UGraphic ugText = ug.apply(HColors.BLACK).apply(new UTranslate(10, 2));</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">			for (Warning w : warnings) {</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">				for (String s : w.getMessage()) {</span>
+<span class="fc" id="L240">					final UText text = UText.build(s, WARNING_FC);</span>
+<span class="fc" id="L241">					final double height = text.calculateDimension(stringBounder).getHeight();</span>
+<span class="fc" id="L242">					ugText = ugText.apply(UTranslate.dy(height));</span>
+<span class="fc" id="L243">					ugText.draw(text);</span>
+<span class="fc" id="L244">				}</span>
+<span class="fc" id="L245">				ugText = ugText.apply(UTranslate.dy(LINE_SPACING));</span>
+<span class="fc" id="L246">			}</span>
+<span class="fc" id="L247">		}</span>
 
 		@Override
 		public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L251">			double width = 0;</span>
-<span class="nc" id="L252">			double height = 0;</span>
-<span class="nc bnc" id="L253" title="All 2 branches missed.">			for (Warning w : warnings) {</span>
-<span class="nc bnc" id="L254" title="All 2 branches missed.">				for (String s : w.getMessage()) {</span>
-<span class="nc" id="L255">					final XDimension2D lineDim = UText.build(s, WARNING_FC).calculateDimension(stringBounder);</span>
-<span class="nc" id="L256">					width = Math.max(width, lineDim.getWidth());</span>
-<span class="nc" id="L257">					height += lineDim.getHeight();</span>
-<span class="nc" id="L258">				}</span>
-<span class="nc" id="L259">				height += LINE_SPACING;</span>
-<span class="nc" id="L260">			}</span>
+<span class="fc" id="L251">			double width = 0;</span>
+<span class="fc" id="L252">			double height = 0;</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">			for (Warning w : warnings) {</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">				for (String s : w.getMessage()) {</span>
+<span class="fc" id="L255">					final XDimension2D lineDim = UText.build(s, WARNING_FC).calculateDimension(stringBounder);</span>
+<span class="fc" id="L256">					width = Math.max(width, lineDim.getWidth());</span>
+<span class="fc" id="L257">					height += lineDim.getHeight();</span>
+<span class="fc" id="L258">				}</span>
+<span class="fc" id="L259">				height += LINE_SPACING;</span>
+<span class="fc" id="L260">			}</span>
 			// Remove trailing spacing from last warning
-<span class="nc bnc" id="L262" title="All 2 branches missed.">			if (!warnings.isEmpty())</span>
-<span class="nc" id="L263">				height -= LINE_SPACING;</span>
+<span class="pc bpc" id="L262" title="1 of 2 branches missed.">			if (!warnings.isEmpty())</span>
+<span class="fc" id="L263">				height -= LINE_SPACING;</span>
 
-<span class="nc" id="L265">			return new XDimension2D(width + 20, height + 10);</span>
+<span class="fc" id="L265">			return new XDimension2D(width + 20, height + 10);</span>
 		}
 
 		@Override

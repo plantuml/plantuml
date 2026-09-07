@@ -261,12 +261,12 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 
 	private Event nextButSkippingNotes(Iterator&lt;Event&gt; it) {
 		while (true) {
-<span class="pc bpc" id="L264" title="1 of 2 branches missed.">			if (it.hasNext() == false)</span>
-<span class="nc" id="L265">				return null;</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">			if (it.hasNext() == false)</span>
+<span class="fc" id="L265">				return null;</span>
 
 <span class="fc" id="L267">			final Event next = it.next();</span>
-<span class="pc bpc" id="L268" title="1 of 2 branches missed.">			if (next instanceof Note)</span>
-<span class="nc" id="L269">				continue;</span>
+<span class="fc bfc" id="L268" title="All 2 branches covered.">			if (next instanceof Note)</span>
+<span class="fc" id="L269">				continue;</span>
 
 			// System.err.println(&quot;nextButSkippingNotes=&quot; + next);
 <span class="fc" id="L272">			return next;</span>
