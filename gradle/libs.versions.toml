@@ -17,7 +17,7 @@ xmlunit-core        = "2.13.0"
 xtext-xbase         = "2.44.0"
 junit-pioneer       = "2.3.0"
 teavm               = "0.14.1"
-sonarqube           = "7.4.0.8496"
+sonarqube           = "7.5.0.8588"
 openpdf             = "3.0.5"
 
 [libraries]
