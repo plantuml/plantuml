@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+' issue #2622: CSS "Padding" has no effect on the "database" symbol used
+' in component/deployment diagrams, unlike "skinparam padding". This
+' currently renders identically to a plain "database D" with no style at
+' all - pinning that gap so a fix shows up as an intentional diff here.
+<style>
+database {
+  Padding: 30
+}
+</style>
+database D
+@enduml

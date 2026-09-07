@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+' issue #2622: CSS "Padding" has no effect on the cells of a Creole table
+' (here rendered inside a note), unlike "skinparam padding" - the legacy
+' table renderer (StripeTable) reads ISkinParam.getPadding() directly and
+' never consults the style/CSS engine. This currently renders identically
+' to the same table with no style at all - pinning that gap so a fix
+' shows up as an intentional diff here.
+<style>
+element {
+  Padding: 20
+}
+</style>
+(*) --> "test"
+note left
+|= H1 |= H2 |
+| a | b |
+end note
+@enduml

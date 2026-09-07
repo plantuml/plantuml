@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+' issue #2622: "skinparam padding X" enlarges the cells of a Creole table
+' (here rendered inside a note). Pins the current (working) behaviour so
+' a regression can be caught if this stops applying.
+skinparam padding 20
+(*) --> "test"
+note left
+|= H1 |= H2 |
+| a | b |
+end note
+@enduml

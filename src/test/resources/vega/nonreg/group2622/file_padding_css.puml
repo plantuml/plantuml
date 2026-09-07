@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+' issue #2622: CSS "Padding" is documented as the replacement for
+' "skinparam padding", but has no effect on the "file" symbol used in
+' component/deployment diagrams. This currently renders identically to a
+' plain "file F" with no style at all - pinning that gap so a fix shows
+' up as an intentional diff here.
+<style>
+file {
+  Padding: 30
+}
+</style>
+file F
+@enduml

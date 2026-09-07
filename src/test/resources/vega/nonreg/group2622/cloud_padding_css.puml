@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+' issue #2622: CSS "Padding" has no effect on the "cloud" symbol used in
+' component/deployment diagrams, unlike "skinparam padding". This
+' currently renders identically to a plain "cloud C" with no style at
+' all - pinning that gap so a fix shows up as an intentional diff here.
+<style>
+cloud {
+  Padding: 30
+}
+</style>
+cloud C
+@enduml
