@@ -95,8 +95,8 @@ public class CommandSkinParam extends SingleLineCommand2<TitledDiagram> {
 			if ("ParticipantPadding".equalsIgnoreCase(name))
 				diagram.addWarning(new Warning("Please use CSS style instead of skinparam ParticipantPadding"));
 
-			if ("padding".equalsIgnoreCase(name))
-				diagram.addWarning(new Warning("Please use CSS style instead of skinparam padding"));
+//			if ("padding".equalsIgnoreCase(name))
+//				diagram.addWarning(new Warning("Please use CSS style instead of skinparam padding"));
 
 			diagram.setParam(name, arg.get("VALUE", 0));
 			diagram.setSkinParamUsed(true);
