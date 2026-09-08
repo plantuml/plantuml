@@ -67,8 +67,8 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
@@ -99,11 +99,11 @@ public class ConditionalBuilder {
 	private final Style styleDiamond;
 
 	private StyleQuery getStyleSignatureDiamond() {
-		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
+		return StyleQueries.ACTIVITYDIAG_ACTIVITY_DIAMOND;
 	}
 
 	private StyleQuery getStyleSignatureArrow() {
-		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+		return StyleQueries.ACTIVITYDIAG_ARROW;
 	}
 
 	public ConditionalBuilder(Swimlane swimlane, HColor backColor, FtileFactory ftileFactory,

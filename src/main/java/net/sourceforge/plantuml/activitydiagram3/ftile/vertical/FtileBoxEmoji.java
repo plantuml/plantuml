@@ -58,9 +58,9 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 
 public class FtileBoxEmoji extends AbstractFtile {
@@ -73,11 +73,11 @@ public class FtileBoxEmoji extends AbstractFtile {
 	private final Swimlane swimlane;
 
 	static public StyleQuery getStyleQuery() {
-		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.activity);
+		return StyleQueries.ACTIVITYDIAG_ACTIVITY;
 	}
 	
 	static public StyleQuery getStyleSignatureArrow() {
-		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+		return StyleQueries.ACTIVITYDIAG_ARROW;
 	}
 
 	@Override

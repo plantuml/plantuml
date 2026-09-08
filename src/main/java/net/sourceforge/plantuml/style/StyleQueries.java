@@ -40,4 +40,16 @@ public final class StyleQueries {
 	public static final StyleQuery ACTIVITYDIAG_ACTIVITY_ARROW = StyleQuery.of3(SName.root, SName.element,
 			SName.activityDiagram, SName.activity, SName.arrow);
 
+	public static final StyleQuery ACTIVITYDIAG_ARROW = StyleQuery.of3(SName.root, SName.element,
+			SName.activityDiagram, SName.arrow);
+
+	public static final StyleQuery ACTIVITYDIAG_ACTIVITY = StyleQuery.of3(SName.root, SName.element,
+			SName.activityDiagram, SName.activity);
+
+	public static final StyleQuery ACTIVITYDIAG_ACTIVITY_DIAMOND = StyleQuery.of3(SName.root, SName.element,
+			SName.activityDiagram, SName.activity, SName.diamond);
+
+	public static final StyleQuery ACTIVITYDIAG_NOTE = StyleQuery.of3(SName.root, SName.element,
+			SName.activityDiagram, SName.note);
+
 }

@@ -58,8 +58,8 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 
 public class ParallelBuilderSplit extends AbstractParallelFtilesBuilder {
@@ -70,7 +70,7 @@ public class ParallelBuilderSplit extends AbstractParallelFtilesBuilder {
 
 	@Override
 	public StyleQuery getStyleSignature() {
-		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+		return StyleQueries.ACTIVITYDIAG_ARROW;
 	}
 
 	@Override

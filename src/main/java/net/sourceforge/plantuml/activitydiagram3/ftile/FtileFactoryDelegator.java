@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.url.Url;
 
@@ -73,7 +74,7 @@ public class FtileFactoryDelegator implements FtileFactory {
 	private final Rose rose = new Rose();
 
 	final public StyleQuery getDefaultStyleDefinitionActivity() {
-		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.activity);
+		return StyleQueries.ACTIVITYDIAG_ACTIVITY;
 	}
 
 	final public StyleQuery getDefaultStyleDefinitionDiamond() {
@@ -82,7 +83,7 @@ public class FtileFactoryDelegator implements FtileFactory {
 	}
 
 	final public StyleQuery getDefaultStyleDefinitionArrow() {
-		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+		return StyleQueries.ACTIVITYDIAG_ARROW;
 	}
 
 	protected final Rainbow getInLinkRenderingColor(Ftile tile) {

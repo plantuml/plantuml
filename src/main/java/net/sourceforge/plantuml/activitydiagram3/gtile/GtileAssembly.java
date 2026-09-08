@@ -48,8 +48,8 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 
 public class GtileAssembly extends GtileTopDown {
@@ -69,7 +69,7 @@ public class GtileAssembly extends GtileTopDown {
 	}
 
 	final public StyleQuery getDefaultStyleDefinitionArrow() {
-		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+		return StyleQueries.ACTIVITYDIAG_ARROW;
 	}
 
 	@Override

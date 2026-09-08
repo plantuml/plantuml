@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
-import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 
 public class GtileWhile extends GtileTopDown3 {
@@ -53,7 +53,7 @@ public class GtileWhile extends GtileTopDown3 {
 	}
 
 	private static StyleQuery getDefaultStyleDefinitionDiamond() {
-		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
+		return StyleQueries.ACTIVITYDIAG_ACTIVITY_DIAMOND;
 	}
 
 	private static Gtile getShape1(Gtile toto, Swimlane swimlane, Display test, Display yes) {
