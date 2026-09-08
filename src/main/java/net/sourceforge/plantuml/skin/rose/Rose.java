@@ -299,7 +299,7 @@ public class Rose {
 
 		final ArrowDirection arrowDirection = config.getArrowDirection();
 
-		final StyleQuery signature = StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram,
+		final StyleQuery signature = StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram,
 				SName.arrow));
 		final Style textStyle = param.getCurrentStyleBuilder().getMergedStyle(signature);
 		final String value = textStyle.value(PName.HorizontalAlignment).asString();

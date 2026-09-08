@@ -138,7 +138,7 @@ public class NwGroup implements NStackable {
 	}
 
 	private StyleQuery getStyleDefinition() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.nwdiagDiagram, SName.group));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.nwdiagDiagram, SName.group));
 	}
 
 	public void drawGroup(UGraphic ug, MinMax size, ISkinParam skinParam) {

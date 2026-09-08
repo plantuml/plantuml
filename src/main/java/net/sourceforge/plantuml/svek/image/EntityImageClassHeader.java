@@ -77,7 +77,7 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header));
 	}
 
 	public EntityImageClassHeader(Entity entity, PortionShower portionShower) {
@@ -135,7 +135,7 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 			genericBlock = null;
 		} else {
 			final Style styleGeneric = getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery
-					.of(Arrays.asList(SName.root, SName.element, SName.classDiagram, SName.class_, SName.generic)) //
+					.of3(Arrays.asList(SName.root, SName.element, SName.classDiagram, SName.class_, SName.generic)) //
 					.withTOBECHANGED(stereotype) //
 					.with(entity.getStereostyles()));
 
@@ -195,31 +195,31 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 	private StyleQuery spotStyleSignature(LeafType leafType) {
 		switch (leafType) {
 		case ANNOTATION:
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotAnnotation));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotAnnotation));
 		case ABSTRACT_CLASS:
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotAbstractClass));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotAbstractClass));
 		case CLASS:
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotClass));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotClass));
 		case INTERFACE:
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotInterface));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotInterface));
 		case ENUM:
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotEnum));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotEnum));
 		case ENTITY:
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotEntity));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotEntity));
 		case PROTOCOL:
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotProtocol));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotProtocol));
 		case STRUCT:
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotStruct));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotStruct));
 		case EXCEPTION:
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotException));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotException));
 		case METACLASS:
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotMetaClass));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotMetaClass));
 		case STEREOTYPE:
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotStereotype));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotStereotype));
 		case DATACLASS:
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotDataClass));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotDataClass));
 		case RECORD:
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotRecord));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotRecord));
 		}
 		throw new IllegalStateException();
 	}

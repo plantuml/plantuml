@@ -155,6 +155,6 @@ public class TimeArrow implements UDrawable {
 	}
 
 	private StyleQuery getStyleSignature() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.timingDiagram, SName.arrow));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.timingDiagram, SName.arrow));
 	}
 }

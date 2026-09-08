@@ -58,7 +58,7 @@ public class GtileCircleStart extends AbstractGtile {
 	private double shadowing;
 
 	private StyleQuery getDefaultStyleDefinitionCircle() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.circle));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.circle));
 	}
 
 	public GtileCircleStart(StringBounder stringBounder, ISkinParam skinParam, HColor backColor, Swimlane swimlane) {

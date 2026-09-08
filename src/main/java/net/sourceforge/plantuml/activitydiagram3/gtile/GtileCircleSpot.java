@@ -65,7 +65,7 @@ public class GtileCircleSpot extends AbstractGtile {
 	private double shadowing;
 
 	private StyleQuery getDefaultStyleDefinitionCircle() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.circle));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.circle));
 	}
 
 	public GtileCircleSpot(StringBounder stringBounder, ISkinParam skinParam, HColor backColor, Swimlane swimlane,

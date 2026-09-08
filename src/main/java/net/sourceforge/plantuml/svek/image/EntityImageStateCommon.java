@@ -61,7 +61,7 @@ import net.sourceforge.plantuml.url.Url;
 public abstract class EntityImageStateCommon extends AbstractEntityImage {
 
 	public static final StyleQuery STYLE = StyleQuery
-			.of(Arrays.asList(SName.root, SName.element, SName.stateDiagram, SName.state));
+			.of3(Arrays.asList(SName.root, SName.element, SName.stateDiagram, SName.state));
 
 	final protected TextBlock name;
 	final protected Url url;

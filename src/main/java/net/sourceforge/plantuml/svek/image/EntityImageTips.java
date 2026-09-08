@@ -89,7 +89,7 @@ public class EntityImageTips extends AbstractEntityImage {
 	}
 
 	private StyleQuery getStyleQueryFor(Stereotype stereotype) {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, getStyleName(), SName.note))
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, getStyleName(), SName.note))
 				.withTOBECHANGED(stereotype);
 	}
 

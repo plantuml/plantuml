@@ -82,7 +82,7 @@ public class FtileWithNotes extends AbstractFtile {
 	private final double suppSpace = 20;
 
 	public StyleQuery getStyleSignature() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.note));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.note));
 	}
 
 	public Set<Swimlane> getSwimlanes() {

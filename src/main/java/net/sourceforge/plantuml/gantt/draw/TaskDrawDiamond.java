@@ -73,7 +73,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 
 	@Override
 	StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.milestone));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.milestone));
 	}
 
 	private double getYNotePosition(StringBounder stringBounder) {

@@ -97,7 +97,7 @@ public class EntityImageRequirement extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.componentDiagram, SName.requirement));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.componentDiagram, SName.requirement));
 	}
 
 	private Style getStyle() {

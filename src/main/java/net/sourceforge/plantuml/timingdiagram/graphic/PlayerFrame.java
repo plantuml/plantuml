@@ -65,7 +65,7 @@ public class PlayerFrame {
 	}
 
 	private StyleQuery getStyleSignature() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.timingDiagram));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.timingDiagram));
 	}
 
 	private HColor getLineColor() {

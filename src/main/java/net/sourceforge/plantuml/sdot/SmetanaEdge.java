@@ -255,7 +255,7 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 
 	private Style getStyle() {
 		final StyleQuery query = StyleQuery
-				.of(Arrays.asList(SName.root, SName.element, diagramType().getStyleName(), SName.arrow))
+				.of3(Arrays.asList(SName.root, SName.element, diagramType().getStyleName(), SName.arrow))
 				.withTOBECHANGED(link.getStereotype());
 		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);
 	}

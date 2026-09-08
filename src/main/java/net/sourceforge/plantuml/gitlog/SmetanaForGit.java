@@ -87,7 +87,7 @@ public class SmetanaForGit {
 
 	private Style getStyle() {
 		return skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.gitDiagram)));
+				.getMergedStyle(StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.gitDiagram)));
 	}
 
 	private HColor arrowColor() {

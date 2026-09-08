@@ -156,17 +156,17 @@ public final class ClusterHeader {
 		final USymbol uSymbol = g.getUSymbol();
 		if (g.getGroupType() == GroupType.STATE)
 			signature = StyleQuery
-					.of(Arrays.asList(SName.root, SName.element, SName.stateDiagram, SName.state, SName.name));
+					.of3(Arrays.asList(SName.root, SName.element, SName.stateDiagram, SName.state, SName.name));
 		else if (uSymbol != null) {
 			final List<SName> names = new ArrayList<SName>(Arrays.asList(SName.root, SName.element, sname));
 			names.addAll(Arrays.asList(uSymbol.getSNames()));
 			names.add(SName.composite);
 			names.add(SName.title);
-			signature = StyleQuery.of(names);
+			signature = StyleQuery.of3(names);
 		} else if (g.getGroupType() == GroupType.PACKAGE)
-			signature = StyleQuery.of(Arrays.asList(SName.root, SName.element, sname, SName.package_, SName.title));
+			signature = StyleQuery.of3(Arrays.asList(SName.root, SName.element, sname, SName.package_, SName.title));
 		else
-			signature = StyleQuery.of(Arrays.asList(SName.root, SName.element, sname, SName.composite, SName.title));
+			signature = StyleQuery.of3(Arrays.asList(SName.root, SName.element, sname, SName.composite, SName.title));
 		return signature;
 	}
 

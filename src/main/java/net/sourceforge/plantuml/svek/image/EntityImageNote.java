@@ -186,7 +186,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, getStyleName(), SName.note))
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, getStyleName(), SName.note))
 				.withTOBECHANGED(getStereo());
 	}
 

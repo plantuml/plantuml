@@ -68,7 +68,7 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, getStyleName(), SName.circle))
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, getStyleName(), SName.circle))
 				.withTOBECHANGED(getStereo());
 	}
 

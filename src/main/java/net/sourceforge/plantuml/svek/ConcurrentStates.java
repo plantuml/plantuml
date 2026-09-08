@@ -114,7 +114,7 @@ public final class ConcurrentStates extends TextBlockMemoized implements IEntity
 	}
 
 	private StyleQuery getStyleSignature() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.stateDiagram, SName.state));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.stateDiagram, SName.state));
 	}
 
 	public void drawU(UGraphic ug) {

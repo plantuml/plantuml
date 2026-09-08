@@ -122,7 +122,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.objectDiagram, SName.object));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.objectDiagram, SName.object));
 	}
 
 	private Style getStyle() {
@@ -132,7 +132,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 
 	private Style getStyleHeader() {
 		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery
-				.of(Arrays.asList(SName.root, SName.element, SName.objectDiagram, SName.object, SName.header))
+				.of3(Arrays.asList(SName.root, SName.element, SName.objectDiagram, SName.object, SName.header))
 				.withTOBECHANGED(getEntity().getStereotype()));
 	}
 

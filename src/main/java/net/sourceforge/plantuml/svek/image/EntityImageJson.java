@@ -138,7 +138,7 @@ public class EntityImageJson extends AbstractEntityImage implements Stencil, Wit
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.objectDiagram, SName.json));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.objectDiagram, SName.json));
 	}
 
 	private Style getStyle() {
@@ -148,7 +148,7 @@ public class EntityImageJson extends AbstractEntityImage implements Stencil, Wit
 
 	private Style getStyleHeader() {
 		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery
-				.of(Arrays.asList(SName.root, SName.element, SName.objectDiagram, SName.json, SName.header))
+				.of3(Arrays.asList(SName.root, SName.element, SName.objectDiagram, SName.json, SName.header))
 				.withTOBECHANGED(getEntity().getStereotype()));
 	}
 

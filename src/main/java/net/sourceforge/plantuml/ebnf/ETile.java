@@ -53,7 +53,7 @@ public abstract class ETile extends TextBlockMemoized {
 	protected final boolean TRACE = false;
 
 	public static StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ebnf));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.ebnf));
 	}
 
 	public abstract void push(ETile tile);

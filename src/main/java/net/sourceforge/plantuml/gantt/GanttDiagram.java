@@ -206,13 +206,13 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 	@Override
 	public final Style getStyle(SName param) {
 		return getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, param)));
+				.getMergedStyle(StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, param)));
 	}
 
 	@Override
 	public final Style getStyle(SName param1, SName param2) {
 		return getCurrentStyleBuilder().getMergedStyle(
-				StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, param1, param2)));
+				StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, param1, param2)));
 	}
 
 	public void closeDayOfWeek(DayOfWeek day, String task) {

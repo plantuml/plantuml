@@ -146,7 +146,7 @@ public class TimeConstraint {
 	}
 
 	private StyleQuery getStyleSignature() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.timingDiagram, SName.constraintArrow));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.timingDiagram, SName.constraintArrow));
 	}
 
 	public double getConstraintHeight(StringBounder stringBounder) {

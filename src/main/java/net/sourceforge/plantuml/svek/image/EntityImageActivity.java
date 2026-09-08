@@ -141,7 +141,7 @@ public class EntityImageActivity extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity))
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity))
 				.withTOBECHANGED(getStereo());
 	}
 

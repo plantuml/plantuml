@@ -71,7 +71,7 @@ public class LaneDivider implements TextBlock {
 	}
 
 	public StyleQuery getDefaultStyleDefinition() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.swimlane));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.swimlane));
 	}
 
 	private Style getStyle() {

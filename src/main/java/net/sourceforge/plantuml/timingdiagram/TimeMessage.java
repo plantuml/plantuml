@@ -90,7 +90,7 @@ public class TimeMessage extends WithLinkType {
 	}
 
 	private StyleQuery getStyleSignature() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.timingDiagram, SName.arrow));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.timingDiagram, SName.arrow));
 	}
 
 	public final Player getPlayer1() {

@@ -142,7 +142,7 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 
 	@Override
 	StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.task));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.task));
 	}
 
 	public void drawU(UGraphic ug) {

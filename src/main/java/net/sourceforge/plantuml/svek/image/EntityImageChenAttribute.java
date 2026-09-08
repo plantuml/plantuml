@@ -104,18 +104,18 @@ public class EntityImageChenAttribute extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chenEerDiagram, SName.chenAttribute));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.chenEerDiagram, SName.chenAttribute));
 	}
 
 	private static Style getStyle(Entity group, ISkinParam skinParam) {
 		return skinParam.getCurrentStyleBuilder().getMergedStyle(
-				StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chenEerDiagram, SName.chenAttribute))
+				StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.chenEerDiagram, SName.chenAttribute))
 						.withTOBECHANGED(group.getStereotype()));
 	}
 
 	private static Style getStyleTitle(Entity group, ISkinParam skinParam) {
 		return skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQuery
-				.of(Arrays.asList(SName.root, SName.element, SName.chenEerDiagram, SName.chenAttribute, SName.title))
+				.of3(Arrays.asList(SName.root, SName.element, SName.chenEerDiagram, SName.chenAttribute, SName.title))
 				.withTOBECHANGED(group.getStereotype()));
 	}
 

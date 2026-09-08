@@ -214,7 +214,7 @@ class MyElkDrawing implements TextBlock {
 
 	// Duplication from SvekEdge
 	final public StyleQuery getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
-		StyleQuery result = StyleQuery.of(Arrays.asList(SName.root, SName.element, styleName, SName.arrow));
+		StyleQuery result = StyleQuery.of3(Arrays.asList(SName.root, SName.element, styleName, SName.arrow));
 		if (stereotype != null)
 			result = result.withTOBECHANGED(stereotype);
 

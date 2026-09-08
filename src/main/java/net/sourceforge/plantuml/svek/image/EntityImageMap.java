@@ -136,7 +136,7 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.objectDiagram, SName.map));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.objectDiagram, SName.map));
 	}
 
 	private Style getStyle() {
@@ -146,7 +146,7 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 
 	private Style getStyleHeader() {
 		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery
-				.of(Arrays.asList(SName.root, SName.element, SName.objectDiagram, SName.map, SName.header))
+				.of3(Arrays.asList(SName.root, SName.element, SName.objectDiagram, SName.map, SName.header))
 				.withTOBECHANGED(getEntity().getStereotype()));
 	}
 

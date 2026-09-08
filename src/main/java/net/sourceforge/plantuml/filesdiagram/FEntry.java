@@ -165,7 +165,7 @@ public class FEntry implements Iterable<FEntry> {
 
 	private Opale createOpale(ISkinParam skinParam) {
 
-		final StyleQuery signature = StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.filesDiagram,
+		final StyleQuery signature = StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.filesDiagram,
 				SName.note));
 		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(signature);
 

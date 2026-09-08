@@ -78,7 +78,7 @@ public class ScatterRenderer {
 	}
 
 	private StyleQuery getScatterStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.scatter));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.scatter));
 	}
 
 	private Style getScatterStyle(ChartSeries series) {

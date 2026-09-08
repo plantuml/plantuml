@@ -203,9 +203,9 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		final LeafType type = getEntity().getLeafType();
 		if (type == LeafType.USECASE_BUSINESS)
 			return StyleQuery
-					.of(Arrays.asList(SName.root, SName.element, SName.componentDiagram, SName.usecase, SName.business))
+					.of3(Arrays.asList(SName.root, SName.element, SName.componentDiagram, SName.usecase, SName.business))
 					.withTOBECHANGED(getStereo());
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.componentDiagram, SName.usecase))
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.componentDiagram, SName.usecase))
 				.withTOBECHANGED(getStereo());
 	}
 

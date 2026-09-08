@@ -76,7 +76,7 @@ public class FtileNoteAlone extends AbstractFtile implements Stencil, Styleable 
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.note));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.note));
 	}
 
 	@Override

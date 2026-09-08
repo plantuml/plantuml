@@ -68,13 +68,13 @@ public enum NoteStyle {
 	public StyleQuery getStyleQuery() {
 		if (this == NoteStyle.HEXAGONAL)
 			return StyleQuery
-					.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.note, SName.hnote));
+					.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.note, SName.hnote));
 
 		if (this == NoteStyle.BOX)
 			return StyleQuery
-					.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.note, SName.rnote));
+					.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.note, SName.rnote));
 
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.note));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.note));
 
 	}
 

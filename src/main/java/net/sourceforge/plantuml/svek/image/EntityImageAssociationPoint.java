@@ -67,7 +67,7 @@ public class EntityImageAssociationPoint extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.classDiagram, SName.arrow))
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.classDiagram, SName.arrow))
 				.withTOBECHANGED(getStereo());
 	}
 

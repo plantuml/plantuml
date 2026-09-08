@@ -84,7 +84,7 @@ public class BarRenderer {
 	}
 
 	private StyleQuery getBarStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.bar));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.bar));
 	}
 
 	private Style getBarStyle(ChartSeries series) {

@@ -283,7 +283,7 @@ public final class DiagramChromeFactory {
 			return original;
 
 		final Style style = skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.document, SName.mainframe)));
+				.getMergedStyle(StyleQuery.of3(Arrays.asList(SName.root, SName.document, SName.mainframe)));
 		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, style);
 		final TextBlock title = mainFrame.create(fontConfiguration, HorizontalAlignment.CENTER, skinParam);
 
@@ -367,7 +367,7 @@ public final class DiagramChromeFactory {
 			return original;
 
 		final Style style = skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.document, SName.title)));
+				.getMergedStyle(StyleQuery.of3(Arrays.asList(SName.root, SName.document, SName.title)));
 		final TextBlock titleBlock = style.createTextBlockBordered(title.getDisplay(), skinParam.getIHtmlColorSet(),
 				skinParam, Style.ID_TITLE, LineBreakStrategy.NONE);
 
@@ -387,7 +387,7 @@ public final class DiagramChromeFactory {
 			return original;
 
 		final Style style = skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.document, SName.caption)));
+				.getMergedStyle(StyleQuery.of3(Arrays.asList(SName.root, SName.document, SName.caption)));
 		final TextBlock captionBlock = style.createTextBlockBordered(caption.getDisplay(), skinParam.getIHtmlColorSet(),
 				skinParam, Style.ID_CAPTION, LineBreakStrategy.NONE);
 
@@ -413,7 +413,7 @@ public final class DiagramChromeFactory {
 		TextBlock textHeader = null;
 		if (!header.isNull()) {
 			final Style style = skinParam.getCurrentStyleBuilder()
-					.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.document, SName.header)));
+					.getMergedStyle(StyleQuery.of3(Arrays.asList(SName.root, SName.document, SName.header)));
 			textHeader = header.createRibbon(FontConfiguration.create(skinParam, FontParam.HEADER, null), skinParam,
 					style);
 		}
@@ -424,7 +424,7 @@ public final class DiagramChromeFactory {
 		TextBlock textFooter = null;
 		if (!footer.isNull()) {
 			final Style style = skinParam.getCurrentStyleBuilder()
-					.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.document, SName.footer)));
+					.getMergedStyle(StyleQuery.of3(Arrays.asList(SName.root, SName.document, SName.footer)));
 			textFooter = footer.createRibbon(FontConfiguration.create(skinParam, FontParam.FOOTER, null), skinParam,
 					style);
 		}

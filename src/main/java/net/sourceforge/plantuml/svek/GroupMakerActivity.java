@@ -107,7 +107,7 @@ public final class GroupMakerActivity {
 	}
 
 	final public StyleQuery getDefaultStyleDefinitionGroup() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.group));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.group));
 	}
 
 	public IEntityImage getImage() throws IOException, InterruptedException {

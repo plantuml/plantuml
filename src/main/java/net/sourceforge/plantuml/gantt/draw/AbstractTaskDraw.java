@@ -118,7 +118,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	abstract StyleQuery getStyleQuery();
 
 	private StyleQuery getStyleSignatureUnstarted() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.task, SName.unstarted));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.task, SName.unstarted));
 	}
 
 	final protected HColor getLineColor() {
@@ -215,7 +215,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 
 	protected Opale getOpaleNote() {
 		final Style style = getStyleBuilder().getMergedStyle(StyleQuery
-				.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.note))
+				.of3(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.note))
 				.withTOBECHANGED(noteStereotype));
 
 		final FontConfiguration fc = style.getFontConfiguration(getColorSet());

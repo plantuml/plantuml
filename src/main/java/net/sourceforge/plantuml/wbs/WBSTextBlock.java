@@ -85,7 +85,7 @@ abstract class WBSTextBlock extends TextBlockMemoized implements AsciiBlock {
 	}
 
 	private Style getStyleUsed() {
-		final StyleQuery signature = StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.arrow))
+		final StyleQuery signature = StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.arrow))
 				.addLevel(level).withTOBECHANGED(stereotype);
 		return styleBuilder.getMergedStyle(signature);
 	}

@@ -97,7 +97,7 @@ public class GanttConstraint extends WithLinkType {
 	}
 
 	final public StyleQuery getStyleSignature() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.arrow));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.arrow));
 	}
 
 	public UDrawable getUDrawable(TimeScale timeScale, TaskDrawRegistryData toTaskDraw) {

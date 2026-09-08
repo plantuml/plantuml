@@ -97,7 +97,7 @@ public class LinkAnchor {
 		final double ymin = Math.min(y1, y2);
 		final double ymax = Math.max(y1, y2);
 
-		final StyleQuery signature = StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram,
+		final StyleQuery signature = StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram,
 				SName.arrow));
 		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(signature);
 

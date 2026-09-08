@@ -112,7 +112,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 	public StyleQuery getStyleQuery() {
 		final List<SName> names = new ArrayList<>(Arrays.asList(SName.root, SName.element, getStyleName()));
 		names.addAll(Arrays.asList(symbol.getSNames()));
-		return StyleQuery.of(names);
+		return StyleQuery.of3(names);
 
 	}
 
@@ -145,13 +145,13 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		final StyleQuery queryTitle;
 		if (symbol instanceof USymbolActorBusiness)
-			queryTitle = StyleQuery.of(Arrays.asList(SName.root, SName.element, getStyleName(), SName.actor,
+			queryTitle = StyleQuery.of3(Arrays.asList(SName.root, SName.element, getStyleName(), SName.actor,
 					SName.business, SName.title));
 		else {
 			final List<SName> namesTitle = new ArrayList<>(Arrays.asList(SName.root, SName.element, getStyleName()));
 			namesTitle.addAll(Arrays.asList(symbol.getSNames()));
 			namesTitle.add(SName.title);
-			queryTitle = StyleQuery.of(namesTitle);
+			queryTitle = StyleQuery.of3(namesTitle);
 		}
 
 		final Stereotype stereotype = entity.getStereotype();
@@ -162,7 +162,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		namesStereo.addAll(Arrays.asList(symbol.getSNames()));
 		namesStereo.add(SName.stereotype);
 		final Style styleStereo = getEntity().getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of(namesStereo).forStereotypeItself(stereotype));
+				.getMergedStyle(StyleQuery.of3(namesStereo).forStereotypeItself(stereotype));
 
 		final Style style = getEntity().getCurrentStyleBuilder().getMergedStyle(getStyleQuery().withTOBECHANGED(stereotype))
 				.eventuallyOverride(colors);

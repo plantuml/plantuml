@@ -48,7 +48,7 @@ public enum LifeEventType implements Styleable {
 	public StyleQuery getStyleQuery() {
 		if (this == DESTROY)
 			return StyleQuery
-					.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.destroy));
+					.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.destroy));
 
 		// To be completed
 		throw new UnsupportedOperationException();

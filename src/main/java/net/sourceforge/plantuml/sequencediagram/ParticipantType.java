@@ -57,28 +57,28 @@ public enum ParticipantType implements Styleable {
 	@Override
 	public StyleQuery getStyleQuery() {
 		if (this == PARTICIPANT)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.participant));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.participant));
 
 		if (this == ACTOR)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.actor));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.actor));
 
 		if (this == BOUNDARY)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.boundary));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.boundary));
 
 		if (this == CONTROL)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.control));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.control));
 
 		if (this == ENTITY)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.entity));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.entity));
 
 		if (this == QUEUE)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.queue));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.queue));
 
 		if (this == DATABASE)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.database));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.database));
 
 		if (this == COLLECTIONS)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.collections));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.collections));
 
 		return null;
 	}

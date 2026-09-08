@@ -178,7 +178,7 @@ public class GtileIfHexagon extends GtileColumns {
 	}
 
 	final public StyleQuery getDefaultStyleDefinitionDiamond() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));
 	}
 
 	@Override

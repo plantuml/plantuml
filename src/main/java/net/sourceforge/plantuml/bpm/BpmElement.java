@@ -142,7 +142,7 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 	}
 
 	private StyleQuery getSignatureCircle() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.circle));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.circle));
 	}
 
 	private Style getStyle(ISkinParam skinParam) {

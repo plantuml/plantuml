@@ -186,12 +186,12 @@ public class TimingRuler {
 
 	private Style getStyleTimegrid() {
 		return skinParam.getCurrentStyleBuilder().getMergedStyle(
-				StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.timingDiagram, SName.timegrid)));
+				StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.timingDiagram, SName.timegrid)));
 	}
 
 	private Style getStyleTimeline() {
 		return skinParam.getCurrentStyleBuilder().getMergedStyle(
-				StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.timingDiagram, SName.timeline)));
+				StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.timingDiagram, SName.timeline)));
 	}
 
 	private TextBlock getTimeTextBlock(long time) {

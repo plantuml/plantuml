@@ -74,16 +74,16 @@ public class FtileFactoryDelegator implements FtileFactory {
 	private final Rose rose = new Rose();
 
 	final public StyleQuery getDefaultStyleDefinitionActivity() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity));
 	}
 
 	final public StyleQuery getDefaultStyleDefinitionDiamond() {
 		return StyleQuery
-				.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));
+				.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));
 	}
 
 	final public StyleQuery getDefaultStyleDefinitionArrow() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
 	}
 
 	protected final Rainbow getInLinkRenderingColor(Ftile tile) {

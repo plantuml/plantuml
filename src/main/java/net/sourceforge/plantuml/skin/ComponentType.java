@@ -76,35 +76,35 @@ public enum ComponentType implements Styleable {
 	@Override
 	public StyleQuery getStyleQuery() {
 		if (this == PARTICIPANT_HEAD || this == PARTICIPANT_TAIL)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.participant));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.participant));
 
 		if (this == PARTICIPANT_LINE /*|| this == CONTINUE_LINE*/)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine));
 
 		if (this == ACTIVATION_BOX_CLOSE_CLOSE || this == ACTIVATION_BOX_CLOSE_OPEN || this == ACTIVATION_BOX_OPEN_CLOSE
 				|| this == ACTIVATION_BOX_OPEN_OPEN)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.activationBox));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.activationBox));
 
 		if (this == DESTROY)
 			return LifeEventType.DESTROY.getStyleQuery();
 
 		if (this == DIVIDER)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.separator));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.separator));
 
 		if (this == ENGLOBER)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.box));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.box));
 
 		if (this == NEWPAGE)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.newpage));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.newpage));
 
 		if (this == NOTE)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.note));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.note));
 
 		if (this == DELAY_TEXT)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.delay));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.delay));
 
 		if (this == DELAY_LINE)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.delay));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.delay));
 
 		throw new UnsupportedOperationException(toString());
 	}

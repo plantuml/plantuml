@@ -185,7 +185,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 
 	@Override
 	StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.task))
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.task))
 				.withTOBECHANGED(getTask().getStereotype());
 	}
 
@@ -294,7 +294,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		}
 
 		final HColor backUndone = getStyleBuilder()
-				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.undone)))
+				.getMergedStyle(StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.undone)))
 				.value(PName.BackGroundColor).asColor(getColorSet());
 
 		final RectangleTask rectangleTask = new RectangleTask(startPos, endPos, round, getCompletion(), off);

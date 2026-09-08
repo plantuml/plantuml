@@ -152,7 +152,7 @@ public class NServer {
 	}
 
 	private StyleQuery getStyleDefinition(SName sname) {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.nwdiagDiagram, sname));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.nwdiagDiagram, sname));
 	}
 
 	private FontConfiguration getFontConfiguration(SName sname) {

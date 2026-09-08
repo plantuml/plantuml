@@ -288,18 +288,18 @@ public class Cluster implements Moveable {
 			GroupType groupType) {
 		if (diagramStyleName == SName.stateDiagram)
 			return StyleQuery
-					.of(Arrays.asList(SName.root, SName.element, SName.stateDiagram, SName.state, SName.group));
+					.of3(Arrays.asList(SName.root, SName.element, SName.stateDiagram, SName.state, SName.group));
 		if (symbol != null) {
 			final List<SName> names = new ArrayList<>(
 					Arrays.asList(SName.root, SName.element, diagramStyleName, SName.group));
 			names.addAll(Arrays.asList(symbol.getSNames()));
-			return StyleQuery.of(names);
+			return StyleQuery.of3(names);
 		}
 		if (groupType == GroupType.PACKAGE)
 			return StyleQuery
-					.of(Arrays.asList(SName.root, SName.element, diagramStyleName, SName.package_, SName.group));
+					.of3(Arrays.asList(SName.root, SName.element, diagramStyleName, SName.package_, SName.group));
 
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, diagramStyleName, SName.group));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, diagramStyleName, SName.group));
 	}
 
 	public void drawU(UGraphic ug) {

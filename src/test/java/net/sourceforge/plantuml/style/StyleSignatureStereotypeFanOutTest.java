@@ -88,7 +88,7 @@ class StyleSignatureStereotypeFanOutTest {
 				+ ".foo {\n  BackGroundColor red\n}\n" //
 				+ ".bar {\n  BackGroundColor blue\n}\n"; // declared later, so it wins any tie
 		final StyleBuilder builder = builderFrom(skin);
-		final StyleQuery base = StyleQuery.of(Arrays.asList(SName.root));
+		final StyleQuery base = StyleQuery.of3(Arrays.asList(SName.root));
 
 		final Style fooLabelFirst = builder.getMergedStyle(base.withTOBECHANGED(Stereotype.build("<<foo>><<bar>>")));
 		assertEquals("blue", fooLabelFirst.value(PName.BackGroundColor).asString());
@@ -104,7 +104,7 @@ class StyleSignatureStereotypeFanOutTest {
 				+ ".bar {\n  BackGroundColor blue\n}\n" //
 				+ ".foo {\n  .bar {\n    BackGroundColor green\n  }\n}\n";
 		final StyleBuilder builder = builderFrom(skin);
-		final StyleQuery base = StyleQuery.of(Arrays.asList(SName.root));
+		final StyleQuery base = StyleQuery.of3(Arrays.asList(SName.root));
 
 		// "green" (the {foo, bar} declaration) always wins now, whatever the label order on the
 		// element and whatever file order the three declarations were in.

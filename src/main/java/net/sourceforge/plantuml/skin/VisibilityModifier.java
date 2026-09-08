@@ -337,19 +337,19 @@ public enum VisibilityModifier {
 
 	public StyleQuery getStyleSignature() {
 		if (this == IE_MANDATORY)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.visibilityIcon, SName.IEMandatory));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.visibilityIcon, SName.IEMandatory));
 
 		if (this == PUBLIC_FIELD || this == PUBLIC_METHOD)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.visibilityIcon, SName.public_));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.visibilityIcon, SName.public_));
 
 		if (this == PRIVATE_FIELD || this == PRIVATE_METHOD)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.visibilityIcon, SName.private_));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.visibilityIcon, SName.private_));
 
 		if (this == PROTECTED_FIELD || this == PROTECTED_METHOD)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.visibilityIcon, SName.protected_));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.visibilityIcon, SName.protected_));
 
 		if (this == PACKAGE_PRIVATE_FIELD || this == VisibilityModifier.PACKAGE_PRIVATE_METHOD)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.visibilityIcon, SName.package_));
+			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.visibilityIcon, SName.package_));
 
 		throw new IllegalStateException();
 	}

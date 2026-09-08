@@ -140,7 +140,7 @@ class BundledSkinTest {
 	void bundledSkinLoads(String filename) throws Exception {
 		final StyleBuilder builder = StyleLoader.loadSkin(filename);
 		assertNotNull(builder);
-		assertNotNull(builder.getMergedStyle(StyleQuery.of(Collections.singletonList(SName.root))));
+		assertNotNull(builder.getMergedStyle(StyleQuery.of3(Collections.singletonList(SName.root))));
 	}
 
 	// -----------------------------------------------------------------------

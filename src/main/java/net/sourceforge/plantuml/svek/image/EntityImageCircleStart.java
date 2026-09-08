@@ -55,7 +55,7 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, getSkinParam().getDiagramType().getStyleName(),
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, getSkinParam().getDiagramType().getStyleName(),
 				SName.circle, SName.start));
 	}
 

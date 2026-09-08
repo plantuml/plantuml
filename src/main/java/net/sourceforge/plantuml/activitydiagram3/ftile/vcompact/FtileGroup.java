@@ -89,7 +89,7 @@ public class FtileGroup extends AbstractFtile {
 		final List<SName> names = new ArrayList<>(Arrays.asList(SName.root, SName.element, SName.activityDiagram));
 		names.addAll(Arrays.asList(symbol.getSNames()));
 		names.add(SName.composite);
-		return StyleQuery.of(names);
+		return StyleQuery.of3(names);
 	}
 
 	public FtileGroup(Ftile inner, Display title, HColor backColor, ISkinParam skinParam, USymbol type, Style style) {

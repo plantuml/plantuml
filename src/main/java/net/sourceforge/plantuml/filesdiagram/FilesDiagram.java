@@ -70,7 +70,7 @@ public class FilesDiagram extends TitledDiagram {
 			e.printStackTrace();
 		}
 		final Style style = skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.filesDiagram)));
+				.getMergedStyle(StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.filesDiagram)));
 
 		// final FontConfiguration fontConfiguration =
 		// FontConfiguration.blackBlueTrue(UFont.courier(14));

@@ -65,7 +65,7 @@ public class EntityImageStateBorder extends AbstractEntityImageBorder {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.stateDiagram, SName.state));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.stateDiagram, SName.state));
 	}
 
 	private boolean upPosition() {

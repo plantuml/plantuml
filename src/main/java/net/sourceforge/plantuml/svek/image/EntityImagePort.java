@@ -71,7 +71,7 @@ public class EntityImagePort extends AbstractEntityImageBorder {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, getStyleName(), SName.port));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, getStyleName(), SName.port));
 	}
 
 	private boolean upPosition() {

@@ -143,7 +143,7 @@ public class ClockwiseTopRightBottomLeft {
 	}
 
 	public static ClockwiseTopRightBottomLeft marginForDocument(StyleBuilder styleBuilder) {
-		final Style style = styleBuilder.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.document)));
+		final Style style = styleBuilder.getMergedStyle(StyleQuery.of3(Arrays.asList(SName.root, SName.document)));
 		return style.getMargin();
 	}
 

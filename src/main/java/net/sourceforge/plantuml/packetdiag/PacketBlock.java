@@ -219,7 +219,7 @@ public class PacketBlock {
 
 	Style getStyle() {
 		return skinParam.getCurrentStyleBuilder().getMergedStyle(
-				StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.packetdiagDiagram, SName.rectangle)));
+				StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.packetdiagDiagram, SName.rectangle)));
 	}
 
 	Fashion getFashion() {

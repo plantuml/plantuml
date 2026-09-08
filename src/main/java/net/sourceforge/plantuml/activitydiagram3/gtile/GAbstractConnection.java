@@ -87,7 +87,7 @@ public abstract class GAbstractConnection implements GConnection {
 	}
 
 	private final StyleQuery getDefaultStyleDefinitionArrow() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
 	}
 
 	protected ISkinParam skinParam() {

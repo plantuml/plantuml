@@ -71,7 +71,7 @@ public class ParallelBuilderSplit extends AbstractParallelFtilesBuilder {
 
 	@Override
 	public StyleQuery getStyleSignature() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
+		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
 	}
 
 	@Override

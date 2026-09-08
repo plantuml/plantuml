@@ -682,12 +682,12 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 	private Style getStyle() {
 		return diagram.getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery
-				.of(Arrays.asList(SName.root, SName.element, diagram.getDiagramType().getStyleName(), SName.arrow)));
+				.of3(Arrays.asList(SName.root, SName.element, diagram.getDiagramType().getStyleName(), SName.arrow)));
 	}
 
 	// Duplication from SvekEdge
 	final public StyleQuery getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
-		StyleQuery result = StyleQuery.of(Arrays.asList(SName.root, SName.element, styleName, SName.arrow));
+		StyleQuery result = StyleQuery.of3(Arrays.asList(SName.root, SName.element, styleName, SName.arrow));
 		if (stereotype != null)
 			result = result.withTOBECHANGED(stereotype);
 
