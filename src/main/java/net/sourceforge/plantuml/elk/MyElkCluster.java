@@ -145,7 +145,7 @@ public class MyElkCluster {
 
 		final Style style = skinParam.getCurrentStyleBuilder()
 				.getMergedStyle(Cluster.getDefaultStyleDefinition(diagramType.getStyleName(), uSymbol, group.getGroupType())
-						.withTOBECHANGED(group.getStereotype()));
+						.withStereotype(group.getStereotype()));
 
 		final UStroke stroke = Cluster.getStrokeInternal(group, style);
 

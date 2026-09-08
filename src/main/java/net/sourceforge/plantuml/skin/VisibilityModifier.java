@@ -51,10 +51,9 @@ import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
-import java.util.Arrays;
 
-import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 public enum VisibilityModifier {
 	PRIVATE_FIELD(StringUtils.PRIVATE_FIELD, ColorParam.iconPrivate, null),
@@ -337,19 +336,19 @@ public enum VisibilityModifier {
 
 	public StyleQuery getStyleSignature() {
 		if (this == IE_MANDATORY)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.visibilityIcon, SName.IEMandatory));
+			return StyleQueries.VISIBILITYICON_IE_MANDATORY;
 
 		if (this == PUBLIC_FIELD || this == PUBLIC_METHOD)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.visibilityIcon, SName.public_));
+			return StyleQueries.VISIBILITYICON_PUBLIC;
 
 		if (this == PRIVATE_FIELD || this == PRIVATE_METHOD)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.visibilityIcon, SName.private_));
+			return StyleQueries.VISIBILITYICON_PRIVATE;
 
 		if (this == PROTECTED_FIELD || this == PROTECTED_METHOD)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.visibilityIcon, SName.protected_));
+			return StyleQueries.VISIBILITYICON_PROTECTED;
 
 		if (this == PACKAGE_PRIVATE_FIELD || this == VisibilityModifier.PACKAGE_PRIVATE_METHOD)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.visibilityIcon, SName.package_));
+			return StyleQueries.VISIBILITYICON_PACKAGE;
 
 		throw new IllegalStateException();
 	}

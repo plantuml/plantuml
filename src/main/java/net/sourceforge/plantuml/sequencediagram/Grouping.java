@@ -35,16 +35,15 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.style.WithStyle;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public abstract class Grouping extends AbstractEvent implements Event, WithStyle {
 
@@ -61,15 +60,14 @@ public abstract class Grouping extends AbstractEvent implements Event, WithStyle
 	@Override
 	public StyleQuery getStyleQuery() {
 		if (type == GroupingType.START_PARTITION)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.partition));
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.group));
+			return StyleQueries.SEQUENCEDIAG_PARTITION;
+		return StyleQueries.SEQUENCEDIAG_GROUP;
 	}
 
 	final private StyleQuery getHeaderStyleDefinition() {
 		if (type == GroupingType.START_PARTITION)
-			return StyleQuery
-					.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.partition, SName.header));
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.groupHeader));
+			return StyleQueries.SEQUENCEDIAG_PARTITION_HEADER;
+		return StyleQueries.SEQUENCEDIAG_GROUPHEADER;
 	}
 
 	// The nested counterpart of the legacy flat "groupHeader" above, added for
@@ -81,8 +79,7 @@ public abstract class Grouping extends AbstractEvent implements Event, WithStyle
 	// every existing diagram styling `groupHeader` directly keeps working
 	// unchanged: only diagrams that opt into the new nested form are affected.
 	final private StyleQuery getNestedHeaderStyleDefinition() {
-		return StyleQuery
-				.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.group, SName.header));
+		return StyleQueries.SEQUENCEDIAG_GROUP_HEADER;
 	}
 
 	private Style computeStyleHeader(StyleBuilder styleBuilder) {

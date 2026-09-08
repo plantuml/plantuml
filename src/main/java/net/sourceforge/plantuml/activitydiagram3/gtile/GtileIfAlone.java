@@ -46,8 +46,8 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 public class GtileIfAlone extends GtileTopDown3 {
 
@@ -74,7 +74,7 @@ public class GtileIfAlone extends GtileTopDown3 {
 	}
 
 	final static public StyleQuery getDefaultStyleDefinitionDiamond() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));
+		return StyleQueries.ACTIVITYDIAG_ACTIVITY_DIAMOND;
 	}
 
 	@Override

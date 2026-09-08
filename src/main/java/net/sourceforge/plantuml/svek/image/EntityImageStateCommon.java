@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LineConfigurable;
@@ -53,15 +52,15 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.url.Url;
 
 public abstract class EntityImageStateCommon extends AbstractEntityImage {
 
-	public static final StyleQuery STYLE = StyleQuery
-			.of(Arrays.asList(SName.root, SName.element, SName.stateDiagram, SName.state));
+	public static final StyleQuery STYLE = StyleQueries.STATEDIAG_STATE;
 
 	final protected TextBlock name;
 	final protected Url url;
@@ -91,20 +90,20 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 	}
 
 	public static Style getStyleStateName(Stereotype stereotype, StyleBuilder styleBuilder) {
-		final StyleQuery toto1 = STYLE.addSName(SName.name);
-		return styleBuilder.getMergedStyle(toto1.withTOBECHANGED(stereotype));
+		final StyleQuery toto1 = STYLE.add(SName.name);
+		return styleBuilder.getMergedStyle(toto1.withStereotype(stereotype));
 	}
 
 	public static Style getStyleStateDescription(Stereotype stereotype, StyleBuilder styleBuilder) {
-		return styleBuilder.getMergedStyle(STYLE.addSName(SName.description).withTOBECHANGED(stereotype));
+		return styleBuilder.getMergedStyle(STYLE.add(SName.description).withStereotype(stereotype));
 	}
 
 	public static Style getStyleState(Stereotype stereotype, StyleBuilder styleBuilder) {
-		return styleBuilder.getMergedStyle(STYLE.withTOBECHANGED(stereotype));
+		return styleBuilder.getMergedStyle(STYLE.withStereotype(stereotype));
 	}
 
 	public static Style getStyleStateBody(Stereotype stereotype, StyleBuilder styleBuilder) {
-		return styleBuilder.getMergedStyle(STYLE.addSName(SName.body).withTOBECHANGED(stereotype));
+		return styleBuilder.getMergedStyle(STYLE.add(SName.body).withStereotype(stereotype));
 	}
 
 	final protected Style getStyleState() {
@@ -113,7 +112,7 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 
 	final protected Style getStyleStateDescription() {
 		return getSkinParam().getCurrentStyleBuilder()
-				.getMergedStyle(STYLE.addSName(SName.name).withTOBECHANGED(getEntity().getStereotype()));
+				.getMergedStyle(STYLE.add(SName.name).withStereotype(getEntity().getStereotype()));
 	}
 
 	final public ShapeType getShapeType() {

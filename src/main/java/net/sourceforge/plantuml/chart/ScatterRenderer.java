@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.chart;
 
-import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -54,9 +53,9 @@ import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 public class ScatterRenderer {
 
@@ -78,13 +77,13 @@ public class ScatterRenderer {
 	}
 
 	private StyleQuery getScatterStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.scatter));
+		return StyleQueries.CHARTDIAG_SCATTER;
 	}
 
 	private Style getScatterStyle(ChartSeries series) {
 		StyleQuery query = getScatterStyleQuery();
 		if (series != null && series.getStereotype() != null)
-			return skinParam.getCurrentStyleBuilder().getMergedStyle(query.withTOBECHANGED(series.getStereotype()));
+			return skinParam.getCurrentStyleBuilder().getMergedStyle(query.withStereotype(series.getStereotype()));
 
 		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);
 	}

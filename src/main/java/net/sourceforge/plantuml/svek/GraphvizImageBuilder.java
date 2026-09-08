@@ -40,7 +40,6 @@ package net.sourceforge.plantuml.svek;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -81,7 +80,8 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.image.EntityImageClass;
 import net.sourceforge.plantuml.svek.image.EntityImageNote;
 import net.sourceforge.plantuml.teavm.TeaVM;
@@ -114,18 +114,17 @@ public final class GraphvizImageBuilder {
 	}
 
 	final public StyleQuery getDefaultStyleDefinitionArrow(Stereotype stereotype) {
-		StyleQuery result = StyleQuery.of(Arrays.asList(SName.root, SName.element, styleName, SName.arrow));
+		StyleQuery result = StyleQueries.ARROW.add(styleName);
 		if (stereotype != null)
-			result = result.withTOBECHANGED(stereotype);
+			result = result.withStereotype(stereotype);
 
 		return result;
 	}
 
 	final public StyleQuery getStyleArrowCardinality(Stereotype stereotype) {
-		StyleQuery result = StyleQuery
-				.of(Arrays.asList(SName.root, SName.element, styleName, SName.arrow, SName.cardinality));
+		StyleQuery result = StyleQueries.ARROW_CARDINALITY.add(styleName);
 		if (stereotype != null)
-			result = result.withTOBECHANGED(stereotype);
+			result = result.withStereotype(stereotype);
 
 		return result;
 	}
@@ -202,7 +201,7 @@ public final class GraphvizImageBuilder {
 	// Duplicate SvekResult / GeneralImageBuilder
 	private HColor getBackcolor() {
 		final Style style = dotData.getSkinParam().getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.document)));
+				.getMergedStyle(StyleQueries.DOCUMENT);
 		return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
 	}
 

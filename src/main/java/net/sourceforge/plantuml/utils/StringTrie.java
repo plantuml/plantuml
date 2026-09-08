@@ -33,7 +33,7 @@
  *
  *
  */
-package net.sourceforge.plantuml.style;
+package net.sourceforge.plantuml.utils;
 
 import java.util.HashMap;
 import java.util.Map;

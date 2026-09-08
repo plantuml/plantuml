@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.chart;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -58,7 +57,8 @@ import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 public class ChartRenderer {
 
@@ -950,11 +950,11 @@ public class ChartRenderer {
 	}
 
 	private StyleQuery getStyleSignature() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram));
+		return StyleQueries.CHARTDIAG;
 	}
 
 	private StyleQuery getBarStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.bar));
+		return StyleQueries.CHARTDIAG_BAR;
 	}
 
 	private Style getBarStyle(ChartSeries series) {
@@ -962,7 +962,7 @@ public class ChartRenderer {
 		if (series.getStereotype() != null) {
 			// Use withTOBECHANGED for element-level stereotype styling
 			Style style = skinParam.getCurrentStyleBuilder()
-					.getMergedStyle(query.withTOBECHANGED(series.getStereotype()));
+					.getMergedStyle(query.withStereotype(series.getStereotype()));
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., .primary)
 			// This matches the pattern used by sequence diagrams
@@ -979,7 +979,7 @@ public class ChartRenderer {
 	}
 
 	private StyleQuery getLineStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.line));
+		return StyleQueries.CHARTDIAG_LINE;
 	}
 
 	private Style getLineStyle(ChartSeries series) {
@@ -987,7 +987,7 @@ public class ChartRenderer {
 		if (series.getStereotype() != null) {
 			// Use withTOBECHANGED for element-level stereotype styling
 			Style style = skinParam.getCurrentStyleBuilder()
-					.getMergedStyle(query.withTOBECHANGED(series.getStereotype()));
+					.getMergedStyle(query.withStereotype(series.getStereotype()));
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., line.target)
 			Style stereoStyle = skinParam.getCurrentStyleBuilder()
@@ -1003,7 +1003,7 @@ public class ChartRenderer {
 	}
 
 	private StyleQuery getAreaStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.area));
+		return StyleQueries.CHARTDIAG_AREA;
 	}
 
 	private Style getAreaStyle(ChartSeries series) {
@@ -1011,7 +1011,7 @@ public class ChartRenderer {
 		if (series.getStereotype() != null) {
 			// Use withTOBECHANGED for element-level stereotype styling
 			Style style = skinParam.getCurrentStyleBuilder()
-					.getMergedStyle(query.withTOBECHANGED(series.getStereotype()));
+					.getMergedStyle(query.withStereotype(series.getStereotype()));
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., area.highlight)
 			Style stereoStyle = skinParam.getCurrentStyleBuilder()
@@ -1036,7 +1036,7 @@ public class ChartRenderer {
 	}
 
 	private StyleQuery getScatterStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.scatter));
+		return StyleQueries.CHARTDIAG_SCATTER;
 	}
 
 	private Style getScatterStyle(ChartSeries series) {
@@ -1044,7 +1044,7 @@ public class ChartRenderer {
 		if (series.getStereotype() != null) {
 			// Use withTOBECHANGED for element-level stereotype styling
 			Style style = skinParam.getCurrentStyleBuilder()
-					.getMergedStyle(query.withTOBECHANGED(series.getStereotype()));
+					.getMergedStyle(query.withStereotype(series.getStereotype()));
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., scatter.highlight)
 			Style stereoStyle = skinParam.getCurrentStyleBuilder()
@@ -1061,19 +1061,19 @@ public class ChartRenderer {
 
 	private StyleQuery getAxisStyleSignature(boolean horizontal) {
 		SName axisType = horizontal ? SName.hAxis : SName.vAxis;
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.axis, axisType));
+		return StyleQueries.CHARTDIAG_AXIS.add(axisType);
 	}
 
 	private StyleQuery getGridStyleSignature() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.grid));
+		return StyleQueries.CHARTDIAG_GRID;
 	}
 
 	private StyleQuery getLegendStyleSignature() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.legend));
+		return StyleQueries.CHARTDIAG_LEGEND;
 	}
 
 	private StyleQuery getAnnotationStyleSignature() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.annotation));
+		return StyleQueries.CHARTDIAG_ANNOTATION;
 	}
 
 	private XDimension2D calculateLegendDimension(StringBounder stringBounder) {

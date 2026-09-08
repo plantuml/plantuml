@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.Arrays;
 import java.util.Map;
 
 import net.sourceforge.plantuml.abel.Entity;
@@ -56,9 +55,9 @@ import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -89,8 +88,7 @@ public class EntityImageTips extends AbstractEntityImage {
 	}
 
 	private StyleQuery getStyleQueryFor(Stereotype stereotype) {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, getStyleName(), SName.note))
-				.withTOBECHANGED(stereotype);
+		return StyleQueries.NOTE.add(getStyleName()).withStereotype(stereotype);
 	}
 
 	private HColor getNoteBackgroundColor(Tip tip, Style style) {

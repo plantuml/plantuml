@@ -42,7 +42,6 @@ import static gen.lib.gvc.gvc__c.gvContext;
 import static gen.lib.gvc.gvlayout__c.gvLayoutJobs;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -63,7 +62,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.yaml.Highlighted;
 import smetana.core.CString;
 import smetana.core.Globals;
@@ -117,13 +116,11 @@ public class SmetanaForJson {
 	}
 
 	private Style getStyleArrow() {
-		return skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.element, getDiagramType(), SName.arrow)));
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.ARROW.add(getDiagramType()));
 	}
 
 	private Style getStyleNode() {
-		return skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.element, getDiagramType(), SName.node)));
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.NODE.add(getDiagramType()));
 	}
 
 	private ST_Agnode_s manageOneNode(Globals zz, JsonValue current, List<Highlighted> highlighted) {

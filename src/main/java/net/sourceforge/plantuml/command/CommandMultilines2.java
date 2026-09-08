@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.Lazy;
-import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;

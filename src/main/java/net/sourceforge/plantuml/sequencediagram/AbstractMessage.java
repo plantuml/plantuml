@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.sequencediagram;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
@@ -46,11 +45,11 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.style.WithStyle;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.warning.Warning;
@@ -74,8 +73,7 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.arrow))
-				.withTOBECHANGED(stereotype);
+		return StyleQueries.SEQUENCEDIAG_ARROW.withStereotype(stereotype);
 	}
 
 	private final Display label;

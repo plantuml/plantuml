@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.wbs;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBoxOld;
 import net.sourceforge.plantuml.asciiverse.ATable;
@@ -54,10 +53,10 @@ import net.sourceforge.plantuml.mindmap.IdeaShape;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 abstract class WBSTextBlock extends TextBlockMemoized implements AsciiBlock {
 
@@ -85,8 +84,7 @@ abstract class WBSTextBlock extends TextBlockMemoized implements AsciiBlock {
 	}
 
 	private Style getStyleUsed() {
-		final StyleQuery signature = StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.arrow))
-				.addLevel(level).withTOBECHANGED(stereotype);
+		final StyleQuery signature = StyleQueries.WBSDIAG_ARROW.addLevel(level).withStereotype(stereotype);
 		return styleBuilder.getMergedStyle(signature);
 	}
 

@@ -33,7 +33,7 @@
  *
  *
  */
-package net.sourceforge.plantuml.style.parser2;
+package net.sourceforge.plantuml.style.parser;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -46,7 +46,6 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.StyleScheme;
-import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.CharInspector;
 

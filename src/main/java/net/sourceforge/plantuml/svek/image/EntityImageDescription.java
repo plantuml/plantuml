@@ -36,8 +36,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -76,7 +74,8 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Margins;
@@ -110,10 +109,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		final List<SName> names = new ArrayList<>(Arrays.asList(SName.root, SName.element, getStyleName()));
-		names.addAll(Arrays.asList(symbol.getSNames()));
-		return StyleQuery.of(names);
-
+		return StyleQueries.ELEMENT.add(getStyleName()).addSNames(symbol.getSNames());
 	}
 
 	public EntityImageDescription(Entity entity, PortionShower portionShower, Collection<Link> links,
@@ -145,27 +141,20 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		final StyleQuery queryTitle;
 		if (symbol instanceof USymbolActorBusiness)
-			queryTitle = StyleQuery.of(Arrays.asList(SName.root, SName.element, getStyleName(), SName.actor,
-					SName.business, SName.title));
-		else {
-			final List<SName> namesTitle = new ArrayList<>(Arrays.asList(SName.root, SName.element, getStyleName()));
-			namesTitle.addAll(Arrays.asList(symbol.getSNames()));
-			namesTitle.add(SName.title);
-			queryTitle = StyleQuery.of(namesTitle);
-		}
+			queryTitle = StyleQueries.ACTOR_BUSINESS_TITLE.add(getStyleName());
+		else
+			queryTitle = StyleQueries.ELEMENT.add(getStyleName()).addSNames(symbol.getSNames())
+					.add(SName.title);
 
 		final Stereotype stereotype = entity.getStereotype();
-		final Style styleTitle = getEntity().getCurrentStyleBuilder().getMergedStyle(queryTitle.withTOBECHANGED(stereotype))
-				.eventuallyOverride(colors);
+		final Style styleTitle = getEntity().getCurrentStyleBuilder()
+				.getMergedStyle(queryTitle.withStereotype(stereotype)).eventuallyOverride(colors);
 
-		final List<SName> namesStereo = new ArrayList<>(Arrays.asList(SName.root, SName.element, getStyleName()));
-		namesStereo.addAll(Arrays.asList(symbol.getSNames()));
-		namesStereo.add(SName.stereotype);
-		final Style styleStereo = getEntity().getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of(namesStereo).forStereotypeItself(stereotype));
+		final Style styleStereo = getEntity().getCurrentStyleBuilder().getMergedStyle(StyleQueries.STEREOTYPE
+				.add(getStyleName()).addSNames(symbol.getSNames()).forStereotypeItself(stereotype));
 
-		final Style style = getEntity().getCurrentStyleBuilder().getMergedStyle(getStyleQuery().withTOBECHANGED(stereotype))
-				.eventuallyOverride(colors);
+		final Style style = getEntity().getCurrentStyleBuilder()
+				.getMergedStyle(getStyleQuery().withStereotype(stereotype)).eventuallyOverride(colors);
 
 		final HColor forecolor = styleTitle.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 

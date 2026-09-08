@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.gantt.draw;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.TreeSet;
 
@@ -68,10 +67,10 @@ import net.sourceforge.plantuml.sequencediagram.graphic.Segment;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 public class TaskDrawRegular extends AbstractTaskDraw {
 
@@ -185,8 +184,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 
 	@Override
 	StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.task))
-				.withTOBECHANGED(getTask().getStereotype());
+		return StyleQueries.GANTTDIAG_TASK.withStereotype(getTask().getStereotype());
 	}
 
 	public void drawU(UGraphic ug) {
@@ -294,7 +292,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		}
 
 		final HColor backUndone = getStyleBuilder()
-				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.undone)))
+				.getMergedStyle(StyleQueries.GANTTDIAG_UNDONE)
 				.value(PName.BackGroundColor).asColor(getColorSet());
 
 		final RectangleTask rectangleTask = new RectangleTask(startPos, endPos, round, getCompletion(), off);

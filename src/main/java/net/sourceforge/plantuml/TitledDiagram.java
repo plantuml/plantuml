@@ -38,7 +38,6 @@ package net.sourceforge.plantuml;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -73,12 +72,11 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.NoStyleAvailableException;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleLoader;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.warning.Warning;
 
@@ -280,7 +278,7 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 	@Override
 	public final HColor calculateBackColor() {
 		final Style style = this.getSkinParam().getCurrentStyleBuilder().getMergedStyle(
-				StyleQuery.of(Arrays.asList(SName.root, SName.document, this.getDiagramType().getStyleName())));
+				StyleQueries.DOCUMENT.add(this.getDiagramType().getStyleName()));
 
 		HColor backgroundColor = style.value(PName.BackGroundColor).asColor(this.getSkinParam().getIHtmlColorSet());
 		if (backgroundColor == null)

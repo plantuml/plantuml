@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
@@ -58,7 +57,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.utils.Direction;
 
@@ -69,7 +68,7 @@ public class FloatingNote implements Stencil, TextBlock {
 	private FloatingNote(Display note, ISkinParam skinParam, SName sname, boolean withLink) {
 
 		final Style style = skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.element, sname, SName.note)));
+				.getMergedStyle(StyleQueries.NOTE.add(sname));
 		final LineBreakStrategy wrapWidth = style.wrapWidth();
 		final FontConfiguration fc = FontConfiguration.create(skinParam, style);
 		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());

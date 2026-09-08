@@ -240,7 +240,7 @@ public class LifeLine {
 					currentStyleBuilder = skinParam2.getCurrentStyleBuilder();
 
 				Style style = currentStyleBuilder
-						.getMergedStyle(type.getStyleQuery().withTOBECHANGED(participant.getStereotype()));
+						.getMergedStyle(type.getStyleQuery().withStereotype(participant.getStereotype()));
 
 				if (style != null) {
 					style = style.eventuallyOverride(PName.BackGroundColor, specificBackColor);

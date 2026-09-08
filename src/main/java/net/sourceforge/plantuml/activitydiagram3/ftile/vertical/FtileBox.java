@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
@@ -71,10 +70,10 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 public class FtileBox extends AbstractFtile {
 
@@ -96,11 +95,11 @@ public class FtileBox extends AbstractFtile {
 	private final Style style;
 
 	static public StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity));
+		return StyleQueries.ACTIVITYDIAG_ACTIVITY;
 	}
 
 	static public StyleQuery getStyleSignatureArrow() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
+		return StyleQueries.ACTIVITYDIAG_ARROW;
 	}
 
 	@Override
@@ -144,7 +143,7 @@ public class FtileBox extends AbstractFtile {
 		if (styleBuilder == null)
 			styleBuilder = skinParam.getCurrentStyleBuilder();
 
-		final Style style = styleBuilder.getMergedStyle(getStyleQuery().withTOBECHANGED(stereotype));
+		final Style style = styleBuilder.getMergedStyle(getStyleQuery().withStereotype(stereotype));
 		final Style styleArrow = styleBuilder.getMergedStyle(getStyleSignatureArrow());
 		return new FtileBox(skinParam, label, swimlane, boxStyle, style, styleArrow);
 	}

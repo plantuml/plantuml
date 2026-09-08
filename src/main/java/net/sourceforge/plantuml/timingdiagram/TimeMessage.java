@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
@@ -45,10 +44,10 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 public class TimeMessage extends WithLinkType {
     // ::remove folder when __HAXE__
@@ -90,7 +89,7 @@ public class TimeMessage extends WithLinkType {
 	}
 
 	private StyleQuery getStyleSignature() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.timingDiagram, SName.arrow));
+		return StyleQueries.TIMINGDIAG_ARROW;
 	}
 
 	public final Player getPlayer1() {

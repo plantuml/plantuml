@@ -35,11 +35,10 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-import java.util.Arrays;
 
-import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.style.Styleable;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public enum LifeEventType implements Styleable {
 	ACTIVATE, DEACTIVATE, DESTROY, CREATE;
@@ -47,8 +46,7 @@ public enum LifeEventType implements Styleable {
 	@Override
 	public StyleQuery getStyleQuery() {
 		if (this == DESTROY)
-			return StyleQuery
-					.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.destroy));
+			return StyleQueries.SEQUENCEDIAG_LIFELINE_DESTROY;
 
 		// To be completed
 		throw new UnsupportedOperationException();

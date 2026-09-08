@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -69,10 +68,10 @@ import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.url.Url;
 
 public class VCompactFactory implements FtileFactory {
@@ -95,19 +94,19 @@ public class VCompactFactory implements FtileFactory {
 	}
 
 	private StyleQuery getSignatureCircleEnd() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.end));
+		return StyleQueries.ACTIVITYDIAG_CIRCLE_END;
 	}
 
 	private StyleQuery getSignatureCircleStop() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.stop));
+		return StyleQueries.ACTIVITYDIAG_CIRCLE_STOP;
 	}
 
 	private StyleQuery getSignatureCircleSpot() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.spot));
+		return StyleQueries.ACTIVITYDIAG_CIRCLE_SPOT;
 	}
 
 	private StyleQuery getSignatureCircleStart() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.start));
+		return StyleQueries.ACTIVITYDIAG_CIRCLE_START;
 	}
 
 	@Override

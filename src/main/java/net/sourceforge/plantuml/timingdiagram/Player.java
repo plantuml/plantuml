@@ -35,7 +35,6 @@
 package net.sourceforge.plantuml.timingdiagram;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -53,7 +52,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.timingdiagram.graphic.Panels;
 import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrame;
 import net.sourceforge.plantuml.utils.Position;
@@ -74,9 +73,8 @@ public abstract class Player {
 	private final SName sname;
 
 	public final void addNote(TimeTick now, Display note, Position position, Stereotype stereotype) {
-		final StyleQuery signature = StyleQuery
-				.of(Arrays.asList(SName.root, SName.element, SName.timingDiagram, SName.note));
-		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(signature.withTOBECHANGED(stereotype));
+		final Style style = skinParam.getCurrentStyleBuilder()
+				.getMergedStyle(StyleQueries.TIMINGDIAG_NOTE.withStereotype(stereotype));
 
 		this.notes.add(new TimingNote(now, this, note, position, skinParam, style));
 	}
@@ -96,8 +94,8 @@ public abstract class Player {
 	}
 
 	final protected Style getStyle() {
-		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery
-				.of(Arrays.asList(SName.root, SName.element, SName.timingDiagram, sname)).withTOBECHANGED(stereotype));
+		return getSkinParam().getCurrentStyleBuilder()
+				.getMergedStyle(StyleQueries.TIMINGDIAG.add(sname).withStereotype(stereotype));
 	}
 
 	public final List<TimingNote> getNotes() {
@@ -129,7 +127,7 @@ public abstract class Player {
 			return TextBlockUtils.EMPTY_TEXT_BLOCK;
 		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam,
 				skinParam.getCurrentStyleBuilder()
-						.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.timingDiagram))));
+						.getMergedStyle(StyleQueries.TIMINGDIAG));
 		return title.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);
 	}
 

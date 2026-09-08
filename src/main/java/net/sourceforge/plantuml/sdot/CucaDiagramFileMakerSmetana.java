@@ -46,7 +46,6 @@ import static smetana.core.debug.SmetanaDebug.SMETANA_TRACE;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -96,7 +95,8 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.ClusterHeader;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
@@ -681,15 +681,15 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	}
 
 	private Style getStyle() {
-		return diagram.getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery
-				.of(Arrays.asList(SName.root, SName.element, diagram.getDiagramType().getStyleName(), SName.arrow)));
+		return diagram.getSkinParam().getCurrentStyleBuilder()
+				.getMergedStyle(StyleQueries.ARROW.add(diagram.getDiagramType().getStyleName()));
 	}
 
 	// Duplication from SvekEdge
-	final public StyleQuery getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
-		StyleQuery result = StyleQuery.of(Arrays.asList(SName.root, SName.element, styleName, SName.arrow));
+	private StyleQuery getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
+		StyleQuery result = StyleQueries.ARROW.add(styleName);
 		if (stereotype != null)
-			result = result.withTOBECHANGED(stereotype);
+			result = result.withStereotype(stereotype);
 
 		return result;
 	}

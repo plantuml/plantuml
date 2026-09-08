@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
 
@@ -65,9 +64,9 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.utils.MathUtils;
 
@@ -82,7 +81,7 @@ public class FtileWithNotes extends AbstractFtile {
 	private final double suppSpace = 20;
 
 	public StyleQuery getStyleSignature() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.note));
+		return StyleQueries.ACTIVITYDIAG_NOTE;
 	}
 
 	public Set<Swimlane> getSwimlanes() {

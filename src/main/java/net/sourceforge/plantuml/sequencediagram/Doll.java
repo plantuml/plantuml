@@ -60,8 +60,8 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.style.WithStyle;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class Doll implements WithStyle {
 
@@ -106,7 +106,7 @@ public class Doll implements WithStyle {
 	}
 
 	final public Style[] getUsedStyles() {
-		Style tmp = styleBuilder.getMergedStyle(getStyleQuery().withTOBECHANGED(englober.getStereotype()));
+		Style tmp = styleBuilder.getMergedStyle(getStyleQuery().withStereotype(englober.getStereotype()));
 		final HColor backColor = englober.getBoxColor();
 		if (tmp != null)
 			tmp = tmp.eventuallyOverride(PName.BackGroundColor, backColor);

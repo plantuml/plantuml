@@ -137,7 +137,7 @@ public class LiveBoxesDrawer {
 		final StyleBuilder currentStyleBuilder = styleBuilder == null ? skinParam.getCurrentStyleBuilder()
 				: styleBuilder;
 
-		Style style = currentStyleBuilder.getMergedStyle(type.getStyleQuery().withTOBECHANGED(stereotype));
+		Style style = currentStyleBuilder.getMergedStyle(type.getStyleQuery().withStereotype(stereotype));
 
 		if (style == null) {
 			if (symbolContext != null)

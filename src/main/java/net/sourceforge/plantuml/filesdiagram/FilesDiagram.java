@@ -35,7 +35,6 @@
 package net.sourceforge.plantuml.filesdiagram;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -50,17 +49,16 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.text.StringLocated;
 
 public class FilesDiagram extends TitledDiagram {
 
 	private final FilesListing list;
 
-	public FilesDiagram(UmlSource source, StyleExtractor styleExtractor, PreprocessingArtifact preprocessing) {
+	FilesDiagram(UmlSource source, StyleExtractor styleExtractor, PreprocessingArtifact preprocessing) {
 		super(source, DiagramType.FILES, null, preprocessing);
 
 		final ISkinParam skinParam = getSkinParam();
@@ -70,7 +68,7 @@ public class FilesDiagram extends TitledDiagram {
 			e.printStackTrace();
 		}
 		final Style style = skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.filesDiagram)));
+				.getMergedStyle(StyleQueries.FILESDIAG);
 
 		// final FontConfiguration fontConfiguration =
 		// FontConfiguration.blackBlueTrue(UFont.courier(14));

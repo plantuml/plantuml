@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.core;
 import java.awt.Graphics2D;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Arrays;
 import java.util.Set;
 
 import net.atmp.SvgOption;
@@ -90,9 +89,8 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.SvgCharSizeHack;
 import net.sourceforge.plantuml.url.CMapData;
@@ -510,7 +508,7 @@ public class TextBlockExporter {
 
 		private static ClockwiseTopRightBottomLeft calculateMargin(net.sourceforge.plantuml.TitledDiagram diagram) {
 			final Style style = diagram.getSkinParam().getCurrentStyleBuilder()
-					.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.document)));
+					.getMergedStyle(StyleQueries.DOCUMENT);
 			if (style.hasValue(PName.Margin))
 				return style.getMargin();
 			return diagram.getDefaultMargins();

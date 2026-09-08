@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.gantt.draw;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.gantt.core.GSide;
 import net.sourceforge.plantuml.gantt.core.Task;
@@ -62,10 +61,10 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.url.Url;
 
@@ -118,7 +117,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	abstract StyleQuery getStyleQuery();
 
 	private StyleQuery getStyleSignatureUnstarted() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.task, SName.unstarted));
+		return StyleQueries.GANTTDIAG_TASK_UNSTARTED;
 	}
 
 	final protected HColor getLineColor() {
@@ -214,9 +213,8 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	}
 
 	protected Opale getOpaleNote() {
-		final Style style = getStyleBuilder().getMergedStyle(StyleQuery
-				.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.note))
-				.withTOBECHANGED(noteStereotype));
+		final Style style = getStyleBuilder()
+				.getMergedStyle(StyleQueries.GANTTDIAG_NOTE.withStereotype(noteStereotype));
 
 		final FontConfiguration fc = style.getFontConfiguration(getColorSet());
 

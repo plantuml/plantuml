@@ -33,15 +33,9 @@
  *
  *
  */
-package net.sourceforge.plantuml.style;
+package net.sourceforge.plantuml.style.value;
 
-import java.util.Objects;
-
-import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.color.HColorSet;
-import net.sourceforge.plantuml.klimt.color.HColors;
-import net.sourceforge.plantuml.klimt.font.UFontFace;
-import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import java.util.Objects;import net.sourceforge.plantuml.klimt.color.HColor;import net.sourceforge.plantuml.klimt.color.HColorSet;import net.sourceforge.plantuml.klimt.color.HColors;import net.sourceforge.plantuml.klimt.font.UFontFace;import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;import net.sourceforge.plantuml.style.AutomaticCounter;
 
 public class ValueImpl implements Value {
 

@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.gantt;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
@@ -50,10 +49,10 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 public class GanttConstraint extends WithLinkType {
 
@@ -97,7 +96,7 @@ public class GanttConstraint extends WithLinkType {
 	}
 
 	final public StyleQuery getStyleSignature() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.arrow));
+		return StyleQueries.GANTTDIAG_ARROW;
 	}
 
 	public UDrawable getUDrawable(TimeScale timeScale, TaskDrawRegistryData toTaskDraw) {

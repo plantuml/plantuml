@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.style;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -44,7 +43,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.value.Value;
+import net.sourceforge.plantuml.style.value.ValueImpl;
 
 public class FromSkinparamToStyle {
 	// ::remove file when __HAXE__
@@ -399,7 +399,7 @@ public class FromSkinparamToStyle {
 	private void addStyle(PName propertyName, Value value, SName... styleNames) {
 		Map<PName, Value> map = new EnumMap<PName, Value>(PName.class);
 		map.put(propertyName, value);
-		StyleQuery sig = StyleQuery.of(Arrays.asList(styleNames));
+		StyleQuery sig = StyleQuery.of3(styleNames);
 		if (stereo != null) {
 			final String[] names = stereo.split("\\&");
 			map = StyleLoader.addStereotypeCount(map, names.length);

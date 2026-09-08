@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
@@ -59,9 +58,9 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 public class ParallelBuilderSplit extends AbstractParallelFtilesBuilder {
 
@@ -71,7 +70,7 @@ public class ParallelBuilderSplit extends AbstractParallelFtilesBuilder {
 
 	@Override
 	public StyleQuery getStyleSignature() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
+		return StyleQueries.ACTIVITYDIAG_ARROW;
 	}
 
 	@Override

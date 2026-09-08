@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -61,10 +60,10 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.url.Url;
 
 public class FtileFactoryDelegator implements FtileFactory {
@@ -74,16 +73,15 @@ public class FtileFactoryDelegator implements FtileFactory {
 	private final Rose rose = new Rose();
 
 	final public StyleQuery getDefaultStyleDefinitionActivity() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity));
+		return StyleQueries.ACTIVITYDIAG_ACTIVITY;
 	}
 
-	final public StyleQuery getDefaultStyleDefinitionDiamond() {
-		return StyleQuery
-				.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));
+	final protected StyleQuery getDefaultStyleDefinitionDiamond() {
+		return StyleQueries.ACTIVITYDIAG_ACTIVITY_DIAMOND;
 	}
 
-	final public StyleQuery getDefaultStyleDefinitionArrow() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
+	final protected StyleQuery getDefaultStyleDefinitionArrow() {
+		return StyleQueries.ACTIVITYDIAG_ARROW;
 	}
 
 	protected final Rainbow getInLinkRenderingColor(Ftile tile) {

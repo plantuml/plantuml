@@ -43,8 +43,6 @@ import java.util.EnumSet;
 
 import org.junit.jupiter.api.Test;
 
-import net.sourceforge.plantuml.style.parser2.StyleAtom;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 /**

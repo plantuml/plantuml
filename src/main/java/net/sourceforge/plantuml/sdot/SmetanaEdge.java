@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.sdot;
 
-import java.util.Arrays;
 
 import h.ST_Agedge_s;
 import h.ST_Agedgeinfo_t;
@@ -67,9 +66,9 @@ import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.LineParam;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.extremity.Extremity;
@@ -254,9 +253,8 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 	}
 
 	private Style getStyle() {
-		final StyleQuery query = StyleQuery
-				.of(Arrays.asList(SName.root, SName.element, diagramType().getStyleName(), SName.arrow))
-				.withTOBECHANGED(link.getStereotype());
+		final StyleQuery query = StyleQueries.ARROW.add(diagramType().getStyleName())
+				.withStereotype(link.getStereotype());
 		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);
 	}
 

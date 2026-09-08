@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.svek;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -100,10 +99,10 @@ import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.extremity.Extremity;
 import net.sourceforge.plantuml.svek.extremity.ExtremityArrow;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
@@ -815,10 +814,9 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 	}
 
 	private StyleQuery getDefaultStyleDefinition(Stereotype stereotype) {
-		final StyleQuery result = StyleQuery
-				.of(Arrays.asList(SName.root, SName.element, diagramType().getStyleName(), SName.arrow));
+		final StyleQuery result = StyleQueries.ARROW.add(diagramType().getStyleName());
 
-		return result.withTOBECHANGED(stereotype);
+		return result.withStereotype(stereotype);
 	}
 
 	private Set<String> ids;

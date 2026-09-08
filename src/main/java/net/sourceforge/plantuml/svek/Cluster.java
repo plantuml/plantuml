@@ -37,7 +37,6 @@
 package net.sourceforge.plantuml.svek;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
@@ -89,7 +88,8 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
 import net.sourceforge.plantuml.svek.image.EntityImageStateCommon;
@@ -287,19 +287,13 @@ public class Cluster implements Moveable {
 	static public StyleQuery getDefaultStyleDefinition(SName diagramStyleName, USymbol symbol,
 			GroupType groupType) {
 		if (diagramStyleName == SName.stateDiagram)
-			return StyleQuery
-					.of(Arrays.asList(SName.root, SName.element, SName.stateDiagram, SName.state, SName.group));
-		if (symbol != null) {
-			final List<SName> names = new ArrayList<>(
-					Arrays.asList(SName.root, SName.element, diagramStyleName, SName.group));
-			names.addAll(Arrays.asList(symbol.getSNames()));
-			return StyleQuery.of(names);
-		}
+			return StyleQueries.STATEDIAG_STATE_GROUP;
+		if (symbol != null)
+			return StyleQueries.GROUP.add(diagramStyleName).addSNames(symbol.getSNames());
 		if (groupType == GroupType.PACKAGE)
-			return StyleQuery
-					.of(Arrays.asList(SName.root, SName.element, diagramStyleName, SName.package_, SName.group));
+			return StyleQueries.PACKAGE_GROUP.add(diagramStyleName);
 
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, diagramStyleName, SName.group));
+		return StyleQueries.GROUP.add(diagramStyleName);
 	}
 
 	public void drawU(UGraphic ug) {
@@ -393,7 +387,7 @@ public class Cluster implements Moveable {
 		final DiagramType diagramType = diagram.getDiagramType();
 		final USymbol uSymbol = group.getUSymbol() == null ? USymbols.PACKAGE : group.getUSymbol();
 		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinition(
-				diagramType.getStyleName(), uSymbol, group.getGroupType()).withTOBECHANGED(group.getStereotype()));
+				diagramType.getStyleName(), uSymbol, group.getGroupType()).withStereotype(group.getStereotype()));
 		return style;
 	}
 
@@ -470,13 +464,13 @@ public class Cluster implements Moveable {
 		if (northBackcolor == null) {
 			northBackcolor = styleBuilder
 					.getMergedStyle(
-							EntityImageStateCommon.STYLE.addSName(SName.name).withTOBECHANGED(group.getStereotype()))
+							EntityImageStateCommon.STYLE.add(SName.name).withStereotype(group.getStereotype()))
 					.value(PName.BackGroundColor).asColor(colorSet);
-			centerBackColor = styleBuilder.getMergedStyle(EntityImageStateCommon.STYLE.addSName(SName.description)
-					.withTOBECHANGED(group.getStereotype())).value(PName.BackGroundColor).asColor(colorSet);
+			centerBackColor = styleBuilder.getMergedStyle(EntityImageStateCommon.STYLE.add(SName.description)
+					.withStereotype(group.getStereotype())).value(PName.BackGroundColor).asColor(colorSet);
 			southBackcolor = styleBuilder
 					.getMergedStyle(
-							EntityImageStateCommon.STYLE.addSName(SName.body).withTOBECHANGED(group.getStereotype()))
+							EntityImageStateCommon.STYLE.add(SName.body).withStereotype(group.getStereotype()))
 					.value(PName.BackGroundColor).asColor(colorSet);
 		}
 
@@ -746,7 +740,7 @@ public class Cluster implements Moveable {
 		final DiagramType diagramType = DiagramType.CLASS;
 
 		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinition(
-				diagramType.getStyleName(), uSymbol, group.getGroupType()).withTOBECHANGED(group.getStereotype()));
+				diagramType.getStyleName(), uSymbol, group.getGroupType()).withStereotype(group.getStereotype()));
 
 		final UStroke stroke = getStrokeInternal(group, style);
 

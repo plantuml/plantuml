@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.klimt.UShape;
@@ -50,9 +49,9 @@ import net.sourceforge.plantuml.klimt.shape.UEmpty;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 public class LaneDivider implements TextBlock {
 
@@ -71,7 +70,7 @@ public class LaneDivider implements TextBlock {
 	}
 
 	public StyleQuery getDefaultStyleDefinition() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.swimlane));
+		return StyleQueries.ACTIVITYDIAG_SWIMLANE;
 	}
 
 	private Style getStyle() {

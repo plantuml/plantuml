@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.mindmap;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -46,10 +45,10 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.MergeStrategy;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.wbs.WElement;
 
 class Idea {
@@ -67,39 +66,26 @@ class Idea {
 	private StyleQuery getDefaultStyleDefinitionNode(int level) {
 		if (level == 0)
 			if (shape == IdeaShape.NONE)
-				return StyleQuery
-						.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode,
-								SName.boxless))
-						.withTOBECHANGED(stereotype).addLevel(level);
+				return StyleQueries.MINDMAPDIAG_NODE_ROOT_BOXLESS.withStereotype(stereotype).addLevel(level);
 			else
-				return StyleQuery
-						.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode))
-						.withTOBECHANGED(stereotype).addLevel(level);
+				return StyleQueries.MINDMAPDIAG_NODE_ROOT.withStereotype(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE && children.size() == 0)
-			return StyleQuery
-					.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode,
-							SName.boxless))
-					.withTOBECHANGED(stereotype).addLevel(level);
+			return StyleQueries.MINDMAPDIAG_NODE_LEAF_BOXLESS.withStereotype(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE)
-			return StyleQuery
-					.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.boxless))
-					.withTOBECHANGED(stereotype).addLevel(level);
+			return StyleQueries.MINDMAPDIAG_NODE_BOXLESS.withStereotype(stereotype).addLevel(level);
 
 		if (children.size() == 0)
-			return StyleQuery
-					.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode))
-					.withTOBECHANGED(stereotype).addLevel(level);
+			return StyleQueries.MINDMAPDIAG_NODE_LEAF.withStereotype(stereotype).addLevel(level);
 
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.node))
-				.withTOBECHANGED(stereotype).addLevel(level);
+		return StyleQueries.MINDMAPDIAG_NODE.withStereotype(stereotype).addLevel(level);
 	}
 
 	/**
 	 * Resolves this element's style, cascading down from ancestors' starred ("{@code * }")
 	 * declarations. A nearer ancestor's matching declaration always beats a farther ancestor's --
-	 * see {@link net.sourceforge.plantuml.style.Specificity}'s own javadoc for why each cascade
+	 * see {@link net.sourceforge.plantuml.style.value.Specificity}'s own javadoc for why each cascade
 	 * step is simply one strictly-decreasing rank (0 at this element's own level) rather than a
 	 * magnitude-multiplied constant.
 	 */
@@ -116,9 +102,8 @@ class Idea {
 	}
 
 	public Style getStyleArrow() {
-		final StyleQuery defaultStyleDefinitionArrow = StyleQuery
-				.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.arrow))
-				.withTOBECHANGED(stereotype).addLevel(level);
+		final StyleQuery defaultStyleDefinitionArrow = StyleQueries.MINDMAPDIAG_ARROW
+				.withStereotype(stereotype).addLevel(level);
 		return styleBuilder.getMergedStyle(defaultStyleDefinitionArrow);
 	}
 

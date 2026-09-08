@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import java.util.Arrays;
 import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
@@ -60,10 +59,10 @@ import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.skin.AlignmentParam;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.style.Styleable;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.image.Opale;
 
 public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Styleable {
@@ -83,7 +82,7 @@ public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Stylea
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.note));
+		return StyleQueries.ACTIVITYDIAG_NOTE;
 	}
 
 	@Override

@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.sequencediagram;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -45,10 +44,10 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.warning.Warning;
 
@@ -64,12 +63,12 @@ public class Reference extends AbstractEvent implements EventWithNote {
 	final private Style style;
 	final private Style styleHeader;
 
-	public StyleQuery getDefaultStyleDefinition() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.reference));
+	private StyleQuery getDefaultStyleDefinition() {
+		return StyleQueries.SEQUENCEDIAG_REFERENCE;
 	}
 
 	private StyleQuery getHeaderStyleDefinition() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.referenceHeader));
+		return StyleQueries.SEQUENCEDIAG_REFERENCEHEADER;
 	}
 
 	// The nested counterpart of the legacy flat "referenceHeader" above, added
@@ -80,7 +79,7 @@ public class Reference extends AbstractEvent implements EventWithNote {
 	// diagram styling `referenceHeader` directly keeps working unchanged: only
 	// diagrams that opt into the new nested form are affected.
 	private StyleQuery getNestedHeaderStyleDefinition() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.reference, SName.header));
+		return StyleQueries.SEQUENCEDIAG_REFERENCE_HEADER;
 	}
 
 	private Style computeStyleHeader(StyleBuilder styleBuilder) {

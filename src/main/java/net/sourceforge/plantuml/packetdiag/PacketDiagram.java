@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.packetdiag;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -56,9 +55,8 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
 /**
@@ -354,10 +352,10 @@ public class PacketDiagram extends TitledDiagram {
 	 *
 	 * @return the current diagram {@link Style}
 	 */
-	public Style getStyle() {
+	private Style getStyle() {
 		if (style == null) {
 			style = getSkinParam().getCurrentStyleBuilder()
-					.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.packetdiagDiagram)));
+					.getMergedStyle(StyleQueries.PACKETDIAG);
 		}
 		return style;
 	}

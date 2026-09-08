@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -69,10 +68,10 @@ import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.skin.AlignmentParam;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.style.Styleable;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.utils.Direction;
 
@@ -88,7 +87,7 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.note));
+		return StyleQueries.ACTIVITYDIAG_NOTE;
 	}
 
 	public Set<Swimlane> getSwimlanes() {
@@ -136,7 +135,7 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 
 		final Stereotype stereotype = note.getStereotype();
 
-		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery().withTOBECHANGED(stereotype))
+		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery().withStereotype(stereotype))
 				.eventuallyOverride(note.getColors());
 
 		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());

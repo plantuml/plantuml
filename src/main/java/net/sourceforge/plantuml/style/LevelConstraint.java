@@ -33,7 +33,7 @@
  *
  *
  */
-package net.sourceforge.plantuml.style.parser2;
+package net.sourceforge.plantuml.style;
 
 /**
  * The {@code depth(n)} / {@code *} side of a style declaration or query, encoded as a

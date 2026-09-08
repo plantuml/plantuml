@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.abel.Entity;
@@ -68,9 +67,9 @@ import net.sourceforge.plantuml.klimt.shape.UHorizontalLine;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.text.Guillemet;
@@ -202,11 +201,8 @@ public class EntityImageUseCase extends AbstractEntityImage {
 	public StyleQuery getStyleQuery() {
 		final LeafType type = getEntity().getLeafType();
 		if (type == LeafType.USECASE_BUSINESS)
-			return StyleQuery
-					.of(Arrays.asList(SName.root, SName.element, SName.componentDiagram, SName.usecase, SName.business))
-					.withTOBECHANGED(getStereo());
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.componentDiagram, SName.usecase))
-				.withTOBECHANGED(getStereo());
+			return StyleQueries.COMPONENTDIAG_USECASE_BUSINESS.withStereotype(getStereo());
+		return StyleQueries.COMPONENTDIAG_USECASE.withStereotype(getStereo());
 	}
 
 	private HColor getLineColor() {

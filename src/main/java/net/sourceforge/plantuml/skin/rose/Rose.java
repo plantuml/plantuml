@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.skin.rose;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -58,9 +57,9 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 public class Rose {
 
@@ -299,8 +298,7 @@ public class Rose {
 
 		final ArrowDirection arrowDirection = config.getArrowDirection();
 
-		final StyleQuery signature = StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram,
-				SName.arrow));
+		final StyleQuery signature = StyleQueries.SEQUENCEDIAG_ARROW;
 		final Style textStyle = param.getCurrentStyleBuilder().getMergedStyle(signature);
 		final String value = textStyle.value(PName.HorizontalAlignment).asString();
 		HorizontalAlignment messageHorizontalAlignment = textStyle.getHorizontalAlignment();

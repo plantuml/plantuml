@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -49,9 +48,9 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.klimt.shape.TextBlockMemoized;
 
 public final class ConcurrentStates extends TextBlockMemoized implements IEntityImage {
@@ -114,7 +113,7 @@ public final class ConcurrentStates extends TextBlockMemoized implements IEntity
 	}
 
 	private StyleQuery getStyleSignature() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.stateDiagram, SName.state));
+		return StyleQueries.STATEDIAG_STATE;
 	}
 
 	public void drawU(UGraphic ug) {

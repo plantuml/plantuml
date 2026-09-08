@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.chart;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,9 +54,9 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 public class BarRenderer {
 
@@ -84,13 +83,13 @@ public class BarRenderer {
 	}
 
 	private StyleQuery getBarStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.bar));
+		return StyleQueries.CHARTDIAG_BAR;
 	}
 
 	private Style getBarStyle(ChartSeries series) {
 		StyleQuery query = getBarStyleQuery();
 		if (series != null && series.getStereotype() != null)
-			return skinParam.getCurrentStyleBuilder().getMergedStyle(query.withTOBECHANGED(series.getStereotype()));
+			return skinParam.getCurrentStyleBuilder().getMergedStyle(query.withStereotype(series.getStereotype()));
 
 		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);
 	}

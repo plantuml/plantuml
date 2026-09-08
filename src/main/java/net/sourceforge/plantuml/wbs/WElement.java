@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.wbs;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -53,10 +52,10 @@ import net.sourceforge.plantuml.skin.SkinParamColors;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.MergeStrategy;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.utils.Direction;
 
 final public class WElement {
@@ -77,32 +76,20 @@ final public class WElement {
 	private StyleQuery getDefaultStyleDefinitionNode(int level) {
 		if (level == 0)
 			if (shape == IdeaShape.NONE)
-				return StyleQuery
-						.of(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode,
-								SName.boxless))
-						.withTOBECHANGED(stereotype).addLevel(level);
+				return StyleQueries.WBSDIAG_NODE_ROOT_BOXLESS.withStereotype(stereotype).addLevel(level);
 			else
-				return StyleQuery
-						.of(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode))
-						.withTOBECHANGED(stereotype).addLevel(level);
+				return StyleQueries.WBSDIAG_NODE_ROOT.withStereotype(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE && isLeaf())
-			return StyleQuery
-					.of(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode,
-							SName.boxless))
-					.withTOBECHANGED(stereotype).addLevel(level);
+			return StyleQueries.WBSDIAG_NODE_LEAF_BOXLESS.withStereotype(stereotype).addLevel(level);
 
 		if (isLeaf())
-			return StyleQuery
-					.of(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode))
-					.withTOBECHANGED(stereotype).addLevel(level);
+			return StyleQueries.WBSDIAG_NODE_LEAF.withStereotype(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.boxless))
-					.withTOBECHANGED(stereotype).addLevel(level);
+			return StyleQueries.WBSDIAG_NODE_BOXLESS.withStereotype(stereotype).addLevel(level);
 
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.node))
-				.withTOBECHANGED(stereotype).addLevel(level);
+		return StyleQueries.WBSDIAG_NODE.withStereotype(stereotype).addLevel(level);
 	}
 
 	public ISkinParam withBackColor(ISkinParam skinParam) {
@@ -115,7 +102,7 @@ final public class WElement {
 	/**
 	 * Resolves this element's style, cascading down from ancestors' starred ("{@code * }")
 	 * declarations. A nearer ancestor's matching declaration always beats a farther ancestor's --
-	 * see {@link net.sourceforge.plantuml.style.Specificity}'s own javadoc for why each cascade
+	 * see {@link net.sourceforge.plantuml.style.value.Specificity}'s own javadoc for why each cascade
 	 * step is simply one strictly-decreasing rank (0 at this element's own level) rather than a
 	 * magnitude-multiplied constant.
 	 */

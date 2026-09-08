@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.elk;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -88,7 +87,8 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
@@ -138,9 +138,8 @@ public class MyElkEdge implements UDrawable {
 	}
 
 	private Style getStyle() {
-		final StyleQuery result = StyleQuery
-				.of(Arrays.asList(SName.root, SName.element, diagram.getDiagramType().getStyleName(), SName.arrow))
-				.withTOBECHANGED(link.getStereotype());
+		final StyleQuery result = StyleQueries.ARROW.add(diagram.getDiagramType().getStyleName())
+				.withStereotype(link.getStereotype());
 		return diagram.getSkinParam().getCurrentStyleBuilder().getMergedStyle(result);
 	}
 

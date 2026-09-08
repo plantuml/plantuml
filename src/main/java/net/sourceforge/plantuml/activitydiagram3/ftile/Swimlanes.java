@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -85,11 +84,11 @@ import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.style.Styleable;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.MathUtils;
@@ -126,7 +125,7 @@ public class Swimlanes implements TextBlock, Styleable {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.swimlane));
+		return StyleQueries.ACTIVITYDIAG_SWIMLANE;
 	}
 
 	public Swimlanes(ISkinParam skinParam, Pragma pragma) {
@@ -247,7 +246,7 @@ public class Swimlanes implements TextBlock, Styleable {
 
 			TextBlock full = root.createFtile(getFtileFactory(ug.getStringBounder()));
 			final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(
-					StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.goto_)));
+					StyleQueries.ACTIVITYDIAG_GOTO);
 			final HColor gotoColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 			final boolean isDebug = Boolean.parseBoolean(skinParam.options().getValue(OptionKey.DEBUG));
 
@@ -269,7 +268,7 @@ public class Swimlanes implements TextBlock, Styleable {
 		TextBlock full = root.createGtile(skinParam, ug.getStringBounder());
 
 		final Style style = skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.goto_)));
+				.getMergedStyle(StyleQueries.ACTIVITYDIAG_GOTO);
 		final HColor gotoColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final boolean isDebug = true;
 

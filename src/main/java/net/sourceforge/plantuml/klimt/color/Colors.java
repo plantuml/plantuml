@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.Value;
+import net.sourceforge.plantuml.style.value.Value;
 
 public class Colors {
 	private final Map<ColorType, HColor> map = new EnumMap<ColorType, HColor>(ColorType.class);

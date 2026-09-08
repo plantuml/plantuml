@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -53,9 +52,9 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UHidden;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 public final class SvekResult implements IEntityImage {
 
@@ -109,16 +108,15 @@ public final class SvekResult implements IEntityImage {
 	}
 
 	private StyleQuery getDefaultStyleDefinition(Stereotype stereotype) {
-		StyleQuery result = StyleQuery
-				.of(Arrays.asList(SName.root, SName.element, dotData.geDiagramType().getStyleName(), SName.arrow));
+		StyleQuery result = StyleQueries.ARROW.add(dotData.geDiagramType().getStyleName());
 
-		return result.withTOBECHANGED(stereotype);
+		return result.withStereotype(stereotype);
 	}
 
 	// Duplicate SvekResult / GeneralImageBuilder
 	public HColor getBackcolor() {
 		final Style style = dotData.getSkinParam().getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.document)));
+				.getMergedStyle(StyleQueries.DOCUMENT);
 		return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
 	}
 

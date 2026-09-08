@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.gantt.draw;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.gantt.LabelStrategy;
 import net.sourceforge.plantuml.gantt.core.GArrowType;
@@ -59,10 +58,10 @@ import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 public class TaskDrawGroup extends AbstractTaskDraw {
 
@@ -142,7 +141,7 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 
 	@Override
 	StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.task));
+		return StyleQueries.GANTTDIAG_TASK;
 	}
 
 	public void drawU(UGraphic ug) {

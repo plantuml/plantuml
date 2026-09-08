@@ -35,12 +35,11 @@
  */
 package net.sourceforge.plantuml.skin;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.sequencediagram.LifeEventType;
-import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.style.Styleable;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public enum ComponentType implements Styleable {
 
@@ -76,35 +75,35 @@ public enum ComponentType implements Styleable {
 	@Override
 	public StyleQuery getStyleQuery() {
 		if (this == PARTICIPANT_HEAD || this == PARTICIPANT_TAIL)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.participant));
+			return StyleQueries.SEQUENCEDIAG_PARTICIPANT;
 
 		if (this == PARTICIPANT_LINE /*|| this == CONTINUE_LINE*/)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine));
+			return StyleQueries.SEQUENCEDIAG_LIFELINE;
 
 		if (this == ACTIVATION_BOX_CLOSE_CLOSE || this == ACTIVATION_BOX_CLOSE_OPEN || this == ACTIVATION_BOX_OPEN_CLOSE
 				|| this == ACTIVATION_BOX_OPEN_OPEN)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.activationBox));
+			return StyleQueries.SEQUENCEDIAG_ACTIVATIONBOX;
 
 		if (this == DESTROY)
 			return LifeEventType.DESTROY.getStyleQuery();
 
 		if (this == DIVIDER)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.separator));
+			return StyleQueries.SEQUENCEDIAG_SEPARATOR;
 
 		if (this == ENGLOBER)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.box));
+			return StyleQueries.SEQUENCEDIAG_BOX;
 
 		if (this == NEWPAGE)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.newpage));
+			return StyleQueries.SEQUENCEDIAG_NEWPAGE;
 
 		if (this == NOTE)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.note));
+			return StyleQueries.SEQUENCEDIAG_NOTE;
 
 		if (this == DELAY_TEXT)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.delay));
+			return StyleQueries.SEQUENCEDIAG_LIFELINE_DELAY;
 
 		if (this == DELAY_LINE)
-			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.delay));
+			return StyleQueries.SEQUENCEDIAG_LIFELINE_DELAY;
 
 		throw new UnsupportedOperationException(toString());
 	}

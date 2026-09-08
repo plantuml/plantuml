@@ -49,11 +49,12 @@ import java.util.concurrent.ConcurrentMap;
 
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.style.parser.MergedStyleNode;
+import net.sourceforge.plantuml.style.parser.RawStyleParser;
+import net.sourceforge.plantuml.style.parser.RawStyleSheet;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
-import net.sourceforge.plantuml.style.parser2.MergedStyleNode;
-import net.sourceforge.plantuml.style.parser2.RawStyleParser;
-import net.sourceforge.plantuml.style.parser2.RawStyleSheet;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.value.Value;
+import net.sourceforge.plantuml.style.value.ValueImpl;
 import net.sourceforge.plantuml.teavm.EmbeddedResources;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -197,7 +198,7 @@ public final class StyleLoader {
 	 */
 	public static List<PName> getMissingRootProperties(StyleBuilder styleBuilder) {
 		final Style root = styleBuilder == null ? null
-				: styleBuilder.getMergedStyle(StyleQuery.of(Collections.singletonList(SName.root)));
+				: styleBuilder.getMergedStyle(StyleQueries.ROOT);
 
 		final List<PName> result = new ArrayList<>();
 		for (PName property : MANDATORY_ROOT_PROPERTIES)
@@ -215,4 +216,4 @@ public final class StyleLoader {
 		return result;
 	}
 
-}
+}

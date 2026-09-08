@@ -33,22 +33,15 @@
  *
  *
  */
-package net.sourceforge.plantuml.style.parser2;
+package net.sourceforge.plantuml.style;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.stereo.Stereostyles;
 import net.sourceforge.plantuml.stereo.Stereotype;
-import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.url.Url;
 
@@ -61,39 +54,24 @@ import net.sourceforge.plantuml.url.Url;
  */
 public final class StyleQuery {
 
-	private final SortedSet<StyleAtom> atoms;
+	private final AtomArray atoms;
 	private final LevelConstraint levelConstraint;
 
-	private StyleQuery(SortedSet<StyleAtom> atoms, LevelConstraint levelConstraint) {
+	private StyleQuery(AtomArray atoms, LevelConstraint levelConstraint) {
 		this.atoms = atoms;
 		this.levelConstraint = levelConstraint;
 	}
-	
-	public static StyleQuery activityArrow() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.arrow));
-	}
 
-	public static StyleQuery of(Collection<SName> names, Collection<String> stereotypes,
-			LevelConstraint levelConstraint) {
-		final SortedSet<StyleAtom> atoms = new TreeSet<StyleAtom>();
+	public static StyleQuery of3(SName... names) {
+		AtomArray atoms = AtomArray.empty();
 		for (SName name : names)
-			atoms.add(StyleAtom.of(name));
-		for (String stereotype : stereotypes)
-			atoms.add(StyleAtom.ofStereotype(stereotype));
-		return new StyleQuery(atoms, levelConstraint);
-	}
-
-	public static StyleQuery of(Collection<SName> names, Collection<String> stereotypes) {
-		return of(names, stereotypes, LevelConstraint.none());
-	}
-
-	public static StyleQuery of(Collection<SName> names) {
-		return of(names, Collections.<String>emptySet(), LevelConstraint.none());
+			atoms = atoms.plus(StyleAtom.of(name));
+		return new StyleQuery(atoms, LevelConstraint.none());
 	}
 
 	/** No tag, no depth constraint -- mirroring {@code StyleSignature.empty()}. */
 	public static StyleQuery empty() {
-		return of(Collections.<SName>emptySet());
+		return of3();
 	}
 
 	/**
@@ -109,12 +87,10 @@ public final class StyleQuery {
 	 * since a {@link TreeSet} silently dedupes a stereotype already present.
 	 */
 	public StyleQuery withStereotype(String stereotype) {
-		final SortedSet<StyleAtom> result = new TreeSet<StyleAtom>(atoms);
-		result.add(StyleAtom.ofStereotype(stereotype));
-		return new StyleQuery(result, levelConstraint);
+		return new StyleQuery(atoms.plus(StyleAtom.ofStereotype(stereotype)), levelConstraint);
 	}
 
-	public StyleQuery withTOBECHANGED(Stereotype stereotype) {
+	public StyleQuery withStereotype(Stereotype stereotype) {
 		if (stereotype == null || stereotype.getStyleNames().size() == 0)
 			return this;
 
@@ -129,23 +105,13 @@ public final class StyleQuery {
 	}
 
 	/**
-	 * This same query, additionally requiring every one of {@code stereogroup}'s own stereotype's
-	 * labels at once, the same way {@link #withTOBECHANGED(Stereotype)} does -- mirroring
-	 * {@code StyleSignature.withTOBECHANGED(Stereogroup)}.
-	 */
-	public StyleQuery withTOBECHANGED(Stereogroup stereogroup) {
-		if (stereogroup == null)
-			return this;
-
-		return withTOBECHANGED(stereogroup.buildStereotype());
-	}
-
-	/**
-	 * This same query, additionally requiring every one of {@code stereo}'s labels at once, the
-	 * same way {@link #withTOBECHANGED(Stereotype)} does -- but also requiring the special
-	 * {@link SName#stereotype} tag, mirroring {@code StyleSignature.forStereotypeItself}: used to
-	 * resolve the CSS-class-like rule for the stereotype itself (e.g. {@code <<foo>>}'s own
-	 * {@code .foo { ... }} declaration), as opposed to a plain element carrying that stereotype.
+	 * This same query, additionally requiring every one of {@code stereo}'s labels
+	 * at once, the same way {@link #withStereotype(Stereotype)} does -- but also
+	 * requiring the special {@link SName#stereotype} tag, mirroring
+	 * {@code StyleSignature.forStereotypeItself}: used to resolve the
+	 * CSS-class-like rule for the stereotype itself (e.g. {@code <<foo>>}'s own
+	 * {@code .foo { ... }} declaration), as opposed to a plain element carrying
+	 * that stereotype.
 	 */
 	public StyleQuery forStereotypeItself(Stereotype stereo) {
 		if (stereo == null || stereo.getStyleNames().size() == 0)
@@ -155,8 +121,7 @@ public final class StyleQuery {
 		if (labels.size() == 0)
 			return this;
 
-		final SortedSet<StyleAtom> withStereotypeTag = new TreeSet<StyleAtom>(atoms);
-		withStereotypeTag.add(StyleAtom.of(SName.stereotype));
+		final AtomArray withStereotypeTag = atoms.plus(StyleAtom.of(SName.stereotype));
 		StyleQuery result = new StyleQuery(withStereotypeTag, levelConstraint);
 		for (String name : labels)
 			result = result.withStereotype(name);
@@ -165,10 +130,10 @@ public final class StyleQuery {
 	}
 
 	/**
-	 * This same query, additionally requiring every stereo-style name in {@code stereostyles} --
-	 * mirroring {@code StyleSignature.with(Stereostyles)}.
+	 * This same query, additionally requiring every stereo-style name in
+	 * {@code stereostyles} -- mirroring {@code StyleSignature.with(Stereostyles)}.
 	 */
-	public StyleQuery with(Stereostyles stereostyles) {
+	public StyleQuery withStereostyles(Stereostyles stereostyles) {
 		if (stereostyles.isEmpty())
 			return this;
 
@@ -180,29 +145,41 @@ public final class StyleQuery {
 	}
 
 	/**
-	 * This same query, additionally constrained to depth {@code level} (an exact match unless the
-	 * query was already starred) -- mirroring {@code StyleSignature.addLevel(int)}.
+	 * This same query, additionally constrained to depth {@code level} (an exact
+	 * match unless the query was already starred) -- mirroring
+	 * {@code StyleSignature.addLevel(int)}.
 	 */
 	public StyleQuery addLevel(int level) {
 		return new StyleQuery(atoms, LevelConstraint.of(level, levelConstraint.isStar()));
 	}
 
 	/**
-	 * This same query, additionally starred (an ancestor-inheritance lookup, matching only
-	 * declarations that are themselves starred) while keeping whatever depth was already set --
-	 * mirroring {@code StyleSignature.addStar()} / {@code StyleKey.addStar()}.
+	 * This same query, additionally starred (an ancestor-inheritance lookup,
+	 * matching only declarations that are themselves starred) while keeping
+	 * whatever depth was already set -- mirroring {@code StyleSignature.addStar()}
+	 * / {@code StyleKey.addStar()}.
 	 */
 	public StyleQuery addStar() {
 		return new StyleQuery(atoms, LevelConstraint.of(levelConstraint.getLevel(), true));
 	}
 
-	/**
-	 * This same query, additionally requiring {@code name} -- mirroring
-	 * {@code StyleSignature.addSName(SName)}.
-	 */
-	public StyleQuery addSName(SName name) {
-		final SortedSet<StyleAtom> result = new TreeSet<StyleAtom>(atoms);
-		result.add(StyleAtom.of(name));
+	public StyleQuery add(SName name) {
+		return new StyleQuery(atoms.plus(StyleAtom.of(name)), levelConstraint);
+	}
+
+	public StyleQuery add(SName name1, SName name2) {
+		return new StyleQuery(atoms.plus(StyleAtom.of(name1), StyleAtom.of(name2)), levelConstraint);
+	}
+
+	public StyleQuery add(SName name1, SName name2, SName name3) {
+		return new StyleQuery(atoms.plus(StyleAtom.of(name1), StyleAtom.of(name2), StyleAtom.of(name3)),
+				levelConstraint);
+	}
+
+	public StyleQuery addSNames(SName... names) {
+		AtomArray result = atoms;
+		for (SName name : names)
+			result = result.plus(StyleAtom.of(name));
 		return new StyleQuery(result, levelConstraint);
 	}
 
@@ -210,19 +187,16 @@ public final class StyleQuery {
 		if (url == null)
 			return this;
 
-		final SortedSet<StyleAtom> result = new TreeSet<StyleAtom>(atoms);
-		result.add(StyleAtom.of(SName.clickable));
-		return new StyleQuery(result, levelConstraint);
+		return new StyleQuery(atoms.plus(StyleAtom.of(SName.clickable)), levelConstraint);
 	}
 
 	/**
-	 * This query, unioned with {@code other}: every atom either carries, plus the least
-	 * restrictive combination of their two {@link LevelConstraint}s (deepest level, starred if
-	 * either side is) -- mirroring {@code StyleKey.mergeWith}.
+	 * This query, unioned with {@code other}: every atom either carries, plus the
+	 * least restrictive combination of their two {@link LevelConstraint}s (deepest
+	 * level, starred if either side is) -- mirroring {@code StyleKey.mergeWith}.
 	 */
-	public StyleQuery mergeWith(StyleQuery other) {
-		final SortedSet<StyleAtom> result = new TreeSet<StyleAtom>(atoms);
-		result.addAll(other.atoms);
+	StyleQuery mergeWith(StyleQuery other) {
+		final AtomArray result = atoms.plusAll(other.atoms);
 
 		final int mergedLevel = Math.max(levelConstraint.getLevel(), other.levelConstraint.getLevel());
 		final boolean mergedStar = levelConstraint.isStar() || other.levelConstraint.isStar();
@@ -231,8 +205,8 @@ public final class StyleQuery {
 	}
 
 	/**
-	 * This query, unioned in turn with each of {@code others}'s own signature -- mirroring
-	 * {@code StyleSignature.mergeWith(List<Style>)}.
+	 * This query, unioned in turn with each of {@code others}'s own signature --
+	 * mirroring {@code StyleSignature.mergeWith(List<Style>)}.
 	 */
 	public StyleQuery mergeWith(List<Style> others) {
 		StyleQuery result = this;
@@ -242,11 +216,11 @@ public final class StyleQuery {
 		return result;
 	}
 
-	public SortedSet<StyleAtom> getAtoms() {
+	Iterable<StyleAtom> getAtoms() {
 		return atoms;
 	}
 
-	public LevelConstraint getLevelConstraint() {
+	LevelConstraint getLevelConstraint() {
 		return levelConstraint;
 	}
 
@@ -254,7 +228,7 @@ public final class StyleQuery {
 	 * Every stereotype atom this query carries, in ascending order -- mirroring
 	 * {@code StyleSignature.getStereotypes()}.
 	 */
-	public Set<String> getStereotypes() {
+	Set<String> getStereotypes() {
 		final Set<String> result = new LinkedHashSet<String>();
 		for (StyleAtom atom : atoms)
 			if (atom.isName() == false)

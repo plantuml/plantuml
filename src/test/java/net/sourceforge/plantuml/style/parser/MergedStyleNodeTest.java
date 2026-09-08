@@ -33,7 +33,7 @@
  *
  *
  */
-package net.sourceforge.plantuml.style.parser2;
+package net.sourceforge.plantuml.style.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -49,6 +49,10 @@ import net.sourceforge.plantuml.style.AutomaticCounterBasic;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleLoader;
+import net.sourceforge.plantuml.style.parser.MergedStyleNode;
+import net.sourceforge.plantuml.style.parser.PrioritizedValue;
+import net.sourceforge.plantuml.style.parser.RawStyleParser;
+import net.sourceforge.plantuml.style.parser.RawStyleSheet;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocationImpl;
 

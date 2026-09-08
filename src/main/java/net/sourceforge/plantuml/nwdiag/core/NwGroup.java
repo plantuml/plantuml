@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.nwdiag.core;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
@@ -53,10 +52,10 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.nwdiag.next.NBox;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 public class NwGroup implements NStackable {
 
@@ -138,7 +137,7 @@ public class NwGroup implements NStackable {
 	}
 
 	private StyleQuery getStyleDefinition() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.nwdiagDiagram, SName.group));
+		return StyleQueries.NWDIAG_GROUP;
 	}
 
 	public void drawGroup(UGraphic ug, MinMax size, ISkinParam skinParam) {

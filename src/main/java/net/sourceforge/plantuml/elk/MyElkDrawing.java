@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.elk;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -73,7 +72,8 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.ClusterManager;
 import net.sourceforge.plantuml.svek.GeneralImageBuilder;
@@ -213,10 +213,10 @@ class MyElkDrawing implements TextBlock {
 	}
 
 	// Duplication from SvekEdge
-	final public StyleQuery getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
-		StyleQuery result = StyleQuery.of(Arrays.asList(SName.root, SName.element, styleName, SName.arrow));
+	private StyleQuery getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
+		StyleQuery result = StyleQueries.ARROW.add(styleName);
 		if (stereotype != null)
-			result = result.withTOBECHANGED(stereotype);
+			result = result.withStereotype(stereotype);
 
 		return result;
 	}

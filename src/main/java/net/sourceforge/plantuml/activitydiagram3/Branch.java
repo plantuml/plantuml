@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -64,7 +63,8 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 public class Branch {
 
@@ -84,7 +84,7 @@ public class Branch {
 	private Gtile gtile;
 
 	public StyleQuery getDefaultStyleDefinitionArrow() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
+		return StyleQueries.ACTIVITYDIAG_ARROW;
 	}
 
 //	public StyleSignatureBasic getDefaultStyleDefinitionDiamond() {

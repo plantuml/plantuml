@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityPortion;
@@ -59,9 +58,9 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UComment;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Kal;
 import net.sourceforge.plantuml.svek.Margins;
@@ -161,20 +160,19 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.classDiagram, SName.class_));
+		return StyleQueries.CLASSDIAG_CLASS;
 	}
 
 	private Style getStyle() {
 		return getEntity().getCurrentStyleBuilder().getMergedStyle(getStyleQuery() //
-				.withTOBECHANGED(getEntity().getStereotype()) //
-				.with(getEntity().getStereostyles()));
+				.withStereotype(getEntity().getStereotype()) //
+				.withStereostyles(getEntity().getStereostyles()));
 	}
 
 	private Style getStyleHeader() {
-		return getEntity().getCurrentStyleBuilder().getMergedStyle(StyleQuery
-				.of(Arrays.asList(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header)) //
-				.withTOBECHANGED(getEntity().getStereotype()) //
-				.with(getEntity().getStereostyles()));
+		return getEntity().getCurrentStyleBuilder().getMergedStyle(StyleQueries.CLASSDIAG_CLASS_HEADER //
+				.withStereotype(getEntity().getStereotype()) //
+				.withStereostyles(getEntity().getStereostyles()));
 	}
 
 	private void drawInternal(UGraphic ug) {

@@ -40,7 +40,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -51,7 +50,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
@@ -66,7 +64,6 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 /**
  * Guards the .skin files bundled inside the jar.
@@ -142,7 +139,7 @@ class BundledSkinTest {
 	void bundledSkinLoads(String filename) throws Exception {
 		final StyleBuilder builder = StyleLoader.loadSkin(filename);
 		assertNotNull(builder);
-		assertNotNull(builder.getMergedStyle(StyleQuery.of(Collections.singletonList(SName.root))));
+		assertNotNull(builder.getMergedStyle(StyleQuery.of3(SName.root)));
 	}
 
 	// -----------------------------------------------------------------------

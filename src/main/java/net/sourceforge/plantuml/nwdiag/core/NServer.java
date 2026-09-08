@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.nwdiag.core;
 
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +59,8 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.PackageStyle;
 
 public class NServer {
@@ -152,7 +152,7 @@ public class NServer {
 	}
 
 	private StyleQuery getStyleDefinition(SName sname) {
-		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.nwdiagDiagram, sname));
+		return StyleQueries.NWDIAG.add(sname);
 	}
 
 	private FontConfiguration getFontConfiguration(SName sname) {

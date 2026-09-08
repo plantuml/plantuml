@@ -37,8 +37,6 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.abel.DisplayPositioned;
@@ -63,7 +61,8 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 public final class ClusterHeader {
 
@@ -146,8 +145,8 @@ public final class ClusterHeader {
 	private Style getStyle() {
 		final StyleQuery signature = getSignature();
 		return g.getSkinParam().getCurrentStyleBuilder().getMergedStyle(signature //
-				.withTOBECHANGED(g.getStereotype()) //
-				.with(g.getStereostyles()));
+				.withStereotype(g.getStereotype()) //
+				.withStereostyles(g.getStereostyles()));
 	}
 
 	private StyleQuery getSignature() {
@@ -155,18 +154,13 @@ public final class ClusterHeader {
 		final StyleQuery signature;
 		final USymbol uSymbol = g.getUSymbol();
 		if (g.getGroupType() == GroupType.STATE)
-			signature = StyleQuery
-					.of(Arrays.asList(SName.root, SName.element, SName.stateDiagram, SName.state, SName.name));
-		else if (uSymbol != null) {
-			final List<SName> names = new ArrayList<SName>(Arrays.asList(SName.root, SName.element, sname));
-			names.addAll(Arrays.asList(uSymbol.getSNames()));
-			names.add(SName.composite);
-			names.add(SName.title);
-			signature = StyleQuery.of(names);
-		} else if (g.getGroupType() == GroupType.PACKAGE)
-			signature = StyleQuery.of(Arrays.asList(SName.root, SName.element, sname, SName.package_, SName.title));
+			signature = StyleQueries.STATEDIAG_STATE_NAME;
+		else if (uSymbol != null)
+			signature = StyleQueries.COMPOSITE_TITLE.add(sname).addSNames(uSymbol.getSNames());
+		else if (g.getGroupType() == GroupType.PACKAGE)
+			signature = StyleQueries.PACKAGE_TITLE.add(sname);
 		else
-			signature = StyleQuery.of(Arrays.asList(SName.root, SName.element, sname, SName.composite, SName.title));
+			signature = StyleQueries.COMPOSITE_TITLE.add(sname);
 		return signature;
 	}
 

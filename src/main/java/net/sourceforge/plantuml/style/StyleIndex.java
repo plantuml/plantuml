@@ -42,8 +42,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import net.sourceforge.plantuml.style.parser2.StyleAtomTrie;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.value.DarkString;
 
 /**
  * The fast, queryable counterpart of the old {@code StyleStorage}: every loaded {@link Style}

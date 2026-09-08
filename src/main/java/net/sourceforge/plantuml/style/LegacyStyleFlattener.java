@@ -40,10 +40,12 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.plantuml.style.parser2.MergedStyleNode;
-import net.sourceforge.plantuml.style.parser2.PrioritizedValue;
-import net.sourceforge.plantuml.style.parser2.RawSelector;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.parser.MergedStyleNode;
+import net.sourceforge.plantuml.style.parser.PrioritizedValue;
+import net.sourceforge.plantuml.style.parser.RawSelector;
+import net.sourceforge.plantuml.style.value.Specificity;
+import net.sourceforge.plantuml.style.value.Value;
+import net.sourceforge.plantuml.style.value.ValueImpl;
 
 /**
  * Turns a {@link MergedStyleNode} tree (built by the new {@code parser2} text parser) into the
@@ -100,7 +102,7 @@ final class LegacyStyleFlattener {
 			List<Style> result) {
 		for (Map.Entry<SName, MergedStyleNode> ent : children.entrySet()) {
 			final MergedStyleNode child = ent.getValue();
-			StyleQuery childSignature = pathSoFar.addSName(ent.getKey());
+			StyleQuery childSignature = pathSoFar.add(ent.getKey());
 			if (child.isStar())
 				childSignature = childSignature.addStar();
 			flattenNode(child, childSignature, result);
