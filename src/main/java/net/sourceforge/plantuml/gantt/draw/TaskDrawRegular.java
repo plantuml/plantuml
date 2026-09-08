@@ -70,6 +70,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 
 public class TaskDrawRegular extends AbstractTaskDraw {
@@ -184,8 +185,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 
 	@Override
 	StyleQuery getStyleQuery() {
-		return StyleQuery.of3(SName.root, SName.element, SName.ganttDiagram, SName.task)
-				.withStereotype(getTask().getStereotype());
+		return StyleQueries.GANTTDIAG_TASK.withStereotype(getTask().getStereotype());
 	}
 
 	public void drawU(UGraphic ug) {

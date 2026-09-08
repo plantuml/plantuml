@@ -54,8 +54,8 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 
 public class BarRenderer {
@@ -83,7 +83,7 @@ public class BarRenderer {
 	}
 
 	private StyleQuery getBarStyleQuery() {
-		return StyleQuery.of3(SName.root, SName.element, SName.chartDiagram, SName.bar);
+		return StyleQueries.CHARTDIAG_BAR;
 	}
 
 	private Style getBarStyle(ChartSeries series) {

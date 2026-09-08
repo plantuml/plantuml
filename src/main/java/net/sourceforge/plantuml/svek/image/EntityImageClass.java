@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Kal;
@@ -160,7 +161,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of3(SName.root, SName.element, SName.classDiagram, SName.class_);
+		return StyleQueries.CLASSDIAG_CLASS;
 	}
 
 	private Style getStyle() {

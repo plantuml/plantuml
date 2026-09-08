@@ -70,6 +70,7 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.DecorateEntityImage;
 import net.sourceforge.plantuml.teavm.browser.BrowserLog;
@@ -365,7 +366,7 @@ public final class DiagramChromeFactory {
 			return original;
 
 		final Style style = skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of3(SName.root, SName.document, SName.title));
+				.getMergedStyle(StyleQueries.DOCUMENT_TITLE);
 		final TextBlock titleBlock = style.createTextBlockBordered(title.getDisplay(), skinParam.getIHtmlColorSet(),
 				skinParam, Style.ID_TITLE, LineBreakStrategy.NONE);
 
@@ -411,7 +412,7 @@ public final class DiagramChromeFactory {
 		TextBlock textHeader = null;
 		if (!header.isNull()) {
 			final Style style = skinParam.getCurrentStyleBuilder()
-					.getMergedStyle(StyleQuery.of3(SName.root, SName.document, SName.header));
+					.getMergedStyle(StyleQueries.DOCUMENT_HEADER);
 			textHeader = header.createRibbon(FontConfiguration.create(skinParam, FontParam.HEADER, null), skinParam,
 					style);
 		}
@@ -422,7 +423,7 @@ public final class DiagramChromeFactory {
 		TextBlock textFooter = null;
 		if (!footer.isNull()) {
 			final Style style = skinParam.getCurrentStyleBuilder()
-					.getMergedStyle(StyleQuery.of3(SName.root, SName.document, SName.footer));
+					.getMergedStyle(StyleQueries.DOCUMENT_FOOTER);
 			textFooter = footer.createRibbon(FontConfiguration.create(skinParam, FontParam.FOOTER, null), skinParam,
 					style);
 		}

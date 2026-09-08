@@ -87,4 +87,35 @@ public final class StyleQueries {
 	public static final StyleQuery CHENEER_CIRCLE = StyleQuery.of3(SName.root, SName.element, SName.chenEerDiagram,
 			SName.circle);
 
+	public static final StyleQuery CLASSDIAG_CLASS = StyleQuery.of3(SName.root, SName.element, SName.classDiagram,
+			SName.class_);
+
+	public static final StyleQuery GANTTDIAG_TASK = StyleQuery.of3(SName.root, SName.element, SName.ganttDiagram,
+			SName.task);
+
+	public static final StyleQuery TIMINGDIAG_ARROW = StyleQuery.of3(SName.root, SName.element, SName.timingDiagram,
+			SName.arrow);
+
+	public static final StyleQuery SEQUENCEDIAG_NOTE = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.note);
+
+	public static final StyleQuery SEQUENCEDIAG_PARTICIPANT = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.participant);
+
+	public static final StyleQuery SEQUENCEDIAG_LIFELINE_DELAY = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.lifeLine, SName.delay);
+
+	/** No diagram context -- applies across every diagram type, e.g. the exported page chrome. */
+	public static final StyleQuery DOCUMENT_HEADER = StyleQuery.of3(SName.root, SName.document, SName.header);
+
+	public static final StyleQuery DOCUMENT_FOOTER = StyleQuery.of3(SName.root, SName.document, SName.footer);
+
+	public static final StyleQuery DOCUMENT_TITLE = StyleQuery.of3(SName.root, SName.document, SName.title);
+
+	public static final StyleQuery CHARTDIAG_BAR = StyleQuery.of3(SName.root, SName.element, SName.chartDiagram,
+			SName.bar);
+
+	public static final StyleQuery CHARTDIAG_SCATTER = StyleQuery.of3(SName.root, SName.element, SName.chartDiagram,
+			SName.scatter);
+
 }

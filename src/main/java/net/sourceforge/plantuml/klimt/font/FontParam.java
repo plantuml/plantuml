@@ -39,6 +39,7 @@ package net.sourceforge.plantuml.klimt.font;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 
 interface FontParamConstant {
@@ -189,16 +190,16 @@ public enum FontParam {
 
 	public StyleQuery getStyleDefinition(SName diagramType) {
 		if (this == FOOTER) {
-			return StyleQuery.of3(SName.root, SName.document, SName.footer);
+			return StyleQueries.DOCUMENT_FOOTER;
 		}
 		if (this == HEADER) {
-			return StyleQuery.of3(SName.root, SName.document, SName.header);
+			return StyleQueries.DOCUMENT_HEADER;
 		}
 		if (this == TITLE) {
-			return StyleQuery.of3(SName.root, SName.document, SName.title);
+			return StyleQueries.DOCUMENT_TITLE;
 		}
 		if (this == CLASS_ATTRIBUTE) {
-			return StyleQuery.of3(SName.root, SName.element, SName.classDiagram, SName.class_);
+			return StyleQueries.CLASSDIAG_CLASS;
 		}
 		if (this == RECTANGLE || this == NODE) {
 			return StyleQuery.of3(SName.root, SName.element, SName.componentDiagram, SName.component);

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.sequencediagram;
 
 
 import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.style.Styleable;
 
@@ -56,7 +57,7 @@ public enum ParticipantType implements Styleable {
 	@Override
 	public StyleQuery getStyleQuery() {
 		if (this == PARTICIPANT)
-			return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.participant);
+			return StyleQueries.SEQUENCEDIAG_PARTICIPANT;
 
 		if (this == ACTOR)
 			return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.actor);

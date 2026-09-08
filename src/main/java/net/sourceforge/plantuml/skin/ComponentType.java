@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.skin;
 
 import net.sourceforge.plantuml.sequencediagram.LifeEventType;
 import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.style.Styleable;
 
@@ -75,7 +76,7 @@ public enum ComponentType implements Styleable {
 	@Override
 	public StyleQuery getStyleQuery() {
 		if (this == PARTICIPANT_HEAD || this == PARTICIPANT_TAIL)
-			return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.participant);
+			return StyleQueries.SEQUENCEDIAG_PARTICIPANT;
 
 		if (this == PARTICIPANT_LINE /*|| this == CONTINUE_LINE*/)
 			return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine);
@@ -97,13 +98,13 @@ public enum ComponentType implements Styleable {
 			return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.newpage);
 
 		if (this == NOTE)
-			return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.note);
+			return StyleQueries.SEQUENCEDIAG_NOTE;
 
 		if (this == DELAY_TEXT)
-			return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.delay);
+			return StyleQueries.SEQUENCEDIAG_LIFELINE_DELAY;
 
 		if (this == DELAY_LINE)
-			return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.delay);
+			return StyleQueries.SEQUENCEDIAG_LIFELINE_DELAY;
 
 		throw new UnsupportedOperationException(toString());
 	}
