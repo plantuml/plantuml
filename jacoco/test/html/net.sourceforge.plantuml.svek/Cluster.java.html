@@ -685,8 +685,8 @@ public class Cluster implements Moveable {
 <span class="nc" id="L685">			return null;</span>
 
 <span class="fc" id="L687">		final HColor result = group.getColors().getColor(ColorType.BACK);</span>
-<span class="pc bpc" id="L688" title="1 of 2 branches missed.">		if (result != null)</span>
-<span class="nc" id="L689">			return result;</span>
+<span class="fc bfc" id="L688" title="All 2 branches covered.">		if (result != null)</span>
+<span class="fc" id="L689">			return result;</span>
 
 <span class="fc" id="L691">		return style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
 	}
@@ -725,34 +725,34 @@ public class Cluster implements Moveable {
 
 	public MagneticBorder getMagneticBorder() {
 
-<span class="pc bpc" id="L728" title="2 of 4 branches missed.">		if (group.getUSymbol() == null &amp;&amp; group.getGroupType() != GroupType.PACKAGE)</span>
+<span class="pc bpc" id="L728" title="1 of 4 branches missed.">		if (group.getUSymbol() == null &amp;&amp; group.getGroupType() != GroupType.PACKAGE)</span>
 <span class="fc" id="L729">			return new MagneticBorderNone();</span>
 
-<span class="nc" id="L731">		final USymbol uSymbol = group.getUSymbol();</span>
-<span class="nc" id="L732">		PackageStyle packageStyle = group.getPackageStyle();</span>
-<span class="nc bnc" id="L733" title="All 2 branches missed.">		if (packageStyle == null)</span>
-<span class="nc" id="L734">			packageStyle = skinParam.packageStyle();</span>
+<span class="fc" id="L731">		final USymbol uSymbol = group.getUSymbol();</span>
+<span class="fc" id="L732">		PackageStyle packageStyle = group.getPackageStyle();</span>
+<span class="pc bpc" id="L733" title="1 of 2 branches missed.">		if (packageStyle == null)</span>
+<span class="fc" id="L734">			packageStyle = skinParam.packageStyle();</span>
 
-<span class="nc" id="L736">		final DiagramType diagramType = DiagramType.CLASS;</span>
+<span class="fc" id="L736">		final DiagramType diagramType = DiagramType.CLASS;</span>
 
-<span class="nc" id="L738">		final Style style = getDefaultStyleDefinition(diagramType.getStyleName(), uSymbol, group.getGroupType())</span>
-<span class="nc" id="L739">				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L738">		final Style style = getDefaultStyleDefinition(diagramType.getStyleName(), uSymbol, group.getGroupType())</span>
+<span class="fc" id="L739">				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
 
-<span class="nc" id="L741">		final UStroke stroke = getStrokeInternal(group, style);</span>
+<span class="fc" id="L741">		final UStroke stroke = getStrokeInternal(group, style);</span>
 
-<span class="nc" id="L743">		final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(),</span>
-<span class="nc" id="L744">				clusterHeader.getTitle(), clusterHeader.getStereo(), rectangleArea, stroke);</span>
+<span class="fc" id="L743">		final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(),</span>
+<span class="fc" id="L744">				clusterHeader.getTitle(), clusterHeader.getStereo(), rectangleArea, stroke);</span>
 
-<span class="nc" id="L746">		final TextBlock textBlock = decoration.getTextBlock(HColors.BLACK, HColors.BLACK, 0, 0,</span>
-<span class="nc" id="L747">				skinParam.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null),</span>
-<span class="nc" id="L748">				skinParam.getStereotypeAlignment(), 0);</span>
+<span class="fc" id="L746">		final TextBlock textBlock = decoration.getTextBlock(HColors.BLACK, HColors.BLACK, 0, 0,</span>
+<span class="fc" id="L747">				skinParam.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null),</span>
+<span class="fc" id="L748">				skinParam.getStereotypeAlignment(), 0);</span>
 
-<span class="nc" id="L750">		final MagneticBorder orig = textBlock.getMagneticBorder();</span>
+<span class="fc" id="L750">		final MagneticBorder orig = textBlock.getMagneticBorder();</span>
 
-<span class="nc" id="L752">		return new MagneticBorder() {</span>
+<span class="fc" id="L752">		return new MagneticBorder() {</span>
 			public UTranslate getForceAt(StringBounder stringBounder, XPoint2D position) {
-<span class="nc" id="L754">				return orig.getForceAt(stringBounder,</span>
-<span class="nc" id="L755">						position.move(-rectangleArea.getMinX(), -rectangleArea.getMinY()));</span>
+<span class="fc" id="L754">				return orig.getForceAt(stringBounder,</span>
+<span class="fc" id="L755">						position.move(-rectangleArea.getMinX(), -rectangleArea.getMinY()));</span>
 			}
 		};
 	}

@@ -128,14 +128,14 @@ public final class ClusterHeader {
 <span class="fc" id="L128">		TextBlock result = label.create(fontConfiguration, alignment, g.getSkinParam());</span>
 
 <span class="fc" id="L130">		final VisibilityModifier modifier = g.getVisibilityModifier();</span>
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		if (modifier != null) {</span>
-<span class="nc" id="L132">			final Rose rose = new Rose();</span>
-<span class="nc" id="L133">			final HColor back = rose.getHtmlColor(g.getSkinParam(), modifier.getBackground());</span>
-<span class="nc" id="L134">			final HColor fore = rose.getHtmlColor(g.getSkinParam(), modifier.getForeground());</span>
-<span class="nc" id="L135">			final TextBlock uBlock = TextBlockUtils.withMargin(</span>
-<span class="nc" id="L136">					modifier.getUBlock(g.getSkinParam().classAttributeIconSize(), fore, back, false), 0, 0, 4, 0);</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		if (modifier != null) {</span>
+<span class="fc" id="L132">			final Rose rose = new Rose();</span>
+<span class="fc" id="L133">			final HColor back = rose.getHtmlColor(g.getSkinParam(), modifier.getBackground());</span>
+<span class="fc" id="L134">			final HColor fore = rose.getHtmlColor(g.getSkinParam(), modifier.getForeground());</span>
+<span class="fc" id="L135">			final TextBlock uBlock = TextBlockUtils.withMargin(</span>
+<span class="fc" id="L136">					modifier.getUBlock(g.getSkinParam().classAttributeIconSize(), fore, back, false), 0, 0, 4, 0);</span>
 
-<span class="nc" id="L138">			result = TextBlockUtils.mergeLR(uBlock, result, VerticalAlignment.CENTER);</span>
+<span class="fc" id="L138">			result = TextBlockUtils.mergeLR(uBlock, result, VerticalAlignment.CENTER);</span>
 		}
 
 <span class="fc" id="L141">		return result;</span>

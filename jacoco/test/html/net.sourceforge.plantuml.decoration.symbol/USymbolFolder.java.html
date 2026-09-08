@@ -240,27 +240,27 @@ public class USymbolFolder extends USymbol {
 
 			@Override
 			public MagneticBorder getMagneticBorder() {
-<span class="nc" id="L243">				return new MagneticBorder() {</span>
+<span class="fc" id="L243">				return new MagneticBorder() {</span>
 
 					@Override
 					public UTranslate getForceAt(StringBounder stringBounder, XPoint2D position) {
-<span class="nc" id="L247">						final XDimension2D dim = calculateDimension(stringBounder);</span>
-<span class="nc" id="L248">						final XDimension2D dimTitle = title.calculateDimension(stringBounder);</span>
-<span class="nc" id="L249">						final double wtitle = getWTitle(dim.getWidth(), dimTitle);</span>
-<span class="nc" id="L250">						final double htitle = getHTitle(dimTitle);</span>
+<span class="fc" id="L247">						final XDimension2D dim = calculateDimension(stringBounder);</span>
+<span class="fc" id="L248">						final XDimension2D dimTitle = title.calculateDimension(stringBounder);</span>
+<span class="fc" id="L249">						final double wtitle = getWTitle(dim.getWidth(), dimTitle);</span>
+<span class="fc" id="L250">						final double htitle = getHTitle(dimTitle);</span>
 
-<span class="nc bnc" id="L252" title="All 6 branches missed.">						if (position.getX() &gt;= wtitle &amp;&amp; position.getY() &gt;= 0 &amp;&amp; position.getY() &lt;= htitle)</span>
+<span class="pc bpc" id="L252" title="5 of 6 branches missed.">						if (position.getX() &gt;= wtitle &amp;&amp; position.getY() &gt;= 0 &amp;&amp; position.getY() &lt;= htitle)</span>
 <span class="nc" id="L253">							return new UTranslate(0, htitle);</span>
 
-<span class="nc bnc" id="L255" title="All 4 branches missed.">						if (position.getY() &lt;= 0 &amp;&amp; position.getX() &gt;= wtitle + marginTitleX3)</span>
+<span class="pc bpc" id="L255" title="3 of 4 branches missed.">						if (position.getY() &lt;= 0 &amp;&amp; position.getX() &gt;= wtitle + marginTitleX3)</span>
 <span class="nc" id="L256">							return new UTranslate(0, htitle);</span>
 
-<span class="nc bnc" id="L258" title="All 4 branches missed.">						if (position.getY() &lt;= 0 &amp;&amp; position.getX() &gt;= wtitle - marginTitleX3) {</span>
+<span class="pc bpc" id="L258" title="3 of 4 branches missed.">						if (position.getY() &lt;= 0 &amp;&amp; position.getX() &gt;= wtitle - marginTitleX3) {</span>
 <span class="nc" id="L259">							final double delta = position.getX() - (wtitle - marginTitleX3);</span>
 <span class="nc" id="L260">							final double how = delta / (2 * marginTitleX3);</span>
 <span class="nc" id="L261">							return new UTranslate(0, htitle * how);</span>
 						}
-<span class="nc" id="L263">						return UTranslate.none();</span>
+<span class="fc" id="L263">						return UTranslate.none();</span>
 					}
 				};
 

@@ -909,7 +909,7 @@ public class TContext {
 	private String getFunctionNameAt(String s, int pos) {
 <span class="fc bfc" id="L910" title="All 4 branches covered.">		final boolean justAfterALetter = pos &gt; 0 &amp;&amp; TLineType.isLetterOrEmojiOrUnderscoreOrDigit(s.charAt(pos - 1))</span>
 <span class="fc bfc" id="L911" title="All 2 branches covered.">				&amp;&amp; VariableManager.justAfterBackslashN(s, pos) == false;</span>
-<span class="pc bpc" id="L912" title="1 of 6 branches missed.">		if (justAfterALetter &amp;&amp; s.charAt(pos) != '%' &amp;&amp; s.charAt(pos) != '$')</span>
+<span class="fc bfc" id="L912" title="All 6 branches covered.">		if (justAfterALetter &amp;&amp; s.charAt(pos) != '%' &amp;&amp; s.charAt(pos) != '$')</span>
 <span class="fc" id="L913">			return null;</span>
 
 <span class="fc" id="L915">		final String fname = functionsSet.getLonguestMatchStartingIn(s, pos);</span>
