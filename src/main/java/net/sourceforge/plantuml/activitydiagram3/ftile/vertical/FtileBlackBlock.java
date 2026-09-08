@@ -55,8 +55,8 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 
 public class FtileBlackBlock extends AbstractFtile {
@@ -95,7 +95,7 @@ public class FtileBlackBlock extends AbstractFtile {
 	}
 
 	private StyleQuery getSignature() {
-		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.activityBar);
+		return StyleQueries.ACTIVITYDIAG_ACTIVITYBAR;
 	}
 
 	public void drawU(UGraphic ug) {

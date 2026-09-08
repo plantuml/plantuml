@@ -46,8 +46,8 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 
@@ -64,7 +64,7 @@ public class PlayerFrame {
 	}
 
 	private StyleQuery getStyleSignature() {
-		return StyleQuery.of3(SName.root, SName.element, SName.timingDiagram);
+		return StyleQueries.TIMINGDIAG;
 	}
 
 	private HColor getLineColor() {

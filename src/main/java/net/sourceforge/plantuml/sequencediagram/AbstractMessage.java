@@ -45,9 +45,9 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.style.WithStyle;
 import net.sourceforge.plantuml.url.Url;
@@ -73,8 +73,7 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.arrow)
-				.withStereotype(stereotype);
+		return StyleQueries.SEQUENCEDIAG_ARROW.withStereotype(stereotype);
 	}
 
 	private final Display label;

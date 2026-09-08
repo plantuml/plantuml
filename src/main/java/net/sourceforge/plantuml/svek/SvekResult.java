@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 
 public final class SvekResult implements IEntityImage {
@@ -117,7 +118,7 @@ public final class SvekResult implements IEntityImage {
 	// Duplicate SvekResult / GeneralImageBuilder
 	public HColor getBackcolor() {
 		final Style style = dotData.getSkinParam().getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of3(SName.root, SName.document));
+				.getMergedStyle(StyleQueries.DOCUMENT);
 		return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
 	}
 

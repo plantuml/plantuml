@@ -47,8 +47,8 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.sequencediagram.teoz.CommonTile;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 
 public class LinkAnchor {
@@ -96,8 +96,7 @@ public class LinkAnchor {
 		final double ymin = Math.min(y1, y2);
 		final double ymax = Math.max(y1, y2);
 
-		final StyleQuery signature = StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram,
-				SName.arrow);
+		final StyleQuery signature = StyleQueries.SEQUENCEDIAG_ARROW;
 		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(signature);
 
 		final HColor color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());

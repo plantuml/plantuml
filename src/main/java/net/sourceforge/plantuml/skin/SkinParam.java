@@ -93,11 +93,10 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.LengthAdjust;
 import net.sourceforge.plantuml.style.NoStyleAvailableException;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleLoader;
-import net.sourceforge.plantuml.style.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
@@ -315,7 +314,7 @@ public class SkinParam implements ISkinParam {
 		if (result != null)
 			return result;
 
-		final Style style = getCurrentStyleBuilder().getMergedStyle(StyleQuery.of3(SName.root, SName.document));
+		final Style style = getCurrentStyleBuilder().getMergedStyle(StyleQueries.DOCUMENT);
 		return style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 	}
 

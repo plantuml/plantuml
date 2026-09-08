@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.timingdiagram.graphic.Panels;
 import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrame;
@@ -128,7 +129,7 @@ public abstract class Player {
 			return TextBlockUtils.EMPTY_TEXT_BLOCK;
 		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam,
 				skinParam.getCurrentStyleBuilder()
-						.getMergedStyle(StyleQuery.of3(SName.root, SName.element, SName.timingDiagram)));
+						.getMergedStyle(StyleQueries.TIMINGDIAG));
 		return title.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);
 	}
 

@@ -52,4 +52,39 @@ public final class StyleQueries {
 	public static final StyleQuery ACTIVITYDIAG_NOTE = StyleQuery.of3(SName.root, SName.element,
 			SName.activityDiagram, SName.note);
 
+	public static final StyleQuery ACTIVITYDIAG_CIRCLE = StyleQuery.of3(SName.root, SName.element,
+			SName.activityDiagram, SName.circle);
+
+	public static final StyleQuery ACTIVITYDIAG_SWIMLANE = StyleQuery.of3(SName.root, SName.element,
+			SName.activityDiagram, SName.swimlane);
+
+	public static final StyleQuery ACTIVITYDIAG_GOTO = StyleQuery.of3(SName.root, SName.element,
+			SName.activityDiagram, SName.goto_);
+
+	public static final StyleQuery ACTIVITYDIAG_ACTIVITYBAR = StyleQuery.of3(SName.root, SName.element,
+			SName.activityDiagram, SName.activityBar);
+
+	/** No sub-element -- the diagram's own root style, e.g. a background rectangle. */
+	public static final StyleQuery DOCUMENT = StyleQuery.of3(SName.root, SName.document);
+
+	public static final StyleQuery GITDIAG = StyleQuery.of3(SName.root, SName.element, SName.gitDiagram);
+
+	public static final StyleQuery STATEDIAG_STATE = StyleQuery.of3(SName.root, SName.element, SName.stateDiagram,
+			SName.state);
+
+	public static final StyleQuery SEQUENCEDIAG_ARROW = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.arrow);
+
+	/** No sub-element -- the diagram's own root style. */
+	public static final StyleQuery TIMINGDIAG = StyleQuery.of3(SName.root, SName.element, SName.timingDiagram);
+
+	public static final StyleQuery CHENEER_ENTITY = StyleQuery.of3(SName.root, SName.element, SName.chenEerDiagram,
+			SName.chenEntity);
+
+	public static final StyleQuery CHENEER_ATTRIBUTE = StyleQuery.of3(SName.root, SName.element,
+			SName.chenEerDiagram, SName.chenAttribute);
+
+	public static final StyleQuery CHENEER_CIRCLE = StyleQuery.of3(SName.root, SName.element, SName.chenEerDiagram,
+			SName.circle);
+
 }

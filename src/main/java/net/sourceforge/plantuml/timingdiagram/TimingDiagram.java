@@ -64,8 +64,8 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
 import net.sourceforge.plantuml.timingdiagram.graphic.Panels;
@@ -114,7 +114,7 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 	}
 
 	private StyleQuery getStyleSignature() {
-		return StyleQuery.of3(SName.root, SName.element, SName.timingDiagram);
+		return StyleQueries.TIMINGDIAG;
 	}
 
 	private HColor black() {

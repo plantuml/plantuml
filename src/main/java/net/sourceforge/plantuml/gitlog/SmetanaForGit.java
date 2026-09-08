@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.gitlog;
 
+import net.sourceforge.plantuml.style.StyleQueries;
 import static gen.lib.cgraph.attr__c.agsafeset;
 import static gen.lib.cgraph.edge__c.agedge;
 import static gen.lib.cgraph.graph__c.agopen;
@@ -62,9 +63,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleQuery;
 import smetana.core.CString;
 import smetana.core.Globals;
 
@@ -86,7 +85,7 @@ public class SmetanaForGit {
 
 	private Style getStyle() {
 		return skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of3(SName.root, SName.element, SName.gitDiagram));
+				.getMergedStyle(StyleQueries.GITDIAG);
 	}
 
 	private HColor arrowColor() {

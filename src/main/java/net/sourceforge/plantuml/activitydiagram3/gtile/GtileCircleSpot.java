@@ -50,8 +50,8 @@ import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.skin.SkinParamUtils;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 
 public class GtileCircleSpot extends AbstractGtile {
@@ -64,7 +64,7 @@ public class GtileCircleSpot extends AbstractGtile {
 	private double shadowing;
 
 	private StyleQuery getDefaultStyleDefinitionCircle() {
-		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.circle);
+		return StyleQueries.ACTIVITYDIAG_CIRCLE;
 	}
 
 	public GtileCircleSpot(StringBounder stringBounder, ISkinParam skinParam, HColor backColor, Swimlane swimlane,

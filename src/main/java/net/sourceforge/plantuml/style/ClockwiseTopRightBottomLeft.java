@@ -39,6 +39,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.style.StyleQueries;
 
 public class ClockwiseTopRightBottomLeft {
 
@@ -142,7 +143,7 @@ public class ClockwiseTopRightBottomLeft {
 	}
 
 	public static ClockwiseTopRightBottomLeft marginForDocument(StyleBuilder styleBuilder) {
-		final Style style = styleBuilder.getMergedStyle(StyleQuery.of3(SName.root, SName.document));
+		final Style style = styleBuilder.getMergedStyle(StyleQueries.DOCUMENT);
 		return style.getMargin();
 	}
 

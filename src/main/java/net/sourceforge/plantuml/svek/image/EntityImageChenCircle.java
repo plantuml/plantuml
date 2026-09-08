@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -102,13 +103,12 @@ public class EntityImageChenCircle extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of3(SName.root, SName.element, SName.chenEerDiagram, SName.circle);
+		return StyleQueries.CHENEER_CIRCLE;
 	}
 
 	private static Style getStyle(Entity group, ISkinParam skinParam) {
-		return skinParam.getCurrentStyleBuilder().getMergedStyle(
-				StyleQuery.of3(SName.root, SName.element, SName.chenEerDiagram, SName.circle)
-						.withStereotype(group.getStereotype()));
+		return skinParam.getCurrentStyleBuilder()
+				.getMergedStyle(StyleQueries.CHENEER_CIRCLE.withStereotype(group.getStereotype()));
 	}
 
 	private static Style getStyleTitle(Entity group, ISkinParam skinParam) {

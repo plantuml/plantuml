@@ -80,6 +80,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.image.EntityImageClass;
 import net.sourceforge.plantuml.svek.image.EntityImageNote;
@@ -201,7 +202,7 @@ public final class GraphvizImageBuilder {
 	// Duplicate SvekResult / GeneralImageBuilder
 	private HColor getBackcolor() {
 		final Style style = dotData.getSkinParam().getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of3(SName.root, SName.document));
+				.getMergedStyle(StyleQueries.DOCUMENT);
 		return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
 	}
 

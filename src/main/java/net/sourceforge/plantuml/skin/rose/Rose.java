@@ -57,8 +57,8 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 
 public class Rose {
@@ -298,8 +298,7 @@ public class Rose {
 
 		final ArrowDirection arrowDirection = config.getArrowDirection();
 
-		final StyleQuery signature = StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram,
-				SName.arrow);
+		final StyleQuery signature = StyleQueries.SEQUENCEDIAG_ARROW;
 		final Style textStyle = param.getCurrentStyleBuilder().getMergedStyle(signature);
 		final String value = textStyle.value(PName.HorizontalAlignment).asString();
 		HorizontalAlignment messageHorizontalAlignment = textStyle.getHorizontalAlignment();
