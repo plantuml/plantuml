@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="303px" preserveAspectRatio="none" style="width:240px;height:303px;background:#FFFFFF;" version="1.1" viewBox="0 0 240 303" width="240px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster a_$a-->
+    <g class="cluster" data-qualified-name="a_.a" data-source-line="1" id="ent0001">
+      <path d="M31,12 L63.15,12 A3.75,3.75 0 0 1 65.65,14.5 L72.65,32 L222,32 A2.5,2.5 0 0 1 224.5,34.5 L224.5,228.5 A2.5,2.5 0 0 1 222,231 L31,231 A2.5,2.5 0 0 1 28.5,228.5 L28.5,14.5 A2.5,2.5 0 0 1 31,12" fill="#FF0" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="28.5" x2="72.65" y1="32" y2="32"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="31.15" x="32.5" y="24.889">a_$a</text>
+    </g>
+    <!--cluster java-->
+    <g class="cluster" data-qualified-name="a_.a.java" data-source-line="3" id="ent0004">
+      <path d="M79,53 L105.725,53 A3.75,3.75 0 0 1 108.225,55.5 L115.225,73 L206,73 A2.5,2.5 0 0 1 208.5,75.5 L208.5,212.5 A2.5,2.5 0 0 1 206,215 L79,215 A2.5,2.5 0 0 1 76.5,212.5 L76.5,55.5 A2.5,2.5 0 0 1 79,53" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="76.5" x2="115.225" y1="73" y2="73"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="25.725" x="80.5" y="65.889">java</text>
+    </g>
+    <!--cluster lang-->
+    <g class="cluster" data-qualified-name="a_.a.java.lang" data-source-line="2" id="ent0002">
+      <path d="M95,94 L122.512,94 A3.75,3.75 0 0 1 125.012,96.5 L132.013,114 L190,114 A2.5,2.5 0 0 1 192.5,116.5 L192.5,196.5 A2.5,2.5 0 0 1 190,199 L95,199 A2.5,2.5 0 0 1 92.5,196.5 L92.5,96.5 A2.5,2.5 0 0 1 95,94" fill="#FFF" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="92.5" x2="132.013" y1="114" y2="114"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.512" x="96.5" y="106.889">lang</text>
+    </g>
+    <!--class dummy$2-->
+    <g class="entity" data-qualified-name="dummy.2" data-source-line="6" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="93.425" x="6" y="239"/>
+      <ellipse cx="21" cy="255" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="260">C</text>
+      <text fill="#000" font-size="14" textLength="61.425" x="35" y="258.889">dummy$2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="98.425" y1="271" y2="271"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="98.425" y1="279" y2="279"/>
+    </g>
+    <!--class foo$1-->
+    <g class="entity" data-qualified-name="a_.a.java.lang.foo.1" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67" x="109" y="135"/>
+      <ellipse cx="124" cy="151" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="119" y="156">C</text>
+      <text fill="#000" font-size="14" textLength="35" x="138" y="154.889">foo$1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="110" x2="175" y1="167" y2="167"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="110" x2="175" y1="175" y2="175"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="52.5,238.703,56.5,229.703,52.5,233.703,48.5,229.703,52.5,238.703" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M52.5,231.225 C52.5,231.314 52.5,231.403 52.5,231.492 C52.5,231.848 52.5,232.203 52.5,232.555 C52.5,233.261 52.5,233.959 52.5,234.651 C52.5,236.033 52.5,232.386 52.5,233.703" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

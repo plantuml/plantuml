@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
++package "Hello" as uid <<Frame>> {
+  class World
+}
+@enduml
+
+/' This is the "correct" code as mentioned
+in issue #2846. The output for this is in
+correct_code.png.
+'/

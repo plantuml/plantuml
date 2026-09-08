@@ -1,0 +1,27 @@
+---
+output: svg
+expected-description: (2 entities)
+---
+@startuml
+package a_$a #yellow {
+  package java.lang #white {
+    class foo$1
+  }
+}
+a_$a --> dummy$2
+@enduml
+
+/' Regression introduced by the fix for issue #2846 (PR #2874, commit
+350eb1e0bc69): CODE_BAREWORD in CommandPackage.java ("[%pLN_.]*") dropped
+support for '$' in an unquoted, no-"as" package identifier, unlike the
+permissive NAME group it replaced and unlike the '$'-inclusive identifier
+regex used elsewhere for entities (see
+CommandLinkClass.getClassIdentifier(), "[%pLN_$]+").
+
+With the bug, "package a_$a { ... }" only captured "a_" as the package's
+code, while the later reference "a_$a --> dummy$2" resolved via the
+(unaffected) general entity-identifier regex to the full "a_$a" - a
+different code from the package's. This split what should be a single
+package into two entities: a package named "a_" plus a stray class
+"a_$a", growing the diagram from 2 leaf entities to 3.
+'/
