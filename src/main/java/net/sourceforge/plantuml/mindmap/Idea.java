@@ -99,7 +99,7 @@ class Idea {
 	/**
 	 * Resolves this element's style, cascading down from ancestors' starred ("{@code * }")
 	 * declarations. A nearer ancestor's matching declaration always beats a farther ancestor's --
-	 * see {@link net.sourceforge.plantuml.style.Specificity}'s own javadoc for why each cascade
+	 * see {@link net.sourceforge.plantuml.style.value.Specificity}'s own javadoc for why each cascade
 	 * step is simply one strictly-decreasing rank (0 at this element's own level) rather than a
 	 * magnitude-multiplied constant.
 	 */

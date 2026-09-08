@@ -53,6 +53,8 @@ import net.sourceforge.plantuml.style.parser.MergedStyleNode;
 import net.sourceforge.plantuml.style.parser.RawStyleParser;
 import net.sourceforge.plantuml.style.parser.RawStyleSheet;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
+import net.sourceforge.plantuml.style.value.Value;
+import net.sourceforge.plantuml.style.value.ValueImpl;
 import net.sourceforge.plantuml.teavm.EmbeddedResources;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.BlocLines;

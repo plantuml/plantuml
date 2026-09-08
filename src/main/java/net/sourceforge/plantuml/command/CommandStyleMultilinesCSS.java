@@ -33,21 +33,19 @@
  *
  *
  */
-package net.sourceforge.plantuml.style;
+package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.annotation.Explain;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.CommandMultilines2;
-import net.sourceforge.plantuml.command.MultilinesStrategy;
-import net.sourceforge.plantuml.command.ParserPass;
-import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.skin.SkinParam;
+import net.sourceforge.plantuml.style.NoStyleAvailableException;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleLoader;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.utils.BlocLines;
 

@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
 import java.io.IOException;
 import java.util.EnumMap;
 import java.util.Map;
@@ -15,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontFace;
+import net.sourceforge.plantuml.style.value.Value;
+import net.sourceforge.plantuml.style.value.ValueImpl;
 import test.utils.PlantUmlTestUtils;
 
 /**

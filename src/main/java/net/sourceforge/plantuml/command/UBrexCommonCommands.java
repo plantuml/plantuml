@@ -42,9 +42,6 @@ import net.sourceforge.plantuml.classdiagram.command.CommandHideShowByVisibility
 import net.sourceforge.plantuml.classdiagram.command.CommandNamespaceSeparator;
 import net.sourceforge.plantuml.sequencediagram.command.CommandSkin;
 import net.sourceforge.plantuml.statediagram.command.CommandHideEmptyDescription;
-import net.sourceforge.plantuml.style.CommandStyleImport;
-import net.sourceforge.plantuml.style.CommandStyleMultilinesCSS;
-import net.sourceforge.plantuml.style.CommandStyleSingleLineCSS;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
 public final class UBrexCommonCommands {

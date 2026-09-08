@@ -33,7 +33,7 @@
  *
  *
  */
-package net.sourceforge.plantuml.style;
+package net.sourceforge.plantuml.command;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,9 +42,6 @@ import java.net.MalformedURLException;
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.annotation.Explain;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.ParserPass;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;

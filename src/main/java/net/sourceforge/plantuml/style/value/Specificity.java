@@ -33,7 +33,7 @@
  *
  *
  */
-package net.sourceforge.plantuml.style;
+package net.sourceforge.plantuml.style.value;
 
 /**
  * How specific a style declaration is, modeled the way real CSS specificity actually works: an

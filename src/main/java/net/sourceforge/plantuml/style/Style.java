@@ -58,6 +58,11 @@ import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.style.value.Specificity;
+import net.sourceforge.plantuml.style.value.Value;
+import net.sourceforge.plantuml.style.value.ValueColor;
+import net.sourceforge.plantuml.style.value.ValueImpl;
+import net.sourceforge.plantuml.style.value.ValueNull;
 
 public class Style {
 

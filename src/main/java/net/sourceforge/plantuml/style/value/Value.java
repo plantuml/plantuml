@@ -33,34 +33,36 @@
  *
  *
  */
-package net.sourceforge.plantuml.style;
+package net.sourceforge.plantuml.style.value;
 
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.font.UFontFace;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 
-public class ValueColor extends ValueAbstract {
+public interface Value {
 
-	private final HColor color;
-	private final Specificity specificity;
+	public String asString();
 
-	@Override
-	public String toString() {
-		return color.toString();
-	}
+	public HColor asColor(HColorSet set);
 
-	public ValueColor(HColor color, Specificity specificity) {
-		this.color = color;
-		this.specificity = specificity;
-	}
+	public int asInt();
 
-	@Override
-	public HColor asColor(HColorSet set) {
-		return color;
-	}
+	public int asIntButMinusOneIfError();
 
-	@Override
-	public Specificity getSpecificity() {
-		return specificity;
-	}
+	public double asDouble();
+	
+	public double asDoubleDefaultTo(double defaultValue);
+
+	public boolean asBoolean();
+
+	/**
+	 * Returns the font face (weight + italic axis) represented by this value.
+	 */
+	public UFontFace asFontFace();
+
+	public HorizontalAlignment asHorizontalAlignment();
+
+	public Specificity getSpecificity();
 
 }

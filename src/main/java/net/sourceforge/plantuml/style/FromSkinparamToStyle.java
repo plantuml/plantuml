@@ -44,6 +44,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import net.sourceforge.plantuml.style.value.Value;
+import net.sourceforge.plantuml.style.value.ValueImpl;
+
 public class FromSkinparamToStyle {
 	// ::remove file when __HAXE__
 
