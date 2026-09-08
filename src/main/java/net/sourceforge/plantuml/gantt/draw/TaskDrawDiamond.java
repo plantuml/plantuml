@@ -58,9 +58,9 @@ import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 
 public class TaskDrawDiamond extends AbstractTaskDraw {
@@ -72,7 +72,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 
 	@Override
 	StyleQuery getStyleQuery() {
-		return StyleQuery.of3(SName.root, SName.element, SName.ganttDiagram, SName.milestone);
+		return StyleQueries.GANTTDIAG_MILESTONE;
 	}
 
 	private double getYNotePosition(StringBounder stringBounder) {

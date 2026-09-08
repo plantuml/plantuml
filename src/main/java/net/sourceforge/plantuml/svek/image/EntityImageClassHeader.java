@@ -64,6 +64,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.HeaderLayout;
@@ -194,31 +195,31 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 	private StyleQuery spotStyleSignature(LeafType leafType) {
 		switch (leafType) {
 		case ANNOTATION:
-			return StyleQuery.of3(SName.root, SName.element, SName.spot, SName.spotAnnotation);
+			return StyleQueries.SPOT_ANNOTATION;
 		case ABSTRACT_CLASS:
-			return StyleQuery.of3(SName.root, SName.element, SName.spot, SName.spotAbstractClass);
+			return StyleQueries.SPOT_ABSTRACT_CLASS;
 		case CLASS:
-			return StyleQuery.of3(SName.root, SName.element, SName.spot, SName.spotClass);
+			return StyleQueries.SPOT_CLASS;
 		case INTERFACE:
-			return StyleQuery.of3(SName.root, SName.element, SName.spot, SName.spotInterface);
+			return StyleQueries.SPOT_INTERFACE;
 		case ENUM:
-			return StyleQuery.of3(SName.root, SName.element, SName.spot, SName.spotEnum);
+			return StyleQueries.SPOT_ENUM;
 		case ENTITY:
-			return StyleQuery.of3(SName.root, SName.element, SName.spot, SName.spotEntity);
+			return StyleQueries.SPOT_ENTITY;
 		case PROTOCOL:
-			return StyleQuery.of3(SName.root, SName.element, SName.spot, SName.spotProtocol);
+			return StyleQueries.SPOT_PROTOCOL;
 		case STRUCT:
-			return StyleQuery.of3(SName.root, SName.element, SName.spot, SName.spotStruct);
+			return StyleQueries.SPOT_STRUCT;
 		case EXCEPTION:
-			return StyleQuery.of3(SName.root, SName.element, SName.spot, SName.spotException);
+			return StyleQueries.SPOT_EXCEPTION;
 		case METACLASS:
-			return StyleQuery.of3(SName.root, SName.element, SName.spot, SName.spotMetaClass);
+			return StyleQueries.SPOT_META_CLASS;
 		case STEREOTYPE:
-			return StyleQuery.of3(SName.root, SName.element, SName.spot, SName.spotStereotype);
+			return StyleQueries.SPOT_STEREOTYPE;
 		case DATACLASS:
-			return StyleQuery.of3(SName.root, SName.element, SName.spot, SName.spotDataClass);
+			return StyleQueries.SPOT_DATA_CLASS;
 		case RECORD:
-			return StyleQuery.of3(SName.root, SName.element, SName.spot, SName.spotRecord);
+			return StyleQueries.SPOT_RECORD;
 		}
 		throw new IllegalStateException();
 	}

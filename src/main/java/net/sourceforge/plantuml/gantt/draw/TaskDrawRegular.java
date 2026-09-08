@@ -67,7 +67,6 @@ import net.sourceforge.plantuml.sequencediagram.graphic.Segment;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleQueries;
@@ -293,7 +292,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		}
 
 		final HColor backUndone = getStyleBuilder()
-				.getMergedStyle(StyleQuery.of3(SName.root, SName.element, SName.ganttDiagram, SName.undone))
+				.getMergedStyle(StyleQueries.GANTTDIAG_UNDONE)
 				.value(PName.BackGroundColor).asColor(getColorSet());
 
 		final RectangleTask rectangleTask = new RectangleTask(startPos, endPos, round, getCompletion(), off);

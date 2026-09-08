@@ -64,6 +64,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.url.Url;
@@ -117,7 +118,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	abstract StyleQuery getStyleQuery();
 
 	private StyleQuery getStyleSignatureUnstarted() {
-		return StyleQuery.of3(SName.root, SName.element, SName.ganttDiagram, SName.task, SName.unstarted);
+		return StyleQueries.GANTTDIAG_TASK_UNSTARTED;
 	}
 
 	final protected HColor getLineColor() {

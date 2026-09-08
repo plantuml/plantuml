@@ -118,4 +118,103 @@ public final class StyleQueries {
 	public static final StyleQuery CHARTDIAG_SCATTER = StyleQuery.of3(SName.root, SName.element, SName.chartDiagram,
 			SName.scatter);
 
+	/** No sub-element -- the diagram's own root style. */
+	public static final StyleQuery CHARTDIAG = StyleQuery.of3(SName.root, SName.element, SName.chartDiagram);
+
+	public static final StyleQuery CHARTDIAG_LINE = StyleQuery.of3(SName.root, SName.element, SName.chartDiagram,
+			SName.line);
+
+	public static final StyleQuery CHARTDIAG_AREA = StyleQuery.of3(SName.root, SName.element, SName.chartDiagram,
+			SName.area);
+
+	public static final StyleQuery CHARTDIAG_GRID = StyleQuery.of3(SName.root, SName.element, SName.chartDiagram,
+			SName.grid);
+
+	public static final StyleQuery CHARTDIAG_LEGEND = StyleQuery.of3(SName.root, SName.element, SName.chartDiagram,
+			SName.legend);
+
+	public static final StyleQuery CHARTDIAG_ANNOTATION = StyleQuery.of3(SName.root, SName.element,
+			SName.chartDiagram, SName.annotation);
+
+	public static final StyleQuery GANTTDIAG_TIMELINE = StyleQuery.of3(SName.root, SName.element,
+			SName.ganttDiagram, SName.timeline);
+
+	public static final StyleQuery GANTTDIAG_ARROW = StyleQuery.of3(SName.root, SName.element, SName.ganttDiagram,
+			SName.arrow);
+
+	public static final StyleQuery GANTTDIAG_UNDONE = StyleQuery.of3(SName.root, SName.element, SName.ganttDiagram,
+			SName.undone);
+
+	public static final StyleQuery GANTTDIAG_MILESTONE = StyleQuery.of3(SName.root, SName.element,
+			SName.ganttDiagram, SName.milestone);
+
+	public static final StyleQuery GANTTDIAG_TASK_UNSTARTED = StyleQuery.of3(SName.root, SName.element,
+			SName.ganttDiagram, SName.task, SName.unstarted);
+
+	public static final StyleQuery GANTTDIAG_SEPARATOR = StyleQuery.of3(SName.root, SName.element,
+			SName.ganttDiagram, SName.separator);
+
+	/**
+	 * The class-header icon shown for each classifier kind ({@code class}, {@code interface}, an
+	 * annotation, ...) -- one constant per {@link SName} the header can carry, so the enumeration
+	 * in {@code EntityImageClassHeader} reads as a closed set rather than 13 near-identical
+	 * one-off literals.
+	 */
+	public static final StyleQuery SPOT_ANNOTATION = StyleQuery.of3(SName.root, SName.element, SName.spot,
+			SName.spotAnnotation);
+
+	public static final StyleQuery SPOT_ABSTRACT_CLASS = StyleQuery.of3(SName.root, SName.element, SName.spot,
+			SName.spotAbstractClass);
+
+	public static final StyleQuery SPOT_CLASS = StyleQuery.of3(SName.root, SName.element, SName.spot, SName.spotClass);
+
+	public static final StyleQuery SPOT_INTERFACE = StyleQuery.of3(SName.root, SName.element, SName.spot,
+			SName.spotInterface);
+
+	public static final StyleQuery SPOT_ENUM = StyleQuery.of3(SName.root, SName.element, SName.spot, SName.spotEnum);
+
+	public static final StyleQuery SPOT_ENTITY = StyleQuery.of3(SName.root, SName.element, SName.spot,
+			SName.spotEntity);
+
+	public static final StyleQuery SPOT_PROTOCOL = StyleQuery.of3(SName.root, SName.element, SName.spot,
+			SName.spotProtocol);
+
+	public static final StyleQuery SPOT_STRUCT = StyleQuery.of3(SName.root, SName.element, SName.spot,
+			SName.spotStruct);
+
+	public static final StyleQuery SPOT_EXCEPTION = StyleQuery.of3(SName.root, SName.element, SName.spot,
+			SName.spotException);
+
+	public static final StyleQuery SPOT_META_CLASS = StyleQuery.of3(SName.root, SName.element, SName.spot,
+			SName.spotMetaClass);
+
+	public static final StyleQuery SPOT_STEREOTYPE = StyleQuery.of3(SName.root, SName.element, SName.spot,
+			SName.spotStereotype);
+
+	public static final StyleQuery SPOT_DATA_CLASS = StyleQuery.of3(SName.root, SName.element, SName.spot,
+			SName.spotDataClass);
+
+	public static final StyleQuery SPOT_RECORD = StyleQuery.of3(SName.root, SName.element, SName.spot,
+			SName.spotRecord);
+
+	/**
+	 * The visibility-modifier icon shown next to a class member ({@code +}, {@code -}, {@code #},
+	 * {@code ~}, or the IE-notation mandatory marker) -- another closed set, mirroring the
+	 * {@code SPOT_*} family above for {@code VisibilityModifier}.
+	 */
+	public static final StyleQuery VISIBILITYICON_IE_MANDATORY = StyleQuery.of3(SName.root, SName.element,
+			SName.visibilityIcon, SName.IEMandatory);
+
+	public static final StyleQuery VISIBILITYICON_PUBLIC = StyleQuery.of3(SName.root, SName.element,
+			SName.visibilityIcon, SName.public_);
+
+	public static final StyleQuery VISIBILITYICON_PRIVATE = StyleQuery.of3(SName.root, SName.element,
+			SName.visibilityIcon, SName.private_);
+
+	public static final StyleQuery VISIBILITYICON_PROTECTED = StyleQuery.of3(SName.root, SName.element,
+			SName.visibilityIcon, SName.protected_);
+
+	public static final StyleQuery VISIBILITYICON_PACKAGE = StyleQuery.of3(SName.root, SName.element,
+			SName.visibilityIcon, SName.package_);
+
 }

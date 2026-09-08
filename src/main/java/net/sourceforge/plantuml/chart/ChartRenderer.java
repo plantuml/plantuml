@@ -950,7 +950,7 @@ public class ChartRenderer {
 	}
 
 	private StyleQuery getStyleSignature() {
-		return StyleQuery.of3(SName.root, SName.element, SName.chartDiagram);
+		return StyleQueries.CHARTDIAG;
 	}
 
 	private StyleQuery getBarStyleQuery() {
@@ -979,7 +979,7 @@ public class ChartRenderer {
 	}
 
 	private StyleQuery getLineStyleQuery() {
-		return StyleQuery.of3(SName.root, SName.element, SName.chartDiagram, SName.line);
+		return StyleQueries.CHARTDIAG_LINE;
 	}
 
 	private Style getLineStyle(ChartSeries series) {
@@ -1003,7 +1003,7 @@ public class ChartRenderer {
 	}
 
 	private StyleQuery getAreaStyleQuery() {
-		return StyleQuery.of3(SName.root, SName.element, SName.chartDiagram, SName.area);
+		return StyleQueries.CHARTDIAG_AREA;
 	}
 
 	private Style getAreaStyle(ChartSeries series) {
@@ -1065,15 +1065,15 @@ public class ChartRenderer {
 	}
 
 	private StyleQuery getGridStyleSignature() {
-		return StyleQuery.of3(SName.root, SName.element, SName.chartDiagram, SName.grid);
+		return StyleQueries.CHARTDIAG_GRID;
 	}
 
 	private StyleQuery getLegendStyleSignature() {
-		return StyleQuery.of3(SName.root, SName.element, SName.chartDiagram, SName.legend);
+		return StyleQueries.CHARTDIAG_LEGEND;
 	}
 
 	private StyleQuery getAnnotationStyleSignature() {
-		return StyleQuery.of3(SName.root, SName.element, SName.chartDiagram, SName.annotation);
+		return StyleQueries.CHARTDIAG_ANNOTATION;
 	}
 
 	private XDimension2D calculateLegendDimension(StringBounder stringBounder) {
