@@ -69,10 +69,10 @@ public final class StyleQuery {
 
 	public static StyleQuery activityArrow() {
 		return StyleQuery
-				.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.arrow));
+				.of3(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.arrow);
 	}
 
-	public static StyleQuery of3(Collection<SName> names) {
+	public static StyleQuery of3(SName... names) {
 		final SortedSet<StyleAtom> atoms = new TreeSet<StyleAtom>();
 		for (SName name : names)
 			atoms.add(StyleAtom.of(name));
