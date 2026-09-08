@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.klimt.UGroup;
@@ -55,8 +54,8 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, getSkinParam().getDiagramType().getStyleName(),
-				SName.circle, SName.start));
+		return StyleQuery.of3(SName.root, SName.element, getSkinParam().getDiagramType().getStyleName(),
+				SName.circle, SName.start);
 	}
 
 	public EntityImageCircleStart(Entity entity) {

@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.wbs;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -78,30 +77,30 @@ final public class WElement {
 		if (level == 0)
 			if (shape == IdeaShape.NONE)
 				return StyleQuery
-						.of3(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode,
-								SName.boxless))
+						.of3(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode,
+								SName.boxless)
 						.withTOBECHANGED(stereotype).addLevel(level);
 			else
 				return StyleQuery
-						.of3(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode))
+						.of3(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode)
 						.withTOBECHANGED(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE && isLeaf())
 			return StyleQuery
-					.of3(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode,
-							SName.boxless))
+					.of3(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode,
+							SName.boxless)
 					.withTOBECHANGED(stereotype).addLevel(level);
 
 		if (isLeaf())
 			return StyleQuery
-					.of3(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode))
+					.of3(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode)
 					.withTOBECHANGED(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE)
-			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.boxless))
+			return StyleQuery.of3(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.boxless)
 					.withTOBECHANGED(stereotype).addLevel(level);
 
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.node))
+		return StyleQuery.of3(SName.root, SName.element, SName.wbsDiagram, SName.node)
 				.withTOBECHANGED(stereotype).addLevel(level);
 	}
 

@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -146,7 +145,7 @@ public class TimeConstraint {
 	}
 
 	private StyleQuery getStyleSignature() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.timingDiagram, SName.constraintArrow));
+		return StyleQuery.of3(SName.root, SName.element, SName.timingDiagram, SName.constraintArrow);
 	}
 
 	public double getConstraintHeight(StringBounder stringBounder) {

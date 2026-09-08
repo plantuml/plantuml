@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.klimt.CopyForegroundColorToBackgroundColor;
@@ -67,7 +66,7 @@ public class EntityImageAssociationPoint extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.classDiagram, SName.arrow))
+		return StyleQuery.of3(SName.root, SName.element, SName.classDiagram, SName.arrow)
 				.withTOBECHANGED(getStereo());
 	}
 

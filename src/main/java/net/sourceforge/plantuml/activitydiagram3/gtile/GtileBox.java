@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
@@ -89,11 +88,11 @@ public class GtileBox extends AbstractGtile {
 	private final Style style;
 
 	static public StyleQuery getStyleQuery() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.activity);
 	}
 
 	static public StyleQuery getDefaultStyleDefinitionArrow() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
 	final public LinkRendering getInLinkRendering() {

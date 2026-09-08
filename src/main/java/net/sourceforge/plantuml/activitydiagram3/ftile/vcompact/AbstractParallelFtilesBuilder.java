@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
@@ -72,11 +71,11 @@ public abstract class AbstractParallelFtilesBuilder {
 	protected final Colors colors;
 
 	public StyleQuery getStyleSignature() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.activity);
 	}
 
 	final public StyleQuery getStyleSignatureArrow() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
 	public AbstractParallelFtilesBuilder(ISkinParam skinParam, StringBounder stringBounder, List<Ftile> all,

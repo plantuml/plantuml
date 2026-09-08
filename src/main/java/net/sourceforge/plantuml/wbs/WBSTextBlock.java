@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.wbs;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBoxOld;
 import net.sourceforge.plantuml.asciiverse.ATable;
@@ -85,7 +84,7 @@ abstract class WBSTextBlock extends TextBlockMemoized implements AsciiBlock {
 	}
 
 	private Style getStyleUsed() {
-		final StyleQuery signature = StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.arrow))
+		final StyleQuery signature = StyleQuery.of3(SName.root, SName.element, SName.wbsDiagram, SName.arrow)
 				.addLevel(level).withTOBECHANGED(stereotype);
 		return styleBuilder.getMergedStyle(signature);
 	}

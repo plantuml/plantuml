@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -110,7 +109,7 @@ public final class SvekResult implements IEntityImage {
 
 	private StyleQuery getDefaultStyleDefinition(Stereotype stereotype) {
 		StyleQuery result = StyleQuery
-				.of3(Arrays.asList(SName.root, SName.element, dotData.geDiagramType().getStyleName(), SName.arrow));
+				.of3(SName.root, SName.element, dotData.geDiagramType().getStyleName(), SName.arrow);
 
 		return result.withTOBECHANGED(stereotype);
 	}
@@ -118,7 +117,7 @@ public final class SvekResult implements IEntityImage {
 	// Duplicate SvekResult / GeneralImageBuilder
 	public HColor getBackcolor() {
 		final Style style = dotData.getSkinParam().getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of3(Arrays.asList(SName.root, SName.document)));
+				.getMergedStyle(StyleQuery.of3(SName.root, SName.document));
 		return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
 	}
 

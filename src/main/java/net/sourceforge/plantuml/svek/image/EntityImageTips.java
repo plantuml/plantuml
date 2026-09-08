@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.Arrays;
 import java.util.Map;
 
 import net.sourceforge.plantuml.abel.Entity;
@@ -89,7 +88,7 @@ public class EntityImageTips extends AbstractEntityImage {
 	}
 
 	private StyleQuery getStyleQueryFor(Stereotype stereotype) {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, getStyleName(), SName.note))
+		return StyleQuery.of3(SName.root, SName.element, getStyleName(), SName.note)
 				.withTOBECHANGED(stereotype);
 	}
 

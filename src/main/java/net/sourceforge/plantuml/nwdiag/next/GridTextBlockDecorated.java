@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.nwdiag.next;
 
-import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -133,7 +132,7 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 	}
 
 	private StyleQuery getStyleDefinitionNetwork(SName sname) {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.nwdiagDiagram, sname));
+		return StyleQuery.of3(SName.root, SName.element, SName.nwdiagDiagram, sname);
 	}
 
 	private void drawNetworkTube(UGraphic ug) {

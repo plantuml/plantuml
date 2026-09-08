@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.gantt.draw;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.gantt.LabelStrategy;
 import net.sourceforge.plantuml.gantt.core.GArrowType;
@@ -114,7 +113,7 @@ public class TaskDrawSeparator implements TaskDraw {
 	}
 
 	private StyleQuery getStyleSignature() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.separator));
+		return StyleQuery.of3(SName.root, SName.element, SName.ganttDiagram, SName.separator);
 	}
 
 	private Style getStyle() {

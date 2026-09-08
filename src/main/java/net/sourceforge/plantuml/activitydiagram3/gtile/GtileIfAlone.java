@@ -74,7 +74,7 @@ public class GtileIfAlone extends GtileTopDown3 {
 	}
 
 	final static public StyleQuery getDefaultStyleDefinitionDiamond() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
 	}
 
 	@Override

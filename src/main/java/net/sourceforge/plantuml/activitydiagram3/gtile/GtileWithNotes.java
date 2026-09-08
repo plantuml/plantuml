@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
 
@@ -76,7 +75,7 @@ public class GtileWithNotes extends AbstractGtile {
 	private final double suppSpace = 20;
 
 	public StyleQuery getDefaultStyleDefinition() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.note));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.note);
 	}
 
 	@Override

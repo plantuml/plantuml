@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -126,7 +125,7 @@ public class Swimlanes implements TextBlock, Styleable {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.swimlane));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.swimlane);
 	}
 
 	public Swimlanes(ISkinParam skinParam, Pragma pragma) {
@@ -247,7 +246,7 @@ public class Swimlanes implements TextBlock, Styleable {
 
 			TextBlock full = root.createFtile(getFtileFactory(ug.getStringBounder()));
 			final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(
-					StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.goto_)));
+					StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.goto_));
 			final HColor gotoColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 			final boolean isDebug = Boolean.parseBoolean(skinParam.options().getValue(OptionKey.DEBUG));
 
@@ -269,7 +268,7 @@ public class Swimlanes implements TextBlock, Styleable {
 		TextBlock full = root.createGtile(skinParam, ug.getStringBounder());
 
 		final Style style = skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.goto_)));
+				.getMergedStyle(StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.goto_));
 		final HColor gotoColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final boolean isDebug = true;
 

@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.Link;
@@ -93,7 +92,7 @@ public class Kal implements UDrawable {
 		this.link = link;
 		this.skinParam = skinParam;
 		this.style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQuery
-				.of3(Arrays.asList(SName.root, SName.element, SName.classDiagram, SName.class_, SName.qualified)) //
+				.of3(SName.root, SName.element, SName.classDiagram, SName.class_, SName.qualified) //
 				.withTOBECHANGED(entity.getStereotype()) //
 				.with(entity.getStereostyles()));
 

@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.packetdiag;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.klimt.Fashion;
@@ -219,7 +218,7 @@ public class PacketBlock {
 
 	Style getStyle() {
 		return skinParam.getCurrentStyleBuilder().getMergedStyle(
-				StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.packetdiagDiagram, SName.rectangle)));
+				StyleQuery.of3(SName.root, SName.element, SName.packetdiagDiagram, SName.rectangle));
 	}
 
 	Fashion getFashion() {

@@ -41,7 +41,6 @@ import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
@@ -206,13 +205,13 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 	@Override
 	public final Style getStyle(SName param) {
 		return getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, param)));
+				.getMergedStyle(StyleQuery.of3(SName.root, SName.element, SName.ganttDiagram, param));
 	}
 
 	@Override
 	public final Style getStyle(SName param1, SName param2) {
 		return getCurrentStyleBuilder().getMergedStyle(
-				StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, param1, param2)));
+				StyleQuery.of3(SName.root, SName.element, SName.ganttDiagram, param1, param2));
 	}
 
 	public void closeDayOfWeek(DayOfWeek day, String task) {

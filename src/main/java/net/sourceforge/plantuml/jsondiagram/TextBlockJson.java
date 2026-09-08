@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.jsondiagram;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -139,15 +138,15 @@ public class TextBlockJson extends TextBlockMemoized {
 		final StyleQuery query;
 		if (header && highlighted != null)
 			query = StyleQuery
-					.of3(Arrays.asList(SName.root, SName.element, diagramType, SName.header, SName.node, SName.highlight))
+					.of3(SName.root, SName.element, diagramType, SName.header, SName.node, SName.highlight)
 					.withTOBECHANGED(highlighted.getStereotype());
 		else if (highlighted != null)
-			query = StyleQuery.of3(Arrays.asList(SName.root, SName.element, diagramType, SName.node, SName.highlight))
+			query = StyleQuery.of3(SName.root, SName.element, diagramType, SName.node, SName.highlight)
 					.withTOBECHANGED(highlighted.getStereotype());
 		else if (header)
-			query = StyleQuery.of3(Arrays.asList(SName.root, SName.element, diagramType, SName.header, SName.node));
+			query = StyleQuery.of3(SName.root, SName.element, diagramType, SName.header, SName.node);
 		else
-			query = StyleQuery.of3(Arrays.asList(SName.root, SName.element, diagramType, SName.node));
+			query = StyleQuery.of3(SName.root, SName.element, diagramType, SName.node);
 
 		return styleBuilder.getMergedStyle(query);
 	}
@@ -267,7 +266,7 @@ public class TextBlockJson extends TextBlockMemoized {
 
 		double y = 0;
 		final Style styleNode = styleBuilder
-				.getMergedStyle(StyleQuery.of3(Arrays.asList(SName.root, SName.element, diagramType, SName.node)));
+				.getMergedStyle(StyleQuery.of3(SName.root, SName.element, diagramType, SName.node));
 		final UGraphic ugNode = styleNode.applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet());
 		for (Line line : lines) {
 			final double heightOfRow = line.getHeightOfRow(stringBounder);
@@ -284,7 +283,7 @@ public class TextBlockJson extends TextBlockMemoized {
 		ugNode.apply(backColor.bg()).apply(backColor).draw(fullNodeRectangle);
 
 		final Style styleSeparator = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQuery
-				.of3(Arrays.asList(SName.root, SName.element, diagramType, SName.node, SName.separator)));
+				.of3(SName.root, SName.element, diagramType, SName.node, SName.separator));
 		final UGraphic ugSeparator = styleSeparator.applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet());
 
 		y = 0;
@@ -294,7 +293,7 @@ public class TextBlockJson extends TextBlockMemoized {
 			if (line.highlighted != null) {
 				final URectangle back = URectangle.build(trueWidth - 2, heightOfRow).rounded(4);
 				final Style styleNodeHighlight = styleBuilder.getMergedStyle(StyleQuery
-						.of3(Arrays.asList(SName.root, SName.element, diagramType, SName.node, SName.highlight))
+						.of3(SName.root, SName.element, diagramType, SName.node, SName.highlight)
 						.withTOBECHANGED(line.highlighted.getStereotype()));
 				final HColor cellBackColor = styleNodeHighlight.value(PName.BackGroundColor)
 						.asColor(skinParam.getIHtmlColorSet());

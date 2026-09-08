@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
@@ -96,11 +95,11 @@ public class FtileBoxOld extends AbstractFtile {
 	private final Style style;
 
 	static public StyleQuery getDefaultStyleDefinitionActivity() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.activity);
 	}
 
 	static public StyleQuery getDefaultStyleDefinitionArrow() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
 	final public LinkRendering getInLinkRendering() {

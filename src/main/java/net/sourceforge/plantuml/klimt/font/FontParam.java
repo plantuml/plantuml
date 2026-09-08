@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.klimt.font;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
@@ -190,21 +189,21 @@ public enum FontParam {
 
 	public StyleQuery getStyleDefinition(SName diagramType) {
 		if (this == FOOTER) {
-			return StyleQuery.of3(Arrays.asList(SName.root, SName.document, SName.footer));
+			return StyleQuery.of3(SName.root, SName.document, SName.footer);
 		}
 		if (this == HEADER) {
-			return StyleQuery.of3(Arrays.asList(SName.root, SName.document, SName.header));
+			return StyleQuery.of3(SName.root, SName.document, SName.header);
 		}
 		if (this == TITLE) {
-			return StyleQuery.of3(Arrays.asList(SName.root, SName.document, SName.title));
+			return StyleQuery.of3(SName.root, SName.document, SName.title);
 		}
 		if (this == CLASS_ATTRIBUTE) {
-			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.classDiagram, SName.class_));
+			return StyleQuery.of3(SName.root, SName.element, SName.classDiagram, SName.class_);
 		}
 		if (this == RECTANGLE || this == NODE) {
-			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.componentDiagram, SName.component));
+			return StyleQuery.of3(SName.root, SName.element, SName.componentDiagram, SName.component);
 		}
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, diagramType, SName.component));
+		return StyleQuery.of3(SName.root, SName.element, diagramType, SName.component);
 //		System.err.println("Warning " + this);
 //		throw new UnsupportedOperationException();
 	}

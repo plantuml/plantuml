@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.nwdiag.core;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
@@ -138,7 +137,7 @@ public class NwGroup implements NStackable {
 	}
 
 	private StyleQuery getStyleDefinition() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.nwdiagDiagram, SName.group));
+		return StyleQuery.of3(SName.root, SName.element, SName.nwdiagDiagram, SName.group);
 	}
 
 	public void drawGroup(UGraphic ug, MinMax size, ISkinParam skinParam) {

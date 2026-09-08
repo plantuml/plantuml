@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.svek;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -816,7 +815,7 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 
 	private StyleQuery getDefaultStyleDefinition(Stereotype stereotype) {
 		final StyleQuery result = StyleQuery
-				.of3(Arrays.asList(SName.root, SName.element, diagramType().getStyleName(), SName.arrow));
+				.of3(SName.root, SName.element, diagramType().getStyleName(), SName.arrow);
 
 		return result.withTOBECHANGED(stereotype);
 	}

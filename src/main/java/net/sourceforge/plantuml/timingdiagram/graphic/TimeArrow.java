@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.timingdiagram.graphic;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.decoration.WithLinkType;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -155,6 +154,6 @@ public class TimeArrow implements UDrawable {
 	}
 
 	private StyleQuery getStyleSignature() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.timingDiagram, SName.arrow));
+		return StyleQuery.of3(SName.root, SName.element, SName.timingDiagram, SName.arrow);
 	}
 }

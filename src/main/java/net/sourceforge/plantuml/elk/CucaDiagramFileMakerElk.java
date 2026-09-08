@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.elk;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.LinkedHashMap;
@@ -147,7 +146,7 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 
 	// Duplication from SvekEdge
 	final public StyleQuery getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
-		StyleQuery result = StyleQuery.of3(Arrays.asList(SName.root, SName.element, styleName, SName.arrow));
+		StyleQuery result = StyleQuery.of3(SName.root, SName.element, styleName, SName.arrow);
 		if (stereotype != null)
 			result = result.withTOBECHANGED(stereotype);
 

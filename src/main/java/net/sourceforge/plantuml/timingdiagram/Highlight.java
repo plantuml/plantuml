@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -73,7 +72,7 @@ public class Highlight {
 	}
 
 	private StyleQuery getStyleSignature() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.timingDiagram, SName.highlight));
+		return StyleQuery.of3(SName.root, SName.element, SName.timingDiagram, SName.highlight);
 	}
 
 	private Style getStyle() {

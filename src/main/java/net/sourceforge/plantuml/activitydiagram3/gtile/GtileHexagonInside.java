@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
@@ -63,7 +62,7 @@ public class GtileHexagonInside extends AbstractGtile {
 	protected final double shadowing;
 
 	final public StyleQuery getDefaultStyleDefinition() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
 	}
 
 	// FtileDiamondInside

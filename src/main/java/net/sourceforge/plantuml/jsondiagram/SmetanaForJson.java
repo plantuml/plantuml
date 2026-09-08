@@ -42,7 +42,6 @@ import static gen.lib.gvc.gvc__c.gvContext;
 import static gen.lib.gvc.gvlayout__c.gvLayoutJobs;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -118,12 +117,12 @@ public class SmetanaForJson {
 
 	private Style getStyleArrow() {
 		return skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of3(Arrays.asList(SName.root, SName.element, getDiagramType(), SName.arrow)));
+				.getMergedStyle(StyleQuery.of3(SName.root, SName.element, getDiagramType(), SName.arrow));
 	}
 
 	private Style getStyleNode() {
 		return skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of3(Arrays.asList(SName.root, SName.element, getDiagramType(), SName.node)));
+				.getMergedStyle(StyleQuery.of3(SName.root, SName.element, getDiagramType(), SName.node));
 	}
 
 	private ST_Agnode_s manageOneNode(Globals zz, JsonValue current, List<Highlighted> highlighted) {

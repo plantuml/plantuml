@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.gantt.draw;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.gantt.LabelStrategy;
 import net.sourceforge.plantuml.gantt.core.GArrowType;
@@ -142,7 +141,7 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 
 	@Override
 	StyleQuery getStyleQuery() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.task));
+		return StyleQuery.of3(SName.root, SName.element, SName.ganttDiagram, SName.task);
 	}
 
 	public void drawU(UGraphic ug) {

@@ -35,7 +35,6 @@
 package net.sourceforge.plantuml.filesdiagram;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -165,8 +164,8 @@ public class FEntry implements Iterable<FEntry> {
 
 	private Opale createOpale(ISkinParam skinParam) {
 
-		final StyleQuery signature = StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.filesDiagram,
-				SName.note));
+		final StyleQuery signature = StyleQuery.of3(SName.root, SName.element, SName.filesDiagram,
+				SName.note);
 		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(signature);
 
 		final FontConfiguration fc = FontConfiguration.create(skinParam, style);

@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import java.util.Arrays;
 import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
@@ -83,7 +82,7 @@ public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Stylea
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.note));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.note);
 	}
 
 	@Override

@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -95,19 +94,19 @@ public class VCompactFactory implements FtileFactory {
 	}
 
 	private StyleQuery getSignatureCircleEnd() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.end));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.end);
 	}
 
 	private StyleQuery getSignatureCircleStop() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.stop));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.stop);
 	}
 
 	private StyleQuery getSignatureCircleSpot() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.spot));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.spot);
 	}
 
 	private StyleQuery getSignatureCircleStart() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.start));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.start);
 	}
 
 	@Override

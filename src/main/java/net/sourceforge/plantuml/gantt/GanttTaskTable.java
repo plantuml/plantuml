@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.gantt;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -197,7 +196,7 @@ public final class GanttTaskTable {
 
 	private Style getStyle() {
 		return timelineStyle.getSkinParam().getCurrentStyleBuilder().getMergedStyle(
-				StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.timeline)));
+				StyleQuery.of3(SName.root, SName.element, SName.ganttDiagram, SName.timeline));
 	}
 
 	private FontConfiguration getFontConfiguration() {

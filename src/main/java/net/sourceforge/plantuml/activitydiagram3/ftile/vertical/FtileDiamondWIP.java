@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
@@ -75,7 +74,7 @@ abstract class FtileDiamondWIP extends AbstractFtile implements Styleable {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
 	}
 
 	final public Style getStyle() {

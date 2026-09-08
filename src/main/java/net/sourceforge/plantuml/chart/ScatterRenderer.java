@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.chart;
 
-import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -78,7 +77,7 @@ public class ScatterRenderer {
 	}
 
 	private StyleQuery getScatterStyleQuery() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.scatter));
+		return StyleQuery.of3(SName.root, SName.element, SName.chartDiagram, SName.scatter);
 	}
 
 	private Style getScatterStyle(ChartSeries series) {

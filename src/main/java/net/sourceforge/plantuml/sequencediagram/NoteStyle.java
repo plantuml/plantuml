@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.style.SName;
@@ -68,13 +67,13 @@ public enum NoteStyle {
 	public StyleQuery getStyleQuery() {
 		if (this == NoteStyle.HEXAGONAL)
 			return StyleQuery
-					.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.note, SName.hnote));
+					.of3(SName.root, SName.element, SName.sequenceDiagram, SName.note, SName.hnote);
 
 		if (this == NoteStyle.BOX)
 			return StyleQuery
-					.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.note, SName.rnote));
+					.of3(SName.root, SName.element, SName.sequenceDiagram, SName.note, SName.rnote);
 
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.note));
+		return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.note);
 
 	}
 

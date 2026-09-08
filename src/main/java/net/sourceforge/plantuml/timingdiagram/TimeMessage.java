@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
@@ -90,7 +89,7 @@ public class TimeMessage extends WithLinkType {
 	}
 
 	private StyleQuery getStyleSignature() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.timingDiagram, SName.arrow));
+		return StyleQuery.of3(SName.root, SName.element, SName.timingDiagram, SName.arrow);
 	}
 
 	public final Player getPlayer1() {

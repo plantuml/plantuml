@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.elk;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -139,7 +138,7 @@ public class MyElkEdge implements UDrawable {
 
 	private Style getStyle() {
 		final StyleQuery result = StyleQuery
-				.of3(Arrays.asList(SName.root, SName.element, diagram.getDiagramType().getStyleName(), SName.arrow))
+				.of3(SName.root, SName.element, diagram.getDiagramType().getStyleName(), SName.arrow)
 				.withTOBECHANGED(link.getStereotype());
 		return diagram.getSkinParam().getCurrentStyleBuilder().getMergedStyle(result);
 	}

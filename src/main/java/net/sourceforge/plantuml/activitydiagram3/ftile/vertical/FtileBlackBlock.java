@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
@@ -96,7 +95,7 @@ public class FtileBlackBlock extends AbstractFtile {
 	}
 
 	private StyleQuery getSignature() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activityBar));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.activityBar);
 	}
 
 	public void drawU(UGraphic ug) {

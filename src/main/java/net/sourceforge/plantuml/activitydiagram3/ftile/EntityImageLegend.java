@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -48,8 +47,8 @@ public class EntityImageLegend {
 
 	public static TextBlock create(Display note, ISkinParam skinParam) {
 
-		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQuery.of3(Arrays.asList(SName.root,
-				SName.root, SName.document, skinParam.getDiagramType().getStyleName(), SName.legend)));
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQuery.of3(SName.root,
+				SName.root, SName.document, skinParam.getDiagramType().getStyleName(), SName.legend));
 
 		return style.createTextBlockBordered(note, skinParam.getIHtmlColorSet(), skinParam, Style.ID_LEGEND,
 				style.wrapWidth());

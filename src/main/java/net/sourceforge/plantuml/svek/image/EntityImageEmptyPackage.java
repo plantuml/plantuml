@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.abel.Entity;
@@ -86,7 +85,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, getStyleName(), SName.package_, SName.title));
+		return StyleQuery.of3(SName.root, SName.element, getStyleName(), SName.package_, SName.title);
 	}
 
 	private Style getStyle() {

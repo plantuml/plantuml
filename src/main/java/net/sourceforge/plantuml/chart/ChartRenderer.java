@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.chart;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -950,11 +949,11 @@ public class ChartRenderer {
 	}
 
 	private StyleQuery getStyleSignature() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.chartDiagram));
+		return StyleQuery.of3(SName.root, SName.element, SName.chartDiagram);
 	}
 
 	private StyleQuery getBarStyleQuery() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.bar));
+		return StyleQuery.of3(SName.root, SName.element, SName.chartDiagram, SName.bar);
 	}
 
 	private Style getBarStyle(ChartSeries series) {
@@ -979,7 +978,7 @@ public class ChartRenderer {
 	}
 
 	private StyleQuery getLineStyleQuery() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.line));
+		return StyleQuery.of3(SName.root, SName.element, SName.chartDiagram, SName.line);
 	}
 
 	private Style getLineStyle(ChartSeries series) {
@@ -1003,7 +1002,7 @@ public class ChartRenderer {
 	}
 
 	private StyleQuery getAreaStyleQuery() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.area));
+		return StyleQuery.of3(SName.root, SName.element, SName.chartDiagram, SName.area);
 	}
 
 	private Style getAreaStyle(ChartSeries series) {
@@ -1036,7 +1035,7 @@ public class ChartRenderer {
 	}
 
 	private StyleQuery getScatterStyleQuery() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.scatter));
+		return StyleQuery.of3(SName.root, SName.element, SName.chartDiagram, SName.scatter);
 	}
 
 	private Style getScatterStyle(ChartSeries series) {
@@ -1061,19 +1060,19 @@ public class ChartRenderer {
 
 	private StyleQuery getAxisStyleSignature(boolean horizontal) {
 		SName axisType = horizontal ? SName.hAxis : SName.vAxis;
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.axis, axisType));
+		return StyleQuery.of3(SName.root, SName.element, SName.chartDiagram, SName.axis, axisType);
 	}
 
 	private StyleQuery getGridStyleSignature() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.grid));
+		return StyleQuery.of3(SName.root, SName.element, SName.chartDiagram, SName.grid);
 	}
 
 	private StyleQuery getLegendStyleSignature() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.legend));
+		return StyleQuery.of3(SName.root, SName.element, SName.chartDiagram, SName.legend);
 	}
 
 	private StyleQuery getAnnotationStyleSignature() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.annotation));
+		return StyleQuery.of3(SName.root, SName.element, SName.chartDiagram, SName.annotation);
 	}
 
 	private XDimension2D calculateLegendDimension(StringBounder stringBounder) {

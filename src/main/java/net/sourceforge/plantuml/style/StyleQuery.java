@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.style;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -76,14 +75,12 @@ public final class StyleQuery {
 		final SortedSet<StyleAtom> atoms = new TreeSet<StyleAtom>();
 		for (SName name : names)
 			atoms.add(StyleAtom.of(name));
-		for (String stereotype : Collections.<String>emptySet())
-			atoms.add(StyleAtom.ofStereotype(stereotype));
 		return new StyleQuery(atoms, LevelConstraint.none());
 	}
 
 	/** No tag, no depth constraint -- mirroring {@code StyleSignature.empty()}. */
 	public static StyleQuery empty() {
-		return of3(Collections.<SName>emptySet());
+		return of3();
 	}
 
 	/**
@@ -198,6 +195,20 @@ public final class StyleQuery {
 	public StyleQuery addSName(SName name) {
 		final SortedSet<StyleAtom> result = new TreeSet<StyleAtom>(atoms);
 		result.add(StyleAtom.of(name));
+		return new StyleQuery(result, levelConstraint);
+	}
+
+	/**
+	 * This same query, additionally requiring every one of {@code names} -- the varargs
+	 * counterpart of {@link #addSName(SName)}, for a caller folding in a whole array at once
+	 * (typically {@code USymbol#getSNames()}) instead of one name at a time. Also accepts a
+	 * plain {@code SName[]} directly, so a dynamically-built array never has to be wrapped in
+	 * a {@code List} just to reach {@link #of3(SName...)}.
+	 */
+	public StyleQuery addSNames(SName... names) {
+		final SortedSet<StyleAtom> result = new TreeSet<StyleAtom>(atoms);
+		for (SName name : names)
+			result.add(StyleAtom.of(name));
 		return new StyleQuery(result, levelConstraint);
 	}
 

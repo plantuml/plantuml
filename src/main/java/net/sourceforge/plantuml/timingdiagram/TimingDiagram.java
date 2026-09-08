@@ -39,7 +39,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -115,7 +114,7 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 	}
 
 	private StyleQuery getStyleSignature() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.timingDiagram));
+		return StyleQuery.of3(SName.root, SName.element, SName.timingDiagram);
 	}
 
 	private HColor black() {

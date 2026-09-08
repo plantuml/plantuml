@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.gantt;
 
-import java.util.Arrays;
 import java.util.Locale;
 
 import net.sourceforge.plantuml.crash.CrashImage;
@@ -108,7 +107,7 @@ public class GanttDiagramMainBlock extends TextBlockMemoized {
 //				ug = ug.apply(UTranslate.dx(layout.getTitlesWidth()));
 
 			final Style style = timelineStyle.getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery
-					.of3(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.timeline)));
+					.of3(SName.root, SName.element, SName.ganttDiagram, SName.timeline));
 
 			final HColor back = style.value(PName.BackGroundColor).asColor(timelineStyle.getColorSet());
 			if (back.isTransparent() == false) {

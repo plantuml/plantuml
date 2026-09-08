@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -114,7 +113,7 @@ public final class ConcurrentStates extends TextBlockMemoized implements IEntity
 	}
 
 	private StyleQuery getStyleSignature() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.stateDiagram, SName.state));
+		return StyleQuery.of3(SName.root, SName.element, SName.stateDiagram, SName.state);
 	}
 
 	public void drawU(UGraphic ug) {

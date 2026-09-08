@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -74,16 +73,16 @@ public class FtileFactoryDelegator implements FtileFactory {
 	private final Rose rose = new Rose();
 
 	final public StyleQuery getDefaultStyleDefinitionActivity() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.activity);
 	}
 
 	final public StyleQuery getDefaultStyleDefinitionDiamond() {
 		return StyleQuery
-				.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));
+				.of3(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
 	}
 
 	final public StyleQuery getDefaultStyleDefinitionArrow() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
 	protected final Rainbow getInLinkRenderingColor(Ftile tile) {

@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.ebnf;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.klimt.CopyForegroundColorToBackgroundColor;
 import net.sourceforge.plantuml.klimt.UPath;
@@ -53,7 +52,7 @@ public abstract class ETile extends TextBlockMemoized {
 	protected final boolean TRACE = false;
 
 	public static StyleQuery getStyleQuery() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.ebnf));
+		return StyleQuery.of3(SName.root, SName.element, SName.ebnf);
 	}
 
 	public abstract void push(ETile tile);

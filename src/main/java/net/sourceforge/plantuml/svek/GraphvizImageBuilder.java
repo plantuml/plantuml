@@ -40,7 +40,6 @@ package net.sourceforge.plantuml.svek;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -114,7 +113,7 @@ public final class GraphvizImageBuilder {
 	}
 
 	final public StyleQuery getDefaultStyleDefinitionArrow(Stereotype stereotype) {
-		StyleQuery result = StyleQuery.of3(Arrays.asList(SName.root, SName.element, styleName, SName.arrow));
+		StyleQuery result = StyleQuery.of3(SName.root, SName.element, styleName, SName.arrow);
 		if (stereotype != null)
 			result = result.withTOBECHANGED(stereotype);
 
@@ -123,7 +122,7 @@ public final class GraphvizImageBuilder {
 
 	final public StyleQuery getStyleArrowCardinality(Stereotype stereotype) {
 		StyleQuery result = StyleQuery
-				.of3(Arrays.asList(SName.root, SName.element, styleName, SName.arrow, SName.cardinality));
+				.of3(SName.root, SName.element, styleName, SName.arrow, SName.cardinality);
 		if (stereotype != null)
 			result = result.withTOBECHANGED(stereotype);
 
@@ -202,7 +201,7 @@ public final class GraphvizImageBuilder {
 	// Duplicate SvekResult / GeneralImageBuilder
 	private HColor getBackcolor() {
 		final Style style = dotData.getSkinParam().getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of3(Arrays.asList(SName.root, SName.document)));
+				.getMergedStyle(StyleQuery.of3(SName.root, SName.document));
 		return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
 	}
 

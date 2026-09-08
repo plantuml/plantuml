@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.wbs;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -246,7 +245,7 @@ public class WBSDiagram extends TitledDiagram implements TextBlock {
 
 		if (color == null) {
 			final Style style = getCurrentStyleBuilder().getMergedStyle(StyleQuery
-					.of3(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.arrow))
+					.of3(SName.root, SName.element, SName.wbsDiagram, SName.arrow)
 					.withTOBECHANGED(stereotype));
 
 			color = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());

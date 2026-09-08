@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.bpm;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBox;
@@ -142,7 +141,7 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 	}
 
 	private StyleQuery getSignatureCircle() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.circle));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.circle);
 	}
 
 	private Style getStyle(ISkinParam skinParam) {

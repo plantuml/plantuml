@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.packetdiag;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -357,7 +356,7 @@ public class PacketDiagram extends TitledDiagram {
 	public Style getStyle() {
 		if (style == null) {
 			style = getSkinParam().getCurrentStyleBuilder()
-					.getMergedStyle(StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.packetdiagDiagram)));
+					.getMergedStyle(StyleQuery.of3(SName.root, SName.element, SName.packetdiagDiagram));
 		}
 		return style;
 	}

@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -70,7 +69,7 @@ public class GtileAssembly extends GtileTopDown {
 	}
 
 	final public StyleQuery getDefaultStyleDefinitionArrow() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
 	@Override

@@ -46,7 +46,6 @@ import static smetana.core.debug.SmetanaDebug.SMETANA_TRACE;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -682,12 +681,12 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 	private Style getStyle() {
 		return diagram.getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery
-				.of3(Arrays.asList(SName.root, SName.element, diagram.getDiagramType().getStyleName(), SName.arrow)));
+				.of3(SName.root, SName.element, diagram.getDiagramType().getStyleName(), SName.arrow));
 	}
 
 	// Duplication from SvekEdge
 	final public StyleQuery getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
-		StyleQuery result = StyleQuery.of3(Arrays.asList(SName.root, SName.element, styleName, SName.arrow));
+		StyleQuery result = StyleQuery.of3(SName.root, SName.element, styleName, SName.arrow);
 		if (stereotype != null)
 			result = result.withTOBECHANGED(stereotype);
 

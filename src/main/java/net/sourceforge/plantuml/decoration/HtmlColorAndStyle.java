@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.decoration;
 
 import java.util.Objects;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
@@ -82,7 +81,7 @@ public class HtmlColorAndStyle {
 	}
 
 	static final public StyleQuery getDefaultStyleDefinitionArrow() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
 	public static HtmlColorAndStyle build(ISkinParam skinParam, String definition) throws NoSuchColorException {

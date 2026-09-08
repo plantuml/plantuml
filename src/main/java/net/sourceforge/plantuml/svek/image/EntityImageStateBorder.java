@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityPosition;
@@ -65,7 +64,7 @@ public class EntityImageStateBorder extends AbstractEntityImageBorder {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.stateDiagram, SName.state));
+		return StyleQuery.of3(SName.root, SName.element, SName.stateDiagram, SName.state);
 	}
 
 	private boolean upPosition() {

@@ -35,7 +35,6 @@
 package net.sourceforge.plantuml.filesdiagram;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -70,7 +69,7 @@ public class FilesDiagram extends TitledDiagram {
 			e.printStackTrace();
 		}
 		final Style style = skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.filesDiagram)));
+				.getMergedStyle(StyleQuery.of3(SName.root, SName.element, SName.filesDiagram));
 
 		// final FontConfiguration fontConfiguration =
 		// FontConfiguration.blackBlueTrue(UFont.courier(14));

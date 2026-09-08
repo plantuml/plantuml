@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.gantt;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
@@ -97,7 +96,7 @@ public class GanttConstraint extends WithLinkType {
 	}
 
 	final public StyleQuery getStyleSignature() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.arrow));
+		return StyleQuery.of3(SName.root, SName.element, SName.ganttDiagram, SName.arrow);
 	}
 
 	public UDrawable getUDrawable(TimeScale timeScale, TaskDrawRegistryData toTaskDraw) {

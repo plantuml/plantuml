@@ -35,7 +35,6 @@
 package net.sourceforge.plantuml.nwdiag;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -318,7 +317,7 @@ public class NwDiagram extends TitledDiagram {
 	}
 
 	private StyleQuery getStyleDefinitionNetwork(SName sname) {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.nwdiagDiagram, sname));
+		return StyleQuery.of3(SName.root, SName.element, SName.nwdiagDiagram, sname);
 	}
 
 	private TextBlock toTextBlockForNetworkName(String name, String s) {

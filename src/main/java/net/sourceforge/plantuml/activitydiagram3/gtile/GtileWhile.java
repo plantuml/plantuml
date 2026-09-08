@@ -53,7 +53,7 @@ public class GtileWhile extends GtileTopDown3 {
 	}
 
 	private static StyleQuery getDefaultStyleDefinitionDiamond() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
 	}
 
 	private static Gtile getShape1(Gtile toto, Swimlane swimlane, Display test, Display yes) {

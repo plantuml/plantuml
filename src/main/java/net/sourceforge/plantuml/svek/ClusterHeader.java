@@ -37,8 +37,6 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.abel.DisplayPositioned;
@@ -156,17 +154,14 @@ public final class ClusterHeader {
 		final USymbol uSymbol = g.getUSymbol();
 		if (g.getGroupType() == GroupType.STATE)
 			signature = StyleQuery
-					.of3(Arrays.asList(SName.root, SName.element, SName.stateDiagram, SName.state, SName.name));
-		else if (uSymbol != null) {
-			final List<SName> names = new ArrayList<SName>(Arrays.asList(SName.root, SName.element, sname));
-			names.addAll(Arrays.asList(uSymbol.getSNames()));
-			names.add(SName.composite);
-			names.add(SName.title);
-			signature = StyleQuery.of3(names);
-		} else if (g.getGroupType() == GroupType.PACKAGE)
-			signature = StyleQuery.of3(Arrays.asList(SName.root, SName.element, sname, SName.package_, SName.title));
+					.of3(SName.root, SName.element, SName.stateDiagram, SName.state, SName.name);
+		else if (uSymbol != null)
+			signature = StyleQuery.of3(SName.root, SName.element, sname).addSNames(uSymbol.getSNames())
+					.addSNames(SName.composite, SName.title);
+		else if (g.getGroupType() == GroupType.PACKAGE)
+			signature = StyleQuery.of3(SName.root, SName.element, sname, SName.package_, SName.title);
 		else
-			signature = StyleQuery.of3(Arrays.asList(SName.root, SName.element, sname, SName.composite, SName.title));
+			signature = StyleQuery.of3(SName.root, SName.element, sname, SName.composite, SName.title);
 		return signature;
 	}
 

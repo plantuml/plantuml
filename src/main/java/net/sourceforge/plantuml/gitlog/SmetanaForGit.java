@@ -42,7 +42,6 @@ import static gen.lib.gvc.gvc__c.gvContext;
 import static gen.lib.gvc.gvlayout__c.gvLayoutJobs;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -87,7 +86,7 @@ public class SmetanaForGit {
 
 	private Style getStyle() {
 		return skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.gitDiagram)));
+				.getMergedStyle(StyleQuery.of3(SName.root, SName.element, SName.gitDiagram));
 	}
 
 	private HColor arrowColor() {

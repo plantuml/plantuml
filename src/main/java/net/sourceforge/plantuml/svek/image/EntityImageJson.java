@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityPortion;
@@ -138,7 +137,7 @@ public class EntityImageJson extends AbstractEntityImage implements Stencil, Wit
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.objectDiagram, SName.json));
+		return StyleQuery.of3(SName.root, SName.element, SName.objectDiagram, SName.json);
 	}
 
 	private Style getStyle() {
@@ -148,7 +147,7 @@ public class EntityImageJson extends AbstractEntityImage implements Stencil, Wit
 
 	private Style getStyleHeader() {
 		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery
-				.of3(Arrays.asList(SName.root, SName.element, SName.objectDiagram, SName.json, SName.header))
+				.of3(SName.root, SName.element, SName.objectDiagram, SName.json, SName.header)
 				.withTOBECHANGED(getEntity().getStereotype()));
 	}
 

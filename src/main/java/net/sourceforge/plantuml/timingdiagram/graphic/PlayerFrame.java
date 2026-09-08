@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.timingdiagram.graphic;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -65,7 +64,7 @@ public class PlayerFrame {
 	}
 
 	private StyleQuery getStyleSignature() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.timingDiagram));
+		return StyleQuery.of3(SName.root, SName.element, SName.timingDiagram);
 	}
 
 	private HColor getLineColor() {

@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.svek;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -107,7 +106,7 @@ public final class GroupMakerActivity {
 	}
 
 	final public StyleQuery getDefaultStyleDefinitionGroup() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.group));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.group);
 	}
 
 	public IEntityImage getImage() throws IOException, InterruptedException {

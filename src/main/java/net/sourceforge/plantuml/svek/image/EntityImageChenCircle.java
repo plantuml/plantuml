@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.klimt.UGroup;
@@ -103,18 +102,18 @@ public class EntityImageChenCircle extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.chenEerDiagram, SName.circle));
+		return StyleQuery.of3(SName.root, SName.element, SName.chenEerDiagram, SName.circle);
 	}
 
 	private static Style getStyle(Entity group, ISkinParam skinParam) {
 		return skinParam.getCurrentStyleBuilder().getMergedStyle(
-				StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.chenEerDiagram, SName.circle))
+				StyleQuery.of3(SName.root, SName.element, SName.chenEerDiagram, SName.circle)
 						.withTOBECHANGED(group.getStereotype()));
 	}
 
 	private static Style getStyleTitle(Entity group, ISkinParam skinParam) {
 		return skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQuery
-				.of3(Arrays.asList(SName.root, SName.element, SName.chenEerDiagram, SName.circle, SName.title))
+				.of3(SName.root, SName.element, SName.chenEerDiagram, SName.circle, SName.title)
 				.withTOBECHANGED(group.getStereotype()));
 	}
 

@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -123,7 +122,7 @@ public abstract class CommunicationTileNoteBottomTopAbstract extends AbstractTil
 	protected final void drawLine(UGraphic ug, double x1, double y1, double x2, double y2) {
 
 		final Style style = skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram)));
+				.getMergedStyle(StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram));
 		final HColor color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 
 		final double dx = x2 - x1;

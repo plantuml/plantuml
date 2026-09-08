@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LineConfigurable;
@@ -61,7 +60,7 @@ import net.sourceforge.plantuml.url.Url;
 public abstract class EntityImageStateCommon extends AbstractEntityImage {
 
 	public static final StyleQuery STYLE = StyleQuery
-			.of3(Arrays.asList(SName.root, SName.element, SName.stateDiagram, SName.state));
+			.of3(SName.root, SName.element, SName.stateDiagram, SName.state);
 
 	final protected TextBlock name;
 	final protected Url url;

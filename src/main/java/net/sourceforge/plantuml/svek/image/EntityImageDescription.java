@@ -36,8 +36,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -110,10 +108,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		final List<SName> names = new ArrayList<>(Arrays.asList(SName.root, SName.element, getStyleName()));
-		names.addAll(Arrays.asList(symbol.getSNames()));
-		return StyleQuery.of3(names);
-
+		return StyleQuery.of3(SName.root, SName.element, getStyleName()).addSNames(symbol.getSNames());
 	}
 
 	public EntityImageDescription(Entity entity, PortionShower portionShower, Collection<Link> links,
@@ -145,24 +140,19 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		final StyleQuery queryTitle;
 		if (symbol instanceof USymbolActorBusiness)
-			queryTitle = StyleQuery.of3(Arrays.asList(SName.root, SName.element, getStyleName(), SName.actor,
-					SName.business, SName.title));
-		else {
-			final List<SName> namesTitle = new ArrayList<>(Arrays.asList(SName.root, SName.element, getStyleName()));
-			namesTitle.addAll(Arrays.asList(symbol.getSNames()));
-			namesTitle.add(SName.title);
-			queryTitle = StyleQuery.of3(namesTitle);
-		}
+			queryTitle = StyleQuery.of3(SName.root, SName.element, getStyleName(), SName.actor,
+					SName.business, SName.title);
+		else
+			queryTitle = StyleQuery.of3(SName.root, SName.element, getStyleName()).addSNames(symbol.getSNames())
+					.addSName(SName.title);
 
 		final Stereotype stereotype = entity.getStereotype();
 		final Style styleTitle = getEntity().getCurrentStyleBuilder().getMergedStyle(queryTitle.withTOBECHANGED(stereotype))
 				.eventuallyOverride(colors);
 
-		final List<SName> namesStereo = new ArrayList<>(Arrays.asList(SName.root, SName.element, getStyleName()));
-		namesStereo.addAll(Arrays.asList(symbol.getSNames()));
-		namesStereo.add(SName.stereotype);
 		final Style styleStereo = getEntity().getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of3(namesStereo).forStereotypeItself(stereotype));
+				.getMergedStyle(StyleQuery.of3(SName.root, SName.element, getStyleName()).addSNames(symbol.getSNames())
+						.addSName(SName.stereotype).forStereotypeItself(stereotype));
 
 		final Style style = getEntity().getCurrentStyleBuilder().getMergedStyle(getStyleQuery().withTOBECHANGED(stereotype))
 				.eventuallyOverride(colors);

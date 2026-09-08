@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.abel.Entity;
@@ -203,9 +202,9 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		final LeafType type = getEntity().getLeafType();
 		if (type == LeafType.USECASE_BUSINESS)
 			return StyleQuery
-					.of3(Arrays.asList(SName.root, SName.element, SName.componentDiagram, SName.usecase, SName.business))
+					.of3(SName.root, SName.element, SName.componentDiagram, SName.usecase, SName.business)
 					.withTOBECHANGED(getStereo());
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.componentDiagram, SName.usecase))
+		return StyleQuery.of3(SName.root, SName.element, SName.componentDiagram, SName.usecase)
 				.withTOBECHANGED(getStereo());
 	}
 

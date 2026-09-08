@@ -50,7 +50,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
@@ -140,7 +139,7 @@ class BundledSkinTest {
 	void bundledSkinLoads(String filename) throws Exception {
 		final StyleBuilder builder = StyleLoader.loadSkin(filename);
 		assertNotNull(builder);
-		assertNotNull(builder.getMergedStyle(StyleQuery.of3(Collections.singletonList(SName.root))));
+		assertNotNull(builder.getMergedStyle(StyleQuery.of3(SName.root)));
 	}
 
 	// -----------------------------------------------------------------------

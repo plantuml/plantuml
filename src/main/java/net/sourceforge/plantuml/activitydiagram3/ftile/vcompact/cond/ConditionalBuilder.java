@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import net.sourceforge.plantuml.activitydiagram3.Branch;
@@ -100,11 +99,11 @@ public class ConditionalBuilder {
 	private final Style styleDiamond;
 
 	private StyleQuery getStyleSignatureDiamond() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
 	}
 
 	private StyleQuery getStyleSignatureArrow() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
 	public ConditionalBuilder(Swimlane swimlane, HColor backColor, FtileFactory ftileFactory,

@@ -35,10 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
@@ -86,10 +83,8 @@ public class FtileGroup extends AbstractFtile {
 	private final double roundCorner;
 
 	final static public StyleQuery getStyleQuery(USymbol symbol) {
-		final List<SName> names = new ArrayList<>(Arrays.asList(SName.root, SName.element, SName.activityDiagram));
-		names.addAll(Arrays.asList(symbol.getSNames()));
-		names.add(SName.composite);
-		return StyleQuery.of3(names);
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram).addSNames(symbol.getSNames())
+				.addSName(SName.composite);
 	}
 
 	public FtileGroup(Ftile inner, Display title, HColor backColor, ISkinParam skinParam, USymbol type, Style style) {

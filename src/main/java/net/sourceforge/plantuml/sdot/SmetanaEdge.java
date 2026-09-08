@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.sdot;
 
-import java.util.Arrays;
 
 import h.ST_Agedge_s;
 import h.ST_Agedgeinfo_t;
@@ -255,7 +254,7 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 
 	private Style getStyle() {
 		final StyleQuery query = StyleQuery
-				.of3(Arrays.asList(SName.root, SName.element, diagramType().getStyleName(), SName.arrow))
+				.of3(SName.root, SName.element, diagramType().getStyleName(), SName.arrow)
 				.withTOBECHANGED(link.getStereotype());
 		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);
 	}

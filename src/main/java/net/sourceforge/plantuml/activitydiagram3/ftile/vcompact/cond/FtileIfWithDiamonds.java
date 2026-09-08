@@ -145,7 +145,7 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 	}
 
 	private static StyleQuery getStyleSignature() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.note));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.note);
 	}
 
 	@Override

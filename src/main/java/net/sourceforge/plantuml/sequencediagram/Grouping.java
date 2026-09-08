@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.style.MergeStrategy;
@@ -61,15 +60,15 @@ public abstract class Grouping extends AbstractEvent implements Event, WithStyle
 	@Override
 	public StyleQuery getStyleQuery() {
 		if (type == GroupingType.START_PARTITION)
-			return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.partition));
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.group));
+			return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.partition);
+		return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.group);
 	}
 
 	final private StyleQuery getHeaderStyleDefinition() {
 		if (type == GroupingType.START_PARTITION)
 			return StyleQuery
-					.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.partition, SName.header));
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.groupHeader));
+					.of3(SName.root, SName.element, SName.sequenceDiagram, SName.partition, SName.header);
+		return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.groupHeader);
 	}
 
 	// The nested counterpart of the legacy flat "groupHeader" above, added for
@@ -82,7 +81,7 @@ public abstract class Grouping extends AbstractEvent implements Event, WithStyle
 	// unchanged: only diagrams that opt into the new nested form are affected.
 	final private StyleQuery getNestedHeaderStyleDefinition() {
 		return StyleQuery
-				.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.group, SName.header));
+				.of3(SName.root, SName.element, SName.sequenceDiagram, SName.group, SName.header);
 	}
 
 	private Style computeStyleHeader(StyleBuilder styleBuilder) {

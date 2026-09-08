@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -88,7 +87,7 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.note));
+		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.note);
 	}
 
 	public Set<Swimlane> getSwimlanes() {

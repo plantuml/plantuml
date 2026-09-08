@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.chart;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,7 +83,7 @@ public class BarRenderer {
 	}
 
 	private StyleQuery getBarStyleQuery() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.bar));
+		return StyleQuery.of3(SName.root, SName.element, SName.chartDiagram, SName.bar);
 	}
 
 	private Style getBarStyle(ChartSeries series) {

@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
@@ -85,7 +84,7 @@ public class EntityImageState2 extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, getStyleName(), SName.state));
+		return StyleQuery.of3(SName.root, SName.element, getStyleName(), SName.state);
 	}
 
 	public ShapeType getShapeType() {

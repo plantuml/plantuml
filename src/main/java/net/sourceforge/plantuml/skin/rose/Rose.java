@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.skin.rose;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -299,8 +298,8 @@ public class Rose {
 
 		final ArrowDirection arrowDirection = config.getArrowDirection();
 
-		final StyleQuery signature = StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram,
-				SName.arrow));
+		final StyleQuery signature = StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram,
+				SName.arrow);
 		final Style textStyle = param.getCurrentStyleBuilder().getMergedStyle(signature);
 		final String value = textStyle.value(PName.HorizontalAlignment).asString();
 		HorizontalAlignment messageHorizontalAlignment = textStyle.getHorizontalAlignment();

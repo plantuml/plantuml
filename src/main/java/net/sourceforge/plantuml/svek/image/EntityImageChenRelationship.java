@@ -95,7 +95,7 @@ public class EntityImageChenRelationship extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.chenEerDiagram, SName.chenRelationship));
+		return StyleQuery.of3(SName.root, SName.element, SName.chenEerDiagram, SName.chenRelationship);
 	}
 
 	private Style getStyle(Entity group, ISkinParam skinParam) {
@@ -103,8 +103,7 @@ public class EntityImageChenRelationship extends AbstractEntityImage {
 	}
 
 	private static Style getStyleTitle(Entity group, ISkinParam skinParam) {
-		return skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQuery.of3(
-				Arrays.asList(SName.root, SName.element, SName.chenEerDiagram, SName.chenRelationship, SName.title))
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQuery.of3(SName.root, SName.element, SName.chenEerDiagram, SName.chenRelationship, SName.title)
 				.withTOBECHANGED(group.getStereotype()));
 	}
 

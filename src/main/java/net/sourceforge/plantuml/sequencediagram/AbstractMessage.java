@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.sequencediagram;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
@@ -74,7 +73,7 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.arrow))
+		return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.arrow)
 				.withTOBECHANGED(stereotype);
 	}
 

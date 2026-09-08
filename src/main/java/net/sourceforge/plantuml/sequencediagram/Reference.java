@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.sequencediagram;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -65,11 +64,11 @@ public class Reference extends AbstractEvent implements EventWithNote {
 	final private Style styleHeader;
 
 	public StyleQuery getDefaultStyleDefinition() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.reference));
+		return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.reference);
 	}
 
 	private StyleQuery getHeaderStyleDefinition() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.referenceHeader));
+		return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.referenceHeader);
 	}
 
 	// The nested counterpart of the legacy flat "referenceHeader" above, added
@@ -80,7 +79,7 @@ public class Reference extends AbstractEvent implements EventWithNote {
 	// diagram styling `referenceHeader` directly keeps working unchanged: only
 	// diagrams that opt into the new nested form are affected.
 	private StyleQuery getNestedHeaderStyleDefinition() {
-		return StyleQuery.of3(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.reference, SName.header));
+		return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.reference, SName.header);
 	}
 
 	private Style computeStyleHeader(StyleBuilder styleBuilder) {
