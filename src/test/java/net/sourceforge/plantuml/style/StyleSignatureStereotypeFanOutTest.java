@@ -43,7 +43,6 @@ import java.util.Collection;
 import org.junit.jupiter.api.Test;
 
 import net.sourceforge.plantuml.stereo.Stereotype;
-import net.sourceforge.plantuml.style.parser.StyleQuery;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 /**

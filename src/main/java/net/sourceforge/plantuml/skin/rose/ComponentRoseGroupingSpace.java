@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 public class ComponentRoseGroupingSpace implements Component {
 

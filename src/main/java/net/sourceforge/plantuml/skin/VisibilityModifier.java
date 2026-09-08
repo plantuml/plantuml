@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import java.util.Arrays;
 
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.parser.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 public enum VisibilityModifier {
 	PRIVATE_FIELD(StringUtils.PRIVATE_FIELD, ColorParam.iconPrivate, null),

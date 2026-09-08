@@ -38,8 +38,8 @@ package net.sourceforge.plantuml.sequencediagram;
 import java.util.Arrays;
 
 import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.style.Styleable;
-import net.sourceforge.plantuml.style.parser.StyleQuery;
 
 public enum LifeEventType implements Styleable {
 	ACTIVATE, DEACTIVATE, DESTROY, CREATE;

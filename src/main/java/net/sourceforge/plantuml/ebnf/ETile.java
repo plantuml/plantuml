@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlockMemoized;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.parser.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 public abstract class ETile extends TextBlockMemoized {
 

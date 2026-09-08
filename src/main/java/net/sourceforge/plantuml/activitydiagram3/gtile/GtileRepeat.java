@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.parser.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 public class GtileRepeat extends GtileTopDown3 {
 

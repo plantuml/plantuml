@@ -42,9 +42,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import net.sourceforge.plantuml.style.parser.StyleAtomTrie;
-import net.sourceforge.plantuml.style.parser.StyleQuery;
-
 /**
  * The fast, queryable counterpart of the old {@code StyleStorage}: every loaded {@link Style}
  * is indexed by its query's tags in a

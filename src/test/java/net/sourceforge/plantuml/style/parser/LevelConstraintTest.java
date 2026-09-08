@@ -42,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import net.sourceforge.plantuml.style.parser.LevelConstraint;
+import net.sourceforge.plantuml.style.LevelConstraint;
 
 /**
  * Pins {@link LevelConstraint#matches(LevelConstraint, LevelConstraint)} against the exact

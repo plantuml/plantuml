@@ -33,9 +33,7 @@
  *
  *
  */
-package net.sourceforge.plantuml.style.parser;
-
-import net.sourceforge.plantuml.style.SName;
+package net.sourceforge.plantuml.style;
 
 /**
  * One "tag" a style declaration or a query element can carry, put under a single total order

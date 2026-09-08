@@ -43,7 +43,6 @@ import java.util.Map;
 import net.sourceforge.plantuml.style.parser.MergedStyleNode;
 import net.sourceforge.plantuml.style.parser.PrioritizedValue;
 import net.sourceforge.plantuml.style.parser.RawSelector;
-import net.sourceforge.plantuml.style.parser.StyleQuery;
 
 /**
  * Turns a {@link MergedStyleNode} tree (built by the new {@code parser2} text parser) into the
