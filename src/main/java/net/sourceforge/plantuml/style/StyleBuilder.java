@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.style;
 import java.util.Collection;
 import java.util.EnumMap;
 
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.parser.StyleQuery;
 
 public class StyleBuilder implements AutomaticCounter {
 

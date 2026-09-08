@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.parser.StyleQuery;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 
 public class PlayerFrame {

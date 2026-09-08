@@ -40,7 +40,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.parser.StyleQuery;
 
 public class ClockwiseTopRightBottomLeft {
 

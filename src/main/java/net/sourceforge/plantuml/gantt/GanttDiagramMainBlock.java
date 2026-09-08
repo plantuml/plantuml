@@ -64,7 +64,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.parser.StyleQuery;
 
 public class GanttDiagramMainBlock extends TextBlockMemoized {
 

@@ -33,7 +33,7 @@
  *
  *
  */
-package net.sourceforge.plantuml.style.parser2;
+package net.sourceforge.plantuml.style.parser;
 
 import java.util.ArrayList;
 import java.util.Collections;

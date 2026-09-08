@@ -33,7 +33,7 @@
  *
  *
  */
-package net.sourceforge.plantuml.style.parser2;
+package net.sourceforge.plantuml.style.parser;
 
 /**
  * One property value, together with the priority it was assigned when merged in (see

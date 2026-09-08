@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.sequencediagram;
 import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.parser.StyleQuery;
 
 public class LifeEvent extends AbstractEvent implements Event {
 

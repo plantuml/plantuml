@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.style;
 
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.parser.StyleQuery;
 
 public interface Styleable {
 

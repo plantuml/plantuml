@@ -49,11 +49,11 @@ import java.util.concurrent.ConcurrentMap;
 
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.style.parser.MergedStyleNode;
+import net.sourceforge.plantuml.style.parser.RawStyleParser;
+import net.sourceforge.plantuml.style.parser.RawStyleSheet;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
-import net.sourceforge.plantuml.style.parser2.MergedStyleNode;
-import net.sourceforge.plantuml.style.parser2.RawStyleParser;
-import net.sourceforge.plantuml.style.parser2.RawStyleSheet;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.parser.StyleQuery;
 import net.sourceforge.plantuml.teavm.EmbeddedResources;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.BlocLines;

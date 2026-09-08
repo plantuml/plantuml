@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.WithStyle;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.parser.StyleQuery;
 import net.sourceforge.plantuml.url.Url;
 
 final public class Note extends AbstractEvent implements Event, SpecificBackcolorable, WithStyle {

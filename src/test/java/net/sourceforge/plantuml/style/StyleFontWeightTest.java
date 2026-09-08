@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontFace;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.parser.StyleQuery;
 import test.utils.PlantUmlTestUtils;
 
 /**
