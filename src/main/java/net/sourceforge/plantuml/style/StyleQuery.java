@@ -226,7 +226,7 @@ public final class StyleQuery {
 	 * least restrictive combination of their two {@link LevelConstraint}s (deepest
 	 * level, starred if either side is) -- mirroring {@code StyleKey.mergeWith}.
 	 */
-	public StyleQuery mergeWith(StyleQuery other) {
+	StyleQuery mergeWith(StyleQuery other) {
 		final SortedSet<StyleAtom> result = new TreeSet<StyleAtom>(atoms);
 		result.addAll(other.atoms);
 
@@ -248,11 +248,11 @@ public final class StyleQuery {
 		return result;
 	}
 
-	public SortedSet<StyleAtom> getAtoms() {
+	SortedSet<StyleAtom> getAtoms() {
 		return atoms;
 	}
 
-	public LevelConstraint getLevelConstraint() {
+	LevelConstraint getLevelConstraint() {
 		return levelConstraint;
 	}
 
@@ -260,7 +260,7 @@ public final class StyleQuery {
 	 * Every stereotype atom this query carries, in ascending order -- mirroring
 	 * {@code StyleSignature.getStereotypes()}.
 	 */
-	public Set<String> getStereotypes() {
+	Set<String> getStereotypes() {
 		final Set<String> result = new LinkedHashSet<String>();
 		for (StyleAtom atom : atoms)
 			if (atom.isName() == false)
