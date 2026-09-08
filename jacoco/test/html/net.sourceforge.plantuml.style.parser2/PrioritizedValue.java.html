@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PrioritizedValue.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.style.parser2</a> &gt; <span class="el_source">PrioritizedValue.java</span></div><h1>PrioritizedValue.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.style.parser2;
+
+/**
+ * One property value, together with the priority it was assigned when merged in (see
+ * {@link MergedStyleNode#mergeRule}) -- the direct counterpart of the legacy
+ * {@code net.sourceforge.plantuml.style.DarkString}, kept under the same name it had before
+ * this class grew a dark half.
+ *
+ * A property can carry a {@link #getLight()} value, a {@link #getDark()} one, or both: a
+ * plain declaration (outside any {@code @media} block) sets only {@link #getLight()}: a
+ * declaration inside {@code @media (prefers-color-scheme:dark) { ... }} sets only
+ * {@link #getDark()}. When both a light and a dark declaration reach the very same property
+ * of the very same selector, {@link #mergeWith(PrioritizedValue)} folds them into ONE value
+ * carrying both -- exactly what lets the final color object (see
+ * {@code net.sourceforge.plantuml.style.ValueImpl#asColor}, {@code HColor#withDark}) embed
+ * both variants and let the actual theme be picked at render/output time (e.g. so a single
+ * generated SVG can follow the viewer's {@code prefers-color-scheme} setting), instead of one
+ * theme being baked in once and for all when the style sheet is resolved.
+ */
+public final class PrioritizedValue {
+
+	private final String light;
+	private final String dark;
+	private final int priority;
+
+<span class="fc" id="L61">	private PrioritizedValue(String light, String dark, int priority) {</span>
+<span class="fc" id="L62">		this.light = light;</span>
+<span class="fc" id="L63">		this.dark = dark;</span>
+<span class="fc" id="L64">		this.priority = priority;</span>
+<span class="fc" id="L65">	}</span>
+
+	public static PrioritizedValue light(String value, int priority) {
+<span class="fc" id="L68">		return new PrioritizedValue(value, null, priority);</span>
+	}
+
+	public static PrioritizedValue dark(String value, int priority) {
+<span class="fc" id="L72">		return new PrioritizedValue(null, value, priority);</span>
+	}
+
+	/** Null if this value was never given a light (regular) declaration. */
+	public String getLight() {
+<span class="fc" id="L77">		return light;</span>
+	}
+
+	/** Null if this value was never given a dark ({@code @media}) declaration. */
+	public String getDark() {
+<span class="fc" id="L82">		return dark;</span>
+	}
+
+	/**
+	 * The light value if there is one, else the dark one -- for callers that do not (yet) care
+	 * about the light/dark distinction and just want a single string, the way
+	 * {@link #getProperties()}-style call sites used before this class carried both.
+	 */
+	public String getValue() {
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		return light != null ? light : dark;</span>
+	}
+
+	public int getPriority() {
+<span class="fc" id="L95">		return priority;</span>
+	}
+
+	/**
+	 * Merges this (incoming) value with {@code existing} (already accumulated for the same
+	 * property), mirroring {@code DarkString#mergeWith} exactly:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;if both are the same kind (both light-only, or both dark-only) -- or either one is
+	 * already a combined light+dark value -- the strictly higher priority wins outright, and on
+	 * an exact tie {@code existing} wins, not the incoming value;&lt;/li&gt;
+	 * &lt;li&gt;if one is light-only and the other is dark-only, they combine into one value carrying
+	 * both, keeping whichever priority belonged to the light-only side of the pair.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * {@code existing} may be null (nothing accumulated yet), in which case this value is
+	 * returned unconditionally.
+	 */
+	public PrioritizedValue mergeWith(PrioritizedValue existing) {
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (existing == null)</span>
+<span class="fc" id="L113">			return this;</span>
+
+<span class="pc bpc" id="L115" title="3 of 8 branches missed.">		if ((this.dark == null &amp;&amp; existing.dark == null) || (this.light == null &amp;&amp; existing.light == null))</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">			return isBigger(this.priority, existing.priority) ? this : existing;</span>
+
+<span class="pc bpc" id="L118" title="3 of 4 branches missed.">		if (this.dark == null &amp;&amp; existing.light == null)</span>
+<span class="nc" id="L119">			return new PrioritizedValue(this.light, existing.dark, this.priority);</span>
+
+<span class="pc bpc" id="L121" title="2 of 4 branches missed.">		if (existing.dark == null &amp;&amp; this.light == null)</span>
+<span class="fc" id="L122">			return new PrioritizedValue(existing.light, this.dark, existing.priority);</span>
+
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		return isBigger(this.priority, existing.priority) ? this : existing;</span>
+	}
+
+	private static boolean isBigger(int a, int b) {
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		return a &gt; b;</span>
+	}
+
+	public PrioritizedValue shiftPriority(int delta) {
+<span class="nc" id="L132">		return new PrioritizedValue(light, dark, priority + delta);</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L137">		return light + &quot;/&quot; + dark + &quot; (&quot; + priority + &quot;)&quot;;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

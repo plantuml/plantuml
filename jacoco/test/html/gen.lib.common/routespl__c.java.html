@@ -689,7 +689,7 @@ try {
 	    }
 	}
     }
-<span class="pc bpc" id="L692" title="4 of 8 branches missed.">    if (thepath.start.p.x &lt; ((ST_boxf)boxes[0]).LL.x</span>
+<span class="pc bpc" id="L692" title="3 of 8 branches missed.">    if (thepath.start.p.x &lt; ((ST_boxf)boxes[0]).LL.x</span>
 	|| thepath.start.p.x &gt; ((ST_boxf)boxes[0]).UR.x
 	|| thepath.start.p.y &lt; ((ST_boxf)boxes[0]).LL.y
 	|| thepath.start.p.y &gt; ((ST_boxf)boxes[0]).UR.y) {
@@ -697,13 +697,13 @@ try {
 	    fprintf(stderr, &quot;in checkpath, start port not in first box\n&quot;);
 	    printpath(thepath);
 	}*/
-<span class="nc bnc" id="L700" title="All 2 branches missed.">	if (thepath.start.p.x &lt; ((ST_boxf)boxes[0]).LL.x)</span>
+<span class="pc bpc" id="L700" title="1 of 2 branches missed.">	if (thepath.start.p.x &lt; ((ST_boxf)boxes[0]).LL.x)</span>
 <span class="nc" id="L701">	    thepath.start.p.x = (((ST_boxf)boxes[0]).LL.x);</span>
-<span class="nc bnc" id="L702" title="All 2 branches missed.">	if (thepath.start.p.x &gt; ((ST_boxf)boxes[0]).UR.x)</span>
+<span class="pc bpc" id="L702" title="1 of 2 branches missed.">	if (thepath.start.p.x &gt; ((ST_boxf)boxes[0]).UR.x)</span>
 <span class="nc" id="L703">	    thepath.start.p.x = (((ST_boxf)boxes[0]).UR.x);</span>
-<span class="nc bnc" id="L704" title="All 2 branches missed.">	if (thepath.start.p.y &lt; ((ST_boxf)boxes[0]).LL.y)</span>
-<span class="nc" id="L705">	    thepath.start.p.y = (((ST_boxf)boxes[0]).LL.y);</span>
-<span class="nc bnc" id="L706" title="All 2 branches missed.">	if (thepath.start.p.y &gt; ((ST_boxf)boxes[0]).UR.y)</span>
+<span class="pc bpc" id="L704" title="1 of 2 branches missed.">	if (thepath.start.p.y &lt; ((ST_boxf)boxes[0]).LL.y)</span>
+<span class="fc" id="L705">	    thepath.start.p.y = (((ST_boxf)boxes[0]).LL.y);</span>
+<span class="pc bpc" id="L706" title="1 of 2 branches missed.">	if (thepath.start.p.y &gt; ((ST_boxf)boxes[0]).UR.y)</span>
 <span class="nc" id="L707">	    thepath.start.p.y = (((ST_boxf)boxes[0]).UR.y);</span>
     }
 <span class="pc bpc" id="L709" title="3 of 8 branches missed.">    if (thepath.end.p.x &lt; ((ST_boxf)boxes[boxn - 1]).LL.x</span>

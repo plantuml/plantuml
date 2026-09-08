@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public abstract class AbstractComponent implements Component {
 
@@ -58,102 +58,103 @@ public abstract class AbstractComponent implements Component {
 <span class="nc" id="L58">		throw new UnsupportedOperationException();</span>
 	}
 
-	public StyleSignatureBasic getStyleSignature() {
-<span class="nc" id="L62">		throw new UnsupportedOperationException();</span>
+	@Override
+	public StyleQuery getStyleQuery() {
+<span class="nc" id="L63">		throw new UnsupportedOperationException();</span>
 	}
 
 	private final Style style;
 	private final ISkinParam skinParam;
 
-<span class="fc" id="L68">	public AbstractComponent(Style style, ISkinParam skinParam) {</span>
-<span class="fc" id="L69">		this.style = style;</span>
-<span class="fc" id="L70">		this.skinParam = skinParam;</span>
-<span class="fc" id="L71">	}</span>
+<span class="fc" id="L69">	public AbstractComponent(Style style, ISkinParam skinParam) {</span>
+<span class="fc" id="L70">		this.style = style;</span>
+<span class="fc" id="L71">		this.skinParam = skinParam;</span>
+<span class="fc" id="L72">	}</span>
 
 	protected final Style getStyle() {
-<span class="fc" id="L74">		return style;</span>
+<span class="fc" id="L75">		return style;</span>
 	}
 
 	protected final ISkinParam getSkinParam() {
-<span class="fc" id="L78">		return skinParam;</span>
+<span class="fc" id="L79">		return skinParam;</span>
 	}
 
 	protected HColorSet getIHtmlColorSet() {
-<span class="fc" id="L82">		return skinParam.getIHtmlColorSet();</span>
+<span class="fc" id="L83">		return skinParam.getIHtmlColorSet();</span>
 	}
 
 	protected final Fashion getSymbolContext() {
-<span class="fc" id="L86">		return style.getSymbolContext(getIHtmlColorSet());</span>
+<span class="fc" id="L87">		return style.getSymbolContext(getIHtmlColorSet());</span>
 	}
 
 	protected final Fashion getSymbolContext(Colors colors) {
-<span class="fc" id="L90">		return style.getSymbolContext(getIHtmlColorSet(), colors);</span>
+<span class="fc" id="L91">		return style.getSymbolContext(getIHtmlColorSet(), colors);</span>
 	}
 
 	private final HColor getColor(PName name) {
-<span class="fc" id="L94">		return style.value(name).asColor(getIHtmlColorSet());</span>
+<span class="fc" id="L95">		return style.value(name).asColor(getIHtmlColorSet());</span>
 	}
 
 	protected final HColor getColorFont() {
-<span class="nc" id="L98">		return getColor(PName.FontColor);</span>
+<span class="nc" id="L99">		return getColor(PName.FontColor);</span>
 	}
 
 	protected final HColor getColorLine() {
-<span class="fc" id="L102">		return getColor(PName.LineColor);</span>
+<span class="fc" id="L103">		return getColor(PName.LineColor);</span>
 	}
 
 	protected final HColor getColorBackGround() {
-<span class="fc" id="L106">		return getColor(PName.BackGroundColor);</span>
+<span class="fc" id="L107">		return getColor(PName.BackGroundColor);</span>
 	}
 
 	protected final double getRoundCorner() {
-<span class="fc" id="L110">		return style.value(PName.RoundCorner).asInt();</span>
+<span class="fc" id="L111">		return style.value(PName.RoundCorner).asInt();</span>
 	}
 
 	protected final double getDiagonalCorner() {
-<span class="fc" id="L114">		return style.value(PName.DiagonalCorner).asInt();</span>
+<span class="fc" id="L115">		return style.value(PName.DiagonalCorner).asInt();</span>
 	}	
 
 	protected final UStroke getStroke() {
-<span class="fc" id="L118">		return style.getStroke();</span>
+<span class="fc" id="L119">		return style.getStroke();</span>
 	}
 
 	protected final double getShadowing() {
-<span class="fc" id="L122">		return style.getShadowing();</span>
+<span class="fc" id="L123">		return style.getShadowing();</span>
 	}
 
 	protected final UFont getUFont() {
-<span class="nc" id="L126">		return style.getUFont();</span>
+<span class="nc" id="L127">		return style.getUFont();</span>
 	}
 
 	protected final FontConfiguration getFontConfiguration() {
-<span class="fc" id="L130">		return style.getFontConfiguration(getIHtmlColorSet());</span>
+<span class="fc" id="L131">		return style.getFontConfiguration(getIHtmlColorSet());</span>
 	}
 
 	protected final HorizontalAlignment getHorizontalAlignment() {
-<span class="fc" id="L134">		return style.getHorizontalAlignment();</span>
+<span class="fc" id="L135">		return style.getHorizontalAlignment();</span>
 	}
 
 	abstract protected void drawInternalU(UGraphic ug, Area area);
 
 	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
-<span class="fc" id="L140">	}</span>
+<span class="fc" id="L141">	}</span>
 
 	public final void drawU(UGraphic ug, Area area, Context2D context) {
-<span class="fc" id="L143">		ug = ug.apply(new UTranslate(getPaddingX(), getPaddingY()));</span>
-<span class="fc bfc" id="L144" title="All 2 branches covered.">		if (context.isBackground())</span>
-<span class="fc" id="L145">			drawBackgroundInternalU(ug, area);</span>
+<span class="fc" id="L144">		ug = ug.apply(new UTranslate(getPaddingX(), getPaddingY()));</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">		if (context.isBackground())</span>
+<span class="fc" id="L146">			drawBackgroundInternalU(ug, area);</span>
 		else
-<span class="fc" id="L147">			drawInternalU(ug, area);</span>
+<span class="fc" id="L148">			drawInternalU(ug, area);</span>
 
-<span class="fc" id="L149">	}</span>
+<span class="fc" id="L150">	}</span>
 
 	public double getPaddingX() {
-<span class="fc" id="L152">		return 0;</span>
+<span class="fc" id="L153">		return 0;</span>
 	}
 
 	public double getPaddingY() {
-<span class="fc" id="L156">		return 0;</span>
+<span class="fc" id="L157">		return 0;</span>
 	}
 
 	public abstract double getPreferredWidth(StringBounder stringBounder);
@@ -161,9 +162,9 @@ public abstract class AbstractComponent implements Component {
 	public abstract double getPreferredHeight(StringBounder stringBounder);
 
 	public final XDimension2D getPreferredDimension(StringBounder stringBounder) {
-<span class="fc" id="L164">		final double w = getPreferredWidth(stringBounder);</span>
-<span class="fc" id="L165">		final double h = getPreferredHeight(stringBounder);</span>
-<span class="fc" id="L166">		return new XDimension2D(w, h);</span>
+<span class="fc" id="L165">		final double w = getPreferredWidth(stringBounder);</span>
+<span class="fc" id="L166">		final double h = getPreferredHeight(stringBounder);</span>
+<span class="fc" id="L167">		return new XDimension2D(w, h);</span>
 	}
 
 }

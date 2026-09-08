@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.svek;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -59,13 +60,13 @@ import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.descdiagram.command.StringWithArrow;
 import net.sourceforge.plantuml.dot.DotSplines;
 import net.sourceforge.plantuml.dot.GraphvizVersion;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorType;
-import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -102,8 +103,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.extremity.Extremity;
 import net.sourceforge.plantuml.svek.extremity.ExtremityArrow;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
@@ -286,8 +286,8 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		} else {
 <span class="nc" id="L287">			final HorizontalAlignment alignment = getMessageTextAlignment(diagramType(), skinParam);</span>
 <span class="nc" id="L288">			final boolean hasSeveralGuideLines = link.getLabel().hasSeveralGuideLines();</span>
-<span class="nc" id="L289">			final Style arrowStyle = getDefaultStyleDefinition(link.getStereotype())</span>
-<span class="nc" id="L290">					.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L289">			final Style arrowStyle = skinParam.getCurrentStyleBuilder()</span>
+<span class="nc" id="L290">					.getMergedStyle(getDefaultStyleDefinition(link.getStereotype()));</span>
 <span class="nc" id="L291">			final LineBreakStrategy styleWidth = arrowStyle.wrapWidth();</span>
 <span class="nc bnc" id="L292" title="All 2 branches missed.">			final LineBreakStrategy wrapWidth = styleWidth.getMaxWidth() &gt; 0</span>
 <span class="nc" id="L293">					? styleWidth</span>
@@ -814,9 +814,9 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 
 	}
 
-	private StyleSignature getDefaultStyleDefinition(Stereotype stereotype) {
-<span class="nc" id="L818">		final StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, diagramType().getStyleName(),</span>
-				SName.arrow);
+	private StyleQuery getDefaultStyleDefinition(Stereotype stereotype) {
+<span class="nc" id="L818">		final StyleQuery result = StyleQuery</span>
+<span class="nc" id="L819">				.of(Arrays.asList(SName.root, SName.element, diagramType().getStyleName(), SName.arrow));</span>
 
 <span class="nc" id="L821">		return result.withTOBECHANGED(stereotype);</span>
 	}
@@ -872,7 +872,7 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 <span class="nc" id="L872">		y += dy;</span>
 
 <span class="nc" id="L874">		final StyleBuilder currentStyleBuilder = this.getCurrentStyleBuilder();</span>
-<span class="nc" id="L875">		final Style styleLine = getDefaultStyleDefinition(this.getStereotype()).getMergedStyle(currentStyleBuilder);</span>
+<span class="nc" id="L875">		final Style styleLine = currentStyleBuilder.getMergedStyle(getDefaultStyleDefinition(this.getStereotype()));</span>
 <span class="nc" id="L876">		final UStroke suggestedStroke = styleLine.getStroke();</span>
 <span class="nc" id="L877">		final Rainbow rainbow = Rainbow.build(styleLine, this.skinParam.getIHtmlColorSet());</span>
 

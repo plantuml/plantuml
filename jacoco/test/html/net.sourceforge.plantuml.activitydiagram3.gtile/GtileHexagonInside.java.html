@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -48,7 +50,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class GtileHexagonInside extends AbstractGtile {
 
@@ -60,64 +62,64 @@ public class GtileHexagonInside extends AbstractGtile {
 
 	protected final double shadowing;
 
-	final public StyleSignatureBasic getDefaultStyleDefinition() {
-<span class="nc" id="L64">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);</span>
+	final public StyleQuery getDefaultStyleDefinition() {
+<span class="nc" id="L66">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));</span>
 	}
 
 	// FtileDiamondInside
 
 	public GtileHexagonInsideLabelled withEastLabel(TextBlock eastLabel) {
-<span class="nc" id="L70">		return new GtileHexagonInsideLabelled(this, TextBlockUtils.EMPTY_TEXT_BLOCK, eastLabel,</span>
+<span class="nc" id="L72">		return new GtileHexagonInsideLabelled(this, TextBlockUtils.EMPTY_TEXT_BLOCK, eastLabel,</span>
 				TextBlockUtils.EMPTY_TEXT_BLOCK);
 	}
 
 	public GtileHexagonInsideLabelled withWestLabel(TextBlock westLabel) {
-<span class="nc" id="L75">		return new GtileHexagonInsideLabelled(this, TextBlockUtils.EMPTY_TEXT_BLOCK, TextBlockUtils.EMPTY_TEXT_BLOCK,</span>
+<span class="nc" id="L77">		return new GtileHexagonInsideLabelled(this, TextBlockUtils.EMPTY_TEXT_BLOCK, TextBlockUtils.EMPTY_TEXT_BLOCK,</span>
 				westLabel);
 	}
 
 	public AbstractGtileRoot withSouthLabel(TextBlock southLabel) {
-<span class="nc" id="L80">		return new GtileHexagonInsideLabelled(this, southLabel, TextBlockUtils.EMPTY_TEXT_BLOCK,</span>
+<span class="nc" id="L82">		return new GtileHexagonInsideLabelled(this, southLabel, TextBlockUtils.EMPTY_TEXT_BLOCK,</span>
 				TextBlockUtils.EMPTY_TEXT_BLOCK);
 	}
 
 	public GtileHexagonInside(StringBounder stringBounder, TextBlock label, ISkinParam skinParam, HColor backColor,
 			HColor borderColor, Swimlane swimlane) {
-<span class="nc" id="L86">		super(stringBounder, skinParam, swimlane);</span>
+<span class="nc" id="L88">		super(stringBounder, skinParam, swimlane);</span>
 
-<span class="nc" id="L88">		final Style style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="nc" id="L89">		this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
-<span class="nc" id="L90">		this.backColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());</span>
-<span class="nc" id="L91">		this.shadowing = style.getShadowing();</span>
+<span class="nc" id="L90">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinition());</span>
+<span class="nc" id="L91">		this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
+<span class="nc" id="L92">		this.backColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());</span>
+<span class="nc" id="L93">		this.shadowing = style.getShadowing();</span>
 
-<span class="nc" id="L93">		this.label = label;</span>
-<span class="nc" id="L94">		this.dimLabel = label.calculateDimension(stringBounder);</span>
+<span class="nc" id="L95">		this.label = label;</span>
+<span class="nc" id="L96">		this.dimLabel = label.calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L96">	}</span>
+<span class="nc" id="L98">	}</span>
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
 		final XDimension2D dim;
-<span class="nc bnc" id="L101" title="All 4 branches missed.">		if (dimLabel.getWidth() == 0 || dimLabel.getHeight() == 0) {</span>
-<span class="nc" id="L102">			dim = new XDimension2D(Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2);</span>
+<span class="nc bnc" id="L103" title="All 4 branches missed.">		if (dimLabel.getWidth() == 0 || dimLabel.getHeight() == 0) {</span>
+<span class="nc" id="L104">			dim = new XDimension2D(Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2);</span>
 		} else {
-<span class="nc" id="L104">			dim = dimLabel.atLeast(Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2)</span>
-<span class="nc" id="L105">					.delta(Hexagon.hexagonHalfSize * 2, 0);</span>
+<span class="nc" id="L106">			dim = dimLabel.atLeast(Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2)</span>
+<span class="nc" id="L107">					.delta(Hexagon.hexagonHalfSize * 2, 0);</span>
 		}
-<span class="nc" id="L107">		return dim;</span>
+<span class="nc" id="L109">		return dim;</span>
 	}
 
 	@Override
 	protected void drawUInternal(UGraphic ug) {
-<span class="nc" id="L112">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L113">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
-<span class="nc" id="L114">		ug = ug.apply(borderColor).apply(getThickness()).apply(backColor.bg());</span>
-<span class="nc" id="L115">		ug.draw(Hexagon.asPolygon(shadowing, dimTotal.getWidth(), dimTotal.getHeight()));</span>
+<span class="nc" id="L114">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L115">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
+<span class="nc" id="L116">		ug = ug.apply(borderColor).apply(getThickness()).apply(backColor.bg());</span>
+<span class="nc" id="L117">		ug.draw(Hexagon.asPolygon(shadowing, dimTotal.getWidth(), dimTotal.getHeight()));</span>
 
-<span class="nc" id="L117">		final double lx = (dimTotal.getWidth() - dimLabel.getWidth()) / 2;</span>
-<span class="nc" id="L118">		final double ly = (dimTotal.getHeight() - dimLabel.getHeight()) / 2;</span>
-<span class="nc" id="L119">		label.drawU(ug.apply(new UTranslate(lx, ly)));</span>
-<span class="nc" id="L120">	}</span>
+<span class="nc" id="L119">		final double lx = (dimTotal.getWidth() - dimLabel.getWidth()) / 2;</span>
+<span class="nc" id="L120">		final double ly = (dimTotal.getHeight() - dimLabel.getHeight()) / 2;</span>
+<span class="nc" id="L121">		label.drawU(ug.apply(new UTranslate(lx, ly)));</span>
+<span class="nc" id="L122">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

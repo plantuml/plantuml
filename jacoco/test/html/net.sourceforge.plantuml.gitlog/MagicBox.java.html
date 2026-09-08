@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.gitlog;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -52,7 +54,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class MagicBox {
 
@@ -60,53 +62,53 @@ public class MagicBox {
 	private final GNode node;
 	private final HColor fontColor;
 
-<span class="nc" id="L63">	public MagicBox(ISkinParam skinParam, GNode node) {</span>
-<span class="nc" id="L64">		this.skinParam = skinParam;</span>
-<span class="nc" id="L65">		this.node = node;</span>
-<span class="nc" id="L66">		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.gitDiagram)</span>
-<span class="nc" id="L67">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="nc" id="L68">		this.fontColor = style.value(PName.FontColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="nc" id="L69">	}</span>
+<span class="nc" id="L65">	public MagicBox(ISkinParam skinParam, GNode node) {</span>
+<span class="nc" id="L66">		this.skinParam = skinParam;</span>
+<span class="nc" id="L67">		this.node = node;</span>
+<span class="nc" id="L68">		final Style style = skinParam.getCurrentStyleBuilder()</span>
+<span class="nc" id="L69">				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.gitDiagram)));</span>
+<span class="nc" id="L70">		this.fontColor = style.value(PName.FontColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L71">	}</span>
 
 	private TextBlock getSmallBlock() {
-<span class="nc" id="L72">		final FontConfiguration fc = FontConfiguration.create(UFontFactory.monospace(15).withFontFace(UFontFace.bold()), fontColor, fontColor, null);</span>
-<span class="nc" id="L73">		return node.getDisplay().create(fc, HorizontalAlignment.CENTER, skinParam);</span>
+<span class="nc" id="L74">		final FontConfiguration fc = FontConfiguration.create(UFontFactory.monospace(15).withFontFace(UFontFace.bold()), fontColor, fontColor, null);</span>
+<span class="nc" id="L75">		return node.getDisplay().create(fc, HorizontalAlignment.CENTER, skinParam);</span>
 	}
 
 	private TextBlock getCommentBlock() {
-<span class="nc bnc" id="L77" title="All 4 branches missed.">		if (node.getComment() != null &amp;&amp; node.isTop()) {</span>
-<span class="nc" id="L78">			final FontConfiguration tag = FontConfiguration.create(UFontFactory.sansSerif(13), fontColor, fontColor, null);</span>
-<span class="nc" id="L79">			return Display.create(node.getComment()).create(tag, HorizontalAlignment.CENTER, skinParam);</span>
+<span class="nc bnc" id="L79" title="All 4 branches missed.">		if (node.getComment() != null &amp;&amp; node.isTop()) {</span>
+<span class="nc" id="L80">			final FontConfiguration tag = FontConfiguration.create(UFontFactory.sansSerif(13), fontColor, fontColor, null);</span>
+<span class="nc" id="L81">			return Display.create(node.getComment()).create(tag, HorizontalAlignment.CENTER, skinParam);</span>
 		}
-<span class="nc" id="L81">		return TextBlockUtils.empty(0, 0);</span>
+<span class="nc" id="L83">		return TextBlockUtils.empty(0, 0);</span>
 
 	}
 
 	public XDimension2D getBigDim(StringBounder stringBounder) {
-<span class="nc" id="L86">		final XDimension2D dimComment = getCommentBlock().calculateDimension(stringBounder);</span>
-<span class="nc" id="L87">		final XDimension2D dimSmall = getSmallBlock().calculateDimension(stringBounder);</span>
-<span class="nc" id="L88">		final XDimension2D mergeTB = dimComment.mergeTB(dimSmall);</span>
-<span class="nc" id="L89">		return mergeTB.delta(8, 2);</span>
+<span class="nc" id="L88">		final XDimension2D dimComment = getCommentBlock().calculateDimension(stringBounder);</span>
+<span class="nc" id="L89">		final XDimension2D dimSmall = getSmallBlock().calculateDimension(stringBounder);</span>
+<span class="nc" id="L90">		final XDimension2D mergeTB = dimComment.mergeTB(dimSmall);</span>
+<span class="nc" id="L91">		return mergeTB.delta(8, 2);</span>
 	}
 
 	public void drawBorder(UGraphic ug, XDimension2D sizeInDot) {
 
-<span class="nc" id="L94">		final TextBlock comment = getCommentBlock();</span>
-<span class="nc" id="L95">		final TextBlock small = getSmallBlock();</span>
+<span class="nc" id="L96">		final TextBlock comment = getCommentBlock();</span>
+<span class="nc" id="L97">		final TextBlock small = getSmallBlock();</span>
 
-<span class="nc" id="L97">		final double moveY = comment.calculateDimension(ug.getStringBounder()).getHeight();</span>
+<span class="nc" id="L99">		final double moveY = comment.calculateDimension(ug.getStringBounder()).getHeight();</span>
 
-<span class="nc" id="L99">		final URectangle rect = URectangle.build(sizeInDot.getWidth(), sizeInDot.getHeight() - moveY).rounded(8);</span>
-<span class="nc" id="L100">		ug.apply(UStroke.withThickness(1.5)).apply(UTranslate.dy(moveY)).draw(rect);</span>
+<span class="nc" id="L101">		final URectangle rect = URectangle.build(sizeInDot.getWidth(), sizeInDot.getHeight() - moveY).rounded(8);</span>
+<span class="nc" id="L102">		ug.apply(UStroke.withThickness(1.5)).apply(UTranslate.dy(moveY)).draw(rect);</span>
 
-<span class="nc" id="L102">		comment.drawU(ug);</span>
+<span class="nc" id="L104">		comment.drawU(ug);</span>
 
-<span class="nc" id="L104">		final double deltaWidth = rect.getWidth() - small.calculateDimension(ug.getStringBounder()).getWidth();</span>
-<span class="nc" id="L105">		final double deltaHeight = rect.getHeight() - small.calculateDimension(ug.getStringBounder()).getHeight();</span>
+<span class="nc" id="L106">		final double deltaWidth = rect.getWidth() - small.calculateDimension(ug.getStringBounder()).getWidth();</span>
+<span class="nc" id="L107">		final double deltaHeight = rect.getHeight() - small.calculateDimension(ug.getStringBounder()).getHeight();</span>
 
-<span class="nc" id="L107">		small.drawU(ug.apply(new UTranslate(deltaWidth / 2, moveY + deltaHeight / 2)));</span>
+<span class="nc" id="L109">		small.drawU(ug.apply(new UTranslate(deltaWidth / 2, moveY + deltaHeight / 2)));</span>
 
-<span class="nc" id="L109">	}</span>
+<span class="nc" id="L111">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

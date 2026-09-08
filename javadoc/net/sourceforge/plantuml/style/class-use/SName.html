@@ -94,14 +94,16 @@ loadScripts(document, 'script');</script>
  <a href="https://plantuml.com/style-evolution" target="_top">
  Style</a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.svek">net.sourceforge.plantuml.svek</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.style.parser2">net.sourceforge.plantuml.style.parser2</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.svek">net.sourceforge.plantuml.svek</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/svek" target="_top">
  PlantUML Svek Architecture</a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.timingdiagram">net.sourceforge.plantuml.timingdiagram</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.timingdiagram">net.sourceforge.plantuml.timingdiagram</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/timing-diagram" target="_top">
  Timing Diagram</a>.</div>
@@ -188,7 +190,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>final <a href="../StyleSignature.html" title="interface in net.sourceforge.plantuml.style">StyleSignature</a></code></div>
+<div class="col-first even-row-color"><code>final <a href="../parser2/StyleQuery.html" title="class in net.sourceforge.plantuml.style.parser2">StyleQuery</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CucaDiagramFileMakerElk.</span><code><a href="../../elk/CucaDiagramFileMakerElk.html#getDefaultStyleDefinitionArrow(net.sourceforge.plantuml.stereo.Stereotype,net.sourceforge.plantuml.style.SName)" class="member-name-link">getDefaultStyleDefinitionArrow</a><wbr>(<a href="../../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype,
  <a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;styleName)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -279,7 +281,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../StyleSignatureBasic.html" title="class in net.sourceforge.plantuml.style">StyleSignatureBasic</a></code></div>
+<div class="col-first even-row-color"><code><a href="../parser2/StyleQuery.html" title="class in net.sourceforge.plantuml.style.parser2">StyleQuery</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">FontParam.</span><code><a href="../../klimt/font/FontParam.html#getStyleDefinition(net.sourceforge.plantuml.style.SName)" class="member-name-link">getStyleDefinition</a><wbr>(<a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;diagramType)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
@@ -308,7 +310,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>final <a href="../StyleSignature.html" title="interface in net.sourceforge.plantuml.style">StyleSignature</a></code></div>
+<div class="col-first even-row-color"><code>final <a href="../parser2/StyleQuery.html" title="class in net.sourceforge.plantuml.style.parser2">StyleQuery</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CucaDiagramFileMakerSmetana.</span><code><a href="../../sdot/CucaDiagramFileMakerSmetana.html#getDefaultStyleDefinitionArrow(net.sourceforge.plantuml.stereo.Stereotype,net.sourceforge.plantuml.style.SName)" class="member-name-link">getDefaultStyleDefinitionArrow</a><wbr>(<a href="../../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype,
  <a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;styleName)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -355,29 +357,79 @@ the order they are declared.</div>
 <div class="col-first even-row-color"><code><a href="../StyleKey.html" title="class in net.sourceforge.plantuml.style">StyleKey</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">StyleKey.</span><code><a href="../StyleKey.html#addSName(net.sourceforge.plantuml.style.SName)" class="member-name-link">addSName</a><wbr>(<a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;name)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../StyleSignatureBasic.html" title="class in net.sourceforge.plantuml.style">StyleSignatureBasic</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">StyleSignatureBasic.</span><code><a href="../StyleSignatureBasic.html#addSName(net.sourceforge.plantuml.style.SName)" class="member-name-link">addSName</a><wbr>(<a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;name)</code></div>
+<div class="col-first odd-row-color"><code>static <a href="../StyleKey.html" title="class in net.sourceforge.plantuml.style">StyleKey</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">StyleKey.</span><code><a href="../StyleKey.html#ofSNames(net.sourceforge.plantuml.style.SName...)" class="member-name-link">ofSNames</a><wbr>(<a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>...&nbsp;names)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../StyleKey.html" title="class in net.sourceforge.plantuml.style">StyleKey</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">StyleKey.</span><code><a href="../StyleKey.html#of(net.sourceforge.plantuml.style.SName...)" class="member-name-link">of</a><wbr>(<a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>...&nbsp;names)</code></div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.style.parser2">
+<h2>Uses of <a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a> in <a href="../parser2/package-summary.html">net.sourceforge.plantuml.style.parser2</a></h2>
+<div class="caption"><span>Methods in <a href="../parser2/package-summary.html">net.sourceforge.plantuml.style.parser2</a> that return <a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">RawSelector.</span><code><a href="../parser2/RawSelector.html#getSName()" class="member-name-link">getSName</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Non-null only when <a href="../parser2/RawSelector.html#getKind()"><code>RawSelector.getKind()</code></a> is <a href="../parser2/RawSelector.Kind.html#NAME"><code>RawSelector.Kind.NAME</code></a>.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">StyleAtom.</span><code><a href="../parser2/StyleAtom.html#getSName()" class="member-name-link">getSName</a>()</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Non-null only when <a href="../parser2/StyleAtom.html#isName()"><code>StyleAtom.isName()</code></a> is true.</div>
+</div>
+</div>
+<div class="caption"><span>Methods in <a href="../parser2/package-summary.html">net.sourceforge.plantuml.style.parser2</a> that return types with arguments of type <a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>,<wbr><a href="../parser2/MergedStyleNode.html" title="class in net.sourceforge.plantuml.style.parser2">MergedStyleNode</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">MergedStyleNode.</span><code><a href="../parser2/MergedStyleNode.html#getNamedChildren()" class="member-name-link">getNamedChildren</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Children reached through a plain (non-starred) named selector.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>,<wbr><a href="../parser2/MergedStyleNode.html" title="class in net.sourceforge.plantuml.style.parser2">MergedStyleNode</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">MergedStyleNode.</span><code><a href="../parser2/MergedStyleNode.html#getStarredNamedChildren()" class="member-name-link">getStarredNamedChildren</a>()</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Children reached through a starred named selector, e.g.</div>
+</div>
+</div>
+<div class="caption"><span>Methods in <a href="../parser2/package-summary.html">net.sourceforge.plantuml.style.parser2</a> with parameters of type <a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../parser2/StyleQuery.html" title="class in net.sourceforge.plantuml.style.parser2">StyleQuery</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">StyleQuery.</span><code><a href="../parser2/StyleQuery.html#addSName(net.sourceforge.plantuml.style.SName)" class="member-name-link">addSName</a><wbr>(<a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;name)</code></div>
+<div class="col-last even-row-color">
+<div class="block">This same query, additionally requiring <code>name</code> -- mirroring
+ <code>StyleSignature.addSName(SName)</code>.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../parser2/StyleAtom.html" title="class in net.sourceforge.plantuml.style.parser2">StyleAtom</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">StyleAtom.</span><code><a href="../parser2/StyleAtom.html#of(net.sourceforge.plantuml.style.SName)" class="member-name-link">of</a><wbr>(<a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;sname)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Method parameters in <a href="../parser2/package-summary.html">net.sourceforge.plantuml.style.parser2</a> with type arguments of type <a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static <a href="../parser2/StyleQuery.html" title="class in net.sourceforge.plantuml.style.parser2">StyleQuery</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">StyleQuery.</span><code><a href="../parser2/StyleQuery.html#of(java.util.Collection)" class="member-name-link">of</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&gt;&nbsp;names)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../StyleSignatureBasic.html" title="class in net.sourceforge.plantuml.style">StyleSignatureBasic</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">StyleSignatureBasic.</span><code><a href="../StyleSignatureBasic.html#of(net.sourceforge.plantuml.style.SName...)" class="member-name-link">of</a><wbr>(<a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>...&nbsp;names)</code></div>
+<div class="col-first odd-row-color"><code>static <a href="../parser2/StyleQuery.html" title="class in net.sourceforge.plantuml.style.parser2">StyleQuery</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">StyleQuery.</span><code><a href="../parser2/StyleQuery.html#of(java.util.Collection,java.util.Collection)" class="member-name-link">of</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&gt;&nbsp;names,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;stereotypes)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../StyleSignatureBasic.html" title="class in net.sourceforge.plantuml.style">StyleSignatureBasic</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">StyleSignatureBasic.</span><code><a href="../StyleSignatureBasic.html#of(net.sourceforge.plantuml.style.SName,net.sourceforge.plantuml.style.SName,net.sourceforge.plantuml.style.SName,net.sourceforge.plantuml.style.SName%5B%5D,net.sourceforge.plantuml.style.SName...)" class="member-name-link">of</a><wbr>(<a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;name0,
- <a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;name1,
- <a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;name2,
- <a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>[]&nbsp;sNames,
- <a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>...&nbsp;other)</code></div>
+<div class="col-first even-row-color"><code>static <a href="../parser2/StyleQuery.html" title="class in net.sourceforge.plantuml.style.parser2">StyleQuery</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">StyleQuery.</span><code><a href="../parser2/StyleQuery.html#of(java.util.Collection,java.util.Collection,net.sourceforge.plantuml.style.parser2.LevelConstraint)" class="member-name-link">of</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&gt;&nbsp;names,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;stereotypes,
+ <a href="../parser2/LevelConstraint.html" title="class in net.sourceforge.plantuml.style.parser2">LevelConstraint</a>&nbsp;levelConstraint)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../StyleSignatureBasic.html" title="class in net.sourceforge.plantuml.style">StyleSignatureBasic</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">StyleSignatureBasic.</span><code><a href="../StyleSignatureBasic.html#of(net.sourceforge.plantuml.style.SName,net.sourceforge.plantuml.style.SName,net.sourceforge.plantuml.style.SName,net.sourceforge.plantuml.style.SName,net.sourceforge.plantuml.style.SName%5B%5D)" class="member-name-link">of</a><wbr>(<a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;name0,
- <a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;name1,
- <a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;name2,
- <a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;name3,
- <a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>[]&nbsp;names)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -407,7 +459,7 @@ the order they are declared.</div>
  <a href="../../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a>&nbsp;colorSet,
  <a href="../../abel/GroupType.html" title="enum class in net.sourceforge.plantuml.abel">GroupType</a>&nbsp;groupType)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../StyleSignatureBasic.html" title="class in net.sourceforge.plantuml.style">StyleSignatureBasic</a></code></div>
+<div class="col-first odd-row-color"><code>static <a href="../parser2/StyleQuery.html" title="class in net.sourceforge.plantuml.style.parser2">StyleQuery</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">Cluster.</span><code><a href="../../svek/Cluster.html#getDefaultStyleDefinition(net.sourceforge.plantuml.style.SName,net.sourceforge.plantuml.decoration.symbol.USymbol,net.sourceforge.plantuml.abel.GroupType)" class="member-name-link">getDefaultStyleDefinition</a><wbr>(<a href="../SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;diagramStyleName,
  <a href="../../decoration/symbol/USymbol.html" title="class in net.sourceforge.plantuml.decoration.symbol">USymbol</a>&nbsp;symbol,
  <a href="../../abel/GroupType.html" title="enum class in net.sourceforge.plantuml.abel">GroupType</a>&nbsp;groupType)</code></div>

@@ -115,10 +115,10 @@ public class UGraphicForSnake extends UGraphicDelegator {
 <span class="fc" id="L115">			final Snake s1 = snake.move(dx, dy);</span>
 <span class="fc" id="L116">			final Snake s2 = newItem.snake.move(newItem.dx, newItem.dy);</span>
 <span class="fc" id="L117">			final Snake merge = s1.merge(s2, ug.getStringBounder());</span>
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">			if (merge == null) {</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">			if (merge == null) {</span>
 <span class="fc" id="L119">				return null;</span>
 			}
-<span class="nc" id="L121">			return new PendingSnake(merge.move(-dx, -dy), ug, dx, dy);</span>
+<span class="fc" id="L121">			return new PendingSnake(merge.move(-dx, -dy), ug, dx, dy);</span>
 		}
 
 	}
@@ -147,9 +147,9 @@ public class UGraphicForSnake extends UGraphicDelegator {
 <span class="fc" id="L147">		final PendingSnake newItem = new PendingSnake(snake, getUg(), dx, dy);</span>
 <span class="fc bfc" id="L148" title="All 2 branches covered.">		for (int pos = 0; pos &lt; snakes.size(); pos++) {</span>
 <span class="fc" id="L149">			final PendingSnake merge = snakes.get(pos).merge(newItem);</span>
-<span class="pc bpc" id="L150" title="1 of 2 branches missed.">			if (merge != null) {</span>
-<span class="nc" id="L151">				snakes.set(pos, merge);</span>
-<span class="nc" id="L152">				return;</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">			if (merge != null) {</span>
+<span class="fc" id="L151">				snakes.set(pos, merge);</span>
+<span class="fc" id="L152">				return;</span>
 			}
 		}
 <span class="fc" id="L155">		snakes.add(newItem);</span>

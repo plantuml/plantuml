@@ -107,7 +107,7 @@ loadScripts(document, 'script');</script>
  <a href="https://plantuml.com/style-evolution" target="_top">
  Style</a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.style.parser">net.sourceforge.plantuml.style.parser</a></div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.style.parser2">net.sourceforge.plantuml.style.parser2</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.timingdiagram.command">net.sourceforge.plantuml.timingdiagram.command</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -686,19 +686,29 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CommandStyleMultilinesCSS.</span><code><a href="../../style/CommandStyleMultilinesCSS.html#explainNow(net.sourceforge.plantuml.utils.BlocLines)" class="member-name-link">explainNow</a><wbr>(<a href="../BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a><wbr>&lt;<a href="../../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">StyleLoader.</span><code><a href="../../style/StyleLoader.html#parseStyleText(net.sourceforge.plantuml.utils.BlocLines,net.sourceforge.plantuml.style.AutomaticCounter)" class="member-name-link">parseStyleText</a><wbr>(<a href="../BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines,
+ <a href="../../style/AutomaticCounter.html" title="interface in net.sourceforge.plantuml.style">AutomaticCounter</a>&nbsp;counter)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Parses a fragment of .skin/<code>&lt;style&gt;</code> text into flat legacy <a href="../../style/Style.html" title="class in net.sourceforge.plantuml.style"><code>Style</code></a> objects,
+ assigning each property an increasing priority via <code>counter</code> -- the direct
+ replacement for <code>new net.sourceforge.plantuml.style.parser.StyleParser(counter).parse(lines)</code>,
+ now going through the <code>parser2</code> tokenizer (<a href="../../style/parser2/RawStyleParser.html" title="class in net.sourceforge.plantuml.style.parser2"><code>RawStyleParser</code></a>) instead of the
+ legacy hand-written one.</div>
+</div>
 </div>
 </section>
 </li>
 <li>
-<section class="detail" id="net.sourceforge.plantuml.style.parser">
-<h2>Uses of <a href="../BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a> in <a href="../../style/parser/package-summary.html">net.sourceforge.plantuml.style.parser</a></h2>
-<div class="caption"><span>Methods in <a href="../../style/parser/package-summary.html">net.sourceforge.plantuml.style.parser</a> with parameters of type <a href="../BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a></span></div>
+<section class="detail" id="net.sourceforge.plantuml.style.parser2">
+<h2>Uses of <a href="../BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a> in <a href="../../style/parser2/package-summary.html">net.sourceforge.plantuml.style.parser2</a></h2>
+<div class="caption"><span>Methods in <a href="../../style/parser2/package-summary.html">net.sourceforge.plantuml.style.parser2</a> with parameters of type <a href="../BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a><wbr>&lt;<a href="../../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">StyleParser.</span><code><a href="../../style/parser/StyleParser.html#parse(net.sourceforge.plantuml.utils.BlocLines)" class="member-name-link">parse</a><wbr>(<a href="../BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</code></div>
+<div class="col-first even-row-color"><code>static <a href="../../style/parser2/RawStyleSheet.html" title="class in net.sourceforge.plantuml.style.parser2">RawStyleSheet</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">RawStyleParser.</span><code><a href="../../style/parser2/RawStyleParser.html#parse(net.sourceforge.plantuml.utils.BlocLines)" class="member-name-link">parse</a><wbr>(<a href="../BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>

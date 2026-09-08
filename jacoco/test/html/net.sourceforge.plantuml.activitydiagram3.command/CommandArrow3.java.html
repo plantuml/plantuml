@@ -96,17 +96,17 @@ public class CommandArrow3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 
-<span class="nc" id="L99">		final String colorString = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (colorString != null) {</span>
+<span class="fc" id="L99">		final String colorString = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		if (colorString != null) {</span>
 <span class="nc" id="L101">			final Rainbow rainbow = Rainbow.build(diagram.getSkinParam(), colorString,</span>
 <span class="nc" id="L102">					diagram.getSkinParam().colorArrowSeparationSpace());</span>
 <span class="nc" id="L103">			diagram.setColorNextArrow(rainbow);</span>
 		}
-<span class="nc" id="L105">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
-<span class="nc bnc" id="L106" title="All 4 branches missed.">		if (label != null &amp;&amp; label.length() &gt; 0)</span>
-<span class="nc" id="L107">			diagram.setLabelNextArrow(Display.getWithNewlines(diagram.getPragma(), label));</span>
+<span class="fc" id="L105">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="pc bpc" id="L106" title="2 of 4 branches missed.">		if (label != null &amp;&amp; label.length() &gt; 0)</span>
+<span class="fc" id="L107">			diagram.setLabelNextArrow(Display.getWithNewlines(diagram.getPragma(), label));</span>
 
-<span class="nc" id="L109">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L109">		return CommandExecutionResult.ok();</span>
 	}
 
 }

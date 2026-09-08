@@ -39,8 +39,8 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class Divider extends AbstractEvent implements Event, WithStyle, EventWithDeactivate {
 
@@ -48,25 +48,26 @@ public class Divider extends AbstractEvent implements Event, WithStyle, EventWit
 
 	final private Style style;
 
-	public StyleSignature getStyleSignature() {
-<span class="fc" id="L52">		return ComponentType.DIVIDER.getStyleSignature();</span>
+	@Override
+	public StyleQuery getStyleQuery() {
+<span class="fc" id="L53">		return ComponentType.DIVIDER.getStyleQuery();</span>
 	}
 
 	public Style[] getUsedStyles() {
-<span class="fc" id="L56">		return new Style[] { style };</span>
+<span class="fc" id="L57">		return new Style[] { style };</span>
 	}
 
-<span class="fc" id="L59">	public Divider(Display text, StyleBuilder styleBuilder) {</span>
-<span class="fc" id="L60">		this.text = text;</span>
-<span class="fc" id="L61">		this.style = getStyleSignature().getMergedStyle(styleBuilder);</span>
-<span class="fc" id="L62">	}</span>
+<span class="fc" id="L60">	public Divider(Display text, StyleBuilder styleBuilder) {</span>
+<span class="fc" id="L61">		this.text = text;</span>
+<span class="fc" id="L62">		this.style = styleBuilder.getMergedStyle(getStyleQuery());</span>
+<span class="fc" id="L63">	}</span>
 
 	public final Display getText() {
-<span class="fc" id="L65">		return text;</span>
+<span class="fc" id="L66">		return text;</span>
 	}
 
 	public boolean dealWith(Participant someone) {
-<span class="fc" id="L69">		return false;</span>
+<span class="fc" id="L70">		return false;</span>
 	}
 
 	// A divider (== ... ==) closes off whatever message preceded it, exactly like
@@ -89,15 +90,15 @@ public class Divider extends AbstractEvent implements Event, WithStyle, EventWit
 	private double posYendLevel;
 
 	public void setPosYendLevel(double posYendLevel) {
-<span class="nc" id="L92">		this.posYendLevel = posYendLevel;</span>
-<span class="nc" id="L93">	}</span>
+<span class="nc" id="L93">		this.posYendLevel = posYendLevel;</span>
+<span class="nc" id="L94">	}</span>
 
 	public double getPosYendLevel() {
-<span class="nc" id="L96">		return posYendLevel;</span>
+<span class="nc" id="L97">		return posYendLevel;</span>
 	}
 
 	public boolean addLifeEvent(LifeEvent lifeEvent) {
-<span class="nc" id="L100">		return true;</span>
+<span class="nc" id="L101">		return true;</span>
 	}
 
 }

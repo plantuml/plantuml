@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -51,8 +53,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 
@@ -63,20 +64,19 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 	private final Style style;
 
 	public EntityImagePseudoState(Entity entity) {
-<span class="nc" id="L66">		this(entity, &quot;H&quot;);</span>
-<span class="nc" id="L67">	}</span>
+<span class="nc" id="L67">		this(entity, &quot;H&quot;);</span>
+<span class="nc" id="L68">	}</span>
 
 	@Override
-	public StyleSignature getStyleSignature() {
-<span class="nc" id="L71">		return StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), SName.diamond);</span>
+	public StyleQuery getStyleQuery() {
+<span class="nc" id="L72">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, getStyleName(), SName.diamond));</span>
 	}
 
 	public EntityImagePseudoState(Entity entity, String historyText) {
-<span class="nc" id="L75">		super(entity);</span>
-<span class="nc" id="L76">		final Stereotype stereotype = entity.getStereotype();</span>
+<span class="nc" id="L76">		super(entity);</span>
+<span class="nc" id="L77">		final Stereotype stereotype = entity.getStereotype();</span>
 
-<span class="nc" id="L78">		this.style = getStyleSignature().withTOBECHANGED(stereotype)</span>
-<span class="nc" id="L79">				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L79">		this.style = getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery().withTOBECHANGED(stereotype));</span>
 
 <span class="nc" id="L81">		final FontConfiguration fontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
 

@@ -134,7 +134,7 @@ public class EbnfExpression implements TextBlockable {
 
 	@Override
 	public TextBlock getUDrawable(ISkinParam skinParam, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L137">		final Style style = ETile.getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L137">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(ETile.getStyleQuery());</span>
 <span class="nc" id="L138">		final FontConfiguration fc = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
 
 <span class="nc bnc" id="L140" title="All 2 branches missed.">		if (tokens.size() == 0)</span>

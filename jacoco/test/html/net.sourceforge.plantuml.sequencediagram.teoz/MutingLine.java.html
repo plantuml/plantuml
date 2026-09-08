@@ -102,18 +102,17 @@ public class MutingLine {
 		// Like in Puma (see DrawableSetInitializer.prepareParticipant), the style
 		// is merged with the participant stereotype, so that stereotyped rules
 		// such as &lt;style&gt;.foo { lineColor ... }&lt;/style&gt; apply to the life line
-<span class="fc" id="L105">		final Style style = defaultLineType.getStyleSignature().withTOBECHANGED(participant.getStereotype())</span>
-<span class="fc" id="L106">				.getMergedStyle(styleBuilder);</span>
-<span class="fc" id="L107">		final Component comp = skin.createComponent(new Style[] { style }, defaultLineType, null, skinParam,</span>
-<span class="fc" id="L108">				participant.getDisplay(skinParam.forceSequenceParticipantUnderlined()));</span>
-<span class="fc" id="L109">		final XDimension2D dim = comp.getPreferredDimension(ug.getStringBounder());</span>
-<span class="fc" id="L110">		final Area area = Area.create(dim.getWidth(), y2 - y1);</span>
-<span class="fc" id="L111">		comp.drawU(ug.apply(UTranslate.dy(y1)), area, context);</span>
-<span class="fc" id="L112">	}</span>
+<span class="fc" id="L105">		final Style style = styleBuilder.getMergedStyle(defaultLineType.getStyleQuery().withTOBECHANGED(participant.getStereotype()));</span>
+<span class="fc" id="L106">		final Component comp = skin.createComponent(new Style[] { style }, defaultLineType, null, skinParam,</span>
+<span class="fc" id="L107">				participant.getDisplay(skinParam.forceSequenceParticipantUnderlined()));</span>
+<span class="fc" id="L108">		final XDimension2D dim = comp.getPreferredDimension(ug.getStringBounder());</span>
+<span class="fc" id="L109">		final Area area = Area.create(dim.getWidth(), y2 - y1);</span>
+<span class="fc" id="L110">		comp.drawU(ug.apply(UTranslate.dy(y1)), area, context);</span>
+<span class="fc" id="L111">	}</span>
 
 	public void delayOn(double y, double height) {
-<span class="fc" id="L115">		delays.put(y, height);</span>
-<span class="fc" id="L116">	}</span>
+<span class="fc" id="L114">		delays.put(y, height);</span>
+<span class="fc" id="L115">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

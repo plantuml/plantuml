@@ -97,7 +97,7 @@ public class CommandHeader extends SingleLineCommand2&lt;TitledDiagram&gt; {
 <span class="fc" id="L97">		final String align = arg.get(&quot;POSITION&quot;, 0);</span>
 <span class="fc" id="L98">		HorizontalAlignment ha = HorizontalAlignment.fromString(align, HorizontalAlignment.RIGHT);</span>
 <span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (align == null)</span>
-<span class="fc" id="L100">			ha = FontParam.HEADER.getStyleDefinition(null).getMergedStyle(diagram.getCurrentStyleBuilder())</span>
+<span class="fc" id="L100">			ha = diagram.getCurrentStyleBuilder().getMergedStyle(FontParam.HEADER.getStyleDefinition(null))</span>
 <span class="fc" id="L101">					.getHorizontalAlignment();</span>
 
 <span class="fc" id="L103">		final Display s = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy(&quot;LABEL&quot;, 0));</span>

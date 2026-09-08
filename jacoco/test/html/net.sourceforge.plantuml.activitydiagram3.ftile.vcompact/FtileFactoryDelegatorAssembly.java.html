@@ -58,8 +58,8 @@ public class FtileFactoryDelegatorAssembly extends FtileFactoryDelegator {
 <span class="fc" id="L58">		double height = 35;</span>
 <span class="fc" id="L59">		final TextBlock textBlock = getTextBlock(getInLinkRenderingDisplay(tile2));</span>
 <span class="fc" id="L60">		final StringBounder stringBounder = getStringBounder();</span>
-<span class="pc bpc" id="L61" title="1 of 2 branches missed.">		if (textBlock != null) {</span>
-<span class="nc" id="L62">			height += textBlock.calculateDimension(stringBounder).getHeight();</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		if (textBlock != null) {</span>
+<span class="fc" id="L62">			height += textBlock.calculateDimension(stringBounder).getHeight();</span>
 		}
 		// final Ftile space = new FtileEmpty(getFactory().shadowing(), 1, height);
 <span class="fc" id="L65">		final Ftile tile1andSpace = FtileUtils.addBottom(tile1, height);</span>
@@ -77,18 +77,18 @@ public class FtileFactoryDelegatorAssembly extends FtileFactoryDelegator {
 
 <span class="fc" id="L78">		final ConnectionVerticalDown connection = new ConnectionVerticalDown(tile1, tile2, p1, p2, color, textBlock);</span>
 <span class="fc" id="L79">		result = FtileUtils.addConnection(result, connection);</span>
-<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (textBlock != null) {</span>
-<span class="nc" id="L81">			final FtileGeometry dim = result.calculateDimension(stringBounder);</span>
-<span class="nc" id="L82">			final double width = dim.getWidth();</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">		if (textBlock != null) {</span>
+<span class="fc" id="L81">			final FtileGeometry dim = result.calculateDimension(stringBounder);</span>
+<span class="fc" id="L82">			final double width = dim.getWidth();</span>
 			// System.err.println(&quot;width=&quot; + width);
 			// System.err.println(&quot;p1=&quot; + p1);
 			// System.err.println(&quot;p2=&quot; + p2);
-<span class="nc" id="L86">			final double maxX = connection.getMaxX(stringBounder);</span>
+<span class="fc" id="L86">			final double maxX = connection.getMaxX(stringBounder);</span>
 			// System.err.println(&quot;FtileFactoryDelegatorAssembly dim=&quot; + dim);
 			// System.err.println(&quot;maxX=&quot; + maxX);
-<span class="nc" id="L89">			final double needed = (maxX - width) * 2;</span>
+<span class="fc" id="L89">			final double needed = (maxX - width) * 2;</span>
 			// result = new FtileMinWidth(result, needed);
-<span class="nc bnc" id="L91" title="All 2 branches missed.">			if (width &lt; maxX) {</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">			if (width &lt; maxX) {</span>
 <span class="nc" id="L92">				result = new FtileMargedRight(result, maxX);</span>
 			}
 			// System.err.println(&quot;FtileFactoryDelegatorAssembly result=&quot; +

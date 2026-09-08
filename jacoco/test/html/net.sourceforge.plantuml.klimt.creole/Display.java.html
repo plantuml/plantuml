@@ -231,14 +231,14 @@ public class Display implements Iterable&lt;CharSequence&gt;, AsciiBlock {
 	}
 
 	public static List&lt;String&gt; getWithNewlines3(CharSequence s) {
-<span class="nc bnc" id="L234" title="All 2 branches missed.">		if (s == null)</span>
+<span class="pc bpc" id="L234" title="1 of 2 branches missed.">		if (s == null)</span>
 <span class="nc" id="L235">			return null;</span>
 
-<span class="nc" id="L237">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L238">		final StringBuilder current = new StringBuilder();</span>
-<span class="nc bnc" id="L239" title="All 2 branches missed.">		for (int i = 0; i &lt; s.length(); i++) {</span>
-<span class="nc" id="L240">			final char c = s.charAt(i);</span>
-<span class="nc bnc" id="L241" title="All 4 branches missed.">			if (c == '\\' &amp;&amp; i &lt; s.length() - 1) {</span>
+<span class="fc" id="L237">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L238">		final StringBuilder current = new StringBuilder();</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L240">			final char c = s.charAt(i);</span>
+<span class="pc bpc" id="L241" title="3 of 4 branches missed.">			if (c == '\\' &amp;&amp; i &lt; s.length() - 1) {</span>
 <span class="nc" id="L242">				final char c2 = s.charAt(i + 1);</span>
 <span class="nc" id="L243">				i++;</span>
 <span class="nc bnc" id="L244" title="All 2 branches missed.">				if (c2 == 'n') {</span>
@@ -250,11 +250,11 @@ public class Display implements Iterable&lt;CharSequence&gt;, AsciiBlock {
 <span class="nc" id="L250">					current.append(c2);</span>
 				}
 <span class="nc" id="L252">			} else {</span>
-<span class="nc" id="L253">				current.append(c);</span>
+<span class="fc" id="L253">				current.append(c);</span>
 			}
 		}
-<span class="nc" id="L256">		result.add(current.toString());</span>
-<span class="nc" id="L257">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L256">		result.add(current.toString());</span>
+<span class="fc" id="L257">		return Collections.unmodifiableList(result);</span>
 	}
 
 <span class="fc" id="L260">	private final static Warning MORE_INFO = new Warning(&quot;More info on https://plantuml.com/newline&quot;);</span>

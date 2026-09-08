@@ -60,35 +60,34 @@ public abstract class AbstractEntityImageBorder extends AbstractEntityImage {
 
 	final protected Style getStyle() {
 <span class="fc" id="L62">		final Stereotype stereotype = getEntity().getStereotype();</span>
-<span class="fc" id="L63">		return getStyleSignature().withTOBECHANGED(stereotype)</span>
-<span class="fc" id="L64">				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L63">		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery().withTOBECHANGED(stereotype));</span>
 	}
 
 	AbstractEntityImageBorder(Entity leaf, Cluster parent, Bibliotekon bibliotekon, FontParam fontParam) {
-<span class="fc" id="L68">		super(leaf);</span>
+<span class="fc" id="L67">		super(leaf);</span>
 
-<span class="fc" id="L70">		this.parent = parent;</span>
-<span class="fc" id="L71">		this.bibliotekon = bibliotekon;</span>
-<span class="fc" id="L72">		this.entityPosition = leaf.getEntityPosition();</span>
-<span class="fc" id="L73">		this.rankdir = getSkinParam().getRankdir();</span>
+<span class="fc" id="L69">		this.parent = parent;</span>
+<span class="fc" id="L70">		this.bibliotekon = bibliotekon;</span>
+<span class="fc" id="L71">		this.entityPosition = leaf.getEntityPosition();</span>
+<span class="fc" id="L72">		this.rankdir = getSkinParam().getRankdir();</span>
 
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if (entityPosition == EntityPosition.NORMAL)</span>
-<span class="nc" id="L76">			throw new IllegalArgumentException();</span>
-<span class="fc" id="L77">	}</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (entityPosition == EntityPosition.NORMAL)</span>
+<span class="nc" id="L75">			throw new IllegalArgumentException();</span>
+<span class="fc" id="L76">	}</span>
 
 	protected final TextBlock getDesc() {
-<span class="fc" id="L80">		final Entity leaf = (Entity) getEntity();</span>
-<span class="fc" id="L81">		final FontConfiguration fc = FontConfiguration.create(getSkinParam(), getStyle());</span>
-<span class="fc" id="L82">		return leaf.getDisplay().create(fc, HorizontalAlignment.CENTER, getSkinParam());</span>
+<span class="fc" id="L79">		final Entity leaf = (Entity) getEntity();</span>
+<span class="fc" id="L80">		final FontConfiguration fc = FontConfiguration.create(getSkinParam(), getStyle());</span>
+<span class="fc" id="L81">		return leaf.getDisplay().create(fc, HorizontalAlignment.CENTER, getSkinParam());</span>
 	}
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="nc" id="L87">		return entityPosition.getDimension(rankdir);</span>
+<span class="nc" id="L86">		return entityPosition.getDimension(rankdir);</span>
 	}
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L91">		return entityPosition.getShapeType();</span>
+<span class="nc" id="L90">		return entityPosition.getShapeType();</span>
 	}
 
 }

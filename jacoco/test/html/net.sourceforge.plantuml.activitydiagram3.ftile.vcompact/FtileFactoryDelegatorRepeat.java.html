@@ -91,8 +91,8 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 <span class="fc" id="L91">		final ConditionStyle conditionStyle = skinParam().getConditionStyle();</span>
 <span class="fc" id="L92">		final HColorSet colorSet = skinParam().getIHtmlColorSet();</span>
 
-<span class="fc" id="L94">		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(currentStyleBuilder);</span>
-<span class="fc" id="L95">		final Style styleDiamond = getDefaultStyleDefinitionDiamond().getMergedStyle(currentStyleBuilder);</span>
+<span class="fc" id="L94">		final Style styleArrow = currentStyleBuilder.getMergedStyle(getDefaultStyleDefinitionArrow());</span>
+<span class="fc" id="L95">		final Style styleDiamond = currentStyleBuilder.getMergedStyle(getDefaultStyleDefinitionDiamond());</span>
 
 <span class="fc" id="L97">		final HColor borderColor = styleDiamond.value(PName.LineColor).asColor(colorSet);</span>
 
@@ -104,7 +104,7 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 <span class="pc bpc" id="L104" title="2 of 4 branches missed.">		if (stereogroup2.getInnerColors(colorSet).isEmpty() &amp;&amp; stereogroup2.isEmpty())</span>
 <span class="fc" id="L105">			diamondColor2 = diamondColor1;</span>
 
-<span class="fc" id="L107">		final Colors colorsEntry = getDefaultStyleDefinitionActivity().getMergedStyle(currentStyleBuilder)</span>
+<span class="fc" id="L107">		final Colors colorsEntry = currentStyleBuilder.getMergedStyle(getDefaultStyleDefinitionActivity())</span>
 <span class="fc" id="L108">				.toColors(colorSet).add(ColorType.BACK, diamondColor1);</span>
 
 <span class="fc" id="L110">		final Rainbow arrowColor = Rainbow.build(styleArrow, colorSet);</span>

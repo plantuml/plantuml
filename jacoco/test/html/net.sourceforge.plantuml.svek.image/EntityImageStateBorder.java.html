@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityPosition;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -50,8 +52,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.SvekNode;
@@ -59,58 +60,58 @@ import net.sourceforge.plantuml.svek.SvekNode;
 public class EntityImageStateBorder extends AbstractEntityImageBorder {
 
 	public EntityImageStateBorder(Entity leaf, Cluster stateParent, final Bibliotekon bibliotekon) {
-<span class="nc" id="L62">		super(leaf, stateParent, bibliotekon, FontParam.STATE);</span>
-<span class="nc" id="L63">	}</span>
+<span class="nc" id="L63">		super(leaf, stateParent, bibliotekon, FontParam.STATE);</span>
+<span class="nc" id="L64">	}</span>
 
 	@Override
-	public StyleSignature getStyleSignature() {
-<span class="nc" id="L67">		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state);</span>
+	public StyleQuery getStyleQuery() {
+<span class="nc" id="L68">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.stateDiagram, SName.state));</span>
 	}
 
 	private boolean upPosition() {
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (parent == null)</span>
-<span class="nc" id="L72">			return false;</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (parent == null)</span>
+<span class="nc" id="L73">			return false;</span>
 
-<span class="nc" id="L74">		final XPoint2D clusterCenter = parent.getRectangleArea().getPointCenter();</span>
-<span class="nc" id="L75">		final SvekNode node = bibliotekon.getNode(getEntity());</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		return node.getMinY() &lt; clusterCenter.getY();</span>
+<span class="nc" id="L75">		final XPoint2D clusterCenter = parent.getRectangleArea().getPointCenter();</span>
+<span class="nc" id="L76">		final SvekNode node = bibliotekon.getNode(getEntity());</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		return node.getMinY() &lt; clusterCenter.getY();</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="nc" id="L80">		final TextBlock desc = getDesc();</span>
-<span class="nc" id="L81">		double y = 0;</span>
-<span class="nc" id="L82">		final XDimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L83">		final double x = 0 - (dimDesc.getWidth() - 2 * EntityPosition.RADIUS) / 2;</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (upPosition())</span>
-<span class="nc" id="L85">			y -= 2 * EntityPosition.RADIUS + dimDesc.getHeight();</span>
+<span class="nc" id="L81">		final TextBlock desc = getDesc();</span>
+<span class="nc" id="L82">		double y = 0;</span>
+<span class="nc" id="L83">		final XDimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L84">		final double x = 0 - (dimDesc.getWidth() - 2 * EntityPosition.RADIUS) / 2;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (upPosition())</span>
+<span class="nc" id="L86">			y -= 2 * EntityPosition.RADIUS + dimDesc.getHeight();</span>
 		else
-<span class="nc" id="L87">			y += 2 * EntityPosition.RADIUS;</span>
+<span class="nc" id="L88">			y += 2 * EntityPosition.RADIUS;</span>
 
-<span class="nc" id="L89">		desc.drawU(ug.apply(new UTranslate(x, y)));</span>
+<span class="nc" id="L90">		desc.drawU(ug.apply(new UTranslate(x, y)));</span>
 
-<span class="nc" id="L91">		final Style style = getStyle();</span>
+<span class="nc" id="L92">		final Style style = getStyle();</span>
 
-<span class="nc" id="L93">		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L94">		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (backcolor == null)</span>
-<span class="nc" id="L96">			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (backcolor.isTransparent())</span>
-<span class="nc" id="L98">			backcolor = getSkinParam().getBackgroundColor();</span>
+<span class="nc" id="L94">		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L95">		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (backcolor == null)</span>
+<span class="nc" id="L97">			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (backcolor.isTransparent())</span>
+<span class="nc" id="L99">			backcolor = getSkinParam().getBackgroundColor();</span>
 
-<span class="nc" id="L100">		ug = ug.apply(getUStroke()).apply(borderColor);</span>
-<span class="nc" id="L101">		ug = ug.apply(backcolor.bg());</span>
+<span class="nc" id="L101">		ug = ug.apply(getUStroke()).apply(borderColor);</span>
+<span class="nc" id="L102">		ug = ug.apply(backcolor.bg());</span>
 
-<span class="nc" id="L103">		entityPosition.drawSymbol(ug, rankdir);</span>
-<span class="nc" id="L104">	}</span>
+<span class="nc" id="L104">		entityPosition.drawSymbol(ug, rankdir);</span>
+<span class="nc" id="L105">	}</span>
 
 	private UStroke getUStroke() {
-<span class="nc" id="L107">		return UStroke.withThickness(1.5);</span>
+<span class="nc" id="L108">		return UStroke.withThickness(1.5);</span>
 	}
 
 	public double getMaxWidthFromLabelForEntryExit(StringBounder stringBounder) {
-<span class="nc" id="L111">		final TextBlock desc = getDesc();</span>
-<span class="nc" id="L112">		final XDimension2D dimDesc = desc.calculateDimension(stringBounder);</span>
-<span class="nc" id="L113">		return dimDesc.getWidth();</span>
+<span class="nc" id="L112">		final TextBlock desc = getDesc();</span>
+<span class="nc" id="L113">		final XDimension2D dimDesc = desc.calculateDimension(stringBounder);</span>
+<span class="nc" id="L114">		return dimDesc.getWidth();</span>
 	}
 
 }

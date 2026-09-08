@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.elk;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -87,8 +88,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
@@ -138,10 +138,10 @@ public class MyElkEdge implements UDrawable {
 <span class="fc" id="L138">	}</span>
 
 	private Style getStyle() {
-<span class="fc" id="L141">		final StyleSignature result = StyleSignatureBasic</span>
-<span class="fc" id="L142">				.of(SName.root, SName.element, diagram.getDiagramType().getStyleName(), SName.arrow)</span>
+<span class="fc" id="L141">		final StyleQuery result = StyleQuery</span>
+<span class="fc" id="L142">				.of(Arrays.asList(SName.root, SName.element, diagram.getDiagramType().getStyleName(), SName.arrow))</span>
 <span class="fc" id="L143">				.withTOBECHANGED(link.getStereotype());</span>
-<span class="fc" id="L144">		return result.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L144">		return diagram.getSkinParam().getCurrentStyleBuilder().getMergedStyle(result);</span>
 	}
 
 	@DuplicateCode(reference = &quot;SvekEdge&quot;)

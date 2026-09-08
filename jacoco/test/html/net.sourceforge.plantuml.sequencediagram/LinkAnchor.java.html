@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -48,7 +50,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class LinkAnchor {
 
@@ -56,27 +58,27 @@ public class LinkAnchor {
 	private final String anchor2;
 	private final String message;
 
-<span class="nc" id="L59">	public LinkAnchor(String anchor1, String anchor2, String message) {</span>
-<span class="nc" id="L60">		this.anchor1 = anchor1;</span>
-<span class="nc" id="L61">		this.anchor2 = anchor2;</span>
-<span class="nc" id="L62">		this.message = message;</span>
-<span class="nc" id="L63">	}</span>
+<span class="nc" id="L61">	public LinkAnchor(String anchor1, String anchor2, String message) {</span>
+<span class="nc" id="L62">		this.anchor1 = anchor1;</span>
+<span class="nc" id="L63">		this.anchor2 = anchor2;</span>
+<span class="nc" id="L64">		this.message = message;</span>
+<span class="nc" id="L65">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L67">		return anchor1 + &quot;&lt;-&gt;&quot; + anchor2 + &quot; &quot; + message;</span>
+<span class="nc" id="L69">		return anchor1 + &quot;&lt;-&gt;&quot; + anchor2 + &quot; &quot; + message;</span>
 	}
 
 	public final String getAnchor1() {
-<span class="nc" id="L71">		return anchor1;</span>
+<span class="nc" id="L73">		return anchor1;</span>
 	}
 
 	public final String getAnchor2() {
-<span class="nc" id="L75">		return anchor2;</span>
+<span class="nc" id="L77">		return anchor2;</span>
 	}
 
 	public final String getMessage() {
-<span class="nc" id="L79">		return message;</span>
+<span class="nc" id="L81">		return message;</span>
 	}
 
 	public void drawAnchor(UGraphic ug, CommonTile tile1, CommonTile tile2, ISkinParam skinParam) {
@@ -87,32 +89,32 @@ public class LinkAnchor {
 		// contactPointRelative is roughly half the tile's height by coincidence); a
 		// note wrapper grows max without moving the arrow, which exposes the
 		// difference.
-<span class="nc" id="L90">		final double y1 = tile1.getYGauge().getMin().getCurrentValue() + tile1.getContactPointRelative();</span>
-<span class="nc" id="L91">		final double y2 = tile2.getYGauge().getMin().getCurrentValue() + tile2.getContactPointRelative();</span>
-<span class="nc" id="L92">		final double xx1 = tile1.getMiddleX();</span>
-<span class="nc" id="L93">		final double xx2 = tile2.getMiddleX();</span>
-<span class="nc" id="L94">		final double x = (xx1 + xx2) / 2;</span>
-<span class="nc" id="L95">		final double ymin = Math.min(y1, y2);</span>
-<span class="nc" id="L96">		final double ymax = Math.max(y1, y2);</span>
+<span class="nc" id="L92">		final double y1 = tile1.getYGauge().getMin().getCurrentValue() + tile1.getContactPointRelative();</span>
+<span class="nc" id="L93">		final double y2 = tile2.getYGauge().getMin().getCurrentValue() + tile2.getContactPointRelative();</span>
+<span class="nc" id="L94">		final double xx1 = tile1.getMiddleX();</span>
+<span class="nc" id="L95">		final double xx2 = tile2.getMiddleX();</span>
+<span class="nc" id="L96">		final double x = (xx1 + xx2) / 2;</span>
+<span class="nc" id="L97">		final double ymin = Math.min(y1, y2);</span>
+<span class="nc" id="L98">		final double ymax = Math.max(y1, y2);</span>
 
-<span class="nc" id="L98">		final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram,</span>
-				SName.arrow);
-<span class="nc" id="L100">		final Style style = signature.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L100">		final StyleQuery signature = StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram,</span>
+				SName.arrow));
+<span class="nc" id="L102">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(signature);</span>
 
-<span class="nc" id="L102">		final HColor color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="nc" id="L103">		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, style);</span>
+<span class="nc" id="L104">		final HColor color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L105">		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, style);</span>
 
-<span class="nc" id="L105">		final Rainbow rainbow = Rainbow.fromColor(color, null);</span>
+<span class="nc" id="L107">		final Rainbow rainbow = Rainbow.fromColor(color, null);</span>
 
-<span class="nc" id="L107">		final Display display = Display.getWithNewlines(skinParam.getPragma(), message);</span>
-<span class="nc" id="L108">		final TextBlock title = display.create(fontConfiguration, HorizontalAlignment.CENTER, skinParam);</span>
-<span class="nc" id="L109">		final Snake snake = Snake.create(skinParam, skinParam.arrows().asToUp(), rainbow, skinParam.arrows().asToDown())</span>
-<span class="nc" id="L110">				.withLabel(title, HorizontalAlignment.CENTER);</span>
+<span class="nc" id="L109">		final Display display = Display.getWithNewlines(skinParam.getPragma(), message);</span>
+<span class="nc" id="L110">		final TextBlock title = display.create(fontConfiguration, HorizontalAlignment.CENTER, skinParam);</span>
+<span class="nc" id="L111">		final Snake snake = Snake.create(skinParam, skinParam.arrows().asToUp(), rainbow, skinParam.arrows().asToDown())</span>
+<span class="nc" id="L112">				.withLabel(title, HorizontalAlignment.CENTER);</span>
 
-<span class="nc" id="L112">		snake.addPoint(x, ymin + 2);</span>
-<span class="nc" id="L113">		snake.addPoint(x, ymax - 2);</span>
-<span class="nc" id="L114">		snake.drawInternal(ug);</span>
-<span class="nc" id="L115">	}</span>
+<span class="nc" id="L114">		snake.addPoint(x, ymin + 2);</span>
+<span class="nc" id="L115">		snake.addPoint(x, ymax - 2);</span>
+<span class="nc" id="L116">		snake.drawInternal(ug);</span>
+<span class="nc" id="L117">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -100,14 +100,17 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../Value.html" title="interface in net.sourceforge.plantuml.style">Value</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ValueImpl.</span><code><a href="../ValueImpl.html#addPriority(int)" class="member-name-link">addPriority</a><wbr>(int&nbsp;delta)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ValueImpl.</span><code><a href="../ValueImpl.html#mergeWith(net.sourceforge.plantuml.style.Value)" class="member-name-link">mergeWith</a><wbr>(<a href="../Value.html" title="interface in net.sourceforge.plantuml.style">Value</a>&nbsp;other)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../Value.html" title="interface in net.sourceforge.plantuml.style">Value</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ValueImpl.</span><code><a href="../ValueImpl.html#mergeWith(net.sourceforge.plantuml.style.Value)" class="member-name-link">mergeWith</a><wbr>(<a href="../Value.html" title="interface in net.sourceforge.plantuml.style">Value</a>&nbsp;other)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Style.</span><code><a href="../Style.html#value(net.sourceforge.plantuml.style.PName)" class="member-name-link">value</a><wbr>(<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../Value.html" title="interface in net.sourceforge.plantuml.style">Value</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Style.</span><code><a href="../Style.html#value(net.sourceforge.plantuml.style.PName)" class="member-name-link">value</a><wbr>(<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>&nbsp;name)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ValueImpl.</span><code><a href="../ValueImpl.html#withAncestorRank(int)" class="member-name-link">withAncestorRank</a><wbr>(int&nbsp;rank)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../Value.html" title="interface in net.sourceforge.plantuml.style">Value</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ValueImpl.</span><code><a href="../ValueImpl.html#withStereotypeCount(int)" class="member-name-link">withStereotypeCount</a><wbr>(int&nbsp;count)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">net.sourceforge.plantuml.style</a> that return types with arguments of type <a href="../Value.html" title="interface in net.sourceforge.plantuml.style">Value</a></span></div>
 <div class="summary-table three-column-summary">
@@ -115,7 +118,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="../Value.html" title="interface in net.sourceforge.plantuml.style">Value</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">StyleLoader.</span><code><a href="../StyleLoader.html#addPriorityForStereotype(java.util.Map)" class="member-name-link">addPriorityForStereotype</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="../Value.html" title="interface in net.sourceforge.plantuml.style">Value</a>&gt;&nbsp;tmp)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">StyleLoader.</span><code><a href="../StyleLoader.html#addStereotypeCount(java.util.Map,int)" class="member-name-link">addStereotypeCount</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="../Value.html" title="interface in net.sourceforge.plantuml.style">Value</a>&gt;&nbsp;tmp,
+ int&nbsp;count)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">net.sourceforge.plantuml.style</a> with parameters of type <a href="../Value.html" title="interface in net.sourceforge.plantuml.style">Value</a></span></div>
@@ -133,7 +137,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="../Value.html" title="interface in net.sourceforge.plantuml.style">Value</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">StyleLoader.</span><code><a href="../StyleLoader.html#addPriorityForStereotype(java.util.Map)" class="member-name-link">addPriorityForStereotype</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="../Value.html" title="interface in net.sourceforge.plantuml.style">Value</a>&gt;&nbsp;tmp)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">StyleLoader.</span><code><a href="../StyleLoader.html#addStereotypeCount(java.util.Map,int)" class="member-name-link">addStereotypeCount</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="../Value.html" title="interface in net.sourceforge.plantuml.style">Value</a>&gt;&nbsp;tmp,
+ int&nbsp;count)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Constructor parameters in <a href="../package-summary.html">net.sourceforge.plantuml.style</a> with type arguments of type <a href="../Value.html" title="interface in net.sourceforge.plantuml.style">Value</a></span></div>
@@ -142,7 +147,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../Style.html#%3Cinit%3E(net.sourceforge.plantuml.style.StyleSignatureBasic,java.util.Map)" class="member-name-link">Style</a><wbr>(<a href="../StyleSignatureBasic.html" title="class in net.sourceforge.plantuml.style">StyleSignatureBasic</a>&nbsp;signature,
+<div class="col-second even-row-color"><code><a href="../Style.html#%3Cinit%3E(net.sourceforge.plantuml.style.parser2.StyleQuery,java.util.Map)" class="member-name-link">Style</a><wbr>(<a href="../parser2/StyleQuery.html" title="class in net.sourceforge.plantuml.style.parser2">StyleQuery</a>&nbsp;query,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="../Value.html" title="interface in net.sourceforge.plantuml.style">Value</a>&gt;&nbsp;map)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>

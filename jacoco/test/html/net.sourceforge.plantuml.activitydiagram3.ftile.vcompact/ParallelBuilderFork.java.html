@@ -67,11 +67,11 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 	
 	public ParallelBuilderFork(ISkinParam skinParam, StringBounder stringBounder, String label, Swimlane in,
 			Swimlane out, List&lt;Ftile&gt; all, Colors colors) {
-<span class="nc" id="L70">		super(skinParam, stringBounder, all, colors);</span>
-<span class="nc" id="L71">		this.label = label;</span>
-<span class="nc" id="L72">		this.in = in;</span>
-<span class="nc" id="L73">		this.out = out;</span>
-<span class="nc" id="L74">	}</span>
+<span class="fc" id="L70">		super(skinParam, stringBounder, all, colors);</span>
+<span class="fc" id="L71">		this.label = label;</span>
+<span class="fc" id="L72">		this.in = in;</span>
+<span class="fc" id="L73">		this.out = out;</span>
+<span class="fc" id="L74">	}</span>
 
 	@Override
 	protected Swimlane swimlaneOutForStep2() {
@@ -80,55 +80,55 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 
 	@Override
 	protected Ftile doStep1(Ftile middle) {
-<span class="nc" id="L83">		Ftile result = middle;</span>
-<span class="nc" id="L84">		final List&lt;Connection&gt; conns = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L85">		final Swimlane swimlaneBlack = in;</span>
-<span class="nc" id="L86">		final Style style = getStyleSignatureArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L87">		final Ftile black = new FtileBlackBlock(skinParam(), swimlaneBlack, colors);</span>
-<span class="nc" id="L88">		double x = 0;</span>
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		for (Ftile tmp : list99) {</span>
-<span class="nc" id="L90">			final XDimension2D dim = tmp.calculateDimension(getStringBounder());</span>
-<span class="nc" id="L91">			final Rainbow def = Rainbow.build(style, skinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L92">			final Rainbow rainbow = tmp.getInLinkRendering().getRainbow(def);</span>
-<span class="nc" id="L93">			conns.add(new ConnectionIn(black, tmp, x, rainbow));</span>
-<span class="nc" id="L94">			x += dim.getWidth();</span>
-<span class="nc" id="L95">		}</span>
+<span class="fc" id="L83">		Ftile result = middle;</span>
+<span class="fc" id="L84">		final List&lt;Connection&gt; conns = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L85">		final Swimlane swimlaneBlack = in;</span>
+<span class="fc" id="L86">		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getStyleSignatureArrow());</span>
+<span class="fc" id="L87">		final Ftile black = new FtileBlackBlock(skinParam(), swimlaneBlack, colors);</span>
+<span class="fc" id="L88">		double x = 0;</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		for (Ftile tmp : list99) {</span>
+<span class="fc" id="L90">			final XDimension2D dim = tmp.calculateDimension(getStringBounder());</span>
+<span class="fc" id="L91">			final Rainbow def = Rainbow.build(style, skinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L92">			final Rainbow rainbow = tmp.getInLinkRendering().getRainbow(def);</span>
+<span class="fc" id="L93">			conns.add(new ConnectionIn(black, tmp, x, rainbow));</span>
+<span class="fc" id="L94">			x += dim.getWidth();</span>
+<span class="fc" id="L95">		}</span>
 
-<span class="nc" id="L97">		result = FtileUtils.addConnection(result, conns);</span>
-<span class="nc" id="L98">		((FtileBlackBlock) black).setBlackBlockDimension(result.calculateDimension(getStringBounder()).getWidth(),</span>
+<span class="fc" id="L97">		result = FtileUtils.addConnection(result, conns);</span>
+<span class="fc" id="L98">		((FtileBlackBlock) black).setBlackBlockDimension(result.calculateDimension(getStringBounder()).getWidth(),</span>
 				barHeight);
 
-<span class="nc" id="L101">		return new FtileAssemblySimple(black, result);</span>
+<span class="fc" id="L101">		return new FtileAssemblySimple(black, result);</span>
 	}
 
 	private double getJustBeforeBar2(Ftile middle, StringBounder stringBounder) {
-<span class="nc" id="L105">		return barHeight + getHeightOfMiddle(middle);</span>
+<span class="fc" id="L105">		return barHeight + getHeightOfMiddle(middle);</span>
 	}
 
 	@Override
 	protected Ftile doStep2(Ftile middle, Ftile result) {
-<span class="nc" id="L110">		final Swimlane swimlaneBlack = out;</span>
-<span class="nc" id="L111">		final Ftile out = new FtileBlackBlock(skinParam(), swimlaneBlack, colors);</span>
-<span class="nc" id="L112">		((FtileBlackBlock) out).setBlackBlockDimension(result.calculateDimension(getStringBounder()).getWidth(),</span>
+<span class="fc" id="L110">		final Swimlane swimlaneBlack = out;</span>
+<span class="fc" id="L111">		final Ftile out = new FtileBlackBlock(skinParam(), swimlaneBlack, colors);</span>
+<span class="fc" id="L112">		((FtileBlackBlock) out).setBlackBlockDimension(result.calculateDimension(getStringBounder()).getWidth(),</span>
 				barHeight);	
-<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (label != null)</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (label != null)</span>
 <span class="nc" id="L115">			((FtileBlackBlock) out).setLabel(getTextBlock(Display.getWithNewlines(skinParam().getPragma(), label)));</span>
 
-<span class="nc" id="L117">		result = new FtileAssemblySimple(result, out);</span>
-<span class="nc" id="L118">		final List&lt;Connection&gt; conns = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L119">		final Style style = getStyleSignatureArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L120">		double x = 0;</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		for (Ftile tmp : list99) {</span>
-<span class="nc" id="L122">			final XDimension2D dim = tmp.calculateDimension(getStringBounder());</span>
-<span class="nc" id="L123">			final Rainbow def = Rainbow.build(style, skinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L124">			final Rainbow rainbow = tmp.getOutLinkRendering().getRainbow(def);</span>
-<span class="nc bnc" id="L125" title="All 2 branches missed.">			if (tmp.calculateDimension(getStringBounder()).hasPointOut())</span>
-<span class="nc" id="L126">				conns.add(new ConnectionOut(tmp, out, x, rainbow, getJustBeforeBar2(middle, getStringBounder())));</span>
+<span class="fc" id="L117">		result = new FtileAssemblySimple(result, out);</span>
+<span class="fc" id="L118">		final List&lt;Connection&gt; conns = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L119">		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getStyleSignatureArrow());</span>
+<span class="fc" id="L120">		double x = 0;</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		for (Ftile tmp : list99) {</span>
+<span class="fc" id="L122">			final XDimension2D dim = tmp.calculateDimension(getStringBounder());</span>
+<span class="fc" id="L123">			final Rainbow def = Rainbow.build(style, skinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L124">			final Rainbow rainbow = tmp.getOutLinkRendering().getRainbow(def);</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">			if (tmp.calculateDimension(getStringBounder()).hasPointOut())</span>
+<span class="fc" id="L126">				conns.add(new ConnectionOut(tmp, out, x, rainbow, getJustBeforeBar2(middle, getStringBounder())));</span>
 
-<span class="nc" id="L128">			x += dim.getWidth();</span>
-<span class="nc" id="L129">		}</span>
-<span class="nc" id="L130">		result = FtileUtils.addConnection(result, conns);</span>
-<span class="nc" id="L131">		return result;</span>
+<span class="fc" id="L128">			x += dim.getWidth();</span>
+<span class="fc" id="L129">		}</span>
+<span class="fc" id="L130">		result = FtileUtils.addConnection(result, conns);</span>
+<span class="fc" id="L131">		return result;</span>
 	}
 
 //	private HColor barColor() {
@@ -141,26 +141,26 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 		private final Rainbow arrowColor;
 		private final Display label;
 
-<span class="nc" id="L144">		public ConnectionIn(Ftile ftile1, Ftile ftile2, double x, Rainbow arrowColor) {</span>
-<span class="nc" id="L145">			super(ftile1, ftile2);</span>
-<span class="nc" id="L146">			this.label = ftile2.getInLinkRendering().getDisplay();</span>
-<span class="nc" id="L147">			this.x = x;</span>
-<span class="nc" id="L148">			this.arrowColor = arrowColor;</span>
-<span class="nc" id="L149">		}</span>
+<span class="fc" id="L144">		public ConnectionIn(Ftile ftile1, Ftile ftile2, double x, Rainbow arrowColor) {</span>
+<span class="fc" id="L145">			super(ftile1, ftile2);</span>
+<span class="fc" id="L146">			this.label = ftile2.getInLinkRendering().getDisplay();</span>
+<span class="fc" id="L147">			this.x = x;</span>
+<span class="fc" id="L148">			this.arrowColor = arrowColor;</span>
+<span class="fc" id="L149">		}</span>
 
 		public void drawU(UGraphic ug) {
-<span class="nc" id="L152">			ug = ug.apply(UTranslate.dx(x));</span>
-<span class="nc" id="L153">			final FtileGeometry geo2 = getFtile2().calculateDimension(getStringBounder());</span>
-<span class="nc" id="L154">			Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToDown());</span>
-<span class="nc bnc" id="L155" title="All 2 branches missed.">			if (Display.isNull(label) == false)</span>
-<span class="nc" id="L156">				snake = snake.withLabel(getTextBlock(label), arrowHorizontalAlignment());</span>
+<span class="fc" id="L152">			ug = ug.apply(UTranslate.dx(x));</span>
+<span class="fc" id="L153">			final FtileGeometry geo2 = getFtile2().calculateDimension(getStringBounder());</span>
+<span class="fc" id="L154">			Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToDown());</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">			if (Display.isNull(label) == false)</span>
+<span class="fc" id="L156">				snake = snake.withLabel(getTextBlock(label), arrowHorizontalAlignment());</span>
 
-<span class="nc" id="L158">			final XPoint2D p1 = new XPoint2D(geo2.getLeft(), 0);</span>
-<span class="nc" id="L159">			final XPoint2D p2 = new XPoint2D(geo2.getLeft(), geo2.getInY());</span>
-<span class="nc" id="L160">			snake.addPoint(p1);</span>
-<span class="nc" id="L161">			snake.addPoint(p2);</span>
-<span class="nc" id="L162">			ug.draw(snake);</span>
-<span class="nc" id="L163">		}</span>
+<span class="fc" id="L158">			final XPoint2D p1 = new XPoint2D(geo2.getLeft(), 0);</span>
+<span class="fc" id="L159">			final XPoint2D p2 = new XPoint2D(geo2.getLeft(), geo2.getInY());</span>
+<span class="fc" id="L160">			snake.addPoint(p1);</span>
+<span class="fc" id="L161">			snake.addPoint(p2);</span>
+<span class="fc" id="L162">			ug.draw(snake);</span>
+<span class="fc" id="L163">		}</span>
 
 		@Override
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
@@ -191,30 +191,30 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 		private final Display label;
 		private final double justBeforeBar2;
 
-<span class="nc" id="L194">		public ConnectionOut(Ftile ftile1, Ftile ftile2, double x, Rainbow arrowColor, double justBeforeBar2) {</span>
-<span class="nc" id="L195">			super(ftile1, ftile2);</span>
-<span class="nc" id="L196">			this.justBeforeBar2 = justBeforeBar2;</span>
-<span class="nc" id="L197">			this.label = ftile1.getOutLinkRendering().getDisplay();</span>
-<span class="nc" id="L198">			this.x = x;</span>
-<span class="nc" id="L199">			this.arrowColor = arrowColor;</span>
-<span class="nc" id="L200">		}</span>
+<span class="fc" id="L194">		public ConnectionOut(Ftile ftile1, Ftile ftile2, double x, Rainbow arrowColor, double justBeforeBar2) {</span>
+<span class="fc" id="L195">			super(ftile1, ftile2);</span>
+<span class="fc" id="L196">			this.justBeforeBar2 = justBeforeBar2;</span>
+<span class="fc" id="L197">			this.label = ftile1.getOutLinkRendering().getDisplay();</span>
+<span class="fc" id="L198">			this.x = x;</span>
+<span class="fc" id="L199">			this.arrowColor = arrowColor;</span>
+<span class="fc" id="L200">		}</span>
 
 		public void drawU(UGraphic ug) {
-<span class="nc" id="L203">			ug = ug.apply(UTranslate.dx(x));</span>
-<span class="nc" id="L204">			final FtileGeometry geo1 = getFtile1().calculateDimension(getStringBounder());</span>
-<span class="nc bnc" id="L205" title="All 2 branches missed.">			if (geo1.hasPointOut() == false)</span>
+<span class="fc" id="L203">			ug = ug.apply(UTranslate.dx(x));</span>
+<span class="fc" id="L204">			final FtileGeometry geo1 = getFtile1().calculateDimension(getStringBounder());</span>
+<span class="pc bpc" id="L205" title="1 of 2 branches missed.">			if (geo1.hasPointOut() == false)</span>
 <span class="nc" id="L206">				return;</span>
 
-<span class="nc" id="L208">			Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToDown());</span>
-<span class="nc bnc" id="L209" title="All 2 branches missed.">			if (Display.isNull(label) == false)</span>
-<span class="nc" id="L210">				snake = snake.withLabel(getTextBlock(label), arrowHorizontalAlignment());</span>
+<span class="fc" id="L208">			Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToDown());</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">			if (Display.isNull(label) == false)</span>
+<span class="fc" id="L210">				snake = snake.withLabel(getTextBlock(label), arrowHorizontalAlignment());</span>
 
-<span class="nc" id="L212">			final XPoint2D p1 = new XPoint2D(geo1.getLeft(), barHeight + geo1.getOutY());</span>
-<span class="nc" id="L213">			final XPoint2D p2 = new XPoint2D(geo1.getLeft(), justBeforeBar2);</span>
-<span class="nc" id="L214">			snake.addPoint(p1);</span>
-<span class="nc" id="L215">			snake.addPoint(p2);</span>
-<span class="nc" id="L216">			ug.draw(snake);</span>
-<span class="nc" id="L217">		}</span>
+<span class="fc" id="L212">			final XPoint2D p1 = new XPoint2D(geo1.getLeft(), barHeight + geo1.getOutY());</span>
+<span class="fc" id="L213">			final XPoint2D p2 = new XPoint2D(geo1.getLeft(), justBeforeBar2);</span>
+<span class="fc" id="L214">			snake.addPoint(p1);</span>
+<span class="fc" id="L215">			snake.addPoint(p2);</span>
+<span class="fc" id="L216">			ug.draw(snake);</span>
+<span class="fc" id="L217">		}</span>
 
 		@Override
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {

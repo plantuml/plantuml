@@ -41,7 +41,6 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FloatingNote;
-import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileGroup;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -61,12 +60,11 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.utils.MathUtils;
 
 public class GtileGroup extends AbstractGtileRoot {
 
-<span class="nc" id="L69">	private final double diffYY2 = 20;</span>
+<span class="nc" id="L67">	private final double diffYY2 = 20;</span>
 	private final Gtile inner;
 	private final TextBlock name;
 	private final TextBlock headerNote;
@@ -77,94 +75,90 @@ public class GtileGroup extends AbstractGtileRoot {
 	private final USymbol type;
 	private final double roundCorner;
 
-	final public StyleSignatureBasic getStyleSignature() {
-<span class="nc" id="L81">		return FtileGroup.getStyleSignature(type);</span>
-	}
-
 	private double suppWidth(StringBounder stringBounder) {
-<span class="nc" id="L85">		final XDimension2D orig = inner.calculateDimension(stringBounder);</span>
-<span class="nc" id="L86">		final XDimension2D dimTitle = name.calculateDimension(stringBounder);</span>
-<span class="nc" id="L87">		final XDimension2D dimHeaderNote = headerNote.calculateDimension(stringBounder);</span>
-<span class="nc" id="L88">		final double suppWidth = MathUtils.max(orig.getWidth(), dimTitle.getWidth() + 20, dimHeaderNote.getWidth() + 20)</span>
-<span class="nc" id="L89">				- orig.getWidth();</span>
-<span class="nc" id="L90">		return suppWidth;</span>
+<span class="nc" id="L79">		final XDimension2D orig = inner.calculateDimension(stringBounder);</span>
+<span class="nc" id="L80">		final XDimension2D dimTitle = name.calculateDimension(stringBounder);</span>
+<span class="nc" id="L81">		final XDimension2D dimHeaderNote = headerNote.calculateDimension(stringBounder);</span>
+<span class="nc" id="L82">		final double suppWidth = MathUtils.max(orig.getWidth(), dimTitle.getWidth() + 20, dimHeaderNote.getWidth() + 20)</span>
+<span class="nc" id="L83">				- orig.getWidth();</span>
+<span class="nc" id="L84">		return suppWidth;</span>
 	}
 
 	public GtileGroup(Gtile inner, Display title, Display displayNote, HColor arrowColor, HColor backColor,
 			ISkinParam skinParam, USymbol type, Style style) {
-<span class="nc" id="L95">		super(inner.getStringBounder(), skinParam);</span>
-<span class="nc" id="L96">		this.type = type;</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		this.backColor = backColor == null ? HColors.WHITE : backColor;</span>
-<span class="nc" id="L98">		this.inner = inner;</span>
-<span class="nc" id="L99">		this.borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="nc" id="L100">		this.roundCorner = style.value(PName.RoundCorner).asDouble();</span>
+<span class="nc" id="L89">		super(inner.getStringBounder(), skinParam);</span>
+<span class="nc" id="L90">		this.type = type;</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		this.backColor = backColor == null ? HColors.WHITE : backColor;</span>
+<span class="nc" id="L92">		this.inner = inner;</span>
+<span class="nc" id="L93">		this.borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L94">		this.roundCorner = style.value(PName.RoundCorner).asDouble();</span>
 
-<span class="nc" id="L102">		final FontConfiguration fc = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
-<span class="nc" id="L103">		this.shadowing = style.getShadowing();</span>
+<span class="nc" id="L96">		final FontConfiguration fc = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L97">		this.shadowing = style.getShadowing();</span>
 
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (title == null)</span>
-<span class="nc" id="L106">			this.name = TextBlockUtils.empty(0, 0);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (title == null)</span>
+<span class="nc" id="L100">			this.name = TextBlockUtils.empty(0, 0);</span>
 		else
-<span class="nc" id="L108">			this.name = title.create(fc, HorizontalAlignment.LEFT, skinParam);</span>
+<span class="nc" id="L102">			this.name = title.create(fc, HorizontalAlignment.LEFT, skinParam);</span>
 
-<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (Display.isNull(displayNote))</span>
-<span class="nc" id="L111">			this.headerNote = TextBlockUtils.empty(0, 0);</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (Display.isNull(displayNote))</span>
+<span class="nc" id="L105">			this.headerNote = TextBlockUtils.empty(0, 0);</span>
 		else
-<span class="nc" id="L113">			this.headerNote = FloatingNote.create(displayNote, skinParam, SName.activityDiagram);</span>
+<span class="nc" id="L107">			this.headerNote = FloatingNote.create(displayNote, skinParam, SName.activityDiagram);</span>
 
-<span class="nc" id="L115">		this.stroke = style.getStroke();</span>
-<span class="nc" id="L116">	}</span>
+<span class="nc" id="L109">		this.stroke = style.getStroke();</span>
+<span class="nc" id="L110">	}</span>
 
 	@Override
 	public Collection&lt;GConnection&gt; getInnerConnections() {
-<span class="nc" id="L120">		return Collections.emptyList();</span>
+<span class="nc" id="L114">		return Collections.emptyList();</span>
 	}
 
 	@Override
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="nc" id="L125">		return inner.getSwimlanes();</span>
+<span class="nc" id="L119">		return inner.getSwimlanes();</span>
 	}
 
 	@Override
 	public Swimlane getSwimlane(String point) {
-<span class="nc" id="L130">		return inner.getSwimlane(point);</span>
+<span class="nc" id="L124">		return inner.getSwimlane(point);</span>
 	}
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="nc" id="L135">		final XDimension2D orig = inner.calculateDimension(stringBounder);</span>
-<span class="nc" id="L136">		return orig.delta(18, suppHeight(stringBounder));</span>
+<span class="nc" id="L129">		final XDimension2D orig = inner.calculateDimension(stringBounder);</span>
+<span class="nc" id="L130">		return orig.delta(18, suppHeight(stringBounder));</span>
 	}
 
 	private double suppHeight(StringBounder stringBounder) {
-<span class="nc" id="L140">		final XDimension2D dimTitle = name.calculateDimension(stringBounder);</span>
-<span class="nc" id="L141">		return dimTitle.getHeight() + 30;</span>
+<span class="nc" id="L134">		final XDimension2D dimTitle = name.calculateDimension(stringBounder);</span>
+<span class="nc" id="L135">		return dimTitle.getHeight() + 30;</span>
 	}
 
 	private UTranslate getTranslate() {
-<span class="nc" id="L145">		return new UTranslate(9, suppHeight(getStringBounder()) - 10);</span>
+<span class="nc" id="L139">		return new UTranslate(9, suppHeight(getStringBounder()) - 10);</span>
 	}
 
 	@Override
 	protected UTranslate getCoordImpl(String name) {
-<span class="nc" id="L150">		return inner.getCoord(name).compose(getTranslate());</span>
+<span class="nc" id="L144">		return inner.getCoord(name).compose(getTranslate());</span>
 	}
 
 	@Override
 	protected void drawUInternal(UGraphic ug) {
 
-<span class="nc" id="L156">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
+<span class="nc" id="L150">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L158">		final Fashion symbolContext = new Fashion(backColor, borderColor).withShadow(shadowing).withStroke(stroke)</span>
-<span class="nc" id="L159">				.withCorner(roundCorner, 0);</span>
+<span class="nc" id="L152">		final Fashion symbolContext = new Fashion(backColor, borderColor).withShadow(shadowing).withStroke(stroke)</span>
+<span class="nc" id="L153">				.withCorner(roundCorner, 0);</span>
 
-<span class="nc" id="L161">		final HorizontalAlignment align = inner.skinParam().getHorizontalAlignment(AlignmentParam.packageTitleAlignment,</span>
+<span class="nc" id="L155">		final HorizontalAlignment align = inner.skinParam().getHorizontalAlignment(AlignmentParam.packageTitleAlignment,</span>
 				null, false, null);
-<span class="nc" id="L163">		type.asBig(name, align, TextBlockUtils.empty(0, 0), dimTotal.getWidth(), dimTotal.getHeight(), symbolContext,</span>
-<span class="nc" id="L164">				skinParam().getStereotypeAlignment()).drawU(ug);</span>
+<span class="nc" id="L157">		type.asBig(name, align, TextBlockUtils.empty(0, 0), dimTotal.getWidth(), dimTotal.getHeight(), symbolContext,</span>
+<span class="nc" id="L158">				skinParam().getStereotypeAlignment()).drawU(ug);</span>
 
-<span class="nc" id="L166">		inner.drawU(ug.apply(getTranslate()));</span>
-<span class="nc" id="L167">	}</span>
+<span class="nc" id="L160">		inner.drawU(ug.apply(getTranslate()));</span>
+<span class="nc" id="L161">	}</span>
 
 //	@Override
 //	public Collection&lt;Ftile&gt; getMyChildren() {

@@ -39,8 +39,8 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class Delay extends AbstractEvent implements Event, WithStyle {
 
@@ -48,25 +48,26 @@ public class Delay extends AbstractEvent implements Event, WithStyle {
 
 	final private Style style;
 
-	public StyleSignature getStyleSignature() {
-<span class="fc" id="L52">		return ComponentType.DELAY_TEXT.getStyleSignature();</span>
+	@Override
+	public StyleQuery getStyleQuery() {
+<span class="fc" id="L53">		return ComponentType.DELAY_TEXT.getStyleQuery();</span>
 	}
 
 	public Style[] getUsedStyles() {
-<span class="fc" id="L56">		return new Style[] { style };</span>
+<span class="fc" id="L57">		return new Style[] { style };</span>
 	}
 
-<span class="fc" id="L59">	public Delay(Display text, StyleBuilder styleBuilder) {</span>
-<span class="fc" id="L60">		this.text = text;</span>
-<span class="fc" id="L61">		this.style = getStyleSignature().getMergedStyle(styleBuilder);</span>
-<span class="fc" id="L62">	}</span>
+<span class="fc" id="L60">	public Delay(Display text, StyleBuilder styleBuilder) {</span>
+<span class="fc" id="L61">		this.text = text;</span>
+<span class="fc" id="L62">		this.style = styleBuilder.getMergedStyle(getStyleQuery());</span>
+<span class="fc" id="L63">	}</span>
 
 	public final Display getText() {
-<span class="fc" id="L65">		return text;</span>
+<span class="fc" id="L66">		return text;</span>
 	}
 
 	public boolean dealWith(Participant someone) {
-<span class="nc" id="L69">		return false;</span>
+<span class="nc" id="L70">		return false;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

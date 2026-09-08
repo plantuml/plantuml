@@ -57,9 +57,8 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.WithStyle;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -69,7 +68,7 @@ public class Participant implements SpecificBackcolorable, WithStyle, AsciiBlock
 	private Display display;
 	private final ParticipantType type;
 
-<span class="fc" id="L72">	private int initialLife = 0;</span>
+<span class="fc" id="L71">	private int initialLife = 0;</span>
 
 	private Stereotype stereotype;
 	private boolean stereotypePositionTop;
@@ -79,16 +78,17 @@ public class Participant implements SpecificBackcolorable, WithStyle, AsciiBlock
 	private final LineLocation location;
 	private final String uid;
 
-	public StyleSignatureBasic getStyleSignature() {
-<span class="fc" id="L83">		return type.getStyleSignature().addClickable(getUrl());</span>
+	@Override
+	public StyleQuery getStyleQuery() {
+<span class="fc" id="L83">		return type.getStyleQuery().addClickable(getUrl());</span>
 	}
 
 	public Style[] getUsedStyles() {
 
-<span class="fc" id="L88">		final StyleSignature signature = getStyleSignature().withTOBECHANGED(stereotype);</span>
-<span class="fc" id="L89">		Style tmp = signature.getMergedStyle(styleBuilder);</span>
+<span class="fc" id="L88">		final StyleQuery query = getStyleQuery().withTOBECHANGED(stereotype);</span>
+<span class="fc" id="L89">		Style tmp = styleBuilder.getMergedStyle(query);</span>
 <span class="fc" id="L90">		tmp = tmp.eventuallyOverride(getColors());</span>
-<span class="fc" id="L91">		Style stereo = getStyleSignature().forStereotypeItself(stereotype).getMergedStyle(styleBuilder);</span>
+<span class="fc" id="L91">		Style stereo = styleBuilder.getMergedStyle(getStyleQuery().forStereotypeItself(stereotype));</span>
 <span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (tmp != null)</span>
 <span class="fc" id="L93">			stereo = tmp.mergeWith(stereo, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
 

@@ -64,7 +64,7 @@ public class EbnfEngine {
 <span class="nc" id="L64">	public EbnfEngine(ISkinParam skinParam, ConfigurationStore&lt;OptionKey&gt; option) {</span>
 <span class="nc" id="L65">		this.skinParam = skinParam;</span>
 <span class="nc" id="L66">		this.option = option;</span>
-<span class="nc" id="L67">		this.style = ETile.getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L67">		this.style = skinParam.getCurrentStyleBuilder().getMergedStyle(ETile.getStyleQuery());</span>
 <span class="nc" id="L68">		this.fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
 <span class="nc" id="L69">		this.colorSet = skinParam.getIHtmlColorSet();</span>
 <span class="nc" id="L70">		this.lineColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>

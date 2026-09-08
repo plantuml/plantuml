@@ -1758,18 +1758,18 @@ try {
 <span class="fc" id="L1758">    boolean is_out = false;</span>
 <span class="fc" id="L1759">    int cross = 0;</span>
     ST_Agedge_s e, f;
-<span class="pc bpc" id="L1761" title="1 of 2 branches missed.">    if (dir &gt; 0)</span>
+<span class="fc bfc" id="L1761" title="All 2 branches covered.">    if (dir &gt; 0)</span>
 <span class="fc" id="L1762">	is_out = true;</span>
     else
-<span class="nc" id="L1764">	is_out = false;</span>
+<span class="fc" id="L1764">	is_out = false;</span>
 <span class="fc bfc" id="L1765" title="All 2 branches covered.">    for (i = 0; (e = l.list.get_(i))!=null; i++) {</span>
-<span class="pc bpc" id="L1766" title="1 of 2 branches missed.">	if (is_out)</span>
+<span class="fc bfc" id="L1766" title="All 2 branches covered.">	if (is_out)</span>
 <span class="fc bfc" id="L1767" title="All 2 branches covered.">	    for (j = i + 1; (f = l.list.get_(j))!=null; j++) {</span>
 <span class="fc" id="L1768">		if ((ND_order(aghead(f)) - ND_order(aghead(e)))</span>
 <span class="pc bpc" id="L1769" title="1 of 2 branches missed.">			 * (ED_tail_port(f).p.x - ED_tail_port(e).p.x) &lt; 0)</span>
 <span class="nc" id="L1770">UNSUPPORTED(&quot;bw8rwv11yqzss88pad7ljil8a&quot;); // 		    cross += ED_xpenalty(e) * ED_xpenalty(f);</span>
 	} else
-<span class="nc bnc" id="L1772" title="All 2 branches missed.">	    for (j = i + 1; (f = l.list.get_(j))!=null; j++) {</span>
+<span class="pc bpc" id="L1772" title="1 of 2 branches missed.">	    for (j = i + 1; (f = l.list.get_(j))!=null; j++) {</span>
 <span class="nc" id="L1773">UNSUPPORTED(&quot;bza83c6rmihrkzyllwf0jm4tn&quot;); // 		if ((ND_order(agtail(f)) - ND_order(agtail(e)))</span>
 <span class="nc" id="L1774">UNSUPPORTED(&quot;csrxg0y1azmvde7t833lm13sp&quot;); // 			* (ED_head_port(f).p.x - ED_head_port(e).p.x) &lt; 0)</span>
 <span class="nc" id="L1775">UNSUPPORTED(&quot;bw8rwv11yqzss88pad7ljil8a&quot;); // 		    cross += ED_xpenalty(e) * ED_xpenalty(f);</span>
@@ -1833,8 +1833,8 @@ try {
     }
 <span class="fc bfc" id="L1834" title="All 2 branches covered.">    for (bot = 0; bot &lt; GD_rank(g).get__(r + 1).n; bot++) {</span>
 <span class="fc" id="L1835">	v = (ST_Agnode_s) GD_rank(g).get__(r + 1).v.get_(bot);</span>
-<span class="pc bpc" id="L1836" title="1 of 2 branches missed.">	if (ND_has_port(v))</span>
-<span class="nc" id="L1837">	    cross += local_cross(ND_in(v), -1);</span>
+<span class="fc bfc" id="L1836" title="All 2 branches covered.">	if (ND_has_port(v))</span>
+<span class="fc" id="L1837">	    cross += local_cross(ND_in(v), -1);</span>
     }
 <span class="fc" id="L1839">    return cross;</span>
 } finally {

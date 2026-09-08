@@ -98,6 +98,8 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color"><a href="parser/package-summary.html">net.sourceforge.plantuml.style.parser</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="parser2/package-summary.html">net.sourceforge.plantuml.style.parser2</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </div>
 </li>
@@ -138,28 +140,37 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color class-summary class-summary-tab3">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab3"><a href="SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab3">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="StringTrie.html" title="class in net.sourceforge.plantuml.style">StringTrie</a>&lt;V&gt;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Specificity.html" title="class in net.sourceforge.plantuml.style">Specificity</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">How specific a style declaration is, modeled the way real CSS specificity actually works: an
+ ordered tuple, compared one component at a time from most to least significant -- never a
+ single number that has to rely on one component's magnitude never reaching into (or being
+ dominated by) another's.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="StringTrie.html" title="class in net.sourceforge.plantuml.style">StringTrie</a>&lt;V&gt;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Style.html" title="class in net.sourceforge.plantuml.style">Style</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="Style.html" title="class in net.sourceforge.plantuml.style">Style</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="Styleable.html" title="interface in net.sourceforge.plantuml.style">Styleable</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="Styleable.html" title="interface in net.sourceforge.plantuml.style">Styleable</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="StyleIndex.html" title="class in net.sourceforge.plantuml.style">StyleIndex</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">The fast, queryable counterpart of the old <code>StyleStorage</code>: every loaded <a href="Style.html" title="class in net.sourceforge.plantuml.style"><code>Style</code></a>
+ is indexed by its query's tags in a
+ <a href="parser2/StyleAtomTrie.html" title="class in net.sourceforge.plantuml.style.parser2"><code>StyleAtomTrie</code></a>, so <a href="StyleIndex.html#findMatching(net.sourceforge.plantuml.style.parser2.StyleQuery)"><code>StyleIndex.findMatching(StyleQuery)</code></a> only ever visits
+ declarations that could possibly match a query, instead of the old linear scan over every
+ style ever loaded checking <code>StyleSignatureBasic#matchAll</code> one by one -- the actual fix
+ for the slow style resolution (<a href="StyleBuilder.html#getMergedStyle(net.sourceforge.plantuml.style.parser2.StyleQuery)"><code>StyleBuilder.getMergedStyle(net.sourceforge.plantuml.style.parser2.StyleQuery)</code></a>,
+ <a href="StyleBuilder.html#getMergedStyleSpecial(net.sourceforge.plantuml.style.parser2.StyleQuery,int)"><code>StyleBuilder.getMergedStyleSpecial(net.sourceforge.plantuml.style.parser2.StyleQuery, int)</code></a>) this whole <code>parser2</code> engine was built for.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="StyleKey.html" title="class in net.sourceforge.plantuml.style">StyleKey</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="StyleLoader.html" title="class in net.sourceforge.plantuml.style">StyleLoader</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first odd-row-color class-summary class-summary-tab3"><a href="StyleScheme.html" title="enum class in net.sourceforge.plantuml.style">StyleScheme</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab3">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="StyleSignature.html" title="interface in net.sourceforge.plantuml.style">StyleSignature</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="StyleSignatureBasic.html" title="class in net.sourceforge.plantuml.style">StyleSignatureBasic</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="StyleSignatures.html" title="class in net.sourceforge.plantuml.style">StyleSignatures</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="StyleStorage.html" title="class in net.sourceforge.plantuml.style">StyleStorage</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="Value.html" title="interface in net.sourceforge.plantuml.style">Value</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ValueAbstract.html" title="class in net.sourceforge.plantuml.style">ValueAbstract</a></div>

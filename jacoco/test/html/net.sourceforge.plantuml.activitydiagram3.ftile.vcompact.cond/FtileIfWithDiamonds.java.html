@@ -64,7 +64,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.image.Opale;
 
 public class FtileIfWithDiamonds extends FtileIfNude {
@@ -111,7 +111,7 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 <span class="nc" id="L111">	}</span>
 
 	public static Opale createOpale(final PositionedNote first, ISkinParam skinParam) {
-<span class="nc" id="L114">		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder())</span>
+<span class="nc" id="L114">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getStyleSignature())</span>
 <span class="nc" id="L115">				.eventuallyOverride(first.getColors());</span>
 <span class="nc" id="L116">		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
 <span class="nc" id="L117">		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
@@ -144,8 +144,8 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 		};
 	}
 
-	private static StyleSignatureBasic getStyleSignature() {
-<span class="nc" id="L148">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.note);</span>
+	private static StyleQuery getStyleSignature() {
+<span class="nc" id="L148">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.note));</span>
 	}
 
 	@Override

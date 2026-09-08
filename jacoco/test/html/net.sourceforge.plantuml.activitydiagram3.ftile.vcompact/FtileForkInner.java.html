@@ -53,14 +53,14 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 class FtileForkInner extends AbstractFtile {
 
-<span class="nc" id="L56">	private final List&lt;Ftile&gt; forks = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L56">	private final List&lt;Ftile&gt; forks = new ArrayList&lt;&gt;();</span>
 
 	public FtileForkInner(List&lt;Ftile&gt; forks) {
-<span class="nc" id="L59">		super(forks.get(0).skinParam());</span>
-<span class="nc bnc" id="L60" title="All 2 branches missed.">		for (Ftile ftile : forks) {</span>
-<span class="nc" id="L61">			this.forks.add(ftile);</span>
-<span class="nc" id="L62">		}</span>
-<span class="nc" id="L63">	}</span>
+<span class="fc" id="L59">		super(forks.get(0).skinParam());</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">		for (Ftile ftile : forks) {</span>
+<span class="fc" id="L61">			this.forks.add(ftile);</span>
+<span class="fc" id="L62">		}</span>
+<span class="fc" id="L63">	}</span>
 
 	@Override
 	public Collection&lt;Ftile&gt; getMyChildren() {
@@ -88,29 +88,29 @@ class FtileForkInner extends AbstractFtile {
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L91">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L91">		final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="nc" id="L93">		double xpos = 0;</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		for (Ftile ftile : forks) {</span>
-<span class="nc" id="L95">			ug.apply(UTranslate.dx(xpos)).draw(ftile);</span>
-<span class="nc" id="L96">			final XDimension2D dim = ftile.calculateDimension(stringBounder);</span>
-<span class="nc" id="L97">			xpos += dim.getWidth();</span>
-<span class="nc" id="L98">		}</span>
-<span class="nc" id="L99">	}</span>
+<span class="fc" id="L93">		double xpos = 0;</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		for (Ftile ftile : forks) {</span>
+<span class="fc" id="L95">			ug.apply(UTranslate.dx(xpos)).draw(ftile);</span>
+<span class="fc" id="L96">			final XDimension2D dim = ftile.calculateDimension(stringBounder);</span>
+<span class="fc" id="L97">			xpos += dim.getWidth();</span>
+<span class="fc" id="L98">		}</span>
+<span class="fc" id="L99">	}</span>
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-<span class="nc" id="L103">		double height = 0;</span>
-<span class="nc" id="L104">		double width = 0;</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		for (Ftile ftile : forks) {</span>
-<span class="nc" id="L106">			final XDimension2D dim = ftile.calculateDimension(stringBounder);</span>
-<span class="nc" id="L107">			width += dim.getWidth();</span>
-<span class="nc bnc" id="L108" title="All 2 branches missed.">			if (dim.getHeight() &gt; height)</span>
-<span class="nc" id="L109">				height = dim.getHeight();</span>
+<span class="fc" id="L103">		double height = 0;</span>
+<span class="fc" id="L104">		double width = 0;</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		for (Ftile ftile : forks) {</span>
+<span class="fc" id="L106">			final XDimension2D dim = ftile.calculateDimension(stringBounder);</span>
+<span class="fc" id="L107">			width += dim.getWidth();</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">			if (dim.getHeight() &gt; height)</span>
+<span class="fc" id="L109">				height = dim.getHeight();</span>
 
-<span class="nc" id="L111">		}</span>
-<span class="nc" id="L112">		final XDimension2D dimTotal = new XDimension2D(width, height);</span>
-<span class="nc" id="L113">		return new FtileGeometry(dimTotal, dimTotal.getWidth() / 2, 0, dimTotal.getHeight());</span>
+<span class="fc" id="L111">		}</span>
+<span class="fc" id="L112">		final XDimension2D dimTotal = new XDimension2D(width, height);</span>
+<span class="fc" id="L113">		return new FtileGeometry(dimTotal, dimTotal.getWidth() / 2, 0, dimTotal.getHeight());</span>
 	}
 
 	public UTranslate getTranslateFor(Ftile searched, StringBounder stringBounder) {

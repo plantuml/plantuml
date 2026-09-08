@@ -112,7 +112,7 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 <span class="nc" id="L112">			ftiles.add(new FtileDecorateOutLabel(new FtileDecorateInLabel(branch.getFtile(), dimLabelIn), dimLabelOut));</span>
 <span class="nc" id="L113">		}</span>
 
-<span class="nc" id="L115">		final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L115">		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionArrow());</span>
 <span class="nc" id="L116">		final Rainbow arrowColor = Rainbow.build(style, skinParam().getIHtmlColorSet());</span>
 
 <span class="nc bnc" id="L118" title="All 2 branches missed.">		if (ftiles.size() == 1) {</span>
@@ -130,7 +130,7 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 
 <span class="nc" id="L131">		LineBreakStrategy lineBreak = LineBreakStrategy.NONE;</span>
 
-<span class="nc" id="L133">		final Style style = getDefaultStyleDefinitionDiamond().getMergedStyle(skinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L133">		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionDiamond());</span>
 <span class="nc" id="L134">		lineBreak = style.wrapWidth();</span>
 <span class="nc" id="L135">		final FontConfiguration fcDiamond = style.getFontConfiguration(skinParam().getIHtmlColorSet());</span>
 <span class="nc" id="L136">		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());</span>
@@ -150,7 +150,7 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 
 	private Ftile getDiamond2(Swimlane swimlane, Branch branch0, Colors endColors) {
 
-<span class="nc" id="L153">		final Style style = getDefaultStyleDefinitionDiamond().getMergedStyle(skinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L153">		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionDiamond());</span>
 <span class="nc" id="L154">		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());</span>
 <span class="nc bnc" id="L155" title="All 2 branches missed.">		final HColor backColor = branch0.getColor() == null</span>
 <span class="nc" id="L156">				? endColors.getColor(style, PName.BackGroundColor, skinParam().getIHtmlColorSet())</span>

@@ -110,8 +110,8 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.klimt.color.HColor,int)" class="member-name-link">ValueColor</a><wbr>(<a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;color,
- int&nbsp;priority)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.klimt.color.HColor,net.sourceforge.plantuml.style.Specificity)" class="member-name-link">ValueColor</a><wbr>(<a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;color,
+ <a href="Specificity.html" title="class in net.sourceforge.plantuml.style">Specificity</a>&nbsp;specificity)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -130,8 +130,8 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#asColor(net.sourceforge.plantuml.klimt.color.HColorSet)" class="member-name-link">asColor</a><wbr>(<a href="../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a>&nbsp;set)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPriority()" class="member-name-link">getPriority</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Specificity.html" title="class in net.sourceforge.plantuml.style">Specificity</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSpecificity()" class="member-name-link">getSpecificity</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
@@ -157,10 +157,10 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.klimt.color.HColor,int)">
+<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.klimt.color.HColor,net.sourceforge.plantuml.style.Specificity)">
 <h3>ValueColor</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ValueColor</span><wbr><span class="parameters">(<a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;color,
- int&nbsp;priority)</span></div>
+ <a href="Specificity.html" title="class in net.sourceforge.plantuml.style">Specificity</a>&nbsp;specificity)</span></div>
 </section>
 </li>
 </ul>
@@ -194,14 +194,14 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="getPriority()">
-<h3>getPriority</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getPriority</span>()</div>
+<section class="detail" id="getSpecificity()">
+<h3>getSpecificity</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Specificity.html" title="class in net.sourceforge.plantuml.style">Specificity</a></span>&nbsp;<span class="element-name">getSpecificity</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Value.html#getPriority()">getPriority</a></code>&nbsp;in interface&nbsp;<code><a href="Value.html" title="interface in net.sourceforge.plantuml.style">Value</a></code></dd>
+<dd><code><a href="Value.html#getSpecificity()">getSpecificity</a></code>&nbsp;in interface&nbsp;<code><a href="Value.html" title="interface in net.sourceforge.plantuml.style">Value</a></code></dd>
 <dt>Overrides:</dt>
-<dd><code><a href="ValueAbstract.html#getPriority()">getPriority</a></code>&nbsp;in class&nbsp;<code><a href="ValueAbstract.html" title="class in net.sourceforge.plantuml.style">ValueAbstract</a></code></dd>
+<dd><code><a href="ValueAbstract.html#getSpecificity()">getSpecificity</a></code>&nbsp;in class&nbsp;<code><a href="ValueAbstract.html" title="class in net.sourceforge.plantuml.style">ValueAbstract</a></code></dd>
 </dl>
 </section>
 </li>

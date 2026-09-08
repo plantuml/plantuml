@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.utils.Direction;
 
 public class Snake implements UShape {
@@ -74,7 +74,7 @@ public class Snake implements UShape {
 <span class="fc" id="L74">		}</span>
 
 		private boolean hasText(StringBounder stringBounder) {
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">			return TextBlockUtils.isEmpty(this.textBlock, stringBounder) == false;</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">			return TextBlockUtils.isEmpty(this.textBlock, stringBounder) == false;</span>
 		}
 
 	}
@@ -136,19 +136,19 @@ public class Snake implements UShape {
 	}
 
 	public static Snake create(ISkinParam skinParam, Rainbow color) {
-<span class="nc" id="L139">		final Style style = StyleSignatureBasic.activityArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L139">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQuery.activityArrow());</span>
 <span class="nc" id="L140">		return new Snake(skinParam, null, color, null, new Worm(style, skinParam.arrows()), MergeStrategy.FULL, null,</span>
 				new ArrayList&lt;Text&gt;());
 	}
 
 	public static Snake create(ISkinParam skinParam, Rainbow color, UPolygon endDecoration) {
-<span class="fc" id="L145">		final Style style = StyleSignatureBasic.activityArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L145">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQuery.activityArrow());</span>
 <span class="fc" id="L146">		return new Snake(skinParam, null, color, endDecoration, new Worm(style, skinParam.arrows()), MergeStrategy.FULL,</span>
 				null, new ArrayList&lt;Text&gt;());
 	}
 
 	public static Snake create(ISkinParam skinParam, UPolygon startDecoration, Rainbow color, UPolygon endDecoration) {
-<span class="nc" id="L151">		final Style style = StyleSignatureBasic.activityArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L151">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQuery.activityArrow());</span>
 <span class="nc" id="L152">		return new Snake(skinParam, startDecoration, color, endDecoration, new Worm(style, skinParam.arrows()),</span>
 				MergeStrategy.FULL, null, new ArrayList&lt;Text&gt;());
 	}
@@ -225,48 +225,48 @@ public class Snake implements UShape {
 
 	private void drawInternalLabel(UGraphic ug) {
 <span class="fc bfc" id="L227" title="All 2 branches covered.">		for (Text text : texts)</span>
-<span class="pc bpc" id="L228" title="1 of 2 branches missed.">			if (text.hasText(ug.getStringBounder())) {</span>
-<span class="nc" id="L229">				final XPoint2D position = getTextBlockPosition(ug.getStringBounder(), text);</span>
-<span class="nc" id="L230">				text.textBlock.drawU(ug.apply(UTranslate.point(position)));</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">			if (text.hasText(ug.getStringBounder())) {</span>
+<span class="fc" id="L229">				final XPoint2D position = getTextBlockPosition(ug.getStringBounder(), text);</span>
+<span class="fc" id="L230">				text.textBlock.drawU(ug.apply(UTranslate.point(position)));</span>
 			}
 <span class="fc" id="L232">	}</span>
 
 	public double getMaxX(StringBounder stringBounder) {
-<span class="nc" id="L235">		double result = worm.getMaxX();</span>
-<span class="nc bnc" id="L236" title="All 2 branches missed.">		for (Text text : texts) {</span>
-<span class="nc" id="L237">			final XPoint2D position = getTextBlockPosition(stringBounder, text);</span>
-<span class="nc" id="L238">			final XDimension2D dim = text.textBlock.calculateDimension(stringBounder);</span>
-<span class="nc" id="L239">			result = Math.max(result, position.getX() + dim.getWidth());</span>
-<span class="nc" id="L240">		}</span>
-<span class="nc" id="L241">		return result;</span>
+<span class="fc" id="L235">		double result = worm.getMaxX();</span>
+<span class="fc bfc" id="L236" title="All 2 branches covered.">		for (Text text : texts) {</span>
+<span class="fc" id="L237">			final XPoint2D position = getTextBlockPosition(stringBounder, text);</span>
+<span class="fc" id="L238">			final XDimension2D dim = text.textBlock.calculateDimension(stringBounder);</span>
+<span class="fc" id="L239">			result = Math.max(result, position.getX() + dim.getWidth());</span>
+<span class="fc" id="L240">		}</span>
+<span class="fc" id="L241">		return result;</span>
 	}
 
 	private XPoint2D getTextBlockPosition(StringBounder stringBounder, Text text) {
-<span class="nc" id="L245">		final XPoint2D pt1 = worm.getPoint(0);</span>
-<span class="nc" id="L246">		final XPoint2D pt2 = worm.getPoint(1);</span>
-<span class="nc" id="L247">		final XDimension2D dim = text.textBlock.calculateDimension(stringBounder);</span>
-<span class="nc" id="L248">		double x = Math.max(pt1.getX(), pt2.getX()) + 4;</span>
-<span class="nc bnc" id="L249" title="All 4 branches missed.">		final boolean zigzag = worm.getDirectionsCode().startsWith(&quot;DLD&quot;) || worm.getDirectionsCode().startsWith(&quot;DRD&quot;);</span>
-<span class="nc" id="L250">		double y = (pt1.getY() + pt2.getY()) / 2 - dim.getHeight() / 2;</span>
-<span class="nc bnc" id="L251" title="All 2 branches missed.">		if (text.verticalAlignment == VerticalAlignment.BOTTOM) {</span>
+<span class="fc" id="L245">		final XPoint2D pt1 = worm.getPoint(0);</span>
+<span class="fc" id="L246">		final XPoint2D pt2 = worm.getPoint(1);</span>
+<span class="fc" id="L247">		final XDimension2D dim = text.textBlock.calculateDimension(stringBounder);</span>
+<span class="fc" id="L248">		double x = Math.max(pt1.getX(), pt2.getX()) + 4;</span>
+<span class="pc bpc" id="L249" title="2 of 4 branches missed.">		final boolean zigzag = worm.getDirectionsCode().startsWith(&quot;DLD&quot;) || worm.getDirectionsCode().startsWith(&quot;DRD&quot;);</span>
+<span class="fc" id="L250">		double y = (pt1.getY() + pt2.getY()) / 2 - dim.getHeight() / 2;</span>
+<span class="pc bpc" id="L251" title="1 of 2 branches missed.">		if (text.verticalAlignment == VerticalAlignment.BOTTOM) {</span>
 <span class="nc" id="L252">			x = worm.getMinX();</span>
 <span class="nc" id="L253">			y = worm.getMaxY();</span>
-<span class="nc bnc" id="L254" title="All 2 branches missed.">		} else if (text.verticalAlignment == VerticalAlignment.CENTER) {</span>
+<span class="pc bpc" id="L254" title="1 of 2 branches missed.">		} else if (text.verticalAlignment == VerticalAlignment.CENTER) {</span>
 <span class="nc" id="L255">			x = worm.getMinX();</span>
 <span class="nc" id="L256">			y = (worm.getFirst().getY() + worm.getLast().getY() - 10) / 2 - dim.getHeight() / 2;</span>
-<span class="nc bnc" id="L257" title="All 4 branches missed.">		} else if (text.horizontalAlignment == HorizontalAlignment.CENTER &amp;&amp; zigzag) {</span>
+<span class="pc bpc" id="L257" title="3 of 4 branches missed.">		} else if (text.horizontalAlignment == HorizontalAlignment.CENTER &amp;&amp; zigzag) {</span>
 <span class="nc" id="L258">			final XPoint2D pt3 = worm.getPoint(2);</span>
 <span class="nc" id="L259">			x = (pt2.getX() + pt3.getX()) / 2 - dim.getWidth() / 2;</span>
-<span class="nc bnc" id="L260" title="All 4 branches missed.">		} else if (text.horizontalAlignment == HorizontalAlignment.RIGHT &amp;&amp; zigzag) {</span>
+<span class="pc bpc" id="L260" title="3 of 4 branches missed.">		} else if (text.horizontalAlignment == HorizontalAlignment.RIGHT &amp;&amp; zigzag) {</span>
 <span class="nc" id="L261">			x = Math.max(pt1.getX(), pt2.getX()) - dim.getWidth() - 4;</span>
-<span class="nc bnc" id="L262" title="All 2 branches missed.">		} else if (worm.getDirectionsCode().equals(&quot;RD&quot;)) {</span>
+<span class="pc bpc" id="L262" title="1 of 2 branches missed.">		} else if (worm.getDirectionsCode().equals(&quot;RD&quot;)) {</span>
 <span class="nc" id="L263">			x = Math.max(pt1.getX(), pt2.getX());</span>
 <span class="nc" id="L264">			y = (pt1.getY() + worm.getPoint(2).getY()) / 2 - dim.getHeight() / 2;</span>
-<span class="nc bnc" id="L265" title="All 2 branches missed.">		} else if (worm.getDirectionsCode().equals(&quot;LD&quot;)) {</span>
+<span class="pc bpc" id="L265" title="1 of 2 branches missed.">		} else if (worm.getDirectionsCode().equals(&quot;LD&quot;)) {</span>
 <span class="nc" id="L266">			x = Math.min(pt1.getX(), pt2.getX());</span>
 <span class="nc" id="L267">			y = (pt1.getY() + worm.getPoint(2).getY()) / 2 - dim.getHeight() / 2;</span>
 		}
-<span class="nc" id="L269">		return new XPoint2D(x, y);</span>
+<span class="fc" id="L269">		return new XPoint2D(x, y);</span>
 	}
 
 	public List&lt;XLine2D&gt; getHorizontalLines() {
@@ -297,7 +297,7 @@ public class Snake implements UShape {
 	}
 
 	static public boolean same(XPoint2D pt1, XPoint2D pt2) {
-<span class="pc bpc" id="L300" title="1 of 2 branches missed.">		return pt1.distance(pt2) &lt; 0.001;</span>
+<span class="fc bfc" id="L300" title="All 2 branches covered.">		return pt1.distance(pt2) &lt; 0.001;</span>
 	}
 
 	public Snake merge(Snake other, StringBounder stringBounder) {
@@ -306,19 +306,19 @@ public class Snake implements UShape {
 <span class="nc" id="L306">			return null;</span>
 
 <span class="fc bfc" id="L308" title="All 2 branches covered.">		for (Text text : other.texts)</span>
-<span class="pc bpc" id="L309" title="1 of 2 branches missed.">			if (text.hasText(stringBounder))</span>
-<span class="nc" id="L310">				return null;</span>
+<span class="fc bfc" id="L309" title="All 2 branches covered.">			if (text.hasText(stringBounder))</span>
+<span class="fc" id="L310">				return null;</span>
 
-<span class="pc bpc" id="L312" title="1 of 2 branches missed.">		if (same(this.getLast(), other.getFirst())) {</span>
-<span class="nc bnc" id="L313" title="All 2 branches missed.">			final UPolygon oneOf = other.endDecoration == null ? endDecoration : other.endDecoration;</span>
-<span class="nc bnc" id="L314" title="All 4 branches missed.">			if (this.startDecoration != null || other.startDecoration != null)</span>
+<span class="fc bfc" id="L312" title="All 2 branches covered.">		if (same(this.getLast(), other.getFirst())) {</span>
+<span class="pc bpc" id="L313" title="1 of 2 branches missed.">			final UPolygon oneOf = other.endDecoration == null ? endDecoration : other.endDecoration;</span>
+<span class="pc bpc" id="L314" title="2 of 4 branches missed.">			if (this.startDecoration != null || other.startDecoration != null)</span>
 <span class="nc" id="L315">				throw new UnsupportedOperationException(&quot;Not yet coded: to be done&quot;);</span>
 
-<span class="nc" id="L317">			final ArrayList&lt;Text&gt; mergeTexts = new ArrayList&lt;Text&gt;(this.texts);</span>
-<span class="nc" id="L318">			mergeTexts.addAll(other.texts);</span>
-<span class="nc" id="L319">			final Snake result = new Snake(skinParam, null, color, oneOf, this.worm.merge(other.worm, strategy),</span>
-<span class="nc bnc" id="L320" title="All 2 branches missed.">					strategy, emphasizeDirection == null ? other.emphasizeDirection : emphasizeDirection, mergeTexts);</span>
-<span class="nc" id="L321">			return result;</span>
+<span class="fc" id="L317">			final ArrayList&lt;Text&gt; mergeTexts = new ArrayList&lt;Text&gt;(this.texts);</span>
+<span class="fc" id="L318">			mergeTexts.addAll(other.texts);</span>
+<span class="fc" id="L319">			final Snake result = new Snake(skinParam, null, color, oneOf, this.worm.merge(other.worm, strategy),</span>
+<span class="pc bpc" id="L320" title="1 of 2 branches missed.">					strategy, emphasizeDirection == null ? other.emphasizeDirection : emphasizeDirection, mergeTexts);</span>
+<span class="fc" id="L321">			return result;</span>
 		}
 <span class="pc bpc" id="L323" title="1 of 2 branches missed.">		if (same(this.getFirst(), other.getLast()))</span>
 <span class="nc" id="L324">			return other.merge(this, stringBounder);</span>

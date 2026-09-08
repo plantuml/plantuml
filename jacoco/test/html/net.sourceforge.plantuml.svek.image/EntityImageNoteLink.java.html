@@ -60,41 +60,40 @@ public class EntityImageNoteLink extends TextBlockMemoized implements IEntityIma
 
 <span class="nc" id="L61">	public EntityImageNoteLink(Display note, Colors colors, ISkinParam skinParam, StyleBuilder styleBuilder) {</span>
 <span class="nc" id="L62">		final Rose skin = new Rose();</span>
-<span class="nc" id="L63">		comp = skin.createComponentNote(</span>
-<span class="nc" id="L64">				new Style[] { ComponentType.NOTE.getStyleSignature().getMergedStyle(styleBuilder) }, ComponentType.NOTE,</span>
-				skinParam, note, colors);
-<span class="nc" id="L66">	}</span>
+<span class="nc" id="L63">		comp = skin.createComponentNote(new Style[] { styleBuilder.getMergedStyle(ComponentType.NOTE.getStyleQuery()) },</span>
+				ComponentType.NOTE, skinParam, note, colors);
+<span class="nc" id="L65">	}</span>
 
 	@Override
 	final public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="nc" id="L70">		final double height = comp.getPreferredHeight(stringBounder);</span>
-<span class="nc" id="L71">		final double width = comp.getPreferredWidth(stringBounder);</span>
-<span class="nc" id="L72">		return new XDimension2D(width, height);</span>
+<span class="nc" id="L69">		final double height = comp.getPreferredHeight(stringBounder);</span>
+<span class="nc" id="L70">		final double width = comp.getPreferredWidth(stringBounder);</span>
+<span class="nc" id="L71">		return new XDimension2D(width, height);</span>
 	}
 
 	@Override
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L77">		comp.drawU(ug, new Area(calculateDimension(ug.getStringBounder())), new SimpleContext2D(false));</span>
-<span class="nc" id="L78">	}</span>
+<span class="nc" id="L76">		comp.drawU(ug, new Area(calculateDimension(ug.getStringBounder())), new SimpleContext2D(false));</span>
+<span class="nc" id="L77">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L81">		return ShapeType.RECTANGLE;</span>
+<span class="nc" id="L80">		return ShapeType.RECTANGLE;</span>
 	}
 
 	public HColor getBackcolor() {
-<span class="nc" id="L85">		return null;</span>
+<span class="nc" id="L84">		return null;</span>
 	}
 
 	public Margins getShield(StringBounder stringBounder) {
-<span class="nc" id="L89">		return Margins.NONE;</span>
+<span class="nc" id="L88">		return Margins.NONE;</span>
 	}
 
 	public boolean isHidden() {
-<span class="nc" id="L93">		return false;</span>
+<span class="nc" id="L92">		return false;</span>
 	}
 
 	public double getOverscanX(StringBounder stringBounder) {
-<span class="nc" id="L97">		return 0;</span>
+<span class="nc" id="L96">		return 0;</span>
 	}
 
 }

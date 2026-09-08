@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class GtileIfHexagon extends GtileColumns {
 
@@ -79,8 +79,8 @@ public class GtileIfHexagon extends GtileColumns {
 <span class="nc" id="L79">		this.branches = branches;</span>
 
 <span class="nc" id="L81">		this.shape1 = getShape1(swimlane);</span>
-<span class="nc" id="L82">		this.shape2 = Gtiles.diamondEmpty(swimlane, getStringBounder(), skinParam(), getDefaultStyleDefinitionDiamond(),</span>
-<span class="nc" id="L83">				branches.get(0).getColor());</span>
+<span class="nc" id="L82">		this.shape2 = Gtiles.diamondEmpty(swimlane, getStringBounder(), skinParam(),</span>
+<span class="nc" id="L83">				getDefaultStyleDefinitionDiamond(), branches.get(0).getColor());</span>
 
 <span class="nc" id="L85">		final XDimension2D dimShape1 = shape1.calculateDimension(stringBounder);</span>
 <span class="nc" id="L86">		this.pushDown(dimShape1.getHeight());</span>
@@ -145,56 +145,49 @@ public class GtileIfHexagon extends GtileColumns {
 
 	private Gtile getShape1(Swimlane swimlane) {
 <span class="nc" id="L147">		GtileHexagonInside tmp = Gtiles.hexagonInside(swimlane, getStringBounder(), skinParam(),</span>
-<span class="nc" id="L148">				getDefaultStyleDefinitionDiamond(), branches.get(0).getColor(), branches.get(0).getLabelTest());</span>
+<span class="nc" id="L148">				getDefaultStyleDefinitionDiamond(), branches.get(0).getColor(),</span>
+<span class="nc" id="L149">				branches.get(0).getLabelTest());</span>
 
-<span class="nc" id="L150">		final TextBlock tmp0 = branches.get(0).getTextBlockPositive();</span>
-<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (branches.size() == 1) {</span>
-<span class="nc" id="L152">			return Gtiles.withSouthMargin(tmp.withSouthLabel(tmp0), 10);</span>
+<span class="nc" id="L151">		final TextBlock tmp0 = branches.get(0).getTextBlockPositive();</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">		if (branches.size() == 1) {</span>
+<span class="nc" id="L153">			return Gtiles.withSouthMargin(tmp.withSouthLabel(tmp0), 10);</span>
 		}
 
-<span class="nc" id="L155">		final TextBlock tmp1 = branches.get(1).getTextBlockPositive();</span>
-<span class="nc" id="L156">		return Gtiles.withSouthMargin(tmp.withWestLabel(tmp0).withEastLabel(tmp1), 10);</span>
+<span class="nc" id="L156">		final TextBlock tmp1 = branches.get(1).getTextBlockPositive();</span>
+<span class="nc" id="L157">		return Gtiles.withSouthMargin(tmp.withWestLabel(tmp0).withEastLabel(tmp1), 10);</span>
 	}
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="nc" id="L161">		final XDimension2D rawDim = calculateDimensionRaw(stringBounder);</span>
-<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (branches.size() == 2) {</span>
-<span class="nc" id="L163">			final XDimension2D shape1Dim = shape1.calculateDimension(stringBounder);</span>
-<span class="nc" id="L164">			final double shape1max = this.positionShape1.getDx() + shape1Dim.getWidth();</span>
-<span class="nc" id="L165">			return rawDim.atLeast(shape1max, 0);</span>
+<span class="nc" id="L162">		final XDimension2D rawDim = calculateDimensionRaw(stringBounder);</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (branches.size() == 2) {</span>
+<span class="nc" id="L164">			final XDimension2D shape1Dim = shape1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L165">			final double shape1max = this.positionShape1.getDx() + shape1Dim.getWidth();</span>
+<span class="nc" id="L166">			return rawDim.atLeast(shape1max, 0);</span>
 
 		}
 		// return MathUtils.max(rawDim, shape1Dim);
-<span class="nc" id="L169">		return rawDim;</span>
+<span class="nc" id="L170">		return rawDim;</span>
 	}
 
 	private XDimension2D calculateDimensionRaw(StringBounder stringBounder) {
-<span class="nc" id="L173">		final double height2 = shape2.calculateDimension(stringBounder).getHeight();</span>
-<span class="nc" id="L174">		final XDimension2D nude = super.calculateDimension(stringBounder);</span>
+<span class="nc" id="L174">		final double height2 = shape2.calculateDimension(stringBounder).getHeight();</span>
+<span class="nc" id="L175">		final XDimension2D nude = super.calculateDimension(stringBounder);</span>
 		// +30 to be done only when branches.size()==1 ?
-<span class="nc" id="L176">		return nude.delta(0, height2 + 30);</span>
+<span class="nc" id="L177">		return nude.delta(0, height2 + 30);</span>
 	}
 
-	final public StyleSignatureBasic getDefaultStyleDefinitionActivity() {
-<span class="nc" id="L180">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity);</span>
-	}
-
-	final public StyleSignatureBasic getDefaultStyleDefinitionDiamond() {
-<span class="nc" id="L184">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);</span>
-	}
-
-	final public StyleSignatureBasic getDefaultStyleDefinitionArrow() {
-<span class="nc" id="L188">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);</span>
+	final public StyleQuery getDefaultStyleDefinitionDiamond() {
+<span class="nc" id="L181">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));</span>
 	}
 
 	@Override
 	protected void drawUInternal(UGraphic ug) {
-<span class="nc" id="L193">		super.drawUInternal(ug);</span>
+<span class="nc" id="L186">		super.drawUInternal(ug);</span>
 
-<span class="nc" id="L195">		ug.apply(positionShape1).draw(shape1);</span>
-<span class="nc" id="L196">		ug.apply(positionShape2).draw(shape2);</span>
-<span class="nc" id="L197">	}</span>
+<span class="nc" id="L188">		ug.apply(positionShape1).draw(shape1);</span>
+<span class="nc" id="L189">		ug.apply(positionShape2).draw(shape2);</span>
+<span class="nc" id="L190">	}</span>
 
 //	private TextBlock getLabelPositive(Branch branch) {
 //		final LineBreakStrategy labelLineBreak = LineBreakStrategy.NONE;
@@ -213,31 +206,31 @@ public class GtileIfHexagon extends GtileColumns {
 
 	@Override
 	public Collection&lt;GConnection&gt; getInnerConnections() {
-<span class="nc bnc" id="L216" title="All 2 branches missed.">		if (branches.size() == 1) {</span>
-<span class="nc" id="L217">			final GConnection arrow1 = new GConnectionVerticalDown(positionShape1, shape1.getGPoint(GPoint.SOUTH_HOOK),</span>
-<span class="nc" id="L218">					getPosition(0), gtiles.get(0).getGPoint(GPoint.NORTH_HOOK), TextBlockUtils.EMPTY_TEXT_BLOCK);</span>
-<span class="nc" id="L219">			final GConnection arrow2 = new GConnectionVerticalDown(getPosition(0),</span>
-<span class="nc" id="L220">					gtiles.get(0).getGPoint(GPoint.SOUTH_HOOK), positionShape2, shape2.getGPoint(GPoint.NORTH_HOOK),</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">		if (branches.size() == 1) {</span>
+<span class="nc" id="L210">			final GConnection arrow1 = new GConnectionVerticalDown(positionShape1, shape1.getGPoint(GPoint.SOUTH_HOOK),</span>
+<span class="nc" id="L211">					getPosition(0), gtiles.get(0).getGPoint(GPoint.NORTH_HOOK), TextBlockUtils.EMPTY_TEXT_BLOCK);</span>
+<span class="nc" id="L212">			final GConnection arrow2 = new GConnectionVerticalDown(getPosition(0),</span>
+<span class="nc" id="L213">					gtiles.get(0).getGPoint(GPoint.SOUTH_HOOK), positionShape2, shape2.getGPoint(GPoint.NORTH_HOOK),</span>
 					TextBlockUtils.EMPTY_TEXT_BLOCK);
-<span class="nc" id="L222">			return Arrays.asList(arrow1, arrow2);</span>
-<span class="nc bnc" id="L223" title="All 2 branches missed.">		} else if (branches.size() == 2) {</span>
-<span class="nc" id="L224">			final GConnection arrow1 = new GConnectionHorizontalThenVerticalDown(positionShape1,</span>
-<span class="nc" id="L225">					shape1.getGPoint(GPoint.WEST_HOOK), getPosition(0), gtiles.get(0).getGPoint(GPoint.NORTH_HOOK),</span>
+<span class="nc" id="L215">			return Arrays.asList(arrow1, arrow2);</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">		} else if (branches.size() == 2) {</span>
+<span class="nc" id="L217">			final GConnection arrow1 = new GConnectionHorizontalThenVerticalDown(positionShape1,</span>
+<span class="nc" id="L218">					shape1.getGPoint(GPoint.WEST_HOOK), getPosition(0), gtiles.get(0).getGPoint(GPoint.NORTH_HOOK),</span>
 					TextBlockUtils.EMPTY_TEXT_BLOCK);
-<span class="nc" id="L227">			final GConnection arrow2 = new GConnectionHorizontalThenVerticalDown(positionShape1,</span>
-<span class="nc" id="L228">					shape1.getGPoint(GPoint.EAST_HOOK), getPosition(1), gtiles.get(1).getGPoint(GPoint.NORTH_HOOK),</span>
-					TextBlockUtils.EMPTY_TEXT_BLOCK);
-
-<span class="nc" id="L231">			final GConnection arrow3 = new GConnectionVerticalDownThenHorizontal(getPosition(0),</span>
-<span class="nc" id="L232">					gtiles.get(0).getGPoint(GPoint.SOUTH_HOOK), positionShape2, shape2.getGPoint(GPoint.WEST_HOOK),</span>
-					TextBlockUtils.EMPTY_TEXT_BLOCK);
-<span class="nc" id="L234">			final GConnection arrow4 = new GConnectionVerticalDownThenHorizontal(getPosition(1),</span>
-<span class="nc" id="L235">					gtiles.get(1).getGPoint(GPoint.SOUTH_HOOK), positionShape2, shape2.getGPoint(GPoint.EAST_HOOK),</span>
+<span class="nc" id="L220">			final GConnection arrow2 = new GConnectionHorizontalThenVerticalDown(positionShape1,</span>
+<span class="nc" id="L221">					shape1.getGPoint(GPoint.EAST_HOOK), getPosition(1), gtiles.get(1).getGPoint(GPoint.NORTH_HOOK),</span>
 					TextBlockUtils.EMPTY_TEXT_BLOCK);
 
-<span class="nc" id="L238">			return Arrays.asList(arrow1, arrow2, arrow3, arrow4);</span>
+<span class="nc" id="L224">			final GConnection arrow3 = new GConnectionVerticalDownThenHorizontal(getPosition(0),</span>
+<span class="nc" id="L225">					gtiles.get(0).getGPoint(GPoint.SOUTH_HOOK), positionShape2, shape2.getGPoint(GPoint.WEST_HOOK),</span>
+					TextBlockUtils.EMPTY_TEXT_BLOCK);
+<span class="nc" id="L227">			final GConnection arrow4 = new GConnectionVerticalDownThenHorizontal(getPosition(1),</span>
+<span class="nc" id="L228">					gtiles.get(1).getGPoint(GPoint.SOUTH_HOOK), positionShape2, shape2.getGPoint(GPoint.EAST_HOOK),</span>
+					TextBlockUtils.EMPTY_TEXT_BLOCK);
+
+<span class="nc" id="L231">			return Arrays.asList(arrow1, arrow2, arrow3, arrow4);</span>
 		}
-<span class="nc" id="L240">		return super.getInnerConnections();</span>
+<span class="nc" id="L233">		return super.getInnerConnections();</span>
 	}
 
 }

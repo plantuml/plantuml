@@ -51,11 +51,11 @@ public class FtileHeightFixedMarged extends AbstractFtile {
 	private final double ymargin2;
 
 	public FtileHeightFixedMarged(double ymargin1, Ftile tile, double ymargin2) {
-<span class="nc" id="L54">		super(tile.skinParam());</span>
-<span class="nc" id="L55">		this.tile = tile;</span>
-<span class="nc" id="L56">		this.ymargin1 = ymargin1;</span>
-<span class="nc" id="L57">		this.ymargin2 = ymargin2;</span>
-<span class="nc" id="L58">	}</span>
+<span class="fc" id="L54">		super(tile.skinParam());</span>
+<span class="fc" id="L55">		this.tile = tile;</span>
+<span class="fc" id="L56">		this.ymargin1 = ymargin1;</span>
+<span class="fc" id="L57">		this.ymargin2 = ymargin2;</span>
+<span class="fc" id="L58">	}</span>
 
 	@Override
 	public Collection&lt;Ftile&gt; getMyChildren() {
@@ -65,12 +65,12 @@ public class FtileHeightFixedMarged extends AbstractFtile {
 
 	@Override
 	public LinkRendering getInLinkRendering() {
-<span class="nc" id="L68">		return tile.getInLinkRendering();</span>
+<span class="fc" id="L68">		return tile.getInLinkRendering();</span>
 	}
 
 	@Override
 	public LinkRendering getOutLinkRendering() {
-<span class="nc" id="L73">		return tile.getOutLinkRendering();</span>
+<span class="fc" id="L73">		return tile.getOutLinkRendering();</span>
 	}
 
 	public Set&lt;Swimlane&gt; getSwimlanes() {
@@ -87,17 +87,17 @@ public class FtileHeightFixedMarged extends AbstractFtile {
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-<span class="nc" id="L90">		final FtileGeometry dim = tile.calculateDimension(stringBounder);</span>
-<span class="nc" id="L91">		return dim.translate(getTranslate(stringBounder)).fixedHeight(ymargin1 + dim.getHeight() + ymargin2);</span>
+<span class="fc" id="L90">		final FtileGeometry dim = tile.calculateDimension(stringBounder);</span>
+<span class="fc" id="L91">		return dim.translate(getTranslate(stringBounder)).fixedHeight(ymargin1 + dim.getHeight() + ymargin2);</span>
 	}
 
 	private UTranslate getTranslate(StringBounder stringBounder) {
-<span class="nc" id="L95">		return UTranslate.dy(ymargin1);</span>
+<span class="fc" id="L95">		return UTranslate.dy(ymargin1);</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L99">		ug.apply(getTranslate(ug.getStringBounder())).draw(tile);</span>
-<span class="nc" id="L100">	}</span>
+<span class="fc" id="L99">		ug.apply(getTranslate(ug.getStringBounder())).draw(tile);</span>
+<span class="fc" id="L100">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

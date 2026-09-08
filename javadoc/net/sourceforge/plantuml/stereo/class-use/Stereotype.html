@@ -156,28 +156,30 @@ loadScripts(document, 'script');</script>
  <a href="https://plantuml.com/style-evolution" target="_top">
  Style</a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.svek">net.sourceforge.plantuml.svek</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.style.parser2">net.sourceforge.plantuml.style.parser2</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.svek">net.sourceforge.plantuml.svek</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/svek" target="_top">
  PlantUML Svek Architecture</a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.svek.image">net.sourceforge.plantuml.svek.image</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.timingdiagram">net.sourceforge.plantuml.timingdiagram</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.svek.image">net.sourceforge.plantuml.svek.image</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.timingdiagram">net.sourceforge.plantuml.timingdiagram</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/timing-diagram" target="_top">
  Timing Diagram</a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.wbs">net.sourceforge.plantuml.wbs</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.wbs">net.sourceforge.plantuml.wbs</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/wbs-diagram" target="_top">
  WBS Diagram</a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.yaml">net.sourceforge.plantuml.yaml</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.yaml">net.sourceforge.plantuml.yaml</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/yaml" target="_top">
  YAML Diagram</a>.</div>
@@ -681,7 +683,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>final <a href="../../style/StyleSignature.html" title="interface in net.sourceforge.plantuml.style">StyleSignature</a></code></div>
+<div class="col-first even-row-color"><code>final <a href="../../style/parser2/StyleQuery.html" title="class in net.sourceforge.plantuml.style.parser2">StyleQuery</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CucaDiagramFileMakerElk.</span><code><a href="../../elk/CucaDiagramFileMakerElk.html#getDefaultStyleDefinitionArrow(net.sourceforge.plantuml.stereo.Stereotype,net.sourceforge.plantuml.style.SName)" class="member-name-link">getDefaultStyleDefinitionArrow</a><wbr>(<a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype,
  <a href="../../style/SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;styleName)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -872,7 +874,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>final <a href="../../style/StyleSignature.html" title="interface in net.sourceforge.plantuml.style">StyleSignature</a></code></div>
+<div class="col-first even-row-color"><code>final <a href="../../style/parser2/StyleQuery.html" title="class in net.sourceforge.plantuml.style.parser2">StyleQuery</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CucaDiagramFileMakerSmetana.</span><code><a href="../../sdot/CucaDiagramFileMakerSmetana.html#getDefaultStyleDefinitionArrow(net.sourceforge.plantuml.stereo.Stereotype,net.sourceforge.plantuml.style.SName)" class="member-name-link">getDefaultStyleDefinitionArrow</a><wbr>(<a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype,
  <a href="../../style/SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;styleName)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -1158,12 +1160,6 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../../style/StyleSignatureBasic.html" title="class in net.sourceforge.plantuml.style">StyleSignatureBasic</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">StyleSignatureBasic.</span><code><a href="../../style/StyleSignatureBasic.html#addStereotype(net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">addStereotype</a><wbr>(<a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereo)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../../style/StyleSignature.html" title="interface in net.sourceforge.plantuml.style">StyleSignature</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">StyleSignatureBasic.</span><code><a href="../../style/StyleSignatureBasic.html#forStereotypeItself(net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">forStereotypeItself</a><wbr>(<a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereo)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>char</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">ISkinParam.</span><code><a href="../../style/ISkinParam.html#getCircledCharacter(net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">getCircledCharacter</a><wbr>(<a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -1206,14 +1202,27 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>boolean</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">ISkinParam.</span><code><a href="../../style/ISkinParam.html#useOctagonForActivity(net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">useOctagonForActivity</a><wbr>(<a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../../style/StyleSignature.html" title="interface in net.sourceforge.plantuml.style">StyleSignature</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">StyleSignature.</span><code><a href="../../style/StyleSignature.html#withTOBECHANGED(net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">withTOBECHANGED</a><wbr>(<a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="../../style/StyleSignature.html" title="interface in net.sourceforge.plantuml.style">StyleSignature</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">StyleSignatureBasic.</span><code><a href="../../style/StyleSignatureBasic.html#withTOBECHANGED(net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">withTOBECHANGED</a><wbr>(<a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereo)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../../style/StyleSignature.html" title="interface in net.sourceforge.plantuml.style">StyleSignature</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">StyleSignatures.</span><code><a href="../../style/StyleSignatures.html#withTOBECHANGED(net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">withTOBECHANGED</a><wbr>(<a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.style.parser2">
+<h2>Uses of <a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a> in <a href="../../style/parser2/package-summary.html">net.sourceforge.plantuml.style.parser2</a></h2>
+<div class="caption"><span>Methods in <a href="../../style/parser2/package-summary.html">net.sourceforge.plantuml.style.parser2</a> with parameters of type <a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../../style/parser2/StyleQuery.html" title="class in net.sourceforge.plantuml.style.parser2">StyleQuery</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">StyleQuery.</span><code><a href="../../style/parser2/StyleQuery.html#forStereotypeItself(net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">forStereotypeItself</a><wbr>(<a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereo)</code></div>
+<div class="col-last even-row-color">
+<div class="block">This same query, additionally requiring every one of <code>stereo</code>'s labels at once, the
+ same way <a href="../../style/parser2/StyleQuery.html#withTOBECHANGED(net.sourceforge.plantuml.stereo.Stereotype)"><code>StyleQuery.withTOBECHANGED(Stereotype)</code></a> does -- but also requiring the special
+ <a href="../../style/SName.html#stereotype"><code>SName.stereotype</code></a> tag, mirroring <code>StyleSignature.forStereotypeItself</code>: used to
+ resolve the CSS-class-like rule for the stereotype itself (e.g.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../../style/parser2/StyleQuery.html" title="class in net.sourceforge.plantuml.style.parser2">StyleQuery</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">StyleQuery.</span><code><a href="../../style/parser2/StyleQuery.html#withTOBECHANGED(net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">withTOBECHANGED</a><wbr>(<a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
@@ -1251,14 +1260,14 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color"><span class="type-name-label">GroupMakerActivity.</span><code><a href="../../svek/GroupMakerActivity.html#getColor(net.sourceforge.plantuml.skin.ColorParam,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">getColor</a><wbr>(<a href="../../skin/ColorParam.html" title="enum class in net.sourceforge.plantuml.skin">ColorParam</a>&nbsp;colorParam,
  <a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereo)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>final <a href="../../style/StyleSignature.html" title="interface in net.sourceforge.plantuml.style">StyleSignature</a></code></div>
+<div class="col-first even-row-color"><code>final <a href="../../style/parser2/StyleQuery.html" title="class in net.sourceforge.plantuml.style.parser2">StyleQuery</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">GraphvizImageBuilder.</span><code><a href="../../svek/GraphvizImageBuilder.html#getDefaultStyleDefinitionArrow(net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">getDefaultStyleDefinitionArrow</a><wbr>(<a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static <a href="../../klimt/UStroke.html" title="class in net.sourceforge.plantuml.klimt">UStroke</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">GeneralImageBuilder.</span><code><a href="../../svek/GeneralImageBuilder.html#getForcedStroke(net.sourceforge.plantuml.stereo.Stereotype,net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">getForcedStroke</a><wbr>(<a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype,
  <a href="../../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>final <a href="../../style/StyleSignature.html" title="interface in net.sourceforge.plantuml.style">StyleSignature</a></code></div>
+<div class="col-first even-row-color"><code>final <a href="../../style/parser2/StyleQuery.html" title="class in net.sourceforge.plantuml.style.parser2">StyleQuery</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">GraphvizImageBuilder.</span><code><a href="../../svek/GraphvizImageBuilder.html#getStyleArrowCardinality(net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">getStyleArrowCardinality</a><wbr>(<a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>

@@ -77,7 +77,7 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 <span class="nc" id="L77">		double x = 0;</span>
 <span class="nc bnc" id="L78" title="All 2 branches missed.">		for (Ftile tmp : list99) {</span>
 <span class="nc" id="L79">			final XDimension2D dim = tmp.calculateDimension(getStringBounder());</span>
-<span class="nc" id="L80">			Style style = getStyleSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L80">			Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getStyleSignature());</span>
 <span class="nc" id="L81">			final Rainbow def = Rainbow.build(style, skinParam().getIHtmlColorSet());</span>
 <span class="nc" id="L82">			final Rainbow rainbow = tmp.getInLinkRendering().getRainbow(def);</span>
 <span class="nc" id="L83">			conns.add(new ConnectionIn(black, tmp, x, rainbow));</span>
@@ -93,7 +93,7 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 
 	@Override
 	protected Ftile doStep2(Ftile inner, Ftile result) {
-<span class="nc" id="L96">		final Style style = getStyleSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L96">		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getStyleSignature());</span>
 
 <span class="nc" id="L98">		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());</span>
 <span class="nc" id="L99">		final HColor backColor = style.value(PName.BackGroundColor).asColor(skinParam().getIHtmlColorSet());</span>

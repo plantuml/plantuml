@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class GtileIfAlone extends GtileTopDown3 {
 
@@ -73,37 +73,29 @@ public class GtileIfAlone extends GtileTopDown3 {
 <span class="nc" id="L73">		return Gtiles.withNorthMargin(tmp, 20);</span>
 	}
 
-	final public StyleSignatureBasic getDefaultStyleDefinitionActivity() {
-<span class="nc" id="L77">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity);</span>
-	}
-
-	final static public StyleSignatureBasic getDefaultStyleDefinitionDiamond() {
-<span class="nc" id="L81">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);</span>
-	}
-
-	final public StyleSignatureBasic getDefaultStyleDefinitionArrow() {
-<span class="nc" id="L85">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);</span>
+	final static public StyleQuery getDefaultStyleDefinitionDiamond() {
+<span class="nc" id="L77">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));</span>
 	}
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="nc" id="L90">		return super.calculateDimension(stringBounder).delta(SUPP_WIDTH, 0);</span>
+<span class="nc" id="L82">		return super.calculateDimension(stringBounder).delta(SUPP_WIDTH, 0);</span>
 	}
 
 	@Override
 	public Collection&lt;GConnection&gt; getInnerConnections() {
 
-<span class="nc" id="L96">		final GConnection arrow1 = new GConnectionVerticalDown(getPos1(), tile1.getGPoint(GPoint.SOUTH_HOOK), getPos2(),</span>
-<span class="nc" id="L97">				tile2.getGPoint(GPoint.NORTH_HOOK), TextBlockUtils.EMPTY_TEXT_BLOCK);</span>
-<span class="nc" id="L98">		final GConnection arrow2 = new GConnectionVerticalDown(getPos2(), tile2.getGPoint(GPoint.SOUTH_HOOK), getPos3(),</span>
-<span class="nc" id="L99">				tile3.getGPoint(GPoint.NORTH_HOOK), TextBlockUtils.EMPTY_TEXT_BLOCK);</span>
+<span class="nc" id="L88">		final GConnection arrow1 = new GConnectionVerticalDown(getPos1(), tile1.getGPoint(GPoint.SOUTH_HOOK), getPos2(),</span>
+<span class="nc" id="L89">				tile2.getGPoint(GPoint.NORTH_HOOK), TextBlockUtils.EMPTY_TEXT_BLOCK);</span>
+<span class="nc" id="L90">		final GConnection arrow2 = new GConnectionVerticalDown(getPos2(), tile2.getGPoint(GPoint.SOUTH_HOOK), getPos3(),</span>
+<span class="nc" id="L91">				tile3.getGPoint(GPoint.NORTH_HOOK), TextBlockUtils.EMPTY_TEXT_BLOCK);</span>
 
-<span class="nc" id="L101">		final double xright = calculateDimension(stringBounder).getWidth();</span>
+<span class="nc" id="L93">		final double xright = calculateDimension(stringBounder).getWidth();</span>
 
-<span class="nc" id="L103">		final GConnection arrow3 = new GConnectionSideThenVerticalThenSide(getPos1(), tile1.getGPoint(GPoint.EAST_HOOK),</span>
-<span class="nc" id="L104">				getPos3(), tile3.getGPoint(GPoint.EAST_HOOK), xright, TextBlockUtils.EMPTY_TEXT_BLOCK);</span>
+<span class="nc" id="L95">		final GConnection arrow3 = new GConnectionSideThenVerticalThenSide(getPos1(), tile1.getGPoint(GPoint.EAST_HOOK),</span>
+<span class="nc" id="L96">				getPos3(), tile3.getGPoint(GPoint.EAST_HOOK), xright, TextBlockUtils.EMPTY_TEXT_BLOCK);</span>
 
-<span class="nc" id="L106">		return Arrays.asList(arrow1, arrow2, arrow3);</span>
+<span class="nc" id="L98">		return Arrays.asList(arrow1, arrow2, arrow3);</span>
 	}
 
 }

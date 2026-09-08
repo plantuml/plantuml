@@ -51,10 +51,10 @@ public class FtileHeightFixedCentered extends AbstractFtile {
 	private final double fixedHeight;
 
 	public FtileHeightFixedCentered(Ftile tile, double fixedHeight) {
-<span class="nc" id="L54">		super(tile.skinParam());</span>
-<span class="nc" id="L55">		this.tile = tile;</span>
-<span class="nc" id="L56">		this.fixedHeight = fixedHeight;</span>
-<span class="nc" id="L57">	}</span>
+<span class="fc" id="L54">		super(tile.skinParam());</span>
+<span class="fc" id="L55">		this.tile = tile;</span>
+<span class="fc" id="L56">		this.fixedHeight = fixedHeight;</span>
+<span class="fc" id="L57">	}</span>
 
 	@Override
 	public Collection&lt;Ftile&gt; getMyChildren() {
@@ -64,12 +64,12 @@ public class FtileHeightFixedCentered extends AbstractFtile {
 
 	@Override
 	public LinkRendering getInLinkRendering() {
-<span class="nc" id="L67">		return tile.getInLinkRendering();</span>
+<span class="fc" id="L67">		return tile.getInLinkRendering();</span>
 	}
 
 	@Override
 	public LinkRendering getOutLinkRendering() {
-<span class="nc" id="L72">		return tile.getOutLinkRendering();</span>
+<span class="fc" id="L72">		return tile.getOutLinkRendering();</span>
 	}
 
 	public Set&lt;Swimlane&gt; getSwimlanes() {
@@ -86,20 +86,20 @@ public class FtileHeightFixedCentered extends AbstractFtile {
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-<span class="nc" id="L89">		return tile.calculateDimension(stringBounder).translate(getTranslate(stringBounder)).fixedHeight(fixedHeight);</span>
+<span class="fc" id="L89">		return tile.calculateDimension(stringBounder).translate(getTranslate(stringBounder)).fixedHeight(fixedHeight);</span>
 	}
 
 	private UTranslate getTranslate(StringBounder stringBounder) {
-<span class="nc" id="L93">		final XDimension2D dim = tile.calculateDimension(stringBounder);</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (dim.getHeight() &gt; fixedHeight)</span>
+<span class="fc" id="L93">		final XDimension2D dim = tile.calculateDimension(stringBounder);</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (dim.getHeight() &gt; fixedHeight)</span>
 <span class="nc" id="L95">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L97">		return UTranslate.dy((fixedHeight - dim.getHeight()) / 2);</span>
+<span class="fc" id="L97">		return UTranslate.dy((fixedHeight - dim.getHeight()) / 2);</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L101">		ug.apply(getTranslate(ug.getStringBounder())).draw(tile);</span>
-<span class="nc" id="L102">	}</span>
+<span class="fc" id="L101">		ug.apply(getTranslate(ug.getStringBounder())).draw(tile);</span>
+<span class="fc" id="L102">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

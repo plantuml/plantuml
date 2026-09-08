@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.timingdiagram;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -52,8 +53,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.timingdiagram.graphic.Panels;
 import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrame;
 import net.sourceforge.plantuml.utils.Position;
@@ -74,9 +74,9 @@ public abstract class Player {
 	private final SName sname;
 
 	public final void addNote(TimeTick now, Display note, Position position, Stereotype stereotype) {
-<span class="nc" id="L77">		final StyleSignature signature = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram,</span>
-				SName.note);
-<span class="nc" id="L79">		final Style style = signature.withTOBECHANGED(stereotype).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L77">		final StyleQuery signature = StyleQuery</span>
+<span class="nc" id="L78">				.of(Arrays.asList(SName.root, SName.element, SName.timingDiagram, SName.note));</span>
+<span class="nc" id="L79">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(signature.withTOBECHANGED(stereotype));</span>
 
 <span class="nc" id="L81">		this.notes.add(new TimingNote(now, this, note, position, skinParam, style));</span>
 <span class="nc" id="L82">	}</span>
@@ -96,8 +96,8 @@ public abstract class Player {
 <span class="fc" id="L96">	}</span>
 
 	final protected Style getStyle() {
-<span class="fc" id="L99">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, sname).withTOBECHANGED(stereotype)</span>
-<span class="fc" id="L100">				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L99">		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery</span>
+<span class="fc" id="L100">				.of(Arrays.asList(SName.root, SName.element, SName.timingDiagram, sname)).withTOBECHANGED(stereotype));</span>
 	}
 
 	public final List&lt;TimingNote&gt; getNotes() {
@@ -127,9 +127,10 @@ public abstract class Player {
 	private TextBlock getTitle() {
 <span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (title.isWhite())</span>
 <span class="nc" id="L129">			return TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
-<span class="fc" id="L130">		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, StyleSignatureBasic</span>
-<span class="fc" id="L131">				.of(SName.root, SName.element, SName.timingDiagram).getMergedStyle(skinParam.getCurrentStyleBuilder()));</span>
-<span class="fc" id="L132">		return title.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);</span>
+<span class="fc" id="L130">		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam,</span>
+<span class="fc" id="L131">				skinParam.getCurrentStyleBuilder()</span>
+<span class="fc" id="L132">						.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.timingDiagram))));</span>
+<span class="fc" id="L133">		return title.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);</span>
 	}
 
 	public abstract void defineState(String stateCode, String label);
@@ -139,22 +140,22 @@ public abstract class Player {
 	public abstract void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config);
 
 	public final void drawFrameTitle(UGraphic ug) {
-<span class="fc" id="L142">		playerFrame.drawFrameTitle(ug);</span>
-<span class="fc" id="L143">	}</span>
+<span class="fc" id="L143">		playerFrame.drawFrameTitle(ug);</span>
+<span class="fc" id="L144">	}</span>
 
 	public final double getFrameHeight(StringBounder stringBounder) {
-<span class="fc" id="L146">		return playerFrame.getHeight(stringBounder);</span>
+<span class="fc" id="L147">		return playerFrame.getHeight(stringBounder);</span>
 	}
 
 	public final void setHeight(int height) {
-<span class="nc" id="L150">		this.suggestedHeight = height;</span>
-<span class="nc" id="L151">	}</span>
+<span class="nc" id="L151">		this.suggestedHeight = height;</span>
+<span class="nc" id="L152">	}</span>
 
 	public final Panels panels() {
-<span class="fc bfc" id="L154" title="All 2 branches covered.">		if (cached == null)</span>
-<span class="fc" id="L155">			cached = buildPlayerPanels();</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">		if (cached == null)</span>
+<span class="fc" id="L156">			cached = buildPlayerPanels();</span>
 
-<span class="fc" id="L157">		return cached;</span>
+<span class="fc" id="L158">		return cached;</span>
 	}
 
 	protected abstract Panels buildPlayerPanels();

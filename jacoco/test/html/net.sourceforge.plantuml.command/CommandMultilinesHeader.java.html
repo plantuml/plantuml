@@ -96,8 +96,8 @@ public class CommandMultilinesHeader extends CommandMultilines&lt;TitledDiagram&
 <span class="nc bnc" id="L96" title="All 2 branches missed.">		if (strings.size() &gt; 0) {</span>
 <span class="nc" id="L97">			HorizontalAlignment ha = HorizontalAlignment.fromString(align, HorizontalAlignment.RIGHT);</span>
 <span class="nc bnc" id="L98" title="All 2 branches missed.">			if (align == null)</span>
-<span class="nc" id="L99">				ha = FontParam.HEADER.getStyleDefinition(null)</span>
-<span class="nc" id="L100">						.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder()).getHorizontalAlignment();</span>
+<span class="nc" id="L99">				ha = diagram.getSkinParam().getCurrentStyleBuilder()</span>
+<span class="nc" id="L100">						.getMergedStyle(FontParam.HEADER.getStyleDefinition(null)).getHorizontalAlignment();</span>
 
 <span class="nc" id="L102">			diagram.updateHeader(location, strings, ha);</span>
 <span class="nc" id="L103">			return CommandExecutionResult.ok();</span>

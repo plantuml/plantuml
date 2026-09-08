@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -39,64 +39,56 @@ public class DarkString {
 
 	private final String value1;
 	private final String value2;
-	private final int priority;
+	private final Specificity specificity;
 
-<span class="fc" id="L44">	public DarkString(String value1, String value2, int priority) {</span>
+<span class="fc" id="L44">	public DarkString(String value1, String value2, Specificity specificity) {</span>
 <span class="fc" id="L45">		this.value1 = value1;</span>
 <span class="fc" id="L46">		this.value2 = value2;</span>
-<span class="fc" id="L47">		this.priority = priority;</span>
+<span class="fc" id="L47">		this.specificity = specificity;</span>
 <span class="fc" id="L48">	}</span>
 
 	public DarkString mergeWith(DarkString other) {
 <span class="pc bpc" id="L51" title="1 of 2 branches missed.">		if (other == null)</span>
 <span class="nc" id="L52">			return this;</span>
 
-<span class="pc bpc" id="L54" title="1 of 8 branches missed.">		if ((this.value2 == null &amp;&amp; other.value2 == null) || this.value1 == null &amp;&amp; other.value1 == null) {</span>
-<span class="fc bfc" id="L55" title="All 2 branches covered.">			if (isBigger(this.priority, other.priority))</span>
+<span class="pc bpc" id="L54" title="3 of 8 branches missed.">		if ((this.value2 == null &amp;&amp; other.value2 == null) || this.value1 == null &amp;&amp; other.value1 == null) {</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">			if (this.specificity.isBiggerThan(other.specificity))</span>
 <span class="fc" id="L56">				return this;</span>
 <span class="fc" id="L57">			return other;</span>
 		}
-<span class="pc bpc" id="L59" title="1 of 4 branches missed.">		if (this.value2 == null &amp;&amp; other.value1 == null)</span>
-<span class="nc" id="L60">			return new DarkString(this.value1, other.value2, this.priority);</span>
-<span class="fc bfc" id="L61" title="All 4 branches covered.">		if (other.value2 == null &amp;&amp; this.value1 == null)</span>
-<span class="fc" id="L62">			return new DarkString(other.value1, this.value2, other.priority);</span>
+<span class="fc bfc" id="L59" title="All 4 branches covered.">		if (this.value2 == null &amp;&amp; other.value1 == null)</span>
+<span class="fc" id="L60">			return new DarkString(this.value1, other.value2, this.specificity);</span>
+<span class="pc bpc" id="L61" title="1 of 4 branches missed.">		if (other.value2 == null &amp;&amp; this.value1 == null)</span>
+<span class="nc" id="L62">			return new DarkString(other.value1, this.value2, other.specificity);</span>
 
-<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (isBigger(this.priority, other.priority))</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (this.specificity.isBiggerThan(other.specificity))</span>
 <span class="fc" id="L65">			return this;</span>
 <span class="fc" id="L66">		return other;</span>
-
-//		System.err.println(&quot;this =&quot; + this);
-//		System.err.println(&quot;other=&quot; + other);
-//		throw new UnsupportedOperationException();
 	}
 
-	private static boolean isBigger(int a, int b) {
-//		if (a &gt; StyleLoader.DELTA_PRIORITY_FOR_STEREOTYPE)
-//			a = StyleLoader.DELTA_PRIORITY_FOR_STEREOTYPE;
-//		if (b &gt; StyleLoader.DELTA_PRIORITY_FOR_STEREOTYPE)
-//			b = StyleLoader.DELTA_PRIORITY_FOR_STEREOTYPE;
-<span class="fc bfc" id="L78" title="All 2 branches covered.">		return a &gt; b;</span>
+	public DarkString withAncestorRank(int rank) {
+<span class="fc" id="L70">		return new DarkString(value1, value2, specificity.withAncestorRank(rank));</span>
 	}
 
-	public DarkString addPriority(int delta) {
-<span class="fc" id="L82">		return new DarkString(value1, value2, delta + priority);</span>
+	public DarkString withStereotypeCount(int count) {
+<span class="fc" id="L74">		return new DarkString(value1, value2, specificity.withStereotypeCount(count));</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="fc" id="L87">		return value1 + &quot;/&quot; + value2 + &quot; (&quot; + priority + &quot;)&quot;;</span>
+<span class="fc" id="L79">		return value1 + &quot;/&quot; + value2 + &quot; (&quot; + specificity + &quot;)&quot;;</span>
 	}
 
 	public final String getValue1() {
-<span class="fc" id="L91">		return value1;</span>
+<span class="fc" id="L83">		return value1;</span>
 	}
 
 	public final String getValue2() {
-<span class="fc" id="L95">		return value2;</span>
+<span class="fc" id="L87">		return value2;</span>
 	}
 
-	public final int getPriority() {
-<span class="fc" id="L99">		return priority;</span>
+	public final Specificity getSpecificity() {
+<span class="fc" id="L91">		return specificity;</span>
 	}
 
 }

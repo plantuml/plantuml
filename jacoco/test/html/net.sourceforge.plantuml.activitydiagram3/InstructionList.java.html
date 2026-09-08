@@ -134,12 +134,12 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) throws NoSuchColorException {
-<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (all.size() == 0) {</span>
-<span class="nc" id="L138">			Ftile result = new FtileEmpty(factory.skinParam(), defaultSwimlane);</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">		if (all.size() == 0) {</span>
+<span class="fc" id="L138">			Ftile result = new FtileEmpty(factory.skinParam(), defaultSwimlane);</span>
 			// Not a typo, in that case, we decide to decorate the entry link.
-<span class="nc bnc" id="L140" title="All 2 branches missed.">			if (outlinkRendering != null)</span>
-<span class="nc" id="L141">				result = factory.decorateIn(result, outlinkRendering);</span>
-<span class="nc" id="L142">			return result;</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">			if (outlinkRendering != null)</span>
+<span class="fc" id="L141">				result = factory.decorateIn(result, outlinkRendering);</span>
+<span class="fc" id="L142">			return result;</span>
 		}
 
 <span class="fc" id="L145">		final List&lt;WeldingPoint&gt; breaks = new ArrayList&lt;&gt;();</span>
@@ -147,8 +147,8 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 <span class="fc bfc" id="L147" title="All 2 branches covered.">		for (Instruction ins : all) {</span>
 <span class="fc" id="L148">			Ftile cur = ins.createFtile(factory);</span>
 <span class="fc" id="L149">			breaks.addAll(cur.getWeldingPoints());</span>
-<span class="pc bpc" id="L150" title="1 of 2 branches missed.">			if (ins.getInLinkRendering().isNone() == false)</span>
-<span class="nc" id="L151">				cur = factory.decorateIn(cur, ins.getInLinkRendering());</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">			if (ins.getInLinkRendering().isNone() == false)</span>
+<span class="fc" id="L151">				cur = factory.decorateIn(cur, ins.getInLinkRendering());</span>
 
 <span class="fc bfc" id="L153" title="All 2 branches covered.">			if (result == null)</span>
 <span class="fc" id="L154">				result = cur;</span>
@@ -156,8 +156,8 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 <span class="fc" id="L156">				result = factory.assembly(result, cur);</span>
 <span class="fc" id="L157">		}</span>
 
-<span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (outlinkRendering != null)</span>
-<span class="nc" id="L160">			result = factory.decorateOut(result, outlinkRendering);</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">		if (outlinkRendering != null)</span>
+<span class="fc" id="L160">			result = factory.decorateOut(result, outlinkRendering);</span>
 
 <span class="pc bpc" id="L162" title="1 of 2 branches missed.">		if (breaks.size() &gt; 0)</span>
 <span class="nc" id="L163">			result = new FtileDecorateWelding(result, breaks);</span>
@@ -228,8 +228,8 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 	private LinkRendering outlinkRendering;
 
 	public void setOutRendering(LinkRendering outlinkRendering) {
-<span class="nc" id="L231">		this.outlinkRendering = outlinkRendering;</span>
-<span class="nc" id="L232">	}</span>
+<span class="fc" id="L231">		this.outlinkRendering = outlinkRendering;</span>
+<span class="fc" id="L232">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

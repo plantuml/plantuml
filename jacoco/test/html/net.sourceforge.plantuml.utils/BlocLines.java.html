@@ -148,11 +148,11 @@ public class BlocLines implements Iterable&lt;StringLocated&gt; {
 	}
 
 	public static BlocLines getWithNewlines(String s) {
-<span class="nc" id="L151">		final List&lt;StringLocated&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L152" title="All 2 branches missed.">		for (String cs : Display.getWithNewlines3(s))</span>
-<span class="nc" id="L153">			result.add(new StringLocated(cs, null));</span>
+<span class="fc" id="L151">		final List&lt;StringLocated&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">		for (String cs : Display.getWithNewlines3(s))</span>
+<span class="fc" id="L153">			result.add(new StringLocated(cs, null));</span>
 
-<span class="nc" id="L155">		return new BlocLines(result);</span>
+<span class="fc" id="L155">		return new BlocLines(result);</span>
 	}
 
 	public static BlocLines create() {

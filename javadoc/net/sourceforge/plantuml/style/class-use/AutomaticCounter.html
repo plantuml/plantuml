@@ -61,7 +61,7 @@ loadScripts(document, 'script');</script>
  <a href="https://plantuml.com/style-evolution" target="_top">
  Style</a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.style.parser">net.sourceforge.plantuml.style.parser</a></div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.style.parser2">net.sourceforge.plantuml.style.parser2</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <section class="class-uses">
@@ -94,24 +94,51 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color"><span class="type-name-label">ValueImpl.</span><code><a href="../ValueImpl.html#dark(java.lang.String,net.sourceforge.plantuml.style.AutomaticCounter)" class="member-name-link">dark</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value,
  <a href="../AutomaticCounter.html" title="interface in net.sourceforge.plantuml.style">AutomaticCounter</a>&nbsp;counter)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../ValueImpl.html" title="class in net.sourceforge.plantuml.style">ValueImpl</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ValueImpl.</span><code><a href="../ValueImpl.html#regular(java.lang.String,net.sourceforge.plantuml.style.AutomaticCounter)" class="member-name-link">regular</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value,
+<div class="col-first even-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a><wbr>&lt;<a href="../Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">StyleLoader.</span><code><a href="../StyleLoader.html#parseStyleText(net.sourceforge.plantuml.utils.BlocLines,net.sourceforge.plantuml.style.AutomaticCounter)" class="member-name-link">parseStyleText</a><wbr>(<a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines,
  <a href="../AutomaticCounter.html" title="interface in net.sourceforge.plantuml.style">AutomaticCounter</a>&nbsp;counter)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Parses a fragment of .skin/<code>&lt;style&gt;</code> text into flat legacy <a href="../Style.html" title="class in net.sourceforge.plantuml.style"><code>Style</code></a> objects,
+ assigning each property an increasing priority via <code>counter</code> -- the direct
+ replacement for <code>new net.sourceforge.plantuml.style.parser.StyleParser(counter).parse(lines)</code>,
+ now going through the <code>parser2</code> tokenizer (<a href="../parser2/RawStyleParser.html" title="class in net.sourceforge.plantuml.style.parser2"><code>RawStyleParser</code></a>) instead of the
+ legacy hand-written one.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../ValueImpl.html" title="class in net.sourceforge.plantuml.style">ValueImpl</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ValueImpl.</span><code><a href="../ValueImpl.html#regular(java.lang.String,net.sourceforge.plantuml.style.AutomaticCounter)" class="member-name-link">regular</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value,
+ <a href="../AutomaticCounter.html" title="interface in net.sourceforge.plantuml.style">AutomaticCounter</a>&nbsp;counter)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
 <li>
-<section class="detail" id="net.sourceforge.plantuml.style.parser">
-<h2>Uses of <a href="../AutomaticCounter.html" title="interface in net.sourceforge.plantuml.style">AutomaticCounter</a> in <a href="../parser/package-summary.html">net.sourceforge.plantuml.style.parser</a></h2>
-<div class="caption"><span>Constructors in <a href="../parser/package-summary.html">net.sourceforge.plantuml.style.parser</a> with parameters of type <a href="../AutomaticCounter.html" title="interface in net.sourceforge.plantuml.style">AutomaticCounter</a></span></div>
+<section class="detail" id="net.sourceforge.plantuml.style.parser2">
+<h2>Uses of <a href="../AutomaticCounter.html" title="interface in net.sourceforge.plantuml.style">AutomaticCounter</a> in <a href="../parser2/package-summary.html">net.sourceforge.plantuml.style.parser2</a></h2>
+<div class="caption"><span>Methods in <a href="../parser2/package-summary.html">net.sourceforge.plantuml.style.parser2</a> with parameters of type <a href="../AutomaticCounter.html" title="interface in net.sourceforge.plantuml.style">AutomaticCounter</a></span></div>
 <div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier</div>
-<div class="table-header col-second">Constructor</div>
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../parser/StyleParser.html#%3Cinit%3E(net.sourceforge.plantuml.style.AutomaticCounter)" class="member-name-link">StyleParser</a><wbr>(<a href="../AutomaticCounter.html" title="interface in net.sourceforge.plantuml.style">AutomaticCounter</a>&nbsp;counter)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">MergedStyleNode.</span><code><a href="../parser2/MergedStyleNode.html#mergeAll(net.sourceforge.plantuml.style.parser2.RawStyleSheet,net.sourceforge.plantuml.style.AutomaticCounter)" class="member-name-link">mergeAll</a><wbr>(<a href="../parser2/RawStyleSheet.html" title="class in net.sourceforge.plantuml.style.parser2">RawStyleSheet</a>&nbsp;raw,
+ <a href="../AutomaticCounter.html" title="interface in net.sourceforge.plantuml.style">AutomaticCounter</a>&nbsp;counter)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Merges every top-level rule in <code>raw</code> into this node, <code>@media</code> content
+ dispatched to its dark half exactly as the plain case is -- what
+ <code>net.sourceforge.plantuml.style.StyleLoader#parseStyleText</code> calls to fold a whole
+ .skin file, or a hand-written <code>&lt;style&gt;...&lt;/style&gt;</code> block, into one throwaway tree,
+ immediately flattened back to legacy <code>net.sourceforge.plantuml.style.Style</code> objects
+ by <code>LegacyStyleFlattener</code>.</div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">MergedStyleNode.</span><code><a href="../parser2/MergedStyleNode.html#mergeRule(net.sourceforge.plantuml.style.parser2.RawStyleRule,net.sourceforge.plantuml.style.AutomaticCounter,boolean)" class="member-name-link">mergeRule</a><wbr>(<a href="../parser2/RawStyleRule.html" title="class in net.sourceforge.plantuml.style.parser2">RawStyleRule</a>&nbsp;rule,
+ <a href="../AutomaticCounter.html" title="interface in net.sourceforge.plantuml.style">AutomaticCounter</a>&nbsp;counter,
+ boolean&nbsp;dark)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Merges one raw declaration -- and, recursively, everything nested inside it -- into
+ this node, which stands for its parent selector (the top-level container for a
+ top-level declaration).</div>
+</div>
 </div>
 </section>
 </li>

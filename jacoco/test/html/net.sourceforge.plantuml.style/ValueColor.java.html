@@ -41,16 +41,16 @@ import net.sourceforge.plantuml.klimt.color.HColorSet;
 public class ValueColor extends ValueAbstract {
 
 	private final HColor color;
-	private final int priority;
+	private final Specificity specificity;
 
 	@Override
 	public String toString() {
 <span class="nc" id="L48">		return color.toString();</span>
 	}
 
-<span class="fc" id="L51">	public ValueColor(HColor color, int priority) {</span>
+<span class="fc" id="L51">	public ValueColor(HColor color, Specificity specificity) {</span>
 <span class="fc" id="L52">		this.color = color;</span>
-<span class="fc" id="L53">		this.priority = priority;</span>
+<span class="fc" id="L53">		this.specificity = specificity;</span>
 <span class="fc" id="L54">	}</span>
 
 	@Override
@@ -59,8 +59,8 @@ public class ValueColor extends ValueAbstract {
 	}
 
 	@Override
-	public int getPriority() {
-<span class="fc" id="L63">		return priority;</span>
+	public Specificity getSpecificity() {
+<span class="fc" id="L63">		return specificity;</span>
 	}
 
 }

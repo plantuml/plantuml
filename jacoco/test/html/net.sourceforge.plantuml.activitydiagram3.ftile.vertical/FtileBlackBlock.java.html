@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
@@ -57,76 +58,76 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class FtileBlackBlock extends AbstractFtile {
 
-<span class="nc" id="L64">	private final double labelMargin = 5;</span>
+<span class="fc" id="L65">	private final double labelMargin = 5;</span>
 
 	private double width;
 	private double height;
 	private final Colors colors;
-<span class="nc" id="L69">	private TextBlock label = TextBlockUtils.empty(0, 0);</span>
+<span class="fc" id="L70">	private TextBlock label = TextBlockUtils.empty(0, 0);</span>
 
 	private final Swimlane swimlane;
 
 	public FtileBlackBlock(ISkinParam skinParam, Swimlane swimlane, Colors colors) {
-<span class="nc" id="L74">		super(skinParam);</span>
-<span class="nc" id="L75">		this.colors = colors;</span>
-<span class="nc" id="L76">		this.swimlane = swimlane;</span>
-<span class="nc" id="L77">	}</span>
+<span class="fc" id="L75">		super(skinParam);</span>
+<span class="fc" id="L76">		this.colors = colors;</span>
+<span class="fc" id="L77">		this.swimlane = swimlane;</span>
+<span class="fc" id="L78">	}</span>
 
 	public void setBlackBlockDimension(double width, double height) {
-<span class="nc" id="L80">		this.height = height;</span>
-<span class="nc" id="L81">		this.width = width;</span>
-<span class="nc" id="L82">	}</span>
+<span class="fc" id="L81">		this.height = height;</span>
+<span class="fc" id="L82">		this.width = width;</span>
+<span class="fc" id="L83">	}</span>
 
 	public void setLabel(TextBlock label) {
-<span class="nc" id="L85">		this.label = Objects.requireNonNull(label);</span>
-<span class="nc" id="L86">	}</span>
+<span class="nc" id="L86">		this.label = Objects.requireNonNull(label);</span>
+<span class="nc" id="L87">	}</span>
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-<span class="nc" id="L90">		double supp = label.calculateDimension(stringBounder).getWidth();</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (supp &gt; 0)</span>
-<span class="nc" id="L92">			supp += labelMargin;</span>
+<span class="fc" id="L91">		double supp = label.calculateDimension(stringBounder).getWidth();</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (supp &gt; 0)</span>
+<span class="nc" id="L93">			supp += labelMargin;</span>
 
-<span class="nc" id="L94">		return new FtileGeometry(width + supp, height, width / 2, 0, height);</span>
+<span class="fc" id="L95">		return new FtileGeometry(width + supp, height, width / 2, 0, height);</span>
 	}
 
-	private StyleSignatureBasic getSignature() {
-<span class="nc" id="L98">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activityBar);</span>
+	private StyleQuery getSignature() {
+<span class="fc" id="L99">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activityBar));</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L102">		final URectangle rect = URectangle.build(width, height).rounded(5).ignoreForCompressionOnX();</span>
+<span class="fc" id="L103">		final URectangle rect = URectangle.build(width, height).rounded(5).ignoreForCompressionOnX();</span>
 
-<span class="nc" id="L104">		final Style style = getSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L105">		final double shadowing = style.getShadowing();</span>
-<span class="nc" id="L106">		rect.setDeltaShadow(shadowing);</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">		final HColor colorBar = colors == null ? style.value(PName.BackGroundColor).asColor(getIHtmlColorSet())</span>
-<span class="nc" id="L108">				: colors.getColor(style, PName.BackGroundColor, getIHtmlColorSet());</span>
+<span class="fc" id="L105">		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getSignature());</span>
+<span class="fc" id="L106">		final double shadowing = style.getShadowing();</span>
+<span class="fc" id="L107">		rect.setDeltaShadow(shadowing);</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		final HColor colorBar = colors == null ? style.value(PName.BackGroundColor).asColor(getIHtmlColorSet())</span>
+<span class="fc" id="L109">				: colors.getColor(style, PName.BackGroundColor, getIHtmlColorSet());</span>
 
-<span class="nc" id="L110">		ug.apply(colorBar).apply(colorBar.bg()).draw(rect);</span>
-<span class="nc" id="L111">		final XDimension2D dimLabel = label.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L112">		label.drawU(ug.apply(new UTranslate(width + labelMargin, -dimLabel.getHeight() / 2)));</span>
-<span class="nc" id="L113">	}</span>
+<span class="fc" id="L111">		ug.apply(colorBar).apply(colorBar.bg()).draw(rect);</span>
+<span class="fc" id="L112">		final XDimension2D dimLabel = label.calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L113">		label.drawU(ug.apply(new UTranslate(width + labelMargin, -dimLabel.getHeight() / 2)));</span>
+<span class="fc" id="L114">	}</span>
 
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="nc" id="L116">		return Collections.singleton(swimlane);</span>
+<span class="nc" id="L117">		return Collections.singleton(swimlane);</span>
 	}
 
 	public Swimlane getSwimlaneIn() {
-<span class="nc" id="L120">		return swimlane;</span>
+<span class="nc" id="L121">		return swimlane;</span>
 	}
 
 	public Swimlane getSwimlaneOut() {
-<span class="nc" id="L124">		return swimlane;</span>
+<span class="nc" id="L125">		return swimlane;</span>
 	}
 
 	@Override
 	public Collection&lt;Ftile&gt; getMyChildren() {
-<span class="nc" id="L129">		return Collections.emptyList();</span>
+<span class="nc" id="L130">		return Collections.emptyList();</span>
 	}
 
 }

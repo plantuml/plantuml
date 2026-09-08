@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.wbs;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBoxOld;
 import net.sourceforge.plantuml.asciiverse.ATable;
 import net.sourceforge.plantuml.asciiverse.AsciiBlock;
@@ -55,8 +57,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 abstract class WBSTextBlock extends TextBlockMemoized implements AsciiBlock {
 
@@ -66,28 +67,27 @@ abstract class WBSTextBlock extends TextBlockMemoized implements AsciiBlock {
 	private final int level;
 	private final WElement idea;
 
-<span class="fc" id="L69">	public WBSTextBlock(ISkinParam skinParam, WElement idea) {</span>
-<span class="fc" id="L70">		this.idea = idea;</span>
-<span class="fc" id="L71">		this.skinParam = skinParam;</span>
-<span class="fc" id="L72">		this.styleBuilder = idea.getStyleBuilder();</span>
-<span class="fc" id="L73">		this.level = idea.getLevel();</span>
-<span class="fc" id="L74">		this.stereotype = idea.getStereotype();</span>
-<span class="fc" id="L75">	}</span>
+<span class="fc" id="L70">	public WBSTextBlock(ISkinParam skinParam, WElement idea) {</span>
+<span class="fc" id="L71">		this.idea = idea;</span>
+<span class="fc" id="L72">		this.skinParam = skinParam;</span>
+<span class="fc" id="L73">		this.styleBuilder = idea.getStyleBuilder();</span>
+<span class="fc" id="L74">		this.level = idea.getLevel();</span>
+<span class="fc" id="L75">		this.stereotype = idea.getStereotype();</span>
+<span class="fc" id="L76">	}</span>
 
 	final protected boolean isAutoWidth() {
-<span class="fc" id="L78">		final String width = idea.getStyle().value(PName.Width).asString();</span>
-<span class="fc" id="L79">		return &quot;auto&quot;.equalsIgnoreCase(width);</span>
+<span class="fc" id="L79">		final String width = idea.getStyle().value(PName.Width).asString();</span>
+<span class="fc" id="L80">		return &quot;auto&quot;.equalsIgnoreCase(width);</span>
 	}
 
 	final protected WElement getIdea() {
-<span class="fc" id="L83">		return idea;</span>
+<span class="fc" id="L84">		return idea;</span>
 	}
 
 	private Style getStyleUsed() {
-<span class="fc" id="L87">		final StyleSignature signature = StyleSignatureBasic</span>
-<span class="fc" id="L88">				.of(SName.root, SName.element, SName.wbsDiagram, SName.arrow).addLevel(level)</span>
-<span class="fc" id="L89">				.withTOBECHANGED(stereotype);</span>
-<span class="fc" id="L90">		return signature.getMergedStyle(styleBuilder);</span>
+<span class="fc" id="L88">		final StyleQuery signature = StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.arrow))</span>
+<span class="fc" id="L89">				.addLevel(level).withTOBECHANGED(stereotype);</span>
+<span class="fc" id="L90">		return styleBuilder.getMergedStyle(signature);</span>
 	}
 
 	final protected void drawLine(UGraphic ug, double x1, double y1, double x2, double y2) {

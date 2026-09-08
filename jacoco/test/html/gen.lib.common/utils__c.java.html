@@ -261,7 +261,7 @@ try {
 <span class="nc" id="L261">	return def;</span>
 <span class="fc" id="L262">    rv = strtod (p, endp);</span>
 <span class="pc bpc" id="L263" title="1 of 2 branches missed.">    if (p == endp[0]) return def;  /* invalid double format */</span>
-<span class="pc bpc" id="L264" title="1 of 2 branches missed.">    if (rv &lt; low) return low;</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">    if (rv &lt; low) return low;</span>
 <span class="fc" id="L265">    else return rv;</span>
 } finally {
 <span class="fc" id="L267">LEAVING(&quot;d68314e4f20r79tt0cnmxugme&quot;,&quot;late_double&quot;);</span>

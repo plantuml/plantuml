@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.packetdiag;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
@@ -55,7 +57,7 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 /**
  * A single drawable field (block) in a {@code packetdiag} diagram.
@@ -75,7 +77,7 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
  */
 public class PacketBlock {
 
-<span class="fc" id="L78">	private static final UStroke openerStroke = new UStroke(5, 5, 1);</span>
+<span class="fc" id="L80">	private static final UStroke openerStroke = new UStroke(5, 5, 1);</span>
 
 	/**
 	 * Desired block width unit, this is not the final drawing dimension as margins,
@@ -95,9 +97,9 @@ public class PacketBlock {
 
 	private final ISkinParam skinParam;
 
-<span class="fc" id="L98">	private boolean leftOpen = false;</span>
+<span class="fc" id="L100">	private boolean leftOpen = false;</span>
 
-<span class="fc" id="L100">	private boolean rightOpen = false;</span>
+<span class="fc" id="L102">	private boolean rightOpen = false;</span>
 
 	/**
 	 * Creates a closed block with the given bit-size and label.
@@ -108,12 +110,12 @@ public class PacketBlock {
 	 *                  depending on caller conventions)
 	 * @param skinParam skin parameters used to resolve styles, fonts and colors
 	 */
-<span class="fc" id="L111">	public PacketBlock(int width, int height, String label, ISkinParam skinParam) {</span>
-<span class="fc" id="L112">		this.width = width;</span>
-<span class="fc" id="L113">		this.height = height;</span>
-<span class="fc" id="L114">		this.label = label;</span>
-<span class="fc" id="L115">		this.skinParam = skinParam;</span>
-<span class="fc" id="L116">	}</span>
+<span class="fc" id="L113">	public PacketBlock(int width, int height, String label, ISkinParam skinParam) {</span>
+<span class="fc" id="L114">		this.width = width;</span>
+<span class="fc" id="L115">		this.height = height;</span>
+<span class="fc" id="L116">		this.label = label;</span>
+<span class="fc" id="L117">		this.skinParam = skinParam;</span>
+<span class="fc" id="L118">	}</span>
 
 	/**
 	 * Creates a block with optional open edges to represent a field continued
@@ -128,14 +130,14 @@ public class PacketBlock {
 	 * @param rightOpen {@code true} if the right border is &quot;open&quot; (continues on the
 	 *                  next row)
 	 */
-<span class="fc" id="L131">	public PacketBlock(int width, int height, String label, ISkinParam skinParam, boolean leftOpen, boolean rightOpen) {</span>
-<span class="fc" id="L132">		this.width = width;</span>
-<span class="fc" id="L133">		this.height = height;</span>
-<span class="fc" id="L134">		this.label = label;</span>
-<span class="fc" id="L135">		this.skinParam = skinParam;</span>
-<span class="fc" id="L136">		this.leftOpen = leftOpen;</span>
-<span class="fc" id="L137">		this.rightOpen = rightOpen;</span>
-<span class="fc" id="L138">	}</span>
+<span class="fc" id="L133">	public PacketBlock(int width, int height, String label, ISkinParam skinParam, boolean leftOpen, boolean rightOpen) {</span>
+<span class="fc" id="L134">		this.width = width;</span>
+<span class="fc" id="L135">		this.height = height;</span>
+<span class="fc" id="L136">		this.label = label;</span>
+<span class="fc" id="L137">		this.skinParam = skinParam;</span>
+<span class="fc" id="L138">		this.leftOpen = leftOpen;</span>
+<span class="fc" id="L139">		this.rightOpen = rightOpen;</span>
+<span class="fc" id="L140">	}</span>
 
 	/**
 	 * Marks whether the left edge should be rendered as open (continuation
@@ -144,8 +146,8 @@ public class PacketBlock {
 	 * @param leftOpen {@code true} to open the left edge, {@code false} to close it
 	 */
 	public void openLeft(boolean leftOpen) {
-<span class="nc" id="L147">		this.leftOpen = leftOpen;</span>
-<span class="nc" id="L148">	}</span>
+<span class="nc" id="L149">		this.leftOpen = leftOpen;</span>
+<span class="nc" id="L150">	}</span>
 
 	/**
 	 * Marks whether the right edge should be rendered as open (continuation
@@ -155,8 +157,8 @@ public class PacketBlock {
 	 *                  it
 	 */
 	public void openRight(boolean rightOpen) {
-<span class="nc" id="L158">		this.rightOpen = rightOpen;</span>
-<span class="nc" id="L159">	}</span>
+<span class="nc" id="L160">		this.rightOpen = rightOpen;</span>
+<span class="nc" id="L161">	}</span>
 
 	/**
 	 * Returns the block width in bit units.
@@ -164,7 +166,7 @@ public class PacketBlock {
 	 * @return width in bit units (columns)
 	 */
 	public int getWidth() {
-<span class="fc" id="L167">		return width;</span>
+<span class="fc" id="L169">		return width;</span>
 	}
 
 	/**
@@ -173,7 +175,7 @@ public class PacketBlock {
 	 * @return height in bit units (rows)
 	 */
 	public int getHeight() {
-<span class="fc" id="L176">		return height;</span>
+<span class="fc" id="L178">		return height;</span>
 	}
 
 	/**
@@ -182,8 +184,8 @@ public class PacketBlock {
 	 * @param height height in bit units (rows)
 	 */
 	public void setHeight(int height) {
-<span class="fc" id="L185">		this.height = height;</span>
-<span class="fc" id="L186">	}</span>
+<span class="fc" id="L187">		this.height = height;</span>
+<span class="fc" id="L188">	}</span>
 
 	/**
 	 * Returns the block width in pixels for a given horizontal bit scale.
@@ -192,7 +194,7 @@ public class PacketBlock {
 	 * @return width in pixels
 	 */
 	public double getDrawWidth(double scale) {
-<span class="fc" id="L195">		return width * scale;</span>
+<span class="fc" id="L197">		return width * scale;</span>
 	}
 
 	/**
@@ -202,7 +204,7 @@ public class PacketBlock {
 	 * @return height in pixels
 	 */
 	public double getDrawHeight(double scale) {
-<span class="fc" id="L205">		return height * scale;</span>
+<span class="fc" id="L207">		return height * scale;</span>
 	}
 
 	/**
@@ -212,83 +214,83 @@ public class PacketBlock {
 	 *         depending on caller conventions)
 	 */
 	public String getLabel() {
-<span class="nc" id="L215">		return label;</span>
+<span class="nc" id="L217">		return label;</span>
 	}
 
 	Style getStyle() {
-<span class="fc" id="L219">		return StyleSignatureBasic.of(SName.root, SName.element, SName.packetdiagDiagram, SName.rectangle)</span>
-<span class="fc" id="L220">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L221">		return skinParam.getCurrentStyleBuilder().getMergedStyle(</span>
+<span class="fc" id="L222">				StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.packetdiagDiagram, SName.rectangle)));</span>
 	}
 
 	Fashion getFashion() {
-<span class="fc" id="L224">		return getStyle().getSymbolContext(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L226">		return getStyle().getSymbolContext(skinParam.getIHtmlColorSet());</span>
 	}
 
 	private TextBlock getLabelTextBlock(String label) {
-<span class="fc" id="L228">		return Display.getWithNewlines(skinParam.getPragma(), label).create8(</span>
-<span class="fc" id="L229">				getStyle().getFontConfiguration(skinParam.getIHtmlColorSet()), HorizontalAlignment.CENTER, skinParam,</span>
+<span class="fc" id="L230">		return Display.getWithNewlines(skinParam.getPragma(), label).create8(</span>
+<span class="fc" id="L231">				getStyle().getFontConfiguration(skinParam.getIHtmlColorSet()), HorizontalAlignment.CENTER, skinParam,</span>
 				CreoleMode.SIMPLE_LINE, LineBreakStrategy.NONE);
 	}
 
 	private TextBlock getLabelTextBlockAbbr(StringBounder stringBounder, double bitWidth) {
-<span class="fc" id="L234">		UFont font = getStyle().getUFont();</span>
-<span class="fc" id="L235">		final String pad = &quot;...&quot;;</span>
-<span class="fc" id="L236">		XDimension2D padDim = stringBounder.calculateDimension(font, pad);</span>
-<span class="fc" id="L237">		XDimension2D labelDim = stringBounder.calculateDimension(font, label);</span>
-<span class="fc" id="L238">		double reqWidth = getDrawWidth(bitWidth);</span>
-<span class="fc bfc" id="L239" title="All 2 branches covered.">		if (labelDim.getWidth() &lt; reqWidth) {</span>
-<span class="fc" id="L240">			return getLabelTextBlock(label);</span>
+<span class="fc" id="L236">		UFont font = getStyle().getUFont();</span>
+<span class="fc" id="L237">		final String pad = &quot;...&quot;;</span>
+<span class="fc" id="L238">		XDimension2D padDim = stringBounder.calculateDimension(font, pad);</span>
+<span class="fc" id="L239">		XDimension2D labelDim = stringBounder.calculateDimension(font, label);</span>
+<span class="fc" id="L240">		double reqWidth = getDrawWidth(bitWidth);</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">		if (labelDim.getWidth() &lt; reqWidth) {</span>
+<span class="fc" id="L242">			return getLabelTextBlock(label);</span>
 		}
 		// Shrink label char by char, this is technically wrong when there's multiple
 		// Unicode code points
-<span class="fc" id="L244">		String abbr = label;</span>
-<span class="fc bfc" id="L245" title="All 2 branches covered.">		for (int i = label.length(); i &gt; 0; i--) {</span>
-<span class="fc bfc" id="L246" title="All 2 branches covered.">			if (labelDim.getWidth() + padDim.getWidth() &lt; reqWidth) {</span>
-<span class="fc" id="L247">				break;</span>
+<span class="fc" id="L246">		String abbr = label;</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">		for (int i = label.length(); i &gt; 0; i--) {</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">			if (labelDim.getWidth() + padDim.getWidth() &lt; reqWidth) {</span>
+<span class="fc" id="L249">				break;</span>
 			}
-<span class="fc" id="L249">			abbr = label.substring(0, i) + pad;</span>
-<span class="fc" id="L250">			labelDim = stringBounder.calculateDimension(font, abbr);</span>
+<span class="fc" id="L251">			abbr = label.substring(0, i) + pad;</span>
+<span class="fc" id="L252">			labelDim = stringBounder.calculateDimension(font, abbr);</span>
 		}
-<span class="fc" id="L252">		return getLabelTextBlock(abbr);</span>
+<span class="fc" id="L254">		return getLabelTextBlock(abbr);</span>
 	}
 
 	TextBlock getShapeTextBlock(StringBounder stringBounder, double bitWidth, double bitHeight) {
-<span class="fc" id="L256">		final double vMargin = 10D;</span>
-<span class="fc" id="L257">		final double reqWidth = getDrawWidth(bitWidth);</span>
-<span class="fc" id="L258">		final Fashion fashion = getFashion();</span>
-<span class="fc" id="L259">		final TextBlock label = getLabelTextBlockAbbr(stringBounder, bitWidth);</span>
-<span class="fc" id="L260">		final double labelHeight = label.calculateDimension(stringBounder).getHeight();</span>
-<span class="fc" id="L261">		final double totalSpare = Math.max(0D, getDrawHeight(bitHeight) - labelHeight - vMargin - vMargin);</span>
-<span class="fc" id="L262">		final double topSpare = totalSpare / 2.0;</span>
-<span class="fc" id="L263">		final double bottomSpare = totalSpare - topSpare;</span>
-<span class="fc" id="L264">		final TextBlock topSpacer = TextBlockUtils.empty(reqWidth, topSpare);</span>
-<span class="fc" id="L265">		final TextBlock bottomSpacer = TextBlockUtils.empty(reqWidth, bottomSpare);</span>
+<span class="fc" id="L258">		final double vMargin = 10D;</span>
+<span class="fc" id="L259">		final double reqWidth = getDrawWidth(bitWidth);</span>
+<span class="fc" id="L260">		final Fashion fashion = getFashion();</span>
+<span class="fc" id="L261">		final TextBlock label = getLabelTextBlockAbbr(stringBounder, bitWidth);</span>
+<span class="fc" id="L262">		final double labelHeight = label.calculateDimension(stringBounder).getHeight();</span>
+<span class="fc" id="L263">		final double totalSpare = Math.max(0D, getDrawHeight(bitHeight) - labelHeight - vMargin - vMargin);</span>
+<span class="fc" id="L264">		final double topSpare = totalSpare / 2.0;</span>
+<span class="fc" id="L265">		final double bottomSpare = totalSpare - topSpare;</span>
+<span class="fc" id="L266">		final TextBlock topSpacer = TextBlockUtils.empty(reqWidth, topSpare);</span>
+<span class="fc" id="L267">		final TextBlock bottomSpacer = TextBlockUtils.empty(reqWidth, bottomSpare);</span>
 
-<span class="fc" id="L267">		return new TextBlock() {</span>
+<span class="fc" id="L269">		return new TextBlock() {</span>
 			@Override
 			@Fast
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L271">				final double w = reqWidth;</span>
-<span class="fc" id="L272">				final double h = topSpare + labelHeight + bottomSpare + vMargin + vMargin;</span>
-<span class="fc" id="L273">				return new XDimension2D(w, h);</span>
+<span class="fc" id="L273">				final double w = reqWidth;</span>
+<span class="fc" id="L274">				final double h = topSpare + labelHeight + bottomSpare + vMargin + vMargin;</span>
+<span class="fc" id="L275">				return new XDimension2D(w, h);</span>
 			}
 
 			@Override
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L278">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
-<span class="pc bpc" id="L279" title="1 of 4 branches missed.">				if (dim.getWidth() == 0 || dim.getHeight() == 0)</span>
-<span class="fc" id="L280">					return;</span>
-<span class="fc" id="L281">				ug = UGraphicStencil.create(ug, dim);</span>
-<span class="fc" id="L282">				ug = fashion.apply(ug);</span>
-<span class="fc" id="L283">				final URectangle rect = URectangle.build(dim.getWidth(), dim.getHeight());</span>
-<span class="fc" id="L284">				final Shadowable shape = rect.rounded(fashion.getRoundCorner());</span>
-<span class="fc" id="L285">				shape.setDeltaShadow(fashion.getDeltaShadow());</span>
-<span class="fc" id="L286">				ug.draw(shape);</span>
+<span class="fc" id="L280">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="pc bpc" id="L281" title="1 of 4 branches missed.">				if (dim.getWidth() == 0 || dim.getHeight() == 0)</span>
+<span class="fc" id="L282">					return;</span>
+<span class="fc" id="L283">				ug = UGraphicStencil.create(ug, dim);</span>
+<span class="fc" id="L284">				ug = fashion.apply(ug);</span>
+<span class="fc" id="L285">				final URectangle rect = URectangle.build(dim.getWidth(), dim.getHeight());</span>
+<span class="fc" id="L286">				final Shadowable shape = rect.rounded(fashion.getRoundCorner());</span>
+<span class="fc" id="L287">				shape.setDeltaShadow(fashion.getDeltaShadow());</span>
+<span class="fc" id="L288">				ug.draw(shape);</span>
 
-<span class="fc" id="L288">				final TextBlock tb = TextBlockUtils.mergeTB(topSpacer, label, HorizontalAlignment.CENTER);</span>
-<span class="fc" id="L289">				final TextBlock full = TextBlockUtils.mergeTB(tb, bottomSpacer, HorizontalAlignment.CENTER);</span>
-<span class="fc" id="L290">				full.drawU(ug.apply(new UTranslate(0D, vMargin)));</span>
-<span class="fc" id="L291">			}</span>
+<span class="fc" id="L290">				final TextBlock tb = TextBlockUtils.mergeTB(topSpacer, label, HorizontalAlignment.CENTER);</span>
+<span class="fc" id="L291">				final TextBlock full = TextBlockUtils.mergeTB(tb, bottomSpacer, HorizontalAlignment.CENTER);</span>
+<span class="fc" id="L292">				full.drawU(ug.apply(new UTranslate(0D, vMargin)));</span>
+<span class="fc" id="L293">			}</span>
 		};
 	}
 }

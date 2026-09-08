@@ -214,33 +214,33 @@ public class ActivityDiagram3 extends TitledDiagram {
 	}
 
 	public void fork(Colors colors) {
-<span class="nc" id="L217">		manageSwimlaneStrategy();</span>
-<span class="nc" id="L218">		final InstructionFork instructionFork = new InstructionFork(current(), nextLinkRenderer(),</span>
-<span class="nc" id="L219">				swimlanes.getCurrentSwimlane(), colors);</span>
-<span class="nc" id="L220">		current().add(instructionFork);</span>
-<span class="nc" id="L221">		setNextLinkRendererInternal(LinkRendering.none());</span>
-<span class="nc" id="L222">		setCurrent(instructionFork);</span>
-<span class="nc" id="L223">	}</span>
+<span class="fc" id="L217">		manageSwimlaneStrategy();</span>
+<span class="fc" id="L218">		final InstructionFork instructionFork = new InstructionFork(current(), nextLinkRenderer(),</span>
+<span class="fc" id="L219">				swimlanes.getCurrentSwimlane(), colors);</span>
+<span class="fc" id="L220">		current().add(instructionFork);</span>
+<span class="fc" id="L221">		setNextLinkRendererInternal(LinkRendering.none());</span>
+<span class="fc" id="L222">		setCurrent(instructionFork);</span>
+<span class="fc" id="L223">	}</span>
 
 	public CommandExecutionResult forkAgain() {
-<span class="nc bnc" id="L226" title="All 2 branches missed.">		if (current() instanceof InstructionFork) {</span>
-<span class="nc" id="L227">			final InstructionFork currentFork = (InstructionFork) current();</span>
-<span class="nc" id="L228">			currentFork.manageOutRendering(nextLinkRenderer(), false);</span>
-<span class="nc" id="L229">			setNextLinkRendererInternal(LinkRendering.none());</span>
-<span class="nc" id="L230">			currentFork.forkAgain(swimlanes.getCurrentSwimlane());</span>
-<span class="nc" id="L231">			return CommandExecutionResult.ok();</span>
+<span class="pc bpc" id="L226" title="1 of 2 branches missed.">		if (current() instanceof InstructionFork) {</span>
+<span class="fc" id="L227">			final InstructionFork currentFork = (InstructionFork) current();</span>
+<span class="fc" id="L228">			currentFork.manageOutRendering(nextLinkRenderer(), false);</span>
+<span class="fc" id="L229">			setNextLinkRendererInternal(LinkRendering.none());</span>
+<span class="fc" id="L230">			currentFork.forkAgain(swimlanes.getCurrentSwimlane());</span>
+<span class="fc" id="L231">			return CommandExecutionResult.ok();</span>
 		}
 <span class="nc" id="L233">		return CommandExecutionResult.error(&quot;Cannot find fork&quot;);</span>
 	}
 
 	public CommandExecutionResult endFork(ForkStyle forkStyle, String label) {
-<span class="nc bnc" id="L237" title="All 2 branches missed.">		if (current() instanceof InstructionFork) {</span>
-<span class="nc" id="L238">			final InstructionFork currentFork = (InstructionFork) current();</span>
-<span class="nc" id="L239">			currentFork.setStyle(forkStyle, label, swimlanes.getCurrentSwimlane());</span>
-<span class="nc" id="L240">			currentFork.manageOutRendering(nextLinkRenderer(), true);</span>
-<span class="nc" id="L241">			setNextLinkRendererInternal(LinkRendering.none());</span>
-<span class="nc" id="L242">			setCurrent(currentFork.getParent());</span>
-<span class="nc" id="L243">			return CommandExecutionResult.ok();</span>
+<span class="pc bpc" id="L237" title="1 of 2 branches missed.">		if (current() instanceof InstructionFork) {</span>
+<span class="fc" id="L238">			final InstructionFork currentFork = (InstructionFork) current();</span>
+<span class="fc" id="L239">			currentFork.setStyle(forkStyle, label, swimlanes.getCurrentSwimlane());</span>
+<span class="fc" id="L240">			currentFork.manageOutRendering(nextLinkRenderer(), true);</span>
+<span class="fc" id="L241">			setNextLinkRendererInternal(LinkRendering.none());</span>
+<span class="fc" id="L242">			setCurrent(currentFork.getParent());</span>
+<span class="fc" id="L243">			return CommandExecutionResult.ok();</span>
 		}
 <span class="nc" id="L245">		return CommandExecutionResult.error(&quot;Cannot find fork&quot;);</span>
 	}
@@ -459,13 +459,13 @@ public class ActivityDiagram3 extends TitledDiagram {
 //			instructionRepeat.setBackwardArrowLabel(label);
 //			return;
 //		}
-<span class="nc bnc" id="L462" title="All 4 branches missed.">		if (current() instanceof InstructionWhile &amp;&amp; ((InstructionWhile) current()).getLast() == null) {</span>
+<span class="pc bpc" id="L462" title="3 of 4 branches missed.">		if (current() instanceof InstructionWhile &amp;&amp; ((InstructionWhile) current()).getLast() == null) {</span>
 <span class="nc" id="L463">			((InstructionWhile) current()).overwriteYes(label);</span>
 <span class="nc" id="L464">			return;</span>
 		}
 
-<span class="nc" id="L467">		setNextLinkRendererInternal(nextLinkRenderer().withDisplay(label));</span>
-<span class="nc" id="L468">	}</span>
+<span class="fc" id="L467">		setNextLinkRendererInternal(nextLinkRenderer().withDisplay(label));</span>
+<span class="fc" id="L468">	}</span>
 
 	public void setColorNextArrow(Rainbow color) {
 <span class="nc bnc" id="L471" title="All 2 branches missed.">		if (color == null)</span>

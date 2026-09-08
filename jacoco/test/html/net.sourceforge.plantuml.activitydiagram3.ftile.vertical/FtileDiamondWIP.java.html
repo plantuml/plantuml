@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
@@ -47,8 +48,8 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.Styleable;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 abstract class FtileDiamondWIP extends AbstractFtile implements Styleable {
 
@@ -66,55 +67,56 @@ abstract class FtileDiamondWIP extends AbstractFtile implements Styleable {
 	protected final double shadowing;
 
 	public void swapEastWest() {
-<span class="nc" id="L69">		final TextBlock tmp = this.west;</span>
-<span class="nc" id="L70">		this.west = this.east;</span>
-<span class="nc" id="L71">		this.east = tmp;</span>
+<span class="nc" id="L70">		final TextBlock tmp = this.west;</span>
+<span class="nc" id="L71">		this.west = this.east;</span>
+<span class="nc" id="L72">		this.east = tmp;</span>
 
-<span class="nc" id="L73">	}</span>
+<span class="nc" id="L74">	}</span>
 
-	final public StyleSignatureBasic getStyleSignature() {
-<span class="fc" id="L76">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);</span>
+	@Override
+	public StyleQuery getStyleQuery() {
+<span class="fc" id="L78">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));</span>
 	}
 
 	final public Style getStyle() {
-<span class="fc" id="L80">		return getStyleSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L82">		return skinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery());</span>
 	}
 
 	@Override
 	final public Collection&lt;Ftile&gt; getMyChildren() {
-<span class="nc" id="L85">		return Collections.emptyList();</span>
+<span class="nc" id="L87">		return Collections.emptyList();</span>
 	}
 
 	protected FtileDiamondWIP(TextBlock label, ISkinParam skinParam, HColor backColor, HColor borderColor,
 			Swimlane swimlane, TextBlock north, TextBlock south, TextBlock east, TextBlock west) {
-<span class="fc" id="L90">		super(skinParam);</span>
-<span class="fc" id="L91">		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="fc" id="L92">		this.borderColor = borderColor;</span>
-<span class="fc" id="L93">		this.backColor = backColor;</span>
-<span class="fc" id="L94">		this.shadowing = style.getShadowing();</span>
+<span class="fc" id="L92">		super(skinParam);</span>
+<span class="fc" id="L93">		final Style style = getStyle();</span>
+<span class="fc" id="L94">		this.borderColor = borderColor;</span>
+<span class="fc" id="L95">		this.backColor = backColor;</span>
+<span class="fc" id="L96">		this.shadowing = style.getShadowing();</span>
 
-<span class="fc" id="L96">		this.swimlane = swimlane;</span>
+<span class="fc" id="L98">		this.swimlane = swimlane;</span>
 
-<span class="fc" id="L98">		this.label = label;</span>
-<span class="fc" id="L99">		this.north = north;</span>
-<span class="fc" id="L100">		this.west = west;</span>
-<span class="fc" id="L101">		this.east = east;</span>
-<span class="fc" id="L102">		this.south = south;</span>
-<span class="fc" id="L103">	}</span>
+<span class="fc" id="L100">		this.label = label;</span>
+<span class="fc" id="L101">		this.north = north;</span>
+<span class="fc" id="L102">		this.west = west;</span>
+<span class="fc" id="L103">		this.east = east;</span>
+<span class="fc" id="L104">		this.south = south;</span>
+<span class="fc" id="L105">	}</span>
 
 	final public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (swimlane == null)</span>
-<span class="nc" id="L107">			return Collections.emptySet();</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (swimlane == null)</span>
+<span class="nc" id="L109">			return Collections.emptySet();</span>
 
-<span class="nc" id="L109">		return Collections.singleton(swimlane);</span>
+<span class="nc" id="L111">		return Collections.singleton(swimlane);</span>
 	}
 
 	final public Swimlane getSwimlaneIn() {
-<span class="nc" id="L113">		return swimlane;</span>
+<span class="nc" id="L115">		return swimlane;</span>
 	}
 
 	final public Swimlane getSwimlaneOut() {
-<span class="fc" id="L117">		return swimlane;</span>
+<span class="fc" id="L119">		return swimlane;</span>
 	}
 
 }

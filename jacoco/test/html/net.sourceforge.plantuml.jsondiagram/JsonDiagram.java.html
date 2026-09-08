@@ -81,7 +81,7 @@ public class JsonDiagram extends TitledDiagram implements TextBlock {
 <span class="nc" id="L81">			this.root = new JsonArray();</span>
 <span class="nc" id="L82">			((JsonArray) this.root).add(json);</span>
 <span class="pc bpc" id="L83" title="1 of 2 branches missed.">		} else if (json != null</span>
-<span class="pc bpc" id="L84" title="5 of 8 branches missed.">				&amp;&amp; ((json.isArray() &amp;&amp; json.asArray().isEmpty()) || (json.isObject() &amp;&amp; json.asObject().isEmpty()))) {</span>
+<span class="pc bpc" id="L84" title="2 of 8 branches missed.">				&amp;&amp; ((json.isArray() &amp;&amp; json.asArray().isEmpty()) || (json.isObject() &amp;&amp; json.asObject().isEmpty()))) {</span>
 <span class="nc" id="L85">			this.root = new JsonArray();</span>
 <span class="nc" id="L86">			((JsonArray) this.root).add(&quot;&quot;);</span>
 		} else {
@@ -100,8 +100,8 @@ public class JsonDiagram extends TitledDiagram implements TextBlock {
 <span class="fc" id="L100">	}</span>
 
 	public DiagramDescription getDescription() {
-<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (getDiagramType() == DiagramType.YAML)</span>
-<span class="nc" id="L104">			return new DiagramDescription(&quot;(Yaml)&quot;);</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (getDiagramType() == DiagramType.YAML)</span>
+<span class="fc" id="L104">			return new DiagramDescription(&quot;(Yaml)&quot;);</span>
 
 <span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (getDiagramType() == DiagramType.HCL)</span>
 <span class="nc" id="L107">			return new DiagramDescription(&quot;(HCL)&quot;);</span>

@@ -46,6 +46,7 @@ import static smetana.core.debug.SmetanaDebug.SMETANA_TRACE;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -95,8 +96,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.ClusterHeader;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
@@ -681,13 +681,13 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	}
 
 	private Style getStyle() {
-<span class="fc" id="L684">		return StyleSignatureBasic.of(SName.root, SName.element, diagram.getDiagramType().getStyleName(), SName.arrow)</span>
-<span class="fc" id="L685">				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L684">		return diagram.getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery</span>
+<span class="fc" id="L685">				.of(Arrays.asList(SName.root, SName.element, diagram.getDiagramType().getStyleName(), SName.arrow)));</span>
 	}
 
 	// Duplication from SvekEdge
-	final public StyleSignature getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
-<span class="fc" id="L690">		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.arrow);</span>
+	final public StyleQuery getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
+<span class="fc" id="L690">		StyleQuery result = StyleQuery.of(Arrays.asList(SName.root, SName.element, styleName, SName.arrow));</span>
 <span class="pc bpc" id="L691" title="1 of 2 branches missed.">		if (stereotype != null)</span>
 <span class="nc" id="L692">			result = result.withTOBECHANGED(stereotype);</span>
 
@@ -697,8 +697,8 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	private FontConfiguration getFontForLink(Link link, final ISkinParam skinParam) {
 <span class="fc" id="L698">		final SName styleName = skinParam.getDiagramType().getStyleName();</span>
 
-<span class="fc" id="L700">		final Style style = getDefaultStyleDefinitionArrow(link.getStereotype(), styleName)</span>
-<span class="fc" id="L701">				.getMergedStyle(link.getStyleBuilder());</span>
+<span class="fc" id="L700">		final Style style = link.getStyleBuilder()</span>
+<span class="fc" id="L701">				.getMergedStyle(getDefaultStyleDefinitionArrow(link.getStereotype(), styleName));</span>
 <span class="fc" id="L702">		return style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
 	}
 
@@ -754,8 +754,8 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			// block = StringWithArrow.addSeveralMagicArrows(link.getLabel(), this, font,
 			// alignment, skinParam);
 			// else
-<span class="fc" id="L757">			final Style arrowStyle = getDefaultStyleDefinitionArrow(link.getStereotype(),</span>
-<span class="fc" id="L758">					skinParam.getDiagramType().getStyleName()).getMergedStyle(link.getStyleBuilder());</span>
+<span class="fc" id="L757">			final Style arrowStyle = link.getStyleBuilder().getMergedStyle(getDefaultStyleDefinitionArrow(</span>
+<span class="fc" id="L758">					link.getStereotype(), skinParam.getDiagramType().getStyleName()));</span>
 <span class="fc" id="L759">			final LineBreakStrategy styleWidth = arrowStyle.wrapWidth();</span>
 <span class="fc bfc" id="L760" title="All 2 branches covered.">			final LineBreakStrategy wrapWidth = styleWidth.getMaxWidth() &gt; 0 ? styleWidth : skinParam.maxMessageSize();</span>
 <span class="fc" id="L761">			block = link.getLabel().create0(font, alignment, skinParam, wrapWidth, CreoleMode.SIMPLE_LINE, null, null);</span>

@@ -60,20 +60,20 @@ public class FtileEmpty extends AbstractFtile {
 <span class="nc" id="L60">	}</span>
 
 	public FtileEmpty(ISkinParam skinParam, double width, double height, Swimlane swimlane) {
-<span class="nc" id="L63">		super(skinParam);</span>
-<span class="nc" id="L64">		this.width = width;</span>
-<span class="nc" id="L65">		this.height = height;</span>
-<span class="nc" id="L66">		this.swimlane = swimlane;</span>
+<span class="fc" id="L63">		super(skinParam);</span>
+<span class="fc" id="L64">		this.width = width;</span>
+<span class="fc" id="L65">		this.height = height;</span>
+<span class="fc" id="L66">		this.swimlane = swimlane;</span>
 
-<span class="nc" id="L68">	}</span>
+<span class="fc" id="L68">	}</span>
 
 	public FtileEmpty(ISkinParam skinParam) {
 <span class="nc" id="L71">		this(skinParam, 0, 0, null);</span>
 <span class="nc" id="L72">	}</span>
 
 	public FtileEmpty(ISkinParam skinParam, Swimlane swimlane) {
-<span class="nc" id="L75">		this(skinParam, 0, 0, swimlane);</span>
-<span class="nc" id="L76">	}</span>
+<span class="fc" id="L75">		this(skinParam, 0, 0, swimlane);</span>
+<span class="fc" id="L76">	}</span>
 
 	@Override
 	public String toString() {
@@ -81,15 +81,15 @@ public class FtileEmpty extends AbstractFtile {
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L84">	}</span>
+<span class="fc" id="L84">	}</span>
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-<span class="nc" id="L88">		return calculateDimensionEmpty();</span>
+<span class="fc" id="L88">		return calculateDimensionEmpty();</span>
 	}
 
 	final protected FtileGeometry calculateDimensionEmpty() {
-<span class="nc" id="L92">		return new FtileGeometry(width, height, width / 2, 0, height);</span>
+<span class="fc" id="L92">		return new FtileGeometry(width, height, width / 2, 0, height);</span>
 	}
 
 	public Swimlane getSwimlaneIn() {

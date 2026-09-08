@@ -86,11 +86,11 @@ public class EntityImageState extends EntityImageStateCommon {
 <span class="fc" id="L86">		final Display list = Display.create(entity.getBodier().getRawBody());</span>
 
 <span class="fc" id="L88">		final StyleBuilder styleBuilder = getSkinParam().getCurrentStyleBuilder();</span>
-<span class="fc" id="L89">		this.style = STYLE.withTOBECHANGED(getEntity().getStereotype()).getMergedStyle(styleBuilder);</span>
-<span class="fc" id="L90">		this.styleName = STYLE.addSName(SName.name).withTOBECHANGED(getEntity().getStereotype())</span>
-<span class="fc" id="L91">				.getMergedStyle(styleBuilder);</span>
-<span class="fc" id="L92">		this.styleDescription = STYLE.addSName(SName.description).withTOBECHANGED(getEntity().getStereotype())</span>
-<span class="fc" id="L93">				.getMergedStyle(styleBuilder);</span>
+<span class="fc" id="L89">		this.style = styleBuilder.getMergedStyle(STYLE.withTOBECHANGED(getEntity().getStereotype()));</span>
+<span class="fc" id="L90">		this.styleName = styleBuilder</span>
+<span class="fc" id="L91">				.getMergedStyle(STYLE.addSName(SName.name).withTOBECHANGED(getEntity().getStereotype()));</span>
+<span class="fc" id="L92">		this.styleDescription = styleBuilder</span>
+<span class="fc" id="L93">				.getMergedStyle(STYLE.addSName(SName.description).withTOBECHANGED(getEntity().getStereotype()));</span>
 
 <span class="fc" id="L95">		final FontConfiguration fieldsFontConfiguration = styleDescription</span>
 <span class="fc" id="L96">				.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>

@@ -90,81 +90,80 @@ public class MyElkCluster {
 
 <span class="fc" id="L91">		final DiagramType diagramType = diagram.getDiagramType();</span>
 
-<span class="fc" id="L93">		final Style style = Cluster</span>
-<span class="fc" id="L94">				.getDefaultStyleDefinition(diagramType.getStyleName(), group.getUSymbol(), group.getGroupType())</span>
-<span class="fc" id="L95">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="fc" id="L96">		final double shadowing = style.getShadowing();</span>
-<span class="fc" id="L97">		final UStroke stroke = Cluster.getStrokeInternal(group, style);</span>
+<span class="fc" id="L93">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(</span>
+<span class="fc" id="L94">				Cluster.getDefaultStyleDefinition(diagramType.getStyleName(), group.getUSymbol(), group.getGroupType()));</span>
+<span class="fc" id="L95">		final double shadowing = style.getShadowing();</span>
+<span class="fc" id="L96">		final UStroke stroke = Cluster.getStrokeInternal(group, style);</span>
 
-<span class="fc" id="L99">		HColor backColor = getBackColor(diagramType);</span>
-<span class="fc" id="L100">		backColor = Cluster.getBackColor(backColor, group.getStereotype(), diagramType.getStyleName(),</span>
-<span class="fc" id="L101">				group.getUSymbol(), skinParam.getCurrentStyleBuilder(), skinParam.getIHtmlColorSet(),</span>
-<span class="fc" id="L102">				group.getGroupType());</span>
+<span class="fc" id="L98">		HColor backColor = getBackColor(diagramType);</span>
+<span class="fc" id="L99">		backColor = Cluster.getBackColor(backColor, group.getStereotype(), diagramType.getStyleName(),</span>
+<span class="fc" id="L100">				group.getUSymbol(), skinParam.getCurrentStyleBuilder(), skinParam.getIHtmlColorSet(),</span>
+<span class="fc" id="L101">				group.getGroupType());</span>
 
-<span class="fc" id="L104">		final double roundCorner = style.value(PName.RoundCorner).asDouble();</span>
+<span class="fc" id="L103">		final double roundCorner = style.value(PName.RoundCorner).asDouble();</span>
 //			final double roundCorner = group.getUSymbol() == null ? 0
 //					: group.getUSymbol().getSkinParameter().getRoundCorner(skinParam, group.getStereotype());
 
-<span class="fc" id="L108">		final RectangleArea rectangleArea = new RectangleArea(0, 0, elkNode.getWidth(), elkNode.getHeight());</span>
-<span class="fc" id="L109">		final ClusterHeader clusterHeader = new ClusterHeader(group, diagram, ug.getStringBounder());</span>
+<span class="fc" id="L107">		final RectangleArea rectangleArea = new RectangleArea(0, 0, elkNode.getWidth(), elkNode.getHeight());</span>
+<span class="fc" id="L108">		final ClusterHeader clusterHeader = new ClusterHeader(group, diagram, ug.getStringBounder());</span>
 
-<span class="fc" id="L111">		final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(),</span>
-<span class="fc" id="L112">				clusterHeader.getTitle(), clusterHeader.getStereo(), rectangleArea, stroke);</span>
+<span class="fc" id="L110">		final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(),</span>
+<span class="fc" id="L111">				clusterHeader.getTitle(), clusterHeader.getStereo(), rectangleArea, stroke);</span>
 
-<span class="fc" id="L114">		HColor borderColor = group.getColors().getColor(ColorType.LINE);</span>
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (borderColor == null)</span>
-<span class="fc" id="L116">			borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="fc" id="L117">		decoration.drawU(ug.apply(UTranslate.point(corner)), backColor, borderColor, shadowing, roundCorner,</span>
-<span class="fc" id="L118">				skinParam.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null),</span>
-<span class="fc" id="L119">				skinParam.getStereotypeAlignment(), 0);</span>
+<span class="fc" id="L113">		HColor borderColor = group.getColors().getColor(ColorType.LINE);</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (borderColor == null)</span>
+<span class="fc" id="L115">			borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L116">		decoration.drawU(ug.apply(UTranslate.point(corner)), backColor, borderColor, shadowing, roundCorner,</span>
+<span class="fc" id="L117">				skinParam.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null),</span>
+<span class="fc" id="L118">				skinParam.getStereotypeAlignment(), 0);</span>
 
 //			// Print a simple rectangle right now
 //			ug.apply(HColorUtils.BLACK).apply(UStroke.withThickness(1.5)).apply(new UTranslate(corner)).draw(rect);
-<span class="fc" id="L123">	}</span>
+<span class="fc" id="L122">	}</span>
 
 	private HColor getBackColor(DiagramType diagramType) {
-<span class="fc" id="L126">		return null;</span>
+<span class="fc" id="L125">		return null;</span>
 	}
 
 	@DuplicateCode(reference = &quot;Cluster&quot;)
 	public MagneticBorder getMagneticBorder(StringBounder stringBounder) {
 
-<span class="fc" id="L132">		USymbol uSymbol = group.getUSymbol();</span>
-<span class="fc" id="L133">		PackageStyle packageStyle = group.getPackageStyle();</span>
-<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		if (packageStyle == null)</span>
-<span class="fc" id="L135">			packageStyle = skinParam.packageStyle();</span>
+<span class="fc" id="L131">		USymbol uSymbol = group.getUSymbol();</span>
+<span class="fc" id="L132">		PackageStyle packageStyle = group.getPackageStyle();</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (packageStyle == null)</span>
+<span class="fc" id="L134">			packageStyle = skinParam.packageStyle();</span>
 
-<span class="pc bpc" id="L137" title="3 of 4 branches missed.">		if (uSymbol == null &amp;&amp; packageStyle == PackageStyle.FOLDER)</span>
-<span class="nc" id="L138">			uSymbol = USymbols.FOLDER;</span>
+<span class="pc bpc" id="L136" title="3 of 4 branches missed.">		if (uSymbol == null &amp;&amp; packageStyle == PackageStyle.FOLDER)</span>
+<span class="nc" id="L137">			uSymbol = USymbols.FOLDER;</span>
 
-<span class="pc bpc" id="L140" title="1 of 2 branches missed.">		if (uSymbol == null)</span>
-<span class="nc" id="L141">			return new MagneticBorderNone();</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">		if (uSymbol == null)</span>
+<span class="nc" id="L140">			return new MagneticBorderNone();</span>
 
-<span class="fc" id="L143">		final XPoint2D corner = CucaDiagramFileMakerElk.getPosition(elkNode);</span>
+<span class="fc" id="L142">		final XPoint2D corner = CucaDiagramFileMakerElk.getPosition(elkNode);</span>
 
-<span class="fc" id="L145">		final DiagramType diagramType = DiagramType.CLASS;</span>
+<span class="fc" id="L144">		final DiagramType diagramType = DiagramType.CLASS;</span>
 
-<span class="fc" id="L147">		final Style style = Cluster</span>
-<span class="fc" id="L148">				.getDefaultStyleDefinition(diagramType.getStyleName(), uSymbol, group.getGroupType())</span>
-<span class="fc" id="L149">				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L146">		final Style style = skinParam.getCurrentStyleBuilder()</span>
+<span class="fc" id="L147">				.getMergedStyle(Cluster.getDefaultStyleDefinition(diagramType.getStyleName(), uSymbol, group.getGroupType())</span>
+<span class="fc" id="L148">						.withTOBECHANGED(group.getStereotype()));</span>
 
-<span class="fc" id="L151">		final UStroke stroke = Cluster.getStrokeInternal(group, style);</span>
+<span class="fc" id="L150">		final UStroke stroke = Cluster.getStrokeInternal(group, style);</span>
 
-<span class="fc" id="L153">		final RectangleArea rectangleArea = new RectangleArea(0, 0, elkNode.getWidth(), elkNode.getHeight());</span>
-<span class="fc" id="L154">		final ClusterHeader clusterHeader = new ClusterHeader(group, diagram, stringBounder);</span>
+<span class="fc" id="L152">		final RectangleArea rectangleArea = new RectangleArea(0, 0, elkNode.getWidth(), elkNode.getHeight());</span>
+<span class="fc" id="L153">		final ClusterHeader clusterHeader = new ClusterHeader(group, diagram, stringBounder);</span>
 
-<span class="fc" id="L156">		final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(),</span>
-<span class="fc" id="L157">				clusterHeader.getTitle(), clusterHeader.getStereo(), rectangleArea, stroke);</span>
+<span class="fc" id="L155">		final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(),</span>
+<span class="fc" id="L156">				clusterHeader.getTitle(), clusterHeader.getStereo(), rectangleArea, stroke);</span>
 
-<span class="fc" id="L159">		final TextBlock textBlock = decoration.getTextBlock(HColors.BLACK, HColors.BLACK, 0, 0,</span>
-<span class="fc" id="L160">				skinParam.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null),</span>
-<span class="fc" id="L161">				skinParam.getStereotypeAlignment(), 0);</span>
+<span class="fc" id="L158">		final TextBlock textBlock = decoration.getTextBlock(HColors.BLACK, HColors.BLACK, 0, 0,</span>
+<span class="fc" id="L159">				skinParam.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null),</span>
+<span class="fc" id="L160">				skinParam.getStereotypeAlignment(), 0);</span>
 
-<span class="fc" id="L163">		final MagneticBorder orig = textBlock.getMagneticBorder();</span>
+<span class="fc" id="L162">		final MagneticBorder orig = textBlock.getMagneticBorder();</span>
 
-<span class="fc" id="L165">		return new MagneticBorder() {</span>
+<span class="fc" id="L164">		return new MagneticBorder() {</span>
 			public UTranslate getForceAt(StringBounder stringBounder, XPoint2D position) {
-<span class="fc" id="L167">				return orig.getForceAt(stringBounder, position.move(-corner.x, -corner.y));</span>
+<span class="fc" id="L166">				return orig.getForceAt(stringBounder, position.move(-corner.x, -corner.y));</span>
 			}
 		};
 	}

@@ -46,87 +46,116 @@ public class StyleKey {
 	public final boolean isStared;
 	public final int level;
 
-<span class="fc" id="L49">	private StyleKey(EnumSet&lt;SName&gt; snames, int level, boolean isStared) {</span>
-<span class="fc" id="L50">		this.level = level;</span>
-<span class="fc" id="L51">		this.isStared = isStared;</span>
-<span class="fc" id="L52">		this.snames = snames;</span>
-<span class="fc" id="L53">	}</span>
+	/**
+	 * A bit per {@code snames} member ({@code 1L &lt;&lt; (name.ordinal() &amp; 63)}), maintained
+	 * incrementally alongside {@code snames} instead of ever being derived from it. It exists
+	 * only to keep {@link #hashCode()} off {@code EnumSet}'s own iterator: on the JVM,
+	 * {@code EnumSet.hashCode()} is cheap, but under TeaVM every {@code next()} call on a
+	 * {@code GenericEnumSet}'s iterator rebuilds the enum's whole {@code values()} array from
+	 * scratch (no caching there, unlike {@code Class} on the JVM) -- and {@code StyleKey}'s own
+	 * per-instance hash cache below doesn't help the very common case of a brand-new instance
+	 * (every {@code with*}-style method here returns one), so that cost was paid on nearly every
+	 * style lookup. A single {@code long} can't distinguish all of {@link SName}'s own values
+	 * (there are more than 64 of them) the way a real {@code Set} membership test can, so this
+	 * is deliberately NOT used for {@link #equals(Object)} or any exactness-sensitive check --
+	 * {@code equals} keeps comparing the real {@code snames} sets, and two different SNames
+	 * whose ordinals happen to collide modulo 64 just make for a very slightly worse (never
+	 * wrong) hash, which is all a hash code ever has to be.
+	 */
+	private final long snameBits;
+
+<span class="nc" id="L67">	private StyleKey(EnumSet&lt;SName&gt; snames, long snameBits, int level, boolean isStared) {</span>
+<span class="nc" id="L68">		this.level = level;</span>
+<span class="nc" id="L69">		this.isStared = isStared;</span>
+<span class="nc" id="L70">		this.snames = snames;</span>
+<span class="nc" id="L71">		this.snameBits = snameBits;</span>
+<span class="nc" id="L72">	}</span>
+
+	private static long bitFor(SName name) {
+<span class="nc" id="L75">		return 1L &lt;&lt; (name.ordinal() &amp; 63);</span>
+	}
 
 	public static StyleKey empty() {
-<span class="fc" id="L56">		return new StyleKey(EnumSet.noneOf(SName.class), -1, false);</span>
+<span class="nc" id="L79">		return new StyleKey(EnumSet.noneOf(SName.class), 0L, -1, false);</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="fc" id="L61">		final StringBuilder sb = new StringBuilder(snames + &quot; &quot;);</span>
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (level != -1)</span>
-<span class="nc" id="L63">			sb.append(&quot; &quot; + level);</span>
-<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (isStared)</span>
-<span class="nc" id="L65">			sb.append(&quot; (*)&quot;);</span>
-<span class="fc" id="L66">		return sb.toString();</span>
+<span class="nc" id="L84">		final StringBuilder sb = new StringBuilder(snames + &quot; &quot;);</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (level != -1)</span>
+<span class="nc" id="L86">			sb.append(&quot; &quot; + level);</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (isStared)</span>
+<span class="nc" id="L88">			sb.append(&quot; (*)&quot;);</span>
+<span class="nc" id="L89">		return sb.toString();</span>
 	}
 
 	public StyleKey addClickable(Url url) {
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (url == null)</span>
-<span class="nc" id="L71">			return this;</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (url == null)</span>
+<span class="nc" id="L94">			return this;</span>
 
-<span class="fc" id="L73">		final EnumSet&lt;SName&gt; result = snames.clone();</span>
-<span class="fc" id="L74">		result.add(SName.clickable);</span>
+<span class="nc" id="L96">		final EnumSet&lt;SName&gt; result = snames.clone();</span>
+<span class="nc" id="L97">		result.add(SName.clickable);</span>
 
-<span class="fc" id="L76">		return new StyleKey(result, level, isStared);</span>
+<span class="nc" id="L99">		return new StyleKey(result, snameBits | bitFor(SName.clickable), level, isStared);</span>
 
 	}
 
 	public StyleKey addLevel(int level) {
-<span class="fc" id="L81">		return new StyleKey(snames, level, isStared);</span>
+<span class="nc" id="L104">		return new StyleKey(snames, snameBits, level, isStared);</span>
 	}
 
 	public StyleKey addSName(SName name) {
-<span class="fc" id="L85">		final EnumSet&lt;SName&gt; result = snames.clone();</span>
-<span class="fc" id="L86">		result.add(name);</span>
-<span class="fc" id="L87">		return new StyleKey(result, level, isStared);</span>
+<span class="nc" id="L108">		final EnumSet&lt;SName&gt; result = snames.clone();</span>
+<span class="nc" id="L109">		result.add(name);</span>
+<span class="nc" id="L110">		return new StyleKey(result, snameBits | bitFor(name), level, isStared);</span>
 	}
 
 	public StyleKey addStar() {
-<span class="fc" id="L91">		return new StyleKey(snames, level, true);</span>
+<span class="nc" id="L114">		return new StyleKey(snames, snameBits, level, true);</span>
 	}
 
-	public static StyleKey of(SName... names) {
+	public static StyleKey ofSNames(SName... names) {
 
-<span class="fc" id="L96">		final EnumSet&lt;SName&gt; result = EnumSet.noneOf(SName.class);</span>
-<span class="fc bfc" id="L97" title="All 2 branches covered.">		for (SName name : names)</span>
-<span class="fc" id="L98">			result.add(name);</span>
-<span class="fc" id="L99">		return new StyleKey(result, -1, false);</span>
+<span class="nc" id="L119">		final EnumSet&lt;SName&gt; result = EnumSet.noneOf(SName.class);</span>
+<span class="nc" id="L120">		long bits = 0L;</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		for (SName name : names) {</span>
+<span class="nc" id="L122">			result.add(name);</span>
+<span class="nc" id="L123">			bits |= bitFor(name);</span>
+		}
+<span class="nc" id="L125">		return new StyleKey(result, bits, -1, false);</span>
 	}
 
 	public StyleKey mergeWith(StyleKey other) {
 
-<span class="fc" id="L104">		final EnumSet&lt;SName&gt; result1 = snames.clone();</span>
-<span class="fc" id="L105">		result1.addAll(other.snames);</span>
+<span class="nc" id="L130">		final EnumSet&lt;SName&gt; result1 = snames.clone();</span>
+<span class="nc" id="L131">		result1.addAll(other.snames);</span>
 
-<span class="fc bfc" id="L107" title="All 4 branches covered.">		return new StyleKey(result1, Math.max(level, other.level), isStared || other.isStared);</span>
+<span class="nc bnc" id="L133" title="All 4 branches missed.">		return new StyleKey(result1, snameBits | other.snameBits, Math.max(level, other.level),</span>
+				isStared || other.isStared);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (this == obj)</span>
-<span class="nc" id="L113">			return true;</span>
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (!(obj instanceof StyleKey))</span>
-<span class="nc" id="L115">			return false;</span>
-<span class="fc" id="L116">		final StyleKey other = (StyleKey) obj;</span>
-<span class="pc bpc" id="L117" title="3 of 6 branches missed.">		return Objects.equals(snames, other.snames) &amp;&amp; isStared == other.isStared &amp;&amp; level == other.level;</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (this == obj)</span>
+<span class="nc" id="L140">			return true;</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (!(obj instanceof StyleKey))</span>
+<span class="nc" id="L142">			return false;</span>
+<span class="nc" id="L143">		final StyleKey other = (StyleKey) obj;</span>
+<span class="nc bnc" id="L144" title="All 6 branches missed.">		return Objects.equals(snames, other.snames) &amp;&amp; isStared == other.isStared &amp;&amp; level == other.level;</span>
 	}
 
-<span class="fc" id="L120">	private transient int cachedHashCode = 0;</span>
+<span class="nc" id="L147">	private transient int cachedHashCode = 0;</span>
 
 	@Override
 	public int hashCode() {
-<span class="fc" id="L124">		int result = cachedHashCode;</span>
-<span class="fc bfc" id="L125" title="All 2 branches covered.">		if (result == 0) {</span>
-<span class="fc" id="L126">			result = Objects.hash(snames, isStared, level);</span>
-<span class="fc" id="L127">			cachedHashCode = result;</span>
+<span class="nc" id="L151">		int result = cachedHashCode;</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">		if (result == 0) {</span>
+<span class="nc" id="L153">			result = 31 * (31 * Long.hashCode(snameBits) + Boolean.hashCode(isStared)) + level;</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">			if (result == 0)</span>
+<span class="nc" id="L155">				result = 1;</span>
+<span class="nc" id="L156">			cachedHashCode = result;</span>
 		}
-<span class="fc" id="L129">		return result;</span>
+<span class="nc" id="L158">		return result;</span>
 	}
 
 }

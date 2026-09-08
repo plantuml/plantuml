@@ -191,6 +191,7 @@ net.sourceforge.plantuml.stats.api
 net.sourceforge.plantuml.stereo
 net.sourceforge.plantuml.style
 net.sourceforge.plantuml.style.parser
+net.sourceforge.plantuml.style.parser2
 net.sourceforge.plantuml.sudoku
 net.sourceforge.plantuml.svek
 net.sourceforge.plantuml.svek.extremity

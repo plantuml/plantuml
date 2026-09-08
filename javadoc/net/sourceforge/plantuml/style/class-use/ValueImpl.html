@@ -77,13 +77,24 @@ loadScripts(document, 'script');</script>
  <a href="../AutomaticCounter.html" title="interface in net.sourceforge.plantuml.style">AutomaticCounter</a>&nbsp;counter)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static <a href="../ValueImpl.html" title="class in net.sourceforge.plantuml.style">ValueImpl</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ValueImpl.</span><code><a href="../ValueImpl.html#regular(java.lang.String,int)" class="member-name-link">regular</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value,
- int&nbsp;priority)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-second odd-row-color"><span class="type-name-label">ValueImpl.</span><code><a href="../ValueImpl.html#of(java.lang.String,java.lang.String,net.sourceforge.plantuml.style.Specificity)" class="member-name-link">of</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;light,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;dark,
+ <a href="../Specificity.html" title="class in net.sourceforge.plantuml.style">Specificity</a>&nbsp;specificity)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">A value that may already carry both a light and a dark half at an explicit specificity --
+
+ unlike <a href="../ValueImpl.html#regular(java.lang.String,net.sourceforge.plantuml.style.AutomaticCounter)"><code>regular(java.lang.String, net.sourceforge.plantuml.style.AutomaticCounter)</code></a> and <a href="../ValueImpl.html#dark(java.lang.String,net.sourceforge.plantuml.style.AutomaticCounter)"><code>dark(java.lang.String, net.sourceforge.plantuml.style.AutomaticCounter)</code></a>, which always create a one-sided value from a
+
+ counter.</div>
+</div>
 <div class="col-first even-row-color"><code>static <a href="../ValueImpl.html" title="class in net.sourceforge.plantuml.style">ValueImpl</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">ValueImpl.</span><code><a href="../ValueImpl.html#regular(java.lang.String,net.sourceforge.plantuml.style.AutomaticCounter)" class="member-name-link">regular</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value,
  <a href="../AutomaticCounter.html" title="interface in net.sourceforge.plantuml.style">AutomaticCounter</a>&nbsp;counter)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../ValueImpl.html" title="class in net.sourceforge.plantuml.style">ValueImpl</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ValueImpl.</span><code><a href="../ValueImpl.html#regular(java.lang.String,net.sourceforge.plantuml.style.Specificity)" class="member-name-link">regular</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value,
+ <a href="../Specificity.html" title="class in net.sourceforge.plantuml.style">Specificity</a>&nbsp;specificity)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

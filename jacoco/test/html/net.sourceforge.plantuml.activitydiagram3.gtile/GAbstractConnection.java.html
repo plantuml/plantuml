@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public abstract class GAbstractConnection implements GConnection {
 
@@ -86,8 +86,8 @@ public abstract class GAbstractConnection implements GConnection {
 <span class="nc" id="L86">		throw new UnsupportedOperationException();</span>
 	}
 
-	private final StyleSignatureBasic getDefaultStyleDefinitionArrow() {
-<span class="nc" id="L90">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);</span>
+	private final StyleQuery getDefaultStyleDefinitionArrow() {
+<span class="nc" id="L90">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));</span>
 	}
 
 	protected ISkinParam skinParam() {
@@ -97,7 +97,7 @@ public abstract class GAbstractConnection implements GConnection {
 	// DUPLICATE 4561
 	final protected Rainbow getInLinkRenderingColor() {
 <span class="nc" id="L99">		final ISkinParam skinParam = gpoint1.getGtile().skinParam();</span>
-<span class="nc" id="L100">		final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L100">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionArrow());</span>
 <span class="nc" id="L101">		final Rainbow color = Rainbow.build(style, skinParam.getIHtmlColorSet());</span>
 //		final LinkRendering linkRendering = tile.getInLinkRendering();
 //		if (linkRendering == null) {

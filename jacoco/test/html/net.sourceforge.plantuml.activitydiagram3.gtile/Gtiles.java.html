@@ -53,14 +53,14 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 <span class="nc" id="L58">public class Gtiles {</span>
 
 	static public GtileHexagonInside hexagonInside(Swimlane swimlane, StringBounder stringBounder, ISkinParam skinParam,
-			StyleSignatureBasic styleSignature, HColor color, Display label) {
+			StyleQuery styleQuery, HColor color, Display label) {
 
-<span class="nc" id="L63">		final Style style = styleSignature.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L63">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(styleQuery);</span>
 <span class="nc" id="L64">		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
 <span class="nc bnc" id="L65" title="All 2 branches missed.">		final HColor backColor = color == null</span>
 <span class="nc" id="L66">				? style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet())</span>
@@ -77,9 +77,9 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 	}
 
 	static public AbstractGtileRoot diamondEmpty(Swimlane swimlane, StringBounder stringBounder, ISkinParam skinParam,
-			StyleSignatureBasic styleSignature, HColor color) {
+			StyleQuery styleQuery, HColor color) {
 
-<span class="nc" id="L82">		final Style style = styleSignature.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L82">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(styleQuery);</span>
 <span class="nc" id="L83">		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
 <span class="nc bnc" id="L84" title="All 2 branches missed.">		final HColor backColor = color == null</span>
 <span class="nc" id="L85">				? style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet())</span>

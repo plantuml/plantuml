@@ -1101,8 +1101,8 @@ public static boolean compassPort(ST_Agnode_s n, ST_boxf bp, ST_port pp, CString
     else {
 	/* compute angle with 0 at north pole, increasing CCW */
 <span class="fc" id="L1103">	double angle = Math.atan2(p.y, p.x) + 1.5 * M_PI;</span>
-<span class="pc bpc" id="L1104" title="1 of 2 branches missed.">	if (angle &gt;= 2 * M_PI)</span>
-<span class="nc" id="L1105">	    angle -= 2 * M_PI;</span>
+<span class="fc bfc" id="L1104" title="All 2 branches covered.">	if (angle &gt;= 2 * M_PI)</span>
+<span class="fc" id="L1105">	    angle -= 2 * M_PI;</span>
 <span class="fc" id="L1106">	pp.order = (int) ((256 * angle) / (2 * M_PI));</span>
     }
 <span class="fc" id="L1108">    pp.constrained = constrain;</span>
@@ -1522,10 +1522,10 @@ try {
 <span class="fc" id="L1522">		fp.id = tmpport;</span>
 <span class="fc" id="L1523">		tmpport = null;</span>
 	    }
-<span class="pc bpc" id="L1525" title="1 of 2 branches missed.">	    if ((mode &amp; (HASTEXT | HASTABLE)) == 0)</span>
-<span class="nc" id="L1526"> 		{mode |= 1; tsp.setCharAt(0, ' ');tsp=tsp.plus_(1); }</span>
+<span class="fc bfc" id="L1525" title="All 2 branches covered.">	    if ((mode &amp; (HASTEXT | HASTABLE)) == 0)</span>
+<span class="fc" id="L1526"> 		{mode |= 1; tsp.setCharAt(0, ' ');tsp=tsp.plus_(1); }</span>
 <span class="fc bfc" id="L1527" title="All 2 branches covered.">	    if ((mode &amp; HASTEXT)!=0) {</span>
-<span class="pc bpc" id="L1528" title="1 of 2 branches missed.">		if (tsp.comparePointer(text.plus_(1))  &gt; 0 &amp;&amp;</span>
+<span class="fc bfc" id="L1528" title="All 2 branches covered.">		if (tsp.comparePointer(text.plus_(1))  &gt; 0 &amp;&amp;</span>
 <span class="pc bpc" id="L1529" title="2 of 4 branches missed.">		    tsp.plus_(-1).comparePointer(hstsp) != 0 &amp;&amp; tsp.charAt(-1) == ' ')</span>
 <span class="nc" id="L1530">		    tsp = tsp.plus_(-1);</span>
 <span class="fc" id="L1531">		tsp.setCharAt(0, '\000');</span>
@@ -1623,7 +1623,7 @@ private static ST_pointf size_reclbl_(Globals zz, ST_Agnode_s n, ST_field_t f) {
 <span class="fc bfc" id="L1623" title="All 2 branches covered.">    if (f.lp != null) {</span>
 <span class="fc" id="L1624">	dimen.___(f.lp.dimen);</span>
 	/* minimal whitespace around label */
-<span class="pc bpc" id="L1626" title="3 of 4 branches missed.">	if ((dimen.x &gt; 0.0) || (dimen.y &gt; 0.0)) {</span>
+<span class="pc bpc" id="L1626" title="1 of 4 branches missed.">	if ((dimen.x &gt; 0.0) || (dimen.y &gt; 0.0)) {</span>
 	    /* padding */
 <span class="pc bpc" id="L1628" title="1 of 2 branches missed.">	    if ((p = agget(zz, n, new CString(&quot;margin&quot;)))!=null) {</span>
 <span class="nc" id="L1629">UNSUPPORTED(&quot;bfyy3iw4z9ebf4m89x69tn1eb&quot;); // 		i = sscanf(p, &quot;%lf,%lf&quot;, &amp;marginx, &amp;marginy);</span>
@@ -2375,7 +2375,7 @@ public static CString closestSide(ST_Agnode_s n, ST_Agnode_s other, ST_port oldp
 <span class="fc bfc" id="L2375" title="All 2 branches covered.">    for (i = 0; i &lt; 4; i++) {</span>
 <span class="fc bfc" id="L2376" title="All 2 branches covered.">	if ((sides &amp; (1 &lt;&lt; i)) == 0)</span>
 <span class="fc" id="L2377">	    continue;</span>
-<span class="pc bpc" id="L2378" title="3 of 5 branches missed.">	switch (i) {</span>
+<span class="pc bpc" id="L2378" title="1 of 5 branches missed.">	switch (i) {</span>
 	case 0:
 <span class="fc" id="L2380">	    p.y = (int) b.LL.y;</span>
 <span class="fc" id="L2381">	    p.x = (int) (b.LL.x + b.UR.x) / 2;</span>
@@ -2385,12 +2385,12 @@ public static CString closestSide(ST_Agnode_s n, ST_Agnode_s other, ST_port oldp
 <span class="fc" id="L2385">	    p.y = (int) (b.LL.y + b.UR.y) / 2;</span>
 <span class="fc" id="L2386">	    break;</span>
 	case 2:
-<span class="nc" id="L2388">	    p.y = (int) b.UR.y;</span>
-<span class="nc" id="L2389">	    p.x = (int) (b.LL.x + b.UR.x) / 2;</span>
-<span class="nc" id="L2390">	    break;</span>
+<span class="fc" id="L2388">	    p.y = (int) b.UR.y;</span>
+<span class="fc" id="L2389">	    p.x = (int) (b.LL.x + b.UR.x) / 2;</span>
+<span class="fc" id="L2390">	    break;</span>
 	case 3:
-<span class="nc" id="L2392">	    p.x = (int) b.LL.x;</span>
-<span class="nc" id="L2393">	    p.y = (int) (b.LL.y + b.UR.y) / 2;</span>
+<span class="fc" id="L2392">	    p.x = (int) b.LL.x;</span>
+<span class="fc" id="L2393">	    p.y = (int) (b.LL.y + b.UR.y) / 2;</span>
 	    break;
 	}
 <span class="fc" id="L2396">	p.x += pt.x;</span>

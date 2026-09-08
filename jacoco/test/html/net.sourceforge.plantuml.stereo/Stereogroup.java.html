@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.stereo;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -52,147 +53,160 @@ import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.style.AutomaticCounterBasic;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.parser.StyleParser;
+import net.sourceforge.plantuml.style.StyleLoader;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.utils.BlocLines;
 
 public class Stereogroup {
 
 	private static final String KEY = &quot;STEREOGROUP&quot;;
 
-<span class="fc" id="L66">	public final static Stereogroup NONE = new Stereogroup(null);</span>
+<span class="fc" id="L69">	public final static Stereogroup NONE = new Stereogroup(null);</span>
 
 	private String definition;
 
-<span class="fc" id="L70">	private static final Pattern pattern = Pattern.compile(&quot;&lt;&lt;([^&lt;&gt;]+)&gt;&gt;&quot;);</span>
+<span class="fc" id="L73">	private static final Pattern pattern = Pattern.compile(&quot;&lt;&lt;([^&lt;&gt;]+)&gt;&gt;&quot;);</span>
 
 	public static IRegex optionalStereogroup() {
-<span class="fc" id="L73">		final String regex = &quot;(&lt;&lt;[^&lt;&gt;]+&gt;&gt;(?:[%s]*&lt;&lt;[^&lt;&gt;]+&gt;&gt;)*)&quot;;</span>
-<span class="fc" id="L74">		return new RegexOptional(new RegexLeaf(1, KEY, regex));</span>
+<span class="fc" id="L76">		final String regex = &quot;(&lt;&lt;[^&lt;&gt;]+&gt;&gt;(?:[%s]*&lt;&lt;[^&lt;&gt;]+&gt;&gt;)*)&quot;;</span>
+<span class="fc" id="L77">		return new RegexOptional(new RegexLeaf(1, KEY, regex));</span>
 	}
 
 	public static Stereogroup build(RegexResult arg) {
-<span class="fc" id="L78">		final String full = arg.get(Stereogroup.KEY, 0);</span>
-<span class="fc" id="L79">		return new Stereogroup(full);</span>
+<span class="fc" id="L81">		final String full = arg.get(Stereogroup.KEY, 0);</span>
+<span class="fc" id="L82">		return new Stereogroup(full);</span>
 	}
 
 	public static Stereogroup build(String full) {
-<span class="fc" id="L83">		return new Stereogroup(full);</span>
+<span class="fc" id="L86">		return new Stereogroup(full);</span>
 	}
 
-<span class="fc" id="L86">	private Stereogroup(String definition) {</span>
-<span class="fc" id="L87">		this.definition = definition;</span>
-<span class="fc" id="L88">	}</span>
+<span class="fc" id="L89">	private Stereogroup(String definition) {</span>
+<span class="fc" id="L90">		this.definition = definition;</span>
+<span class="fc" id="L91">	}</span>
 
 	public boolean isEmpty() {
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		return definition == null;</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		return definition == null;</span>
 	}
 
 	public Stereotype buildStereotype() {
-<span class="fc bfc" id="L95" title="All 2 branches covered.">		if (definition == null)</span>
-<span class="fc" id="L96">			return null;</span>
-<span class="fc" id="L97">		return Stereotype.build(definition);</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">		if (definition == null)</span>
+<span class="fc" id="L99">			return null;</span>
+<span class="fc" id="L100">		return Stereotype.build(definition);</span>
 	}
 
 	public BoxStyle getBoxStyle() {
-<span class="fc bfc" id="L101" title="All 2 branches covered.">		for (String label : getLabels()) {</span>
-<span class="fc" id="L102">			final BoxStyle tmp = BoxStyle.fromString(label);</span>
-<span class="pc bpc" id="L103" title="1 of 2 branches missed.">			if (tmp != BoxStyle.PLAIN)</span>
-<span class="nc" id="L104">				return tmp;</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		for (String label : getLabels()) {</span>
+<span class="fc" id="L105">			final BoxStyle tmp = BoxStyle.fromString(label);</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">			if (tmp != BoxStyle.PLAIN)</span>
+<span class="nc" id="L107">				return tmp;</span>
 
-<span class="fc" id="L106">		}</span>
-<span class="fc" id="L107">		return BoxStyle.PLAIN;</span>
+<span class="fc" id="L109">		}</span>
+<span class="fc" id="L110">		return BoxStyle.PLAIN;</span>
 	}
 
 	public LeafType getLeafType() {
-<span class="fc" id="L111">		final List&lt;String&gt; labels = getLabels();</span>
-<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (labels.size() == 0)</span>
-<span class="fc" id="L113">			return null;</span>
+<span class="fc" id="L114">		final List&lt;String&gt; labels = getLabels();</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		if (labels.size() == 0)</span>
+<span class="fc" id="L116">			return null;</span>
 
-<span class="pc bpc" id="L115" title="5 of 7 branches missed.">		switch (labels.get(0).toLowerCase()) {</span>
+<span class="pc bpc" id="L118" title="5 of 7 branches missed.">		switch (labels.get(0).toLowerCase()) {</span>
 		case &quot;choice&quot;:
-<span class="nc" id="L117">			return LeafType.STATE_CHOICE;</span>
+<span class="nc" id="L120">			return LeafType.STATE_CHOICE;</span>
 		case &quot;fork&quot;:
 		case &quot;join&quot;:
-<span class="nc" id="L120">			return LeafType.STATE_FORK_JOIN;</span>
+<span class="nc" id="L123">			return LeafType.STATE_FORK_JOIN;</span>
 		case &quot;start&quot;:
-<span class="fc" id="L122">			return LeafType.CIRCLE_START;</span>
+<span class="fc" id="L125">			return LeafType.CIRCLE_START;</span>
 		case &quot;end&quot;:
-<span class="nc" id="L124">			return LeafType.CIRCLE_END;</span>
+<span class="nc" id="L127">			return LeafType.CIRCLE_END;</span>
 		case &quot;history&quot;:
-<span class="nc" id="L126">			return LeafType.PSEUDO_STATE;</span>
+<span class="nc" id="L129">			return LeafType.PSEUDO_STATE;</span>
 		case &quot;history*&quot;:
-<span class="nc" id="L128">			return LeafType.DEEP_HISTORY;</span>
+<span class="nc" id="L131">			return LeafType.DEEP_HISTORY;</span>
 		default:
-<span class="fc" id="L130">			return null;</span>
+<span class="fc" id="L133">			return null;</span>
 		}
 	}
 
 	public List&lt;String&gt; getLabels() {
-<span class="fc bfc" id="L135" title="All 2 branches covered.">		if (definition == null)</span>
-<span class="fc" id="L136">			return Collections.emptyList();</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">		if (definition == null)</span>
+<span class="fc" id="L139">			return Collections.emptyList();</span>
 
-<span class="fc" id="L138">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L139">		final Matcher matcher = pattern.matcher(definition);</span>
-<span class="fc bfc" id="L140" title="All 2 branches covered.">		while (matcher.find())</span>
-<span class="fc" id="L141">			result.add(matcher.group(1).trim());</span>
+<span class="fc" id="L141">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L142">		final Matcher matcher = pattern.matcher(definition);</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">		while (matcher.find())</span>
+<span class="fc" id="L144">			result.add(matcher.group(1).trim());</span>
 
-<span class="fc" id="L143">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L146">		return Collections.unmodifiableList(result);</span>
 	}
 
 	public Style mute(Style style, HColorSet colorSet) throws NoSuchColorException {
-<span class="nc" id="L147">		return style.eventuallyOverride(getInnerColors(colorSet));</span>
+<span class="nc" id="L150">		return style.eventuallyOverride(getInnerColors(colorSet));</span>
 	}
 
-	public HColor getHColor(StyleSignature styleSignature, PName pname, StyleBuilder styleBuilder, HColorSet colorSet)
+	public HColor getHColor(StyleQuery styleQuery, PName pname, StyleBuilder styleBuilder, HColorSet colorSet)
 			throws NoSuchColorException {
-<span class="fc" id="L152">		final Style style = styleSignature.withTOBECHANGED(this).getMergedStyle(styleBuilder);</span>
-<span class="fc" id="L153">		final Colors colors = getInnerColors(colorSet);</span>
-<span class="fc" id="L154">		return colors.getColor(style, pname, colorSet);</span>
+<span class="fc" id="L155">		final Style style = styleBuilder.getMergedStyle(styleQuery.withTOBECHANGED(this));</span>
+<span class="fc" id="L156">		final Colors colors = getInnerColors(colorSet);</span>
+<span class="fc" id="L157">		return colors.getColor(style, pname, colorSet);</span>
 	}
 
 	public Colors getInnerColors(HColorSet colorSet) throws NoSuchColorException {
-<span class="fc" id="L158">		Colors colors = Colors.empty();</span>
-<span class="fc bfc" id="L159" title="All 2 branches covered.">		for (String label : getLabels()) {</span>
-<span class="pc bpc" id="L160" title="1 of 2 branches missed.">			if (label.startsWith(&quot;###&quot;)) {</span>
-<span class="nc" id="L161">				label = label.substring(3);</span>
-<span class="nc" id="L162">				final HColor textColor = colorSet.getColorOrNull(label);</span>
-<span class="nc bnc" id="L163" title="All 2 branches missed.">				if (textColor != null)</span>
-<span class="nc" id="L164">					colors = colors.add(ColorType.TEXT, textColor);</span>
+<span class="fc" id="L161">		Colors colors = Colors.empty();</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">		for (String label : getLabels()) {</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">			if (label.startsWith(&quot;###&quot;)) {</span>
+<span class="nc" id="L164">				label = label.substring(3);</span>
+<span class="nc" id="L165">				final HColor textColor = colorSet.getColorOrNull(label);</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">				if (textColor != null)</span>
+<span class="nc" id="L167">					colors = colors.add(ColorType.TEXT, textColor);</span>
 
-<span class="pc bpc" id="L166" title="1 of 2 branches missed.">			} else if (label.startsWith(&quot;##&quot;)) {</span>
-<span class="nc" id="L167">				label = label.substring(2);</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">			} else if (label.startsWith(&quot;##&quot;)) {</span>
+<span class="nc" id="L170">				label = label.substring(2);</span>
 
-<span class="nc bnc" id="L169" title="All 2 branches missed.">				if (label.charAt(0) == '[') {</span>
-<span class="nc" id="L170">					int x = label.indexOf(']');</span>
-<span class="nc bnc" id="L171" title="All 2 branches missed.">					if (x != -1) {</span>
-<span class="nc" id="L172">						colors = colors.addLegacyStroke(label.substring(1, x));</span>
-<span class="nc" id="L173">						label = label.substring(x + 1);</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">				if (label.charAt(0) == '[') {</span>
+<span class="nc" id="L173">					int x = label.indexOf(']');</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">					if (x != -1) {</span>
+<span class="nc" id="L175">						colors = colors.addLegacyStroke(label.substring(1, x));</span>
+<span class="nc" id="L176">						label = label.substring(x + 1);</span>
 					} else
-<span class="nc" id="L175">						label = &quot;&quot;;</span>
+<span class="nc" id="L178">						label = &quot;&quot;;</span>
 				}
 
-<span class="nc bnc" id="L178" title="All 2 branches missed.">				if (label.length() &gt; 0) {</span>
-<span class="nc" id="L179">					final HColor lineColor = colorSet.getColorOrNull(label);</span>
-<span class="nc bnc" id="L180" title="All 2 branches missed.">					if (lineColor != null)</span>
-<span class="nc" id="L181">						colors = colors.add(ColorType.LINE, lineColor);</span>
-<span class="nc" id="L182">				}</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">				if (label.length() &gt; 0) {</span>
+<span class="nc" id="L182">					final HColor lineColor = colorSet.getColorOrNull(label);</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">					if (lineColor != null)</span>
+<span class="nc" id="L184">						colors = colors.add(ColorType.LINE, lineColor);</span>
+<span class="nc" id="L185">				}</span>
 
-<span class="fc bfc" id="L184" title="All 2 branches covered.">			} else if (label.startsWith(&quot;#&quot;)) {</span>
-<span class="nc" id="L185">				colors = colors.mergeWith(new Colors(label, colorSet, ColorType.BACK));</span>
-<span class="pc bpc" id="L186" title="3 of 4 branches missed.">			} else if (label.contains(&quot;:&quot;) &amp;&amp; label.contains(&quot;;&quot;)) {</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">			} else if (label.startsWith(&quot;#&quot;)) {</span>
+<span class="nc" id="L188">				colors = colors.mergeWith(new Colors(label, colorSet, ColorType.BACK));</span>
+<span class="pc bpc" id="L189" title="1 of 4 branches missed.">			} else if (label.contains(&quot;:&quot;) &amp;&amp; label.contains(&quot;;&quot;)) {</span>
 				try {
-<span class="nc" id="L188">					final Style style = new StyleParser().parseSingleLine(label);</span>
-<span class="nc" id="L189">					colors = colors.applyStyle(style, colorSet);</span>
-<span class="nc" id="L190">				} catch (StyleParsingException e) {</span>
+					// label is a bare &quot;Prop:value;Prop:value;&quot; list, with no selector of its
+					// own -- the legacy character-level tokenizer's own parseSingleLine() could
+					// read that directly, at its Context's still-empty root, and hand back a
+					// Style with an empty signature. RawStyleParser has no such root-level
+					// property syntax (parsePropertyDeclaration always requires an open block),
+					// so it is wrapped in a throwaway selector here purely to give it one; the
+					// resulting Style's signature is never looked at below, only its property
+					// values are (see Colors#applyStyle), exactly as before.
+<span class="fc" id="L199">					final Collection&lt;Style&gt; styles = StyleLoader.parseStyleText(</span>
+<span class="fc" id="L200">							BlocLines.singleString(&quot;inlineStereogroupColors {&quot; + label + &quot;}&quot;),</span>
+							new AutomaticCounterBasic());
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">					if (styles.isEmpty() == false)</span>
+<span class="fc" id="L203">						colors = colors.applyStyle(styles.iterator().next(), colorSet);</span>
+<span class="nc" id="L204">				} catch (StyleParsingException e) {</span>
 					// Ignore for now...
-<span class="nc" id="L192">				}</span>
+<span class="fc" id="L206">				}</span>
 			}
-<span class="fc" id="L194">		}</span>
-<span class="fc" id="L195">		return colors;</span>
+<span class="fc" id="L208">		}</span>
+<span class="fc" id="L209">		return colors;</span>
 	}
 
 }

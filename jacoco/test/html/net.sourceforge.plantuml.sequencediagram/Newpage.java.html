@@ -38,27 +38,28 @@ package net.sourceforge.plantuml.sequencediagram;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class Newpage extends AbstractEvent implements Event, WithStyle {
 
 	final private Style style;
 
-	public StyleSignature getStyleSignature() {
-<span class="fc" id="L49">		return ComponentType.NEWPAGE.getStyleSignature();</span>
+	@Override
+	public StyleQuery getStyleQuery() {
+<span class="fc" id="L50">		return ComponentType.NEWPAGE.getStyleQuery();</span>
 	}
 
 	public Style[] getUsedStyles() {
-<span class="fc" id="L53">		return new Style[] { style };</span>
+<span class="fc" id="L54">		return new Style[] { style };</span>
 	}
 
-<span class="fc" id="L56">	public Newpage(StyleBuilder styleBuilder) {</span>
-<span class="fc" id="L57">		this.style = getStyleSignature().getMergedStyle(styleBuilder);</span>
-<span class="fc" id="L58">	}</span>
+<span class="fc" id="L57">	public Newpage(StyleBuilder styleBuilder) {</span>
+<span class="fc" id="L58">		this.style = styleBuilder.getMergedStyle(getStyleQuery());</span>
+<span class="fc" id="L59">	}</span>
 
 	public boolean dealWith(Participant someone) {
-<span class="nc" id="L61">		return false;</span>
+<span class="nc" id="L62">		return false;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

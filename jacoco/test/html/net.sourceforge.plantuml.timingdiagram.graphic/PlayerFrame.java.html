@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.timingdiagram.graphic;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -47,7 +49,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 
 public class PlayerFrame {
@@ -56,62 +58,62 @@ public class PlayerFrame {
 	private final TextBlock title;
 	private final boolean compact;
 
-<span class="fc" id="L59">	public PlayerFrame(TextBlock title, ISkinParam skinParam, boolean compact) {</span>
-<span class="fc" id="L60">		this.title = title;</span>
-<span class="fc" id="L61">		this.skinParam = skinParam;</span>
-<span class="fc" id="L62">		this.compact = compact;</span>
-<span class="fc" id="L63">	}</span>
+<span class="fc" id="L61">	public PlayerFrame(TextBlock title, ISkinParam skinParam, boolean compact) {</span>
+<span class="fc" id="L62">		this.title = title;</span>
+<span class="fc" id="L63">		this.skinParam = skinParam;</span>
+<span class="fc" id="L64">		this.compact = compact;</span>
+<span class="fc" id="L65">	}</span>
 
-	private StyleSignatureBasic getStyleSignature() {
-<span class="fc" id="L66">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram);</span>
+	private StyleQuery getStyleSignature() {
+<span class="fc" id="L68">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.timingDiagram));</span>
 	}
 
 	private HColor getLineColor() {
-<span class="fc" id="L70">		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="fc" id="L71">		return style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L72">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getStyleSignature());</span>
+<span class="fc" id="L73">		return style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
 	}
 
 	private UStroke getUStroke() {
-<span class="fc" id="L75">		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="fc" id="L76">		return style.getStroke();</span>
+<span class="fc" id="L77">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getStyleSignature());</span>
+<span class="fc" id="L78">		return style.getStroke();</span>
 	}
 
 	public void drawTitle(UGraphic ug) {
-<span class="nc" id="L80">		title.drawU(ug);</span>
-<span class="nc" id="L81">	}</span>
+<span class="nc" id="L82">		title.drawU(ug);</span>
+<span class="nc" id="L83">	}</span>
 
 	public void drawFrameTitle(UGraphic ug) {
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (title == TextBlockUtils.EMPTY_TEXT_BLOCK)</span>
-<span class="nc" id="L85">			return;</span>
-<span class="fc" id="L86">		title.drawU(ug);</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		if (title == TextBlockUtils.EMPTY_TEXT_BLOCK)</span>
+<span class="nc" id="L87">			return;</span>
+<span class="fc" id="L88">		title.drawU(ug);</span>
 
-<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (compact)</span>
-<span class="nc" id="L89">			return;</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (compact)</span>
+<span class="nc" id="L91">			return;</span>
 
-<span class="fc" id="L91">		ug = ug.apply(getLineColor()).apply(getUStroke());</span>
-<span class="fc" id="L92">		final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L93">		ug = ug.apply(getLineColor()).apply(getUStroke());</span>
+<span class="fc" id="L94">		final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());</span>
 
-<span class="fc" id="L94">		final double widthTmp = dimTitle.getWidth() + 1;</span>
-<span class="fc" id="L95">		final double height = dimTitle.getHeight() + 1;</span>
-<span class="fc" id="L96">		drawLine(ug, -TimingDiagram.marginX1, height, widthTmp, height, widthTmp + 10, 0);</span>
-<span class="fc" id="L97">	}</span>
+<span class="fc" id="L96">		final double widthTmp = dimTitle.getWidth() + 1;</span>
+<span class="fc" id="L97">		final double height = dimTitle.getHeight() + 1;</span>
+<span class="fc" id="L98">		drawLine(ug, -TimingDiagram.marginX1, height, widthTmp, height, widthTmp + 10, 0);</span>
+<span class="fc" id="L99">	}</span>
 
 	public double getHeight(StringBounder stringBounder) {
-<span class="fc" id="L100">		final double height = title.calculateDimension(stringBounder).getHeight();</span>
-<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		if (compact)</span>
-<span class="nc" id="L102">			return height - 1;</span>
-<span class="fc" id="L103">		return height + 1;</span>
+<span class="fc" id="L102">		final double height = title.calculateDimension(stringBounder).getHeight();</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (compact)</span>
+<span class="nc" id="L104">			return height - 1;</span>
+<span class="fc" id="L105">		return height + 1;</span>
 	}
 
 	private void drawLine(UGraphic ug, double... coord) {
-<span class="fc bfc" id="L107" title="All 2 branches covered.">		for (int i = 0; i &lt; coord.length - 2; i += 2) {</span>
-<span class="fc" id="L108">			final double x1 = coord[i];</span>
-<span class="fc" id="L109">			final double y1 = coord[i + 1];</span>
-<span class="fc" id="L110">			final double x2 = coord[i + 2];</span>
-<span class="fc" id="L111">			final double y2 = coord[i + 3];</span>
-<span class="fc" id="L112">			ug.apply(new UTranslate(x1, y1)).draw(new ULine(x2 - x1, y2 - y1));</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		for (int i = 0; i &lt; coord.length - 2; i += 2) {</span>
+<span class="fc" id="L110">			final double x1 = coord[i];</span>
+<span class="fc" id="L111">			final double y1 = coord[i + 1];</span>
+<span class="fc" id="L112">			final double x2 = coord[i + 2];</span>
+<span class="fc" id="L113">			final double y2 = coord[i + 3];</span>
+<span class="fc" id="L114">			ug.apply(new UTranslate(x1, y1)).draw(new ULine(x2 - x1, y2 - y1));</span>
 		}
-<span class="fc" id="L114">	}</span>
+<span class="fc" id="L116">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

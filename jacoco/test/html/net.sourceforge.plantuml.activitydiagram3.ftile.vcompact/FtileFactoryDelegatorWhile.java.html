@@ -75,8 +75,8 @@ public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 
 <span class="nc" id="L76">		final ConditionStyle conditionStyle = skinParam().getConditionStyle();</span>
 
-<span class="nc" id="L78">		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(currentStyleBuilder);</span>
-<span class="nc" id="L79">		final Style styleDiamond = getDefaultStyleDefinitionDiamond().getMergedStyle(currentStyleBuilder);</span>
+<span class="nc" id="L78">		final Style styleArrow = currentStyleBuilder.getMergedStyle(getDefaultStyleDefinitionArrow());</span>
+<span class="nc" id="L79">		final Style styleDiamond = currentStyleBuilder.getMergedStyle(getDefaultStyleDefinitionDiamond());</span>
 <span class="nc" id="L80">		final HColor borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());</span>
 <span class="nc bnc" id="L81" title="All 2 branches missed.">		final HColor backColor = color == null</span>
 <span class="nc" id="L82">				? styleDiamond.value(PName.BackGroundColor).asColor(skinParam().getIHtmlColorSet())</span>

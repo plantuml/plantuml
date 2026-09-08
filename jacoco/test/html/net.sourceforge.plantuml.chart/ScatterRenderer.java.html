@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.chart;
 
+import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -55,7 +56,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class ScatterRenderer {
 
@@ -67,26 +68,25 @@ public class ScatterRenderer {
 	private final ChartAxis xAxis;
 
 	public ScatterRenderer(ISkinParam skinParam, double plotWidth, double plotHeight, int categoryCount,
-<span class="nc" id="L70">			ChartAxis axis, ChartAxis xAxis) {</span>
-<span class="nc" id="L71">		this.skinParam = skinParam;</span>
-<span class="nc" id="L72">		this.plotWidth = plotWidth;</span>
-<span class="nc" id="L73">		this.plotHeight = plotHeight;</span>
-<span class="nc" id="L74">		this.categoryCount = categoryCount;</span>
-<span class="nc" id="L75">		this.axis = axis;</span>
-<span class="nc" id="L76">		this.xAxis = xAxis;</span>
-<span class="nc" id="L77">	}</span>
+<span class="nc" id="L71">			ChartAxis axis, ChartAxis xAxis) {</span>
+<span class="nc" id="L72">		this.skinParam = skinParam;</span>
+<span class="nc" id="L73">		this.plotWidth = plotWidth;</span>
+<span class="nc" id="L74">		this.plotHeight = plotHeight;</span>
+<span class="nc" id="L75">		this.categoryCount = categoryCount;</span>
+<span class="nc" id="L76">		this.axis = axis;</span>
+<span class="nc" id="L77">		this.xAxis = xAxis;</span>
+<span class="nc" id="L78">	}</span>
 
-	private StyleSignatureBasic getScatterStyleSignature() {
-<span class="nc" id="L80">		return StyleSignatureBasic.of(SName.root, SName.element, SName.chartDiagram, SName.scatter);</span>
+	private StyleQuery getScatterStyleQuery() {
+<span class="nc" id="L81">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.scatter));</span>
 	}
 
 	private Style getScatterStyle(ChartSeries series) {
-<span class="nc" id="L84">		StyleSignatureBasic signature = getScatterStyleSignature();</span>
-<span class="nc bnc" id="L85" title="All 4 branches missed.">		if (series != null &amp;&amp; series.getStereotype() != null) {</span>
-<span class="nc" id="L86">			return signature.withTOBECHANGED(series.getStereotype())</span>
-<span class="nc" id="L87">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-		}
-<span class="nc" id="L89">		return signature.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L85">		StyleQuery query = getScatterStyleQuery();</span>
+<span class="nc bnc" id="L86" title="All 4 branches missed.">		if (series != null &amp;&amp; series.getStereotype() != null)</span>
+<span class="nc" id="L87">			return skinParam.getCurrentStyleBuilder().getMergedStyle(query.withTOBECHANGED(series.getStereotype()));</span>
+
+<span class="nc" id="L89">		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);</span>
 	}
 
 	public void draw(UGraphic ug, ChartSeries series, HColor color) {

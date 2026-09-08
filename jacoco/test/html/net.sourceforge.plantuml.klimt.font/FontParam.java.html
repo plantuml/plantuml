@@ -35,174 +35,176 @@
  */
 package net.sourceforge.plantuml.klimt.font;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 interface FontParamConstant {
 	String FAMILY = &quot;SansSerif&quot;;
 	String COLOR = &quot;black&quot;;
 }
 
-<span class="fc" id="L48">public enum FontParam {</span>
-<span class="fc" id="L49">	TIMING(12, UFontFace.normal()), //</span>
-<span class="fc" id="L50">	ACTIVITY(12, UFontFace.normal()), //</span>
-<span class="fc" id="L51">	ACTIVITY_DIAMOND(11, UFontFace.normal()), //</span>
+<span class="fc" id="L50">public enum FontParam {</span>
+<span class="fc" id="L51">	TIMING(12, UFontFace.normal()), //</span>
+<span class="fc" id="L52">	ACTIVITY(12, UFontFace.normal()), //</span>
+<span class="fc" id="L53">	ACTIVITY_DIAMOND(11, UFontFace.normal()), //</span>
 	// ACTIVITY_ARROW(11, UFontFace.normal()), //
 	// GENERIC_ARROW(13, UFontFace.normal()), //
-<span class="fc" id="L54">	ARROW(13, UFontFace.normal()), //</span>
-<span class="fc" id="L55">	CIRCLED_CHARACTER(17, UFontFace.bold(), FontParamConstant.COLOR, &quot;Monospaced&quot;), //</span>
-<span class="fc" id="L56">	OBJECT_ATTRIBUTE(10, UFontFace.normal()), //</span>
-<span class="fc" id="L57">	OBJECT(12, UFontFace.normal()), //</span>
-<span class="fc" id="L58">	OBJECT_STEREOTYPE(12, UFontFace.italic()), //</span>
-<span class="fc" id="L59">	CLASS_ATTRIBUTE(10, UFontFace.normal()), //</span>
-<span class="fc" id="L60">	CLASS(12, UFontFace.normal()), //</span>
-<span class="fc" id="L61">	CLASS_STEREOTYPE(12, UFontFace.italic()), //</span>
-<span class="fc" id="L62">	COMPONENT(14, UFontFace.normal()), //</span>
-<span class="fc" id="L63">	INTERFACE(14, UFontFace.normal()), //</span>
-<span class="fc" id="L64">	INTERFACE_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L65">	COMPONENT_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L66">	NOTE(13, UFontFace.normal()), //</span>
-<span class="fc" id="L67">	PACKAGE(14, UFontFace.normal()), //</span>
-<span class="fc" id="L68">	PACKAGE_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L69">	ACTOR(14, UFontFace.normal()), //</span>
-<span class="fc" id="L70">	ARTIFACT(14, UFontFace.normal()), //</span>
-<span class="fc" id="L71">	CLOUD(14, UFontFace.normal()), //</span>
-<span class="fc" id="L72">	FOLDER(14, UFontFace.normal()), //</span>
-<span class="fc" id="L73">	FILE(14, UFontFace.normal()), //</span>
-<span class="fc" id="L74">	FRAME(14, UFontFace.normal()), //</span>
-<span class="fc" id="L75">	STORAGE(14, UFontFace.normal()), //</span>
-<span class="fc" id="L76">	BOUNDARY(14, UFontFace.normal()), //</span>
-<span class="fc" id="L77">	CONTROL(14, UFontFace.normal()), //</span>
-<span class="fc" id="L78">	ENTITY(14, UFontFace.normal()), //</span>
-<span class="fc" id="L79">	AGENT(14, UFontFace.normal()), //</span>
-<span class="fc" id="L80">	RECTANGLE(14, UFontFace.normal()), //</span>
-<span class="fc" id="L81">	LABEL(14, UFontFace.normal()), //</span>
-<span class="fc" id="L82">	HEXAGON(14, UFontFace.normal()), //</span>
-<span class="fc" id="L83">	PERSON(14, UFontFace.normal()), //</span>
-<span class="fc" id="L84">	ARCHIMATE(14, UFontFace.normal()), //</span>
-<span class="fc" id="L85">	CARD(14, UFontFace.normal()), //</span>
-<span class="fc" id="L86">	NODE(14, UFontFace.normal()), //</span>
-<span class="fc" id="L87">	DATABASE(14, UFontFace.normal()), //</span>
-<span class="fc" id="L88">	QUEUE(14, UFontFace.normal()), //</span>
-<span class="fc" id="L89">	STACK(14, UFontFace.normal()), //</span>
+<span class="fc" id="L56">	ARROW(13, UFontFace.normal()), //</span>
+<span class="fc" id="L57">	CIRCLED_CHARACTER(17, UFontFace.bold(), FontParamConstant.COLOR, &quot;Monospaced&quot;), //</span>
+<span class="fc" id="L58">	OBJECT_ATTRIBUTE(10, UFontFace.normal()), //</span>
+<span class="fc" id="L59">	OBJECT(12, UFontFace.normal()), //</span>
+<span class="fc" id="L60">	OBJECT_STEREOTYPE(12, UFontFace.italic()), //</span>
+<span class="fc" id="L61">	CLASS_ATTRIBUTE(10, UFontFace.normal()), //</span>
+<span class="fc" id="L62">	CLASS(12, UFontFace.normal()), //</span>
+<span class="fc" id="L63">	CLASS_STEREOTYPE(12, UFontFace.italic()), //</span>
+<span class="fc" id="L64">	COMPONENT(14, UFontFace.normal()), //</span>
+<span class="fc" id="L65">	INTERFACE(14, UFontFace.normal()), //</span>
+<span class="fc" id="L66">	INTERFACE_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L67">	COMPONENT_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L68">	NOTE(13, UFontFace.normal()), //</span>
+<span class="fc" id="L69">	PACKAGE(14, UFontFace.normal()), //</span>
+<span class="fc" id="L70">	PACKAGE_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L71">	ACTOR(14, UFontFace.normal()), //</span>
+<span class="fc" id="L72">	ARTIFACT(14, UFontFace.normal()), //</span>
+<span class="fc" id="L73">	CLOUD(14, UFontFace.normal()), //</span>
+<span class="fc" id="L74">	FOLDER(14, UFontFace.normal()), //</span>
+<span class="fc" id="L75">	FILE(14, UFontFace.normal()), //</span>
+<span class="fc" id="L76">	FRAME(14, UFontFace.normal()), //</span>
+<span class="fc" id="L77">	STORAGE(14, UFontFace.normal()), //</span>
+<span class="fc" id="L78">	BOUNDARY(14, UFontFace.normal()), //</span>
+<span class="fc" id="L79">	CONTROL(14, UFontFace.normal()), //</span>
+<span class="fc" id="L80">	ENTITY(14, UFontFace.normal()), //</span>
+<span class="fc" id="L81">	AGENT(14, UFontFace.normal()), //</span>
+<span class="fc" id="L82">	RECTANGLE(14, UFontFace.normal()), //</span>
+<span class="fc" id="L83">	LABEL(14, UFontFace.normal()), //</span>
+<span class="fc" id="L84">	HEXAGON(14, UFontFace.normal()), //</span>
+<span class="fc" id="L85">	PERSON(14, UFontFace.normal()), //</span>
+<span class="fc" id="L86">	ARCHIMATE(14, UFontFace.normal()), //</span>
+<span class="fc" id="L87">	CARD(14, UFontFace.normal()), //</span>
+<span class="fc" id="L88">	NODE(14, UFontFace.normal()), //</span>
+<span class="fc" id="L89">	DATABASE(14, UFontFace.normal()), //</span>
+<span class="fc" id="L90">	QUEUE(14, UFontFace.normal()), //</span>
+<span class="fc" id="L91">	STACK(14, UFontFace.normal()), //</span>
 	// SEQUENCE_ARROW(13, UFontFace.normal()), //
-<span class="fc" id="L91">	SEQUENCE_BOX(13, UFontFace.bold()), //</span>
-<span class="fc" id="L92">	SEQUENCE_DIVIDER(13, UFontFace.bold()), //</span>
-<span class="fc" id="L93">	SEQUENCE_REFERENCE(13, UFontFace.normal()), //</span>
-<span class="fc" id="L94">	SEQUENCE_DELAY(11, UFontFace.normal()), //</span>
-<span class="fc" id="L95">	SEQUENCE_GROUP(11, UFontFace.bold()), //</span>
-<span class="fc" id="L96">	SEQUENCE_GROUP_HEADER(13, UFontFace.bold()), //</span>
-<span class="fc" id="L97">	PARTICIPANT(14, UFontFace.normal()), //</span>
-<span class="fc" id="L98">	PARTICIPANT_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L99">	STATE(14, UFontFace.normal()), //</span>
-<span class="fc" id="L100">	STATE_ATTRIBUTE(12, UFontFace.normal()), //</span>
-<span class="fc" id="L101">	LEGEND(14, UFontFace.normal()), //</span>
-<span class="fc" id="L102">	TITLE(18, UFontFace.normal()), //</span>
+<span class="fc" id="L93">	SEQUENCE_BOX(13, UFontFace.bold()), //</span>
+<span class="fc" id="L94">	SEQUENCE_DIVIDER(13, UFontFace.bold()), //</span>
+<span class="fc" id="L95">	SEQUENCE_REFERENCE(13, UFontFace.normal()), //</span>
+<span class="fc" id="L96">	SEQUENCE_DELAY(11, UFontFace.normal()), //</span>
+<span class="fc" id="L97">	SEQUENCE_GROUP(11, UFontFace.bold()), //</span>
+<span class="fc" id="L98">	SEQUENCE_GROUP_HEADER(13, UFontFace.bold()), //</span>
+<span class="fc" id="L99">	PARTICIPANT(14, UFontFace.normal()), //</span>
+<span class="fc" id="L100">	PARTICIPANT_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L101">	STATE(14, UFontFace.normal()), //</span>
+<span class="fc" id="L102">	STATE_ATTRIBUTE(12, UFontFace.normal()), //</span>
+<span class="fc" id="L103">	LEGEND(14, UFontFace.normal()), //</span>
+<span class="fc" id="L104">	TITLE(18, UFontFace.normal()), //</span>
 	// SEQUENCE_TITLE(14, UFontFace.bold()), //
-<span class="fc" id="L104">	CAPTION(14, UFontFace.normal()), //</span>
-<span class="fc" id="L105">	SWIMLANE_TITLE(18, UFontFace.normal()), //</span>
-<span class="fc" id="L106">	FOOTER(10, UFontFace.normal(), &quot;#888888&quot;, FontParamConstant.FAMILY), //</span>
-<span class="fc" id="L107">	HEADER(10, UFontFace.normal(), &quot;#888888&quot;, FontParamConstant.FAMILY), //</span>
-<span class="fc" id="L108">	USECASE(14, UFontFace.normal()), //</span>
-<span class="fc" id="L109">	USECASE_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L110">	ARTIFACT_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L111">	CLOUD_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L112">	STORAGE_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L113">	BOUNDARY_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L114">	CONTROL_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L115">	ENTITY_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L116">	AGENT_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L117">	RECTANGLE_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L118">	LABEL_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L119">	PERSON_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L120">	HEXAGON_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L121">	ARCHIMATE_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L122">	CARD_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L123">	NODE_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L124">	FOLDER_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L125">	FILE_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L126">	FRAME_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L127">	DATABASE_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L128">	QUEUE_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L129">	STACK_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L130">	ACTOR_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L131">	SEQUENCE_STEREOTYPE(14, UFontFace.italic()), //</span>
-<span class="fc" id="L132">	PARTITION(14, UFontFace.normal()), DESIGNED_DOMAIN(12, UFontFace.normal()), //</span>
-<span class="fc" id="L133">	DESIGNED_DOMAIN_STEREOTYPE(12, UFontFace.italic()), //</span>
-<span class="fc" id="L134">	DOMAIN(12, UFontFace.normal()), //</span>
-<span class="fc" id="L135">	DOMAIN_STEREOTYPE(12, UFontFace.italic()), //</span>
-<span class="fc" id="L136">	MACHINE(12, UFontFace.normal()), //</span>
-<span class="fc" id="L137">	MACHINE_STEREOTYPE(12, UFontFace.italic()), //</span>
-<span class="fc" id="L138">	REQUIREMENT(12, UFontFace.normal()), //</span>
-<span class="fc" id="L139">	REQUIREMENT_STEREOTYPE(12, UFontFace.italic()); //</span>
+<span class="fc" id="L106">	CAPTION(14, UFontFace.normal()), //</span>
+<span class="fc" id="L107">	SWIMLANE_TITLE(18, UFontFace.normal()), //</span>
+<span class="fc" id="L108">	FOOTER(10, UFontFace.normal(), &quot;#888888&quot;, FontParamConstant.FAMILY), //</span>
+<span class="fc" id="L109">	HEADER(10, UFontFace.normal(), &quot;#888888&quot;, FontParamConstant.FAMILY), //</span>
+<span class="fc" id="L110">	USECASE(14, UFontFace.normal()), //</span>
+<span class="fc" id="L111">	USECASE_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L112">	ARTIFACT_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L113">	CLOUD_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L114">	STORAGE_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L115">	BOUNDARY_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L116">	CONTROL_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L117">	ENTITY_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L118">	AGENT_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L119">	RECTANGLE_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L120">	LABEL_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L121">	PERSON_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L122">	HEXAGON_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L123">	ARCHIMATE_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L124">	CARD_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L125">	NODE_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L126">	FOLDER_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L127">	FILE_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L128">	FRAME_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L129">	DATABASE_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L130">	QUEUE_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L131">	STACK_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L132">	ACTOR_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L133">	SEQUENCE_STEREOTYPE(14, UFontFace.italic()), //</span>
+<span class="fc" id="L134">	PARTITION(14, UFontFace.normal()), DESIGNED_DOMAIN(12, UFontFace.normal()), //</span>
+<span class="fc" id="L135">	DESIGNED_DOMAIN_STEREOTYPE(12, UFontFace.italic()), //</span>
+<span class="fc" id="L136">	DOMAIN(12, UFontFace.normal()), //</span>
+<span class="fc" id="L137">	DOMAIN_STEREOTYPE(12, UFontFace.italic()), //</span>
+<span class="fc" id="L138">	MACHINE(12, UFontFace.normal()), //</span>
+<span class="fc" id="L139">	MACHINE_STEREOTYPE(12, UFontFace.italic()), //</span>
+<span class="fc" id="L140">	REQUIREMENT(12, UFontFace.normal()), //</span>
+<span class="fc" id="L141">	REQUIREMENT_STEREOTYPE(12, UFontFace.italic()); //</span>
 
 	private final int defaultSize;
 	private final UFontFace defaultFace;
 	private final String defaultColor;
 	private final String defaultFamily;
 
-<span class="fc" id="L146">	private FontParam(int defaultSize, UFontFace defaultFace, String defaultColor, String defaultFamily) {</span>
-<span class="fc" id="L147">		this.defaultSize = defaultSize;</span>
-<span class="fc" id="L148">		this.defaultFace = defaultFace;</span>
-<span class="fc" id="L149">		this.defaultColor = defaultColor;</span>
-<span class="fc" id="L150">		this.defaultFamily = defaultFamily;</span>
-<span class="fc" id="L151">	}</span>
+<span class="fc" id="L148">	private FontParam(int defaultSize, UFontFace defaultFace, String defaultColor, String defaultFamily) {</span>
+<span class="fc" id="L149">		this.defaultSize = defaultSize;</span>
+<span class="fc" id="L150">		this.defaultFace = defaultFace;</span>
+<span class="fc" id="L151">		this.defaultColor = defaultColor;</span>
+<span class="fc" id="L152">		this.defaultFamily = defaultFamily;</span>
+<span class="fc" id="L153">	}</span>
 
 	private FontParam(int defaultSize, UFontFace defaultFace) {
-<span class="fc" id="L154">		this(defaultSize, defaultFace, FontParamConstant.COLOR, FontParamConstant.FAMILY);</span>
-<span class="fc" id="L155">	}</span>
+<span class="fc" id="L156">		this(defaultSize, defaultFace, FontParamConstant.COLOR, FontParamConstant.FAMILY);</span>
+<span class="fc" id="L157">	}</span>
 
 	public final int getDefaultSize(ISkinParam skinParam) {
-<span class="pc bpc" id="L158" title="3 of 4 branches missed.">		if (this == ARROW &amp;&amp; skinParam.getDiagramType() == DiagramType.ACTIVITY) {</span>
-<span class="nc" id="L159">			return 11;</span>
+<span class="pc bpc" id="L160" title="3 of 4 branches missed.">		if (this == ARROW &amp;&amp; skinParam.getDiagramType() == DiagramType.ACTIVITY) {</span>
+<span class="nc" id="L161">			return 11;</span>
 		}
-<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		if (this == CLASS_ATTRIBUTE) {</span>
-<span class="nc" id="L162">			return 11;</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">		if (this == CLASS_ATTRIBUTE) {</span>
+<span class="nc" id="L164">			return 11;</span>
 		}
-<span class="fc" id="L164">		return defaultSize;</span>
+<span class="fc" id="L166">		return defaultSize;</span>
 	}
 
 	public final UFontFace getDefaultFontFace(ISkinParam skinParam, boolean inPackageTitle) {
-<span class="pc bpc" id="L168" title="1 of 2 branches missed.">		if (this == STATE)</span>
-<span class="nc" id="L169">			return defaultFace;</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		if (this == STATE)</span>
+<span class="nc" id="L171">			return defaultFace;</span>
 
-<span class="pc bpc" id="L171" title="2 of 4 branches missed.">		if (inPackageTitle || this == PACKAGE)</span>
-<span class="nc" id="L172">			return UFontFace.bold();</span>
+<span class="pc bpc" id="L173" title="2 of 4 branches missed.">		if (inPackageTitle || this == PACKAGE)</span>
+<span class="nc" id="L174">			return UFontFace.bold();</span>
 
-<span class="fc" id="L174">		return defaultFace;</span>
+<span class="fc" id="L176">		return defaultFace;</span>
 	}
 
 	public final String getDefaultColor() {
-<span class="fc" id="L178">		return defaultColor;</span>
+<span class="fc" id="L180">		return defaultColor;</span>
 	}
 
 	public String getDefaultFamily() {
-<span class="fc" id="L182">		return defaultFamily;</span>
+<span class="fc" id="L184">		return defaultFamily;</span>
 	}
 
 	public FontConfiguration getFontConfiguration(ISkinParam skinParam) {
-<span class="nc" id="L186">		return FontConfiguration.create(skinParam, this, null);</span>
+<span class="nc" id="L188">		return FontConfiguration.create(skinParam, this, null);</span>
 	}
 
-	public StyleSignatureBasic getStyleDefinition(SName diagramType) {
-<span class="fc bfc" id="L190" title="All 2 branches covered.">		if (this == FOOTER) {</span>
-<span class="fc" id="L191">			return StyleSignatureBasic.of(SName.root, SName.document, SName.footer);</span>
+	public StyleQuery getStyleDefinition(SName diagramType) {
+<span class="fc bfc" id="L192" title="All 2 branches covered.">		if (this == FOOTER) {</span>
+<span class="fc" id="L193">			return StyleQuery.of(Arrays.asList(SName.root, SName.document, SName.footer));</span>
 		}
-<span class="pc bpc" id="L193" title="1 of 2 branches missed.">		if (this == HEADER) {</span>
-<span class="fc" id="L194">			return StyleSignatureBasic.of(SName.root, SName.document, SName.header);</span>
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">		if (this == HEADER) {</span>
+<span class="fc" id="L196">			return StyleQuery.of(Arrays.asList(SName.root, SName.document, SName.header));</span>
 		}
-<span class="nc bnc" id="L196" title="All 2 branches missed.">		if (this == TITLE) {</span>
-<span class="nc" id="L197">			return StyleSignatureBasic.of(SName.root, SName.document, SName.title);</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">		if (this == TITLE) {</span>
+<span class="nc" id="L199">			return StyleQuery.of(Arrays.asList(SName.root, SName.document, SName.title));</span>
 		}
-<span class="nc bnc" id="L199" title="All 2 branches missed.">		if (this == CLASS_ATTRIBUTE) {</span>
-<span class="nc" id="L200">			return StyleSignatureBasic.of(SName.root, SName.element, SName.classDiagram, SName.class_);</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">		if (this == CLASS_ATTRIBUTE) {</span>
+<span class="nc" id="L202">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.classDiagram, SName.class_));</span>
 		}
-<span class="nc bnc" id="L202" title="All 4 branches missed.">		if (this == RECTANGLE || this == NODE) {</span>
-<span class="nc" id="L203">			return StyleSignatureBasic.of(SName.root, SName.element, SName.componentDiagram, SName.component);</span>
+<span class="nc bnc" id="L204" title="All 4 branches missed.">		if (this == RECTANGLE || this == NODE) {</span>
+<span class="nc" id="L205">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.componentDiagram, SName.component));</span>
 		}
-<span class="nc" id="L205">		return StyleSignatureBasic.of(SName.root, SName.element, diagramType, SName.component);</span>
+<span class="nc" id="L207">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, diagramType, SName.component));</span>
 //		System.err.println(&quot;Warning &quot; + this);
 //		throw new UnsupportedOperationException();
 	}

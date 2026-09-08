@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorType;
@@ -52,7 +54,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class Highlight {
 
@@ -62,77 +64,77 @@ public class Highlight {
 	private final Colors colors;
 	private final ISkinParam skinParam;
 
-<span class="nc" id="L65">	public Highlight(ISkinParam skinParam, TimeTick tickFrom, TimeTick tickTo, Display caption, Colors colors) {</span>
-<span class="nc" id="L66">		this.tickFrom = tickFrom;</span>
-<span class="nc" id="L67">		this.tickTo = tickTo;</span>
-<span class="nc" id="L68">		this.caption = caption;</span>
-<span class="nc" id="L69">		this.colors = colors;</span>
-<span class="nc" id="L70">		this.skinParam = skinParam;</span>
-<span class="nc" id="L71">	}</span>
+<span class="nc" id="L67">	public Highlight(ISkinParam skinParam, TimeTick tickFrom, TimeTick tickTo, Display caption, Colors colors) {</span>
+<span class="nc" id="L68">		this.tickFrom = tickFrom;</span>
+<span class="nc" id="L69">		this.tickTo = tickTo;</span>
+<span class="nc" id="L70">		this.caption = caption;</span>
+<span class="nc" id="L71">		this.colors = colors;</span>
+<span class="nc" id="L72">		this.skinParam = skinParam;</span>
+<span class="nc" id="L73">	}</span>
 
-	private StyleSignatureBasic getStyleSignature() {
-<span class="nc" id="L74">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.highlight);</span>
+	private StyleQuery getStyleSignature() {
+<span class="nc" id="L76">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.timingDiagram, SName.highlight));</span>
 	}
 
 	private Style getStyle() {
-<span class="nc" id="L78">		return getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L80">		return skinParam.getCurrentStyleBuilder().getMergedStyle(getStyleSignature());</span>
 
 	}
 
 	private HColor getBackColor() {
-<span class="nc" id="L83">		final HColor result = colors.getColor(ColorType.BACK);</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (result == null)</span>
-<span class="nc" id="L85">			return getStyle().value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L85">		final HColor result = colors.getColor(ColorType.BACK);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L87">			return getStyle().value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
 
-<span class="nc" id="L87">		return result;</span>
+<span class="nc" id="L89">		return result;</span>
 	}
 
 	private HColor getLineColor() {
-<span class="nc" id="L91">		final HColor result = colors.getColor(ColorType.LINE);</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (result == null)</span>
-<span class="nc" id="L93">			return getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L93">		final HColor result = colors.getColor(ColorType.LINE);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L95">			return getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
 
-<span class="nc" id="L95">		return result;</span>
+<span class="nc" id="L97">		return result;</span>
 	}
 
 	private UStroke getUStroke() {
-<span class="nc" id="L99">		return getStyle().getStroke();</span>
+<span class="nc" id="L101">		return getStyle().getStroke();</span>
 	}
 
 	public final TimeTick getTickFrom() {
-<span class="nc" id="L103">		return tickFrom;</span>
+<span class="nc" id="L105">		return tickFrom;</span>
 	}
 
 	public final TimeTick getTickTo() {
-<span class="nc" id="L107">		return tickTo;</span>
+<span class="nc" id="L109">		return tickTo;</span>
 	}
 
 	public final Display getCaption() {
-<span class="nc" id="L111">		return caption;</span>
+<span class="nc" id="L113">		return caption;</span>
 	}
 
 	public TextBlock getCaption(ISkinParam skinParam) {
-<span class="nc" id="L115">		final FontConfiguration fc = FontConfiguration.create(skinParam, FontParam.TIMING, null);</span>
-<span class="nc" id="L116">		return caption.create(fc, HorizontalAlignment.LEFT, skinParam);</span>
+<span class="nc" id="L117">		final FontConfiguration fc = FontConfiguration.create(skinParam, FontParam.TIMING, null);</span>
+<span class="nc" id="L118">		return caption.create(fc, HorizontalAlignment.LEFT, skinParam);</span>
 	}
 
 	public void drawHighlightsBack(UGraphic ug, TimingRuler ruler, double height) {
-<span class="nc" id="L120">		ug = ug.apply(HColors.none()).apply(getBackColor().bg());</span>
-<span class="nc" id="L121">		final double start = ruler.getPosInPixel(this.getTickFrom());</span>
-<span class="nc" id="L122">		final double end = ruler.getPosInPixel(this.getTickTo());</span>
-<span class="nc" id="L123">		final URectangle rect = URectangle.build(end - start, height);</span>
-<span class="nc" id="L124">		ug.apply(UTranslate.dx(start)).draw(rect);</span>
-<span class="nc" id="L125">	}</span>
+<span class="nc" id="L122">		ug = ug.apply(HColors.none()).apply(getBackColor().bg());</span>
+<span class="nc" id="L123">		final double start = ruler.getPosInPixel(this.getTickFrom());</span>
+<span class="nc" id="L124">		final double end = ruler.getPosInPixel(this.getTickTo());</span>
+<span class="nc" id="L125">		final URectangle rect = URectangle.build(end - start, height);</span>
+<span class="nc" id="L126">		ug.apply(UTranslate.dx(start)).draw(rect);</span>
+<span class="nc" id="L127">	}</span>
 
 	public void drawHighlightsLines(UGraphic ug, TimingRuler ruler, double height) {
-<span class="nc" id="L128">		ug = ug.apply(getUStroke());</span>
-<span class="nc" id="L129">		ug = ug.apply(getLineColor());</span>
-<span class="nc" id="L130">		final ULine line = ULine.vline(height);</span>
-<span class="nc" id="L131">		final double start = ruler.getPosInPixel(this.getTickFrom());</span>
-<span class="nc" id="L132">		final double end = ruler.getPosInPixel(this.getTickTo());</span>
-<span class="nc" id="L133">		ug.apply(UTranslate.dx(start)).draw(line);</span>
-<span class="nc" id="L134">		ug.apply(UTranslate.dx(end)).draw(line);</span>
-<span class="nc" id="L135">	}</span>
+<span class="nc" id="L130">		ug = ug.apply(getUStroke());</span>
+<span class="nc" id="L131">		ug = ug.apply(getLineColor());</span>
+<span class="nc" id="L132">		final ULine line = ULine.vline(height);</span>
+<span class="nc" id="L133">		final double start = ruler.getPosInPixel(this.getTickFrom());</span>
+<span class="nc" id="L134">		final double end = ruler.getPosInPixel(this.getTickTo());</span>
+<span class="nc" id="L135">		ug.apply(UTranslate.dx(start)).draw(line);</span>
+<span class="nc" id="L136">		ug.apply(UTranslate.dx(end)).draw(line);</span>
+<span class="nc" id="L137">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -35,80 +35,78 @@
  */
 package net.sourceforge.plantuml.skin;
 
+import java.util.Arrays;
+
 import net.sourceforge.plantuml.sequencediagram.LifeEventType;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.Styleable;
+import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
-<span class="fc" id="L44">public enum ComponentType implements Styleable {</span>
+<span class="fc" id="L45">public enum ComponentType implements Styleable {</span>
 
-<span class="fc" id="L46">	ARROW,</span>
+<span class="fc" id="L47">	ARROW,</span>
 
-<span class="fc" id="L48">	ACTOR_HEAD, ACTOR_TAIL,</span>
+<span class="fc" id="L49">	ACTOR_HEAD, ACTOR_TAIL,</span>
 
-<span class="fc" id="L50">	BOUNDARY_HEAD, BOUNDARY_TAIL, CONTROL_HEAD, CONTROL_TAIL, ENTITY_HEAD, ENTITY_TAIL, QUEUE_HEAD, QUEUE_TAIL,</span>
-<span class="fc" id="L51">	DATABASE_HEAD, DATABASE_TAIL, COLLECTIONS_HEAD, COLLECTIONS_TAIL,</span>
-
-	//
-<span class="fc" id="L54">	ACTIVATION_BOX_CLOSE_CLOSE, ACTIVATION_BOX_CLOSE_OPEN, ACTIVATION_BOX_OPEN_CLOSE, ACTIVATION_BOX_OPEN_OPEN,</span>
-
-<span class="fc" id="L56">	DELAY_TEXT, DESTROY,</span>
-
-<span class="fc" id="L58">	DELAY_LINE, PARTICIPANT_LINE, /*CONTINUE_LINE,*/</span>
+<span class="fc" id="L51">	BOUNDARY_HEAD, BOUNDARY_TAIL, CONTROL_HEAD, CONTROL_TAIL, ENTITY_HEAD, ENTITY_TAIL, QUEUE_HEAD, QUEUE_TAIL,</span>
+<span class="fc" id="L52">	DATABASE_HEAD, DATABASE_TAIL, COLLECTIONS_HEAD, COLLECTIONS_TAIL,</span>
 
 	//
-<span class="fc" id="L61">	GROUPING_ELSE_LEGACY, GROUPING_ELSE_TEOZ, GROUPING_HEADER_LEGACY, GROUPING_HEADER_TEOZ, GROUPING_SPACE,</span>
-	//
-<span class="fc" id="L63">	NEWPAGE, NOTE, NOTE_HEXAGONAL, NOTE_BOX, DIVIDER, REFERENCE, ENGLOBER,</span>
+<span class="fc" id="L55">	ACTIVATION_BOX_CLOSE_CLOSE, ACTIVATION_BOX_CLOSE_OPEN, ACTIVATION_BOX_OPEN_CLOSE, ACTIVATION_BOX_OPEN_OPEN,</span>
+
+<span class="fc" id="L57">	DELAY_TEXT, DESTROY,</span>
+
+<span class="fc" id="L59">	DELAY_LINE, PARTICIPANT_LINE, /*CONTINUE_LINE,*/</span>
 
 	//
-<span class="fc" id="L66">	PARTICIPANT_HEAD, PARTICIPANT_TAIL</span>
+<span class="fc" id="L62">	GROUPING_ELSE_LEGACY, GROUPING_ELSE_TEOZ, GROUPING_HEADER_LEGACY, GROUPING_HEADER_TEOZ, GROUPING_SPACE,</span>
+	//
+<span class="fc" id="L64">	NEWPAGE, NOTE, NOTE_HEXAGONAL, NOTE_BOX, DIVIDER, REFERENCE, ENGLOBER,</span>
+
+	//
+<span class="fc" id="L67">	PARTICIPANT_HEAD, PARTICIPANT_TAIL</span>
 
 	//
 	/* TITLE, SIGNATURE */;
 
 	public boolean isArrow() {
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		return this == ARROW;</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		return this == ARROW;</span>
 	}
+	
+	@Override
+	public StyleQuery getStyleQuery() {
+<span class="pc bpc" id="L78" title="2 of 4 branches missed.">		if (this == PARTICIPANT_HEAD || this == PARTICIPANT_TAIL)</span>
+<span class="nc" id="L79">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.participant));</span>
 
-	public StyleSignature getStyleSignature() {
-<span class="pc bpc" id="L76" title="2 of 4 branches missed.">		if (this == PARTICIPANT_HEAD || this == PARTICIPANT_TAIL)</span>
-<span class="nc" id="L77">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.participant);</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">		if (this == PARTICIPANT_LINE /*|| this == CONTINUE_LINE*/)</span>
+<span class="fc" id="L82">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine));</span>
 
-<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (this == PARTICIPANT_LINE /*|| this == CONTINUE_LINE*/)</span>
-<span class="fc" id="L80">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine);</span>
-
-<span class="pc bpc" id="L82" title="3 of 8 branches missed.">		if (this == ACTIVATION_BOX_CLOSE_CLOSE || this == ACTIVATION_BOX_CLOSE_OPEN || this == ACTIVATION_BOX_OPEN_CLOSE</span>
+<span class="pc bpc" id="L84" title="3 of 8 branches missed.">		if (this == ACTIVATION_BOX_CLOSE_CLOSE || this == ACTIVATION_BOX_CLOSE_OPEN || this == ACTIVATION_BOX_OPEN_CLOSE</span>
 				|| this == ACTIVATION_BOX_OPEN_OPEN)
-<span class="fc" id="L84">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.activationBox);</span>
+<span class="fc" id="L86">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.activationBox));</span>
 
-<span class="fc bfc" id="L86" title="All 2 branches covered.">		if (this == DESTROY)</span>
-<span class="fc" id="L87">			return LifeEventType.DESTROY.getStyleSignature();</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		if (this == DESTROY)</span>
+<span class="fc" id="L89">			return LifeEventType.DESTROY.getStyleQuery();</span>
 
-<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (this == DIVIDER)</span>
-<span class="fc" id="L90">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.separator);</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (this == DIVIDER)</span>
+<span class="fc" id="L92">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.separator));</span>
 
-<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (this == ENGLOBER)</span>
-<span class="fc" id="L93">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.box);</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (this == ENGLOBER)</span>
+<span class="fc" id="L95">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.box));</span>
 
-<span class="fc bfc" id="L95" title="All 2 branches covered.">		if (this == NEWPAGE)</span>
-<span class="fc" id="L96">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.newpage);</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		if (this == NEWPAGE)</span>
+<span class="fc" id="L98">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.newpage));</span>
 
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (this == NOTE)</span>
-<span class="nc" id="L99">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.note);</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		if (this == NOTE)</span>
+<span class="nc" id="L101">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.note));</span>
 
-<span class="fc bfc" id="L101" title="All 2 branches covered.">		if (this == DELAY_TEXT)</span>
-<span class="fc" id="L102">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.delay);</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (this == DELAY_TEXT)</span>
+<span class="fc" id="L104">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.delay));</span>
 
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (this == DELAY_LINE)</span>
-<span class="fc" id="L105">			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.delay);</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (this == DELAY_LINE)</span>
+<span class="fc" id="L107">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.delay));</span>
 
-//		if (this == REFERENCE) {
-//			return StyleSignature.of(SName.root, SName.element,
-//					SName.sequenceDiagram, SName.reference);
-//		}
-<span class="nc" id="L111">		throw new UnsupportedOperationException(toString());</span>
+<span class="nc" id="L109">		throw new UnsupportedOperationException(toString());</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

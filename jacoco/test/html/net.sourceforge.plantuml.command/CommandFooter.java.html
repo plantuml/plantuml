@@ -95,7 +95,7 @@ public class CommandFooter extends SingleLineCommand2&lt;TitledDiagram&gt; {
 <span class="fc" id="L95">		final String align = arg.get(&quot;POSITION&quot;, 0);</span>
 <span class="fc" id="L96">		HorizontalAlignment ha = HorizontalAlignment.fromString(align, HorizontalAlignment.CENTER);</span>
 <span class="pc bpc" id="L97" title="1 of 2 branches missed.">		if (align == null)</span>
-<span class="fc" id="L98">			ha = FontParam.FOOTER.getStyleDefinition(null).getMergedStyle(diagram.getCurrentStyleBuilder())</span>
+<span class="fc" id="L98">			ha = diagram.getCurrentStyleBuilder().getMergedStyle(FontParam.FOOTER.getStyleDefinition(null))</span>
 <span class="fc" id="L99">					.getHorizontalAlignment();</span>
 
 <span class="fc" id="L101">		final Display s = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy(&quot;LABEL&quot;, 0));</span>
