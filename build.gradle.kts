@@ -758,22 +758,25 @@ tasks.register("teavm") {
 			into(outputDir)
 		}
 
-		// List all produced .js files with human-readable sizes
+		// List all produced .js files with human-readable sizes. Walked
+		// recursively (not just outputDir's direct children) so the stdlib
+		// bundles under stdlib/ (see issue #2870) are still counted.
 		fun sizeInMB(bytes: Long): String {
 			return "%.2f MB".format(bytes.toDouble() / (1024.0 * 1024.0))
 		}
 
-		val jsFiles = outputDir.listFiles { f -> f.isFile && f.name.endsWith(".js") }
-			?.sortedBy { it.name.lowercase() }
-		if (jsFiles != null && jsFiles.isNotEmpty()) {
-			val nameWidth = maxOf(jsFiles.maxOf { it.name.length }, "TOTAL".length)
+		val jsFiles = outputDir.walkTopDown().filter { it.isFile && it.name.endsWith(".js") }.toList()
+			.sortedBy { it.relativeTo(outputDir).path.lowercase() }
+		if (jsFiles.isNotEmpty()) {
+			val displayName = jsFiles.associateWith { it.relativeTo(outputDir).path }
+			val nameWidth = maxOf(displayName.values.maxOf { it.length }, "TOTAL".length)
 			val totalSize = jsFiles.sumOf { it.length() }
 			val sizeWidth = sizeInMB(totalSize).length
 
 			println("")
 			println("TeaVM JS files:")
 			for (f in jsFiles) {
-				println("  %-${nameWidth}s  %${sizeWidth}s".format(f.name, sizeInMB(f.length())))
+				println("  %-${nameWidth}s  %${sizeWidth}s".format(displayName[f], sizeInMB(f.length())))
 			}
 			println("  %-${nameWidth}s  %${sizeWidth}s".format("TOTAL", sizeInMB(totalSize)))
 		}
@@ -795,7 +798,11 @@ tasks.register<Zip>("teavmZip") {
 	
 	// Use lazy evaluation to ensure files are read after teavm task completes
 	from(teavmJsOutputDir) {
-		include("*.js", "*.html", "*.css", "*.svg", "*.ico", "preview/**", "vendor/**")
+		// stdlib/** carries the <lib>.min.js bundles (issue #2870): the plain
+		// "*.js" pattern only matches files directly under teavmJsOutputDir,
+		// it is not implicitly recursive, so the subfolder needs its own entry
+		// or the ZIP silently ships without any stdlib bundle.
+		include("*.js", "*.html", "*.css", "*.svg", "*.ico", "preview/**", "vendor/**", "stdlib/**")
 	}
 	
 	destinationDirectory.set(layout.buildDirectory.dir("libs"))

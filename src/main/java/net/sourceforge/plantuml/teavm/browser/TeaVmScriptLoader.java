@@ -54,6 +54,19 @@ public final class TeaVmScriptLoader {
 	 * mark {@code __pl_script_state[url] = { state: 'loaded' }}; the fast path
 	 * then skips loading entirely. With neither global set, the behaviour is
 	 * exactly what it always was.
+	 * <p>
+	 * Stdlib bundles physically live under a {@code stdlib/} subfolder next to
+	 * the engine (see issue #2870); {@code themes.js}, {@code emoji.js} and
+	 * {@code openiconic.js} do not. The {@code .min.js} suffix is exactly what
+	 * already tells a stdlib bundle apart from those (it is how a
+	 * {@code PLANTUML_STDLIB_LOADER} hook is expected to opt out of the
+	 * others), so it is reused here to add {@code stdlib/} to the actual
+	 * script-tag / {@code PLANTUML_STDLIB_BASE} fetch path. The {@code url}
+	 * argument itself -- the cache key and the value handed to
+	 * {@code PLANTUML_STDLIB_LOADER} -- is left untouched, so a host that
+	 * already implements the loader hook keeps seeing the bare
+	 * {@code <lib>.min.js} it always did, regardless of where the file
+	 * physically sits.
 	 */
 	@JSBody(params = { "url", "onOk", "onErr" }, script = "var w = (typeof globalThis !== 'undefined') ? globalThis"
 			+ " : ((typeof self !== 'undefined') ? self : window);"
@@ -75,7 +88,9 @@ public final class TeaVmScriptLoader {
 			+ "  var handled = w.PLANTUML_STDLIB_LOADER(url, ok, function(message) { fail(message || ('Loader failed for ' + url)); });"
 			+ "  if (handled !== false) return;" + "}" +
 
-			"var full = (typeof w.PLANTUML_STDLIB_BASE === 'string') ? (w.PLANTUML_STDLIB_BASE + url) : url;" +
+			"var fetchUrl = (/\\.min\\.js$/.test(url)) ? ('stdlib/' + url) : url;" +
+			"var full = (typeof w.PLANTUML_STDLIB_BASE === 'string') ? (w.PLANTUML_STDLIB_BASE + fetchUrl) : fetchUrl;"
+			+
 
 			"var s = document.createElement('script');" + "s.src = full;" + "s.async = true;" +
 

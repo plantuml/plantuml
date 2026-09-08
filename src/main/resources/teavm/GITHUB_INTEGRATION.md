@@ -206,25 +206,34 @@ Sent from the iframe back to `github.com`.
 ## Standard Library and Support Scripts
 
 `!include <C4/C4_Context>` and friends lazy-load one bundle per library
-(`c4.min.js`, `azure.min.js`, ...). Themes, emoji and OpenIconic sprites are
-lazy-loaded the same way (`themes.js`, `emoji.js`, `openiconic.js`). The
-loader injects a script tag with a **relative** URL, which resolves against
-the hosting page, so out of the box these features only work when those
-files sit next to the page. Two globals, set before rendering, change that:
+(`c4.min.js`, `azure.min.js`, ...), physically stored under a `stdlib/`
+subfolder next to the engine. Themes, emoji and OpenIconic sprites are
+lazy-loaded the same way but stay at the top level (`themes.js`, `emoji.js`,
+`openiconic.js`). The loader injects a script tag with a **relative** URL
+(`stdlib/c4.min.js`, `themes.js`, ...), which resolves against the hosting
+page, so out of the box these features only work when those files -- the
+`stdlib/` subfolder included -- sit next to the page. Two globals, set
+before rendering, change that:
 
 ```html
 <script>
   // Where the bundles live. One line gives a page that imports the engine
   // from a CDN the entire stdlib (and themes/emoji), fetched on demand.
-  // The value is a plain URL prefix: note the trailing slash.
+  // The value is a plain URL prefix: note the trailing slash. The `stdlib/`
+  // subfolder is appended automatically, so this must point at the folder
+  // that *contains* stdlib/, not at stdlib/ itself.
   window.PLANTUML_STDLIB_BASE = "https://plantuml.github.io/plantuml/js-plantuml/";
 </script>
 ```
 
-For production, self-host the files your diagrams use and point the base at
+For production, self-host the files your diagrams use -- including the
+`stdlib/` subfolder, kept alongside the other files -- and point the base at
 your own assets instead of a third-party origin.
 
-Hosts that cannot load scripts at all set a loader callback instead:
+Hosts that cannot load scripts at all set a loader callback instead. The
+`url` this callback receives is always the bare `<lib>.min.js`, never
+`stdlib/`-prefixed: the subfolder is purely a detail of where the file sits
+on disk for the script-tag path, and a loader hook never touches that path:
 
 ```html
 <script>

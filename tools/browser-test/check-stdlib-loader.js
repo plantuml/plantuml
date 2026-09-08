@@ -53,8 +53,12 @@ dir = path.resolve(dir);
 // The synthetic libraries: a sequence-diagram participant each, so no layout
 // engine (viz/smetana) is involved and the rendered name proves which bundle's
 // content flowed through the include. Each library exists ONLY at the location
-// its scenario is supposed to use (fakelib at the page root, baselib under
-// /cdn/, hooklib as JSON), so a wrong loading path cannot render by accident.
+// its scenario is supposed to use (fakelib under /stdlib/, baselib under
+// /cdn/stdlib/, hooklib as JSON), so a wrong loading path cannot render by
+// accident. The stdlib/ subfolder (issue #2870) is where the engine actually
+// fetches <lib>.min.js from -- see the fetchUrl logic in
+// TeaVmScriptLoader.loadOnce -- while the PLANTUML_STDLIB_LOADER hook below
+// still sees the bare, unprefixed `url`.
 const greetingLine = lib => 'participant "Hello from ' + lib + '" as FAKEHELLO';
 const bundleScript = lib => `(function(){
 window.PLANTUML_STDLIB=window.PLANTUML_STDLIB||{};
@@ -107,8 +111,9 @@ window.__ready=1;
 
 // The server records every bundle-ish request so the checks can assert what
 // was and was not fetched. Bundles exist ONLY at the paths each scenario is
-// supposed to use: /fakelib.min.js for the relative page, /cdn/fakelib.min.js
-// for the base page, /json/*.json for the hook pages.
+// supposed to use: /stdlib/fakelib.min.js for the relative page,
+// /cdn/stdlib/baselib.min.js for the base page, /json/*.json for the hook
+// pages (the hook never sees a stdlib/-prefixed url -- see above).
 const requested = [];
 const server = http.createServer((req, res) => {
   const u = decodeURIComponent(req.url.split('?')[0]);
@@ -118,8 +123,8 @@ const server = http.createServer((req, res) => {
   if (u === '/index-hook.html') { res.setHeader('content-type', 'text/html'); return res.end(pageHtml('hook')); }
   if (u === '/index-hookfail.html') { res.setHeader('content-type', 'text/html'); return res.end(pageHtml('hookfail')); }
   if (u === '/index-decline.html') { res.setHeader('content-type', 'text/html'); return res.end(pageHtml('decline')); }
-  if (u === '/fakelib.min.js') { res.setHeader('content-type', 'application/javascript'); return res.end(bundleScript('fakelib')); }
-  if (u === '/cdn/baselib.min.js') { res.setHeader('content-type', 'application/javascript'); return res.end(bundleScript('baselib')); }
+  if (u === '/stdlib/fakelib.min.js') { res.setHeader('content-type', 'application/javascript'); return res.end(bundleScript('fakelib')); }
+  if (u === '/cdn/stdlib/baselib.min.js') { res.setHeader('content-type', 'application/javascript'); return res.end(bundleScript('baselib')); }
   if (u === '/json/hooklib.json') { res.setHeader('content-type', 'application/json'); return res.end(hooklibJson); }
   if (u === '/json/linklib.json') { res.setHeader('content-type', 'application/json'); return res.end(linklibJson); }
   const p = path.join(dir, u);
@@ -189,7 +194,7 @@ const failsVisibly = r => !r.thrown && (!!r.text.trim() || (!!r.svg && isErrorIm
   r = await renderOn(bare.page, includeOf('fakelib'));
   check('relative bundle next to the page still loads', rendersGreeting(r, 'fakelib'),
     r.thrown || (r.svg ? 'include content missing from svg' : 'no svg: ' + r.text.slice(0, 120)));
-  check('relative bundle was fetched from the page origin', requested.includes('/fakelib.min.js'),
+  check('relative bundle was fetched from the page origin under stdlib/', requested.includes('/stdlib/fakelib.min.js'),
     'requests seen: ' + requested.join(', '));
   r = await renderOn(bare.page, includeOf('nosuchlib'));
   check('missing bundle fails the include visibly, no hang', failsVisibly(r),
@@ -203,8 +208,8 @@ const failsVisibly = r => !r.thrown && (!!r.text.trim() || (!!r.svg && isErrorIm
   r = await renderOn(base.page, includeOf('baselib'));
   check('PLANTUML_STDLIB_BASE loads the bundle from the prefix', rendersGreeting(r, 'baselib'),
     r.thrown || (r.svg ? 'include content missing from svg' : 'no svg: ' + r.text.slice(0, 120)));
-  check('base page fetched /cdn/baselib.min.js and nothing from the root',
-    requested.includes('/cdn/baselib.min.js') && !requested.includes('/baselib.min.js'),
+  check('base page fetched /cdn/stdlib/baselib.min.js and nothing from the root',
+    requested.includes('/cdn/stdlib/baselib.min.js') && !requested.includes('/stdlib/baselib.min.js'),
     'requests seen: ' + requested.join(', '));
   check('no unhandled page errors on the base page', base.errors.length === 0, base.errors.join(' | '));
 
@@ -244,8 +249,8 @@ const failsVisibly = r => !r.thrown && (!!r.text.trim() || (!!r.svg && isErrorIm
   r = await renderOn(decline.page, includeOf('fakelib'));
   check('a declining hook falls back to the script tag', rendersGreeting(r, 'fakelib'),
     r.thrown || (r.svg ? 'include content missing from svg' : 'no svg: ' + r.text.slice(0, 120)));
-  check('the declining hook was consulted before the fallback',
-    r.loaderCalls && r.loaderCalls.includes('fakelib.min.js') && requested.includes('/fakelib.min.js'),
+  check('the declining hook was consulted (bare url) before the fallback (stdlib/-prefixed)',
+    r.loaderCalls && r.loaderCalls.includes('fakelib.min.js') && requested.includes('/stdlib/fakelib.min.js'),
     'loader calls: ' + (r.loaderCalls || []).join(', ') + '; requests: ' + requested.join(', '));
   check('no unhandled page errors on the decline page', decline.errors.length === 0,
     decline.errors.join(' | '));
