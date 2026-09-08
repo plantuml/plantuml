@@ -140,13 +140,13 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 
 	private Style getStyle() {
 		return getSkinParam().getCurrentStyleBuilder()
-				.getMergedStyle(getStyleQuery().withTOBECHANGED(getEntity().getStereotype()));
+				.getMergedStyle(getStyleQuery().withStereotype(getEntity().getStereotype()));
 	}
 
 	private Style getStyleHeader() {
 		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery
 				.of3(SName.root, SName.element, SName.objectDiagram, SName.map, SName.header)
-				.withTOBECHANGED(getEntity().getStereotype()));
+				.withStereotype(getEntity().getStereotype()));
 	}
 
 	final public void drawU(UGraphic ug) {

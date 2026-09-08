@@ -111,7 +111,7 @@ public final class SvekResult implements IEntityImage {
 		StyleQuery result = StyleQuery
 				.of3(SName.root, SName.element, dotData.geDiagramType().getStyleName(), SName.arrow);
 
-		return result.withTOBECHANGED(stereotype);
+		return result.withStereotype(stereotype);
 	}
 
 	// Duplicate SvekResult / GeneralImageBuilder

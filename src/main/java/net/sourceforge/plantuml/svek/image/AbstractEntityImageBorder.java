@@ -60,7 +60,7 @@ public abstract class AbstractEntityImageBorder extends AbstractEntityImage {
 
 	final protected Style getStyle() {
 		final Stereotype stereotype = getEntity().getStereotype();
-		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery().withTOBECHANGED(stereotype));
+		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery().withStereotype(stereotype));
 	}
 
 	AbstractEntityImageBorder(Entity leaf, Cluster parent, Bibliotekon bibliotekon, FontParam fontParam) {

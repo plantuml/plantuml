@@ -246,7 +246,7 @@ public class WBSDiagram extends TitledDiagram implements TextBlock {
 		if (color == null) {
 			final Style style = getCurrentStyleBuilder().getMergedStyle(StyleQuery
 					.of3(SName.root, SName.element, SName.wbsDiagram, SName.arrow)
-					.withTOBECHANGED(stereotype));
+					.withStereotype(stereotype));
 
 			color = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 		}

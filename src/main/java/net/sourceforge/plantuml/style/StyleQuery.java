@@ -101,7 +101,7 @@ public final class StyleQuery {
 		return new StyleQuery(result, levelConstraint);
 	}
 
-	public StyleQuery withTOBECHANGED(Stereotype stereotype) {
+	public StyleQuery withStereotype(Stereotype stereotype) {
 		if (stereotype == null || stereotype.getStyleNames().size() == 0)
 			return this;
 
@@ -116,21 +116,8 @@ public final class StyleQuery {
 	}
 
 	/**
-	 * This same query, additionally requiring every one of {@code stereogroup}'s
-	 * own stereotype's labels at once, the same way
-	 * {@link #withTOBECHANGED(Stereotype)} does -- mirroring
-	 * {@code StyleSignature.withTOBECHANGED(Stereogroup)}.
-	 */
-	public StyleQuery withTOBECHANGED(Stereogroup stereogroup) {
-		if (stereogroup == null)
-			return this;
-
-		return withTOBECHANGED(stereogroup.buildStereotype());
-	}
-
-	/**
 	 * This same query, additionally requiring every one of {@code stereo}'s labels
-	 * at once, the same way {@link #withTOBECHANGED(Stereotype)} does -- but also
+	 * at once, the same way {@link #withStereotype(Stereotype)} does -- but also
 	 * requiring the special {@link SName#stereotype} tag, mirroring
 	 * {@code StyleSignature.forStereotypeItself}: used to resolve the
 	 * CSS-class-like rule for the stereotype itself (e.g. {@code <<foo>>}'s own
@@ -158,7 +145,7 @@ public final class StyleQuery {
 	 * This same query, additionally requiring every stereo-style name in
 	 * {@code stereostyles} -- mirroring {@code StyleSignature.with(Stereostyles)}.
 	 */
-	public StyleQuery with(Stereostyles stereostyles) {
+	public StyleQuery withStereostyles(Stereostyles stereostyles) {
 		if (stereostyles.isEmpty())
 			return this;
 

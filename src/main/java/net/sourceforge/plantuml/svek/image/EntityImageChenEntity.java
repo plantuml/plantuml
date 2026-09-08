@@ -98,13 +98,13 @@ public class EntityImageChenEntity extends AbstractEntityImage {
 	private static Style getStyleState(Entity group, ISkinParam skinParam) {
 		return skinParam.getCurrentStyleBuilder().getMergedStyle(
 				StyleQuery.of3(SName.root, SName.element, SName.chenEerDiagram, SName.chenEntity)
-						.withTOBECHANGED(group.getStereotype()));
+						.withStereotype(group.getStereotype()));
 	}
 
 	private static Style getStyleStateTitle(Entity group, ISkinParam skinParam) {
 		return skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQuery
 				.of3(SName.root, SName.element, SName.chenEerDiagram, SName.chenEntity, SName.title)
-				.withTOBECHANGED(group.getStereotype()));
+				.withStereotype(group.getStereotype()));
 	}
 
 	@Override

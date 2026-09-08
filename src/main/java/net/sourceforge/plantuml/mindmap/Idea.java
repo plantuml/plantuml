@@ -69,30 +69,30 @@ class Idea {
 				return StyleQuery
 						.of3(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode,
 								SName.boxless)
-						.withTOBECHANGED(stereotype).addLevel(level);
+						.withStereotype(stereotype).addLevel(level);
 			else
 				return StyleQuery
 						.of3(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode)
-						.withTOBECHANGED(stereotype).addLevel(level);
+						.withStereotype(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE && children.size() == 0)
 			return StyleQuery
 					.of3(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode,
 							SName.boxless)
-					.withTOBECHANGED(stereotype).addLevel(level);
+					.withStereotype(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE)
 			return StyleQuery
 					.of3(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.boxless)
-					.withTOBECHANGED(stereotype).addLevel(level);
+					.withStereotype(stereotype).addLevel(level);
 
 		if (children.size() == 0)
 			return StyleQuery
 					.of3(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode)
-					.withTOBECHANGED(stereotype).addLevel(level);
+					.withStereotype(stereotype).addLevel(level);
 
 		return StyleQuery.of3(SName.root, SName.element, SName.mindmapDiagram, SName.node)
-				.withTOBECHANGED(stereotype).addLevel(level);
+				.withStereotype(stereotype).addLevel(level);
 	}
 
 	/**
@@ -117,7 +117,7 @@ class Idea {
 	public Style getStyleArrow() {
 		final StyleQuery defaultStyleDefinitionArrow = StyleQuery
 				.of3(SName.root, SName.element, SName.mindmapDiagram, SName.arrow)
-				.withTOBECHANGED(stereotype).addLevel(level);
+				.withStereotype(stereotype).addLevel(level);
 		return styleBuilder.getMergedStyle(defaultStyleDefinitionArrow);
 	}
 

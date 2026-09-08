@@ -144,8 +144,8 @@ public final class ClusterHeader {
 	private Style getStyle() {
 		final StyleQuery signature = getSignature();
 		return g.getSkinParam().getCurrentStyleBuilder().getMergedStyle(signature //
-				.withTOBECHANGED(g.getStereotype()) //
-				.with(g.getStereostyles()));
+				.withStereotype(g.getStereotype()) //
+				.withStereostyles(g.getStereostyles()));
 	}
 
 	private StyleQuery getSignature() {

@@ -79,29 +79,29 @@ final public class WElement {
 				return StyleQuery
 						.of3(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode,
 								SName.boxless)
-						.withTOBECHANGED(stereotype).addLevel(level);
+						.withStereotype(stereotype).addLevel(level);
 			else
 				return StyleQuery
 						.of3(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode)
-						.withTOBECHANGED(stereotype).addLevel(level);
+						.withStereotype(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE && isLeaf())
 			return StyleQuery
 					.of3(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode,
 							SName.boxless)
-					.withTOBECHANGED(stereotype).addLevel(level);
+					.withStereotype(stereotype).addLevel(level);
 
 		if (isLeaf())
 			return StyleQuery
 					.of3(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode)
-					.withTOBECHANGED(stereotype).addLevel(level);
+					.withStereotype(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE)
 			return StyleQuery.of3(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.boxless)
-					.withTOBECHANGED(stereotype).addLevel(level);
+					.withStereotype(stereotype).addLevel(level);
 
 		return StyleQuery.of3(SName.root, SName.element, SName.wbsDiagram, SName.node)
-				.withTOBECHANGED(stereotype).addLevel(level);
+				.withStereotype(stereotype).addLevel(level);
 	}
 
 	public ISkinParam withBackColor(ISkinParam skinParam) {

@@ -135,7 +135,7 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 
 		final Stereotype stereotype = note.getStereotype();
 
-		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery().withTOBECHANGED(stereotype))
+		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery().withStereotype(stereotype))
 				.eventuallyOverride(note.getColors());
 
 		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());

@@ -83,7 +83,7 @@ public class ScatterRenderer {
 	private Style getScatterStyle(ChartSeries series) {
 		StyleQuery query = getScatterStyleQuery();
 		if (series != null && series.getStereotype() != null)
-			return skinParam.getCurrentStyleBuilder().getMergedStyle(query.withTOBECHANGED(series.getStereotype()));
+			return skinParam.getCurrentStyleBuilder().getMergedStyle(query.withStereotype(series.getStereotype()));
 
 		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);
 	}

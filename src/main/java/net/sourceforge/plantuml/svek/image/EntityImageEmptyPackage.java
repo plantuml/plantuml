@@ -89,7 +89,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 	}
 
 	private Style getStyle() {
-		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery().withTOBECHANGED(stereotype));
+		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery().withStereotype(stereotype));
 	}
 
 	public EntityImageEmptyPackage(Entity entity, PortionShower portionShower) {

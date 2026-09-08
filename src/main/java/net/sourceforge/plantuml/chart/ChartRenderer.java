@@ -961,7 +961,7 @@ public class ChartRenderer {
 		if (series.getStereotype() != null) {
 			// Use withTOBECHANGED for element-level stereotype styling
 			Style style = skinParam.getCurrentStyleBuilder()
-					.getMergedStyle(query.withTOBECHANGED(series.getStereotype()));
+					.getMergedStyle(query.withStereotype(series.getStereotype()));
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., .primary)
 			// This matches the pattern used by sequence diagrams
@@ -986,7 +986,7 @@ public class ChartRenderer {
 		if (series.getStereotype() != null) {
 			// Use withTOBECHANGED for element-level stereotype styling
 			Style style = skinParam.getCurrentStyleBuilder()
-					.getMergedStyle(query.withTOBECHANGED(series.getStereotype()));
+					.getMergedStyle(query.withStereotype(series.getStereotype()));
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., line.target)
 			Style stereoStyle = skinParam.getCurrentStyleBuilder()
@@ -1010,7 +1010,7 @@ public class ChartRenderer {
 		if (series.getStereotype() != null) {
 			// Use withTOBECHANGED for element-level stereotype styling
 			Style style = skinParam.getCurrentStyleBuilder()
-					.getMergedStyle(query.withTOBECHANGED(series.getStereotype()));
+					.getMergedStyle(query.withStereotype(series.getStereotype()));
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., area.highlight)
 			Style stereoStyle = skinParam.getCurrentStyleBuilder()
@@ -1043,7 +1043,7 @@ public class ChartRenderer {
 		if (series.getStereotype() != null) {
 			// Use withTOBECHANGED for element-level stereotype styling
 			Style style = skinParam.getCurrentStyleBuilder()
-					.getMergedStyle(query.withTOBECHANGED(series.getStereotype()));
+					.getMergedStyle(query.withStereotype(series.getStereotype()));
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., scatter.highlight)
 			Style stereoStyle = skinParam.getCurrentStyleBuilder()

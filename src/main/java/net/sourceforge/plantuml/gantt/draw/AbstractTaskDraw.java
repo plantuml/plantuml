@@ -215,7 +215,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	protected Opale getOpaleNote() {
 		final Style style = getStyleBuilder().getMergedStyle(StyleQuery
 				.of3(SName.root, SName.element, SName.ganttDiagram, SName.note)
-				.withTOBECHANGED(noteStereotype));
+				.withStereotype(noteStereotype));
 
 		final FontConfiguration fc = style.getFontConfiguration(getColorSet());
 

@@ -89,7 +89,7 @@ public class BarRenderer {
 	private Style getBarStyle(ChartSeries series) {
 		StyleQuery query = getBarStyleQuery();
 		if (series != null && series.getStereotype() != null)
-			return skinParam.getCurrentStyleBuilder().getMergedStyle(query.withTOBECHANGED(series.getStereotype()));
+			return skinParam.getCurrentStyleBuilder().getMergedStyle(query.withStereotype(series.getStereotype()));
 
 		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);
 	}

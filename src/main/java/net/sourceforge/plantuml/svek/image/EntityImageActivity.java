@@ -141,7 +141,7 @@ public class EntityImageActivity extends AbstractEntityImage {
 	@Override
 	public StyleQuery getStyleQuery() {
 		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram, SName.activity)
-				.withTOBECHANGED(getStereo());
+				.withStereotype(getStereo());
 	}
 
 	private UGraphic applyColors(UGraphic ug) {

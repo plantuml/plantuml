@@ -688,7 +688,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	final public StyleQuery getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
 		StyleQuery result = StyleQuery.of3(SName.root, SName.element, styleName, SName.arrow);
 		if (stereotype != null)
-			result = result.withTOBECHANGED(stereotype);
+			result = result.withStereotype(stereotype);
 
 		return result;
 	}

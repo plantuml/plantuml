@@ -93,8 +93,8 @@ public class Kal implements UDrawable {
 		this.skinParam = skinParam;
 		this.style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQuery
 				.of3(SName.root, SName.element, SName.classDiagram, SName.class_, SName.qualified) //
-				.withTOBECHANGED(entity.getStereotype()) //
-				.with(entity.getStereostyles()));
+				.withStereotype(entity.getStereotype()) //
+				.withStereostyles(entity.getStereostyles()));
 
 		final FontConfiguration font = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 

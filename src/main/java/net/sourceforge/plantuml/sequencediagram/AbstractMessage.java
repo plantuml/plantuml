@@ -74,7 +74,7 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	@Override
 	public StyleQuery getStyleQuery() {
 		return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.arrow)
-				.withTOBECHANGED(stereotype);
+				.withStereotype(stereotype);
 	}
 
 	private final Display label;

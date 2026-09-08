@@ -90,8 +90,8 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 		final String generic = displayGenericWithOldFashion ? null : entity.getGeneric();
 
 		final Style styleHeader = getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery() //
-				.withTOBECHANGED(stereotype) //
-				.with(entity.getStereostyles()));
+				.withStereotype(stereotype) //
+				.withStereostyles(entity.getStereostyles()));
 
 		FontConfiguration fontConfigurationName = FontConfiguration.create(getSkinParam(), styleHeader,
 				entity.getColors());
@@ -135,8 +135,8 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 		} else {
 			final Style styleGeneric = getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery
 					.of3(SName.root, SName.element, SName.classDiagram, SName.class_, SName.generic) //
-					.withTOBECHANGED(stereotype) //
-					.with(entity.getStereostyles()));
+					.withStereotype(stereotype) //
+					.withStereostyles(entity.getStereostyles()));
 
 			genericBlock = Display.getWithNewlines(getSkinParam().getPragma(), generic).create(
 					FontConfiguration.create(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),

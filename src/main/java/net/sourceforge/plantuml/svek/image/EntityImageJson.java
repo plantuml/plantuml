@@ -142,13 +142,13 @@ public class EntityImageJson extends AbstractEntityImage implements Stencil, Wit
 
 	private Style getStyle() {
 		return getSkinParam().getCurrentStyleBuilder()
-				.getMergedStyle(getStyleQuery().withTOBECHANGED(getEntity().getStereotype()));
+				.getMergedStyle(getStyleQuery().withStereotype(getEntity().getStereotype()));
 	}
 
 	private Style getStyleHeader() {
 		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery
 				.of3(SName.root, SName.element, SName.objectDiagram, SName.json, SName.header)
-				.withTOBECHANGED(getEntity().getStereotype()));
+				.withStereotype(getEntity().getStereotype()));
 	}
 
 	final public void drawU(UGraphic ug) {

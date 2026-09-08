@@ -139,10 +139,10 @@ public class TextBlockJson extends TextBlockMemoized {
 		if (header && highlighted != null)
 			query = StyleQuery
 					.of3(SName.root, SName.element, diagramType, SName.header, SName.node, SName.highlight)
-					.withTOBECHANGED(highlighted.getStereotype());
+					.withStereotype(highlighted.getStereotype());
 		else if (highlighted != null)
 			query = StyleQuery.of3(SName.root, SName.element, diagramType, SName.node, SName.highlight)
-					.withTOBECHANGED(highlighted.getStereotype());
+					.withStereotype(highlighted.getStereotype());
 		else if (header)
 			query = StyleQuery.of3(SName.root, SName.element, diagramType, SName.header, SName.node);
 		else
@@ -294,7 +294,7 @@ public class TextBlockJson extends TextBlockMemoized {
 				final URectangle back = URectangle.build(trueWidth - 2, heightOfRow).rounded(4);
 				final Style styleNodeHighlight = styleBuilder.getMergedStyle(StyleQuery
 						.of3(SName.root, SName.element, diagramType, SName.node, SName.highlight)
-						.withTOBECHANGED(line.highlighted.getStereotype()));
+						.withStereotype(line.highlighted.getStereotype()));
 				final HColor cellBackColor = styleNodeHighlight.value(PName.BackGroundColor)
 						.asColor(skinParam.getIHtmlColorSet());
 				ugline.apply(cellBackColor).apply(cellBackColor.bg()).apply(new UTranslate(1.5, 0)).draw(back);

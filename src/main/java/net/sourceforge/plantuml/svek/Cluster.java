@@ -389,7 +389,7 @@ public class Cluster implements Moveable {
 		final DiagramType diagramType = diagram.getDiagramType();
 		final USymbol uSymbol = group.getUSymbol() == null ? USymbols.PACKAGE : group.getUSymbol();
 		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinition(
-				diagramType.getStyleName(), uSymbol, group.getGroupType()).withTOBECHANGED(group.getStereotype()));
+				diagramType.getStyleName(), uSymbol, group.getGroupType()).withStereotype(group.getStereotype()));
 		return style;
 	}
 
@@ -466,13 +466,13 @@ public class Cluster implements Moveable {
 		if (northBackcolor == null) {
 			northBackcolor = styleBuilder
 					.getMergedStyle(
-							EntityImageStateCommon.STYLE.addSName(SName.name).withTOBECHANGED(group.getStereotype()))
+							EntityImageStateCommon.STYLE.addSName(SName.name).withStereotype(group.getStereotype()))
 					.value(PName.BackGroundColor).asColor(colorSet);
 			centerBackColor = styleBuilder.getMergedStyle(EntityImageStateCommon.STYLE.addSName(SName.description)
-					.withTOBECHANGED(group.getStereotype())).value(PName.BackGroundColor).asColor(colorSet);
+					.withStereotype(group.getStereotype())).value(PName.BackGroundColor).asColor(colorSet);
 			southBackcolor = styleBuilder
 					.getMergedStyle(
-							EntityImageStateCommon.STYLE.addSName(SName.body).withTOBECHANGED(group.getStereotype()))
+							EntityImageStateCommon.STYLE.addSName(SName.body).withStereotype(group.getStereotype()))
 					.value(PName.BackGroundColor).asColor(colorSet);
 		}
 
@@ -742,7 +742,7 @@ public class Cluster implements Moveable {
 		final DiagramType diagramType = DiagramType.CLASS;
 
 		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinition(
-				diagramType.getStyleName(), uSymbol, group.getGroupType()).withTOBECHANGED(group.getStereotype()));
+				diagramType.getStyleName(), uSymbol, group.getGroupType()).withStereotype(group.getStereotype()));
 
 		final UStroke stroke = getStrokeInternal(group, style);
 

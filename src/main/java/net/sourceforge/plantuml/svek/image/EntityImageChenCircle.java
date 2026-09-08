@@ -108,13 +108,13 @@ public class EntityImageChenCircle extends AbstractEntityImage {
 	private static Style getStyle(Entity group, ISkinParam skinParam) {
 		return skinParam.getCurrentStyleBuilder().getMergedStyle(
 				StyleQuery.of3(SName.root, SName.element, SName.chenEerDiagram, SName.circle)
-						.withTOBECHANGED(group.getStereotype()));
+						.withStereotype(group.getStereotype()));
 	}
 
 	private static Style getStyleTitle(Entity group, ISkinParam skinParam) {
 		return skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQuery
 				.of3(SName.root, SName.element, SName.chenEerDiagram, SName.circle, SName.title)
-				.withTOBECHANGED(group.getStereotype()));
+				.withStereotype(group.getStereotype()));
 	}
 
 	@Override

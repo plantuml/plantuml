@@ -817,7 +817,7 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		final StyleQuery result = StyleQuery
 				.of3(SName.root, SName.element, diagramType().getStyleName(), SName.arrow);
 
-		return result.withTOBECHANGED(stereotype);
+		return result.withStereotype(stereotype);
 	}
 
 	private Set<String> ids;

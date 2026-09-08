@@ -185,7 +185,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 	@Override
 	StyleQuery getStyleQuery() {
 		return StyleQuery.of3(SName.root, SName.element, SName.ganttDiagram, SName.task)
-				.withTOBECHANGED(getTask().getStereotype());
+				.withStereotype(getTask().getStereotype());
 	}
 
 	public void drawU(UGraphic ug) {

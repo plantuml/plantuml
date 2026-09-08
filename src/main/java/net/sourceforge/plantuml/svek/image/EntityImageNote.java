@@ -186,7 +186,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 	@Override
 	public StyleQuery getStyleQuery() {
 		return StyleQuery.of3(SName.root, SName.element, getStyleName(), SName.note)
-				.withTOBECHANGED(getStereo());
+				.withStereotype(getStereo());
 	}
 
 	final public void drawU(UGraphic ug) {

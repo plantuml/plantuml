@@ -85,7 +85,7 @@ public class Participant implements SpecificBackcolorable, WithStyle, AsciiBlock
 
 	public Style[] getUsedStyles() {
 
-		final StyleQuery query = getStyleQuery().withTOBECHANGED(stereotype);
+		final StyleQuery query = getStyleQuery().withStereotype(stereotype);
 		Style tmp = styleBuilder.getMergedStyle(query);
 		tmp = tmp.eventuallyOverride(getColors());
 		Style stereo = styleBuilder.getMergedStyle(getStyleQuery().forStereotypeItself(stereotype));

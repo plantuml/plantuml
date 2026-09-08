@@ -159,7 +159,7 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 		// Warning : titleColor unused in FTileGroupW
 
 		final Style stylePartition = diagram.getSkinParam().getCurrentStyleBuilder()
-				.getMergedStyle(FtileGroup.getStyleQuery(symbol).withTOBECHANGED(stereotype));
+				.getMergedStyle(FtileGroup.getStyleQuery(symbol).withStereotype(stereotype));
 		HColor backColor = colors.getColor(ColorType.BACK);
 		if (backColor == null)
 			backColor = stylePartition.value(PName.BackGroundColor).asColor(diagram.getSkinParam().getIHtmlColorSet());

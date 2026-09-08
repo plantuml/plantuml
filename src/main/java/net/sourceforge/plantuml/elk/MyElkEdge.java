@@ -139,7 +139,7 @@ public class MyElkEdge implements UDrawable {
 	private Style getStyle() {
 		final StyleQuery result = StyleQuery
 				.of3(SName.root, SName.element, diagram.getDiagramType().getStyleName(), SName.arrow)
-				.withTOBECHANGED(link.getStereotype());
+				.withStereotype(link.getStereotype());
 		return diagram.getSkinParam().getCurrentStyleBuilder().getMergedStyle(result);
 	}
 

@@ -203,9 +203,9 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		if (type == LeafType.USECASE_BUSINESS)
 			return StyleQuery
 					.of3(SName.root, SName.element, SName.componentDiagram, SName.usecase, SName.business)
-					.withTOBECHANGED(getStereo());
+					.withStereotype(getStereo());
 		return StyleQuery.of3(SName.root, SName.element, SName.componentDiagram, SName.usecase)
-				.withTOBECHANGED(getStereo());
+				.withStereotype(getStereo());
 	}
 
 	private HColor getLineColor() {
