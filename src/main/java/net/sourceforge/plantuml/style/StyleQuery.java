@@ -66,11 +66,6 @@ public final class StyleQuery {
 		this.levelConstraint = levelConstraint;
 	}
 
-	public static StyleQuery activityArrow() {
-		return StyleQuery
-				.of3(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.arrow);
-	}
-
 	public static StyleQuery of3(SName... names) {
 		final SortedSet<StyleAtom> atoms = new TreeSet<StyleAtom>();
 		for (SName name : names)
