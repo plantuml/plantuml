@@ -322,4 +322,93 @@ public final class StyleQueries {
 	public static final StyleQuery SEQUENCEDIAG_NEWPAGE = StyleQuery.of3(SName.root, SName.element,
 			SName.sequenceDiagram, SName.newpage);
 
+	/** No sub-element -- the diagram's own root style. */
+	public static final StyleQuery ACTIVITYDIAG = StyleQuery.of3(SName.root, SName.element, SName.activityDiagram);
+
+	/**
+	 * The four circle markers (start/end/stop/spot) drawn by a compact activity-diagram tile --
+	 * closed set completing {@code ACTIVITYDIAG_CIRCLE} (the bare circle style), the same way
+	 * {@code SPOT_*} completes {@code SPOT}.
+	 */
+	public static final StyleQuery ACTIVITYDIAG_CIRCLE_END = StyleQuery.of3(SName.root, SName.element,
+			SName.activityDiagram, SName.circle, SName.end);
+
+	public static final StyleQuery ACTIVITYDIAG_CIRCLE_STOP = StyleQuery.of3(SName.root, SName.element,
+			SName.activityDiagram, SName.circle, SName.stop);
+
+	public static final StyleQuery ACTIVITYDIAG_CIRCLE_SPOT = StyleQuery.of3(SName.root, SName.element,
+			SName.activityDiagram, SName.circle, SName.spot);
+
+	public static final StyleQuery ACTIVITYDIAG_CIRCLE_START = StyleQuery.of3(SName.root, SName.element,
+			SName.activityDiagram, SName.circle, SName.start);
+
+	/** No sub-element -- the diagram's own root style. */
+	public static final StyleQuery EBNF = StyleQuery.of3(SName.root, SName.element, SName.ebnf);
+
+	/** No sub-element -- the diagram's own root style. */
+	public static final StyleQuery FILESDIAG = StyleQuery.of3(SName.root, SName.element, SName.filesDiagram);
+
+	public static final StyleQuery FILESDIAG_NOTE = StyleQuery.of3(SName.root, SName.element, SName.filesDiagram,
+			SName.note);
+
+	/** No sub-element -- the diagram's own root style. */
+	public static final StyleQuery PACKETDIAG = StyleQuery.of3(SName.root, SName.element, SName.packetdiagDiagram);
+
+	public static final StyleQuery PACKETDIAG_RECTANGLE = StyleQuery.of3(SName.root, SName.element,
+			SName.packetdiagDiagram, SName.rectangle);
+
+	public static final StyleQuery NWDIAG_GROUP = StyleQuery.of3(SName.root, SName.element, SName.nwdiagDiagram,
+			SName.group);
+
+	public static final StyleQuery COMPONENTDIAG_COMPONENT = StyleQuery.of3(SName.root, SName.element,
+			SName.componentDiagram, SName.component);
+
+	public static final StyleQuery GANTTDIAG_NOTE = StyleQuery.of3(SName.root, SName.element, SName.ganttDiagram,
+			SName.note);
+
+	/** No sub-element -- the diagram's own root style. */
+	public static final StyleQuery SEQUENCEDIAG = StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram);
+
+	/**
+	 * {@code partition}/{@code group} (a plain {@code group {}} block versus the dedicated
+	 * {@code partition} construct) and their headers, both the legacy flat selector and the
+	 * nested {@code header {}} form added for #2679 -- see {@code Grouping} and {@code Reference}
+	 * below for why each pair keeps a flat and a nested constant.
+	 */
+	public static final StyleQuery SEQUENCEDIAG_PARTITION = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.partition);
+
+	public static final StyleQuery SEQUENCEDIAG_GROUP = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.group);
+
+	public static final StyleQuery SEQUENCEDIAG_PARTITION_HEADER = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.partition, SName.header);
+
+	public static final StyleQuery SEQUENCEDIAG_GROUPHEADER = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.groupHeader);
+
+	public static final StyleQuery SEQUENCEDIAG_GROUP_HEADER = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.group, SName.header);
+
+	/** Pairs with {@code SEQUENCEDIAG_LIFELINE_DELAY} -- the other lifeline-decoration kind. */
+	public static final StyleQuery SEQUENCEDIAG_LIFELINE_DESTROY = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.lifeLine, SName.destroy);
+
+	/** The two note shapes, alongside the plain {@code SEQUENCEDIAG_NOTE}. */
+	public static final StyleQuery SEQUENCEDIAG_NOTE_HNOTE = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.note, SName.hnote);
+
+	public static final StyleQuery SEQUENCEDIAG_NOTE_RNOTE = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.note, SName.rnote);
+
+	/** {@code reference} and its header, flat and nested -- same shape as {@code SEQUENCEDIAG_GROUP*}. */
+	public static final StyleQuery SEQUENCEDIAG_REFERENCE = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.reference);
+
+	public static final StyleQuery SEQUENCEDIAG_REFERENCEHEADER = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.referenceHeader);
+
+	public static final StyleQuery SEQUENCEDIAG_REFERENCE_HEADER = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.reference, SName.header);
+
 }

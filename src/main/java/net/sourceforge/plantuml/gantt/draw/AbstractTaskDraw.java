@@ -61,7 +61,6 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleQueries;
@@ -214,9 +213,8 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	}
 
 	protected Opale getOpaleNote() {
-		final Style style = getStyleBuilder().getMergedStyle(StyleQuery
-				.of3(SName.root, SName.element, SName.ganttDiagram, SName.note)
-				.withStereotype(noteStereotype));
+		final Style style = getStyleBuilder()
+				.getMergedStyle(StyleQueries.GANTTDIAG_NOTE.withStereotype(noteStereotype));
 
 		final FontConfiguration fc = style.getFontConfiguration(getColorSet());
 

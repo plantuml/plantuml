@@ -55,8 +55,8 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.image.Opale;
 
@@ -164,8 +164,7 @@ public class FEntry implements Iterable<FEntry> {
 
 	private Opale createOpale(ISkinParam skinParam) {
 
-		final StyleQuery signature = StyleQuery.of3(SName.root, SName.element, SName.filesDiagram,
-				SName.note);
+		final StyleQuery signature = StyleQueries.FILESDIAG_NOTE;
 		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(signature);
 
 		final FontConfiguration fc = FontConfiguration.create(skinParam, style);

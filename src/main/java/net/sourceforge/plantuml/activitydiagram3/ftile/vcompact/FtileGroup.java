@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
 import net.sourceforge.plantuml.utils.MathUtils;
@@ -83,8 +84,7 @@ public class FtileGroup extends AbstractFtile {
 	private final double roundCorner;
 
 	final static public StyleQuery getStyleQuery(USymbol symbol) {
-		return StyleQuery.of3(SName.root, SName.element, SName.activityDiagram).addSNames(symbol.getSNames())
-				.addSName(SName.composite);
+		return StyleQueries.ACTIVITYDIAG.addSNames(symbol.getSNames()).addSName(SName.composite);
 	}
 
 	public FtileGroup(Ftile inner, Display title, HColor backColor, ISkinParam skinParam, USymbol type, Style style) {

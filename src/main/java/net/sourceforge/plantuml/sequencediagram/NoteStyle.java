@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.sequencediagram;
 
 
 import net.sourceforge.plantuml.skin.ComponentType;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 
@@ -67,12 +66,10 @@ public enum NoteStyle {
 
 	StyleQuery getStyleQuery() {
 		if (this == NoteStyle.HEXAGONAL)
-			return StyleQuery
-					.of3(SName.root, SName.element, SName.sequenceDiagram, SName.note, SName.hnote);
+			return StyleQueries.SEQUENCEDIAG_NOTE_HNOTE;
 
 		if (this == NoteStyle.BOX)
-			return StyleQuery
-					.of3(SName.root, SName.element, SName.sequenceDiagram, SName.note, SName.rnote);
+			return StyleQueries.SEQUENCEDIAG_NOTE_RNOTE;
 
 		return StyleQueries.SEQUENCEDIAG_NOTE;
 
