@@ -145,7 +145,7 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 	}
 
 	// Duplication from SvekEdge
-	final public StyleQuery getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
+	private StyleQuery getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
 		StyleQuery result = StyleQuery.of3(SName.root, SName.element, styleName, SName.arrow);
 		if (stereotype != null)
 			result = result.withStereotype(stereotype);

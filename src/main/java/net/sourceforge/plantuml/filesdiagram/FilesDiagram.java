@@ -59,7 +59,7 @@ public class FilesDiagram extends TitledDiagram {
 
 	private final FilesListing list;
 
-	public FilesDiagram(UmlSource source, StyleExtractor styleExtractor, PreprocessingArtifact preprocessing) {
+	FilesDiagram(UmlSource source, StyleExtractor styleExtractor, PreprocessingArtifact preprocessing) {
 		super(source, DiagramType.FILES, null, preprocessing);
 
 		final ISkinParam skinParam = getSkinParam();

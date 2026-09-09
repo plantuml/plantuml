@@ -77,12 +77,12 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return StyleQueries.ACTIVITYDIAG_ACTIVITY;
 	}
 
-	final public StyleQuery getDefaultStyleDefinitionDiamond() {
+	final protected StyleQuery getDefaultStyleDefinitionDiamond() {
 		return StyleQuery
 				.of3(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
 	}
 
-	final public StyleQuery getDefaultStyleDefinitionArrow() {
+	final protected StyleQuery getDefaultStyleDefinitionArrow() {
 		return StyleQueries.ACTIVITYDIAG_ARROW;
 	}
 

@@ -353,7 +353,7 @@ public class PacketDiagram extends TitledDiagram {
 	 *
 	 * @return the current diagram {@link Style}
 	 */
-	public Style getStyle() {
+	private Style getStyle() {
 		if (style == null) {
 			style = getSkinParam().getCurrentStyleBuilder()
 					.getMergedStyle(StyleQuery.of3(SName.root, SName.element, SName.packetdiagDiagram));

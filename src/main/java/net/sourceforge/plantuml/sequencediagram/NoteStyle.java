@@ -65,7 +65,7 @@ public enum NoteStyle {
 		return ComponentType.NOTE;
 	}
 
-	public StyleQuery getStyleQuery() {
+	StyleQuery getStyleQuery() {
 		if (this == NoteStyle.HEXAGONAL)
 			return StyleQuery
 					.of3(SName.root, SName.element, SName.sequenceDiagram, SName.note, SName.hnote);

@@ -63,7 +63,7 @@ public class Reference extends AbstractEvent implements EventWithNote {
 	final private Style style;
 	final private Style styleHeader;
 
-	public StyleQuery getDefaultStyleDefinition() {
+	private StyleQuery getDefaultStyleDefinition() {
 		return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.reference);
 	}
 
