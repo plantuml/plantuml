@@ -488,4 +488,7 @@ public final class StyleQueries {
 	public static final StyleQuery STATEDIAG_STATE_NAME = StyleQuery.of3(SName.root, SName.element,
 			SName.stateDiagram, SName.state, SName.name);
 
+	public static final StyleQuery COMPONENTDIAG_REQUIREMENT = StyleQuery.of3(SName.root, SName.element,
+			SName.componentDiagram, SName.requirement);
+
 }

@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -59,8 +60,7 @@ import net.sourceforge.plantuml.url.Url;
 
 public abstract class EntityImageStateCommon extends AbstractEntityImage {
 
-	public static final StyleQuery STYLE = StyleQuery
-			.of3(SName.root, SName.element, SName.stateDiagram, SName.state);
+	public static final StyleQuery STYLE = StyleQueries.STATEDIAG_STATE;
 
 	final protected TextBlock name;
 	final protected Url url;
