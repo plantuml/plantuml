@@ -56,7 +56,6 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockInEllipse;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
@@ -113,9 +112,8 @@ public class EntityImageChenAttribute extends AbstractEntityImage {
 	}
 
 	private static Style getStyleTitle(Entity group, ISkinParam skinParam) {
-		return skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQuery
-				.of3(SName.root, SName.element, SName.chenEerDiagram, SName.chenAttribute, SName.title)
-				.withStereotype(group.getStereotype()));
+		return skinParam.getCurrentStyleBuilder()
+				.getMergedStyle(StyleQueries.CHENEER_ATTRIBUTE_TITLE.withStereotype(group.getStereotype()));
 	}
 
 	@Override

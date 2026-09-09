@@ -67,8 +67,8 @@ import net.sourceforge.plantuml.klimt.shape.UHorizontalLine;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -201,11 +201,8 @@ public class EntityImageUseCase extends AbstractEntityImage {
 	public StyleQuery getStyleQuery() {
 		final LeafType type = getEntity().getLeafType();
 		if (type == LeafType.USECASE_BUSINESS)
-			return StyleQuery
-					.of3(SName.root, SName.element, SName.componentDiagram, SName.usecase, SName.business)
-					.withStereotype(getStereo());
-		return StyleQuery.of3(SName.root, SName.element, SName.componentDiagram, SName.usecase)
-				.withStereotype(getStereo());
+			return StyleQueries.COMPONENTDIAG_USECASE_BUSINESS.withStereotype(getStereo());
+		return StyleQueries.COMPONENTDIAG_USECASE.withStereotype(getStereo());
 	}
 
 	private HColor getLineColor() {

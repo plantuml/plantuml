@@ -61,6 +61,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 
 public final class ClusterHeader {
@@ -153,8 +154,7 @@ public final class ClusterHeader {
 		final StyleQuery signature;
 		final USymbol uSymbol = g.getUSymbol();
 		if (g.getGroupType() == GroupType.STATE)
-			signature = StyleQuery
-					.of3(SName.root, SName.element, SName.stateDiagram, SName.state, SName.name);
+			signature = StyleQueries.STATEDIAG_STATE_NAME;
 		else if (uSymbol != null)
 			signature = StyleQuery.of3(SName.root, SName.element, sname).addSNames(uSymbol.getSNames())
 					.addSNames(SName.composite, SName.title);

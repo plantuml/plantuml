@@ -88,6 +88,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
@@ -286,8 +287,7 @@ public class Cluster implements Moveable {
 	static public StyleQuery getDefaultStyleDefinition(SName diagramStyleName, USymbol symbol,
 			GroupType groupType) {
 		if (diagramStyleName == SName.stateDiagram)
-			return StyleQuery
-					.of3(SName.root, SName.element, SName.stateDiagram, SName.state, SName.group);
+			return StyleQueries.STATEDIAG_STATE_GROUP;
 		if (symbol != null)
 			return StyleQuery.of3(SName.root, SName.element, diagramStyleName, SName.group)
 					.addSNames(symbol.getSNames());

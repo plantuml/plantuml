@@ -65,8 +65,8 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Ports;
@@ -137,7 +137,7 @@ public class EntityImageJson extends AbstractEntityImage implements Stencil, Wit
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of3(SName.root, SName.element, SName.objectDiagram, SName.json);
+		return StyleQueries.OBJECTDIAG_JSON;
 	}
 
 	private Style getStyle() {
@@ -146,9 +146,8 @@ public class EntityImageJson extends AbstractEntityImage implements Stencil, Wit
 	}
 
 	private Style getStyleHeader() {
-		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery
-				.of3(SName.root, SName.element, SName.objectDiagram, SName.json, SName.header)
-				.withStereotype(getEntity().getStereotype()));
+		return getSkinParam().getCurrentStyleBuilder()
+				.getMergedStyle(StyleQueries.OBJECTDIAG_JSON_HEADER.withStereotype(getEntity().getStereotype()));
 	}
 
 	final public void drawU(UGraphic ug) {

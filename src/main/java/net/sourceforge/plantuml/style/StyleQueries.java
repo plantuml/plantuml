@@ -411,4 +411,81 @@ public final class StyleQueries {
 	public static final StyleQuery SEQUENCEDIAG_REFERENCE_HEADER = StyleQuery.of3(SName.root, SName.element,
 			SName.sequenceDiagram, SName.reference, SName.header);
 
+	/** {@code map}/{@code object}/{@code json} and their headers, from the three object-diagram shapes. */
+	public static final StyleQuery OBJECTDIAG_MAP = StyleQuery.of3(SName.root, SName.element, SName.objectDiagram,
+			SName.map);
+
+	public static final StyleQuery OBJECTDIAG_MAP_HEADER = StyleQuery.of3(SName.root, SName.element,
+			SName.objectDiagram, SName.map, SName.header);
+
+	public static final StyleQuery OBJECTDIAG_OBJECT = StyleQuery.of3(SName.root, SName.element, SName.objectDiagram,
+			SName.object);
+
+	public static final StyleQuery OBJECTDIAG_OBJECT_HEADER = StyleQuery.of3(SName.root, SName.element,
+			SName.objectDiagram, SName.object, SName.header);
+
+	public static final StyleQuery OBJECTDIAG_JSON = StyleQuery.of3(SName.root, SName.element, SName.objectDiagram,
+			SName.json);
+
+	public static final StyleQuery OBJECTDIAG_JSON_HEADER = StyleQuery.of3(SName.root, SName.element,
+			SName.objectDiagram, SName.json, SName.header);
+
+	public static final StyleQuery CLASSDIAG_ARROW = StyleQuery.of3(SName.root, SName.element, SName.classDiagram,
+			SName.arrow);
+
+	/** The plain and "business" use-case shapes. */
+	public static final StyleQuery COMPONENTDIAG_USECASE = StyleQuery.of3(SName.root, SName.element,
+			SName.componentDiagram, SName.usecase);
+
+	public static final StyleQuery COMPONENTDIAG_USECASE_BUSINESS = StyleQuery.of3(SName.root, SName.element,
+			SName.componentDiagram, SName.usecase, SName.business);
+
+	/**
+	 * The title style for each Chen-ER shape, alongside the plain {@code CHENEER_ATTRIBUTE}/
+	 * {@code _CIRCLE}/{@code _ENTITY} and the newly-added {@code CHENEER_RELATIONSHIP}.
+	 */
+	public static final StyleQuery CHENEER_ATTRIBUTE_TITLE = StyleQuery.of3(SName.root, SName.element,
+			SName.chenEerDiagram, SName.chenAttribute, SName.title);
+
+	public static final StyleQuery CHENEER_CIRCLE_TITLE = StyleQuery.of3(SName.root, SName.element,
+			SName.chenEerDiagram, SName.circle, SName.title);
+
+	public static final StyleQuery CHENEER_ENTITY_TITLE = StyleQuery.of3(SName.root, SName.element,
+			SName.chenEerDiagram, SName.chenEntity, SName.title);
+
+	public static final StyleQuery CHENEER_RELATIONSHIP = StyleQuery.of3(SName.root, SName.element,
+			SName.chenEerDiagram, SName.chenRelationship);
+
+	public static final StyleQuery CHENEER_RELATIONSHIP_TITLE = StyleQuery.of3(SName.root, SName.element,
+			SName.chenEerDiagram, SName.chenRelationship, SName.title);
+
+	public static final StyleQuery ACTIVITYDIAG_GROUP = StyleQuery.of3(SName.root, SName.element,
+			SName.activityDiagram, SName.group);
+
+	public static final StyleQuery TIMINGDIAG_HIGHLIGHT = StyleQuery.of3(SName.root, SName.element,
+			SName.timingDiagram, SName.highlight);
+
+	public static final StyleQuery TIMINGDIAG_CONSTRAINTARROW = StyleQuery.of3(SName.root, SName.element,
+			SName.timingDiagram, SName.constraintArrow);
+
+	public static final StyleQuery TIMINGDIAG_TIMEGRID = StyleQuery.of3(SName.root, SName.element,
+			SName.timingDiagram, SName.timegrid);
+
+	public static final StyleQuery TIMINGDIAG_TIMELINE = StyleQuery.of3(SName.root, SName.element,
+			SName.timingDiagram, SName.timeline);
+
+	public static final StyleQuery TIMINGDIAG_NOTE = StyleQuery.of3(SName.root, SName.element, SName.timingDiagram,
+			SName.note);
+
+	/**
+	 * The state-diagram special cases inside {@code Cluster.getDefaultStyleDefinition} and
+	 * {@code ClusterHeader.getSignature} -- the one branch of each that doesn't depend on the
+	 * caller-supplied diagram style name, alongside the plain {@code STATEDIAG_STATE}.
+	 */
+	public static final StyleQuery STATEDIAG_STATE_GROUP = StyleQuery.of3(SName.root, SName.element,
+			SName.stateDiagram, SName.state, SName.group);
+
+	public static final StyleQuery STATEDIAG_STATE_NAME = StyleQuery.of3(SName.root, SName.element,
+			SName.stateDiagram, SName.state, SName.name);
+
 }

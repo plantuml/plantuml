@@ -52,9 +52,9 @@ import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.utils.Direction;
 
@@ -145,7 +145,7 @@ public class TimeConstraint {
 	}
 
 	private StyleQuery getStyleSignature() {
-		return StyleQuery.of3(SName.root, SName.element, SName.timingDiagram, SName.constraintArrow);
+		return StyleQueries.TIMINGDIAG_CONSTRAINTARROW;
 	}
 
 	public double getConstraintHeight(StringBounder stringBounder) {

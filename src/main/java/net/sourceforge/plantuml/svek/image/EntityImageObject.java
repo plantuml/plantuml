@@ -66,8 +66,8 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Ports;
@@ -121,7 +121,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of3(SName.root, SName.element, SName.objectDiagram, SName.object);
+		return StyleQueries.OBJECTDIAG_OBJECT;
 	}
 
 	private Style getStyle() {
@@ -130,9 +130,8 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 	}
 
 	private Style getStyleHeader() {
-		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery
-				.of3(SName.root, SName.element, SName.objectDiagram, SName.object, SName.header)
-				.withStereotype(getEntity().getStereotype()));
+		return getSkinParam().getCurrentStyleBuilder()
+				.getMergedStyle(StyleQueries.OBJECTDIAG_OBJECT_HEADER.withStereotype(getEntity().getStereotype()));
 	}
 
 	private Display getUnderlinedName(Entity entity) {

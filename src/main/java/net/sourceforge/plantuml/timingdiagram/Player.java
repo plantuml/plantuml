@@ -74,9 +74,8 @@ public abstract class Player {
 	private final SName sname;
 
 	public final void addNote(TimeTick now, Display note, Position position, Stereotype stereotype) {
-		final StyleQuery signature = StyleQuery
-				.of3(SName.root, SName.element, SName.timingDiagram, SName.note);
-		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(signature.withStereotype(stereotype));
+		final Style style = skinParam.getCurrentStyleBuilder()
+				.getMergedStyle(StyleQueries.TIMINGDIAG_NOTE.withStereotype(stereotype));
 
 		this.notes.add(new TimingNote(now, this, note, position, skinParam, style));
 	}
