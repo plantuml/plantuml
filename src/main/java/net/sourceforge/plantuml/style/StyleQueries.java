@@ -217,4 +217,109 @@ public final class StyleQueries {
 	public static final StyleQuery VISIBILITYICON_PACKAGE = StyleQuery.of3(SName.root, SName.element,
 			SName.visibilityIcon, SName.package_);
 
+	/** Duplicated literally in two files -- {@code WBSTextBlock} and {@code WBSDiagram}. */
+	public static final StyleQuery WBSDIAG_ARROW = StyleQuery.of3(SName.root, SName.element, SName.wbsDiagram,
+			SName.arrow);
+
+	/** Duplicated literally in two files -- {@code EntityImageClassHeader} and {@code EntityImageClass}. */
+	public static final StyleQuery CLASSDIAG_CLASS_HEADER = StyleQuery.of3(SName.root, SName.element,
+			SName.classDiagram, SName.class_, SName.header);
+
+	/** No diagram context, same family as {@code DOCUMENT_HEADER}/{@code _FOOTER}/{@code _TITLE}. */
+	public static final StyleQuery DOCUMENT_MAINFRAME = StyleQuery.of3(SName.root, SName.document,
+			SName.mainframe);
+
+	public static final StyleQuery DOCUMENT_CAPTION = StyleQuery.of3(SName.root, SName.document, SName.caption);
+
+	/**
+	 * A mindmap node's shape ({@code Idea}), keyed by root/leaf and boxless -- a closed set the
+	 * same way {@code SPOT_*} and {@code VISIBILITYICON_*} are, one constant per combination
+	 * actually used.
+	 */
+	public static final StyleQuery MINDMAPDIAG_NODE = StyleQuery.of3(SName.root, SName.element, SName.mindmapDiagram,
+			SName.node);
+
+	public static final StyleQuery MINDMAPDIAG_NODE_ROOT = StyleQuery.of3(SName.root, SName.element,
+			SName.mindmapDiagram, SName.node, SName.rootNode);
+
+	public static final StyleQuery MINDMAPDIAG_NODE_ROOT_BOXLESS = StyleQuery.of3(SName.root, SName.element,
+			SName.mindmapDiagram, SName.node, SName.rootNode, SName.boxless);
+
+	public static final StyleQuery MINDMAPDIAG_NODE_LEAF = StyleQuery.of3(SName.root, SName.element,
+			SName.mindmapDiagram, SName.node, SName.leafNode);
+
+	public static final StyleQuery MINDMAPDIAG_NODE_LEAF_BOXLESS = StyleQuery.of3(SName.root, SName.element,
+			SName.mindmapDiagram, SName.node, SName.leafNode, SName.boxless);
+
+	public static final StyleQuery MINDMAPDIAG_NODE_BOXLESS = StyleQuery.of3(SName.root, SName.element,
+			SName.mindmapDiagram, SName.node, SName.boxless);
+
+	public static final StyleQuery MINDMAPDIAG_ARROW = StyleQuery.of3(SName.root, SName.element,
+			SName.mindmapDiagram, SName.arrow);
+
+	/** A WBS node's shape ({@code WElement}) -- same closed-set shape as {@code MINDMAPDIAG_NODE*}. */
+	public static final StyleQuery WBSDIAG_NODE = StyleQuery.of3(SName.root, SName.element, SName.wbsDiagram,
+			SName.node);
+
+	public static final StyleQuery WBSDIAG_NODE_ROOT = StyleQuery.of3(SName.root, SName.element, SName.wbsDiagram,
+			SName.node, SName.rootNode);
+
+	public static final StyleQuery WBSDIAG_NODE_ROOT_BOXLESS = StyleQuery.of3(SName.root, SName.element,
+			SName.wbsDiagram, SName.node, SName.rootNode, SName.boxless);
+
+	public static final StyleQuery WBSDIAG_NODE_LEAF = StyleQuery.of3(SName.root, SName.element, SName.wbsDiagram,
+			SName.node, SName.leafNode);
+
+	public static final StyleQuery WBSDIAG_NODE_LEAF_BOXLESS = StyleQuery.of3(SName.root, SName.element,
+			SName.wbsDiagram, SName.node, SName.leafNode, SName.boxless);
+
+	public static final StyleQuery WBSDIAG_NODE_BOXLESS = StyleQuery.of3(SName.root, SName.element, SName.wbsDiagram,
+			SName.node, SName.boxless);
+
+	/**
+	 * The participant kind icon ({@code ParticipantType}) -- actor/boundary/control/entity/
+	 * queue/database/collections -- a closed set alongside {@code SEQUENCEDIAG_PARTICIPANT}
+	 * itself (the plain, kind-less participant).
+	 */
+	public static final StyleQuery SEQUENCEDIAG_ACTOR = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.actor);
+
+	public static final StyleQuery SEQUENCEDIAG_BOUNDARY = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.boundary);
+
+	public static final StyleQuery SEQUENCEDIAG_CONTROL = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.control);
+
+	public static final StyleQuery SEQUENCEDIAG_ENTITY = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.entity);
+
+	public static final StyleQuery SEQUENCEDIAG_QUEUE = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.queue);
+
+	public static final StyleQuery SEQUENCEDIAG_DATABASE = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.database);
+
+	public static final StyleQuery SEQUENCEDIAG_COLLECTIONS = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.collections);
+
+	/**
+	 * Structural components ({@code ComponentType}) -- lifeline/activation box/separator/box/
+	 * newpage -- completing the sequence-diagram catalog alongside {@code SEQUENCEDIAG_NOTE}
+	 * and {@code SEQUENCEDIAG_PARTICIPANT}, which come from the same file.
+	 */
+	public static final StyleQuery SEQUENCEDIAG_LIFELINE = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.lifeLine);
+
+	public static final StyleQuery SEQUENCEDIAG_ACTIVATIONBOX = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.activationBox);
+
+	public static final StyleQuery SEQUENCEDIAG_SEPARATOR = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.separator);
+
+	public static final StyleQuery SEQUENCEDIAG_BOX = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.box);
+
+	public static final StyleQuery SEQUENCEDIAG_NEWPAGE = StyleQuery.of3(SName.root, SName.element,
+			SName.sequenceDiagram, SName.newpage);
+
 }

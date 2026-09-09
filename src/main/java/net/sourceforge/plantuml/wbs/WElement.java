@@ -52,9 +52,9 @@ import net.sourceforge.plantuml.skin.SkinParamColors;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.MergeStrategy;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.utils.Direction;
 
@@ -76,32 +76,20 @@ final public class WElement {
 	private StyleQuery getDefaultStyleDefinitionNode(int level) {
 		if (level == 0)
 			if (shape == IdeaShape.NONE)
-				return StyleQuery
-						.of3(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode,
-								SName.boxless)
-						.withStereotype(stereotype).addLevel(level);
+				return StyleQueries.WBSDIAG_NODE_ROOT_BOXLESS.withStereotype(stereotype).addLevel(level);
 			else
-				return StyleQuery
-						.of3(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode)
-						.withStereotype(stereotype).addLevel(level);
+				return StyleQueries.WBSDIAG_NODE_ROOT.withStereotype(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE && isLeaf())
-			return StyleQuery
-					.of3(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode,
-							SName.boxless)
-					.withStereotype(stereotype).addLevel(level);
+			return StyleQueries.WBSDIAG_NODE_LEAF_BOXLESS.withStereotype(stereotype).addLevel(level);
 
 		if (isLeaf())
-			return StyleQuery
-					.of3(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode)
-					.withStereotype(stereotype).addLevel(level);
+			return StyleQueries.WBSDIAG_NODE_LEAF.withStereotype(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE)
-			return StyleQuery.of3(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.boxless)
-					.withStereotype(stereotype).addLevel(level);
+			return StyleQueries.WBSDIAG_NODE_BOXLESS.withStereotype(stereotype).addLevel(level);
 
-		return StyleQuery.of3(SName.root, SName.element, SName.wbsDiagram, SName.node)
-				.withStereotype(stereotype).addLevel(level);
+		return StyleQueries.WBSDIAG_NODE.withStereotype(stereotype).addLevel(level);
 	}
 
 	public ISkinParam withBackColor(ISkinParam skinParam) {

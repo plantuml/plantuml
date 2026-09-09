@@ -45,9 +45,9 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.MergeStrategy;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.wbs.WElement;
 
@@ -66,33 +66,20 @@ class Idea {
 	private StyleQuery getDefaultStyleDefinitionNode(int level) {
 		if (level == 0)
 			if (shape == IdeaShape.NONE)
-				return StyleQuery
-						.of3(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode,
-								SName.boxless)
-						.withStereotype(stereotype).addLevel(level);
+				return StyleQueries.MINDMAPDIAG_NODE_ROOT_BOXLESS.withStereotype(stereotype).addLevel(level);
 			else
-				return StyleQuery
-						.of3(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode)
-						.withStereotype(stereotype).addLevel(level);
+				return StyleQueries.MINDMAPDIAG_NODE_ROOT.withStereotype(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE && children.size() == 0)
-			return StyleQuery
-					.of3(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode,
-							SName.boxless)
-					.withStereotype(stereotype).addLevel(level);
+			return StyleQueries.MINDMAPDIAG_NODE_LEAF_BOXLESS.withStereotype(stereotype).addLevel(level);
 
 		if (shape == IdeaShape.NONE)
-			return StyleQuery
-					.of3(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.boxless)
-					.withStereotype(stereotype).addLevel(level);
+			return StyleQueries.MINDMAPDIAG_NODE_BOXLESS.withStereotype(stereotype).addLevel(level);
 
 		if (children.size() == 0)
-			return StyleQuery
-					.of3(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode)
-					.withStereotype(stereotype).addLevel(level);
+			return StyleQueries.MINDMAPDIAG_NODE_LEAF.withStereotype(stereotype).addLevel(level);
 
-		return StyleQuery.of3(SName.root, SName.element, SName.mindmapDiagram, SName.node)
-				.withStereotype(stereotype).addLevel(level);
+		return StyleQueries.MINDMAPDIAG_NODE.withStereotype(stereotype).addLevel(level);
 	}
 
 	/**
@@ -115,8 +102,7 @@ class Idea {
 	}
 
 	public Style getStyleArrow() {
-		final StyleQuery defaultStyleDefinitionArrow = StyleQuery
-				.of3(SName.root, SName.element, SName.mindmapDiagram, SName.arrow)
+		final StyleQuery defaultStyleDefinitionArrow = StyleQueries.MINDMAPDIAG_ARROW
 				.withStereotype(stereotype).addLevel(level);
 		return styleBuilder.getMergedStyle(defaultStyleDefinitionArrow);
 	}

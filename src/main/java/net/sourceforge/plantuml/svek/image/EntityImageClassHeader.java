@@ -77,7 +77,7 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of3(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header);
+		return StyleQueries.CLASSDIAG_CLASS_HEADER;
 	}
 
 	public EntityImageClassHeader(Entity entity, PortionShower portionShower) {

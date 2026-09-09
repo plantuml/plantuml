@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.sequencediagram;
 
 
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.style.Styleable;
@@ -60,25 +59,25 @@ public enum ParticipantType implements Styleable {
 			return StyleQueries.SEQUENCEDIAG_PARTICIPANT;
 
 		if (this == ACTOR)
-			return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.actor);
+			return StyleQueries.SEQUENCEDIAG_ACTOR;
 
 		if (this == BOUNDARY)
-			return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.boundary);
+			return StyleQueries.SEQUENCEDIAG_BOUNDARY;
 
 		if (this == CONTROL)
-			return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.control);
+			return StyleQueries.SEQUENCEDIAG_CONTROL;
 
 		if (this == ENTITY)
-			return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.entity);
+			return StyleQueries.SEQUENCEDIAG_ENTITY;
 
 		if (this == QUEUE)
-			return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.queue);
+			return StyleQueries.SEQUENCEDIAG_QUEUE;
 
 		if (this == DATABASE)
-			return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.database);
+			return StyleQueries.SEQUENCEDIAG_DATABASE;
 
 		if (this == COLLECTIONS)
-			return StyleQuery.of3(SName.root, SName.element, SName.sequenceDiagram, SName.collections);
+			return StyleQueries.SEQUENCEDIAG_COLLECTIONS;
 
 		return null;
 	}

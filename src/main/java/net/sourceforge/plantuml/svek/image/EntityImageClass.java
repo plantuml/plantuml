@@ -58,7 +58,6 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UComment;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
@@ -171,8 +170,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	}
 
 	private Style getStyleHeader() {
-		return getEntity().getCurrentStyleBuilder().getMergedStyle(StyleQuery
-				.of3(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header) //
+		return getEntity().getCurrentStyleBuilder().getMergedStyle(StyleQueries.CLASSDIAG_CLASS_HEADER //
 				.withStereotype(getEntity().getStereotype()) //
 				.withStereostyles(getEntity().getStereostyles()));
 	}
