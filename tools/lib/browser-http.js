@@ -27,8 +27,7 @@ function tryServeMountedFile(res, requestPath, mount) {
     return false;
   const filePath = path.resolve(mount.dir, relativePath);
   const dirPrefix = mount.dir.endsWith(path.sep) ? mount.dir : mount.dir + path.sep;
-  if (filePath.toLowerCase() !== mount.dir.toLowerCase()
-    && !filePath.toLowerCase().startsWith(dirPrefix.toLowerCase()))
+  if (filePath !== mount.dir && !filePath.startsWith(dirPrefix))
     return false;
   if (!allowFile(relativePath, filePath))
     return false;
@@ -37,7 +36,13 @@ function tryServeMountedFile(res, requestPath, mount) {
 
   res.setHeader('content-type', mount.contentType || 'application/javascript');
   res.setHeader('cache-control', 'no-store');
-  fs.createReadStream(filePath).pipe(res);
+  const stream = fs.createReadStream(filePath);
+  stream.on('error', () => {
+    if (!res.headersSent)
+      res.statusCode = 404;
+    res.end();
+  });
+  stream.pipe(res);
   return true;
 }
 
