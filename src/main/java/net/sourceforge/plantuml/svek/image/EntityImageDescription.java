@@ -109,7 +109,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of3(SName.root, SName.element, getStyleName()).addSNames(symbol.getSNames());
+		return StyleQueries.TOTO1.addSName(getStyleName()).addSNames(symbol.getSNames());
 	}
 
 	public EntityImageDescription(Entity entity, PortionShower portionShower, Collection<Link> links,
@@ -143,19 +143,18 @@ public class EntityImageDescription extends AbstractEntityImage {
 		if (symbol instanceof USymbolActorBusiness)
 			queryTitle = StyleQueries.ACTOR_BUSINESS_TITLE.addSName(getStyleName());
 		else
-			queryTitle = StyleQuery.of3(SName.root, SName.element, getStyleName()).addSNames(symbol.getSNames())
+			queryTitle = StyleQueries.TOTO1.addSName(getStyleName()).addSNames(symbol.getSNames())
 					.addSName(SName.title);
 
 		final Stereotype stereotype = entity.getStereotype();
-		final Style styleTitle = getEntity().getCurrentStyleBuilder().getMergedStyle(queryTitle.withStereotype(stereotype))
-				.eventuallyOverride(colors);
+		final Style styleTitle = getEntity().getCurrentStyleBuilder()
+				.getMergedStyle(queryTitle.withStereotype(stereotype)).eventuallyOverride(colors);
 
-		final Style styleStereo = getEntity().getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of3(SName.root, SName.element, getStyleName()).addSNames(symbol.getSNames())
-						.addSName(SName.stereotype).forStereotypeItself(stereotype));
+		final Style styleStereo = getEntity().getCurrentStyleBuilder().getMergedStyle(StyleQueries.TOTO2
+				.addSName(getStyleName()).addSNames(symbol.getSNames()).forStereotypeItself(stereotype));
 
-		final Style style = getEntity().getCurrentStyleBuilder().getMergedStyle(getStyleQuery().withStereotype(stereotype))
-				.eventuallyOverride(colors);
+		final Style style = getEntity().getCurrentStyleBuilder()
+				.getMergedStyle(getStyleQuery().withStereotype(stereotype)).eventuallyOverride(colors);
 
 		final HColor forecolor = styleTitle.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 
