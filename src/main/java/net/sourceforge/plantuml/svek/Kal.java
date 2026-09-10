@@ -53,9 +53,8 @@ import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.utils.Direction;
 
 public class Kal implements UDrawable {
@@ -91,8 +90,7 @@ public class Kal implements UDrawable {
 		this.entity = entity;
 		this.link = link;
 		this.skinParam = skinParam;
-		this.style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQuery
-				.of3(SName.root, SName.element, SName.classDiagram, SName.class_, SName.qualified) //
+		this.style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.CLASSDIAG_CLASS_QUALIFIED //
 				.withStereotype(entity.getStereotype()) //
 				.withStereostyles(entity.getStereostyles()));
 

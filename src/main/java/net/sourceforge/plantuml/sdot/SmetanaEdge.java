@@ -66,8 +66,8 @@ import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.LineParam;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
@@ -253,8 +253,7 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 	}
 
 	private Style getStyle() {
-		final StyleQuery query = StyleQuery
-				.of3(SName.root, SName.element, diagramType().getStyleName(), SName.arrow)
+		final StyleQuery query = StyleQueries.ARROW.addSName(diagramType().getStyleName())
 				.withStereotype(link.getStereotype());
 		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);
 	}

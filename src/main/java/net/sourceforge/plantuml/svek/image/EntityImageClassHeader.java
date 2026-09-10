@@ -62,7 +62,6 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
@@ -134,8 +133,7 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 		if (generic == null) {
 			genericBlock = null;
 		} else {
-			final Style styleGeneric = getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery
-					.of3(SName.root, SName.element, SName.classDiagram, SName.class_, SName.generic) //
+			final Style styleGeneric = getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQueries.CLASSDIAG_CLASS_GENERIC //
 					.withStereotype(stereotype) //
 					.withStereostyles(entity.getStereostyles()));
 

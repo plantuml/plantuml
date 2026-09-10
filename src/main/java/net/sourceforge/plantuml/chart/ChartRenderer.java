@@ -1061,7 +1061,7 @@ public class ChartRenderer {
 
 	private StyleQuery getAxisStyleSignature(boolean horizontal) {
 		SName axisType = horizontal ? SName.hAxis : SName.vAxis;
-		return StyleQuery.of3(SName.root, SName.element, SName.chartDiagram, SName.axis, axisType);
+		return StyleQueries.CHARTDIAG_AXIS.addSName(axisType);
 	}
 
 	private StyleQuery getGridStyleSignature() {

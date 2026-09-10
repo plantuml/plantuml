@@ -556,4 +556,19 @@ public final class StyleQueries {
 	public static final StyleQuery COMPOSITE_TITLE = StyleQuery.of3(SName.root, SName.element, SName.composite,
 			SName.title);
 
+	public static final StyleQuery ARROW_CARDINALITY = StyleQuery.of3(SName.root, SName.element, SName.arrow,
+			SName.cardinality);
+
+	public static final StyleQuery CLASSDIAG_CLASS_QUALIFIED = StyleQuery.of3(SName.root, SName.element,
+			SName.classDiagram, SName.class_, SName.qualified);
+
+	public static final StyleQuery CLASSDIAG_CLASS_GENERIC = StyleQuery.of3(SName.root, SName.element,
+			SName.classDiagram, SName.class_, SName.generic);
+
+	public static final StyleQuery CHARTDIAG_AXIS = StyleQuery.of3(SName.root, SName.element, SName.chartDiagram,
+			SName.axis);
+
+	/** The bare root selector, e.g. for a style sheet's own top-level property check. */
+	public static final StyleQuery ROOT = StyleQuery.of3(SName.root);
+
 }

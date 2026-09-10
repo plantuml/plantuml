@@ -52,7 +52,6 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UHidden;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
@@ -109,8 +108,7 @@ public final class SvekResult implements IEntityImage {
 	}
 
 	private StyleQuery getDefaultStyleDefinition(Stereotype stereotype) {
-		StyleQuery result = StyleQuery
-				.of3(SName.root, SName.element, dotData.geDiagramType().getStyleName(), SName.arrow);
+		StyleQuery result = StyleQueries.ARROW.addSName(dotData.geDiagramType().getStyleName());
 
 		return result.withStereotype(stereotype);
 	}

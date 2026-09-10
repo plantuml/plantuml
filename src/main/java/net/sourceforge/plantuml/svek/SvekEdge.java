@@ -99,9 +99,9 @@ import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.extremity.Extremity;
 import net.sourceforge.plantuml.svek.extremity.ExtremityArrow;
@@ -814,8 +814,7 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 	}
 
 	private StyleQuery getDefaultStyleDefinition(Stereotype stereotype) {
-		final StyleQuery result = StyleQuery
-				.of3(SName.root, SName.element, diagramType().getStyleName(), SName.arrow);
+		final StyleQuery result = StyleQueries.ARROW.addSName(diagramType().getStyleName());
 
 		return result.withStereotype(stereotype);
 	}

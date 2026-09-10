@@ -114,7 +114,7 @@ public final class GraphvizImageBuilder {
 	}
 
 	final public StyleQuery getDefaultStyleDefinitionArrow(Stereotype stereotype) {
-		StyleQuery result = StyleQuery.of3(SName.root, SName.element, styleName, SName.arrow);
+		StyleQuery result = StyleQueries.ARROW.addSName(styleName);
 		if (stereotype != null)
 			result = result.withStereotype(stereotype);
 
@@ -122,8 +122,7 @@ public final class GraphvizImageBuilder {
 	}
 
 	final public StyleQuery getStyleArrowCardinality(Stereotype stereotype) {
-		StyleQuery result = StyleQuery
-				.of3(SName.root, SName.element, styleName, SName.arrow, SName.cardinality);
+		StyleQuery result = StyleQueries.ARROW_CARDINALITY.addSName(styleName);
 		if (stereotype != null)
 			result = result.withStereotype(stereotype);
 

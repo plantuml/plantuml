@@ -198,7 +198,7 @@ public final class StyleLoader {
 	 */
 	public static List<PName> getMissingRootProperties(StyleBuilder styleBuilder) {
 		final Style root = styleBuilder == null ? null
-				: styleBuilder.getMergedStyle(StyleQuery.of3(SName.root));
+				: styleBuilder.getMergedStyle(StyleQueries.ROOT);
 
 		final List<PName> result = new ArrayList<>();
 		for (PName property : MANDATORY_ROOT_PROPERTIES)
