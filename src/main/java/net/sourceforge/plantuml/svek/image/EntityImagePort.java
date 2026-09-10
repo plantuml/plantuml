@@ -70,7 +70,7 @@ public class EntityImagePort extends AbstractEntityImageBorder {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQueries.PORT.addSName(getStyleName());
+		return StyleQueries.PORT.add(getStyleName());
 	}
 
 	private boolean upPosition() {

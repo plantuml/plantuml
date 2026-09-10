@@ -138,14 +138,14 @@ public class TextBlockJson extends TextBlockMemoized {
 	private Style getStyleToUse(boolean header, Highlighted highlighted) {
 		final StyleQuery query;
 		if (header && highlighted != null)
-			query = StyleQueries.NODE_HEADER_HIGHLIGHT.addSName(diagramType)
+			query = StyleQueries.NODE_HEADER_HIGHLIGHT.add(diagramType)
 					.withStereotype(highlighted.getStereotype());
 		else if (highlighted != null)
-			query = StyleQueries.NODE_HIGHLIGHT.addSName(diagramType).withStereotype(highlighted.getStereotype());
+			query = StyleQueries.NODE_HIGHLIGHT.add(diagramType).withStereotype(highlighted.getStereotype());
 		else if (header)
-			query = StyleQueries.NODE_HEADER.addSName(diagramType);
+			query = StyleQueries.NODE_HEADER.add(diagramType);
 		else
-			query = StyleQueries.NODE.addSName(diagramType);
+			query = StyleQueries.NODE.add(diagramType);
 
 		return styleBuilder.getMergedStyle(query);
 	}
@@ -264,7 +264,7 @@ public class TextBlockJson extends TextBlockMemoized {
 		final double widthColB = getWidthColB(stringBounder);
 
 		double y = 0;
-		final Style styleNode = styleBuilder.getMergedStyle(StyleQueries.NODE.addSName(diagramType));
+		final Style styleNode = styleBuilder.getMergedStyle(StyleQueries.NODE.add(diagramType));
 		final UGraphic ugNode = styleNode.applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet());
 		for (Line line : lines) {
 			final double heightOfRow = line.getHeightOfRow(stringBounder);
@@ -281,7 +281,7 @@ public class TextBlockJson extends TextBlockMemoized {
 		ugNode.apply(backColor.bg()).apply(backColor).draw(fullNodeRectangle);
 
 		final Style styleSeparator = skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleQueries.NODE_SEPARATOR.addSName(diagramType));
+				.getMergedStyle(StyleQueries.NODE_SEPARATOR.add(diagramType));
 		final UGraphic ugSeparator = styleSeparator.applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet());
 
 		y = 0;
@@ -291,7 +291,7 @@ public class TextBlockJson extends TextBlockMemoized {
 			if (line.highlighted != null) {
 				final URectangle back = URectangle.build(trueWidth - 2, heightOfRow).rounded(4);
 				final Style styleNodeHighlight = styleBuilder.getMergedStyle(StyleQueries.NODE_HIGHLIGHT
-						.addSName(diagramType).withStereotype(line.highlighted.getStereotype()));
+						.add(diagramType).withStereotype(line.highlighted.getStereotype()));
 				final HColor cellBackColor = styleNodeHighlight.value(PName.BackGroundColor)
 						.asColor(skinParam.getIHtmlColorSet());
 				ugline.apply(cellBackColor).apply(cellBackColor.bg()).apply(new UTranslate(1.5, 0)).draw(back);

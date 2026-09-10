@@ -69,7 +69,7 @@ public class EntityImageAssociation extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQueries.DIAMOND.addSName(getStyleName());
+		return StyleQueries.DIAMOND.add(getStyleName());
 	}
 
 	final public void drawU(UGraphic ug) {

@@ -116,11 +116,11 @@ public class SmetanaForJson {
 	}
 
 	private Style getStyleArrow() {
-		return skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.ARROW.addSName(getDiagramType()));
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.ARROW.add(getDiagramType()));
 	}
 
 	private Style getStyleNode() {
-		return skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.NODE.addSName(getDiagramType()));
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.NODE.add(getDiagramType()));
 	}
 
 	private ST_Agnode_s manageOneNode(Globals zz, JsonValue current, List<Highlighted> highlighted) {

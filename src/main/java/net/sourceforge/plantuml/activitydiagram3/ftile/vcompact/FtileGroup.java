@@ -84,7 +84,7 @@ public class FtileGroup extends AbstractFtile {
 	private final double roundCorner;
 
 	final static public StyleQuery getStyleQuery(USymbol symbol) {
-		return StyleQueries.ACTIVITYDIAG.addSNames(symbol.getSNames()).addSName(SName.composite);
+		return StyleQueries.ACTIVITYDIAG.addSNames(symbol.getSNames()).add(SName.composite);
 	}
 
 	public FtileGroup(Ftile inner, Display title, HColor backColor, ISkinParam skinParam, USymbol type, Style style) {

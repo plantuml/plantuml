@@ -138,7 +138,7 @@ public class MyElkEdge implements UDrawable {
 	}
 
 	private Style getStyle() {
-		final StyleQuery result = StyleQueries.ARROW.addSName(diagram.getDiagramType().getStyleName())
+		final StyleQuery result = StyleQueries.ARROW.add(diagram.getDiagramType().getStyleName())
 				.withStereotype(link.getStereotype());
 		return diagram.getSkinParam().getCurrentStyleBuilder().getMergedStyle(result);
 	}

@@ -37,6 +37,12 @@ package net.sourceforge.plantuml.style;
 
 public final class StyleQueries {
 
+	public static final StyleQuery ROOT = StyleQuery.of3(SName.root);
+
+	public static final StyleQuery ELEMENT = StyleQuery.of3(SName.root, SName.element);
+
+	public static final StyleQuery STEREOTYPE = StyleQuery.of3(SName.root, SName.element, SName.stereotype);
+
 	public static final StyleQuery ACTIVITYDIAG_ACTIVITY_ARROW = StyleQuery.of3(SName.root, SName.element,
 			SName.activityDiagram, SName.activity, SName.arrow);
 
@@ -607,17 +613,5 @@ public final class StyleQueries {
 
 	public static final StyleQuery CHARTDIAG_AXIS = StyleQuery.of3(SName.root, SName.element, SName.chartDiagram,
 			SName.axis);
-
-	/**
-	 * The bare root selector, e.g. for a style sheet's own top-level property
-	 * check.
-	 */
-	public static final StyleQuery ROOT = StyleQuery.of3(SName.root);
-
-	/** The bare root+element+stereotype prefix, for a caller adding only a dynamic diagram type. */
-	public static final StyleQuery STEREOTYPE = StyleQuery.of3(SName.root, SName.element, SName.stereotype);
-
-	/** The bare root+element prefix, for callers whose whole sub-selector is dynamic. */
-	public static final StyleQuery ELEMENT = StyleQuery.of3(SName.root, SName.element);
 
 }

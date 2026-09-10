@@ -90,12 +90,12 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 	}
 
 	public static Style getStyleStateName(Stereotype stereotype, StyleBuilder styleBuilder) {
-		final StyleQuery toto1 = STYLE.addSName(SName.name);
+		final StyleQuery toto1 = STYLE.add(SName.name);
 		return styleBuilder.getMergedStyle(toto1.withStereotype(stereotype));
 	}
 
 	public static Style getStyleStateDescription(Stereotype stereotype, StyleBuilder styleBuilder) {
-		return styleBuilder.getMergedStyle(STYLE.addSName(SName.description).withStereotype(stereotype));
+		return styleBuilder.getMergedStyle(STYLE.add(SName.description).withStereotype(stereotype));
 	}
 
 	public static Style getStyleState(Stereotype stereotype, StyleBuilder styleBuilder) {
@@ -103,7 +103,7 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 	}
 
 	public static Style getStyleStateBody(Stereotype stereotype, StyleBuilder styleBuilder) {
-		return styleBuilder.getMergedStyle(STYLE.addSName(SName.body).withStereotype(stereotype));
+		return styleBuilder.getMergedStyle(STYLE.add(SName.body).withStereotype(stereotype));
 	}
 
 	final protected Style getStyleState() {
@@ -112,7 +112,7 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 
 	final protected Style getStyleStateDescription() {
 		return getSkinParam().getCurrentStyleBuilder()
-				.getMergedStyle(STYLE.addSName(SName.name).withStereotype(getEntity().getStereotype()));
+				.getMergedStyle(STYLE.add(SName.name).withStereotype(getEntity().getStereotype()));
 	}
 
 	final public ShapeType getShapeType() {

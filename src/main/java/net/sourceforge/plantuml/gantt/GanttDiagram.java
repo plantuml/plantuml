@@ -204,7 +204,7 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 
 	@Override
 	public final Style getStyle(SName param) {
-		return getCurrentStyleBuilder().getMergedStyle(StyleQueries.GANTTDIAG.addSName(param));
+		return getCurrentStyleBuilder().getMergedStyle(StyleQueries.GANTTDIAG.add(param));
 	}
 
 	@Override

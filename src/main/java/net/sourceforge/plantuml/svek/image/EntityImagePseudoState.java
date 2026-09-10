@@ -68,7 +68,7 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQueries.DIAMOND.addSName(getStyleName());
+		return StyleQueries.DIAMOND.add(getStyleName());
 	}
 
 	public EntityImagePseudoState(Entity entity, String historyText) {

@@ -95,7 +95,7 @@ public abstract class Player {
 
 	final protected Style getStyle() {
 		return getSkinParam().getCurrentStyleBuilder()
-				.getMergedStyle(StyleQueries.TIMINGDIAG.addSName(sname).withStereotype(stereotype));
+				.getMergedStyle(StyleQueries.TIMINGDIAG.add(sname).withStereotype(stereotype));
 	}
 
 	public final List<TimingNote> getNotes() {

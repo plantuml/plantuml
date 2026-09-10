@@ -318,7 +318,7 @@ public class NwDiagram extends TitledDiagram {
 	}
 
 	private StyleQuery getStyleDefinitionNetwork(SName sname) {
-		return StyleQueries.NWDIAG.addSName(sname);
+		return StyleQueries.NWDIAG.add(sname);
 	}
 
 	private TextBlock toTextBlockForNetworkName(String name, String s) {

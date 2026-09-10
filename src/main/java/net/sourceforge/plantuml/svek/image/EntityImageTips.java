@@ -88,7 +88,7 @@ public class EntityImageTips extends AbstractEntityImage {
 	}
 
 	private StyleQuery getStyleQueryFor(Stereotype stereotype) {
-		return StyleQueries.NOTE.addSName(getStyleName()).withStereotype(stereotype);
+		return StyleQueries.NOTE.add(getStyleName()).withStereotype(stereotype);
 	}
 
 	private HColor getNoteBackgroundColor(Tip tip, Style style) {

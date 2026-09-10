@@ -152,7 +152,7 @@ public class NServer {
 	}
 
 	private StyleQuery getStyleDefinition(SName sname) {
-		return StyleQueries.NWDIAG.addSName(sname);
+		return StyleQueries.NWDIAG.add(sname);
 	}
 
 	private FontConfiguration getFontConfiguration(SName sname) {

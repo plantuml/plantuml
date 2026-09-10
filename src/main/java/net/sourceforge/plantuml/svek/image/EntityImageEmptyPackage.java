@@ -85,7 +85,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQueries.PACKAGE_TITLE.addSName(getStyleName());
+		return StyleQueries.PACKAGE_TITLE.add(getStyleName());
 	}
 
 	private Style getStyle() {

@@ -48,7 +48,7 @@ public class EntityImageLegend {
 	public static TextBlock create(Display note, ISkinParam skinParam) {
 
 		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.DOCUMENT
-				.addSName(SName.legend).addSName(skinParam.getDiagramType().getStyleName()));
+				.add(SName.legend).add(skinParam.getDiagramType().getStyleName()));
 
 		return style.createTextBlockBordered(note, skinParam.getIHtmlColorSet(), skinParam, Style.ID_LEGEND,
 				style.wrapWidth());

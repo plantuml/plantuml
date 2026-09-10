@@ -67,7 +67,7 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQueries.CIRCLE.addSName(getStyleName()).withStereotype(getStereo());
+		return StyleQueries.CIRCLE.add(getStyleName()).withStereotype(getStereo());
 	}
 
 	private UStroke getUStroke() {

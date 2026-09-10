@@ -204,7 +204,7 @@ public enum FontParam {
 		if (this == RECTANGLE || this == NODE) {
 			return StyleQueries.COMPONENTDIAG_COMPONENT;
 		}
-		return StyleQueries.COMPONENT.addSName(diagramType);
+		return StyleQueries.COMPONENT.add(diagramType);
 //		System.err.println("Warning " + this);
 //		throw new UnsupportedOperationException();
 	}

@@ -133,7 +133,7 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 	}
 
 	private StyleQuery getStyleDefinitionNetwork(SName sname) {
-		return StyleQueries.NWDIAG.addSName(sname);
+		return StyleQueries.NWDIAG.add(sname);
 	}
 
 	private void drawNetworkTube(UGraphic ug) {

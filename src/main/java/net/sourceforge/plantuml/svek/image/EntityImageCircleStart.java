@@ -54,7 +54,7 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQueries.CIRCLE_START.addSName(getSkinParam().getDiagramType().getStyleName());
+		return StyleQueries.CIRCLE_START.add(getSkinParam().getDiagramType().getStyleName());
 	}
 
 	public EntityImageCircleStart(Entity entity) {

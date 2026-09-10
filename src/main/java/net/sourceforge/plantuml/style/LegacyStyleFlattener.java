@@ -102,7 +102,7 @@ final class LegacyStyleFlattener {
 			List<Style> result) {
 		for (Map.Entry<SName, MergedStyleNode> ent : children.entrySet()) {
 			final MergedStyleNode child = ent.getValue();
-			StyleQuery childSignature = pathSoFar.addSName(ent.getKey());
+			StyleQuery childSignature = pathSoFar.add(ent.getKey());
 			if (child.isStar())
 				childSignature = childSignature.addStar();
 			flattenNode(child, childSignature, result);

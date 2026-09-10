@@ -109,7 +109,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQueries.ELEMENT.addSName(getStyleName()).addSNames(symbol.getSNames());
+		return StyleQueries.ELEMENT.add(getStyleName()).addSNames(symbol.getSNames());
 	}
 
 	public EntityImageDescription(Entity entity, PortionShower portionShower, Collection<Link> links,
@@ -141,17 +141,17 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		final StyleQuery queryTitle;
 		if (symbol instanceof USymbolActorBusiness)
-			queryTitle = StyleQueries.ACTOR_BUSINESS_TITLE.addSName(getStyleName());
+			queryTitle = StyleQueries.ACTOR_BUSINESS_TITLE.add(getStyleName());
 		else
-			queryTitle = StyleQueries.ELEMENT.addSName(getStyleName()).addSNames(symbol.getSNames())
-					.addSName(SName.title);
+			queryTitle = StyleQueries.ELEMENT.add(getStyleName()).addSNames(symbol.getSNames())
+					.add(SName.title);
 
 		final Stereotype stereotype = entity.getStereotype();
 		final Style styleTitle = getEntity().getCurrentStyleBuilder()
 				.getMergedStyle(queryTitle.withStereotype(stereotype)).eventuallyOverride(colors);
 
 		final Style styleStereo = getEntity().getCurrentStyleBuilder().getMergedStyle(StyleQueries.STEREOTYPE
-				.addSName(getStyleName()).addSNames(symbol.getSNames()).forStereotypeItself(stereotype));
+				.add(getStyleName()).addSNames(symbol.getSNames()).forStereotypeItself(stereotype));
 
 		final Style style = getEntity().getCurrentStyleBuilder()
 				.getMergedStyle(getStyleQuery().withStereotype(stereotype)).eventuallyOverride(colors);

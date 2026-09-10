@@ -108,7 +108,7 @@ public final class SvekResult implements IEntityImage {
 	}
 
 	private StyleQuery getDefaultStyleDefinition(Stereotype stereotype) {
-		StyleQuery result = StyleQueries.ARROW.addSName(dotData.geDiagramType().getStyleName());
+		StyleQuery result = StyleQueries.ARROW.add(dotData.geDiagramType().getStyleName());
 
 		return result.withStereotype(stereotype);
 	}

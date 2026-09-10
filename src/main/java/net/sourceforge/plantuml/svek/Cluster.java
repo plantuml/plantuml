@@ -289,11 +289,11 @@ public class Cluster implements Moveable {
 		if (diagramStyleName == SName.stateDiagram)
 			return StyleQueries.STATEDIAG_STATE_GROUP;
 		if (symbol != null)
-			return StyleQueries.GROUP.addSName(diagramStyleName).addSNames(symbol.getSNames());
+			return StyleQueries.GROUP.add(diagramStyleName).addSNames(symbol.getSNames());
 		if (groupType == GroupType.PACKAGE)
-			return StyleQueries.PACKAGE_GROUP.addSName(diagramStyleName);
+			return StyleQueries.PACKAGE_GROUP.add(diagramStyleName);
 
-		return StyleQueries.GROUP.addSName(diagramStyleName);
+		return StyleQueries.GROUP.add(diagramStyleName);
 	}
 
 	public void drawU(UGraphic ug) {
@@ -464,13 +464,13 @@ public class Cluster implements Moveable {
 		if (northBackcolor == null) {
 			northBackcolor = styleBuilder
 					.getMergedStyle(
-							EntityImageStateCommon.STYLE.addSName(SName.name).withStereotype(group.getStereotype()))
+							EntityImageStateCommon.STYLE.add(SName.name).withStereotype(group.getStereotype()))
 					.value(PName.BackGroundColor).asColor(colorSet);
-			centerBackColor = styleBuilder.getMergedStyle(EntityImageStateCommon.STYLE.addSName(SName.description)
+			centerBackColor = styleBuilder.getMergedStyle(EntityImageStateCommon.STYLE.add(SName.description)
 					.withStereotype(group.getStereotype())).value(PName.BackGroundColor).asColor(colorSet);
 			southBackcolor = styleBuilder
 					.getMergedStyle(
-							EntityImageStateCommon.STYLE.addSName(SName.body).withStereotype(group.getStereotype()))
+							EntityImageStateCommon.STYLE.add(SName.body).withStereotype(group.getStereotype()))
 					.value(PName.BackGroundColor).asColor(colorSet);
 		}
 

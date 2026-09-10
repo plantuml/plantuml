@@ -84,7 +84,7 @@ public class EntityImageState2 extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQueries.STATE.addSName(getStyleName());
+		return StyleQueries.STATE.add(getStyleName());
 	}
 
 	public ShapeType getShapeType() {
