@@ -491,4 +491,12 @@ public final class StyleQueries {
 	public static final StyleQuery COMPONENTDIAG_REQUIREMENT = StyleQuery.of3(SName.root, SName.element,
 			SName.componentDiagram, SName.requirement);
 
+	/**
+	 * The diagram-type-less base for a note, meant to be completed with
+	 * {@code .addSName(sname)} once the caller-supplied diagram style name is known --
+	 * {@link StyleQuery}'s atoms are an unordered set, so this is exactly equivalent to
+	 * {@code StyleQuery.of3(SName.root, SName.element, sname, SName.note)}.
+	 */
+	public static final StyleQuery NOTE = StyleQuery.of3(SName.root, SName.element, SName.note);
+
 }
