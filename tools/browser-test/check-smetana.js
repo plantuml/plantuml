@@ -46,7 +46,7 @@ window.__wasm = 0;
 
 const pageHtml = withViz => createModulePageHtml({
   headHtml: hook,
-  bodyHtml: withViz ? maybeScriptTag(dir, 'viz-global.js') : '',
+  bodyHtml: withViz ? maybeScriptTag(dir, 'viz-global.js', '/viz-global.js') : '',
   modulePath: `/${file}`,
   moduleBody: `window.__render=(lines,id)=>render(lines,id,{maxSvgSize:98304});
 window.__ready=1;`,

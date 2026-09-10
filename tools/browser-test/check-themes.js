@@ -38,7 +38,7 @@ const NAMES = Object.keys(THEMES).sort();
 
 const pageHtml = createModulePageHtml({
   modulePath: `/${file}`,
-  bodyHtml: maybeScriptTag(dir, 'viz-global.js'),
+  bodyHtml: maybeScriptTag(dir, 'viz-global.js', '/viz-global.js'),
   moduleBody: `window.__render=(lines,id)=>render(lines,id,{maxSvgSize:98304});
 window.__ready=1;`,
 });

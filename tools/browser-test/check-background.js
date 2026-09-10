@@ -23,7 +23,7 @@ const { dir, file } = parseTargetArg(process.argv, 'node check-background.js tar
 
 const pageHtml = createModulePageHtml({
   modulePath: `/${file}`,
-  bodyHtml: maybeScriptTag(dir, 'viz-global.js'),
+  bodyHtml: maybeScriptTag(dir, 'viz-global.js', '/viz-global.js'),
   moduleBody: `window.__render=(lines,id,opts)=>render(lines,id,Object.assign({maxSvgSize:98304},opts||{}));
 window.__ready=1;`,
 });

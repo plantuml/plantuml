@@ -48,7 +48,7 @@ const stub = `<script>window.Viz = {};</script>`;
 
 const pageHtml = mode => createModulePageHtml({
   headHtml: hook,
-  bodyHtml: mode === 'viz' ? maybeScriptTag(dir, 'viz-global.js') : mode === 'stub' ? stub : '',
+  bodyHtml: mode === 'viz' ? maybeScriptTag(dir, 'viz-global.js', '/viz-global.js') : mode === 'stub' ? stub : '',
   modulePath: `/${file}`,
   moduleBody: `window.__render=(lines,id)=>render(lines,id,{maxSvgSize:98304});
 window.__ready=1;`,

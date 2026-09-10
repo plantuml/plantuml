@@ -10,9 +10,14 @@ function send(res, body, contentType) {
   res.end(body);
 }
 
+function matchesMountPrefix(requestPath, prefix) {
+  return requestPath === prefix
+    || requestPath.startsWith(prefix.endsWith('/') ? prefix : prefix + '/');
+}
+
 function tryServeMountedFile(res, requestPath, mount) {
   const allowFile = mount.allowFile || (request => /\.js$/i.test(request));
-  if (!requestPath.startsWith(mount.prefix))
+  if (!matchesMountPrefix(requestPath, mount.prefix))
     return false;
 
   const relativePath = requestPath.slice(mount.prefix.length).replace(/^\/+/, '');

@@ -44,7 +44,7 @@ const brokenStub = `<script>
 window.Viz = { instance: function () { return Promise.reject(new Error('Viz failed to initialize (simulated)')); } };
 </script>`;
 const pageHtml = mode => createModulePageHtml({
-  bodyHtml: mode === 'viz' ? maybeScriptTag(dir, 'viz-global.js') : mode === 'broken' ? brokenStub : '',
+  bodyHtml: mode === 'viz' ? maybeScriptTag(dir, 'viz-global.js', '/viz-global.js') : mode === 'broken' ? brokenStub : '',
   modulePath: `/${file}`,
   moduleBody: `window.__render=(lines,id)=>render(lines,id,{maxSvgSize:98304});
 window.__ready=1;`,
