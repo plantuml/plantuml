@@ -4,7 +4,20 @@ const fs = require('fs');
 const path = require('path');
 
 function loadPlaywright() {
-  return require(process.env.BENCH_PW || 'playwright');
+  if (process.env.BENCH_PW)
+    return require(process.env.BENCH_PW);
+
+  try {
+    return require('playwright');
+  } catch (e) {
+    const resolved = require.resolve('playwright', {
+      paths: [
+        path.join(__dirname, '..', 'browser-test'),
+        path.join(__dirname, '..', 'perf-bench'),
+      ],
+    });
+    return require(resolved);
+  }
 }
 
 function maybeScriptTag(dir, fileName, requestPath) {
