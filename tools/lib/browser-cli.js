@@ -13,6 +13,10 @@ function resolveEngineSpec(spec) {
 }
 
 function parseTargetArg(argv, usage) {
+  if (argv.length <= 2) {
+    console.error('usage: ' + usage);
+    process.exit(2);
+  }
   let target = null;
   for (let i = 2; i < argv.length; i++) {
     const m = argv[i].match(/^target=(.+)$/);

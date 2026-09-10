@@ -25,11 +25,11 @@ function tryServeMountedFile(res, requestPath, mount) {
     return false;
   if (relativePath.split(/[\\/]+/).includes('..'))
     return false;
-  const filePath = path.resolve(mount.dir, relativePath);
-  const relativeCheck = path.relative(mount.dir, filePath);
-  if (relativeCheck === '..'
-    || relativeCheck.startsWith('..' + path.sep) || path.isAbsolute(relativeCheck))
+  const joinedPath = path.join(mount.dir, relativePath);
+  const dirPrefix = mount.dir.endsWith(path.sep) ? mount.dir : mount.dir + path.sep;
+  if (joinedPath !== mount.dir && !joinedPath.toLowerCase().startsWith(dirPrefix.toLowerCase()))
     return false;
+  const filePath = path.resolve(joinedPath);
   if (!allowFile(relativePath, filePath))
     return false;
   if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile())
