@@ -61,6 +61,8 @@ public final class StyleQueries {
 
 	public static final StyleQuery GANTTDIAG = ELEMENT.add(SName.ganttDiagram);
 
+	public static final StyleQuery SEQUENCEDIAG = ELEMENT.add(SName.sequenceDiagram);
+
 	public static final StyleQuery ACTIVITYDIAG_ACTIVITY_ARROW = ACTIVITYDIAG.add(SName.activity, SName.arrow);
 
 	public static final StyleQuery ACTIVITYDIAG_ARROW = ACTIVITYDIAG.add(SName.arrow);
@@ -83,7 +85,7 @@ public final class StyleQueries {
 
 	public static final StyleQuery STATEDIAG_STATE = ELEMENT.add(SName.stateDiagram, SName.state);
 
-	public static final StyleQuery SEQUENCEDIAG_ARROW = ELEMENT.add(SName.sequenceDiagram, SName.arrow);
+	public static final StyleQuery SEQUENCEDIAG_ARROW = SEQUENCEDIAG.add(SName.arrow);
 
 	public static final StyleQuery TIMINGDIAG = ELEMENT.add(SName.timingDiagram);
 
@@ -99,12 +101,11 @@ public final class StyleQueries {
 
 	public static final StyleQuery TIMINGDIAG_ARROW = ELEMENT.add(SName.timingDiagram, SName.arrow);
 
-	public static final StyleQuery SEQUENCEDIAG_NOTE = ELEMENT.add(SName.sequenceDiagram, SName.note);
+	public static final StyleQuery SEQUENCEDIAG_NOTE = SEQUENCEDIAG.add(SName.note);
 
-	public static final StyleQuery SEQUENCEDIAG_PARTICIPANT = ELEMENT.add(SName.sequenceDiagram, SName.participant);
+	public static final StyleQuery SEQUENCEDIAG_PARTICIPANT = SEQUENCEDIAG.add(SName.participant);
 
-	public static final StyleQuery SEQUENCEDIAG_LIFELINE_DELAY = ELEMENT.add(SName.sequenceDiagram, SName.lifeLine,
-			SName.delay);
+	public static final StyleQuery SEQUENCEDIAG_LIFELINE_DELAY = SEQUENCEDIAG.add(SName.lifeLine, SName.delay);
 
 	public static final StyleQuery CHARTDIAG_BAR = ELEMENT.add(SName.chartDiagram, SName.bar);
 
@@ -204,29 +205,29 @@ public final class StyleQueries {
 
 	public static final StyleQuery WBSDIAG_NODE_BOXLESS = ELEMENT.add(SName.wbsDiagram, SName.node, SName.boxless);
 
-	public static final StyleQuery SEQUENCEDIAG_ACTOR = ELEMENT.add(SName.sequenceDiagram, SName.actor);
+	public static final StyleQuery SEQUENCEDIAG_ACTOR = SEQUENCEDIAG.add(SName.actor);
 
-	public static final StyleQuery SEQUENCEDIAG_BOUNDARY = ELEMENT.add(SName.sequenceDiagram, SName.boundary);
+	public static final StyleQuery SEQUENCEDIAG_BOUNDARY = SEQUENCEDIAG.add(SName.boundary);
 
-	public static final StyleQuery SEQUENCEDIAG_CONTROL = ELEMENT.add(SName.sequenceDiagram, SName.control);
+	public static final StyleQuery SEQUENCEDIAG_CONTROL = SEQUENCEDIAG.add(SName.control);
 
-	public static final StyleQuery SEQUENCEDIAG_ENTITY = ELEMENT.add(SName.sequenceDiagram, SName.entity);
+	public static final StyleQuery SEQUENCEDIAG_ENTITY = SEQUENCEDIAG.add(SName.entity);
 
-	public static final StyleQuery SEQUENCEDIAG_QUEUE = ELEMENT.add(SName.sequenceDiagram, SName.queue);
+	public static final StyleQuery SEQUENCEDIAG_QUEUE = SEQUENCEDIAG.add(SName.queue);
 
-	public static final StyleQuery SEQUENCEDIAG_DATABASE = ELEMENT.add(SName.sequenceDiagram, SName.database);
+	public static final StyleQuery SEQUENCEDIAG_DATABASE = SEQUENCEDIAG.add(SName.database);
 
-	public static final StyleQuery SEQUENCEDIAG_COLLECTIONS = ELEMENT.add(SName.sequenceDiagram, SName.collections);
+	public static final StyleQuery SEQUENCEDIAG_COLLECTIONS = SEQUENCEDIAG.add(SName.collections);
 
-	public static final StyleQuery SEQUENCEDIAG_LIFELINE = ELEMENT.add(SName.sequenceDiagram, SName.lifeLine);
+	public static final StyleQuery SEQUENCEDIAG_LIFELINE = SEQUENCEDIAG.add(SName.lifeLine);
 
-	public static final StyleQuery SEQUENCEDIAG_ACTIVATIONBOX = ELEMENT.add(SName.sequenceDiagram, SName.activationBox);
+	public static final StyleQuery SEQUENCEDIAG_ACTIVATIONBOX = SEQUENCEDIAG.add(SName.activationBox);
 
-	public static final StyleQuery SEQUENCEDIAG_SEPARATOR = ELEMENT.add(SName.sequenceDiagram, SName.separator);
+	public static final StyleQuery SEQUENCEDIAG_SEPARATOR = SEQUENCEDIAG.add(SName.separator);
 
-	public static final StyleQuery SEQUENCEDIAG_BOX = ELEMENT.add(SName.sequenceDiagram, SName.box);
+	public static final StyleQuery SEQUENCEDIAG_BOX = SEQUENCEDIAG.add(SName.box);
 
-	public static final StyleQuery SEQUENCEDIAG_NEWPAGE = ELEMENT.add(SName.sequenceDiagram, SName.newpage);
+	public static final StyleQuery SEQUENCEDIAG_NEWPAGE = SEQUENCEDIAG.add(SName.newpage);
 
 	public static final StyleQuery ACTIVITYDIAG_CIRCLE_END = ACTIVITYDIAG.add(SName.circle, SName.end);
 
@@ -252,36 +253,27 @@ public final class StyleQueries {
 
 	public static final StyleQuery GANTTDIAG_NOTE = GANTTDIAG.add(SName.note);
 
-	public static final StyleQuery SEQUENCEDIAG = ELEMENT.add(SName.sequenceDiagram);
+	public static final StyleQuery SEQUENCEDIAG_PARTITION = SEQUENCEDIAG.add(SName.partition);
 
-	public static final StyleQuery SEQUENCEDIAG_PARTITION = ELEMENT.add(SName.sequenceDiagram, SName.partition);
+	public static final StyleQuery SEQUENCEDIAG_GROUP = SEQUENCEDIAG.add(SName.group);
 
-	public static final StyleQuery SEQUENCEDIAG_GROUP = ELEMENT.add(SName.sequenceDiagram, SName.group);
+	public static final StyleQuery SEQUENCEDIAG_PARTITION_HEADER = SEQUENCEDIAG.add(SName.partition, SName.header);
 
-	public static final StyleQuery SEQUENCEDIAG_PARTITION_HEADER = ELEMENT.add(SName.sequenceDiagram, SName.partition,
-			SName.header);
+	public static final StyleQuery SEQUENCEDIAG_GROUPHEADER = SEQUENCEDIAG.add(SName.groupHeader);
 
-	public static final StyleQuery SEQUENCEDIAG_GROUPHEADER = ELEMENT.add(SName.sequenceDiagram, SName.groupHeader);
+	public static final StyleQuery SEQUENCEDIAG_GROUP_HEADER = SEQUENCEDIAG.add(SName.group, SName.header);
 
-	public static final StyleQuery SEQUENCEDIAG_GROUP_HEADER = ELEMENT.add(SName.sequenceDiagram, SName.group,
-			SName.header);
+	public static final StyleQuery SEQUENCEDIAG_LIFELINE_DESTROY = SEQUENCEDIAG.add(SName.lifeLine, SName.destroy);
 
-	public static final StyleQuery SEQUENCEDIAG_LIFELINE_DESTROY = ELEMENT.add(SName.sequenceDiagram, SName.lifeLine,
-			SName.destroy);
+	public static final StyleQuery SEQUENCEDIAG_NOTE_HNOTE = SEQUENCEDIAG.add(SName.note, SName.hnote);
 
-	public static final StyleQuery SEQUENCEDIAG_NOTE_HNOTE = ELEMENT.add(SName.sequenceDiagram, SName.note,
-			SName.hnote);
+	public static final StyleQuery SEQUENCEDIAG_NOTE_RNOTE = SEQUENCEDIAG.add(SName.note, SName.rnote);
 
-	public static final StyleQuery SEQUENCEDIAG_NOTE_RNOTE = ELEMENT.add(SName.sequenceDiagram, SName.note,
-			SName.rnote);
+	public static final StyleQuery SEQUENCEDIAG_REFERENCE = SEQUENCEDIAG.add(SName.reference);
 
-	public static final StyleQuery SEQUENCEDIAG_REFERENCE = ELEMENT.add(SName.sequenceDiagram, SName.reference);
+	public static final StyleQuery SEQUENCEDIAG_REFERENCEHEADER = SEQUENCEDIAG.add(SName.referenceHeader);
 
-	public static final StyleQuery SEQUENCEDIAG_REFERENCEHEADER = ELEMENT.add(SName.sequenceDiagram,
-			SName.referenceHeader);
-
-	public static final StyleQuery SEQUENCEDIAG_REFERENCE_HEADER = ELEMENT.add(SName.sequenceDiagram, SName.reference,
-			SName.header);
+	public static final StyleQuery SEQUENCEDIAG_REFERENCE_HEADER = SEQUENCEDIAG.add(SName.reference, SName.header);
 
 	public static final StyleQuery OBJECTDIAG_MAP = ELEMENT.add(SName.objectDiagram, SName.map);
 
