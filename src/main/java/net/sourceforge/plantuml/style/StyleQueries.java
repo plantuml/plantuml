@@ -63,6 +63,8 @@ public final class StyleQueries {
 
 	public static final StyleQuery SEQUENCEDIAG = ELEMENT.add(SName.sequenceDiagram);
 
+	public static final StyleQuery WBSDIAG = ELEMENT.add(SName.wbsDiagram);
+
 	public static final StyleQuery ACTIVITYDIAG_ACTIVITY_ARROW = ACTIVITYDIAG.add(SName.activity, SName.arrow);
 
 	public static final StyleQuery ACTIVITYDIAG_ARROW = ACTIVITYDIAG.add(SName.arrow);
@@ -171,7 +173,7 @@ public final class StyleQueries {
 
 	public static final StyleQuery VISIBILITYICON_PACKAGE = ELEMENT.add(SName.visibilityIcon, SName.package_);
 
-	public static final StyleQuery WBSDIAG_ARROW = ELEMENT.add(SName.wbsDiagram, SName.arrow);
+	public static final StyleQuery WBSDIAG_ARROW = WBSDIAG.add(SName.arrow);
 
 	public static final StyleQuery CLASSDIAG_CLASS_HEADER = ELEMENT.add(SName.classDiagram, SName.class_, SName.header);
 
@@ -191,19 +193,17 @@ public final class StyleQueries {
 
 	public static final StyleQuery MINDMAPDIAG_ARROW = MINDMAPDIAG.add(SName.arrow);
 
-	public static final StyleQuery WBSDIAG_NODE = ELEMENT.add(SName.wbsDiagram, SName.node);
+	public static final StyleQuery WBSDIAG_NODE = WBSDIAG.add(SName.node);
 
-	public static final StyleQuery WBSDIAG_NODE_ROOT = ELEMENT.add(SName.wbsDiagram, SName.node, SName.rootNode);
+	public static final StyleQuery WBSDIAG_NODE_ROOT = WBSDIAG.add(SName.node, SName.rootNode);
 
-	public static final StyleQuery WBSDIAG_NODE_ROOT_BOXLESS = ELEMENT.add(SName.wbsDiagram, SName.node, SName.rootNode,
-			SName.boxless);
+	public static final StyleQuery WBSDIAG_NODE_ROOT_BOXLESS = WBSDIAG.add(SName.node, SName.rootNode, SName.boxless);
 
-	public static final StyleQuery WBSDIAG_NODE_LEAF = ELEMENT.add(SName.wbsDiagram, SName.node, SName.leafNode);
+	public static final StyleQuery WBSDIAG_NODE_LEAF = WBSDIAG.add(SName.node, SName.leafNode);
 
-	public static final StyleQuery WBSDIAG_NODE_LEAF_BOXLESS = ELEMENT.add(SName.wbsDiagram, SName.node, SName.leafNode,
-			SName.boxless);
+	public static final StyleQuery WBSDIAG_NODE_LEAF_BOXLESS = WBSDIAG.add(SName.node, SName.leafNode, SName.boxless);
 
-	public static final StyleQuery WBSDIAG_NODE_BOXLESS = ELEMENT.add(SName.wbsDiagram, SName.node, SName.boxless);
+	public static final StyleQuery WBSDIAG_NODE_BOXLESS = WBSDIAG.add(SName.node, SName.boxless);
 
 	public static final StyleQuery SEQUENCEDIAG_ACTOR = SEQUENCEDIAG.add(SName.actor);
 
