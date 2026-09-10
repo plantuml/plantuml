@@ -59,6 +59,8 @@ public final class StyleQueries {
 
 	public static final StyleQuery MINDMAPDIAG = ELEMENT.add(SName.mindmapDiagram);
 
+	public static final StyleQuery GANTTDIAG = ELEMENT.add(SName.ganttDiagram);
+
 	public static final StyleQuery ACTIVITYDIAG_ACTIVITY_ARROW = ACTIVITYDIAG.add(SName.activity, SName.arrow);
 
 	public static final StyleQuery ACTIVITYDIAG_ARROW = ACTIVITYDIAG.add(SName.arrow);
@@ -93,7 +95,7 @@ public final class StyleQueries {
 
 	public static final StyleQuery CLASSDIAG_CLASS = ELEMENT.add(SName.classDiagram, SName.class_);
 
-	public static final StyleQuery GANTTDIAG_TASK = ELEMENT.add(SName.ganttDiagram, SName.task);
+	public static final StyleQuery GANTTDIAG_TASK = GANTTDIAG.add(SName.task);
 
 	public static final StyleQuery TIMINGDIAG_ARROW = ELEMENT.add(SName.timingDiagram, SName.arrow);
 
@@ -120,18 +122,17 @@ public final class StyleQueries {
 
 	public static final StyleQuery CHARTDIAG_ANNOTATION = ELEMENT.add(SName.chartDiagram, SName.annotation);
 
-	public static final StyleQuery GANTTDIAG_TIMELINE = ELEMENT.add(SName.ganttDiagram, SName.timeline);
+	public static final StyleQuery GANTTDIAG_TIMELINE = GANTTDIAG.add(SName.timeline);
 
-	public static final StyleQuery GANTTDIAG_ARROW = ELEMENT.add(SName.ganttDiagram, SName.arrow);
+	public static final StyleQuery GANTTDIAG_ARROW = GANTTDIAG.add(SName.arrow);
 
-	public static final StyleQuery GANTTDIAG_UNDONE = ELEMENT.add(SName.ganttDiagram, SName.undone);
+	public static final StyleQuery GANTTDIAG_UNDONE = GANTTDIAG.add(SName.undone);
 
-	public static final StyleQuery GANTTDIAG_MILESTONE = ELEMENT.add(SName.ganttDiagram, SName.milestone);
+	public static final StyleQuery GANTTDIAG_MILESTONE = GANTTDIAG.add(SName.milestone);
 
-	public static final StyleQuery GANTTDIAG_TASK_UNSTARTED = ELEMENT.add(SName.ganttDiagram, SName.task,
-			SName.unstarted);
+	public static final StyleQuery GANTTDIAG_TASK_UNSTARTED = GANTTDIAG.add(SName.task, SName.unstarted);
 
-	public static final StyleQuery GANTTDIAG_SEPARATOR = ELEMENT.add(SName.ganttDiagram, SName.separator);
+	public static final StyleQuery GANTTDIAG_SEPARATOR = GANTTDIAG.add(SName.separator);
 
 	public static final StyleQuery SPOT_ANNOTATION = ELEMENT.add(SName.spot, SName.spotAnnotation);
 
@@ -249,7 +250,7 @@ public final class StyleQueries {
 
 	public static final StyleQuery COMPONENTDIAG_COMPONENT = ELEMENT.add(SName.componentDiagram, SName.component);
 
-	public static final StyleQuery GANTTDIAG_NOTE = ELEMENT.add(SName.ganttDiagram, SName.note);
+	public static final StyleQuery GANTTDIAG_NOTE = GANTTDIAG.add(SName.note);
 
 	public static final StyleQuery SEQUENCEDIAG = ELEMENT.add(SName.sequenceDiagram);
 
@@ -362,8 +363,6 @@ public final class StyleQueries {
 	public static final StyleQuery NODE_HEADER_HIGHLIGHT = ELEMENT.add(SName.header, SName.node, SName.highlight);
 
 	public static final StyleQuery NODE_SEPARATOR = ELEMENT.add(SName.node, SName.separator);
-
-	public static final StyleQuery GANTTDIAG = ELEMENT.add(SName.ganttDiagram);
 
 	public static final StyleQuery NWDIAG = ELEMENT.add(SName.nwdiagDiagram);
 
