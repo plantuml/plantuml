@@ -37,18 +37,14 @@
 // The stdlib library used is synthetic (one participant definition), so the
 // check needs no real stdlib bundle and pins the loading mechanics, not any
 // particular library's content.
-const path = require('path'), http = require('http'), fs = require('fs');
-const pw = require(process.env.BENCH_PW || 'playwright');
+const path = require('path');
+const { createCheckReporter, isErrorImage } = require('../lib/browser-check');
+const { parseTargetArg } = require('../lib/browser-cli');
+const { createMountedServer, startServer } = require('../lib/browser-http');
+const { createModulePageHtml, loadPlaywright, openReadyPage } = require('../lib/browser-page');
 
-let dir = null, file = 'plantuml.js';
-for (let i = 2; i < process.argv.length; i++) {
-  const m = process.argv[i].match(/^target=(.+)$/);
-  if (!m) { console.error('bad arg: ' + process.argv[i]); process.exit(2); }
-  dir = m[1];
-  if (dir.endsWith('.js')) { file = path.basename(dir); dir = path.dirname(dir); }
-}
-if (!dir) { console.error('usage: node check-stdlib-loader.js target=<dir-or-js>'); process.exit(2); }
-dir = path.resolve(dir);
+const pw = loadPlaywright();
+const { dir, file } = parseTargetArg(process.argv, 'node check-stdlib-loader.js target=<dir-or-js>');
 
 // The synthetic libraries: a sequence-diagram participant each, so no layout
 // engine (viz/smetana) is involved and the rendered name proves which bundle's
@@ -94,51 +90,42 @@ window.__loaderCalls = [];
 window.PLANTUML_STDLIB_LOADER = function (url) { window.__loaderCalls.push(url); return false; };
 </script>`;
 
-const pageHtml = mode => `<!doctype html><html><head></head><body><div id="out"></div>
-${mode === 'base' ? `<script>window.PLANTUML_STDLIB_BASE = '/cdn/';</script>` : ''}
-${mode === 'hook' ? hookScript(null) : ''}
-${mode === 'hookfail' ? hookScript('fakelib') : ''}
-${mode === 'decline' ? declineScript : ''}
-<script type="module">
-import {render} from '/${file}';
-window.__render=(lines,id)=>render(lines,id,{maxSvgSize:98304});
-window.__ready=1;
-</script></body></html>`;
+const pageHtml = mode => createModulePageHtml({
+  bodyHtml:
+    (mode === 'base' ? `<script>window.PLANTUML_STDLIB_BASE = '/cdn/';</script>` : '')
+    + (mode === 'hook' ? hookScript(null) : '')
+    + (mode === 'hookfail' ? hookScript('fakelib') : '')
+    + (mode === 'decline' ? declineScript : ''),
+  modulePath: `/${file}`,
+  moduleBody: `window.__render=(lines,id)=>render(lines,id,{maxSvgSize:98304});
+window.__ready=1;`,
+});
 
 // The server records every bundle-ish request so the checks can assert what
 // was and was not fetched. Bundles exist ONLY at the paths each scenario is
 // supposed to use: /fakelib.min.js for the relative page, /cdn/fakelib.min.js
 // for the base page, /json/*.json for the hook pages.
 const requested = [];
-const server = http.createServer((req, res) => {
-  const u = decodeURIComponent(req.url.split('?')[0]);
-  if (/\.min\.js$|\/json\//.test(u)) requested.push(u);
-  if (u === '/index.html') { res.setHeader('content-type', 'text/html'); return res.end(pageHtml('bare')); }
-  if (u === '/index-base.html') { res.setHeader('content-type', 'text/html'); return res.end(pageHtml('base')); }
-  if (u === '/index-hook.html') { res.setHeader('content-type', 'text/html'); return res.end(pageHtml('hook')); }
-  if (u === '/index-hookfail.html') { res.setHeader('content-type', 'text/html'); return res.end(pageHtml('hookfail')); }
-  if (u === '/index-decline.html') { res.setHeader('content-type', 'text/html'); return res.end(pageHtml('decline')); }
-  if (u === '/fakelib.min.js') { res.setHeader('content-type', 'application/javascript'); return res.end(bundleScript('fakelib')); }
-  if (u === '/cdn/baselib.min.js') { res.setHeader('content-type', 'application/javascript'); return res.end(bundleScript('baselib')); }
-  if (u === '/json/hooklib.json') { res.setHeader('content-type', 'application/json'); return res.end(hooklibJson); }
-  if (u === '/json/linklib.json') { res.setHeader('content-type', 'application/json'); return res.end(linklibJson); }
-  const p = path.join(dir, u);
-  if (p.startsWith(dir) && fs.existsSync(p) && fs.statSync(p).isFile()) {
-    res.setHeader('content-type', 'application/javascript');
-    res.setHeader('cache-control', 'no-store');
-    return fs.createReadStream(p).pipe(res);
-  }
-  res.statusCode = 404; res.end();
+const server = createMountedServer({
+  routes: {
+    '/index.html': { contentType: 'text/html', body: pageHtml('bare') },
+    '/index-base.html': { contentType: 'text/html', body: pageHtml('base') },
+    '/index-hook.html': { contentType: 'text/html', body: pageHtml('hook') },
+    '/index-hookfail.html': { contentType: 'text/html', body: pageHtml('hookfail') },
+    '/index-decline.html': { contentType: 'text/html', body: pageHtml('decline') },
+    '/fakelib.min.js': { contentType: 'application/javascript', body: bundleScript('fakelib') },
+    '/cdn/baselib.min.js': { contentType: 'application/javascript', body: bundleScript('baselib') },
+    '/json/hooklib.json': { contentType: 'application/json', body: hooklibJson },
+    '/json/linklib.json': { contentType: 'application/json', body: linklibJson },
+  },
+  mounts: [{ prefix: '/', dir }],
+  onRequest: requestPath => {
+    if (/\.min\.js$|\/json\//.test(requestPath))
+      requested.push(requestPath);
+  },
 });
 
-// The PlantUML error image is green on black; a laid-out diagram never is.
-const isErrorImage = svg => svg.includes('#33FF02') && svg.includes('#FF0000');
-
-let failures = 0;
-function check(label, ok, detail) {
-  console.log(`${ok ? 'PASS' : 'FAIL'}  ${label}${ok || !detail ? '' : '\n        ' + detail}`);
-  if (!ok) failures++;
-}
+const { check, finish } = createCheckReporter();
 
 const includeOf = lib => ['@startuml', '!include <' + lib + '/greeting>', 'FAKEHELLO -> FAKEHELLO : ping', '@enduml'];
 const SEQUENCE = ['@startuml', 'Alice -> Bob: hello', 'Bob --> Alice: hi', '@enduml'];
@@ -167,17 +154,11 @@ const rendersGreeting = (r, lib) => !r.thrown && !!r.svg && !isErrorImage(r.svg)
 const failsVisibly = r => !r.thrown && (!!r.text.trim() || (!!r.svg && isErrorImage(r.svg)));
 
 (async () => {
-  await new Promise(r => server.listen(0, '127.0.0.1', r));
-  const port = server.address().port;
+  const port = await startServer(server);
   const browser = await pw.chromium.launch({ headless: true });
 
   async function openPage(name) {
-    const page = await browser.newPage();
-    const errors = [];
-    page.on('pageerror', e => errors.push(String(e.message).split('\n')[0]));
-    await page.goto(`http://127.0.0.1:${port}/${name}`, { waitUntil: 'load' });
-    await page.waitForFunction('window.__ready && window.__render', null, { timeout: 120000, polling: 200 });
-    return { page, errors };
+    return openReadyPage(browser, `http://127.0.0.1:${port}/${name}`, { polling: 200 });
   }
 
   // Page 1: neither global set. Relative loading and the failure mode are
@@ -252,6 +233,5 @@ const failsVisibly = r => !r.thrown && (!!r.text.trim() || (!!r.svg && isErrorIm
 
   await browser.close();
   server.close();
-  console.log(failures === 0 ? 'ALL CHECKS PASSED' : failures + ' CHECK(S) FAILED');
-  process.exit(failures === 0 ? 0 : 1);
+  finish({ uppercase: true });
 })().catch(e => { console.error(e); process.exit(2); });
