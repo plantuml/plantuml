@@ -18,18 +18,15 @@
 // path still uses the Graphviz bridge, so the fallback changes nothing for
 // pages that load viz. A page with a partially loaded Viz (the global exists
 // but instance() is not a function) falls back the same way as an absent one.
-const path = require('path'), http = require('http'), fs = require('fs');
-const pw = require(process.env.BENCH_PW || 'playwright');
+const fs = require('fs');
+const path = require('path');
+const { createCheckReporter, isErrorImage } = require('../lib/browser-check');
+const { parseTargetArg } = require('../lib/browser-cli');
+const { createMountedServer, startServer } = require('../lib/browser-http');
+const { createModulePageHtml, delay, loadPlaywright, maybeScriptTag, openReadyPage } = require('../lib/browser-page');
 
-let dir = null, file = 'plantuml.js';
-for (let i = 2; i < process.argv.length; i++) {
-  const m = process.argv[i].match(/^target=(.+)$/);
-  if (!m) { console.error('bad arg: ' + process.argv[i]); process.exit(2); }
-  dir = m[1];
-  if (dir.endsWith('.js')) { file = path.basename(dir); dir = path.dirname(dir); }
-}
-if (!dir) { console.error('usage: node check-viz-fallback.js target=<dir-or-js>'); process.exit(2); }
-dir = path.resolve(dir);
+const pw = loadPlaywright();
+const { dir, file } = parseTargetArg(process.argv, 'node check-viz-fallback.js target=<dir-or-js>');
 
 if (!fs.existsSync(path.join(dir, 'viz-global.js'))) {
   console.error('viz-global.js not found next to the engine in ' + dir + ' (needed for the control page)');
@@ -49,35 +46,24 @@ window.__wasm = 0;
 // different script claimed the name. The probe must treat this as missing.
 const stub = `<script>window.Viz = {};</script>`;
 
-const pageHtml = mode => `<!doctype html><html><head>${hook}</head><body><div id="out"></div>
-${mode === 'viz' ? '<script src="/viz-global.js"></script>' : mode === 'stub' ? stub : ''}
-<script type="module">
-import {render} from '/${file}';
-window.__render=(lines,id)=>render(lines,id,{maxSvgSize:98304});
-window.__ready=1;
-</script></body></html>`;
-
-const server = http.createServer((req, res) => {
-  const u = decodeURIComponent(req.url.split('?')[0]);
-  if (u === '/index.html') { res.setHeader('content-type', 'text/html'); return res.end(pageHtml('bare')); }
-  if (u === '/index-viz.html') { res.setHeader('content-type', 'text/html'); return res.end(pageHtml('viz')); }
-  if (u === '/index-stub.html') { res.setHeader('content-type', 'text/html'); return res.end(pageHtml('stub')); }
-  const p = path.join(dir, u);
-  if (p.startsWith(dir) && fs.existsSync(p) && fs.statSync(p).isFile()) {
-    res.setHeader('content-type', 'application/javascript');
-    res.setHeader('cache-control', 'no-store');
-    return fs.createReadStream(p).pipe(res);
-  }
-  res.statusCode = 404; res.end();
+const pageHtml = mode => createModulePageHtml({
+  headHtml: hook,
+  bodyHtml: mode === 'viz' ? maybeScriptTag(dir, 'viz-global.js') : mode === 'stub' ? stub : '',
+  modulePath: `/${file}`,
+  moduleBody: `window.__render=(lines,id)=>render(lines,id,{maxSvgSize:98304});
+window.__ready=1;`,
 });
 
-const isErrorImage = svg => svg.includes('#33FF02') && svg.includes('#FF0000');
+const server = createMountedServer({
+  routes: {
+    '/index.html': { contentType: 'text/html', body: pageHtml('bare') },
+    '/index-viz.html': { contentType: 'text/html', body: pageHtml('viz') },
+    '/index-stub.html': { contentType: 'text/html', body: pageHtml('stub') },
+  },
+  mounts: [{ prefix: '/', dir }],
+});
 
-let failures = 0;
-function check(label, ok, detail) {
-  console.log(`${ok ? 'PASS' : 'FAIL'}  ${label}${ok || !detail ? '' : '\n        ' + detail}`);
-  if (!ok) failures++;
-}
+const { check, getFailures } = createCheckReporter();
 
 const FAMILIES = [
   ['class', ['class Car {', '  +drive(): void', '}', 'class Engine', 'class Wheel', 'Car *-- Engine', 'Car *-- "4" Wheel']],
@@ -114,23 +100,22 @@ async function renderOn(page, lines) {
 }
 
 (async () => {
-  await new Promise(r => server.listen(0, '127.0.0.1', r));
-  const port = server.address().port;
+  const port = await startServer(server);
   const browser = await pw.chromium.launch({ headless: true });
 
   // Page 1: engine only, viz-global.js not loaded, no pragma anywhere.
-  const bare = await browser.newPage();
-  const bareErrors = [];
   const fallbackNotes = [];
-  bare.on('pageerror', e => bareErrors.push(String(e.message).split('\n')[0]));
-  bare.on('console', m => { if (m.type() === 'info' && /Smetana layout engine/.test(m.text())) fallbackNotes.push(m.text()); });
-  await bare.goto(`http://127.0.0.1:${port}/index.html`, { waitUntil: 'load' });
-  await bare.waitForFunction('window.__ready && window.__render', null, { timeout: 120000, polling: 200 });
+  const bareReady = await openReadyPage(browser, `http://127.0.0.1:${port}/index.html`, {
+    polling: 200,
+    onConsole: m => { if (m.type() === 'info' && /Smetana layout engine/.test(m.text())) fallbackNotes.push(m.text()); },
+  });
+  const bare = bareReady.page;
+  const bareErrors = bareReady.errors;
 
   // First render on the page carries the pragma: the pragma must short-circuit
   // the probe, so it renders through Smetana with no fallback note at all.
   const prag = await renderOn(bare, ['@startuml', '!pragma layout smetana', ...FAMILIES[0][1], '@enduml']);
-  await new Promise(r => setTimeout(r, 250)); // let any console event arrive before asserting absence
+  await delay(250); // let any console event arrive before asserting absence
   check('pragma diagram on the viz-less page renders with no fallback note (pragma short-circuits the probe)',
     !prag.thrown && !!prag.svg && !isErrorImage(prag.svg) && prag.shapes > 0 && prag.wasm === 0 && fallbackNotes.length === 0,
     prag.thrown || (!prag.svg ? 'no svg: ' + prag.text.slice(0, 120)
@@ -155,13 +140,13 @@ async function renderOn(page, lines) {
   check('no unhandled page errors on the viz-less page', bareErrors.length === 0, bareErrors.join(' | '));
 
   // Page 2 (control): viz-global.js loaded. The default path must be unchanged.
-  const ctrl = await browser.newPage();
-  const ctrlErrors = [];
   const ctrlNotes = [];
-  ctrl.on('pageerror', e => ctrlErrors.push(String(e.message).split('\n')[0]));
-  ctrl.on('console', m => { if (m.type() === 'info' && /Smetana layout engine/.test(m.text())) ctrlNotes.push(m.text()); });
-  await ctrl.goto(`http://127.0.0.1:${port}/index-viz.html`, { waitUntil: 'load' });
-  await ctrl.waitForFunction('window.__ready && window.__render', null, { timeout: 120000, polling: 200 });
+  const ctrlReady = await openReadyPage(browser, `http://127.0.0.1:${port}/index-viz.html`, {
+    polling: 200,
+    onConsole: m => { if (m.type() === 'info' && /Smetana layout engine/.test(m.text())) ctrlNotes.push(m.text()); },
+  });
+  const ctrl = ctrlReady.page;
+  const ctrlErrors = ctrlReady.errors;
 
   const viaViz = await renderOn(ctrl, diagram(FAMILIES[0][1]));
   check('control: class diagram without the pragma still uses the Graphviz bridge',
@@ -174,16 +159,16 @@ async function renderOn(page, lines) {
 
   // Page 3: a partially loaded Viz (the global exists, instance() is not a
   // function). The probe must treat it as missing and fall back, with the note.
-  const part = await browser.newPage();
-  const partErrors = [];
   const partNotes = [];
-  part.on('pageerror', e => partErrors.push(String(e.message).split('\n')[0]));
-  part.on('console', m => { if (m.type() === 'info' && /Smetana layout engine/.test(m.text())) partNotes.push(m.text()); });
-  await part.goto(`http://127.0.0.1:${port}/index-stub.html`, { waitUntil: 'load' });
-  await part.waitForFunction('window.__ready && window.__render', null, { timeout: 120000, polling: 200 });
+  const partReady = await openReadyPage(browser, `http://127.0.0.1:${port}/index-stub.html`, {
+    polling: 200,
+    onConsole: m => { if (m.type() === 'info' && /Smetana layout engine/.test(m.text())) partNotes.push(m.text()); },
+  });
+  const part = partReady.page;
+  const partErrors = partReady.errors;
 
   const viaStub = await renderOn(part, diagram(FAMILIES[0][1]));
-  await new Promise(r => setTimeout(r, 250));
+  await delay(250);
   check('partially loaded Viz (no instance function) falls back to smetana with the note',
     !viaStub.thrown && !!viaStub.svg && !isErrorImage(viaStub.svg) && viaStub.shapes > 0 && viaStub.wasm === 0 && partNotes.length === 1,
     viaStub.thrown || (!viaStub.svg ? 'no svg: ' + viaStub.text.slice(0, 120)
@@ -194,6 +179,7 @@ async function renderOn(page, lines) {
 
   await browser.close();
   server.close();
+  const failures = getFailures();
   console.log(failures === 0 ? 'ALL CHECKS PASSED' : failures + ' CHECK(S) FAILED');
   process.exit(failures === 0 ? 0 : 1);
 })().catch(e => { console.error(e); process.exit(2); });

@@ -12,40 +12,28 @@
 // contract on the browser engine, including the deliberate skips: null, transparent, pure
 // black and pure white paint nothing (see SvgGraphics.paintBackcolor and the
 // SvgGraphicsTeaVM constructor). Every check runs; the exit code is non-zero if any failed.
-const path = require('path'), http = require('http'), fs = require('fs');
-const pw = require(process.env.BENCH_PW || 'playwright');
+const path = require('path');
+const { createCheckReporter, isErrorImage } = require('../lib/browser-check');
+const { parseTargetArg } = require('../lib/browser-cli');
+const { createMountedServer, startServer } = require('../lib/browser-http');
+const { createModulePageHtml, loadPlaywright, maybeScriptTag, openReadyPage } = require('../lib/browser-page');
 
-let dir = null, file = 'plantuml.js';
-for (let i = 2; i < process.argv.length; i++) {
-  const m = process.argv[i].match(/^target=(.+)$/);
-  if (!m) { console.error('bad arg: ' + process.argv[i]); process.exit(2); }
-  dir = m[1];
-  if (dir.endsWith('.js')) { file = path.basename(dir); dir = path.dirname(dir); }
-}
-if (!dir) { console.error('usage: node check-background.js target=<dir-or-js>'); process.exit(2); }
-dir = path.resolve(dir);
+const pw = loadPlaywright();
+const { dir, file } = parseTargetArg(process.argv, 'node check-background.js target=<dir-or-js>');
 
-const pageHtml = `<!doctype html><html><head></head><body><div id="out"></div>
-${fs.existsSync(path.join(dir, 'viz-global.js')) ? '<script src="/viz-global.js"></script>' : ''}
-<script type="module">
-import {render} from '/${file}';
-window.__render=(lines,id,opts)=>render(lines,id,Object.assign({maxSvgSize:98304},opts||{}));
-window.__ready=1;
-</script></body></html>`;
-
-const server = http.createServer((req, res) => {
-  const u = decodeURIComponent(req.url.split('?')[0]);
-  if (u === '/index.html') { res.setHeader('content-type', 'text/html'); return res.end(pageHtml); }
-  const p = path.join(dir, u);
-  if (p.startsWith(dir) && fs.existsSync(p) && fs.statSync(p).isFile()) {
-    res.setHeader('content-type', 'application/javascript');
-    res.setHeader('cache-control', 'no-store');
-    return fs.createReadStream(p).pipe(res);
-  }
-  res.statusCode = 404; res.end();
+const pageHtml = createModulePageHtml({
+  modulePath: `/${file}`,
+  bodyHtml: maybeScriptTag(dir, 'viz-global.js'),
+  moduleBody: `window.__render=(lines,id,opts)=>render(lines,id,Object.assign({maxSvgSize:98304},opts||{}));
+window.__ready=1;`,
 });
 
-const isErrorImage = svg => svg.includes('#33FF02') && svg.includes('#FF0000');
+const server = createMountedServer({
+  routes: {
+    '/index.html': { contentType: 'text/html', body: pageHtml },
+  },
+  mounts: [{ prefix: '/', dir }],
+});
 
 // The background contract, as one predicate: a rect at 0,0 covering the whole viewBox in
 // the expected fill, plus a background-color style on the svg element itself.
@@ -69,11 +57,7 @@ function backgroundOf(svg) {
   return { styleColor, rectColor };
 }
 
-let failures = 0;
-function check(label, ok, detail) {
-  console.log(`${ok ? 'PASS' : 'FAIL'}  ${label}${ok || !detail ? '' : '\n        ' + detail}`);
-  if (!ok) failures++;
-}
+const { check, getFailures } = createCheckReporter();
 function expectBackground(label, svg, color) {
   const bg = backgroundOf(svg);
   check(label, bg.styleColor === color && bg.rectColor === color,
@@ -89,12 +73,9 @@ const body = ['Alice -> Bob: hello', 'Bob --> Alice: hi'];
 const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
 
 (async () => {
-  await new Promise(r => server.listen(0, '127.0.0.1', r));
-  const port = server.address().port;
+  const port = await startServer(server);
   const browser = await pw.chromium.launch({ headless: true });
-  const page = await browser.newPage();
-  await page.goto(`http://127.0.0.1:${port}/index.html`, { waitUntil: 'load' });
-  await page.waitForFunction('window.__ready && window.__render', null, { timeout: 120000 });
+  const { page } = await openReadyPage(browser, `http://127.0.0.1:${port}/index.html`, { trackErrors: false });
 
   const render = async (lines, opts) => {
     const r = await page.evaluate(async ({ lines, opts }) => {
@@ -182,6 +163,7 @@ const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
   await browser.close();
   server.close();
 
+  const failures = getFailures();
   console.log(`\n${failures === 0 ? 'all checks passed' : failures + ' check(s) failed'}`);
   process.exit(failures === 0 ? 0 : 1);
 })().catch(e => { console.error(e); process.exit(1); });

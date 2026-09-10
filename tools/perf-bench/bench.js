@@ -15,22 +15,19 @@
 // Methodology (do not change casually, band history depends on it): all engines render in ONE
 // browser instance (one page per engine) so per-run host speed cancels in the target/reference
 // ratio; warm medians pooled across blocks; small/ files aggregate into a single row.
-const path = require('path'), http = require('http'), fs = require('fs'), os = require('os');
-const pw = require(process.env.BENCH_PW || 'playwright');
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const { parseNamedEnginesAndOptions } = require('../lib/browser-cli');
+const { createMountedServer, startServer } = require('../lib/browser-http');
+const { createModulePageHtml, loadPlaywright, maybeScriptTag, openReadyPage } = require('../lib/browser-page');
+
+const pw = loadPlaywright();
 
 const HERE = __dirname;
-const engines = []; // {name, dir, file}
-const opt = { reps: 6, blocks: 2, corpus: '', maxsvg: 98304, out: 'results' };
-for (let i = 2; i < process.argv.length; i++) {
-  const a = process.argv[i];
-  const flag = a.match(/^--(\w+)$/);
-  if (flag) { opt[flag[1]] = process.argv[++i]; continue; }
-  const m = a.match(/^(\w+)=(.+)$/);
-  if (!m) { console.error('bad arg: ' + a); process.exit(2); }
-  let dir = m[2], file = 'plantuml.js';
-  if (dir.endsWith('.js')) { file = path.basename(dir); dir = path.dirname(dir); }
-  engines.push({ name: m[1], dir: path.resolve(dir), file });
-}
+const parsed = parseNamedEnginesAndOptions(process.argv, { reps: 6, blocks: 2, corpus: '', maxsvg: 98304, out: 'results' });
+const engines = parsed.engines; // {name, dir, file}
+const opt = parsed.options;
 opt.reps = Number(opt.reps); opt.blocks = Number(opt.blocks); opt.maxsvg = Number(opt.maxsvg);
 if (engines.length < 1 || engines.length > 2 || engines[0].name !== 'target') {
   console.error('need target=<path> and optionally reference=<path>'); process.exit(2);
@@ -50,36 +47,22 @@ const files = allFiles.filter(f => f.includes(opt.corpus));
 if (files.length === 0) { console.error('corpus filter matched nothing'); process.exit(2); }
 
 function pageHtml(engine) {
-  const viz = fs.existsSync(path.join(engine.dir, 'viz-global.js'))
-    ? `<script src="/${engine.name}/viz-global.js"></script>` : '';
-  return `<!doctype html><html><head><script>window.__t0=performance.now();</script></head><body>
-<div id="out"></div>
-${viz}
-<script type="module">
-import {render} from '/${engine.name}/${engine.file}';
-window.__render=(lines,id)=>render(lines,id,{maxSvgSize:${opt.maxsvg}});
+  return createModulePageHtml({
+    headHtml: '<script>window.__t0=performance.now();</script>',
+    bodyHtml: maybeScriptTag(engine.dir, 'viz-global.js', `/${engine.name}/viz-global.js`),
+    modulePath: `/${engine.name}/${engine.file}`,
+    moduleBody: `window.__render=(lines,id)=>render(lines,id,{maxSvgSize:${opt.maxsvg}});
 window.__importMs=Math.round(performance.now()-window.__t0);
-window.__ready=1;
-</script></body></html>`;
+window.__ready=1;`,
+  });
 }
 
-const server = http.createServer((req, res) => {
-  const u = decodeURIComponent(req.url.split('?')[0]);
-  const m = u.match(/^\/(\w+)\/(.*)$/);
-  const eng = m && engines.find(e => e.name === m[1]);
-  if (u.startsWith('/page/')) {
-    const e2 = engines.find(e => e.name === u.slice(6));
-    if (e2) { res.setHeader('content-type', 'text/html'); return res.end(pageHtml(e2)); }
-  }
-  if (eng) {
-    const p = path.join(eng.dir, m[2]);
-    if (fs.existsSync(p) && fs.statSync(p).isFile()) {
-      res.setHeader('content-type', 'application/javascript');
-      res.setHeader('cache-control', 'no-store');
-      return fs.createReadStream(p).pipe(res);
-    }
-  }
-  res.statusCode = 404; res.end();
+const routes = {};
+for (const engine of engines)
+  routes[`/page/${engine.name}`] = { contentType: 'text/html', body: pageHtml(engine) };
+const server = createMountedServer({
+  routes,
+  mounts: engines.map(engine => ({ prefix: `/${engine.name}/`, dir: engine.dir })),
 });
 
 async function renderOnce(page, lines) {
@@ -115,23 +98,23 @@ function graph(target, ref) {
 }
 
 (async () => {
-  await new Promise(r => server.listen(0, '127.0.0.1', r));
-  const port = server.address().port;
+  const port = await startServer(server);
   const browser = await pw.chromium.launch({ headless: true });
   const reps = []; // {engine, diagram, block, rep, ms, err, bytes, sha, truncated}
   const engineInfo = {};
 
   const pages = {};
   for (const e of engines) {
-    const page = await browser.newPage();
-    page.on('pageerror', err => console.error('PAGEERROR', e.name, err.message));
-    await page.goto(`http://127.0.0.1:${port}/page/${e.name}`, { waitUntil: 'load' });
-    await page.waitForFunction('window.__ready && window.__render', null, { timeout: 120000 });
-    pages[e.name] = page;
+    const ready = await openReadyPage(browser, `http://127.0.0.1:${port}/page/${e.name}`, {
+      onConsole: null,
+      trackErrors: false,
+    });
+    ready.page.on('pageerror', err => console.error('PAGEERROR', e.name, err.message));
+    pages[e.name] = ready.page;
     engineInfo[e.name] = {
       path: path.join(e.dir, e.file),
       sizeBytes: fs.statSync(path.join(e.dir, e.file)).size,
-      importMs: await page.evaluate('window.__importMs'),
+      importMs: await ready.page.evaluate('window.__importMs'),
     };
   }
 

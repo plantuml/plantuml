@@ -9,18 +9,16 @@
 // over http exactly as it is in the npm package. Every check runs; the exit code is non-zero if
 // any failed, so it can gate a build. There are no golden files: the expected output for a theme is derived
 // from that theme's own text, read out of the served themes.js.
-const path = require('path'), http = require('http'), fs = require('fs'), crypto = require('crypto');
-const pw = require(process.env.BENCH_PW || 'playwright');
+const crypto = require('crypto');
+const fs = require('fs');
+const path = require('path');
+const { createCheckReporter, isErrorImage } = require('../lib/browser-check');
+const { parseTargetArg } = require('../lib/browser-cli');
+const { createMountedServer, startServer } = require('../lib/browser-http');
+const { createModulePageHtml, loadPlaywright, maybeScriptTag, openReadyPage } = require('../lib/browser-page');
 
-let dir = null, file = 'plantuml.js';
-for (let i = 2; i < process.argv.length; i++) {
-  const m = process.argv[i].match(/^target=(.+)$/);
-  if (!m) { console.error('bad arg: ' + process.argv[i]); process.exit(2); }
-  dir = m[1];
-  if (dir.endsWith('.js')) { file = path.basename(dir); dir = path.dirname(dir); }
-}
-if (!dir) { console.error('usage: node check-themes.js target=<dir-or-js>'); process.exit(2); }
-dir = path.resolve(dir);
+const pw = loadPlaywright();
+const { dir, file } = parseTargetArg(process.argv, 'node check-themes.js target=<dir-or-js>');
 
 const themesJsPath = path.join(dir, 'themes.js');
 if (!fs.existsSync(themesJsPath)) {
@@ -38,57 +36,47 @@ const THEMES = (() => {
 })();
 const NAMES = Object.keys(THEMES).sort();
 
-const pageHtml = `<!doctype html><html><head></head><body><div id="out"></div>
-${fs.existsSync(path.join(dir, 'viz-global.js')) ? '<script src="/viz-global.js"></script>' : ''}
-<script type="module">
-import {render} from '/${file}';
-window.__render=(lines,id)=>render(lines,id,{maxSvgSize:98304});
-window.__ready=1;
-</script></body></html>`;
-
-const server = http.createServer((req, res) => {
-  const u = decodeURIComponent(req.url.split('?')[0]);
-  if (u === '/index.html') { res.setHeader('content-type', 'text/html'); return res.end(pageHtml); }
-  const p = path.join(dir, u);
-  if (p.startsWith(dir) && fs.existsSync(p) && fs.statSync(p).isFile()) {
-    res.setHeader('content-type', 'application/javascript');
-    res.setHeader('cache-control', 'no-store');
-    return fs.createReadStream(p).pipe(res);
-  }
-  res.statusCode = 404; res.end();
+const pageHtml = createModulePageHtml({
+  modulePath: `/${file}`,
+  bodyHtml: maybeScriptTag(dir, 'viz-global.js'),
+  moduleBody: `window.__render=(lines,id)=>render(lines,id,{maxSvgSize:98304});
+window.__ready=1;`,
 });
 
-// The PlantUML error image is green on black; a themed diagram never is.
-const isErrorImage = svg => svg.includes('#33FF02') && svg.includes('#FF0000');
+const server = createMountedServer({
+  routes: {
+    '/index.html': { contentType: 'text/html', body: pageHtml },
+  },
+  mounts: [{ prefix: '/', dir }],
+});
+
 // The embedded source differs whenever the source text does, so it is excluded from comparisons.
 const shape = svg => svg.replace(/<\?plantuml-src[^?]*\?>/g, '');
 const hash = svg => crypto.createHash('sha256').update(shape(svg)).digest('hex');
 // A theme file starts with a YAML header; the body alone is what !theme executes.
 const themeBody = name => THEMES[name].replace(/^---\n[\s\S]*?\n---\n/, '');
 
-let failures = 0;
-function check(label, ok, detail) {
-  console.log(`${ok ? 'PASS' : 'FAIL'}  ${label}${ok || !detail ? '' : '\n        ' + detail}`);
-  if (!ok) failures++;
-}
+const { check, getFailures } = createCheckReporter();
 
 const body = ['Alice -> Bob: hello', 'Bob --> Alice: hi', 'note right: a note'];
 const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
 
 (async () => {
-  await new Promise(r => server.listen(0, '127.0.0.1', r));
-  const port = server.address().port;
+  const port = await startServer(server);
   const browser = await pw.chromium.launch({ headless: true });
 
   async function newRenderer({ blockThemesJs = false, preregister = false } = {}) {
-    const page = await browser.newPage();
     const consoleMessages = [];
-    page.on('console', m => consoleMessages.push({ type: m.type(), text: m.text() }));
-    if (blockThemesJs) await page.route('**/themes.js', r => r.abort());
-    if (preregister)
-      await page.addInitScript(`globalThis.PLANTUML_THEMES = ${JSON.stringify(THEMES)};`);
-    await page.goto(`http://127.0.0.1:${port}/index.html`, { waitUntil: 'load' });
-    await page.waitForFunction('window.__ready && window.__render', null, { timeout: 120000 });
+    const ready = await openReadyPage(browser, `http://127.0.0.1:${port}/index.html`, {
+      trackErrors: false,
+      onConsole: m => consoleMessages.push({ type: m.type(), text: m.text() }),
+      beforeGoto: async page => {
+        if (blockThemesJs) await page.route('**/themes.js', r => r.abort());
+        if (preregister)
+          await page.addInitScript(`globalThis.PLANTUML_THEMES = ${JSON.stringify(THEMES)};`);
+      },
+    });
+    const page = ready.page;
     const renderOnPage = async lines => {
       const r = await page.evaluate(async ({ lines }) => {
         const out = document.getElementById('out'); out.innerHTML = '';
@@ -205,6 +193,7 @@ const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
   await browser.close();
   server.close();
 
+  const failures = getFailures();
   console.log(`\n${failures === 0 ? 'all checks passed' : failures + ' check(s) failed'}`);
   process.exit(failures === 0 ? 0 : 1);
 })().catch(e => { console.error(e); process.exit(1); });

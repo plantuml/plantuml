@@ -19,18 +19,15 @@
 // diagrams without the pragma still render through the Graphviz bridge (observed
 // via a WebAssembly.instantiate hook), so the default path is unchanged, and with
 // the pragma they render without touching WebAssembly at all.
-const path = require('path'), http = require('http'), fs = require('fs');
-const pw = require(process.env.BENCH_PW || 'playwright');
+const fs = require('fs');
+const path = require('path');
+const { createCheckReporter, isErrorImage } = require('../lib/browser-check');
+const { parseTargetArg } = require('../lib/browser-cli');
+const { createMountedServer, startServer } = require('../lib/browser-http');
+const { createModulePageHtml, loadPlaywright, maybeScriptTag, openReadyPage } = require('../lib/browser-page');
 
-let dir = null, file = 'plantuml.js';
-for (let i = 2; i < process.argv.length; i++) {
-  const m = process.argv[i].match(/^target=(.+)$/);
-  if (!m) { console.error('bad arg: ' + process.argv[i]); process.exit(2); }
-  dir = m[1];
-  if (dir.endsWith('.js')) { file = path.basename(dir); dir = path.dirname(dir); }
-}
-if (!dir) { console.error('usage: node check-smetana.js target=<dir-or-js>'); process.exit(2); }
-dir = path.resolve(dir);
+const pw = loadPlaywright();
+const { dir, file } = parseTargetArg(process.argv, 'node check-smetana.js target=<dir-or-js>');
 
 if (!fs.existsSync(path.join(dir, 'viz-global.js'))) {
   console.error('viz-global.js not found next to the engine in ' + dir + ' (needed for the control page)');
@@ -47,35 +44,23 @@ window.__wasm = 0;
 });
 </script>`;
 
-const pageHtml = withViz => `<!doctype html><html><head>${hook}</head><body><div id="out"></div>
-${withViz ? '<script src="/viz-global.js"></script>' : ''}
-<script type="module">
-import {render} from '/${file}';
-window.__render=(lines,id)=>render(lines,id,{maxSvgSize:98304});
-window.__ready=1;
-</script></body></html>`;
-
-const server = http.createServer((req, res) => {
-  const u = decodeURIComponent(req.url.split('?')[0]);
-  if (u === '/index.html') { res.setHeader('content-type', 'text/html'); return res.end(pageHtml(false)); }
-  if (u === '/index-viz.html') { res.setHeader('content-type', 'text/html'); return res.end(pageHtml(true)); }
-  const p = path.join(dir, u);
-  if (p.startsWith(dir) && fs.existsSync(p) && fs.statSync(p).isFile()) {
-    res.setHeader('content-type', 'application/javascript');
-    res.setHeader('cache-control', 'no-store');
-    return fs.createReadStream(p).pipe(res);
-  }
-  res.statusCode = 404; res.end();
+const pageHtml = withViz => createModulePageHtml({
+  headHtml: hook,
+  bodyHtml: withViz ? maybeScriptTag(dir, 'viz-global.js') : '',
+  modulePath: `/${file}`,
+  moduleBody: `window.__render=(lines,id)=>render(lines,id,{maxSvgSize:98304});
+window.__ready=1;`,
 });
 
-// The PlantUML error image is green on black; a laid-out diagram never is.
-const isErrorImage = svg => svg.includes('#33FF02') && svg.includes('#FF0000');
+const server = createMountedServer({
+  routes: {
+    '/index.html': { contentType: 'text/html', body: pageHtml(false) },
+    '/index-viz.html': { contentType: 'text/html', body: pageHtml(true) },
+  },
+  mounts: [{ prefix: '/', dir }],
+});
 
-let failures = 0;
-function check(label, ok, detail) {
-  console.log(`${ok ? 'PASS' : 'FAIL'}  ${label}${ok || !detail ? '' : '\n        ' + detail}`);
-  if (!ok) failures++;
-}
+const { check, getFailures } = createCheckReporter();
 
 const FAMILIES = [
   ['class', ['class Car {', '  +drive(): void', '}', 'class Engine', 'class Wheel', 'Car *-- Engine', 'Car *-- "4" Wheel']],
@@ -119,16 +104,13 @@ async function renderOn(page, lines) {
 }
 
 (async () => {
-  await new Promise(r => server.listen(0, '127.0.0.1', r));
-  const port = server.address().port;
+  const port = await startServer(server);
   const browser = await pw.chromium.launch({ headless: true });
 
   // Page 1: engine only, no viz-global.js. The pragma must be enough.
-  const bare = await browser.newPage();
-  const bareErrors = [];
-  bare.on('pageerror', e => bareErrors.push(String(e.message).split('\n')[0]));
-  await bare.goto(`http://127.0.0.1:${port}/index.html`, { waitUntil: 'load' });
-  await bare.waitForFunction('window.__ready && window.__render', null, { timeout: 120000, polling: 200 });
+  const bareReady = await openReadyPage(browser, `http://127.0.0.1:${port}/index.html`, { polling: 200 });
+  const bare = bareReady.page;
+  const bareErrors = bareReady.errors;
 
   for (const [label, body] of FAMILIES) {
     const r = await renderOn(bare, diagram(body, true));
@@ -144,11 +126,9 @@ async function renderOn(page, lines) {
   // Page 2 (control): viz-global.js loaded. Without the pragma the Graphviz
   // bridge must still be used (default path unchanged); with the pragma the
   // render must not touch WebAssembly.
-  const ctrl = await browser.newPage();
-  const ctrlErrors = [];
-  ctrl.on('pageerror', e => ctrlErrors.push(String(e.message).split('\n')[0]));
-  await ctrl.goto(`http://127.0.0.1:${port}/index-viz.html`, { waitUntil: 'load' });
-  await ctrl.waitForFunction('window.__ready && window.__render', null, { timeout: 120000, polling: 200 });
+  const ctrlReady = await openReadyPage(browser, `http://127.0.0.1:${port}/index-viz.html`, { polling: 200 });
+  const ctrl = ctrlReady.page;
+  const ctrlErrors = ctrlReady.errors;
 
   const viaViz = await renderOn(ctrl, diagram(FAMILIES[0][1], false));
   check('control: class diagram without the pragma still uses the Graphviz bridge',
@@ -166,6 +146,7 @@ async function renderOn(page, lines) {
 
   await browser.close();
   server.close();
+  const failures = getFailures();
   console.log(failures === 0 ? 'ALL CHECKS PASSED' : failures + ' CHECK(S) FAILED');
   process.exit(failures === 0 ? 0 : 1);
 })().catch(e => { console.error(e); process.exit(2); });
