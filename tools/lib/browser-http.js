@@ -22,6 +22,8 @@ function tryServeMountedFile(res, requestPath, mount) {
   if (relativeCheck === '..'
     || relativeCheck.startsWith('..' + path.sep) || path.isAbsolute(relativeCheck))
     return false;
+  if (!mount.allowFile(requestPath, filePath))
+    return false;
   if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile())
     return false;
 
@@ -37,6 +39,7 @@ function createMountedServer(options) {
     prefix: mount.prefix,
     dir: path.resolve(mount.dir),
     contentType: mount.contentType,
+    allowFile: mount.allowFile || (requestPath => /\.js$/i.test(requestPath)),
   }));
 
   return http.createServer((req, res) => {
