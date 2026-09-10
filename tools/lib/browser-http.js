@@ -17,7 +17,7 @@ function tryServeMountedFile(res, requestPath, mount) {
   const relativePath = requestPath.slice(mount.prefix.length).replace(/^\/+/, '');
   const filePath = path.resolve(mount.dir, relativePath);
   const relativeCheck = path.relative(mount.dir, filePath);
-  if (relativeCheck === '' || relativeCheck === '..'
+  if (relativeCheck === '..'
     || relativeCheck.startsWith('..' + path.sep) || path.isAbsolute(relativeCheck))
     return false;
   if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile())
@@ -65,8 +65,18 @@ function createMountedServer(options) {
 }
 
 function startServer(server, host) {
-  return new Promise(resolve => {
-    server.listen(0, host || '127.0.0.1', () => resolve(server.address().port));
+  return new Promise((resolve, reject) => {
+    const onError = err => {
+      server.off('listening', onListening);
+      reject(err);
+    };
+    const onListening = () => {
+      server.off('error', onError);
+      resolve(server.address().port);
+    };
+    server.once('error', onError);
+    server.once('listening', onListening);
+    server.listen(0, host || '127.0.0.1');
   });
 }
 
