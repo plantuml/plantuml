@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleQueries;
-import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.timingdiagram.graphic.Panels;
 import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrame;
 import net.sourceforge.plantuml.utils.Position;
@@ -95,8 +94,8 @@ public abstract class Player {
 	}
 
 	final protected Style getStyle() {
-		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery
-				.of3(SName.root, SName.element, SName.timingDiagram, sname).withStereotype(stereotype));
+		return getSkinParam().getCurrentStyleBuilder()
+				.getMergedStyle(StyleQueries.TIMINGDIAG.addSName(sname).withStereotype(stereotype));
 	}
 
 	public final List<TimingNote> getNotes() {

@@ -156,12 +156,11 @@ public final class ClusterHeader {
 		if (g.getGroupType() == GroupType.STATE)
 			signature = StyleQueries.STATEDIAG_STATE_NAME;
 		else if (uSymbol != null)
-			signature = StyleQuery.of3(SName.root, SName.element, sname).addSNames(uSymbol.getSNames())
-					.addSNames(SName.composite, SName.title);
+			signature = StyleQueries.COMPOSITE_TITLE.addSName(sname).addSNames(uSymbol.getSNames());
 		else if (g.getGroupType() == GroupType.PACKAGE)
-			signature = StyleQuery.of3(SName.root, SName.element, sname, SName.package_, SName.title);
+			signature = StyleQueries.PACKAGE_TITLE.addSName(sname);
 		else
-			signature = StyleQuery.of3(SName.root, SName.element, sname, SName.composite, SName.title);
+			signature = StyleQueries.COMPOSITE_TITLE.addSName(sname);
 		return signature;
 	}
 

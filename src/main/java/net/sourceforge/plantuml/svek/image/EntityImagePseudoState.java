@@ -50,8 +50,8 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -68,7 +68,7 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of3(SName.root, SName.element, getStyleName(), SName.diamond);
+		return StyleQueries.DIAMOND.addSName(getStyleName());
 	}
 
 	public EntityImagePseudoState(Entity entity, String historyText) {

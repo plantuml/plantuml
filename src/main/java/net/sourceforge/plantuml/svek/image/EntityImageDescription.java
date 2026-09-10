@@ -74,6 +74,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Bibliotekon;
@@ -140,8 +141,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		final StyleQuery queryTitle;
 		if (symbol instanceof USymbolActorBusiness)
-			queryTitle = StyleQuery.of3(SName.root, SName.element, getStyleName(), SName.actor,
-					SName.business, SName.title);
+			queryTitle = StyleQueries.ACTOR_BUSINESS_TITLE.addSName(getStyleName());
 		else
 			queryTitle = StyleQuery.of3(SName.root, SName.element, getStyleName()).addSNames(symbol.getSNames())
 					.addSName(SName.title);

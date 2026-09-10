@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.yaml.Highlighted;
 import smetana.core.CString;
 import smetana.core.Globals;
@@ -116,13 +116,11 @@ public class SmetanaForJson {
 	}
 
 	private Style getStyleArrow() {
-		return skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of3(SName.root, SName.element, getDiagramType(), SName.arrow));
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.ARROW.addSName(getDiagramType()));
 	}
 
 	private Style getStyleNode() {
-		return skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of3(SName.root, SName.element, getDiagramType(), SName.node));
+		return skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.NODE.addSName(getDiagramType()));
 	}
 
 	private ST_Agnode_s manageOneNode(Globals zz, JsonValue current, List<Highlighted> highlighted) {

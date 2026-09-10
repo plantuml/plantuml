@@ -87,6 +87,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
@@ -137,8 +138,7 @@ public class MyElkEdge implements UDrawable {
 	}
 
 	private Style getStyle() {
-		final StyleQuery result = StyleQuery
-				.of3(SName.root, SName.element, diagram.getDiagramType().getStyleName(), SName.arrow)
+		final StyleQuery result = StyleQueries.ARROW.addSName(diagram.getDiagramType().getStyleName())
 				.withStereotype(link.getStereotype());
 		return diagram.getSkinParam().getCurrentStyleBuilder().getMergedStyle(result);
 	}

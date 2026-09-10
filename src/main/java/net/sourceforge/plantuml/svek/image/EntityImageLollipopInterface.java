@@ -51,8 +51,8 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -67,8 +67,7 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-		return StyleQuery.of3(SName.root, SName.element, getStyleName(), SName.circle)
-				.withStereotype(getStereo());
+		return StyleQueries.CIRCLE.addSName(getStyleName()).withStereotype(getStereo());
 	}
 
 	private UStroke getUStroke() {

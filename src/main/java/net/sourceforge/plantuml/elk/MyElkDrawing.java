@@ -72,6 +72,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.ClusterManager;
@@ -213,7 +214,7 @@ class MyElkDrawing implements TextBlock {
 
 	// Duplication from SvekEdge
 	private StyleQuery getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
-		StyleQuery result = StyleQuery.of3(SName.root, SName.element, styleName, SName.arrow);
+		StyleQuery result = StyleQueries.ARROW.addSName(styleName);
 		if (stereotype != null)
 			result = result.withStereotype(stereotype);
 

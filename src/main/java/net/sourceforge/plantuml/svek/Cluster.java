@@ -289,13 +289,11 @@ public class Cluster implements Moveable {
 		if (diagramStyleName == SName.stateDiagram)
 			return StyleQueries.STATEDIAG_STATE_GROUP;
 		if (symbol != null)
-			return StyleQuery.of3(SName.root, SName.element, diagramStyleName, SName.group)
-					.addSNames(symbol.getSNames());
+			return StyleQueries.GROUP.addSName(diagramStyleName).addSNames(symbol.getSNames());
 		if (groupType == GroupType.PACKAGE)
-			return StyleQuery
-					.of3(SName.root, SName.element, diagramStyleName, SName.package_, SName.group);
+			return StyleQueries.PACKAGE_GROUP.addSName(diagramStyleName);
 
-		return StyleQuery.of3(SName.root, SName.element, diagramStyleName, SName.group);
+		return StyleQueries.GROUP.addSName(diagramStyleName);
 	}
 
 	public void drawU(UGraphic ug) {

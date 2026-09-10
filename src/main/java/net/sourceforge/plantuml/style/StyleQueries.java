@@ -499,4 +499,61 @@ public final class StyleQueries {
 	 */
 	public static final StyleQuery NOTE = StyleQuery.of3(SName.root, SName.element, SName.note);
 
+	/**
+	 * The remaining diagram-type-less bases below follow the same
+	 * addSName(dynamic-diagram-style-name)/addSNames(...) pattern as {@link #NOTE} --
+	 * each is completed with the caller-supplied diagram style name (and sometimes a
+	 * {@code USymbol}'s own names) once known.
+	 */
+	public static final StyleQuery DIAMOND = StyleQuery.of3(SName.root, SName.element, SName.diamond);
+
+	public static final StyleQuery PORT = StyleQuery.of3(SName.root, SName.element, SName.port);
+
+	public static final StyleQuery STATE = StyleQuery.of3(SName.root, SName.element, SName.state);
+
+	public static final StyleQuery CIRCLE = StyleQuery.of3(SName.root, SName.element, SName.circle);
+
+	public static final StyleQuery CIRCLE_END = StyleQuery.of3(SName.root, SName.element, SName.circle, SName.end);
+
+	public static final StyleQuery CIRCLE_START = StyleQuery.of3(SName.root, SName.element, SName.circle,
+			SName.start);
+
+	public static final StyleQuery ACTOR_BUSINESS_TITLE = StyleQuery.of3(SName.root, SName.element, SName.actor,
+			SName.business, SName.title);
+
+	/** Shared by the empty-package shape and {@code ClusterHeader}'s package title. */
+	public static final StyleQuery PACKAGE_TITLE = StyleQuery.of3(SName.root, SName.element, SName.package_,
+			SName.title);
+
+	public static final StyleQuery ARROW = StyleQuery.of3(SName.root, SName.element, SName.arrow);
+
+	public static final StyleQuery NODE = StyleQuery.of3(SName.root, SName.element, SName.node);
+
+	public static final StyleQuery NODE_HEADER = StyleQuery.of3(SName.root, SName.element, SName.header, SName.node);
+
+	public static final StyleQuery NODE_HIGHLIGHT = StyleQuery.of3(SName.root, SName.element, SName.node,
+			SName.highlight);
+
+	public static final StyleQuery NODE_HEADER_HIGHLIGHT = StyleQuery.of3(SName.root, SName.element, SName.header,
+			SName.node, SName.highlight);
+
+	public static final StyleQuery NODE_SEPARATOR = StyleQuery.of3(SName.root, SName.element, SName.node,
+			SName.separator);
+
+	public static final StyleQuery GANTTDIAG = StyleQuery.of3(SName.root, SName.element, SName.ganttDiagram);
+
+	public static final StyleQuery NWDIAG = StyleQuery.of3(SName.root, SName.element, SName.nwdiagDiagram);
+
+	public static final StyleQuery COMPONENT = StyleQuery.of3(SName.root, SName.element, SName.component);
+
+	/** Shared by {@code Cluster.getDefaultStyleDefinition}'s symbol and plain-group branches. */
+	public static final StyleQuery GROUP = StyleQuery.of3(SName.root, SName.element, SName.group);
+
+	public static final StyleQuery PACKAGE_GROUP = StyleQuery.of3(SName.root, SName.element, SName.package_,
+			SName.group);
+
+	/** Shared by {@code ClusterHeader.getSignature}'s uSymbol and plain-composite branches. */
+	public static final StyleQuery COMPOSITE_TITLE = StyleQuery.of3(SName.root, SName.element, SName.composite,
+			SName.title);
+
 }

@@ -55,8 +55,8 @@ import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Bibliotekon;
@@ -88,8 +88,7 @@ public class EntityImageTips extends AbstractEntityImage {
 	}
 
 	private StyleQuery getStyleQueryFor(Stereotype stereotype) {
-		return StyleQuery.of3(SName.root, SName.element, getStyleName(), SName.note)
-				.withStereotype(stereotype);
+		return StyleQueries.NOTE.addSName(getStyleName()).withStereotype(stereotype);
 	}
 
 	private HColor getNoteBackgroundColor(Tip tip, Style style) {

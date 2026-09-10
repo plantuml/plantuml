@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.PackageStyle;
 
@@ -151,7 +152,7 @@ public class NServer {
 	}
 
 	private StyleQuery getStyleDefinition(SName sname) {
-		return StyleQuery.of3(SName.root, SName.element, SName.nwdiagDiagram, sname);
+		return StyleQueries.NWDIAG.addSName(sname);
 	}
 
 	private FontConfiguration getFontConfiguration(SName sname) {

@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 
 public class GridTextBlockDecorated extends GridTextBlockSimple {
@@ -132,7 +133,7 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 	}
 
 	private StyleQuery getStyleDefinitionNetwork(SName sname) {
-		return StyleQuery.of3(SName.root, SName.element, SName.nwdiagDiagram, sname);
+		return StyleQueries.NWDIAG.addSName(sname);
 	}
 
 	private void drawNetworkTube(UGraphic ug) {

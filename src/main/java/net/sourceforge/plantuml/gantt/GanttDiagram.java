@@ -102,7 +102,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
 
 public class GanttDiagram extends TitledDiagram implements GanttStyle {
 
@@ -204,14 +204,12 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 
 	@Override
 	public final Style getStyle(SName param) {
-		return getCurrentStyleBuilder()
-				.getMergedStyle(StyleQuery.of3(SName.root, SName.element, SName.ganttDiagram, param));
+		return getCurrentStyleBuilder().getMergedStyle(StyleQueries.GANTTDIAG.addSName(param));
 	}
 
 	@Override
 	public final Style getStyle(SName param1, SName param2) {
-		return getCurrentStyleBuilder().getMergedStyle(
-				StyleQuery.of3(SName.root, SName.element, SName.ganttDiagram, param1, param2));
+		return getCurrentStyleBuilder().getMergedStyle(StyleQueries.GANTTDIAG.addSNames(param1, param2));
 	}
 
 	public void closeDayOfWeek(DayOfWeek day, String task) {
