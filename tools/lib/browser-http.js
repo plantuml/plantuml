@@ -42,6 +42,10 @@ function tryServeMountedFile(res, requestPath, mount) {
     return false;
   if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile())
     return false;
+  const realFilePath = fs.realpathSync(filePath);
+  const realDirPrefix = mount.realDir.endsWith(path.sep) ? mount.realDir : mount.realDir + path.sep;
+  if (realFilePath !== mount.realDir && !realFilePath.startsWith(realDirPrefix))
+    return false;
 
   res.setHeader('content-type', mount.contentType || 'application/javascript');
   res.setHeader('cache-control', 'no-store');
@@ -60,6 +64,7 @@ function createMountedServer(options) {
   const mounts = (options.mounts || []).map(mount => ({
     prefix: normalizeMountPrefix(mount.prefix),
     dir: path.resolve(mount.dir),
+    realDir: fs.realpathSync(path.resolve(mount.dir)),
     contentType: mount.contentType,
     allowFile: mount.allowFile || (requestPath => /\.js$/i.test(requestPath)),
   }));
