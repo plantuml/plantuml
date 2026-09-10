@@ -4,6 +4,10 @@ const fs = require('fs');
 const http = require('http');
 const path = require('path');
 
+function normalizeMountPrefix(prefix) {
+  return prefix === '/' ? '/' : prefix.replace(/\/+$/, '');
+}
+
 function send(res, body, contentType) {
   if (contentType)
     res.setHeader('content-type', contentType);
@@ -11,6 +15,7 @@ function send(res, body, contentType) {
 }
 
 function matchesMountPrefix(requestPath, prefix) {
+  prefix = normalizeMountPrefix(prefix);
   if (prefix === '/')
     return requestPath.startsWith('/');
   return requestPath === prefix || requestPath.startsWith(prefix + '/');
@@ -18,12 +23,13 @@ function matchesMountPrefix(requestPath, prefix) {
 
 function tryServeMountedFile(res, requestPath, mount) {
   const allowFile = mount.allowFile || (request => /\.js$/i.test(request));
-  if (!matchesMountPrefix(requestPath, mount.prefix))
+  const prefix = normalizeMountPrefix(mount.prefix);
+  if (!matchesMountPrefix(requestPath, prefix))
     return false;
 
-  const relativePath = mount.prefix === '/'
+  const relativePath = prefix === '/'
     ? requestPath.slice(1)
-    : requestPath === mount.prefix ? '' : requestPath.slice(mount.prefix.length + 1);
+    : requestPath === prefix ? '' : requestPath.slice(prefix.length + 1);
   if (relativePath === '')
     return false;
   if (relativePath.split(/[\\/]+/).includes('..'))
@@ -52,7 +58,7 @@ function tryServeMountedFile(res, requestPath, mount) {
 function createMountedServer(options) {
   const routes = options.routes || {};
   const mounts = (options.mounts || []).map(mount => ({
-    prefix: mount.prefix === '/' ? '/' : mount.prefix.replace(/\/+$/, ''),
+    prefix: normalizeMountPrefix(mount.prefix),
     dir: path.resolve(mount.dir),
     contentType: mount.contentType,
     allowFile: mount.allowFile || (requestPath => /\.js$/i.test(requestPath)),
