@@ -41,32 +41,41 @@ public final class StyleQueries {
 
 	public static final StyleQuery ELEMENT = StyleQuery.of3(SName.root, SName.element);
 
+	public static final StyleQuery DOCUMENT = StyleQuery.of3(SName.root, SName.document);
+
+	public static final StyleQuery DOCUMENT_HEADER = DOCUMENT.add(SName.header);
+
+	public static final StyleQuery DOCUMENT_FOOTER = DOCUMENT.add(SName.footer);
+
+	public static final StyleQuery DOCUMENT_TITLE = DOCUMENT.add(SName.title);
+
+	public static final StyleQuery DOCUMENT_MAINFRAME = DOCUMENT.add(SName.mainframe);
+
+	public static final StyleQuery DOCUMENT_CAPTION = DOCUMENT.add(SName.caption);
+
 	public static final StyleQuery STEREOTYPE = ELEMENT.add(SName.stereotype);
 
-	public static final StyleQuery ACTIVITYDIAG_ACTIVITY_ARROW = ELEMENT.add(SName.activityDiagram, SName.activity,
-			SName.arrow);
+	public static final StyleQuery ACTIVITYDIAG = ELEMENT.add(SName.activityDiagram);
 
-	public static final StyleQuery ACTIVITYDIAG_ARROW = ELEMENT.add(SName.activityDiagram, SName.arrow);
+	public static final StyleQuery MINDMAPDIAG = ELEMENT.add(SName.mindmapDiagram);
 
-	public static final StyleQuery ACTIVITYDIAG_ACTIVITY = ELEMENT.add(SName.activityDiagram, SName.activity);
+	public static final StyleQuery ACTIVITYDIAG_ACTIVITY_ARROW = ACTIVITYDIAG.add(SName.activity, SName.arrow);
 
-	public static final StyleQuery ACTIVITYDIAG_ACTIVITY_DIAMOND = ELEMENT.add(SName.activityDiagram, SName.activity,
-			SName.diamond);
+	public static final StyleQuery ACTIVITYDIAG_ARROW = ACTIVITYDIAG.add(SName.arrow);
 
-	public static final StyleQuery ACTIVITYDIAG_NOTE = ELEMENT.add(SName.activityDiagram, SName.note);
+	public static final StyleQuery ACTIVITYDIAG_ACTIVITY = ACTIVITYDIAG.add(SName.activity);
 
-	public static final StyleQuery ACTIVITYDIAG_CIRCLE = ELEMENT.add(SName.activityDiagram, SName.circle);
+	public static final StyleQuery ACTIVITYDIAG_ACTIVITY_DIAMOND = ACTIVITYDIAG.add(SName.activity, SName.diamond);
 
-	public static final StyleQuery ACTIVITYDIAG_SWIMLANE = ELEMENT.add(SName.activityDiagram, SName.swimlane);
+	public static final StyleQuery ACTIVITYDIAG_NOTE = ACTIVITYDIAG.add(SName.note);
 
-	public static final StyleQuery ACTIVITYDIAG_GOTO = ELEMENT.add(SName.activityDiagram, SName.goto_);
+	public static final StyleQuery ACTIVITYDIAG_CIRCLE = ACTIVITYDIAG.add(SName.circle);
 
-	public static final StyleQuery ACTIVITYDIAG_ACTIVITYBAR = ELEMENT.add(SName.activityDiagram, SName.activityBar);
+	public static final StyleQuery ACTIVITYDIAG_SWIMLANE = ACTIVITYDIAG.add(SName.swimlane);
 
-	/**
-	 * No sub-element -- the diagram's own root style, e.g. a background rectangle.
-	 */
-	public static final StyleQuery DOCUMENT = StyleQuery.of3(SName.root, SName.document);
+	public static final StyleQuery ACTIVITYDIAG_GOTO = ACTIVITYDIAG.add(SName.goto_);
+
+	public static final StyleQuery ACTIVITYDIAG_ACTIVITYBAR = ACTIVITYDIAG.add(SName.activityBar);
 
 	public static final StyleQuery GITDIAG = ELEMENT.add(SName.gitDiagram);
 
@@ -74,7 +83,6 @@ public final class StyleQueries {
 
 	public static final StyleQuery SEQUENCEDIAG_ARROW = ELEMENT.add(SName.sequenceDiagram, SName.arrow);
 
-	/** No sub-element -- the diagram's own root style. */
 	public static final StyleQuery TIMINGDIAG = ELEMENT.add(SName.timingDiagram);
 
 	public static final StyleQuery CHENEER_ENTITY = ELEMENT.add(SName.chenEerDiagram, SName.chenEntity);
@@ -96,21 +104,10 @@ public final class StyleQueries {
 	public static final StyleQuery SEQUENCEDIAG_LIFELINE_DELAY = ELEMENT.add(SName.sequenceDiagram, SName.lifeLine,
 			SName.delay);
 
-	/**
-	 * No diagram context -- applies across every diagram type, e.g. the exported
-	 * page chrome.
-	 */
-	public static final StyleQuery DOCUMENT_HEADER = StyleQuery.of3(SName.root, SName.document, SName.header);
-
-	public static final StyleQuery DOCUMENT_FOOTER = StyleQuery.of3(SName.root, SName.document, SName.footer);
-
-	public static final StyleQuery DOCUMENT_TITLE = StyleQuery.of3(SName.root, SName.document, SName.title);
-
 	public static final StyleQuery CHARTDIAG_BAR = ELEMENT.add(SName.chartDiagram, SName.bar);
 
 	public static final StyleQuery CHARTDIAG_SCATTER = ELEMENT.add(SName.chartDiagram, SName.scatter);
 
-	/** No sub-element -- the diagram's own root style. */
 	public static final StyleQuery CHARTDIAG = ELEMENT.add(SName.chartDiagram);
 
 	public static final StyleQuery CHARTDIAG_LINE = ELEMENT.add(SName.chartDiagram, SName.line);
@@ -136,12 +133,6 @@ public final class StyleQueries {
 
 	public static final StyleQuery GANTTDIAG_SEPARATOR = ELEMENT.add(SName.ganttDiagram, SName.separator);
 
-	/**
-	 * The class-header icon shown for each classifier kind ({@code class},
-	 * {@code interface}, an annotation, ...) -- one constant per {@link SName} the
-	 * header can carry, so the enumeration in {@code EntityImageClassHeader} reads
-	 * as a closed set rather than 13 near-identical one-off literals.
-	 */
 	public static final StyleQuery SPOT_ANNOTATION = ELEMENT.add(SName.spot, SName.spotAnnotation);
 
 	public static final StyleQuery SPOT_ABSTRACT_CLASS = ELEMENT.add(SName.spot, SName.spotAbstractClass);
@@ -168,12 +159,6 @@ public final class StyleQueries {
 
 	public static final StyleQuery SPOT_RECORD = ELEMENT.add(SName.spot, SName.spotRecord);
 
-	/**
-	 * The visibility-modifier icon shown next to a class member ({@code +},
-	 * {@code -}, {@code #}, {@code ~}, or the IE-notation mandatory marker) --
-	 * another closed set, mirroring the {@code SPOT_*} family above for
-	 * {@code VisibilityModifier}.
-	 */
 	public static final StyleQuery VISIBILITYICON_IE_MANDATORY = ELEMENT.add(SName.visibilityIcon, SName.IEMandatory);
 
 	public static final StyleQuery VISIBILITYICON_PUBLIC = ELEMENT.add(SName.visibilityIcon, SName.public_);
@@ -184,54 +169,26 @@ public final class StyleQueries {
 
 	public static final StyleQuery VISIBILITYICON_PACKAGE = ELEMENT.add(SName.visibilityIcon, SName.package_);
 
-	/**
-	 * Duplicated literally in two files -- {@code WBSTextBlock} and
-	 * {@code WBSDiagram}.
-	 */
 	public static final StyleQuery WBSDIAG_ARROW = ELEMENT.add(SName.wbsDiagram, SName.arrow);
 
-	/**
-	 * Duplicated literally in two files -- {@code EntityImageClassHeader} and
-	 * {@code EntityImageClass}.
-	 */
 	public static final StyleQuery CLASSDIAG_CLASS_HEADER = ELEMENT.add(SName.classDiagram, SName.class_, SName.header);
 
-	/**
-	 * No diagram context, same family as
-	 * {@code DOCUMENT_HEADER}/{@code _FOOTER}/{@code _TITLE}.
-	 */
-	public static final StyleQuery DOCUMENT_MAINFRAME = StyleQuery.of3(SName.root, SName.document, SName.mainframe);
+	public static final StyleQuery MINDMAPDIAG_NODE = MINDMAPDIAG.add(SName.node);
 
-	public static final StyleQuery DOCUMENT_CAPTION = StyleQuery.of3(SName.root, SName.document, SName.caption);
+	public static final StyleQuery MINDMAPDIAG_NODE_ROOT = MINDMAPDIAG.add(SName.node, SName.rootNode);
 
-	/**
-	 * A mindmap node's shape ({@code Idea}), keyed by root/leaf and boxless -- a
-	 * closed set the same way {@code SPOT_*} and {@code VISIBILITYICON_*} are, one
-	 * constant per combination actually used.
-	 */
-	public static final StyleQuery MINDMAPDIAG_NODE = ELEMENT.add(SName.mindmapDiagram, SName.node);
-
-	public static final StyleQuery MINDMAPDIAG_NODE_ROOT = ELEMENT.add(SName.mindmapDiagram, SName.node,
-			SName.rootNode);
-
-	public static final StyleQuery MINDMAPDIAG_NODE_ROOT_BOXLESS = ELEMENT.add(SName.mindmapDiagram, SName.node,
-			SName.rootNode, SName.boxless);
-
-	public static final StyleQuery MINDMAPDIAG_NODE_LEAF = ELEMENT.add(SName.mindmapDiagram, SName.node,
-			SName.leafNode);
-
-	public static final StyleQuery MINDMAPDIAG_NODE_LEAF_BOXLESS = ELEMENT.add(SName.mindmapDiagram, SName.node,
-			SName.leafNode, SName.boxless);
-
-	public static final StyleQuery MINDMAPDIAG_NODE_BOXLESS = ELEMENT.add(SName.mindmapDiagram, SName.node,
+	public static final StyleQuery MINDMAPDIAG_NODE_ROOT_BOXLESS = MINDMAPDIAG.add(SName.node, SName.rootNode,
 			SName.boxless);
 
-	public static final StyleQuery MINDMAPDIAG_ARROW = ELEMENT.add(SName.mindmapDiagram, SName.arrow);
+	public static final StyleQuery MINDMAPDIAG_NODE_LEAF = MINDMAPDIAG.add(SName.node, SName.leafNode);
 
-	/**
-	 * A WBS node's shape ({@code WElement}) -- same closed-set shape as
-	 * {@code MINDMAPDIAG_NODE*}.
-	 */
+	public static final StyleQuery MINDMAPDIAG_NODE_LEAF_BOXLESS = MINDMAPDIAG.add(SName.node, SName.leafNode,
+			SName.boxless);
+
+	public static final StyleQuery MINDMAPDIAG_NODE_BOXLESS = MINDMAPDIAG.add(SName.node, SName.boxless);
+
+	public static final StyleQuery MINDMAPDIAG_ARROW = MINDMAPDIAG.add(SName.arrow);
+
 	public static final StyleQuery WBSDIAG_NODE = ELEMENT.add(SName.wbsDiagram, SName.node);
 
 	public static final StyleQuery WBSDIAG_NODE_ROOT = ELEMENT.add(SName.wbsDiagram, SName.node, SName.rootNode);
@@ -246,12 +203,6 @@ public final class StyleQueries {
 
 	public static final StyleQuery WBSDIAG_NODE_BOXLESS = ELEMENT.add(SName.wbsDiagram, SName.node, SName.boxless);
 
-	/**
-	 * The participant kind icon ({@code ParticipantType}) --
-	 * actor/boundary/control/entity/ queue/database/collections -- a closed set
-	 * alongside {@code SEQUENCEDIAG_PARTICIPANT} itself (the plain, kind-less
-	 * participant).
-	 */
 	public static final StyleQuery SEQUENCEDIAG_ACTOR = ELEMENT.add(SName.sequenceDiagram, SName.actor);
 
 	public static final StyleQuery SEQUENCEDIAG_BOUNDARY = ELEMENT.add(SName.sequenceDiagram, SName.boundary);
@@ -266,12 +217,6 @@ public final class StyleQueries {
 
 	public static final StyleQuery SEQUENCEDIAG_COLLECTIONS = ELEMENT.add(SName.sequenceDiagram, SName.collections);
 
-	/**
-	 * Structural components ({@code ComponentType}) -- lifeline/activation
-	 * box/separator/box/ newpage -- completing the sequence-diagram catalog
-	 * alongside {@code SEQUENCEDIAG_NOTE} and {@code SEQUENCEDIAG_PARTICIPANT},
-	 * which come from the same file.
-	 */
 	public static final StyleQuery SEQUENCEDIAG_LIFELINE = ELEMENT.add(SName.sequenceDiagram, SName.lifeLine);
 
 	public static final StyleQuery SEQUENCEDIAG_ACTIVATIONBOX = ELEMENT.add(SName.sequenceDiagram, SName.activationBox);
@@ -282,35 +227,20 @@ public final class StyleQueries {
 
 	public static final StyleQuery SEQUENCEDIAG_NEWPAGE = ELEMENT.add(SName.sequenceDiagram, SName.newpage);
 
-	/** No sub-element -- the diagram's own root style. */
-	public static final StyleQuery ACTIVITYDIAG = ELEMENT.add(SName.activityDiagram);
+	public static final StyleQuery ACTIVITYDIAG_CIRCLE_END = ACTIVITYDIAG.add(SName.circle, SName.end);
 
-	/**
-	 * The four circle markers (start/end/stop/spot) drawn by a compact
-	 * activity-diagram tile -- closed set completing {@code ACTIVITYDIAG_CIRCLE}
-	 * (the bare circle style), the same way {@code SPOT_*} completes {@code SPOT}.
-	 */
-	public static final StyleQuery ACTIVITYDIAG_CIRCLE_END = ELEMENT.add(SName.activityDiagram, SName.circle,
-			SName.end);
+	public static final StyleQuery ACTIVITYDIAG_CIRCLE_STOP = ACTIVITYDIAG.add(SName.circle, SName.stop);
 
-	public static final StyleQuery ACTIVITYDIAG_CIRCLE_STOP = ELEMENT.add(SName.activityDiagram, SName.circle,
-			SName.stop);
+	public static final StyleQuery ACTIVITYDIAG_CIRCLE_SPOT = ACTIVITYDIAG.add(SName.circle, SName.spot);
 
-	public static final StyleQuery ACTIVITYDIAG_CIRCLE_SPOT = ELEMENT.add(SName.activityDiagram, SName.circle,
-			SName.spot);
+	public static final StyleQuery ACTIVITYDIAG_CIRCLE_START = ACTIVITYDIAG.add(SName.circle, SName.start);
 
-	public static final StyleQuery ACTIVITYDIAG_CIRCLE_START = ELEMENT.add(SName.activityDiagram, SName.circle,
-			SName.start);
-
-	/** No sub-element -- the diagram's own root style. */
 	public static final StyleQuery EBNF = ELEMENT.add(SName.ebnf);
 
-	/** No sub-element -- the diagram's own root style. */
 	public static final StyleQuery FILESDIAG = ELEMENT.add(SName.filesDiagram);
 
 	public static final StyleQuery FILESDIAG_NOTE = ELEMENT.add(SName.filesDiagram, SName.note);
 
-	/** No sub-element -- the diagram's own root style. */
 	public static final StyleQuery PACKETDIAG = ELEMENT.add(SName.packetdiagDiagram);
 
 	public static final StyleQuery PACKETDIAG_RECTANGLE = ELEMENT.add(SName.packetdiagDiagram, SName.rectangle);
@@ -321,16 +251,8 @@ public final class StyleQueries {
 
 	public static final StyleQuery GANTTDIAG_NOTE = ELEMENT.add(SName.ganttDiagram, SName.note);
 
-	/** No sub-element -- the diagram's own root style. */
 	public static final StyleQuery SEQUENCEDIAG = ELEMENT.add(SName.sequenceDiagram);
 
-	/**
-	 * {@code partition}/{@code group} (a plain {@code group {}} block versus the
-	 * dedicated {@code partition} construct) and their headers, both the legacy
-	 * flat selector and the nested {@code header {}} form added for #2679 -- see
-	 * {@code Grouping} and {@code Reference} below for why each pair keeps a flat
-	 * and a nested constant.
-	 */
 	public static final StyleQuery SEQUENCEDIAG_PARTITION = ELEMENT.add(SName.sequenceDiagram, SName.partition);
 
 	public static final StyleQuery SEQUENCEDIAG_GROUP = ELEMENT.add(SName.sequenceDiagram, SName.group);
@@ -343,24 +265,15 @@ public final class StyleQueries {
 	public static final StyleQuery SEQUENCEDIAG_GROUP_HEADER = ELEMENT.add(SName.sequenceDiagram, SName.group,
 			SName.header);
 
-	/**
-	 * Pairs with {@code SEQUENCEDIAG_LIFELINE_DELAY} -- the other
-	 * lifeline-decoration kind.
-	 */
 	public static final StyleQuery SEQUENCEDIAG_LIFELINE_DESTROY = ELEMENT.add(SName.sequenceDiagram, SName.lifeLine,
 			SName.destroy);
 
-	/** The two note shapes, alongside the plain {@code SEQUENCEDIAG_NOTE}. */
 	public static final StyleQuery SEQUENCEDIAG_NOTE_HNOTE = ELEMENT.add(SName.sequenceDiagram, SName.note,
 			SName.hnote);
 
 	public static final StyleQuery SEQUENCEDIAG_NOTE_RNOTE = ELEMENT.add(SName.sequenceDiagram, SName.note,
 			SName.rnote);
 
-	/**
-	 * {@code reference} and its header, flat and nested -- same shape as
-	 * {@code SEQUENCEDIAG_GROUP*}.
-	 */
 	public static final StyleQuery SEQUENCEDIAG_REFERENCE = ELEMENT.add(SName.sequenceDiagram, SName.reference);
 
 	public static final StyleQuery SEQUENCEDIAG_REFERENCEHEADER = ELEMENT.add(SName.sequenceDiagram,
@@ -369,10 +282,6 @@ public final class StyleQueries {
 	public static final StyleQuery SEQUENCEDIAG_REFERENCE_HEADER = ELEMENT.add(SName.sequenceDiagram, SName.reference,
 			SName.header);
 
-	/**
-	 * {@code map}/{@code object}/{@code json} and their headers, from the three
-	 * object-diagram shapes.
-	 */
 	public static final StyleQuery OBJECTDIAG_MAP = ELEMENT.add(SName.objectDiagram, SName.map);
 
 	public static final StyleQuery OBJECTDIAG_MAP_HEADER = ELEMENT.add(SName.objectDiagram, SName.map, SName.header);
@@ -388,17 +297,11 @@ public final class StyleQueries {
 
 	public static final StyleQuery CLASSDIAG_ARROW = ELEMENT.add(SName.classDiagram, SName.arrow);
 
-	/** The plain and "business" use-case shapes. */
 	public static final StyleQuery COMPONENTDIAG_USECASE = ELEMENT.add(SName.componentDiagram, SName.usecase);
 
 	public static final StyleQuery COMPONENTDIAG_USECASE_BUSINESS = ELEMENT.add(SName.componentDiagram, SName.usecase,
 			SName.business);
 
-	/**
-	 * The title style for each Chen-ER shape, alongside the plain
-	 * {@code CHENEER_ATTRIBUTE}/ {@code _CIRCLE}/{@code _ENTITY} and the
-	 * newly-added {@code CHENEER_RELATIONSHIP}.
-	 */
 	public static final StyleQuery CHENEER_ATTRIBUTE_TITLE = ELEMENT.add(SName.chenEerDiagram, SName.chenAttribute,
 			SName.title);
 
@@ -412,7 +315,7 @@ public final class StyleQueries {
 	public static final StyleQuery CHENEER_RELATIONSHIP_TITLE = ELEMENT.add(SName.chenEerDiagram,
 			SName.chenRelationship, SName.title);
 
-	public static final StyleQuery ACTIVITYDIAG_GROUP = ELEMENT.add(SName.activityDiagram, SName.group);
+	public static final StyleQuery ACTIVITYDIAG_GROUP = ACTIVITYDIAG.add(SName.group);
 
 	public static final StyleQuery TIMINGDIAG_HIGHLIGHT = ELEMENT.add(SName.timingDiagram, SName.highlight);
 
@@ -424,33 +327,14 @@ public final class StyleQueries {
 
 	public static final StyleQuery TIMINGDIAG_NOTE = ELEMENT.add(SName.timingDiagram, SName.note);
 
-	/**
-	 * The state-diagram special cases inside
-	 * {@code Cluster.getDefaultStyleDefinition} and
-	 * {@code ClusterHeader.getSignature} -- the one branch of each that doesn't
-	 * depend on the caller-supplied diagram style name, alongside the plain
-	 * {@code STATEDIAG_STATE}.
-	 */
 	public static final StyleQuery STATEDIAG_STATE_GROUP = ELEMENT.add(SName.stateDiagram, SName.state, SName.group);
 
 	public static final StyleQuery STATEDIAG_STATE_NAME = ELEMENT.add(SName.stateDiagram, SName.state, SName.name);
 
 	public static final StyleQuery COMPONENTDIAG_REQUIREMENT = ELEMENT.add(SName.componentDiagram, SName.requirement);
 
-	/**
-	 * The diagram-type-less base for a note, meant to be completed with
-	 * {@code .addSName(sname)} once the caller-supplied diagram style name is known
-	 * -- {@link StyleQuery}'s atoms are an unordered set, so this is exactly
-	 * equivalent to {@code ELEMENT.add( sname, SName.note)}.
-	 */
 	public static final StyleQuery NOTE = ELEMENT.add(SName.note);
 
-	/**
-	 * The remaining diagram-type-less bases below follow the same
-	 * addSName(dynamic-diagram-style-name)/addSNames(...) pattern as {@link #NOTE}
-	 * -- each is completed with the caller-supplied diagram style name (and
-	 * sometimes a {@code USymbol}'s own names) once known.
-	 */
 	public static final StyleQuery DIAMOND = ELEMENT.add(SName.diamond);
 
 	public static final StyleQuery PORT = ELEMENT.add(SName.port);
@@ -465,9 +349,6 @@ public final class StyleQueries {
 
 	public static final StyleQuery ACTOR_BUSINESS_TITLE = ELEMENT.add(SName.actor, SName.business, SName.title);
 
-	/**
-	 * Shared by the empty-package shape and {@code ClusterHeader}'s package title.
-	 */
 	public static final StyleQuery PACKAGE_TITLE = ELEMENT.add(SName.package_, SName.title);
 
 	public static final StyleQuery ARROW = ELEMENT.add(SName.arrow);
@@ -488,18 +369,10 @@ public final class StyleQueries {
 
 	public static final StyleQuery COMPONENT = ELEMENT.add(SName.component);
 
-	/**
-	 * Shared by {@code Cluster.getDefaultStyleDefinition}'s symbol and plain-group
-	 * branches.
-	 */
 	public static final StyleQuery GROUP = ELEMENT.add(SName.group);
 
 	public static final StyleQuery PACKAGE_GROUP = ELEMENT.add(SName.package_, SName.group);
 
-	/**
-	 * Shared by {@code ClusterHeader.getSignature}'s uSymbol and plain-composite
-	 * branches.
-	 */
 	public static final StyleQuery COMPOSITE_TITLE = ELEMENT.add(SName.composite, SName.title);
 
 	public static final StyleQuery ARROW_CARDINALITY = ELEMENT.add(SName.arrow, SName.cardinality);
