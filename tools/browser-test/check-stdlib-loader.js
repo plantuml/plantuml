@@ -125,7 +125,7 @@ const server = createMountedServer({
   },
 });
 
-const { check, getFailures } = createCheckReporter();
+const { check, finish } = createCheckReporter();
 
 const includeOf = lib => ['@startuml', '!include <' + lib + '/greeting>', 'FAKEHELLO -> FAKEHELLO : ping', '@enduml'];
 const SEQUENCE = ['@startuml', 'Alice -> Bob: hello', 'Bob --> Alice: hi', '@enduml'];
@@ -233,7 +233,5 @@ const failsVisibly = r => !r.thrown && (!!r.text.trim() || (!!r.svg && isErrorIm
 
   await browser.close();
   server.close();
-  const failures = getFailures();
-  console.log(failures === 0 ? 'ALL CHECKS PASSED' : failures + ' CHECK(S) FAILED');
-  process.exit(failures === 0 ? 0 : 1);
+  finish({ uppercase: true });
 })().catch(e => { console.error(e); process.exit(2); });

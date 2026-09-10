@@ -13,8 +13,17 @@ function createCheckReporter() {
       failures++;
   }
 
+  function finish(options) {
+    const opt = options || {};
+    const okText = opt.uppercase ? 'ALL CHECKS PASSED' : 'all checks passed';
+    const failText = opt.uppercase ? 'CHECK(S) FAILED' : 'check(s) failed';
+    console.log((opt.leadingBlankLine ? '\n' : '') + (failures === 0 ? okText : failures + ' ' + failText));
+    process.exit(failures === 0 ? 0 : 1);
+  }
+
   return {
     check,
+    finish,
     getFailures: () => failures,
   };
 }

@@ -57,7 +57,7 @@ function backgroundOf(svg) {
   return { styleColor, rectColor };
 }
 
-const { check, getFailures } = createCheckReporter();
+const { check, finish } = createCheckReporter();
 function expectBackground(label, svg, color) {
   const bg = backgroundOf(svg);
   check(label, bg.styleColor === color && bg.rectColor === color,
@@ -163,7 +163,5 @@ const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
   await browser.close();
   server.close();
 
-  const failures = getFailures();
-  console.log(`\n${failures === 0 ? 'all checks passed' : failures + ' check(s) failed'}`);
-  process.exit(failures === 0 ? 0 : 1);
+  finish({ leadingBlankLine: true });
 })().catch(e => { console.error(e); process.exit(1); });

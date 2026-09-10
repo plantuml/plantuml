@@ -56,7 +56,7 @@ const hash = svg => crypto.createHash('sha256').update(shape(svg)).digest('hex')
 // A theme file starts with a YAML header; the body alone is what !theme executes.
 const themeBody = name => THEMES[name].replace(/^---\n[\s\S]*?\n---\n/, '');
 
-const { check, getFailures } = createCheckReporter();
+const { check, finish } = createCheckReporter();
 
 const body = ['Alice -> Bob: hello', 'Bob --> Alice: hi', 'note right: a note'];
 const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
@@ -193,7 +193,5 @@ const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
   await browser.close();
   server.close();
 
-  const failures = getFailures();
-  console.log(`\n${failures === 0 ? 'all checks passed' : failures + ' check(s) failed'}`);
-  process.exit(failures === 0 ? 0 : 1);
+  finish({ leadingBlankLine: true });
 })().catch(e => { console.error(e); process.exit(1); });

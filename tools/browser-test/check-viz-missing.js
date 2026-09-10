@@ -59,7 +59,7 @@ const server = createMountedServer({
   mounts: [{ prefix: '/', dir }],
 });
 
-const { check, getFailures } = createCheckReporter();
+const { check, finish } = createCheckReporter();
 
 const CLASS = ['@startuml', 'class Car {', '  +drive(): void', '}', 'class Engine', 'Car *-- Engine', '@enduml'];
 const COMPONENT = ['@startuml', '[Web UI] --> [API Gateway]', '[API Gateway] --> [Orders]', '@enduml'];
@@ -144,7 +144,5 @@ async function renderOn(page, lines) {
 
   await browser.close();
   server.close();
-  const failures = getFailures();
-  console.log(failures === 0 ? 'ALL CHECKS PASSED' : failures + ' CHECK(S) FAILED');
-  process.exit(failures === 0 ? 0 : 1);
+  finish({ uppercase: true });
 })().catch(e => { console.error(e); process.exit(2); });
