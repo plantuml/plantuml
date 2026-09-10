@@ -1,0 +1,119 @@
+'use strict';
+
+const fs = require('fs');
+const http = require('http');
+const path = require('path');
+
+function normalizeMountPrefix(prefix) {
+  return prefix === '/' ? '/' : prefix.replace(/\/+$/, '');
+}
+
+function send(res, body, contentType) {
+  if (contentType)
+    res.setHeader('content-type', contentType);
+  res.end(body);
+}
+
+function matchesMountPrefix(requestPath, prefix) {
+  prefix = normalizeMountPrefix(prefix);
+  if (prefix === '/')
+    return requestPath.startsWith('/');
+  return requestPath === prefix || requestPath.startsWith(prefix + '/');
+}
+
+function tryServeMountedFile(res, requestPath, mount) {
+  const allowFile = mount.allowFile || (request => /\.js$/i.test(request));
+  const prefix = normalizeMountPrefix(mount.prefix);
+  if (!matchesMountPrefix(requestPath, prefix))
+    return false;
+
+  const relativePath = prefix === '/'
+    ? requestPath.slice(1)
+    : requestPath === prefix ? '' : requestPath.slice(prefix.length + 1);
+  if (relativePath === '')
+    return false;
+  if (relativePath.split(/[\\/]+/).includes('..'))
+    return false;
+  const filePath = path.resolve(mount.dir, relativePath);
+  const dirPrefix = mount.dir.endsWith(path.sep) ? mount.dir : mount.dir + path.sep;
+  if (filePath !== mount.dir && !filePath.startsWith(dirPrefix))
+    return false;
+  if (!allowFile(relativePath, filePath))
+    return false;
+  if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile())
+    return false;
+  const realFilePath = fs.realpathSync(filePath);
+  const realDirPrefix = mount.realDir.endsWith(path.sep) ? mount.realDir : mount.realDir + path.sep;
+  if (realFilePath !== mount.realDir && !realFilePath.startsWith(realDirPrefix))
+    return false;
+
+  res.setHeader('content-type', mount.contentType || 'application/javascript');
+  res.setHeader('cache-control', 'no-store');
+  const stream = fs.createReadStream(filePath);
+  stream.on('error', () => {
+    if (!res.headersSent)
+      res.statusCode = 404;
+    res.end();
+  });
+  stream.pipe(res);
+  return true;
+}
+
+function createMountedServer(options) {
+  const routes = options.routes || {};
+  const mounts = (options.mounts || []).map(mount => ({
+    prefix: normalizeMountPrefix(mount.prefix),
+    dir: path.resolve(mount.dir),
+    realDir: fs.realpathSync(path.resolve(mount.dir)),
+    contentType: mount.contentType,
+    allowFile: mount.allowFile || (requestPath => /\.js$/i.test(requestPath)),
+  }));
+
+  return http.createServer((req, res) => {
+    let requestPath;
+    try {
+      requestPath = decodeURIComponent((req.url || '').split('?')[0]);
+    } catch (e) {
+      res.statusCode = 400;
+      return res.end();
+    }
+    if (typeof options.onRequest === 'function')
+      options.onRequest(requestPath, req);
+
+    const route = routes[requestPath];
+    if (route) {
+      if (typeof route === 'function')
+        return route(req, res, requestPath);
+      return send(res, route.body, route.contentType);
+    }
+
+    for (const mount of mounts)
+      if (tryServeMountedFile(res, requestPath, mount))
+        return;
+
+    res.statusCode = 404;
+    res.end();
+  });
+}
+
+function startServer(server, host) {
+  return new Promise((resolve, reject) => {
+    const onError = err => {
+      server.off('error', onError);
+      server.off('listening', onListening);
+      reject(err);
+    };
+    const onListening = () => {
+      server.off('error', onError);
+      resolve(server.address().port);
+    };
+    server.once('error', onError);
+    server.once('listening', onListening);
+    server.listen(0, host || '127.0.0.1');
+  });
+}
+
+module.exports = {
+  createMountedServer,
+  startServer,
+};
