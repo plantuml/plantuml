@@ -16,8 +16,9 @@ function tryServeMountedFile(res, requestPath, mount) {
 
   const relativePath = requestPath.slice(mount.prefix.length).replace(/^\/+/, '');
   const filePath = path.resolve(mount.dir, relativePath);
-  const dirPrefix = mount.dir.endsWith(path.sep) ? mount.dir : mount.dir + path.sep;
-  if (filePath !== mount.dir && !filePath.startsWith(dirPrefix))
+  const relativeCheck = path.relative(mount.dir, filePath);
+  if (relativeCheck === '' || relativeCheck === '..'
+    || relativeCheck.startsWith('..' + path.sep) || path.isAbsolute(relativeCheck))
     return false;
   if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile())
     return false;
@@ -37,7 +38,13 @@ function createMountedServer(options) {
   }));
 
   return http.createServer((req, res) => {
-    const requestPath = decodeURIComponent((req.url || '').split('?')[0]);
+    let requestPath;
+    try {
+      requestPath = decodeURIComponent((req.url || '').split('?')[0]);
+    } catch (e) {
+      res.statusCode = 400;
+      return res.end();
+    }
     if (typeof options.onRequest === 'function')
       options.onRequest(requestPath, req);
 
