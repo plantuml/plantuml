@@ -11,6 +11,7 @@ function send(res, body, contentType) {
 }
 
 function tryServeMountedFile(res, requestPath, mount) {
+  const allowFile = mount.allowFile || (request => /\.js$/i.test(request));
   if (!requestPath.startsWith(mount.prefix))
     return false;
 
@@ -22,7 +23,7 @@ function tryServeMountedFile(res, requestPath, mount) {
   if (relativeCheck === '..'
     || relativeCheck.startsWith('..' + path.sep) || path.isAbsolute(relativeCheck))
     return false;
-  if (!mount.allowFile(requestPath, filePath))
+  if (!allowFile(requestPath, filePath))
     return false;
   if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile())
     return false;
