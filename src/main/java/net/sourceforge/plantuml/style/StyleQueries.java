@@ -614,8 +614,10 @@ public final class StyleQueries {
 	 */
 	public static final StyleQuery ROOT = StyleQuery.of3(SName.root);
 
-	public static final StyleQuery TOTO2 = StyleQuery.of3(SName.root, SName.element, SName.stereotype);
+	/** The bare root+element+stereotype prefix, for a caller adding only a dynamic diagram type. */
+	public static final StyleQuery STEREOTYPE = StyleQuery.of3(SName.root, SName.element, SName.stereotype);
 
-	public static final StyleQuery TOTO1 = StyleQuery.of3(SName.root, SName.element);
+	/** The bare root+element prefix, for callers whose whole sub-selector is dynamic. */
+	public static final StyleQuery ELEMENT = StyleQuery.of3(SName.root, SName.element);
 
 }
