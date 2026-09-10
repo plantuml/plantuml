@@ -11,8 +11,9 @@ function send(res, body, contentType) {
 }
 
 function matchesMountPrefix(requestPath, prefix) {
-  return requestPath === prefix
-    || requestPath.startsWith(prefix.endsWith('/') ? prefix : prefix + '/');
+  if (prefix === '/')
+    return requestPath.startsWith('/');
+  return requestPath === prefix || requestPath.startsWith(prefix + '/');
 }
 
 function tryServeMountedFile(res, requestPath, mount) {
@@ -20,7 +21,9 @@ function tryServeMountedFile(res, requestPath, mount) {
   if (!matchesMountPrefix(requestPath, mount.prefix))
     return false;
 
-  const relativePath = requestPath.slice(mount.prefix.length).replace(/^\/+/, '');
+  const relativePath = mount.prefix === '/'
+    ? requestPath.slice(1)
+    : requestPath === mount.prefix ? '' : requestPath.slice(mount.prefix.length + 1);
   if (relativePath === '')
     return false;
   if (relativePath.split(/[\\/]+/).includes('..'))
@@ -49,7 +52,7 @@ function tryServeMountedFile(res, requestPath, mount) {
 function createMountedServer(options) {
   const routes = options.routes || {};
   const mounts = (options.mounts || []).map(mount => ({
-    prefix: mount.prefix,
+    prefix: mount.prefix === '/' ? '/' : mount.prefix.replace(/\/+$/, ''),
     dir: path.resolve(mount.dir),
     contentType: mount.contentType,
     allowFile: mount.allowFile || (requestPath => /\.js$/i.test(requestPath)),
