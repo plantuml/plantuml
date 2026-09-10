@@ -180,6 +180,23 @@ public final class StyleQuery {
 		return new StyleQuery(result, levelConstraint);
 	}
 
+	public StyleQuery add(SName name1, SName name2, SName name3) {
+		final SortedSet<StyleAtom> result = new TreeSet<StyleAtom>(atoms);
+		result.add(StyleAtom.of(name1));
+		result.add(StyleAtom.of(name2));
+		result.add(StyleAtom.of(name3));
+		return new StyleQuery(result, levelConstraint);
+	}
+
+	public StyleQuery add(SName name1, SName name2, SName name3, SName name4) {
+		final SortedSet<StyleAtom> result = new TreeSet<StyleAtom>(atoms);
+		result.add(StyleAtom.of(name1));
+		result.add(StyleAtom.of(name2));
+		result.add(StyleAtom.of(name3));
+		result.add(StyleAtom.of(name4));
+		return new StyleQuery(result, levelConstraint);
+	}
+
 	public StyleQuery addSNames(SName... names) {
 		final SortedSet<StyleAtom> result = new TreeSet<StyleAtom>(atoms);
 		for (SName name : names)
