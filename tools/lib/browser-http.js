@@ -15,7 +15,7 @@ function tryServeMountedFile(res, requestPath, mount) {
     return false;
 
   const relativePath = requestPath.slice(mount.prefix.length).replace(/^\/+/, '');
-  if (relativePath.split('/').includes('..'))
+  if (relativePath.split(/[\\/]+/).includes('..'))
     return false;
   const filePath = path.resolve(mount.dir, relativePath);
   const relativeCheck = path.relative(mount.dir, filePath);
@@ -69,6 +69,7 @@ function createMountedServer(options) {
 function startServer(server, host) {
   return new Promise((resolve, reject) => {
     const onError = err => {
+      server.off('error', onError);
       server.off('listening', onListening);
       reject(err);
     };
