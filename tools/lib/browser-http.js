@@ -15,6 +15,8 @@ function tryServeMountedFile(res, requestPath, mount) {
     return false;
 
   const relativePath = requestPath.slice(mount.prefix.length).replace(/^\/+/, '');
+  if (relativePath.split('/').includes('..'))
+    return false;
   const filePath = path.resolve(mount.dir, relativePath);
   const relativeCheck = path.relative(mount.dir, filePath);
   if (relativeCheck === '..'
