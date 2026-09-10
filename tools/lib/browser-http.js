@@ -21,6 +21,8 @@ function tryServeMountedFile(res, requestPath, mount) {
     return false;
 
   const relativePath = requestPath.slice(mount.prefix.length).replace(/^\/+/, '');
+  if (relativePath === '')
+    return false;
   if (relativePath.split(/[\\/]+/).includes('..'))
     return false;
   const filePath = path.resolve(mount.dir, relativePath);
@@ -28,7 +30,7 @@ function tryServeMountedFile(res, requestPath, mount) {
   if (relativeCheck === '..'
     || relativeCheck.startsWith('..' + path.sep) || path.isAbsolute(relativeCheck))
     return false;
-  if (!allowFile(requestPath, filePath))
+  if (!allowFile(relativePath, filePath))
     return false;
   if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile())
     return false;
