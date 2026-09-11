@@ -142,10 +142,10 @@ public final class Encoder {
    *  -1 if there is no corresponding code in the table.
    */
   static int getAlphanumericCode(int code) {
-<span class="fc bfc" id="L145" title="All 2 branches covered.">    if (code &lt; ALPHANUMERIC_TABLE.length) {</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">    if (code &lt; ALPHANUMERIC_TABLE.length) {</span>
 <span class="fc" id="L146">      return ALPHANUMERIC_TABLE[code];</span>
     }
-<span class="fc" id="L148">    return -1;</span>
+<span class="nc" id="L148">    return -1;</span>
   }
 
   public static Mode chooseMode(String content) {
