@@ -105,14 +105,7 @@ public final class AtomArray implements Iterable<StyleAtom> {
 		return new AtomArray(size == sorted.length ? sorted : Arrays.copyOf(sorted, size));
 	}
 
-	/**
-	 * This same collection, plus {@code atom} -- a no-op (returns {@code this}) when {@code atom}
-	 * is already present, mirroring {@code TreeSet.add}'s silent dedup.
-	 */
 	public AtomArray plus(StyleAtom atom) {
-		if (atom == null)
-			throw new IllegalArgumentException("atom");
-
 		final int found = Arrays.binarySearch(data, atom);
 		if (found >= 0)
 			return this;
@@ -125,27 +118,44 @@ public final class AtomArray implements Iterable<StyleAtom> {
 		return new AtomArray(result);
 	}
 
-	/**
-	 * This collection, unioned with {@code other} -- a single linear merge of the two (already
-	 * sorted, duplicate-free) backing arrays, rather than inserting {@code other}'s atoms one at a
-	 * time.
-	 */
+	public AtomArray plus(StyleAtom atom1, StyleAtom atom2) {
+		final StyleAtom[] newAtoms = atom1.compareTo(atom2) < 0 ? new StyleAtom[] { atom1, atom2 }
+				: new StyleAtom[] { atom2, atom1 };
+		return plusSorted(newAtoms);
+	}
+
+	public AtomArray plus(StyleAtom atom1, StyleAtom atom2, StyleAtom atom3) {
+		final StyleAtom[] sorted = { atom1, atom2, atom3 };
+		Arrays.sort(sorted);
+
+		int size = 1;
+		for (int i = 1; i < sorted.length; i++)
+			if (sorted[size - 1].compareTo(sorted[i]) != 0)
+				sorted[size++] = sorted[i];
+
+		return plusSorted(size == sorted.length ? sorted : Arrays.copyOf(sorted, size));
+	}
+
 	public AtomArray plusAll(AtomArray other) {
 		if (other == null || other.isEmpty())
 			return this;
 		if (this.isEmpty())
 			return other;
 
-		final StyleAtom[] merged = new StyleAtom[data.length + other.data.length];
+		return plusSorted(other.data);
+	}
+
+	private AtomArray plusSorted(StyleAtom[] newAtoms) {
+		final StyleAtom[] merged = new StyleAtom[data.length + newAtoms.length];
 		int i = 0;
 		int j = 0;
 		int k = 0;
-		while (i < data.length && j < other.data.length) {
-			final int cmp = data[i].compareTo(other.data[j]);
+		while (i < data.length && j < newAtoms.length) {
+			final int cmp = data[i].compareTo(newAtoms[j]);
 			if (cmp < 0)
 				merged[k++] = data[i++];
 			else if (cmp > 0)
-				merged[k++] = other.data[j++];
+				merged[k++] = newAtoms[j++];
 			else {
 				merged[k++] = data[i++];
 				j++;
@@ -153,8 +163,8 @@ public final class AtomArray implements Iterable<StyleAtom> {
 		}
 		while (i < data.length)
 			merged[k++] = data[i++];
-		while (j < other.data.length)
-			merged[k++] = other.data[j++];
+		while (j < newAtoms.length)
+			merged[k++] = newAtoms[j++];
 
 		return new AtomArray(k == merged.length ? merged : Arrays.copyOf(merged, k));
 	}

@@ -169,11 +169,11 @@ public final class StyleQuery {
 	}
 
 	public StyleQuery add(SName name1, SName name2) {
-		return new StyleQuery(atoms.plus(StyleAtom.of(name1)).plus(StyleAtom.of(name2)), levelConstraint);
+		return new StyleQuery(atoms.plus(StyleAtom.of(name1), StyleAtom.of(name2)), levelConstraint);
 	}
 
 	public StyleQuery add(SName name1, SName name2, SName name3) {
-		return new StyleQuery(atoms.plus(StyleAtom.of(name1)).plus(StyleAtom.of(name2)).plus(StyleAtom.of(name3)),
+		return new StyleQuery(atoms.plus(StyleAtom.of(name1), StyleAtom.of(name2), StyleAtom.of(name3)),
 				levelConstraint);
 	}
 

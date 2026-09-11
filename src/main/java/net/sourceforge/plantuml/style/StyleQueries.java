@@ -181,13 +181,11 @@ public final class StyleQueries {
 
 	public static final StyleQuery MINDMAPDIAG_NODE_ROOT = MINDMAPDIAG.add(SName.node, SName.rootNode);
 
-	public static final StyleQuery MINDMAPDIAG_NODE_ROOT_BOXLESS = MINDMAPDIAG.add(SName.node, SName.rootNode,
-			SName.boxless);
+	public static final StyleQuery MINDMAPDIAG_NODE_ROOT_BOXLESS = MINDMAPDIAG.add(SName.node, SName.rootNode, SName.boxless);
 
 	public static final StyleQuery MINDMAPDIAG_NODE_LEAF = MINDMAPDIAG.add(SName.node, SName.leafNode);
 
-	public static final StyleQuery MINDMAPDIAG_NODE_LEAF_BOXLESS = MINDMAPDIAG.add(SName.node, SName.leafNode,
-			SName.boxless);
+	public static final StyleQuery MINDMAPDIAG_NODE_LEAF_BOXLESS = MINDMAPDIAG.add(SName.node, SName.leafNode, SName.boxless);
 
 	public static final StyleQuery MINDMAPDIAG_NODE_BOXLESS = MINDMAPDIAG.add(SName.node, SName.boxless);
 
@@ -281,8 +279,7 @@ public final class StyleQueries {
 
 	public static final StyleQuery OBJECTDIAG_OBJECT = ELEMENT.add(SName.objectDiagram, SName.object);
 
-	public static final StyleQuery OBJECTDIAG_OBJECT_HEADER = ELEMENT.add(SName.objectDiagram, SName.object,
-			SName.header);
+	public static final StyleQuery OBJECTDIAG_OBJECT_HEADER = ELEMENT.add(SName.objectDiagram, SName.object, SName.header);
 
 	public static final StyleQuery OBJECTDIAG_JSON = ELEMENT.add(SName.objectDiagram, SName.json);
 
@@ -292,21 +289,17 @@ public final class StyleQueries {
 
 	public static final StyleQuery COMPONENTDIAG_USECASE = ELEMENT.add(SName.componentDiagram, SName.usecase);
 
-	public static final StyleQuery COMPONENTDIAG_USECASE_BUSINESS = ELEMENT.add(SName.componentDiagram, SName.usecase,
-			SName.business);
+	public static final StyleQuery COMPONENTDIAG_USECASE_BUSINESS = ELEMENT.add(SName.componentDiagram, SName.usecase, SName.business);
 
-	public static final StyleQuery CHENEER_ATTRIBUTE_TITLE = ELEMENT.add(SName.chenEerDiagram, SName.chenAttribute,
-			SName.title);
+	public static final StyleQuery CHENEER_ATTRIBUTE_TITLE = ELEMENT.add(SName.chenEerDiagram, SName.chenAttribute, SName.title);
 
 	public static final StyleQuery CHENEER_CIRCLE_TITLE = ELEMENT.add(SName.chenEerDiagram, SName.circle, SName.title);
 
-	public static final StyleQuery CHENEER_ENTITY_TITLE = ELEMENT.add(SName.chenEerDiagram, SName.chenEntity,
-			SName.title);
+	public static final StyleQuery CHENEER_ENTITY_TITLE = ELEMENT.add(SName.chenEerDiagram, SName.chenEntity, SName.title);
 
 	public static final StyleQuery CHENEER_RELATIONSHIP = ELEMENT.add(SName.chenEerDiagram, SName.chenRelationship);
 
-	public static final StyleQuery CHENEER_RELATIONSHIP_TITLE = ELEMENT.add(SName.chenEerDiagram,
-			SName.chenRelationship, SName.title);
+	public static final StyleQuery CHENEER_RELATIONSHIP_TITLE = ELEMENT.add(SName.chenEerDiagram, SName.chenRelationship, SName.title);
 
 	public static final StyleQuery ACTIVITYDIAG_GROUP = ACTIVITYDIAG.add(SName.group);
 
@@ -368,11 +361,9 @@ public final class StyleQueries {
 
 	public static final StyleQuery ARROW_CARDINALITY = ELEMENT.add(SName.arrow, SName.cardinality);
 
-	public static final StyleQuery CLASSDIAG_CLASS_QUALIFIED = ELEMENT.add(SName.classDiagram, SName.class_,
-			SName.qualified);
+	public static final StyleQuery CLASSDIAG_CLASS_QUALIFIED = ELEMENT.add(SName.classDiagram, SName.class_, SName.qualified);
 
-	public static final StyleQuery CLASSDIAG_CLASS_GENERIC = ELEMENT.add(SName.classDiagram, SName.class_,
-			SName.generic);
+	public static final StyleQuery CLASSDIAG_CLASS_GENERIC = ELEMENT.add(SName.classDiagram, SName.class_, SName.generic);
 
 	public static final StyleQuery CHARTDIAG_AXIS = ELEMENT.add(SName.chartDiagram, SName.axis);
 
