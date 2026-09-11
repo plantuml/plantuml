@@ -55,18 +55,18 @@ import net.sourceforge.plantuml.url.Url;
  */
 public final class StyleQuery {
 
-	private final SortedSet<StyleAtom> atoms;
+	private final AtomArray atoms;
 	private final LevelConstraint levelConstraint;
 
-	private StyleQuery(SortedSet<StyleAtom> atoms, LevelConstraint levelConstraint) {
+	private StyleQuery(AtomArray atoms, LevelConstraint levelConstraint) {
 		this.atoms = atoms;
 		this.levelConstraint = levelConstraint;
 	}
 
 	public static StyleQuery of3(SName... names) {
-		final SortedSet<StyleAtom> atoms = new TreeSet<StyleAtom>();
+		AtomArray atoms = AtomArray.empty();
 		for (SName name : names)
-			atoms.add(StyleAtom.of(name));
+			atoms = atoms.plus(StyleAtom.of(name));
 		return new StyleQuery(atoms, LevelConstraint.none());
 	}
 
@@ -88,9 +88,7 @@ public final class StyleQuery {
 	 * since a {@link TreeSet} silently dedupes a stereotype already present.
 	 */
 	public StyleQuery withStereotype(String stereotype) {
-		final SortedSet<StyleAtom> result = new TreeSet<StyleAtom>(atoms);
-		result.add(StyleAtom.ofStereotype(stereotype));
-		return new StyleQuery(result, levelConstraint);
+		return new StyleQuery(atoms.plus(StyleAtom.ofStereotype(stereotype)), levelConstraint);
 	}
 
 	public StyleQuery withStereotype(Stereotype stereotype) {
@@ -124,8 +122,7 @@ public final class StyleQuery {
 		if (labels.size() == 0)
 			return this;
 
-		final SortedSet<StyleAtom> withStereotypeTag = new TreeSet<StyleAtom>(atoms);
-		withStereotypeTag.add(StyleAtom.of(SName.stereotype));
+		final AtomArray withStereotypeTag = atoms.plus(StyleAtom.of(SName.stereotype));
 		StyleQuery result = new StyleQuery(withStereotypeTag, levelConstraint);
 		for (String name : labels)
 			result = result.withStereotype(name);
@@ -168,39 +165,21 @@ public final class StyleQuery {
 	}
 
 	public StyleQuery add(SName name) {
-		final SortedSet<StyleAtom> result = new TreeSet<StyleAtom>(atoms);
-		result.add(StyleAtom.of(name));
-		return new StyleQuery(result, levelConstraint);
+		return new StyleQuery(atoms.plus(StyleAtom.of(name)), levelConstraint);
 	}
 
 	public StyleQuery add(SName name1, SName name2) {
-		final SortedSet<StyleAtom> result = new TreeSet<StyleAtom>(atoms);
-		result.add(StyleAtom.of(name1));
-		result.add(StyleAtom.of(name2));
-		return new StyleQuery(result, levelConstraint);
+		return new StyleQuery(atoms.plus(StyleAtom.of(name1)).plus(StyleAtom.of(name2)), levelConstraint);
 	}
 
 	public StyleQuery add(SName name1, SName name2, SName name3) {
-		final SortedSet<StyleAtom> result = new TreeSet<StyleAtom>(atoms);
-		result.add(StyleAtom.of(name1));
-		result.add(StyleAtom.of(name2));
-		result.add(StyleAtom.of(name3));
-		return new StyleQuery(result, levelConstraint);
-	}
-
-	public StyleQuery add(SName name1, SName name2, SName name3, SName name4) {
-		final SortedSet<StyleAtom> result = new TreeSet<StyleAtom>(atoms);
-		result.add(StyleAtom.of(name1));
-		result.add(StyleAtom.of(name2));
-		result.add(StyleAtom.of(name3));
-		result.add(StyleAtom.of(name4));
-		return new StyleQuery(result, levelConstraint);
+		return new StyleQuery(atoms.plus(StyleAtom.of(name1)).plus(StyleAtom.of(name2)), levelConstraint);
 	}
 
 	public StyleQuery addSNames(SName... names) {
-		final SortedSet<StyleAtom> result = new TreeSet<StyleAtom>(atoms);
+		AtomArray result = atoms;
 		for (SName name : names)
-			result.add(StyleAtom.of(name));
+			result = result.plus(StyleAtom.of(name));
 		return new StyleQuery(result, levelConstraint);
 	}
 
@@ -208,9 +187,7 @@ public final class StyleQuery {
 		if (url == null)
 			return this;
 
-		final SortedSet<StyleAtom> result = new TreeSet<StyleAtom>(atoms);
-		result.add(StyleAtom.of(SName.clickable));
-		return new StyleQuery(result, levelConstraint);
+		return new StyleQuery(atoms.plus(StyleAtom.of(SName.clickable)), levelConstraint);
 	}
 
 	/**
@@ -219,8 +196,7 @@ public final class StyleQuery {
 	 * level, starred if either side is) -- mirroring {@code StyleKey.mergeWith}.
 	 */
 	StyleQuery mergeWith(StyleQuery other) {
-		final SortedSet<StyleAtom> result = new TreeSet<StyleAtom>(atoms);
-		result.addAll(other.atoms);
+		final AtomArray result = atoms.plusAll(other.atoms);
 
 		final int mergedLevel = Math.max(levelConstraint.getLevel(), other.levelConstraint.getLevel());
 		final boolean mergedStar = levelConstraint.isStar() || other.levelConstraint.isStar();
@@ -240,7 +216,7 @@ public final class StyleQuery {
 		return result;
 	}
 
-	SortedSet<StyleAtom> getAtoms() {
+	Iterable<StyleAtom> getAtoms() {
 		return atoms;
 	}
 
