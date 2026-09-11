@@ -16,7 +16,7 @@ const path = require('path');
 const { createCheckReporter, isErrorImage } = require('../lib/browser-check');
 const { parseTargetArg } = require('../lib/browser-cli');
 const { createMountedServer, startServer } = require('../lib/browser-http');
-const { createModulePageHtml, loadPlaywright, maybeScriptTag, openReadyPage } = require('../lib/browser-page');
+const { createModulePageHtml, loadPlaywright, makeRenderModuleBody, maybeScriptTag, openRenderer } = require('../lib/browser-page');
 
 const pw = loadPlaywright();
 const { dir, file } = parseTargetArg(process.argv, 'node check-background.js target=<dir-or-js>');
@@ -24,8 +24,7 @@ const { dir, file } = parseTargetArg(process.argv, 'node check-background.js tar
 const pageHtml = createModulePageHtml({
   modulePath: `/${file}`,
   bodyHtml: maybeScriptTag(dir, 'viz-global.js', '/viz-global.js'),
-  moduleBody: `window.__render=(lines,id,opts)=>render(lines,id,Object.assign({maxSvgSize:98304},opts||{}));
-window.__ready=1;`,
+  moduleBody: makeRenderModuleBody({ maxSvgSize: 98304, allowOverrides: true }),
 });
 
 const server = createMountedServer({
@@ -75,23 +74,13 @@ const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
 (async () => {
   const port = await startServer(server);
   const browser = await pw.chromium.launch({ headless: true });
-  const { page } = await openReadyPage(browser, `http://127.0.0.1:${port}/index.html`, { trackErrors: false });
+  const render = await openRenderer(browser, `http://127.0.0.1:${port}/index.html`, { trackErrors: false }, {
+    timeoutMs: 60000,
+    maxTextLength: 120,
+  });
 
-  const render = async (lines, opts) => {
-    const r = await page.evaluate(async ({ lines, opts }) => {
-      const out = document.getElementById('out'); out.innerHTML = '';
-      const done = new Promise(res => {
-        const mo = new MutationObserver(() => {
-          if (out.querySelector('svg') || out.textContent) { mo.disconnect(); res(); }
-        });
-        mo.observe(out, { childList: true, subtree: true });
-      });
-      let err = null;
-      try { window.__render(lines, 'out', opts); } catch (e) { err = String((e && e.message) || e); }
-      if (!err) await Promise.race([done, new Promise(r => setTimeout(r, 60000))]);
-      const svg = out.querySelector('svg');
-      return { err, svg: svg ? svg.outerHTML : null };
-    }, { lines, opts: opts || {} });
+  const renderSvg = async (lines, opts) => {
+    const r = await render(lines, opts || {});
     if (r.err || !r.svg) throw new Error('render produced no svg: ' + r.err);
     return r.svg;
   };
@@ -100,63 +89,63 @@ const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
 
   // 1. The default background is white, which both drivers deliberately skip, so the
   //    unthemed diagram must stay exactly as it is today: no background at all.
-  const control = await render(diagram());
+  const control = await renderSvg(diagram());
   check('control renders', !isErrorImage(control));
   expectNoBackground('control paints no background (white is skipped)', control);
 
   // 2. skinparam backgroundColor is the plainest way to set the document background.
   expectBackground('skinparam backgroundColor paints the background',
-    await render(diagram('skinparam backgroundColor #0B58A8')), '#0B58A8');
+    await renderSvg(diagram('skinparam backgroundColor #0B58A8')), '#0B58A8');
 
   // 3. The style form of the same setting.
   expectBackground('<style> document BackGroundColor paints the background',
-    await render(diagram('<style>document{BackGroundColor #114411}</style>')), '#114411');
+    await renderSvg(diagram('<style>document{BackGroundColor #114411}</style>')), '#114411');
 
   // 4. Themes set the document background the same way; amiga is white on blue and is
   //    unreadable without it.
   expectBackground('!theme amiga paints its blue background',
-    await render(diagram('!theme amiga')), '#0B58A8');
+    await renderSvg(diagram('!theme amiga')), '#0B58A8');
 
   // 5. Another dark theme, to show it is not a single hard-coded colour.
   expectBackground('!theme blueprint paints its background',
-    await render(diagram('!theme blueprint')), '#003153');
+    await renderSvg(diagram('!theme blueprint')), '#003153');
 
   // 6. transparent must keep painting nothing: the host page shows through.
   expectNoBackground('skinparam backgroundColor transparent paints nothing',
-    await render(diagram('skinparam backgroundColor transparent')));
+    await renderSvg(diagram('skinparam backgroundColor transparent')));
 
   // 7. Dark mode maps the default white background away; it must not start painting one.
-  const dark = await render(diagram(), { dark: true });
+  const dark = await renderSvg(diagram(), { dark: true });
   check('dark mode control renders', !isErrorImage(dark));
   expectNoBackground('dark mode control paints no background', dark);
 
   // 8. Dark mode only suppresses the default: an author's explicit color has no paired
   //    dark value and must paint unchanged.
   expectBackground('dark mode keeps an explicit background',
-    await render(diagram('skinparam backgroundColor #0B58A8'), { dark: true }), '#0B58A8');
+    await renderSvg(diagram('skinparam backgroundColor #0B58A8'), { dark: true }), '#0B58A8');
 
   // 9. scale changes the root size but not the viewBox convention; the background must
   //    still cover the whole viewBox (expectBackground asserts exactly that).
   expectBackground('scale 2 keeps the background covering the viewBox',
-    await render(diagram('scale 2', 'skinparam backgroundColor #0B58A8')), '#0B58A8');
+    await renderSvg(diagram('scale 2', 'skinparam backgroundColor #0B58A8')), '#0B58A8');
 
   // 10. The fix lives in the shared buildSvg path, not in the sequence renderer;
   //     pin one diagram type with its own layouter and one that goes through graphviz.
   expectBackground('activity diagram paints a theme background',
-    await render(['@startuml', '!theme amiga', 'start', ':do the thing;', 'stop', '@enduml']), '#0B58A8');
+    await renderSvg(['@startuml', '!theme amiga', 'start', ':do the thing;', 'stop', '@enduml']), '#0B58A8');
   expectBackground('class diagram paints the background',
-    await render(['@startuml', 'skinparam backgroundColor #0B58A8', 'class Foo', 'class Bar', 'Foo -> Bar', '@enduml']),
+    await renderSvg(['@startuml', 'skinparam backgroundColor #0B58A8', 'class Foo', 'class Bar', 'Foo -> Bar', '@enduml']),
     '#0B58A8');
 
   // 11. A skinparam after !theme overrides the theme background, like the Java build
   //     (verified against the jar: background:#114411).
   expectBackground('skinparam after !theme overrides the theme background',
-    await render(diagram('!theme amiga', 'skinparam backgroundColor #114411')), '#114411');
+    await renderSvg(diagram('!theme amiga', 'skinparam backgroundColor #114411')), '#114411');
 
   // 12. A gradient background degrades to its first color under TeaVM (HColorGradient
   //     resolves to color1 there; the Java build renders a real gradient). Pinned so the
   //     degradation stays a degradation and never becomes an error.
-  const gradient = await render(diagram('skinparam backgroundColor #0B58A8-#004488'));
+  const gradient = await renderSvg(diagram('skinparam backgroundColor #0B58A8-#004488'));
   check('gradient background renders', !isErrorImage(gradient));
   expectBackground('gradient background degrades to its first color', gradient, '#0B58A8');
 

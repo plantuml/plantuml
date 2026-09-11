@@ -27,7 +27,7 @@ const path = require('path');
 const { createCheckReporter, isErrorImage } = require('../lib/browser-check');
 const { parseTargetArg } = require('../lib/browser-cli');
 const { createMountedServer, startServer } = require('../lib/browser-http');
-const { createModulePageHtml, loadPlaywright, maybeScriptTag, openReadyPage } = require('../lib/browser-page');
+const { createModulePageHtml, loadPlaywright, makeRenderModuleBody, maybeScriptTag, openReadyPage, renderOn } = require('../lib/browser-page');
 
 const pw = loadPlaywright();
 const { dir, file } = parseTargetArg(process.argv, 'node check-viz-missing.js target=<dir-or-js>');
@@ -46,8 +46,7 @@ window.Viz = { instance: function () { return Promise.reject(new Error('Viz fail
 const pageHtml = mode => createModulePageHtml({
   bodyHtml: mode === 'viz' ? maybeScriptTag(dir, 'viz-global.js', '/viz-global.js') : mode === 'broken' ? brokenStub : '',
   modulePath: `/${file}`,
-  moduleBody: `window.__render=(lines,id)=>render(lines,id,{maxSvgSize:98304});
-window.__ready=1;`,
+  moduleBody: makeRenderModuleBody({ maxSvgSize: 98304 }),
 });
 
 const server = createMountedServer({
@@ -70,25 +69,6 @@ const STATE = ['@startuml', '[*] --> Working', 'state Working {', '  [*] --> Fet
 const SEQUENCE = ['@startuml', 'Alice -> Bob: hello', 'Bob --> Alice: hi', '@enduml'];
 const ACTIVITY = ['@startuml', 'start', ':Receive order;', ':Charge card;', 'stop', '@enduml'];
 
-async function renderOn(page, lines) {
-  return page.evaluate(async ({ lines }) => {
-    const out = document.getElementById('out');
-    out.innerHTML = '';
-    const done = new Promise(res => {
-      const mo = new MutationObserver(() => {
-        if (out.querySelector('svg') || out.textContent) { mo.disconnect(); res(); }
-      });
-      mo.observe(out, { childList: true, subtree: true });
-    });
-    let thrown = null;
-    try { window.__render(lines, 'out'); } catch (e) { thrown = String(e && e.message || e); }
-    if (!thrown) await Promise.race([done, new Promise(r => setTimeout(r, 30000))]);
-    const svg = out.querySelector('svg');
-    return { thrown, svg: svg ? svg.outerHTML : null, text: out.textContent || '',
-      shapes: svg ? svg.querySelectorAll('path,polygon,line,rect,ellipse').length : 0 };
-  }, { lines });
-}
-
 (async () => {
   const port = await startServer(server);
   const browser = await pw.chromium.launch({ headless: true });
@@ -99,13 +79,13 @@ async function renderOn(page, lines) {
   const bareErrors = bareReady.errors;
 
   for (const [label, lines] of [['sequence', SEQUENCE], ['activity', ACTIVITY]]) {
-    const r = await renderOn(bare, lines);
+    const r = await renderOn(bare, lines, { maxTextLength: 120 });
     check(`${label} diagram renders without viz-global.js`, !r.thrown && !!r.svg,
       r.thrown || 'no svg produced: ' + r.text.slice(0, 120));
   }
 
   for (const [label, lines] of [['class', CLASS], ['component', COMPONENT], ['composite state', STATE]]) {
-    const r = await renderOn(bare, lines);
+    const r = await renderOn(bare, lines, { includeShapeCounts: true, maxTextLength: 120 });
     const ok = !r.thrown && !!r.svg && !isErrorImage(r.svg) && r.shapes > 0;
     check(`${label} diagram without viz-global.js falls back to smetana`, ok,
       r.thrown || (!r.svg ? 'no svg: ' + r.text.slice(0, 120)
@@ -120,7 +100,7 @@ async function renderOn(page, lines) {
   const brokenErrors = brokenReady.errors;
 
   for (const [label, lines] of [['class', CLASS], ['component', COMPONENT], ['composite state', STATE]]) {
-    const r = await renderOn(broken, lines);
+    const r = await renderOn(broken, lines, { maxTextLength: 120 });
     const output = r.svg || r.text;
     check(`${label} diagram with a broken Viz produces output`, !r.thrown && !!output && output.trim().length > 0,
       r.thrown || 'target element left empty');
@@ -135,7 +115,7 @@ async function renderOn(page, lines) {
   const ctrlErrors = ctrlReady.errors;
 
   for (const [label, lines] of [['class', CLASS], ['component', COMPONENT]]) {
-    const r = await renderOn(ctrl, lines);
+    const r = await renderOn(ctrl, lines, { maxTextLength: 120 });
     const ok = !r.thrown && !!r.svg && !/viz is not loaded/i.test(r.svg) && !isErrorImage(r.svg);
     check(`control: ${label} diagram still renders with viz-global.js`, ok,
       r.thrown || (r.svg ? 'crash text in output' : 'no svg produced: ' + r.text.slice(0, 120)));
