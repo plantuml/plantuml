@@ -95,17 +95,17 @@ public final class StyleQueries {
 
 	public static final StyleQuery CHARTDIAG_AREA = CHARTDIAG.add(SName.area);
 
-	public static final StyleQuery CHARTDIAG_AXIS = ELEMENT.add(SName.chartDiagram, SName.axis);
+	public static final StyleQuery CHARTDIAG_AXIS = CHARTDIAG.add(SName.axis);
 
-	public static final StyleQuery CHARTDIAG_BAR = ELEMENT.add(SName.chartDiagram, SName.bar);
+	public static final StyleQuery CHARTDIAG_BAR = CHARTDIAG.add(SName.bar);
 
-	public static final StyleQuery CHARTDIAG_GRID = ELEMENT.add(SName.chartDiagram, SName.grid);
+	public static final StyleQuery CHARTDIAG_GRID = CHARTDIAG.add(SName.grid);
 
-	public static final StyleQuery CHARTDIAG_LEGEND = ELEMENT.add(SName.chartDiagram, SName.legend);
+	public static final StyleQuery CHARTDIAG_LEGEND = CHARTDIAG.add(SName.legend);
 
-	public static final StyleQuery CHARTDIAG_LINE = ELEMENT.add(SName.chartDiagram, SName.line);
+	public static final StyleQuery CHARTDIAG_LINE = CHARTDIAG.add(SName.line);
 
-	public static final StyleQuery CHARTDIAG_SCATTER = ELEMENT.add(SName.chartDiagram, SName.scatter);
+	public static final StyleQuery CHARTDIAG_SCATTER = CHARTDIAG.add(SName.scatter);
 
 	public static final StyleQuery CHENEER_ATTRIBUTE = ELEMENT.add(SName.chenEerDiagram, SName.chenAttribute);
 
@@ -231,7 +231,7 @@ public final class StyleQueries {
 
 	public static final StyleQuery PACKETDIAG = ELEMENT.add(SName.packetdiagDiagram);
 
-	public static final StyleQuery PACKETDIAG_RECTANGLE = ELEMENT.add(SName.packetdiagDiagram, SName.rectangle);
+	public static final StyleQuery PACKETDIAG_RECTANGLE = PACKETDIAG.add(SName.rectangle);
 
 	public static final StyleQuery PORT = ELEMENT.add(SName.port);
 
@@ -329,17 +329,17 @@ public final class StyleQueries {
 
 	public static final StyleQuery TIMINGDIAG = ELEMENT.add(SName.timingDiagram);
 
-	public static final StyleQuery TIMINGDIAG_ARROW = ELEMENT.add(SName.timingDiagram, SName.arrow);
+	public static final StyleQuery TIMINGDIAG_ARROW = TIMINGDIAG.add(SName.arrow);
 
-	public static final StyleQuery TIMINGDIAG_CONSTRAINTARROW = ELEMENT.add(SName.timingDiagram, SName.constraintArrow);
+	public static final StyleQuery TIMINGDIAG_CONSTRAINTARROW = TIMINGDIAG.add(SName.constraintArrow);
 
-	public static final StyleQuery TIMINGDIAG_HIGHLIGHT = ELEMENT.add(SName.timingDiagram, SName.highlight);
+	public static final StyleQuery TIMINGDIAG_HIGHLIGHT = TIMINGDIAG.add(SName.highlight);
 
-	public static final StyleQuery TIMINGDIAG_NOTE = ELEMENT.add(SName.timingDiagram, SName.note);
+	public static final StyleQuery TIMINGDIAG_NOTE = TIMINGDIAG.add(SName.note);
 
-	public static final StyleQuery TIMINGDIAG_TIMEGRID = ELEMENT.add(SName.timingDiagram, SName.timegrid);
+	public static final StyleQuery TIMINGDIAG_TIMEGRID = TIMINGDIAG.add(SName.timegrid);
 
-	public static final StyleQuery TIMINGDIAG_TIMELINE = ELEMENT.add(SName.timingDiagram, SName.timeline);
+	public static final StyleQuery TIMINGDIAG_TIMELINE = TIMINGDIAG.add(SName.timeline);
 
 	public static final StyleQuery VISIBILITYICON_IE_MANDATORY = ELEMENT.add(SName.visibilityIcon, SName.IEMandatory);
 
