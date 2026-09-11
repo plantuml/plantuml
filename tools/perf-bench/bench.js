@@ -20,7 +20,7 @@ const os = require('os');
 const path = require('path');
 const { parseNamedEnginesAndOptions } = require('../lib/browser-cli');
 const { createMountedServer, startServer } = require('../lib/browser-http');
-const { createModulePageHtml, loadPlaywright, maybeScriptTag, openReadyPage } = require('../lib/browser-page');
+const { createModulePageHtml, loadPlaywright, makeRenderer, makeRenderModuleBody, maybeScriptTag, openReadyPage } = require('../lib/browser-page');
 
 const pw = loadPlaywright();
 
@@ -51,9 +51,8 @@ function pageHtml(engine) {
     headHtml: '<script>window.__t0=performance.now();</script>',
     bodyHtml: maybeScriptTag(engine.dir, 'viz-global.js', `/${engine.name}/viz-global.js`),
     modulePath: `/${engine.name}/${engine.file}`,
-    moduleBody: `window.__render=(lines,id)=>render(lines,id,{maxSvgSize:${opt.maxsvg}});
-window.__importMs=Math.round(performance.now()-window.__t0);
-window.__ready=1;`,
+    moduleBody: makeRenderModuleBody({ maxSvgSize: opt.maxsvg }) + `
+window.__importMs=Math.round(performance.now()-window.__t0);`,
   });
 }
 
@@ -64,30 +63,6 @@ const server = createMountedServer({
   routes,
   mounts: engines.map(engine => ({ prefix: `/${engine.name}/`, dir: engine.dir })),
 });
-
-async function renderOnce(page, lines) {
-  return page.evaluate(async ({ lines, id }) => {
-    const out = document.getElementById(id); out.innerHTML = '';
-    const t0 = performance.now();
-    let err = null;
-    const done = new Promise(res => {
-      const mo = new MutationObserver(() => { if (out.querySelector('svg') || out.textContent) { mo.disconnect(); res(); } });
-      mo.observe(out, { childList: true, subtree: true });
-    });
-    try { window.__render(lines, id); } catch (e) { err = String(e && e.message || e); }
-    if (!err) await Promise.race([done, new Promise(r => setTimeout(r, 180000))]);
-    const svg = out.querySelector('svg');
-    let sha = null, bytes = 0, truncated = false;
-    if (svg) {
-      const html = svg.outerHTML;
-      bytes = html.length;
-      truncated = html.includes('(max ');
-      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(html));
-      sha = [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
-    }
-    return { ms: Math.round(performance.now() - t0), err: err || (svg ? null : String(out.textContent).slice(0, 120)), bytes, sha, truncated };
-  }, { lines, id: 'out' });
-}
 
 function median(v) { const s = [...v].sort((a, b) => a - b); return s.length ? s[Math.floor(s.length / 2)] : null; }
 function iqr(v) { const s = [...v].sort((a, b) => a - b); return s.length ? [s[Math.floor(s.length / 4)], s[Math.floor(3 * s.length / 4)]] : [null, null]; }
@@ -104,6 +79,7 @@ function graph(target, ref) {
   const engineInfo = {};
 
   const pages = {};
+  const renderers = {};
   for (const e of engines) {
     const ready = await openReadyPage(browser, `http://127.0.0.1:${port}/page/${e.name}`, {
       onConsole: null,
@@ -111,6 +87,13 @@ function graph(target, ref) {
     });
     ready.page.on('pageerror', err => console.error('PAGEERROR', e.name, err.message));
     pages[e.name] = ready.page;
+    renderers[e.name] = makeRenderer(ready.page, {
+      timeoutMs: 180000,
+      includeTiming: true,
+      includeHash: true,
+      includeTruncation: true,
+      maxTextLength: 120,
+    });
     engineInfo[e.name] = {
       path: path.join(e.dir, e.file),
       sizeBytes: fs.statSync(path.join(e.dir, e.file)).size,
@@ -129,7 +112,7 @@ function graph(target, ref) {
       for (let rep = 0; rep < opt.reps; rep++) {
         const order = (rep + block) % 2 === 0 ? engines : [...engines].reverse();
         for (const e of order) {
-          const r = await renderOnce(pages[e.name], sources[f]);
+          const r = await renderers[e.name](sources[f]);
           reps.push({ engine: e.name, diagram: f, block, rep, ...r });
         }
       }
