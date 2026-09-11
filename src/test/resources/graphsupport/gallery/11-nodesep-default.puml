@@ -1,0 +1,12 @@
+@startuml
+' Baseline for the nodesep pair below
+skinparam nodesep 10
+class Api
+class Service
+class Worker
+class Store
+Api --> Service
+Api --> Worker
+Service --> Store
+Worker --> Store
+@enduml

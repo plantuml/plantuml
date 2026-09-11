@@ -1,0 +1,12 @@
+@startuml
+' skinparam nodesep 120: Smetana renders exactly as with 10, the setting is ignored
+skinparam nodesep 120
+class Api
+class Service
+class Worker
+class Store
+Api --> Service
+Api --> Worker
+Service --> Store
+Worker --> Store
+@enduml

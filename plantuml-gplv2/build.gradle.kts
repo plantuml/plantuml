@@ -41,6 +41,8 @@ sourceSets {
   main {
     java {
       srcDirs("build/generated/sjpp")
+      // graph-support is Apache-2.0, which cannot be combined with GPLv2-only.
+      exclude("net/sourceforge/plantuml/graphsupport/**")
     }
     resources {
       srcDir(rootProject.layout.projectDirectory.dir("src/main/resources"))

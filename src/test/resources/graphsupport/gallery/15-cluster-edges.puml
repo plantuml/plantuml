@@ -1,0 +1,11 @@
+@startuml
+' Edges that start or end on a cluster border: DOT does this with compound/lhead/ltail, which Smetana never sets
+package Box {
+  class Inner
+}
+class Outside
+class Another
+Outside --> Box
+Box --> Another
+Inner --> Another
+@enduml

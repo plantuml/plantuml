@@ -93,11 +93,13 @@ import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
 import net.sourceforge.plantuml.svek.image.EntityImageStateCommon;
+import net.sourceforge.plantuml.svek.layout.SvekLayoutModel;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.Position;
 
 public class Cluster implements Moveable {
+	private static final double GRAPH_SUPPORT_TITLE_PADDING = 15;
 
 	// /* private */ static final String RANK_SAME = "same";
 	/* private */ static final String RANK_SOURCE = "source";
@@ -648,6 +650,116 @@ public class Cluster implements Moveable {
 		return rankSame;
 	}
 
+	SvekLayoutModel.ClusterSpec toLayoutSpec() {
+		PackageStyle packageStyle = getGroup().getPackageStyle();
+		if (packageStyle == null)
+			packageStyle = skinParam.packageStyle();
+		final USymbol symbol = getGroup().getUSymbol() == null ? packageStyle.toUSymbol() : getGroup().getUSymbol();
+		final boolean decorated = symbol != null && symbol.suppWidthBecauseOfShape() > 0;
+		final double containmentMargin = decorated ? 20 : 10;
+		final double contentTopPadding = getTitleAndAttributeHeight() > 0 ? GRAPH_SUPPORT_TITLE_PADDING : 0;
+		final HorizontalAlignment alignment = skinParam.getHorizontalAlignment(AlignmentParam.packageTitleAlignment,
+				null, false, null);
+		return SvekLayoutModel.ClusterSpec.builder(getClusterId())
+				.title(getTitleAndAttributeWidth(), getTitleAndAttributeHeight(), toLayoutAlignment(alignment))
+				.margins(containmentMargin, containmentMargin)
+				.contentTopPadding(contentTopPadding)
+				.build();
+	}
+
+	private static SvekLayoutModel.Alignment toLayoutAlignment(HorizontalAlignment alignment) {
+		if (alignment == HorizontalAlignment.LEFT)
+			return SvekLayoutModel.Alignment.LEFT;
+		if (alignment == HorizontalAlignment.RIGHT)
+			return SvekLayoutModel.Alignment.RIGHT;
+		return SvekLayoutModel.Alignment.CENTER;
+	}
+
+	Together getTogether() {
+		return group.getTogether();
+	}
+
+	boolean isPackedForLayout() {
+		return group.isPacked();
+	}
+
+	boolean isLayoutTitleRequired() {
+		final SvekLayoutModel.ClusterSpec spec = toLayoutSpec();
+		return spec.titleWidth > 0 && spec.titleHeight > 0;
+	}
+
+	boolean usesSwimlanes(DiagramType type) {
+		return skinParam.useSwimlanes(type);
+	}
+
+	String getSourceInPoint(DiagramType type) {
+		return usesSwimlanes(type) ? "sourceIn" + color : null;
+	}
+
+	String getSinkInPoint(DiagramType type) {
+		return usesSwimlanes(type) ? "sinkIn" + color : null;
+	}
+
+	List<String> getLayoutNodeIds(Set<EntityPosition> positions) {
+		final List<String> result = new ArrayList<>();
+		for (SvekNode node : nodes)
+			if (positions.contains(node.getEntityPosition()))
+				result.add(node.getUid());
+		return result;
+	}
+
+	boolean hasLayoutPorts() {
+		for (SvekNode node : nodes)
+			if (node.getEntityPosition().isPort())
+				return true;
+		return false;
+	}
+
+	boolean needsLayoutCenter() {
+		for (SvekNode node : nodes)
+			if (node.getEntityPosition() != EntityPosition.NORMAL)
+				return true;
+		return false;
+	}
+
+	boolean needsLayoutProtection(DiagramType type) {
+		return usesSwimlanes(type) == false && needsLayoutCenter() == false;
+	}
+
+	List<SvekLayoutModel.RankSpec> toLayoutRankSpecs(Collection<SvekEdge> lines) {
+		final List<SvekLayoutModel.RankSpec> result = new ArrayList<>();
+		final Set<String> pairs = new LinkedHashSet<>();
+		if (skinParam.useRankSame())
+			for (SvekEdge edge : lines) {
+				if (edge.hasEntryPoint())
+					continue;
+				final String start = edge.getStartUidPrefix();
+				final String end = edge.getEndUidPrefix();
+				if (isInCluster(start) && isInCluster(end) && edge.rankSame() != null) {
+					final String key = start + "\u0000" + end;
+					if (pairs.add(key)) {
+						final List<String> ids = new ArrayList<>();
+						ids.add(start);
+						ids.add(end);
+						result.add(new SvekLayoutModel.RankSpec(SvekLayoutModel.Rank.SAME, ids));
+					}
+				}
+			}
+		addLayoutRank(result, SvekLayoutModel.Rank.SOURCE, EntityPosition.getInputs());
+		addLayoutRank(result, SvekLayoutModel.Rank.SINK, EntityPosition.getOutputs());
+		return Collections.unmodifiableList(result);
+	}
+
+	private void addLayoutRank(List<SvekLayoutModel.RankSpec> result, SvekLayoutModel.Rank rank,
+			Set<EntityPosition> positions) {
+		final List<String> ids = new ArrayList<>();
+		for (SvekNode node : nodes)
+			if (positions.contains(node.getEntityPosition()))
+				ids.add(node.getUid());
+		if (ids.size() > 0)
+			result.add(new SvekLayoutModel.RankSpec(rank, ids));
+	}
+
 	private boolean isInCluster(String uid) {
 		for (SvekNode node : nodes)
 			if (node.getUid().equals(uid))
@@ -662,6 +774,26 @@ public class Cluster implements Moveable {
 
 	static String getSpecialPointId(Entity group) {
 		return CENTER_ID + group.getUid();
+	}
+
+	/** Same size as the DOT declaration {@code [shape=point,width=.01]}: 0.01 inch is 0.72 units. */
+	private static final double CENTER_POINT_SIZE = .72;
+
+	SvekLayoutModel.NodeSpec toLayoutCenterNodeSpec(Collection<SvekEdge> lines) {
+		final String id = getSpecialPointId(group);
+		if (isLayoutEndpoint(lines, id) == false && needsLayoutCenter() == false)
+			return null;
+
+		return new SvekLayoutModel.NodeSpec(id, CENTER_POINT_SIZE, CENTER_POINT_SIZE, SvekLayoutModel.Shape.POINT,
+				null, Collections.emptyList(), true);
+	}
+
+	private static boolean isLayoutEndpoint(Collection<SvekEdge> lines, String id) {
+		for (SvekEdge line : lines)
+			if (line.hasLayoutEndpoint(id))
+				return true;
+
+		return false;
 	}
 
 	String getMinPoint(DiagramType type) {

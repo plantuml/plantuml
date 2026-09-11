@@ -62,6 +62,12 @@ public class EntityPort {
 		return entityUid;
 	}
 
+	public String getPortId() {
+		if (isShielded())
+			return "h";
+		return portId;
+	}
+
 	private boolean isShielded() {
 		return entityUid.endsWith(":h");
 	}

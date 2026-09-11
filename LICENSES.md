@@ -22,6 +22,11 @@ subproject containing the corresponding license text:
 
 You may choose to use PlantUML under any one of the licenses listed above.
 
+The `plantuml-gplv2` artifact is the exception: the graph-support layout engine
+is licensed under Apache-2.0, which cannot be combined with GPL-2.0-only, so
+that artifact is built without it and falls back to Smetana when Graphviz is
+missing.
+
 ## npm packages
 
 The following npm packages are distributed under the **MIT License**:

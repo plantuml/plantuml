@@ -415,6 +415,57 @@ public class DotPath implements UShape, Moveable {
 		return Collections.unmodifiableList(beziers);
 	}
 
+	public DotPath withEndpointTangentsToward(RectangleArea head, RectangleArea tail) {
+		if (beziers.isEmpty())
+			return this;
+		final List<XCubicCurve2D> copy = new ArrayList<>(beziers);
+		if (tail != null) {
+			final XCubicCurve2D first = copy.get(0);
+			final XPoint2D start = first.getP1();
+			final XPoint2D center = tail.getPointCenter();
+			if (pointsToward(first.getCtrlP1(), start, center) == false) {
+				final double length = Math.max(1, start.distance(first.getCtrlP1()));
+				final XPoint2D control = pointAwayFrom(start, center, length);
+				copy.set(0, new XCubicCurve2D(start.getX(), start.getY(), control.getX(), control.getY(),
+						first.getCtrlX2(), first.getCtrlY2(), first.getX2(), first.getY2()));
+			}
+		}
+		if (head != null) {
+			final int index = copy.size() - 1;
+			final XCubicCurve2D last = copy.get(index);
+			final XPoint2D end = last.getP2();
+			final XPoint2D center = head.getPointCenter();
+			if (pointsToward(last.getCtrlP2(), end, center) == false) {
+				final double length = Math.max(1, end.distance(last.getCtrlP2()));
+				final XPoint2D control = pointAwayFrom(end, center, length);
+				copy.set(index, new XCubicCurve2D(last.getX1(), last.getY1(), last.getCtrlX1(), last.getCtrlY1(),
+						control.getX(), control.getY(), end.getX(), end.getY()));
+			}
+		}
+		return fromBeziers(copy);
+	}
+
+	private static boolean pointsToward(XPoint2D from, XPoint2D to, XPoint2D target) {
+		final double tangentX = to.getX() - from.getX();
+		final double tangentY = to.getY() - from.getY();
+		final double targetX = target.getX() - to.getX();
+		final double targetY = target.getY() - to.getY();
+		return tangentX * targetX + tangentY * targetY > 0;
+	}
+
+	private static XPoint2D pointToward(XPoint2D origin, XPoint2D target, double length) {
+		final double distance = origin.distance(target);
+		if (distance == 0)
+			return origin;
+		return new XPoint2D(origin.getX() + (target.getX() - origin.getX()) * length / distance,
+				origin.getY() + (target.getY() - origin.getY()) * length / distance);
+	}
+
+	private static XPoint2D pointAwayFrom(XPoint2D origin, XPoint2D target, double length) {
+		final XPoint2D toward = pointToward(origin, target, length);
+		return new XPoint2D(2 * origin.getX() - toward.getX(), 2 * origin.getY() - toward.getY());
+	}
+
 	public DotPath simulateCompound(RectangleArea head, RectangleArea tail) {
 		if (head == null && tail == null)
 			return this;
