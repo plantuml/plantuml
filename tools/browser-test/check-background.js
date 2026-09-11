@@ -16,7 +16,7 @@ const path = require('path');
 const { createCheckReporter, isErrorImage } = require('../lib/browser-check');
 const { parseTargetArg } = require('../lib/browser-cli');
 const { createMountedServer, startServer } = require('../lib/browser-http');
-const { createModulePageHtml, loadPlaywright, makeRenderModuleBody, maybeScriptTag, newRenderer } = require('../lib/browser-page');
+const { createModulePageHtml, loadPlaywright, makeRenderModuleBody, maybeScriptTag, openRenderer } = require('../lib/browser-page');
 
 const pw = loadPlaywright();
 const { dir, file } = parseTargetArg(process.argv, 'node check-background.js target=<dir-or-js>');
@@ -74,7 +74,7 @@ const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
 (async () => {
   const port = await startServer(server);
   const browser = await pw.chromium.launch({ headless: true });
-  const render = await newRenderer(browser, `http://127.0.0.1:${port}/index.html`, { trackErrors: false }, {
+  const render = await openRenderer(browser, `http://127.0.0.1:${port}/index.html`, { trackErrors: false }, {
     timeoutMs: 60000,
     maxTextLength: 120,
   });

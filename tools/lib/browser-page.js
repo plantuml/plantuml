@@ -150,7 +150,7 @@ function makeRenderer(page, options) {
   };
 }
 
-async function newRenderer(browser, url, openOptions, renderOptions) {
+async function openRenderer(browser, url, openOptions, renderOptions) {
   const ready = await openReadyPage(browser, url, openOptions);
   const renderer = makeRenderer(ready.page, renderOptions);
   renderer.page = ready.page;
@@ -169,7 +169,7 @@ module.exports = {
   makeRenderer,
   makeRenderModuleBody,
   maybeScriptTag,
-  newRenderer,
+  openRenderer,
   openReadyPage,
   renderOn,
   shortPageError,

@@ -15,7 +15,7 @@ const path = require('path');
 const { createCheckReporter, isErrorImage } = require('../lib/browser-check');
 const { parseTargetArg } = require('../lib/browser-cli');
 const { createMountedServer, startServer } = require('../lib/browser-http');
-const { createModulePageHtml, loadPlaywright, makeRenderModuleBody, maybeScriptTag, newRenderer: openRenderer } = require('../lib/browser-page');
+const { createModulePageHtml, loadPlaywright, makeRenderModuleBody, maybeScriptTag, openRenderer } = require('../lib/browser-page');
 
 const pw = loadPlaywright();
 const { dir, file } = parseTargetArg(process.argv, 'node check-themes.js target=<dir-or-js>');
@@ -64,7 +64,7 @@ const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
   const port = await startServer(server);
   const browser = await pw.chromium.launch({ headless: true });
 
-  async function newRenderer({ blockThemesJs = false, preregister = false } = {}) {
+  async function openThemedRenderer({ blockThemesJs = false, preregister = false } = {}) {
     const consoleMessages = [];
     const renderOnPage = await openRenderer(browser, `http://127.0.0.1:${port}/index.html`, {
       trackErrors: false,
@@ -86,7 +86,7 @@ const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
     return render;
   }
 
-  const render = await newRenderer();
+  const render = await openThemedRenderer();
 
   console.log(`engine : ${path.join(dir, file)}`);
   console.log(`themes : ${NAMES.length} in themes.js\n`);
@@ -154,7 +154,7 @@ const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
   // 9. A host that registers PLANTUML_THEMES itself must not need themes.js to be fetchable.
   //    This is what lets themes work inside a Web Worker, where the script loader has no
   //    document to append a script tag to.
-  const preregistered = await newRenderer({ blockThemesJs: true, preregister: true });
+  const preregistered = await openThemedRenderer({ blockThemesJs: true, preregister: true });
   const amigaPre = await preregistered(diagram('!theme amiga'));
   check('pre-registered PLANTUML_THEMES works without fetching themes.js',
     amigaPre.includes('#0B58A8') && hash(amigaPre) === hash(amiga),
@@ -166,7 +166,7 @@ const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
   //     file is reported as a console warning, which is where the page author looks. An
   //     unknown theme name with themes.js present stays an error (checked above): only
   //     the missing-file case degrades.
-  const noThemes = await newRenderer({ blockThemesJs: true });
+  const noThemes = await openThemedRenderer({ blockThemesJs: true });
   const amigaMissing = await noThemes(diagram('!theme amiga'));
   check('missing themes.js still renders the diagram, unthemed',
     !isErrorImage(amigaMissing) && hash(amigaMissing) === controlHash,
