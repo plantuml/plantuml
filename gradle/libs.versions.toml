@@ -4,7 +4,7 @@
 # https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
 
 [versions]
-ant                 = "1.10.17"
+ant                 = "1.10.18"
 elk                 = "0.12.0"
 gorylenko-gradle-git-properties = "4.0.1"
 graalvm-native      = "1.1.12"
