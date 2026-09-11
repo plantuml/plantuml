@@ -35,9 +35,7 @@
  */
 package net.sourceforge.plantuml.core;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 
 import net.sourceforge.plantuml.Annotated;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
@@ -70,9 +68,8 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.svek.DecorateEntityImage;
 import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 import net.sourceforge.plantuml.warning.Warning;
@@ -101,7 +98,7 @@ import net.sourceforge.plantuml.warning.Warning;
  */
 public final class DiagramChromeFactory {
 
-<span class="fc" id="L104">	private static final FontConfiguration WARNING_FC = FontConfiguration.blackBlueTrue(UFontFactory.monospace(10));</span>
+<span class="fc" id="L101">	private static final FontConfiguration WARNING_FC = FontConfiguration.blackBlueTrue(UFontFactory.monospace(10));</span>
 
 	// Utility class — no instantiation
 	private DiagramChromeFactory() {
@@ -124,15 +121,15 @@ public final class DiagramChromeFactory {
 	public static TextBlock create(TextBlock raw, Annotated annotated, ISkinParam skinParam,
 			Collection&lt;Warning&gt; warnings, DisplayPositioned title) {
 
-<span class="fc" id="L127">		TextBlock result = raw;</span>
-<span class="fc" id="L128">		BrowserLog.consoleLog(DiagramChromeFactory.class, &quot;create &quot; + warnings);</span>
-<span class="fc" id="L129">		result = addWarnings(result, warnings);</span>
-<span class="fc" id="L130">		result = decorateWithFrame(result, annotated, skinParam);</span>
-<span class="fc" id="L131">		result = addLegend(result, annotated, skinParam);</span>
-<span class="fc" id="L132">		result = addTitle(result, title, skinParam);</span>
-<span class="fc" id="L133">		result = addCaption(result, annotated, skinParam);</span>
-<span class="fc" id="L134">		result = addHeaderAndFooter(result, annotated, skinParam);</span>
-<span class="fc" id="L135">		return result;</span>
+<span class="fc" id="L124">		TextBlock result = raw;</span>
+<span class="fc" id="L125">		BrowserLog.consoleLog(DiagramChromeFactory.class, &quot;create &quot; + warnings);</span>
+<span class="fc" id="L126">		result = addWarnings(result, warnings);</span>
+<span class="fc" id="L127">		result = decorateWithFrame(result, annotated, skinParam);</span>
+<span class="fc" id="L128">		result = addLegend(result, annotated, skinParam);</span>
+<span class="fc" id="L129">		result = addTitle(result, title, skinParam);</span>
+<span class="fc" id="L130">		result = addCaption(result, annotated, skinParam);</span>
+<span class="fc" id="L131">		result = addHeaderAndFooter(result, annotated, skinParam);</span>
+<span class="fc" id="L132">		return result;</span>
 	}
 
 	// -----------------------------------------------------------------------
@@ -156,18 +153,18 @@ public final class DiagramChromeFactory {
 	 *         above it, or {@code raw} unchanged if there is no title
 	 */
 	public static AsciiBlock createAscii(AsciiBlock raw, Annotated annotated) {
-<span class="fc" id="L159">		return addAsciiTitle(raw, annotated);</span>
+<span class="fc" id="L156">		return addAsciiTitle(raw, annotated);</span>
 	}
 
 	private static AsciiBlock addAsciiTitle(AsciiBlock original, Annotated annotated) {
-<span class="fc" id="L163">		final DisplayPositioned title = (DisplayPositioned) annotated.getTitle();</span>
-<span class="fc bfc" id="L164" title="All 2 branches covered.">		if (title.isNull())</span>
-<span class="fc" id="L165">			return original;</span>
+<span class="fc" id="L160">		final DisplayPositioned title = (DisplayPositioned) annotated.getTitle();</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">		if (title.isNull())</span>
+<span class="fc" id="L162">			return original;</span>
 
 		// Display already implements AsciiBlock (see Display.asciiDraw()), so no
 		// separate ASCII title TextBlock/Style plumbing is needed here, unlike
 		// addTitle() above which has to go through Style.createTextBlockBordered().
-<span class="fc" id="L170">		return new AsciiBlockStackTB(title.getDisplay(), original);</span>
+<span class="fc" id="L167">		return new AsciiBlockStackTB(title.getDisplay(), original);</span>
 	}
 
 	// -----------------------------------------------------------------------
@@ -175,30 +172,30 @@ public final class DiagramChromeFactory {
 	// -----------------------------------------------------------------------
 
 	private static TextBlock addWarnings(TextBlock original, Collection&lt;Warning&gt; warnings) {
-<span class="pc bpc" id="L178" title="1 of 4 branches missed.">		if (warnings == null || warnings.isEmpty())</span>
-<span class="fc" id="L179">			return original;</span>
+<span class="pc bpc" id="L175" title="1 of 4 branches missed.">		if (warnings == null || warnings.isEmpty())</span>
+<span class="fc" id="L176">			return original;</span>
 
-<span class="fc" id="L181">		final WarningBannerBlock warningBanner = new WarningBannerBlock(warnings);</span>
+<span class="fc" id="L178">		final WarningBannerBlock warningBanner = new WarningBannerBlock(warnings);</span>
 
-<span class="fc" id="L183">		return new TextBlock() {</span>
+<span class="fc" id="L180">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L186">				final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L187">				final double totalWidth = calculateDimension(stringBounder).getWidth();</span>
-<span class="fc" id="L188">				warningBanner.drawU(ug, totalWidth);</span>
-<span class="fc" id="L189">				final double bannerHeight = warningBanner.calculateDimension(stringBounder).getHeight();</span>
-<span class="fc" id="L190">				original.drawU(ug.apply(UTranslate.dy(bannerHeight)));</span>
-<span class="fc" id="L191">			}</span>
+<span class="fc" id="L183">				final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L184">				final double totalWidth = calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L185">				warningBanner.drawU(ug, totalWidth);</span>
+<span class="fc" id="L186">				final double bannerHeight = warningBanner.calculateDimension(stringBounder).getHeight();</span>
+<span class="fc" id="L187">				original.drawU(ug.apply(UTranslate.dy(bannerHeight)));</span>
+<span class="fc" id="L188">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L194">				final XDimension2D dimBanner = warningBanner.calculateDimension(stringBounder);</span>
-<span class="fc" id="L195">				final XDimension2D dimOriginal = original.calculateDimension(stringBounder);</span>
-<span class="fc" id="L196">				return new XDimension2D(Math.max(dimBanner.getWidth(), dimOriginal.getWidth()),</span>
-<span class="fc" id="L197">						dimBanner.getHeight() + dimOriginal.getHeight());</span>
+<span class="fc" id="L191">				final XDimension2D dimBanner = warningBanner.calculateDimension(stringBounder);</span>
+<span class="fc" id="L192">				final XDimension2D dimOriginal = original.calculateDimension(stringBounder);</span>
+<span class="fc" id="L193">				return new XDimension2D(Math.max(dimBanner.getWidth(), dimOriginal.getWidth()),</span>
+<span class="fc" id="L194">						dimBanner.getHeight() + dimOriginal.getHeight());</span>
 			}
 
 			public HColor getBackcolor() {
-<span class="nc" id="L201">				return original.getBackcolor();</span>
+<span class="nc" id="L198">				return original.getBackcolor();</span>
 			}
 		};
 	}
@@ -214,61 +211,61 @@ public final class DiagramChromeFactory {
 
 		private final Collection&lt;Warning&gt; warnings;
 
-<span class="fc" id="L217">		WarningBannerBlock(Collection&lt;Warning&gt; warnings) {</span>
-<span class="fc" id="L218">			this.warnings = warnings;</span>
-<span class="fc" id="L219">		}</span>
+<span class="fc" id="L214">		WarningBannerBlock(Collection&lt;Warning&gt; warnings) {</span>
+<span class="fc" id="L215">			this.warnings = warnings;</span>
+<span class="fc" id="L216">		}</span>
 
 		@Override
 		public void drawU(UGraphic ug) {
-<span class="nc" id="L223">			drawU(ug, 0);</span>
-<span class="nc" id="L224">		}</span>
+<span class="nc" id="L220">			drawU(ug, 0);</span>
+<span class="nc" id="L221">		}</span>
 
 		public void drawU(UGraphic ug, double forceWidth) {
-<span class="fc" id="L227">			final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L228">			final XDimension2D dim = calculateDimension(stringBounder);</span>
-<span class="fc" id="L229">			final double effectiveWidth = Math.max(dim.getWidth(), forceWidth);</span>
+<span class="fc" id="L224">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L225">			final XDimension2D dim = calculateDimension(stringBounder);</span>
+<span class="fc" id="L226">			final double effectiveWidth = Math.max(dim.getWidth(), forceWidth);</span>
 
-<span class="fc" id="L231">			final HColorSet set = HColorSet.instance();</span>
-<span class="fc" id="L232">			final HColor back = set.getColorOrWhite(&quot;ffffcc&quot;).withDark(set.getColorOrWhite(&quot;774400&quot;));</span>
-<span class="fc" id="L233">			final HColor border = set.getColorOrWhite(&quot;ffdd88&quot;).withDark(set.getColorOrWhite(&quot;aa5500&quot;));</span>
+<span class="fc" id="L228">			final HColorSet set = HColorSet.instance();</span>
+<span class="fc" id="L229">			final HColor back = set.getColorOrWhite(&quot;ffffcc&quot;).withDark(set.getColorOrWhite(&quot;774400&quot;));</span>
+<span class="fc" id="L230">			final HColor border = set.getColorOrWhite(&quot;ffdd88&quot;).withDark(set.getColorOrWhite(&quot;aa5500&quot;));</span>
 
-<span class="fc" id="L235">			final URectangle rect = URectangle.build(effectiveWidth - 10, dim.getHeight() - 5).rounded(CORNER_RADIUS);</span>
-<span class="fc" id="L236">			ug.apply(back.bg()).apply(border).apply(UStroke.withThickness(3)).apply(new UTranslate(3, 3)).draw(rect);</span>
+<span class="fc" id="L232">			final URectangle rect = URectangle.build(effectiveWidth - 10, dim.getHeight() - 5).rounded(CORNER_RADIUS);</span>
+<span class="fc" id="L233">			ug.apply(back.bg()).apply(border).apply(UStroke.withThickness(3)).apply(new UTranslate(3, 3)).draw(rect);</span>
 
-<span class="fc" id="L238">			UGraphic ugText = ug.apply(HColors.BLACK).apply(new UTranslate(10, 2));</span>
-<span class="fc bfc" id="L239" title="All 2 branches covered.">			for (Warning w : warnings) {</span>
-<span class="fc bfc" id="L240" title="All 2 branches covered.">				for (String s : w.getMessage()) {</span>
-<span class="fc" id="L241">					final UText text = UText.build(s, WARNING_FC);</span>
-<span class="fc" id="L242">					final double height = text.calculateDimension(stringBounder).getHeight();</span>
-<span class="fc" id="L243">					ugText = ugText.apply(UTranslate.dy(height));</span>
-<span class="fc" id="L244">					ugText.draw(text);</span>
-<span class="fc" id="L245">				}</span>
-<span class="fc" id="L246">				ugText = ugText.apply(UTranslate.dy(LINE_SPACING));</span>
-<span class="fc" id="L247">			}</span>
-<span class="fc" id="L248">		}</span>
+<span class="fc" id="L235">			UGraphic ugText = ug.apply(HColors.BLACK).apply(new UTranslate(10, 2));</span>
+<span class="fc bfc" id="L236" title="All 2 branches covered.">			for (Warning w : warnings) {</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">				for (String s : w.getMessage()) {</span>
+<span class="fc" id="L238">					final UText text = UText.build(s, WARNING_FC);</span>
+<span class="fc" id="L239">					final double height = text.calculateDimension(stringBounder).getHeight();</span>
+<span class="fc" id="L240">					ugText = ugText.apply(UTranslate.dy(height));</span>
+<span class="fc" id="L241">					ugText.draw(text);</span>
+<span class="fc" id="L242">				}</span>
+<span class="fc" id="L243">				ugText = ugText.apply(UTranslate.dy(LINE_SPACING));</span>
+<span class="fc" id="L244">			}</span>
+<span class="fc" id="L245">		}</span>
 
 		@Override
 		public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L252">			double width = 0;</span>
-<span class="fc" id="L253">			double height = 0;</span>
-<span class="fc bfc" id="L254" title="All 2 branches covered.">			for (Warning w : warnings) {</span>
-<span class="fc bfc" id="L255" title="All 2 branches covered.">				for (String s : w.getMessage()) {</span>
-<span class="fc" id="L256">					final XDimension2D lineDim = UText.build(s, WARNING_FC).calculateDimension(stringBounder);</span>
-<span class="fc" id="L257">					width = Math.max(width, lineDim.getWidth());</span>
-<span class="fc" id="L258">					height += lineDim.getHeight();</span>
-<span class="fc" id="L259">				}</span>
-<span class="fc" id="L260">				height += LINE_SPACING;</span>
-<span class="fc" id="L261">			}</span>
+<span class="fc" id="L249">			double width = 0;</span>
+<span class="fc" id="L250">			double height = 0;</span>
+<span class="fc bfc" id="L251" title="All 2 branches covered.">			for (Warning w : warnings) {</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">				for (String s : w.getMessage()) {</span>
+<span class="fc" id="L253">					final XDimension2D lineDim = UText.build(s, WARNING_FC).calculateDimension(stringBounder);</span>
+<span class="fc" id="L254">					width = Math.max(width, lineDim.getWidth());</span>
+<span class="fc" id="L255">					height += lineDim.getHeight();</span>
+<span class="fc" id="L256">				}</span>
+<span class="fc" id="L257">				height += LINE_SPACING;</span>
+<span class="fc" id="L258">			}</span>
 			// Remove trailing spacing from last warning
-<span class="pc bpc" id="L263" title="1 of 2 branches missed.">			if (!warnings.isEmpty())</span>
-<span class="fc" id="L264">				height -= LINE_SPACING;</span>
+<span class="pc bpc" id="L260" title="1 of 2 branches missed.">			if (!warnings.isEmpty())</span>
+<span class="fc" id="L261">				height -= LINE_SPACING;</span>
 
-<span class="fc" id="L266">			return new XDimension2D(width + 20, height + 10);</span>
+<span class="fc" id="L263">			return new XDimension2D(width + 20, height + 10);</span>
 		}
 
 		@Override
 		public HColor getBackcolor() {
-<span class="nc" id="L271">			return null;</span>
+<span class="nc" id="L268">			return null;</span>
 		}
 	}
 
@@ -278,63 +275,63 @@ public final class DiagramChromeFactory {
 
 	private static TextBlock decorateWithFrame(TextBlock original, Annotated annotated, ISkinParam skinParam) {
 
-<span class="fc" id="L281">		final Display mainFrame = annotated.getMainFrame().getDisplay();</span>
-<span class="fc bfc" id="L282" title="All 2 branches covered.">		if (Display.isNull(mainFrame))</span>
-<span class="fc" id="L283">			return original;</span>
+<span class="fc" id="L278">		final Display mainFrame = annotated.getMainFrame().getDisplay();</span>
+<span class="fc bfc" id="L279" title="All 2 branches covered.">		if (Display.isNull(mainFrame))</span>
+<span class="fc" id="L280">			return original;</span>
 
-<span class="fc" id="L285">		final Style style = skinParam.getCurrentStyleBuilder()</span>
-<span class="fc" id="L286">				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.document, SName.mainframe)));</span>
-<span class="fc" id="L287">		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, style);</span>
-<span class="fc" id="L288">		final TextBlock title = mainFrame.create(fontConfiguration, HorizontalAlignment.CENTER, skinParam);</span>
+<span class="fc" id="L282">		final Style style = skinParam.getCurrentStyleBuilder()</span>
+<span class="fc" id="L283">				.getMergedStyle(StyleQueries.DOCUMENT_MAINFRAME);</span>
+<span class="fc" id="L284">		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, style);</span>
+<span class="fc" id="L285">		final TextBlock title = mainFrame.create(fontConfiguration, HorizontalAlignment.CENTER, skinParam);</span>
 
-<span class="fc" id="L290">		final Fashion symbolContext = style.getSymbolContext(skinParam.getIHtmlColorSet());</span>
-<span class="fc" id="L291">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+<span class="fc" id="L287">		final Fashion symbolContext = style.getSymbolContext(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L288">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
 
-<span class="fc" id="L293">		final TextBlock frame = new BigFrame(title, original, style.getPadding(), symbolContext);</span>
+<span class="fc" id="L290">		final TextBlock frame = new BigFrame(title, original, style.getPadding(), symbolContext);</span>
 
-<span class="fc" id="L295">		return new TextBlock() {</span>
+<span class="fc" id="L292">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L298">				final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L299">				final ClockwiseTopRightBottomLeft padding = computePadding(stringBounder);</span>
-<span class="fc" id="L300">				final UTranslate delta = computeDelta(stringBounder);</span>
-<span class="fc" id="L301">				frame.drawU(ug.apply(margin.getTranslate()));</span>
-<span class="fc" id="L302">				original.drawU(ug.apply(margin.getTranslate().compose(padding.getTranslate().compose(delta))));</span>
-<span class="fc" id="L303">			}</span>
+<span class="fc" id="L295">				final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L296">				final ClockwiseTopRightBottomLeft padding = computePadding(stringBounder);</span>
+<span class="fc" id="L297">				final UTranslate delta = computeDelta(stringBounder);</span>
+<span class="fc" id="L298">				frame.drawU(ug.apply(margin.getTranslate()));</span>
+<span class="fc" id="L299">				original.drawU(ug.apply(margin.getTranslate().compose(padding.getTranslate().compose(delta))));</span>
+<span class="fc" id="L300">			}</span>
 
 			@Override
 			public XRectangle2D getInnerPosition(CharSequence member, StringBounder sb) {
-<span class="nc" id="L307">				final ClockwiseTopRightBottomLeft padding = computePadding(sb);</span>
-<span class="nc" id="L308">				final XDimension2D dimTitle = title.calculateDimension(sb);</span>
-<span class="nc" id="L309">				final MinMax originalMinMax = TextBlockUtils.getMinMax(original, sb, false);</span>
-<span class="nc bnc" id="L310" title="All 2 branches missed.">				final double dx = originalMinMax.getMinX() &lt; 0 ? -originalMinMax.getMinX() : 0;</span>
-<span class="nc bnc" id="L311" title="All 2 branches missed.">				final double dy = originalMinMax.getMinY() &lt; 0 ? -originalMinMax.getMinY() : 0;</span>
-<span class="nc" id="L312">				final XRectangle2D rect = original.getInnerPosition(member, sb);</span>
-<span class="nc" id="L313">				return new XRectangle2D(dx + rect.getX() + margin.getLeft() + padding.getLeft(),</span>
-<span class="nc" id="L314">						dy + rect.getY() + margin.getTop() + padding.getTop() + dimTitle.getHeight(), rect.getWidth(),</span>
-<span class="nc" id="L315">						rect.getHeight());</span>
+<span class="nc" id="L304">				final ClockwiseTopRightBottomLeft padding = computePadding(sb);</span>
+<span class="nc" id="L305">				final XDimension2D dimTitle = title.calculateDimension(sb);</span>
+<span class="nc" id="L306">				final MinMax originalMinMax = TextBlockUtils.getMinMax(original, sb, false);</span>
+<span class="nc bnc" id="L307" title="All 2 branches missed.">				final double dx = originalMinMax.getMinX() &lt; 0 ? -originalMinMax.getMinX() : 0;</span>
+<span class="nc bnc" id="L308" title="All 2 branches missed.">				final double dy = originalMinMax.getMinY() &lt; 0 ? -originalMinMax.getMinY() : 0;</span>
+<span class="nc" id="L309">				final XRectangle2D rect = original.getInnerPosition(member, sb);</span>
+<span class="nc" id="L310">				return new XRectangle2D(dx + rect.getX() + margin.getLeft() + padding.getLeft(),</span>
+<span class="nc" id="L311">						dy + rect.getY() + margin.getTop() + padding.getTop() + dimTitle.getHeight(), rect.getWidth(),</span>
+<span class="nc" id="L312">						rect.getHeight());</span>
 			}
 
 			public XDimension2D calculateDimension(StringBounder sb) {
-<span class="fc" id="L319">				final XDimension2D frameDim = frame.calculateDimension(sb);</span>
-<span class="fc" id="L320">				return new XDimension2D(margin.getLeft() + frameDim.getWidth() + margin.getRight(),</span>
-<span class="fc" id="L321">						margin.getTop() + frameDim.getHeight() + margin.getBottom());</span>
+<span class="fc" id="L316">				final XDimension2D frameDim = frame.calculateDimension(sb);</span>
+<span class="fc" id="L317">				return new XDimension2D(margin.getLeft() + frameDim.getWidth() + margin.getRight(),</span>
+<span class="fc" id="L318">						margin.getTop() + frameDim.getHeight() + margin.getBottom());</span>
 			}
 
 			public HColor getBackcolor() {
-<span class="nc" id="L325">				return symbolContext.getBackColor();</span>
+<span class="nc" id="L322">				return symbolContext.getBackColor();</span>
 			}
 
 			private ClockwiseTopRightBottomLeft computePadding(StringBounder sb) {
-<span class="fc" id="L329">				final XDimension2D dimTitle = title.calculateDimension(sb);</span>
-<span class="fc" id="L330">				return style.getPadding().incTop(dimTitle.getHeight() + 10);</span>
+<span class="fc" id="L326">				final XDimension2D dimTitle = title.calculateDimension(sb);</span>
+<span class="fc" id="L327">				return style.getPadding().incTop(dimTitle.getHeight() + 10);</span>
 			}
 
 			private UTranslate computeDelta(StringBounder sb) {
-<span class="fc" id="L334">				final MinMax originalMinMax = TextBlockUtils.getMinMax(original, sb, false);</span>
-<span class="pc bpc" id="L335" title="1 of 2 branches missed.">				final double dx = originalMinMax.getMinX() &lt; 0 ? -originalMinMax.getMinX() : 0;</span>
-<span class="pc bpc" id="L336" title="1 of 2 branches missed.">				final double dy = originalMinMax.getMinY() &lt; 0 ? -originalMinMax.getMinY() : 0;</span>
-<span class="fc" id="L337">				return new UTranslate(dx, dy);</span>
+<span class="fc" id="L331">				final MinMax originalMinMax = TextBlockUtils.getMinMax(original, sb, false);</span>
+<span class="pc bpc" id="L332" title="1 of 2 branches missed.">				final double dx = originalMinMax.getMinX() &lt; 0 ? -originalMinMax.getMinX() : 0;</span>
+<span class="pc bpc" id="L333" title="1 of 2 branches missed.">				final double dy = originalMinMax.getMinY() &lt; 0 ? -originalMinMax.getMinY() : 0;</span>
+<span class="fc" id="L334">				return new UTranslate(dx, dy);</span>
 			}
 		};
 	}
@@ -345,16 +342,16 @@ public final class DiagramChromeFactory {
 
 	private static TextBlock addLegend(TextBlock original, Annotated annotated, ISkinParam skinParam) {
 
-<span class="fc" id="L348">		final DisplayPositioned legend = annotated.getLegend();</span>
-<span class="fc bfc" id="L349" title="All 2 branches covered.">		if (legend.isNull())</span>
-<span class="fc" id="L350">			return original;</span>
+<span class="fc" id="L345">		final DisplayPositioned legend = annotated.getLegend();</span>
+<span class="fc bfc" id="L346" title="All 2 branches covered.">		if (legend.isNull())</span>
+<span class="fc" id="L347">			return original;</span>
 
-<span class="fc" id="L352">		final UGroup group = new UGroup(legend.getLineLocation());</span>
-<span class="fc" id="L353">		group.put(UGroupType.CLASS, &quot;legend&quot;);</span>
+<span class="fc" id="L349">		final UGroup group = new UGroup(legend.getLineLocation());</span>
+<span class="fc" id="L350">		group.put(UGroupType.CLASS, &quot;legend&quot;);</span>
 
-<span class="fc" id="L355">		final TextBlock legendBlock = EntityImageLegend.create(legend.getDisplay(), skinParam);</span>
-<span class="fc" id="L356">		return DecorateEntityImage.add(group, original, legendBlock, legend.getHorizontalAlignment(),</span>
-<span class="fc" id="L357">				legend.getVerticalAlignment());</span>
+<span class="fc" id="L352">		final TextBlock legendBlock = EntityImageLegend.create(legend.getDisplay(), skinParam);</span>
+<span class="fc" id="L353">		return DecorateEntityImage.add(group, original, legendBlock, legend.getHorizontalAlignment(),</span>
+<span class="fc" id="L354">				legend.getVerticalAlignment());</span>
 	}
 
 	// -----------------------------------------------------------------------
@@ -363,17 +360,17 @@ public final class DiagramChromeFactory {
 
 	private static TextBlock addTitle(TextBlock original, DisplayPositioned title, ISkinParam skinParam) {
 
-<span class="fc bfc" id="L366" title="All 2 branches covered.">		if (title.isNull())</span>
-<span class="fc" id="L367">			return original;</span>
+<span class="fc bfc" id="L363" title="All 2 branches covered.">		if (title.isNull())</span>
+<span class="fc" id="L364">			return original;</span>
 
-<span class="fc" id="L369">		final Style style = skinParam.getCurrentStyleBuilder()</span>
-<span class="fc" id="L370">				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.document, SName.title)));</span>
-<span class="fc" id="L371">		final TextBlock titleBlock = style.createTextBlockBordered(title.getDisplay(), skinParam.getIHtmlColorSet(),</span>
+<span class="fc" id="L366">		final Style style = skinParam.getCurrentStyleBuilder()</span>
+<span class="fc" id="L367">				.getMergedStyle(StyleQueries.DOCUMENT_TITLE);</span>
+<span class="fc" id="L368">		final TextBlock titleBlock = style.createTextBlockBordered(title.getDisplay(), skinParam.getIHtmlColorSet(),</span>
 				skinParam, Style.ID_TITLE, LineBreakStrategy.NONE);
 
-<span class="fc" id="L374">		final UGroup group = new UGroup(title.getLineLocation());</span>
-<span class="fc" id="L375">		group.put(UGroupType.CLASS, &quot;title&quot;);</span>
-<span class="fc" id="L376">		return DecorateEntityImage.addTop(group, original, titleBlock, HorizontalAlignment.CENTER);</span>
+<span class="fc" id="L371">		final UGroup group = new UGroup(title.getLineLocation());</span>
+<span class="fc" id="L372">		group.put(UGroupType.CLASS, &quot;title&quot;);</span>
+<span class="fc" id="L373">		return DecorateEntityImage.addTop(group, original, titleBlock, HorizontalAlignment.CENTER);</span>
 	}
 
 	// -----------------------------------------------------------------------
@@ -382,18 +379,18 @@ public final class DiagramChromeFactory {
 
 	private static TextBlock addCaption(TextBlock original, Annotated annotated, ISkinParam skinParam) {
 
-<span class="fc" id="L385">		final DisplayPositioned caption = annotated.getCaption();</span>
-<span class="fc bfc" id="L386" title="All 2 branches covered.">		if (caption.isNull())</span>
-<span class="fc" id="L387">			return original;</span>
+<span class="fc" id="L382">		final DisplayPositioned caption = annotated.getCaption();</span>
+<span class="fc bfc" id="L383" title="All 2 branches covered.">		if (caption.isNull())</span>
+<span class="fc" id="L384">			return original;</span>
 
-<span class="fc" id="L389">		final Style style = skinParam.getCurrentStyleBuilder()</span>
-<span class="fc" id="L390">				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.document, SName.caption)));</span>
-<span class="fc" id="L391">		final TextBlock captionBlock = style.createTextBlockBordered(caption.getDisplay(), skinParam.getIHtmlColorSet(),</span>
+<span class="fc" id="L386">		final Style style = skinParam.getCurrentStyleBuilder()</span>
+<span class="fc" id="L387">				.getMergedStyle(StyleQueries.DOCUMENT_CAPTION);</span>
+<span class="fc" id="L388">		final TextBlock captionBlock = style.createTextBlockBordered(caption.getDisplay(), skinParam.getIHtmlColorSet(),</span>
 				skinParam, Style.ID_CAPTION, LineBreakStrategy.NONE);
 
-<span class="fc" id="L394">		final UGroup group = new UGroup(caption.getLineLocation());</span>
-<span class="fc" id="L395">		group.put(UGroupType.CLASS, &quot;caption&quot;);</span>
-<span class="fc" id="L396">		return DecorateEntityImage.addBottom(group, original, captionBlock, HorizontalAlignment.CENTER);</span>
+<span class="fc" id="L391">		final UGroup group = new UGroup(caption.getLineLocation());</span>
+<span class="fc" id="L392">		group.put(UGroupType.CLASS, &quot;caption&quot;);</span>
+<span class="fc" id="L393">		return DecorateEntityImage.addBottom(group, original, captionBlock, HorizontalAlignment.CENTER);</span>
 	}
 
 	// -----------------------------------------------------------------------
@@ -402,35 +399,35 @@ public final class DiagramChromeFactory {
 
 	private static TextBlock addHeaderAndFooter(TextBlock original, Annotated annotated, ISkinParam skinParam) {
 
-<span class="fc" id="L405">		final DisplayPositioned header = annotated.getHeader();</span>
-<span class="fc" id="L406">		final DisplayPositioned footer = annotated.getFooter();</span>
-<span class="pc bpc" id="L407" title="1 of 4 branches missed.">		if (footer.isNull() &amp;&amp; header.isNull())</span>
-<span class="fc" id="L408">			return original;</span>
+<span class="fc" id="L402">		final DisplayPositioned header = annotated.getHeader();</span>
+<span class="fc" id="L403">		final DisplayPositioned footer = annotated.getFooter();</span>
+<span class="pc bpc" id="L404" title="1 of 4 branches missed.">		if (footer.isNull() &amp;&amp; header.isNull())</span>
+<span class="fc" id="L405">			return original;</span>
 
-<span class="fc" id="L410">		final UGroup group1 = new UGroup(header.getLineLocation());</span>
-<span class="fc" id="L411">		group1.put(UGroupType.CLASS, &quot;header&quot;);</span>
+<span class="fc" id="L407">		final UGroup group1 = new UGroup(header.getLineLocation());</span>
+<span class="fc" id="L408">		group1.put(UGroupType.CLASS, &quot;header&quot;);</span>
 
-<span class="fc" id="L413">		TextBlock textHeader = null;</span>
-<span class="fc bfc" id="L414" title="All 2 branches covered.">		if (!header.isNull()) {</span>
-<span class="fc" id="L415">			final Style style = skinParam.getCurrentStyleBuilder()</span>
-<span class="fc" id="L416">					.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.document, SName.header)));</span>
-<span class="fc" id="L417">			textHeader = header.createRibbon(FontConfiguration.create(skinParam, FontParam.HEADER, null), skinParam,</span>
+<span class="fc" id="L410">		TextBlock textHeader = null;</span>
+<span class="fc bfc" id="L411" title="All 2 branches covered.">		if (!header.isNull()) {</span>
+<span class="fc" id="L412">			final Style style = skinParam.getCurrentStyleBuilder()</span>
+<span class="fc" id="L413">					.getMergedStyle(StyleQueries.DOCUMENT_HEADER);</span>
+<span class="fc" id="L414">			textHeader = header.createRibbon(FontConfiguration.create(skinParam, FontParam.HEADER, null), skinParam,</span>
 					style);
 		}
 
-<span class="fc" id="L421">		final UGroup group2 = new UGroup(footer.getLineLocation());</span>
-<span class="fc" id="L422">		group2.put(UGroupType.CLASS, &quot;footer&quot;);</span>
+<span class="fc" id="L418">		final UGroup group2 = new UGroup(footer.getLineLocation());</span>
+<span class="fc" id="L419">		group2.put(UGroupType.CLASS, &quot;footer&quot;);</span>
 
-<span class="fc" id="L424">		TextBlock textFooter = null;</span>
-<span class="pc bpc" id="L425" title="1 of 2 branches missed.">		if (!footer.isNull()) {</span>
-<span class="fc" id="L426">			final Style style = skinParam.getCurrentStyleBuilder()</span>
-<span class="fc" id="L427">					.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.document, SName.footer)));</span>
-<span class="fc" id="L428">			textFooter = footer.createRibbon(FontConfiguration.create(skinParam, FontParam.FOOTER, null), skinParam,</span>
+<span class="fc" id="L421">		TextBlock textFooter = null;</span>
+<span class="pc bpc" id="L422" title="1 of 2 branches missed.">		if (!footer.isNull()) {</span>
+<span class="fc" id="L423">			final Style style = skinParam.getCurrentStyleBuilder()</span>
+<span class="fc" id="L424">					.getMergedStyle(StyleQueries.DOCUMENT_FOOTER);</span>
+<span class="fc" id="L425">			textFooter = footer.createRibbon(FontConfiguration.create(skinParam, FontParam.FOOTER, null), skinParam,</span>
 					style);
 		}
 
-<span class="fc" id="L432">		return DecorateEntityImage.addTopAndBottom(original, group1, textHeader, header.getHorizontalAlignment(),</span>
-<span class="fc" id="L433">				group2, textFooter, footer.getHorizontalAlignment());</span>
+<span class="fc" id="L429">		return DecorateEntityImage.addTopAndBottom(original, group1, textHeader, header.getHorizontalAlignment(),</span>
+<span class="fc" id="L430">				group2, textFooter, footer.getHorizontalAlignment());</span>
 	}
 
 }

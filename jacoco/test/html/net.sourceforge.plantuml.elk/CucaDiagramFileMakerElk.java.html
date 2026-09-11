@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.elk;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.LinkedHashMap;
@@ -114,7 +113,8 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.ClusterHeader;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.svek.GeneralImageBuilder;
@@ -146,10 +146,10 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 <span class="fc" id="L146">	}</span>
 
 	// Duplication from SvekEdge
-	final public StyleQuery getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
-<span class="fc" id="L150">		StyleQuery result = StyleQuery.of(Arrays.asList(SName.root, SName.element, styleName, SName.arrow));</span>
+	private StyleQuery getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
+<span class="fc" id="L150">		StyleQuery result = StyleQueries.ARROW.add(styleName);</span>
 <span class="pc bpc" id="L151" title="1 of 2 branches missed.">		if (stereotype != null)</span>
-<span class="nc" id="L152">			result = result.withTOBECHANGED(stereotype);</span>
+<span class="nc" id="L152">			result = result.withStereotype(stereotype);</span>
 
 <span class="fc" id="L154">		return result;</span>
 	}

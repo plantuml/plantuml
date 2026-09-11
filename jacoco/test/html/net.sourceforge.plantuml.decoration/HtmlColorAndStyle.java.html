@@ -37,16 +37,15 @@ package net.sourceforge.plantuml.decoration;
 
 import java.util.Objects;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 public class HtmlColorAndStyle {
 
@@ -56,55 +55,55 @@ public class HtmlColorAndStyle {
 
 	@Override
 	public String toString() {
-<span class="nc" id="L59">		return arrowColor + &quot; &quot; + style;</span>
+<span class="nc" id="L58">		return arrowColor + &quot; &quot; + style;</span>
 	}
 
 	public HtmlColorAndStyle(HColor color, HColor arrowHeadColor) {
-<span class="fc" id="L63">		this(color, LinkStyle.NORMAL(), arrowHeadColor);</span>
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L62">		this(color, LinkStyle.NORMAL(), arrowHeadColor);</span>
+<span class="fc" id="L63">	}</span>
 
-<span class="fc" id="L66">	public HtmlColorAndStyle(HColor arrowColor, LinkStyle style, HColor arrowHeadColor) {</span>
-<span class="fc" id="L67">		this.arrowColor = Objects.requireNonNull(arrowColor);</span>
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		this.arrowHeadColor = arrowHeadColor == null ? arrowColor : arrowHeadColor;</span>
-<span class="fc" id="L69">		this.style = style;</span>
-<span class="fc" id="L70">	}</span>
+<span class="fc" id="L65">	public HtmlColorAndStyle(HColor arrowColor, LinkStyle style, HColor arrowHeadColor) {</span>
+<span class="fc" id="L66">		this.arrowColor = Objects.requireNonNull(arrowColor);</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		this.arrowHeadColor = arrowHeadColor == null ? arrowColor : arrowHeadColor;</span>
+<span class="fc" id="L68">		this.style = style;</span>
+<span class="fc" id="L69">	}</span>
 
 	public HColor getArrowColor() {
-<span class="fc" id="L73">		return arrowColor;</span>
+<span class="fc" id="L72">		return arrowColor;</span>
 	}
 
 	public HColor getArrowHeadColor() {
-<span class="fc" id="L77">		return arrowHeadColor;</span>
+<span class="fc" id="L76">		return arrowHeadColor;</span>
 	}
 
 	public LinkStyle getStyle() {
-<span class="fc" id="L81">		return style;</span>
+<span class="fc" id="L80">		return style;</span>
 	}
 
 	static final public StyleQuery getDefaultStyleDefinitionArrow() {
-<span class="nc" id="L85">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));</span>
+<span class="nc" id="L84">		return StyleQueries.ACTIVITYDIAG_ARROW;</span>
 	}
 
 	public static HtmlColorAndStyle build(ISkinParam skinParam, String definition) throws NoSuchColorException {
 
-<span class="nc" id="L90">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionArrow());</span>
-<span class="nc" id="L91">		HColor arrowColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="nc" id="L92">		final HColor arrowHeadColor = null;</span>
+<span class="nc" id="L89">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionArrow());</span>
+<span class="nc" id="L90">		HColor arrowColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L91">		final HColor arrowHeadColor = null;</span>
 
-<span class="nc" id="L94">		LinkStyle linkStyle = LinkStyle.NORMAL();</span>
-<span class="nc" id="L95">		final HColorSet set = skinParam.getIHtmlColorSet();</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		for (String s : definition.split(&quot;,&quot;)) {</span>
-<span class="nc" id="L97">			final LinkStyle tmpStyle = LinkStyle.fromString1(s);</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">			if (tmpStyle.isNormal() == false) {</span>
-<span class="nc" id="L99">				linkStyle = tmpStyle;</span>
-<span class="nc" id="L100">				continue;</span>
+<span class="nc" id="L93">		LinkStyle linkStyle = LinkStyle.NORMAL();</span>
+<span class="nc" id="L94">		final HColorSet set = skinParam.getIHtmlColorSet();</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		for (String s : definition.split(&quot;,&quot;)) {</span>
+<span class="nc" id="L96">			final LinkStyle tmpStyle = LinkStyle.fromString1(s);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">			if (tmpStyle.isNormal() == false) {</span>
+<span class="nc" id="L98">				linkStyle = tmpStyle;</span>
+<span class="nc" id="L99">				continue;</span>
 			}
-<span class="nc bnc" id="L102" title="All 2 branches missed.">			final HColor tmpColor = s == null ? null : set.getColor(s);</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">			if (tmpColor != null)</span>
-<span class="nc" id="L104">				arrowColor = tmpColor;</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">			final HColor tmpColor = s == null ? null : set.getColor(s);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">			if (tmpColor != null)</span>
+<span class="nc" id="L103">				arrowColor = tmpColor;</span>
 
 		}
-<span class="nc" id="L107">		return new HtmlColorAndStyle(arrowColor, linkStyle, arrowHeadColor);</span>
+<span class="nc" id="L106">		return new HtmlColorAndStyle(arrowColor, linkStyle, arrowHeadColor);</span>
 	}
 
 }

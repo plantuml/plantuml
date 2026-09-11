@@ -35,12 +35,12 @@
  */
 package net.sourceforge.plantuml.klimt.font;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 interface FontParamConstant {
 	String FAMILY = &quot;SansSerif&quot;;
@@ -190,21 +190,21 @@ interface FontParamConstant {
 
 	public StyleQuery getStyleDefinition(SName diagramType) {
 <span class="fc bfc" id="L192" title="All 2 branches covered.">		if (this == FOOTER) {</span>
-<span class="fc" id="L193">			return StyleQuery.of(Arrays.asList(SName.root, SName.document, SName.footer));</span>
+<span class="fc" id="L193">			return StyleQueries.DOCUMENT_FOOTER;</span>
 		}
 <span class="pc bpc" id="L195" title="1 of 2 branches missed.">		if (this == HEADER) {</span>
-<span class="fc" id="L196">			return StyleQuery.of(Arrays.asList(SName.root, SName.document, SName.header));</span>
+<span class="fc" id="L196">			return StyleQueries.DOCUMENT_HEADER;</span>
 		}
 <span class="nc bnc" id="L198" title="All 2 branches missed.">		if (this == TITLE) {</span>
-<span class="nc" id="L199">			return StyleQuery.of(Arrays.asList(SName.root, SName.document, SName.title));</span>
+<span class="nc" id="L199">			return StyleQueries.DOCUMENT_TITLE;</span>
 		}
 <span class="nc bnc" id="L201" title="All 2 branches missed.">		if (this == CLASS_ATTRIBUTE) {</span>
-<span class="nc" id="L202">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.classDiagram, SName.class_));</span>
+<span class="nc" id="L202">			return StyleQueries.CLASSDIAG_CLASS;</span>
 		}
 <span class="nc bnc" id="L204" title="All 4 branches missed.">		if (this == RECTANGLE || this == NODE) {</span>
-<span class="nc" id="L205">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.componentDiagram, SName.component));</span>
+<span class="nc" id="L205">			return StyleQueries.COMPONENTDIAG_COMPONENT;</span>
 		}
-<span class="nc" id="L207">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, diagramType, SName.component));</span>
+<span class="nc" id="L207">		return StyleQueries.COMPONENT.add(diagramType);</span>
 //		System.err.println(&quot;Warning &quot; + this);
 //		throw new UnsupportedOperationException();
 	}

@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RawStyleParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.style.parser</a> &gt; <span class="el_source">RawStyleParser.java</span></div><h1>RawStyleParser.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.style.parser;
+
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.StyleScheme;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.CharInspector;
+
+/**
+ * Turns the raw text of a .skin file into a {@link RawStyleSheet}: a literal tree of
+ * {@code selector { ... }} blocks, with no attempt yet at merging duplicate selectors,
+ * expanding comma lists, or resolving {@code @media} into a cascade -- see
+ * {@link RawStyleRule}. That second pass, building the actual in-memory, queryable style
+ * model, is left for later.
+ *
+ * Grammar handled here, ignoring whitespace and comments ({@code //}, {@code /* *}{@code
+ * /} and {@code /' '/}) between tokens:
+ *
+ * &lt;pre&gt;
+ *   sheet        ::= statement*
+ *   statement    ::= rule | atMediaRule | variableDecl | propertyDecl
+ *   rule         ::= ':'? selectorList '*'? '{' statement* '}'
+ *   atMediaRule  ::= '@' anyCharExceptBraceOrSemicolon* '{' statement* '}'
+ *   selectorList ::= name (',' name)*
+ *   variableDecl ::= '--' name ':'? value (';' | end-of-line)
+ *   propertyDecl ::= name ':'? value (';' | end-of-line)
+ * &lt;/pre&gt;
+ */
+public final class RawStyleParser {
+
+	// Matches var(--name), var(-name) or var(name), the way CssVariables already tolerated it.
+<span class="fc" id="L75">	private static final Pattern VAR_REF = Pattern.compile(&quot;var\\(\\s*-*([A-Za-z_][-\\w]*)\\s*\\)&quot;);</span>
+
+	private final CharInspector ins;
+<span class="fc" id="L78">	private final Map&lt;String, String&gt; variables = new LinkedHashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L79">	private final Deque&lt;RawStyleRule&gt; stack = new ArrayDeque&lt;RawStyleRule&gt;();</span>
+<span class="fc" id="L80">	private final List&lt;RawStyleRule&gt; topLevel = new ArrayList&lt;RawStyleRule&gt;();</span>
+
+<span class="fc" id="L82">	private RawStyleParser(CharInspector ins) {</span>
+<span class="fc" id="L83">		this.ins = ins;</span>
+<span class="fc" id="L84">	}</span>
+
+	public static RawStyleSheet parse(BlocLines lines) throws StyleParsingException {
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (lines.size() == 0)</span>
+<span class="nc" id="L88">			return new RawStyleSheet(new LinkedHashMap&lt;String, String&gt;(), new ArrayList&lt;RawStyleRule&gt;());</span>
+
+<span class="fc" id="L90">		return new RawStyleParser(lines.inspectorWithNewlines()).run();</span>
+	}
+
+	private RawStyleSheet run() throws StyleParsingException {
+		while (true) {
+<span class="fc" id="L95">			skipWhitespaceAndComments();</span>
+<span class="fc" id="L96">			final char c = ins.peek(0);</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">			if (c == '\0')</span>
+<span class="fc" id="L98">				break;</span>
+
+<span class="fc bfc" id="L100" title="All 2 branches covered.">			if (c == '}') {</span>
+<span class="fc" id="L101">				ins.jump();</span>
+<span class="fc" id="L102">				closeCurrentRule();</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">			} else if (c == '@') {</span>
+<span class="fc" id="L104">				parseAtRule();</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">			} else if (c == ':') {</span>
+				// A selector may be written with a leading colon, e.g. &quot;:foo {&quot;.
+<span class="nc" id="L107">				ins.jump();</span>
+<span class="nc" id="L108">				parseSelectorHead(readIdentifier());</span>
+			} else {
+<span class="fc" id="L110">				parseStatementStartingWithIdentifier();</span>
+			}
+<span class="fc" id="L112">		}</span>
+
+		// The legacy character-level tokenizer never checked for this at all: reaching
+		// end-of-file with a selector block still open was simply the end of parsing, not an
+		// error -- whatever was nested inside that block and DID get its own closing brace (an
+		// &quot;arrow { ... }&quot; inside an unclosed &quot;activityDiagram { ... &quot;) was already linked to it
+		// the moment that child's own '}' was seen (see closeCurrentRule), so nothing is lost by
+		// not raising an error here, only by discarding that parent along with the file's
+		// missing brace. Close every remaining open rule now instead, exactly as if the missing
+		// '}' characters had actually been there.
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		while (stack.isEmpty() == false)</span>
+<span class="fc" id="L123">			closeCurrentRule();</span>
+
+<span class="fc" id="L125">		return new RawStyleSheet(variables, topLevel);</span>
+	}
+
+	// -----------------------------------------------------------------------
+	// Statements
+	// -----------------------------------------------------------------------
+
+	private void parseStatementStartingWithIdentifier() throws StyleParsingException {
+<span class="fc" id="L133">		final String head = readIdentifier();</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		if (head.length() == 0)</span>
+<span class="nc" id="L135">			throw new StyleParsingException(&quot;Unexpected character '&quot; + ins.peek(0) + &quot;'&quot;);</span>
+
+<span class="fc bfc" id="L137" title="All 2 branches covered.">		if (head.startsWith(&quot;--&quot;)) {</span>
+<span class="fc" id="L138">			parseVariableDeclaration(head);</span>
+<span class="fc" id="L139">			return;</span>
+		}
+
+<span class="fc" id="L142">		skipWhitespaceAndComments();</span>
+<span class="fc" id="L143">		final char next = ins.peek(0);</span>
+<span class="fc bfc" id="L144" title="All 6 branches covered.">		if (next == ',' || next == '*' || next == '{')</span>
+<span class="fc" id="L145">			parseSelectorHead(head);</span>
+		else
+<span class="fc" id="L147">			parsePropertyDeclaration(head);</span>
+<span class="fc" id="L148">	}</span>
+
+	private void parseSelectorHead(String firstName) throws StyleParsingException {
+<span class="fc" id="L151">		final List&lt;String&gt; names = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L152">		names.add(firstName);</span>
+
+<span class="fc" id="L154">		skipWhitespaceAndComments();</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">		while (ins.peek(0) == ',') {</span>
+<span class="fc" id="L156">			ins.jump();</span>
+<span class="fc" id="L157">			skipWhitespaceAndComments();</span>
+<span class="fc" id="L158">			names.add(readIdentifier());</span>
+<span class="fc" id="L159">			skipWhitespaceAndComments();</span>
+		}
+
+<span class="fc" id="L162">		boolean star = false;</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">		if (ins.peek(0) == '*') {</span>
+<span class="fc" id="L164">			star = true;</span>
+<span class="fc" id="L165">			ins.jump();</span>
+<span class="fc" id="L166">			skipWhitespaceAndComments();</span>
+		}
+
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		if (ins.peek(0) != '{')</span>
+<span class="nc" id="L170">			throw new StyleParsingException(&quot;Expected '{' after selector &quot; + names);</span>
+<span class="fc" id="L171">		ins.jump();</span>
+
+<span class="fc" id="L173">		final List&lt;RawSelector&gt; selectors = new ArrayList&lt;RawSelector&gt;();</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">		for (String name : names)</span>
+<span class="fc" id="L175">			selectors.add(RawSelector.classify(name));</span>
+
+<span class="fc" id="L177">		stack.push(RawStyleRule.forSelectors(selectors, star));</span>
+<span class="fc" id="L178">	}</span>
+
+	private void parseAtRule() throws StyleParsingException {
+<span class="fc" id="L181">		ins.jump(); // consume '@'</span>
+<span class="fc" id="L182">		final StringBuilder header = new StringBuilder();</span>
+		while (true) {
+<span class="fc" id="L184">			final char c = ins.peek(0);</span>
+<span class="pc bpc" id="L185" title="3 of 6 branches missed.">			if (c == '\0' || c == '}' || c == ';')</span>
+<span class="nc" id="L186">				throw new StyleParsingException(&quot;Unterminated @ rule: '@&quot; + header + &quot;'&quot;);</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">			if (c == '{')</span>
+<span class="fc" id="L188">				break;</span>
+<span class="fc" id="L189">			header.append(c);</span>
+<span class="fc" id="L190">			ins.jump();</span>
+<span class="fc" id="L191">		}</span>
+<span class="fc" id="L192">		ins.jump(); // consume '{'</span>
+<span class="fc" id="L193">		stack.push(RawStyleRule.forMedia(header.toString().trim()));</span>
+<span class="fc" id="L194">	}</span>
+
+	private void parseVariableDeclaration(String name) {
+<span class="fc" id="L197">		final String value = readValue();</span>
+<span class="fc" id="L198">		variables.put(name.substring(2), resolveVariables(value));</span>
+<span class="fc" id="L199">	}</span>
+
+	private void parsePropertyDeclaration(String name) throws StyleParsingException {
+<span class="fc bfc" id="L202" title="All 2 branches covered.">		if (stack.isEmpty())</span>
+<span class="fc" id="L203">			throw new StyleParsingException(&quot;Property '&quot; + name + &quot;' declared outside of any block&quot;);</span>
+
+<span class="fc" id="L205">		final String rawValue = readValue();</span>
+<span class="fc" id="L206">		final PName pname = PName.getFromName(name, StyleScheme.REGULAR);</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">		if (pname == null)</span>
+<span class="fc" id="L208">			return; // Unknown property name: silently ignored, as the legacy parser already did.</span>
+
+<span class="fc" id="L210">		stack.peek().putProperty(pname, resolveVariables(rawValue));</span>
+<span class="fc" id="L211">	}</span>
+
+	/**
+	 * A stray {@code }} with nothing open to close is silently ignored, rather than raising an
+	 * error -- exactly like the legacy character-level tokenizer, which never even had the
+	 * chance to notice one: its own {@code Context#pop()} is always guarded by
+	 * {@code Context#isEmpty()} first ({@code StyleParser}'s {@code CLOSE_BRACKET} handling
+	 * only pops &quot;if (context.isEmpty() == false)&quot;), so an extra closing brace back at the
+	 * top level was always a silent no-op, never a parse error. A real-world {@code &lt;style&gt;}
+	 * block with exactly this shape -- one closing brace too many, right before
+	 * {@code &lt;/style&gt;} -- must keep parsing exactly as it did before.
+	 */
+	private void closeCurrentRule() {
+<span class="fc bfc" id="L224" title="All 2 branches covered.">		if (stack.isEmpty())</span>
+<span class="fc" id="L225">			return;</span>
+
+<span class="fc" id="L227">		final RawStyleRule closed = stack.pop();</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">		if (stack.isEmpty())</span>
+<span class="fc" id="L229">			topLevel.add(closed);</span>
+		else
+<span class="fc" id="L231">			stack.peek().addChild(closed);</span>
+<span class="fc" id="L232">	}</span>
+
+	// -----------------------------------------------------------------------
+	// Lexical helpers
+	// -----------------------------------------------------------------------
+
+	/**
+	 * Reads everything up to (not including) the next {@code ;}, end-of-line or {@code }} --
+	 * except for a double-quoted segment (e.g. {@code FontName &quot;Cascadia Code PL&quot;}, needed to
+	 * carry a space through as part of one value): its surrounding quotes are dropped and its
+	 * content copied verbatim, exactly like the legacy character-level tokenizer's own
+	 * {@code readQuotedString} does before its value-joining step ever sees the text, so a quoted
+	 * value doesn't reach a caller with its literal quote characters still attached (which is
+	 * indistinguishable from a font name that simply doesn't exist).
+	 */
+	private String readValue() {
+<span class="fc" id="L248">		skipInlineSpaces();</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">		while (ins.peek(0) == ':')</span>
+<span class="fc" id="L250">			ins.jump();</span>
+<span class="fc" id="L251">		skipInlineSpaces();</span>
+
+<span class="fc" id="L253">		final StringBuilder sb = new StringBuilder();</span>
+		while (true) {
+<span class="fc" id="L255">			final char c = ins.peek(0);</span>
+<span class="pc bpc" id="L256" title="2 of 8 branches missed.">			if (c == '\0' || c == '\n' || c == '\r' || c == '}')</span>
+<span class="fc" id="L257">				break;</span>
+<span class="fc bfc" id="L258" title="All 2 branches covered.">			if (c == ';') {</span>
+<span class="fc" id="L259">				ins.jump();</span>
+<span class="fc" id="L260">				break;</span>
+			}
+<span class="fc bfc" id="L262" title="All 2 branches covered.">			if (c == '\&quot;') {</span>
+<span class="fc" id="L263">				ins.jump();</span>
+<span class="pc bpc" id="L264" title="1 of 4 branches missed.">				while (ins.peek(0) != '\0' &amp;&amp; ins.peek(0) != '\&quot;') {</span>
+<span class="fc" id="L265">					sb.append(ins.peek(0));</span>
+<span class="fc" id="L266">					ins.jump();</span>
+				}
+<span class="pc bpc" id="L268" title="1 of 2 branches missed.">				if (ins.peek(0) == '\&quot;')</span>
+<span class="fc" id="L269">					ins.jump();</span>
+				continue;
+			}
+<span class="fc" id="L272">			sb.append(c);</span>
+<span class="fc" id="L273">			ins.jump();</span>
+<span class="fc" id="L274">		}</span>
+<span class="fc" id="L275">		return sb.toString().trim();</span>
+	}
+
+	/**
+	 * Reads one bare identifier, or a double-quoted string; stops before any delimiter --
+	 * except that a name starting with {@code '.'} (a stereotype selector, e.g.
+	 * {@code .static lib { ... }}) is allowed to carry literal embedded spaces, exactly like
+	 * the legacy character-level tokenizer's own {@code StyleParser#readString}, whose only
+	 * break condition on a space is {@code ch == ' ' &amp;&amp; result.charAt(0) != '.'} -- a dot-led
+	 * token never stops at a space there, only at a &quot;harder&quot; delimiter (tab, newline, '{',
+	 * '}', ';', ',', ':', '*', or end of input), and gets {@code trim()}-ed once read. Without
+	 * this, &quot;.static lib {&quot; is misread as the single-word selector &quot;.static&quot; followed by a
+	 * bare &quot;lib&quot; that belongs to neither a selector nor a property, which is exactly the real
+	 * user-visible regression this reproduces: &quot;Property '.static' declared outside of any
+	 * block&quot;, instead of the two-word stereotype name the legacy parser always accepted.
+	 */
+	private String readIdentifier() {
+<span class="pc bpc" id="L292" title="1 of 2 branches missed.">		if (ins.peek(0) == '\&quot;')</span>
+<span class="nc" id="L293">			return readQuoted();</span>
+
+<span class="fc bfc" id="L295" title="All 2 branches covered.">		final boolean stereotypeLed = ins.peek(0) == '.';</span>
+<span class="fc" id="L296">		final StringBuilder sb = new StringBuilder();</span>
+		while (true) {
+<span class="fc" id="L298">			final char c = ins.peek(0);</span>
+<span class="fc bfc" id="L299" title="All 4 branches covered.">			if (c == ' ' &amp;&amp; stereotypeLed) {</span>
+<span class="fc" id="L300">				sb.append(c);</span>
+<span class="fc" id="L301">				ins.jump();</span>
+<span class="fc" id="L302">				continue;</span>
+			}
+<span class="fc bfc" id="L304" title="All 2 branches covered.">			if (isDelimiter(c))</span>
+<span class="fc" id="L305">				break;</span>
+<span class="fc" id="L306">			sb.append(c);</span>
+<span class="fc" id="L307">			ins.jump();</span>
+<span class="fc" id="L308">		}</span>
+<span class="fc bfc" id="L309" title="All 2 branches covered.">		return stereotypeLed ? sb.toString().trim() : sb.toString();</span>
+	}
+
+	private String readQuoted() {
+<span class="nc" id="L313">		ins.jump(); // opening quote</span>
+<span class="nc" id="L314">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L315" title="All 4 branches missed.">		while (ins.peek(0) != '\0' &amp;&amp; ins.peek(0) != '\&quot;') {</span>
+<span class="nc" id="L316">			sb.append(ins.peek(0));</span>
+<span class="nc" id="L317">			ins.jump();</span>
+		}
+<span class="nc bnc" id="L319" title="All 2 branches missed.">		if (ins.peek(0) == '\&quot;')</span>
+<span class="nc" id="L320">			ins.jump();</span>
+<span class="nc" id="L321">		return sb.toString();</span>
+	}
+
+	private static boolean isDelimiter(char c) {
+		// '*' included: unlike the legacy character-level tokenizer (where '*' is always its
+		// own token, so &quot;name*&quot; and &quot;name *&quot; tokenize identically), readIdentifier() would
+		// otherwise swallow a directly-attached trailing '*' into the name itself -- silently
+		// losing the star altogether, since neither the selector-list star check just below
+		// nor RawSelector#classify's &quot;depth(n)&quot; pattern (which requires the string to end in
+		// ')') would then recognize it. &quot;depth(2)*&quot;, written without a space, is exactly the
+		// real hand-written ancestor-cascade catch-all syntax this must not break.
+<span class="pc bpc" id="L332" title="6 of 22 branches missed.">		return c == '\0' || c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '{' || c == '}' || c == ';'</span>
+				|| c == ',' || c == ':' || c == '*';
+	}
+
+	private void skipInlineSpaces() {
+<span class="pc bpc" id="L337" title="1 of 4 branches missed.">		while (ins.peek(0) == ' ' || ins.peek(0) == '\t')</span>
+<span class="fc" id="L338">			ins.jump();</span>
+<span class="fc" id="L339">	}</span>
+
+	private void skipWhitespaceAndComments() {
+		while (true) {
+<span class="fc" id="L343">			final char c = ins.peek(0);</span>
+<span class="pc bpc" id="L344" title="2 of 8 branches missed.">			if (c == ' ' || c == '\t' || c == '\n' || c == '\r') {</span>
+<span class="fc" id="L345">				ins.jump();</span>
+<span class="fc bfc" id="L346" title="All 4 branches covered.">			} else if (c == '/' &amp;&amp; ins.peek(1) == '/') {</span>
+<span class="fc" id="L347">				skipUntil('\n');</span>
+<span class="pc bpc" id="L348" title="1 of 4 branches missed.">			} else if (c == '/' &amp;&amp; ins.peek(1) == '*') {</span>
+<span class="fc" id="L349">				ins.jump();</span>
+<span class="fc" id="L350">				ins.jump();</span>
+<span class="fc" id="L351">				skipUntilSequence('*', '/');</span>
+<span class="pc bpc" id="L352" title="3 of 4 branches missed.">			} else if (c == '/' &amp;&amp; ins.peek(1) == '\'') {</span>
+<span class="nc" id="L353">				ins.jump();</span>
+<span class="nc" id="L354">				ins.jump();</span>
+<span class="nc" id="L355">				skipUntilSequence('\'', '/');</span>
+			} else {
+<span class="fc" id="L357">				return;</span>
+			}
+<span class="fc" id="L359">		}</span>
+	}
+
+	private void skipUntil(char end) {
+<span class="pc bpc" id="L363" title="1 of 4 branches missed.">		while (ins.peek(0) != '\0' &amp;&amp; ins.peek(0) != end)</span>
+<span class="fc" id="L364">			ins.jump();</span>
+<span class="fc" id="L365">	}</span>
+
+	private void skipUntilSequence(char first, char second) {
+<span class="pc bpc" id="L368" title="1 of 2 branches missed.">		while (ins.peek(0) != '\0') {</span>
+<span class="fc bfc" id="L369" title="All 4 branches covered.">			if (ins.peek(0) == first &amp;&amp; ins.peek(1) == second) {</span>
+<span class="fc" id="L370">				ins.jump();</span>
+<span class="fc" id="L371">				ins.jump();</span>
+<span class="fc" id="L372">				return;</span>
+			}
+<span class="fc" id="L374">			ins.jump();</span>
+		}
+<span class="nc" id="L376">	}</span>
+
+	/** Replaces every {@code var(--name)} reference with the value learnt for {@code name}. */
+	private String resolveVariables(String value) {
+<span class="fc bfc" id="L380" title="All 2 branches covered.">		if (value.indexOf(&quot;var(&quot;) == -1)</span>
+<span class="fc" id="L381">			return value;</span>
+
+<span class="fc" id="L383">		final Matcher m = VAR_REF.matcher(value);</span>
+<span class="fc" id="L384">		final StringBuffer sb = new StringBuffer();</span>
+<span class="fc bfc" id="L385" title="All 2 branches covered.">		while (m.find()) {</span>
+<span class="fc" id="L386">			final String varName = m.group(1);</span>
+<span class="pc bpc" id="L387" title="1 of 2 branches missed.">			final String replacement = variables.containsKey(varName) ? variables.get(varName) : m.group();</span>
+<span class="fc" id="L388">			m.appendReplacement(sb, Matcher.quoteReplacement(replacement));</span>
+<span class="fc" id="L389">		}</span>
+<span class="fc" id="L390">		m.appendTail(sb);</span>
+<span class="fc" id="L391">		return sb.toString();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -84,19 +84,61 @@ loadScripts(document, 'script');</script>
  <a href="https://plantuml.com/style-evolution" target="_top">
  Style</a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="../parser2/package-summary.html">net.sourceforge.plantuml.style.parser2</a></div>
+<div class="col-first odd-row-color"><a href="../value/package-summary.html">net.sourceforge.plantuml.style.value</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </div>
 </li>
 <li>
 <div id="class-summary">
-<div class="caption"><span>Exception Classes</span></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="class-summary-tab0" role="tab" aria-selected="true" aria-controls="class-summary.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary', 2)" class="active-table-tab">All Classes and Interfaces</button><button id="class-summary-tab2" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab2', 2)" class="table-tab">Classes</button><button id="class-summary-tab3" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab3', 2)" class="table-tab">Enum Classes</button><button id="class-summary-tab5" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab5', 2)" class="table-tab">Exception Classes</button></div>
+<div id="class-summary.tabpanel" role="tabpanel" aria-labelledby="class-summary-tab0">
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color class-summary class-summary-tab5"><a href="StyleParsingException.html" title="class in net.sourceforge.plantuml.style.parser">StyleParsingException</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab5">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="MergedStyleNode.html" title="class in net.sourceforge.plantuml.style.parser">MergedStyleNode</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">One node of the canonical, merged style tree: unlike <a href="RawStyleRule.html" title="class in net.sourceforge.plantuml.style.parser"><code>RawStyleRule</code></a>, there is at
+ most one node per (selector name, <code>*</code>-or-not) pair at a given level, whatever comma
+ lists or repeated declarations produced it in the source file.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="PrioritizedValue.html" title="class in net.sourceforge.plantuml.style.parser">PrioritizedValue</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">One property value, together with the priority it was assigned when merged in (see
+ <a href="MergedStyleNode.html#mergeRule(net.sourceforge.plantuml.style.parser.RawStyleRule,net.sourceforge.plantuml.style.AutomaticCounter,boolean)"><code>MergedStyleNode.mergeRule(net.sourceforge.plantuml.style.parser.RawStyleRule, net.sourceforge.plantuml.style.AutomaticCounter, boolean)</code></a>) -- the direct counterpart of the legacy
+ <code>net.sourceforge.plantuml.style.DarkString</code>, kept under the same name it had before
+ this class grew a dark half.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RawSelector.html" title="class in net.sourceforge.plantuml.style.parser">RawSelector</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">One alternative name inside a (possibly comma-separated) selector list, exactly as it
+ was spelled in a .skin file, e.g.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab3"><a href="RawSelector.Kind.html" title="enum class in net.sourceforge.plantuml.style.parser">RawSelector.Kind</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab3">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RawStyleParser.html" title="class in net.sourceforge.plantuml.style.parser">RawStyleParser</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Turns the raw text of a .skin file into a <a href="RawStyleSheet.html" title="class in net.sourceforge.plantuml.style.parser"><code>RawStyleSheet</code></a>: a literal tree of
+ <code>selector { ... }</code> blocks, with no attempt yet at merging duplicate selectors,
+ expanding comma lists, or resolving <code>@media</code> into a cascade -- see
+ <a href="RawStyleRule.html" title="class in net.sourceforge.plantuml.style.parser"><code>RawStyleRule</code></a>.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RawStyleRule.html" title="class in net.sourceforge.plantuml.style.parser">RawStyleRule</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">One <code>selector { ... }</code> block, exactly as written in a .skin file: its selector
+ alternatives (or, for an <code>@media</code> block, the raw condition text), the properties
+ declared directly inside it, and its nested blocks.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RawStyleSheet.html" title="class in net.sourceforge.plantuml.style.parser">RawStyleSheet</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">The literal result of parsing one .skin file: the CSS variables declared with
+ <code>--name: value;</code> (keyed without the leading <code>--</code>), and the top-level
+ <code>selector { ... }</code> / <code>@media { ... }</code> blocks, in the order they appear in
+ the file.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab5"><a href="StyleParsingException.html" title="class in net.sourceforge.plantuml.style.parser">StyleParsingException</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab5">&nbsp;</div>
+</div>
 </div>
 </div>
 </li>

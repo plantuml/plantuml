@@ -35,46 +35,43 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.skin.ComponentType;
-import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 
-<span class="fc" id="L44">public enum NoteStyle {</span>
+<span class="fc" id="L43">public enum NoteStyle {</span>
 
-<span class="fc" id="L46">	NORMAL, HEXAGONAL, BOX;</span>
+<span class="fc" id="L45">	NORMAL, HEXAGONAL, BOX;</span>
 
 	public static NoteStyle getNoteStyle(String s) {
-<span class="fc bfc" id="L49" title="All 2 branches covered.">		if (s.equalsIgnoreCase(&quot;hnote&quot;))</span>
-<span class="fc" id="L50">			return NoteStyle.HEXAGONAL;</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">		if (s.equalsIgnoreCase(&quot;hnote&quot;))</span>
+<span class="fc" id="L49">			return NoteStyle.HEXAGONAL;</span>
 
-<span class="fc bfc" id="L52" title="All 2 branches covered.">		if (s.equalsIgnoreCase(&quot;rnote&quot;))</span>
-<span class="fc" id="L53">			return NoteStyle.BOX;</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">		if (s.equalsIgnoreCase(&quot;rnote&quot;))</span>
+<span class="fc" id="L52">			return NoteStyle.BOX;</span>
 
-<span class="fc" id="L55">		return NoteStyle.NORMAL;</span>
+<span class="fc" id="L54">		return NoteStyle.NORMAL;</span>
 	}
 
 	public ComponentType getNoteComponentType() {
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		if (this == NoteStyle.HEXAGONAL)</span>
-<span class="nc" id="L60">			return ComponentType.NOTE_HEXAGONAL;</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (this == NoteStyle.HEXAGONAL)</span>
+<span class="nc" id="L59">			return ComponentType.NOTE_HEXAGONAL;</span>
 
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (this == NoteStyle.BOX)</span>
-<span class="nc" id="L63">			return ComponentType.NOTE_BOX;</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">		if (this == NoteStyle.BOX)</span>
+<span class="nc" id="L62">			return ComponentType.NOTE_BOX;</span>
 
-<span class="fc" id="L65">		return ComponentType.NOTE;</span>
+<span class="fc" id="L64">		return ComponentType.NOTE;</span>
 	}
 
-	public StyleQuery getStyleQuery() {
-<span class="fc bfc" id="L69" title="All 2 branches covered.">		if (this == NoteStyle.HEXAGONAL)</span>
-<span class="fc" id="L70">			return StyleQuery</span>
-<span class="fc" id="L71">					.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.note, SName.hnote));</span>
+	StyleQuery getStyleQuery() {
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (this == NoteStyle.HEXAGONAL)</span>
+<span class="fc" id="L69">			return StyleQueries.SEQUENCEDIAG_NOTE_HNOTE;</span>
 
-<span class="fc bfc" id="L73" title="All 2 branches covered.">		if (this == NoteStyle.BOX)</span>
-<span class="fc" id="L74">			return StyleQuery</span>
-<span class="fc" id="L75">					.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.note, SName.rnote));</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		if (this == NoteStyle.BOX)</span>
+<span class="fc" id="L72">			return StyleQueries.SEQUENCEDIAG_NOTE_RNOTE;</span>
 
-<span class="fc" id="L77">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.note));</span>
+<span class="fc" id="L74">		return StyleQueries.SEQUENCEDIAG_NOTE;</span>
 
 	}
 

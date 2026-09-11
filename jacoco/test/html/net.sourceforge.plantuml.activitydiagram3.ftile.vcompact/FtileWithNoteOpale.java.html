@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -69,10 +68,10 @@ import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.skin.AlignmentParam;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.style.Styleable;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.utils.Direction;
 
@@ -83,176 +82,176 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 	private final VerticalAlignment verticalAlignment;
 
 	private final NotePosition notePosition;
-<span class="fc" id="L86">	private final double suppSpace = 20;</span>
+<span class="fc" id="L85">	private final double suppSpace = 20;</span>
 	private final Swimlane swimlaneNote;
 
 	@Override
 	public StyleQuery getStyleQuery() {
-<span class="fc" id="L91">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.note));</span>
+<span class="fc" id="L90">		return StyleQueries.ACTIVITYDIAG_NOTE;</span>
 	}
 
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (swimlaneNote != null) {</span>
-<span class="fc" id="L96">			final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;(tile.getSwimlanes());</span>
-<span class="fc" id="L97">			result.add(swimlaneNote);</span>
-<span class="fc" id="L98">			return Collections.unmodifiableSet(result);</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (swimlaneNote != null) {</span>
+<span class="fc" id="L95">			final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;(tile.getSwimlanes());</span>
+<span class="fc" id="L96">			result.add(swimlaneNote);</span>
+<span class="fc" id="L97">			return Collections.unmodifiableSet(result);</span>
 		}
-<span class="nc" id="L100">		return tile.getSwimlanes();</span>
+<span class="nc" id="L99">		return tile.getSwimlanes();</span>
 	}
 
 	public Swimlane getSwimlaneIn() {
-<span class="fc" id="L104">		return tile.getSwimlaneIn();</span>
+<span class="fc" id="L103">		return tile.getSwimlaneIn();</span>
 	}
 
 	public Swimlane getSwimlaneOut() {
-<span class="fc" id="L108">		return tile.getSwimlaneOut();</span>
+<span class="fc" id="L107">		return tile.getSwimlaneOut();</span>
 	}
 
 	@Override
 	public Collection&lt;Ftile&gt; getMyChildren() {
-<span class="nc" id="L113">		return Collections.singleton(tile);</span>
+<span class="nc" id="L112">		return Collections.singleton(tile);</span>
 	}
 
 	public static Ftile create(Ftile tile, Collection&lt;PositionedNote&gt; notes, boolean withLink,
 			VerticalAlignment verticalAlignment) {
-<span class="fc bfc" id="L118" title="All 2 branches covered.">		if (notes.size() &gt; 1)</span>
-<span class="fc" id="L119">			return new FtileWithNotes(tile, notes, verticalAlignment);</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">		if (notes.size() &gt; 1)</span>
+<span class="fc" id="L118">			return new FtileWithNotes(tile, notes, verticalAlignment);</span>
 
-<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (notes.size() == 0)</span>
-<span class="nc" id="L122">			throw new IllegalArgumentException();</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (notes.size() == 0)</span>
+<span class="nc" id="L121">			throw new IllegalArgumentException();</span>
 
-<span class="fc" id="L124">		return new FtileWithNoteOpale(tile, notes.iterator().next(), withLink, verticalAlignment);</span>
+<span class="fc" id="L123">		return new FtileWithNoteOpale(tile, notes.iterator().next(), withLink, verticalAlignment);</span>
 	}
 
 	private FtileWithNoteOpale(Ftile tile, PositionedNote note, boolean withLink, VerticalAlignment verticalAlignment) {
-<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		super(note.getColors() == null ? tile.skinParam() : note.getColors().mute(tile.skinParam()));</span>
-<span class="fc" id="L129">		this.verticalAlignment = verticalAlignment;</span>
-<span class="fc" id="L130">		this.swimlaneNote = note.getSwimlaneNote();</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		super(note.getColors() == null ? tile.skinParam() : note.getColors().mute(tile.skinParam()));</span>
+<span class="fc" id="L128">		this.verticalAlignment = verticalAlignment;</span>
+<span class="fc" id="L129">		this.swimlaneNote = note.getSwimlaneNote();</span>
 
-<span class="fc" id="L132">		this.tile = tile;</span>
-<span class="fc" id="L133">		this.notePosition = note.getNotePosition();</span>
-<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		if (note.getType() == NoteType.FLOATING_NOTE)</span>
-<span class="nc" id="L135">			withLink = false;</span>
+<span class="fc" id="L131">		this.tile = tile;</span>
+<span class="fc" id="L132">		this.notePosition = note.getNotePosition();</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (note.getType() == NoteType.FLOATING_NOTE)</span>
+<span class="nc" id="L134">			withLink = false;</span>
 
-<span class="fc" id="L137">		final Stereotype stereotype = note.getStereotype();</span>
+<span class="fc" id="L136">		final Stereotype stereotype = note.getStereotype();</span>
 
-<span class="fc" id="L139">		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery().withTOBECHANGED(stereotype))</span>
-<span class="fc" id="L140">				.eventuallyOverride(note.getColors());</span>
+<span class="fc" id="L138">		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery().withStereotype(stereotype))</span>
+<span class="fc" id="L139">				.eventuallyOverride(note.getColors());</span>
 
-<span class="fc" id="L142">		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());</span>
-<span class="fc" id="L143">		final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
-<span class="fc" id="L144">		final FontConfiguration fc = style.getFontConfiguration(getIHtmlColorSet());</span>
-<span class="fc" id="L145">		final double shadowing = style.getShadowing();</span>
-<span class="fc" id="L146">		final LineBreakStrategy wrapWidth = style.wrapWidth();</span>
-<span class="fc" id="L147">		final UStroke stroke = style.getStroke();</span>
+<span class="fc" id="L141">		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());</span>
+<span class="fc" id="L142">		final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
+<span class="fc" id="L143">		final FontConfiguration fc = style.getFontConfiguration(getIHtmlColorSet());</span>
+<span class="fc" id="L144">		final double shadowing = style.getShadowing();</span>
+<span class="fc" id="L145">		final LineBreakStrategy wrapWidth = style.wrapWidth();</span>
+<span class="fc" id="L146">		final UStroke stroke = style.getStroke();</span>
 
-<span class="fc" id="L149">		final HorizontalAlignment align = skinParam().getHorizontalAlignment(AlignmentParam.noteTextAlignment, null,</span>
+<span class="fc" id="L148">		final HorizontalAlignment align = skinParam().getHorizontalAlignment(AlignmentParam.noteTextAlignment, null,</span>
 				false, null);
-<span class="fc" id="L151">		final Sheet sheet = skinParam().sheet(fc, align, CreoleMode.FULL).createSheet(note.getDisplay());</span>
-<span class="fc" id="L152">		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam().getPadding()), this,</span>
+<span class="fc" id="L150">		final Sheet sheet = skinParam().sheet(fc, align, CreoleMode.FULL).createSheet(note.getDisplay());</span>
+<span class="fc" id="L151">		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam().getPadding()), this,</span>
 				stroke);
-<span class="fc" id="L154">		opale = new Opale(shadowing, borderColor, noteBackgroundColor, text, withLink, stroke);</span>
+<span class="fc" id="L153">		opale = new Opale(shadowing, borderColor, noteBackgroundColor, text, withLink, stroke);</span>
 
-<span class="fc" id="L156">	}</span>
+<span class="fc" id="L155">	}</span>
 
 	private UTranslate getTranslate(StringBounder stringBounder) {
-<span class="fc" id="L159">		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
-<span class="fc" id="L160">		final XDimension2D dimNote = opale.calculateDimension(stringBounder);</span>
-<span class="fc" id="L161">		final XDimension2D dimTile = tile.calculateDimension(stringBounder);</span>
-<span class="fc" id="L162">		final double yForFtile = (dimTotal.getHeight() - dimTile.getHeight()) / 2;</span>
+<span class="fc" id="L158">		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="fc" id="L159">		final XDimension2D dimNote = opale.calculateDimension(stringBounder);</span>
+<span class="fc" id="L160">		final XDimension2D dimTile = tile.calculateDimension(stringBounder);</span>
+<span class="fc" id="L161">		final double yForFtile = (dimTotal.getHeight() - dimTile.getHeight()) / 2;</span>
 		final double marge;
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">		if (notePosition == NotePosition.LEFT)</span>
-<span class="nc" id="L165">			marge = dimNote.getWidth() + suppSpace;</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">		if (notePosition == NotePosition.LEFT)</span>
+<span class="nc" id="L164">			marge = dimNote.getWidth() + suppSpace;</span>
 		else
-<span class="fc" id="L167">			marge = 0;</span>
+<span class="fc" id="L166">			marge = 0;</span>
 
-<span class="fc" id="L169">		return new UTranslate(marge, yForFtile);</span>
+<span class="fc" id="L168">		return new UTranslate(marge, yForFtile);</span>
 	}
 
 	@Override
 	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
-<span class="nc bnc" id="L174" title="All 2 branches missed.">		if (child == tile)</span>
-<span class="nc" id="L175">			return UTranslate.none();</span>
-<span class="nc" id="L176">		return super.getTranslateFor(child, stringBounder);</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		if (child == tile)</span>
+<span class="nc" id="L174">			return UTranslate.none();</span>
+<span class="nc" id="L175">		return super.getTranslateFor(child, stringBounder);</span>
 
 	}
 
 	private UTranslate getTranslateForOpale(UGraphic ug) {
-<span class="fc" id="L181">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L182">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
-<span class="fc" id="L183">		final XDimension2D dimNote = opale.calculateDimension(stringBounder);</span>
+<span class="fc" id="L180">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L181">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
+<span class="fc" id="L182">		final XDimension2D dimNote = opale.calculateDimension(stringBounder);</span>
 
 		final double yForNote;
-<span class="pc bpc" id="L186" title="1 of 2 branches missed.">		if (verticalAlignment == VerticalAlignment.CENTER)</span>
-<span class="fc" id="L187">			yForNote = (dimTotal.getHeight() - dimNote.getHeight()) / 2;</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">		if (verticalAlignment == VerticalAlignment.CENTER)</span>
+<span class="fc" id="L186">			yForNote = (dimTotal.getHeight() - dimNote.getHeight()) / 2;</span>
 		else
-<span class="nc" id="L189">			yForNote = 0;</span>
+<span class="nc" id="L188">			yForNote = 0;</span>
 
-<span class="pc bpc" id="L191" title="1 of 2 branches missed.">		if (notePosition == NotePosition.LEFT)</span>
-<span class="nc" id="L192">			return UTranslate.dy(yForNote);</span>
+<span class="pc bpc" id="L190" title="1 of 2 branches missed.">		if (notePosition == NotePosition.LEFT)</span>
+<span class="nc" id="L191">			return UTranslate.dy(yForNote);</span>
 
-<span class="fc" id="L194">		final double dx = dimTotal.getWidth() - dimNote.getWidth();</span>
-<span class="fc" id="L195">		return new UTranslate(dx, yForNote);</span>
+<span class="fc" id="L193">		final double dx = dimTotal.getWidth() - dimNote.getWidth();</span>
+<span class="fc" id="L194">		return new UTranslate(dx, yForNote);</span>
 	}
 
 	public void drawU(UGraphic ug) {
 		final Swimlane intoSw;
-<span class="fc bfc" id="L200" title="All 2 branches covered.">		if (ug instanceof UGraphicInterceptorOneSwimlane)</span>
-<span class="fc" id="L201">			intoSw = ((UGraphicInterceptorOneSwimlane) ug).getSwimlane();</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">		if (ug instanceof UGraphicInterceptorOneSwimlane)</span>
+<span class="fc" id="L200">			intoSw = ((UGraphicInterceptorOneSwimlane) ug).getSwimlane();</span>
 		else
-<span class="fc" id="L203">			intoSw = null;</span>
+<span class="fc" id="L202">			intoSw = null;</span>
 
-<span class="fc" id="L205">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L206">		final XDimension2D dimNote = opale.calculateDimension(stringBounder);</span>
+<span class="fc" id="L204">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L205">		final XDimension2D dimNote = opale.calculateDimension(stringBounder);</span>
 
-<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		if (notePosition == NotePosition.LEFT) {</span>
-<span class="nc" id="L209">			final Direction strategy = Direction.RIGHT;</span>
-<span class="nc" id="L210">			final XPoint2D pp1 = new XPoint2D(dimNote.getWidth(), dimNote.getHeight() / 2);</span>
-<span class="nc" id="L211">			final XPoint2D pp2 = new XPoint2D(dimNote.getWidth() + suppSpace, dimNote.getHeight() / 2);</span>
-<span class="nc" id="L212">			opale.setOpale(strategy, pp1, pp2);</span>
-<span class="nc" id="L213">		} else {</span>
-<span class="fc" id="L214">			final Direction strategy = Direction.LEFT;</span>
-<span class="fc" id="L215">			final XPoint2D pp1 = new XPoint2D(0, dimNote.getHeight() / 2);</span>
-<span class="fc" id="L216">			final XPoint2D pp2 = new XPoint2D(-suppSpace, dimNote.getHeight() / 2);</span>
-<span class="fc" id="L217">			opale.setOpale(strategy, pp1, pp2);</span>
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">		if (notePosition == NotePosition.LEFT) {</span>
+<span class="nc" id="L208">			final Direction strategy = Direction.RIGHT;</span>
+<span class="nc" id="L209">			final XPoint2D pp1 = new XPoint2D(dimNote.getWidth(), dimNote.getHeight() / 2);</span>
+<span class="nc" id="L210">			final XPoint2D pp2 = new XPoint2D(dimNote.getWidth() + suppSpace, dimNote.getHeight() / 2);</span>
+<span class="nc" id="L211">			opale.setOpale(strategy, pp1, pp2);</span>
+<span class="nc" id="L212">		} else {</span>
+<span class="fc" id="L213">			final Direction strategy = Direction.LEFT;</span>
+<span class="fc" id="L214">			final XPoint2D pp1 = new XPoint2D(0, dimNote.getHeight() / 2);</span>
+<span class="fc" id="L215">			final XPoint2D pp2 = new XPoint2D(-suppSpace, dimNote.getHeight() / 2);</span>
+<span class="fc" id="L216">			opale.setOpale(strategy, pp1, pp2);</span>
 		}
 
-<span class="pc bpc" id="L220" title="2 of 6 branches missed.">		if (ug instanceof UGraphicInterceptorOneSwimlane == false || swimlaneNote == null || intoSw == swimlaneNote)</span>
-<span class="fc" id="L221">			opale.drawU(ug.apply(getTranslateForOpale(ug)));</span>
+<span class="pc bpc" id="L219" title="2 of 6 branches missed.">		if (ug instanceof UGraphicInterceptorOneSwimlane == false || swimlaneNote == null || intoSw == swimlaneNote)</span>
+<span class="fc" id="L220">			opale.drawU(ug.apply(getTranslateForOpale(ug)));</span>
 
-<span class="fc" id="L223">		ug.apply(getTranslate(stringBounder)).draw(tile);</span>
-<span class="fc" id="L224">	}</span>
+<span class="fc" id="L222">		ug.apply(getTranslate(stringBounder)).draw(tile);</span>
+<span class="fc" id="L223">	}</span>
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-<span class="fc" id="L228">		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
-<span class="fc" id="L229">		final FtileGeometry orig = tile.calculateDimension(stringBounder);</span>
-<span class="fc" id="L230">		final UTranslate translate = getTranslate(stringBounder);</span>
-<span class="pc bpc" id="L231" title="1 of 2 branches missed.">		if (orig.hasPointOut())</span>
-<span class="fc" id="L232">			return new FtileGeometry(dimTotal, orig.getLeft() + translate.getDx(), orig.getInY() + translate.getDy(),</span>
-<span class="fc" id="L233">					orig.getOutY() + translate.getDy());</span>
+<span class="fc" id="L227">		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="fc" id="L228">		final FtileGeometry orig = tile.calculateDimension(stringBounder);</span>
+<span class="fc" id="L229">		final UTranslate translate = getTranslate(stringBounder);</span>
+<span class="pc bpc" id="L230" title="1 of 2 branches missed.">		if (orig.hasPointOut())</span>
+<span class="fc" id="L231">			return new FtileGeometry(dimTotal, orig.getLeft() + translate.getDx(), orig.getInY() + translate.getDy(),</span>
+<span class="fc" id="L232">					orig.getOutY() + translate.getDy());</span>
 
-<span class="nc" id="L235">		return new FtileGeometry(dimTotal, orig.getLeft() + translate.getDx(), orig.getInY() + translate.getDy());</span>
+<span class="nc" id="L234">		return new FtileGeometry(dimTotal, orig.getLeft() + translate.getDx(), orig.getInY() + translate.getDy());</span>
 	}
 
 	private XDimension2D calculateDimensionInternal(StringBounder stringBounder) {
-<span class="fc" id="L239">		final XDimension2D dimNote = opale.calculateDimension(stringBounder);</span>
-<span class="fc" id="L240">		final XDimension2D dimTile = tile.calculateDimension(stringBounder);</span>
-<span class="fc" id="L241">		final double height = Math.max(dimNote.getHeight(), dimTile.getHeight());</span>
-<span class="fc" id="L242">		return new XDimension2D(dimTile.getWidth() + 1 * dimNote.getWidth() + suppSpace, height);</span>
+<span class="fc" id="L238">		final XDimension2D dimNote = opale.calculateDimension(stringBounder);</span>
+<span class="fc" id="L239">		final XDimension2D dimTile = tile.calculateDimension(stringBounder);</span>
+<span class="fc" id="L240">		final double height = Math.max(dimNote.getHeight(), dimTile.getHeight());</span>
+<span class="fc" id="L241">		return new XDimension2D(dimTile.getWidth() + 1 * dimNote.getWidth() + suppSpace, height);</span>
 	}
 
 	public double getStartingX(StringBounder stringBounder, double y) {
-<span class="fc" id="L246">		return -opale.getMarginX1();</span>
+<span class="fc" id="L245">		return -opale.getMarginX1();</span>
 	}
 
 	public double getEndingX(StringBounder stringBounder, double y) {
-<span class="fc" id="L250">		return opale.calculateDimension(stringBounder).getWidth() - opale.getMarginX1();</span>
+<span class="fc" id="L249">		return opale.calculateDimension(stringBounder).getWidth() - opale.getMarginX1();</span>
 	}
 
 	@Override
 	final public LinkRendering getInLinkRendering() {
-<span class="fc" id="L255">		return tile.getInLinkRendering();</span>
+<span class="fc" id="L254">		return tile.getInLinkRendering();</span>
 	}
 
 }

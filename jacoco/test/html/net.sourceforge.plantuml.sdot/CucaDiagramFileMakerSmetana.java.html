@@ -46,7 +46,6 @@ import static smetana.core.debug.SmetanaDebug.SMETANA_TRACE;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -96,7 +95,8 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.ClusterHeader;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
@@ -681,15 +681,15 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	}
 
 	private Style getStyle() {
-<span class="fc" id="L684">		return diagram.getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery</span>
-<span class="fc" id="L685">				.of(Arrays.asList(SName.root, SName.element, diagram.getDiagramType().getStyleName(), SName.arrow)));</span>
+<span class="fc" id="L684">		return diagram.getSkinParam().getCurrentStyleBuilder()</span>
+<span class="fc" id="L685">				.getMergedStyle(StyleQueries.ARROW.add(diagram.getDiagramType().getStyleName()));</span>
 	}
 
 	// Duplication from SvekEdge
-	final public StyleQuery getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
-<span class="fc" id="L690">		StyleQuery result = StyleQuery.of(Arrays.asList(SName.root, SName.element, styleName, SName.arrow));</span>
+	private StyleQuery getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
+<span class="fc" id="L690">		StyleQuery result = StyleQueries.ARROW.add(styleName);</span>
 <span class="pc bpc" id="L691" title="1 of 2 branches missed.">		if (stereotype != null)</span>
-<span class="nc" id="L692">			result = result.withTOBECHANGED(stereotype);</span>
+<span class="nc" id="L692">			result = result.withStereotype(stereotype);</span>
 
 <span class="fc" id="L694">		return result;</span>
 	}

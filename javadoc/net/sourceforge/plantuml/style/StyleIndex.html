@@ -95,11 +95,11 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">The fast, queryable counterpart of the old <code>StyleStorage</code>: every loaded <a href="Style.html" title="class in net.sourceforge.plantuml.style"><code>Style</code></a>
  is indexed by its query's tags in a
- <a href="parser2/StyleAtomTrie.html" title="class in net.sourceforge.plantuml.style.parser2"><code>StyleAtomTrie</code></a>, so <a href="#findMatching(net.sourceforge.plantuml.style.parser2.StyleQuery)"><code>findMatching(StyleQuery)</code></a> only ever visits
+ <a href="StyleAtomTrie.html" title="class in net.sourceforge.plantuml.style"><code>StyleAtomTrie</code></a>, so <a href="#findMatching(net.sourceforge.plantuml.style.StyleQuery)"><code>findMatching(StyleQuery)</code></a> only ever visits
  declarations that could possibly match a query, instead of the old linear scan over every
  style ever loaded checking <code>StyleSignatureBasic#matchAll</code> one by one -- the actual fix
- for the slow style resolution (<a href="StyleBuilder.html#getMergedStyle(net.sourceforge.plantuml.style.parser2.StyleQuery)"><code>StyleBuilder.getMergedStyle(net.sourceforge.plantuml.style.parser2.StyleQuery)</code></a>,
- <a href="StyleBuilder.html#getMergedStyleSpecial(net.sourceforge.plantuml.style.parser2.StyleQuery,int)"><code>StyleBuilder.getMergedStyleSpecial(net.sourceforge.plantuml.style.parser2.StyleQuery, int)</code></a>) this whole <code>parser2</code> engine was built for.
+ for the slow style resolution (<a href="StyleBuilder.html#getMergedStyle(net.sourceforge.plantuml.style.StyleQuery)"><code>StyleBuilder.getMergedStyle(net.sourceforge.plantuml.style.StyleQuery)</code></a>,
+ <a href="StyleBuilder.html#getMergedStyleSpecial(net.sourceforge.plantuml.style.StyleQuery,int)"><code>StyleBuilder.getMergedStyleSpecial(net.sourceforge.plantuml.style.StyleQuery, int)</code></a>) this whole <code>parser2</code> engine was built for.
  The subset-query trie itself already replicates <code>matchAll</code>'s semantics exactly (level,
  star, <code>SName</code> set and stereotype set all included) -- see
  <code>net.sourceforge.plantuml.style.parser2.LevelConstraint</code> and
@@ -127,7 +127,7 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#empty()" class="member-name-link">empty</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#findMatching(net.sourceforge.plantuml.style.parser2.StyleQuery)" class="member-name-link">findMatching</a><wbr>(<a href="parser2/StyleQuery.html" title="class in net.sourceforge.plantuml.style.parser2">StyleQuery</a>&nbsp;query)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#findMatching(net.sourceforge.plantuml.style.StyleQuery)" class="member-name-link">findMatching</a><wbr>(<a href="StyleQuery.html" title="class in net.sourceforge.plantuml.style">StyleQuery</a>&nbsp;query)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Every loaded style whose query is a subset of <code>query</code>'s, in the order they were
  loaded or muted in.</div>
@@ -143,9 +143,9 @@ loadScripts(document, 'script');</script>
 <div class="block">The counterpart of the old <code>StyleBuilder#loadInternal</code>'s
  <code>storage.get(signature)</code>/<code>storage.put(...)</code> pair, called while loading a .skin
  file: a light-only "root { FontColor black }" and a later, dark-only
- "@media (dark) { root { FontColor white } }" share the exact same <a href="parser2/StyleQuery.html" title="class in net.sourceforge.plantuml.style.parser2"><code>StyleQuery</code></a>
+ "@media (dark) { root { FontColor white } }" share the exact same <a href="StyleQuery.html" title="class in net.sourceforge.plantuml.style"><code>StyleQuery</code></a>
  and MUST be folded into one <a href="Style.html" title="class in net.sourceforge.plantuml.style"><code>Style</code></a> right here, at load time -- not left for
- <a href="#findMatching(net.sourceforge.plantuml.style.parser2.StyleQuery)"><code>findMatching(net.sourceforge.plantuml.style.parser2.StyleQuery)</code></a> to hand back as two separate entries.</div>
+ <a href="#findMatching(net.sourceforge.plantuml.style.StyleQuery)"><code>findMatching(net.sourceforge.plantuml.style.StyleQuery)</code></a> to hand back as two separate entries.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="StyleIndex.html" title="class in net.sourceforge.plantuml.style">StyleIndex</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withMuted(java.util.Collection)" class="member-name-link">withMuted</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&gt;&nbsp;newStyles)</code></div>
@@ -185,12 +185,12 @@ loadScripts(document, 'script');</script>
 <div class="block">The counterpart of the old <code>StyleBuilder#loadInternal</code>'s
  <code>storage.get(signature)</code>/<code>storage.put(...)</code> pair, called while loading a .skin
  file: a light-only "root { FontColor black }" and a later, dark-only
- "@media (dark) { root { FontColor white } }" share the exact same <a href="parser2/StyleQuery.html" title="class in net.sourceforge.plantuml.style.parser2"><code>StyleQuery</code></a>
+ "@media (dark) { root { FontColor white } }" share the exact same <a href="StyleQuery.html" title="class in net.sourceforge.plantuml.style"><code>StyleQuery</code></a>
  and MUST be folded into one <a href="Style.html" title="class in net.sourceforge.plantuml.style"><code>Style</code></a> right here, at load time -- not left for
- <a href="#findMatching(net.sourceforge.plantuml.style.parser2.StyleQuery)"><code>findMatching(net.sourceforge.plantuml.style.parser2.StyleQuery)</code></a> to hand back as two separate entries. Deferring that fold to query
+ <a href="#findMatching(net.sourceforge.plantuml.style.StyleQuery)"><code>findMatching(net.sourceforge.plantuml.style.StyleQuery)</code></a> to hand back as two separate entries. Deferring that fold to query
  time is unsound: a cross-selector cascade merge (say, "root" combined with a more specific
  "root document ganttDiagram") uses priority alone to decide the winner once both sides
- already carry a value (<a href="DarkString.html#mergeWith(net.sourceforge.plantuml.style.DarkString)"><code>DarkString.mergeWith(net.sourceforge.plantuml.style.DarkString)</code></a>'s final, non-combining branch), so a
+ already carry a value (<a href="value/DarkString.html#mergeWith(net.sourceforge.plantuml.style.value.DarkString)"><code>DarkString.mergeWith(net.sourceforge.plantuml.style.value.DarkString)</code></a>'s final, non-combining branch), so a
  still-unmerged dark-only "root" entry -- whose priority is always high, since every dark
  declaration in a .skin file is numbered after every light one -- can beat an already-combined
  light+dark value from a less specific selector and silently drop that combined value's light
@@ -211,9 +211,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="findMatching(net.sourceforge.plantuml.style.parser2.StyleQuery)">
+<section class="detail" id="findMatching(net.sourceforge.plantuml.style.StyleQuery)">
 <h3>findMatching</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&gt;</span>&nbsp;<span class="element-name">findMatching</span><wbr><span class="parameters">(<a href="parser2/StyleQuery.html" title="class in net.sourceforge.plantuml.style.parser2">StyleQuery</a>&nbsp;query)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&gt;</span>&nbsp;<span class="element-name">findMatching</span><wbr><span class="parameters">(<a href="StyleQuery.html" title="class in net.sourceforge.plantuml.style">StyleQuery</a>&nbsp;query)</span></div>
 <div class="block">Every loaded style whose query is a subset of <code>query</code>'s, in the order they were
  loaded or muted in.</div>
 </section>

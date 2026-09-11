@@ -159,7 +159,7 @@ public class CommandPartition3 extends SingleLineCommand2&lt;ActivityDiagram3&gt
 		// Warning : titleColor unused in FTileGroupW
 
 <span class="fc" id="L161">		final Style stylePartition = diagram.getSkinParam().getCurrentStyleBuilder()</span>
-<span class="fc" id="L162">				.getMergedStyle(FtileGroup.getStyleQuery(symbol).withTOBECHANGED(stereotype));</span>
+<span class="fc" id="L162">				.getMergedStyle(FtileGroup.getStyleQuery(symbol).withStereotype(stereotype));</span>
 <span class="fc" id="L163">		HColor backColor = colors.getColor(ColorType.BACK);</span>
 <span class="pc bpc" id="L164" title="1 of 2 branches missed.">		if (backColor == null)</span>
 <span class="fc" id="L165">			backColor = stylePartition.value(PName.BackGroundColor).asColor(diagram.getSkinParam().getIHtmlColorSet());</span>

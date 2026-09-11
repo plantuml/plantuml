@@ -41,7 +41,6 @@ import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
@@ -103,20 +102,20 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
 
 public class GanttDiagram extends TitledDiagram implements GanttStyle {
 
 	// ------------------------------------------------------------------------
 	// model / prepared state
 	// ------------------------------------------------------------------------
-<span class="fc" id="L113">	private final GanttModelData modelData = new GanttModelData();</span>
-<span class="fc" id="L114">	private final TimeBoundsData timeBounds = new TimeBoundsData();</span>
-<span class="fc" id="L115">	private final TimeScaleConfigData scaleConfig = new TimeScaleConfigData();</span>
-<span class="fc" id="L116">	private final WeekConfigData weekConfig = new WeekConfigData();</span>
-<span class="fc" id="L117">	private final DayCalendarData dayCalendar = new DayCalendarData();</span>
-<span class="fc" id="L118">	private final DisplayConfigData displayConfig = new DisplayConfigData();</span>
-<span class="fc" id="L119">	private final TaskDrawRegistryData drawRegistry = new TaskDrawRegistryData();</span>
+<span class="fc" id="L112">	private final GanttModelData modelData = new GanttModelData();</span>
+<span class="fc" id="L113">	private final TimeBoundsData timeBounds = new TimeBoundsData();</span>
+<span class="fc" id="L114">	private final TimeScaleConfigData scaleConfig = new TimeScaleConfigData();</span>
+<span class="fc" id="L115">	private final WeekConfigData weekConfig = new WeekConfigData();</span>
+<span class="fc" id="L116">	private final DayCalendarData dayCalendar = new DayCalendarData();</span>
+<span class="fc" id="L117">	private final DisplayConfigData displayConfig = new DisplayConfigData();</span>
+<span class="fc" id="L118">	private final TaskDrawRegistryData drawRegistry = new TaskDrawRegistryData();</span>
 	private final TimelineStyleData timelineStyle;
 
 	// ------------------------------------------------------------------------
@@ -125,377 +124,375 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 
 	private TimePoint today;
 
-<span class="fc" id="L128">	private int defaultCompletion = 100;</span>
+<span class="fc" id="L127">	private int defaultCompletion = 100;</span>
 
 	// ------------------------------------------------------------------------
 	// parsing / &quot;current&quot; pointers (stateful command interpretation)
 	// ------------------------------------------------------------------------
 	private Task it;
 	private Resource they;
-<span class="fc" id="L135">	private TaskGroup currentGroup = null;</span>
+<span class="fc" id="L134">	private TaskGroup currentGroup = null;</span>
 
 	// ------------------------------------------------------------------------
 	// constants / patterns
 	// ------------------------------------------------------------------------
-<span class="fc" id="L140">	private static final Pattern RESOURCE_ASSIGNMENT_PATTERN = Pattern.compile(&quot;([^:]+)(:(\\d+))?&quot;);</span>
+<span class="fc" id="L139">	private static final Pattern RESOURCE_ASSIGNMENT_PATTERN = Pattern.compile(&quot;([^:]+)(:(\\d+))?&quot;);</span>
 
 	public CommandExecutionResult changeLanguage(String lang) {
-<span class="fc" id="L143">		this.weekConfig.setLocale(new Locale(lang));</span>
-<span class="fc" id="L144">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L142">		this.weekConfig.setLocale(new Locale(lang));</span>
+<span class="fc" id="L143">		return CommandExecutionResult.ok();</span>
 	}
 
 	public DiagramDescription getDescription() {
-<span class="fc" id="L148">		return new DiagramDescription(&quot;(Gantt)&quot;);</span>
+<span class="fc" id="L147">		return new DiagramDescription(&quot;(Gantt)&quot;);</span>
 	}
 
 	public void setWeekNumberStrategy(DayOfWeek firstDayOfWeek, int minimalDaysInFirstWeek) {
-<span class="nc" id="L152">		this.weekConfig.setWeekNumberStrategy(new WeekNumberStrategy(firstDayOfWeek, minimalDaysInFirstWeek));</span>
-<span class="nc" id="L153">	}</span>
+<span class="nc" id="L151">		this.weekConfig.setWeekNumberStrategy(new WeekNumberStrategy(firstDayOfWeek, minimalDaysInFirstWeek));</span>
+<span class="nc" id="L152">	}</span>
 
 	public GanttDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L156">		super(source, DiagramType.GANTT, null, preprocessing);</span>
-<span class="fc" id="L157">		this.timelineStyle = new TimelineStyleData(getSkinParam(), this, HColorSet.instance());</span>
-<span class="fc" id="L158">	}</span>
+<span class="fc" id="L155">		super(source, DiagramType.GANTT, null, preprocessing);</span>
+<span class="fc" id="L156">		this.timelineStyle = new TimelineStyleData(getSkinParam(), this, HColorSet.instance());</span>
+<span class="fc" id="L157">	}</span>
 
 	public final int getDpi(FileFormatOption fileFormatOption) {
-<span class="nc" id="L161">		return 96;</span>
+<span class="nc" id="L160">		return 96;</span>
 	}
 
 	public void setPrintScale(PrintScale printScale) {
-<span class="fc" id="L165">		this.scaleConfig.setPrintScale(printScale);</span>
-<span class="fc" id="L166">	}</span>
+<span class="fc" id="L164">		this.scaleConfig.setPrintScale(printScale);</span>
+<span class="fc" id="L165">	}</span>
 
 	public void setFactorScale(double factorScale) {
-<span class="nc" id="L169">		this.scaleConfig.setFactorScale(factorScale);</span>
-<span class="nc" id="L170">	}</span>
+<span class="nc" id="L168">		this.scaleConfig.setFactorScale(factorScale);</span>
+<span class="nc" id="L169">	}</span>
 
 	@Override
 	public String checkFinalError() {
 		try {
-<span class="fc" id="L175">			initMinMax();</span>
-<span class="pc bpc" id="L176" title="1 of 2 branches missed.">			if (timeBounds.durationInDays() &gt; 365 * 20)</span>
-<span class="nc" id="L177">				return &quot;Gantt diagrams cannot last more than 20 years&quot;;</span>
-<span class="nc" id="L178">		} catch (ImpossibleSolvingException ex) {</span>
-<span class="nc" id="L179">			return ex.getMessage();</span>
-<span class="fc" id="L180">		}</span>
-<span class="fc" id="L181">		return null;</span>
+<span class="fc" id="L174">			initMinMax();</span>
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">			if (timeBounds.durationInDays() &gt; 365 * 20)</span>
+<span class="nc" id="L176">				return &quot;Gantt diagrams cannot last more than 20 years&quot;;</span>
+<span class="nc" id="L177">		} catch (ImpossibleSolvingException ex) {</span>
+<span class="nc" id="L178">			return ex.getMessage();</span>
+<span class="fc" id="L179">		}</span>
+<span class="fc" id="L180">		return null;</span>
 	}
 
 	@Override
 	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
-<span class="fc" id="L186">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam(), getPragma());</span>
-<span class="pc bpc" id="L187" title="1 of 2 branches missed.">		if (this.timeBounds.getPrintStart() == null) {</span>
-<span class="fc" id="L188">			initMinMax();</span>
+<span class="fc" id="L185">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam(), getPragma());</span>
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">		if (this.timeBounds.getPrintStart() == null) {</span>
+<span class="fc" id="L187">			initMinMax();</span>
 		} else {
-<span class="nc" id="L190">			this.timeBounds.setMinDay(this.timeBounds.getPrintStart());</span>
-<span class="nc" id="L191">			this.timeBounds.setMaxDay(this.timeBounds.getPrintEnd());</span>
+<span class="nc" id="L189">			this.timeBounds.setMinDay(this.timeBounds.getPrintStart());</span>
+<span class="nc" id="L190">			this.timeBounds.setMaxDay(this.timeBounds.getPrintEnd());</span>
 		}
-<span class="fc" id="L193">		final TimeHeaderFactory factory = new TimeHeaderFactory(this.weekConfig, this.dayCalendar, this.timeBounds,</span>
+<span class="fc" id="L192">		final TimeHeaderFactory factory = new TimeHeaderFactory(this.weekConfig, this.dayCalendar, this.timeBounds,</span>
 				this.scaleConfig, this.timelineStyle);
 
-<span class="fc" id="L196">		final TimeHeader timeHeader = factory.createTimeHeader();</span>
+<span class="fc" id="L195">		final TimeHeader timeHeader = factory.createTimeHeader();</span>
 
-<span class="fc" id="L198">		return new GanttDiagramMainBlock(this.timeBounds, this.modelData, this.drawRegistry, this.displayConfig,</span>
-<span class="fc" id="L199">				this.timelineStyle, this, timeHeader, this.weekConfig.getLocale(), stringBounder);</span>
+<span class="fc" id="L197">		return new GanttDiagramMainBlock(this.timeBounds, this.modelData, this.drawRegistry, this.displayConfig,</span>
+<span class="fc" id="L198">				this.timelineStyle, this, timeHeader, this.weekConfig.getLocale(), stringBounder);</span>
 	}
 
 	private void initMinMax() {
-<span class="fc" id="L203">		timeBounds.initMinMax(modelData, dayCalendar);</span>
-<span class="fc" id="L204">	}</span>
+<span class="fc" id="L202">		timeBounds.initMinMax(modelData, dayCalendar);</span>
+<span class="fc" id="L203">	}</span>
 
 	@Override
 	public final Style getStyle(SName param) {
-<span class="fc" id="L208">		return getCurrentStyleBuilder()</span>
-<span class="fc" id="L209">				.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, param)));</span>
+<span class="fc" id="L207">		return getCurrentStyleBuilder().getMergedStyle(StyleQueries.GANTTDIAG.add(param));</span>
 	}
 
 	@Override
 	public final Style getStyle(SName param1, SName param2) {
-<span class="fc" id="L214">		return getCurrentStyleBuilder().getMergedStyle(</span>
-<span class="fc" id="L215">				StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, param1, param2)));</span>
+<span class="fc" id="L212">		return getCurrentStyleBuilder().getMergedStyle(StyleQueries.GANTTDIAG.addSNames(param1, param2));</span>
 	}
 
 	public void closeDayOfWeek(DayOfWeek day, String task) {
-<span class="fc" id="L219">		this.dayCalendar.getOpenClose().close(day);</span>
-<span class="fc" id="L220">	}</span>
+<span class="fc" id="L216">		this.dayCalendar.getOpenClose().close(day);</span>
+<span class="fc" id="L217">	}</span>
 
 	public void openDayOfWeek(DayOfWeek day, String task) {
-<span class="pc bpc" id="L223" title="1 of 2 branches missed.">		if (task.length() == 0)</span>
-<span class="nc" id="L224">			this.dayCalendar.getOpenClose().open(day);</span>
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">		if (task.length() == 0)</span>
+<span class="nc" id="L221">			this.dayCalendar.getOpenClose().open(day);</span>
 		else
-<span class="fc" id="L226">			this.dayCalendar.getOpenCloseForTask(task).open(day);</span>
-<span class="fc" id="L227">	}</span>
+<span class="fc" id="L223">			this.dayCalendar.getOpenCloseForTask(task).open(day);</span>
+<span class="fc" id="L224">	}</span>
 
 	public void closeDayAsDate(LocalDate day, String task) {
-<span class="nc bnc" id="L230" title="All 2 branches missed.">		if (task.length() == 0)</span>
-<span class="nc" id="L231">			this.dayCalendar.getOpenClose().close(day);</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">		if (task.length() == 0)</span>
+<span class="nc" id="L228">			this.dayCalendar.getOpenClose().close(day);</span>
 		else
-<span class="nc" id="L233">			this.dayCalendar.getOpenCloseForTask(task).close(day);</span>
+<span class="nc" id="L230">			this.dayCalendar.getOpenCloseForTask(task).close(day);</span>
 
-<span class="nc" id="L235">	}</span>
+<span class="nc" id="L232">	}</span>
 
 	public void openDayAsDate(LocalDate day, String task) {
-<span class="pc bpc" id="L238" title="1 of 2 branches missed.">		if (task.length() == 0)</span>
-<span class="fc" id="L239">			this.dayCalendar.getOpenClose().open(day);</span>
+<span class="pc bpc" id="L235" title="1 of 2 branches missed.">		if (task.length() == 0)</span>
+<span class="fc" id="L236">			this.dayCalendar.getOpenClose().open(day);</span>
 		else
-<span class="nc" id="L241">			this.dayCalendar.getOpenCloseForTask(task).open(day);</span>
+<span class="nc" id="L238">			this.dayCalendar.getOpenCloseForTask(task).open(day);</span>
 
-<span class="fc" id="L243">	}</span>
+<span class="fc" id="L240">	}</span>
 
 	public TimePoint getThenDate() {
-<span class="fc" id="L246">		TimePoint result = TimePoint.ofStartOfDay(this.timeBounds.getMinDay());</span>
-<span class="fc bfc" id="L247" title="All 2 branches covered.">		for (TimePoint d : this.dayCalendar.getColorDays())</span>
-<span class="fc bfc" id="L248" title="All 2 branches covered.">			if (d.compareTo(result) &gt; 0)</span>
-<span class="fc" id="L249">				result = d;</span>
+<span class="fc" id="L243">		TimePoint result = TimePoint.ofStartOfDay(this.timeBounds.getMinDay());</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">		for (TimePoint d : this.dayCalendar.getColorDays())</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">			if (d.compareTo(result) &gt; 0)</span>
+<span class="fc" id="L246">				result = d;</span>
 
-<span class="fc bfc" id="L251" title="All 2 branches covered.">		for (TimePoint d : this.dayCalendar.getNameDays().keySet())</span>
-<span class="pc bpc" id="L252" title="1 of 2 branches missed.">			if (d.compareTo(result) &gt; 0)</span>
-<span class="nc" id="L253">				result = d;</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">		for (TimePoint d : this.dayCalendar.getNameDays().keySet())</span>
+<span class="pc bpc" id="L249" title="1 of 2 branches missed.">			if (d.compareTo(result) &gt; 0)</span>
+<span class="nc" id="L250">				result = d;</span>
 
-<span class="fc" id="L255">		return result;</span>
+<span class="fc" id="L252">		return result;</span>
 	}
 
 	public Task getExistingTask(String id) {
-<span class="fc" id="L259">		final TaskCode code = TaskCode.fromId(Objects.requireNonNull(id));</span>
-<span class="fc" id="L260">		return this.modelData.getTask(code);</span>
+<span class="fc" id="L256">		final TaskCode code = TaskCode.fromId(Objects.requireNonNull(id));</span>
+<span class="fc" id="L257">		return this.modelData.getTask(code);</span>
 	}
 
 	public GanttConstraint forceTaskOrder(Task task1, Task task2) {
-<span class="fc" id="L264">		final TaskInstant end1 = new TaskInstant(task1, TaskAttribute.END);</span>
-<span class="fc" id="L265">		task2.setStart(end1.getInstantPrecise());</span>
-<span class="fc" id="L266">		final GanttConstraint result = new GanttConstraint(this.getIHtmlColorSet(),</span>
-<span class="fc" id="L267">				getSkinParam().getCurrentStyleBuilder(), end1, new TaskInstant(task2, TaskAttribute.START));</span>
-<span class="fc" id="L268">		addContraint(result);</span>
-<span class="fc" id="L269">		return result;</span>
+<span class="fc" id="L261">		final TaskInstant end1 = new TaskInstant(task1, TaskAttribute.END);</span>
+<span class="fc" id="L262">		task2.setStart(end1.getInstantPrecise());</span>
+<span class="fc" id="L263">		final GanttConstraint result = new GanttConstraint(this.getIHtmlColorSet(),</span>
+<span class="fc" id="L264">				getSkinParam().getCurrentStyleBuilder(), end1, new TaskInstant(task2, TaskAttribute.START));</span>
+<span class="fc" id="L265">		addContraint(result);</span>
+<span class="fc" id="L266">		return result;</span>
 	}
 
 	public Task getOrCreateTask(TaskCode code, boolean linkedToPrevious) {
-<span class="fc" id="L273">		Task result = this.modelData.getTask(Objects.requireNonNull(code));</span>
-<span class="fc bfc" id="L274" title="All 2 branches covered.">		if (result == null) {</span>
-<span class="fc" id="L275">			Task previous = null;</span>
-<span class="fc bfc" id="L276" title="All 2 branches covered.">			if (linkedToPrevious)</span>
-<span class="fc" id="L277">				previous = getLastCreatedTask();</span>
+<span class="fc" id="L270">		Task result = this.modelData.getTask(Objects.requireNonNull(code));</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">		if (result == null) {</span>
+<span class="fc" id="L272">			Task previous = null;</span>
+<span class="fc bfc" id="L273" title="All 2 branches covered.">			if (linkedToPrevious)</span>
+<span class="fc" id="L274">				previous = getLastCreatedTask();</span>
 
-<span class="fc" id="L279">			result = new TaskImpl(this, getSkinParam().getCurrentStyleBuilder(), code,</span>
-<span class="fc" id="L280">					TimePoint.ofStartOfDay(this.timeBounds.getMinDay()), defaultCompletion);</span>
-<span class="pc bpc" id="L281" title="1 of 2 branches missed.">			if (currentGroup != null)</span>
-<span class="nc" id="L282">				currentGroup.addTask(result);</span>
+<span class="fc" id="L276">			result = new TaskImpl(this, getSkinParam().getCurrentStyleBuilder(), code,</span>
+<span class="fc" id="L277">					TimePoint.ofStartOfDay(this.timeBounds.getMinDay()), defaultCompletion);</span>
+<span class="pc bpc" id="L278" title="1 of 2 branches missed.">			if (currentGroup != null)</span>
+<span class="nc" id="L279">				currentGroup.addTask(result);</span>
 
-<span class="fc" id="L284">			this.modelData.putTask(code, result);</span>
+<span class="fc" id="L281">			this.modelData.putTask(code, result);</span>
 
-<span class="fc bfc" id="L286" title="All 2 branches covered.">			if (previous != null)</span>
-<span class="fc" id="L287">				forceTaskOrder(previous, result);</span>
+<span class="fc bfc" id="L283" title="All 2 branches covered.">			if (previous != null)</span>
+<span class="fc" id="L284">				forceTaskOrder(previous, result);</span>
 
 		}
-<span class="fc" id="L290">		return result;</span>
+<span class="fc" id="L287">		return result;</span>
 	}
 
 	public PiecewiseConstant getLoadPlanableForTask(String taskId) {
-<span class="fc" id="L294">		return this.dayCalendar.getOpenClose().mutateMe(this.dayCalendar.getOpenCloseForTask(taskId))</span>
-<span class="fc" id="L295">				.asPiecewiseConstant();</span>
+<span class="fc" id="L291">		return this.dayCalendar.getOpenClose().mutateMe(this.dayCalendar.getOpenCloseForTask(taskId))</span>
+<span class="fc" id="L292">				.asPiecewiseConstant();</span>
 	}
 
 	private Task getLastCreatedTask() {
-<span class="fc" id="L299">		final List&lt;Task&gt; all = new ArrayList&lt;&gt;(this.modelData.getTasks());</span>
-<span class="pc bpc" id="L300" title="1 of 2 branches missed.">		for (int i = all.size() - 1; i &gt;= 0; i--)</span>
-<span class="pc bpc" id="L301" title="1 of 2 branches missed.">			if (all.get(i) instanceof TaskImpl)</span>
-<span class="fc" id="L302">				return all.get(i);</span>
+<span class="fc" id="L296">		final List&lt;Task&gt; all = new ArrayList&lt;&gt;(this.modelData.getTasks());</span>
+<span class="pc bpc" id="L297" title="1 of 2 branches missed.">		for (int i = all.size() - 1; i &gt;= 0; i--)</span>
+<span class="pc bpc" id="L298" title="1 of 2 branches missed.">			if (all.get(i) instanceof TaskImpl)</span>
+<span class="fc" id="L299">				return all.get(i);</span>
 
-<span class="nc" id="L304">		return null;</span>
+<span class="nc" id="L301">		return null;</span>
 	}
 
 	public void addSeparator(String comment) {
-<span class="nc" id="L308">		TaskSeparator separator = new TaskSeparator(getSkinParam().getCurrentStyleBuilder(), comment,</span>
-<span class="nc" id="L309">				this.modelData.getTasks().size());</span>
-<span class="nc" id="L310">		this.modelData.putTask(separator.getCode(), separator);</span>
-<span class="nc" id="L311">	}</span>
+<span class="nc" id="L305">		TaskSeparator separator = new TaskSeparator(getSkinParam().getCurrentStyleBuilder(), comment,</span>
+<span class="nc" id="L306">				this.modelData.getTasks().size());</span>
+<span class="nc" id="L307">		this.modelData.putTask(separator.getCode(), separator);</span>
+<span class="nc" id="L308">	}</span>
 
 	public CommandExecutionResult addGroup(TaskCode code) {
-<span class="nc" id="L314">		TaskGroup group = new TaskGroup(this.currentGroup, getSkinParam().getCurrentStyleBuilder(), code);</span>
+<span class="nc" id="L311">		TaskGroup group = new TaskGroup(this.currentGroup, getSkinParam().getCurrentStyleBuilder(), code);</span>
 
-<span class="nc bnc" id="L316" title="All 2 branches missed.">		if (this.currentGroup != null)</span>
-<span class="nc" id="L317">			this.currentGroup.addTask(group);</span>
+<span class="nc bnc" id="L313" title="All 2 branches missed.">		if (this.currentGroup != null)</span>
+<span class="nc" id="L314">			this.currentGroup.addTask(group);</span>
 
-<span class="nc" id="L319">		this.currentGroup = group;</span>
-<span class="nc" id="L320">		this.modelData.putTask(group.getCode(), group);</span>
-<span class="nc" id="L321">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L316">		this.currentGroup = group;</span>
+<span class="nc" id="L317">		this.modelData.putTask(group.getCode(), group);</span>
+<span class="nc" id="L318">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult endGroup() {
-<span class="nc bnc" id="L325" title="All 2 branches missed.">		if (this.currentGroup == null)</span>
-<span class="nc" id="L326">			return CommandExecutionResult.error(&quot;No group to be closed&quot;);</span>
+<span class="nc bnc" id="L322" title="All 2 branches missed.">		if (this.currentGroup == null)</span>
+<span class="nc" id="L323">			return CommandExecutionResult.error(&quot;No group to be closed&quot;);</span>
 
-<span class="nc" id="L328">		this.currentGroup = this.currentGroup.getParent();</span>
+<span class="nc" id="L325">		this.currentGroup = this.currentGroup.getParent();</span>
 
-<span class="nc" id="L330">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L327">		return CommandExecutionResult.ok();</span>
 	}
 
 	public void addContraint(GanttConstraint constraint) {
-<span class="fc" id="L334">		this.modelData.addConstraint(constraint);</span>
-<span class="fc" id="L335">	}</span>
+<span class="fc" id="L331">		this.modelData.addConstraint(constraint);</span>
+<span class="fc" id="L332">	}</span>
 
 	public CommandExecutionResult updateStartingPoint(LocalDate start) {
-<span class="pc bpc" id="L338" title="1 of 2 branches missed.">		if (this.modelData.getTasks().size() &gt; 0)</span>
-<span class="nc" id="L339">			return CommandExecutionResult.error(&quot;Starting point must be set before task definition&quot;);</span>
+<span class="pc bpc" id="L335" title="1 of 2 branches missed.">		if (this.modelData.getTasks().size() &gt; 0)</span>
+<span class="nc" id="L336">			return CommandExecutionResult.error(&quot;Starting point must be set before task definition&quot;);</span>
 
-<span class="fc" id="L341">		this.timeBounds.setMinDay(start);</span>
-<span class="fc" id="L342">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L338">		this.timeBounds.setMinDay(start);</span>
+<span class="fc" id="L339">		return CommandExecutionResult.ok();</span>
 	}
 
 	public LocalDate getMinDay() {
-<span class="fc" id="L346">		return this.timeBounds.getMinDay();</span>
+<span class="fc" id="L343">		return this.timeBounds.getMinDay();</span>
 	}
 
 	public LocalDate getMaxDay() {
-<span class="nc" id="L350">		initMinMax();</span>
-<span class="nc" id="L351">		return this.timeBounds.getMaxDay();</span>
+<span class="nc" id="L347">		initMinMax();</span>
+<span class="nc" id="L348">		return this.timeBounds.getMaxDay();</span>
 	}
 
 	public TimePoint getMinTimePoint() {
-<span class="nc" id="L355">		return TimePoint.ofStartOfDay(this.timeBounds.getMinDay());</span>
+<span class="nc" id="L352">		return TimePoint.ofStartOfDay(this.timeBounds.getMinDay());</span>
 	}
 
 	public TimePoint getMaxTimePoint() {
-<span class="nc" id="L359">		initMinMax();</span>
-<span class="nc" id="L360">		return TimePoint.ofStartOfDay(this.timeBounds.getMaxDay());</span>
+<span class="nc" id="L356">		initMinMax();</span>
+<span class="nc" id="L357">		return TimePoint.ofStartOfDay(this.timeBounds.getMaxDay());</span>
 	}
 
 	public int daysInWeek() {
-<span class="fc" id="L364">		return this.dayCalendar.getOpenClose().daysInWeek();</span>
+<span class="fc" id="L361">		return this.dayCalendar.getOpenClose().daysInWeek();</span>
 	}
 
 	public int daysInMonth() {
-<span class="nc" id="L368">		return 30;</span>
+<span class="nc" id="L365">		return 30;</span>
 	}
 
 	public boolean isOpen(LocalDate day) {
-<span class="fc" id="L372">		return this.dayCalendar.isOpen(day);</span>
+<span class="fc" id="L369">		return this.dayCalendar.isOpen(day);</span>
 	}
 
 	public boolean affectResource(Task result, String description) {
-<span class="fc" id="L376">		final Matcher m = RESOURCE_ASSIGNMENT_PATTERN.matcher(description);</span>
-<span class="pc bpc" id="L377" title="1 of 2 branches missed.">		if (m.find() == false)</span>
-<span class="nc" id="L378">			throw new IllegalArgumentException();</span>
+<span class="fc" id="L373">		final Matcher m = RESOURCE_ASSIGNMENT_PATTERN.matcher(description);</span>
+<span class="pc bpc" id="L374" title="1 of 2 branches missed.">		if (m.find() == false)</span>
+<span class="nc" id="L375">			throw new IllegalArgumentException();</span>
 
-<span class="fc" id="L380">		final Resource resource = getResource(m.group(1));</span>
-<span class="fc" id="L381">		int percentage = 100;</span>
-<span class="pc bpc" id="L382" title="1 of 2 branches missed.">		if (m.group(3) != null)</span>
-<span class="fc" id="L383">			percentage = Integer.parseInt(m.group(3));</span>
+<span class="fc" id="L377">		final Resource resource = getResource(m.group(1));</span>
+<span class="fc" id="L378">		int percentage = 100;</span>
+<span class="pc bpc" id="L379" title="1 of 2 branches missed.">		if (m.group(3) != null)</span>
+<span class="fc" id="L380">			percentage = Integer.parseInt(m.group(3));</span>
 
-<span class="pc bpc" id="L385" title="1 of 2 branches missed.">		if (percentage == 0)</span>
-<span class="nc" id="L386">			return false;</span>
+<span class="pc bpc" id="L382" title="1 of 2 branches missed.">		if (percentage == 0)</span>
+<span class="nc" id="L383">			return false;</span>
 
-<span class="fc" id="L388">		result.addResource(resource, percentage);</span>
-<span class="fc" id="L389">		return true;</span>
+<span class="fc" id="L385">		result.addResource(resource, percentage);</span>
+<span class="fc" id="L386">		return true;</span>
 	}
 
 	public Resource getResource(String resourceName) {
-<span class="fc" id="L393">		Resource resource = this.modelData.getResource(resourceName);</span>
-<span class="pc bpc" id="L394" title="1 of 2 branches missed.">		if (resource == null)</span>
-<span class="fc" id="L395">			resource = new Resource(resourceName);</span>
+<span class="fc" id="L390">		Resource resource = this.modelData.getResource(resourceName);</span>
+<span class="pc bpc" id="L391" title="1 of 2 branches missed.">		if (resource == null)</span>
+<span class="fc" id="L392">			resource = new Resource(resourceName);</span>
 
-<span class="fc" id="L397">		this.modelData.putResource(resourceName, resource);</span>
-<span class="fc" id="L398">		return resource;</span>
+<span class="fc" id="L394">		this.modelData.putResource(resourceName, resource);</span>
+<span class="fc" id="L395">		return resource;</span>
 	}
 
 	public Moment getExistingMoment(String id) {
-<span class="fc" id="L402">		Moment result = getExistingTask(id);</span>
-<span class="fc bfc" id="L403" title="All 2 branches covered.">		if (result == null) {</span>
-<span class="fc" id="L404">			TimePoint start = null;</span>
-<span class="fc" id="L405">			TimePoint end = null;</span>
-<span class="fc bfc" id="L406" title="All 2 branches covered.">			for (Map.Entry&lt;TimePoint, String&gt; ent : this.dayCalendar.getNameDays().entrySet()) {</span>
-<span class="fc bfc" id="L407" title="All 2 branches covered.">				if (ent.getValue().equalsIgnoreCase(id) == false)</span>
-<span class="fc" id="L408">					continue;</span>
+<span class="fc" id="L399">		Moment result = getExistingTask(id);</span>
+<span class="fc bfc" id="L400" title="All 2 branches covered.">		if (result == null) {</span>
+<span class="fc" id="L401">			TimePoint start = null;</span>
+<span class="fc" id="L402">			TimePoint end = null;</span>
+<span class="fc bfc" id="L403" title="All 2 branches covered.">			for (Map.Entry&lt;TimePoint, String&gt; ent : this.dayCalendar.getNameDays().entrySet()) {</span>
+<span class="fc bfc" id="L404" title="All 2 branches covered.">				if (ent.getValue().equalsIgnoreCase(id) == false)</span>
+<span class="fc" id="L405">					continue;</span>
 
-<span class="fc" id="L410">				start = min(start, ent.getKey());</span>
-<span class="fc" id="L411">				end = max(end, ent.getKey());</span>
-<span class="fc" id="L412">			}</span>
-<span class="pc bpc" id="L413" title="1 of 2 branches missed.">			if (start != null)</span>
-<span class="fc" id="L414">				result = new MomentImpl(start, end.increment());</span>
+<span class="fc" id="L407">				start = min(start, ent.getKey());</span>
+<span class="fc" id="L408">				end = max(end, ent.getKey());</span>
+<span class="fc" id="L409">			}</span>
+<span class="pc bpc" id="L410" title="1 of 2 branches missed.">			if (start != null)</span>
+<span class="fc" id="L411">				result = new MomentImpl(start, end.increment());</span>
 
 		}
-<span class="fc" id="L417">		return result;</span>
+<span class="fc" id="L414">		return result;</span>
 	}
 
 	private TimePoint min(TimePoint d1, TimePoint d2) {
-<span class="fc bfc" id="L421" title="All 2 branches covered.">		if (d1 == null)</span>
+<span class="fc bfc" id="L418" title="All 2 branches covered.">		if (d1 == null)</span>
+<span class="fc" id="L419">			return d2;</span>
+
+<span class="pc bpc" id="L421" title="1 of 2 branches missed.">		if (d1.compareTo(d2) &gt; 0)</span>
 <span class="fc" id="L422">			return d2;</span>
 
-<span class="pc bpc" id="L424" title="1 of 2 branches missed.">		if (d1.compareTo(d2) &gt; 0)</span>
-<span class="fc" id="L425">			return d2;</span>
-
-<span class="nc" id="L427">		return d1;</span>
+<span class="nc" id="L424">		return d1;</span>
 	}
 
 	private TimePoint max(TimePoint d1, TimePoint d2) {
-<span class="fc bfc" id="L431" title="All 2 branches covered.">		if (d1 == null)</span>
-<span class="fc" id="L432">			return d2;</span>
+<span class="fc bfc" id="L428" title="All 2 branches covered.">		if (d1 == null)</span>
+<span class="fc" id="L429">			return d2;</span>
 
-<span class="pc bpc" id="L434" title="1 of 2 branches missed.">		if (d1.compareTo(d2) &lt; 0)</span>
-<span class="nc" id="L435">			return d2;</span>
+<span class="pc bpc" id="L431" title="1 of 2 branches missed.">		if (d1.compareTo(d2) &lt; 0)</span>
+<span class="nc" id="L432">			return d2;</span>
 
-<span class="fc" id="L437">		return d1;</span>
+<span class="fc" id="L434">		return d1;</span>
 	}
 
 	public void colorDay(LocalDate day, HColor color) {
-<span class="fc" id="L441">		this.dayCalendar.putColorDay(TimePoint.ofStartOfDay(day), color);</span>
-<span class="fc" id="L442">	}</span>
+<span class="fc" id="L438">		this.dayCalendar.putColorDay(TimePoint.ofStartOfDay(day), color);</span>
+<span class="fc" id="L439">	}</span>
 
 	public void colorDay(DayOfWeek day, HColor color) {
-<span class="nc" id="L445">		this.dayCalendar.putColorDayOfWeek(day, color);</span>
-<span class="nc" id="L446">	}</span>
+<span class="nc" id="L442">		this.dayCalendar.putColorDayOfWeek(day, color);</span>
+<span class="nc" id="L443">	}</span>
 
 	public void nameDay(LocalDate day, String name) {
-<span class="fc" id="L449">		this.dayCalendar.putNameDay(TimePoint.ofStartOfDay(day), name);</span>
-<span class="fc" id="L450">	}</span>
+<span class="fc" id="L446">		this.dayCalendar.putNameDay(TimePoint.ofStartOfDay(day), name);</span>
+<span class="fc" id="L447">	}</span>
 
 	public LocalDate getToday() {
-<span class="nc bnc" id="L453" title="All 2 branches missed.">		if (today == null)</span>
-<span class="nc" id="L454">			this.today = TimePoint.todayAtMidnight();</span>
+<span class="nc bnc" id="L450" title="All 2 branches missed.">		if (today == null)</span>
+<span class="nc" id="L451">			this.today = TimePoint.todayAtMidnight();</span>
 
-<span class="nc" id="L456">		return today.toDay();</span>
+<span class="nc" id="L453">		return today.toDay();</span>
 	}
 
 	public void setTodayColors(CenterBorderColor colors) {
-<span class="pc bpc" id="L460" title="1 of 2 branches missed.">		if (today == null)</span>
-<span class="nc" id="L461">			this.today = TimePoint.todayAtMidnight();</span>
+<span class="pc bpc" id="L457" title="1 of 2 branches missed.">		if (today == null)</span>
+<span class="nc" id="L458">			this.today = TimePoint.todayAtMidnight();</span>
 
-<span class="fc" id="L463">		this.dayCalendar.putColorDayToday(today, colors.getCenter());</span>
-<span class="fc" id="L464">	}</span>
+<span class="fc" id="L460">		this.dayCalendar.putColorDayToday(today, colors.getCenter());</span>
+<span class="fc" id="L461">	}</span>
 
 	public CommandExecutionResult setToday(LocalDate date) {
-<span class="fc" id="L467">		this.today = TimePoint.ofStartOfDay(date);</span>
-<span class="fc" id="L468">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L464">		this.today = TimePoint.ofStartOfDay(date);</span>
+<span class="fc" id="L465">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult deleteTask(Task task) {
-<span class="nc" id="L472">		task.setColors(new CenterBorderColor(HColors.WHITE, HColors.BLACK));</span>
-<span class="nc" id="L473">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L469">		task.setColors(new CenterBorderColor(HColors.WHITE, HColors.BLACK));</span>
+<span class="nc" id="L470">		return CommandExecutionResult.ok();</span>
 	}
 
 	public void setPrintInterval(LocalDate start, LocalDate end) {
-<span class="nc" id="L477">		this.timeBounds.setPrintStart(start);</span>
-<span class="nc" id="L478">		this.timeBounds.setPrintEnd(end);</span>
-<span class="nc" id="L479">	}</span>
+<span class="nc" id="L474">		this.timeBounds.setPrintStart(start);</span>
+<span class="nc" id="L475">		this.timeBounds.setPrintEnd(end);</span>
+<span class="nc" id="L476">	}</span>
 
 	public CommandExecutionResult addNote(Display note, Stereotype stereotype) {
-<span class="fc" id="L482">		Task last = null;</span>
-<span class="fc bfc" id="L483" title="All 2 branches covered.">		for (Task current : this.modelData.getTasks())</span>
-<span class="fc" id="L484">			last = current;</span>
-<span class="pc bpc" id="L485" title="1 of 2 branches missed.">		if (last == null)</span>
-<span class="nc" id="L486">			return CommandExecutionResult.error(&quot;No task defined&quot;);</span>
+<span class="fc" id="L479">		Task last = null;</span>
+<span class="fc bfc" id="L480" title="All 2 branches covered.">		for (Task current : this.modelData.getTasks())</span>
+<span class="fc" id="L481">			last = current;</span>
+<span class="pc bpc" id="L482" title="1 of 2 branches missed.">		if (last == null)</span>
+<span class="nc" id="L483">			return CommandExecutionResult.error(&quot;No task defined&quot;);</span>
 
-<span class="fc" id="L488">		last.setNote(note, stereotype);</span>
-<span class="fc" id="L489">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L485">		last.setNote(note, stereotype);</span>
+<span class="fc" id="L486">		return CommandExecutionResult.ok();</span>
 	}
 
 	public void setShowFootbox(boolean footbox) {
-<span class="nc" id="L493">		this.displayConfig.setShowFootbox(footbox);</span>
-<span class="nc" id="L494">	}</span>
+<span class="nc" id="L490">		this.displayConfig.setShowFootbox(footbox);</span>
+<span class="nc" id="L491">	}</span>
 
 	@Override
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-<span class="fc" id="L498">		return ClockwiseTopRightBottomLeft.none();</span>
+<span class="fc" id="L495">		return ClockwiseTopRightBottomLeft.none();</span>
 	}
 
 //	public void setLabelStrategy(LabelStrategy strategy) {
@@ -503,185 +500,185 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 //	}
 
 	public void setWeeklyHeaderStrategy(WeeklyHeaderStrategy weeklyHeaderStrategy, int weekStartingNumber) {
-<span class="nc" id="L506">		this.weekConfig.setWeeklyHeaderStrategy(weeklyHeaderStrategy);</span>
-<span class="nc" id="L507">		this.weekConfig.setWeekStartingNumber(weekStartingNumber);</span>
-<span class="nc" id="L508">	}</span>
+<span class="nc" id="L503">		this.weekConfig.setWeeklyHeaderStrategy(weeklyHeaderStrategy);</span>
+<span class="nc" id="L504">		this.weekConfig.setWeekStartingNumber(weekStartingNumber);</span>
+<span class="nc" id="L505">	}</span>
 
 	public CommandExecutionResult hideResourceName() {
-<span class="nc" id="L511">		this.displayConfig.setHideResourceName(true);</span>
-<span class="nc" id="L512">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L508">		this.displayConfig.setHideResourceName(true);</span>
+<span class="nc" id="L509">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult hideResourceFootbox() {
-<span class="nc" id="L516">		this.displayConfig.setHideResourceFootbox(true);</span>
-<span class="nc" id="L517">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L513">		this.displayConfig.setHideResourceFootbox(true);</span>
+<span class="nc" id="L514">		return CommandExecutionResult.ok();</span>
 	}
 
 	public void addVerticalSeparatorBefore(LocalDate day) {
-<span class="nc" id="L521">		this.dayCalendar.addSeparatorBefore(day);</span>
-<span class="nc" id="L522">	}</span>
+<span class="nc" id="L518">		this.dayCalendar.addSeparatorBefore(day);</span>
+<span class="nc" id="L519">	}</span>
 
 	public void setTaskDefaultCompletion(int defaultCompletion) {
-<span class="nc" id="L525">		this.defaultCompletion = defaultCompletion;</span>
-<span class="nc" id="L526">	}</span>
+<span class="nc" id="L522">		this.defaultCompletion = defaultCompletion;</span>
+<span class="nc" id="L523">	}</span>
 
 	public List&lt;TaskDrawRegular&gt; getAllTasksForResource(Resource res) {
-<span class="nc" id="L529">		final List&lt;TaskDrawRegular&gt; result = new ArrayList&lt;TaskDrawRegular&gt;();</span>
-<span class="nc bnc" id="L530" title="All 2 branches missed.">		for (Task task : this.modelData.getTasks())</span>
-<span class="nc bnc" id="L531" title="All 2 branches missed.">			if (task.isAssignedTo(res)) {</span>
-<span class="nc" id="L532">				final TaskDrawRegular draw = (TaskDrawRegular) this.drawRegistry.getTaskDraw(task);</span>
-<span class="nc" id="L533">				result.add(draw);</span>
+<span class="nc" id="L526">		final List&lt;TaskDrawRegular&gt; result = new ArrayList&lt;TaskDrawRegular&gt;();</span>
+<span class="nc bnc" id="L527" title="All 2 branches missed.">		for (Task task : this.modelData.getTasks())</span>
+<span class="nc bnc" id="L528" title="All 2 branches missed.">			if (task.isAssignedTo(res)) {</span>
+<span class="nc" id="L529">				final TaskDrawRegular draw = (TaskDrawRegular) this.drawRegistry.getTaskDraw(task);</span>
+<span class="nc" id="L530">				result.add(draw);</span>
 			}
 
-<span class="nc" id="L536">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L533">		return Collections.unmodifiableList(result);</span>
 	}
 
 	public void setIt(Task result) {
-<span class="fc" id="L540">		this.it = result;</span>
-<span class="fc" id="L541">	}</span>
+<span class="fc" id="L537">		this.it = result;</span>
+<span class="fc" id="L538">	}</span>
 
 	public Task getIt() {
-<span class="nc" id="L544">		return it;</span>
+<span class="nc" id="L541">		return it;</span>
 	}
 
 	public final Resource getThey() {
-<span class="nc" id="L548">		return they;</span>
+<span class="nc" id="L545">		return they;</span>
 	}
 
 	public final void setThey(Resource they) {
-<span class="nc" id="L552">		this.they = they;</span>
-<span class="nc" id="L553">	}</span>
+<span class="nc" id="L549">		this.they = they;</span>
+<span class="nc" id="L550">	}</span>
 
 	public void setHideClosed(boolean hideClosed) {
-<span class="nc" id="L556">		this.scaleConfig.setHideClosed(hideClosed);</span>
-<span class="nc" id="L557">	}</span>
+<span class="nc" id="L553">		this.scaleConfig.setHideClosed(hideClosed);</span>
+<span class="nc" id="L554">	}</span>
 
 	public PiecewiseConstant getDefaultPlan() {
-<span class="fc" id="L560">		return this.dayCalendar.getDefaultPlan();</span>
+<span class="fc" id="L557">		return this.dayCalendar.getDefaultPlan();</span>
 	}
 
 	public HColorSet getIHtmlColorSet() {
-<span class="fc" id="L564">		return this.timelineStyle.getColorSet();</span>
+<span class="fc" id="L561">		return this.timelineStyle.getColorSet();</span>
 	}
 
 	public CommandExecutionResult addWorkingTimeRange(TimeRange timeRange) {
-<span class="fc" id="L568">		this.dayCalendar.addWorkingTimeRange(timeRange);</span>
-<span class="fc" id="L569">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L565">		this.dayCalendar.addWorkingTimeRange(timeRange);</span>
+<span class="fc" id="L566">		return CommandExecutionResult.ok();</span>
 	}
 
 	public Duration durationOfDays(int totalDays) {
-<span class="fc" id="L573">		return dayCalendar.durationOfDays(totalDays);</span>
+<span class="fc" id="L570">		return dayCalendar.durationOfDays(totalDays);</span>
 	}
 
 	public Duration durationOfDaysAndHours(int totalDays, int totalHours) {
-<span class="nc" id="L577">		final Duration result = durationOfDays(totalDays);</span>
-<span class="nc" id="L578">		return result.plus(Duration.ofHours(totalHours));</span>
+<span class="nc" id="L574">		final Duration result = durationOfDays(totalDays);</span>
+<span class="nc" id="L575">		return result.plus(Duration.ofHours(totalHours));</span>
 	}
 
 	public Duration durationOfDaysHoursMinutesSeconds(int totalDays, int totalHours, int totalMinutes,
 			int totalSeconds) {
-<span class="fc" id="L583">		return durationOfDays(totalDays) //</span>
-<span class="fc" id="L584">				.plusHours(totalHours) //</span>
-<span class="fc" id="L585">				.plusMinutes(totalMinutes) //</span>
-<span class="fc" id="L586">				.plusSeconds(totalSeconds);</span>
+<span class="fc" id="L580">		return durationOfDays(totalDays) //</span>
+<span class="fc" id="L581">				.plusHours(totalHours) //</span>
+<span class="fc" id="L582">				.plusMinutes(totalMinutes) //</span>
+<span class="fc" id="L583">				.plusSeconds(totalSeconds);</span>
 	}
 
 	@Override
 	protected ImageData exportTxt(OutputStream os, int index, FileFormat fileFormat) throws IOException {
-<span class="fc" id="L591">		initMinMax();</span>
+<span class="fc" id="L588">		initMinMax();</span>
 
-<span class="fc" id="L593">		final Locale locale = weekConfig.getLocale();</span>
+<span class="fc" id="L590">		final Locale locale = weekConfig.getLocale();</span>
 
-<span class="fc" id="L595">		final List&lt;Task&gt; drawableTasks = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L596" title="All 2 branches covered.">		for (Task task : modelData.getTasks())</span>
-<span class="pc bpc" id="L597" title="1 of 2 branches missed.">			if (isDrawable(task))</span>
-<span class="fc" id="L598">				drawableTasks.add(task);</span>
+<span class="fc" id="L592">		final List&lt;Task&gt; drawableTasks = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L593" title="All 2 branches covered.">		for (Task task : modelData.getTasks())</span>
+<span class="pc bpc" id="L594" title="1 of 2 branches missed.">			if (isDrawable(task))</span>
+<span class="fc" id="L595">				drawableTasks.add(task);</span>
 
 		// One header row plus one row per drawable task; four columns.
-<span class="fc" id="L601">		final ATable table = new ATable(drawableTasks.size() + 1, 4).withLeftPadding(1).withRightPadding(1);</span>
+<span class="fc" id="L598">		final ATable table = new ATable(drawableTasks.size() + 1, 4).withLeftPadding(1).withRightPadding(1);</span>
 
-<span class="fc" id="L603">		table.setCellContent(0, 0, Display.create(GanttI18n.task(locale)));</span>
-<span class="fc" id="L604">		table.setCellContent(0, 1, Display.create(GanttI18n.start(locale)));</span>
-<span class="fc" id="L605">		table.setCellContent(0, 2, Display.create(GanttI18n.end(locale)));</span>
-<span class="fc" id="L606">		table.setCellContent(0, 3, Display.create(GanttI18n.duration(locale)));</span>
+<span class="fc" id="L600">		table.setCellContent(0, 0, Display.create(GanttI18n.task(locale)));</span>
+<span class="fc" id="L601">		table.setCellContent(0, 1, Display.create(GanttI18n.start(locale)));</span>
+<span class="fc" id="L602">		table.setCellContent(0, 2, Display.create(GanttI18n.end(locale)));</span>
+<span class="fc" id="L603">		table.setCellContent(0, 3, Display.create(GanttI18n.duration(locale)));</span>
 
-<span class="fc" id="L608">		int row = 1;</span>
-<span class="fc bfc" id="L609" title="All 2 branches covered.">		for (Task task : drawableTasks) {</span>
-<span class="fc" id="L610">			table.setCellContent(row, 0, Display.create(codeOf(task)));</span>
-<span class="fc" id="L611">			table.setCellContent(row, 1, Display.create(startOf(task, locale)));</span>
-<span class="fc" id="L612">			table.setCellContent(row, 2, Display.create(endOf(task, locale)));</span>
-<span class="fc" id="L613">			table.setCellContent(row, 3, Display.create(durationOf(task, locale)));</span>
-<span class="fc" id="L614">			row++;</span>
-<span class="fc" id="L615">		}</span>
+<span class="fc" id="L605">		int row = 1;</span>
+<span class="fc bfc" id="L606" title="All 2 branches covered.">		for (Task task : drawableTasks) {</span>
+<span class="fc" id="L607">			table.setCellContent(row, 0, Display.create(codeOf(task)));</span>
+<span class="fc" id="L608">			table.setCellContent(row, 1, Display.create(startOf(task, locale)));</span>
+<span class="fc" id="L609">			table.setCellContent(row, 2, Display.create(endOf(task, locale)));</span>
+<span class="fc" id="L610">			table.setCellContent(row, 3, Display.create(durationOf(task, locale)));</span>
+<span class="fc" id="L611">			row++;</span>
+<span class="fc" id="L612">		}</span>
 
-<span class="fc" id="L617">		final InfinitePlan plan = new InfinitePlan(FileFormat.ATXT);</span>
-<span class="fc" id="L618">		table.asciiDraw(plan);</span>
+<span class="fc" id="L614">		final InfinitePlan plan = new InfinitePlan(FileFormat.ATXT);</span>
+<span class="fc" id="L615">		table.asciiDraw(plan);</span>
 
-<span class="fc" id="L620">		plan.exportTxt(os);</span>
+<span class="fc" id="L617">		plan.exportTxt(os);</span>
 
-<span class="fc" id="L622">		return ImageDataSimple.ok();</span>
+<span class="fc" id="L619">		return ImageDataSimple.ok();</span>
 	}
 
 	private boolean isDrawable(Task task) {
-<span class="pc bpc" id="L626" title="1 of 2 branches missed.">		if (task instanceof TaskImpl == false)</span>
+<span class="pc bpc" id="L623" title="1 of 2 branches missed.">		if (task instanceof TaskImpl == false)</span>
+<span class="nc" id="L624">			return false;</span>
+
+<span class="pc bpc" id="L626" title="1 of 2 branches missed.">		if (timeBounds.isHidden(task))</span>
 <span class="nc" id="L627">			return false;</span>
 
-<span class="pc bpc" id="L629" title="1 of 2 branches missed.">		if (timeBounds.isHidden(task))</span>
-<span class="nc" id="L630">			return false;</span>
-
-<span class="fc" id="L632">		return true;</span>
+<span class="fc" id="L629">		return true;</span>
 	}
 
 	private String codeOf(Task task) {
-<span class="fc" id="L636">		return task.getCode().getDisplay();</span>
+<span class="fc" id="L633">		return task.getCode().getDisplay();</span>
 	}
 
 	private boolean isRelativeMode() {
-<span class="fc" id="L640">		return timeBounds.getMinDay().equals(TimePoint.epoch());</span>
+<span class="fc" id="L637">		return timeBounds.getMinDay().equals(TimePoint.epoch());</span>
 	}
 
 	private int relativeDayNum(TimePoint point) {
-<span class="nc" id="L644">		final int minAbs = TimePoint.ofStartOfDay(timeBounds.getMinDay()).getAbsoluteDayNum();</span>
-<span class="nc" id="L645">		return point.getAbsoluteDayNum() - minAbs + 1;</span>
+<span class="nc" id="L641">		final int minAbs = TimePoint.ofStartOfDay(timeBounds.getMinDay()).getAbsoluteDayNum();</span>
+<span class="nc" id="L642">		return point.getAbsoluteDayNum() - minAbs + 1;</span>
 	}
 
 	private String startOf(Task task, Locale locale) {
-<span class="pc bpc" id="L649" title="1 of 2 branches missed.">		if (isRelativeMode())</span>
-<span class="nc" id="L650">			return GanttI18n.dayNumber(locale, relativeDayNum(task.getStart()));</span>
+<span class="pc bpc" id="L646" title="1 of 2 branches missed.">		if (isRelativeMode())</span>
+<span class="nc" id="L647">			return GanttI18n.dayNumber(locale, relativeDayNum(task.getStart()));</span>
 
-<span class="fc" id="L652">		return task.getStart().toStringShort(locale);</span>
+<span class="fc" id="L649">		return task.getStart().toStringShort(locale);</span>
 	}
 
 	private String endOf(Task task, Locale locale) {
-<span class="pc bpc" id="L656" title="1 of 2 branches missed.">		if (isRelativeMode())</span>
-<span class="nc" id="L657">			return GanttI18n.dayNumber(locale, relativeDayNum(task.getEndMinusOneDayTOBEREMOVED()));</span>
+<span class="pc bpc" id="L653" title="1 of 2 branches missed.">		if (isRelativeMode())</span>
+<span class="nc" id="L654">			return GanttI18n.dayNumber(locale, relativeDayNum(task.getEndMinusOneDayTOBEREMOVED()));</span>
 
-<span class="fc" id="L659">		return task.getEndMinusOneDayTOBEREMOVED().toStringShort(locale);</span>
+<span class="fc" id="L656">		return task.getEndMinusOneDayTOBEREMOVED().toStringShort(locale);</span>
 	}
 
 	private String durationOf(Task task, Locale locale) {
-<span class="fc" id="L663">		final TimePoint start = task.getStart();</span>
-<span class="fc" id="L664">		final TimePoint end = task.getEnd();</span>
-<span class="fc" id="L665">		final Duration duration = Duration.between(start.toLocalDateTime(), end.toLocalDateTime());</span>
+<span class="fc" id="L660">		final TimePoint start = task.getStart();</span>
+<span class="fc" id="L661">		final TimePoint end = task.getEnd();</span>
+<span class="fc" id="L662">		final Duration duration = Duration.between(start.toLocalDateTime(), end.toLocalDateTime());</span>
 
-<span class="fc" id="L667">		return GanttI18n.durationHumanReadable(locale, duration);</span>
+<span class="fc" id="L664">		return GanttI18n.durationHumanReadable(locale, duration);</span>
 	}
 
-<span class="fc" id="L670">	private final Set&lt;GanttTaskTableColumn&gt; displayedColumn = EnumSet.of(GanttTaskTableColumn.START,</span>
+<span class="fc" id="L667">	private final Set&lt;GanttTaskTableColumn&gt; displayedColumn = EnumSet.of(GanttTaskTableColumn.START,</span>
 			GanttTaskTableColumn.END, GanttTaskTableColumn.DURATION);
 
 	public CommandExecutionResult hideOrShowColumn(boolean show, GanttTaskTableColumn column) {
-<span class="nc bnc" id="L674" title="All 2 branches missed.">		if (column != null) {</span>
-<span class="nc bnc" id="L675" title="All 2 branches missed.">			if (show)</span>
-<span class="nc" id="L676">				displayedColumn.add(column);</span>
+<span class="nc bnc" id="L671" title="All 2 branches missed.">		if (column != null) {</span>
+<span class="nc bnc" id="L672" title="All 2 branches missed.">			if (show)</span>
+<span class="nc" id="L673">				displayedColumn.add(column);</span>
 			else
-<span class="nc" id="L678">				displayedColumn.remove(column);</span>
+<span class="nc" id="L675">				displayedColumn.remove(column);</span>
 		}
-<span class="nc" id="L680">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L677">		return CommandExecutionResult.ok();</span>
 	}
 
 	public List&lt;GanttTaskTableColumn&gt; getDisplayedColumn() {
-<span class="fc" id="L684">		return new ArrayList&lt;&gt;(displayedColumn);</span>
+<span class="fc" id="L681">		return new ArrayList&lt;&gt;(displayedColumn);</span>
 	}
 
 }

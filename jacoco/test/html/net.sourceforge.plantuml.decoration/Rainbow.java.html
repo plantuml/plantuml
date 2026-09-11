@@ -47,8 +47,8 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.Value;
-import net.sourceforge.plantuml.style.ValueNull;
+import net.sourceforge.plantuml.style.value.Value;
+import net.sourceforge.plantuml.style.value.ValueNull;
 
 public class Rainbow {
     // ::remove folder when __HAXE__

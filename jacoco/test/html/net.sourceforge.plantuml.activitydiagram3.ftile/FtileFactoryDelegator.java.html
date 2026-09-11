@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -61,120 +60,119 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.url.Url;
 
 public class FtileFactoryDelegator implements FtileFactory {
 
 	private final FtileFactory factory;
 
-<span class="fc" id="L74">	private final Rose rose = new Rose();</span>
+<span class="fc" id="L73">	private final Rose rose = new Rose();</span>
 
 	final public StyleQuery getDefaultStyleDefinitionActivity() {
-<span class="fc" id="L77">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity));</span>
+<span class="fc" id="L76">		return StyleQueries.ACTIVITYDIAG_ACTIVITY;</span>
 	}
 
-	final public StyleQuery getDefaultStyleDefinitionDiamond() {
-<span class="fc" id="L81">		return StyleQuery</span>
-<span class="fc" id="L82">				.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond));</span>
+	final protected StyleQuery getDefaultStyleDefinitionDiamond() {
+<span class="fc" id="L80">		return StyleQueries.ACTIVITYDIAG_ACTIVITY_DIAMOND;</span>
 	}
 
-	final public StyleQuery getDefaultStyleDefinitionArrow() {
-<span class="fc" id="L86">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));</span>
+	final protected StyleQuery getDefaultStyleDefinitionArrow() {
+<span class="fc" id="L84">		return StyleQueries.ACTIVITYDIAG_ARROW;</span>
 	}
 
 	protected final Rainbow getInLinkRenderingColor(Ftile tile) {
 		Rainbow color;
-<span class="fc" id="L91">		final LinkRendering linkRendering = tile.getInLinkRendering();</span>
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (linkRendering == null) {</span>
-<span class="nc" id="L93">			final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionArrow());</span>
-<span class="nc" id="L94">			return Rainbow.build(style, skinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L89">		final LinkRendering linkRendering = tile.getInLinkRendering();</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (linkRendering == null) {</span>
+<span class="nc" id="L91">			final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionArrow());</span>
+<span class="nc" id="L92">			return Rainbow.build(style, skinParam().getIHtmlColorSet());</span>
 		} else {
-<span class="fc" id="L96">			color = linkRendering.getRainbow();</span>
+<span class="fc" id="L94">			color = linkRendering.getRainbow();</span>
 		}
-<span class="fc bfc" id="L98" title="All 2 branches covered.">		if (color.size() == 0) {</span>
-<span class="fc" id="L99">			final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionArrow());</span>
-<span class="fc" id="L100">			return Rainbow.build(style, skinParam().getIHtmlColorSet());</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (color.size() == 0) {</span>
+<span class="fc" id="L97">			final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionArrow());</span>
+<span class="fc" id="L98">			return Rainbow.build(style, skinParam().getIHtmlColorSet());</span>
 		}
-<span class="fc" id="L102">		return color;</span>
+<span class="fc" id="L100">		return color;</span>
 	}
 
 	protected final TextBlock getTextBlock(Display display) {
 		// DUP3945
-<span class="fc bfc" id="L107" title="All 2 branches covered.">		if (Display.isNull(display))</span>
-<span class="fc" id="L108">			return null;</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (Display.isNull(display))</span>
+<span class="fc" id="L106">			return null;</span>
 
-<span class="fc" id="L110">		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionArrow());</span>
-<span class="fc" id="L111">		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L108">		final Style style = skinParam().getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinitionArrow());</span>
+<span class="fc" id="L109">		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam().getIHtmlColorSet());</span>
 
-<span class="fc" id="L113">		return display.create7(fontConfiguration, HorizontalAlignment.LEFT, skinParam(), CreoleMode.SIMPLE_LINE);</span>
+<span class="fc" id="L111">		return display.create7(fontConfiguration, HorizontalAlignment.LEFT, skinParam(), CreoleMode.SIMPLE_LINE);</span>
 	}
 
 	protected Display getInLinkRenderingDisplay(Ftile tile) {
-<span class="fc" id="L117">		final LinkRendering linkRendering = tile.getInLinkRendering();</span>
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (linkRendering == null)</span>
-<span class="nc" id="L119">			return Display.NULL;</span>
+<span class="fc" id="L115">		final LinkRendering linkRendering = tile.getInLinkRendering();</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (linkRendering == null)</span>
+<span class="nc" id="L117">			return Display.NULL;</span>
 
-<span class="fc" id="L121">		return linkRendering.getDisplay();</span>
+<span class="fc" id="L119">		return linkRendering.getDisplay();</span>
 	}
 
-<span class="fc" id="L124">	public FtileFactoryDelegator(FtileFactory factory) {</span>
-<span class="fc" id="L125">		this.factory = factory;</span>
-<span class="fc" id="L126">	}</span>
+<span class="fc" id="L122">	public FtileFactoryDelegator(FtileFactory factory) {</span>
+<span class="fc" id="L123">		this.factory = factory;</span>
+<span class="fc" id="L124">	}</span>
 
 	@Override
 	public Ftile start(Swimlane swimlane, Colors colors) {
-<span class="fc" id="L130">		return factory.start(swimlane, colors);</span>
+<span class="fc" id="L128">		return factory.start(swimlane, colors);</span>
 	}
 
 	@Override
 	public Ftile end(Swimlane swimlane, Colors colors) {
-<span class="nc" id="L135">		return factory.end(swimlane, colors);</span>
+<span class="nc" id="L133">		return factory.end(swimlane, colors);</span>
 	}
 
 	@Override
 	public Ftile stop(Swimlane swimlane, Colors colors) {
-<span class="fc" id="L140">		return factory.stop(swimlane, colors);</span>
+<span class="fc" id="L138">		return factory.stop(swimlane, colors);</span>
 	}
 
 	@Override
 	public Ftile spot(Swimlane swimlane, String spot, HColor color) {
-<span class="nc" id="L145">		return factory.spot(swimlane, spot, color);</span>
+<span class="nc" id="L143">		return factory.spot(swimlane, spot, color);</span>
 	}
 
 	@Override
 	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors, Stereotype stereotype,
 			StyleBuilder styleBuilder) {
-<span class="fc" id="L151">		return factory.activity(label, swimlane, style, colors, stereotype, styleBuilder);</span>
+<span class="fc" id="L149">		return factory.activity(label, swimlane, style, colors, stereotype, styleBuilder);</span>
 	}
 
 	@Override
 	public Ftile addNote(Ftile ftile, Swimlane swimlane, Collection&lt;PositionedNote&gt; notes,
 			VerticalAlignment verticalAlignment) {
-<span class="fc" id="L157">		return factory.addNote(ftile, swimlane, notes, verticalAlignment);</span>
+<span class="fc" id="L155">		return factory.addNote(ftile, swimlane, notes, verticalAlignment);</span>
 	}
 
 	@Override
 	public Ftile addUrl(Ftile ftile, Url url) {
-<span class="nc" id="L162">		return factory.addUrl(ftile, url);</span>
+<span class="nc" id="L160">		return factory.addUrl(ftile, url);</span>
 	}
 
 	@Override
 	public Ftile decorateIn(Ftile ftile, LinkRendering linkRendering) {
-<span class="fc" id="L167">		return factory.decorateIn(ftile, Objects.requireNonNull(linkRendering));</span>
+<span class="fc" id="L165">		return factory.decorateIn(ftile, Objects.requireNonNull(linkRendering));</span>
 	}
 
 	@Override
 	public Ftile decorateOut(Ftile ftile, LinkRendering linkRendering) {
-<span class="fc" id="L172">		return factory.decorateOut(ftile, Objects.requireNonNull(linkRendering));</span>
+<span class="fc" id="L170">		return factory.decorateOut(ftile, Objects.requireNonNull(linkRendering));</span>
 	}
 
 	@Override
 	public Ftile assembly(Ftile tile1, Ftile tile2) {
-<span class="fc" id="L177">		return factory.assembly(tile1, tile2);</span>
+<span class="fc" id="L175">		return factory.assembly(tile1, tile2);</span>
 	}
 
 	@Override
@@ -182,7 +180,7 @@ public class FtileFactoryDelegator implements FtileFactory {
 			Swimlane swimlaneOut, Display startLabel, Ftile repeat, Display test, Display yes, Display out,
 			Ftile backward, boolean noOut, LinkRendering incoming1, LinkRendering incoming2,
 			StyleBuilder currentStyleBuilder) throws NoSuchColorException {
-<span class="fc" id="L185">		return factory.repeat(stereotype, stereotype2, boxStyleIn, swimlane, swimlaneOut, startLabel, repeat, test, yes,</span>
+<span class="fc" id="L183">		return factory.repeat(stereotype, stereotype2, boxStyleIn, swimlane, swimlaneOut, startLabel, repeat, test, yes,</span>
 				out, backward, noOut, incoming1, incoming2, currentStyleBuilder);
 	}
 
@@ -190,7 +188,7 @@ public class FtileFactoryDelegator implements FtileFactory {
 	public Ftile createWhile(LinkRendering outColor, Swimlane swimlane, Ftile whileBlock, Display test, Display yes,
 			HColor color, Instruction specialOut, Ftile back, LinkRendering incoming1, LinkRendering incoming2,
 			StyleBuilder styleBuilder) throws NoSuchColorException {
-<span class="nc" id="L193">		return factory.createWhile(outColor, swimlane, whileBlock, test, yes, color, specialOut, back, incoming1,</span>
+<span class="nc" id="L191">		return factory.createWhile(outColor, swimlane, whileBlock, test, yes, color, specialOut, back, incoming1,</span>
 				incoming2, styleBuilder);
 	}
 
@@ -198,45 +196,45 @@ public class FtileFactoryDelegator implements FtileFactory {
 	public Ftile createIf(Swimlane swimlane, List&lt;Branch&gt; thens, Branch elseBranch, LinkRendering afterEndwhile,
 			LinkRendering topInlinkRendering, Url url, Collection&lt;PositionedNote&gt; notes, Stereotype stereotype,
 			StyleBuilder currentStyleBuilder) {
-<span class="nc" id="L201">		return factory.createIf(swimlane, thens, elseBranch, afterEndwhile, topInlinkRendering, url, notes, stereotype,</span>
+<span class="nc" id="L199">		return factory.createIf(swimlane, thens, elseBranch, afterEndwhile, topInlinkRendering, url, notes, stereotype,</span>
 				currentStyleBuilder);
 	}
 
 	@Override
 	public Ftile createSwitch(Swimlane swimlane, List&lt;Branch&gt; branches, LinkRendering afterEndwhile,
 			LinkRendering topInlinkRendering, Display labelTest, Colors colors, Colors endColors) {
-<span class="nc" id="L208">		return factory.createSwitch(swimlane, branches, afterEndwhile, topInlinkRendering, labelTest, colors,</span>
+<span class="nc" id="L206">		return factory.createSwitch(swimlane, branches, afterEndwhile, topInlinkRendering, labelTest, colors,</span>
 				endColors);
 	}
 
 	@Override
 	public Ftile createParallel(List&lt;Ftile&gt; all, ForkStyle style, String label, Swimlane in, Swimlane out,
 			Colors colors) {
-<span class="fc" id="L215">		return factory.createParallel(all, style, label, in, out, colors);</span>
+<span class="fc" id="L213">		return factory.createParallel(all, style, label, in, out, colors);</span>
 	}
 
 	@Override
 	public Ftile createGroup(Ftile list, Display name, HColor backColor, PositionedNote note, USymbol type,
 			Style style) {
-<span class="nc" id="L221">		return factory.createGroup(list, name, backColor, note, type, style);</span>
+<span class="nc" id="L219">		return factory.createGroup(list, name, backColor, note, type, style);</span>
 	}
 
 	@Override
 	public StringBounder getStringBounder() {
-<span class="fc" id="L226">		return factory.getStringBounder();</span>
+<span class="fc" id="L224">		return factory.getStringBounder();</span>
 	}
 
 	protected final Rose getRose() {
-<span class="nc" id="L230">		return rose;</span>
+<span class="nc" id="L228">		return rose;</span>
 	}
 
 	@Override
 	public final ISkinParam skinParam() {
-<span class="fc" id="L235">		return factory.skinParam();</span>
+<span class="fc" id="L233">		return factory.skinParam();</span>
 	}
 
 	protected FtileFactory getFactory() {
-<span class="nc" id="L239">		return factory;</span>
+<span class="nc" id="L237">		return factory;</span>
 	}
 
 }

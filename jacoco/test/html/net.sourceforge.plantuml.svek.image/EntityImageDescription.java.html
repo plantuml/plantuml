@@ -36,8 +36,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -76,7 +74,8 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Margins;
@@ -87,7 +86,7 @@ import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.MathUtils;
 
-<span class="fc" id="L90">public class EntityImageDescription extends AbstractEntityImage {</span>
+<span class="fc" id="L89">public class EntityImageDescription extends AbstractEntityImage {</span>
 
 	private final ShapeType shapeType;
 
@@ -110,267 +109,257 @@ import net.sourceforge.plantuml.utils.MathUtils;
 
 	@Override
 	public StyleQuery getStyleQuery() {
-<span class="fc" id="L113">		final List&lt;SName&gt; names = new ArrayList&lt;&gt;(Arrays.asList(SName.root, SName.element, getStyleName()));</span>
-<span class="fc" id="L114">		names.addAll(Arrays.asList(symbol.getSNames()));</span>
-<span class="fc" id="L115">		return StyleQuery.of(names);</span>
-
+<span class="fc" id="L112">		return StyleQueries.ELEMENT.add(getStyleName()).addSNames(symbol.getSNames());</span>
 	}
 
 	public EntityImageDescription(Entity entity, PortionShower portionShower, Collection&lt;Link&gt; links,
 			Bibliotekon bibliotekon) {
-<span class="fc" id="L121">		super(entity);</span>
-<span class="fc" id="L122">		this.useRankSame = getSkinParam().useRankSame();</span>
-<span class="fc" id="L123">		this.bibliotekon = bibliotekon;</span>
-<span class="fc" id="L124">		this.fixCircleLabelOverlapping = getSkinParam().fixCircleLabelOverlapping();</span>
+<span class="fc" id="L117">		super(entity);</span>
+<span class="fc" id="L118">		this.useRankSame = getSkinParam().useRankSame();</span>
+<span class="fc" id="L119">		this.bibliotekon = bibliotekon;</span>
+<span class="fc" id="L120">		this.fixCircleLabelOverlapping = getSkinParam().fixCircleLabelOverlapping();</span>
 
-<span class="fc" id="L126">		this.links = links;</span>
-<span class="fc" id="L127">		this.symbol = getUSymbol(entity);</span>
-<span class="pc bpc" id="L128" title="2 of 4 branches missed.">		if (symbol == USymbols.FOLDER || symbol == USymbols.PACKAGE)</span>
-<span class="nc" id="L129">			this.shapeType = ShapeType.FOLDER;</span>
-<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		else if (symbol == USymbols.HEXAGON)</span>
-<span class="nc" id="L131">			this.shapeType = ShapeType.HEXAGON;</span>
-<span class="pc bpc" id="L132" title="1 of 4 branches missed.">		else if (symbol == USymbols.USECASE || symbol == USymbols.USECASE_BUSINESS)</span>
-<span class="fc" id="L133">			this.shapeType = ShapeType.OVAL;</span>
-<span class="fc bfc" id="L134" title="All 2 branches covered.">		else if (symbol == USymbols.INTERFACE)</span>
-<span class="pc bpc" id="L135" title="1 of 2 branches missed.">			this.shapeType = getSkinParam().fixCircleLabelOverlapping() ? ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE</span>
-<span class="fc" id="L136">					: ShapeType.RECTANGLE;</span>
+<span class="fc" id="L122">		this.links = links;</span>
+<span class="fc" id="L123">		this.symbol = getUSymbol(entity);</span>
+<span class="pc bpc" id="L124" title="2 of 4 branches missed.">		if (symbol == USymbols.FOLDER || symbol == USymbols.PACKAGE)</span>
+<span class="nc" id="L125">			this.shapeType = ShapeType.FOLDER;</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		else if (symbol == USymbols.HEXAGON)</span>
+<span class="nc" id="L127">			this.shapeType = ShapeType.HEXAGON;</span>
+<span class="pc bpc" id="L128" title="1 of 4 branches missed.">		else if (symbol == USymbols.USECASE || symbol == USymbols.USECASE_BUSINESS)</span>
+<span class="fc" id="L129">			this.shapeType = ShapeType.OVAL;</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">		else if (symbol == USymbols.INTERFACE)</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">			this.shapeType = getSkinParam().fixCircleLabelOverlapping() ? ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE</span>
+<span class="fc" id="L132">					: ShapeType.RECTANGLE;</span>
 		else
-<span class="fc" id="L138">			this.shapeType = ShapeType.RECTANGLE;</span>
+<span class="fc" id="L134">			this.shapeType = ShapeType.RECTANGLE;</span>
 
-<span class="fc bfc" id="L140" title="All 2 branches covered.">		this.hideText = symbol == USymbols.INTERFACE;</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		this.hideText = symbol == USymbols.INTERFACE;</span>
 
-<span class="fc" id="L142">		this.url = entity.getUrl99();</span>
+<span class="fc" id="L138">		this.url = entity.getUrl99();</span>
 
-<span class="fc" id="L144">		final Colors colors = entity.getColors();</span>
+<span class="fc" id="L140">		final Colors colors = entity.getColors();</span>
 
 		final StyleQuery queryTitle;
-<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		if (symbol instanceof USymbolActorBusiness)</span>
-<span class="nc" id="L148">			queryTitle = StyleQuery.of(Arrays.asList(SName.root, SName.element, getStyleName(), SName.actor,</span>
-					SName.business, SName.title));
-		else {
-<span class="fc" id="L151">			final List&lt;SName&gt; namesTitle = new ArrayList&lt;&gt;(Arrays.asList(SName.root, SName.element, getStyleName()));</span>
-<span class="fc" id="L152">			namesTitle.addAll(Arrays.asList(symbol.getSNames()));</span>
-<span class="fc" id="L153">			namesTitle.add(SName.title);</span>
-<span class="fc" id="L154">			queryTitle = StyleQuery.of(namesTitle);</span>
-		}
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">		if (symbol instanceof USymbolActorBusiness)</span>
+<span class="nc" id="L144">			queryTitle = StyleQueries.ACTOR_BUSINESS_TITLE.add(getStyleName());</span>
+		else
+<span class="fc" id="L146">			queryTitle = StyleQueries.ELEMENT.add(getStyleName()).addSNames(symbol.getSNames())</span>
+<span class="fc" id="L147">					.add(SName.title);</span>
 
-<span class="fc" id="L157">		final Stereotype stereotype = entity.getStereotype();</span>
-<span class="fc" id="L158">		final Style styleTitle = getEntity().getCurrentStyleBuilder().getMergedStyle(queryTitle.withTOBECHANGED(stereotype))</span>
-<span class="fc" id="L159">				.eventuallyOverride(colors);</span>
+<span class="fc" id="L149">		final Stereotype stereotype = entity.getStereotype();</span>
+<span class="fc" id="L150">		final Style styleTitle = getEntity().getCurrentStyleBuilder()</span>
+<span class="fc" id="L151">				.getMergedStyle(queryTitle.withStereotype(stereotype)).eventuallyOverride(colors);</span>
 
-<span class="fc" id="L161">		final List&lt;SName&gt; namesStereo = new ArrayList&lt;&gt;(Arrays.asList(SName.root, SName.element, getStyleName()));</span>
-<span class="fc" id="L162">		namesStereo.addAll(Arrays.asList(symbol.getSNames()));</span>
-<span class="fc" id="L163">		namesStereo.add(SName.stereotype);</span>
-<span class="fc" id="L164">		final Style styleStereo = getEntity().getCurrentStyleBuilder()</span>
-<span class="fc" id="L165">				.getMergedStyle(StyleQuery.of(namesStereo).forStereotypeItself(stereotype));</span>
+<span class="fc" id="L153">		final Style styleStereo = getEntity().getCurrentStyleBuilder().getMergedStyle(StyleQueries.STEREOTYPE</span>
+<span class="fc" id="L154">				.add(getStyleName()).addSNames(symbol.getSNames()).forStereotypeItself(stereotype));</span>
 
-<span class="fc" id="L167">		final Style style = getEntity().getCurrentStyleBuilder().getMergedStyle(getStyleQuery().withTOBECHANGED(stereotype))</span>
-<span class="fc" id="L168">				.eventuallyOverride(colors);</span>
+<span class="fc" id="L156">		final Style style = getEntity().getCurrentStyleBuilder()</span>
+<span class="fc" id="L157">				.getMergedStyle(getStyleQuery().withStereotype(stereotype)).eventuallyOverride(colors);</span>
 
-<span class="fc" id="L170">		final HColor forecolor = styleTitle.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L159">		final HColor forecolor = styleTitle.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 
-<span class="fc" id="L172">		HColor backcolor = colors.getColor(ColorType.BACK);</span>
-<span class="fc bfc" id="L173" title="All 2 branches covered.">		if (backcolor == null)</span>
-<span class="fc" id="L174">			backcolor = styleTitle.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L161">		HColor backcolor = colors.getColor(ColorType.BACK);</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">		if (backcolor == null)</span>
+<span class="fc" id="L163">			backcolor = styleTitle.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 
-<span class="fc" id="L176">		final double roundCorner = styleTitle.value(PName.RoundCorner).asDouble();</span>
-<span class="fc" id="L177">		final double diagonalCorner = styleTitle.value(PName.DiagonalCorner).asDouble();</span>
-<span class="fc" id="L178">		final double deltaShadow = styleTitle.getShadowing();</span>
-<span class="fc" id="L179">		final UStroke stroke = styleTitle.getStroke(colors);</span>
-<span class="fc" id="L180">		final FontConfiguration fcTitle = styleTitle.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L181">		final FontConfiguration fc = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L182">		final FontConfiguration fcStereo = styleStereo.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L183">		final HorizontalAlignment defaultAlign = styleTitle.getHorizontalAlignment();</span>
+<span class="fc" id="L165">		final double roundCorner = styleTitle.value(PName.RoundCorner).asDouble();</span>
+<span class="fc" id="L166">		final double diagonalCorner = styleTitle.value(PName.DiagonalCorner).asDouble();</span>
+<span class="fc" id="L167">		final double deltaShadow = styleTitle.getShadowing();</span>
+<span class="fc" id="L168">		final UStroke stroke = styleTitle.getStroke(colors);</span>
+<span class="fc" id="L169">		final FontConfiguration fcTitle = styleTitle.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L170">		final FontConfiguration fc = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L171">		final FontConfiguration fcStereo = styleStereo.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L172">		final HorizontalAlignment defaultAlign = styleTitle.getHorizontalAlignment();</span>
 
-<span class="pc bpc" id="L185" title="1 of 2 branches missed.">		if (TeaVM.a())</span>
-<span class="pc bpc" id="L186" title="1 of 2 branches missed.">			assert getStereo() == stereotype;</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		if (TeaVM.a())</span>
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">			assert getStereo() == stereotype;</span>
 
-<span class="fc" id="L188">		ctx = new Fashion(backcolor, forecolor).withStroke(stroke).withShadow(deltaShadow).withCorner(roundCorner,</span>
+<span class="fc" id="L177">		ctx = new Fashion(backcolor, forecolor).withStroke(stroke).withShadow(deltaShadow).withCorner(roundCorner,</span>
 				diagonalCorner);
 
-<span class="fc" id="L191">		final Display codeDisplay = Display.getWithNewlines(getSkinParam().getPragma(), entity.getName());</span>
-<span class="pc bpc" id="L192" title="1 of 4 branches missed.">		if ((entity.getDisplay().equalsLike(codeDisplay) &amp;&amp; symbol.getSNames()[0] == SName.package_)</span>
-<span class="pc bpc" id="L193" title="1 of 2 branches missed.">				|| entity.getDisplay().isWhite())</span>
-<span class="nc" id="L194">			desc = TextBlockUtils.empty(style.value(PName.MinimumWidth).asDouble(), 0);</span>
-<span class="fc bfc" id="L195" title="All 2 branches covered.">		else if (entity.getDisplay().equalsLike(codeDisplay))</span>
-<span class="fc" id="L196">			desc = BodyFactory.create3(entity.getDisplay(), getSkinParam(), defaultAlign, fcTitle, style.wrapWidth(),</span>
+<span class="fc" id="L180">		final Display codeDisplay = Display.getWithNewlines(getSkinParam().getPragma(), entity.getName());</span>
+<span class="pc bpc" id="L181" title="1 of 4 branches missed.">		if ((entity.getDisplay().equalsLike(codeDisplay) &amp;&amp; symbol.getSNames()[0] == SName.package_)</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">				|| entity.getDisplay().isWhite())</span>
+<span class="nc" id="L183">			desc = TextBlockUtils.empty(style.value(PName.MinimumWidth).asDouble(), 0);</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">		else if (entity.getDisplay().equalsLike(codeDisplay))</span>
+<span class="fc" id="L185">			desc = BodyFactory.create3(entity.getDisplay(), getSkinParam(), defaultAlign, fcTitle, style.wrapWidth(),</span>
 					styleTitle);
 		else
-<span class="fc" id="L199">			desc = BodyFactory.create3(entity.getDisplay(), getSkinParam(), defaultAlign, fc, style.wrapWidth(), style);</span>
+<span class="fc" id="L188">			desc = BodyFactory.create3(entity.getDisplay(), getSkinParam(), defaultAlign, fc, style.wrapWidth(), style);</span>
 
-<span class="fc" id="L201">		final List&lt;String&gt; stereotypeLabels = portionShower.getVisibleStereotypeLabels(entity);</span>
-<span class="fc bfc" id="L202" title="All 4 branches covered.">		if (stereotype != null &amp;&amp; stereotype.getSprite(getSkinParam()) != null)</span>
-<span class="fc" id="L203">			stereo = stereotype.getSprite(getSkinParam());</span>
-<span class="pc bpc" id="L204" title="1 of 4 branches missed.">		else if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null</span>
-<span class="pc bpc" id="L205" title="1 of 2 branches missed.">				|| stereotypeLabels.isEmpty())</span>
-<span class="fc" id="L206">			stereo = TextBlockUtils.empty(0, 0);</span>
+<span class="fc" id="L190">		final List&lt;String&gt; stereotypeLabels = portionShower.getVisibleStereotypeLabels(entity);</span>
+<span class="fc bfc" id="L191" title="All 4 branches covered.">		if (stereotype != null &amp;&amp; stereotype.getSprite(getSkinParam()) != null)</span>
+<span class="fc" id="L192">			stereo = stereotype.getSprite(getSkinParam());</span>
+<span class="pc bpc" id="L193" title="1 of 4 branches missed.">		else if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null</span>
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">				|| stereotypeLabels.isEmpty())</span>
+<span class="fc" id="L195">			stereo = TextBlockUtils.empty(0, 0);</span>
 		else
-<span class="fc" id="L208">			stereo = TextBlockUtils.withMargin(</span>
-<span class="fc" id="L209">					Display.create(stereotypeLabels).create(fcStereo, HorizontalAlignment.CENTER, getSkinParam()), 1,</span>
+<span class="fc" id="L197">			stereo = TextBlockUtils.withMargin(</span>
+<span class="fc" id="L198">					Display.create(stereotypeLabels).create(fcStereo, HorizontalAlignment.CENTER, getSkinParam()), 1,</span>
 					0);
 
-<span class="fc" id="L212">		name = BodyFactory.create2(getSkinParam().getDefaultTextAlignment(HorizontalAlignment.CENTER), codeDisplay,</span>
-<span class="fc" id="L213">				getSkinParam(), stereotype, entity, styleTitle);</span>
+<span class="fc" id="L201">		name = BodyFactory.create2(getSkinParam().getDefaultTextAlignment(HorizontalAlignment.CENTER), codeDisplay,</span>
+<span class="fc" id="L202">				getSkinParam(), stereotype, entity, styleTitle);</span>
 
-<span class="fc" id="L215">		final HorizontalAlignment stereotypeAlignment = styleStereo.getHorizontalAlignment();</span>
+<span class="fc" id="L204">		final HorizontalAlignment stereotypeAlignment = styleStereo.getHorizontalAlignment();</span>
 
-<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (hideText)</span>
-<span class="fc" id="L218">			asSmall = symbol.asSmall(TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0),</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">		if (hideText)</span>
+<span class="fc" id="L207">			asSmall = symbol.asSmall(TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0),</span>
 					ctx, stereotypeAlignment);
 		else
-<span class="fc" id="L221">			asSmall = symbol.asSmall(name, desc, stereo, ctx, stereotypeAlignment);</span>
+<span class="fc" id="L210">			asSmall = symbol.asSmall(name, desc, stereo, ctx, stereotypeAlignment);</span>
 
-<span class="fc" id="L223">	}</span>
+<span class="fc" id="L212">	}</span>
 
 	private USymbol getUSymbol(Entity entity) {
 		final USymbol result;
-<span class="pc bpc" id="L227" title="1 of 2 branches missed.">		if (entity.getUSymbol() == null)</span>
-<span class="nc" id="L228">			result = getSkinParam().componentStyle().toUSymbol();</span>
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">		if (entity.getUSymbol() == null)</span>
+<span class="nc" id="L217">			result = getSkinParam().componentStyle().toUSymbol();</span>
 		else
-<span class="fc" id="L230">			result = entity.getUSymbol();</span>
-<span class="fc" id="L231">		return Objects.requireNonNull(result);</span>
+<span class="fc" id="L219">			result = entity.getUSymbol();</span>
+<span class="fc" id="L220">		return Objects.requireNonNull(result);</span>
 	}
 
 	public XDimension2D getNameDimension(StringBounder stringBounder) {
-<span class="nc bnc" id="L235" title="All 2 branches missed.">		if (hideText)</span>
-<span class="nc" id="L236">			return new XDimension2D(0, 0);</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">		if (hideText)</span>
+<span class="nc" id="L225">			return new XDimension2D(0, 0);</span>
 
-<span class="nc" id="L238">		return name.calculateDimension(stringBounder);</span>
+<span class="nc" id="L227">		return name.calculateDimension(stringBounder);</span>
 	}
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="fc" id="L243">		return asSmall.calculateDimension(stringBounder);</span>
+<span class="fc" id="L232">		return asSmall.calculateDimension(stringBounder);</span>
 	}
 
 	@Override
 	public Margins getShield(StringBounder stringBounder) {
-<span class="nc bnc" id="L248" title="All 2 branches missed.">		if (hideText == false)</span>
-<span class="nc" id="L249">			return Margins.NONE;</span>
+<span class="nc bnc" id="L237" title="All 2 branches missed.">		if (hideText == false)</span>
+<span class="nc" id="L238">			return Margins.NONE;</span>
 
-<span class="nc bnc" id="L251" title="All 2 branches missed.">		if (isThereADoubleLink((Entity) getEntity(), links))</span>
-<span class="nc" id="L252">			return Margins.NONE;</span>
+<span class="nc bnc" id="L240" title="All 2 branches missed.">		if (isThereADoubleLink((Entity) getEntity(), links))</span>
+<span class="nc" id="L241">			return Margins.NONE;</span>
 
-<span class="nc bnc" id="L254" title="All 4 branches missed.">		if (fixCircleLabelOverlapping == false &amp;&amp; hasSomeHorizontalLinkVisible((Entity) getEntity(), links))</span>
-<span class="nc" id="L255">			return Margins.NONE;</span>
+<span class="nc bnc" id="L243" title="All 4 branches missed.">		if (fixCircleLabelOverlapping == false &amp;&amp; hasSomeHorizontalLinkVisible((Entity) getEntity(), links))</span>
+<span class="nc" id="L244">			return Margins.NONE;</span>
 
-<span class="nc bnc" id="L257" title="All 2 branches missed.">		if (hasSomeHorizontalLinkDoubleDecorated((Entity) getEntity(), links))</span>
-<span class="nc" id="L258">			return Margins.NONE;</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">		if (hasSomeHorizontalLinkDoubleDecorated((Entity) getEntity(), links))</span>
+<span class="nc" id="L247">			return Margins.NONE;</span>
 
-<span class="nc" id="L260">		final XDimension2D dimStereo = stereo.calculateDimension(stringBounder);</span>
-<span class="nc" id="L261">		final XDimension2D dimDesc = desc.calculateDimension(stringBounder);</span>
-<span class="nc" id="L262">		final XDimension2D dimSmall = asSmall.calculateDimension(stringBounder);</span>
-<span class="nc" id="L263">		final double x = Math.max(dimStereo.getWidth(), dimDesc.getWidth());</span>
-<span class="nc" id="L264">		double suppX = x - dimSmall.getWidth();</span>
-<span class="nc bnc" id="L265" title="All 2 branches missed.">		if (suppX &lt; 1)</span>
-<span class="nc" id="L266">			suppX = 1;</span>
+<span class="nc" id="L249">		final XDimension2D dimStereo = stereo.calculateDimension(stringBounder);</span>
+<span class="nc" id="L250">		final XDimension2D dimDesc = desc.calculateDimension(stringBounder);</span>
+<span class="nc" id="L251">		final XDimension2D dimSmall = asSmall.calculateDimension(stringBounder);</span>
+<span class="nc" id="L252">		final double x = Math.max(dimStereo.getWidth(), dimDesc.getWidth());</span>
+<span class="nc" id="L253">		double suppX = x - dimSmall.getWidth();</span>
+<span class="nc bnc" id="L254" title="All 2 branches missed.">		if (suppX &lt; 1)</span>
+<span class="nc" id="L255">			suppX = 1;</span>
 
-<span class="nc" id="L268">		final double y = MathUtils.max(1, dimDesc.getHeight(), dimStereo.getHeight());</span>
-<span class="nc" id="L269">		return new Margins(suppX / 2, suppX / 2, y, y);</span>
+<span class="nc" id="L257">		final double y = MathUtils.max(1, dimDesc.getHeight(), dimStereo.getHeight());</span>
+<span class="nc" id="L258">		return new Margins(suppX / 2, suppX / 2, y, y);</span>
 	}
 
 	private boolean hasSomeHorizontalLinkVisible(Entity leaf, Collection&lt;Link&gt; links) {
-<span class="nc bnc" id="L273" title="All 2 branches missed.">		for (Link link : links)</span>
-<span class="nc bnc" id="L274" title="All 6 branches missed.">			if (link.getLength() == 1 &amp;&amp; link.contains(leaf) &amp;&amp; link.isInvis() == false)</span>
-<span class="nc" id="L275">				return true;</span>
+<span class="nc bnc" id="L262" title="All 2 branches missed.">		for (Link link : links)</span>
+<span class="nc bnc" id="L263" title="All 6 branches missed.">			if (link.getLength() == 1 &amp;&amp; link.contains(leaf) &amp;&amp; link.isInvis() == false)</span>
+<span class="nc" id="L264">				return true;</span>
 
-<span class="nc" id="L277">		return false;</span>
+<span class="nc" id="L266">		return false;</span>
 	}
 
 	private boolean isThereADoubleLink(Entity leaf, Collection&lt;Link&gt; links) {
-<span class="nc" id="L281">		final Set&lt;Entity&gt; others = new HashSet&lt;&gt;();</span>
-<span class="nc bnc" id="L282" title="All 2 branches missed.">		for (Link link : links) {</span>
-<span class="nc bnc" id="L283" title="All 2 branches missed.">			if (link.contains(leaf)) {</span>
-<span class="nc" id="L284">				final Entity other = link.getOther(leaf);</span>
-<span class="nc" id="L285">				final boolean changed = others.add(other);</span>
-<span class="nc bnc" id="L286" title="All 2 branches missed.">				if (changed == false)</span>
-<span class="nc" id="L287">					return true;</span>
+<span class="nc" id="L270">		final Set&lt;Entity&gt; others = new HashSet&lt;&gt;();</span>
+<span class="nc bnc" id="L271" title="All 2 branches missed.">		for (Link link : links) {</span>
+<span class="nc bnc" id="L272" title="All 2 branches missed.">			if (link.contains(leaf)) {</span>
+<span class="nc" id="L273">				final Entity other = link.getOther(leaf);</span>
+<span class="nc" id="L274">				final boolean changed = others.add(other);</span>
+<span class="nc bnc" id="L275" title="All 2 branches missed.">				if (changed == false)</span>
+<span class="nc" id="L276">					return true;</span>
 
 			}
-<span class="nc" id="L290">		}</span>
-<span class="nc" id="L291">		return false;</span>
+<span class="nc" id="L279">		}</span>
+<span class="nc" id="L280">		return false;</span>
 	}
 
 	private boolean hasSomeHorizontalLinkDoubleDecorated(Entity leaf, Collection&lt;Link&gt; links) {
-<span class="nc bnc" id="L295" title="All 2 branches missed.">		for (Link link : links)</span>
-<span class="nc bnc" id="L296" title="All 6 branches missed.">			if (link.getLength() == 1 &amp;&amp; link.contains(leaf) &amp;&amp; link.getType().isDoubleDecorated())</span>
-<span class="nc" id="L297">				return true;</span>
+<span class="nc bnc" id="L284" title="All 2 branches missed.">		for (Link link : links)</span>
+<span class="nc bnc" id="L285" title="All 6 branches missed.">			if (link.getLength() == 1 &amp;&amp; link.contains(leaf) &amp;&amp; link.getType().isDoubleDecorated())</span>
+<span class="nc" id="L286">				return true;</span>
 
-<span class="nc" id="L299">		return false;</span>
+<span class="nc" id="L288">		return false;</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="fc" id="L303">		ug.draw(new UComment(&quot;entity &quot; + getEntity().getName()));</span>
-<span class="fc" id="L304">		final UGroup group = new UGroup(getEntity().getLocation());</span>
-<span class="fc" id="L305">		group.put(UGroupType.CLASS, &quot;entity&quot;);</span>
-<span class="fc" id="L306">		group.put(UGroupType.ID, &quot;entity_&quot; + getEntity().getName());</span>
-<span class="fc" id="L307">		group.put(UGroupType.DATA_ENTITY, getEntity().getName());</span>
-<span class="fc" id="L308">		group.put(UGroupType.DATA_UID, getEntity().getUid());</span>
-<span class="fc" id="L309">		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());</span>
-<span class="fc" id="L310">		ug.startGroup(group);</span>
+<span class="fc" id="L292">		ug.draw(new UComment(&quot;entity &quot; + getEntity().getName()));</span>
+<span class="fc" id="L293">		final UGroup group = new UGroup(getEntity().getLocation());</span>
+<span class="fc" id="L294">		group.put(UGroupType.CLASS, &quot;entity&quot;);</span>
+<span class="fc" id="L295">		group.put(UGroupType.ID, &quot;entity_&quot; + getEntity().getName());</span>
+<span class="fc" id="L296">		group.put(UGroupType.DATA_ENTITY, getEntity().getName());</span>
+<span class="fc" id="L297">		group.put(UGroupType.DATA_UID, getEntity().getUid());</span>
+<span class="fc" id="L298">		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());</span>
+<span class="fc" id="L299">		ug.startGroup(group);</span>
 
-<span class="fc bfc" id="L312" title="All 2 branches covered.">		if (url != null)</span>
-<span class="fc" id="L313">			ug.startUrl(url);</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">		if (url != null)</span>
+<span class="fc" id="L302">			ug.startUrl(url);</span>
 
-<span class="pc bpc" id="L315" title="1 of 2 branches missed.">		if (shapeType == ShapeType.HEXAGON)</span>
-<span class="nc" id="L316">			drawHexagon(ctx.apply(ug));</span>
+<span class="pc bpc" id="L304" title="1 of 2 branches missed.">		if (shapeType == ShapeType.HEXAGON)</span>
+<span class="nc" id="L305">			drawHexagon(ctx.apply(ug));</span>
 
-<span class="fc" id="L318">		asSmall.drawU(ug);</span>
+<span class="fc" id="L307">		asSmall.drawU(ug);</span>
 
-<span class="fc bfc" id="L320" title="All 2 branches covered.">		if (hideText) {</span>
-<span class="fc" id="L321">			final double space = 8;</span>
-<span class="fc" id="L322">			final XDimension2D dimSmall = asSmall.calculateDimension(ug.getStringBounder());</span>
-<span class="fc" id="L323">			final XDimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());</span>
-<span class="fc" id="L324">			final double posx1 = (dimSmall.getWidth() - dimDesc.getWidth()) / 2;</span>
+<span class="fc bfc" id="L309" title="All 2 branches covered.">		if (hideText) {</span>
+<span class="fc" id="L310">			final double space = 8;</span>
+<span class="fc" id="L311">			final XDimension2D dimSmall = asSmall.calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L312">			final XDimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L313">			final double posx1 = (dimSmall.getWidth() - dimDesc.getWidth()) / 2;</span>
 
-<span class="fc" id="L326">			UGraphic ugDesc = ug.apply(new UTranslate(posx1, space + dimSmall.getHeight()));</span>
-<span class="fc" id="L327">			ugDesc = UGraphicStencil.create(ugDesc, dimDesc);</span>
-<span class="fc" id="L328">			desc.drawU(ugDesc);</span>
+<span class="fc" id="L315">			UGraphic ugDesc = ug.apply(new UTranslate(posx1, space + dimSmall.getHeight()));</span>
+<span class="fc" id="L316">			ugDesc = UGraphicStencil.create(ugDesc, dimDesc);</span>
+<span class="fc" id="L317">			desc.drawU(ugDesc);</span>
 
-<span class="fc" id="L330">			final XDimension2D dimStereo = stereo.calculateDimension(ug.getStringBounder());</span>
-<span class="fc" id="L331">			final double posx2 = (dimSmall.getWidth() - dimStereo.getWidth()) / 2;</span>
-<span class="fc" id="L332">			stereo.drawU(ug.apply(new UTranslate(posx2, -space - dimStereo.getHeight())));</span>
+<span class="fc" id="L319">			final XDimension2D dimStereo = stereo.calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L320">			final double posx2 = (dimSmall.getWidth() - dimStereo.getWidth()) / 2;</span>
+<span class="fc" id="L321">			stereo.drawU(ug.apply(new UTranslate(posx2, -space - dimStereo.getHeight())));</span>
 		}
 
-<span class="fc bfc" id="L335" title="All 2 branches covered.">		if (url != null)</span>
-<span class="fc" id="L336">			ug.closeUrl();</span>
+<span class="fc bfc" id="L324" title="All 2 branches covered.">		if (url != null)</span>
+<span class="fc" id="L325">			ug.closeUrl();</span>
 
-<span class="fc" id="L338">		ug.closeGroup();</span>
-<span class="fc" id="L339">	}</span>
+<span class="fc" id="L327">		ug.closeGroup();</span>
+<span class="fc" id="L328">	}</span>
 
 	private void drawHexagon(UGraphic ug) {
-<span class="nc bnc" id="L342" title="All 2 branches missed.">		if (bibliotekon == null)</span>
-<span class="nc" id="L343">			throw new IllegalStateException();</span>
+<span class="nc bnc" id="L331" title="All 2 branches missed.">		if (bibliotekon == null)</span>
+<span class="nc" id="L332">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L345">		final SvekNode node = bibliotekon.getNode(getEntity());</span>
-<span class="nc" id="L346">		final Shadowable hexagon = node.getPolygon();</span>
-<span class="nc bnc" id="L347" title="All 2 branches missed.">		if (hexagon != null) {</span>
-<span class="nc" id="L348">			hexagon.setDeltaShadow(ctx.getDeltaShadow());</span>
-<span class="nc" id="L349">			ug.draw(hexagon);</span>
+<span class="nc" id="L334">		final SvekNode node = bibliotekon.getNode(getEntity());</span>
+<span class="nc" id="L335">		final Shadowable hexagon = node.getPolygon();</span>
+<span class="nc bnc" id="L336" title="All 2 branches missed.">		if (hexagon != null) {</span>
+<span class="nc" id="L337">			hexagon.setDeltaShadow(ctx.getDeltaShadow());</span>
+<span class="nc" id="L338">			ug.draw(hexagon);</span>
 		}
-<span class="nc" id="L351">	}</span>
+<span class="nc" id="L340">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="fc" id="L354">		return shapeType;</span>
+<span class="fc" id="L343">		return shapeType;</span>
 	}
 
 	@Override
 	public double getOverscanX(StringBounder stringBounder) {
-<span class="nc bnc" id="L359" title="All 2 branches missed.">		if (hideText) {</span>
-<span class="nc" id="L360">			final XDimension2D dimSmall = asSmall.calculateDimension(stringBounder);</span>
-<span class="nc" id="L361">			final XDimension2D dimDesc = desc.calculateDimension(stringBounder);</span>
-<span class="nc" id="L362">			final XDimension2D dimStereo = stereo.calculateDimension(stringBounder);</span>
-<span class="nc" id="L363">			final double posx1 = (dimSmall.getWidth() - dimDesc.getWidth()) / 2;</span>
-<span class="nc" id="L364">			final double posx2 = (dimSmall.getWidth() - dimStereo.getWidth()) / 2;</span>
-<span class="nc" id="L365">			return MathUtils.max(-posx1, -posx2, 0);</span>
+<span class="nc bnc" id="L348" title="All 2 branches missed.">		if (hideText) {</span>
+<span class="nc" id="L349">			final XDimension2D dimSmall = asSmall.calculateDimension(stringBounder);</span>
+<span class="nc" id="L350">			final XDimension2D dimDesc = desc.calculateDimension(stringBounder);</span>
+<span class="nc" id="L351">			final XDimension2D dimStereo = stereo.calculateDimension(stringBounder);</span>
+<span class="nc" id="L352">			final double posx1 = (dimSmall.getWidth() - dimDesc.getWidth()) / 2;</span>
+<span class="nc" id="L353">			final double posx2 = (dimSmall.getWidth() - dimStereo.getWidth()) / 2;</span>
+<span class="nc" id="L354">			return MathUtils.max(-posx1, -posx2, 0);</span>
 		}
-<span class="nc" id="L367">		return 0;</span>
+<span class="nc" id="L356">		return 0;</span>
 	}
 
 	@Override
 	public MagneticBorder getMagneticBorder() {
-<span class="pc bpc" id="L372" title="1 of 2 branches missed.">		if (shapeType == ShapeType.FOLDER)</span>
-<span class="nc" id="L373">			return asSmall.getMagneticBorder();</span>
+<span class="pc bpc" id="L361" title="1 of 2 branches missed.">		if (shapeType == ShapeType.FOLDER)</span>
+<span class="nc" id="L362">			return asSmall.getMagneticBorder();</span>
 //			return new MagneticBorder() {
 //
 //				@Override
@@ -386,7 +375,7 @@ import net.sourceforge.plantuml.utils.MathUtils;
 //					return UTranslate.none();
 //				}
 //			};
-<span class="fc" id="L389">		return new MagneticBorderNone();</span>
+<span class="fc" id="L378">		return new MagneticBorderNone();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

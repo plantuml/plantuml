@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.abel.Entity;
@@ -63,215 +62,214 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.HeaderLayout;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.text.Guillemet;
 
-<span class="fc" id="L74">public class EntityImageClassHeader extends AbstractEntityImage {</span>
+<span class="fc" id="L73">public class EntityImageClassHeader extends AbstractEntityImage {</span>
 
 	final private HeaderLayout headerLayout;
 
 	@Override
 	public StyleQuery getStyleQuery() {
-<span class="fc" id="L80">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header));</span>
+<span class="fc" id="L79">		return StyleQueries.CLASSDIAG_CLASS_HEADER;</span>
 	}
 
 	public EntityImageClassHeader(Entity entity, PortionShower portionShower) {
-<span class="fc" id="L84">		super(entity);</span>
+<span class="fc" id="L83">		super(entity);</span>
 
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		final boolean italic = entity.getLeafType() == LeafType.ABSTRACT_CLASS</span>
-<span class="fc bfc" id="L87" title="All 2 branches covered.">				|| entity.getLeafType() == LeafType.INTERFACE;</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		final boolean italic = entity.getLeafType() == LeafType.ABSTRACT_CLASS</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">				|| entity.getLeafType() == LeafType.INTERFACE;</span>
 
-<span class="fc" id="L89">		final Stereotype stereotype = entity.getStereotype();</span>
-<span class="fc" id="L90">		final boolean displayGenericWithOldFashion = getSkinParam().displayGenericWithOldFashion();</span>
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		final String generic = displayGenericWithOldFashion ? null : entity.getGeneric();</span>
+<span class="fc" id="L88">		final Stereotype stereotype = entity.getStereotype();</span>
+<span class="fc" id="L89">		final boolean displayGenericWithOldFashion = getSkinParam().displayGenericWithOldFashion();</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		final String generic = displayGenericWithOldFashion ? null : entity.getGeneric();</span>
 
-<span class="fc" id="L93">		final Style styleHeader = getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery() //</span>
-<span class="fc" id="L94">				.withTOBECHANGED(stereotype) //</span>
-<span class="fc" id="L95">				.with(entity.getStereostyles()));</span>
+<span class="fc" id="L92">		final Style styleHeader = getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery() //</span>
+<span class="fc" id="L93">				.withStereotype(stereotype) //</span>
+<span class="fc" id="L94">				.withStereostyles(entity.getStereostyles()));</span>
 
-<span class="fc" id="L97">		FontConfiguration fontConfigurationName = FontConfiguration.create(getSkinParam(), styleHeader,</span>
-<span class="fc" id="L98">				entity.getColors());</span>
-<span class="fc bfc" id="L99" title="All 2 branches covered.">		if (italic)</span>
-<span class="fc" id="L100">			fontConfigurationName = fontConfigurationName.italic();</span>
+<span class="fc" id="L96">		FontConfiguration fontConfigurationName = FontConfiguration.create(getSkinParam(), styleHeader,</span>
+<span class="fc" id="L97">				entity.getColors());</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">		if (italic)</span>
+<span class="fc" id="L99">			fontConfigurationName = fontConfigurationName.italic();</span>
 
-<span class="fc" id="L102">		Display display = entity.getDisplay();</span>
-<span class="pc bpc" id="L103" title="3 of 4 branches missed.">		if (displayGenericWithOldFashion &amp;&amp; entity.getGeneric() != null)</span>
-<span class="nc" id="L104">			display = display.addGeneric(entity.getGeneric());</span>
+<span class="fc" id="L101">		Display display = entity.getDisplay();</span>
+<span class="pc bpc" id="L102" title="3 of 4 branches missed.">		if (displayGenericWithOldFashion &amp;&amp; entity.getGeneric() != null)</span>
+<span class="nc" id="L103">			display = display.addGeneric(entity.getGeneric());</span>
 
-<span class="fc" id="L106">		TextBlock name = display.create8(fontConfigurationName, HorizontalAlignment.CENTER, getSkinParam(),</span>
-<span class="fc" id="L107">				CreoleMode.FULL_BUT_UNDERSCORE, styleHeader.wrapWidth());</span>
-<span class="fc" id="L108">		final VisibilityModifier modifier = entity.getVisibilityModifier();</span>
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (modifier == null) {</span>
-<span class="fc" id="L110">			name = TextBlockUtils.withMargin(name, 3, 3, 0, 0);</span>
+<span class="fc" id="L105">		TextBlock name = display.create8(fontConfigurationName, HorizontalAlignment.CENTER, getSkinParam(),</span>
+<span class="fc" id="L106">				CreoleMode.FULL_BUT_UNDERSCORE, styleHeader.wrapWidth());</span>
+<span class="fc" id="L107">		final VisibilityModifier modifier = entity.getVisibilityModifier();</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (modifier == null) {</span>
+<span class="fc" id="L109">			name = TextBlockUtils.withMargin(name, 3, 3, 0, 0);</span>
 		} else {
-<span class="nc" id="L112">			final Rose rose = new Rose();</span>
-<span class="nc" id="L113">			final HColor back = rose.getHtmlColor(getSkinParam(), modifier.getBackground());</span>
-<span class="nc" id="L114">			final HColor fore = rose.getHtmlColor(getSkinParam(), modifier.getForeground());</span>
+<span class="nc" id="L111">			final Rose rose = new Rose();</span>
+<span class="nc" id="L112">			final HColor back = rose.getHtmlColor(getSkinParam(), modifier.getBackground());</span>
+<span class="nc" id="L113">			final HColor fore = rose.getHtmlColor(getSkinParam(), modifier.getForeground());</span>
 
-<span class="nc" id="L116">			final TextBlock uBlock = TextBlockUtils.withMargin(</span>
-<span class="nc" id="L117">					modifier.getUBlock(getSkinParam().classAttributeIconSize(), fore, back, false), 0, 0, 4, 0);</span>
+<span class="nc" id="L115">			final TextBlock uBlock = TextBlockUtils.withMargin(</span>
+<span class="nc" id="L116">					modifier.getUBlock(getSkinParam().classAttributeIconSize(), fore, back, false), 0, 0, 4, 0);</span>
 
-<span class="nc" id="L119">			name = TextBlockUtils.mergeLR(uBlock, name, VerticalAlignment.CENTER);</span>
-<span class="nc" id="L120">			name = TextBlockUtils.withMargin(name, 3, 3, 0, 0);</span>
+<span class="nc" id="L118">			name = TextBlockUtils.mergeLR(uBlock, name, VerticalAlignment.CENTER);</span>
+<span class="nc" id="L119">			name = TextBlockUtils.withMargin(name, 3, 3, 0, 0);</span>
 		}
 
 		final TextBlock stereo;
-<span class="fc" id="L124">		final List&lt;String&gt; stereotypeLabels = portionShower.getVisibleStereotypeLabels(entity);</span>
-<span class="pc bpc" id="L125" title="1 of 4 branches missed.">		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null</span>
-<span class="fc bfc" id="L126" title="All 2 branches covered.">				|| stereotypeLabels.isEmpty())</span>
-<span class="fc" id="L127">			stereo = null;</span>
+<span class="fc" id="L123">		final List&lt;String&gt; stereotypeLabels = portionShower.getVisibleStereotypeLabels(entity);</span>
+<span class="pc bpc" id="L124" title="1 of 4 branches missed.">		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">				|| stereotypeLabels.isEmpty())</span>
+<span class="fc" id="L126">			stereo = null;</span>
 		else
-<span class="fc" id="L129">			stereo = TextBlockUtils.withMargin(Display.create(stereotypeLabels).create(</span>
-<span class="fc" id="L130">					FontConfiguration.create(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),</span>
-<span class="fc" id="L131">					HorizontalAlignment.CENTER, getSkinParam()), 1, 0);</span>
+<span class="fc" id="L128">			stereo = TextBlockUtils.withMargin(Display.create(stereotypeLabels).create(</span>
+<span class="fc" id="L129">					FontConfiguration.create(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),</span>
+<span class="fc" id="L130">					HorizontalAlignment.CENTER, getSkinParam()), 1, 0);</span>
 
 		TextBlock genericBlock;
-<span class="fc bfc" id="L134" title="All 2 branches covered.">		if (generic == null) {</span>
-<span class="fc" id="L135">			genericBlock = null;</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		if (generic == null) {</span>
+<span class="fc" id="L134">			genericBlock = null;</span>
 		} else {
-<span class="fc" id="L137">			final Style styleGeneric = getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery</span>
-<span class="fc" id="L138">					.of(Arrays.asList(SName.root, SName.element, SName.classDiagram, SName.class_, SName.generic)) //</span>
-<span class="fc" id="L139">					.withTOBECHANGED(stereotype) //</span>
-<span class="fc" id="L140">					.with(entity.getStereostyles()));</span>
+<span class="fc" id="L136">			final Style styleGeneric = getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQueries.CLASSDIAG_CLASS_GENERIC //</span>
+<span class="fc" id="L137">					.withStereotype(stereotype) //</span>
+<span class="fc" id="L138">					.withStereostyles(entity.getStereostyles()));</span>
 
-<span class="fc" id="L142">			genericBlock = Display.getWithNewlines(getSkinParam().getPragma(), generic).create(</span>
-<span class="fc" id="L143">					FontConfiguration.create(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),</span>
-<span class="fc" id="L144">					HorizontalAlignment.CENTER, getSkinParam());</span>
-<span class="fc" id="L145">			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);</span>
+<span class="fc" id="L140">			genericBlock = Display.getWithNewlines(getSkinParam().getPragma(), generic).create(</span>
+<span class="fc" id="L141">					FontConfiguration.create(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),</span>
+<span class="fc" id="L142">					HorizontalAlignment.CENTER, getSkinParam());</span>
+<span class="fc" id="L143">			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);</span>
 
-<span class="fc" id="L147">			final HColor classBackground = styleGeneric.value(PName.BackGroundColor)</span>
-<span class="fc" id="L148">					.asColor(getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L149">			final HColor classBorder = styleGeneric.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L145">			final HColor classBackground = styleGeneric.value(PName.BackGroundColor)</span>
+<span class="fc" id="L146">					.asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L147">			final HColor classBorder = styleGeneric.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 
-<span class="fc" id="L151">			genericBlock = new TextBlockGeneric(genericBlock, classBackground, classBorder);</span>
-<span class="fc" id="L152">			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);</span>
+<span class="fc" id="L149">			genericBlock = new TextBlockGeneric(genericBlock, classBackground, classBorder);</span>
+<span class="fc" id="L150">			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);</span>
 		}
 
 		final TextBlock circledCharacter;
-<span class="pc bpc" id="L156" title="1 of 2 branches missed.">		if (portionShower.showPortion(EntityPortion.CIRCLED_CHARACTER, (Entity) getEntity()))</span>
-<span class="fc" id="L157">			circledCharacter = TextBlockUtils.withMargin(getCircledCharacter(entity, getSkinParam()), 4, 0, 5, 5);</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">		if (portionShower.showPortion(EntityPortion.CIRCLED_CHARACTER, (Entity) getEntity()))</span>
+<span class="fc" id="L155">			circledCharacter = TextBlockUtils.withMargin(getCircledCharacter(entity, getSkinParam()), 4, 0, 5, 5);</span>
 		else
-<span class="nc" id="L159">			circledCharacter = null;</span>
+<span class="nc" id="L157">			circledCharacter = null;</span>
 
-<span class="fc" id="L161">		this.headerLayout = new HeaderLayout(circledCharacter, stereo, name, genericBlock);</span>
-<span class="fc" id="L162">	}</span>
+<span class="fc" id="L159">		this.headerLayout = new HeaderLayout(circledCharacter, stereo, name, genericBlock);</span>
+<span class="fc" id="L160">	}</span>
 
 	private TextBlock getCircledCharacter(Entity entity, ISkinParam skinParam) {
-<span class="fc" id="L165">		final Stereotype stereotype = entity.getStereotype();</span>
-<span class="pc bpc" id="L166" title="1 of 4 branches missed.">		if (stereotype != null &amp;&amp; stereotype.getSprite(skinParam) != null)</span>
-<span class="nc" id="L167">			return stereotype.getSprite(skinParam);</span>
+<span class="fc" id="L163">		final Stereotype stereotype = entity.getStereotype();</span>
+<span class="pc bpc" id="L164" title="1 of 4 branches missed.">		if (stereotype != null &amp;&amp; stereotype.getSprite(skinParam) != null)</span>
+<span class="nc" id="L165">			return stereotype.getSprite(skinParam);</span>
 
-<span class="fc" id="L169">		final UFont font = SkinParamUtils.getFont(getSkinParam(), FontParam.CIRCLED_CHARACTER, null);</span>
+<span class="fc" id="L167">		final UFont font = SkinParamUtils.getFont(getSkinParam(), FontParam.CIRCLED_CHARACTER, null);</span>
 
-<span class="fc" id="L171">		final LeafType leafType = entity.getLeafType();</span>
+<span class="fc" id="L169">		final LeafType leafType = entity.getLeafType();</span>
 
-<span class="fc" id="L173">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(spotStyleSignature(leafType));</span>
-<span class="fc" id="L174">		final HColor spotBorder = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="fc" id="L175">		final HColor spotBackColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L171">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(spotStyleSignature(leafType));</span>
+<span class="fc" id="L172">		final HColor spotBorder = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L173">		final HColor spotBackColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
 
-<span class="fc" id="L177">		final HColor fontColor = style.value(PName.FontColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L175">		final HColor fontColor = style.value(PName.FontColor).asColor(skinParam.getIHtmlColorSet());</span>
 
-<span class="fc bfc" id="L179" title="All 4 branches covered.">		if (stereotype != null &amp;&amp; stereotype.getCharacter() != 0)</span>
-<span class="fc" id="L180">			return new CircledCharacter(stereotype.getCharacter(), getSkinParam().getCircledCharacterRadius(), font,</span>
-<span class="pc bpc" id="L181" title="1 of 2 branches missed.">					stereotype.getHtmlColor() == null ? spotBackColor : stereotype.getHtmlColor(), spotBorder,</span>
+<span class="fc bfc" id="L177" title="All 4 branches covered.">		if (stereotype != null &amp;&amp; stereotype.getCharacter() != 0)</span>
+<span class="fc" id="L178">			return new CircledCharacter(stereotype.getCharacter(), getSkinParam().getCircledCharacterRadius(), font,</span>
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">					stereotype.getHtmlColor() == null ? spotBackColor : stereotype.getHtmlColor(), spotBorder,</span>
 					fontColor);
 
-<span class="fc" id="L184">		char circledChar = 0;</span>
-<span class="fc bfc" id="L185" title="All 2 branches covered.">		if (stereotype != null)</span>
-<span class="fc" id="L186">			circledChar = getSkinParam().getCircledCharacter(stereotype);</span>
+<span class="fc" id="L182">		char circledChar = 0;</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">		if (stereotype != null)</span>
+<span class="fc" id="L184">			circledChar = getSkinParam().getCircledCharacter(stereotype);</span>
 
-<span class="pc bpc" id="L188" title="1 of 2 branches missed.">		if (circledChar == 0)</span>
-<span class="fc" id="L189">			circledChar = getCircledChar(leafType);</span>
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">		if (circledChar == 0)</span>
+<span class="fc" id="L187">			circledChar = getCircledChar(leafType);</span>
 
-<span class="fc" id="L191">		return new CircledCharacter(circledChar, getSkinParam().getCircledCharacterRadius(), font, spotBackColor,</span>
+<span class="fc" id="L189">		return new CircledCharacter(circledChar, getSkinParam().getCircledCharacterRadius(), font, spotBackColor,</span>
 				spotBorder, fontColor);
 	}
 
 	private StyleQuery spotStyleSignature(LeafType leafType) {
-<span class="pc bpc" id="L196" title="12 of 14 branches missed.">		switch (leafType) {</span>
+<span class="pc bpc" id="L194" title="12 of 14 branches missed.">		switch (leafType) {</span>
 		case ANNOTATION:
-<span class="nc" id="L198">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotAnnotation));</span>
+<span class="nc" id="L196">			return StyleQueries.SPOT_ANNOTATION;</span>
 		case ABSTRACT_CLASS:
-<span class="nc" id="L200">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotAbstractClass));</span>
+<span class="nc" id="L198">			return StyleQueries.SPOT_ABSTRACT_CLASS;</span>
 		case CLASS:
-<span class="fc" id="L202">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotClass));</span>
+<span class="fc" id="L200">			return StyleQueries.SPOT_CLASS;</span>
 		case INTERFACE:
-<span class="fc" id="L204">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotInterface));</span>
+<span class="fc" id="L202">			return StyleQueries.SPOT_INTERFACE;</span>
 		case ENUM:
-<span class="nc" id="L206">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotEnum));</span>
+<span class="nc" id="L204">			return StyleQueries.SPOT_ENUM;</span>
 		case ENTITY:
-<span class="nc" id="L208">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotEntity));</span>
+<span class="nc" id="L206">			return StyleQueries.SPOT_ENTITY;</span>
 		case PROTOCOL:
-<span class="nc" id="L210">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotProtocol));</span>
+<span class="nc" id="L208">			return StyleQueries.SPOT_PROTOCOL;</span>
 		case STRUCT:
-<span class="nc" id="L212">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotStruct));</span>
+<span class="nc" id="L210">			return StyleQueries.SPOT_STRUCT;</span>
 		case EXCEPTION:
-<span class="nc" id="L214">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotException));</span>
+<span class="nc" id="L212">			return StyleQueries.SPOT_EXCEPTION;</span>
 		case METACLASS:
-<span class="nc" id="L216">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotMetaClass));</span>
+<span class="nc" id="L214">			return StyleQueries.SPOT_META_CLASS;</span>
 		case STEREOTYPE:
-<span class="nc" id="L218">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotStereotype));</span>
+<span class="nc" id="L216">			return StyleQueries.SPOT_STEREOTYPE;</span>
 		case DATACLASS:
-<span class="nc" id="L220">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotDataClass));</span>
+<span class="nc" id="L218">			return StyleQueries.SPOT_DATA_CLASS;</span>
 		case RECORD:
-<span class="nc" id="L222">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.spot, SName.spotRecord));</span>
+<span class="nc" id="L220">			return StyleQueries.SPOT_RECORD;</span>
 		}
-<span class="nc" id="L224">		throw new IllegalStateException();</span>
+<span class="nc" id="L222">		throw new IllegalStateException();</span>
 	}
 
 	private char getCircledChar(LeafType leafType) {
-<span class="pc bpc" id="L228" title="12 of 14 branches missed.">		switch (leafType) {</span>
+<span class="pc bpc" id="L226" title="12 of 14 branches missed.">		switch (leafType) {</span>
 		case ANNOTATION:
-<span class="nc" id="L230">			return '@';</span>
+<span class="nc" id="L228">			return '@';</span>
 		case ABSTRACT_CLASS:
-<span class="nc" id="L232">			return 'A';</span>
+<span class="nc" id="L230">			return 'A';</span>
 		case CLASS:
-<span class="fc" id="L234">			return 'C';</span>
+<span class="fc" id="L232">			return 'C';</span>
 		case INTERFACE:
-<span class="fc" id="L236">			return 'I';</span>
+<span class="fc" id="L234">			return 'I';</span>
 		case ENUM:
-<span class="nc" id="L238">			return 'E';</span>
+<span class="nc" id="L236">			return 'E';</span>
 		case ENTITY:
-<span class="nc" id="L240">			return 'E';</span>
+<span class="nc" id="L238">			return 'E';</span>
 		case PROTOCOL:
-<span class="nc" id="L242">			return 'P';</span>
+<span class="nc" id="L240">			return 'P';</span>
 		case STRUCT:
-<span class="nc" id="L244">			return 'S';</span>
+<span class="nc" id="L242">			return 'S';</span>
 		case EXCEPTION:
-<span class="nc" id="L246">			return 'X';</span>
+<span class="nc" id="L244">			return 'X';</span>
 		case METACLASS:
-<span class="nc" id="L248">			return 'M';</span>
+<span class="nc" id="L246">			return 'M';</span>
 		case STEREOTYPE:
-<span class="nc" id="L250">			return 'S';</span>
+<span class="nc" id="L248">			return 'S';</span>
 		case DATACLASS:
-<span class="nc" id="L252">			return 'D';</span>
+<span class="nc" id="L250">			return 'D';</span>
 		case RECORD:
-<span class="nc" id="L254">			return 'R';</span>
+<span class="nc" id="L252">			return 'R';</span>
 		}
-<span class="nc" id="L256">		assert false;</span>
-<span class="nc" id="L257">		return '?';</span>
+<span class="nc" id="L254">		assert false;</span>
+<span class="nc" id="L255">		return '?';</span>
 	}
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="fc" id="L262">		return headerLayout.getDimension(stringBounder);</span>
+<span class="fc" id="L260">		return headerLayout.getDimension(stringBounder);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="nc" id="L266">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L264">		throw new UnsupportedOperationException();</span>
 	}
 
 	public void drawU(UGraphic ug, double width, double height) {
-<span class="fc" id="L270">		headerLayout.drawU(ug, width, height);</span>
-<span class="fc" id="L271">	}</span>
+<span class="fc" id="L268">		headerLayout.drawU(ug, width, height);</span>
+<span class="fc" id="L269">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L274">		return ShapeType.RECTANGLE;</span>
+<span class="nc" id="L272">		return ShapeType.RECTANGLE;</span>
 	}
 
 }

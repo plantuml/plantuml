@@ -62,9 +62,9 @@ import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.AlignmentParam;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.image.Opale;
 
 public class FtileIfWithDiamonds extends FtileIfNude {
@@ -145,7 +145,7 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 	}
 
 	private static StyleQuery getStyleSignature() {
-<span class="nc" id="L148">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.note));</span>
+<span class="nc" id="L148">		return StyleQueries.ACTIVITYDIAG_NOTE;</span>
 	}
 
 	@Override

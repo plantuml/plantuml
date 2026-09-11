@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.chart;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -58,7 +57,8 @@ import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 public class ChartRenderer {
 
@@ -950,11 +950,11 @@ public class ChartRenderer {
 	}
 
 	private StyleQuery getStyleSignature() {
-<span class="nc" id="L953">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram));</span>
+<span class="nc" id="L953">		return StyleQueries.CHARTDIAG;</span>
 	}
 
 	private StyleQuery getBarStyleQuery() {
-<span class="nc" id="L957">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.bar));</span>
+<span class="nc" id="L957">		return StyleQueries.CHARTDIAG_BAR;</span>
 	}
 
 	private Style getBarStyle(ChartSeries series) {
@@ -962,7 +962,7 @@ public class ChartRenderer {
 <span class="nc bnc" id="L962" title="All 2 branches missed.">		if (series.getStereotype() != null) {</span>
 			// Use withTOBECHANGED for element-level stereotype styling
 <span class="nc" id="L964">			Style style = skinParam.getCurrentStyleBuilder()</span>
-<span class="nc" id="L965">					.getMergedStyle(query.withTOBECHANGED(series.getStereotype()));</span>
+<span class="nc" id="L965">					.getMergedStyle(query.withStereotype(series.getStereotype()));</span>
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., .primary)
 			// This matches the pattern used by sequence diagrams
@@ -979,7 +979,7 @@ public class ChartRenderer {
 	}
 
 	private StyleQuery getLineStyleQuery() {
-<span class="nc" id="L982">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.line));</span>
+<span class="nc" id="L982">		return StyleQueries.CHARTDIAG_LINE;</span>
 	}
 
 	private Style getLineStyle(ChartSeries series) {
@@ -987,7 +987,7 @@ public class ChartRenderer {
 <span class="nc bnc" id="L987" title="All 2 branches missed.">		if (series.getStereotype() != null) {</span>
 			// Use withTOBECHANGED for element-level stereotype styling
 <span class="nc" id="L989">			Style style = skinParam.getCurrentStyleBuilder()</span>
-<span class="nc" id="L990">					.getMergedStyle(query.withTOBECHANGED(series.getStereotype()));</span>
+<span class="nc" id="L990">					.getMergedStyle(query.withStereotype(series.getStereotype()));</span>
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., line.target)
 <span class="nc" id="L993">			Style stereoStyle = skinParam.getCurrentStyleBuilder()</span>
@@ -1003,7 +1003,7 @@ public class ChartRenderer {
 	}
 
 	private StyleQuery getAreaStyleQuery() {
-<span class="nc" id="L1006">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.area));</span>
+<span class="nc" id="L1006">		return StyleQueries.CHARTDIAG_AREA;</span>
 	}
 
 	private Style getAreaStyle(ChartSeries series) {
@@ -1011,7 +1011,7 @@ public class ChartRenderer {
 <span class="nc bnc" id="L1011" title="All 2 branches missed.">		if (series.getStereotype() != null) {</span>
 			// Use withTOBECHANGED for element-level stereotype styling
 <span class="nc" id="L1013">			Style style = skinParam.getCurrentStyleBuilder()</span>
-<span class="nc" id="L1014">					.getMergedStyle(query.withTOBECHANGED(series.getStereotype()));</span>
+<span class="nc" id="L1014">					.getMergedStyle(query.withStereotype(series.getStereotype()));</span>
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., area.highlight)
 <span class="nc" id="L1017">			Style stereoStyle = skinParam.getCurrentStyleBuilder()</span>
@@ -1036,7 +1036,7 @@ public class ChartRenderer {
 	}
 
 	private StyleQuery getScatterStyleQuery() {
-<span class="nc" id="L1039">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.scatter));</span>
+<span class="nc" id="L1039">		return StyleQueries.CHARTDIAG_SCATTER;</span>
 	}
 
 	private Style getScatterStyle(ChartSeries series) {
@@ -1044,7 +1044,7 @@ public class ChartRenderer {
 <span class="nc bnc" id="L1044" title="All 2 branches missed.">		if (series.getStereotype() != null) {</span>
 			// Use withTOBECHANGED for element-level stereotype styling
 <span class="nc" id="L1046">			Style style = skinParam.getCurrentStyleBuilder()</span>
-<span class="nc" id="L1047">					.getMergedStyle(query.withTOBECHANGED(series.getStereotype()));</span>
+<span class="nc" id="L1047">					.getMergedStyle(query.withStereotype(series.getStereotype()));</span>
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., scatter.highlight)
 <span class="nc" id="L1050">			Style stereoStyle = skinParam.getCurrentStyleBuilder()</span>
@@ -1061,19 +1061,19 @@ public class ChartRenderer {
 
 	private StyleQuery getAxisStyleSignature(boolean horizontal) {
 <span class="nc bnc" id="L1063" title="All 2 branches missed.">		SName axisType = horizontal ? SName.hAxis : SName.vAxis;</span>
-<span class="nc" id="L1064">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.axis, axisType));</span>
+<span class="nc" id="L1064">		return StyleQueries.CHARTDIAG_AXIS.add(axisType);</span>
 	}
 
 	private StyleQuery getGridStyleSignature() {
-<span class="nc" id="L1068">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.grid));</span>
+<span class="nc" id="L1068">		return StyleQueries.CHARTDIAG_GRID;</span>
 	}
 
 	private StyleQuery getLegendStyleSignature() {
-<span class="nc" id="L1072">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.legend));</span>
+<span class="nc" id="L1072">		return StyleQueries.CHARTDIAG_LEGEND;</span>
 	}
 
 	private StyleQuery getAnnotationStyleSignature() {
-<span class="nc" id="L1076">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.chartDiagram, SName.annotation));</span>
+<span class="nc" id="L1076">		return StyleQueries.CHARTDIAG_ANNOTATION;</span>
 	}
 
 	private XDimension2D calculateLegendDimension(StringBounder stringBounder) {

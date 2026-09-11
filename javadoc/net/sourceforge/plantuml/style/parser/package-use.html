@@ -67,7 +67,7 @@ loadScripts(document, 'script');</script>
  <a href="https://plantuml.com/style-evolution" target="_top">
  Style</a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.style.parser2">net.sourceforge.plantuml.style.parser2</a></div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.style.parser">net.sourceforge.plantuml.style.parser</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 <section class="package-uses">
@@ -95,12 +95,45 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="net.sourceforge.plantuml.style.parser2">
-<div class="caption"><span>Classes in <a href="package-summary.html">net.sourceforge.plantuml.style.parser</a> used by <a href="../parser2/package-summary.html">net.sourceforge.plantuml.style.parser2</a></span></div>
+<section class="detail" id="net.sourceforge.plantuml.style.parser">
+<div class="caption"><span>Classes in <a href="package-summary.html">net.sourceforge.plantuml.style.parser</a> used by <a href="package-summary.html">net.sourceforge.plantuml.style.parser</a></span></div>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><a href="class-use/StyleParsingException.html#net.sourceforge.plantuml.style.parser2">StyleParsingException</a></div>
+<div class="col-first even-row-color"><a href="class-use/MergedStyleNode.html#net.sourceforge.plantuml.style.parser">MergedStyleNode</a></div>
+<div class="col-last even-row-color">
+<div class="block">One node of the canonical, merged style tree: unlike <a href="RawStyleRule.html" title="class in net.sourceforge.plantuml.style.parser"><code>RawStyleRule</code></a>, there is at
+ most one node per (selector name, <code>*</code>-or-not) pair at a given level, whatever comma
+ lists or repeated declarations produced it in the source file.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/PrioritizedValue.html#net.sourceforge.plantuml.style.parser">PrioritizedValue</a></div>
+<div class="col-last odd-row-color">
+<div class="block">One property value, together with the priority it was assigned when merged in (see
+ <a href="MergedStyleNode.html#mergeRule(net.sourceforge.plantuml.style.parser.RawStyleRule,net.sourceforge.plantuml.style.AutomaticCounter,boolean)"><code>MergedStyleNode.mergeRule(net.sourceforge.plantuml.style.parser.RawStyleRule, net.sourceforge.plantuml.style.AutomaticCounter, boolean)</code></a>) -- the direct counterpart of the legacy
+ <code>net.sourceforge.plantuml.style.DarkString</code>, kept under the same name it had before
+ this class grew a dark half.</div>
+</div>
+<div class="col-first even-row-color"><a href="class-use/RawSelector.html#net.sourceforge.plantuml.style.parser">RawSelector</a></div>
+<div class="col-last even-row-color">
+<div class="block">One alternative name inside a (possibly comma-separated) selector list, exactly as it
+ was spelled in a .skin file, e.g.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/RawSelector.Kind.html#net.sourceforge.plantuml.style.parser">RawSelector.Kind</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="class-use/RawStyleRule.html#net.sourceforge.plantuml.style.parser">RawStyleRule</a></div>
+<div class="col-last even-row-color">
+<div class="block">One <code>selector { ... }</code> block, exactly as written in a .skin file: its selector
+ alternatives (or, for an <code>@media</code> block, the raw condition text), the properties
+ declared directly inside it, and its nested blocks.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/RawStyleSheet.html#net.sourceforge.plantuml.style.parser">RawStyleSheet</a></div>
+<div class="col-last odd-row-color">
+<div class="block">The literal result of parsing one .skin file: the CSS variables declared with
+ <code>--name: value;</code> (keyed without the leading <code>--</code>), and the top-level
+ <code>selector { ... }</code> / <code>@media { ... }</code> blocks, in the order they appear in
+ the file.</div>
+</div>
+<div class="col-first even-row-color"><a href="class-use/StyleParsingException.html#net.sourceforge.plantuml.style.parser">StyleParsingException</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>

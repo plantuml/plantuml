@@ -107,8 +107,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="Value.html" title="interface in net.sourceforge.plantuml.style">Value</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#addStereotypeCount(java.util.Map,int)" class="member-name-link">addStereotypeCount</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="Value.html" title="interface in net.sourceforge.plantuml.style">Value</a>&gt;&nbsp;tmp,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="value/Value.html" title="interface in net.sourceforge.plantuml.style.value">Value</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#addStereotypeCount(java.util.Map,int)" class="member-name-link">addStereotypeCount</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="value/Value.html" title="interface in net.sourceforge.plantuml.style.value">Value</a>&gt;&nbsp;tmp,
  int&nbsp;count)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a></code></div>
@@ -129,7 +129,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Parses a fragment of .skin/<code>&lt;style&gt;</code> text into flat legacy <a href="Style.html" title="class in net.sourceforge.plantuml.style"><code>Style</code></a> objects,
  assigning each property an increasing priority via <code>counter</code> -- the direct
  replacement for <code>new net.sourceforge.plantuml.style.parser.StyleParser(counter).parse(lines)</code>,
- now going through the <code>parser2</code> tokenizer (<a href="parser2/RawStyleParser.html" title="class in net.sourceforge.plantuml.style.parser2"><code>RawStyleParser</code></a>) instead of the
+ now going through the <code>parser2</code> tokenizer (<a href="parser/RawStyleParser.html" title="class in net.sourceforge.plantuml.style.parser"><code>RawStyleParser</code></a>) instead of the
  legacy hand-written one.</div>
 </div>
 </div>
@@ -171,14 +171,14 @@ loadScripts(document, 'script');</script>
 <div class="block">Parses a fragment of .skin/<code>&lt;style&gt;</code> text into flat legacy <a href="Style.html" title="class in net.sourceforge.plantuml.style"><code>Style</code></a> objects,
  assigning each property an increasing priority via <code>counter</code> -- the direct
  replacement for <code>new net.sourceforge.plantuml.style.parser.StyleParser(counter).parse(lines)</code>,
- now going through the <code>parser2</code> tokenizer (<a href="parser2/RawStyleParser.html" title="class in net.sourceforge.plantuml.style.parser2"><code>RawStyleParser</code></a>) instead of the
+ now going through the <code>parser2</code> tokenizer (<a href="parser/RawStyleParser.html" title="class in net.sourceforge.plantuml.style.parser"><code>RawStyleParser</code></a>) instead of the
  legacy hand-written one. <code>counter</code> is almost always the <a href="StyleBuilder.html" title="class in net.sourceforge.plantuml.style"><code>StyleBuilder</code></a> the
  result will be loaded or muted into, exactly as before: continuing its counter is what
  guarantees an overlay's declarations always outrank whatever that builder already holds.
 
  <p>
  Parsing itself (tokenizing, comma-list handling, <code>@media</code> detection, <code>
- var(--name)</code> substitution) is <a href="parser2/RawStyleParser.html" title="class in net.sourceforge.plantuml.style.parser2"><code>RawStyleParser</code></a>'s job; <a href="parser2/MergedStyleNode.html" title="class in net.sourceforge.plantuml.style.parser2"><code>MergedStyleNode</code></a> then
+ var(--name)</code> substitution) is <a href="parser/RawStyleParser.html" title="class in net.sourceforge.plantuml.style.parser"><code>RawStyleParser</code></a>'s job; <a href="parser/MergedStyleNode.html" title="class in net.sourceforge.plantuml.style.parser"><code>MergedStyleNode</code></a> then
  merges duplicate selectors and folds a dark declaration into its light counterpart -- into
  a throwaway, one-shot tree here (this call's <code>counter</code> is external and not carried
  across calls, so there is no tree identity worth keeping around afterwards) -- before
@@ -214,7 +214,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="addStereotypeCount(java.util.Map,int)">
 <h3>addStereotypeCount</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="Value.html" title="interface in net.sourceforge.plantuml.style">Value</a>&gt;</span>&nbsp;<span class="element-name">addStereotypeCount</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="Value.html" title="interface in net.sourceforge.plantuml.style">Value</a>&gt;&nbsp;tmp,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="value/Value.html" title="interface in net.sourceforge.plantuml.style.value">Value</a>&gt;</span>&nbsp;<span class="element-name">addStereotypeCount</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="value/Value.html" title="interface in net.sourceforge.plantuml.style.value">Value</a>&gt;&nbsp;tmp,
  int&nbsp;count)</span></div>
 </section>
 </li>

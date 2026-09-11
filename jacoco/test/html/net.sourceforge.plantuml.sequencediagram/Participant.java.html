@@ -57,8 +57,8 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.style.WithStyle;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -85,7 +85,7 @@ public class Participant implements SpecificBackcolorable, WithStyle, AsciiBlock
 
 	public Style[] getUsedStyles() {
 
-<span class="fc" id="L88">		final StyleQuery query = getStyleQuery().withTOBECHANGED(stereotype);</span>
+<span class="fc" id="L88">		final StyleQuery query = getStyleQuery().withStereotype(stereotype);</span>
 <span class="fc" id="L89">		Style tmp = styleBuilder.getMergedStyle(query);</span>
 <span class="fc" id="L90">		tmp = tmp.eventuallyOverride(getColors());</span>
 <span class="fc" id="L91">		Style stereo = styleBuilder.getMergedStyle(getStyleQuery().forStereotypeItself(stereotype));</span>

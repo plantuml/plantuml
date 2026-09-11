@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.Arrays;
 import java.util.Map;
 
 import net.sourceforge.plantuml.abel.Entity;
@@ -56,9 +55,9 @@ import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -70,12 +69,12 @@ public class EntityImageTips extends AbstractEntityImage {
 
 	private final Bibliotekon bibliotekon;
 
-<span class="fc" id="L73">	private final double ySpacing = 10;</span>
+<span class="fc" id="L72">	private final double ySpacing = 10;</span>
 
 	public EntityImageTips(Entity entity, Bibliotekon bibliotekon) {
-<span class="fc" id="L76">		super(entity);</span>
-<span class="fc" id="L77">		this.bibliotekon = bibliotekon;</span>
-<span class="fc" id="L78">	}</span>
+<span class="fc" id="L75">		super(entity);</span>
+<span class="fc" id="L76">		this.bibliotekon = bibliotekon;</span>
+<span class="fc" id="L77">	}</span>
 
 	// Several &quot;note ... of Class::member&quot; tips on the same side of the same
 	// class are grouped into this single Entity (one per member, see
@@ -85,121 +84,120 @@ public class EntityImageTips extends AbstractEntityImage {
 	// parsed silently recolors every earlier tip on the same side of the
 	// same class (issue #2814).
 	private Style getStyleFor(Tip tip) {
-<span class="fc" id="L88">		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQueryFor(tip.getStereotype()));</span>
+<span class="fc" id="L87">		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQueryFor(tip.getStereotype()));</span>
 	}
 
 	private StyleQuery getStyleQueryFor(Stereotype stereotype) {
-<span class="fc" id="L92">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, getStyleName(), SName.note))</span>
-<span class="fc" id="L93">				.withTOBECHANGED(stereotype);</span>
+<span class="fc" id="L91">		return StyleQueries.NOTE.add(getStyleName()).withStereotype(stereotype);</span>
 	}
 
 	private HColor getNoteBackgroundColor(Tip tip, Style style) {
-<span class="fc" id="L97">		final HColor fromTip = tip.getColors().getColor(ColorType.BACK);</span>
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (fromTip == null)</span>
-<span class="nc" id="L99">			return style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L95">		final HColor fromTip = tip.getColors().getColor(ColorType.BACK);</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (fromTip == null)</span>
+<span class="nc" id="L97">			return style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 
-<span class="fc" id="L101">		return fromTip;</span>
+<span class="fc" id="L99">		return fromTip;</span>
 	}
 
 	@Override
 	public StyleQuery getStyleQuery() {
-<span class="nc" id="L106">		return getStyleQueryFor(getStereo());</span>
+<span class="nc" id="L104">		return getStyleQueryFor(getStereo());</span>
 	}
 
 	private Position getPosition() {
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (getEntity().getName().endsWith(Position.RIGHT.name()))</span>
-<span class="fc" id="L111">			return Position.RIGHT;</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (getEntity().getName().endsWith(Position.RIGHT.name()))</span>
+<span class="fc" id="L109">			return Position.RIGHT;</span>
 
-<span class="nc" id="L113">		return Position.LEFT;</span>
+<span class="nc" id="L111">		return Position.LEFT;</span>
 	}
 
 	public ShapeType getShapeType() {
-<span class="fc" id="L117">		return ShapeType.RECTANGLE;</span>
+<span class="fc" id="L115">		return ShapeType.RECTANGLE;</span>
 	}
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="fc" id="L122">		double width = 0;</span>
-<span class="fc" id="L123">		double height = 0;</span>
-<span class="fc bfc" id="L124" title="All 2 branches covered.">		for (Map.Entry&lt;String, Tip&gt; ent : getEntity().getTips().entrySet()) {</span>
-<span class="fc" id="L125">			final Tip tip = ent.getValue();</span>
-<span class="fc" id="L126">			final XDimension2D dim = getOpale(tip).calculateDimension(stringBounder);</span>
-<span class="fc" id="L127">			height += dim.getHeight();</span>
-<span class="fc" id="L128">			height += ySpacing;</span>
-<span class="fc" id="L129">			width = Math.max(width, dim.getWidth());</span>
-<span class="fc" id="L130">		}</span>
-<span class="fc" id="L131">		return new XDimension2D(width, height);</span>
+<span class="fc" id="L120">		double width = 0;</span>
+<span class="fc" id="L121">		double height = 0;</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		for (Map.Entry&lt;String, Tip&gt; ent : getEntity().getTips().entrySet()) {</span>
+<span class="fc" id="L123">			final Tip tip = ent.getValue();</span>
+<span class="fc" id="L124">			final XDimension2D dim = getOpale(tip).calculateDimension(stringBounder);</span>
+<span class="fc" id="L125">			height += dim.getHeight();</span>
+<span class="fc" id="L126">			height += ySpacing;</span>
+<span class="fc" id="L127">			width = Math.max(width, dim.getWidth());</span>
+<span class="fc" id="L128">		}</span>
+<span class="fc" id="L129">		return new XDimension2D(width, height);</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L135">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L133">		final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="fc" id="L137">		final Entity tmp = getEntity();</span>
-<span class="fc" id="L138">		final Entity other = bibliotekon.getOnlyOther(tmp);</span>
-<span class="pc bpc" id="L139" title="1 of 2 branches missed.">		if (other == null) {</span>
-<span class="nc" id="L140">			System.err.println(&quot;Error1 in EntityImageTips&quot;);</span>
-<span class="nc" id="L141">			return;</span>
+<span class="fc" id="L135">		final Entity tmp = getEntity();</span>
+<span class="fc" id="L136">		final Entity other = bibliotekon.getOnlyOther(tmp);</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (other == null) {</span>
+<span class="nc" id="L138">			System.err.println(&quot;Error1 in EntityImageTips&quot;);</span>
+<span class="nc" id="L139">			return;</span>
 		}
 
-<span class="fc" id="L144">		final SvekNode nodeMe = bibliotekon.getNode(getEntity());</span>
-<span class="fc" id="L145">		final SvekNode nodeOther = bibliotekon.getNode(other);</span>
-<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		if (nodeOther == null) {</span>
-<span class="nc" id="L147">			System.err.println(&quot;Error2 in EntityImageTips&quot;);</span>
-<span class="nc" id="L148">			return;</span>
+<span class="fc" id="L142">		final SvekNode nodeMe = bibliotekon.getNode(getEntity());</span>
+<span class="fc" id="L143">		final SvekNode nodeOther = bibliotekon.getNode(other);</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">		if (nodeOther == null) {</span>
+<span class="nc" id="L145">			System.err.println(&quot;Error2 in EntityImageTips&quot;);</span>
+<span class="nc" id="L146">			return;</span>
 		}
-<span class="fc" id="L150">		final XPoint2D positionOther = nodeOther.getPosition();</span>
-<span class="fc" id="L151">		bibliotekon.getNode(getEntity());</span>
-<span class="fc" id="L152">		final Position position = getPosition();</span>
-<span class="fc" id="L153">		Direction direction = position.reverseDirection();</span>
-<span class="fc" id="L154">		final XPoint2D positionMe = nodeMe.getPosition();</span>
-<span class="fc" id="L155">		double height = 0;</span>
-<span class="fc bfc" id="L156" title="All 2 branches covered.">		for (Map.Entry&lt;String, Tip&gt; ent : getEntity().getTips().entrySet()) {</span>
-<span class="fc" id="L157">			final Tip tip = ent.getValue();</span>
-<span class="fc" id="L158">			final String member = ent.getKey();</span>
-<span class="fc" id="L159">			final CharSequence bestMatch = nodeOther.getBestMatch(member);</span>
-<span class="pc bpc" id="L160" title="1 of 2 branches missed.">			if (bestMatch == null)</span>
-<span class="nc" id="L161">				return;</span>
-<span class="fc" id="L162">			final XRectangle2D memberPosition = nodeOther.getImage().getInnerPosition(bestMatch.toString(),</span>
+<span class="fc" id="L148">		final XPoint2D positionOther = nodeOther.getPosition();</span>
+<span class="fc" id="L149">		bibliotekon.getNode(getEntity());</span>
+<span class="fc" id="L150">		final Position position = getPosition();</span>
+<span class="fc" id="L151">		Direction direction = position.reverseDirection();</span>
+<span class="fc" id="L152">		final XPoint2D positionMe = nodeMe.getPosition();</span>
+<span class="fc" id="L153">		double height = 0;</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		for (Map.Entry&lt;String, Tip&gt; ent : getEntity().getTips().entrySet()) {</span>
+<span class="fc" id="L155">			final Tip tip = ent.getValue();</span>
+<span class="fc" id="L156">			final String member = ent.getKey();</span>
+<span class="fc" id="L157">			final CharSequence bestMatch = nodeOther.getBestMatch(member);</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">			if (bestMatch == null)</span>
+<span class="nc" id="L159">				return;</span>
+<span class="fc" id="L160">			final XRectangle2D memberPosition = nodeOther.getImage().getInnerPosition(bestMatch.toString(),</span>
 					stringBounder);
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">			if (memberPosition == null)</span>
-<span class="nc" id="L165">				return;</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">			if (memberPosition == null)</span>
+<span class="nc" id="L163">				return;</span>
 
-<span class="fc" id="L167">			final Opale opale = getOpale(tip);</span>
-<span class="fc" id="L168">			final XDimension2D dim = opale.calculateDimension(stringBounder);</span>
-<span class="fc" id="L169">			final XPoint2D pp1 = new XPoint2D(0, dim.getHeight() / 2);</span>
-<span class="fc" id="L170">			double x = positionOther.getX() - positionMe.getX();</span>
-<span class="pc bpc" id="L171" title="3 of 4 branches missed.">			if (direction == Direction.RIGHT &amp;&amp; x &lt; 0)</span>
-<span class="nc" id="L172">				direction = direction.getInv();</span>
+<span class="fc" id="L165">			final Opale opale = getOpale(tip);</span>
+<span class="fc" id="L166">			final XDimension2D dim = opale.calculateDimension(stringBounder);</span>
+<span class="fc" id="L167">			final XPoint2D pp1 = new XPoint2D(0, dim.getHeight() / 2);</span>
+<span class="fc" id="L168">			double x = positionOther.getX() - positionMe.getX();</span>
+<span class="pc bpc" id="L169" title="3 of 4 branches missed.">			if (direction == Direction.RIGHT &amp;&amp; x &lt; 0)</span>
+<span class="nc" id="L170">				direction = direction.getInv();</span>
 
-<span class="pc bpc" id="L174" title="1 of 2 branches missed.">			if (direction == Direction.LEFT)</span>
-<span class="fc" id="L175">				x += memberPosition.getMaxX();</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">			if (direction == Direction.LEFT)</span>
+<span class="fc" id="L173">				x += memberPosition.getMaxX();</span>
 			else
-<span class="nc" id="L177">				x += memberPosition.getMinX();</span>
+<span class="nc" id="L175">				x += memberPosition.getMinX();</span>
 
-<span class="fc" id="L179">			final double y = positionOther.getY() - positionMe.getY() - height + memberPosition.getCenterY();</span>
-<span class="fc" id="L180">			final XPoint2D pp2 = new XPoint2D(x, y);</span>
-<span class="fc" id="L181">			opale.setOpale(direction, pp1, pp2);</span>
-<span class="fc" id="L182">			opale.drawU(UGraphicStencil.create(ug, dim));</span>
-<span class="fc" id="L183">			ug = ug.apply(UTranslate.dy(dim.getHeight() + ySpacing));</span>
-<span class="fc" id="L184">			height += dim.getHeight();</span>
-<span class="fc" id="L185">			height += ySpacing;</span>
-<span class="fc" id="L186">		}</span>
+<span class="fc" id="L177">			final double y = positionOther.getY() - positionMe.getY() - height + memberPosition.getCenterY();</span>
+<span class="fc" id="L178">			final XPoint2D pp2 = new XPoint2D(x, y);</span>
+<span class="fc" id="L179">			opale.setOpale(direction, pp1, pp2);</span>
+<span class="fc" id="L180">			opale.drawU(UGraphicStencil.create(ug, dim));</span>
+<span class="fc" id="L181">			ug = ug.apply(UTranslate.dy(dim.getHeight() + ySpacing));</span>
+<span class="fc" id="L182">			height += dim.getHeight();</span>
+<span class="fc" id="L183">			height += ySpacing;</span>
+<span class="fc" id="L184">		}</span>
 
-<span class="fc" id="L188">	}</span>
+<span class="fc" id="L186">	}</span>
 
 	private Opale getOpale(final Tip tip) {
 
-<span class="fc" id="L192">		final Style style = getStyleFor(tip);</span>
-<span class="fc" id="L193">		final HColor noteBackgroundColor = getNoteBackgroundColor(tip, style);</span>
-<span class="fc" id="L194">		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L190">		final Style style = getStyleFor(tip);</span>
+<span class="fc" id="L191">		final HColor noteBackgroundColor = getNoteBackgroundColor(tip, style);</span>
+<span class="fc" id="L192">		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 
-<span class="fc" id="L196">		final double shadowing = style.getShadowing();</span>
-<span class="fc" id="L197">		final FontConfiguration fc = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L198">		final UStroke stroke = style.getStroke();</span>
+<span class="fc" id="L194">		final double shadowing = style.getShadowing();</span>
+<span class="fc" id="L195">		final FontConfiguration fc = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L196">		final UStroke stroke = style.getStroke();</span>
 
-<span class="fc" id="L200">		final TextBlock textBlock = BodyFactory.create3(tip.getDisplay(), getSkinParam(), HorizontalAlignment.LEFT,</span>
-<span class="fc" id="L201">				fc, style.wrapWidth(), style);</span>
-<span class="fc" id="L202">		return new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true, stroke);</span>
+<span class="fc" id="L198">		final TextBlock textBlock = BodyFactory.create3(tip.getDisplay(), getSkinParam(), HorizontalAlignment.LEFT,</span>
+<span class="fc" id="L199">				fc, style.wrapWidth(), style);</span>
+<span class="fc" id="L200">		return new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true, stroke);</span>
 	}
 
 }

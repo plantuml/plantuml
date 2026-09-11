@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LineConfigurable;
@@ -53,15 +52,15 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.url.Url;
 
 public abstract class EntityImageStateCommon extends AbstractEntityImage {
 
-<span class="fc" id="L63">	public static final StyleQuery STYLE = StyleQuery</span>
-<span class="fc" id="L64">			.of(Arrays.asList(SName.root, SName.element, SName.stateDiagram, SName.state));</span>
+<span class="fc" id="L63">	public static final StyleQuery STYLE = StyleQueries.STATEDIAG_STATE;</span>
 
 	final protected TextBlock name;
 	final protected Url url;
@@ -69,86 +68,86 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 	final protected LineConfigurable lineConfig;
 
 	public EntityImageStateCommon(Entity entity) {
-<span class="fc" id="L72">		super(entity);</span>
+<span class="fc" id="L71">		super(entity);</span>
 
-<span class="fc" id="L74">		this.lineConfig = entity;</span>
+<span class="fc" id="L73">		this.lineConfig = entity;</span>
 
-<span class="fc" id="L76">		final FontConfiguration nameFc = getStyleStateName(entity.getStereotype(),</span>
-<span class="fc" id="L77">				getSkinParam().getCurrentStyleBuilder())</span>
-<span class="fc" id="L78">				.getFontConfiguration(getSkinParam().getIHtmlColorSet(), entity.getColors());</span>
+<span class="fc" id="L75">		final FontConfiguration nameFc = getStyleStateName(entity.getStereotype(),</span>
+<span class="fc" id="L76">				getSkinParam().getCurrentStyleBuilder())</span>
+<span class="fc" id="L77">				.getFontConfiguration(getSkinParam().getIHtmlColorSet(), entity.getColors());</span>
 
-<span class="fc" id="L80">		final HorizontalAlignment horizontalAlignment = getStyleState(entity.getStereotype(),</span>
-<span class="fc" id="L81">				getSkinParam().getCurrentStyleBuilder()).getHorizontalAlignment();</span>
-<span class="fc" id="L82">		this.name = entity.getDisplay().create8(nameFc, horizontalAlignment, getSkinParam(), CreoleMode.FULL,</span>
-<span class="fc" id="L83">				getStyleState().wrapWidth());</span>
-<span class="fc" id="L84">		this.url = entity.getUrl99();</span>
+<span class="fc" id="L79">		final HorizontalAlignment horizontalAlignment = getStyleState(entity.getStereotype(),</span>
+<span class="fc" id="L80">				getSkinParam().getCurrentStyleBuilder()).getHorizontalAlignment();</span>
+<span class="fc" id="L81">		this.name = entity.getDisplay().create8(nameFc, horizontalAlignment, getSkinParam(), CreoleMode.FULL,</span>
+<span class="fc" id="L82">				getStyleState().wrapWidth());</span>
+<span class="fc" id="L83">		this.url = entity.getUrl99();</span>
 
-<span class="fc" id="L86">	}</span>
+<span class="fc" id="L85">	}</span>
 
 	@Override
 	public StyleQuery getStyleQuery() {
-<span class="nc" id="L90">		return STYLE;</span>
+<span class="nc" id="L89">		return STYLE;</span>
 	}
 
 	public static Style getStyleStateName(Stereotype stereotype, StyleBuilder styleBuilder) {
-<span class="fc" id="L94">		final StyleQuery toto1 = STYLE.addSName(SName.name);</span>
-<span class="fc" id="L95">		return styleBuilder.getMergedStyle(toto1.withTOBECHANGED(stereotype));</span>
+<span class="fc" id="L93">		final StyleQuery toto1 = STYLE.add(SName.name);</span>
+<span class="fc" id="L94">		return styleBuilder.getMergedStyle(toto1.withStereotype(stereotype));</span>
 	}
 
 	public static Style getStyleStateDescription(Stereotype stereotype, StyleBuilder styleBuilder) {
-<span class="fc" id="L99">		return styleBuilder.getMergedStyle(STYLE.addSName(SName.description).withTOBECHANGED(stereotype));</span>
+<span class="fc" id="L98">		return styleBuilder.getMergedStyle(STYLE.add(SName.description).withStereotype(stereotype));</span>
 	}
 
 	public static Style getStyleState(Stereotype stereotype, StyleBuilder styleBuilder) {
-<span class="fc" id="L103">		return styleBuilder.getMergedStyle(STYLE.withTOBECHANGED(stereotype));</span>
+<span class="fc" id="L102">		return styleBuilder.getMergedStyle(STYLE.withStereotype(stereotype));</span>
 	}
 
 	public static Style getStyleStateBody(Stereotype stereotype, StyleBuilder styleBuilder) {
-<span class="nc" id="L107">		return styleBuilder.getMergedStyle(STYLE.addSName(SName.body).withTOBECHANGED(stereotype));</span>
+<span class="nc" id="L106">		return styleBuilder.getMergedStyle(STYLE.add(SName.body).withStereotype(stereotype));</span>
 	}
 
 	final protected Style getStyleState() {
-<span class="fc" id="L111">		return getStyleState(getEntity().getStereotype(), getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L110">		return getStyleState(getEntity().getStereotype(), getSkinParam().getCurrentStyleBuilder());</span>
 	}
 
 	final protected Style getStyleStateDescription() {
-<span class="fc" id="L115">		return getSkinParam().getCurrentStyleBuilder()</span>
-<span class="fc" id="L116">				.getMergedStyle(STYLE.addSName(SName.name).withTOBECHANGED(getEntity().getStereotype()));</span>
+<span class="fc" id="L114">		return getSkinParam().getCurrentStyleBuilder()</span>
+<span class="fc" id="L115">				.getMergedStyle(STYLE.add(SName.name).withStereotype(getEntity().getStereotype()));</span>
 	}
 
 	final public ShapeType getShapeType() {
-<span class="fc" id="L120">		return ShapeType.ROUND_RECTANGLE;</span>
+<span class="fc" id="L119">		return ShapeType.ROUND_RECTANGLE;</span>
 	}
 
 	final protected URectangle getShape(final XDimension2D dimTotal) {
 
-<span class="fc" id="L125">		final double corner = getStyleState().value(PName.RoundCorner).asDouble();</span>
-<span class="fc" id="L126">		final double deltaShadow = getStyleState().getShadowing();</span>
+<span class="fc" id="L124">		final double corner = getStyleState().value(PName.RoundCorner).asDouble();</span>
+<span class="fc" id="L125">		final double deltaShadow = getStyleState().getShadowing();</span>
 
-<span class="fc" id="L128">		final URectangle rect = URectangle.build(dimTotal).rounded(corner);</span>
-<span class="fc" id="L129">		rect.setDeltaShadow(deltaShadow);</span>
-<span class="fc" id="L130">		return rect;</span>
+<span class="fc" id="L127">		final URectangle rect = URectangle.build(dimTotal).rounded(corner);</span>
+<span class="fc" id="L128">		rect.setDeltaShadow(deltaShadow);</span>
+<span class="fc" id="L129">		return rect;</span>
 	}
 
 	final protected UGraphic applyColor(UGraphic ug, Style style) {
 
-<span class="fc" id="L135">		HColor border = getBorderColor();</span>
+<span class="fc" id="L134">		HColor border = getBorderColor();</span>
 
-<span class="fc" id="L137">		ug = ug.apply(border);</span>
-<span class="fc" id="L138">		HColor backcolor = lineConfig.getColors().getColor(ColorType.BACK);</span>
-<span class="pc bpc" id="L139" title="1 of 2 branches missed.">		if (backcolor == null)</span>
-<span class="fc" id="L140">			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L136">		ug = ug.apply(border);</span>
+<span class="fc" id="L137">		HColor backcolor = lineConfig.getColors().getColor(ColorType.BACK);</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		if (backcolor == null)</span>
+<span class="fc" id="L139">			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 
-<span class="fc" id="L142">		ug = ug.apply(backcolor.bg());</span>
+<span class="fc" id="L141">		ug = ug.apply(backcolor.bg());</span>
 
-<span class="fc" id="L144">		return ug;</span>
+<span class="fc" id="L143">		return ug;</span>
 	}
 
 	final protected HColor getBorderColor() {
-<span class="fc" id="L148">		HColor border = lineConfig.getColors().getColor(ColorType.LINE);</span>
-<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		if (border == null)</span>
-<span class="fc" id="L150">			border = getStyleState().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L151">		return border;</span>
+<span class="fc" id="L147">		HColor border = lineConfig.getColors().getColor(ColorType.LINE);</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (border == null)</span>
+<span class="fc" id="L149">			border = getStyleState().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L150">		return border;</span>
 	}
 
 }

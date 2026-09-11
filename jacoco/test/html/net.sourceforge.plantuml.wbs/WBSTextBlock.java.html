@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.wbs;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBoxOld;
 import net.sourceforge.plantuml.asciiverse.ATable;
@@ -54,10 +53,10 @@ import net.sourceforge.plantuml.mindmap.IdeaShape;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 abstract class WBSTextBlock extends TextBlockMemoized implements AsciiBlock {
 
@@ -67,59 +66,58 @@ abstract class WBSTextBlock extends TextBlockMemoized implements AsciiBlock {
 	private final int level;
 	private final WElement idea;
 
-<span class="fc" id="L70">	public WBSTextBlock(ISkinParam skinParam, WElement idea) {</span>
-<span class="fc" id="L71">		this.idea = idea;</span>
-<span class="fc" id="L72">		this.skinParam = skinParam;</span>
-<span class="fc" id="L73">		this.styleBuilder = idea.getStyleBuilder();</span>
-<span class="fc" id="L74">		this.level = idea.getLevel();</span>
-<span class="fc" id="L75">		this.stereotype = idea.getStereotype();</span>
-<span class="fc" id="L76">	}</span>
+<span class="fc" id="L69">	public WBSTextBlock(ISkinParam skinParam, WElement idea) {</span>
+<span class="fc" id="L70">		this.idea = idea;</span>
+<span class="fc" id="L71">		this.skinParam = skinParam;</span>
+<span class="fc" id="L72">		this.styleBuilder = idea.getStyleBuilder();</span>
+<span class="fc" id="L73">		this.level = idea.getLevel();</span>
+<span class="fc" id="L74">		this.stereotype = idea.getStereotype();</span>
+<span class="fc" id="L75">	}</span>
 
 	final protected boolean isAutoWidth() {
-<span class="fc" id="L79">		final String width = idea.getStyle().value(PName.Width).asString();</span>
-<span class="fc" id="L80">		return &quot;auto&quot;.equalsIgnoreCase(width);</span>
+<span class="fc" id="L78">		final String width = idea.getStyle().value(PName.Width).asString();</span>
+<span class="fc" id="L79">		return &quot;auto&quot;.equalsIgnoreCase(width);</span>
 	}
 
 	final protected WElement getIdea() {
-<span class="fc" id="L84">		return idea;</span>
+<span class="fc" id="L83">		return idea;</span>
 	}
 
 	private Style getStyleUsed() {
-<span class="fc" id="L88">		final StyleQuery signature = StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.wbsDiagram, SName.arrow))</span>
-<span class="fc" id="L89">				.addLevel(level).withTOBECHANGED(stereotype);</span>
-<span class="fc" id="L90">		return styleBuilder.getMergedStyle(signature);</span>
+<span class="fc" id="L87">		final StyleQuery signature = StyleQueries.WBSDIAG_ARROW.addLevel(level).withStereotype(stereotype);</span>
+<span class="fc" id="L88">		return styleBuilder.getMergedStyle(signature);</span>
 	}
 
 	final protected void drawLine(UGraphic ug, double x1, double y1, double x2, double y2) {
-<span class="fc" id="L94">		ug = getStyleUsed().applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet());</span>
-<span class="fc" id="L95">		final XPoint2D p1 = new XPoint2D(Math.min(x1, x2), y1);</span>
-<span class="fc" id="L96">		final XPoint2D p2 = new XPoint2D(Math.max(x1, x2), y2);</span>
-<span class="fc" id="L97">		final ULine line = ULine.create(p1, p2);</span>
-<span class="fc" id="L98">		ug = ug.apply(UTranslate.point(p1));</span>
-<span class="fc" id="L99">		ug.draw(line);</span>
-<span class="fc" id="L100">	}</span>
+<span class="fc" id="L92">		ug = getStyleUsed().applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L93">		final XPoint2D p1 = new XPoint2D(Math.min(x1, x2), y1);</span>
+<span class="fc" id="L94">		final XPoint2D p2 = new XPoint2D(Math.max(x1, x2), y2);</span>
+<span class="fc" id="L95">		final ULine line = ULine.create(p1, p2);</span>
+<span class="fc" id="L96">		ug = ug.apply(UTranslate.point(p1));</span>
+<span class="fc" id="L97">		ug.draw(line);</span>
+<span class="fc" id="L98">	}</span>
 
 	final protected TextBlock buildMain(WElement idea) {
-<span class="fc" id="L103">		final Display label = idea.getLabel();</span>
-<span class="fc" id="L104">		final Style style = idea.getStyle();</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (idea.getShape() == IdeaShape.PSEUDO)</span>
-<span class="fc" id="L106">			return TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
+<span class="fc" id="L101">		final Display label = idea.getLabel();</span>
+<span class="fc" id="L102">		final Style style = idea.getStyle();</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (idea.getShape() == IdeaShape.PSEUDO)</span>
+<span class="fc" id="L104">			return TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
 
-<span class="fc bfc" id="L108" title="All 2 branches covered.">		if (idea.getShape() == IdeaShape.BOX)</span>
-<span class="fc" id="L109">			return FtileBoxOld.createWbs(style, idea.withBackColor(skinParam), label);</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">		if (idea.getShape() == IdeaShape.BOX)</span>
+<span class="fc" id="L107">			return FtileBoxOld.createWbs(style, idea.withBackColor(skinParam), label);</span>
 
-<span class="fc" id="L111">		final TextBlock text = label.create0(style.getFontConfiguration(skinParam.getIHtmlColorSet()),</span>
-<span class="fc" id="L112">				style.getHorizontalAlignment(), skinParam, style.wrapWidth(), CreoleMode.FULL, null, null);</span>
-<span class="fc" id="L113">		return TextBlockUtils.withMargin(text, 0, 3, 1, 1);</span>
+<span class="fc" id="L109">		final TextBlock text = label.create0(style.getFontConfiguration(skinParam.getIHtmlColorSet()),</span>
+<span class="fc" id="L110">				style.getHorizontalAlignment(), skinParam, style.wrapWidth(), CreoleMode.FULL, null, null);</span>
+<span class="fc" id="L111">		return TextBlockUtils.withMargin(text, 0, 3, 1, 1);</span>
 	}
 
 	@Override
 	public void asciiDraw(InfinitePlan plan) {
-<span class="nc" id="L118">		final Display label = idea.getLabel();</span>
-<span class="nc" id="L119">		final ATable table = new ATable(1, 1).withLeftPadding(1).withRightPadding(1);</span>
-<span class="nc" id="L120">		table.setCellContent(0, 0, label);</span>
-<span class="nc" id="L121">		table.asciiDraw(plan);</span>
-<span class="nc" id="L122">	}</span>
+<span class="nc" id="L116">		final Display label = idea.getLabel();</span>
+<span class="nc" id="L117">		final ATable table = new ATable(1, 1).withLeftPadding(1).withRightPadding(1);</span>
+<span class="nc" id="L118">		table.setCellContent(0, 0, label);</span>
+<span class="nc" id="L119">		table.asciiDraw(plan);</span>
+<span class="nc" id="L120">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

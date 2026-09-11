@@ -71,7 +71,7 @@ loadScripts(document, 'script');</script>
  <a href="https://plantuml.com/style-evolution" target="_top">
  Style</a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.style.parser2">net.sourceforge.plantuml.style.parser2</a></div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.style.parser">net.sourceforge.plantuml.style.parser</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <section class="class-uses">
@@ -101,7 +101,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Stereogroup.</span><code><a href="../../stereo/Stereogroup.html#getHColor(net.sourceforge.plantuml.style.parser2.StyleQuery,net.sourceforge.plantuml.style.PName,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.klimt.color.HColorSet)" class="member-name-link">getHColor</a><wbr>(<a href="../parser2/StyleQuery.html" title="class in net.sourceforge.plantuml.style.parser2">StyleQuery</a>&nbsp;styleQuery,
+<div class="col-second even-row-color"><span class="type-name-label">Stereogroup.</span><code><a href="../../stereo/Stereogroup.html#getHColor(net.sourceforge.plantuml.style.StyleQuery,net.sourceforge.plantuml.style.PName,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.klimt.color.HColorSet)" class="member-name-link">getHColor</a><wbr>(<a href="../StyleQuery.html" title="class in net.sourceforge.plantuml.style">StyleQuery</a>&nbsp;styleQuery,
  <a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>&nbsp;pname,
  <a href="../StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder,
  <a href="../../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a>&nbsp;colorSet)</code></div>
@@ -138,8 +138,8 @@ the order they are declared.</div>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="../Value.html" title="interface in net.sourceforge.plantuml.style">Value</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">StyleLoader.</span><code><a href="../StyleLoader.html#addStereotypeCount(java.util.Map,int)" class="member-name-link">addStereotypeCount</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="../Value.html" title="interface in net.sourceforge.plantuml.style">Value</a>&gt;&nbsp;tmp,
+<div class="col-first even-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="../value/Value.html" title="interface in net.sourceforge.plantuml.style.value">Value</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">StyleLoader.</span><code><a href="../StyleLoader.html#addStereotypeCount(java.util.Map,int)" class="member-name-link">addStereotypeCount</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="../value/Value.html" title="interface in net.sourceforge.plantuml.style.value">Value</a>&gt;&nbsp;tmp,
  int&nbsp;count)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>&gt;</code></div>
@@ -168,7 +168,7 @@ the order they are declared.</div>
 <div class="col-first odd-row-color"><code>boolean</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">Style.</span><code><a href="../Style.html#hasValue(net.sourceforge.plantuml.style.PName)" class="member-name-link">hasValue</a><wbr>(<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="../Value.html" title="interface in net.sourceforge.plantuml.style">Value</a></code></div>
+<div class="col-first even-row-color"><code><a href="../value/Value.html" title="interface in net.sourceforge.plantuml.style.value">Value</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">Style.</span><code><a href="../Style.html#value(net.sourceforge.plantuml.style.PName)" class="member-name-link">value</a><wbr>(<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>&nbsp;name)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
@@ -177,8 +177,8 @@ the order they are declared.</div>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="../Value.html" title="interface in net.sourceforge.plantuml.style">Value</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">StyleLoader.</span><code><a href="../StyleLoader.html#addStereotypeCount(java.util.Map,int)" class="member-name-link">addStereotypeCount</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="../Value.html" title="interface in net.sourceforge.plantuml.style">Value</a>&gt;&nbsp;tmp,
+<div class="col-first even-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="../value/Value.html" title="interface in net.sourceforge.plantuml.style.value">Value</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">StyleLoader.</span><code><a href="../StyleLoader.html#addStereotypeCount(java.util.Map,int)" class="member-name-link">addStereotypeCount</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="../value/Value.html" title="interface in net.sourceforge.plantuml.style.value">Value</a>&gt;&nbsp;tmp,
  int&nbsp;count)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
@@ -188,43 +188,43 @@ the order they are declared.</div>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../Style.html#%3Cinit%3E(net.sourceforge.plantuml.style.parser2.StyleQuery,java.util.Map)" class="member-name-link">Style</a><wbr>(<a href="../parser2/StyleQuery.html" title="class in net.sourceforge.plantuml.style.parser2">StyleQuery</a>&nbsp;query,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="../Value.html" title="interface in net.sourceforge.plantuml.style">Value</a>&gt;&nbsp;map)</code></div>
+<div class="col-second even-row-color"><code><a href="../Style.html#%3Cinit%3E(net.sourceforge.plantuml.style.StyleQuery,java.util.Map)" class="member-name-link">Style</a><wbr>(<a href="../StyleQuery.html" title="class in net.sourceforge.plantuml.style">StyleQuery</a>&nbsp;query,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="../value/Value.html" title="interface in net.sourceforge.plantuml.style.value">Value</a>&gt;&nbsp;map)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
 <li>
-<section class="detail" id="net.sourceforge.plantuml.style.parser2">
-<h2>Uses of <a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a> in <a href="../parser2/package-summary.html">net.sourceforge.plantuml.style.parser2</a></h2>
-<div class="caption"><span>Methods in <a href="../parser2/package-summary.html">net.sourceforge.plantuml.style.parser2</a> that return types with arguments of type <a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a></span></div>
+<section class="detail" id="net.sourceforge.plantuml.style.parser">
+<h2>Uses of <a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a> in <a href="../parser/package-summary.html">net.sourceforge.plantuml.style.parser</a></h2>
+<div class="caption"><span>Methods in <a href="../parser/package-summary.html">net.sourceforge.plantuml.style.parser</a> that return types with arguments of type <a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="../parser2/PrioritizedValue.html" title="class in net.sourceforge.plantuml.style.parser2">PrioritizedValue</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">MergedStyleNode.</span><code><a href="../parser2/MergedStyleNode.html#getProperties()" class="member-name-link">getProperties</a>()</code></div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="../parser/PrioritizedValue.html" title="class in net.sourceforge.plantuml.style.parser">PrioritizedValue</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">MergedStyleNode.</span><code><a href="../parser/MergedStyleNode.html#getProperties()" class="member-name-link">getProperties</a>()</code></div>
 <div class="col-last even-row-color">
 <div class="block">Properties declared anywhere for this exact selector, already merged -- light and dark
- declarations for the same property folded into one <a href="../parser2/PrioritizedValue.html" title="class in net.sourceforge.plantuml.style.parser2"><code>PrioritizedValue</code></a>, per
- <a href="../parser2/MergedStyleNode.html#mergeRule(net.sourceforge.plantuml.style.parser2.RawStyleRule,net.sourceforge.plantuml.style.AutomaticCounter,boolean)"><code>MergedStyleNode.mergeRule(net.sourceforge.plantuml.style.parser2.RawStyleRule, net.sourceforge.plantuml.style.AutomaticCounter, boolean)</code></a>.</div>
+ declarations for the same property folded into one <a href="../parser/PrioritizedValue.html" title="class in net.sourceforge.plantuml.style.parser"><code>PrioritizedValue</code></a>, per
+ <a href="../parser/MergedStyleNode.html#mergeRule(net.sourceforge.plantuml.style.parser.RawStyleRule,net.sourceforge.plantuml.style.AutomaticCounter,boolean)"><code>MergedStyleNode.mergeRule(net.sourceforge.plantuml.style.parser.RawStyleRule, net.sourceforge.plantuml.style.AutomaticCounter, boolean)</code></a>.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">RawStyleRule.</span><code><a href="../parser2/RawStyleRule.html#getProperties()" class="member-name-link">getProperties</a>()</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">RawStyleRule.</span><code><a href="../parser/RawStyleRule.html#getProperties()" class="member-name-link">getProperties</a>()</code></div>
 <div class="col-last odd-row-color">
 <div class="block">Only the properties declared directly in this block, in file order.</div>
 </div>
 </div>
-<div class="caption"><span>Methods in <a href="../parser2/package-summary.html">net.sourceforge.plantuml.style.parser2</a> with parameters of type <a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a></span></div>
+<div class="caption"><span>Methods in <a href="../parser/package-summary.html">net.sourceforge.plantuml.style.parser</a> with parameters of type <a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../parser2/PrioritizedValue.html" title="class in net.sourceforge.plantuml.style.parser2">PrioritizedValue</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">MergedStyleNode.</span><code><a href="../parser2/MergedStyleNode.html#getProperty(net.sourceforge.plantuml.style.PName)" class="member-name-link">getProperty</a><wbr>(<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>&nbsp;name)</code></div>
+<div class="col-first even-row-color"><code><a href="../parser/PrioritizedValue.html" title="class in net.sourceforge.plantuml.style.parser">PrioritizedValue</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">MergedStyleNode.</span><code><a href="../parser/MergedStyleNode.html#getProperty(net.sourceforge.plantuml.style.PName)" class="member-name-link">getProperty</a><wbr>(<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>&nbsp;name)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">RawStyleRule.</span><code><a href="../parser2/RawStyleRule.html#putProperty(net.sourceforge.plantuml.style.PName,java.lang.String)" class="member-name-link">putProperty</a><wbr>(<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>&nbsp;name,
+<div class="col-second odd-row-color"><span class="type-name-label">RawStyleRule.</span><code><a href="../parser/RawStyleRule.html#putProperty(net.sourceforge.plantuml.style.PName,java.lang.String)" class="member-name-link">putProperty</a><wbr>(<a href="../PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>&nbsp;name,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>

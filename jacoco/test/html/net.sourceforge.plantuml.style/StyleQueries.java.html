@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StyleQueries.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.style</a> &gt; <span class="el_source">StyleQueries.java</span></div><h1>StyleQueries.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.style;
+
+<span class="nc" id="L38">public final class StyleQueries {</span>
+
+<span class="fc" id="L40">	public static final StyleQuery ROOT = StyleQuery.of3(SName.root);</span>
+
+<span class="fc" id="L42">	public static final StyleQuery DOCUMENT = ROOT.add(SName.document);</span>
+
+<span class="fc" id="L44">	public static final StyleQuery DOCUMENT_CAPTION = DOCUMENT.add(SName.caption);</span>
+
+<span class="fc" id="L46">	public static final StyleQuery DOCUMENT_FOOTER = DOCUMENT.add(SName.footer);</span>
+
+<span class="fc" id="L48">	public static final StyleQuery DOCUMENT_HEADER = DOCUMENT.add(SName.header);</span>
+
+<span class="fc" id="L50">	public static final StyleQuery DOCUMENT_MAINFRAME = DOCUMENT.add(SName.mainframe);</span>
+
+<span class="fc" id="L52">	public static final StyleQuery DOCUMENT_TITLE = DOCUMENT.add(SName.title);</span>
+
+<span class="fc" id="L54">	public static final StyleQuery ELEMENT = ROOT.add(SName.element);</span>
+
+<span class="fc" id="L56">	public static final StyleQuery ACTIVITYDIAG = ELEMENT.add(SName.activityDiagram);</span>
+
+<span class="fc" id="L58">	public static final StyleQuery ACTIVITYDIAG_ACTIVITY = ACTIVITYDIAG.add(SName.activity);</span>
+
+<span class="fc" id="L60">	public static final StyleQuery ACTIVITYDIAG_ACTIVITYBAR = ACTIVITYDIAG.add(SName.activityBar);</span>
+
+<span class="fc" id="L62">	public static final StyleQuery ACTIVITYDIAG_ACTIVITY_ARROW = ACTIVITYDIAG.add(SName.activity, SName.arrow);</span>
+
+<span class="fc" id="L64">	public static final StyleQuery ACTIVITYDIAG_ACTIVITY_DIAMOND = ACTIVITYDIAG.add(SName.activity, SName.diamond);</span>
+
+<span class="fc" id="L66">	public static final StyleQuery ACTIVITYDIAG_ARROW = ACTIVITYDIAG.add(SName.arrow);</span>
+
+<span class="fc" id="L68">	public static final StyleQuery ACTIVITYDIAG_CIRCLE = ACTIVITYDIAG.add(SName.circle);</span>
+
+<span class="fc" id="L70">	public static final StyleQuery ACTIVITYDIAG_CIRCLE_END = ACTIVITYDIAG.add(SName.circle, SName.end);</span>
+
+<span class="fc" id="L72">	public static final StyleQuery ACTIVITYDIAG_CIRCLE_SPOT = ACTIVITYDIAG.add(SName.circle, SName.spot);</span>
+
+<span class="fc" id="L74">	public static final StyleQuery ACTIVITYDIAG_CIRCLE_START = ACTIVITYDIAG.add(SName.circle, SName.start);</span>
+
+<span class="fc" id="L76">	public static final StyleQuery ACTIVITYDIAG_CIRCLE_STOP = ACTIVITYDIAG.add(SName.circle, SName.stop);</span>
+
+<span class="fc" id="L78">	public static final StyleQuery ACTIVITYDIAG_GOTO = ACTIVITYDIAG.add(SName.goto_);</span>
+
+<span class="fc" id="L80">	public static final StyleQuery ACTIVITYDIAG_GROUP = ACTIVITYDIAG.add(SName.group);</span>
+
+<span class="fc" id="L82">	public static final StyleQuery ACTIVITYDIAG_NOTE = ACTIVITYDIAG.add(SName.note);</span>
+
+<span class="fc" id="L84">	public static final StyleQuery ACTIVITYDIAG_SWIMLANE = ACTIVITYDIAG.add(SName.swimlane);</span>
+
+<span class="fc" id="L86">	public static final StyleQuery ACTOR_BUSINESS_TITLE = ELEMENT.add(SName.actor, SName.business, SName.title);</span>
+
+<span class="fc" id="L88">	public static final StyleQuery ARROW = ELEMENT.add(SName.arrow);</span>
+
+<span class="fc" id="L90">	public static final StyleQuery ARROW_CARDINALITY = ELEMENT.add(SName.arrow, SName.cardinality);</span>
+
+<span class="fc" id="L92">	public static final StyleQuery CHARTDIAG = ELEMENT.add(SName.chartDiagram);</span>
+
+<span class="fc" id="L94">	public static final StyleQuery CHARTDIAG_ANNOTATION = ELEMENT.add(SName.chartDiagram, SName.annotation);</span>
+
+<span class="fc" id="L96">	public static final StyleQuery CHARTDIAG_AREA = CHARTDIAG.add(SName.area);</span>
+
+<span class="fc" id="L98">	public static final StyleQuery CHARTDIAG_AXIS = CHARTDIAG.add(SName.axis);</span>
+
+<span class="fc" id="L100">	public static final StyleQuery CHARTDIAG_BAR = CHARTDIAG.add(SName.bar);</span>
+
+<span class="fc" id="L102">	public static final StyleQuery CHARTDIAG_GRID = CHARTDIAG.add(SName.grid);</span>
+
+<span class="fc" id="L104">	public static final StyleQuery CHARTDIAG_LEGEND = CHARTDIAG.add(SName.legend);</span>
+
+<span class="fc" id="L106">	public static final StyleQuery CHARTDIAG_LINE = CHARTDIAG.add(SName.line);</span>
+
+<span class="fc" id="L108">	public static final StyleQuery CHARTDIAG_SCATTER = CHARTDIAG.add(SName.scatter);</span>
+
+<span class="fc" id="L110">	public static final StyleQuery CHENEER_ATTRIBUTE = ELEMENT.add(SName.chenEerDiagram, SName.chenAttribute);</span>
+
+<span class="fc" id="L112">	public static final StyleQuery CHENEER_ATTRIBUTE_TITLE = ELEMENT.add(SName.chenEerDiagram, SName.chenAttribute, SName.title);</span>
+
+<span class="fc" id="L114">	public static final StyleQuery CHENEER_CIRCLE = ELEMENT.add(SName.chenEerDiagram, SName.circle);</span>
+
+<span class="fc" id="L116">	public static final StyleQuery CHENEER_CIRCLE_TITLE = ELEMENT.add(SName.chenEerDiagram, SName.circle, SName.title);</span>
+
+<span class="fc" id="L118">	public static final StyleQuery CHENEER_ENTITY = ELEMENT.add(SName.chenEerDiagram, SName.chenEntity);</span>
+
+<span class="fc" id="L120">	public static final StyleQuery CHENEER_ENTITY_TITLE = ELEMENT.add(SName.chenEerDiagram, SName.chenEntity, SName.title);</span>
+
+<span class="fc" id="L122">	public static final StyleQuery CHENEER_RELATIONSHIP = ELEMENT.add(SName.chenEerDiagram, SName.chenRelationship);</span>
+
+<span class="fc" id="L124">	public static final StyleQuery CHENEER_RELATIONSHIP_TITLE = ELEMENT.add(SName.chenEerDiagram, SName.chenRelationship, SName.title);</span>
+
+<span class="fc" id="L126">	public static final StyleQuery CIRCLE = ELEMENT.add(SName.circle);</span>
+
+<span class="fc" id="L128">	public static final StyleQuery CIRCLE_END = ELEMENT.add(SName.circle, SName.end);</span>
+
+<span class="fc" id="L130">	public static final StyleQuery CIRCLE_START = ELEMENT.add(SName.circle, SName.start);</span>
+
+<span class="fc" id="L132">	public static final StyleQuery CLASSDIAG_ARROW = ELEMENT.add(SName.classDiagram, SName.arrow);</span>
+
+<span class="fc" id="L134">	public static final StyleQuery CLASSDIAG_CLASS = ELEMENT.add(SName.classDiagram, SName.class_);</span>
+
+<span class="fc" id="L136">	public static final StyleQuery CLASSDIAG_CLASS_GENERIC = ELEMENT.add(SName.classDiagram, SName.class_, SName.generic);</span>
+
+<span class="fc" id="L138">	public static final StyleQuery CLASSDIAG_CLASS_HEADER = ELEMENT.add(SName.classDiagram, SName.class_, SName.header);</span>
+
+<span class="fc" id="L140">	public static final StyleQuery CLASSDIAG_CLASS_QUALIFIED = ELEMENT.add(SName.classDiagram, SName.class_, SName.qualified);</span>
+
+<span class="fc" id="L142">	public static final StyleQuery COMPONENT = ELEMENT.add(SName.component);</span>
+
+<span class="fc" id="L144">	public static final StyleQuery COMPONENTDIAG_COMPONENT = ELEMENT.add(SName.componentDiagram, SName.component);</span>
+
+<span class="fc" id="L146">	public static final StyleQuery COMPONENTDIAG_REQUIREMENT = ELEMENT.add(SName.componentDiagram, SName.requirement);</span>
+
+<span class="fc" id="L148">	public static final StyleQuery COMPONENTDIAG_USECASE = ELEMENT.add(SName.componentDiagram, SName.usecase);</span>
+
+<span class="fc" id="L150">	public static final StyleQuery COMPONENTDIAG_USECASE_BUSINESS = ELEMENT.add(SName.componentDiagram, SName.usecase, SName.business);</span>
+
+<span class="fc" id="L152">	public static final StyleQuery COMPOSITE_TITLE = ELEMENT.add(SName.composite, SName.title);</span>
+
+<span class="fc" id="L154">	public static final StyleQuery DIAMOND = ELEMENT.add(SName.diamond);</span>
+
+<span class="fc" id="L156">	public static final StyleQuery EBNF = ELEMENT.add(SName.ebnf);</span>
+
+<span class="fc" id="L158">	public static final StyleQuery FILESDIAG = ELEMENT.add(SName.filesDiagram);</span>
+
+<span class="fc" id="L160">	public static final StyleQuery FILESDIAG_NOTE = ELEMENT.add(SName.filesDiagram, SName.note);</span>
+
+<span class="fc" id="L162">	public static final StyleQuery GANTTDIAG = ELEMENT.add(SName.ganttDiagram);</span>
+
+<span class="fc" id="L164">	public static final StyleQuery GANTTDIAG_ARROW = GANTTDIAG.add(SName.arrow);</span>
+
+<span class="fc" id="L166">	public static final StyleQuery GANTTDIAG_MILESTONE = GANTTDIAG.add(SName.milestone);</span>
+
+<span class="fc" id="L168">	public static final StyleQuery GANTTDIAG_NOTE = GANTTDIAG.add(SName.note);</span>
+
+<span class="fc" id="L170">	public static final StyleQuery GANTTDIAG_SEPARATOR = GANTTDIAG.add(SName.separator);</span>
+
+<span class="fc" id="L172">	public static final StyleQuery GANTTDIAG_TASK = GANTTDIAG.add(SName.task);</span>
+
+<span class="fc" id="L174">	public static final StyleQuery GANTTDIAG_TASK_UNSTARTED = GANTTDIAG.add(SName.task, SName.unstarted);</span>
+
+<span class="fc" id="L176">	public static final StyleQuery GANTTDIAG_TIMELINE = GANTTDIAG.add(SName.timeline);</span>
+
+<span class="fc" id="L178">	public static final StyleQuery GANTTDIAG_UNDONE = GANTTDIAG.add(SName.undone);</span>
+
+<span class="fc" id="L180">	public static final StyleQuery GITDIAG = ELEMENT.add(SName.gitDiagram);</span>
+
+<span class="fc" id="L182">	public static final StyleQuery GROUP = ELEMENT.add(SName.group);</span>
+
+<span class="fc" id="L184">	public static final StyleQuery MINDMAPDIAG = ELEMENT.add(SName.mindmapDiagram);</span>
+
+<span class="fc" id="L186">	public static final StyleQuery MINDMAPDIAG_ARROW = MINDMAPDIAG.add(SName.arrow);</span>
+
+<span class="fc" id="L188">	public static final StyleQuery MINDMAPDIAG_NODE = MINDMAPDIAG.add(SName.node);</span>
+
+<span class="fc" id="L190">	public static final StyleQuery MINDMAPDIAG_NODE_BOXLESS = MINDMAPDIAG.add(SName.node, SName.boxless);</span>
+
+<span class="fc" id="L192">	public static final StyleQuery MINDMAPDIAG_NODE_LEAF = MINDMAPDIAG.add(SName.node, SName.leafNode);</span>
+
+<span class="fc" id="L194">	public static final StyleQuery MINDMAPDIAG_NODE_LEAF_BOXLESS = MINDMAPDIAG.add(SName.node, SName.leafNode, SName.boxless);</span>
+
+<span class="fc" id="L196">	public static final StyleQuery MINDMAPDIAG_NODE_ROOT = MINDMAPDIAG.add(SName.node, SName.rootNode);</span>
+
+<span class="fc" id="L198">	public static final StyleQuery MINDMAPDIAG_NODE_ROOT_BOXLESS = MINDMAPDIAG.add(SName.node, SName.rootNode, SName.boxless);</span>
+
+<span class="fc" id="L200">	public static final StyleQuery NODE = ELEMENT.add(SName.node);</span>
+
+<span class="fc" id="L202">	public static final StyleQuery NODE_HEADER = ELEMENT.add(SName.header, SName.node);</span>
+
+<span class="fc" id="L204">	public static final StyleQuery NODE_HEADER_HIGHLIGHT = ELEMENT.add(SName.header, SName.node, SName.highlight);</span>
+
+<span class="fc" id="L206">	public static final StyleQuery NODE_HIGHLIGHT = ELEMENT.add(SName.node, SName.highlight);</span>
+
+<span class="fc" id="L208">	public static final StyleQuery NODE_SEPARATOR = ELEMENT.add(SName.node, SName.separator);</span>
+
+<span class="fc" id="L210">	public static final StyleQuery NOTE = ELEMENT.add(SName.note);</span>
+
+<span class="fc" id="L212">	public static final StyleQuery NWDIAG = ELEMENT.add(SName.nwdiagDiagram);</span>
+
+<span class="fc" id="L214">	public static final StyleQuery NWDIAG_GROUP = ELEMENT.add(SName.nwdiagDiagram, SName.group);</span>
+
+<span class="fc" id="L216">	public static final StyleQuery OBJECTDIAG_JSON = ELEMENT.add(SName.objectDiagram, SName.json);</span>
+
+<span class="fc" id="L218">	public static final StyleQuery OBJECTDIAG_JSON_HEADER = ELEMENT.add(SName.objectDiagram, SName.json, SName.header);</span>
+
+<span class="fc" id="L220">	public static final StyleQuery OBJECTDIAG_MAP = ELEMENT.add(SName.objectDiagram, SName.map);</span>
+
+<span class="fc" id="L222">	public static final StyleQuery OBJECTDIAG_MAP_HEADER = ELEMENT.add(SName.objectDiagram, SName.map, SName.header);</span>
+
+<span class="fc" id="L224">	public static final StyleQuery OBJECTDIAG_OBJECT = ELEMENT.add(SName.objectDiagram, SName.object);</span>
+
+<span class="fc" id="L226">	public static final StyleQuery OBJECTDIAG_OBJECT_HEADER = ELEMENT.add(SName.objectDiagram, SName.object, SName.header);</span>
+
+<span class="fc" id="L228">	public static final StyleQuery PACKAGE_GROUP = ELEMENT.add(SName.package_, SName.group);</span>
+
+<span class="fc" id="L230">	public static final StyleQuery PACKAGE_TITLE = ELEMENT.add(SName.package_, SName.title);</span>
+
+<span class="fc" id="L232">	public static final StyleQuery PACKETDIAG = ELEMENT.add(SName.packetdiagDiagram);</span>
+
+<span class="fc" id="L234">	public static final StyleQuery PACKETDIAG_RECTANGLE = PACKETDIAG.add(SName.rectangle);</span>
+
+<span class="fc" id="L236">	public static final StyleQuery PORT = ELEMENT.add(SName.port);</span>
+
+<span class="fc" id="L238">	public static final StyleQuery SEQUENCEDIAG = ELEMENT.add(SName.sequenceDiagram);</span>
+
+<span class="fc" id="L240">	public static final StyleQuery SEQUENCEDIAG_ACTIVATIONBOX = SEQUENCEDIAG.add(SName.activationBox);</span>
+
+<span class="fc" id="L242">	public static final StyleQuery SEQUENCEDIAG_ACTOR = SEQUENCEDIAG.add(SName.actor);</span>
+
+<span class="fc" id="L244">	public static final StyleQuery SEQUENCEDIAG_ARROW = SEQUENCEDIAG.add(SName.arrow);</span>
+
+<span class="fc" id="L246">	public static final StyleQuery SEQUENCEDIAG_BOUNDARY = SEQUENCEDIAG.add(SName.boundary);</span>
+
+<span class="fc" id="L248">	public static final StyleQuery SEQUENCEDIAG_BOX = SEQUENCEDIAG.add(SName.box);</span>
+
+<span class="fc" id="L250">	public static final StyleQuery SEQUENCEDIAG_COLLECTIONS = SEQUENCEDIAG.add(SName.collections);</span>
+
+<span class="fc" id="L252">	public static final StyleQuery SEQUENCEDIAG_CONTROL = SEQUENCEDIAG.add(SName.control);</span>
+
+<span class="fc" id="L254">	public static final StyleQuery SEQUENCEDIAG_DATABASE = SEQUENCEDIAG.add(SName.database);</span>
+
+<span class="fc" id="L256">	public static final StyleQuery SEQUENCEDIAG_ENTITY = SEQUENCEDIAG.add(SName.entity);</span>
+
+<span class="fc" id="L258">	public static final StyleQuery SEQUENCEDIAG_GROUP = SEQUENCEDIAG.add(SName.group);</span>
+
+<span class="fc" id="L260">	public static final StyleQuery SEQUENCEDIAG_GROUPHEADER = SEQUENCEDIAG.add(SName.groupHeader);</span>
+
+<span class="fc" id="L262">	public static final StyleQuery SEQUENCEDIAG_GROUP_HEADER = SEQUENCEDIAG.add(SName.group, SName.header);</span>
+
+<span class="fc" id="L264">	public static final StyleQuery SEQUENCEDIAG_LIFELINE = SEQUENCEDIAG.add(SName.lifeLine);</span>
+
+<span class="fc" id="L266">	public static final StyleQuery SEQUENCEDIAG_LIFELINE_DELAY = SEQUENCEDIAG.add(SName.lifeLine, SName.delay);</span>
+
+<span class="fc" id="L268">	public static final StyleQuery SEQUENCEDIAG_LIFELINE_DESTROY = SEQUENCEDIAG.add(SName.lifeLine, SName.destroy);</span>
+
+<span class="fc" id="L270">	public static final StyleQuery SEQUENCEDIAG_NEWPAGE = SEQUENCEDIAG.add(SName.newpage);</span>
+
+<span class="fc" id="L272">	public static final StyleQuery SEQUENCEDIAG_NOTE = SEQUENCEDIAG.add(SName.note);</span>
+
+<span class="fc" id="L274">	public static final StyleQuery SEQUENCEDIAG_NOTE_HNOTE = SEQUENCEDIAG.add(SName.note, SName.hnote);</span>
+
+<span class="fc" id="L276">	public static final StyleQuery SEQUENCEDIAG_NOTE_RNOTE = SEQUENCEDIAG.add(SName.note, SName.rnote);</span>
+
+<span class="fc" id="L278">	public static final StyleQuery SEQUENCEDIAG_PARTICIPANT = SEQUENCEDIAG.add(SName.participant);</span>
+
+<span class="fc" id="L280">	public static final StyleQuery SEQUENCEDIAG_PARTITION = SEQUENCEDIAG.add(SName.partition);</span>
+
+<span class="fc" id="L282">	public static final StyleQuery SEQUENCEDIAG_PARTITION_HEADER = SEQUENCEDIAG.add(SName.partition, SName.header);</span>
+
+<span class="fc" id="L284">	public static final StyleQuery SEQUENCEDIAG_QUEUE = SEQUENCEDIAG.add(SName.queue);</span>
+
+<span class="fc" id="L286">	public static final StyleQuery SEQUENCEDIAG_REFERENCE = SEQUENCEDIAG.add(SName.reference);</span>
+
+<span class="fc" id="L288">	public static final StyleQuery SEQUENCEDIAG_REFERENCEHEADER = SEQUENCEDIAG.add(SName.referenceHeader);</span>
+
+<span class="fc" id="L290">	public static final StyleQuery SEQUENCEDIAG_REFERENCE_HEADER = SEQUENCEDIAG.add(SName.reference, SName.header);</span>
+
+<span class="fc" id="L292">	public static final StyleQuery SEQUENCEDIAG_SEPARATOR = SEQUENCEDIAG.add(SName.separator);</span>
+
+<span class="fc" id="L294">	public static final StyleQuery SPOT_ABSTRACT_CLASS = ELEMENT.add(SName.spot, SName.spotAbstractClass);</span>
+
+<span class="fc" id="L296">	public static final StyleQuery SPOT_ANNOTATION = ELEMENT.add(SName.spot, SName.spotAnnotation);</span>
+
+<span class="fc" id="L298">	public static final StyleQuery SPOT_CLASS = ELEMENT.add(SName.spot, SName.spotClass);</span>
+
+<span class="fc" id="L300">	public static final StyleQuery SPOT_DATA_CLASS = ELEMENT.add(SName.spot, SName.spotDataClass);</span>
+
+<span class="fc" id="L302">	public static final StyleQuery SPOT_ENTITY = ELEMENT.add(SName.spot, SName.spotEntity);</span>
+
+<span class="fc" id="L304">	public static final StyleQuery SPOT_ENUM = ELEMENT.add(SName.spot, SName.spotEnum);</span>
+
+<span class="fc" id="L306">	public static final StyleQuery SPOT_EXCEPTION = ELEMENT.add(SName.spot, SName.spotException);</span>
+
+<span class="fc" id="L308">	public static final StyleQuery SPOT_INTERFACE = ELEMENT.add(SName.spot, SName.spotInterface);</span>
+
+<span class="fc" id="L310">	public static final StyleQuery SPOT_META_CLASS = ELEMENT.add(SName.spot, SName.spotMetaClass);</span>
+
+<span class="fc" id="L312">	public static final StyleQuery SPOT_PROTOCOL = ELEMENT.add(SName.spot, SName.spotProtocol);</span>
+
+<span class="fc" id="L314">	public static final StyleQuery SPOT_RECORD = ELEMENT.add(SName.spot, SName.spotRecord);</span>
+
+<span class="fc" id="L316">	public static final StyleQuery SPOT_STEREOTYPE = ELEMENT.add(SName.spot, SName.spotStereotype);</span>
+
+<span class="fc" id="L318">	public static final StyleQuery SPOT_STRUCT = ELEMENT.add(SName.spot, SName.spotStruct);</span>
+
+<span class="fc" id="L320">	public static final StyleQuery STATE = ELEMENT.add(SName.state);</span>
+
+<span class="fc" id="L322">	public static final StyleQuery STATEDIAG_STATE = ELEMENT.add(SName.stateDiagram, SName.state);</span>
+
+<span class="fc" id="L324">	public static final StyleQuery STATEDIAG_STATE_GROUP = ELEMENT.add(SName.stateDiagram, SName.state, SName.group);</span>
+
+<span class="fc" id="L326">	public static final StyleQuery STATEDIAG_STATE_NAME = ELEMENT.add(SName.stateDiagram, SName.state, SName.name);</span>
+
+<span class="fc" id="L328">	public static final StyleQuery STEREOTYPE = ELEMENT.add(SName.stereotype);</span>
+
+<span class="fc" id="L330">	public static final StyleQuery TIMINGDIAG = ELEMENT.add(SName.timingDiagram);</span>
+
+<span class="fc" id="L332">	public static final StyleQuery TIMINGDIAG_ARROW = TIMINGDIAG.add(SName.arrow);</span>
+
+<span class="fc" id="L334">	public static final StyleQuery TIMINGDIAG_CONSTRAINTARROW = TIMINGDIAG.add(SName.constraintArrow);</span>
+
+<span class="fc" id="L336">	public static final StyleQuery TIMINGDIAG_HIGHLIGHT = TIMINGDIAG.add(SName.highlight);</span>
+
+<span class="fc" id="L338">	public static final StyleQuery TIMINGDIAG_NOTE = TIMINGDIAG.add(SName.note);</span>
+
+<span class="fc" id="L340">	public static final StyleQuery TIMINGDIAG_TIMEGRID = TIMINGDIAG.add(SName.timegrid);</span>
+
+<span class="fc" id="L342">	public static final StyleQuery TIMINGDIAG_TIMELINE = TIMINGDIAG.add(SName.timeline);</span>
+
+<span class="fc" id="L344">	public static final StyleQuery VISIBILITYICON_IE_MANDATORY = ELEMENT.add(SName.visibilityIcon, SName.IEMandatory);</span>
+
+<span class="fc" id="L346">	public static final StyleQuery VISIBILITYICON_PACKAGE = ELEMENT.add(SName.visibilityIcon, SName.package_);</span>
+
+<span class="fc" id="L348">	public static final StyleQuery VISIBILITYICON_PRIVATE = ELEMENT.add(SName.visibilityIcon, SName.private_);</span>
+
+<span class="fc" id="L350">	public static final StyleQuery VISIBILITYICON_PROTECTED = ELEMENT.add(SName.visibilityIcon, SName.protected_);</span>
+
+<span class="fc" id="L352">	public static final StyleQuery VISIBILITYICON_PUBLIC = ELEMENT.add(SName.visibilityIcon, SName.public_);</span>
+
+<span class="fc" id="L354">	public static final StyleQuery WBSDIAG = ELEMENT.add(SName.wbsDiagram);</span>
+
+<span class="fc" id="L356">	public static final StyleQuery WBSDIAG_ARROW = WBSDIAG.add(SName.arrow);</span>
+
+<span class="fc" id="L358">	public static final StyleQuery WBSDIAG_NODE = WBSDIAG.add(SName.node);</span>
+
+<span class="fc" id="L360">	public static final StyleQuery WBSDIAG_NODE_BOXLESS = WBSDIAG.add(SName.node, SName.boxless);</span>
+
+<span class="fc" id="L362">	public static final StyleQuery WBSDIAG_NODE_LEAF = WBSDIAG.add(SName.node, SName.leafNode);</span>
+
+<span class="fc" id="L364">	public static final StyleQuery WBSDIAG_NODE_LEAF_BOXLESS = WBSDIAG.add(SName.node, SName.leafNode, SName.boxless);</span>
+
+<span class="fc" id="L366">	public static final StyleQuery WBSDIAG_NODE_ROOT = WBSDIAG.add(SName.node, SName.rootNode);</span>
+
+<span class="fc" id="L368">	public static final StyleQuery WBSDIAG_NODE_ROOT_BOXLESS = WBSDIAG.add(SName.node, SName.rootNode, SName.boxless);</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

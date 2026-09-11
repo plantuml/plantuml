@@ -60,8 +60,8 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.style.WithStyle;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
 public class Doll implements WithStyle {
 
@@ -106,7 +106,7 @@ public class Doll implements WithStyle {
 	}
 
 	final public Style[] getUsedStyles() {
-<span class="fc" id="L109">		Style tmp = styleBuilder.getMergedStyle(getStyleQuery().withTOBECHANGED(englober.getStereotype()));</span>
+<span class="fc" id="L109">		Style tmp = styleBuilder.getMergedStyle(getStyleQuery().withStereotype(englober.getStereotype()));</span>
 <span class="fc" id="L110">		final HColor backColor = englober.getBoxColor();</span>
 <span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (tmp != null)</span>
 <span class="fc" id="L112">			tmp = tmp.eventuallyOverride(PName.BackGroundColor, backColor);</span>

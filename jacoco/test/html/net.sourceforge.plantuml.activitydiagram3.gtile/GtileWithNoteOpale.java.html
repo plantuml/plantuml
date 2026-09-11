@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import java.util.Arrays;
 import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
@@ -60,10 +59,10 @@ import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.skin.AlignmentParam;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.style.Styleable;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
 import net.sourceforge.plantuml.svek.image.Opale;
 
 public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Styleable {
@@ -72,7 +71,7 @@ public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Stylea
 	private final Opale opale;
 
 	private final NotePosition notePosition;
-<span class="nc" id="L75">	private final double suppSpace = 20;</span>
+<span class="nc" id="L74">	private final double suppSpace = 20;</span>
 	private final Swimlane swimlaneNote;
 
 	private final UTranslate positionNote;
@@ -83,87 +82,87 @@ public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Stylea
 
 	@Override
 	public StyleQuery getStyleQuery() {
-<span class="nc" id="L86">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.note));</span>
+<span class="nc" id="L85">		return StyleQueries.ACTIVITYDIAG_NOTE;</span>
 	}
 
 	@Override
 	public Swimlane getSwimlane(String point) {
-<span class="nc" id="L91">		return tile.getSwimlane(point);</span>
+<span class="nc" id="L90">		return tile.getSwimlane(point);</span>
 	}
 
 	@Override
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="nc" id="L96">		return tile.getSwimlanes();</span>
+<span class="nc" id="L95">		return tile.getSwimlanes();</span>
 	}
 
 	public GtileWithNoteOpale(Gtile tile, PositionedNote note, ISkinParam skinParam, boolean withLink) {
-<span class="nc" id="L100">		super(tile.getStringBounder(), tile.skinParam());</span>
-<span class="nc" id="L101">		this.swimlaneNote = note.getSwimlaneNote();</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (note.getColors() != null)</span>
-<span class="nc" id="L103">			skinParam = note.getColors().mute(skinParam);</span>
+<span class="nc" id="L99">		super(tile.getStringBounder(), tile.skinParam());</span>
+<span class="nc" id="L100">		this.swimlaneNote = note.getSwimlaneNote();</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (note.getColors() != null)</span>
+<span class="nc" id="L102">			skinParam = note.getColors().mute(skinParam);</span>
 
-<span class="nc" id="L105">		this.tile = tile;</span>
-<span class="nc" id="L106">		this.notePosition = note.getNotePosition();</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (note.getType() == NoteType.FLOATING_NOTE)</span>
-<span class="nc" id="L108">			withLink = false;</span>
+<span class="nc" id="L104">		this.tile = tile;</span>
+<span class="nc" id="L105">		this.notePosition = note.getNotePosition();</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (note.getType() == NoteType.FLOATING_NOTE)</span>
+<span class="nc" id="L107">			withLink = false;</span>
 
-<span class="nc" id="L110">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getStyleQuery())</span>
-<span class="nc" id="L111">				.eventuallyOverride(note.getColors());</span>
-<span class="nc" id="L112">		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());</span>
-<span class="nc" id="L113">		final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
-<span class="nc" id="L114">		final FontConfiguration fc = style.getFontConfiguration(getIHtmlColorSet());</span>
-<span class="nc" id="L115">		final double shadowing = style.getShadowing();</span>
-<span class="nc" id="L116">		final LineBreakStrategy wrapWidth = style.wrapWidth();</span>
-<span class="nc" id="L117">		final UStroke stroke = style.getStroke();</span>
+<span class="nc" id="L109">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getStyleQuery())</span>
+<span class="nc" id="L110">				.eventuallyOverride(note.getColors());</span>
+<span class="nc" id="L111">		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());</span>
+<span class="nc" id="L112">		final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());</span>
+<span class="nc" id="L113">		final FontConfiguration fc = style.getFontConfiguration(getIHtmlColorSet());</span>
+<span class="nc" id="L114">		final double shadowing = style.getShadowing();</span>
+<span class="nc" id="L115">		final LineBreakStrategy wrapWidth = style.wrapWidth();</span>
+<span class="nc" id="L116">		final UStroke stroke = style.getStroke();</span>
 
-<span class="nc" id="L119">		final HorizontalAlignment align = skinParam.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null,</span>
+<span class="nc" id="L118">		final HorizontalAlignment align = skinParam.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null,</span>
 				false, null);
-<span class="nc" id="L121">		final Sheet sheet = skinParam.sheet(fc, align, CreoleMode.FULL).createSheet(note.getDisplay());</span>
-<span class="nc" id="L122">		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), this,</span>
-<span class="nc" id="L123">				UStroke.withThickness(1));</span>
-<span class="nc" id="L124">		this.opale = new Opale(shadowing, borderColor, noteBackgroundColor, text, withLink, stroke);</span>
+<span class="nc" id="L120">		final Sheet sheet = skinParam.sheet(fc, align, CreoleMode.FULL).createSheet(note.getDisplay());</span>
+<span class="nc" id="L121">		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), this,</span>
+<span class="nc" id="L122">				UStroke.withThickness(1));</span>
+<span class="nc" id="L123">		this.opale = new Opale(shadowing, borderColor, noteBackgroundColor, text, withLink, stroke);</span>
 
-<span class="nc" id="L126">		this.dimNote = opale.calculateDimension(stringBounder);</span>
-<span class="nc" id="L127">		this.dimTile = tile.calculateDimension(stringBounder);</span>
+<span class="nc" id="L125">		this.dimNote = opale.calculateDimension(stringBounder);</span>
+<span class="nc" id="L126">		this.dimTile = tile.calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L129">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
+<span class="nc" id="L128">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
 
-<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (note.getNotePosition() == NotePosition.LEFT) {</span>
-<span class="nc" id="L132">			this.positionNote = new UTranslate(0, (dimTotal.getHeight() - dimNote.getHeight()) / 2);</span>
-<span class="nc" id="L133">			this.positionTile = new UTranslate(dimNote.getWidth() + suppSpace,</span>
-<span class="nc" id="L134">					(dimTotal.getHeight() - dimTile.getHeight()) / 2);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (note.getNotePosition() == NotePosition.LEFT) {</span>
+<span class="nc" id="L131">			this.positionNote = new UTranslate(0, (dimTotal.getHeight() - dimNote.getHeight()) / 2);</span>
+<span class="nc" id="L132">			this.positionTile = new UTranslate(dimNote.getWidth() + suppSpace,</span>
+<span class="nc" id="L133">					(dimTotal.getHeight() - dimTile.getHeight()) / 2);</span>
 		} else {
-<span class="nc" id="L136">			this.positionNote = new UTranslate(dimTile.getWidth() + suppSpace,</span>
-<span class="nc" id="L137">					(dimTotal.getHeight() - dimNote.getHeight()) / 2);</span>
-<span class="nc" id="L138">			this.positionTile = new UTranslate(0, (dimTotal.getHeight() - dimTile.getHeight()) / 2);</span>
+<span class="nc" id="L135">			this.positionNote = new UTranslate(dimTile.getWidth() + suppSpace,</span>
+<span class="nc" id="L136">					(dimTotal.getHeight() - dimNote.getHeight()) / 2);</span>
+<span class="nc" id="L137">			this.positionTile = new UTranslate(0, (dimTotal.getHeight() - dimTile.getHeight()) / 2);</span>
 		}
-<span class="nc" id="L140">	}</span>
+<span class="nc" id="L139">	}</span>
 
 	@Override
 	protected UTranslate getCoordImpl(String name) {
-<span class="nc" id="L144">		return tile.getCoord(name).compose(positionTile);</span>
+<span class="nc" id="L143">		return tile.getCoord(name).compose(positionTile);</span>
 	}
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="nc" id="L149">		final double height = Math.max(dimNote.getHeight(), dimTile.getHeight());</span>
-<span class="nc" id="L150">		return new XDimension2D(dimTile.getWidth() + dimNote.getWidth() + suppSpace, height);</span>
+<span class="nc" id="L148">		final double height = Math.max(dimNote.getHeight(), dimTile.getHeight());</span>
+<span class="nc" id="L149">		return new XDimension2D(dimTile.getWidth() + dimNote.getWidth() + suppSpace, height);</span>
 	}
 
 	@Override
 	protected void drawUInternal(UGraphic ug) {
-<span class="nc" id="L155">		opale.drawU(ug.apply(positionNote));</span>
-<span class="nc" id="L156">		tile.drawU(ug.apply(positionTile));</span>
-<span class="nc" id="L157">	}</span>
+<span class="nc" id="L154">		opale.drawU(ug.apply(positionNote));</span>
+<span class="nc" id="L155">		tile.drawU(ug.apply(positionTile));</span>
+<span class="nc" id="L156">	}</span>
 
 	@Override
 	public double getStartingX(StringBounder stringBounder, double y) {
-<span class="nc" id="L161">		return -opale.getMarginX1();</span>
+<span class="nc" id="L160">		return -opale.getMarginX1();</span>
 	}
 
 	@Override
 	public double getEndingX(StringBounder stringBounder, double y) {
-<span class="nc" id="L166">		return opale.calculateDimension(stringBounder).getWidth() - opale.getMarginX1();</span>
+<span class="nc" id="L165">		return opale.calculateDimension(stringBounder).getWidth() - opale.getMarginX1();</span>
 	}
 
 }

@@ -81,9 +81,9 @@ loadScripts(document, 'script');</script>
 <div class="block">The counterpart of the old <code>StyleBuilder#loadInternal</code>'s
  <code>storage.get(signature)</code>/<code>storage.put(...)</code> pair, called while loading a .skin
  file: a light-only "root { FontColor black }" and a later, dark-only
- "@media (dark) { root { FontColor white } }" share the exact same <a href="../parser2/StyleQuery.html" title="class in net.sourceforge.plantuml.style.parser2"><code>StyleQuery</code></a>
+ "@media (dark) { root { FontColor white } }" share the exact same <a href="../StyleQuery.html" title="class in net.sourceforge.plantuml.style"><code>StyleQuery</code></a>
  and MUST be folded into one <a href="../Style.html" title="class in net.sourceforge.plantuml.style"><code>Style</code></a> right here, at load time -- not left for
- <a href="../StyleIndex.html#findMatching(net.sourceforge.plantuml.style.parser2.StyleQuery)"><code>findMatching(net.sourceforge.plantuml.style.parser2.StyleQuery)</code></a> to hand back as two separate entries.</div>
+ <a href="../StyleIndex.html#findMatching(net.sourceforge.plantuml.style.StyleQuery)"><code>findMatching(net.sourceforge.plantuml.style.StyleQuery)</code></a> to hand back as two separate entries.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="../StyleIndex.html" title="class in net.sourceforge.plantuml.style">StyleIndex</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">StyleIndex.</span><code><a href="../StyleIndex.html#withMuted(java.util.Collection)" class="member-name-link">withMuted</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&gt;&nbsp;newStyles)</code></div>

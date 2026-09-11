@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.gantt;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -59,9 +58,8 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
 
 /**
  * Draws, on the left side of a Gantt diagram, a textual table giving for each
@@ -89,119 +87,119 @@ public final class GanttTaskTable {
 
 	public GanttTaskTable(GanttModelData modelData, TimeBoundsData timeBounds, TaskDrawRegistryData drawRegistry,
 			TimelineStyleData timelineStyle, double headerHeight, Locale locale, StringBounder stringBounder,
-<span class="fc" id="L92">			List&lt;GanttTaskTableColumn&gt; displayedColumn) {</span>
-<span class="fc" id="L93">		this.displayedColumn = displayedColumn;</span>
-<span class="fc" id="L94">		this.modelData = modelData;</span>
-<span class="fc" id="L95">		this.timeBounds = timeBounds;</span>
-<span class="fc" id="L96">		this.drawRegistry = drawRegistry;</span>
-<span class="fc" id="L97">		this.timelineStyle = timelineStyle;</span>
-<span class="fc" id="L98">		this.headerHeight = headerHeight;</span>
-<span class="fc" id="L99">		this.locale = locale;</span>
-<span class="fc" id="L100">		this.context = new Context(locale, isRelativeMode(), timeBounds.getMinDay());</span>
+<span class="fc" id="L90">			List&lt;GanttTaskTableColumn&gt; displayedColumn) {</span>
+<span class="fc" id="L91">		this.displayedColumn = displayedColumn;</span>
+<span class="fc" id="L92">		this.modelData = modelData;</span>
+<span class="fc" id="L93">		this.timeBounds = timeBounds;</span>
+<span class="fc" id="L94">		this.drawRegistry = drawRegistry;</span>
+<span class="fc" id="L95">		this.timelineStyle = timelineStyle;</span>
+<span class="fc" id="L96">		this.headerHeight = headerHeight;</span>
+<span class="fc" id="L97">		this.locale = locale;</span>
+<span class="fc" id="L98">		this.context = new Context(locale, isRelativeMode(), timeBounds.getMinDay());</span>
 
-<span class="fc" id="L102">		this.columnEdges = new double[displayedColumn.size() + 1];</span>
-<span class="fc" id="L103">		this.columnEdges[0] = 0;</span>
-<span class="fc bfc" id="L104" title="All 2 branches covered.">		for (int i = 0; i &lt; displayedColumn.size(); i++) {</span>
-<span class="fc" id="L105">			final double colWidth = columnWidth(stringBounder, displayedColumn.get(i));</span>
-<span class="fc" id="L106">			this.columnEdges[i + 1] = this.columnEdges[i] + colWidth;</span>
+<span class="fc" id="L100">		this.columnEdges = new double[displayedColumn.size() + 1];</span>
+<span class="fc" id="L101">		this.columnEdges[0] = 0;</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">		for (int i = 0; i &lt; displayedColumn.size(); i++) {</span>
+<span class="fc" id="L103">			final double colWidth = columnWidth(stringBounder, displayedColumn.get(i));</span>
+<span class="fc" id="L104">			this.columnEdges[i + 1] = this.columnEdges[i] + colWidth;</span>
 		}
-<span class="fc" id="L108">	}</span>
+<span class="fc" id="L106">	}</span>
 
 	private double columnWidth(StringBounder stringBounder, GanttTaskTableColumn column) {
-<span class="fc" id="L111">		double width = widthOf(stringBounder, column.header(locale));</span>
-<span class="fc bfc" id="L112" title="All 2 branches covered.">		for (Task task : modelData.getTasks()) {</span>
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">			if (isDrawable(task) == false)</span>
-<span class="nc" id="L114">				continue;</span>
+<span class="fc" id="L109">		double width = widthOf(stringBounder, column.header(locale));</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">		for (Task task : modelData.getTasks()) {</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">			if (isDrawable(task) == false)</span>
+<span class="nc" id="L112">				continue;</span>
 
-<span class="fc" id="L116">			width = Math.max(width, widthOf(stringBounder, column.valueOf(task, context)));</span>
-<span class="fc" id="L117">		}</span>
-<span class="fc" id="L118">		return width + 2 * CELL_PADDING;</span>
+<span class="fc" id="L114">			width = Math.max(width, widthOf(stringBounder, column.valueOf(task, context)));</span>
+<span class="fc" id="L115">		}</span>
+<span class="fc" id="L116">		return width + 2 * CELL_PADDING;</span>
 	}
 
 	public double getWidth() {
-<span class="fc" id="L122">		return columnEdges[columnEdges.length - 1];</span>
+<span class="fc" id="L120">		return columnEdges[columnEdges.length - 1];</span>
 	}
 
 	public void drawU(UGraphic ug, double totalHeightWithoutFooter) {
-<span class="fc" id="L126">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L127">		final HColor line = timelineStyle.getLineColor();</span>
+<span class="fc" id="L124">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L125">		final HColor line = timelineStyle.getLineColor();</span>
 
-<span class="fc" id="L129">		drawGrid(ug.apply(line), totalHeightWithoutFooter);</span>
+<span class="fc" id="L127">		drawGrid(ug.apply(line), totalHeightWithoutFooter);</span>
 
-<span class="fc" id="L131">		drawHeaderRow(ug, headerHeight / 2);</span>
+<span class="fc" id="L129">		drawHeaderRow(ug, headerHeight / 2);</span>
 
-<span class="fc bfc" id="L133" title="All 2 branches covered.">		for (Task task : modelData.getTasks()) {</span>
-<span class="pc bpc" id="L134" title="1 of 2 branches missed.">			if (isDrawable(task) == false)</span>
-<span class="nc" id="L135">				continue;</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		for (Task task : modelData.getTasks()) {</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">			if (isDrawable(task) == false)</span>
+<span class="nc" id="L133">				continue;</span>
 
-<span class="fc" id="L137">			final TaskDraw draw = drawRegistry.getTaskDraw(task);</span>
-<span class="fc" id="L138">			final double yCenter = draw.getY(stringBounder).getCurrentValue()</span>
-<span class="fc" id="L139">					+ draw.getFullHeightTask(stringBounder) / 2;</span>
-<span class="fc" id="L140">			drawTaskRow(ug, yCenter, task);</span>
-<span class="fc" id="L141">		}</span>
-<span class="fc" id="L142">	}</span>
+<span class="fc" id="L135">			final TaskDraw draw = drawRegistry.getTaskDraw(task);</span>
+<span class="fc" id="L136">			final double yCenter = draw.getY(stringBounder).getCurrentValue()</span>
+<span class="fc" id="L137">					+ draw.getFullHeightTask(stringBounder) / 2;</span>
+<span class="fc" id="L138">			drawTaskRow(ug, yCenter, task);</span>
+<span class="fc" id="L139">		}</span>
+<span class="fc" id="L140">	}</span>
 
 	private void drawGrid(UGraphic ug, double totalHeightWithoutFooter) {
-<span class="fc" id="L145">		final double width = getWidth();</span>
+<span class="fc" id="L143">		final double width = getWidth();</span>
 
-<span class="fc" id="L147">		ug.draw(ULine.hline(width));</span>
-<span class="fc" id="L148">		ug.apply(UTranslate.dy(headerHeight)).draw(ULine.hline(width));</span>
-<span class="fc" id="L149">		ug.apply(UTranslate.dy(totalHeightWithoutFooter)).draw(ULine.hline(width));</span>
+<span class="fc" id="L145">		ug.draw(ULine.hline(width));</span>
+<span class="fc" id="L146">		ug.apply(UTranslate.dy(headerHeight)).draw(ULine.hline(width));</span>
+<span class="fc" id="L147">		ug.apply(UTranslate.dy(totalHeightWithoutFooter)).draw(ULine.hline(width));</span>
 
-<span class="fc bfc" id="L151" title="All 2 branches covered.">		for (double x : columnEdges)</span>
-<span class="fc" id="L152">			ug.apply(UTranslate.dx(x)).draw(ULine.vline(totalHeightWithoutFooter));</span>
-<span class="fc" id="L153">	}</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">		for (double x : columnEdges)</span>
+<span class="fc" id="L150">			ug.apply(UTranslate.dx(x)).draw(ULine.vline(totalHeightWithoutFooter));</span>
+<span class="fc" id="L151">	}</span>
 
 	private void drawHeaderRow(UGraphic ug, double yCenter) {
-<span class="fc bfc" id="L156" title="All 2 branches covered.">		for (int i = 0; i &lt; displayedColumn.size(); i++)</span>
-<span class="fc" id="L157">			drawCell(ug, columnEdges[i], yCenter, displayedColumn.get(i).header(locale));</span>
-<span class="fc" id="L158">	}</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		for (int i = 0; i &lt; displayedColumn.size(); i++)</span>
+<span class="fc" id="L155">			drawCell(ug, columnEdges[i], yCenter, displayedColumn.get(i).header(locale));</span>
+<span class="fc" id="L156">	}</span>
 
 	private void drawTaskRow(UGraphic ug, double yCenter, Task task) {
-<span class="fc bfc" id="L161" title="All 2 branches covered.">		for (int i = 0; i &lt; displayedColumn.size(); i++)</span>
-<span class="fc" id="L162">			drawCell(ug, columnEdges[i], yCenter, displayedColumn.get(i).valueOf(task, context));</span>
-<span class="fc" id="L163">	}</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">		for (int i = 0; i &lt; displayedColumn.size(); i++)</span>
+<span class="fc" id="L160">			drawCell(ug, columnEdges[i], yCenter, displayedColumn.get(i).valueOf(task, context));</span>
+<span class="fc" id="L161">	}</span>
 
 	private void drawCell(UGraphic ug, double xLeft, double yCenter, String text) {
-<span class="fc" id="L166">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L167">		final TextBlock block = createTextBlock(text);</span>
-<span class="fc" id="L168">		final XDimension2D dim = block.calculateDimension(stringBounder);</span>
-<span class="fc" id="L169">		block.drawU(ug.apply(new UTranslate(xLeft + CELL_PADDING, yCenter - dim.getHeight() / 2)));</span>
-<span class="fc" id="L170">	}</span>
+<span class="fc" id="L164">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L165">		final TextBlock block = createTextBlock(text);</span>
+<span class="fc" id="L166">		final XDimension2D dim = block.calculateDimension(stringBounder);</span>
+<span class="fc" id="L167">		block.drawU(ug.apply(new UTranslate(xLeft + CELL_PADDING, yCenter - dim.getHeight() / 2)));</span>
+<span class="fc" id="L168">	}</span>
 
 	private boolean isDrawable(Task task) {
-<span class="pc bpc" id="L173" title="1 of 2 branches missed.">		if (task instanceof TaskImpl == false)</span>
-<span class="nc" id="L174">			return false;</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">		if (task instanceof TaskImpl == false)</span>
+<span class="nc" id="L172">			return false;</span>
 
-<span class="pc bpc" id="L176" title="1 of 2 branches missed.">		if (timeBounds.isHidden(task))</span>
-<span class="nc" id="L177">			return false;</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		if (timeBounds.isHidden(task))</span>
+<span class="nc" id="L175">			return false;</span>
 
-<span class="pc bpc" id="L179" title="1 of 2 branches missed.">		if (drawRegistry.getTaskDraw(task) == null)</span>
-<span class="nc" id="L180">			return false;</span>
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">		if (drawRegistry.getTaskDraw(task) == null)</span>
+<span class="nc" id="L178">			return false;</span>
 
-<span class="fc" id="L182">		return true;</span>
+<span class="fc" id="L180">		return true;</span>
 	}
 
 	private boolean isRelativeMode() {
-<span class="fc" id="L186">		return timeBounds.getMinDay().equals(TimePoint.epoch());</span>
+<span class="fc" id="L184">		return timeBounds.getMinDay().equals(TimePoint.epoch());</span>
 	}
 
 	private double widthOf(StringBounder stringBounder, String text) {
-<span class="fc" id="L190">		return createTextBlock(text).calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L188">		return createTextBlock(text).calculateDimension(stringBounder).getWidth();</span>
 	}
 
 	private TextBlock createTextBlock(String text) {
-<span class="fc" id="L194">		return Display.getWithNewlines(timelineStyle.getPragma(), text).create(getFontConfiguration(),</span>
+<span class="fc" id="L192">		return Display.getWithNewlines(timelineStyle.getPragma(), text).create(getFontConfiguration(),</span>
 				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 	}
 
 	private Style getStyle() {
-<span class="fc" id="L199">		return timelineStyle.getSkinParam().getCurrentStyleBuilder().getMergedStyle(</span>
-<span class="fc" id="L200">				StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.ganttDiagram, SName.timeline)));</span>
+<span class="fc" id="L197">		return timelineStyle.getSkinParam().getCurrentStyleBuilder().getMergedStyle(</span>
+				StyleQueries.GANTTDIAG_TIMELINE);
 	}
 
 	private FontConfiguration getFontConfiguration() {
-<span class="fc" id="L204">		return getStyle().getFontConfiguration(timelineStyle.getColorSet());</span>
+<span class="fc" id="L202">		return getStyle().getFontConfiguration(timelineStyle.getColorSet());</span>
 	}
 
 }

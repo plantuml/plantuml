@@ -116,13 +116,13 @@ public final class InnerStateAutonom extends TextBlockMemoized implements IEntit
 <span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (this.northBackcolor == null) {</span>
 <span class="fc" id="L117">			this.northBackcolor = styleBuilder</span>
 <span class="fc" id="L118">					.getMergedStyle(</span>
-<span class="fc" id="L119">							EntityImageStateCommon.STYLE.addSName(SName.name).withTOBECHANGED(group.getStereotype()))</span>
+<span class="fc" id="L119">							EntityImageStateCommon.STYLE.add(SName.name).withStereotype(group.getStereotype()))</span>
 <span class="fc" id="L120">					.value(PName.BackGroundColor).asColor(colorSet);</span>
-<span class="fc" id="L121">			this.centerBackColor = styleBuilder.getMergedStyle(EntityImageStateCommon.STYLE.addSName(SName.description)</span>
-<span class="fc" id="L122">					.withTOBECHANGED(group.getStereotype())).value(PName.BackGroundColor).asColor(colorSet);</span>
+<span class="fc" id="L121">			this.centerBackColor = styleBuilder.getMergedStyle(EntityImageStateCommon.STYLE.add(SName.description)</span>
+<span class="fc" id="L122">					.withStereotype(group.getStereotype())).value(PName.BackGroundColor).asColor(colorSet);</span>
 <span class="fc" id="L123">			this.southBackcolor = styleBuilder</span>
 <span class="fc" id="L124">					.getMergedStyle(</span>
-<span class="fc" id="L125">							EntityImageStateCommon.STYLE.addSName(SName.body).withTOBECHANGED(group.getStereotype()))</span>
+<span class="fc" id="L125">							EntityImageStateCommon.STYLE.add(SName.body).withStereotype(group.getStereotype()))</span>
 <span class="fc" id="L126">					.value(PName.BackGroundColor).asColor(colorSet);</span>
 		}
 

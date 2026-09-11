@@ -35,52 +35,51 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-import java.util.Arrays;
 
-import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.style.Styleable;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
-<span class="fc" id="L44">public enum ParticipantType implements Styleable {</span>
-<span class="fc" id="L45">	PARTICIPANT, //</span>
-<span class="fc" id="L46">	ACTOR, //</span>
-<span class="fc" id="L47">	BOUNDARY, //</span>
-<span class="fc" id="L48">	CONTROL, //</span>
-<span class="fc" id="L49">	ENTITY, //</span>
-<span class="fc" id="L50">	QUEUE, //</span>
-<span class="fc" id="L51">	DATABASE, //</span>
-<span class="fc" id="L52">	COLLECTIONS;</span>
+<span class="fc" id="L43">public enum ParticipantType implements Styleable {</span>
+<span class="fc" id="L44">	PARTICIPANT, //</span>
+<span class="fc" id="L45">	ACTOR, //</span>
+<span class="fc" id="L46">	BOUNDARY, //</span>
+<span class="fc" id="L47">	CONTROL, //</span>
+<span class="fc" id="L48">	ENTITY, //</span>
+<span class="fc" id="L49">	QUEUE, //</span>
+<span class="fc" id="L50">	DATABASE, //</span>
+<span class="fc" id="L51">	COLLECTIONS;</span>
 
 	private ParticipantType() {
 	}
 	
 	@Override
 	public StyleQuery getStyleQuery() {
-<span class="fc bfc" id="L59" title="All 2 branches covered.">		if (this == PARTICIPANT)</span>
-<span class="fc" id="L60">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.participant));</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		if (this == PARTICIPANT)</span>
+<span class="fc" id="L59">			return StyleQueries.SEQUENCEDIAG_PARTICIPANT;</span>
 
-<span class="fc bfc" id="L62" title="All 2 branches covered.">		if (this == ACTOR)</span>
-<span class="fc" id="L63">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.actor));</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		if (this == ACTOR)</span>
+<span class="fc" id="L62">			return StyleQueries.SEQUENCEDIAG_ACTOR;</span>
 
-<span class="fc bfc" id="L65" title="All 2 branches covered.">		if (this == BOUNDARY)</span>
-<span class="fc" id="L66">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.boundary));</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (this == BOUNDARY)</span>
+<span class="fc" id="L65">			return StyleQueries.SEQUENCEDIAG_BOUNDARY;</span>
 
-<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (this == CONTROL)</span>
-<span class="fc" id="L69">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.control));</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">		if (this == CONTROL)</span>
+<span class="fc" id="L68">			return StyleQueries.SEQUENCEDIAG_CONTROL;</span>
 
-<span class="fc bfc" id="L71" title="All 2 branches covered.">		if (this == ENTITY)</span>
-<span class="fc" id="L72">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.entity));</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		if (this == ENTITY)</span>
+<span class="fc" id="L71">			return StyleQueries.SEQUENCEDIAG_ENTITY;</span>
 
-<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (this == QUEUE)</span>
-<span class="fc" id="L75">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.queue));</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">		if (this == QUEUE)</span>
+<span class="fc" id="L74">			return StyleQueries.SEQUENCEDIAG_QUEUE;</span>
 
-<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (this == DATABASE)</span>
-<span class="fc" id="L78">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.database));</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		if (this == DATABASE)</span>
+<span class="fc" id="L77">			return StyleQueries.SEQUENCEDIAG_DATABASE;</span>
 
-<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (this == COLLECTIONS)</span>
-<span class="fc" id="L81">			return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.collections));</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (this == COLLECTIONS)</span>
+<span class="fc" id="L80">			return StyleQueries.SEQUENCEDIAG_COLLECTIONS;</span>
 
-<span class="nc" id="L83">		return null;</span>
+<span class="nc" id="L82">		return null;</span>
 	}
 
 }

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StyleQuery.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.style</a> &gt; <span class="el_source">StyleQuery.java</span></div><h1>StyleQuery.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.style;
+
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
+import net.sourceforge.plantuml.stereo.Stereostyles;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.text.Guillemet;
+import net.sourceforge.plantuml.url.Url;
+
+/**
+ * What a {@link StyleAtomTrie} is asked to resolve: the element's tags (its
+ * {@link SName} set plus any stereotypes, e.g. what the legacy
+ * {@code StyleSignatureBasic} calls {@code snames}/{@code stereotypes}) and its
+ * {@link LevelConstraint} (its mindmap/wbs depth and whether this is an
+ * ancestor-inheritance lookup -- see {@link LevelConstraint}).
+ */
+public final class StyleQuery {
+
+	private final AtomArray atoms;
+	private final LevelConstraint levelConstraint;
+
+<span class="fc" id="L60">	private StyleQuery(AtomArray atoms, LevelConstraint levelConstraint) {</span>
+<span class="fc" id="L61">		this.atoms = atoms;</span>
+<span class="fc" id="L62">		this.levelConstraint = levelConstraint;</span>
+<span class="fc" id="L63">	}</span>
+
+	public static StyleQuery of3(SName... names) {
+<span class="fc" id="L66">		AtomArray atoms = AtomArray.empty();</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">		for (SName name : names)</span>
+<span class="fc" id="L68">			atoms = atoms.plus(StyleAtom.of(name));</span>
+<span class="fc" id="L69">		return new StyleQuery(atoms, LevelConstraint.none());</span>
+	}
+
+	/** No tag, no depth constraint -- mirroring {@code StyleSignature.empty()}. */
+	public static StyleQuery empty() {
+<span class="fc" id="L74">		return of3();</span>
+	}
+
+	/**
+	 * This same query, additionally requiring {@code stereotype} -- e.g. so a
+	 * &quot;frequent use&quot; factory that starts from a plain, stereotype-less query (the
+	 * common case, since most such factories are called with no stereotype in hand
+	 * yet) can still fold one in once the caller has it, the way
+	 * {@code StyleSignature.addStereotype} does for the legacy signature.
+	 * {@code stereotype} is cleaned exactly as {@link StyleAtom#ofStereotype}
+	 * cleans it (see there for why), so passing it in raw, un-lower-cased text is
+	 * fine. Requiring several stereotypes at once (an element tagged with more than
+	 * one, e.g. {@code &lt;&lt;foo&gt;&gt;&lt;&lt;bar&gt;&gt;}) is just calling this again on the result,
+	 * since a {@link TreeSet} silently dedupes a stereotype already present.
+	 */
+	public StyleQuery withStereotype(String stereotype) {
+<span class="fc" id="L90">		return new StyleQuery(atoms.plus(StyleAtom.ofStereotype(stereotype)), levelConstraint);</span>
+	}
+
+	public StyleQuery withStereotype(Stereotype stereotype) {
+<span class="fc bfc" id="L94" title="All 4 branches covered.">		if (stereotype == null || stereotype.getStyleNames().size() == 0)</span>
+<span class="fc" id="L95">			return this;</span>
+
+<span class="fc" id="L97">		final List&lt;String&gt; labels = stereotype.getLabels(Guillemet.NONE);</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (labels.size() == 0)</span>
+<span class="nc" id="L99">			return this;</span>
+
+<span class="fc" id="L101">		StyleQuery result = this;</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">		for (String s : labels)</span>
+<span class="fc" id="L103">			result = result.withStereotype(s);</span>
+<span class="fc" id="L104">		return result;</span>
+	}
+
+	/**
+	 * This same query, additionally requiring every one of {@code stereo}'s labels
+	 * at once, the same way {@link #withStereotype(Stereotype)} does -- but also
+	 * requiring the special {@link SName#stereotype} tag, mirroring
+	 * {@code StyleSignature.forStereotypeItself}: used to resolve the
+	 * CSS-class-like rule for the stereotype itself (e.g. {@code &lt;&lt;foo&gt;&gt;}'s own
+	 * {@code .foo { ... }} declaration), as opposed to a plain element carrying
+	 * that stereotype.
+	 */
+	public StyleQuery forStereotypeItself(Stereotype stereo) {
+<span class="fc bfc" id="L117" title="All 4 branches covered.">		if (stereo == null || stereo.getStyleNames().size() == 0)</span>
+<span class="fc" id="L118">			return this;</span>
+
+<span class="fc" id="L120">		final List&lt;String&gt; labels = stereo.getLabels(Guillemet.NONE);</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (labels.size() == 0)</span>
+<span class="nc" id="L122">			return this;</span>
+
+<span class="fc" id="L124">		final AtomArray withStereotypeTag = atoms.plus(StyleAtom.of(SName.stereotype));</span>
+<span class="fc" id="L125">		StyleQuery result = new StyleQuery(withStereotypeTag, levelConstraint);</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		for (String name : labels)</span>
+<span class="fc" id="L127">			result = result.withStereotype(name);</span>
+
+<span class="fc" id="L129">		return result;</span>
+	}
+
+	/**
+	 * This same query, additionally requiring every stereo-style name in
+	 * {@code stereostyles} -- mirroring {@code StyleSignature.with(Stereostyles)}.
+	 */
+	public StyleQuery withStereostyles(Stereostyles stereostyles) {
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (stereostyles.isEmpty())</span>
+<span class="fc" id="L138">			return this;</span>
+
+<span class="nc" id="L140">		StyleQuery result = this;</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">		for (String name : stereostyles.getStyleNames())</span>
+<span class="nc" id="L142">			result = result.withStereotype(name);</span>
+
+<span class="nc" id="L144">		return result;</span>
+	}
+
+	/**
+	 * This same query, additionally constrained to depth {@code level} (an exact
+	 * match unless the query was already starred) -- mirroring
+	 * {@code StyleSignature.addLevel(int)}.
+	 */
+	public StyleQuery addLevel(int level) {
+<span class="fc" id="L153">		return new StyleQuery(atoms, LevelConstraint.of(level, levelConstraint.isStar()));</span>
+	}
+
+	/**
+	 * This same query, additionally starred (an ancestor-inheritance lookup,
+	 * matching only declarations that are themselves starred) while keeping
+	 * whatever depth was already set -- mirroring {@code StyleSignature.addStar()}
+	 * / {@code StyleKey.addStar()}.
+	 */
+	public StyleQuery addStar() {
+<span class="fc" id="L163">		return new StyleQuery(atoms, LevelConstraint.of(levelConstraint.getLevel(), true));</span>
+	}
+
+	public StyleQuery add(SName name) {
+<span class="fc" id="L167">		return new StyleQuery(atoms.plus(StyleAtom.of(name)), levelConstraint);</span>
+	}
+
+	public StyleQuery add(SName name1, SName name2) {
+<span class="fc" id="L171">		return new StyleQuery(atoms.plus(StyleAtom.of(name1), StyleAtom.of(name2)), levelConstraint);</span>
+	}
+
+	public StyleQuery add(SName name1, SName name2, SName name3) {
+<span class="fc" id="L175">		return new StyleQuery(atoms.plus(StyleAtom.of(name1), StyleAtom.of(name2), StyleAtom.of(name3)),</span>
+				levelConstraint);
+	}
+
+	public StyleQuery addSNames(SName... names) {
+<span class="fc" id="L180">		AtomArray result = atoms;</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">		for (SName name : names)</span>
+<span class="fc" id="L182">			result = result.plus(StyleAtom.of(name));</span>
+<span class="fc" id="L183">		return new StyleQuery(result, levelConstraint);</span>
+	}
+
+	public StyleQuery addClickable(Url url) {
+<span class="fc bfc" id="L187" title="All 2 branches covered.">		if (url == null)</span>
+<span class="fc" id="L188">			return this;</span>
+
+<span class="fc" id="L190">		return new StyleQuery(atoms.plus(StyleAtom.of(SName.clickable)), levelConstraint);</span>
+	}
+
+	/**
+	 * This query, unioned with {@code other}: every atom either carries, plus the
+	 * least restrictive combination of their two {@link LevelConstraint}s (deepest
+	 * level, starred if either side is) -- mirroring {@code StyleKey.mergeWith}.
+	 */
+	StyleQuery mergeWith(StyleQuery other) {
+<span class="fc" id="L199">		final AtomArray result = atoms.plusAll(other.atoms);</span>
+
+<span class="fc" id="L201">		final int mergedLevel = Math.max(levelConstraint.getLevel(), other.levelConstraint.getLevel());</span>
+<span class="fc bfc" id="L202" title="All 4 branches covered.">		final boolean mergedStar = levelConstraint.isStar() || other.levelConstraint.isStar();</span>
+
+<span class="fc" id="L204">		return new StyleQuery(result, LevelConstraint.of(mergedLevel, mergedStar));</span>
+	}
+
+	/**
+	 * This query, unioned in turn with each of {@code others}'s own signature --
+	 * mirroring {@code StyleSignature.mergeWith(List&lt;Style&gt;)}.
+	 */
+	public StyleQuery mergeWith(List&lt;Style&gt; others) {
+<span class="nc" id="L212">		StyleQuery result = this;</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">		for (Style other : others)</span>
+<span class="nc" id="L214">			result = result.mergeWith(other.getQuery());</span>
+
+<span class="nc" id="L216">		return result;</span>
+	}
+
+	Iterable&lt;StyleAtom&gt; getAtoms() {
+<span class="fc" id="L220">		return atoms;</span>
+	}
+
+	LevelConstraint getLevelConstraint() {
+<span class="fc" id="L224">		return levelConstraint;</span>
+	}
+
+	/**
+	 * Every stereotype atom this query carries, in ascending order -- mirroring
+	 * {@code StyleSignature.getStereotypes()}.
+	 */
+	Set&lt;String&gt; getStereotypes() {
+<span class="fc" id="L232">		final Set&lt;String&gt; result = new LinkedHashSet&lt;String&gt;();</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">		for (StyleAtom atom : atoms)</span>
+<span class="fc bfc" id="L234" title="All 2 branches covered.">			if (atom.isName() == false)</span>
+<span class="fc" id="L235">				result.add(atom.getStereotype());</span>
+<span class="fc" id="L236">		return result;</span>
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="pc bpc" id="L241" title="1 of 2 branches missed.">		if (obj instanceof StyleQuery == false)</span>
+<span class="nc" id="L242">			return false;</span>
+<span class="fc" id="L243">		final StyleQuery other = (StyleQuery) obj;</span>
+<span class="fc bfc" id="L244" title="All 4 branches covered.">		return this.atoms.equals(other.atoms) &amp;&amp; this.levelConstraint.equals(other.levelConstraint);</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="fc" id="L249">		return atoms.hashCode() * 31 + levelConstraint.hashCode();</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="fc" id="L254">		return atoms + &quot; &quot; + levelConstraint;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

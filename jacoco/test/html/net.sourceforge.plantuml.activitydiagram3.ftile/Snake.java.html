@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.utils.Direction;
 
 public class Snake implements UShape {
@@ -136,19 +136,19 @@ public class Snake implements UShape {
 	}
 
 	public static Snake create(ISkinParam skinParam, Rainbow color) {
-<span class="nc" id="L139">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQuery.activityArrow());</span>
+<span class="nc" id="L139">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.ACTIVITYDIAG_ACTIVITY_ARROW);</span>
 <span class="nc" id="L140">		return new Snake(skinParam, null, color, null, new Worm(style, skinParam.arrows()), MergeStrategy.FULL, null,</span>
 				new ArrayList&lt;Text&gt;());
 	}
 
 	public static Snake create(ISkinParam skinParam, Rainbow color, UPolygon endDecoration) {
-<span class="fc" id="L145">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQuery.activityArrow());</span>
+<span class="fc" id="L145">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.ACTIVITYDIAG_ACTIVITY_ARROW);</span>
 <span class="fc" id="L146">		return new Snake(skinParam, null, color, endDecoration, new Worm(style, skinParam.arrows()), MergeStrategy.FULL,</span>
 				null, new ArrayList&lt;Text&gt;());
 	}
 
 	public static Snake create(ISkinParam skinParam, UPolygon startDecoration, Rainbow color, UPolygon endDecoration) {
-<span class="nc" id="L151">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQuery.activityArrow());</span>
+<span class="nc" id="L151">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.ACTIVITYDIAG_ACTIVITY_ARROW);</span>
 <span class="nc" id="L152">		return new Snake(skinParam, startDecoration, color, endDecoration, new Worm(style, skinParam.arrows()),</span>
 				MergeStrategy.FULL, null, new ArrayList&lt;Text&gt;());
 	}

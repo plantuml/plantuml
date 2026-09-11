@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - net.sourceforge.plantuml.style.AtomArrayTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<a class="breadcrumb" href="../index.html">all</a> &gt; 
+<span class="breadcrumb">net.sourceforge.plantuml.style.AtomArrayTest</span>
+</div>
+<div class="tab-container">
+<ul class="tabLinks">
+<li>
+<a class="successGroup" href="#">Gradle Test Run :test</a>
+</li>
+</ul>
+<div class="tab">
+<h2>Gradle Test Run :test</h2>
+<h1>AtomArrayTest</h1>
+<div class="tab-container">
+<ul class="tabLinks">
+<li>
+<a class="" href="#">summary</a>
+</li>
+</ul>
+<div class="tab">
+<h2>summary</h2>
+<div>
+<div class="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox">
+<div class="counter">21</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox">
+<div class="counter">0</div>
+<p>skipped</p>
+</div>
+</td>
+<td>
+<div class="infoBox duration">
+<div class="counter">0.007s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<table class="test-results sortable">
+<thead>
+<tr>
+<th>Child</th>
+<th>Name</th>
+<th data-sort-default="desc">Tests</th>
+<th data-sort-default="desc">Failures</th>
+<th data-sort-default="desc">Skipped</th>
+<th data-sort-default="desc">Duration</th>
+<th>Success rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="success">contains() is false for an atom that was never added</td>
+<td class="path">containsIsFalseForAbsentAtom()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="0">0s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">empty() has size 0 and no elements</td>
+<td class="path">emptyIsEmpty()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="1">0.001s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">equals() is false for different sets, including a strict subset</td>
+<td class="path">equalsIsFalseForDifferentSets()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="1">0.001s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">equals()/hashCode() agree for the same set built via different paths</td>
+<td class="path">equalsIsOrderAndPathIndependent()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="0">0s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">get() returns atoms in the same order the iterator does</td>
+<td class="path">getMatchesIterationOrder()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="0">0s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">iterator() on an empty collection has no elements</td>
+<td class="path">iteratorOnEmptyHasNoElements()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="1">0.001s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">iterator() throws once exhausted</td>
+<td class="path">iteratorThrowsWhenExhausted()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="0">0s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">of() dedups repeated atoms, same as TreeSet.add</td>
+<td class="path">ofDedupsAtoms()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="0">0s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">of() with no arguments is the empty instance</td>
+<td class="path">ofNoArgsIsEmpty()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="0">0s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">of() throws on a null atom</td>
+<td class="path">ofRejectsNull()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="1">0.001s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">of() sorts its arguments into ascending natural order</td>
+<td class="path">ofSortsAtoms()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="0">0s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">plus() with a new atom grows the collection by one</td>
+<td class="path">plusAddsNewAtom()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="0">0s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">plusAll() dedups atoms shared by both collections</td>
+<td class="path">plusAllDedupsSharedAtoms()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="0">0s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">plusAll() mixing SName and stereotype atoms merges both families correctly</td>
+<td class="path">plusAllMixesNameAndStereotypeAtoms()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="0">0s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">plusAll() called on an empty collection returns the other collection</td>
+<td class="path">plusAllOnEmptyReturnsOther()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="0">0s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">plusAll() unions two disjoint collections</td>
+<td class="path">plusAllUnionsDisjointSets()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="0">0s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">plusAll() with an empty argument returns this unchanged</td>
+<td class="path">plusAllWithEmptyOtherIsNoOp()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="0">0s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">plus() with an atom already present is a no-op, returning the same instance</td>
+<td class="path">plusExistingAtomIsNoOp()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="1">0.001s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">plus() keeps ascending order regardless of insertion position</td>
+<td class="path">plusKeepsSortedOrder()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="0">0s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">building the same set one atom at a time or in one of() call agree</td>
+<td class="path">plusMatchesOfRegardlessOfOrder()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="0">0s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">SName atoms sort before stereotype atoms, per StyleAtom's total order</td>
+<td class="path">snameAtomsSortBeforeStereotypes()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="0">0s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="https://www.gradle.org">Gradle 9.7.1</a> at Sep 11, 2026, 6:36:50 PM</p>
+</div>
+</div>
+</body>
+</html>

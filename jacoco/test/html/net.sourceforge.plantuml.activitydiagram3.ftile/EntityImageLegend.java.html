@@ -35,24 +35,23 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
 
-<span class="nc" id="L47">public class EntityImageLegend {</span>
+<span class="nc" id="L46">public class EntityImageLegend {</span>
 
 	public static TextBlock create(Display note, ISkinParam skinParam) {
 
-<span class="fc" id="L51">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQuery.of(Arrays.asList(SName.root,</span>
-<span class="fc" id="L52">				SName.root, SName.document, skinParam.getDiagramType().getStyleName(), SName.legend)));</span>
+<span class="fc" id="L50">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.DOCUMENT</span>
+<span class="fc" id="L51">				.add(SName.legend).add(skinParam.getDiagramType().getStyleName()));</span>
 
-<span class="fc" id="L54">		return style.createTextBlockBordered(note, skinParam.getIHtmlColorSet(), skinParam, Style.ID_LEGEND,</span>
-<span class="fc" id="L55">				style.wrapWidth());</span>
+<span class="fc" id="L53">		return style.createTextBlockBordered(note, skinParam.getIHtmlColorSet(), skinParam, Style.ID_LEGEND,</span>
+<span class="fc" id="L54">				style.wrapWidth());</span>
 	}
 
 }

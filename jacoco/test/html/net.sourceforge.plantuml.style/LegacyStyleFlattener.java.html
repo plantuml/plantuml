@@ -40,10 +40,12 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.plantuml.style.parser2.MergedStyleNode;
-import net.sourceforge.plantuml.style.parser2.PrioritizedValue;
-import net.sourceforge.plantuml.style.parser2.RawSelector;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.parser.MergedStyleNode;
+import net.sourceforge.plantuml.style.parser.PrioritizedValue;
+import net.sourceforge.plantuml.style.parser.RawSelector;
+import net.sourceforge.plantuml.style.value.Specificity;
+import net.sourceforge.plantuml.style.value.Value;
+import net.sourceforge.plantuml.style.value.ValueImpl;
 
 /**
  * Turns a {@link MergedStyleNode} tree (built by the new {@code parser2} text parser) into the
@@ -76,71 +78,71 @@ final class LegacyStyleFlattener {
 
 	/** Every declaration in {@code root}, as flat legacy {@link Style} objects. */
 	static List&lt;Style&gt; flatten(MergedStyleNode root) {
-<span class="fc" id="L79">		final List&lt;Style&gt; result = new ArrayList&lt;Style&gt;();</span>
-<span class="fc" id="L80">		flattenNode(root, StyleQuery.empty(), result);</span>
-<span class="fc" id="L81">		return result;</span>
+<span class="fc" id="L81">		final List&lt;Style&gt; result = new ArrayList&lt;Style&gt;();</span>
+<span class="fc" id="L82">		flattenNode(root, StyleQuery.empty(), result);</span>
+<span class="fc" id="L83">		return result;</span>
 	}
 
 	private static void flattenNode(MergedStyleNode node, StyleQuery pathSoFar, List&lt;Style&gt; result) {
-<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (node.getProperties().isEmpty() == false)</span>
-<span class="fc" id="L86">			result.add(new Style(pathSoFar, toValueMap(node.getProperties(), pathSoFar.getStereotypes().size())));</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">		if (node.getProperties().isEmpty() == false)</span>
+<span class="fc" id="L88">			result.add(new Style(pathSoFar, toValueMap(node.getProperties(), pathSoFar.getStereotypes().size())));</span>
 
 		// A selector declared once plain and once starred (e.g. &quot;.europeStyle {...}&quot; alongside
 		// &quot;.europeStyle * {...}&quot;) lives in two separate MergedStyleNode child slots, never one --
 		// see MergedStyleNode's own javadoc for why merging them would leak a non-cascading
 		// property onto descendants that must only inherit the cascading one. So each of the two
 		// child kinds (named, other) is visited across both its plain and its starred map.
-<span class="fc" id="L93">		flattenNamedChildren(node.getNamedChildren(), pathSoFar, result);</span>
-<span class="fc" id="L94">		flattenNamedChildren(node.getStarredNamedChildren(), pathSoFar, result);</span>
-<span class="fc" id="L95">		flattenOtherChildren(node, node.getOtherChildren(), pathSoFar, result);</span>
-<span class="fc" id="L96">		flattenOtherChildren(node, node.getStarredOtherChildren(), pathSoFar, result);</span>
-<span class="fc" id="L97">	}</span>
+<span class="fc" id="L95">		flattenNamedChildren(node.getNamedChildren(), pathSoFar, result);</span>
+<span class="fc" id="L96">		flattenNamedChildren(node.getStarredNamedChildren(), pathSoFar, result);</span>
+<span class="fc" id="L97">		flattenOtherChildren(node, node.getOtherChildren(), pathSoFar, result);</span>
+<span class="fc" id="L98">		flattenOtherChildren(node, node.getStarredOtherChildren(), pathSoFar, result);</span>
+<span class="fc" id="L99">	}</span>
 
 	private static void flattenNamedChildren(Map&lt;SName, MergedStyleNode&gt; children, StyleQuery pathSoFar,
 			List&lt;Style&gt; result) {
-<span class="fc bfc" id="L101" title="All 2 branches covered.">		for (Map.Entry&lt;SName, MergedStyleNode&gt; ent : children.entrySet()) {</span>
-<span class="fc" id="L102">			final MergedStyleNode child = ent.getValue();</span>
-<span class="fc" id="L103">			StyleQuery childSignature = pathSoFar.addSName(ent.getKey());</span>
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">			if (child.isStar())</span>
-<span class="nc" id="L105">				childSignature = childSignature.addStar();</span>
-<span class="fc" id="L106">			flattenNode(child, childSignature, result);</span>
-<span class="fc" id="L107">		}</span>
-<span class="fc" id="L108">	}</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		for (Map.Entry&lt;SName, MergedStyleNode&gt; ent : children.entrySet()) {</span>
+<span class="fc" id="L104">			final MergedStyleNode child = ent.getValue();</span>
+<span class="fc" id="L105">			StyleQuery childSignature = pathSoFar.add(ent.getKey());</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">			if (child.isStar())</span>
+<span class="nc" id="L107">				childSignature = childSignature.addStar();</span>
+<span class="fc" id="L108">			flattenNode(child, childSignature, result);</span>
+<span class="fc" id="L109">		}</span>
+<span class="fc" id="L110">	}</span>
 
 	private static void flattenOtherChildren(MergedStyleNode node, Map&lt;String, MergedStyleNode&gt; children,
 			StyleQuery pathSoFar, List&lt;Style&gt; result) {
-<span class="fc bfc" id="L112" title="All 2 branches covered.">		for (Map.Entry&lt;String, MergedStyleNode&gt; ent : children.entrySet()) {</span>
-<span class="fc" id="L113">			final String key = ent.getKey();</span>
-<span class="fc" id="L114">			final MergedStyleNode child = ent.getValue();</span>
-<span class="fc" id="L115">			final RawSelector.Kind kind = node.getOtherChildKind(key);</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		for (Map.Entry&lt;String, MergedStyleNode&gt; ent : children.entrySet()) {</span>
+<span class="fc" id="L115">			final String key = ent.getKey();</span>
+<span class="fc" id="L116">			final MergedStyleNode child = ent.getValue();</span>
+<span class="fc" id="L117">			final RawSelector.Kind kind = node.getOtherChildKind(key);</span>
 
 			StyleQuery childSignature;
-<span class="fc bfc" id="L118" title="All 2 branches covered.">			if (kind == RawSelector.Kind.DEPTH)</span>
-<span class="fc" id="L119">				childSignature = pathSoFar.addLevel(parseDepthKey(key));</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">			if (kind == RawSelector.Kind.DEPTH)</span>
+<span class="fc" id="L121">				childSignature = pathSoFar.addLevel(parseDepthKey(key));</span>
 			else
 				// STEREOTYPE, and UNKNOWN too -- see this class's own documentation for why an
 				// unrecognized selector word is folded in as a stereotype tag here, unlike
 				// StyleAtomTrie#compileNode's UNKNOWN handling.
-<span class="fc" id="L124">				childSignature = pathSoFar.withStereotype(key);</span>
+<span class="fc" id="L126">				childSignature = pathSoFar.withStereotype(key);</span>
 
-<span class="fc bfc" id="L126" title="All 2 branches covered.">			if (child.isStar())</span>
-<span class="fc" id="L127">				childSignature = childSignature.addStar();</span>
-<span class="fc" id="L128">			flattenNode(child, childSignature, result);</span>
-<span class="fc" id="L129">		}</span>
-<span class="fc" id="L130">	}</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">			if (child.isStar())</span>
+<span class="fc" id="L129">				childSignature = childSignature.addStar();</span>
+<span class="fc" id="L130">			flattenNode(child, childSignature, result);</span>
+<span class="fc" id="L131">		}</span>
+<span class="fc" id="L132">	}</span>
 
 	private static Map&lt;PName, Value&gt; toValueMap(Map&lt;PName, PrioritizedValue&gt; properties, int stereotypeCount) {
-<span class="fc" id="L133">		final Map&lt;PName, Value&gt; result = new EnumMap&lt;PName, Value&gt;(PName.class);</span>
-<span class="fc bfc" id="L134" title="All 2 branches covered.">		for (Map.Entry&lt;PName, PrioritizedValue&gt; ent : properties.entrySet()) {</span>
-<span class="fc" id="L135">			final PrioritizedValue pv = ent.getValue();</span>
-<span class="fc" id="L136">			final Specificity specificity = Specificity.atOrder(pv.getPriority()).withStereotypeCount(stereotypeCount);</span>
-<span class="fc" id="L137">			result.put(ent.getKey(), ValueImpl.of(pv.getLight(), pv.getDark(), specificity));</span>
-<span class="fc" id="L138">		}</span>
-<span class="fc" id="L139">		return result;</span>
+<span class="fc" id="L135">		final Map&lt;PName, Value&gt; result = new EnumMap&lt;PName, Value&gt;(PName.class);</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		for (Map.Entry&lt;PName, PrioritizedValue&gt; ent : properties.entrySet()) {</span>
+<span class="fc" id="L137">			final PrioritizedValue pv = ent.getValue();</span>
+<span class="fc" id="L138">			final Specificity specificity = Specificity.atOrder(pv.getPriority()).withStereotypeCount(stereotypeCount);</span>
+<span class="fc" id="L139">			result.put(ent.getKey(), ValueImpl.of(pv.getLight(), pv.getDark(), specificity));</span>
+<span class="fc" id="L140">		}</span>
+<span class="fc" id="L141">		return result;</span>
 	}
 
 	private static int parseDepthKey(String key) {
-<span class="fc" id="L143">		return Integer.parseInt(key.substring(&quot;depth(&quot;.length(), key.length() - 1));</span>
+<span class="fc" id="L145">		return Integer.parseInt(key.substring(&quot;depth(&quot;.length(), key.length() - 1));</span>
 	}
 
 }

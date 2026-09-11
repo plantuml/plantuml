@@ -165,22 +165,16 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.statediagram.command">net.sourceforge.plantuml.statediagram.command</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.style">net.sourceforge.plantuml.style</a></div>
-<div class="col-last odd-row-color">
-<div class="block">Provides classes used to manage 
- <a href="https://plantuml.com/style-evolution" target="_top">
- Style</a>.</div>
-</div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.timingdiagram.command">net.sourceforge.plantuml.timingdiagram.command</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.wbs">net.sourceforge.plantuml.wbs</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.timingdiagram.command">net.sourceforge.plantuml.timingdiagram.command</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.wbs">net.sourceforge.plantuml.wbs</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/wbs-diagram" target="_top">
  WBS Diagram</a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.wire">net.sourceforge.plantuml.wire</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.wire">net.sourceforge.plantuml.wire</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Provides classes used to manage 
  <a href="http://alphadoc.plantuml.com/doc/markdown/en/wire-diagram" target="_top">
  Wire or Block Diagram</a>.</div>
@@ -1149,6 +1143,18 @@ the order they are declared.</div>
  <a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>protected <a href="../CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandStyleImport.</span><code><a href="../CommandStyleImport.html#executeArg(net.sourceforge.plantuml.TitledDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../TitledDiagram.html" title="class in net.sourceforge.plantuml">TitledDiagram</a>&nbsp;diagram,
+ <a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
+ <a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="../CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandStyleSingleLineCSS.</span><code><a href="../CommandStyleSingleLineCSS.html#executeArg(net.sourceforge.plantuml.TitledDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../TitledDiagram.html" title="class in net.sourceforge.plantuml">TitledDiagram</a>&nbsp;diagram,
+ <a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
+ <a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="../CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CommandTitle.</span><code><a href="../CommandTitle.html#executeArg(net.sourceforge.plantuml.TitledDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../TitledDiagram.html" title="class in net.sourceforge.plantuml">TitledDiagram</a>&nbsp;diagram,
  <a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
  <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
@@ -1193,41 +1199,46 @@ the order they are declared.</div>
  <a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines,
  <a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected abstract <a href="../CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">UBrexCommandMultilines2.</span><code><a href="../UBrexCommandMultilines2.html#executeNow(S,net.sourceforge.plantuml.utils.BlocLines,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeNow</a><wbr>(<a href="../UBrexCommandMultilines2.html" title="type parameter in UBrexCommandMultilines2">S</a>&nbsp;system,
+<div class="col-first odd-row-color"><code>protected <a href="../CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandStyleMultilinesCSS.</span><code><a href="../CommandStyleMultilinesCSS.html#executeNow(net.sourceforge.plantuml.TitledDiagram,net.sourceforge.plantuml.utils.BlocLines,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeNow</a><wbr>(<a href="../../TitledDiagram.html" title="class in net.sourceforge.plantuml">TitledDiagram</a>&nbsp;diagram,
  <a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines,
  <a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Command.</span><code><a href="../Command.html#isEligibleFor(net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">isEligibleFor</a><wbr>(<a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;pass)</code></div>
+<div class="col-first even-row-color"><code>protected abstract <a href="../CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">UBrexCommandMultilines2.</span><code><a href="../UBrexCommandMultilines2.html#executeNow(S,net.sourceforge.plantuml.utils.BlocLines,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeNow</a><wbr>(<a href="../UBrexCommandMultilines2.html" title="type parameter in UBrexCommandMultilines2">S</a>&nbsp;system,
+ <a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines,
+ <a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CommandDecoratorMultine.</span><code><a href="../CommandDecoratorMultine.html#isEligibleFor(net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">isEligibleFor</a><wbr>(<a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;pass)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Command.</span><code><a href="../Command.html#isEligibleFor(net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">isEligibleFor</a><wbr>(<a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;pass)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CommandMultilines.</span><code><a href="../CommandMultilines.html#isEligibleFor(net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">isEligibleFor</a><wbr>(<a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;pass)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandDecoratorMultine.</span><code><a href="../CommandDecoratorMultine.html#isEligibleFor(net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">isEligibleFor</a><wbr>(<a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;pass)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CommandMultilines2.</span><code><a href="../CommandMultilines2.html#isEligibleFor(net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">isEligibleFor</a><wbr>(<a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;pass)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandMultilines.</span><code><a href="../CommandMultilines.html#isEligibleFor(net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">isEligibleFor</a><wbr>(<a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;pass)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CommandMultilines3.</span><code><a href="../CommandMultilines3.html#isEligibleFor(net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">isEligibleFor</a><wbr>(<a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;pass)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandMultilines2.</span><code><a href="../CommandMultilines2.html#isEligibleFor(net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">isEligibleFor</a><wbr>(<a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;pass)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CommandSkinParamMultilines.</span><code><a href="../CommandSkinParamMultilines.html#isEligibleFor(net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">isEligibleFor</a><wbr>(<a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;pass)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandMultilines3.</span><code><a href="../CommandMultilines3.html#isEligibleFor(net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">isEligibleFor</a><wbr>(<a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;pass)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ProtectedCommand.</span><code><a href="../ProtectedCommand.html#isEligibleFor(net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">isEligibleFor</a><wbr>(<a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;pass)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandSkinParamMultilines.</span><code><a href="../CommandSkinParamMultilines.html#isEligibleFor(net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">isEligibleFor</a><wbr>(<a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;pass)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SingleLineCommand2.</span><code><a href="../SingleLineCommand2.html#isEligibleFor(net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">isEligibleFor</a><wbr>(<a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;pass)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ProtectedCommand.</span><code><a href="../ProtectedCommand.html#isEligibleFor(net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">isEligibleFor</a><wbr>(<a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;pass)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">UBrexCommandMultilines2.</span><code><a href="../UBrexCommandMultilines2.html#isEligibleFor(net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">isEligibleFor</a><wbr>(<a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;pass)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SingleLineCommand2.</span><code><a href="../SingleLineCommand2.html#isEligibleFor(net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">isEligibleFor</a><wbr>(<a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;pass)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">UBrexSingleLineCommand2.</span><code><a href="../UBrexSingleLineCommand2.html#isEligibleFor(net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">isEligibleFor</a><wbr>(<a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;pass)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">UBrexCommandMultilines2.</span><code><a href="../UBrexCommandMultilines2.html#isEligibleFor(net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">isEligibleFor</a><wbr>(<a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;pass)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">UBrexSingleLineCommand2.</span><code><a href="../UBrexSingleLineCommand2.html#isEligibleFor(net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">isEligibleFor</a><wbr>(<a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;pass)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -2169,34 +2180,6 @@ the order they are declared.</div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>boolean</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CommandEndState.</span><code><a href="../../statediagram/command/CommandEndState.html#isEligibleFor(net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">isEligibleFor</a><wbr>(<a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;pass)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="net.sourceforge.plantuml.style">
-<h2>Uses of <a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a> in <a href="../../style/package-summary.html">net.sourceforge.plantuml.style</a></h2>
-<div class="caption"><span>Methods in <a href="../../style/package-summary.html">net.sourceforge.plantuml.style</a> with parameters of type <a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>protected <a href="../CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CommandStyleImport.</span><code><a href="../../style/CommandStyleImport.html#executeArg(net.sourceforge.plantuml.TitledDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../TitledDiagram.html" title="class in net.sourceforge.plantuml">TitledDiagram</a>&nbsp;diagram,
- <a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
- <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
- <a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected <a href="../CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CommandStyleSingleLineCSS.</span><code><a href="../../style/CommandStyleSingleLineCSS.html#executeArg(net.sourceforge.plantuml.TitledDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../TitledDiagram.html" title="class in net.sourceforge.plantuml">TitledDiagram</a>&nbsp;diagram,
- <a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
- <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
- <a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>protected <a href="../CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CommandStyleMultilinesCSS.</span><code><a href="../../style/CommandStyleMultilinesCSS.html#executeNow(net.sourceforge.plantuml.TitledDiagram,net.sourceforge.plantuml.utils.BlocLines,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeNow</a><wbr>(<a href="../../TitledDiagram.html" title="class in net.sourceforge.plantuml">TitledDiagram</a>&nbsp;diagram,
- <a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines,
- <a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>

@@ -35,23 +35,21 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-import java.util.Arrays;
 
-import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.style.Styleable;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
 
-<span class="fc" id="L44">public enum LifeEventType implements Styleable {</span>
-<span class="fc" id="L45">	ACTIVATE, DEACTIVATE, DESTROY, CREATE;</span>
+<span class="fc" id="L43">public enum LifeEventType implements Styleable {</span>
+<span class="fc" id="L44">	ACTIVATE, DEACTIVATE, DESTROY, CREATE;</span>
 
 	@Override
 	public StyleQuery getStyleQuery() {
-<span class="pc bpc" id="L49" title="1 of 2 branches missed.">		if (this == DESTROY)</span>
-<span class="fc" id="L50">			return StyleQuery</span>
-<span class="fc" id="L51">					.of(Arrays.asList(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.destroy));</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">		if (this == DESTROY)</span>
+<span class="fc" id="L49">			return StyleQueries.SEQUENCEDIAG_LIFELINE_DESTROY;</span>
 
 		// To be completed
-<span class="nc" id="L54">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L52">		throw new UnsupportedOperationException();</span>
 
 	}
 

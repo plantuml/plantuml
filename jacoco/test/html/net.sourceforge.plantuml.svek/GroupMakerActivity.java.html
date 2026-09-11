@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.svek;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -57,7 +56,8 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
 
 public final class GroupMakerActivity {
@@ -107,7 +107,7 @@ public final class GroupMakerActivity {
 	}
 
 	final public StyleQuery getDefaultStyleDefinitionGroup() {
-<span class="nc" id="L110">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.group));</span>
+<span class="nc" id="L110">		return StyleQueries.ACTIVITYDIAG_GROUP;</span>
 	}
 
 	public IEntityImage getImage() throws IOException, InterruptedException {

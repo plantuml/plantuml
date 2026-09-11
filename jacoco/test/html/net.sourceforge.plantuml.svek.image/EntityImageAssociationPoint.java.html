@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.klimt.CopyForegroundColorToBackgroundColor;
@@ -46,9 +45,9 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 
@@ -57,33 +56,32 @@ public class EntityImageAssociationPoint extends AbstractEntityImage {
 	private static final int SIZE = 4;
 
 	public EntityImageAssociationPoint(Entity entity) {
-<span class="fc" id="L60">		super(entity);</span>
-<span class="fc" id="L61">	}</span>
+<span class="fc" id="L59">		super(entity);</span>
+<span class="fc" id="L60">	}</span>
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="fc" id="L65">		return new XDimension2D(SIZE, SIZE);</span>
+<span class="fc" id="L64">		return new XDimension2D(SIZE, SIZE);</span>
 	}
 
 	@Override
 	public StyleQuery getStyleQuery() {
-<span class="fc" id="L70">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.classDiagram, SName.arrow))</span>
-<span class="fc" id="L71">				.withTOBECHANGED(getStereo());</span>
+<span class="fc" id="L69">		return StyleQueries.CLASSDIAG_ARROW.withStereotype(getStereo());</span>
 	}
 
 	private Style getStyle() {
-<span class="fc" id="L75">		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery());</span>
+<span class="fc" id="L73">		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery());</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="fc" id="L79">		final UShape circle = UEllipse.build(SIZE, SIZE);</span>
+<span class="fc" id="L77">		final UShape circle = UEllipse.build(SIZE, SIZE);</span>
 
-<span class="fc" id="L81">		final HColor color = getStyle().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L82">		ug.apply(color).apply(new CopyForegroundColorToBackgroundColor()).draw(circle);</span>
-<span class="fc" id="L83">	}</span>
+<span class="fc" id="L79">		final HColor color = getStyle().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L80">		ug.apply(color).apply(new CopyForegroundColorToBackgroundColor()).draw(circle);</span>
+<span class="fc" id="L81">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="fc" id="L86">		return ShapeType.CIRCLE;</span>
+<span class="fc" id="L84">		return ShapeType.CIRCLE;</span>
 	}
 
 }

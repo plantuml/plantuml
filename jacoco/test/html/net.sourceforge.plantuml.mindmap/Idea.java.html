@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.mindmap;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -46,10 +45,10 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.MergeStrategy;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.wbs.WElement;
 
 class Idea {
@@ -57,7 +56,7 @@ class Idea {
 	private final Display label;
 	private final int level;
 	private final Idea parent;
-<span class="fc" id="L60">	private final List&lt;Idea&gt; children = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L59">	private final List&lt;Idea&gt; children = new ArrayList&lt;&gt;();</span>
 	private final IdeaShape shape;
 	private final HColor backColor;
 	private final StyleBuilder styleBuilder;
@@ -65,125 +64,111 @@ class Idea {
 
 	@DuplicateCode(reference = &quot;WElement&quot;)
 	private StyleQuery getDefaultStyleDefinitionNode(int level) {
-<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (level == 0)</span>
-<span class="fc bfc" id="L69" title="All 2 branches covered.">			if (shape == IdeaShape.NONE)</span>
-<span class="fc" id="L70">				return StyleQuery</span>
-<span class="fc" id="L71">						.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode,</span>
-								SName.boxless))
-<span class="fc" id="L73">						.withTOBECHANGED(stereotype).addLevel(level);</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">		if (level == 0)</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">			if (shape == IdeaShape.NONE)</span>
+<span class="fc" id="L69">				return StyleQueries.MINDMAPDIAG_NODE_ROOT_BOXLESS.withStereotype(stereotype).addLevel(level);</span>
 			else
-<span class="fc" id="L75">				return StyleQuery</span>
-<span class="fc" id="L76">						.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode))</span>
-<span class="fc" id="L77">						.withTOBECHANGED(stereotype).addLevel(level);</span>
+<span class="fc" id="L71">				return StyleQueries.MINDMAPDIAG_NODE_ROOT.withStereotype(stereotype).addLevel(level);</span>
 
-<span class="fc bfc" id="L79" title="All 4 branches covered.">		if (shape == IdeaShape.NONE &amp;&amp; children.size() == 0)</span>
-<span class="fc" id="L80">			return StyleQuery</span>
-<span class="fc" id="L81">					.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode,</span>
-							SName.boxless))
-<span class="fc" id="L83">					.withTOBECHANGED(stereotype).addLevel(level);</span>
+<span class="fc bfc" id="L73" title="All 4 branches covered.">		if (shape == IdeaShape.NONE &amp;&amp; children.size() == 0)</span>
+<span class="fc" id="L74">			return StyleQueries.MINDMAPDIAG_NODE_LEAF_BOXLESS.withStereotype(stereotype).addLevel(level);</span>
 
-<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (shape == IdeaShape.NONE)</span>
-<span class="fc" id="L86">			return StyleQuery</span>
-<span class="fc" id="L87">					.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.boxless))</span>
-<span class="fc" id="L88">					.withTOBECHANGED(stereotype).addLevel(level);</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		if (shape == IdeaShape.NONE)</span>
+<span class="fc" id="L77">			return StyleQueries.MINDMAPDIAG_NODE_BOXLESS.withStereotype(stereotype).addLevel(level);</span>
 
-<span class="fc bfc" id="L90" title="All 2 branches covered.">		if (children.size() == 0)</span>
-<span class="fc" id="L91">			return StyleQuery</span>
-<span class="fc" id="L92">					.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode))</span>
-<span class="fc" id="L93">					.withTOBECHANGED(stereotype).addLevel(level);</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (children.size() == 0)</span>
+<span class="fc" id="L80">			return StyleQueries.MINDMAPDIAG_NODE_LEAF.withStereotype(stereotype).addLevel(level);</span>
 
-<span class="fc" id="L95">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.node))</span>
-<span class="fc" id="L96">				.withTOBECHANGED(stereotype).addLevel(level);</span>
+<span class="fc" id="L82">		return StyleQueries.MINDMAPDIAG_NODE.withStereotype(stereotype).addLevel(level);</span>
 	}
 
 	/**
 	 * Resolves this element's style, cascading down from ancestors' starred (&quot;{@code * }&quot;)
 	 * declarations. A nearer ancestor's matching declaration always beats a farther ancestor's --
-	 * see {@link net.sourceforge.plantuml.style.Specificity}'s own javadoc for why each cascade
+	 * see {@link net.sourceforge.plantuml.style.value.Specificity}'s own javadoc for why each cascade
 	 * step is simply one strictly-decreasing rank (0 at this element's own level) rather than a
 	 * magnitude-multiplied constant.
 	 */
 	public Style getStyle() {
-<span class="fc" id="L107">		int ancestorRank = 0;</span>
-<span class="fc" id="L108">		Style result = styleBuilder.getMergedStyleSpecial(getDefaultStyleDefinitionNode(level), ancestorRank);</span>
-<span class="fc bfc" id="L109" title="All 2 branches covered.">		for (Idea up = parent; up != null; up = up.parent) {</span>
-<span class="fc" id="L110">			final StyleQuery ss = up.getDefaultStyleDefinitionNode(level).addStar();</span>
-<span class="fc" id="L111">			ancestorRank--;</span>
-<span class="fc" id="L112">			final Style styleParent = styleBuilder.getMergedStyleSpecial(ss, ancestorRank);</span>
-<span class="fc" id="L113">			result = result.mergeWith(styleParent, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
+<span class="fc" id="L93">		int ancestorRank = 0;</span>
+<span class="fc" id="L94">		Style result = styleBuilder.getMergedStyleSpecial(getDefaultStyleDefinitionNode(level), ancestorRank);</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">		for (Idea up = parent; up != null; up = up.parent) {</span>
+<span class="fc" id="L96">			final StyleQuery ss = up.getDefaultStyleDefinitionNode(level).addStar();</span>
+<span class="fc" id="L97">			ancestorRank--;</span>
+<span class="fc" id="L98">			final Style styleParent = styleBuilder.getMergedStyleSpecial(ss, ancestorRank);</span>
+<span class="fc" id="L99">			result = result.mergeWith(styleParent, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
 		}
-<span class="fc" id="L115">		return result;</span>
+<span class="fc" id="L101">		return result;</span>
 	}
 
 	public Style getStyleArrow() {
-<span class="fc" id="L119">		final StyleQuery defaultStyleDefinitionArrow = StyleQuery</span>
-<span class="fc" id="L120">				.of(Arrays.asList(SName.root, SName.element, SName.mindmapDiagram, SName.arrow))</span>
-<span class="fc" id="L121">				.withTOBECHANGED(stereotype).addLevel(level);</span>
-<span class="fc" id="L122">		return styleBuilder.getMergedStyle(defaultStyleDefinitionArrow);</span>
+<span class="fc" id="L105">		final StyleQuery defaultStyleDefinitionArrow = StyleQueries.MINDMAPDIAG_ARROW</span>
+<span class="fc" id="L106">				.withStereotype(stereotype).addLevel(level);</span>
+<span class="fc" id="L107">		return styleBuilder.getMergedStyle(defaultStyleDefinitionArrow);</span>
 	}
 
 	public static Idea createIdeaSimple(StyleBuilder styleBuilder, HColor backColor, Display label, IdeaShape shape,
 			Stereotype stereotype) {
-<span class="fc" id="L127">		return new Idea(styleBuilder, backColor, 0, null, label, shape, stereotype);</span>
+<span class="fc" id="L112">		return new Idea(styleBuilder, backColor, 0, null, label, shape, stereotype);</span>
 	}
 
 	public Idea createIdea(StyleBuilder styleBuilder, HColor backColor, int newLevel, Display newDisplay,
 			IdeaShape newShape, Stereotype stereotype) {
-<span class="fc" id="L132">		final Idea result = new Idea(styleBuilder, backColor, newLevel, this, newDisplay, newShape, stereotype);</span>
-<span class="fc" id="L133">		this.children.add(result);</span>
-<span class="fc" id="L134">		return result;</span>
+<span class="fc" id="L117">		final Idea result = new Idea(styleBuilder, backColor, newLevel, this, newDisplay, newShape, stereotype);</span>
+<span class="fc" id="L118">		this.children.add(result);</span>
+<span class="fc" id="L119">		return result;</span>
 	}
 
 	private Idea(StyleBuilder styleBuilder, HColor backColor, int level, Idea parent, Display label, IdeaShape shape,
-<span class="fc" id="L138">			Stereotype stereotype) {</span>
-<span class="fc" id="L139">		this.backColor = backColor;</span>
-<span class="fc" id="L140">		this.styleBuilder = styleBuilder;</span>
-<span class="fc" id="L141">		this.label = label;</span>
-<span class="fc" id="L142">		this.level = level;</span>
-<span class="fc" id="L143">		this.parent = parent;</span>
-<span class="fc" id="L144">		this.shape = shape;</span>
-<span class="fc" id="L145">		this.stereotype = stereotype;</span>
-<span class="fc" id="L146">	}</span>
+<span class="fc" id="L123">			Stereotype stereotype) {</span>
+<span class="fc" id="L124">		this.backColor = backColor;</span>
+<span class="fc" id="L125">		this.styleBuilder = styleBuilder;</span>
+<span class="fc" id="L126">		this.label = label;</span>
+<span class="fc" id="L127">		this.level = level;</span>
+<span class="fc" id="L128">		this.parent = parent;</span>
+<span class="fc" id="L129">		this.shape = shape;</span>
+<span class="fc" id="L130">		this.stereotype = stereotype;</span>
+<span class="fc" id="L131">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L150">		return label.toString();</span>
+<span class="nc" id="L135">		return label.toString();</span>
 	}
 
 	public final int getLevel() {
-<span class="fc" id="L154">		return level;</span>
+<span class="fc" id="L139">		return level;</span>
 	}
 
 	public final Display getLabel() {
-<span class="fc" id="L158">		return label;</span>
+<span class="fc" id="L143">		return label;</span>
 	}
 
 	public Collection&lt;Idea&gt; getChildren() {
-<span class="fc" id="L162">		return Collections.unmodifiableList(children);</span>
+<span class="fc" id="L147">		return Collections.unmodifiableList(children);</span>
 	}
 
 	public boolean hasChildren() {
-<span class="pc bpc" id="L166" title="1 of 2 branches missed.">		return children.size() &gt; 0;</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">		return children.size() &gt; 0;</span>
 	}
 
 	public Idea getParent() {
-<span class="fc" id="L170">		return parent;</span>
+<span class="fc" id="L155">		return parent;</span>
 	}
 
 	public final IdeaShape getShape() {
-<span class="fc" id="L174">		return shape;</span>
+<span class="fc" id="L159">		return shape;</span>
 	}
 
 	public final HColor getBackColor() {
-<span class="fc" id="L178">		return backColor;</span>
+<span class="fc" id="L163">		return backColor;</span>
 	}
 
 	public final StyleBuilder getStyleBuilder() {
-<span class="nc" id="L182">		return styleBuilder;</span>
+<span class="nc" id="L167">		return styleBuilder;</span>
 	}
 
 	public final Stereotype getStereotype1() {
-<span class="nc" id="L186">		return stereotype;</span>
+<span class="nc" id="L171">		return stereotype;</span>
 	}
 
 }

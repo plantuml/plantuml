@@ -35,7 +35,6 @@
 package net.sourceforge.plantuml.timingdiagram;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -53,7 +52,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.timingdiagram.graphic.Panels;
 import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrame;
 import net.sourceforge.plantuml.utils.Position;
@@ -69,68 +68,67 @@ public abstract class Player {
 	private final HColor generalBackgroundColor;
 	private Panels cached;
 
-<span class="fc" id="L72">	private final List&lt;TimingNote&gt; notes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L71">	private final List&lt;TimingNote&gt; notes = new ArrayList&lt;&gt;();</span>
 	private final PlayerFrame playerFrame;
 	private final SName sname;
 
 	public final void addNote(TimeTick now, Display note, Position position, Stereotype stereotype) {
-<span class="nc" id="L77">		final StyleQuery signature = StyleQuery</span>
-<span class="nc" id="L78">				.of(Arrays.asList(SName.root, SName.element, SName.timingDiagram, SName.note));</span>
-<span class="nc" id="L79">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(signature.withTOBECHANGED(stereotype));</span>
+<span class="nc" id="L76">		final Style style = skinParam.getCurrentStyleBuilder()</span>
+<span class="nc" id="L77">				.getMergedStyle(StyleQueries.TIMINGDIAG_NOTE.withStereotype(stereotype));</span>
 
-<span class="nc" id="L81">		this.notes.add(new TimingNote(now, this, note, position, skinParam, style));</span>
-<span class="nc" id="L82">	}</span>
+<span class="nc" id="L79">		this.notes.add(new TimingNote(now, this, note, position, skinParam, style));</span>
+<span class="nc" id="L80">	}</span>
 
 	public Player(String title, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype,
-<span class="fc" id="L85">			HColor generalBackgroundColor, SName sname, int suggestedHeight) {</span>
-<span class="fc" id="L86">		this.generalBackgroundColor = generalBackgroundColor;</span>
-<span class="fc" id="L87">		this.sname = sname;</span>
-<span class="fc" id="L88">		this.stereotype = stereotype;</span>
-<span class="fc" id="L89">		this.skinParam = skinParam;</span>
-<span class="fc" id="L90">		this.compact = compact;</span>
-<span class="fc" id="L91">		this.ruler = ruler;</span>
-<span class="fc" id="L92">		this.suggestedHeight = suggestedHeight;</span>
-<span class="fc" id="L93">		this.title = Display.getWithNewlines(skinParam.getPragma(), title);</span>
-<span class="fc" id="L94">		this.playerFrame = new PlayerFrame(getTitle(), skinParam, compact);</span>
+<span class="fc" id="L83">			HColor generalBackgroundColor, SName sname, int suggestedHeight) {</span>
+<span class="fc" id="L84">		this.generalBackgroundColor = generalBackgroundColor;</span>
+<span class="fc" id="L85">		this.sname = sname;</span>
+<span class="fc" id="L86">		this.stereotype = stereotype;</span>
+<span class="fc" id="L87">		this.skinParam = skinParam;</span>
+<span class="fc" id="L88">		this.compact = compact;</span>
+<span class="fc" id="L89">		this.ruler = ruler;</span>
+<span class="fc" id="L90">		this.suggestedHeight = suggestedHeight;</span>
+<span class="fc" id="L91">		this.title = Display.getWithNewlines(skinParam.getPragma(), title);</span>
+<span class="fc" id="L92">		this.playerFrame = new PlayerFrame(getTitle(), skinParam, compact);</span>
 
-<span class="fc" id="L96">	}</span>
+<span class="fc" id="L94">	}</span>
 
 	final protected Style getStyle() {
-<span class="fc" id="L99">		return getSkinParam().getCurrentStyleBuilder().getMergedStyle(StyleQuery</span>
-<span class="fc" id="L100">				.of(Arrays.asList(SName.root, SName.element, SName.timingDiagram, sname)).withTOBECHANGED(stereotype));</span>
+<span class="fc" id="L97">		return getSkinParam().getCurrentStyleBuilder()</span>
+<span class="fc" id="L98">				.getMergedStyle(StyleQueries.TIMINGDIAG.add(sname).withStereotype(stereotype));</span>
 	}
 
 	public final List&lt;TimingNote&gt; getNotes() {
-<span class="fc" id="L104">		return Collections.unmodifiableList(notes);</span>
+<span class="fc" id="L102">		return Collections.unmodifiableList(notes);</span>
 	}
 
 	public final ISkinParam getSkinParam() {
-<span class="fc" id="L108">		return skinParam;</span>
+<span class="fc" id="L106">		return skinParam;</span>
 	}
 
 	public final TimingRuler getRuler() {
-<span class="fc" id="L112">		return ruler;</span>
+<span class="fc" id="L110">		return ruler;</span>
 	}
 
 	public final int getSuggestedHeight() {
-<span class="fc" id="L116">		return suggestedHeight;</span>
+<span class="fc" id="L114">		return suggestedHeight;</span>
 	}
 
 	public final boolean isCompact() {
-<span class="fc" id="L120">		return compact;</span>
+<span class="fc" id="L118">		return compact;</span>
 	}
 
 	public final HColor getGeneralBackgroundColor() {
-<span class="fc" id="L124">		return generalBackgroundColor;</span>
+<span class="fc" id="L122">		return generalBackgroundColor;</span>
 	}
 
 	private TextBlock getTitle() {
-<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (title.isWhite())</span>
-<span class="nc" id="L129">			return TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
-<span class="fc" id="L130">		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam,</span>
-<span class="fc" id="L131">				skinParam.getCurrentStyleBuilder()</span>
-<span class="fc" id="L132">						.getMergedStyle(StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.timingDiagram))));</span>
-<span class="fc" id="L133">		return title.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		if (title.isWhite())</span>
+<span class="nc" id="L127">			return TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
+<span class="fc" id="L128">		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam,</span>
+<span class="fc" id="L129">				skinParam.getCurrentStyleBuilder()</span>
+<span class="fc" id="L130">						.getMergedStyle(StyleQueries.TIMINGDIAG));</span>
+<span class="fc" id="L131">		return title.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);</span>
 	}
 
 	public abstract void defineState(String stateCode, String label);
@@ -140,22 +138,22 @@ public abstract class Player {
 	public abstract void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config);
 
 	public final void drawFrameTitle(UGraphic ug) {
-<span class="fc" id="L143">		playerFrame.drawFrameTitle(ug);</span>
-<span class="fc" id="L144">	}</span>
+<span class="fc" id="L141">		playerFrame.drawFrameTitle(ug);</span>
+<span class="fc" id="L142">	}</span>
 
 	public final double getFrameHeight(StringBounder stringBounder) {
-<span class="fc" id="L147">		return playerFrame.getHeight(stringBounder);</span>
+<span class="fc" id="L145">		return playerFrame.getHeight(stringBounder);</span>
 	}
 
 	public final void setHeight(int height) {
-<span class="nc" id="L151">		this.suggestedHeight = height;</span>
-<span class="nc" id="L152">	}</span>
+<span class="nc" id="L149">		this.suggestedHeight = height;</span>
+<span class="nc" id="L150">	}</span>
 
 	public final Panels panels() {
-<span class="fc bfc" id="L155" title="All 2 branches covered.">		if (cached == null)</span>
-<span class="fc" id="L156">			cached = buildPlayerPanels();</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		if (cached == null)</span>
+<span class="fc" id="L154">			cached = buildPlayerPanels();</span>
 
-<span class="fc" id="L158">		return cached;</span>
+<span class="fc" id="L156">		return cached;</span>
 	}
 
 	protected abstract Panels buildPlayerPanels();

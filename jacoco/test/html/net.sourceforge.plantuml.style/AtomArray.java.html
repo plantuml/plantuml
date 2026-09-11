@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AtomArray.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.style</a> &gt; <span class="el_source">AtomArray.java</span></div><h1>AtomArray.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.style;
+
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+/**
+ * An immutable, sorted, duplicate-free collection of {@link StyleAtom}, backed by a plain array
+ * instead of a {@link java.util.TreeSet} -- a candidate replacement for the
+ * {@code SortedSet&lt;StyleAtom&gt;} that {@link StyleQuery} currently keeps as {@code atoms} (not yet
+ * wired in there: this class stands on its own, validated by its own unit tests, before any
+ * caller is switched over).
+ *
+ * &lt;p&gt;{@code StyleQuery.atoms} is always tiny (a handful of elements: {@code root}, {@code
+ * element}, a diagram-type {@link SName}, maybe a sub-element and a stereotype or two) and, once
+ * built, is never mutated again -- every {@code StyleQuery} &quot;with&quot;/&quot;add&quot; method builds a brand
+ * new set rather than touching the existing one. A {@link java.util.TreeSet} is the wrong tool
+ * for that shape: each element costs a red-black-tree node (parent/left/right/color fields), and
+ * a copy-then-add rebuilds that whole node chain, when a handful of {@link StyleAtom} references
+ * would fit in a single small array instead. This class trades the tree for exactly that:
+ * {@link #plus} does a binary-search insert with {@code System.arraycopy}, {@link #plusAll} does
+ * a single linear merge of two already-sorted arrays instead of inserting one element at a time,
+ * and {@link #equals}/{@link #hashCode} reduce to {@link Arrays#equals(Object[], Object[])}/
+ * {@link Arrays#hashCode(Object[])} instead of a set-to-set comparison.
+ *
+ * &lt;p&gt;The sort order is {@link StyleAtom}'s natural order (see {@link StyleAtom#compareTo}), the
+ * same order {@code StyleQuery.atoms} relies on today, so two {@code AtomArray}s built from the
+ * same conceptual set of atoms -- regardless of the order they were added in -- always end up
+ * holding an identical backing array (which is exactly what makes {@link #equals}/
+ * {@link #hashCode} safe to compute from the array alone). Adding an atom already present is a
+ * silent no-op, exactly like {@code TreeSet.add} returning {@code false} -- callers such as
+ * {@code StyleQuery.withStereotype} rely on that to fold in a stereotype whether or not it is
+ * already there.
+ */
+public final class AtomArray implements Iterable&lt;StyleAtom&gt; {
+
+<span class="fc" id="L72">	private static final StyleAtom[] NO_ATOMS = new StyleAtom[0];</span>
+<span class="fc" id="L73">	private static final AtomArray EMPTY = new AtomArray(NO_ATOMS);</span>
+
+	private final StyleAtom[] data;
+
+<span class="fc" id="L77">	private AtomArray(StyleAtom[] data) {</span>
+<span class="fc" id="L78">		this.data = data;</span>
+<span class="fc" id="L79">	}</span>
+
+	/** The empty {@code AtomArray} -- mirrors {@code StyleQuery.empty()}'s starting point. */
+	public static AtomArray empty() {
+<span class="fc" id="L83">		return EMPTY;</span>
+	}
+
+	/**
+	 * Builds an {@code AtomArray} holding every one of {@code atoms}, sorted and deduplicated.
+	 * {@code atoms} itself need not be sorted or duplicate-free, and is never modified.
+	 */
+	public static AtomArray of(StyleAtom... atoms) {
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (atoms.length == 0)</span>
+<span class="fc" id="L92">			return EMPTY;</span>
+
+<span class="fc" id="L94">		final StyleAtom[] sorted = Arrays.copyOf(atoms, atoms.length);</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">		for (StyleAtom atom : sorted)</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">			if (atom == null)</span>
+<span class="fc" id="L97">				throw new IllegalArgumentException(&quot;atom&quot;);</span>
+<span class="fc" id="L98">		Arrays.sort(sorted);</span>
+
+<span class="fc" id="L100">		int size = 0;</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		for (int i = 0; i &lt; sorted.length; i++)</span>
+<span class="fc bfc" id="L102" title="All 4 branches covered.">			if (size == 0 || sorted[size - 1].compareTo(sorted[i]) != 0)</span>
+<span class="fc" id="L103">				sorted[size++] = sorted[i];</span>
+
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		return new AtomArray(size == sorted.length ? sorted : Arrays.copyOf(sorted, size));</span>
+	}
+
+	public AtomArray plus(StyleAtom atom) {
+<span class="fc" id="L109">		final int found = Arrays.binarySearch(data, atom);</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">		if (found &gt;= 0)</span>
+<span class="fc" id="L111">			return this;</span>
+
+<span class="fc" id="L113">		final int insertAt = -found - 1;</span>
+<span class="fc" id="L114">		final StyleAtom[] result = new StyleAtom[data.length + 1];</span>
+<span class="fc" id="L115">		System.arraycopy(data, 0, result, 0, insertAt);</span>
+<span class="fc" id="L116">		result[insertAt] = atom;</span>
+<span class="fc" id="L117">		System.arraycopy(data, insertAt, result, insertAt + 1, data.length - insertAt);</span>
+<span class="fc" id="L118">		return new AtomArray(result);</span>
+	}
+
+	public AtomArray plus(StyleAtom atom1, StyleAtom atom2) {
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		final StyleAtom[] newAtoms = atom1.compareTo(atom2) &lt; 0 ? new StyleAtom[] { atom1, atom2 }</span>
+<span class="fc" id="L123">				: new StyleAtom[] { atom2, atom1 };</span>
+<span class="fc" id="L124">		return plusSorted(newAtoms);</span>
+	}
+
+	public AtomArray plus(StyleAtom atom1, StyleAtom atom2, StyleAtom atom3) {
+<span class="fc" id="L128">		final StyleAtom[] sorted = { atom1, atom2, atom3 };</span>
+<span class="fc" id="L129">		Arrays.sort(sorted);</span>
+
+<span class="fc" id="L131">		int size = 1;</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		for (int i = 1; i &lt; sorted.length; i++)</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">			if (sorted[size - 1].compareTo(sorted[i]) != 0)</span>
+<span class="fc" id="L134">				sorted[size++] = sorted[i];</span>
+
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">		return plusSorted(size == sorted.length ? sorted : Arrays.copyOf(sorted, size));</span>
+	}
+
+	public AtomArray plusAll(AtomArray other) {
+<span class="pc bpc" id="L140" title="1 of 4 branches missed.">		if (other == null || other.isEmpty())</span>
+<span class="fc" id="L141">			return this;</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">		if (this.isEmpty())</span>
+<span class="fc" id="L143">			return other;</span>
+
+<span class="fc" id="L145">		return plusSorted(other.data);</span>
+	}
+
+	private AtomArray plusSorted(StyleAtom[] newAtoms) {
+<span class="fc" id="L149">		final StyleAtom[] merged = new StyleAtom[data.length + newAtoms.length];</span>
+<span class="fc" id="L150">		int i = 0;</span>
+<span class="fc" id="L151">		int j = 0;</span>
+<span class="fc" id="L152">		int k = 0;</span>
+<span class="fc bfc" id="L153" title="All 4 branches covered.">		while (i &lt; data.length &amp;&amp; j &lt; newAtoms.length) {</span>
+<span class="fc" id="L154">			final int cmp = data[i].compareTo(newAtoms[j]);</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">			if (cmp &lt; 0)</span>
+<span class="fc" id="L156">				merged[k++] = data[i++];</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">			else if (cmp &gt; 0)</span>
+<span class="fc" id="L158">				merged[k++] = newAtoms[j++];</span>
+			else {
+<span class="fc" id="L160">				merged[k++] = data[i++];</span>
+<span class="fc" id="L161">				j++;</span>
+			}
+<span class="fc" id="L163">		}</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">		while (i &lt; data.length)</span>
+<span class="fc" id="L165">			merged[k++] = data[i++];</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">		while (j &lt; newAtoms.length)</span>
+<span class="fc" id="L167">			merged[k++] = newAtoms[j++];</span>
+
+<span class="fc bfc" id="L169" title="All 2 branches covered.">		return new AtomArray(k == merged.length ? merged : Arrays.copyOf(merged, k));</span>
+	}
+
+	public boolean contains(StyleAtom atom) {
+<span class="pc bpc" id="L173" title="1 of 4 branches missed.">		return atom != null &amp;&amp; Arrays.binarySearch(data, atom) &gt;= 0;</span>
+	}
+
+	public int size() {
+<span class="fc" id="L177">		return data.length;</span>
+	}
+
+	public boolean isEmpty() {
+<span class="fc bfc" id="L181" title="All 2 branches covered.">		return data.length == 0;</span>
+	}
+
+	/** The atom at {@code index}, in ascending order -- zero-allocation random access. */
+	public StyleAtom get(int index) {
+<span class="fc" id="L186">		return data[index];</span>
+	}
+
+	@Override
+	public Iterator&lt;StyleAtom&gt; iterator() {
+<span class="fc" id="L191">		return new Iterator&lt;StyleAtom&gt;() {</span>
+<span class="fc" id="L192">			private int index = 0;</span>
+
+			@Override
+			public boolean hasNext() {
+<span class="fc bfc" id="L196" title="All 2 branches covered.">				return index &lt; data.length;</span>
+			}
+
+			@Override
+			public StyleAtom next() {
+<span class="fc bfc" id="L201" title="All 2 branches covered.">				if (hasNext() == false)</span>
+<span class="fc" id="L202">					throw new NoSuchElementException();</span>
+<span class="fc" id="L203">				return data[index++];</span>
+			}
+		};
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="fc bfc" id="L210" title="All 2 branches covered.">		if (obj instanceof AtomArray == false)</span>
+<span class="fc" id="L211">			return false;</span>
+<span class="fc" id="L212">		return Arrays.equals(this.data, ((AtomArray) obj).data);</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="fc" id="L217">		return Arrays.hashCode(data);</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="fc" id="L222">		return Arrays.toString(data);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

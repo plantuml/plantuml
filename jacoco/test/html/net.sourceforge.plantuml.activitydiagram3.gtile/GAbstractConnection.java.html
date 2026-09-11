@@ -43,9 +43,9 @@ import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.parser2.StyleQuery;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
 
 public abstract class GAbstractConnection implements GConnection {
 
@@ -87,7 +87,7 @@ public abstract class GAbstractConnection implements GConnection {
 	}
 
 	private final StyleQuery getDefaultStyleDefinitionArrow() {
-<span class="nc" id="L90">		return StyleQuery.of(Arrays.asList(SName.root, SName.element, SName.activityDiagram, SName.arrow));</span>
+<span class="nc" id="L90">		return StyleQueries.ACTIVITYDIAG_ARROW;</span>
 	}
 
 	protected ISkinParam skinParam() {

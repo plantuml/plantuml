@@ -98,7 +98,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color"><a href="parser/package-summary.html">net.sourceforge.plantuml.style.parser</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="parser2/package-summary.html">net.sourceforge.plantuml.style.parser2</a></div>
+<div class="col-first even-row-color"><a href="value/package-summary.html">net.sourceforge.plantuml.style.value</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </div>
@@ -110,28 +110,35 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="AutomaticCounter.html" title="interface in net.sourceforge.plantuml.style">AutomaticCounter</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="AutomaticCounterBasic.html" title="class in net.sourceforge.plantuml.style">AutomaticCounterBasic</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ClockwiseTopRightBottomLeft.html" title="class in net.sourceforge.plantuml.style">ClockwiseTopRightBottomLeft</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CommandStyleImport.html" title="class in net.sourceforge.plantuml.style">CommandStyleImport</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CommandStyleMultilinesCSS.html" title="class in net.sourceforge.plantuml.style">CommandStyleMultilinesCSS</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CommandStyleSingleLineCSS.html" title="class in net.sourceforge.plantuml.style">CommandStyleSingleLineCSS</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="DarkString.html" title="class in net.sourceforge.plantuml.style">DarkString</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="FromSkinparamToStyle.html" title="class in net.sourceforge.plantuml.style">FromSkinparamToStyle</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="ISkinSimple.html" title="interface in net.sourceforge.plantuml.style">ISkinSimple</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="AtomArray.html" title="class in net.sourceforge.plantuml.style">AtomArray</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">An immutable, sorted, duplicate-free collection of <a href="StyleAtom.html" title="class in net.sourceforge.plantuml.style"><code>StyleAtom</code></a>, backed by a plain array
+ instead of a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/TreeSet.html" title="class or interface in java.util" class="external-link"><code>TreeSet</code></a> -- a candidate replacement for the
+ <code>SortedSet&lt;StyleAtom&gt;</code> that <a href="StyleQuery.html" title="class in net.sourceforge.plantuml.style"><code>StyleQuery</code></a> currently keeps as <code>atoms</code> (not yet
+ wired in there: this class stands on its own, validated by its own unit tests, before any
+ caller is switched over).</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="AutomaticCounter.html" title="interface in net.sourceforge.plantuml.style">AutomaticCounter</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab3"><a href="LengthAdjust.html" title="enum class in net.sourceforge.plantuml.style">LengthAdjust</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab3">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="AutomaticCounterBasic.html" title="class in net.sourceforge.plantuml.style">AutomaticCounterBasic</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ClockwiseTopRightBottomLeft.html" title="class in net.sourceforge.plantuml.style">ClockwiseTopRightBottomLeft</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="FromSkinparamToStyle.html" title="class in net.sourceforge.plantuml.style">FromSkinparamToStyle</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="ISkinSimple.html" title="interface in net.sourceforge.plantuml.style">ISkinSimple</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab3"><a href="LengthAdjust.html" title="enum class in net.sourceforge.plantuml.style">LengthAdjust</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab3">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="LevelConstraint.html" title="class in net.sourceforge.plantuml.style">LevelConstraint</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">The <code>depth(n)</code> / <code>*</code> side of a style declaration or query, encoded as a
+ <code>long</code> bitmask instead of the ad-hoc <code>level</code>/<code>isStared</code> pair the legacy
+ <code>net.sourceforge.plantuml.style.StyleKey</code> carries -- levels are assumed to fit in
+ <code>0..63</code>, which every real mindmap/wbs diagram does.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab3"><a href="MergeStrategy.html" title="enum class in net.sourceforge.plantuml.style">MergeStrategy</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab3">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab5"><a href="NoStyleAvailableException.html" title="class in net.sourceforge.plantuml.style">NoStyleAvailableException</a></div>
@@ -140,47 +147,49 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color class-summary class-summary-tab3">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab3"><a href="SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab3">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Specificity.html" title="class in net.sourceforge.plantuml.style">Specificity</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">How specific a style declaration is, modeled the way real CSS specificity actually works: an
- ordered tuple, compared one component at a time from most to least significant -- never a
- single number that has to rely on one component's magnitude never reaching into (or being
- dominated by) another's.</div>
-</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="StringTrie.html" title="class in net.sourceforge.plantuml.style">StringTrie</a>&lt;V&gt;</div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Style.html" title="class in net.sourceforge.plantuml.style">Style</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="Styleable.html" title="interface in net.sourceforge.plantuml.style">Styleable</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="StyleAtom.html" title="class in net.sourceforge.plantuml.style">StyleAtom</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">One "tag" a style declaration or a query element can carry, put under a single total order
+ so a <a href="StyleAtomTrie.html" title="class in net.sourceforge.plantuml.style"><code>StyleAtomTrie</code></a> can index both families together instead of keeping a separate
+ plain/legacy split: a <a href="SName.html" title="enum class in net.sourceforge.plantuml.style"><code>SName</code></a> (the common, fast path -- compared by ordinal) or a
+ stereotype name (the rarer path -- compared lexicographically).</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="StyleAtomTrie.html" title="class in net.sourceforge.plantuml.style">StyleAtomTrie</a>&lt;T&gt;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">A set-trie: every declaration is stored under the sorted path of <a href="StyleAtom.html" title="class in net.sourceforge.plantuml.style"><code>StyleAtom</code></a> it
+ requires, and <a href="StyleAtomTrie.html#findMatching(net.sourceforge.plantuml.style.StyleQuery)"><code>StyleAtomTrie.findMatching(StyleQuery)</code></a> walks it once to return every declaration
+ whose required atom set is a subset of the query's -- the same test as the legacy
+ <code>element.snames.containsAll(declaration.snames)</code> (plus stereotypes), but sharing
+ common prefixes across declarations instead of re-testing each one in turn, and with no
+ separate plain/legacy storage to keep in sync.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="StyleIndex.html" title="class in net.sourceforge.plantuml.style">StyleIndex</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">The fast, queryable counterpart of the old <code>StyleStorage</code>: every loaded <a href="Style.html" title="class in net.sourceforge.plantuml.style"><code>Style</code></a>
  is indexed by its query's tags in a
- <a href="parser2/StyleAtomTrie.html" title="class in net.sourceforge.plantuml.style.parser2"><code>StyleAtomTrie</code></a>, so <a href="StyleIndex.html#findMatching(net.sourceforge.plantuml.style.parser2.StyleQuery)"><code>StyleIndex.findMatching(StyleQuery)</code></a> only ever visits
+ <a href="StyleAtomTrie.html" title="class in net.sourceforge.plantuml.style"><code>StyleAtomTrie</code></a>, so <a href="StyleIndex.html#findMatching(net.sourceforge.plantuml.style.StyleQuery)"><code>StyleIndex.findMatching(StyleQuery)</code></a> only ever visits
  declarations that could possibly match a query, instead of the old linear scan over every
  style ever loaded checking <code>StyleSignatureBasic#matchAll</code> one by one -- the actual fix
- for the slow style resolution (<a href="StyleBuilder.html#getMergedStyle(net.sourceforge.plantuml.style.parser2.StyleQuery)"><code>StyleBuilder.getMergedStyle(net.sourceforge.plantuml.style.parser2.StyleQuery)</code></a>,
- <a href="StyleBuilder.html#getMergedStyleSpecial(net.sourceforge.plantuml.style.parser2.StyleQuery,int)"><code>StyleBuilder.getMergedStyleSpecial(net.sourceforge.plantuml.style.parser2.StyleQuery, int)</code></a>) this whole <code>parser2</code> engine was built for.</div>
+ for the slow style resolution (<a href="StyleBuilder.html#getMergedStyle(net.sourceforge.plantuml.style.StyleQuery)"><code>StyleBuilder.getMergedStyle(net.sourceforge.plantuml.style.StyleQuery)</code></a>,
+ <a href="StyleBuilder.html#getMergedStyleSpecial(net.sourceforge.plantuml.style.StyleQuery,int)"><code>StyleBuilder.getMergedStyleSpecial(net.sourceforge.plantuml.style.StyleQuery, int)</code></a>) this whole <code>parser2</code> engine was built for.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="StyleKey.html" title="class in net.sourceforge.plantuml.style">StyleKey</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="StyleLoader.html" title="class in net.sourceforge.plantuml.style">StyleLoader</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="StyleLoader.html" title="class in net.sourceforge.plantuml.style">StyleLoader</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="StyleQueries.html" title="class in net.sourceforge.plantuml.style">StyleQueries</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab3"><a href="StyleScheme.html" title="enum class in net.sourceforge.plantuml.style">StyleScheme</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab3">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="Value.html" title="interface in net.sourceforge.plantuml.style">Value</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ValueAbstract.html" title="class in net.sourceforge.plantuml.style">ValueAbstract</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ValueColor.html" title="class in net.sourceforge.plantuml.style">ValueColor</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ValueImpl.html" title="class in net.sourceforge.plantuml.style">ValueImpl</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ValueNull.html" title="class in net.sourceforge.plantuml.style">ValueNull</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="StyleQuery.html" title="class in net.sourceforge.plantuml.style">StyleQuery</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">What a <a href="StyleAtomTrie.html" title="class in net.sourceforge.plantuml.style"><code>StyleAtomTrie</code></a> is asked to resolve: the element's tags (its
+ <a href="SName.html" title="enum class in net.sourceforge.plantuml.style"><code>SName</code></a> set plus any stereotypes, e.g.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab3"><a href="StyleScheme.html" title="enum class in net.sourceforge.plantuml.style">StyleScheme</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab3">&nbsp;</div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="WithStyle.html" title="interface in net.sourceforge.plantuml.style">WithStyle</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
 </div>

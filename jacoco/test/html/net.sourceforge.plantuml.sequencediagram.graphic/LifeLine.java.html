@@ -240,7 +240,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="nc" id="L240">					currentStyleBuilder = skinParam2.getCurrentStyleBuilder();</span>
 
 <span class="nc" id="L242">				Style style = currentStyleBuilder</span>
-<span class="nc" id="L243">						.getMergedStyle(type.getStyleQuery().withTOBECHANGED(participant.getStereotype()));</span>
+<span class="nc" id="L243">						.getMergedStyle(type.getStyleQuery().withStereotype(participant.getStereotype()));</span>
 
 <span class="nc bnc" id="L245" title="All 2 branches missed.">				if (style != null) {</span>
 <span class="nc" id="L246">					style = style.eventuallyOverride(PName.BackGroundColor, specificBackColor);</span>
