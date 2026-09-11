@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedSet;
 
 /**
  * A set-trie: every declaration is stored under the sorted path of {@link StyleAtom} it
@@ -87,9 +86,13 @@ public final class StyleAtomTrie<T> {
 
 	/**
 	 * Stores {@code payload} under {@code atoms}, matched later only against a query whose
-	 * {@link LevelConstraint} it accepts (see {@link LevelConstraint#matches}).
+	 * {@link LevelConstraint} it accepts (see {@link LevelConstraint#matches}). {@code atoms} must
+	 * already be in ascending order (its natural order, per {@link StyleAtom#compareTo}) and
+	 * duplicate-free -- exactly what a {@code SortedSet<StyleAtom>} or an {@code AtomArray}
+	 * already guarantees -- since {@link #findMatching} walks a stored path and the query's own
+	 * atoms in lockstep, both assumed sorted the same way.
 	 */
-	public void insert(SortedSet<StyleAtom> atoms, LevelConstraint levelConstraint, T payload) {
+	public void insert(Iterable<StyleAtom> atoms, LevelConstraint levelConstraint, T payload) {
 		TrieNode<T> current = root;
 		for (StyleAtom atom : atoms) {
 			TrieNode<T> child = current.children.get(atom);
@@ -109,7 +112,9 @@ public final class StyleAtomTrie<T> {
 	 * results -- that is resolver work, left for later.
 	 */
 	public List<T> findMatching(StyleQuery query) {
-		final List<StyleAtom> queryAtoms = new ArrayList<StyleAtom>(query.getAtoms());
+		final List<StyleAtom> queryAtoms = new ArrayList<StyleAtom>();
+		for (StyleAtom atom : query.getAtoms())
+			queryAtoms.add(atom);
 		final List<T> result = new ArrayList<T>();
 		collect(root, queryAtoms, 0, query.getLevelConstraint(), result);
 		return result;
