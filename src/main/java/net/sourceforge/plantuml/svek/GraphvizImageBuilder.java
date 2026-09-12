@@ -84,11 +84,49 @@ import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.image.EntityImageClass;
 import net.sourceforge.plantuml.svek.image.EntityImageNote;
+import net.sourceforge.plantuml.svek.layout.SvekLayoutBuilder;
+import net.sourceforge.plantuml.svek.layout.SvekLayoutResponse;
+import net.sourceforge.plantuml.svek.layout.SvekLayoutValidation;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.warning.Warning;
 
 public final class GraphvizImageBuilder {
+	public static final class SmetanaFallback extends RuntimeException {
+		private SmetanaFallback(String message, Throwable cause) {
+			super(message, cause);
+		}
+	}
+
+	private enum ModelBuildState {
+		NEW, BUILDING, BUILT, FAILED
+	}
+	private enum LayoutState {
+		NEW, LAYOUTING, COMPLETE, FAILED
+	}
+
+	interface ModelBuildHook {
+		void beforeBuild();
+	}
+	interface LayoutApplier {
+		PreparedLayout prepare(net.sourceforge.plantuml.svek.layout.SvekLayoutResult result);
+	}
+	interface PreparedLayout {
+		SvekLayoutValidation getValidation();
+		void apply();
+	}
+	interface LayoutApplierFactory {
+		LayoutApplier create(DotStringFactory factory);
+	}
+	interface GraphvizOperations {
+		default boolean isAvailable(DotStringFactory factory) {
+			return factory.illegalDotExe() == false;
+		}
+		String getSvg(StringBounder stringBounder, DotMode dotMode, BaseFile basefile, String[] dotStrings)
+				throws IOException;
+		void solve(String svg) throws IOException, InterruptedException;
+	}
 
 	private final DotData dotData;
 	private final DotMode dotMode;
@@ -100,9 +138,62 @@ public final class GraphvizImageBuilder {
 	private final SName styleName;
 	private final DotStringFactory dotStringFactory;
 	private final ClusterManager clusterManager;
+	private final ModelBuildHook modelBuildHook;
+	private final SvekLayoutBuilder layoutBuilder;
+	private final boolean layoutProviderRequested;
+	private final GraphvizOperations graphvizOperations;
+	private final LayoutApplierFactory layoutApplierFactory;
+	private ModelBuildState modelBuildState = ModelBuildState.NEW;
+	private LayoutState layoutState = LayoutState.NEW;
+	private boolean automaticGraphSupport;
 
 	public GraphvizImageBuilder(DotData dotData, UmlSource source, Pragma pragma, SName styleName, DotMode dotMode,
 			DotStringFactory dotStringFactory, ClusterManager clusterManager) {
+		this(dotData, source, pragma, styleName, dotMode, dotStringFactory, clusterManager, null, false, null, null,
+				null);
+	}
+
+	GraphvizImageBuilder(DotData dotData, UmlSource source, Pragma pragma, SName styleName, DotMode dotMode,
+			DotStringFactory dotStringFactory, ClusterManager clusterManager, ModelBuildHook modelBuildHook) {
+		this(dotData, source, pragma, styleName, dotMode, dotStringFactory, clusterManager, null, false, modelBuildHook,
+				null, null);
+	}
+
+	GraphvizImageBuilder(DotData dotData, UmlSource source, Pragma pragma, SName styleName, DotMode dotMode,
+			DotStringFactory dotStringFactory, ClusterManager clusterManager, SvekLayoutBuilder layoutBuilder,
+			boolean layoutProviderRequested) {
+		this(dotData, source, pragma, styleName, dotMode, dotStringFactory, clusterManager, layoutBuilder,
+				layoutProviderRequested, null, null, null);
+	}
+
+	GraphvizImageBuilder(DotData dotData, UmlSource source, Pragma pragma, SName styleName, DotMode dotMode,
+			DotStringFactory dotStringFactory, ClusterManager clusterManager, SvekLayoutBuilder layoutBuilder,
+			boolean layoutProviderRequested, boolean automaticGraphSupport) {
+		this(dotData, source, pragma, styleName, dotMode, dotStringFactory, clusterManager, layoutBuilder,
+				layoutProviderRequested, null, null, automaticGraphSupport);
+	}
+
+	GraphvizImageBuilder(DotData dotData, UmlSource source, Pragma pragma, SName styleName, DotMode dotMode,
+			DotStringFactory dotStringFactory, ClusterManager clusterManager, SvekLayoutBuilder layoutBuilder,
+			boolean layoutProviderRequested, GraphvizOperations graphvizOperations,
+			LayoutApplierFactory layoutApplierFactory, boolean automaticGraphSupport) {
+		this(dotData, source, pragma, styleName, dotMode, dotStringFactory, clusterManager, layoutBuilder,
+				layoutProviderRequested, graphvizOperations, layoutApplierFactory);
+		this.automaticGraphSupport = automaticGraphSupport;
+	}
+
+	GraphvizImageBuilder(DotData dotData, UmlSource source, Pragma pragma, SName styleName, DotMode dotMode,
+			DotStringFactory dotStringFactory, ClusterManager clusterManager, SvekLayoutBuilder layoutBuilder,
+			boolean layoutProviderRequested, GraphvizOperations graphvizOperations,
+			LayoutApplierFactory layoutApplierFactory) {
+		this(dotData, source, pragma, styleName, dotMode, dotStringFactory, clusterManager, layoutBuilder,
+				layoutProviderRequested, null, graphvizOperations, layoutApplierFactory);
+	}
+
+	private GraphvizImageBuilder(DotData dotData, UmlSource source, Pragma pragma, SName styleName, DotMode dotMode,
+			DotStringFactory dotStringFactory, ClusterManager clusterManager, SvekLayoutBuilder layoutBuilder,
+			boolean layoutProviderRequested, ModelBuildHook modelBuildHook, GraphvizOperations graphvizOperations,
+			LayoutApplierFactory layoutApplierFactory) {
 		this.dotData = dotData;
 		this.dotMode = dotMode;
 		this.styleName = styleName;
@@ -110,6 +201,38 @@ public final class GraphvizImageBuilder {
 		this.pragma = pragma;
 		this.dotStringFactory = dotStringFactory;
 		this.clusterManager = clusterManager;
+		this.layoutBuilder = layoutBuilder;
+		this.layoutProviderRequested = layoutProviderRequested;
+		this.modelBuildHook = modelBuildHook;
+		this.graphvizOperations = graphvizOperations == null ? new GraphvizOperations() {
+			public String getSvg(StringBounder stringBounder, DotMode dotMode, BaseFile basefile, String[] dotStrings)
+					throws IOException {
+				return dotStringFactory.getSvg(stringBounder, dotMode, basefile, dotStrings);
+			}
+
+			public void solve(String svg) throws IOException, InterruptedException {
+				dotStringFactory.solve(svg);
+			}
+		} : graphvizOperations;
+		this.layoutApplierFactory = layoutApplierFactory == null ? new LayoutApplierFactory() {
+			public LayoutApplier create(DotStringFactory factory) {
+				final SvekLayoutResultApplier delegate = new SvekLayoutResultApplier(factory);
+				return new LayoutApplier() {
+					public PreparedLayout prepare(net.sourceforge.plantuml.svek.layout.SvekLayoutResult result) {
+						final SvekLayoutResultApplier.PreparedLayout prepared = delegate.prepare(result);
+						return new PreparedLayout() {
+							public SvekLayoutValidation getValidation() {
+								return prepared.getValidation();
+							}
+
+							public void apply() {
+								prepared.apply();
+							}
+						};
+					}
+				};
+			}
+		} : layoutApplierFactory;
 
 	}
 
@@ -207,6 +330,23 @@ public final class GraphvizImageBuilder {
 
 	public IEntityImage buildImage(StringBounder stringBounder, BaseFile basefile, String dotStrings[],
 			boolean fileFormatOptionIsDebugSvek) {
+		beginLayout();
+		try {
+			final IEntityImage result = buildImageInternal(stringBounder, basefile, dotStrings,
+					fileFormatOptionIsDebugSvek);
+			completeLayout();
+			return result;
+		} catch (RuntimeException e) {
+			failLayout();
+			throw e;
+		} catch (Error e) {
+			failLayout();
+			throw e;
+		}
+	}
+
+	private IEntityImage buildImageInternal(StringBounder stringBounder, BaseFile basefile, String dotStrings[],
+			boolean fileFormatOptionIsDebugSvek) {
 		if (dotData.isDegeneratedWithFewEntities(0))
 			return new EntityImageSimpleEmpty(dotData.getSkinParam().getBackgroundColor());
 
@@ -220,51 +360,60 @@ public final class GraphvizImageBuilder {
 				return new EntityImageDegenerated(tmp, getBackcolor());
 			}
 		}
-		dotData.removeIrrelevantSametail();
-
-		printGroups(stringBounder, dotData.getRootGroup());
-		printEntities(stringBounder, getUnpackagedEntities());
-
-		for (Link link : dotData.getLinks()) {
-			if (link.isRemoved())
-				continue;
-
+		buildModel(stringBounder);
+		String layoutDecline = layoutProviderRequested && layoutBuilder == null ? "provider not found" : null;
+		PreparedLayout preparedLayout = null;
+		if (layoutBuilder != null) {
+			SvekLayoutResponse response = null;
 			try {
-				final ISkinParam skinParam = dotData.getSkinParam();
-				final FontConfiguration labelFont = link.getStyleBuilder()
-						.getMergedStyle(getDefaultStyleDefinitionArrow(link.getStereotype()))
-						.getFontConfiguration(skinParam.getIHtmlColorSet());
-				final FontConfiguration cardinalityFont = link.getStyleBuilder()
-						.getMergedStyle(getStyleArrowCardinality(link.getStereotype()))
-						.getFontConfiguration(skinParam.getIHtmlColorSet());
-
-				final SvekEdge line = new SvekEdge(link, skinParam, stringBounder, labelFont, cardinalityFont,
-						dotStringFactory.getBibliotekon(), pragma, dotStringFactory.getGraphvizVersion());
-
-				dotStringFactory.getBibliotekon().addLine(line);
-
-				if (isOpalisable(link.getEntity1())) {
-					final SvekNode node = dotStringFactory.getBibliotekon().getNode(link.getEntity1());
-					final SvekNode other = dotStringFactory.getBibliotekon().getNode(link.getEntity2());
-					if (other != null) {
-						((EntityImageNote) node.getImage()).setOpaleLine(line, node, other);
-						line.setOpale(true);
-					}
-				} else if (isOpalisable(link.getEntity2())) {
-					final SvekNode node = dotStringFactory.getBibliotekon().getNode(link.getEntity2());
-					final SvekNode other = dotStringFactory.getBibliotekon().getNode(link.getEntity1());
-					if (other != null) {
-						((EntityImageNote) node.getImage()).setOpaleLine(line, node, other);
-						line.setOpale(true);
-					}
-				}
-			} catch (IllegalStateException e) {
+				response = new SvekLayoutEmitter(dotStringFactory, dotData.geDiagramType(), stringBounder)
+						.emit(layoutBuilder);
+			} catch (RuntimeException e) {
 				Logme.error(e);
+				layoutDecline = concreteMessage(e);
+			} catch (LinkageError e) {
+				Logme.error(e);
+				layoutDecline = concreteMessage(e);
+			}
+			if (response != null && response.isSuccess()) {
+				try {
+					final PreparedLayout candidate = layoutApplierFactory.create(dotStringFactory).prepare(response.result);
+					final SvekLayoutValidation validation = candidate.getValidation();
+					if (validation.isValid()) {
+						preparedLayout = candidate;
+					}
+					if (validation.isInvalid())
+					if (validation.isInvalid())
+						layoutDecline = validation.getMessage();
+				} catch (RuntimeException e) {
+					Logme.error(e);
+					layoutDecline = concreteMessage(e);
+				} catch (LinkageError e) {
+					Logme.error(e);
+					layoutDecline = concreteMessage(e);
+				}
+			} else if (response != null) {
+				layoutDecline = response.declineMessage == null ? response.declineCode : response.declineMessage;
 			}
 		}
-
+		if (preparedLayout != null) {
+			try {
+				preparedLayout.apply();
+			} catch (RuntimeException | LinkageError e) {
+				if (automaticGraphSupport)
+					throw new SmetanaFallback(concreteMessage(e), e);
+				throw e;
+			}
+			this.maxX = dotStringFactory.getBibliotekon().getMaxX();
+			return new SvekResult(dotData, dotStringFactory);
+		}
+		if (automaticGraphSupport)
+			throw new SmetanaFallback(layoutDecline, null);
+		if (layoutProviderRequested && layoutDecline != null) {
+			pragma.addWarning(new Warning("graph-support layout declined; using Graphviz: " + layoutDecline));
+		}
 		if (!TeaVM.isTeaVM()) {
-			if (dotStringFactory.illegalDotExe())
+			if (graphvizOperations.isAvailable(dotStringFactory) == false)
 				return error(dotStringFactory.getDotExe());
 		}
 		if (basefile == null && (fileFormatOptionIsDebugSvek || isSvekTrace())
@@ -275,7 +424,10 @@ public final class GraphvizImageBuilder {
 
 		final String svg;
 		try {
-			svg = dotStringFactory.getSvg(stringBounder, dotMode, basefile, dotStrings);
+			if (layoutProviderRequested)
+				dotStringFactory.useDetectedGraphvizVersion();
+			dotStringFactory.prepareForGraphviz();
+			svg = graphvizOperations.getSvg(stringBounder, dotMode, basefile, dotStrings);
 		} catch (IOException e) {
 			return GraphvizCrash.build(source.getPlainString(BackSlash.lineSeparator()), false, e);
 		}
@@ -285,7 +437,7 @@ public final class GraphvizImageBuilder {
 
 		final String graphvizVersion = extractGraphvizVersion(svg);
 		try {
-			dotStringFactory.solve(svg);
+			graphvizOperations.solve(svg);
 			final SvekResult result = new SvekResult(dotData, dotStringFactory);
 			this.maxX = dotStringFactory.getBibliotekon().getMaxX();
 			return result;
@@ -295,6 +447,94 @@ public final class GraphvizImageBuilder {
 					source.getPlainString(BackSlash.lineSeparator()));
 		}
 
+	}
+
+	private String concreteMessage(Throwable exception) {
+		if (exception.getMessage() != null && exception.getMessage().length() > 0)
+			return exception.getMessage();
+		return exception.getClass().getName();
+	}
+
+	private synchronized void beginLayout() {
+		if (layoutState == LayoutState.COMPLETE)
+			throw new IllegalStateException("Svek layout has already completed");
+		if (layoutState == LayoutState.LAYOUTING)
+			throw new IllegalStateException("Svek layout is already in progress");
+		if (layoutState == LayoutState.FAILED)
+			throw new IllegalStateException("previous Svek layout failed");
+		layoutState = LayoutState.LAYOUTING;
+	}
+
+	private synchronized void completeLayout() {
+		layoutState = LayoutState.COMPLETE;
+	}
+
+	private synchronized void failLayout() {
+		layoutState = LayoutState.FAILED;
+	}
+
+	synchronized void buildModel(StringBounder stringBounder) {
+		if (modelBuildState == ModelBuildState.BUILT)
+			return;
+		if (modelBuildState == ModelBuildState.BUILDING)
+			throw new IllegalStateException("Svek model build is already in progress");
+		if (modelBuildState == ModelBuildState.FAILED)
+			throw new IllegalStateException("previous Svek model build failed");
+
+		modelBuildState = ModelBuildState.BUILDING;
+		try {
+			if (modelBuildHook != null)
+				modelBuildHook.beforeBuild();
+			dotData.removeIrrelevantSametail();
+			printGroups(stringBounder, dotData.getRootGroup());
+			printEntities(stringBounder, getUnpackagedEntities());
+			for (Link link : dotData.getLinks())
+				addSvekEdge(stringBounder, link);
+			modelBuildState = ModelBuildState.BUILT;
+		} catch (RuntimeException e) {
+			modelBuildState = ModelBuildState.FAILED;
+			throw e;
+		} catch (Error e) {
+			modelBuildState = ModelBuildState.FAILED;
+			throw e;
+		}
+	}
+
+	void addSvekEdge(StringBounder stringBounder, Link link) {
+		if (link.isRemoved())
+			return;
+
+		try {
+			final ISkinParam skinParam = dotData.getSkinParam();
+			final FontConfiguration labelFont = link.getStyleBuilder()
+					.getMergedStyle(getDefaultStyleDefinitionArrow(link.getStereotype()))
+					.getFontConfiguration(skinParam.getIHtmlColorSet());
+			final FontConfiguration cardinalityFont = link.getStyleBuilder()
+					.getMergedStyle(getStyleArrowCardinality(link.getStereotype()))
+					.getFontConfiguration(skinParam.getIHtmlColorSet());
+
+			final SvekEdge line = new SvekEdge(link, skinParam, stringBounder, labelFont, cardinalityFont,
+					dotStringFactory.getBibliotekon(), pragma, dotStringFactory.getGraphvizVersion());
+			dotStringFactory.getBibliotekon().addLine(line);
+
+			if (isOpalisable(link.getEntity1())) {
+				final SvekNode node = dotStringFactory.getBibliotekon().getNode(link.getEntity1());
+				final SvekNode other = dotStringFactory.getBibliotekon().getNode(link.getEntity2());
+				if (other != null) {
+					((EntityImageNote) node.getImage()).setOpaleLine(line, node, other);
+					line.setOpale(true);
+				}
+			} else if (isOpalisable(link.getEntity2())) {
+				final SvekNode node = dotStringFactory.getBibliotekon().getNode(link.getEntity2());
+				final SvekNode other = dotStringFactory.getBibliotekon().getNode(link.getEntity1());
+				if (other != null) {
+					((EntityImageNote) node.getImage()).setOpaleLine(line, node, other);
+					line.setOpale(true);
+				}
+			}
+		} catch (IllegalStateException e) {
+			Logme.error(e);
+		}
 	}
 
 	private boolean isSvekTrace() {

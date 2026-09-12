@@ -55,6 +55,7 @@ public enum PragmaKey {
 	KERMOR, //
 	LABEL_ANGLE, //
 	LABEL_DISTANCE, //
+	LAYOUT, //
 	RATIO, //
 	SHOW_DEPRECATION, //
 	SVG_FONT, //

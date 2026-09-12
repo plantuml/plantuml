@@ -35,6 +35,7 @@
  */
 package net.atmp;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -49,6 +50,8 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.NewpagedDiagram;
+import net.sourceforge.plantuml.PSystemBuilder;
 import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.TitledDiagram;
@@ -64,6 +67,7 @@ import net.sourceforge.plantuml.abel.Together;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.InstallationRequirement;
@@ -99,6 +103,8 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMakerSvek;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMakerTeaVM;
+import net.sourceforge.plantuml.svek.GraphvizImageBuilder.SmetanaFallback;
+import net.sourceforge.plantuml.svek.layout.SvekLayoutBuilders;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.text.Guillemet;
@@ -141,6 +147,10 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 	private int rawLayout;
 	private Entity lastEntity = null;
 	private String warningOrError;
+	private Boolean graphSupportAvailable;
+	private Previous layoutPrevious;
+	private int layoutPage;
+	private boolean automaticGraphSupportFailed;
 
 	@Override
 	final public void setNamespaceSeparator(String namespaceSeparator) {
@@ -150,6 +160,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 
 	public CucaDiagram(UmlSource source, DiagramType type, Previous previous, PreprocessingArtifact preprocessing) {
 		super(source, type, previous, preprocessing);
+		this.layoutPrevious = previous == null ? null : Previous.createFrom(previous.values());
 		this.namespace = new Plasma<Entity>();
 		this.root = namespace.root();
 		new Entity(null, null, this.root, this, null, GroupType.ROOT, 0);
@@ -460,6 +471,11 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 
 	@Override
 	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) throws IOException, InterruptedException {
+		// The engine is never selected in the browser, so the replay is dead code there. Keeping it
+		// behind the marker lets TeaVM drop it, together with the JVM-only builder it reaches.
+		if (TeaVM.isTeaVM() == false && automaticGraphSupportFailed
+				&& getPragma().isDefine(PragmaKey.LAYOUT) == false)
+			return rebuildWithSmetana(fileFormatOption);
 
 		this.eventuallyBuildPhantomGroups(null);
 		final CucaDiagramFileMaker maker;
@@ -468,8 +484,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 			// In the browser build, "!pragma layout smetana" selects the pure-Java
 			// layout engine; with viz-global.js loaded, the default remains the
 			// Graphviz bridge. When viz-global.js is NOT loaded, the diagram falls
-			// back to Smetana instead of failing, mirroring the dotIsAvailable()
-			// fallback of the JVM branch below (the pragma short-circuits, so the
+			// back to Smetana instead of failing (the pragma short-circuits, so the
 			// probe and its one-time console note only run on the default path).
 			// ::revert when JAVA8
 			maker = (this.isUseSmetana() || net.sourceforge.plantuml.teavm.GraphVizjsTeaVMEngine.vizMissingFallback()) ? new CucaDiagramFileMakerSmetana(this) : new CucaDiagramFileMakerTeaVM(this);
@@ -477,30 +492,77 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 		// ::done
 		else if (this.isUseElk())
 			maker = new CucaDiagramFileMakerElk(this);
+		else if (this.isUseGraphSupport())
+			maker = new CucaDiagramFileMakerSvek(this);
 		else if (this.isUseSmetana() || this.dotIsAvailable() == false)
 			maker = new CucaDiagramFileMakerSmetana(this);
 		else
 			maker = new CucaDiagramFileMakerSvek(this);
 
-		return maker.getTextBlock(getDotStrings(), fileFormatOption);
+		if (TeaVM.isTeaVM())
+			return maker.getTextBlock(getDotStrings(), fileFormatOption);
+
+		try {
+			return maker.getTextBlock(getDotStrings(), fileFormatOption);
+		} catch (SmetanaFallback e) {
+			automaticGraphSupportFailed = true;
+			return rebuildWithSmetana(fileFormatOption);
+		}
+	}
+
+	private TextBlock rebuildWithSmetana(FileFormatOption fileFormatOption) throws IOException, InterruptedException {
+		// Simplification removes links and turns groups into leaves. Never retry on that model.
+		// Reparse already-preprocessed source, retaining includes, source locations and inline images.
+		Diagram rebuilt = PSystemBuilder.getInstance().createPSystem(getSource().getPathSystem(), getSource(),
+				layoutPrevious, getPreprocessingArtifact());
+		if (rebuilt instanceof NewpagedDiagram)
+			rebuilt = ((NewpagedDiagram) rebuilt).getDiagrams().get(layoutPage);
+		if (rebuilt instanceof CucaDiagram == false)
+			throw new IllegalStateException("Cannot rebuild diagram for Smetana fallback");
+		final CucaDiagram fresh = (CucaDiagram) rebuilt;
+		fresh.eventuallyBuildPhantomGroups(null);
+		return new CucaDiagramFileMakerSmetana(fresh).getTextBlock(fresh.getDotStrings(), fileFormatOption);
+	}
+
+	public void inheritLayoutReplayContext(CucaDiagram previousPage) {
+		// Every newpage child retains the whole source. Replay must start with page zero's settings.
+		this.layoutPrevious = previousPage.layoutPrevious;
+		this.layoutPage = previousPage.layoutPage + 1;
+	}
+
+	public boolean isAutomaticGraphSupport() {
+		return getPragma().isDefine(PragmaKey.LAYOUT) == false && isUseGraphSupport();
 	}
 
 	private boolean dotIsAvailable() {
 		final GraphvizRuntimeEnvironment gre = GraphvizRuntimeEnvironment.getInstance();
 
-		// An explicit request for VizJs (skinparam or GRAPHVIZ_DOT=vizjs) must be honored
-		// even though Smetana is otherwise preferred over an implicit VizJs fallback.
+		// Honor explicit VizJs, but prefer graph-support over an implicit VizJs fallback.
 		if (gre.useVizJs(getSkinParam()))
 			return true;
 
 		try {
-			final int dotVersion = gre.getDotVersion();
-			return dotVersion != -1;
+			// Resolve the executable now: the version cache may describe a previous path.
+			final File dot = gre.getDotExe();
+			return dot != null && dot.isFile() && dot.canRead() && dot.canExecute();
 		} catch (Exception e) {
 			Logme.error(e);
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public boolean isUseGraphSupport() {
+		if (TeaVM.isTeaVM())
+			return false;
+		if ("graph-support".equalsIgnoreCase(getPragma().getValue(PragmaKey.LAYOUT)))
+			return true;
+		if (isUseElk() || isUseSmetana() || dotIsAvailable())
+			return false;
+		// Cache discovery per diagram, not globally across application classloaders.
+		if (graphSupportAvailable == null)
+			graphSupportAvailable = SvekLayoutBuilders.graphSupport() != null;
+		return graphSupportAvailable;
 	}
 
 	@Override

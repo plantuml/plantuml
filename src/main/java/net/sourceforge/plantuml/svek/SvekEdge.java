@@ -80,6 +80,9 @@ import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
 import net.sourceforge.plantuml.klimt.geom.PointAndAngle;
 import net.sourceforge.plantuml.klimt.geom.Positionable;
 import net.sourceforge.plantuml.klimt.geom.PositionableUtils;
+import net.sourceforge.plantuml.klimt.geom.RectangleArea;
+import net.sourceforge.plantuml.klimt.geom.XLine2D;
+import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.klimt.geom.Side;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -109,6 +112,7 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
 import net.sourceforge.plantuml.svek.extremity.ExtremityOther;
 import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
+import net.sourceforge.plantuml.svek.layout.SvekLayoutModel;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.Direction;
@@ -123,8 +127,8 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 	private final Cluster ltail;
 	private final Cluster lhead;
 
-	private final EntityPort startUid;
-	private final EntityPort endUid;
+	private EntityPort startUid;
+	private EntityPort endUid;
 
 	private final TextBlock startTailText;
 	private final TextBlock endHeadText;
@@ -227,16 +231,6 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 			FontConfiguration cardinalityFont, Bibliotekon bibliotekon, Pragma pragma,
 			GraphvizVersion graphvizVersion) {
 		super(link, skinParam, bibliotekon);
-
-		if (!TeaVM.isTeaVM()) {
-			if (graphvizVersion.useShieldForQuantifier()
-					&& (link.getLinkArg().getQuantifier1() != null || link.getLinkArg().getRole1() != null))
-				link.getEntity1().ensureMargins(Margins.uniform(16));
-
-			if (graphvizVersion.useShieldForQuantifier()
-					&& (link.getLinkArg().getQuantifier2() != null || link.getLinkArg().getRole2() != null))
-				link.getEntity2().ensureMargins(Margins.uniform(16));
-		}
 
 		if (link.getLinkArg().getKal1() != null)
 			this.kal1 = new Kal(this, link.getLinkArg().getKal1(), skinParam, link.getEntity1(), link, stringBounder);
@@ -354,6 +348,35 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		else
 			this.labelShield = 7;
 
+	}
+
+	List<Entity> prepareForGraphviz(GraphvizVersion graphvizVersion) {
+		final List<Entity> changed = new ArrayList<>();
+		if (TeaVM.isTeaVM() || graphvizVersion.useShieldForQuantifier() == false)
+			return changed;
+		if ((link.getLinkArg().getQuantifier1() != null || link.getLinkArg().getRole1() != null)
+				&& needsQuantifierMargins(link.getEntity1())) {
+			link.getEntity1().ensureMargins(Margins.uniform(16));
+			changed.add(link.getEntity1());
+		}
+		if ((link.getLinkArg().getQuantifier2() != null || link.getLinkArg().getRole2() != null)
+				&& needsQuantifierMargins(link.getEntity2())) {
+			link.getEntity2().ensureMargins(Margins.uniform(16));
+			changed.add(link.getEntity2());
+		}
+		return changed;
+	}
+
+	void refreshGraphvizEndpoints() {
+		startUid = link.getEntityPort1(bibliotekon);
+		endUid = link.getEntityPort2(bibliotekon);
+	}
+
+	private boolean needsQuantifierMargins(Entity entity) {
+		if (entity.isGroup())
+			return true;
+		final Margins margins = entity.getMargins();
+		return margins.getX1() < 16 || margins.getX2() < 16 || margins.getY1() < 16 || margins.getY2() < 16;
 	}
 
 	private Kal kal1;
@@ -486,6 +509,47 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 			return new XDimension2D(dim.getWidth() / 2, dim.getHeight());
 
 		return dim;
+	}
+
+	String getLayoutId() {
+		return link.getUid();
+	}
+
+	boolean hasLayoutEndpoint(String id) {
+		return getStartUidPrefix().equals(id) || getEndUidPrefix().equals(id);
+	}
+
+	SvekLayoutModel.EdgeSpec toLayoutSpec() {
+		final List<SvekLayoutModel.LabelSpec> labels = new ArrayList<>();
+		final SvekLayoutModel.LabelSpec main = mainLayoutLabel();
+		if (main != null)
+			labels.add(main);
+		final TextBlock tail = startTailText != null ? startTailText : startTailRoleText;
+		if (tail != null)
+			labels.add(toLayoutLabel(SvekLayoutModel.LabelPosition.TAIL, tail.calculateDimension(stringBounder)));
+		final TextBlock head = endHeadText != null ? endHeadText : endHeadRoleText;
+		if (head != null)
+			labels.add(toLayoutLabel(SvekLayoutModel.LabelPosition.HEAD, head.calculateDimension(stringBounder)));
+		return SvekLayoutModel.EdgeSpec.builder(getLayoutId(), getStartUidPrefix(), getEndUidPrefix())
+				.cells(startUid.getPortId(), endUid.getPortId())
+				.minlen(Math.max(0, link.getLength() - 1))
+				.visible(link.isInvis() == false)
+				.constraint(link.isConstraint() && link.hasTwoEntryPointsSameContainer() == false)
+				.same(link.getSametail(), null)
+				.labels(labels)
+				.build();
+	}
+
+	private SvekLayoutModel.LabelSpec mainLayoutLabel() {
+		if (hasNoteLabelText() == false && link.getLinkConstraint() == null)
+			return null;
+		XDimension2D dim = hasNoteLabelText() ? labelText.calculateDimension(stringBounder) : CONSTRAINT_SPOT;
+		dim = eventuallyDivideByTwo(dim.delta(2 * labelShield));
+		return toLayoutLabel(SvekLayoutModel.LabelPosition.MAIN, dim);
+	}
+
+	private SvekLayoutModel.LabelSpec toLayoutLabel(SvekLayoutModel.LabelPosition position, XDimension2D dim) {
+		return new SvekLayoutModel.LabelSpec(position, dim.getWidth(), dim.getHeight());
 	}
 
 	public String rankSame() {
@@ -633,7 +697,34 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		if (path.isPathConsistent() == false)
 			return;
 
-		dotPath = path.toDotPath();
+		final DotPath pathGeometry = path.toDotPath();
+		final SvgResult lineSvg = fullSvg.substring(end);
+		final PointListIterator decorationPoints = getLinkStrategy() == LinkStrategy.SIMPLEST ? null
+				: lineSvg.getPointsWithThisColor(lineColor);
+		final XPoint2D mainLabel = hasNoteLabelText() || link.getLinkConstraint() != null
+				? getXY(fullSvg, this.noteLabelColor)
+				: null;
+		final XPoint2D tailLabel = this.startTailText != null || this.startTailRoleText != null
+				? getXY(fullSvg, this.startTailColor)
+				: null;
+		final XPoint2D headLabel = this.endHeadText != null || this.endHeadRoleText != null
+				? getXY(fullSvg, this.endHeadColor)
+				: null;
+
+		applyLayoutGeometry(pathGeometry, decorationPoints, mainLabel, tailLabel, headLabel);
+	}
+
+	void applyLayoutGeometry(DotPath path, PointListIterator decorationPoints, XPoint2D mainLabel,
+			XPoint2D tailLabel, XPoint2D headLabel) {
+		applyLayoutGeometry(path, decorationPoints, mainLabel, tailLabel, headLabel, false, false);
+	}
+
+	void applyLayoutGeometry(DotPath path, PointListIterator decorationPoints, XPoint2D mainLabel,
+			XPoint2D tailLabel, XPoint2D headLabel, boolean normalizeCompoundTangents, boolean providerGeometry) {
+		if (this.link.isInvis())
+			return;
+
+		dotPath = path;
 
 		final XPoint2D tmpStartPoint = dotPath.getStartPoint();
 		final XPoint2D tmpEndPoint = dotPath.getEndPoint();
@@ -669,11 +760,35 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		}
 		dotPath = dotPath.simulateCompound(lhead == null ? null : lhead.getRectangleArea(),
 				ltail == null ? null : ltail.getRectangleArea());
+		if (normalizeCompoundTangents)
+			dotPath = dotPath.withEndpointTangentsToward(
+					endpointArea(lhead, svekNode2, dotPath.getEndPoint()),
+					endpointArea(ltail, svekNode1, dotPath.getStartPoint()));
 
-		final SvgResult lineSvg = fullSvg.substring(end);
-		PointListIterator pointListIterator = null;
+		applyExtremities(decorationPoints);
+		applyLollipopImpacts();
+		applyLabelPositions(mainLabel, tailLabel, headLabel);
 
+		if (isOpalisable(providerGeometry) == false)
+			setOpale(false);
+
+	}
+
+	private static RectangleArea endpointArea(Cluster cluster, SvekNode node, XPoint2D endpoint) {
+		final RectangleArea area = cluster != null ? cluster.getRectangleArea()
+				: node == null ? null : node.getRectangleArea();
+		if (area == null)
+			return null;
+		final double dx = Math.max(area.getMinX() - endpoint.getX(), Math.max(0, endpoint.getX() - area.getMaxX()));
+		final double dy = Math.max(area.getMinY() - endpoint.getY(), Math.max(0, endpoint.getY() - area.getMaxY()));
+		return Math.sqrt(dx * dx + dy * dy) <= 2 ? area : null;
+	}
+
+	private void applyExtremities(PointListIterator decorationPoints) {
 		final LinkType linkType = link.getType();
+		final PointListIterator correctionPoints = decorationPoints == null ? null : decorationPoints.cloneMe();
+		final SvekNode svekNode1 = getSvekNode1();
+		final SvekNode svekNode2 = getSvekNode2();
 
 		if (getLinkStrategy() == LinkStrategy.SIMPLEST) {
 			this.extremity1 = getExtremitySimplier(dotPath.getStartPoint(),
@@ -683,12 +798,11 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 					linkType.getDecor1().getExtremityFactoryComplete(backgroundColor), dotPath.getEndAngle(), lhead,
 					svekNode2, false, kal2);
 		} else {
-			pointListIterator = lineSvg.getPointsWithThisColor(lineColor);
-			if (link.getLength() == 1 && isThereTwo(linkType) && count(pointListIterator.cloneMe()) == 2) {
+			if (link.getLength() == 1 && isThereTwo(linkType) && count(decorationPoints.cloneMe()) == 2) {
 				// Sorry, this is ugly because of
 				// https://github.com/plantuml/plantuml/issues/1353
 
-				final List<XPoint2D> points = pointListIterator.next();
+				final List<XPoint2D> points = decorationPoints.next();
 				final XPoint2D p1 = points.get(1);
 
 				XPoint2D startPoint = dotPath.getStartPoint();
@@ -703,18 +817,12 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 				this.extremity2 = getExtremitySpecial(endPoint, linkType.getDecor1(), dotPath.getEndAngle(), lhead,
 						svekNode2);
 			} else {
-				this.extremity1 = getExtremity(dotPath.getStartPoint(), linkType.getDecor2(), pointListIterator,
+				this.extremity1 = getExtremity(dotPath.getStartPoint(), linkType.getDecor2(), decorationPoints,
 						dotPath.getStartAngle() + Math.PI, ltail, svekNode1);
-				this.extremity2 = getExtremity(dotPath.getEndPoint(), linkType.getDecor1(), pointListIterator,
+				this.extremity2 = getExtremity(dotPath.getEndPoint(), linkType.getDecor1(), decorationPoints,
 						dotPath.getEndAngle(), lhead, svekNode2);
 			}
 		}
-
-		if (link.getEntity1().getLeafType() == LeafType.LOLLIPOP_HALF)
-			svekNode1.addImpact(dotPath.getStartAngle() + Math.PI);
-
-		if (link.getEntity2().getLeafType() == LeafType.LOLLIPOP_HALF)
-			svekNode2.addImpact(dotPath.getEndAngle());
 
 		if (getLinkStrategy() == LinkStrategy.LEGACY_toberemoved && extremity1 instanceof Extremity
 				&& extremity2 instanceof Extremity) {
@@ -727,47 +835,51 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 				final double dist2start = p2.distance(dotPath.getStartPoint());
 				final double dist2end = p2.distance(dotPath.getEndPoint());
 				if (dist1start > dist1end && dist2end > dist2start) {
-					pointListIterator = lineSvg.getPointsWithThisColor(lineColor);
-					this.extremity2 = getExtremity(dotPath.getEndPoint(), linkType.getDecor1(), pointListIterator,
+					this.extremity2 = getExtremity(dotPath.getEndPoint(), linkType.getDecor1(), correctionPoints,
 							dotPath.getEndAngle(), lhead, svekNode2);
-					this.extremity1 = getExtremity(dotPath.getStartPoint(), linkType.getDecor2(), pointListIterator,
+					this.extremity1 = getExtremity(dotPath.getStartPoint(), linkType.getDecor2(), correctionPoints,
 							dotPath.getStartAngle() + Math.PI, ltail, svekNode1);
 				}
 			}
 
 		}
+	}
 
+	private void applyLollipopImpacts() {
+		final SvekNode svekNode1 = getSvekNode1();
+		final SvekNode svekNode2 = getSvekNode2();
+		if (link.getEntity1().getLeafType() == LeafType.LOLLIPOP_HALF)
+			svekNode1.addImpact(dotPath.getStartAngle() + Math.PI);
+
+		if (link.getEntity2().getLeafType() == LeafType.LOLLIPOP_HALF)
+			svekNode2.addImpact(dotPath.getEndAngle());
+	}
+
+	private void applyLabelPositions(XPoint2D mainLabel, XPoint2D tailLabel, XPoint2D headLabel) {
 		if (hasNoteLabelText() || link.getLinkConstraint() != null) {
-			final XPoint2D pos = getXY(fullSvg, this.noteLabelColor);
-			if (pos != null) {
+			if (mainLabel != null) {
 //				corner1.manage(pos);
-				this.labelXY = hasNoteLabelText() ? TextBlockUtils.asPositionable(labelText, stringBounder, pos)
-						: TextBlockUtils.asPositionable(CONSTRAINT_SPOT, stringBounder, pos);
+				this.labelXY = hasNoteLabelText() ? TextBlockUtils.asPositionable(labelText, stringBounder, mainLabel)
+						: TextBlockUtils.asPositionable(CONSTRAINT_SPOT, stringBounder, mainLabel);
 			}
 		}
 
 		if (this.startTailText != null || this.startTailRoleText != null) {
-			final XPoint2D pos = getXY(fullSvg, this.startTailColor);
-			if (pos != null) {
+			if (tailLabel != null) {
 //				corner1.manage(pos);
 				final TextBlock forSize = this.startTailText != null ? startTailText : startTailRoleText;
-				this.startTailLabelXY = TextBlockUtils.asPositionable(forSize, stringBounder, pos);
+				this.startTailLabelXY = TextBlockUtils.asPositionable(forSize, stringBounder, tailLabel);
 			}
 		}
 
 		if (this.endHeadText != null || this.endHeadRoleText != null) {
-			final XPoint2D pos = getXY(fullSvg, this.endHeadColor);
-			if (pos != null) {
+			if (headLabel != null) {
 //				corner1.manage(pos);
 				final TextBlock forSize = this.endHeadText != null ? endHeadText : endHeadRoleText;
-				this.endHeadLabelXY = TextBlockUtils.asPositionable(forSize, stringBounder, pos);
+				this.endHeadLabelXY = TextBlockUtils.asPositionable(forSize, stringBounder, headLabel);
 //				corner1.manage(pos.getX() - 15, pos.getY());
 			}
 		}
-
-		if (isOpalisable() == false)
-			setOpale(false);
-
 	}
 
 	private boolean isThereTwo(final LinkType linkType) {
@@ -800,8 +912,46 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		return bibliotekon.getCluster(link.getEntity2());
 	}
 
-	private boolean isOpalisable() {
-		return dotPath.getBeziers().size() <= 1;
+	private boolean isOpalisable(boolean providerGeometry) {
+		return dotPath.getBeziers().size() <= 1 || providerGeometry && hasClearOpaleShortcut();
+	}
+
+	private boolean hasClearOpaleShortcut() {
+		final SvekNode node1 = getSvekNode1();
+		final SvekNode node2 = getSvekNode2();
+		if (node1 == null || node2 == null)
+			return false;
+		final XLine2D direct = XLine2D.line(node1.getRectangleArea().getPointCenter(),
+				node2.getRectangleArea().getPointCenter());
+		for (SvekNode candidate : bibliotekon.allNodes()) {
+			if (candidate == node1 || candidate == node2)
+				continue;
+			if (intersectsForOpale(candidate.getRectangleArea(), direct))
+				return false;
+		}
+		for (Cluster cluster : bibliotekon.allCluster()) {
+			if (contains(cluster, node1) || contains(cluster, node2))
+				continue;
+			if (intersectsForOpale(cluster.getRectangleArea(), direct))
+				return false;
+		}
+		return true;
+	}
+
+	private static boolean contains(Cluster cluster, SvekNode node) {
+		for (Cluster current = node.getCluster(); current != null; current = current.getParentCluster())
+			if (current == cluster)
+				return true;
+		return false;
+	}
+
+	static boolean intersectsForOpale(RectangleArea area, XLine2D line) {
+		if (area == null)
+			return false;
+		final XRectangle2D rectangle = new XRectangle2D(area.getMinX(), area.getMinY(), area.getWidth(),
+				area.getHeight());
+		return area.contains(line.getP1()) || area.contains(line.getP2())
+				|| rectangle.intersect(line) != null;
 	}
 
 	private XPoint2D getXY(SvgResult svgResult, int color) {

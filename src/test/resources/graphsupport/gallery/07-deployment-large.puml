@@ -1,0 +1,28 @@
+@startuml
+' Regions and availability zones as nested nodes, replicating across regions
+cloud Internet
+node "Region A" {
+  node "AZ-1" {
+    [ApiA1]
+    [WorkerA1]
+  }
+  node "AZ-2" {
+    [ApiA2]
+  }
+  database PrimaryA
+}
+node "Region B" {
+  node "AZ-3" {
+    [ApiB1]
+  }
+  database ReplicaB
+}
+Internet --> [ApiA1]
+Internet --> [ApiA2]
+Internet --> [ApiB1]
+[ApiA1] --> PrimaryA
+[ApiA2] --> PrimaryA
+[WorkerA1] --> PrimaryA
+PrimaryA --> ReplicaB
+[ApiB1] --> ReplicaB
+@enduml

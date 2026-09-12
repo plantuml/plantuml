@@ -1,0 +1,27 @@
+@startuml
+' Composite states nested two deep plus a concurrent region
+[*] --> Booting
+Booting --> Ready : loaded
+state Ready {
+  [*] --> Idle
+  Idle --> Working : job
+  Working --> Idle : done
+  state Working {
+    [*] --> Fetch
+    Fetch --> Transform
+    Transform --> Store
+    Store --> [*]
+  }
+}
+state Degraded {
+  state Network
+  state Storage
+  --
+  state Retrying
+  state Alerting
+}
+Ready --> Degraded : failure
+Degraded --> Ready : recovered
+Ready --> [*] : shutdown
+Degraded --> [*] : abort
+@enduml

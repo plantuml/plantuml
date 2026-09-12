@@ -1,0 +1,18 @@
+@startuml
+' Branches, a retry loop and two terminations
+(*) --> "Receive request"
+"Receive request" --> "Authenticate"
+"Authenticate" --> "Load profile"
+"Authenticate" --> "Reject"
+"Load profile" --> "Check quota"
+"Check quota" --> "Enqueue job"
+"Check quota" --> "Throttle"
+"Enqueue job" --> "Render"
+"Throttle" --> "Enqueue job"
+"Render" --> "Upload"
+"Render" --> "Retry render"
+"Retry render" --> "Render"
+"Upload" --> "Notify"
+"Notify" --> (*)
+"Reject" --> (*)
+@enduml

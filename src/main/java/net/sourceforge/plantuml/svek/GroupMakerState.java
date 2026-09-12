@@ -48,10 +48,13 @@ import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.cucadiagram.GroupHierarchy;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.dot.DotData;
+import net.sourceforge.plantuml.dot.GraphvizVersionFinder;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
+import net.sourceforge.plantuml.svek.layout.SvekLayoutBuilder;
+import net.sourceforge.plantuml.svek.layout.SvekLayoutBuilders;
 
 public final class GroupMakerState {
 
@@ -147,10 +150,13 @@ public final class GroupMakerState {
 		final Cluster root = new Cluster(group.getLocation(), diagram, bibliotekon.getColorSequence(), dotData.getRootGroup());
 
 		final ClusterManager clusterManager = new ClusterManager(bibliotekon, root);
+		final boolean graphSupportRequested = diagram.isUseGraphSupport();
+		final SvekLayoutBuilder layoutBuilder = graphSupportRequested ? SvekLayoutBuilders.graphSupport() : null;
 		final DotStringFactory dotStringFactory = new DotStringFactory(bibliotekon, root, diagram.getDiagramType(),
-				diagram.getSkinParam());
+				diagram.getSkinParam(), graphSupportRequested ? GraphvizVersionFinder.DEFAULT : null);
 		return new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(), SName.stateDiagram, dotMode,
-				dotStringFactory, clusterManager);
+				dotStringFactory, clusterManager, layoutBuilder, graphSupportRequested,
+				diagram.isAutomaticGraphSupport());
 	}
 
 	private Collection<Entity> filter(Collection<Entity> leafs) {

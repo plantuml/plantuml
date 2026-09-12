@@ -1,0 +1,42 @@
+@startuml
+' Dense bipartite graph, left to right: worst case for crossing reduction
+left to right direction
+class Src1
+class Src2
+class Src3
+class Src4
+class Src5
+class Src6
+class Src7
+class Dst1
+class Dst2
+class Dst3
+class Dst4
+class Dst5
+class Dst6
+class Dst7
+Src1 --> Dst3
+Src1 --> Dst6
+Src2 --> Dst3
+Src2 --> Dst6
+Src3 --> Dst1
+Src3 --> Dst2
+Src3 --> Dst3
+Src3 --> Dst4
+Src3 --> Dst5
+Src3 --> Dst6
+Src3 --> Dst7
+Src4 --> Dst3
+Src4 --> Dst6
+Src5 --> Dst3
+Src5 --> Dst6
+Src6 --> Dst1
+Src6 --> Dst2
+Src6 --> Dst3
+Src6 --> Dst4
+Src6 --> Dst5
+Src6 --> Dst6
+Src6 --> Dst7
+Src7 --> Dst3
+Src7 --> Dst6
+@enduml

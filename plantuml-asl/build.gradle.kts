@@ -25,6 +25,7 @@ java {
 
 dependencies {
 	compileOnly(libs.ant)
+	compileOnly(libs.graph.support.core)
 	compileOnly(libs.teavm.jso.apis)
 	compileOnly(libs.teavm.classlib)
 	compileOnly(libs.openpdf)

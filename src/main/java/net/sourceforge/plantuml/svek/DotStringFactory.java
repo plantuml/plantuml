@@ -62,27 +62,78 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.svek.layout.SvekLayoutModel;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.Position;
 import net.sourceforge.plantuml.vizjs.GraphvizJs;
 import net.sourceforge.plantuml.vizjs.GraphvizJsRuntimeException;
 
 public final class DotStringFactory implements Moveable {
+	interface GraphvizVersionResolver {
+		GraphvizVersion resolve();
+	}
 
 	private final DiagramType diagramType;
 	private final ISkinParam skinParam;
 	private final Bibliotekon bibliotekon;
 	private final Cluster root;
+	private GraphvizVersion graphvizVersion;
+	private final GraphvizVersionResolver graphvizVersionResolver;
 
 	public DotStringFactory(Bibliotekon bibliotekon, Cluster root, DiagramType diagramType, ISkinParam skinParam) {
+		this(bibliotekon, root, diagramType, skinParam, null);
+	}
+
+	public DotStringFactory(Bibliotekon bibliotekon, Cluster root, DiagramType diagramType, ISkinParam skinParam,
+			GraphvizVersion graphvizVersion) {
+		this(bibliotekon, root, diagramType, skinParam, graphvizVersion, null);
+	}
+
+	DotStringFactory(Bibliotekon bibliotekon, Cluster root, DiagramType diagramType, ISkinParam skinParam,
+			GraphvizVersion graphvizVersion, GraphvizVersionResolver graphvizVersionResolver) {
 		this.bibliotekon = bibliotekon;
 		this.skinParam = skinParam;
 		this.diagramType = diagramType;
 		this.root = root;
+		this.graphvizVersion = graphvizVersion;
+		this.graphvizVersionResolver = graphvizVersionResolver;
 	}
 
 	public Bibliotekon getBibliotekon() {
 		return bibliotekon;
+	}
+
+	Cluster getRootCluster() {
+		return root;
+	}
+
+	SvekLayoutModel.Direction getLayoutDirection() {
+		return skinParam.getRankdir() == Rankdir.LEFT_TO_RIGHT ? SvekLayoutModel.Direction.LEFT_TO_RIGHT
+				: SvekLayoutModel.Direction.TOP_TO_BOTTOM;
+	}
+
+	SvekLayoutModel.GraphSpec toLayoutGraphSpec(StringBounder stringBounder) {
+		double nodeSep = getHorizontalDzeta(stringBounder);
+		if (nodeSep < getMinNodeSep())
+			nodeSep = getMinNodeSep();
+		if (skinParam.getNodesep() != 0)
+			nodeSep = skinParam.getNodesep();
+
+		double rankSep = getVerticalDzeta(stringBounder);
+		if (rankSep < getMinRankSep())
+			rankSep = getMinRankSep();
+		if (skinParam.getRanksep() != 0)
+			rankSep = skinParam.getRanksep();
+
+		final SvekLayoutModel.Direction direction = getLayoutDirection();
+		final SvekLayoutModel.Routing routing;
+		if (skinParam.getDotSplines() == DotSplines.POLYLINE)
+			routing = SvekLayoutModel.Routing.POLYLINE;
+		else if (skinParam.getDotSplines() == DotSplines.ORTHO)
+			routing = SvekLayoutModel.Routing.ORTHO;
+		else
+			routing = SvekLayoutModel.Routing.SPLINE;
+		return new SvekLayoutModel.GraphSpec(direction, routing, nodeSep, rankSep);
 	}
 
 	private double getHorizontalDzeta(StringBounder stringBounder) {
@@ -253,8 +304,6 @@ public final class DotStringFactory implements Moveable {
 		return 35;
 	}
 
-	private GraphvizVersion graphvizVersion;
-
 	public GraphvizVersion getGraphvizVersion() {
 		if (TeaVM.isTeaVM())
 			return null;
@@ -267,6 +316,8 @@ public final class DotStringFactory implements Moveable {
 	}
 
 	private GraphvizVersion getGraphvizVersionInternal() {
+		if (graphvizVersionResolver != null)
+			return graphvizVersionResolver.resolve();
 		if (TeaVM.isTeaVM())
 			return null;
 		else {
@@ -277,6 +328,27 @@ public final class DotStringFactory implements Moveable {
 			final File f = graphviz.getDotExe();
 			return GraphvizRuntimeEnvironment.getInstance().getVersion(f);
 		}
+	}
+
+	void useDetectedGraphvizVersion() {
+		if (TeaVM.isTeaVM() == false)
+			graphvizVersion = getGraphvizVersionInternal();
+	}
+
+	void prepareForGraphviz() {
+		boolean marginsChanged = false;
+		for (SvekEdge line : bibliotekon.allLines())
+			for (Entity entity : line.prepareForGraphviz(getGraphvizVersion())) {
+				final SvekNode node = bibliotekon.getNode(entity);
+				if (node != null) {
+					node.invalidateMargins();
+					marginsChanged = true;
+				}
+			}
+		// An edge without quantifiers may share a node shielded by a later edge.
+		if (marginsChanged)
+			for (SvekEdge line : bibliotekon.allLines())
+				line.refreshGraphvizEndpoints();
 	}
 
 	public String getSvg(StringBounder stringBounder, DotMode dotMode, BaseFile basefile, String[] dotOptions)
@@ -447,13 +519,17 @@ public final class DotStringFactory implements Moveable {
 		for (SvekEdge line : getBibliotekon().allLines())
 			line.solveLine(svgResult);
 
+		finishLayout();
+
+	}
+
+	void finishLayout() {
 		// Align edges at label nodes for orthogonal routing
 		if (skinParam.getDotSplines() == DotSplines.ORTHO)
 			alignEdgesAtLabelNodes();
 
 		for (SvekEdge line : getBibliotekon().allLines())
 			line.manageCollision(getBibliotekon().allNodes());
-
 	}
 
 	/**
