@@ -216,6 +216,16 @@ public final class StyleQuery {
 		return result;
 	}
 
+	/**
+	 * Whether this query requires at least one stereotype -- that is, whether any part of it comes
+	 * from the diagram's own text rather than from the finite set of {@link SName} tags the code
+	 * itself can name. See {@code StyleIndex}, which caches the two families separately for
+	 * exactly that reason.
+	 */
+	public boolean hasStereotype() {
+		return atoms.hasStereotype();
+	}
+
 	Iterable<StyleAtom> getAtoms() {
 		return atoms;
 	}

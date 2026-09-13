@@ -86,7 +86,19 @@ public final class StyleIndex {
 	// as-is (it is immutable with proper equals/hashCode) and safe to keep for this index's
 	// whole lifetime (this index itself is immutable -- withLoaded/withMuted always return a
 	// new one -- so there is no later mutation this cache could ever go stale against).
-	private final Map<StyleQuery, Style> mergedStyleCache = new ConcurrentHashMap<StyleQuery, Style>();
+	//
+	// This one holds ONLY stereotype-free queries, and that restriction is what bounds it.
+	// A StyleIndex built from a .skin file is reached through StyleLoader's own static,
+	// process-lifetime cache and shared by every StyleBuilder cloned from it, so whatever
+	// lands here is never released while the process lives -- which is fine for a query whose
+	// atoms can only be SName values the code itself names (a finite enum, and in practice the
+	// ~165 StyleQueries constants plus a handful of dynamic combinations), and a leak for a
+	// query carrying a stereotype, whose text comes from the diagram being rendered. Every
+	// distinct "<<foo>>" any diagram ever used would otherwise be pinned here forever: on a
+	// long-running server that grows without bound, at four entries per diagram with fresh
+	// stereotype names. Those queries go to the caller's own per-diagram cache instead, passed
+	// in to getMergedStyle -- see StyleBuilder, which owns one and drops it with the diagram.
+	private final Map<StyleQuery, Style> sharedMergedStyleCache = new ConcurrentHashMap<StyleQuery, Style>();
 
 	private StyleIndex(List<Style> allStyles) {
 		this.allStyles = allStyles;
@@ -175,8 +187,19 @@ public final class StyleIndex {
 		return trie().findMatching(query);
 	}
 
-	Style getMergedStyle(StyleQuery query) {
-		final Style cached = mergedStyleCache.get(query);
+	/**
+	 * The merged style for {@code query}, memoized. A stereotype-free query is cached on this
+	 * index, shared with every {@link StyleBuilder} cloned from it; a query carrying a stereotype
+	 * is cached in {@code perDiagramCache} instead, which its owner is expected to discard along
+	 * with the diagram it was rendering -- see {@link #sharedMergedStyleCache} for why the two
+	 * cannot be the same map. {@code perDiagramCache} must be discarded whenever this index is
+	 * replaced, since nothing here invalidates it.
+	 */
+	Style getMergedStyle(StyleQuery query, Map<StyleQuery, Style> perDiagramCache) {
+		final Map<StyleQuery, Style> cache = query.hasStereotype() ? perDiagramCache
+				: sharedMergedStyleCache;
+
+		final Style cached = cache.get(query);
 		if (cached != null)
 			return cached;
 
@@ -188,7 +211,7 @@ public final class StyleIndex {
 		// a hit at all.
 		final Style computed = computeMergedStyle(query);
 		if (computed != null)
-			mergedStyleCache.put(query, computed);
+			cache.put(query, computed);
 
 		return computed;
 	}

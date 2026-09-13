@@ -173,6 +173,15 @@ public final class AtomArray implements Iterable<StyleAtom> {
 		return atom != null && Arrays.binarySearch(data, atom) >= 0;
 	}
 
+	/**
+	 * Whether this holds at least one stereotype atom. Every {@link StyleAtom} carrying an
+	 * {@link SName} sorts before every stereotype atom (see {@link StyleAtom#compareTo}), so the
+	 * question is settled by the last element alone, with no scan.
+	 */
+	public boolean hasStereotype() {
+		return data.length > 0 && data[data.length - 1].isName() == false;
+	}
+
 	public int size() {
 		return data.length;
 	}

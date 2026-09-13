@@ -37,6 +37,8 @@ package net.sourceforge.plantuml.style;
 
 import java.util.Collection;
 import java.util.EnumMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import net.sourceforge.plantuml.style.value.Value;
 
@@ -50,6 +52,17 @@ public class StyleBuilder implements AutomaticCounter {
 	private StyleIndex index = StyleIndex.empty();
 	// private final Set<StyleSignature> printedForLog;
 	private int counter;
+
+	// The per-diagram half of the getMergedStyle memoization; StyleIndex#getMergedStyle picks
+	// this one for any query carrying a stereotype and its own shared cache otherwise -- see
+	// StyleIndex#sharedMergedStyleCache for why stereotype-bearing queries must not be cached
+	// on the index. A StyleBuilder is per-diagram where the index behind it is not: SkinParam
+	// holds one, obtained either from StyleLoader#loadSkin (which hands out a cloneMe() of its
+	// own process-lifetime instance) or from muteStyle (which returns a new builder), so both
+	// paths already start this map empty and let the previous one go with the diagram that
+	// filled it. Kept concurrent for the same reason the shared one is: a diagram rendered from
+	// more than one thread must not corrupt it, and a duplicated computation is harmless.
+	private final Map<StyleQuery, Style> perDiagramMergedStyleCache = new ConcurrentHashMap<StyleQuery, Style>();
 
 	public void printMe() {
 		for (Style style : index.getAllStyles())
@@ -106,6 +119,12 @@ public class StyleBuilder implements AutomaticCounter {
 			throw new IllegalArgumentException();
 
 		this.index = this.index.withLoaded(newStyle);
+		// This is the one place where a StyleBuilder swaps the index under itself rather than
+		// handing back a new builder, so it is also the one place where the per-diagram cache
+		// could answer with a style resolved against the previous index. In practice the only
+		// caller (StyleLoader#loadSkinSlow) fills a brand new builder before anything queries
+		// it, but keeping the invariant here rather than in that caller costs one line.
+		this.perDiagramMergedStyleCache.clear();
 	}
 
 	@Override
@@ -114,7 +133,7 @@ public class StyleBuilder implements AutomaticCounter {
 	}
 
 	public Style getMergedStyle(StyleQuery query) {
-		return index.getMergedStyle(query);
+		return index.getMergedStyle(query, perDiagramMergedStyleCache);
 	}
 
 	public Style getMergedStyleSpecial(StyleQuery query, int ancestorRank) {

@@ -246,4 +246,25 @@ class AtomArrayTest {
 		assertNotEquals(a, "not an AtomArray");
 	}
 
+	// -----------------------------------------------------------------------
+	// hasStereotype()
+	// -----------------------------------------------------------------------
+
+	@Test
+	@DisplayName("hasStereotype() is false for an empty or SName-only array")
+	void hasStereotypeIsFalseWithoutStereotypeAtom() {
+		assertFalse(AtomArray.empty().hasStereotype());
+		assertFalse(AtomArray.of(ROOT).hasStereotype());
+		assertFalse(AtomArray.of(NODE, ROOT, ARROW, ELEMENT).hasStereotype());
+	}
+
+	@Test
+	@DisplayName("hasStereotype() is true as soon as one stereotype atom is present")
+	void hasStereotypeIsTrueWithStereotypeAtom() {
+		assertTrue(AtomArray.of(FOO).hasStereotype());
+		assertTrue(AtomArray.of(ROOT, ELEMENT, FOO).hasStereotype());
+		assertTrue(AtomArray.of(BAR, ROOT, FOO, ELEMENT).hasStereotype());
+		assertTrue(AtomArray.of(ROOT).plus(FOO).hasStereotype());
+	}
+
 }
