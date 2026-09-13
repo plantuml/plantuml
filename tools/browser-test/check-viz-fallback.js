@@ -23,7 +23,7 @@ const path = require('path');
 const { createCheckReporter, isErrorImage } = require('../lib/browser-check');
 const { parseTargetArg } = require('../lib/browser-cli');
 const { createMountedServer, startServer } = require('../lib/browser-http');
-const { createModulePageHtml, delay, loadPlaywright, maybeScriptTag, openReadyPage } = require('../lib/browser-page');
+const { createModulePageHtml, delay, loadPlaywright, makeRenderModuleBody, maybeScriptTag, openReadyPage, renderOn } = require('../lib/browser-page');
 
 const pw = loadPlaywright();
 const { dir, file } = parseTargetArg(process.argv, 'node check-viz-fallback.js target=<dir-or-js>');
@@ -50,8 +50,7 @@ const pageHtml = mode => createModulePageHtml({
   headHtml: hook,
   bodyHtml: mode === 'viz' ? maybeScriptTag(dir, 'viz-global.js', '/viz-global.js') : mode === 'stub' ? stub : '',
   modulePath: `/${file}`,
-  moduleBody: `window.__render=(lines,id)=>render(lines,id,{maxSvgSize:98304});
-window.__ready=1;`,
+  moduleBody: makeRenderModuleBody({ maxSvgSize: 98304 }),
 });
 
 const server = createMountedServer({
@@ -75,30 +74,6 @@ const FAMILIES = [
 const SEQUENCE = ['Alice -> Bob: hello', 'Bob --> Alice: hi'];
 const diagram = body => ['@startuml', ...body, '@enduml'];
 
-async function renderOn(page, lines) {
-  return page.evaluate(async ({ lines }) => {
-    const out = document.getElementById('out');
-    out.innerHTML = '';
-    const w0 = window.__wasm;
-    const done = new Promise(res => {
-      const mo = new MutationObserver(() => {
-        if (out.querySelector('svg') || out.textContent) { mo.disconnect(); res(); }
-      });
-      mo.observe(out, { childList: true, subtree: true });
-    });
-    let thrown = null;
-    try { window.__render(lines, 'out'); } catch (e) { thrown = String(e && e.message || e); }
-    if (!thrown) await Promise.race([done, new Promise(r => setTimeout(r, 30000))]);
-    const svg = out.querySelector('svg');
-    return {
-      thrown, svg: svg ? svg.outerHTML : null, text: out.textContent || '',
-      wasm: window.__wasm - w0,
-      shapes: svg ? svg.querySelectorAll('path,polygon,line,rect,ellipse').length : 0,
-      texts: svg ? svg.querySelectorAll('text').length : 0,
-    };
-  }, { lines });
-}
-
 (async () => {
   const port = await startServer(server);
   const browser = await pw.chromium.launch({ headless: true });
@@ -114,7 +89,11 @@ async function renderOn(page, lines) {
 
   // First render on the page carries the pragma: the pragma must short-circuit
   // the probe, so it renders through Smetana with no fallback note at all.
-  const prag = await renderOn(bare, ['@startuml', '!pragma layout smetana', ...FAMILIES[0][1], '@enduml']);
+  const prag = await renderOn(bare, ['@startuml', '!pragma layout smetana', ...FAMILIES[0][1], '@enduml'], {
+    includeWasmCount: true,
+    includeShapeCounts: true,
+    maxTextLength: 120,
+  });
   await delay(250); // let any console event arrive before asserting absence
   check('pragma diagram on the viz-less page renders with no fallback note (pragma short-circuits the probe)',
     !prag.thrown && !!prag.svg && !isErrorImage(prag.svg) && prag.shapes > 0 && prag.wasm === 0 && fallbackNotes.length === 0,
@@ -122,12 +101,16 @@ async function renderOn(page, lines) {
       : fallbackNotes.length !== 0 ? 'fallback note logged for an explicit pragma render'
       : 'render failed (shapes=' + prag.shapes + ' wasm=' + prag.wasm + ')'));
 
-  const seq = await renderOn(bare, diagram(SEQUENCE));
+  const seq = await renderOn(bare, diagram(SEQUENCE), { maxTextLength: 120 });
   check('sequence diagram renders without viz-global.js', !seq.thrown && !!seq.svg,
     seq.thrown || 'no svg produced: ' + seq.text.slice(0, 120));
 
   for (const [label, body] of FAMILIES) {
-    const r = await renderOn(bare, diagram(body));
+    const r = await renderOn(bare, diagram(body), {
+      includeWasmCount: true,
+      includeShapeCounts: true,
+      maxTextLength: 120,
+    });
     const ok = !r.thrown && !!r.svg && !isErrorImage(r.svg) && r.shapes > 0 && r.texts > 0 && r.wasm === 0;
     check(`${label} diagram without viz-global.js and without pragma falls back to smetana`, ok,
       r.thrown || (!r.svg ? 'no svg: ' + r.text.slice(0, 120)
@@ -148,7 +131,10 @@ async function renderOn(page, lines) {
   const ctrl = ctrlReady.page;
   const ctrlErrors = ctrlReady.errors;
 
-  const viaViz = await renderOn(ctrl, diagram(FAMILIES[0][1]));
+  const viaViz = await renderOn(ctrl, diagram(FAMILIES[0][1]), {
+    includeWasmCount: true,
+    maxTextLength: 120,
+  });
   check('control: class diagram without the pragma still uses the Graphviz bridge',
     !viaViz.thrown && !!viaViz.svg && !isErrorImage(viaViz.svg) && viaViz.wasm > 0,
     viaViz.thrown || (!viaViz.svg ? 'no svg: ' + viaViz.text.slice(0, 120)
@@ -167,7 +153,11 @@ async function renderOn(page, lines) {
   const part = partReady.page;
   const partErrors = partReady.errors;
 
-  const viaStub = await renderOn(part, diagram(FAMILIES[0][1]));
+  const viaStub = await renderOn(part, diagram(FAMILIES[0][1]), {
+    includeWasmCount: true,
+    includeShapeCounts: true,
+    maxTextLength: 120,
+  });
   await delay(250);
   check('partially loaded Viz (no instance function) falls back to smetana with the note',
     !viaStub.thrown && !!viaStub.svg && !isErrorImage(viaStub.svg) && viaStub.shapes > 0 && viaStub.wasm === 0 && partNotes.length === 1,

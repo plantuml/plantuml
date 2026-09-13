@@ -41,7 +41,7 @@ const path = require('path');
 const { createCheckReporter, isErrorImage } = require('../lib/browser-check');
 const { parseTargetArg } = require('../lib/browser-cli');
 const { createMountedServer, startServer } = require('../lib/browser-http');
-const { createModulePageHtml, loadPlaywright, openReadyPage } = require('../lib/browser-page');
+const { createModulePageHtml, loadPlaywright, makeRenderModuleBody, openReadyPage, renderOn } = require('../lib/browser-page');
 
 const pw = loadPlaywright();
 const { dir, file } = parseTargetArg(process.argv, 'node check-stdlib-loader.js target=<dir-or-js>');
@@ -97,8 +97,7 @@ const pageHtml = mode => createModulePageHtml({
     + (mode === 'hookfail' ? hookScript('fakelib') : '')
     + (mode === 'decline' ? declineScript : ''),
   modulePath: `/${file}`,
-  moduleBody: `window.__render=(lines,id)=>render(lines,id,{maxSvgSize:98304});
-window.__ready=1;`,
+  moduleBody: makeRenderModuleBody({ maxSvgSize: 98304 }),
 });
 
 // The server records every bundle-ish request so the checks can assert what
@@ -130,25 +129,6 @@ const { check, finish } = createCheckReporter();
 const includeOf = lib => ['@startuml', '!include <' + lib + '/greeting>', 'FAKEHELLO -> FAKEHELLO : ping', '@enduml'];
 const SEQUENCE = ['@startuml', 'Alice -> Bob: hello', 'Bob --> Alice: hi', '@enduml'];
 
-async function renderOn(page, lines) {
-  return page.evaluate(async ({ lines }) => {
-    const out = document.getElementById('out');
-    out.innerHTML = '';
-    const done = new Promise(res => {
-      const mo = new MutationObserver(() => {
-        if (out.querySelector('svg') || out.textContent) { mo.disconnect(); res(); }
-      });
-      mo.observe(out, { childList: true, subtree: true });
-    });
-    let thrown = null;
-    try { window.__render(lines, 'out'); } catch (e) { thrown = String(e && e.message || e); }
-    if (!thrown) await Promise.race([done, new Promise(r => setTimeout(r, 30000))]);
-    const svg = out.querySelector('svg');
-    return { thrown, svg: svg ? svg.outerHTML : null, text: out.textContent || '',
-      loaderCalls: window.__loaderCalls ? window.__loaderCalls.slice() : null };
-  }, { lines });
-}
-
 const rendersGreeting = (r, lib) => !r.thrown && !!r.svg && !isErrorImage(r.svg)
   && r.svg.includes('Hello from ' + lib);
 const failsVisibly = r => !r.thrown && (!!r.text.trim() || (!!r.svg && isErrorImage(r.svg)));
@@ -164,15 +144,15 @@ const failsVisibly = r => !r.thrown && (!!r.text.trim() || (!!r.svg && isErrorIm
   // Page 1: neither global set. Relative loading and the failure mode are
   // exactly what they always were.
   const bare = await openPage('index.html');
-  let r = await renderOn(bare.page, SEQUENCE);
+  let r = await renderOn(bare.page, SEQUENCE, { includeLoaderCalls: true, maxTextLength: 120 });
   check('plain diagram renders with neither global set', !r.thrown && !!r.svg && !isErrorImage(r.svg),
     r.thrown || 'no svg: ' + r.text.slice(0, 120));
-  r = await renderOn(bare.page, includeOf('fakelib'));
+  r = await renderOn(bare.page, includeOf('fakelib'), { includeLoaderCalls: true, maxTextLength: 120 });
   check('relative bundle next to the page still loads', rendersGreeting(r, 'fakelib'),
     r.thrown || (r.svg ? 'include content missing from svg' : 'no svg: ' + r.text.slice(0, 120)));
   check('relative bundle was fetched from the page origin', requested.includes('/fakelib.min.js'),
     'requests seen: ' + requested.join(', '));
-  r = await renderOn(bare.page, includeOf('nosuchlib'));
+  r = await renderOn(bare.page, includeOf('nosuchlib'), { includeLoaderCalls: true, maxTextLength: 120 });
   check('missing bundle fails the include visibly, no hang', failsVisibly(r),
     r.thrown || 'no visible failure output');
   check('no unhandled page errors on the bare page', bare.errors.length === 0, bare.errors.join(' | '));
@@ -181,7 +161,7 @@ const failsVisibly = r => !r.thrown && (!!r.text.trim() || (!!r.svg && isErrorIm
   // asked for the bundle.
   requested.length = 0;
   const base = await openPage('index-base.html');
-  r = await renderOn(base.page, includeOf('baselib'));
+  r = await renderOn(base.page, includeOf('baselib'), { includeLoaderCalls: true, maxTextLength: 120 });
   check('PLANTUML_STDLIB_BASE loads the bundle from the prefix', rendersGreeting(r, 'baselib'),
     r.thrown || (r.svg ? 'include content missing from svg' : 'no svg: ' + r.text.slice(0, 120)));
   check('base page fetched /cdn/baselib.min.js and nothing from the root',
@@ -192,17 +172,17 @@ const failsVisibly = r => !r.thrown && (!!r.text.trim() || (!!r.svg && isErrorIm
   // Page 3: PLANTUML_STDLIB_LOADER delivers the bundle as fetched JSON.
   requested.length = 0;
   const hook = await openPage('index-hook.html');
-  r = await renderOn(hook.page, includeOf('hooklib'));
+  r = await renderOn(hook.page, includeOf('hooklib'), { includeLoaderCalls: true, maxTextLength: 120 });
   check('PLANTUML_STDLIB_LOADER delivers the bundle as data', rendersGreeting(r, 'hooklib'),
     r.thrown || (r.svg ? 'include content missing from svg' : 'no svg: ' + r.text.slice(0, 120)));
   check('hook page fetched only JSON, no .min.js anywhere',
     requested.some(u => u === '/json/hooklib.json') && !requested.some(u => u.endsWith('.min.js')),
     'requests seen: ' + requested.join(', '));
-  r = await renderOn(hook.page, includeOf('hooklib'));
+  r = await renderOn(hook.page, includeOf('hooklib'), { includeLoaderCalls: true, maxTextLength: 120 });
   check('second render coalesces: loader called once for hooklib',
     r.loaderCalls && r.loaderCalls.filter(u => u === 'hooklib.min.js').length === 1,
     'loader calls: ' + (r.loaderCalls || []).join(', '));
-  r = await renderOn(hook.page, includeOf('linklib'));
+  r = await renderOn(hook.page, includeOf('linklib'), { includeLoaderCalls: true, maxTextLength: 120 });
   check('a library with info.link resolves through two loader calls', rendersGreeting(r, 'hooklib')
     && r.loaderCalls.includes('linklib.min.js'),
     r.thrown || (rendersGreeting(r, 'hooklib') ? 'loader calls: ' + (r.loaderCalls || []).join(', ')
@@ -211,7 +191,7 @@ const failsVisibly = r => !r.thrown && (!!r.text.trim() || (!!r.svg && isErrorIm
 
   // Page 4: the loader refuses the library. The include must fail visibly.
   const hookfail = await openPage('index-hookfail.html');
-  r = await renderOn(hookfail.page, includeOf('fakelib'));
+  r = await renderOn(hookfail.page, includeOf('fakelib'), { includeLoaderCalls: true, maxTextLength: 120 });
   check('loader failure surfaces as a visible include error, no hang', failsVisibly(r),
     r.thrown || 'no visible failure output');
   check('no unhandled page errors on the hook-failure page', hookfail.errors.length === 0,
@@ -222,7 +202,7 @@ const failsVisibly = r => !r.thrown && (!!r.text.trim() || (!!r.svg && isErrorIm
   // not break themes.js, emoji.js and friends.
   requested.length = 0;
   const decline = await openPage('index-decline.html');
-  r = await renderOn(decline.page, includeOf('fakelib'));
+  r = await renderOn(decline.page, includeOf('fakelib'), { includeLoaderCalls: true, maxTextLength: 120 });
   check('a declining hook falls back to the script tag', rendersGreeting(r, 'fakelib'),
     r.thrown || (r.svg ? 'include content missing from svg' : 'no svg: ' + r.text.slice(0, 120)));
   check('the declining hook was consulted before the fallback',

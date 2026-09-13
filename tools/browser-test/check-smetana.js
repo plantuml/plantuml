@@ -24,7 +24,7 @@ const path = require('path');
 const { createCheckReporter, isErrorImage } = require('../lib/browser-check');
 const { parseTargetArg } = require('../lib/browser-cli');
 const { createMountedServer, startServer } = require('../lib/browser-http');
-const { createModulePageHtml, loadPlaywright, maybeScriptTag, openReadyPage } = require('../lib/browser-page');
+const { createModulePageHtml, loadPlaywright, makeRenderModuleBody, maybeScriptTag, openReadyPage, renderOn } = require('../lib/browser-page');
 
 const pw = loadPlaywright();
 const { dir, file } = parseTargetArg(process.argv, 'node check-smetana.js target=<dir-or-js>');
@@ -48,8 +48,7 @@ const pageHtml = withViz => createModulePageHtml({
   headHtml: hook,
   bodyHtml: withViz ? maybeScriptTag(dir, 'viz-global.js', '/viz-global.js') : '',
   modulePath: `/${file}`,
-  moduleBody: `window.__render=(lines,id)=>render(lines,id,{maxSvgSize:98304});
-window.__ready=1;`,
+  moduleBody: makeRenderModuleBody({ maxSvgSize: 98304 }),
 });
 
 const server = createMountedServer({
@@ -79,30 +78,6 @@ const FAMILIES = [
 ];
 const diagram = (body, pragma) => ['@startuml', ...(pragma ? ['!pragma layout smetana'] : []), ...body, '@enduml'];
 
-async function renderOn(page, lines) {
-  return page.evaluate(async ({ lines }) => {
-    const out = document.getElementById('out');
-    out.innerHTML = '';
-    const w0 = window.__wasm;
-    const done = new Promise(res => {
-      const mo = new MutationObserver(() => {
-        if (out.querySelector('svg') || out.textContent) { mo.disconnect(); res(); }
-      });
-      mo.observe(out, { childList: true, subtree: true });
-    });
-    let thrown = null;
-    try { window.__render(lines, 'out'); } catch (e) { thrown = String(e && e.message || e); }
-    if (!thrown) await Promise.race([done, new Promise(r => setTimeout(r, 30000))]);
-    const svg = out.querySelector('svg');
-    return {
-      thrown, svg: svg ? svg.outerHTML : null, text: out.textContent || '',
-      wasm: window.__wasm - w0,
-      shapes: svg ? svg.querySelectorAll('path,polygon,line,rect,ellipse').length : 0,
-      texts: svg ? svg.querySelectorAll('text').length : 0,
-    };
-  }, { lines });
-}
-
 (async () => {
   const port = await startServer(server);
   const browser = await pw.chromium.launch({ headless: true });
@@ -113,7 +88,11 @@ async function renderOn(page, lines) {
   const bareErrors = bareReady.errors;
 
   for (const [label, body] of FAMILIES) {
-    const r = await renderOn(bare, diagram(body, true));
+    const r = await renderOn(bare, diagram(body, true), {
+      includeWasmCount: true,
+      includeShapeCounts: true,
+      maxTextLength: 120,
+    });
     const ok = !r.thrown && !!r.svg && !isErrorImage(r.svg) && r.shapes > 0 && r.texts > 0 && r.wasm === 0;
     check(`smetana ${label} diagram renders without viz-global.js`, ok,
       r.thrown || (!r.svg ? 'no svg: ' + r.text.slice(0, 120)
@@ -130,13 +109,19 @@ async function renderOn(page, lines) {
   const ctrl = ctrlReady.page;
   const ctrlErrors = ctrlReady.errors;
 
-  const viaViz = await renderOn(ctrl, diagram(FAMILIES[0][1], false));
+  const viaViz = await renderOn(ctrl, diagram(FAMILIES[0][1], false), {
+    includeWasmCount: true,
+    maxTextLength: 120,
+  });
   check('control: class diagram without the pragma still uses the Graphviz bridge',
     !viaViz.thrown && !!viaViz.svg && !isErrorImage(viaViz.svg) && viaViz.wasm > 0,
     viaViz.thrown || (!viaViz.svg ? 'no svg: ' + viaViz.text.slice(0, 120)
       : viaViz.wasm === 0 ? 'render used no WebAssembly, default path changed' : 'error image'));
 
-  const viaSmetana = await renderOn(ctrl, diagram(FAMILIES[0][1], true));
+  const viaSmetana = await renderOn(ctrl, diagram(FAMILIES[0][1], true), {
+    includeWasmCount: true,
+    maxTextLength: 120,
+  });
   check('control: class diagram with the pragma ignores viz-global.js even when loaded',
     !viaSmetana.thrown && !!viaSmetana.svg && !isErrorImage(viaSmetana.svg) && viaSmetana.wasm === 0,
     viaSmetana.thrown || (!viaSmetana.svg ? 'no svg: ' + viaSmetana.text.slice(0, 120)
