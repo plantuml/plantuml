@@ -226,7 +226,7 @@ public final class StyleQuery {
 		return atoms.hasStereotype();
 	}
 
-	Iterable<StyleAtom> getAtoms() {
+	AtomArray getAtoms() {
 		return atoms;
 	}
 

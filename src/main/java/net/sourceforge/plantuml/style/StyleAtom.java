@@ -47,6 +47,23 @@ package net.sourceforge.plantuml.style;
  */
 public final class StyleAtom implements Comparable<StyleAtom> {
 
+	// One interned instance per SName, built once. An SName atom carries no state beyond the
+	// enum constant itself, and StyleQuery builds one on every add()/of3() -- that is, several
+	// per rendered element, for a value that can only ever be one of these. Interning them
+	// makes every SName atom in the process a single object, so the trie's HashMap lookups
+	// compare by reference instead of by field, and nothing is allocated to ask a question
+	// about SName.root.
+	private static final StyleAtom[] BY_SNAME = buildInterned();
+
+	private static StyleAtom[] buildInterned() {
+		final SName[] values = SName.values();
+		final StyleAtom[] result = new StyleAtom[values.length];
+		for (int i = 0; i < values.length; i++)
+			result[i] = new StyleAtom(values[i], null);
+
+		return result;
+	}
+
 	private final SName sname;
 	private final String stereotype;
 
@@ -58,7 +75,7 @@ public final class StyleAtom implements Comparable<StyleAtom> {
 	public static StyleAtom of(SName sname) {
 		if (sname == null)
 			throw new IllegalArgumentException("sname");
-		return new StyleAtom(sname, null);
+		return BY_SNAME[sname.ordinal()];
 	}
 
 	/** The stereotype text without its leading dot, already lower-cased. */
@@ -113,6 +130,12 @@ public final class StyleAtom implements Comparable<StyleAtom> {
 
 	@Override
 	public boolean equals(Object obj) {
+		// Interning makes this fast path the one that actually answers for every SName atom;
+		// the field comparison below is left exactly as it was, so nothing here depends on
+		// interning being airtight.
+		if (this == obj)
+			return true;
+
 		if (obj instanceof StyleAtom == false)
 			return false;
 		final StyleAtom other = (StyleAtom) obj;
@@ -123,7 +146,11 @@ public final class StyleAtom implements Comparable<StyleAtom> {
 
 	@Override
 	public int hashCode() {
-		return sname != null ? sname.hashCode() : stereotype.hashCode();
+		// ordinal(), not the enum's own hashCode(): the latter is identity-based, which would
+		// make this -- and through AtomArray, every StyleQuery -- hash differently from one run
+		// to the next for no benefit. Nothing iterates the maps these are keyed in, so the only
+		// thing that ever depended on it was reproducibility while debugging.
+		return sname != null ? sname.ordinal() : stereotype.hashCode();
 	}
 
 	@Override
