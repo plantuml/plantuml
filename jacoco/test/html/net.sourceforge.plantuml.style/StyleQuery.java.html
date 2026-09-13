@@ -216,12 +216,22 @@ public final class StyleQuery {
 <span class="nc" id="L216">		return result;</span>
 	}
 
-	Iterable&lt;StyleAtom&gt; getAtoms() {
-<span class="fc" id="L220">		return atoms;</span>
+	/**
+	 * Whether this query requires at least one stereotype -- that is, whether any part of it comes
+	 * from the diagram's own text rather than from the finite set of {@link SName} tags the code
+	 * itself can name. See {@code StyleIndex}, which caches the two families separately for
+	 * exactly that reason.
+	 */
+	public boolean hasStereotype() {
+<span class="fc" id="L226">		return atoms.hasStereotype();</span>
+	}
+
+	AtomArray getAtoms() {
+<span class="fc" id="L230">		return atoms;</span>
 	}
 
 	LevelConstraint getLevelConstraint() {
-<span class="fc" id="L224">		return levelConstraint;</span>
+<span class="fc" id="L234">		return levelConstraint;</span>
 	}
 
 	/**
@@ -229,29 +239,29 @@ public final class StyleQuery {
 	 * {@code StyleSignature.getStereotypes()}.
 	 */
 	Set&lt;String&gt; getStereotypes() {
-<span class="fc" id="L232">		final Set&lt;String&gt; result = new LinkedHashSet&lt;String&gt;();</span>
-<span class="fc bfc" id="L233" title="All 2 branches covered.">		for (StyleAtom atom : atoms)</span>
-<span class="fc bfc" id="L234" title="All 2 branches covered.">			if (atom.isName() == false)</span>
-<span class="fc" id="L235">				result.add(atom.getStereotype());</span>
-<span class="fc" id="L236">		return result;</span>
+<span class="fc" id="L242">		final Set&lt;String&gt; result = new LinkedHashSet&lt;String&gt;();</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">		for (StyleAtom atom : atoms)</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">			if (atom.isName() == false)</span>
+<span class="fc" id="L245">				result.add(atom.getStereotype());</span>
+<span class="fc" id="L246">		return result;</span>
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="pc bpc" id="L241" title="1 of 2 branches missed.">		if (obj instanceof StyleQuery == false)</span>
-<span class="nc" id="L242">			return false;</span>
-<span class="fc" id="L243">		final StyleQuery other = (StyleQuery) obj;</span>
-<span class="fc bfc" id="L244" title="All 4 branches covered.">		return this.atoms.equals(other.atoms) &amp;&amp; this.levelConstraint.equals(other.levelConstraint);</span>
+<span class="pc bpc" id="L251" title="1 of 2 branches missed.">		if (obj instanceof StyleQuery == false)</span>
+<span class="nc" id="L252">			return false;</span>
+<span class="fc" id="L253">		final StyleQuery other = (StyleQuery) obj;</span>
+<span class="fc bfc" id="L254" title="All 4 branches covered.">		return this.atoms.equals(other.atoms) &amp;&amp; this.levelConstraint.equals(other.levelConstraint);</span>
 	}
 
 	@Override
 	public int hashCode() {
-<span class="fc" id="L249">		return atoms.hashCode() * 31 + levelConstraint.hashCode();</span>
+<span class="fc" id="L259">		return atoms.hashCode() * 31 + levelConstraint.hashCode();</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="fc" id="L254">		return atoms + &quot; &quot; + levelConstraint;</span>
+<span class="fc" id="L264">		return atoms + &quot; &quot; + levelConstraint;</span>
 	}
 
 }

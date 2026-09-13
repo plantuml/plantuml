@@ -103,9 +103,17 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../AtomArray.html" title="class in net.sourceforge.plantuml.style">AtomArray</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">AtomArray.</span><code><a href="../AtomArray.html#plusAll(net.sourceforge.plantuml.style.AtomArray)" class="member-name-link">plusAll</a><wbr>(<a href="../AtomArray.html" title="class in net.sourceforge.plantuml.style">AtomArray</a>&nbsp;other)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">StyleAtomTrie.</span><code><a href="../StyleAtomTrie.html#insert(net.sourceforge.plantuml.style.AtomArray,net.sourceforge.plantuml.style.LevelConstraint,T)" class="member-name-link">insert</a><wbr>(<a href="../AtomArray.html" title="class in net.sourceforge.plantuml.style">AtomArray</a>&nbsp;atoms,
+ <a href="../LevelConstraint.html" title="class in net.sourceforge.plantuml.style">LevelConstraint</a>&nbsp;levelConstraint,
+ <a href="../StyleAtomTrie.html" title="type parameter in StyleAtomTrie">T</a>&nbsp;payload)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Stores <code>payload</code> under <code>atoms</code>, matched later only against a query whose
+ <a href="../LevelConstraint.html" title="class in net.sourceforge.plantuml.style"><code>LevelConstraint</code></a> it accepts (see <a href="../LevelConstraint.html#matches(net.sourceforge.plantuml.style.LevelConstraint,net.sourceforge.plantuml.style.LevelConstraint)"><code>LevelConstraint.matches(net.sourceforge.plantuml.style.LevelConstraint, net.sourceforge.plantuml.style.LevelConstraint)</code></a>).</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../AtomArray.html" title="class in net.sourceforge.plantuml.style">AtomArray</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">AtomArray.</span><code><a href="../AtomArray.html#plusAll(net.sourceforge.plantuml.style.AtomArray)" class="member-name-link">plusAll</a><wbr>(<a href="../AtomArray.html" title="class in net.sourceforge.plantuml.style">AtomArray</a>&nbsp;other)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

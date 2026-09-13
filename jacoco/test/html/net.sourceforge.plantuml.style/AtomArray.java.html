@@ -173,53 +173,62 @@ public final class AtomArray implements Iterable&lt;StyleAtom&gt; {
 <span class="pc bpc" id="L173" title="1 of 4 branches missed.">		return atom != null &amp;&amp; Arrays.binarySearch(data, atom) &gt;= 0;</span>
 	}
 
+	/**
+	 * Whether this holds at least one stereotype atom. Every {@link StyleAtom} carrying an
+	 * {@link SName} sorts before every stereotype atom (see {@link StyleAtom#compareTo}), so the
+	 * question is settled by the last element alone, with no scan.
+	 */
+	public boolean hasStereotype() {
+<span class="fc bfc" id="L182" title="All 4 branches covered.">		return data.length &gt; 0 &amp;&amp; data[data.length - 1].isName() == false;</span>
+	}
+
 	public int size() {
-<span class="fc" id="L177">		return data.length;</span>
+<span class="fc" id="L186">		return data.length;</span>
 	}
 
 	public boolean isEmpty() {
-<span class="fc bfc" id="L181" title="All 2 branches covered.">		return data.length == 0;</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">		return data.length == 0;</span>
 	}
 
 	/** The atom at {@code index}, in ascending order -- zero-allocation random access. */
 	public StyleAtom get(int index) {
-<span class="fc" id="L186">		return data[index];</span>
+<span class="fc" id="L195">		return data[index];</span>
 	}
 
 	@Override
 	public Iterator&lt;StyleAtom&gt; iterator() {
-<span class="fc" id="L191">		return new Iterator&lt;StyleAtom&gt;() {</span>
-<span class="fc" id="L192">			private int index = 0;</span>
+<span class="fc" id="L200">		return new Iterator&lt;StyleAtom&gt;() {</span>
+<span class="fc" id="L201">			private int index = 0;</span>
 
 			@Override
 			public boolean hasNext() {
-<span class="fc bfc" id="L196" title="All 2 branches covered.">				return index &lt; data.length;</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">				return index &lt; data.length;</span>
 			}
 
 			@Override
 			public StyleAtom next() {
-<span class="fc bfc" id="L201" title="All 2 branches covered.">				if (hasNext() == false)</span>
-<span class="fc" id="L202">					throw new NoSuchElementException();</span>
-<span class="fc" id="L203">				return data[index++];</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">				if (hasNext() == false)</span>
+<span class="fc" id="L211">					throw new NoSuchElementException();</span>
+<span class="fc" id="L212">				return data[index++];</span>
 			}
 		};
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="fc bfc" id="L210" title="All 2 branches covered.">		if (obj instanceof AtomArray == false)</span>
-<span class="fc" id="L211">			return false;</span>
-<span class="fc" id="L212">		return Arrays.equals(this.data, ((AtomArray) obj).data);</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">		if (obj instanceof AtomArray == false)</span>
+<span class="fc" id="L220">			return false;</span>
+<span class="fc" id="L221">		return Arrays.equals(this.data, ((AtomArray) obj).data);</span>
 	}
 
 	@Override
 	public int hashCode() {
-<span class="fc" id="L217">		return Arrays.hashCode(data);</span>
+<span class="fc" id="L226">		return Arrays.hashCode(data);</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="fc" id="L222">		return Arrays.toString(data);</span>
+<span class="fc" id="L231">		return Arrays.toString(data);</span>
 	}
 
 }

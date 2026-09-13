@@ -142,7 +142,7 @@ loadScripts(document, 'script');</script>
  insertion order for entries sharing the same atom path).</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#insert(java.lang.Iterable,net.sourceforge.plantuml.style.LevelConstraint,T)" class="member-name-link">insert</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;<a href="StyleAtom.html" title="class in net.sourceforge.plantuml.style">StyleAtom</a>&gt;&nbsp;atoms,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#insert(net.sourceforge.plantuml.style.AtomArray,net.sourceforge.plantuml.style.LevelConstraint,T)" class="member-name-link">insert</a><wbr>(<a href="AtomArray.html" title="class in net.sourceforge.plantuml.style">AtomArray</a>&nbsp;atoms,
  <a href="LevelConstraint.html" title="class in net.sourceforge.plantuml.style">LevelConstraint</a>&nbsp;levelConstraint,
  <a href="StyleAtomTrie.html" title="type parameter in StyleAtomTrie">T</a>&nbsp;payload)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -181,17 +181,18 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="insert(java.lang.Iterable,net.sourceforge.plantuml.style.LevelConstraint,T)">
-<h3 id="insert(java.lang.Iterable,net.sourceforge.plantuml.style.LevelConstraint,java.lang.Object)">insert</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">insert</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;<a href="StyleAtom.html" title="class in net.sourceforge.plantuml.style">StyleAtom</a>&gt;&nbsp;atoms,
+<section class="detail" id="insert(net.sourceforge.plantuml.style.AtomArray,net.sourceforge.plantuml.style.LevelConstraint,T)">
+<h3 id="insert(net.sourceforge.plantuml.style.AtomArray,net.sourceforge.plantuml.style.LevelConstraint,java.lang.Object)">insert</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">insert</span><wbr><span class="parameters">(<a href="AtomArray.html" title="class in net.sourceforge.plantuml.style">AtomArray</a>&nbsp;atoms,
  <a href="LevelConstraint.html" title="class in net.sourceforge.plantuml.style">LevelConstraint</a>&nbsp;levelConstraint,
  <a href="StyleAtomTrie.html" title="type parameter in StyleAtomTrie">T</a>&nbsp;payload)</span></div>
 <div class="block">Stores <code>payload</code> under <code>atoms</code>, matched later only against a query whose
- <a href="LevelConstraint.html" title="class in net.sourceforge.plantuml.style"><code>LevelConstraint</code></a> it accepts (see <a href="LevelConstraint.html#matches(net.sourceforge.plantuml.style.LevelConstraint,net.sourceforge.plantuml.style.LevelConstraint)"><code>LevelConstraint.matches(net.sourceforge.plantuml.style.LevelConstraint, net.sourceforge.plantuml.style.LevelConstraint)</code></a>). <code>atoms</code> must
- already be in ascending order (its natural order, per <a href="StyleAtom.html#compareTo(net.sourceforge.plantuml.style.StyleAtom)"><code>StyleAtom.compareTo(net.sourceforge.plantuml.style.StyleAtom)</code></a>) and
- duplicate-free -- exactly what a <code>SortedSet&lt;StyleAtom&gt;</code> or an <code>AtomArray</code>
- already guarantees -- since <a href="#findMatching(net.sourceforge.plantuml.style.StyleQuery)"><code>findMatching(net.sourceforge.plantuml.style.StyleQuery)</code></a> walks a stored path and the query's own
- atoms in lockstep, both assumed sorted the same way.</div>
+ <a href="LevelConstraint.html" title="class in net.sourceforge.plantuml.style"><code>LevelConstraint</code></a> it accepts (see <a href="LevelConstraint.html#matches(net.sourceforge.plantuml.style.LevelConstraint,net.sourceforge.plantuml.style.LevelConstraint)"><code>LevelConstraint.matches(net.sourceforge.plantuml.style.LevelConstraint, net.sourceforge.plantuml.style.LevelConstraint)</code></a>). <code>atoms</code> is
+ an <a href="AtomArray.html" title="class in net.sourceforge.plantuml.style"><code>AtomArray</code></a> rather than any ordered collection because that is what both sides of
+ a match already hold: it is sorted in <a href="StyleAtom.html" title="class in net.sourceforge.plantuml.style"><code>StyleAtom</code></a>'s natural order and duplicate-free
+ by construction -- which <a href="#findMatching(net.sourceforge.plantuml.style.StyleQuery)"><code>findMatching(net.sourceforge.plantuml.style.StyleQuery)</code></a> relies on, walking a stored path and the
+ query's own atoms in lockstep -- and it is indexable, so neither side needs copying or an
+ iterator to be walked.</div>
 </section>
 </li>
 <li>

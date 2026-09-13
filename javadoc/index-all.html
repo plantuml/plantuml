@@ -30395,6 +30395,16 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/creole/Display.html#hasSeveralGuideLines(java.lang.String)" class="member-name-link">hasSeveralGuideLines(String)</a> - Static method in class net.sourceforge.plantuml.klimt.creole.<a href="net/sourceforge/plantuml/klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/style/AtomArray.html#hasStereotype()" class="member-name-link">hasStereotype()</a> - Method in class net.sourceforge.plantuml.style.<a href="net/sourceforge/plantuml/style/AtomArray.html" title="class in net.sourceforge.plantuml.style">AtomArray</a></dt>
+<dd>
+<div class="block">Whether this holds at least one stereotype atom.</div>
+</dd>
+<dt><a href="net/sourceforge/plantuml/style/StyleQuery.html#hasStereotype()" class="member-name-link">hasStereotype()</a> - Method in class net.sourceforge.plantuml.style.<a href="net/sourceforge/plantuml/style/StyleQuery.html" title="class in net.sourceforge.plantuml.style">StyleQuery</a></dt>
+<dd>
+<div class="block">Whether this query requires at least one stereotype -- that is, whether any part of it comes
+ from the diagram's own text rather than from the finite set of <a href="net/sourceforge/plantuml/style/SName.html" title="enum class in net.sourceforge.plantuml.style"><code>SName</code></a> tags the code
+ itself can name.</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/style/value/Specificity.html#hasStereotype()" class="member-name-link">hasStereotype()</a> - Method in class net.sourceforge.plantuml.style.value.<a href="net/sourceforge/plantuml/style/value/Specificity.html" title="class in net.sourceforge.plantuml.style.value">Specificity</a></dt>
 <dd>
 <div class="block">Whether the declaration this specificity was computed for requires at least one stereotype.</div>
@@ -31510,7 +31520,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Running in INSECURE mode means that PlantUML can access to any local file and
  can connect to any URL.</div>
 </dd>
-<dt><a href="net/sourceforge/plantuml/style/StyleAtomTrie.html#insert(java.lang.Iterable,net.sourceforge.plantuml.style.LevelConstraint,T)" class="member-name-link">insert(Iterable&lt;StyleAtom&gt;, LevelConstraint, T)</a> - Method in class net.sourceforge.plantuml.style.<a href="net/sourceforge/plantuml/style/StyleAtomTrie.html" title="class in net.sourceforge.plantuml.style">StyleAtomTrie</a></dt>
+<dt><a href="net/sourceforge/plantuml/style/StyleAtomTrie.html#insert(net.sourceforge.plantuml.style.AtomArray,net.sourceforge.plantuml.style.LevelConstraint,T)" class="member-name-link">insert(AtomArray, LevelConstraint, T)</a> - Method in class net.sourceforge.plantuml.style.<a href="net/sourceforge/plantuml/style/StyleAtomTrie.html" title="class in net.sourceforge.plantuml.style">StyleAtomTrie</a></dt>
 <dd>
 <div class="block">Stores <code>payload</code> under <code>atoms</code>, matched later only against a query whose
  <a href="net/sourceforge/plantuml/style/LevelConstraint.html" title="class in net.sourceforge.plantuml.style"><code>LevelConstraint</code></a> it accepts (see <a href="net/sourceforge/plantuml/style/LevelConstraint.html#matches(net.sourceforge.plantuml.style.LevelConstraint,net.sourceforge.plantuml.style.LevelConstraint)"><code>LevelConstraint.matches(net.sourceforge.plantuml.style.LevelConstraint, net.sourceforge.plantuml.style.LevelConstraint)</code></a>).</div>

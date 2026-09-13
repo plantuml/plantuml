@@ -165,32 +165,39 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="StyleQuery.html" title="class in net.sourceforge.plantuml.style">StyleQuery</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#mergeWith(java.util.List)" class="member-name-link">mergeWith</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&gt;&nbsp;others)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasStereotype()" class="member-name-link">hasStereotype</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Whether this query requires at least one stereotype -- that is, whether any part of it comes
+ from the diagram's own text rather than from the finite set of <a href="SName.html" title="enum class in net.sourceforge.plantuml.style"><code>SName</code></a> tags the code
+ itself can name.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="StyleQuery.html" title="class in net.sourceforge.plantuml.style">StyleQuery</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#mergeWith(java.util.List)" class="member-name-link">mergeWith</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&gt;&nbsp;others)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">This query, unioned in turn with each of <code>others</code>'s own signature --
  mirroring <code>StyleSignature.mergeWith(List&lt;Style&gt;)</code>.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="StyleQuery.html" title="class in net.sourceforge.plantuml.style">StyleQuery</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#of3(net.sourceforge.plantuml.style.SName...)" class="member-name-link">of3</a><wbr>(<a href="SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>...&nbsp;names)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="StyleQuery.html" title="class in net.sourceforge.plantuml.style">StyleQuery</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withStereostyles(net.sourceforge.plantuml.stereo.Stereostyles)" class="member-name-link">withStereostyles</a><wbr>(<a href="../stereo/Stereostyles.html" title="class in net.sourceforge.plantuml.stereo">Stereostyles</a>&nbsp;stereostyles)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="StyleQuery.html" title="class in net.sourceforge.plantuml.style">StyleQuery</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#of3(net.sourceforge.plantuml.style.SName...)" class="member-name-link">of3</a><wbr>(<a href="SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>...&nbsp;names)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="StyleQuery.html" title="class in net.sourceforge.plantuml.style">StyleQuery</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withStereostyles(net.sourceforge.plantuml.stereo.Stereostyles)" class="member-name-link">withStereostyles</a><wbr>(<a href="../stereo/Stereostyles.html" title="class in net.sourceforge.plantuml.stereo">Stereostyles</a>&nbsp;stereostyles)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">This same query, additionally requiring every stereo-style name in
  <code>stereostyles</code> -- mirroring <code>StyleSignature.with(Stereostyles)</code>.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="StyleQuery.html" title="class in net.sourceforge.plantuml.style">StyleQuery</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withStereotype(java.lang.String)" class="member-name-link">withStereotype</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;stereotype)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="StyleQuery.html" title="class in net.sourceforge.plantuml.style">StyleQuery</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withStereotype(java.lang.String)" class="member-name-link">withStereotype</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;stereotype)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">This same query, additionally requiring <code>stereotype</code> -- e.g.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="StyleQuery.html" title="class in net.sourceforge.plantuml.style">StyleQuery</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withStereotype(net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">withStereotype</a><wbr>(<a href="../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="StyleQuery.html" title="class in net.sourceforge.plantuml.style">StyleQuery</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withStereotype(net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">withStereotype</a><wbr>(<a href="../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -322,6 +329,16 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="StyleQuery.html" title="class in net.sourceforge.plantuml.style">StyleQuery</a></span>&nbsp;<span class="element-name">mergeWith</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&gt;&nbsp;others)</span></div>
 <div class="block">This query, unioned in turn with each of <code>others</code>'s own signature --
  mirroring <code>StyleSignature.mergeWith(List&lt;Style&gt;)</code>.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="hasStereotype()">
+<h3>hasStereotype</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">hasStereotype</span>()</div>
+<div class="block">Whether this query requires at least one stereotype -- that is, whether any part of it comes
+ from the diagram's own text rather than from the finite set of <a href="SName.html" title="enum class in net.sourceforge.plantuml.style"><code>SName</code></a> tags the code
+ itself can name. See <code>StyleIndex</code>, which caches the two families separately for
+ exactly that reason.</div>
 </section>
 </li>
 <li>

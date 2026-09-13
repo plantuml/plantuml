@@ -37,6 +37,8 @@ package net.sourceforge.plantuml.style;
 
 import java.util.Collection;
 import java.util.EnumMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import net.sourceforge.plantuml.style.value.Value;
 
@@ -47,74 +49,91 @@ public class StyleBuilder implements AutomaticCounter {
 	// through this class (once per diagram element, not once per file), so this is the part
 	// that actually had to change; how styles are parsed into Style objects in the first
 	// place (loadInternal/muteStyle's callers) is untouched.
-<span class="fc" id="L50">	private StyleIndex index = StyleIndex.empty();</span>
+<span class="fc" id="L52">	private StyleIndex index = StyleIndex.empty();</span>
 	// private final Set&lt;StyleSignature&gt; printedForLog;
 	private int counter;
 
+	// The per-diagram half of the getMergedStyle memoization; StyleIndex#getMergedStyle picks
+	// this one for any query carrying a stereotype and its own shared cache otherwise -- see
+	// StyleIndex#sharedMergedStyleCache for why stereotype-bearing queries must not be cached
+	// on the index. A StyleBuilder is per-diagram where the index behind it is not: SkinParam
+	// holds one, obtained either from StyleLoader#loadSkin (which hands out a cloneMe() of its
+	// own process-lifetime instance) or from muteStyle (which returns a new builder), so both
+	// paths already start this map empty and let the previous one go with the diagram that
+	// filled it. Kept concurrent for the same reason the shared one is: a diagram rendered from
+	// more than one thread must not corrupt it, and a duplicated computation is harmless.
+<span class="fc" id="L65">	private final Map&lt;StyleQuery, Style&gt; perDiagramMergedStyleCache = new ConcurrentHashMap&lt;StyleQuery, Style&gt;();</span>
+
 	public void printMe() {
-<span class="nc bnc" id="L55" title="All 2 branches missed.">		for (Style style : index.getAllStyles())</span>
-<span class="nc" id="L56">			style.printMe();</span>
-<span class="nc" id="L57">	}</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		for (Style style : index.getAllStyles())</span>
+<span class="nc" id="L69">			style.printMe();</span>
+<span class="nc" id="L70">	}</span>
 
 //	private StyleBuilder(Set&lt;StyleSignature&gt; printedForLog) {
 //		this.printedForLog = new LinkedHashSet&lt;&gt;();
 //	}
 
-<span class="fc" id="L63">	public StyleBuilder() {</span>
+<span class="fc" id="L76">	public StyleBuilder() {</span>
 		// this(new LinkedHashSet&lt;StyleSignature&gt;());
-<span class="fc" id="L65">	}</span>
+<span class="fc" id="L78">	}</span>
 
 	public StyleBuilder cloneMe() {
-<span class="fc" id="L68">		final StyleBuilder result = new StyleBuilder();</span>
-<span class="fc" id="L69">		result.index = this.index;</span>
-<span class="fc" id="L70">		result.counter = this.counter;</span>
-<span class="fc" id="L71">		return result;</span>
+<span class="fc" id="L81">		final StyleBuilder result = new StyleBuilder();</span>
+<span class="fc" id="L82">		result.index = this.index;</span>
+<span class="fc" id="L83">		result.counter = this.counter;</span>
+<span class="fc" id="L84">		return result;</span>
 
 	}
 
 	public Style createStyleStereotype(String name) {
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (name.contains(Style.STAR))</span>
-<span class="nc" id="L77">			throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (name.contains(Style.STAR))</span>
+<span class="nc" id="L90">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L79">		name = name.toLowerCase();</span>
-<span class="nc" id="L80">		final StyleQuery signature = StyleQuery.empty().withStereotype(name);</span>
+<span class="nc" id="L92">		name = name.toLowerCase();</span>
+<span class="nc" id="L93">		final StyleQuery signature = StyleQuery.empty().withStereotype(name);</span>
 
 		// An exact-signature lookup, not a cascade: only a bare &quot;.name { ... }&quot; declared with
 		// no SName scoping at all can ever match. Several such declarations (repeated in the
 		// file) are folded together here rather than pre-merged at load time, since this index
 		// no longer deduplicates by exact signature as it is populated -- see StyleIndex.
-<span class="nc" id="L86">		Style result = null;</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		for (Style style : index.getAllStyles())</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">			if (style.getQuery().equals(signature))</span>
-<span class="nc bnc" id="L89" title="All 2 branches missed.">				result = result == null ? style : result.mergeWith(style, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
+<span class="nc" id="L99">		Style result = null;</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		for (Style style : index.getAllStyles())</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">			if (style.getQuery().equals(signature))</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">				result = result == null ? style : result.mergeWith(style, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
 
-<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (result == null)</span>
-<span class="nc" id="L92">			return new Style(signature, new EnumMap&lt;PName, Value&gt;(PName.class));</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L105">			return new Style(signature, new EnumMap&lt;PName, Value&gt;(PName.class));</span>
 
-<span class="nc" id="L94">		return result;</span>
+<span class="nc" id="L107">		return result;</span>
 	}
 
 	public StyleBuilder muteStyle(Collection&lt;Style&gt; modifiedStyles) {
-<span class="fc" id="L98">		final StyleBuilder result = new StyleBuilder(/*this.printedForLog*/);</span>
-<span class="fc" id="L99">		result.counter = this.counter;</span>
-<span class="fc" id="L100">		result.index = this.index.withMuted(modifiedStyles);</span>
-<span class="fc" id="L101">		return result;</span>
+<span class="fc" id="L111">		final StyleBuilder result = new StyleBuilder(/*this.printedForLog*/);</span>
+<span class="fc" id="L112">		result.counter = this.counter;</span>
+<span class="fc" id="L113">		result.index = this.index.withMuted(modifiedStyles);</span>
+<span class="fc" id="L114">		return result;</span>
 	}
 
 	public void loadInternal(StyleQuery signature, Style newStyle) {
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		if (signature.getLevelConstraint().isStar())</span>
-<span class="nc" id="L106">			throw new IllegalArgumentException();</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (signature.getLevelConstraint().isStar())</span>
+<span class="nc" id="L119">			throw new IllegalArgumentException();</span>
 
-<span class="fc" id="L108">		this.index = this.index.withLoaded(newStyle);</span>
-<span class="fc" id="L109">	}</span>
+<span class="fc" id="L121">		this.index = this.index.withLoaded(newStyle);</span>
+		// This is the one place where a StyleBuilder swaps the index under itself rather than
+		// handing back a new builder, so it is also the one place where the per-diagram cache
+		// could answer with a style resolved against the previous index. In practice the only
+		// caller (StyleLoader#loadSkinSlow) fills a brand new builder before anything queries
+		// it, but keeping the invariant here rather than in that caller costs one line.
+<span class="fc" id="L127">		this.perDiagramMergedStyleCache.clear();</span>
+<span class="fc" id="L128">	}</span>
 
 	@Override
 	public int getNextInt() {
-<span class="fc" id="L113">		return ++counter;</span>
+<span class="fc" id="L132">		return ++counter;</span>
 	}
 
 	public Style getMergedStyle(StyleQuery query) {
-<span class="fc" id="L117">		return index.getMergedStyle(query);</span>
+<span class="fc" id="L136">		return index.getMergedStyle(query, perDiagramMergedStyleCache);</span>
 	}
 
 	public Style getMergedStyleSpecial(StyleQuery query, int ancestorRank) {
@@ -122,21 +141,21 @@ public class StyleBuilder implements AutomaticCounter {
 //		if (added)
 //			Log.info(() -&gt; &quot;Using style &quot; + query);
 
-<span class="fc" id="L125">		Style mergedStyle = null;</span>
-<span class="fc bfc" id="L126" title="All 2 branches covered.">		for (Style style : index.findMatching(query)) {</span>
-<span class="fc" id="L127">			final StyleQuery key = style.getQuery();</span>
+<span class="fc" id="L144">		Style mergedStyle = null;</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">		for (Style style : index.findMatching(query)) {</span>
+<span class="fc" id="L146">			final StyleQuery key = style.getQuery();</span>
 
-<span class="fc" id="L129">			Style tmp = style;</span>
-<span class="fc bfc" id="L130" title="All 2 branches covered.">			if (key.getLevelConstraint().isStar())</span>
-<span class="fc" id="L131">				tmp = tmp.withAncestorRank(ancestorRank);</span>
+<span class="fc" id="L148">			Style tmp = style;</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">			if (key.getLevelConstraint().isStar())</span>
+<span class="fc" id="L150">				tmp = tmp.withAncestorRank(ancestorRank);</span>
 
-<span class="fc bfc" id="L133" title="All 2 branches covered.">			if (mergedStyle == null)</span>
-<span class="fc" id="L134">				mergedStyle = tmp;</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">			if (mergedStyle == null)</span>
+<span class="fc" id="L153">				mergedStyle = tmp;</span>
 			else
-<span class="fc" id="L136">				mergedStyle = mergedStyle.mergeWith(tmp, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
+<span class="fc" id="L155">				mergedStyle = mergedStyle.mergeWith(tmp, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
 
-<span class="fc" id="L138">		}</span>
-<span class="fc" id="L139">		return mergedStyle;</span>
+<span class="fc" id="L157">		}</span>
+<span class="fc" id="L158">		return mergedStyle;</span>
 	}
 
 }

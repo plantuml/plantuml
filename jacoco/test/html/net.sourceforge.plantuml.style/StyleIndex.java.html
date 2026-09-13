@@ -86,14 +86,26 @@ public final class StyleIndex {
 	// as-is (it is immutable with proper equals/hashCode) and safe to keep for this index's
 	// whole lifetime (this index itself is immutable -- withLoaded/withMuted always return a
 	// new one -- so there is no later mutation this cache could ever go stale against).
-<span class="fc" id="L89">	private final Map&lt;StyleQuery, Style&gt; mergedStyleCache = new ConcurrentHashMap&lt;StyleQuery, Style&gt;();</span>
+	//
+	// This one holds ONLY stereotype-free queries, and that restriction is what bounds it.
+	// A StyleIndex built from a .skin file is reached through StyleLoader's own static,
+	// process-lifetime cache and shared by every StyleBuilder cloned from it, so whatever
+	// lands here is never released while the process lives -- which is fine for a query whose
+	// atoms can only be SName values the code itself names (a finite enum, and in practice the
+	// ~165 StyleQueries constants plus a handful of dynamic combinations), and a leak for a
+	// query carrying a stereotype, whose text comes from the diagram being rendered. Every
+	// distinct &quot;&lt;&lt;foo&gt;&gt;&quot; any diagram ever used would otherwise be pinned here forever: on a
+	// long-running server that grows without bound, at four entries per diagram with fresh
+	// stereotype names. Those queries go to the caller's own per-diagram cache instead, passed
+	// in to getMergedStyle -- see StyleBuilder, which owns one and drops it with the diagram.
+<span class="fc" id="L101">	private final Map&lt;StyleQuery, Style&gt; sharedMergedStyleCache = new ConcurrentHashMap&lt;StyleQuery, Style&gt;();</span>
 
-<span class="fc" id="L91">	private StyleIndex(List&lt;Style&gt; allStyles) {</span>
-<span class="fc" id="L92">		this.allStyles = allStyles;</span>
-<span class="fc" id="L93">	}</span>
+<span class="fc" id="L103">	private StyleIndex(List&lt;Style&gt; allStyles) {</span>
+<span class="fc" id="L104">		this.allStyles = allStyles;</span>
+<span class="fc" id="L105">	}</span>
 
 	public static StyleIndex empty() {
-<span class="fc" id="L96">		return EMPTY;</span>
+<span class="fc" id="L108">		return EMPTY;</span>
 	}
 
 	/**
@@ -115,10 +127,10 @@ public final class StyleIndex {
 	 * between two complete values.
 	 */
 	public StyleIndex withLoaded(Style newStyle) {
-<span class="fc" id="L118">		final List&lt;Style&gt; updated = new ArrayList&lt;Style&gt;(allStyles.size() + 1);</span>
-<span class="fc" id="L119">		updated.addAll(allStyles);</span>
-<span class="fc" id="L120">		mergeOrAppend(updated, newStyle);</span>
-<span class="fc" id="L121">		return new StyleIndex(Collections.unmodifiableList(updated));</span>
+<span class="fc" id="L130">		final List&lt;Style&gt; updated = new ArrayList&lt;Style&gt;(allStyles.size() + 1);</span>
+<span class="fc" id="L131">		updated.addAll(allStyles);</span>
+<span class="fc" id="L132">		mergeOrAppend(updated, newStyle);</span>
+<span class="fc" id="L133">		return new StyleIndex(Collections.unmodifiableList(updated));</span>
 	}
 
 	/**
@@ -128,14 +140,14 @@ public final class StyleIndex {
 	 * earlier in {@code newStyles} itself), for the same reason {@link #withLoaded} does.
 	 */
 	public StyleIndex withMuted(Collection&lt;Style&gt; newStyles) {
-<span class="fc bfc" id="L131" title="All 2 branches covered.">		if (newStyles.isEmpty())</span>
-<span class="fc" id="L132">			return this;</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">		if (newStyles.isEmpty())</span>
+<span class="fc" id="L144">			return this;</span>
 
-<span class="fc" id="L134">		final List&lt;Style&gt; updated = new ArrayList&lt;Style&gt;(allStyles.size() + newStyles.size());</span>
-<span class="fc" id="L135">		updated.addAll(allStyles);</span>
-<span class="fc bfc" id="L136" title="All 2 branches covered.">		for (Style modifiedStyle : newStyles)</span>
-<span class="fc" id="L137">			mergeOrAppend(updated, modifiedStyle);</span>
-<span class="fc" id="L138">		return new StyleIndex(Collections.unmodifiableList(updated));</span>
+<span class="fc" id="L146">		final List&lt;Style&gt; updated = new ArrayList&lt;Style&gt;(allStyles.size() + newStyles.size());</span>
+<span class="fc" id="L147">		updated.addAll(allStyles);</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">		for (Style modifiedStyle : newStyles)</span>
+<span class="fc" id="L149">			mergeOrAppend(updated, modifiedStyle);</span>
+<span class="fc" id="L150">		return new StyleIndex(Collections.unmodifiableList(updated));</span>
 	}
 
 	/**
@@ -145,40 +157,51 @@ public final class StyleIndex {
 	 * or appends it as a new entry when no such element exists yet.
 	 */
 	private static void mergeOrAppend(List&lt;Style&gt; list, Style newStyle) {
-<span class="fc" id="L148">		final StyleQuery signature = newStyle.getQuery();</span>
-<span class="fc bfc" id="L149" title="All 2 branches covered.">		for (int i = 0; i &lt; list.size(); i++) {</span>
-<span class="fc bfc" id="L150" title="All 2 branches covered.">			if (list.get(i).getQuery().equals(signature)) {</span>
-<span class="fc" id="L151">				list.set(i, list.get(i).mergeWith(newStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE));</span>
-<span class="fc" id="L152">				return;</span>
+<span class="fc" id="L160">		final StyleQuery signature = newStyle.getQuery();</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">		for (int i = 0; i &lt; list.size(); i++) {</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">			if (list.get(i).getQuery().equals(signature)) {</span>
+<span class="fc" id="L163">				list.set(i, list.get(i).mergeWith(newStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE));</span>
+<span class="fc" id="L164">				return;</span>
 			}
 		}
-<span class="fc" id="L155">		list.add(newStyle);</span>
-<span class="fc" id="L156">	}</span>
+<span class="fc" id="L167">		list.add(newStyle);</span>
+<span class="fc" id="L168">	}</span>
 
 	private StyleAtomTrie&lt;Style&gt; trie() {
-<span class="fc" id="L159">		StyleAtomTrie&lt;Style&gt; result = trieCache;</span>
-<span class="fc bfc" id="L160" title="All 2 branches covered.">		if (result == null) {</span>
-<span class="fc" id="L161">			result = new StyleAtomTrie&lt;Style&gt;();</span>
-<span class="fc bfc" id="L162" title="All 2 branches covered.">			for (Style style : allStyles) {</span>
-<span class="fc" id="L163">				final StyleQuery asDeclaration = style.getQuery();</span>
-<span class="fc" id="L164">				result.insert(asDeclaration.getAtoms(), asDeclaration.getLevelConstraint(), style);</span>
-<span class="fc" id="L165">			}</span>
-<span class="fc" id="L166">			trieCache = result;</span>
+<span class="fc" id="L171">		StyleAtomTrie&lt;Style&gt; result = trieCache;</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">		if (result == null) {</span>
+<span class="fc" id="L173">			result = new StyleAtomTrie&lt;Style&gt;();</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">			for (Style style : allStyles) {</span>
+<span class="fc" id="L175">				final StyleQuery asDeclaration = style.getQuery();</span>
+<span class="fc" id="L176">				result.insert(asDeclaration.getAtoms(), asDeclaration.getLevelConstraint(), style);</span>
+<span class="fc" id="L177">			}</span>
+<span class="fc" id="L178">			trieCache = result;</span>
 		}
-<span class="fc" id="L168">		return result;</span>
+<span class="fc" id="L180">		return result;</span>
 	}
 	/**
 	 * Every loaded style whose query is a subset of {@code query}'s, in the order they were
 	 * loaded or muted in.
 	 */
 	public List&lt;Style&gt; findMatching(StyleQuery query) {
-<span class="fc" id="L175">		return trie().findMatching(query);</span>
+<span class="fc" id="L187">		return trie().findMatching(query);</span>
 	}
 
-	Style getMergedStyle(StyleQuery query) {
-<span class="fc" id="L179">		final Style cached = mergedStyleCache.get(query);</span>
-<span class="fc bfc" id="L180" title="All 2 branches covered.">		if (cached != null)</span>
-<span class="fc" id="L181">			return cached;</span>
+	/**
+	 * The merged style for {@code query}, memoized. A stereotype-free query is cached on this
+	 * index, shared with every {@link StyleBuilder} cloned from it; a query carrying a stereotype
+	 * is cached in {@code perDiagramCache} instead, which its owner is expected to discard along
+	 * with the diagram it was rendering -- see {@link #sharedMergedStyleCache} for why the two
+	 * cannot be the same map. {@code perDiagramCache} must be discarded whenever this index is
+	 * replaced, since nothing here invalidates it.
+	 */
+	Style getMergedStyle(StyleQuery query, Map&lt;StyleQuery, Style&gt; perDiagramCache) {
+<span class="fc bfc" id="L199" title="All 2 branches covered.">		final Map&lt;StyleQuery, Style&gt; cache = query.hasStereotype() ? perDiagramCache</span>
+<span class="fc" id="L200">				: sharedMergedStyleCache;</span>
+
+<span class="fc" id="L202">		final Style cached = cache.get(query);</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">		if (cached != null)</span>
+<span class="fc" id="L204">			return cached;</span>
 
 		// Not computeIfAbsent: computeMergedStyle legitimately returns null when nothing
 		// matches (see below), and computeIfAbsent never records a null result, so a
@@ -186,27 +209,27 @@ public final class StyleIndex {
 		// plain get/put pair costs one extra (harmless, idempotent) recomputation on a
 		// race between two callers instead -- still infinitely better than never caching
 		// a hit at all.
-<span class="fc" id="L189">		final Style computed = computeMergedStyle(query);</span>
-<span class="pc bpc" id="L190" title="1 of 2 branches missed.">		if (computed != null)</span>
-<span class="fc" id="L191">			mergedStyleCache.put(query, computed);</span>
+<span class="fc" id="L212">		final Style computed = computeMergedStyle(query);</span>
+<span class="pc bpc" id="L213" title="1 of 2 branches missed.">		if (computed != null)</span>
+<span class="fc" id="L214">			cache.put(query, computed);</span>
 
-<span class="fc" id="L193">		return computed;</span>
+<span class="fc" id="L216">		return computed;</span>
 	}
 
 	private Style computeMergedStyle(StyleQuery query) {
-<span class="fc" id="L197">		Style mergedStyle = null;</span>
-<span class="fc bfc" id="L198" title="All 2 branches covered.">		for (Style style : findMatching(query)) {</span>
-<span class="fc bfc" id="L199" title="All 2 branches covered.">			if (mergedStyle == null)</span>
-<span class="fc" id="L200">				mergedStyle = style;</span>
+<span class="fc" id="L220">		Style mergedStyle = null;</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">		for (Style style : findMatching(query)) {</span>
+<span class="fc bfc" id="L222" title="All 2 branches covered.">			if (mergedStyle == null)</span>
+<span class="fc" id="L223">				mergedStyle = style;</span>
 			else
-<span class="fc" id="L202">				mergedStyle = mergedStyle.mergeWith(style, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
-<span class="fc" id="L203">		}</span>
-<span class="fc" id="L204">		return mergedStyle;</span>
+<span class="fc" id="L225">				mergedStyle = mergedStyle.mergeWith(style, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
+<span class="fc" id="L226">		}</span>
+<span class="fc" id="L227">		return mergedStyle;</span>
 	}
 
 	/** Every style ever loaded or muted into this index, in that same order. */
 	public List&lt;Style&gt; getAllStyles() {
-<span class="nc" id="L209">		return allStyles;</span>
+<span class="nc" id="L232">		return allStyles;</span>
 	}
 
 }
