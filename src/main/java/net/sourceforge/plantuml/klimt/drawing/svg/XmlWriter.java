@@ -246,7 +246,18 @@ public class XmlWriter {
 	private void escapeText(String input) {
 		if (input == null)
 			return;
-		for (int i = 0; i < input.length(); i++) {
+		final int len = input.length();
+		int i = 0;
+		for (; i < len; i++) {
+			final char c = input.charAt(i);
+			if (c == '&' || c == '<')
+				break;
+		}
+		if (i == len) {
+			out.append(input);
+			return;
+		}
+		for (i = 0; i < input.length(); i++) {
 			final char c = input.charAt(i);
 			switch (c) {
 			case '&':
@@ -265,7 +276,18 @@ public class XmlWriter {
 	private void escapeAttribute(String input) {
 		if (input == null)
 			return;
-		for (int i = 0; i < input.length(); i++) {
+		final int len = input.length();
+		int i = 0;
+		for (; i < len; i++) {
+			final char c = input.charAt(i);
+			if (c == '&' || c == '<' || c == '"')
+				break;
+		}
+		if (i == len) {
+			out.append(input);
+			return;
+		}
+		for (i = 0; i < input.length(); i++) {
 			final char c = input.charAt(i);
 			switch (c) {
 			case '&':
