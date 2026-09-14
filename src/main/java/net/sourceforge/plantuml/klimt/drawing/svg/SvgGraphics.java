@@ -47,7 +47,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -55,6 +54,7 @@ import java.util.regex.Pattern;
 
 import net.atmp.SvgOption;
 import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UPath;
@@ -466,12 +466,7 @@ public class SvgGraphics {
 	}
 
 	private String format(double xx) {
-		final double x = xx * option.getScale();
-		if (x == 0.0)
-			return "0";
-
-		final String s = String.format(Locale.US, "%." + option.getDecimal() + "f", x);
-		return trimZeros(s);
+		return StringUtils.formatDecimal(xx * option.getScale(), option.getDecimal());
 	}
 
 	private String formatBoolean(double x) {
@@ -479,13 +474,8 @@ public class SvgGraphics {
 	}
 
 	private String formatPercent(double value) {
-		final double percent = value * 100.0;
-		if (percent == 0.0)
-			return "0%";
-
 		final int decimal = Math.max(option.getDecimal(), 2);
-		final String s = String.format(Locale.US, "%." + decimal + "f", percent);
-		return trimZeros(s) + "%";
+		return StringUtils.formatDecimal(value * 100.0, decimal) + "%";
 	}
 
 	private String formatOpacity(double value) {
@@ -494,24 +484,7 @@ public class SvgGraphics {
 		if (value >= 1.0)
 			return "1";
 		final int decimal = Math.max(option.getDecimal(), 2);
-		final String s = String.format(Locale.US, "%." + decimal + "f", value);
-		return trimZeros(s);
-	}
-
-	// Removes useless trailing zeros (and the dot if it becomes orphan)
-	private String trimZeros(String s) {
-		final int dot = s.indexOf('.');
-		if (dot >= 0) {
-			int end = s.length() - 1;
-			while (end > dot && s.charAt(end) == '0')
-				end--;
-
-			if (end == dot)
-				end--;
-
-			s = s.substring(0, end + 1);
-		}
-		return s;
+		return StringUtils.formatDecimal(value, decimal);
 	}
 
 	public final void setFillColor(String fill) {

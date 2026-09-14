@@ -502,6 +502,105 @@ public class StringUtils {
 		return h;
 	}
 
+	private static final double[] POW10 = { 1e0, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1e10, 1e11, 1e12, 1e13, 1e14,
+			1e15 };
+
+	// Formats x with at most `decimal` digits after the decimal point, trimming useless
+	// trailing zeros (and the dot if it becomes orphan). Moved out of SvgGraphics#format
+	// so it can be unit-tested and reused; see StringUtilsTest for the edge cases.
+	//
+	// This avoids String.format/Locale/BigDecimal, which are costly on the JVM and even
+	// more so once TeaVM compiles this to JavaScript: x is scaled to an integer, rounded
+	// with plain double/int arithmetic, and the result string is built by hand from its
+	// digits. That scale-and-round step can (extremely rarely) disagree with an exact
+	// decimal rounding when x lands almost exactly on a rounding boundary, so such
+	// near-ties -- and magnitudes too large to scale safely as an int -- fall back to
+	// the slower but always-exact String.format-based path below.
+	public static String formatDecimal(final double x, final int decimal) {
+		if (x == 0.0)
+			return "0";
+
+		if (decimal >= 0 && decimal < POW10.length && Double.isNaN(x) == false && Double.isInfinite(x) == false) {
+			final boolean negative = x < 0;
+			final double abs = negative ? -x : x;
+			final double scaled = abs * POW10[decimal];
+
+			if (scaled < 2_000_000_000.0) {
+				final double floor = Math.floor(scaled);
+				final double frac = scaled - floor;
+				// how far scaled can plausibly be from its true value, given the two
+				// multiplications (abs, POW10) that produced it
+				final double margin = Math.max(scaled, 1.0) * 4e-15;
+				if (Math.abs(frac - 0.5) >= margin) {
+					final int rounded = (int) floor + (frac < 0.5 ? 0 : 1);
+					return buildFixedDecimal(rounded, decimal, negative);
+				}
+			}
+		}
+
+		final String s = String.format(Locale.US, "%." + decimal + "f", x);
+		return trimZeros(s);
+	}
+
+	// Builds "[-]intPart[.fracPart]" from an already-rounded, non-negative int
+	// (x scaled by 10^decimal), trimming useless trailing fractional zeros.
+	private static String buildFixedDecimal(int rounded, int decimal, boolean negative) {
+		if (rounded == 0)
+			return "0";
+
+		final String digits = Integer.toString(rounded);
+		final int len = digits.length();
+
+		final StringBuilder sb = new StringBuilder(len + 2);
+		if (negative)
+			sb.append('-');
+
+		if (decimal == 0) {
+			sb.append(digits);
+			return sb.toString();
+		}
+
+		if (len <= decimal) {
+			sb.append('0').append('.');
+			for (int i = len; i < decimal; i++)
+				sb.append('0');
+			sb.append(digits);
+		} else {
+			sb.append(digits, 0, len - decimal).append('.').append(digits, len - decimal, len);
+		}
+
+		int end = sb.length() - 1;
+		while (sb.charAt(end) == '0')
+			end--;
+
+		if (sb.charAt(end) == '.')
+			end--;
+
+		sb.setLength(end + 1);
+		return sb.toString();
+	}
+
+	// Removes useless trailing zeros (and the dot if it becomes orphan)
+	public static String trimZeros(String s) {
+		final int dot = s.indexOf('.');
+		if (dot >= 0) {
+			int end = s.length() - 1;
+			while (end > dot && s.charAt(end) == '0')
+				end--;
+
+			if (end == dot)
+				end--;
+
+			s = s.substring(0, end + 1);
+		}
+		// A negative value that rounds down to zero (e.g. "-0.001" formatted with
+		// 2 decimals) must not surface as the confusing "-0".
+		if (s.equals("-0"))
+			return "0";
+
+		return s;
+	}
+
 	public static String trin(String arg) {
 		final int len = arg.length();
 		if (len == 0)
