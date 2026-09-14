@@ -1869,11 +1869,11 @@
                 <TotalClasses>37</TotalClasses>
                 <ConcreteClasses>24</ConcreteClasses>
                 <AbstractClasses>13</AbstractClasses>
-                <Ca>97</Ca>
+                <Ca>98</Ca>
                 <Ce>33</Ce>
                 <A>0.35</A>
                 <I>0.25</I>
-                <D>0.39</D>
+                <D>0.4</D>
                 <V>1</V>
             </Stats>
 
@@ -2119,6 +2119,7 @@
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.swing</Package>
                 <Package>net.sourceforge.plantuml.syntax</Package>
+                <Package>net.sourceforge.plantuml.teavm</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
                 <Package>net.sourceforge.plantuml.tim</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram</Package>
@@ -16843,10 +16844,10 @@
                 <ConcreteClasses>19</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>43</Ca>
-                <Ce>14</Ce>
+                <Ce>15</Ce>
                 <A>0.05</A>
-                <I>0.25</I>
-                <D>0.7</D>
+                <I>0.26</I>
+                <D>0.69</D>
                 <V>1</V>
             </Stats>
 
@@ -16920,6 +16921,7 @@
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
+                <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
                 <Package>net.sourceforge.plantuml.klimt.awt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
@@ -20712,6 +20714,7 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.openiconic">
+            <Package>net.sourceforge.plantuml</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.klimt.geom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>

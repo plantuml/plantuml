@@ -348,7 +348,7 @@ Total Classes: 3
 "net.atmp" --> "net.sourceforge.plantuml.klimt.geom"
 "net.atmp" --> "net.sourceforge.plantuml.klimt.shape"
 
-class "net.sourceforge.plantuml" %lighten("red", 61) {
+class "net.sourceforge.plantuml" %lighten("red", 60) {
 Total Classes: 37
 }
 "net.sourceforge.plantuml" --> "java.awt"
@@ -3251,12 +3251,13 @@ Total Classes: 2
 "net.sourceforge.plantuml.syntax" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.syntax" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.teavm" %lighten("red", 30) {
+class "net.sourceforge.plantuml.teavm" %lighten("red", 31) {
 Total Classes: 20
 }
 "net.sourceforge.plantuml.teavm" --> "java.io"
 "net.sourceforge.plantuml.teavm" --> "java.lang"
 "net.sourceforge.plantuml.teavm" --> "java.util"
+"net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml.klimt"
 "net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml.klimt.awt"
 "net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml.klimt.color"
