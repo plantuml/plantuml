@@ -32,7 +32,7 @@ function createCheckReporter() {
       summary += '\n';
     });
     
-    summary += `</details>\n`;
+    summary += `</details>`;
     
     return summary;
   }
@@ -48,7 +48,7 @@ function createCheckReporter() {
     const summaryFile = process.env.GITHUB_STEP_SUMMARY;
     if (summaryFile) {
       const markdown = generateMarkdownSummary(testName);
-      fs.appendFileSync(summaryFile, markdown + '\n');
+      fs.appendFileSync(summaryFile, markdown);
     }
     
     process.exit(failures === 0 ? 0 : 1);
