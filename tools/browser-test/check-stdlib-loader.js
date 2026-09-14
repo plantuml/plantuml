@@ -43,8 +43,9 @@ const { parseTargetArg } = require('../lib/browser-cli');
 const { createMountedServer, startServer } = require('../lib/browser-http');
 const { createModulePageHtml, loadPlaywright, makeRenderModuleBody, openReadyPage, renderOn } = require('../lib/browser-page');
 
+const scriptName = path.basename(__filename, '.js');
+const { dir, file } = parseTargetArg(process.argv, `node ${scriptName}.js target=<dir-or-js>`);
 const pw = loadPlaywright();
-const { dir, file } = parseTargetArg(process.argv, 'node check-stdlib-loader.js target=<dir-or-js>');
 
 // The synthetic libraries: a sequence-diagram participant each, so no layout
 // engine (viz/smetana) is involved and the rendered name proves which bundle's
@@ -213,5 +214,5 @@ const failsVisibly = r => !r.thrown && (!!r.text.trim() || (!!r.svg && isErrorIm
 
   await browser.close();
   server.close();
-  finish({ uppercase: true });
+  finish(scriptName, { uppercase: true });
 })().catch(e => { console.error(e); process.exit(2); });

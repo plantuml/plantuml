@@ -18,8 +18,9 @@ const { parseTargetArg } = require('../lib/browser-cli');
 const { createMountedServer, startServer } = require('../lib/browser-http');
 const { createModulePageHtml, loadPlaywright, makeRenderModuleBody, maybeScriptTag, openRenderer } = require('../lib/browser-page');
 
+const scriptName = path.basename(__filename, '.js');
+const { dir, file } = parseTargetArg(process.argv, `node ${scriptName}.js target=<dir-or-js>`);
 const pw = loadPlaywright();
-const { dir, file } = parseTargetArg(process.argv, 'node check-background.js target=<dir-or-js>');
 
 const pageHtml = createModulePageHtml({
   modulePath: `/${file}`,
@@ -94,24 +95,24 @@ const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
   expectNoBackground('control paints no background (white is skipped)', control);
 
   // 2. skinparam backgroundColor is the plainest way to set the document background.
-  expectBackground('skinparam backgroundColor paints the background',
+  expectBackground('`skinparam backgroundColor` paints the background',
     await renderSvg(diagram('skinparam backgroundColor #0B58A8')), '#0B58A8');
 
   // 3. The style form of the same setting.
-  expectBackground('<style> document BackGroundColor paints the background',
+  expectBackground('`<style> document BackGroundColor` paints the background',
     await renderSvg(diagram('<style>document{BackGroundColor #114411}</style>')), '#114411');
 
   // 4. Themes set the document background the same way; amiga is white on blue and is
   //    unreadable without it.
-  expectBackground('!theme amiga paints its blue background',
+  expectBackground('`!theme amiga` paints its blue background',
     await renderSvg(diagram('!theme amiga')), '#0B58A8');
 
   // 5. Another dark theme, to show it is not a single hard-coded colour.
-  expectBackground('!theme blueprint paints its background',
+  expectBackground('`!theme blueprint` paints its background',
     await renderSvg(diagram('!theme blueprint')), '#003153');
 
   // 6. transparent must keep painting nothing: the host page shows through.
-  expectNoBackground('skinparam backgroundColor transparent paints nothing',
+  expectNoBackground('`skinparam backgroundColor transparent` paints nothing',
     await renderSvg(diagram('skinparam backgroundColor transparent')));
 
   // 7. Dark mode maps the default white background away; it must not start painting one.
@@ -126,7 +127,7 @@ const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
 
   // 9. scale changes the root size but not the viewBox convention; the background must
   //    still cover the whole viewBox (expectBackground asserts exactly that).
-  expectBackground('scale 2 keeps the background covering the viewBox',
+  expectBackground('`scale 2` keeps the background covering the viewBox',
     await renderSvg(diagram('scale 2', 'skinparam backgroundColor #0B58A8')), '#0B58A8');
 
   // 10. The fix lives in the shared buildSvg path, not in the sequence renderer;
@@ -139,7 +140,7 @@ const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
 
   // 11. A skinparam after !theme overrides the theme background, like the Java build
   //     (verified against the jar: background:#114411).
-  expectBackground('skinparam after !theme overrides the theme background',
+  expectBackground('skinparam after `!theme` overrides the theme background',
     await renderSvg(diagram('!theme amiga', 'skinparam backgroundColor #114411')), '#114411');
 
   // 12. A gradient background degrades to its first color under TeaVM (HColorGradient
@@ -152,5 +153,5 @@ const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
   await browser.close();
   server.close();
 
-  finish({ leadingBlankLine: true });
+  finish(scriptName, { leadingBlankLine: true });
 })().catch(e => { console.error(e); process.exit(1); });

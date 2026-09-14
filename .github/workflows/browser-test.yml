@@ -64,6 +64,11 @@ jobs:
           npm ci
           npx playwright install --with-deps --only-shell chromium
 
+      - name: Add Checks title to Summary
+        run: |
+          echo "## Checks" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
       - name: Check themes
         run: node tools/browser-test/check-themes.js target=plantuml-mit/build/npm-plantuml
 

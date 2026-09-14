@@ -29,8 +29,9 @@ const { parseTargetArg } = require('../lib/browser-cli');
 const { createMountedServer, startServer } = require('../lib/browser-http');
 const { createModulePageHtml, loadPlaywright, makeRenderModuleBody, maybeScriptTag, openReadyPage, renderOn } = require('../lib/browser-page');
 
+const scriptName = path.basename(__filename, '.js');
+const { dir, file } = parseTargetArg(process.argv, `node ${scriptName}.js target=<dir-or-js>`);
 const pw = loadPlaywright();
-const { dir, file } = parseTargetArg(process.argv, 'node check-viz-missing.js target=<dir-or-js>');
 
 if (!fs.existsSync(path.join(dir, 'viz-global.js'))) {
   console.error('viz-global.js not found next to the engine in ' + dir + ' (needed for the control page)');
@@ -80,14 +81,14 @@ const ACTIVITY = ['@startuml', 'start', ':Receive order;', ':Charge card;', 'sto
 
   for (const [label, lines] of [['sequence', SEQUENCE], ['activity', ACTIVITY]]) {
     const r = await renderOn(bare, lines, { maxTextLength: 120 });
-    check(`${label} diagram renders without viz-global.js`, !r.thrown && !!r.svg,
+    check(`${label} diagram renders without \`viz-global.js\``, !r.thrown && !!r.svg,
       r.thrown || 'no svg produced: ' + r.text.slice(0, 120));
   }
 
   for (const [label, lines] of [['class', CLASS], ['component', COMPONENT], ['composite state', STATE]]) {
     const r = await renderOn(bare, lines, { includeShapeCounts: true, maxTextLength: 120 });
     const ok = !r.thrown && !!r.svg && !isErrorImage(r.svg) && r.shapes > 0;
-    check(`${label} diagram without viz-global.js falls back to smetana`, ok,
+    check(`${label} diagram without \`viz-global.js\` falls back to smetana`, ok,
       r.thrown || (!r.svg ? 'no svg: ' + r.text.slice(0, 120)
         : isErrorImage(r.svg) ? 'crash report instead of a fallback render'
         : 'svg but no drawn content (shapes=' + r.shapes + ')'));
@@ -117,12 +118,12 @@ const ACTIVITY = ['@startuml', 'start', ':Receive order;', ':Charge card;', 'sto
   for (const [label, lines] of [['class', CLASS], ['component', COMPONENT]]) {
     const r = await renderOn(ctrl, lines, { maxTextLength: 120 });
     const ok = !r.thrown && !!r.svg && !/viz is not loaded/i.test(r.svg) && !isErrorImage(r.svg);
-    check(`control: ${label} diagram still renders with viz-global.js`, ok,
+    check(`control: ${label} diagram still renders with \`viz-global.js\``, ok,
       r.thrown || (r.svg ? 'crash text in output' : 'no svg produced: ' + r.text.slice(0, 120)));
   }
   check('no unhandled page errors on the control page', ctrlErrors.length === 0, ctrlErrors.join(' | '));
 
   await browser.close();
   server.close();
-  finish({ uppercase: true });
+  finish(scriptName, { uppercase: true });
 })().catch(e => { console.error(e); process.exit(2); });

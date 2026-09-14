@@ -25,8 +25,9 @@ const { parseTargetArg } = require('../lib/browser-cli');
 const { createMountedServer, startServer } = require('../lib/browser-http');
 const { createModulePageHtml, delay, loadPlaywright, makeRenderModuleBody, maybeScriptTag, openReadyPage, renderOn } = require('../lib/browser-page');
 
+const scriptName = path.basename(__filename, '.js');
+const { dir, file } = parseTargetArg(process.argv, `node ${scriptName}.js target=<dir-or-js>`);
 const pw = loadPlaywright();
-const { dir, file } = parseTargetArg(process.argv, 'node check-viz-fallback.js target=<dir-or-js>');
 
 if (!fs.existsSync(path.join(dir, 'viz-global.js'))) {
   console.error('viz-global.js not found next to the engine in ' + dir + ' (needed for the control page)');
@@ -102,7 +103,7 @@ const diagram = body => ['@startuml', ...body, '@enduml'];
       : 'render failed (shapes=' + prag.shapes + ' wasm=' + prag.wasm + ')'));
 
   const seq = await renderOn(bare, diagram(SEQUENCE), { maxTextLength: 120 });
-  check('sequence diagram renders without viz-global.js', !seq.thrown && !!seq.svg,
+  check('sequence diagram renders without `viz-global.js`', !seq.thrown && !!seq.svg,
     seq.thrown || 'no svg produced: ' + seq.text.slice(0, 120));
 
   for (const [label, body] of FAMILIES) {
@@ -112,7 +113,7 @@ const diagram = body => ['@startuml', ...body, '@enduml'];
       maxTextLength: 120,
     });
     const ok = !r.thrown && !!r.svg && !isErrorImage(r.svg) && r.shapes > 0 && r.texts > 0 && r.wasm === 0;
-    check(`${label} diagram without viz-global.js and without pragma falls back to smetana`, ok,
+    check(`${label} diagram without \`viz-global.js\` and without pragma falls back to smetana`, ok,
       r.thrown || (!r.svg ? 'no svg: ' + r.text.slice(0, 120)
         : isErrorImage(r.svg) ? 'error image'
         : r.wasm !== 0 ? 'unexpected WebAssembly use (' + r.wasm + ')'
@@ -135,11 +136,11 @@ const diagram = body => ['@startuml', ...body, '@enduml'];
     includeWasmCount: true,
     maxTextLength: 120,
   });
-  check('control: class diagram without the pragma still uses the Graphviz bridge',
+  check('control: class diagram without the pragma still uses the `Graphviz` bridge',
     !viaViz.thrown && !!viaViz.svg && !isErrorImage(viaViz.svg) && viaViz.wasm > 0,
     viaViz.thrown || (!viaViz.svg ? 'no svg: ' + viaViz.text.slice(0, 120)
       : viaViz.wasm === 0 ? 'render used no WebAssembly, default path changed' : 'error image'));
-  check('control: no fallback note when viz-global.js is loaded', ctrlNotes.length === 0,
+  check('control: no fallback note when `viz-global.js` is loaded', ctrlNotes.length === 0,
     ctrlNotes.join(' | '));
   check('no unhandled page errors on the control page', ctrlErrors.length === 0, ctrlErrors.join(' | '));
 
@@ -169,5 +170,5 @@ const diagram = body => ['@startuml', ...body, '@enduml'];
 
   await browser.close();
   server.close();
-  finish({ uppercase: true });
+  finish(scriptName, { uppercase: true });
 })().catch(e => { console.error(e); process.exit(2); });
