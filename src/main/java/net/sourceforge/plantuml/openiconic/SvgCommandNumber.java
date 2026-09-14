@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.openiconic;
 
-import java.util.Locale;
+import net.sourceforge.plantuml.StringUtils;
 
 public class SvgCommandNumber implements SvgCommand {
 
@@ -54,7 +54,7 @@ public class SvgCommandNumber implements SvgCommand {
 	}
 
 	public String toSvg() {
-		return String.format(Locale.US, "%1.4f", number);
+		return StringUtils.formatDecimal(number, 4);
 	}
 
 	public double getDouble() {

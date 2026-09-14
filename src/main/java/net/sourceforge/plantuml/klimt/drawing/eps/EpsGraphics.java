@@ -38,9 +38,9 @@ package net.sourceforge.plantuml.klimt.drawing.eps;
 
 import java.awt.geom.PathIterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.StringTokenizer;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.awt.XColor;
@@ -599,27 +599,11 @@ public class EpsGraphics {
 	}
 
 	public static String formatSimple4(double x) {
-		if (x == 0)
-			return "0";
-
-		String s = String.format(Locale.US, "%1.4f", x);
-		s = s.replaceAll("(\\.\\d*?)0+$", "$1");
-		if (s.endsWith("."))
-			s = s.substring(0, s.length() - 1);
-
-		return s;
+		return StringUtils.formatDecimal(x, 4);
 	}
 
 	private static String formatSimple2(double x) {
-		if (x == 0)
-			return "0";
-
-		String s = String.format(Locale.US, "%1.2f", x);
-		s = s.replaceAll("(\\.\\d*?)0+$", "$1");
-		if (s.endsWith("."))
-			s = s.substring(0, s.length() - 1);
-
-		return s;
+		return StringUtils.formatDecimal(x, 2);
 	}
 
 	protected void append(String s, boolean checkConsistence) {

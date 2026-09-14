@@ -35,9 +35,7 @@
  */
 package net.sourceforge.plantuml.teavm;
 
-import java.util.Locale;
-
-import net.sourceforge.plantuml.annotation.DuplicateCode;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
@@ -82,25 +80,8 @@ public class DriverDotPathTeaVM implements UDriver<DotPath, SvgGraphicsTeaVM> {
 		svg.drawPath(pathData.toString().trim());
 	}
 
-	@DuplicateCode(reference = "SvgGraphics#format")
 	private String format(double x) {
-		if (x == 0.0)
-			return "0";
-
-		String s = String.format(Locale.US, "%.4f", x);
-
-		final int dot = s.indexOf('.');
-		if (dot >= 0) {
-			int end = s.length() - 1;
-			while (end > dot && s.charAt(end) == '0')
-				end--;
-
-			if (end == dot)
-				end--;
-
-			s = s.substring(0, end + 1);
-		}
-		return s;
+		return StringUtils.formatDecimal(x, 4);
 	}
 
 }
