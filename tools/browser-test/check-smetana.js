@@ -26,8 +26,9 @@ const { parseTargetArg } = require('../lib/browser-cli');
 const { createMountedServer, startServer } = require('../lib/browser-http');
 const { createModulePageHtml, loadPlaywright, makeRenderModuleBody, maybeScriptTag, openReadyPage, renderOn } = require('../lib/browser-page');
 
+const scriptName = path.basename(__filename, '.js');
+const { dir, file } = parseTargetArg(process.argv, `node ${scriptName}.js target=<dir-or-js>`);
 const pw = loadPlaywright();
-const { dir, file } = parseTargetArg(process.argv, 'node check-smetana.js target=<dir-or-js>');
 
 if (!fs.existsSync(path.join(dir, 'viz-global.js'))) {
   console.error('viz-global.js not found next to the engine in ' + dir + ' (needed for the control page)');
@@ -94,7 +95,7 @@ const diagram = (body, pragma) => ['@startuml', ...(pragma ? ['!pragma layout sm
       maxTextLength: 120,
     });
     const ok = !r.thrown && !!r.svg && !isErrorImage(r.svg) && r.shapes > 0 && r.texts > 0 && r.wasm === 0;
-    check(`smetana ${label} diagram renders without viz-global.js`, ok,
+    check(`smetana ${label} diagram renders without \`viz-global.js\``, ok,
       r.thrown || (!r.svg ? 'no svg: ' + r.text.slice(0, 120)
         : isErrorImage(r.svg) ? 'error image'
         : r.wasm !== 0 ? 'unexpected WebAssembly use (' + r.wasm + ')'
@@ -122,7 +123,7 @@ const diagram = (body, pragma) => ['@startuml', ...(pragma ? ['!pragma layout sm
     includeWasmCount: true,
     maxTextLength: 120,
   });
-  check('control: class diagram with the pragma ignores viz-global.js even when loaded',
+  check('control: class diagram with the pragma ignores `viz-global.js` even when loaded',
     !viaSmetana.thrown && !!viaSmetana.svg && !isErrorImage(viaSmetana.svg) && viaSmetana.wasm === 0,
     viaSmetana.thrown || (!viaSmetana.svg ? 'no svg: ' + viaSmetana.text.slice(0, 120)
       : viaSmetana.wasm !== 0 ? 'WebAssembly used (' + viaSmetana.wasm + ')' : 'error image'));
@@ -131,5 +132,5 @@ const diagram = (body, pragma) => ['@startuml', ...(pragma ? ['!pragma layout sm
 
   await browser.close();
   server.close();
-  finish({ uppercase: true });
+  finish(scriptName, { uppercase: true });
 })().catch(e => { console.error(e); process.exit(2); });

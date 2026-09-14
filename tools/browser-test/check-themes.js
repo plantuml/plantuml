@@ -17,8 +17,9 @@ const { parseTargetArg } = require('../lib/browser-cli');
 const { createMountedServer, startServer } = require('../lib/browser-http');
 const { createModulePageHtml, loadPlaywright, makeRenderModuleBody, maybeScriptTag, openRenderer } = require('../lib/browser-page');
 
+const scriptName = path.basename(__filename, '.js');
+const { dir, file } = parseTargetArg(process.argv, `node ${scriptName}.js target=<dir-or-js>`);
 const pw = loadPlaywright();
-const { dir, file } = parseTargetArg(process.argv, 'node check-themes.js target=<dir-or-js>');
 
 const themesJsPath = path.join(dir, 'themes.js');
 if (!fs.existsSync(themesJsPath)) {
@@ -98,17 +99,17 @@ const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
   // 2. A theme must actually change the output. This is the regression guard for the original
   //    bug, where !theme was accepted and silently ignored.
   const amiga = await render(diagram('!theme amiga'));
-  check('!theme amiga changes the output', hash(amiga) !== hash(control),
+  check('`!theme amiga` changes the output', hash(amiga) !== hash(control),
     'identical to the unthemed diagram: the directive was ignored');
 
   // 3. ...and change it to that theme's own colours.
-  check('!theme amiga applies the amiga palette', amiga.includes('#0B58A8'),
+  check('`!theme amiga` applies the amiga palette', amiga.includes('#0B58A8'),
     'expected the theme background #0B58A8 in the svg');
 
   // 4. Strongest check: loading a theme by name must equal pasting that theme's body inline.
   //    Both sides come from the same engine, so only the loading path differs.
   const inlined = await render(diagram(...themeBody('amiga').split('\n')));
-  check('!theme amiga == the same theme inlined by hand', hash(amiga) === hash(inlined),
+  check('`!theme amiga` == the same theme inlined by hand', hash(amiga) === hash(inlined),
     'the theme loaded, but produced different output than executing its body directly');
 
   // 5. An unknown name must be reported, not ignored.
@@ -119,13 +120,13 @@ const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
   // 6. The YAML header of the loaded theme must reach %get_current_theme().
   const meta = await render(['@startuml', '!theme amiga', '!$m = %get_current_theme()',
     'Alice -> Bob: $m.display_name', '@enduml']);
-  check('%get_current_theme() returns the loaded theme metadata',
+  check('`%get_current_theme()` returns the loaded theme metadata',
     meta.includes('Amiga Workbench 1.x'), 'expected display_name from the theme YAML header');
 
   // 7. %get_all_theme() must not advertise more themes than the engine can load.
   const all = await render(['@startuml', '!$a = %get_all_theme()',
     'Alice -> Bob: count=%size($a)', '@enduml']);
-  check(`%get_all_theme() agrees with themes.js (${NAMES.length})`,
+  check(`\`%get_all_theme()\` agrees with \`themes.js\` (${NAMES.length})`,
     all.includes(`count=${NAMES.length}`),
     'the engine lists a different number of themes than it ships');
 
@@ -156,7 +157,7 @@ const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
   //    document to append a script tag to.
   const preregistered = await openThemedRenderer({ blockThemesJs: true, preregister: true });
   const amigaPre = await preregistered(diagram('!theme amiga'));
-  check('pre-registered PLANTUML_THEMES works without fetching themes.js',
+  check('pre-registered PLANTUML_THEMES works without fetching `themes.js`',
     amigaPre.includes('#0B58A8') && hash(amigaPre) === hash(amiga),
     'did not match the themes.js-loaded rendering of the same theme');
 
@@ -168,17 +169,17 @@ const diagram = (...head) => ['@startuml', ...head, ...body, '@enduml'];
   //     the missing-file case degrades.
   const noThemes = await openThemedRenderer({ blockThemesJs: true });
   const amigaMissing = await noThemes(diagram('!theme amiga'));
-  check('missing themes.js still renders the diagram, unthemed',
+  check('missing `themes.js` still renders the diagram, unthemed',
     !isErrorImage(amigaMissing) && hash(amigaMissing) === controlHash,
     isErrorImage(amigaMissing)
       ? 'rendered an error image, which would break published pages that upgrade the engine without deploying themes.js'
       : 'rendered something other than the plain unthemed diagram');
-  check('missing themes.js warns on the console',
+  check('missing `themes.js` warns on the console',
     noThemes.consoleMessages.some(m => m.type === 'warning' && m.text.includes('themes.js')),
     'no console warning mentions themes.js, so the page author gets no signal');
 
   await browser.close();
   server.close();
 
-  finish({ leadingBlankLine: true });
+  finish(scriptName, { leadingBlankLine: true });
 })().catch(e => { console.error(e); process.exit(1); });
