@@ -246,41 +246,63 @@ public class XmlWriter {
 	private void escapeText(String input) {
 <span class="pc bpc" id="L247" title="1 of 2 branches missed.">		if (input == null)</span>
 <span class="nc" id="L248">			return;</span>
-<span class="fc bfc" id="L249" title="All 2 branches covered.">		for (int i = 0; i &lt; input.length(); i++) {</span>
-<span class="fc" id="L250">			final char c = input.charAt(i);</span>
-<span class="fc bfc" id="L251" title="All 3 branches covered.">			switch (c) {</span>
-			case '&amp;':
-<span class="fc" id="L253">				out.append(&quot;&amp;amp;&quot;);</span>
+<span class="fc" id="L249">		final int len = input.length();</span>
+<span class="fc" id="L250">		int i = 0;</span>
+<span class="fc bfc" id="L251" title="All 2 branches covered.">		for (; i &lt; len; i++) {</span>
+<span class="fc" id="L252">			final char c = input.charAt(i);</span>
+<span class="fc bfc" id="L253" title="All 4 branches covered.">			if (c == '&amp;' || c == '&lt;')</span>
 <span class="fc" id="L254">				break;</span>
+		}
+<span class="fc bfc" id="L256" title="All 2 branches covered.">		if (i == len) {</span>
+<span class="fc" id="L257">			out.append(input);</span>
+<span class="fc" id="L258">			return;</span>
+		}
+<span class="fc bfc" id="L260" title="All 2 branches covered.">		for (i = 0; i &lt; input.length(); i++) {</span>
+<span class="fc" id="L261">			final char c = input.charAt(i);</span>
+<span class="fc bfc" id="L262" title="All 3 branches covered.">			switch (c) {</span>
+			case '&amp;':
+<span class="fc" id="L264">				out.append(&quot;&amp;amp;&quot;);</span>
+<span class="fc" id="L265">				break;</span>
 			case '&lt;':
-<span class="fc" id="L256">				out.append(&quot;&amp;lt;&quot;);</span>
-<span class="fc" id="L257">				break;</span>
+<span class="fc" id="L267">				out.append(&quot;&amp;lt;&quot;);</span>
+<span class="fc" id="L268">				break;</span>
 			default:
-<span class="fc" id="L259">				out.append(c);</span>
+<span class="fc" id="L270">				out.append(c);</span>
 			}
 		}
-<span class="fc" id="L262">	}</span>
+<span class="fc" id="L273">	}</span>
 
 	// Attribute value (always double-quoted): escape '&amp;', '&lt;' and '&quot;'.
 	private void escapeAttribute(String input) {
-<span class="pc bpc" id="L266" title="1 of 2 branches missed.">		if (input == null)</span>
-<span class="nc" id="L267">			return;</span>
-<span class="fc bfc" id="L268" title="All 2 branches covered.">		for (int i = 0; i &lt; input.length(); i++) {</span>
-<span class="fc" id="L269">			final char c = input.charAt(i);</span>
-<span class="pc bpc" id="L270" title="3 of 4 branches missed.">			switch (c) {</span>
+<span class="pc bpc" id="L277" title="1 of 2 branches missed.">		if (input == null)</span>
+<span class="nc" id="L278">			return;</span>
+<span class="fc" id="L279">		final int len = input.length();</span>
+<span class="fc" id="L280">		int i = 0;</span>
+<span class="fc bfc" id="L281" title="All 2 branches covered.">		for (; i &lt; len; i++) {</span>
+<span class="fc" id="L282">			final char c = input.charAt(i);</span>
+<span class="pc bpc" id="L283" title="3 of 6 branches missed.">			if (c == '&amp;' || c == '&lt;' || c == '&quot;')</span>
+<span class="nc" id="L284">				break;</span>
+		}
+<span class="pc bpc" id="L286" title="1 of 2 branches missed.">		if (i == len) {</span>
+<span class="fc" id="L287">			out.append(input);</span>
+<span class="fc" id="L288">			return;</span>
+		}
+<span class="nc bnc" id="L290" title="All 2 branches missed.">		for (i = 0; i &lt; input.length(); i++) {</span>
+<span class="nc" id="L291">			final char c = input.charAt(i);</span>
+<span class="nc bnc" id="L292" title="All 4 branches missed.">			switch (c) {</span>
 			case '&amp;':
-<span class="nc" id="L272">				out.append(&quot;&amp;amp;&quot;);</span>
-<span class="nc" id="L273">				break;</span>
+<span class="nc" id="L294">				out.append(&quot;&amp;amp;&quot;);</span>
+<span class="nc" id="L295">				break;</span>
 			case '&lt;':
-<span class="nc" id="L275">				out.append(&quot;&amp;lt;&quot;);</span>
-<span class="nc" id="L276">				break;</span>
+<span class="nc" id="L297">				out.append(&quot;&amp;lt;&quot;);</span>
+<span class="nc" id="L298">				break;</span>
 			case '&quot;':
-<span class="nc" id="L278">				out.append(&quot;&amp;quot;&quot;);</span>
-<span class="nc" id="L279">				break;</span>
+<span class="nc" id="L300">				out.append(&quot;&amp;quot;&quot;);</span>
+<span class="nc" id="L301">				break;</span>
 			default:
-<span class="fc" id="L281">				out.append(c);</span>
+<span class="nc" id="L303">				out.append(c);</span>
 			}
 		}
-<span class="fc" id="L284">	}</span>
+<span class="nc" id="L306">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
