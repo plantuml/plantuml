@@ -112,6 +112,8 @@
         <!-- Compile Java sources from preprocessed sources -->
         <javac target="1.8" source="1.8" srcdir="build/sjpp-out" destdir="build" debug="on" encoding="UTF-8">
             <exclude name="test/**" />
+            <!-- The graph-support engine needs its own dependency, which this build does not fetch. -->
+            <exclude name="net/sourceforge/plantuml/graphsupport/**" />
         </javac>
 
         <!-- Copy resources. Grouped by type and directory for better clarity -->

@@ -1,0 +1,12 @@
+@startuml
+' skinparam linetype ortho: Smetana still draws diagonals, no orthogonal segment at all
+skinparam linetype ortho
+class Api
+class Service
+class Worker
+class Store
+Api --> Service
+Api --> Worker
+Service --> Store
+Worker --> Store
+@enduml

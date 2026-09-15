@@ -1,0 +1,12 @@
+@startuml
+' Baseline for the ranksep pair below
+skinparam ranksep 10
+class Api
+class Service
+class Worker
+class Store
+Api --> Service
+Api --> Worker
+Service --> Store
+Worker --> Store
+@enduml

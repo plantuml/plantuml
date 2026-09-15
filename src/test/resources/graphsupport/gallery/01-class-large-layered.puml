@@ -1,0 +1,64 @@
+@startuml
+' 25 classes in 5 packages with 28 dependencies: ranking and crossing reduction at scale
+skinparam classAttributeIconSize 0
+package Api {
+  class OrderController
+  class CustomerController
+  class ReportController
+}
+package Service {
+  class OrderService
+  class PricingService
+  class TaxService
+  class ShippingService
+  class NotificationService
+}
+package Domain {
+  class Order
+  class OrderLine
+  class Customer
+  class Address
+  class Money
+  class Discount
+  class Invoice
+}
+package Repo {
+  class OrderRepository
+  class CustomerRepository
+  class InvoiceRepository
+}
+package Infra {
+  class Database
+  class MessageBus
+  class MailGateway
+  class PdfRenderer
+}
+OrderController --> OrderService
+OrderController --> ReportController
+CustomerController --> CustomerRepository
+ReportController --> InvoiceRepository
+OrderService --> PricingService
+OrderService --> ShippingService
+OrderService --> OrderRepository
+OrderService --> NotificationService
+PricingService --> TaxService
+PricingService --> Discount
+PricingService --> Money
+TaxService --> Money
+ShippingService --> Address
+NotificationService --> MailGateway
+NotificationService --> MessageBus
+Order --> OrderLine
+Order --> Customer
+Order --> Money
+Order --> Invoice
+OrderLine --> Money
+Customer --> Address
+Invoice --> PdfRenderer
+Invoice --> Money
+OrderRepository --> Database
+CustomerRepository --> Database
+InvoiceRepository --> Database
+OrderService --> Order
+CustomerController --> Customer
+@enduml
