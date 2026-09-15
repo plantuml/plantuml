@@ -1,4 +1,4 @@
-name: Browser - perf-bench
+name: Browser (perf-bench)
 
 # Non-blocking render-performance benchmark for the browser (TeaVM) engine.
 # Builds the requested ref, renders a fixed corpus in headless Chromium, and compares against a
