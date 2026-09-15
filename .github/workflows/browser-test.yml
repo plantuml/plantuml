@@ -1,4 +1,4 @@
-name: browser-test
+name: Browser (browser-test)
 
 # Functional checks for the browser (TeaVM) engine: builds the MIT npm package and asserts
 # behaviour in headless Chromium. Unlike perf-bench this one fails the build when a check fails.
