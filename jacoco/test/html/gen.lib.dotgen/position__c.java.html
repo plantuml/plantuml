@@ -2070,18 +2070,18 @@ public static Object do_leaves(Object... arg_) {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/position.c&quot;, name=&quot;ports_eq&quot;, key=&quot;alpljm8o6nsam95ly6leelnbp&quot;, definition=&quot;int ports_eq(edge_t * e, edge_t * f)&quot;)
 public static boolean ports_eq(ST_Agedge_s e, ST_Agedge_s f) {
-<span class="nc" id="L2073">ENTERING(&quot;alpljm8o6nsam95ly6leelnbp&quot;,&quot;ports_eq&quot;);</span>
+<span class="fc" id="L2073">ENTERING(&quot;alpljm8o6nsam95ly6leelnbp&quot;,&quot;ports_eq&quot;);</span>
 try {
-<span class="nc bnc" id="L2075" title="All 2 branches missed.">    return ((ED_head_port(e).defined == ED_head_port(f).defined)</span>
-<span class="nc bnc" id="L2076" title="All 2 branches missed.">	    &amp;&amp; (((ED_head_port(e).p.x == ED_head_port(f).p.x) &amp;&amp;</span>
-<span class="nc bnc" id="L2077" title="All 2 branches missed.">		 (ED_head_port(e).p.y == ED_head_port(f).p.y))</span>
-<span class="nc bnc" id="L2078" title="All 2 branches missed.">		|| (ED_head_port(e).defined == false))</span>
-<span class="nc bnc" id="L2079" title="All 2 branches missed.">	    &amp;&amp; (((ED_tail_port(e).p.x == ED_tail_port(f).p.x) &amp;&amp;</span>
-<span class="nc bnc" id="L2080" title="All 2 branches missed.">		 (ED_tail_port(e).p.y == ED_tail_port(f).p.y))</span>
-<span class="nc bnc" id="L2081" title="All 2 branches missed.">		|| (ED_tail_port(e).defined == false))</span>
+<span class="pc bpc" id="L2075" title="1 of 2 branches missed.">    return ((ED_head_port(e).defined == ED_head_port(f).defined)</span>
+<span class="pc bpc" id="L2076" title="1 of 2 branches missed.">	    &amp;&amp; (((ED_head_port(e).p.x == ED_head_port(f).p.x) &amp;&amp;</span>
+<span class="pc bpc" id="L2077" title="1 of 2 branches missed.">		 (ED_head_port(e).p.y == ED_head_port(f).p.y))</span>
+<span class="pc bnc" id="L2078" title="All 2 branches missed.">		|| (ED_head_port(e).defined == false))</span>
+<span class="pc bpc" id="L2079" title="1 of 2 branches missed.">	    &amp;&amp; (((ED_tail_port(e).p.x == ED_tail_port(f).p.x) &amp;&amp;</span>
+<span class="pc bpc" id="L2080" title="1 of 2 branches missed.">		 (ED_tail_port(e).p.y == ED_tail_port(f).p.y))</span>
+<span class="pc bnc" id="L2081" title="All 2 branches missed.">		|| (ED_tail_port(e).defined == false))</span>
 	);
 } finally {
-<span class="nc" id="L2084">LEAVING(&quot;alpljm8o6nsam95ly6leelnbp&quot;,&quot;ports_eq&quot;);</span>
+<span class="fc" id="L2084">LEAVING(&quot;alpljm8o6nsam95ly6leelnbp&quot;,&quot;ports_eq&quot;);</span>
 }
 }
 

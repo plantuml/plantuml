@@ -187,14 +187,14 @@ public class CommandCreateClass extends SingleLineCommand2&lt;ClassDiagram&gt; {
 
 <span class="fc" id="L188">		Entity entity = quark.get().getData();</span>
 
-<span class="pc bpc" id="L190" title="1 of 2 branches missed.">		if (entity == null) {</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">		if (entity == null) {</span>
 <span class="fc" id="L191">			Display display = Display.getWithNewlines(diagram.getPragma(), displayString);</span>
 <span class="fc bfc" id="L192" title="All 2 branches covered.">			if (Display.isNull(display))</span>
 <span class="fc" id="L193">				display = Display.getWithNewlines(diagram.getPragma(), quark.get().getName())</span>
 <span class="fc" id="L194">						.withCreoleMode(CreoleMode.SIMPLE_LINE);</span>
 <span class="fc" id="L195">			entity = diagram.reallyCreateLeaf(location, quark.get(), display, type, null);</span>
 <span class="fc" id="L196">		} else {</span>
-<span class="nc bnc" id="L197" title="All 2 branches missed.">			if (entity.muteToType(type, null) == false)</span>
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">			if (entity.muteToType(type, null) == false)</span>
 <span class="nc" id="L198">				return CommandExecutionResult.error(&quot;Bad name&quot;);</span>
 		}
 

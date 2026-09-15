@@ -498,7 +498,7 @@ try {
 	}
 <span class="fc bfc" id="L499" title="All 2 branches covered.">	for (j = 0; j &lt; ND_other(n).size; j++) {</span>
 <span class="fc" id="L500">	    e = ND_other(n).list.get_(j);</span>
-<span class="pc bpc" id="L501" title="1 of 2 branches missed.">	    if (ND_rank(aghead(e)) == ND_rank(agtail(e)))</span>
+<span class="fc bfc" id="L501" title="All 2 branches covered.">	    if (ND_rank(aghead(e)) == ND_rank(agtail(e)))</span>
 <span class="fc" id="L502">		checkFlatAdjacent (e);</span>
 	}
     }
@@ -603,7 +603,7 @@ try {
 		ST_Agedge_s le;
 <span class="fc" id="L604">		e = ND_other(n).list.get_(j);</span>
 <span class="fc" id="L605">		SmetanaDebug.LOG(&quot;e=&quot;+e.NAME);</span>
-<span class="pc bpc" id="L606" title="1 of 2 branches missed.">		if (ND_rank(agtail(e)) != ND_rank(aghead(e))) continue;</span>
+<span class="fc bfc" id="L606" title="All 2 branches covered.">		if (ND_rank(agtail(e)) != ND_rank(aghead(e))) continue;</span>
 <span class="fc bfc" id="L607" title="All 2 branches covered.">		if (agtail(e) == aghead(e)) continue; /* skip loops */</span>
 <span class="fc" id="L608">		le = e;</span>
 <span class="fc bfc" id="L609" title="All 2 branches covered.">		while (ED_to_virt(le)!=null) le = ED_to_virt(le);</span>

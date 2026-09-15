@@ -53,12 +53,12 @@ public class EaterInclude extends Eater {
 <span class="fc" id="L53">		final char peekChar = peekChar();</span>
 <span class="pc bpc" id="L54" title="1 of 2 branches missed.">		if (peekChar == 'u') {</span>
 <span class="nc" id="L55">			checkAndEatChar(&quot;url&quot;);</span>
-<span class="pc bpc" id="L56" title="1 of 2 branches missed.">		} else if (peekChar == '_') {</span>
-<span class="nc" id="L57">			checkAndEatChar(&quot;_&quot;);</span>
-<span class="nc" id="L58">			final char peekChar2 = peekChar();</span>
-<span class="nc bnc" id="L59" title="All 2 branches missed.">			if (peekChar2 == 'm') {</span>
-<span class="nc" id="L60">				checkAndEatChar(&quot;many&quot;);</span>
-<span class="nc" id="L61">				this.strategy = PreprocessorIncludeStrategy.MANY;</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">		} else if (peekChar == '_') {</span>
+<span class="fc" id="L57">			checkAndEatChar(&quot;_&quot;);</span>
+<span class="fc" id="L58">			final char peekChar2 = peekChar();</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">			if (peekChar2 == 'm') {</span>
+<span class="fc" id="L60">				checkAndEatChar(&quot;many&quot;);</span>
+<span class="fc" id="L61">				this.strategy = PreprocessorIncludeStrategy.MANY;</span>
 			} else {
 <span class="nc" id="L63">				checkAndEatChar(&quot;once&quot;);</span>
 <span class="nc" id="L64">				this.strategy = PreprocessorIncludeStrategy.ONCE;</span>
