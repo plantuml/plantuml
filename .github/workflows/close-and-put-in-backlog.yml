@@ -1,3 +1,5 @@
+name: Put in Backlog (Close and)
+
 on:
   issues:
     types: [labeled]
