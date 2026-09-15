@@ -74,11 +74,16 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 
-	private static final String KEY1 = "dotted|dashed|plain|bold|hidden|norank|single|node|thickness=\\d+";
-	private static final String UBREX_KEY1 = "dotted┇dashed┇plain┇bold┇hidden┇norank┇single┇node┇thickness=〇+〴d";
+	// 'nonode' must be listed before 'node' isn't required (regex alternation
+	// tries every branch at each position), but it must be listed *somewhere*:
+	// without its own branch, a bare 'node' alternative never matches it (the
+	// third character mismatches: 'd' vs 'n'), so it fails to parse at all
+	// rather than being treated as a per-transition opt-out of node style.
+	private static final String KEY1 = "dotted|dashed|plain|bold|hidden|norank|single|node|nonode|thickness=\\d+";
+	private static final String UBREX_KEY1 = "dotted┇dashed┇plain┇bold┇hidden┇norank┇single┇node┇nonode┇thickness=〇+〴d";
 
-	private static final String KEY2 = ",dotted|,dashed|,plain|,bold|,hidden|,norank|,single|,node|,thickness=\\d+";
-	private static final String UBREX_KEY2 = ",dotted┇,dashed┇,plain┇,bold┇,hidden┇,norank┇,single┇,node┇,thickness=〇+〴d";
+	private static final String KEY2 = ",dotted|,dashed|,plain|,bold|,hidden|,norank|,single|,node|,nonode|,thickness=\\d+";
+	private static final String UBREX_KEY2 = ",dotted┇,dashed┇,plain┇,bold┇,hidden┇,norank┇,single┇,node┇,nonode┇,thickness=〇+〴d";
 
 	public static final String LINE_STYLE = "(?:#\\w+|" + CommandLinkElement.KEY1 + ")(?:,#\\w+|"
 			+ CommandLinkElement.KEY2 + ")*";
@@ -369,6 +374,11 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 
 		// An invisible link must not leave a visible label behind
 		if (containsKeyword(arrowStyle, "hidden"))
+			return false;
+
+		// 'nonode' is a per-link override that forces node style off, even when
+		// the diagram wide setting below would otherwise turn it on
+		if (containsKeyword(arrowStyle, "nonode"))
 			return false;
 
 		// The 'node' keyword in the arrow style is a per-link override

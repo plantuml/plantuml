@@ -154,6 +154,11 @@ public abstract class WithLinkType {
 				// Do nothing
 			} else if (s.equalsIgnoreCase("node")) {
 				this.goNodeStyle();
+			} else if (s.equalsIgnoreCase("nonode")) {
+				// Explicit opt-out of node style, already resolved by the caller
+				// (see CommandLinkStateCommon/CommandLinkElement.shouldUseNodeStyle);
+				// nothing to apply here, but it must not fall through to the
+				// color lookup below.
 			} else if (s.equalsIgnoreCase("norank")) {
 				this.goNorank();
 			} else if (s.startsWith("thickness=")) {

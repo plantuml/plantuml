@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+' Regression test: '-[nonode]->' must parse and force node style off for that
+' one transition, even under a global 'skinparam stateDiagramEdgeLabelStyle
+' node' - including on a self-transition, which is how the real-world source
+' this pins uses it. Before the fix, '[nonode]' wasn't a recognized arrow
+' style keyword at all (the LINE_STYLE grammar only had 'node'), so the whole
+' line failed to parse and fell back to "Syntax Error? (Assumed diagram type:
+' state)".
+skinparam stateDiagramEdgeLabelStyle node
+
+state PoweringUp
+state Charging
+
+PoweringUp -[nonode]-> PoweringUp : selfCheckFailed [attempt < 3] / retry()
+PoweringUp -> Charging : ready
+@enduml
