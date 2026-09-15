@@ -1,4 +1,4 @@
-name: Build and analyse by SonarQube
+name: Sonar - Build and analyse by SonarQube
 
 on:
   push:
