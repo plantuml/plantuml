@@ -832,10 +832,11 @@ public class TContext {
 				if (!TeaVM.isTeaVM()) {
 					final InputFile f2 = this.pathSystem.getInputFile(what);
 					if (f2 != null) {
-						if (strategy == PreprocessorIncludeStrategy.DEFAULT && filesUsedCurrent.contains(f2))
+						final File used = f2 instanceof SFile ? ((SFile) f2).getCanonicalFile().conv() : null;
+						if (strategy == PreprocessorIncludeStrategy.DEFAULT && filesUsedCurrent.contains(used))
 							return;
 
-						if (strategy == PreprocessorIncludeStrategy.ONCE && filesUsedCurrent.contains(f2))
+						if (strategy == PreprocessorIncludeStrategy.ONCE && filesUsedCurrent.contains(used))
 							throw new EaterException("This file has already been included", s);
 
 						reader = DiagramDetector.extractFromFile(f2, "desc2");
@@ -851,6 +852,8 @@ public class TContext {
 						this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());
 						if (TeaVM.a())
 							assert reader != null;
+						if (used != null)
+							filesUsedCurrent.add(used);
 					}
 				}
 			}
