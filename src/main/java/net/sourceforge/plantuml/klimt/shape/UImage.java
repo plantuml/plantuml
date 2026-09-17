@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
+import net.sourceforge.plantuml.klimt.UShapeKind;
 import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.klimt.MutableImage;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
@@ -122,6 +123,11 @@ public class UImage implements TextBlock {
 	@Override
 	public MinMax getMinMax(StringBounder stringBounder) {
 		return MinMax.fromMax(getWidth(), getHeight());
+	}
+
+	@Override
+	public UShapeKind getShapeKind() {
+		return UShapeKind.IMAGE;
 	}
 
 }

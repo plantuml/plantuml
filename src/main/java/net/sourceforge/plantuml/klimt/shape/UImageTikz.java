@@ -1,5 +1,6 @@
 package net.sourceforge.plantuml.klimt.shape;
 
+import net.sourceforge.plantuml.klimt.UShapeKind;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.klimt.UShape;
@@ -67,6 +68,11 @@ public class UImageTikz implements UShape {
 	private static boolean containsUrl(String texLine) {
 		return texLine.contains("\\href{") || texLine.contains("\\hyperref[")
 				|| texLine.contains("href node") || texLine.contains("hyperref node");
+	}
+
+	@Override
+	public UShapeKind getShapeKind() {
+		return UShapeKind.IMAGE_TIKZ;
 	}
 
 }

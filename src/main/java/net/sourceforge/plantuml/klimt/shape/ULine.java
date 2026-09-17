@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
+import net.sourceforge.plantuml.klimt.UShapeKind;
 import net.sourceforge.plantuml.klimt.AbstractShadowable;
 import net.sourceforge.plantuml.klimt.UShapeSized;
 //::comment when __HAXE__
@@ -95,6 +96,11 @@ public class ULine extends AbstractShadowable implements UShapeSized {
 
 	public double getHeight() {
 		return dy;
+	}
+
+	@Override
+	public UShapeKind getShapeKind() {
+		return UShapeKind.LINE;
 	}
 
 }

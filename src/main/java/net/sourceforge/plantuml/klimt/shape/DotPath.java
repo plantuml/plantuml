@@ -36,6 +36,7 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
+import net.sourceforge.plantuml.klimt.UShapeKind;
 import java.awt.Graphics2D;
 import java.awt.geom.CubicCurve2D;
 import java.awt.geom.GeneralPath;
@@ -700,6 +701,11 @@ public class DotPath implements UShape, Moveable {
 				return false;
 		}
 		return true;
+	}
+
+	@Override
+	public UShapeKind getShapeKind() {
+		return UShapeKind.DOT_PATH;
 	}
 
 }

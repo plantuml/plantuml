@@ -36,4 +36,15 @@
 package net.sourceforge.plantuml.klimt;
 
 public interface UShape {
+
+	/**
+	 * Which slot of an {@code AbstractUGraphic}'s driver array this shape is drawn by. Overridden
+	 * by each of the shapes some driver actually handles (see {@link UShapeKind}); everything
+	 * else is a container or a decoration that never reaches {@code AbstractUGraphic#draw} as
+	 * itself and keeps the default, which no driver is ever registered under.
+	 */
+	default UShapeKind getShapeKind() {
+		return UShapeKind.UNKNOWN;
+	}
+
 }

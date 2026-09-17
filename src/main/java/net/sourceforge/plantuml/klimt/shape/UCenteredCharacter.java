@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
+import net.sourceforge.plantuml.klimt.UShapeKind;
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.font.UFont;
 
@@ -55,6 +56,11 @@ public class UCenteredCharacter implements UShape {
 
 	public UFont getFont() {
 		return font;
+	}
+
+	@Override
+	public UShapeKind getShapeKind() {
+		return UShapeKind.CENTERED_CHARACTER;
 	}
 
 }

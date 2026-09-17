@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.creole.legacy;
 
+import net.sourceforge.plantuml.klimt.UShapeKind;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -329,6 +330,11 @@ public final class AtomText extends AbstractAtom implements Atom {
 
 	public FontConfiguration getFontConfiguration() {
 		return fontConfiguration;
+	}
+
+	@Override
+	public UShapeKind getShapeKind() {
+		return UShapeKind.ATOM_TEXT;
 	}
 
 }

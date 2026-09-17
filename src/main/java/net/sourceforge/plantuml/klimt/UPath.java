@@ -247,4 +247,9 @@ public class UPath extends AbstractShadowable implements Iterable<USegment>, USh
 	// return segments.size() == 0;
 	// }
 
+	@Override
+	public UShapeKind getShapeKind() {
+		return UShapeKind.PATH;
+	}
+
 }

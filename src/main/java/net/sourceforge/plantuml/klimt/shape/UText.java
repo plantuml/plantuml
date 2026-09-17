@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
+import net.sourceforge.plantuml.klimt.UShapeKind;
 import java.awt.font.TextLayout;
 
 import net.sourceforge.plantuml.jaws.Jaws;
@@ -93,6 +94,11 @@ public class UText implements UShape {
 
 	public TextLayout createTextLayout() {
 		return getFontConfiguration().getFont().createTextLayout(getText());
+	}
+
+	@Override
+	public UShapeKind getShapeKind() {
+		return UShapeKind.TEXT;
 	}
 
 }

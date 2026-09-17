@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
+import net.sourceforge.plantuml.klimt.UShapeKind;
 import net.sourceforge.plantuml.klimt.AbstractShadowable;
 import net.sourceforge.plantuml.klimt.UShapeSized;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -106,6 +107,11 @@ public class UEllipse extends AbstractShadowable implements UShapeSized {
 		final double x = width / 2 + width / 2 * Math.cos(alpha);
 		final double y = height / 2 + height / 2 * Math.sin(alpha);
 		return new XPoint2D(x, y);
+	}
+
+	@Override
+	public UShapeKind getShapeKind() {
+		return UShapeKind.ELLIPSE;
 	}
 
 }

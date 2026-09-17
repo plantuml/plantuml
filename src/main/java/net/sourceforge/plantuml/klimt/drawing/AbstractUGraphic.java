@@ -35,15 +35,13 @@
  */
 package net.sourceforge.plantuml.klimt.drawing;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.atmp.SpecialText;
 import net.sourceforge.plantuml.activitydiagram3.ftile.CenteredText;
 import net.sourceforge.plantuml.klimt.CopyForegroundColorToBackgroundColor;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.UShapeKind;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.legacy.AtomText;
@@ -72,11 +70,24 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 	private /* final */ O graphic;
 	private /* final */ MinMaxMutable minmax;
 
-	// It would be nice to do something like this but not sure how:
-	// Map<Class<SHAPE>, UDriver<SHAPE, O>>
-	// See
+	// A flat array indexed by UShapeKind, not a Map<Class<?>, ...>: every copyUGraphic() --
+	// that is, every apply(), so every translate, color or stroke change -- builds a fresh
+	// UGraphic and re-runs its register(), so this structure is rebuilt thousands of times per
+	// diagram. As a HashMap that meant a map, its table and one Node per registered driver
+	// allocated each time, plus a hash of the shape's Class on every draw; as an array it is
+	// one allocation of a dozen slots, filled by index, and a plain array read on draw.
+	//
+	// It would have been nice to do something like Map<Class<SHAPE>, UDriver<SHAPE, O>> and let
+	// the type system relate the two sides, which Java cannot express -- see
 	// https://stackoverflow.com/questions/416540/java-map-with-values-limited-by-keys-type-parameter
-	private final Map<Class<? extends UShape>, UDriver<?, O>> drivers = new HashMap<>();
+	// registerDriver still takes the Class, so each call site is still checked that way; only
+	// the storage underneath changed.
+	private final UDriver<?, O>[] drivers = newDriverArray();
+
+	@SuppressWarnings("unchecked")
+	private static <O> UDriver<?, O>[] newDriverArray() {
+		return new UDriver[UShapeKind.COUNT];
+	}
 
 	protected AbstractUGraphic(StringBounder stringBounder) {
 		super(stringBounder);
@@ -103,7 +114,7 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 	}
 
 	final protected <SHAPE extends UShape> void registerDriver(Class<SHAPE> cl, UDriver<SHAPE, O> driver) {
-		this.drivers.put(cl, driver);
+		this.drivers[UShapeKind.of(cl).ordinal()] = driver;
 	}
 
 	private static final UDriver<?, ?> NOOP_DRIVER = new UDriver<UShape, Object>() {
@@ -132,8 +143,11 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 
 		updateMinMax(shape);
 
+		// UShapeKind.UNKNOWN is what every shape no driver handles reports, and nothing is ever
+		// registered in that slot, so an unhandled shape finds null here exactly as an
+		// unregistered Class used to.
 		@SuppressWarnings("unchecked")
-		final UDriver<SHAPE, O> driver = (UDriver<SHAPE, O>) drivers.get(shape.getClass());
+		final UDriver<SHAPE, O> driver = (UDriver<SHAPE, O>) drivers[shape.getShapeKind().ordinal()];
 
 		if (driver == null)
 			throw new UnsupportedOperationException(shape.getClass().toString() + " " + this.getClass());

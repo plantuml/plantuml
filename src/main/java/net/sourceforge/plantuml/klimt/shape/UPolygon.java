@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
+import net.sourceforge.plantuml.klimt.UShapeKind;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -178,6 +179,11 @@ public class UPolygon extends AbstractShadowable {
 
 	public final void setCompressionMode(CompressionMode compressionMode) {
 		this.compressionMode = compressionMode;
+	}
+
+	@Override
+	public UShapeKind getShapeKind() {
+		return UShapeKind.POLYGON;
 	}
 
 }

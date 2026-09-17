@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
+import net.sourceforge.plantuml.klimt.UShapeKind;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -157,6 +158,11 @@ public class UImageSvg implements UShape {
 
 	public double getScale() {
 		return scale;
+	}
+
+	@Override
+	public UShapeKind getShapeKind() {
+		return UShapeKind.IMAGE_SVG;
 	}
 
 }
