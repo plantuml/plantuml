@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.teavm;
 
-import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -45,18 +44,12 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 public class DriverLineTeaVM implements UDriver<ULine, SvgGraphicsTeaVM> {
 	// ::remove file when JAVA8
 
-	private final ClipContainer clipContainer;
-
-	public DriverLineTeaVM(ClipContainer clipContainer) {
-		this.clipContainer = clipContainer;
-	}
-
 	@Override
 	public void draw(ULine line, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
 		double x2 = x + line.getDX();
 		double y2 = y + line.getDY();
 
-		final UClip clip = clipContainer.getClip();
+		final UClip clip = param.getClip();
 		if (clip != null) {
 			if (clip.isInside(x, y) == false && clip.isInside(x2, y2) == false) {
 				if (x == x2) {

@@ -81,8 +81,8 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<URe
 		else
 			shape = new RoundRectangle2D.Double(x, y, rect.getWidth(), rect.getHeight(), rx, ry);
 
-		visible.ensureVisible(x, y);
-		visible.ensureVisible(x + rect.getWidth(), y + rect.getHeight());
+		visible.ensureVisible(x, y, param.getClip());
+		visible.ensureVisible(x + rect.getWidth(), y + rect.getHeight(), param.getClip());
 
 		final HColor back = param.getBackcolor();
 

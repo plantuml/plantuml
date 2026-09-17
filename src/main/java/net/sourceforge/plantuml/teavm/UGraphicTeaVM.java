@@ -40,10 +40,13 @@ import java.io.OutputStream;
 import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.UShapeKind;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.klimt.drawing.AbstractUGraphic;
+import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.DotPath;
 import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
@@ -60,10 +63,48 @@ import net.sourceforge.plantuml.url.Url;
 
 public class UGraphicTeaVM extends AbstractUGraphic<SvgGraphicsTeaVM> implements ClipContainer {
 	// ::remove file when JAVA8
+	
+	// Every TeaVM driver is stateless -- not one of them takes a constructor argument -- so a
+	// single table serves every UGraphicTeaVM ever created, built once at class initialization
+	// rather than once per rendered diagram. It must stay immutable: useDrivers() marks it as
+	// shared, so registerDriver refuses to touch it afterwards.
+	private static final UDriver<?, SvgGraphicsTeaVM>[] DRIVERS = newDrivers();
+
+	@SuppressWarnings("unchecked")
+	private static UDriver<?, SvgGraphicsTeaVM>[] newDrivers() {
+		// "new UDriver<?, SvgGraphicsTeaVM>[n]" is not legal Java -- generic array creation --
+		// so the raw array is created and converted here, once.
+		return new UDriver[UShapeKind.COUNT];
+	}
+
+	static {
+		put(URectangle.class, new DriverRectangleTeaVM());
+		put(ULine.class, new DriverLineTeaVM());
+		put(UPolygon.class, new DriverPolygonTeaVM());
+		put(UEllipse.class, new DriverEllipseTeaVM());
+		put(UText.class, new DriverTextTeaVM());
+		put(UPath.class, new DriverPathTeaVM());
+
+		put(UImage.class, new DriverImageTeaVM());
+		put(UImageSvg.class, new DriverImageSvgTeaVM());
+		put(DotPath.class, new DriverDotPathTeaVM());
+
+		put(UCenteredCharacter.class, new DriverCenteredCharacterTeaVM());
+
+		// NOP drivers for shapes not yet implemented
+		put(UPixel.class, noopDriver());
+	}
+
+	// SHAPE ties the class to its driver, exactly as registerDriver does, so a driver written for
+	// another shape does not compile here. The second type argument of UDriver is the graphic
+	// object -- SvgGraphicsTeaVM, what this UGraphic draws into -- not the UGraphic itself.
+	private static <SHAPE extends UShape> void put(Class<SHAPE> cl, UDriver<SHAPE, SvgGraphicsTeaVM> driver) {
+		DRIVERS[UShapeKind.of(cl).ordinal()] = driver;
+	}
 
 	private UGraphicTeaVM(StringBounder stringBounder) {
 		super(stringBounder);
-		register();
+		useDrivers(DRIVERS);
 	}
 
 	public static UGraphicTeaVM build(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder,
@@ -75,27 +116,14 @@ public class UGraphicTeaVM extends AbstractUGraphic<SvgGraphicsTeaVM> implements
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
-		final UGraphicTeaVM result = new UGraphicTeaVM(getStringBounder());
-		result.copy(this);
-		return result;
+		return new UGraphicTeaVM(this);
 	}
 
-	private void register() {
-		registerDriver(URectangle.class, new DriverRectangleTeaVM(this));
-		registerDriver(ULine.class, new DriverLineTeaVM(this));
-		registerDriver(UPolygon.class, new DriverPolygonTeaVM(this));
-		registerDriver(UEllipse.class, new DriverEllipseTeaVM(this));
-		registerDriver(UText.class, new DriverTextTeaVM(this));
-		registerDriver(UPath.class, new DriverPathTeaVM(this));
-
-		registerDriver(UImage.class, new DriverImageTeaVM(this));
-		registerDriver(UImageSvg.class, new DriverImageSvgTeaVM());
-		registerDriver(DotPath.class, new DriverDotPathTeaVM());
-
-		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterTeaVM());
-
-		// NOP drivers for shapes not yet implemented
-		ignoreShape(UPixel.class);
+	// A copy takes its driver table from "other" (see AbstractUGraphic#copy) instead of building
+	// one, so this constructor deliberately does not register anything.
+	private UGraphicTeaVM(UGraphicTeaVM other) {
+		super(other.getStringBounder());
+		copy(other);
 	}
 
 	public SvgGraphicsTeaVM getSvgGraphics() {

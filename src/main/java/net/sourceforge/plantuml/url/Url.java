@@ -39,9 +39,8 @@ import java.util.Comparator;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.geom.BasicEnsureVisible;
-import net.sourceforge.plantuml.klimt.geom.EnsureVisible;
 
-public class Url implements EnsureVisible {
+public class Url {
 	private final String url;
 	private final String tooltip;
 	private final String label;
@@ -50,13 +49,10 @@ public class Url implements EnsureVisible {
 	public Url(String url, String tooltip, String label) {
 		url = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(url, "\"");
 		this.url = url;
-		// ::revert when __HAXE__
 		if (tooltip == null)
 			this.tooltip = url;
 		else
 			this.tooltip = tooltip;
-		// this.tooltip = url;
-		// ::done
 
 		if (label == null || label.length() == 0)
 			this.label = url;

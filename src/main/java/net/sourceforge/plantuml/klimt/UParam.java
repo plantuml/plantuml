@@ -38,6 +38,18 @@ package net.sourceforge.plantuml.klimt;
 import net.sourceforge.plantuml.klimt.color.HColor;
 
 public interface UParam {
+
+	/**
+	 * The clip in force for the shape being drawn, or {@code null} when there is none.
+	 *
+	 * This belongs here, alongside the stroke and the colors, because it is per-draw state
+	 * exactly as they are -- and because a driver must not reach for it any other way. A driver
+	 * is built once per {@code UGraphic} and kept for every copy that {@code UGraphic#apply}
+	 * makes of it, while the clip is one of the things those copies differ by; a driver holding
+	 * the {@code UGraphic} it was built from would therefore read the wrong instance's clip.
+	 */
+	public UClip getClip();
+
 	public HColor getColor();
 
 	public HColor getBackcolor();

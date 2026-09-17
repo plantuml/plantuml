@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.openpdf;
 
-import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -45,17 +44,11 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 
 public class DriverLinePdf implements UDriver<ULine, PdfGraphics> {
 
-	private final ClipContainer clipContainer;
-
-	public DriverLinePdf(ClipContainer clipContainer) {
-		this.clipContainer = clipContainer;
-	}
-
 	public void draw(ULine shape, double x, double y, ColorMapper mapper, UParam param, PdfGraphics pdf) {
 		double x2 = x + shape.getDX();
 		double y2 = y + shape.getDY();
 
-		final UClip clip = clipContainer.getClip();
+		final UClip clip = param.getClip();
 		if (clip != null) {
 			final XLine2D line = clip.getClippedLine(new XLine2D(x, y, x2, y2));
 			if (line == null) {

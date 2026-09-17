@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.teavm;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -72,15 +71,9 @@ public class DriverTextTeaVM implements UDriver<UText, SvgGraphicsTeaVM> {
 		}
 	}
 
-	private final ClipContainer clipContainer;
-
-	public DriverTextTeaVM(ClipContainer clipContainer) {
-		this.clipContainer = clipContainer;
-	}
-
 	@Override
 	public void draw(UText shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
-		final UClip clip = clipContainer.getClip();
+		final UClip clip = param.getClip();
 		if (clip != null && clip.isInside(x, y) == false)
 			return;
 

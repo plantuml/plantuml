@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.braille;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -48,12 +47,6 @@ import net.sourceforge.plantuml.klimt.shape.UPolygon;
 
 public class DriverPolygonBraille implements UDriver<UPolygon, BrailleGrid> {
 
-	private final ClipContainer clipContainer;
-
-	public DriverPolygonBraille(ClipContainer clipContainer) {
-		this.clipContainer = clipContainer;
-	}
-
 	public void draw(UPolygon shape, double x, double y, ColorMapper mapper, UParam param, BrailleGrid grid) {
 		final List<XPoint2D> points = new ArrayList<>();
 		int i = 0;
@@ -62,7 +55,7 @@ public class DriverPolygonBraille implements UDriver<UPolygon, BrailleGrid> {
 			points.add(new UTranslate(x, y).getTranslated(pt));
 		}
 
-		final UClip clip = clipContainer.getClip();
+		final UClip clip = param.getClip();
 		if (clip != null) {
 			for (XPoint2D pt : points) {
 				if (clip.isInside(pt) == false) {

@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.teavm;
 
-import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -45,12 +44,6 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 
 public class DriverRectangleTeaVM implements UDriver<URectangle, SvgGraphicsTeaVM> {
 	// ::remove file when JAVA8
-
-	private final ClipContainer clipContainer;
-
-	public DriverRectangleTeaVM(ClipContainer clipContainer) {
-		this.clipContainer = clipContainer;
-	}
 
 	@Override
 	public void draw(URectangle rect, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
@@ -63,7 +56,7 @@ public class DriverRectangleTeaVM implements UDriver<URectangle, SvgGraphicsTeaV
 		applyStrokeColor(svg, mapper, param);
 		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
 
-		final UClip clip = clipContainer.getClip();
+		final UClip clip = param.getClip();
 		if (clip != null) {
 			final double clipRight = clip.getX() + clip.getWidth();
 			final double clipBottom = clip.getY() + clip.getHeight();

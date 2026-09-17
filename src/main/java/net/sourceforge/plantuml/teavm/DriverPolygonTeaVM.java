@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.teavm;
 
-import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -45,12 +44,6 @@ import net.sourceforge.plantuml.klimt.shape.UPolygon;
 
 public class DriverPolygonTeaVM implements UDriver<UPolygon, SvgGraphicsTeaVM> {
 	// ::remove file when JAVA8
-
-	private final ClipContainer clipContainer;
-
-	public DriverPolygonTeaVM(ClipContainer clipContainer) {
-		this.clipContainer = clipContainer;
-	}
 
 	@Override
 	public void draw(UPolygon polygon, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
@@ -62,7 +55,7 @@ public class DriverPolygonTeaVM implements UDriver<UPolygon, SvgGraphicsTeaVM> {
 			points[i++] = y + pt.getY();
 		}
 
-		final UClip clip = clipContainer.getClip();
+		final UClip clip = param.getClip();
 		if (clip != null)
 			for (int j = 0; j < points.length; j += 2)
 				if (clip.isInside(points[j], points[j + 1]) == false)
