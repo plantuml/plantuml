@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.teavm;
 
-import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -45,18 +44,12 @@ import net.sourceforge.plantuml.klimt.shape.UEllipse;
 public class DriverEllipseTeaVM implements UDriver<UEllipse, SvgGraphicsTeaVM> {
 	// ::remove file when JAVA8
 
-	private final ClipContainer clipContainer;
-
-	public DriverEllipseTeaVM(ClipContainer clipContainer) {
-		this.clipContainer = clipContainer;
-	}
-
 	@Override
 	public void draw(UEllipse ellipse, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
 		final double width = ellipse.getWidth();
 		final double height = ellipse.getHeight();
 
-		final UClip clip = clipContainer.getClip();
+		final UClip clip = param.getClip();
 		if (clip != null) {
 			if (clip.isInside(x, y) == false)
 				return;

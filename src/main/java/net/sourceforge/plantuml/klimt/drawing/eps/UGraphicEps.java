@@ -70,7 +70,6 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 		super(other.getStringBounder());
 		copy(other);
 		this.strategyTOBEREMOVED = other.strategyTOBEREMOVED;
-		register();
 	}
 
 	public UGraphicEps(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder,
@@ -82,12 +81,12 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 	}
 
 	private void register() {
-		registerDriver(URectangle.class, new DriverRectangleEps(this));
-		registerDriver(UText.class, new DriverTextEps(this, strategyTOBEREMOVED));
-		registerDriver(ULine.class, new DriverLineEps(this));
-		registerDriver(UPolygon.class, new DriverPolygonEps(this));
-		registerDriver(UEllipse.class, new DriverEllipseEps(this));
-		registerDriver(UImage.class, new DriverImageEps(this));
+		registerDriver(URectangle.class, new DriverRectangleEps());
+		registerDriver(UText.class, new DriverTextEps(strategyTOBEREMOVED));
+		registerDriver(ULine.class, new DriverLineEps());
+		registerDriver(UPolygon.class, new DriverPolygonEps());
+		registerDriver(UEllipse.class, new DriverEllipseEps());
+		registerDriver(UImage.class, new DriverImageEps());
 		registerDriver(UPath.class, new DriverPathEps());
 		registerDriver(DotPath.class, new DriverDotPathEps());
 		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterEps());

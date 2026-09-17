@@ -76,7 +76,6 @@ public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements Cl
 	private UGraphicBraille(UGraphicBraille other) {
 		super(other.getStringBounder());
 		copy(other);
-		register();
 	}
 
 	// public UGraphicBraille(ColorMapper colorMapper, String backcolor, boolean
@@ -101,10 +100,10 @@ public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements Cl
 
 	private void register() {
 		ignoreShape(URectangle.class);
-		registerDriver(URectangle.class, new DriverRectangleBraille(this));
+		registerDriver(URectangle.class, new DriverRectangleBraille());
 		registerDriver(UText.class, new DriverTextBraille());
-		registerDriver(ULine.class, new DriverLineBraille(this));
-		registerDriver(UPolygon.class, new DriverPolygonBraille(this));
+		registerDriver(ULine.class, new DriverLineBraille());
+		registerDriver(UPolygon.class, new DriverPolygonBraille());
 		ignoreShape(UEllipse.class);
 		ignoreShape(UImage.class);
 		ignoreShape(UPath.class);

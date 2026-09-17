@@ -71,7 +71,7 @@ public class DriverPolygonG2d extends DriverShadowedG2d implements UDriver<UPoly
 		for (XPoint2D pt : shape.getPoints()) {
 			final double xp = pt.getX() + x;
 			final double yp = pt.getY() + y;
-			visible.ensureVisible(xp, yp);
+			visible.ensureVisible(xp, yp, param.getClip());
 			if (last == null)
 				path.moveTo((float) xp, (float) yp);
 			else

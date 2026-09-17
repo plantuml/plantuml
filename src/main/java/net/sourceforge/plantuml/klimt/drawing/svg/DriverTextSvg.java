@@ -38,7 +38,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -77,15 +76,12 @@ public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
 	}
 
 	private final StringBounder stringBounder;
-	private final ClipContainer clipContainer;
-
-	public DriverTextSvg(StringBounder stringBounder, ClipContainer clipContainer) {
+	public DriverTextSvg(StringBounder stringBounder) {
 		this.stringBounder = stringBounder;
-		this.clipContainer = clipContainer;
 	}
 
 	public void draw(UText shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
-		final UClip clip = clipContainer.getClip();
+		final UClip clip = param.getClip();
 		if (clip != null && clip.isInside(x, y) == false)
 			return;
 

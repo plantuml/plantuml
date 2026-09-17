@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.regex;
 
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -116,16 +115,21 @@ public class RegexLeaf implements IRegex {
 		return Pattern2.compileInternal(pattern).matcher("").groupCount();
 	}
 
-	public Map<String, RegexPartialMatch> createPartialMatch(Iterator<String> it) {
-		final RegexPartialMatch m = new RegexPartialMatch(name);
-		for (int i = 0; i < count(); i++) {
-			final String group = it.next();
-			m.add(group);
-		}
-		if (name == null)
-			return Collections.emptyMap();
+	public void fillPartialMatch(Iterator<String> it, Map<String, RegexPartialMatch> result) {
+		if (name == null) {
+			// Nothing to record, but the groups are still this node's and have to be consumed:
+			// the previous version built a RegexPartialMatch here, filled it, and dropped it.
+			for (int i = count(); i > 0; i--)
+				it.next();
 
-		return Collections.singletonMap(name, m);
+			return;
+		}
+
+		final RegexPartialMatch m = new RegexPartialMatch(name);
+		for (int i = 0; i < count(); i++)
+			m.add(it.next());
+
+		result.put(name, m);
 	}
 
 	public boolean match(StringLocated full) {

@@ -77,7 +77,6 @@ public class UGraphicVdx extends AbstractUGraphic<VisioGraphics> implements Clip
 	private UGraphicVdx(UGraphicVdx other) {
 		super(other.getStringBounder());
 		copy(other);
-		register();
 	}
 
 	private void register() {

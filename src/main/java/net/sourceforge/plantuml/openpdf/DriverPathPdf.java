@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.openpdf;
 
-import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.UPath;
@@ -47,14 +46,8 @@ import net.sourceforge.plantuml.klimt.drawing.g2d.DriverShadowedG2d;
 
 public class DriverPathPdf extends DriverShadowedG2d implements UDriver<UPath, PdfGraphics> {
 
-	private final ClipContainer clipContainer;
-
-	public DriverPathPdf(ClipContainer clipContainer) {
-		this.clipContainer = clipContainer;
-	}
-
 	public void draw(UPath shape, double x, double y, ColorMapper mapper, UParam param, PdfGraphics svg) {
-		final UClip clip = clipContainer.getClip();
+		final UClip clip = param.getClip();
 		if (clip != null && clip.isInside(x, y, shape) == false)
 			return;
 

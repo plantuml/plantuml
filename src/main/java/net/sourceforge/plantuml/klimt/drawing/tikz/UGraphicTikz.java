@@ -78,7 +78,6 @@ public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements Clip
 	private UGraphicTikz(UGraphicTikz other) {
 		super(other.getStringBounder());
 		copy(other);
-		register();
 	}
 
 	private void register() {

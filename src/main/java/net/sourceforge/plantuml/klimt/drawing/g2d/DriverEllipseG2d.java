@@ -64,8 +64,8 @@ public class DriverEllipseG2d extends DriverShadowedG2d implements UDriver<UElli
 
 	public void draw(UEllipse ellipse, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
 		g2d.setStroke(new BasicStroke((float) param.getStroke().getThickness()));
-		visible.ensureVisible(x, y);
-		visible.ensureVisible(x + ellipse.getWidth(), y + ellipse.getHeight());
+		visible.ensureVisible(x, y, param.getClip());
+		visible.ensureVisible(x + ellipse.getWidth(), y + ellipse.getHeight(), param.getClip());
 		final HColor color = param.getColor();
 		if (ellipse.getStart() == 0 && ellipse.getExtend() == 0) {
 			final Shape shape = new Ellipse2D.Double(x, y, ellipse.getWidth(), ellipse.getHeight());

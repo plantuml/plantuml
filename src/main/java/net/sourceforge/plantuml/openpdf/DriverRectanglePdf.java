@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.openpdf;
 
-import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -44,12 +43,6 @@ import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 
 public class DriverRectanglePdf implements UDriver<URectangle, PdfGraphics> {
-
-	private final ClipContainer clipContainer;
-
-	public DriverRectanglePdf(ClipContainer clipContainer) {
-		this.clipContainer = clipContainer;
-	}
 
 	public void draw(URectangle rect, double x, double y, ColorMapper mapper, UParam param, PdfGraphics pdf) {
 		final double rx = rect.getRx();
@@ -62,7 +55,7 @@ public class DriverRectanglePdf implements UDriver<URectangle, PdfGraphics> {
 
 		pdf.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
 
-		final UClip clip = clipContainer.getClip();
+		final UClip clip = param.getClip();
 		if (clip != null) {
 			final XRectangle2D r = clip.getClippedRectangle(new XRectangle2D(x, y, width, height));
 			x = r.x;

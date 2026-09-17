@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.klimt.drawing.eps;
 
-import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -46,12 +45,6 @@ import net.sourceforge.plantuml.klimt.shape.UPolygon;
 
 public class DriverPolygonEps implements UDriver<UPolygon, EpsGraphics> {
 
-	private final ClipContainer clipContainer;
-
-	public DriverPolygonEps(ClipContainer clipContainer) {
-		this.clipContainer = clipContainer;
-	}
-
 	public void draw(UPolygon shape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
 		final double points[] = new double[shape.getPoints().size() * 2];
 		int i = 0;
@@ -61,7 +54,7 @@ public class DriverPolygonEps implements UDriver<UPolygon, EpsGraphics> {
 			points[i++] = pt.getY() + y;
 		}
 
-		final UClip clip = clipContainer.getClip();
+		final UClip clip = param.getClip();
 		if (clip != null) {
 			for (int j = 0; j < points.length; j += 2) {
 				if (clip.isInside(points[j], points[j + 1]) == false) {

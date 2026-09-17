@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.klimt.drawing.html5;
 
-import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -44,17 +43,11 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 
 public class DriverLineHtml5 implements UDriver<ULine, Html5Drawer> {
 
-	private final ClipContainer clipContainer;
-
-	public DriverLineHtml5(ClipContainer clipContainer) {
-		this.clipContainer = clipContainer;
-	}
-
 	public void draw(ULine shape, double x, double y, ColorMapper mapper, UParam param, Html5Drawer html) {
 		double x2 = x + shape.getDX();
 		double y2 = y + shape.getDY();
 
-		final UClip clip = clipContainer.getClip();
+		final UClip clip = param.getClip();
 		if (clip != null) {
 			final XLine2D line = clip.getClippedLine(new XLine2D(x, y, x2, y2));
 			if (line == null) {

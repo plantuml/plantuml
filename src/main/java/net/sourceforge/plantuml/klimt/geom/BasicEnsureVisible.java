@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.geom;
 
-public class BasicEnsureVisible implements EnsureVisible {
+public class BasicEnsureVisible {
 
 	private double minX = Double.MAX_VALUE;
 	private double maxX = -Double.MAX_VALUE;

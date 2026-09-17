@@ -72,10 +72,17 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
-		final UGraphicSvg result = new UGraphicSvg(getStringBounder(), textAsPath, fileFormat);
-		result.copy(this);
-		result.option = this.option;
-		return result;
+		return new UGraphicSvg(this);
+	}
+
+	// A copy takes its driver table from "other" (see AbstractUGraphic#copy) instead of building
+	// one, so this constructor deliberately does not register anything.
+	private UGraphicSvg(UGraphicSvg other) {
+		super(other.getStringBounder());
+		this.fileFormat = other.fileFormat;
+		this.textAsPath = other.textAsPath;
+		copy(other);
+		this.option = other.option;
 	}
 
 	private UGraphicSvg(StringBounder stringBounder, boolean textAsPath, FileFormat fileFormat) {
@@ -109,24 +116,24 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 	}
 
 	private void register() {
-		registerDriver(URectangle.class, new DriverRectangleSvg(this));
+		registerDriver(URectangle.class, new DriverRectangleSvg());
 
 		if (TeaVM.isTeaVM())
-			registerDriver(UText.class, new DriverTextSvg(getStringBounder(), this));
+			registerDriver(UText.class, new DriverTextSvg(getStringBounder()));
 		else if (textAsPath)
-			registerDriver(UText.class, new DriverTextAsPathSvg(this));
+			registerDriver(UText.class, new DriverTextAsPathSvg());
 		else
-			registerDriver(UText.class, new DriverTextSvg(getStringBounder(), this));
+			registerDriver(UText.class, new DriverTextSvg(getStringBounder()));
 
-		registerDriver(ULine.class, new DriverLineSvg(this));
+		registerDriver(ULine.class, new DriverLineSvg());
 		registerDriver(UPixel.class, new DriverPixelSvg());
-		registerDriver(UPolygon.class, new DriverPolygonSvg(this));
-		registerDriver(UEllipse.class, new DriverEllipseSvg(this));
+		registerDriver(UPolygon.class, new DriverPolygonSvg());
+		registerDriver(UEllipse.class, new DriverEllipseSvg());
 		if (!TeaVM.isTeaVM())
-			registerDriver(UImage.class, new DriverImagePng(this));
+			registerDriver(UImage.class, new DriverImagePng());
 		registerDriver(UImageSvg.class, new DriverImageSvgSvg());
 		ignoreShape(UImageTikz.class);
-		registerDriver(UPath.class, new DriverPathSvg(this));
+		registerDriver(UPath.class, new DriverPathSvg());
 		registerDriver(DotPath.class, new DriverDotPathSvg());
 		if (TeaVM.isTeaVM())
 			registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterSvgDeterministic());
