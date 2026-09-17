@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UImageTikz.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.shape</a> &gt; <span class="el_source">UImageTikz.java</span></div><h1>UImageTikz.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml.klimt.shape;
 
+import net.sourceforge.plantuml.klimt.UShapeKind;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.klimt.UShape;
@@ -11,62 +12,67 @@ public class UImageTikz implements UShape {
 	private final double height;
 
 	private boolean hasUrl;
-<span class="fc" id="L14">	private double scaleFactor = 1;</span>
+<span class="fc" id="L15">	private double scaleFactor = 1;</span>
 
-<span class="fc" id="L16">	public UImageTikz(String tikzCode, double width, double height) {</span>
-<span class="fc" id="L17">		this.tikzCode = Objects.requireNonNull(tikzCode);</span>
-<span class="fc" id="L18">		this.width = width;</span>
-<span class="fc" id="L19">		this.height = height;</span>
-<span class="fc" id="L20">		scan(tikzCode);</span>
-<span class="fc" id="L21">	}</span>
+<span class="fc" id="L17">	public UImageTikz(String tikzCode, double width, double height) {</span>
+<span class="fc" id="L18">		this.tikzCode = Objects.requireNonNull(tikzCode);</span>
+<span class="fc" id="L19">		this.width = width;</span>
+<span class="fc" id="L20">		this.height = height;</span>
+<span class="fc" id="L21">		scan(tikzCode);</span>
+<span class="fc" id="L22">	}</span>
 
 	private void scan(String tikzCode) {
-<span class="fc" id="L24">		boolean beforeTikzPicture = true;</span>
-<span class="fc bfc" id="L25" title="All 2 branches covered.">		for (final String line : tikzCode.split(&quot;\n&quot;)) {</span>
-<span class="fc" id="L26">			final String trimmed = line.trim();</span>
-<span class="fc bfc" id="L27" title="All 4 branches covered.">			if (beforeTikzPicture &amp;&amp; trimmed.startsWith(&quot;\\scalebox{&quot;))</span>
-<span class="fc" id="L28">				scaleFactor = parseScaleFactor(trimmed);</span>
+<span class="fc" id="L25">		boolean beforeTikzPicture = true;</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">		for (final String line : tikzCode.split(&quot;\n&quot;)) {</span>
+<span class="fc" id="L27">			final String trimmed = line.trim();</span>
+<span class="fc bfc" id="L28" title="All 4 branches covered.">			if (beforeTikzPicture &amp;&amp; trimmed.startsWith(&quot;\\scalebox{&quot;))</span>
+<span class="fc" id="L29">				scaleFactor = parseScaleFactor(trimmed);</span>
 
-<span class="fc bfc" id="L30" title="All 2 branches covered.">			if (trimmed.startsWith(&quot;\\begin{tikzpicture}&quot;))</span>
-<span class="fc" id="L31">				beforeTikzPicture = false;</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">			if (trimmed.startsWith(&quot;\\begin{tikzpicture}&quot;))</span>
+<span class="fc" id="L32">				beforeTikzPicture = false;</span>
 
-<span class="pc bpc" id="L33" title="1 of 2 branches missed.">			if (containsUrl(trimmed))</span>
-<span class="nc" id="L34">				hasUrl = true;</span>
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">			if (containsUrl(trimmed))</span>
+<span class="nc" id="L35">				hasUrl = true;</span>
 		}
-<span class="fc" id="L36">	}</span>
+<span class="fc" id="L37">	}</span>
 
 	public String getTikzCode() {
-<span class="fc" id="L39">		return tikzCode;</span>
+<span class="fc" id="L40">		return tikzCode;</span>
 	}
 
 	public boolean hasUrl() {
-<span class="fc" id="L43">		return hasUrl;</span>
+<span class="fc" id="L44">		return hasUrl;</span>
 	}
 
 	public double getWidth() {
-<span class="fc" id="L47">		return width * scaleFactor;</span>
+<span class="fc" id="L48">		return width * scaleFactor;</span>
 	}
 
 	public double getHeight() {
-<span class="fc" id="L51">		return height * scaleFactor;</span>
+<span class="fc" id="L52">		return height * scaleFactor;</span>
 	}
 
 	private static double parseScaleFactor(String texLine) {
-<span class="fc" id="L55">		final int start = texLine.indexOf('{') + 1;</span>
-<span class="fc" id="L56">		final int end = texLine.indexOf('}', start);</span>
-<span class="pc bpc" id="L57" title="2 of 4 branches missed.">		if (start &gt; 0 &amp;&amp; end &gt; start) {</span>
+<span class="fc" id="L56">		final int start = texLine.indexOf('{') + 1;</span>
+<span class="fc" id="L57">		final int end = texLine.indexOf('}', start);</span>
+<span class="pc bpc" id="L58" title="2 of 4 branches missed.">		if (start &gt; 0 &amp;&amp; end &gt; start) {</span>
 			try {
-<span class="fc" id="L59">				return Double.parseDouble(texLine.substring(start, end));</span>
-<span class="nc" id="L60">			} catch (NumberFormatException e) {</span>
+<span class="fc" id="L60">				return Double.parseDouble(texLine.substring(start, end));</span>
+<span class="nc" id="L61">			} catch (NumberFormatException e) {</span>
 				// ignore
 			}
 		}
-<span class="nc" id="L64">		return 1;</span>
+<span class="nc" id="L65">		return 1;</span>
 	}
 
 	private static boolean containsUrl(String texLine) {
-<span class="pc bpc" id="L68" title="2 of 4 branches missed.">		return texLine.contains(&quot;\\href{&quot;) || texLine.contains(&quot;\\hyperref[&quot;)</span>
-<span class="pc bpc" id="L69" title="2 of 4 branches missed.">				|| texLine.contains(&quot;href node&quot;) || texLine.contains(&quot;hyperref node&quot;);</span>
+<span class="pc bpc" id="L69" title="2 of 4 branches missed.">		return texLine.contains(&quot;\\href{&quot;) || texLine.contains(&quot;\\hyperref[&quot;)</span>
+<span class="pc bpc" id="L70" title="2 of 4 branches missed.">				|| texLine.contains(&quot;href node&quot;) || texLine.contains(&quot;hyperref node&quot;);</span>
+	}
+
+	@Override
+	public UShapeKind getShapeKind() {
+<span class="fc" id="L75">		return UShapeKind.IMAGE_TIKZ;</span>
 	}
 
 }

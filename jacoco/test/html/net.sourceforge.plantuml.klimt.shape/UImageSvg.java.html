@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
+import net.sourceforge.plantuml.klimt.UShapeKind;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -46,117 +47,122 @@ public class UImageSvg implements UShape {
 
 	private final String svg;
 	private final double scale;
-<span class="fc" id="L49">	private int cachedWidth = -1;</span>
-<span class="fc" id="L50">	private int cachedHeight = -1;</span>
+<span class="fc" id="L50">	private int cachedWidth = -1;</span>
+<span class="fc" id="L51">	private int cachedHeight = -1;</span>
 
-<span class="fc" id="L52">	public UImageSvg(String svg, double scale) {</span>
-<span class="fc" id="L53">		this.svg = Objects.requireNonNull(svg);</span>
-<span class="fc" id="L54">		this.scale = scale;</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L53">	public UImageSvg(String svg, double scale) {</span>
+<span class="fc" id="L54">		this.svg = Objects.requireNonNull(svg);</span>
+<span class="fc" id="L55">		this.scale = scale;</span>
+<span class="fc" id="L56">	}</span>
 
 	public String getMD5Hex() {
-<span class="nc" id="L58">		return SignatureUtils.getMD5Hex(svg);</span>
+<span class="nc" id="L59">		return SignatureUtils.getMD5Hex(svg);</span>
 	}
 
 	public boolean containsXlink() {
-<span class="fc" id="L62">		return svg.contains(&quot;xmlns:xlink=\&quot;http://www.w3.org/1999/xlink\&quot;&quot;);</span>
+<span class="fc" id="L63">		return svg.contains(&quot;xmlns:xlink=\&quot;http://www.w3.org/1999/xlink\&quot;&quot;);</span>
 	}
 
 	public String getSvg(boolean raw) {
-<span class="fc" id="L66">		String result = svg;</span>
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (raw)</span>
-<span class="nc" id="L68">			return result;</span>
+<span class="fc" id="L67">		String result = svg;</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (raw)</span>
+<span class="nc" id="L69">			return result;</span>
 
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (result.startsWith(&quot;&lt;?xml&quot;)) {</span>
-<span class="nc" id="L71">			final int idx = result.indexOf(&quot;&lt;svg&quot;);</span>
-<span class="nc" id="L72">			result = result.substring(idx);</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (result.startsWith(&quot;&lt;?xml&quot;)) {</span>
+<span class="nc" id="L72">			final int idx = result.indexOf(&quot;&lt;svg&quot;);</span>
+<span class="nc" id="L73">			result = result.substring(idx);</span>
 		}
-<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (result.startsWith(&quot;&lt;svg&quot;)) {</span>
-<span class="fc" id="L75">			final int idx = result.indexOf(&quot;&gt;&quot;);</span>
-<span class="fc" id="L76">			result = &quot;&lt;svg&gt;&quot; + result.substring(idx + 1);</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if (result.startsWith(&quot;&lt;svg&quot;)) {</span>
+<span class="fc" id="L76">			final int idx = result.indexOf(&quot;&gt;&quot;);</span>
+<span class="fc" id="L77">			result = &quot;&lt;svg&gt;&quot; + result.substring(idx + 1);</span>
 		}
-<span class="fc" id="L78">		final String style = extractSvgStyle();</span>
-<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (style != null) {</span>
-<span class="fc" id="L80">			final String background = extractBackground(style);</span>
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">			if (background != null) {</span>
-<span class="fc" id="L82">				final int width = getData(&quot;width&quot;);</span>
-<span class="fc" id="L83">				final int height = getData(&quot;height&quot;);</span>
-<span class="fc" id="L84">				result = result.replaceFirst(&quot;&lt;g&gt;&quot;, &quot;&lt;g&gt;&lt;rect fill=\&quot;&quot; + background + &quot;\&quot; style=\&quot;&quot; + style</span>
+<span class="fc" id="L79">		final String style = extractSvgStyle();</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">		if (style != null) {</span>
+<span class="fc" id="L81">			final String background = extractBackground(style);</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">			if (background != null) {</span>
+<span class="fc" id="L83">				final int width = getData(&quot;width&quot;);</span>
+<span class="fc" id="L84">				final int height = getData(&quot;height&quot;);</span>
+<span class="fc" id="L85">				result = result.replaceFirst(&quot;&lt;g&gt;&quot;, &quot;&lt;g&gt;&lt;rect fill=\&quot;&quot; + background + &quot;\&quot; style=\&quot;&quot; + style</span>
 						+ &quot;\&quot; width=\&quot;&quot; + width + &quot;\&quot; height=\&quot;&quot; + height + &quot;\&quot;/&gt; &quot;);
 			}
 
 		}
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (result.startsWith(&quot;&lt;svg&gt;&quot;) == false)</span>
-<span class="nc" id="L90">			throw new IllegalArgumentException();</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (result.startsWith(&quot;&lt;svg&gt;&quot;) == false)</span>
+<span class="nc" id="L91">			throw new IllegalArgumentException();</span>
 
-<span class="fc" id="L92">		return result;</span>
+<span class="fc" id="L93">		return result;</span>
 	}
 
-<span class="fc" id="L95">	private static final Pattern BACKGROUND = Pattern.compile(&quot;background:([^;]+)&quot;);</span>
+<span class="fc" id="L96">	private static final Pattern BACKGROUND = Pattern.compile(&quot;background:([^;]+)&quot;);</span>
 
 	private String extractBackground(String style) {
-<span class="fc" id="L98">		final Matcher m = BACKGROUND.matcher(style);</span>
-<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (m.find())</span>
-<span class="fc" id="L100">			return m.group(1);</span>
+<span class="fc" id="L99">		final Matcher m = BACKGROUND.matcher(style);</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		if (m.find())</span>
+<span class="fc" id="L101">			return m.group(1);</span>
 
-<span class="nc" id="L102">		return null;</span>
+<span class="nc" id="L103">		return null;</span>
 	}
 
-<span class="fc" id="L105">	private static final Pattern STYLE = Pattern.compile(&quot;(?i)\\&lt;svg[^&gt;]+style=\&quot;([^\&quot;&gt;]+)\&quot;&quot;);</span>
+<span class="fc" id="L106">	private static final Pattern STYLE = Pattern.compile(&quot;(?i)\\&lt;svg[^&gt;]+style=\&quot;([^\&quot;&gt;]+)\&quot;&quot;);</span>
 
 	private String extractSvgStyle() {
-<span class="fc" id="L108">		final Matcher m = STYLE.matcher(svg);</span>
-<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (m.find())</span>
-<span class="fc" id="L110">			return m.group(1);</span>
+<span class="fc" id="L109">		final Matcher m = STYLE.matcher(svg);</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">		if (m.find())</span>
+<span class="fc" id="L111">			return m.group(1);</span>
 
-<span class="fc" id="L112">		return null;</span>
+<span class="fc" id="L113">		return null;</span>
 	}
 
-<span class="fc" id="L115">	private static final Pattern VIEWBOX = Pattern</span>
-<span class="fc" id="L116">			.compile(&quot;viewBox[= \&quot;\']+([0-9.]+)[\\s,]+([0-9.]+)[\\s,]+([0-9.]+)[\\s,]+([0-9.]+)&quot;);</span>
+<span class="fc" id="L116">	private static final Pattern VIEWBOX = Pattern</span>
+<span class="fc" id="L117">			.compile(&quot;viewBox[= \&quot;\']+([0-9.]+)[\\s,]+([0-9.]+)[\\s,]+([0-9.]+)[\\s,]+([0-9.]+)&quot;);</span>
 
 	public int getData(String name) {
-<span class="fc" id="L119">		final Matcher m2 = VIEWBOX.matcher(svg);</span>
-<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (m2.find()) {</span>
-<span class="fc bfc" id="L121" title="All 2 branches covered.">			if (&quot;width&quot;.equals(name)) {</span>
-<span class="fc" id="L122">				final String s = m2.group(3);</span>
+<span class="fc" id="L120">		final Matcher m2 = VIEWBOX.matcher(svg);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		if (m2.find()) {</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">			if (&quot;width&quot;.equals(name)) {</span>
+<span class="fc" id="L123">				final String s = m2.group(3);</span>
 				// Round up (not down): a floor here understates the declared box, and
 				// that undersized box is later reused as a hard viewport when this
 				// embedded SVG is re-wrapped without its own viewBox, clipping up to
 				// 1 unit of real content (see issue #2735, embedded-diagram overflow).
-<span class="fc" id="L127">				final int width = (int) Math.ceil(Double.parseDouble(s));</span>
-<span class="fc" id="L128">				return width;</span>
+<span class="fc" id="L128">				final int width = (int) Math.ceil(Double.parseDouble(s));</span>
+<span class="fc" id="L129">				return width;</span>
 			}
-<span class="pc bpc" id="L130" title="1 of 2 branches missed.">			if (&quot;height&quot;.equals(name)) {</span>
-<span class="fc" id="L131">				final String s = m2.group(4);</span>
-<span class="fc" id="L132">				final int result = (int) Math.ceil(Double.parseDouble(s));</span>
-<span class="fc" id="L133">				return result;</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">			if (&quot;height&quot;.equals(name)) {</span>
+<span class="fc" id="L132">				final String s = m2.group(4);</span>
+<span class="fc" id="L133">				final int result = (int) Math.ceil(Double.parseDouble(s));</span>
+<span class="fc" id="L134">				return result;</span>
 			}
 		}
-<span class="fc" id="L136">		final Pattern p = Pattern.compile(&quot;(?i)&lt;svg[^&gt;]+&quot; + name + &quot;\\W+(\\d+)&quot;);</span>
-<span class="fc" id="L137">		final Matcher m = p.matcher(svg);</span>
-<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		if (m.find()) {</span>
-<span class="fc" id="L139">			final String s = m.group(1);</span>
-<span class="fc" id="L140">			return Integer.parseInt(s);</span>
+<span class="fc" id="L137">		final Pattern p = Pattern.compile(&quot;(?i)&lt;svg[^&gt;]+&quot; + name + &quot;\\W+(\\d+)&quot;);</span>
+<span class="fc" id="L138">		final Matcher m = p.matcher(svg);</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">		if (m.find()) {</span>
+<span class="fc" id="L140">			final String s = m.group(1);</span>
+<span class="fc" id="L141">			return Integer.parseInt(s);</span>
 		}
 
-<span class="nc" id="L143">		throw new IllegalStateException(&quot;Cannot find &quot; + name);</span>
+<span class="nc" id="L144">		throw new IllegalStateException(&quot;Cannot find &quot; + name);</span>
 	}
 
 	public double getHeight() {
-<span class="fc bfc" id="L147" title="All 2 branches covered.">		if (cachedHeight == -1)</span>
-<span class="fc" id="L148">			cachedHeight = getData(&quot;height&quot;);</span>
-<span class="fc" id="L149">		return cachedHeight * scale;</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">		if (cachedHeight == -1)</span>
+<span class="fc" id="L149">			cachedHeight = getData(&quot;height&quot;);</span>
+<span class="fc" id="L150">		return cachedHeight * scale;</span>
 	}
 
 	public double getWidth() {
-<span class="fc bfc" id="L153" title="All 2 branches covered.">		if (cachedWidth == -1)</span>
-<span class="fc" id="L154">			cachedWidth = getData(&quot;width&quot;);</span>
-<span class="fc" id="L155">		return cachedWidth * scale;</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		if (cachedWidth == -1)</span>
+<span class="fc" id="L155">			cachedWidth = getData(&quot;width&quot;);</span>
+<span class="fc" id="L156">		return cachedWidth * scale;</span>
 	}
 
 	public double getScale() {
-<span class="fc" id="L159">		return scale;</span>
+<span class="fc" id="L160">		return scale;</span>
+	}
+
+	@Override
+	public UShapeKind getShapeKind() {
+<span class="fc" id="L165">		return UShapeKind.IMAGE_SVG;</span>
 	}
 
 }

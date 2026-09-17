@@ -132,6 +132,11 @@ implements <a href="../UShape.html" title="interface in net.sourceforge.plantuml
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../font/UFont.html" title="class in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFont()" class="member-name-link">getFont</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../UShapeKind.html" title="enum class in net.sourceforge.plantuml.klimt">UShapeKind</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getShapeKind()" class="member-name-link">getShapeKind</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Which slot of an <code>AbstractUGraphic</code>'s driver array this shape is drawn by.</div>
+</div>
 </div>
 </div>
 </div>
@@ -174,6 +179,21 @@ implements <a href="../UShape.html" title="interface in net.sourceforge.plantuml
 <section class="detail" id="getFont()">
 <h3>getFont</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../font/UFont.html" title="class in net.sourceforge.plantuml.klimt.font">UFont</a></span>&nbsp;<span class="element-name">getFont</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getShapeKind()">
+<h3>getShapeKind</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../UShapeKind.html" title="enum class in net.sourceforge.plantuml.klimt">UShapeKind</a></span>&nbsp;<span class="element-name">getShapeKind</span>()</div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../UShape.html#getShapeKind()">UShape</a></code></span></div>
+<div class="block">Which slot of an <code>AbstractUGraphic</code>'s driver array this shape is drawn by. Overridden
+ by each of the shapes some driver actually handles (see <a href="../UShapeKind.html" title="enum class in net.sourceforge.plantuml.klimt"><code>UShapeKind</code></a>); everything
+ else is a container or a decoration that never reaches <code>AbstractUGraphic#draw</code> as
+ itself and keeps the default, which no driver is ever registered under.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../UShape.html#getShapeKind()">getShapeKind</a></code>&nbsp;in interface&nbsp;<code><a href="../UShape.html" title="interface in net.sourceforge.plantuml.klimt">UShape</a></code></dd>
+</dl>
 </section>
 </li>
 </ul>

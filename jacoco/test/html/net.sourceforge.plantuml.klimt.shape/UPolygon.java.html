@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
+import net.sourceforge.plantuml.klimt.UShapeKind;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,138 +48,143 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 public class UPolygon extends AbstractShadowable {
     // ::remove file when __HAXE__
 
-<span class="fc" id="L50">	private final List&lt;XPoint2D&gt; all = new ArrayList&lt;XPoint2D&gt;();</span>
+<span class="fc" id="L51">	private final List&lt;XPoint2D&gt; all = new ArrayList&lt;XPoint2D&gt;();</span>
 	private final String name;
 
-<span class="fc" id="L53">	private MinMax minmax = MinMax.getEmpty(false);</span>
+<span class="fc" id="L54">	private MinMax minmax = MinMax.getEmpty(false);</span>
 
 	public UPolygon() {
-<span class="fc" id="L56">		this((String) null);</span>
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L57">		this((String) null);</span>
+<span class="fc" id="L58">	}</span>
 
 	public UPolygon(List&lt;XPoint2D&gt; points) {
-<span class="fc" id="L60">		this((String) null);</span>
-<span class="fc" id="L61">		all.addAll(points);</span>
-<span class="fc bfc" id="L62" title="All 2 branches covered.">		for (XPoint2D pt : all)</span>
-<span class="fc" id="L63">			manageMinMax(pt.getX(), pt.getY());</span>
+<span class="fc" id="L61">		this((String) null);</span>
+<span class="fc" id="L62">		all.addAll(points);</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">		for (XPoint2D pt : all)</span>
+<span class="fc" id="L64">			manageMinMax(pt.getX(), pt.getY());</span>
 
-<span class="fc" id="L65">	}</span>
+<span class="fc" id="L66">	}</span>
 
-<span class="fc" id="L67">	public UPolygon(String name) {</span>
-<span class="fc" id="L68">		this.name = name;</span>
-<span class="fc" id="L69">	}</span>
+<span class="fc" id="L68">	public UPolygon(String name) {</span>
+<span class="fc" id="L69">		this.name = name;</span>
+<span class="fc" id="L70">	}</span>
 
 	public XPoint2D getPoint(int idx) {
-<span class="fc" id="L72">		return all.get(idx);</span>
+<span class="fc" id="L73">		return all.get(idx);</span>
 	}
 
 	public XPoint2D checkMiddleContactForSpecificTriangle(XPoint2D center) {
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		for (int i = 0; i &lt; all.size() - 1; i++) {</span>
-<span class="nc" id="L77">			final XPoint2D pt1 = all.get(i);</span>
-<span class="nc" id="L78">			final XPoint2D pt2 = all.get(i + 1);</span>
-<span class="nc" id="L79">			final XPoint2D middle = new XPoint2D((pt1.getX() + pt2.getX()) / 2, (pt1.getY() + pt2.getY()) / 2);</span>
-<span class="nc" id="L80">			final double delta = middle.distance(center);</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">			if (delta &lt; 1)</span>
-<span class="nc" id="L82">				return all.get((i + all.size() - 1) % all.size());</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		for (int i = 0; i &lt; all.size() - 1; i++) {</span>
+<span class="nc" id="L78">			final XPoint2D pt1 = all.get(i);</span>
+<span class="nc" id="L79">			final XPoint2D pt2 = all.get(i + 1);</span>
+<span class="nc" id="L80">			final XPoint2D middle = new XPoint2D((pt1.getX() + pt2.getX()) / 2, (pt1.getY() + pt2.getY()) / 2);</span>
+<span class="nc" id="L81">			final double delta = middle.distance(center);</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">			if (delta &lt; 1)</span>
+<span class="nc" id="L83">				return all.get((i + all.size() - 1) % all.size());</span>
 
 		}
-<span class="nc" id="L85">		return null;</span>
+<span class="nc" id="L86">		return null;</span>
 	}
 
 	public void addPoint(double x, double y) {
-<span class="fc" id="L89">		all.add(new XPoint2D(x, y));</span>
-<span class="fc" id="L90">		manageMinMax(x, y);</span>
-<span class="fc" id="L91">	}</span>
+<span class="fc" id="L90">		all.add(new XPoint2D(x, y));</span>
+<span class="fc" id="L91">		manageMinMax(x, y);</span>
+<span class="fc" id="L92">	}</span>
 
 	public void addPoint(XPoint2D point) {
-<span class="fc" id="L94">		addPoint(point.getX(), point.getY());</span>
-<span class="fc" id="L95">	}</span>
+<span class="fc" id="L95">		addPoint(point.getX(), point.getY());</span>
+<span class="fc" id="L96">	}</span>
 
 	private void manageMinMax(double x, double y) {
-<span class="fc" id="L98">		minmax = minmax.addPoint(x, y);</span>
-<span class="fc" id="L99">	}</span>
+<span class="fc" id="L99">		minmax = minmax.addPoint(x, y);</span>
+<span class="fc" id="L100">	}</span>
 
 	public List&lt;XPoint2D&gt; getPoints() {
-<span class="fc" id="L102">		return all;</span>
+<span class="fc" id="L103">		return all;</span>
 	}
 
 	public UPolygon translate(double dx, double dy) {
-<span class="fc" id="L106">		final UPolygon result = new UPolygon();</span>
-<span class="fc bfc" id="L107" title="All 2 branches covered.">		for (XPoint2D pt : all)</span>
-<span class="fc" id="L108">			result.addPoint(pt.x + dx, pt.y + dy);</span>
+<span class="fc" id="L107">		final UPolygon result = new UPolygon();</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		for (XPoint2D pt : all)</span>
+<span class="fc" id="L109">			result.addPoint(pt.x + dx, pt.y + dy);</span>
 
-<span class="fc" id="L110">		return result;</span>
+<span class="fc" id="L111">		return result;</span>
 	}
 
 	public void rotate(double theta) {
-<span class="fc bfc" id="L114" title="All 2 branches covered.">		if (theta == 0)</span>
-<span class="fc" id="L115">			return;</span>
-<span class="fc" id="L116">		affine(XAffineTransform.getRotateInstance(theta));</span>
-<span class="fc" id="L117">	}</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		if (theta == 0)</span>
+<span class="fc" id="L116">			return;</span>
+<span class="fc" id="L117">		affine(XAffineTransform.getRotateInstance(theta));</span>
+<span class="fc" id="L118">	}</span>
 
 	public void affine(XAffineTransform rotate) {
-<span class="fc bfc" id="L120" title="All 2 branches covered.">		for (int i = 0; i &lt; all.size(); i++)</span>
-<span class="fc" id="L121">			all.set(i, all.get(i).transform(rotate));</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		for (int i = 0; i &lt; all.size(); i++)</span>
+<span class="fc" id="L122">			all.set(i, all.get(i).transform(rotate));</span>
 
-<span class="fc" id="L123">	}</span>
+<span class="fc" id="L124">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (name != null)</span>
-<span class="nc" id="L128">			return name;</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (name != null)</span>
+<span class="nc" id="L129">			return name;</span>
 
-<span class="nc" id="L130">		return super.toString() + &quot; &quot; + all;</span>
+<span class="nc" id="L131">		return super.toString() + &quot; &quot; + all;</span>
 	}
 
 	public double getHeight() {
-<span class="nc" id="L134">		return minmax.getHeight();</span>
+<span class="nc" id="L135">		return minmax.getHeight();</span>
 	}
 
 	public double getWidth() {
-<span class="nc" id="L138">		return minmax.getWidth();</span>
+<span class="nc" id="L139">		return minmax.getWidth();</span>
 	}
 
 	public double getMinX() {
-<span class="fc" id="L142">		return minmax.getMinX();</span>
+<span class="fc" id="L143">		return minmax.getMinX();</span>
 	}
 
 	public double getMinY() {
-<span class="fc" id="L146">		return minmax.getMinY();</span>
+<span class="fc" id="L147">		return minmax.getMinY();</span>
 	}
 
 	public double getMaxX() {
-<span class="fc" id="L150">		return minmax.getMaxX();</span>
+<span class="fc" id="L151">		return minmax.getMaxX();</span>
 
 	}
 
 	public double getMaxY() {
-<span class="fc" id="L155">		return minmax.getMaxY();</span>
+<span class="fc" id="L156">		return minmax.getMaxY();</span>
 	}
 
 	public MinMax getMinMax() {
-<span class="nc" id="L159">		return minmax;</span>
+<span class="nc" id="L160">		return minmax;</span>
 	}
 
 	public double[] getPointArray(double x, double y) {
-<span class="fc" id="L163">		final double points[] = new double[getPoints().size() * 2];</span>
-<span class="fc" id="L164">		int i = 0;</span>
+<span class="fc" id="L164">		final double points[] = new double[getPoints().size() * 2];</span>
+<span class="fc" id="L165">		int i = 0;</span>
 
-<span class="fc bfc" id="L166" title="All 2 branches covered.">		for (XPoint2D pt : getPoints()) {</span>
-<span class="fc" id="L167">			points[i++] = pt.getX() + x;</span>
-<span class="fc" id="L168">			points[i++] = pt.getY() + y;</span>
-<span class="fc" id="L169">		}</span>
-<span class="fc" id="L170">		return points;</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">		for (XPoint2D pt : getPoints()) {</span>
+<span class="fc" id="L168">			points[i++] = pt.getX() + x;</span>
+<span class="fc" id="L169">			points[i++] = pt.getY() + y;</span>
+<span class="fc" id="L170">		}</span>
+<span class="fc" id="L171">		return points;</span>
 	}
 
 	private CompressionMode compressionMode;
 
 	public final CompressionMode getCompressionMode() {
-<span class="fc" id="L176">		return compressionMode;</span>
+<span class="fc" id="L177">		return compressionMode;</span>
 	}
 
 	public final void setCompressionMode(CompressionMode compressionMode) {
-<span class="nc" id="L180">		this.compressionMode = compressionMode;</span>
-<span class="nc" id="L181">	}</span>
+<span class="nc" id="L181">		this.compressionMode = compressionMode;</span>
+<span class="nc" id="L182">	}</span>
+
+	@Override
+	public UShapeKind getShapeKind() {
+<span class="fc" id="L186">		return UShapeKind.POLYGON;</span>
+	}
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

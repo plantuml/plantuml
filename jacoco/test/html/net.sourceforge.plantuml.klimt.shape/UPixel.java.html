@@ -35,8 +35,15 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
+import net.sourceforge.plantuml.klimt.UShapeKind;
 import net.sourceforge.plantuml.klimt.UShape;
 
-<span class="nc" id="L40">public class UPixel implements UShape {</span>
+<span class="nc" id="L41">public class UPixel implements UShape {</span>
+
+	@Override
+	public UShapeKind getShapeKind() {
+<span class="nc" id="L45">		return UShapeKind.PIXEL;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
