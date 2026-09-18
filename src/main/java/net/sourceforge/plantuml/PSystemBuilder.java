@@ -108,6 +108,7 @@ import net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagramFactory;
 import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.version.IteratorCounter2;
 import net.sourceforge.plantuml.version.PSystemLicenseFactory;
 import net.sourceforge.plantuml.version.PSystemVersionFactory;
 import net.sourceforge.plantuml.wbs.WBSDiagramFactory;
@@ -231,17 +232,30 @@ public class PSystemBuilder {
 	@DuplicateCode(reference = "PSystemBuilder2")
 	final public Diagram createPSystem(PathSystem pathSystem, List<StringLocated> source, List<StringLocated> rawSource,
 			Previous previous, PreprocessingArtifact preprocessing) {
+		return createPSystem(pathSystem, null, source, rawSource, previous, preprocessing);
+	}
 
+	/** Replays preprocessed input without losing source locations or decoded inline images. */
+	public Diagram createPSystem(PathSystem pathSystem, UmlSource umlSource, Previous previous,
+			PreprocessingArtifact preprocessing) {
+		final List<StringLocated> source = new ArrayList<>();
+		final IteratorCounter2 iterator = umlSource.iterator2();
+		while (iterator.hasNext())
+			source.add(iterator.next());
+		return createPSystem(pathSystem, umlSource, source, null, previous, preprocessing);
+	}
+
+	private Diagram createPSystem(PathSystem pathSystem, UmlSource umlSource, List<StringLocated> source,
+			List<StringLocated> rawSource, Previous previous, PreprocessingArtifact preprocessing) {
 		final long now = System.currentTimeMillis();
 
 		Diagram result = null;
 		try {
-			final Collection<DiagramType> types = DiagramType.findStartTypes(source.get(0).getString());
-			final UmlSource umlSource = UmlSource.createWithRaw(source, types.contains(DiagramType.SEQUENCE),
-					rawSource);
-
-			umlSource.patchBase64();
-
+			if (umlSource == null) {
+				final Collection<DiagramType> types = DiagramType.findStartTypes(source.get(0).getString());
+				umlSource = UmlSource.createWithRaw(source, types.contains(DiagramType.SEQUENCE), rawSource);
+				umlSource.patchBase64();
+			}
 			final Collection<DiagramType> explainTypes = umlSource.getExplainTypes();
 			final Collection<DiagramType> diagramTypes;
 			if (explainTypes == null)

@@ -1,0 +1,11 @@
+@startuml
+' Baseline for the ortho pair below
+class Api
+class Service
+class Worker
+class Store
+Api --> Service
+Api --> Worker
+Service --> Store
+Worker --> Store
+@enduml

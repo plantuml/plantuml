@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
+import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.NewpagedDiagram;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -79,6 +80,8 @@ public class CommandNewpage extends SingleLineCommand2<TitledDiagram> {
 		final int dpi = diagram.getSkinParam().getDpi();
 		final TitledDiagram emptyDiagram = (TitledDiagram) factory.createEmptyDiagram(diagram.getPathSystem(),
 				diagram.getSource(), diagram.getPrevious(), diagram.getPreprocessingArtifact());
+		if (diagram instanceof CucaDiagram && emptyDiagram instanceof CucaDiagram)
+			((CucaDiagram) emptyDiagram).inheritLayoutReplayContext((CucaDiagram) diagram);
 		if (dpi != 96)
 			emptyDiagram.setParam("dpi", "" + dpi);
 

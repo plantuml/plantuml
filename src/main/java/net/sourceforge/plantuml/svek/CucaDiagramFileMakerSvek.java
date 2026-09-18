@@ -46,8 +46,11 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.dot.CucaDiagramSimplifierActivity;
 import net.sourceforge.plantuml.dot.CucaDiagramSimplifierState;
 import net.sourceforge.plantuml.dot.DotData;
+import net.sourceforge.plantuml.dot.GraphvizVersionFinder;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.svek.layout.SvekLayoutBuilder;
+import net.sourceforge.plantuml.svek.layout.SvekLayoutBuilders;
 
 public final class CucaDiagramFileMakerSvek extends CucaDiagramFileMaker {
 
@@ -68,14 +71,18 @@ public final class CucaDiagramFileMakerSvek extends CucaDiagramFileMaker {
 		else if (diagram.getDiagramType() == DiagramType.STATE)
 			new CucaDiagramSimplifierState().simplify(diagram, stringBounder, DotMode.NORMAL);
 
+		final boolean graphSupportRequested = diagram.isUseGraphSupport();
+		final SvekLayoutBuilder layoutBuilder = graphSupportRequested ? SvekLayoutBuilders.graphSupport() : null;
 		final DotStringFactory dotStringFactory = new DotStringFactory(bibliotekon, clusterManager.getCurrent(),
-				diagram.getDiagramType(), diagram.getSkinParam());
+				diagram.getDiagramType(), diagram.getSkinParam(),
+				graphSupportRequested ? GraphvizVersionFinder.DEFAULT : null);
 
 		final DotData dotData = new DotData(diagram, diagram.getRootGroup(), getOrderedLinks(), diagram.leafs(),
 				diagram, diagram);
 
 		GraphvizImageBuilder imageBuilder = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),
-				diagram.getDiagramType().getStyleName(), DotMode.NORMAL, dotStringFactory, clusterManager);
+				diagram.getDiagramType().getStyleName(), DotMode.NORMAL, dotStringFactory, clusterManager, layoutBuilder,
+				graphSupportRequested, diagram.isAutomaticGraphSupport());
 		BaseFile basefile = null;
 //		if (fileFormatOption.isDebugSvek() && os instanceof NamedOutputStream)
 //			basefile = ((NamedOutputStream) os).getBasefile();

@@ -1,0 +1,25 @@
+@startuml
+' Nested namespaces with edges crossing namespace borders, laid out as clusters
+namespace app {
+  class Bootstrap
+  namespace app.web {
+    class Controller
+    class Router
+  }
+  namespace app.core {
+    class UseCase
+    class Policy
+  }
+}
+namespace infra {
+  class JdbcStore
+  class HttpClient
+}
+Bootstrap --> app.web.Router
+app.web.Router --> app.web.Controller
+app.web.Controller --> app.core.UseCase
+app.core.UseCase --> app.core.Policy
+app.core.UseCase --> infra.JdbcStore
+app.core.UseCase --> infra.HttpClient
+infra.HttpClient --> app.core.Policy
+@enduml

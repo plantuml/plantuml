@@ -1,0 +1,24 @@
+@startuml
+' together, a package, a self loop, parallel edges, a note and a hidden edge at once
+left to right direction
+together {
+  class Alpha
+  class Beta
+}
+package Core {
+  class Engine
+  class Engine2
+  Engine --> Engine : retry
+  Engine --> Engine2 : primary
+  Engine --> Engine2 : fallback
+}
+note top of Engine
+  Self loop, parallel edges
+  and a note in one cluster.
+end note
+class Detached
+Alpha --> Engine
+Beta --> Engine2
+Engine2 --> Detached
+Alpha -[hidden]-> Beta
+@enduml
