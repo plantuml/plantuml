@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.klimt.drawing.svg;
 
 import java.io.IOException;
 
-import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -47,14 +46,8 @@ import net.sourceforge.plantuml.utils.Log;
 public class DriverImagePng implements UDriver<UImage, SvgGraphics> {
     // ::remove file when __HAXE__
 
-	private final ClipContainer clipContainer;
-
-	public DriverImagePng(ClipContainer clipContainer) {
-		this.clipContainer = clipContainer;
-	}
-
 	public void draw(UImage image, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
-		final UClip clip = clipContainer.getClip();
+		final UClip clip = param.getClip();
 		if (clip != null) {
 			if (clip.isInside(x, y) == false) {
 				return;

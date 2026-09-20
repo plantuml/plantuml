@@ -70,19 +70,27 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 	private /* final */ O graphic;
 	private /* final */ MinMaxMutable minmax;
 
-	// A flat array indexed by UShapeKind, not a Map<Class<?>, ...>: every copyUGraphic() --
-	// that is, every apply(), so every translate, color or stroke change -- builds a fresh
-	// UGraphic and re-runs its register(), so this structure is rebuilt thousands of times per
-	// diagram. As a HashMap that meant a map, its table and one Node per registered driver
-	// allocated each time, plus a hash of the shape's Class on every draw; as an array it is
-	// one allocation of a dozen slots, filled by index, and a plain array read on draw.
-	//
-	// It would have been nice to do something like Map<Class<SHAPE>, UDriver<SHAPE, O>> and let
-	// the type system relate the two sides, which Java cannot express -- see
+	// A flat array indexed by UShapeKind, not a Map<Class<?>, ...>: a hash of the shape's Class
+	// on every draw bought nothing, since only a dozen shape classes are ever registered and
+	// none of them has a subclass. It would have been nice to write Map<Class<SHAPE>,
+	// UDriver<SHAPE, O>> and let the type system relate the two sides, which Java cannot express
+	// -- see
 	// https://stackoverflow.com/questions/416540/java-map-with-values-limited-by-keys-type-parameter
 	// registerDriver still takes the Class, so each call site is still checked that way; only
 	// the storage underneath changed.
-	private final UDriver<?, O>[] drivers = newDriverArray();
+	//
+	// Null until a driver is actually registered, which only ever happens on the UGraphic a copy
+	// chain starts from: a copy takes the table from the instance it copies (see
+	// copy(AbstractUGraphic)), so filling this in as a field initializer would mean one throwaway
+	// array per apply() -- some fifteen thousand of them on a 200-message sequence diagram.
+	private UDriver<?, O>[] drivers;
+
+	// Set once this UGraphic took its driver table from another one rather than filling its own.
+	// A copy shares the table -- that is the whole point of copy(AbstractUGraphic) -- so
+	// registering into it afterwards would overwrite entries the original and every sibling copy
+	// are still using, and every driver registered on a copy would leak that copy's state to all
+	// of them. No backend should do it; this makes the mistake loud rather than silent.
+	private boolean driversShared;
 
 	@SuppressWarnings("unchecked")
 	private static <O> UDriver<?, O>[] newDriverArray() {
@@ -99,10 +107,20 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 		this.minmax = MinMaxMutable.getEmpty(true);
 	}
 
+	/**
+	 * Makes this UGraphic a copy of {@code other}, sharing its driver table rather than building
+	 * one of its own -- which is only sound because no driver captures anything that differs
+	 * between copies: the clip they used to hold the UGraphic for now reaches them through
+	 * {@code UParam#getClip()}, and what is left (a StringBounder, a dpi factor, a FileFormat,
+	 * an EpsStrategy) is fixed for the whole family. A copy must therefore not call its own
+	 * register(); registerDriver refuses to run after this point.
+	 */
 	protected void copy(AbstractUGraphic<O> other) {
 		basicCopy(other);
 		this.graphic = other.graphic;
 		this.minmax = other.minmax;
+		this.drivers = other.drivers;
+		this.driversShared = true;
 	}
 
 	protected final O getGraphicObject() {
@@ -114,6 +132,13 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 	}
 
 	final protected <SHAPE extends UShape> void registerDriver(Class<SHAPE> cl, UDriver<SHAPE, O> driver) {
+		if (driversShared)
+			throw new IllegalStateException(
+					"Drivers are registered once, on the UGraphic a copy chain starts from: " + getClass().getName());
+
+		if (this.drivers == null)
+			this.drivers = newDriverArray();
+
 		this.drivers[UShapeKind.of(cl).ordinal()] = driver;
 	}
 
@@ -147,7 +172,8 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 		// registered in that slot, so an unhandled shape finds null here exactly as an
 		// unregistered Class used to.
 		@SuppressWarnings("unchecked")
-		final UDriver<SHAPE, O> driver = (UDriver<SHAPE, O>) drivers[shape.getShapeKind().ordinal()];
+		final UDriver<SHAPE, O> driver = drivers == null ? null
+				: (UDriver<SHAPE, O>) drivers[shape.getShapeKind().ordinal()];
 
 		if (driver == null)
 			throw new UnsupportedOperationException(shape.getClass().toString() + " " + this.getClass());

@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.teavm;
 
-import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -48,12 +47,6 @@ import net.sourceforge.plantuml.klimt.shape.UImage;
  */
 public class DriverImageTeaVM implements UDriver<UImage, SvgGraphicsTeaVM> {
 	// ::remove file when JAVA8
-
-	private final ClipContainer clipContainer;
-
-	public DriverImageTeaVM(ClipContainer clipContainer) {
-		this.clipContainer = clipContainer;
-	}
 
 	@Override
 	public void draw(UImage shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {

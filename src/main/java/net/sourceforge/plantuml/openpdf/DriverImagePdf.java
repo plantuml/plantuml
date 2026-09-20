@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.openpdf;
 
 import java.io.IOException;
 
-import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -46,14 +45,8 @@ import net.sourceforge.plantuml.utils.Log;
 
 public class DriverImagePdf implements UDriver<UImage, PdfGraphics> {
 
-	private final ClipContainer clipContainer;
-
-	public DriverImagePdf(ClipContainer clipContainer) {
-		this.clipContainer = clipContainer;
-	}
-
 	public void draw(UImage image, double x, double y, ColorMapper mapper, UParam param, PdfGraphics pdf) {
-		final UClip clip = clipContainer.getClip();
+		final UClip clip = param.getClip();
 		if (clip != null) {
 			if (clip.isInside(x, y) == false) {
 				return;

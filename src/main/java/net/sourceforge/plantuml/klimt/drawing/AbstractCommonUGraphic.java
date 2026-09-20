@@ -142,6 +142,10 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 	final public UParam getParam() {
 		return new UParam() {
 
+			public UClip getClip() {
+				return AbstractCommonUGraphic.this.getClip();
+			}
+
 			public boolean isHidden() {
 				return hidden;
 			}

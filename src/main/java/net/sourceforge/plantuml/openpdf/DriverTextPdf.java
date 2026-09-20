@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.openpdf;
 
 import org.openpdf.text.pdf.BaseFont;
 
-import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -69,14 +68,11 @@ public class DriverTextPdf implements UDriver<UText, PdfGraphics> {
 //		}
 //	}
 
-	private final ClipContainer clipContainer;
-
-	public DriverTextPdf(StringBounder stringBounder, ClipContainer clipContainer) {
-		this.clipContainer = clipContainer;
+	public DriverTextPdf(StringBounder stringBounder) {
 	}
 
 	public void draw(UText shape, double x, double y, ColorMapper mapper, UParam param, PdfGraphics pdf) {
-		final UClip clip = clipContainer.getClip();
+		final UClip clip = param.getClip();
 		if (clip != null && clip.isInside(x, y) == false)
 			return;
 

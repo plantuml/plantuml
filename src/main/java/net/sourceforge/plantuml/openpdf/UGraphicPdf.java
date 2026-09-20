@@ -66,10 +66,15 @@ public class UGraphicPdf extends AbstractUGraphic<PdfGraphics> implements ClipCo
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
-		final UGraphicPdf result = new UGraphicPdf(getStringBounder(), option);
-		result.copy(this);
-		result.option = this.option;
-		return result;
+		return new UGraphicPdf(this);
+	}
+
+	// A copy takes its driver table from "other" (see AbstractUGraphic#copy) instead of building
+	// one, so this constructor deliberately does not register anything.
+	private UGraphicPdf(UGraphicPdf other) {
+		super(other.getStringBounder());
+		this.option = other.option;
+		copy(other);
 	}
 
 	private UGraphicPdf(StringBounder stringBounder, PdfOption option) {
@@ -101,17 +106,17 @@ public class UGraphicPdf extends AbstractUGraphic<PdfGraphics> implements ClipCo
 	}
 
 	private void register() {
-		registerDriver(URectangle.class, new DriverRectanglePdf(this));
-		registerDriver(UText.class, new DriverTextPdf(getStringBounder(), this));
+		registerDriver(URectangle.class, new DriverRectanglePdf());
+		registerDriver(UText.class, new DriverTextPdf(getStringBounder()));
 //
-		registerDriver(ULine.class, new DriverLinePdf(this));
+		registerDriver(ULine.class, new DriverLinePdf());
 //		registerDriver(UPixel.class, new DriverPixelSvg());
-		registerDriver(UPolygon.class, new DriverPolygonPdf(this));
-		registerDriver(UEllipse.class, new DriverEllipsePdf(this));
-		registerDriver(UImage.class, new DriverImagePdf(this));
+		registerDriver(UPolygon.class, new DriverPolygonPdf());
+		registerDriver(UEllipse.class, new DriverEllipsePdf());
+		registerDriver(UImage.class, new DriverImagePdf());
 		ignoreShape(UImageSvg.class);
 		ignoreShape(UImageTikz.class);
-		registerDriver(UPath.class, new DriverPathPdf(this));
+		registerDriver(UPath.class, new DriverPathPdf());
 		registerDriver(DotPath.class, new DriverDotPathPdf());
 		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterPdf());
 	}

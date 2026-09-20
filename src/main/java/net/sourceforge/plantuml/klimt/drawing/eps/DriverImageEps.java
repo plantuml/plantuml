@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.klimt.drawing.eps;
 
-import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -43,14 +42,8 @@ import net.sourceforge.plantuml.klimt.shape.UImage;
 
 public class DriverImageEps implements UDriver<UImage, EpsGraphics> {
 
-	private final ClipContainer clipContainer;
-
-	public DriverImageEps(ClipContainer clipContainer) {
-		this.clipContainer = clipContainer;
-	}
-
 	public void draw(UImage shape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
-		final UClip clip = clipContainer.getClip();
+		final UClip clip = param.getClip();
 		if (clip != null) {
 			if (clip.isInside(x, y) == false) {
 				return;

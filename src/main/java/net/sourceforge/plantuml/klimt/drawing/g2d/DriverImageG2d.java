@@ -56,8 +56,8 @@ public class DriverImageG2d implements UDriver<UImage, Graphics2D> {
 	}
 
 	public void draw(UImage shape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
-		visible.ensureVisible(x, y);
-		visible.ensureVisible(x + shape.getWidth(), y + shape.getHeight());
+		visible.ensureVisible(x, y, param.getClip());
+		visible.ensureVisible(x + shape.getWidth(), y + shape.getHeight(), param.getClip());
 		if (dpiFactor == 1) {
 			g2d.drawImage(shape.getImage(1).getBufferedImage(), (int) (x), (int) (y), null);
 		} else {

@@ -115,7 +115,6 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 		this.allUrls = other.allUrls;
 		this.antiAliasing = other.antiAliasing;
 		this.format = other.format;
-		register(dpiFactor);
 	}
 
 	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, Graphics2D g2d,
@@ -187,9 +186,12 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 		urls.remove(urls.size() - 1);
 	}
 
-	public void ensureVisible(double x, double y) {
+	public void ensureVisible(double x, double y, UClip clip) {
+		// urls is shared by reference with every copy of this UGraphic (see the copy
+		// constructor), so it is the same list whichever instance a driver happens to hold; the
+		// clip is not, which is why it arrives as an argument.
 		for (Url u : urls)
-			if (u != null && (getClip() == null || getClip().isInside(x, y)))
+			if (u != null && (clip == null || clip.isInside(x, y)))
 				u.ensureVisible(x, y);
 
 	}

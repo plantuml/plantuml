@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.geom.BezierUtils;
+import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.geom.EnsureVisible;
 import net.sourceforge.plantuml.klimt.geom.MinFinder;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
@@ -348,10 +349,10 @@ public class DotPath implements UShape, Moveable {
 		g2d.draw(p);
 	}
 
-	public void manageEnsureVisible(double x, double y, EnsureVisible visible) {
+	public void manageEnsureVisible(double x, double y, EnsureVisible visible, UClip clip) {
 		for (XCubicCurve2D bez : beziers) {
-			visible.ensureVisible(x + bez.x1, y + bez.y1);
-			visible.ensureVisible(x + bez.x2, y + bez.y2);
+			visible.ensureVisible(x + bez.x1, y + bez.y1, clip);
+			visible.ensureVisible(x + bez.x2, y + bez.y2, clip);
 		}
 
 	}

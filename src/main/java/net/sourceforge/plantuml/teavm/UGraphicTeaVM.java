@@ -75,20 +75,25 @@ public class UGraphicTeaVM extends AbstractUGraphic<SvgGraphicsTeaVM> implements
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
-		final UGraphicTeaVM result = new UGraphicTeaVM(getStringBounder());
-		result.copy(this);
-		return result;
+		return new UGraphicTeaVM(this);
+	}
+
+	// A copy takes its driver table from "other" (see AbstractUGraphic#copy) instead of building
+	// one, so this constructor deliberately does not register anything.
+	private UGraphicTeaVM(UGraphicTeaVM other) {
+		super(other.getStringBounder());
+		copy(other);
 	}
 
 	private void register() {
-		registerDriver(URectangle.class, new DriverRectangleTeaVM(this));
-		registerDriver(ULine.class, new DriverLineTeaVM(this));
-		registerDriver(UPolygon.class, new DriverPolygonTeaVM(this));
-		registerDriver(UEllipse.class, new DriverEllipseTeaVM(this));
-		registerDriver(UText.class, new DriverTextTeaVM(this));
-		registerDriver(UPath.class, new DriverPathTeaVM(this));
+		registerDriver(URectangle.class, new DriverRectangleTeaVM());
+		registerDriver(ULine.class, new DriverLineTeaVM());
+		registerDriver(UPolygon.class, new DriverPolygonTeaVM());
+		registerDriver(UEllipse.class, new DriverEllipseTeaVM());
+		registerDriver(UText.class, new DriverTextTeaVM());
+		registerDriver(UPath.class, new DriverPathTeaVM());
 
-		registerDriver(UImage.class, new DriverImageTeaVM(this));
+		registerDriver(UImage.class, new DriverImageTeaVM());
 		registerDriver(UImageSvg.class, new DriverImageSvgTeaVM());
 		registerDriver(DotPath.class, new DriverDotPathTeaVM());
 

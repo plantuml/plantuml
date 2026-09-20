@@ -45,6 +45,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
+import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.awt.XColor;
@@ -85,12 +86,13 @@ public class DriverTextG2d implements UDriver<UText, Graphics2D> {
 		for (StyledString styledString : strings) {
 			final FontConfiguration fc = styledString.getStyle() == FontStyle.BOLD ? fontConfiguration.bold()
 					: fontConfiguration;
-			x += printSingleText(g2d, fc, styledString.getText(), x, y, mapper, shape.getOrientation());
+			x += printSingleText(g2d, fc, styledString.getText(), x, y, mapper, shape.getOrientation(),
+					param.getClip());
 		}
 	}
 
 	private double printSingleText(Graphics2D g2d, final FontConfiguration fontConfiguration, final String text,
-			double x, double y, ColorMapper mapper, int orientation) {
+			double x, double y, ColorMapper mapper, int orientation, UClip clip) {
 		final UFont font = fontConfiguration.getFont();
 		final HColor extended = fontConfiguration.getExtendedColor();
 
@@ -150,8 +152,8 @@ public class DriverTextG2d implements UDriver<UText, Graphics2D> {
 					}
 				}
 			}
-			visible.ensureVisible(x, y - height + 1.5);
-			visible.ensureVisible(x + width, y + 1.5);
+			visible.ensureVisible(x, y - height + 1.5, clip);
+			visible.ensureVisible(x + width, y + 1.5, clip);
 
 			g2d.setColor(fontConfiguration.getColor().toColor(mapper).toAwtColor());
 			g2d.drawString(text, (float) x, (float) y);
