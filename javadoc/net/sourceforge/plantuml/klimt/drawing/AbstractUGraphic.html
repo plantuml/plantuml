@@ -126,7 +126,7 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
@@ -145,7 +145,14 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#copy(net.sourceforge.plantuml.klimt.drawing.AbstractUGraphic)" class="member-name-link">copy</a><wbr>(<a href="AbstractUGraphic.html" title="class in net.sourceforge.plantuml.klimt.drawing">AbstractUGraphic</a>&lt;<a href="AbstractUGraphic.html" title="type parameter in AbstractUGraphic">O</a>&gt;&nbsp;other)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Makes this UGraphic a copy of <code>other</code>, sharing its driver table rather
+ than building one of its own -- which is only sound because no driver
+ captures anything that differs between copies: the clip they used to hold the
+ UGraphic for now reaches them through <code>UParam#getClip()</code>, and what is
+ left (a StringBounder, a dpi factor, a FileFormat, an EpsStrategy) is fixed
+ for the whole family.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final &lt;SHAPE extends <a href="../UShape.html" title="interface in net.sourceforge.plantuml.klimt">UShape</a>&gt;<br>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#draw(SHAPE)" class="member-name-link">draw</a><wbr>(SHAPE&nbsp;shape)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -167,13 +174,28 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#manageHiddenAutomatically()" class="member-name-link">manageHiddenAutomatically</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final &lt;SHAPE extends <a href="../UShape.html" title="interface in net.sourceforge.plantuml.klimt">UShape</a>&gt;<br>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#registerDriver(java.lang.Class,net.sourceforge.plantuml.klimt.drawing.UDriver)" class="member-name-link">registerDriver</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;SHAPE&gt;&nbsp;cl,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>protected static &lt;SHAPE extends <a href="../UShape.html" title="interface in net.sourceforge.plantuml.klimt">UShape</a>,<wbr>
+O&gt;<br><a href="UDriver.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UDriver</a><wbr>&lt;SHAPE,<wbr>O&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#noopDriver()" class="member-name-link">noopDriver</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">The do-nothing driver of <a href="#ignoreShape(java.lang.Class)"><code>ignoreShape(java.lang.Class&lt;SHAPE&gt;)</code></a>, for a backend filling a table
+ statically.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final &lt;SHAPE extends <a href="../UShape.html" title="interface in net.sourceforge.plantuml.klimt">UShape</a>&gt;<br>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#registerDriver(java.lang.Class,net.sourceforge.plantuml.klimt.drawing.UDriver)" class="member-name-link">registerDriver</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;SHAPE&gt;&nbsp;cl,
  <a href="UDriver.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UDriver</a>&lt;SHAPE,<wbr><a href="AbstractUGraphic.html" title="type parameter in AbstractUGraphic">O</a>&gt;&nbsp;driver)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resetMax()" class="member-name-link">resetMax</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resetMax()" class="member-name-link">resetMax</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#useDrivers(net.sourceforge.plantuml.klimt.drawing.UDriver%5B%5D)" class="member-name-link">useDrivers</a><wbr>(<a href="UDriver.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UDriver</a>&lt;?,<wbr><a href="AbstractUGraphic.html" title="type parameter in AbstractUGraphic">O</a>&gt;[]&nbsp;shared)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adopts a driver table built elsewhere, instead of filling one through
+ registerDriver: a backend whose drivers are all stateless can hold a single
+ static table and hand it to every UGraphic it creates, rather than building
+ one per copy chain.</div>
+</div>
 </div>
 </div>
 </div>
@@ -223,6 +245,13 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="copy(net.sourceforge.plantuml.klimt.drawing.AbstractUGraphic)">
 <h3>copy</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">copy</span><wbr><span class="parameters">(<a href="AbstractUGraphic.html" title="class in net.sourceforge.plantuml.klimt.drawing">AbstractUGraphic</a>&lt;<a href="AbstractUGraphic.html" title="type parameter in AbstractUGraphic">O</a>&gt;&nbsp;other)</span></div>
+<div class="block">Makes this UGraphic a copy of <code>other</code>, sharing its driver table rather
+ than building one of its own -- which is only sound because no driver
+ captures anything that differs between copies: the clip they used to hold the
+ UGraphic for now reaches them through <code>UParam#getClip()</code>, and what is
+ left (a StringBounder, a dpi factor, a FileFormat, an EpsStrategy) is fixed
+ for the whole family. A copy must therefore not call its own register();
+ registerDriver refuses to run after this point.</div>
 </section>
 </li>
 <li>
@@ -242,6 +271,29 @@ loadScripts(document, 'script');</script>
 <h3>registerDriver</h3>
 <div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="type-parameters">&lt;SHAPE extends <a href="../UShape.html" title="interface in net.sourceforge.plantuml.klimt">UShape</a>&gt;</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">registerDriver</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;SHAPE&gt;&nbsp;cl,
  <a href="UDriver.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UDriver</a>&lt;SHAPE,<wbr><a href="AbstractUGraphic.html" title="type parameter in AbstractUGraphic">O</a>&gt;&nbsp;driver)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="useDrivers(net.sourceforge.plantuml.klimt.drawing.UDriver[])">
+<h3>useDrivers</h3>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">useDrivers</span><wbr><span class="parameters">(<a href="UDriver.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UDriver</a>&lt;?,<wbr><a href="AbstractUGraphic.html" title="type parameter in AbstractUGraphic">O</a>&gt;[]&nbsp;shared)</span></div>
+<div class="block">Adopts a driver table built elsewhere, instead of filling one through
+ registerDriver: a backend whose drivers are all stateless can hold a single
+ static table and hand it to every UGraphic it creates, rather than building
+ one per copy chain. The table is then shared by every instance of that
+ backend for the life of the process, so it must stay immutable --
+ registerDriver refuses to run after this, exactly as it does after
+ copy(AbstractUGraphic).</div>
+</section>
+</li>
+<li>
+<section class="detail" id="noopDriver()">
+<h3>noopDriver</h3>
+<div class="member-signature"><span class="modifiers">protected static</span>&nbsp;<span class="type-parameters">&lt;SHAPE extends <a href="../UShape.html" title="interface in net.sourceforge.plantuml.klimt">UShape</a>,<wbr>
+O&gt;</span>
+<span class="return-type"><a href="UDriver.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UDriver</a>&lt;SHAPE,<wbr>O&gt;</span>&nbsp;<span class="element-name">noopDriver</span>()</div>
+<div class="block">The do-nothing driver of <a href="#ignoreShape(java.lang.Class)"><code>ignoreShape(java.lang.Class&lt;SHAPE&gt;)</code></a>, for a backend filling a table
+ statically.</div>
 </section>
 </li>
 <li>

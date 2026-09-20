@@ -150,8 +150,9 @@ implements <a href="../../geom/EnsureVisible.html" title="interface in net.sourc
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dpiFactor()" class="member-name-link">dpiFactor</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#ensureVisible(double,double)" class="member-name-link">ensureVisible</a><wbr>(double&nbsp;x,
- double&nbsp;y)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#ensureVisible(double,double,net.sourceforge.plantuml.klimt.UClip)" class="member-name-link">ensureVisible</a><wbr>(double&nbsp;x,
+ double&nbsp;y,
+ <a href="../../UClip.html" title="class in net.sourceforge.plantuml.klimt">UClip</a>&nbsp;clip)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="../../../url/Url.html" title="class in net.sourceforge.plantuml.url">Url</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAllUrlsEncountered()" class="member-name-link">getAllUrlsEncountered</a>()</code></div>
@@ -181,7 +182,7 @@ implements <a href="../../geom/EnsureVisible.html" title="interface in net.sourc
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-net.sourceforge.plantuml.klimt.drawing.AbstractUGraphic">Methods inherited from class&nbsp;net.sourceforge.plantuml.klimt.drawing.<a href="../AbstractUGraphic.html" title="class in net.sourceforge.plantuml.klimt.drawing">AbstractUGraphic</a></h3>
-<code><a href="../AbstractUGraphic.html#afterDraw()">afterDraw</a>, <a href="../AbstractUGraphic.html#copy(net.sourceforge.plantuml.klimt.color.HColor,net.sourceforge.plantuml.klimt.color.ColorMapper,O)">copy</a>, <a href="../AbstractUGraphic.html#copy(net.sourceforge.plantuml.klimt.drawing.AbstractUGraphic)">copy</a>, <a href="../AbstractUGraphic.html#draw(SHAPE)">draw</a>, <a href="../AbstractUGraphic.html#drawComment(net.sourceforge.plantuml.klimt.shape.UComment)">drawComment</a>, <a href="../AbstractUGraphic.html#getGraphicObject()">getGraphicObject</a>, <a href="../AbstractUGraphic.html#getMaxX()">getMaxX</a>, <a href="../AbstractUGraphic.html#getMaxY()">getMaxY</a>, <a href="../AbstractUGraphic.html#ignoreShape(java.lang.Class)">ignoreShape</a>, <a href="../AbstractUGraphic.html#manageHiddenAutomatically()">manageHiddenAutomatically</a>, <a href="../AbstractUGraphic.html#registerDriver(java.lang.Class,net.sourceforge.plantuml.klimt.drawing.UDriver)">registerDriver</a>, <a href="../AbstractUGraphic.html#resetMax()">resetMax</a></code></div>
+<code><a href="../AbstractUGraphic.html#afterDraw()">afterDraw</a>, <a href="../AbstractUGraphic.html#copy(net.sourceforge.plantuml.klimt.color.HColor,net.sourceforge.plantuml.klimt.color.ColorMapper,O)">copy</a>, <a href="../AbstractUGraphic.html#copy(net.sourceforge.plantuml.klimt.drawing.AbstractUGraphic)">copy</a>, <a href="../AbstractUGraphic.html#draw(SHAPE)">draw</a>, <a href="../AbstractUGraphic.html#drawComment(net.sourceforge.plantuml.klimt.shape.UComment)">drawComment</a>, <a href="../AbstractUGraphic.html#getGraphicObject()">getGraphicObject</a>, <a href="../AbstractUGraphic.html#getMaxX()">getMaxX</a>, <a href="../AbstractUGraphic.html#getMaxY()">getMaxY</a>, <a href="../AbstractUGraphic.html#ignoreShape(java.lang.Class)">ignoreShape</a>, <a href="../AbstractUGraphic.html#manageHiddenAutomatically()">manageHiddenAutomatically</a>, <a href="../AbstractUGraphic.html#noopDriver()">noopDriver</a>, <a href="../AbstractUGraphic.html#registerDriver(java.lang.Class,net.sourceforge.plantuml.klimt.drawing.UDriver)">registerDriver</a>, <a href="../AbstractUGraphic.html#resetMax()">resetMax</a>, <a href="../AbstractUGraphic.html#useDrivers(net.sourceforge.plantuml.klimt.drawing.UDriver%5B%5D)">useDrivers</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic">Methods inherited from class&nbsp;net.sourceforge.plantuml.klimt.drawing.<a href="../AbstractCommonUGraphic.html" title="class in net.sourceforge.plantuml.klimt.drawing">AbstractCommonUGraphic</a></h3>
 <code><a href="../AbstractCommonUGraphic.html#basicCopy(net.sourceforge.plantuml.klimt.color.HColor,net.sourceforge.plantuml.klimt.color.ColorMapper)">basicCopy</a>, <a href="../AbstractCommonUGraphic.html#basicCopy(net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic)">basicCopy</a>, <a href="../AbstractCommonUGraphic.html#closeGroup()">closeGroup</a>, <a href="../AbstractCommonUGraphic.html#enlargeClip()">enlargeClip</a>, <a href="../AbstractCommonUGraphic.html#flushUg()">flushUg</a>, <a href="../AbstractCommonUGraphic.html#getClip()">getClip</a>, <a href="../AbstractCommonUGraphic.html#getColorMapper()">getColorMapper</a>, <a href="../AbstractCommonUGraphic.html#getDefaultBackground()">getDefaultBackground</a>, <a href="../AbstractCommonUGraphic.html#getParam()">getParam</a>, <a href="../AbstractCommonUGraphic.html#getStringBounder()">getStringBounder</a>, <a href="../AbstractCommonUGraphic.html#getTranslate()">getTranslate</a>, <a href="../AbstractCommonUGraphic.html#getTranslateX()">getTranslateX</a>, <a href="../AbstractCommonUGraphic.html#getTranslateY()">getTranslateY</a>, <a href="../AbstractCommonUGraphic.html#matchesProperty(java.lang.String)">matchesProperty</a>, <a href="../AbstractCommonUGraphic.html#startGroup(net.sourceforge.plantuml.klimt.UGroup)">startGroup</a></code></div>
@@ -287,13 +288,14 @@ implements <a href="../../geom/EnsureVisible.html" title="interface in net.sourc
 </section>
 </li>
 <li>
-<section class="detail" id="ensureVisible(double,double)">
+<section class="detail" id="ensureVisible(double,double,net.sourceforge.plantuml.klimt.UClip)">
 <h3>ensureVisible</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">ensureVisible</span><wbr><span class="parameters">(double&nbsp;x,
- double&nbsp;y)</span></div>
+ double&nbsp;y,
+ <a href="../../UClip.html" title="class in net.sourceforge.plantuml.klimt">UClip</a>&nbsp;clip)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../../geom/EnsureVisible.html#ensureVisible(double,double)">ensureVisible</a></code>&nbsp;in interface&nbsp;<code><a href="../../geom/EnsureVisible.html" title="interface in net.sourceforge.plantuml.klimt.geom">EnsureVisible</a></code></dd>
+<dd><code><a href="../../geom/EnsureVisible.html#ensureVisible(double,double,net.sourceforge.plantuml.klimt.UClip)">ensureVisible</a></code>&nbsp;in interface&nbsp;<code><a href="../../geom/EnsureVisible.html" title="interface in net.sourceforge.plantuml.klimt.geom">EnsureVisible</a></code></dd>
 </dl>
 </section>
 </li>

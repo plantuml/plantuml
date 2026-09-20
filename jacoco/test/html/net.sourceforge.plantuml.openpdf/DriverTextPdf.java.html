@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.openpdf;
 
 import org.openpdf.text.pdf.BaseFont;
 
-import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -69,25 +68,22 @@ public class DriverTextPdf implements UDriver&lt;UText, PdfGraphics&gt; {
 //		}
 //	}
 
-	private final ClipContainer clipContainer;
-
-<span class="nc" id="L74">	public DriverTextPdf(StringBounder stringBounder, ClipContainer clipContainer) {</span>
-<span class="nc" id="L75">		this.clipContainer = clipContainer;</span>
-<span class="nc" id="L76">	}</span>
+<span class="nc" id="L71">	public DriverTextPdf(StringBounder stringBounder) {</span>
+<span class="nc" id="L72">	}</span>
 
 	public void draw(UText shape, double x, double y, ColorMapper mapper, UParam param, PdfGraphics pdf) {
-<span class="nc" id="L79">		final UClip clip = clipContainer.getClip();</span>
-<span class="nc bnc" id="L80" title="All 4 branches missed.">		if (clip != null &amp;&amp; clip.isInside(x, y) == false)</span>
+<span class="nc" id="L75">		final UClip clip = param.getClip();</span>
+<span class="nc bnc" id="L76" title="All 4 branches missed.">		if (clip != null &amp;&amp; clip.isInside(x, y) == false)</span>
+<span class="nc" id="L77">			return;</span>
+
+<span class="nc" id="L79">		final FontConfiguration fontConfiguration = shape.getFontConfiguration();</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (fontConfiguration.getColor().isTransparent())</span>
 <span class="nc" id="L81">			return;</span>
 
-<span class="nc" id="L83">		final FontConfiguration fontConfiguration = shape.getFontConfiguration();</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (fontConfiguration.getColor().isTransparent())</span>
-<span class="nc" id="L85">			return;</span>
-
-<span class="nc" id="L87">		final UFont ufont = fontConfiguration.getFont();</span>
+<span class="nc" id="L83">		final UFont ufont = fontConfiguration.getFont();</span>
 
 
-<span class="nc" id="L90">		String text = shape.getText();</span>
+<span class="nc" id="L86">		String text = shape.getText();</span>
 //		if (text.matches(&quot;^\\s*$&quot;))
 //			text = text.replace(' ', (char) 160);
 //
@@ -150,16 +146,16 @@ public class DriverTextPdf implements UDriver&lt;UText, PdfGraphics&gt; {
 //
 //		}
 //
-<span class="nc" id="L153">		final HColor textColor = fontConfiguration.getColor();</span>
-<span class="nc" id="L154">		pdf.setFillColor(textColor.toColor(mapper).toAwtColor());</span>
-<span class="nc" id="L155">		final BaseFont baseFont = StringBounderOpenPdf.resolveFont(fontConfiguration.getFont());</span>
+<span class="nc" id="L149">		final HColor textColor = fontConfiguration.getColor();</span>
+<span class="nc" id="L150">		pdf.setFillColor(textColor.toColor(mapper).toAwtColor());</span>
+<span class="nc" id="L151">		final BaseFont baseFont = StringBounderOpenPdf.resolveFont(fontConfiguration.getFont());</span>
 
-<span class="nc" id="L157">		pdf.pdfText(text, x, y, baseFont, ufont.getSize());</span>
+<span class="nc" id="L153">		pdf.pdfText(text, x, y, baseFont, ufont.getSize());</span>
 //		svg.text(text, x, y, font.getFamily(text, UFontContext.SVG), font.getSize(), fontWeight, fontStyle,
 //				textDecoration, width, fontConfiguration.getAttributes(), backColor, shape.getOrientation());
 //
 //		extraLines.drawAll(x, y, width, font, mapper, svg);
 
-<span class="nc" id="L163">	}</span>
+<span class="nc" id="L159">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

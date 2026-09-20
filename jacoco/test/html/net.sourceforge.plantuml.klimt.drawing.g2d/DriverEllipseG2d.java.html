@@ -64,8 +64,8 @@ public class DriverEllipseG2d extends DriverShadowedG2d implements UDriver&lt;UE
 
 	public void draw(UEllipse ellipse, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
 <span class="fc" id="L66">		g2d.setStroke(new BasicStroke((float) param.getStroke().getThickness()));</span>
-<span class="fc" id="L67">		visible.ensureVisible(x, y);</span>
-<span class="fc" id="L68">		visible.ensureVisible(x + ellipse.getWidth(), y + ellipse.getHeight());</span>
+<span class="fc" id="L67">		visible.ensureVisible(x, y, param.getClip());</span>
+<span class="fc" id="L68">		visible.ensureVisible(x + ellipse.getWidth(), y + ellipse.getHeight(), param.getClip());</span>
 <span class="fc" id="L69">		final HColor color = param.getColor();</span>
 <span class="pc bpc" id="L70" title="2 of 4 branches missed.">		if (ellipse.getStart() == 0 &amp;&amp; ellipse.getExtend() == 0) {</span>
 <span class="fc" id="L71">			final Shape shape = new Ellipse2D.Double(x, y, ellipse.getWidth(), ellipse.getHeight());</span>

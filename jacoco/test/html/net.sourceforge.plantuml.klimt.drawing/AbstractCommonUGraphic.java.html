@@ -142,68 +142,72 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 	final public UParam getParam() {
 <span class="fc" id="L143">		return new UParam() {</span>
 
+			public UClip getClip() {
+<span class="fc" id="L146">				return AbstractCommonUGraphic.this.getClip();</span>
+			}
+
 			public boolean isHidden() {
-<span class="fc" id="L146">				return hidden;</span>
+<span class="fc" id="L150">				return hidden;</span>
 			}
 
 			public UStroke getStroke() {
-<span class="fc" id="L150">				return stroke;</span>
+<span class="fc" id="L154">				return stroke;</span>
 			}
 
 			public HColor getColor() {
-<span class="fc" id="L154">				return color;</span>
+<span class="fc" id="L158">				return color;</span>
 			}
 
 			public HColor getBackcolor() {
-<span class="fc" id="L158">				return backColor;</span>
+<span class="fc" id="L162">				return backColor;</span>
 			}
 
 			public UPattern getPattern() {
-<span class="fc" id="L162">				return pattern;</span>
+<span class="fc" id="L166">				return pattern;</span>
 			}
 		};
 	}
 
 	@Override
 	public StringBounder getStringBounder() {
-<span class="fc" id="L169">		return stringBounder;</span>
+<span class="fc" id="L173">		return stringBounder;</span>
 	}
 
 	final protected double getTranslateX() {
-<span class="fc" id="L173">		return translate.getDx();</span>
+<span class="fc" id="L177">		return translate.getDx();</span>
 	}
 
 	final protected double getTranslateY() {
-<span class="fc" id="L177">		return translate.getDy();</span>
+<span class="fc" id="L181">		return translate.getDy();</span>
 	}
 
 	final public ColorMapper getColorMapper() {
-<span class="fc" id="L181">		return colorMapper;</span>
+<span class="fc" id="L185">		return colorMapper;</span>
 	}
 
 	final public void flushUg() {
-<span class="fc" id="L185">	}</span>
+<span class="fc" id="L189">	}</span>
 
 	@Override
 	public void startUrl(Url url) {
-<span class="nc" id="L189">	}</span>
+<span class="nc" id="L193">	}</span>
 
 	@Override
 	public void closeUrl() {
-<span class="nc" id="L193">	}</span>
+<span class="nc" id="L197">	}</span>
 
 	public void startGroup(UGroup group) {
-<span class="fc" id="L196">	}</span>
+<span class="fc" id="L200">	}</span>
 
 	public void closeGroup() {
-<span class="fc" id="L199">	}</span>
+<span class="fc" id="L203">	}</span>
 
 	public boolean matchesProperty(String propertyName) {
-<span class="fc" id="L202">		return false;</span>
+<span class="fc" id="L206">		return false;</span>
 	}
 
 	public final UTranslate getTranslate() {
-<span class="fc" id="L206">		return translate;</span>
+<span class="fc" id="L210">		return translate;</span>
 	}
 
 }

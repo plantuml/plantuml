@@ -79,34 +79,34 @@ public abstract class RegexComposed implements IRegex {
 <span class="fc" id="L79">		this.partials = Collections.unmodifiableList(Arrays.asList(partial));</span>
 <span class="fc" id="L80">	}</span>
 
-	public Map&lt;String, RegexPartialMatch&gt; createPartialMatch(Iterator&lt;String&gt; it) {
+	public void fillPartialMatch(Iterator&lt;String&gt; it, Map&lt;String, RegexPartialMatch&gt; result) {
 		// nbCreateMatches.incrementAndGet();
-<span class="fc" id="L84">		final Map&lt;String, RegexPartialMatch&gt; result = new HashMap&lt;String, RegexPartialMatch&gt;();</span>
-<span class="fc bfc" id="L85" title="All 2 branches covered.">		for (IRegex r : partials)</span>
-<span class="fc" id="L86">			result.putAll(r.createPartialMatch(it));</span>
-
-<span class="fc" id="L88">		return result;</span>
-	}
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		for (IRegex r : partials)</span>
+<span class="fc" id="L85">			r.fillPartialMatch(it, result);</span>
+<span class="fc" id="L86">	}</span>
 
 	final public int count() {
-<span class="nc" id="L92">		int cpt = getStartCount();</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		for (IRegex r : partials)</span>
-<span class="nc" id="L94">			cpt += r.count();</span>
+<span class="nc" id="L89">		int cpt = getStartCount();</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		for (IRegex r : partials)</span>
+<span class="nc" id="L91">			cpt += r.count();</span>
 
-<span class="nc" id="L96">		return cpt;</span>
+<span class="nc" id="L93">		return cpt;</span>
 	}
 
 	protected int getStartCount() {
-<span class="nc" id="L100">		return 0;</span>
+<span class="nc" id="L97">		return 0;</span>
 	}
 
 	public RegexResult matcher(String s) {
-<span class="fc" id="L104">		final Matcher2 matcher = getPattern2().matcher(s, 0);</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (matcher.find() == false)</span>
-<span class="fc" id="L106">			return null;</span>
+<span class="fc" id="L101">		final Matcher2 matcher = getPattern2().matcher(s, 0);</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">		if (matcher.find() == false)</span>
+<span class="fc" id="L103">			return null;</span>
 
-<span class="fc" id="L108">		final Iterator&lt;String&gt; it = new MatcherIterator(matcher);</span>
-<span class="fc" id="L109">		return new RegexResult(createPartialMatch(it));</span>
+<span class="fc" id="L105">		final Iterator&lt;String&gt; it = new MatcherIterator(matcher);</span>
+		// The one map of the whole match: every node below fills this same instance.
+<span class="fc" id="L107">		final Map&lt;String, RegexPartialMatch&gt; result = new HashMap&lt;String, RegexPartialMatch&gt;();</span>
+<span class="fc" id="L108">		fillPartialMatch(it, result);</span>
+<span class="fc" id="L109">		return new RegexResult(result);</span>
 	}
 
 	public boolean match(StringLocated s) {

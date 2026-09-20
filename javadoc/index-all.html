@@ -8571,7 +8571,14 @@ loadScripts(document, 'script');</script>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/AbstractUGraphic.html#copy(net.sourceforge.plantuml.klimt.color.HColor,net.sourceforge.plantuml.klimt.color.ColorMapper,O)" class="member-name-link">copy(HColor, ColorMapper, O)</a> - Method in class net.sourceforge.plantuml.klimt.drawing.<a href="net/sourceforge/plantuml/klimt/drawing/AbstractUGraphic.html" title="class in net.sourceforge.plantuml.klimt.drawing">AbstractUGraphic</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/AbstractUGraphic.html#copy(net.sourceforge.plantuml.klimt.drawing.AbstractUGraphic)" class="member-name-link">copy(AbstractUGraphic&lt;O&gt;)</a> - Method in class net.sourceforge.plantuml.klimt.drawing.<a href="net/sourceforge/plantuml/klimt/drawing/AbstractUGraphic.html" title="class in net.sourceforge.plantuml.klimt.drawing">AbstractUGraphic</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Makes this UGraphic a copy of <code>other</code>, sharing its driver table rather
+ than building one of its own -- which is only sound because no driver
+ captures anything that differs between copies: the clip they used to hold the
+ UGraphic for now reaches them through <code>UParam#getClip()</code>, and what is
+ left (a StringBounder, a dpi factor, a FileFormat, an EpsStrategy) is fixed
+ for the whole family.</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/AbstractUGraphicHorizontalLine.html#copy(net.sourceforge.plantuml.klimt.drawing.UGraphic)" class="member-name-link">copy(UGraphic)</a> - Method in class net.sourceforge.plantuml.klimt.drawing.<a href="net/sourceforge/plantuml/klimt/drawing/AbstractUGraphicHorizontalLine.html" title="class in net.sourceforge.plantuml.klimt.drawing">AbstractUGraphicHorizontalLine</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/UGraphicStencil.html#copy(net.sourceforge.plantuml.klimt.drawing.UGraphic)" class="member-name-link">copy(UGraphic)</a> - Method in class net.sourceforge.plantuml.klimt.drawing.<a href="net/sourceforge/plantuml/klimt/drawing/UGraphicStencil.html" title="class in net.sourceforge.plantuml.klimt.drawing">UGraphicStencil</a></dt>
@@ -9497,16 +9504,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="net/sourceforge/plantuml/activitydiagram3/ftile/vcompact/VCompactFactory.html#createParallel(java.util.List,net.sourceforge.plantuml.activitydiagram3.ForkStyle,java.lang.String,net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane,net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane,net.sourceforge.plantuml.klimt.color.Colors)" class="member-name-link">createParallel(List&lt;Ftile&gt;, ForkStyle, String, Swimlane, Swimlane, Colors)</a> - Method in class net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.<a href="net/sourceforge/plantuml/activitydiagram3/ftile/vcompact/VCompactFactory.html" title="class in net.sourceforge.plantuml.activitydiagram3.ftile.vcompact">VCompactFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/sequencediagram/teoz/YGauge.html#createParallel(net.sourceforge.plantuml.sequencediagram.teoz.YGauge,double,double)" class="member-name-link">createParallel(YGauge, double, double)</a> - Static method in class net.sourceforge.plantuml.sequencediagram.teoz.<a href="net/sourceforge/plantuml/sequencediagram/teoz/YGauge.html" title="class in net.sourceforge.plantuml.sequencediagram.teoz">YGauge</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/regex/IRegex.html#createPartialMatch(java.util.Iterator)" class="member-name-link">createPartialMatch(Iterator&lt;String&gt;)</a> - Method in interface net.sourceforge.plantuml.regex.<a href="net/sourceforge/plantuml/regex/IRegex.html" title="interface in net.sourceforge.plantuml.regex">IRegex</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/regex/RegexComposed.html#createPartialMatch(java.util.Iterator)" class="member-name-link">createPartialMatch(Iterator&lt;String&gt;)</a> - Method in class net.sourceforge.plantuml.regex.<a href="net/sourceforge/plantuml/regex/RegexComposed.html" title="class in net.sourceforge.plantuml.regex">RegexComposed</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/regex/RegexLeaf.html#createPartialMatch(java.util.Iterator)" class="member-name-link">createPartialMatch(Iterator&lt;String&gt;)</a> - Method in class net.sourceforge.plantuml.regex.<a href="net/sourceforge/plantuml/regex/RegexLeaf.html" title="class in net.sourceforge.plantuml.regex">RegexLeaf</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/regex/RegexOr.html#createPartialMatch(java.util.Iterator)" class="member-name-link">createPartialMatch(Iterator&lt;String&gt;)</a> - Method in class net.sourceforge.plantuml.regex.<a href="net/sourceforge/plantuml/regex/RegexOr.html" title="class in net.sourceforge.plantuml.regex">RegexOr</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/regex/RegexRepeatedOneOrMore.html#createPartialMatch(java.util.Iterator)" class="member-name-link">createPartialMatch(Iterator&lt;String&gt;)</a> - Method in class net.sourceforge.plantuml.regex.<a href="net/sourceforge/plantuml/regex/RegexRepeatedOneOrMore.html" title="class in net.sourceforge.plantuml.regex">RegexRepeatedOneOrMore</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/openpdf/PdfGraphics.html#createPdf(java.io.OutputStream)" class="member-name-link">createPdf(OutputStream)</a> - Method in class net.sourceforge.plantuml.openpdf.<a href="net/sourceforge/plantuml/openpdf/PdfGraphics.html" title="class in net.sourceforge.plantuml.openpdf">PdfGraphics</a></dt>
 <dd>
@@ -12923,7 +12920,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverEllipseEps.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.eps">DriverEllipseEps</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/eps/package-summary.html">net.sourceforge.plantuml.klimt.drawing.eps</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverEllipseEps.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverEllipseEps(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.eps.<a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverEllipseEps.html" title="class in net.sourceforge.plantuml.klimt.drawing.eps">DriverEllipseEps</a></dt>
+<dt><a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverEllipseEps.html#%3Cinit%3E()" class="member-name-link">DriverEllipseEps()</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.eps.<a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverEllipseEps.html" title="class in net.sourceforge.plantuml.klimt.drawing.eps">DriverEllipseEps</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/g2d/DriverEllipseG2d.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.g2d">DriverEllipseG2d</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/g2d/package-summary.html">net.sourceforge.plantuml.klimt.drawing.g2d</a></dt>
 <dd>&nbsp;</dd>
@@ -12931,15 +12928,15 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/openpdf/DriverEllipsePdf.html" class="type-name-link" title="class in net.sourceforge.plantuml.openpdf">DriverEllipsePdf</a> - Class in <a href="net/sourceforge/plantuml/openpdf/package-summary.html">net.sourceforge.plantuml.openpdf</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/openpdf/DriverEllipsePdf.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverEllipsePdf(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.openpdf.<a href="net/sourceforge/plantuml/openpdf/DriverEllipsePdf.html" title="class in net.sourceforge.plantuml.openpdf">DriverEllipsePdf</a></dt>
+<dt><a href="net/sourceforge/plantuml/openpdf/DriverEllipsePdf.html#%3Cinit%3E()" class="member-name-link">DriverEllipsePdf()</a> - Constructor for class net.sourceforge.plantuml.openpdf.<a href="net/sourceforge/plantuml/openpdf/DriverEllipsePdf.html" title="class in net.sourceforge.plantuml.openpdf">DriverEllipsePdf</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverEllipseSvg.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverEllipseSvg</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/svg/package-summary.html">net.sourceforge.plantuml.klimt.drawing.svg</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverEllipseSvg.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverEllipseSvg(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.svg.<a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverEllipseSvg.html" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverEllipseSvg</a></dt>
+<dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverEllipseSvg.html#%3Cinit%3E()" class="member-name-link">DriverEllipseSvg()</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.svg.<a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverEllipseSvg.html" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverEllipseSvg</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/teavm/DriverEllipseTeaVM.html" class="type-name-link" title="class in net.sourceforge.plantuml.teavm">DriverEllipseTeaVM</a> - Class in <a href="net/sourceforge/plantuml/teavm/package-summary.html">net.sourceforge.plantuml.teavm</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/teavm/DriverEllipseTeaVM.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverEllipseTeaVM(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.teavm.<a href="net/sourceforge/plantuml/teavm/DriverEllipseTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DriverEllipseTeaVM</a></dt>
+<dt><a href="net/sourceforge/plantuml/teavm/DriverEllipseTeaVM.html#%3Cinit%3E()" class="member-name-link">DriverEllipseTeaVM()</a> - Constructor for class net.sourceforge.plantuml.teavm.<a href="net/sourceforge/plantuml/teavm/DriverEllipseTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DriverEllipseTeaVM</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/tikz/DriverEllipseTikz.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.tikz">DriverEllipseTikz</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/tikz/package-summary.html">net.sourceforge.plantuml.klimt.drawing.tikz</a></dt>
 <dd>&nbsp;</dd>
@@ -12947,7 +12944,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverImageEps.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.eps">DriverImageEps</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/eps/package-summary.html">net.sourceforge.plantuml.klimt.drawing.eps</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverImageEps.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverImageEps(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.eps.<a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverImageEps.html" title="class in net.sourceforge.plantuml.klimt.drawing.eps">DriverImageEps</a></dt>
+<dt><a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverImageEps.html#%3Cinit%3E()" class="member-name-link">DriverImageEps()</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.eps.<a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverImageEps.html" title="class in net.sourceforge.plantuml.klimt.drawing.eps">DriverImageEps</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/g2d/DriverImageG2d.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.g2d">DriverImageG2d</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/g2d/package-summary.html">net.sourceforge.plantuml.klimt.drawing.g2d</a></dt>
 <dd>&nbsp;</dd>
@@ -12955,11 +12952,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/openpdf/DriverImagePdf.html" class="type-name-link" title="class in net.sourceforge.plantuml.openpdf">DriverImagePdf</a> - Class in <a href="net/sourceforge/plantuml/openpdf/package-summary.html">net.sourceforge.plantuml.openpdf</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/openpdf/DriverImagePdf.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverImagePdf(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.openpdf.<a href="net/sourceforge/plantuml/openpdf/DriverImagePdf.html" title="class in net.sourceforge.plantuml.openpdf">DriverImagePdf</a></dt>
+<dt><a href="net/sourceforge/plantuml/openpdf/DriverImagePdf.html#%3Cinit%3E()" class="member-name-link">DriverImagePdf()</a> - Constructor for class net.sourceforge.plantuml.openpdf.<a href="net/sourceforge/plantuml/openpdf/DriverImagePdf.html" title="class in net.sourceforge.plantuml.openpdf">DriverImagePdf</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverImagePng.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverImagePng</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/svg/package-summary.html">net.sourceforge.plantuml.klimt.drawing.svg</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverImagePng.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverImagePng(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.svg.<a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverImagePng.html" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverImagePng</a></dt>
+<dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverImagePng.html#%3Cinit%3E()" class="member-name-link">DriverImagePng()</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.svg.<a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverImagePng.html" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverImagePng</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverImageSvgSvg.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverImageSvgSvg</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/svg/package-summary.html">net.sourceforge.plantuml.klimt.drawing.svg</a></dt>
 <dd>&nbsp;</dd>
@@ -12975,7 +12972,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">TeaVM driver for rendering images in SVG.</div>
 </dd>
-<dt><a href="net/sourceforge/plantuml/teavm/DriverImageTeaVM.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverImageTeaVM(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.teavm.<a href="net/sourceforge/plantuml/teavm/DriverImageTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DriverImageTeaVM</a></dt>
+<dt><a href="net/sourceforge/plantuml/teavm/DriverImageTeaVM.html#%3Cinit%3E()" class="member-name-link">DriverImageTeaVM()</a> - Constructor for class net.sourceforge.plantuml.teavm.<a href="net/sourceforge/plantuml/teavm/DriverImageTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DriverImageTeaVM</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/tikz/DriverImageTikz.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.tikz">DriverImageTikz</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/tikz/package-summary.html">net.sourceforge.plantuml.klimt.drawing.tikz</a></dt>
 <dd>&nbsp;</dd>
@@ -12987,11 +12984,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/braille/DriverLineBraille.html" class="type-name-link" title="class in net.sourceforge.plantuml.braille">DriverLineBraille</a> - Class in <a href="net/sourceforge/plantuml/braille/package-summary.html">net.sourceforge.plantuml.braille</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/braille/DriverLineBraille.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverLineBraille(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.braille.<a href="net/sourceforge/plantuml/braille/DriverLineBraille.html" title="class in net.sourceforge.plantuml.braille">DriverLineBraille</a></dt>
+<dt><a href="net/sourceforge/plantuml/braille/DriverLineBraille.html#%3Cinit%3E()" class="member-name-link">DriverLineBraille()</a> - Constructor for class net.sourceforge.plantuml.braille.<a href="net/sourceforge/plantuml/braille/DriverLineBraille.html" title="class in net.sourceforge.plantuml.braille">DriverLineBraille</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverLineEps.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.eps">DriverLineEps</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/eps/package-summary.html">net.sourceforge.plantuml.klimt.drawing.eps</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverLineEps.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverLineEps(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.eps.<a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverLineEps.html" title="class in net.sourceforge.plantuml.klimt.drawing.eps">DriverLineEps</a></dt>
+<dt><a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverLineEps.html#%3Cinit%3E()" class="member-name-link">DriverLineEps()</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.eps.<a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverLineEps.html" title="class in net.sourceforge.plantuml.klimt.drawing.eps">DriverLineEps</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/g2d/DriverLineG2d.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.g2d">DriverLineG2d</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/g2d/package-summary.html">net.sourceforge.plantuml.klimt.drawing.g2d</a></dt>
 <dd>&nbsp;</dd>
@@ -12999,19 +12996,19 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/html5/DriverLineHtml5.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.html5">DriverLineHtml5</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/html5/package-summary.html">net.sourceforge.plantuml.klimt.drawing.html5</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/klimt/drawing/html5/DriverLineHtml5.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverLineHtml5(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.html5.<a href="net/sourceforge/plantuml/klimt/drawing/html5/DriverLineHtml5.html" title="class in net.sourceforge.plantuml.klimt.drawing.html5">DriverLineHtml5</a></dt>
+<dt><a href="net/sourceforge/plantuml/klimt/drawing/html5/DriverLineHtml5.html#%3Cinit%3E()" class="member-name-link">DriverLineHtml5()</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.html5.<a href="net/sourceforge/plantuml/klimt/drawing/html5/DriverLineHtml5.html" title="class in net.sourceforge.plantuml.klimt.drawing.html5">DriverLineHtml5</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/openpdf/DriverLinePdf.html" class="type-name-link" title="class in net.sourceforge.plantuml.openpdf">DriverLinePdf</a> - Class in <a href="net/sourceforge/plantuml/openpdf/package-summary.html">net.sourceforge.plantuml.openpdf</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/openpdf/DriverLinePdf.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverLinePdf(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.openpdf.<a href="net/sourceforge/plantuml/openpdf/DriverLinePdf.html" title="class in net.sourceforge.plantuml.openpdf">DriverLinePdf</a></dt>
+<dt><a href="net/sourceforge/plantuml/openpdf/DriverLinePdf.html#%3Cinit%3E()" class="member-name-link">DriverLinePdf()</a> - Constructor for class net.sourceforge.plantuml.openpdf.<a href="net/sourceforge/plantuml/openpdf/DriverLinePdf.html" title="class in net.sourceforge.plantuml.openpdf">DriverLinePdf</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverLineSvg.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverLineSvg</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/svg/package-summary.html">net.sourceforge.plantuml.klimt.drawing.svg</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverLineSvg.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverLineSvg(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.svg.<a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverLineSvg.html" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverLineSvg</a></dt>
+<dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverLineSvg.html#%3Cinit%3E()" class="member-name-link">DriverLineSvg()</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.svg.<a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverLineSvg.html" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverLineSvg</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/teavm/DriverLineTeaVM.html" class="type-name-link" title="class in net.sourceforge.plantuml.teavm">DriverLineTeaVM</a> - Class in <a href="net/sourceforge/plantuml/teavm/package-summary.html">net.sourceforge.plantuml.teavm</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/teavm/DriverLineTeaVM.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverLineTeaVM(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.teavm.<a href="net/sourceforge/plantuml/teavm/DriverLineTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DriverLineTeaVM</a></dt>
+<dt><a href="net/sourceforge/plantuml/teavm/DriverLineTeaVM.html#%3Cinit%3E()" class="member-name-link">DriverLineTeaVM()</a> - Constructor for class net.sourceforge.plantuml.teavm.<a href="net/sourceforge/plantuml/teavm/DriverLineTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DriverLineTeaVM</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/tikz/DriverLineTikz.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.tikz">DriverLineTikz</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/tikz/package-summary.html">net.sourceforge.plantuml.klimt.drawing.tikz</a></dt>
 <dd>&nbsp;</dd>
@@ -13031,15 +13028,15 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/openpdf/DriverPathPdf.html" class="type-name-link" title="class in net.sourceforge.plantuml.openpdf">DriverPathPdf</a> - Class in <a href="net/sourceforge/plantuml/openpdf/package-summary.html">net.sourceforge.plantuml.openpdf</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/openpdf/DriverPathPdf.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverPathPdf(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.openpdf.<a href="net/sourceforge/plantuml/openpdf/DriverPathPdf.html" title="class in net.sourceforge.plantuml.openpdf">DriverPathPdf</a></dt>
+<dt><a href="net/sourceforge/plantuml/openpdf/DriverPathPdf.html#%3Cinit%3E()" class="member-name-link">DriverPathPdf()</a> - Constructor for class net.sourceforge.plantuml.openpdf.<a href="net/sourceforge/plantuml/openpdf/DriverPathPdf.html" title="class in net.sourceforge.plantuml.openpdf">DriverPathPdf</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverPathSvg.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverPathSvg</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/svg/package-summary.html">net.sourceforge.plantuml.klimt.drawing.svg</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverPathSvg.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverPathSvg(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.svg.<a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverPathSvg.html" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverPathSvg</a></dt>
+<dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverPathSvg.html#%3Cinit%3E()" class="member-name-link">DriverPathSvg()</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.svg.<a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverPathSvg.html" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverPathSvg</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/teavm/DriverPathTeaVM.html" class="type-name-link" title="class in net.sourceforge.plantuml.teavm">DriverPathTeaVM</a> - Class in <a href="net/sourceforge/plantuml/teavm/package-summary.html">net.sourceforge.plantuml.teavm</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/teavm/DriverPathTeaVM.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverPathTeaVM(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.teavm.<a href="net/sourceforge/plantuml/teavm/DriverPathTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DriverPathTeaVM</a></dt>
+<dt><a href="net/sourceforge/plantuml/teavm/DriverPathTeaVM.html#%3Cinit%3E()" class="member-name-link">DriverPathTeaVM()</a> - Constructor for class net.sourceforge.plantuml.teavm.<a href="net/sourceforge/plantuml/teavm/DriverPathTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DriverPathTeaVM</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/tikz/DriverPathTikz.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.tikz">DriverPathTikz</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/tikz/package-summary.html">net.sourceforge.plantuml.klimt.drawing.tikz</a></dt>
 <dd>&nbsp;</dd>
@@ -13059,11 +13056,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/braille/DriverPolygonBraille.html" class="type-name-link" title="class in net.sourceforge.plantuml.braille">DriverPolygonBraille</a> - Class in <a href="net/sourceforge/plantuml/braille/package-summary.html">net.sourceforge.plantuml.braille</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/braille/DriverPolygonBraille.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverPolygonBraille(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.braille.<a href="net/sourceforge/plantuml/braille/DriverPolygonBraille.html" title="class in net.sourceforge.plantuml.braille">DriverPolygonBraille</a></dt>
+<dt><a href="net/sourceforge/plantuml/braille/DriverPolygonBraille.html#%3Cinit%3E()" class="member-name-link">DriverPolygonBraille()</a> - Constructor for class net.sourceforge.plantuml.braille.<a href="net/sourceforge/plantuml/braille/DriverPolygonBraille.html" title="class in net.sourceforge.plantuml.braille">DriverPolygonBraille</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverPolygonEps.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.eps">DriverPolygonEps</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/eps/package-summary.html">net.sourceforge.plantuml.klimt.drawing.eps</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverPolygonEps.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverPolygonEps(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.eps.<a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverPolygonEps.html" title="class in net.sourceforge.plantuml.klimt.drawing.eps">DriverPolygonEps</a></dt>
+<dt><a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverPolygonEps.html#%3Cinit%3E()" class="member-name-link">DriverPolygonEps()</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.eps.<a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverPolygonEps.html" title="class in net.sourceforge.plantuml.klimt.drawing.eps">DriverPolygonEps</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/g2d/DriverPolygonG2d.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.g2d">DriverPolygonG2d</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/g2d/package-summary.html">net.sourceforge.plantuml.klimt.drawing.g2d</a></dt>
 <dd>&nbsp;</dd>
@@ -13071,15 +13068,15 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/openpdf/DriverPolygonPdf.html" class="type-name-link" title="class in net.sourceforge.plantuml.openpdf">DriverPolygonPdf</a> - Class in <a href="net/sourceforge/plantuml/openpdf/package-summary.html">net.sourceforge.plantuml.openpdf</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/openpdf/DriverPolygonPdf.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverPolygonPdf(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.openpdf.<a href="net/sourceforge/plantuml/openpdf/DriverPolygonPdf.html" title="class in net.sourceforge.plantuml.openpdf">DriverPolygonPdf</a></dt>
+<dt><a href="net/sourceforge/plantuml/openpdf/DriverPolygonPdf.html#%3Cinit%3E()" class="member-name-link">DriverPolygonPdf()</a> - Constructor for class net.sourceforge.plantuml.openpdf.<a href="net/sourceforge/plantuml/openpdf/DriverPolygonPdf.html" title="class in net.sourceforge.plantuml.openpdf">DriverPolygonPdf</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverPolygonSvg.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverPolygonSvg</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/svg/package-summary.html">net.sourceforge.plantuml.klimt.drawing.svg</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverPolygonSvg.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverPolygonSvg(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.svg.<a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverPolygonSvg.html" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverPolygonSvg</a></dt>
+<dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverPolygonSvg.html#%3Cinit%3E()" class="member-name-link">DriverPolygonSvg()</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.svg.<a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverPolygonSvg.html" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverPolygonSvg</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/teavm/DriverPolygonTeaVM.html" class="type-name-link" title="class in net.sourceforge.plantuml.teavm">DriverPolygonTeaVM</a> - Class in <a href="net/sourceforge/plantuml/teavm/package-summary.html">net.sourceforge.plantuml.teavm</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/teavm/DriverPolygonTeaVM.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverPolygonTeaVM(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.teavm.<a href="net/sourceforge/plantuml/teavm/DriverPolygonTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DriverPolygonTeaVM</a></dt>
+<dt><a href="net/sourceforge/plantuml/teavm/DriverPolygonTeaVM.html#%3Cinit%3E()" class="member-name-link">DriverPolygonTeaVM()</a> - Constructor for class net.sourceforge.plantuml.teavm.<a href="net/sourceforge/plantuml/teavm/DriverPolygonTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DriverPolygonTeaVM</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/tikz/DriverPolygonTikz.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.tikz">DriverPolygonTikz</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/tikz/package-summary.html">net.sourceforge.plantuml.klimt.drawing.tikz</a></dt>
 <dd>&nbsp;</dd>
@@ -13091,11 +13088,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/braille/DriverRectangleBraille.html" class="type-name-link" title="class in net.sourceforge.plantuml.braille">DriverRectangleBraille</a> - Class in <a href="net/sourceforge/plantuml/braille/package-summary.html">net.sourceforge.plantuml.braille</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/braille/DriverRectangleBraille.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverRectangleBraille(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.braille.<a href="net/sourceforge/plantuml/braille/DriverRectangleBraille.html" title="class in net.sourceforge.plantuml.braille">DriverRectangleBraille</a></dt>
+<dt><a href="net/sourceforge/plantuml/braille/DriverRectangleBraille.html#%3Cinit%3E()" class="member-name-link">DriverRectangleBraille()</a> - Constructor for class net.sourceforge.plantuml.braille.<a href="net/sourceforge/plantuml/braille/DriverRectangleBraille.html" title="class in net.sourceforge.plantuml.braille">DriverRectangleBraille</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverRectangleEps.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.eps">DriverRectangleEps</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/eps/package-summary.html">net.sourceforge.plantuml.klimt.drawing.eps</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverRectangleEps.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverRectangleEps(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.eps.<a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverRectangleEps.html" title="class in net.sourceforge.plantuml.klimt.drawing.eps">DriverRectangleEps</a></dt>
+<dt><a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverRectangleEps.html#%3Cinit%3E()" class="member-name-link">DriverRectangleEps()</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.eps.<a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverRectangleEps.html" title="class in net.sourceforge.plantuml.klimt.drawing.eps">DriverRectangleEps</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/g2d/DriverRectangleG2d.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.g2d">DriverRectangleG2d</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/g2d/package-summary.html">net.sourceforge.plantuml.klimt.drawing.g2d</a></dt>
 <dd>&nbsp;</dd>
@@ -13103,19 +13100,19 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/html5/DriverRectangleHtml5.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.html5">DriverRectangleHtml5</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/html5/package-summary.html">net.sourceforge.plantuml.klimt.drawing.html5</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/klimt/drawing/html5/DriverRectangleHtml5.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverRectangleHtml5(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.html5.<a href="net/sourceforge/plantuml/klimt/drawing/html5/DriverRectangleHtml5.html" title="class in net.sourceforge.plantuml.klimt.drawing.html5">DriverRectangleHtml5</a></dt>
+<dt><a href="net/sourceforge/plantuml/klimt/drawing/html5/DriverRectangleHtml5.html#%3Cinit%3E()" class="member-name-link">DriverRectangleHtml5()</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.html5.<a href="net/sourceforge/plantuml/klimt/drawing/html5/DriverRectangleHtml5.html" title="class in net.sourceforge.plantuml.klimt.drawing.html5">DriverRectangleHtml5</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/openpdf/DriverRectanglePdf.html" class="type-name-link" title="class in net.sourceforge.plantuml.openpdf">DriverRectanglePdf</a> - Class in <a href="net/sourceforge/plantuml/openpdf/package-summary.html">net.sourceforge.plantuml.openpdf</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/openpdf/DriverRectanglePdf.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverRectanglePdf(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.openpdf.<a href="net/sourceforge/plantuml/openpdf/DriverRectanglePdf.html" title="class in net.sourceforge.plantuml.openpdf">DriverRectanglePdf</a></dt>
+<dt><a href="net/sourceforge/plantuml/openpdf/DriverRectanglePdf.html#%3Cinit%3E()" class="member-name-link">DriverRectanglePdf()</a> - Constructor for class net.sourceforge.plantuml.openpdf.<a href="net/sourceforge/plantuml/openpdf/DriverRectanglePdf.html" title="class in net.sourceforge.plantuml.openpdf">DriverRectanglePdf</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverRectangleSvg.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverRectangleSvg</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/svg/package-summary.html">net.sourceforge.plantuml.klimt.drawing.svg</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverRectangleSvg.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverRectangleSvg(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.svg.<a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverRectangleSvg.html" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverRectangleSvg</a></dt>
+<dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverRectangleSvg.html#%3Cinit%3E()" class="member-name-link">DriverRectangleSvg()</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.svg.<a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverRectangleSvg.html" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverRectangleSvg</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/teavm/DriverRectangleTeaVM.html" class="type-name-link" title="class in net.sourceforge.plantuml.teavm">DriverRectangleTeaVM</a> - Class in <a href="net/sourceforge/plantuml/teavm/package-summary.html">net.sourceforge.plantuml.teavm</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/teavm/DriverRectangleTeaVM.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverRectangleTeaVM(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.teavm.<a href="net/sourceforge/plantuml/teavm/DriverRectangleTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DriverRectangleTeaVM</a></dt>
+<dt><a href="net/sourceforge/plantuml/teavm/DriverRectangleTeaVM.html#%3Cinit%3E()" class="member-name-link">DriverRectangleTeaVM()</a> - Constructor for class net.sourceforge.plantuml.teavm.<a href="net/sourceforge/plantuml/teavm/DriverRectangleTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DriverRectangleTeaVM</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/tikz/DriverRectangleTikz.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.tikz">DriverRectangleTikz</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/tikz/package-summary.html">net.sourceforge.plantuml.klimt.drawing.tikz</a></dt>
 <dd>&nbsp;</dd>
@@ -13135,7 +13132,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverTextAsPathSvg.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverTextAsPathSvg</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/svg/package-summary.html">net.sourceforge.plantuml.klimt.drawing.svg</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverTextAsPathSvg.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverTextAsPathSvg(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.svg.<a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverTextAsPathSvg.html" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverTextAsPathSvg</a></dt>
+<dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverTextAsPathSvg.html#%3Cinit%3E()" class="member-name-link">DriverTextAsPathSvg()</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.svg.<a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverTextAsPathSvg.html" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverTextAsPathSvg</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/braille/DriverTextBraille.html" class="type-name-link" title="class in net.sourceforge.plantuml.braille">DriverTextBraille</a> - Class in <a href="net/sourceforge/plantuml/braille/package-summary.html">net.sourceforge.plantuml.braille</a></dt>
 <dd>&nbsp;</dd>
@@ -13143,7 +13140,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverTextEps.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.eps">DriverTextEps</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/eps/package-summary.html">net.sourceforge.plantuml.klimt.drawing.eps</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverTextEps.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer,net.sourceforge.plantuml.klimt.drawing.eps.EpsStrategy)" class="member-name-link">DriverTextEps(ClipContainer, EpsStrategy)</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.eps.<a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverTextEps.html" title="class in net.sourceforge.plantuml.klimt.drawing.eps">DriverTextEps</a></dt>
+<dt><a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverTextEps.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.drawing.eps.EpsStrategy)" class="member-name-link">DriverTextEps(EpsStrategy)</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.eps.<a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverTextEps.html" title="class in net.sourceforge.plantuml.klimt.drawing.eps">DriverTextEps</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/g2d/DriverTextG2d.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.g2d">DriverTextG2d</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/g2d/package-summary.html">net.sourceforge.plantuml.klimt.drawing.g2d</a></dt>
 <dd>&nbsp;</dd>
@@ -13151,15 +13148,15 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/openpdf/DriverTextPdf.html" class="type-name-link" title="class in net.sourceforge.plantuml.openpdf">DriverTextPdf</a> - Class in <a href="net/sourceforge/plantuml/openpdf/package-summary.html">net.sourceforge.plantuml.openpdf</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/openpdf/DriverTextPdf.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.font.StringBounder,net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverTextPdf(StringBounder, ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.openpdf.<a href="net/sourceforge/plantuml/openpdf/DriverTextPdf.html" title="class in net.sourceforge.plantuml.openpdf">DriverTextPdf</a></dt>
+<dt><a href="net/sourceforge/plantuml/openpdf/DriverTextPdf.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">DriverTextPdf(StringBounder)</a> - Constructor for class net.sourceforge.plantuml.openpdf.<a href="net/sourceforge/plantuml/openpdf/DriverTextPdf.html" title="class in net.sourceforge.plantuml.openpdf">DriverTextPdf</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverTextSvg.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverTextSvg</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/svg/package-summary.html">net.sourceforge.plantuml.klimt.drawing.svg</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverTextSvg.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.font.StringBounder,net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverTextSvg(StringBounder, ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.svg.<a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverTextSvg.html" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverTextSvg</a></dt>
+<dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverTextSvg.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">DriverTextSvg(StringBounder)</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.svg.<a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverTextSvg.html" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverTextSvg</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/teavm/DriverTextTeaVM.html" class="type-name-link" title="class in net.sourceforge.plantuml.teavm">DriverTextTeaVM</a> - Class in <a href="net/sourceforge/plantuml/teavm/package-summary.html">net.sourceforge.plantuml.teavm</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/teavm/DriverTextTeaVM.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.ClipContainer)" class="member-name-link">DriverTextTeaVM(ClipContainer)</a> - Constructor for class net.sourceforge.plantuml.teavm.<a href="net/sourceforge/plantuml/teavm/DriverTextTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DriverTextTeaVM</a></dt>
+<dt><a href="net/sourceforge/plantuml/teavm/DriverTextTeaVM.html#%3Cinit%3E()" class="member-name-link">DriverTextTeaVM()</a> - Constructor for class net.sourceforge.plantuml.teavm.<a href="net/sourceforge/plantuml/teavm/DriverTextTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DriverTextTeaVM</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/tikz/DriverTextTikz.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.tikz">DriverTextTikz</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/tikz/package-summary.html">net.sourceforge.plantuml.klimt.drawing.tikz</a></dt>
 <dd>&nbsp;</dd>
@@ -14452,17 +14449,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/eps/EpsGraphics.html#ensureVisible(double,double)" class="member-name-link">ensureVisible(double, double)</a> - Method in class net.sourceforge.plantuml.klimt.drawing.eps.<a href="net/sourceforge/plantuml/klimt/drawing/eps/EpsGraphics.html" title="class in net.sourceforge.plantuml.klimt.drawing.eps">EpsGraphics</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/klimt/drawing/g2d/UGraphicG2d.html#ensureVisible(double,double)" class="member-name-link">ensureVisible(double, double)</a> - Method in class net.sourceforge.plantuml.klimt.drawing.g2d.<a href="net/sourceforge/plantuml/klimt/drawing/g2d/UGraphicG2d.html" title="class in net.sourceforge.plantuml.klimt.drawing.g2d">UGraphicG2d</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/html5/Html5Drawer.html#ensureVisible(double,double)" class="member-name-link">ensureVisible(double, double)</a> - Method in class net.sourceforge.plantuml.klimt.drawing.html5.<a href="net/sourceforge/plantuml/klimt/drawing/html5/Html5Drawer.html" title="class in net.sourceforge.plantuml.klimt.drawing.html5">Html5Drawer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/SvgGraphics.html#ensureVisible(double,double)" class="member-name-link">ensureVisible(double, double)</a> - Method in class net.sourceforge.plantuml.klimt.drawing.svg.<a href="net/sourceforge/plantuml/klimt/drawing/svg/SvgGraphics.html" title="class in net.sourceforge.plantuml.klimt.drawing.svg">SvgGraphics</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/klimt/drawing/UGraphicNull.html#ensureVisible(double,double)" class="member-name-link">ensureVisible(double, double)</a> - Method in class net.sourceforge.plantuml.klimt.drawing.<a href="net/sourceforge/plantuml/klimt/drawing/UGraphicNull.html" title="class in net.sourceforge.plantuml.klimt.drawing">UGraphicNull</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/geom/BasicEnsureVisible.html#ensureVisible(double,double)" class="member-name-link">ensureVisible(double, double)</a> - Method in class net.sourceforge.plantuml.klimt.geom.<a href="net/sourceforge/plantuml/klimt/geom/BasicEnsureVisible.html" title="class in net.sourceforge.plantuml.klimt.geom">BasicEnsureVisible</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/klimt/geom/EnsureVisible.html#ensureVisible(double,double)" class="member-name-link">ensureVisible(double, double)</a> - Method in interface net.sourceforge.plantuml.klimt.geom.<a href="net/sourceforge/plantuml/klimt/geom/EnsureVisible.html" title="interface in net.sourceforge.plantuml.klimt.geom">EnsureVisible</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/openpdf/PdfGraphics.html#ensureVisible(double,double)" class="member-name-link">ensureVisible(double, double)</a> - Method in class net.sourceforge.plantuml.openpdf.<a href="net/sourceforge/plantuml/openpdf/PdfGraphics.html" title="class in net.sourceforge.plantuml.openpdf">PdfGraphics</a></dt>
 <dd>
@@ -14470,8 +14461,17 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="net/sourceforge/plantuml/url/Url.html#ensureVisible(double,double)" class="member-name-link">ensureVisible(double, double)</a> - Method in class net.sourceforge.plantuml.url.<a href="net/sourceforge/plantuml/url/Url.html" title="class in net.sourceforge.plantuml.url">Url</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/klimt/geom/EnsureVisible.html" class="type-name-link" title="interface in net.sourceforge.plantuml.klimt.geom">EnsureVisible</a> - Interface in <a href="net/sourceforge/plantuml/klimt/geom/package-summary.html">net.sourceforge.plantuml.klimt.geom</a></dt>
+<dt><a href="net/sourceforge/plantuml/klimt/drawing/g2d/UGraphicG2d.html#ensureVisible(double,double,net.sourceforge.plantuml.klimt.UClip)" class="member-name-link">ensureVisible(double, double, UClip)</a> - Method in class net.sourceforge.plantuml.klimt.drawing.g2d.<a href="net/sourceforge/plantuml/klimt/drawing/g2d/UGraphicG2d.html" title="class in net.sourceforge.plantuml.klimt.drawing.g2d">UGraphicG2d</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/klimt/drawing/UGraphicNull.html#ensureVisible(double,double,net.sourceforge.plantuml.klimt.UClip)" class="member-name-link">ensureVisible(double, double, UClip)</a> - Method in class net.sourceforge.plantuml.klimt.drawing.<a href="net/sourceforge/plantuml/klimt/drawing/UGraphicNull.html" title="class in net.sourceforge.plantuml.klimt.drawing">UGraphicNull</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/klimt/geom/EnsureVisible.html#ensureVisible(double,double,net.sourceforge.plantuml.klimt.UClip)" class="member-name-link">ensureVisible(double, double, UClip)</a> - Method in interface net.sourceforge.plantuml.klimt.geom.<a href="net/sourceforge/plantuml/klimt/geom/EnsureVisible.html" title="interface in net.sourceforge.plantuml.klimt.geom">EnsureVisible</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/klimt/geom/EnsureVisible.html" class="type-name-link" title="interface in net.sourceforge.plantuml.klimt.geom">EnsureVisible</a> - Interface in <a href="net/sourceforge/plantuml/klimt/geom/package-summary.html">net.sourceforge.plantuml.klimt.geom</a></dt>
+<dd>
+<div class="block">How a driver tells the <code>UGraphic</code> it draws into that a point belongs to what was just
+ drawn, so that the clickable area of whatever <code>Url</code> is currently open grows to cover it.</div>
+</dd>
 <dt><a href="smetana/core/Globals.html#Enter" class="member-name-link">Enter</a> - Variable in class smetana.core.<a href="smetana/core/Globals.html" title="class in smetana.core">Globals</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="gen/lib/common/ns__c.html#enter_edge(smetana.core.Globals,h.ST_Agedge_s)" class="member-name-link">enter_edge(Globals, ST_Agedge_s)</a> - Static method in class gen.lib.common.<a href="gen/lib/common/ns__c.html" title="class in gen.lib.common">ns__c</a></dt>
@@ -17209,6 +17209,19 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/argon2/algorithm/FillMemory.html#fillMemoryBlocks(net.sourceforge.plantuml.argon2.model.Instance)" class="member-name-link">fillMemoryBlocks(Instance)</a> - Static method in class net.sourceforge.plantuml.argon2.algorithm.<a href="net/sourceforge/plantuml/argon2/algorithm/FillMemory.html" title="class in net.sourceforge.plantuml.argon2.algorithm">FillMemory</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/regex/IRegex.html#fillPartialMatch(java.util.Iterator,java.util.Map)" class="member-name-link">fillPartialMatch(Iterator&lt;String&gt;, Map&lt;String, RegexPartialMatch&gt;)</a> - Method in interface net.sourceforge.plantuml.regex.<a href="net/sourceforge/plantuml/regex/IRegex.html" title="interface in net.sourceforge.plantuml.regex">IRegex</a></dt>
+<dd>
+<div class="block">Consumes from <code>it</code> the groups this node accounts for, and puts into <code>result</code> an
+ entry for each named part it holds.</div>
+</dd>
+<dt><a href="net/sourceforge/plantuml/regex/RegexComposed.html#fillPartialMatch(java.util.Iterator,java.util.Map)" class="member-name-link">fillPartialMatch(Iterator&lt;String&gt;, Map&lt;String, RegexPartialMatch&gt;)</a> - Method in class net.sourceforge.plantuml.regex.<a href="net/sourceforge/plantuml/regex/RegexComposed.html" title="class in net.sourceforge.plantuml.regex">RegexComposed</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/regex/RegexLeaf.html#fillPartialMatch(java.util.Iterator,java.util.Map)" class="member-name-link">fillPartialMatch(Iterator&lt;String&gt;, Map&lt;String, RegexPartialMatch&gt;)</a> - Method in class net.sourceforge.plantuml.regex.<a href="net/sourceforge/plantuml/regex/RegexLeaf.html" title="class in net.sourceforge.plantuml.regex">RegexLeaf</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/regex/RegexOr.html#fillPartialMatch(java.util.Iterator,java.util.Map)" class="member-name-link">fillPartialMatch(Iterator&lt;String&gt;, Map&lt;String, RegexPartialMatch&gt;)</a> - Method in class net.sourceforge.plantuml.regex.<a href="net/sourceforge/plantuml/regex/RegexOr.html" title="class in net.sourceforge.plantuml.regex">RegexOr</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/regex/RegexRepeatedOneOrMore.html#fillPartialMatch(java.util.Iterator,java.util.Map)" class="member-name-link">fillPartialMatch(Iterator&lt;String&gt;, Map&lt;String, RegexPartialMatch&gt;)</a> - Method in class net.sourceforge.plantuml.regex.<a href="net/sourceforge/plantuml/regex/RegexRepeatedOneOrMore.html" title="class in net.sourceforge.plantuml.regex">RegexRepeatedOneOrMore</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/sequencediagram/teoz/GroupingTile.html#fillPositionelTiles(net.sourceforge.plantuml.klimt.font.StringBounder,java.util.List,java.util.List,java.util.List)" class="member-name-link">fillPositionelTiles(StringBounder, List&lt;Tile&gt;, List&lt;CommonTile&gt;, List&lt;CommonTile&gt;)</a> - Static method in class net.sourceforge.plantuml.sequencediagram.teoz.<a href="net/sourceforge/plantuml/sequencediagram/teoz/GroupingTile.html" title="class in net.sourceforge.plantuml.sequencediagram.teoz">GroupingTile</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="gen/lib/dotgen/mincross__c.html#fillRanks(h.ST_Agraph_s)" class="member-name-link">fillRanks(ST_Agraph_s)</a> - Static method in class gen.lib.dotgen.<a href="gen/lib/dotgen/mincross__c.html" title="class in gen.lib.dotgen">mincross__c</a></dt>
@@ -19740,6 +19753,12 @@ loadScripts(document, 'script');</script>
 <dt><a href="net/sourceforge/plantuml/klimt/ClipContainer.html#getClip()" class="member-name-link">getClip()</a> - Method in interface net.sourceforge.plantuml.klimt.<a href="net/sourceforge/plantuml/klimt/ClipContainer.html" title="interface in net.sourceforge.plantuml.klimt">ClipContainer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/AbstractCommonUGraphic.html#getClip()" class="member-name-link">getClip()</a> - Method in class net.sourceforge.plantuml.klimt.drawing.<a href="net/sourceforge/plantuml/klimt/drawing/AbstractCommonUGraphic.html" title="class in net.sourceforge.plantuml.klimt.drawing">AbstractCommonUGraphic</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/klimt/UParam.html#getClip()" class="member-name-link">getClip()</a> - Method in interface net.sourceforge.plantuml.klimt.<a href="net/sourceforge/plantuml/klimt/UParam.html" title="interface in net.sourceforge.plantuml.klimt">UParam</a></dt>
+<dd>
+<div class="block">The clip in force for the shape being drawn, or <code>null</code> when there is none.</div>
+</dd>
+<dt><a href="net/sourceforge/plantuml/klimt/UParamNull.html#getClip()" class="member-name-link">getClip()</a> - Method in class net.sourceforge.plantuml.klimt.<a href="net/sourceforge/plantuml/klimt/UParamNull.html" title="class in net.sourceforge.plantuml.klimt">UParamNull</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/swing/SpriteWindow.html#getClipboard()" class="member-name-link">getClipboard()</a> - Static method in class net.sourceforge.plantuml.swing.<a href="net/sourceforge/plantuml/swing/SpriteWindow.html" title="class in net.sourceforge.plantuml.swing">SpriteWindow</a></dt>
 <dd>&nbsp;</dd>
@@ -34678,7 +34697,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/svek/SvekEdge.html#manageCollision(java.util.Collection)" class="member-name-link">manageCollision(Collection&lt;SvekNode&gt;)</a> - Method in class net.sourceforge.plantuml.svek.<a href="net/sourceforge/plantuml/svek/SvekEdge.html" title="class in net.sourceforge.plantuml.svek">SvekEdge</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/klimt/shape/DotPath.html#manageEnsureVisible(double,double,net.sourceforge.plantuml.klimt.geom.EnsureVisible)" class="member-name-link">manageEnsureVisible(double, double, EnsureVisible)</a> - Method in class net.sourceforge.plantuml.klimt.shape.<a href="net/sourceforge/plantuml/klimt/shape/DotPath.html" title="class in net.sourceforge.plantuml.klimt.shape">DotPath</a></dt>
+<dt><a href="net/sourceforge/plantuml/klimt/shape/DotPath.html#manageEnsureVisible(double,double,net.sourceforge.plantuml.klimt.geom.EnsureVisible,net.sourceforge.plantuml.klimt.UClip)" class="member-name-link">manageEnsureVisible(double, double, EnsureVisible, UClip)</a> - Method in class net.sourceforge.plantuml.klimt.shape.<a href="net/sourceforge/plantuml/klimt/shape/DotPath.html" title="class in net.sourceforge.plantuml.klimt.shape">DotPath</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/classdiagram/command/CommandCreateClassMultilines.html#manageExtends(net.sourceforge.plantuml.utils.LineLocation,java.lang.String,net.sourceforge.plantuml.classdiagram.ClassDiagram,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.abel.Entity)" class="member-name-link">manageExtends(LineLocation, String, ClassDiagram, RegexResult, Entity)</a> - Static method in class net.sourceforge.plantuml.classdiagram.command.<a href="net/sourceforge/plantuml/classdiagram/command/CommandCreateClassMultilines.html" title="class in net.sourceforge.plantuml.classdiagram.command">CommandCreateClassMultilines</a></dt>
 <dd>&nbsp;</dd>
@@ -37653,6 +37672,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="h/ST_RTree.html#NonLeafCount" class="member-name-link">NonLeafCount</a> - Variable in class h.<a href="h/ST_RTree.html" title="class in h">ST_RTree</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/klimt/drawing/AbstractUGraphic.html#noopDriver()" class="member-name-link">noopDriver()</a> - Static method in class net.sourceforge.plantuml.klimt.drawing.<a href="net/sourceforge/plantuml/klimt/drawing/AbstractUGraphic.html" title="class in net.sourceforge.plantuml.klimt.drawing">AbstractUGraphic</a></dt>
+<dd>
+<div class="block">The do-nothing driver of <a href="net/sourceforge/plantuml/klimt/drawing/AbstractUGraphic.html#ignoreShape(java.lang.Class)"><code>AbstractUGraphic.ignoreShape(java.lang.Class&lt;SHAPE&gt;)</code></a>, for a backend filling a table
+ statically.</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/code/NoPlantumlCompressionException.html" class="type-name-link" title="class in net.sourceforge.plantuml.code">NoPlantumlCompressionException</a> - Exception Class in <a href="net/sourceforge/plantuml/code/package-summary.html">net.sourceforge.plantuml.code</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/code/NoPlantumlCompressionException.html#%3Cinit%3E(java.lang.Exception)" class="member-name-link">NoPlantumlCompressionException(Exception)</a> - Constructor for exception class net.sourceforge.plantuml.code.<a href="net/sourceforge/plantuml/code/NoPlantumlCompressionException.html" title="class in net.sourceforge.plantuml.code">NoPlantumlCompressionException</a></dt>
@@ -49823,6 +49847,13 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/AnimatedGifEncoder.html#usedEntry" class="member-name-link">usedEntry</a> - Variable in class net.sourceforge.plantuml.<a href="net/sourceforge/plantuml/AnimatedGifEncoder.html" title="class in net.sourceforge.plantuml">AnimatedGifEncoder</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/klimt/drawing/AbstractUGraphic.html#useDrivers(net.sourceforge.plantuml.klimt.drawing.UDriver%5B%5D)" class="member-name-link">useDrivers(UDriver&lt;?, O&gt;[])</a> - Method in class net.sourceforge.plantuml.klimt.drawing.<a href="net/sourceforge/plantuml/klimt/drawing/AbstractUGraphic.html" title="class in net.sourceforge.plantuml.klimt.drawing">AbstractUGraphic</a></dt>
+<dd>
+<div class="block">Adopts a driver table built elsewhere, instead of filling one through
+ registerDriver: a backend whose drivers are all stateless can hold a single
+ static table and hand it to every UGraphic it creates, rather than building
+ one per copy chain.</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/geom/USegment.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.geom">USegment</a> - Class in <a href="net/sourceforge/plantuml/klimt/geom/package-summary.html">net.sourceforge.plantuml.klimt.geom</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/geom/USegment.html#%3Cinit%3E(double%5B%5D,net.sourceforge.plantuml.klimt.geom.USegmentType)" class="member-name-link">USegment(double[], USegmentType)</a> - Constructor for class net.sourceforge.plantuml.klimt.geom.<a href="net/sourceforge/plantuml/klimt/geom/USegment.html" title="class in net.sourceforge.plantuml.klimt.geom">USegment</a></dt>

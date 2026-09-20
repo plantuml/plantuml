@@ -1239,10 +1239,17 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>protected final &lt;SHAPE extends <a href="../UShape.html" title="interface in net.sourceforge.plantuml.klimt">UShape</a>&gt;<br>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">AbstractUGraphic.</span><code><a href="../drawing/AbstractUGraphic.html#ignoreShape(java.lang.Class)" class="member-name-link">ignoreShape</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;SHAPE&gt;&nbsp;cl)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected final &lt;SHAPE extends <a href="../UShape.html" title="interface in net.sourceforge.plantuml.klimt">UShape</a>&gt;<br>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">AbstractUGraphic.</span><code><a href="../drawing/AbstractUGraphic.html#registerDriver(java.lang.Class,net.sourceforge.plantuml.klimt.drawing.UDriver)" class="member-name-link">registerDriver</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;SHAPE&gt;&nbsp;cl,
+<div class="col-first odd-row-color"><code>protected static &lt;SHAPE extends <a href="../UShape.html" title="interface in net.sourceforge.plantuml.klimt">UShape</a>,<wbr>
+O&gt;<br><a href="../drawing/UDriver.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UDriver</a><wbr>&lt;SHAPE,<wbr>O&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">AbstractUGraphic.</span><code><a href="../drawing/AbstractUGraphic.html#noopDriver()" class="member-name-link">noopDriver</a>()</code></div>
+<div class="col-last odd-row-color">
+<div class="block">The do-nothing driver of <a href="../drawing/AbstractUGraphic.html#ignoreShape(java.lang.Class)"><code>AbstractUGraphic.ignoreShape(java.lang.Class&lt;SHAPE&gt;)</code></a>, for a backend filling a table
+ statically.</div>
+</div>
+<div class="col-first even-row-color"><code>protected final &lt;SHAPE extends <a href="../UShape.html" title="interface in net.sourceforge.plantuml.klimt">UShape</a>&gt;<br>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AbstractUGraphic.</span><code><a href="../drawing/AbstractUGraphic.html#registerDriver(java.lang.Class,net.sourceforge.plantuml.klimt.drawing.UDriver)" class="member-name-link">registerDriver</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;SHAPE&gt;&nbsp;cl,
  <a href="../drawing/UDriver.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UDriver</a>&lt;SHAPE,<wbr><a href="../drawing/AbstractUGraphic.html" title="type parameter in AbstractUGraphic">O</a>&gt;&nbsp;driver)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../drawing/package-summary.html">net.sourceforge.plantuml.klimt.drawing</a> with parameters of type <a href="../UShape.html" title="interface in net.sourceforge.plantuml.klimt">UShape</a></span></div>
 <div class="summary-table three-column-summary">

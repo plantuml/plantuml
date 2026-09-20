@@ -41,24 +41,28 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 <span class="fc" id="L41">public class UParamNull implements UParam {</span>
 	// ::remove file when __HAXE__
 
-	public HColor getColor() {
-<span class="fc" id="L45">		return HColors.BLACK;</span>
+	public UClip getClip() {
+<span class="nc" id="L45">		return null;</span>
 	}
 
-	public HColor getBackcolor() {
+	public HColor getColor() {
 <span class="fc" id="L49">		return HColors.BLACK;</span>
 	}
 
+	public HColor getBackcolor() {
+<span class="fc" id="L53">		return HColors.BLACK;</span>
+	}
+
 	public UStroke getStroke() {
-<span class="nc" id="L53">		return UStroke.simple();</span>
+<span class="nc" id="L57">		return UStroke.simple();</span>
 	}
 
 	public boolean isHidden() {
-<span class="nc" id="L57">		return false;</span>
+<span class="nc" id="L61">		return false;</span>
 	}
 
 	public UPattern getPattern() {
-<span class="nc" id="L61">		return UPattern.FULL;</span>
+<span class="nc" id="L65">		return UPattern.FULL;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -58,11 +58,11 @@ public class UGraphicHtml5 extends AbstractUGraphic&lt;Html5Drawer&gt; implement
 	public UGraphicHtml5(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder) {
 <span class="nc" id="L59">		super(stringBounder);</span>
 <span class="nc" id="L60">		copy(defaultBackground, colorMapper, new Html5Drawer());</span>
-<span class="nc" id="L61">		registerDriver(URectangle.class, new DriverRectangleHtml5(this));</span>
+<span class="nc" id="L61">		registerDriver(URectangle.class, new DriverRectangleHtml5());</span>
 		// registerDriver(UText.class, new DriverTextEps(imDummy, this, strategy));
 <span class="nc" id="L63">		ignoreShape(UText.class);</span>
-<span class="nc" id="L64">		registerDriver(ULine.class, new DriverLineHtml5(this));</span>
-		// registerDriver(UPolygon.class, new DriverPolygonEps(this));
+<span class="nc" id="L64">		registerDriver(ULine.class, new DriverLineHtml5());</span>
+		// registerDriver(UPolygon.class, new DriverPolygonEps());
 <span class="nc" id="L66">		ignoreShape(UPolygon.class);</span>
 		// registerDriver(UEllipse.class, new DriverEllipseEps());
 		// registerDriver(UImage.class, new DriverImageEps());

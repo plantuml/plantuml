@@ -56,8 +56,8 @@ public class DriverImageG2d implements UDriver&lt;UImage, Graphics2D&gt; {
 <span class="fc" id="L56">	}</span>
 
 	public void draw(UImage shape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
-<span class="fc" id="L59">		visible.ensureVisible(x, y);</span>
-<span class="fc" id="L60">		visible.ensureVisible(x + shape.getWidth(), y + shape.getHeight());</span>
+<span class="fc" id="L59">		visible.ensureVisible(x, y, param.getClip());</span>
+<span class="fc" id="L60">		visible.ensureVisible(x + shape.getWidth(), y + shape.getHeight(), param.getClip());</span>
 <span class="pc bpc" id="L61" title="1 of 2 branches missed.">		if (dpiFactor == 1) {</span>
 <span class="fc" id="L62">			g2d.drawImage(shape.getImage(1).getBufferedImage(), (int) (x), (int) (y), null);</span>
 		} else {

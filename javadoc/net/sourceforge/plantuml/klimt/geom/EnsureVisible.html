@@ -89,10 +89,24 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
-<dd><code><a href="BasicEnsureVisible.html" title="class in net.sourceforge.plantuml.klimt.geom">BasicEnsureVisible</a></code>, <code><a href="../drawing/g2d/UGraphicG2d.html" title="class in net.sourceforge.plantuml.klimt.drawing.g2d">UGraphicG2d</a></code>, <code><a href="../drawing/UGraphicNull.html" title="class in net.sourceforge.plantuml.klimt.drawing">UGraphicNull</a></code>, <code><a href="../../url/Url.html" title="class in net.sourceforge.plantuml.url">Url</a></code></dd>
+<dd><code><a href="../drawing/g2d/UGraphicG2d.html" title="class in net.sourceforge.plantuml.klimt.drawing.g2d">UGraphicG2d</a></code>, <code><a href="../drawing/UGraphicNull.html" title="class in net.sourceforge.plantuml.klimt.drawing">UGraphicNull</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">EnsureVisible</span></div>
+<div class="block">How a driver tells the <code>UGraphic</code> it draws into that a point belongs to what was just
+ drawn, so that the clickable area of whatever <code>Url</code> is currently open grows to cover it.
+
+ Only <code>UGraphicG2d</code> does anything with it, and only because PNG cannot carry a hyperlink:
+ the links of a PNG are emitted beside it as an HTML image map, whose <code>&lt;area coords&gt;</code>
+ rectangles have to be discovered by watching every shape drawn while a url is open. Every other
+ backend either writes real link markup (svg) or keeps that accounting inside its own graphics
+ object (eps), so none of their drivers report anything.
+
+ <code>clip</code> is the clip in force for the shape being reported, and is passed in rather than
+ read from the <code>UGraphic</code>: a driver is built once and then used by every copy
+ <code>UGraphic#apply</code> makes, so the instance it was built from is not the one being drawn
+ into, and its clip is not the one that applies. A point outside the clip was not actually
+ drawn and must not enlarge the link area.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -108,8 +122,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#ensureVisible(double,double)" class="member-name-link">ensureVisible</a><wbr>(double&nbsp;x,
- double&nbsp;y)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#ensureVisible(double,double,net.sourceforge.plantuml.klimt.UClip)" class="member-name-link">ensureVisible</a><wbr>(double&nbsp;x,
+ double&nbsp;y,
+ <a href="../UClip.html" title="class in net.sourceforge.plantuml.klimt">UClip</a>&nbsp;clip)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
@@ -126,10 +141,11 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="ensureVisible(double,double)">
+<section class="detail" id="ensureVisible(double,double,net.sourceforge.plantuml.klimt.UClip)">
 <h3>ensureVisible</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">ensureVisible</span><wbr><span class="parameters">(double&nbsp;x,
- double&nbsp;y)</span></div>
+ double&nbsp;y,
+ <a href="../UClip.html" title="class in net.sourceforge.plantuml.klimt">UClip</a>&nbsp;clip)</span></div>
 </section>
 </li>
 </ul>

@@ -116,6 +116,19 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="net.sourceforge.plantuml.klimt.drawing">
 <h2>Uses of <a href="../UDriver.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UDriver</a> in <a href="../package-summary.html">net.sourceforge.plantuml.klimt.drawing</a></h2>
+<div class="caption"><span>Methods in <a href="../package-summary.html">net.sourceforge.plantuml.klimt.drawing</a> that return <a href="../UDriver.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UDriver</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>protected static &lt;SHAPE extends <a href="../../UShape.html" title="interface in net.sourceforge.plantuml.klimt">UShape</a>,<wbr>
+O&gt;<br><a href="../UDriver.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UDriver</a><wbr>&lt;SHAPE,<wbr>O&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AbstractUGraphic.</span><code><a href="../AbstractUGraphic.html#noopDriver()" class="member-name-link">noopDriver</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">The do-nothing driver of <a href="../AbstractUGraphic.html#ignoreShape(java.lang.Class)"><code>AbstractUGraphic.ignoreShape(java.lang.Class&lt;SHAPE&gt;)</code></a>, for a backend filling a table
+ statically.</div>
+</div>
+</div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">net.sourceforge.plantuml.klimt.drawing</a> with parameters of type <a href="../UDriver.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UDriver</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
@@ -125,6 +138,14 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">AbstractUGraphic.</span><code><a href="../AbstractUGraphic.html#registerDriver(java.lang.Class,net.sourceforge.plantuml.klimt.drawing.UDriver)" class="member-name-link">registerDriver</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;SHAPE&gt;&nbsp;cl,
  <a href="../UDriver.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UDriver</a>&lt;SHAPE,<wbr><a href="../AbstractUGraphic.html" title="type parameter in AbstractUGraphic">O</a>&gt;&nbsp;driver)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected final void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">AbstractUGraphic.</span><code><a href="../AbstractUGraphic.html#useDrivers(net.sourceforge.plantuml.klimt.drawing.UDriver%5B%5D)" class="member-name-link">useDrivers</a><wbr>(<a href="../UDriver.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UDriver</a>&lt;?,<wbr><a href="../AbstractUGraphic.html" title="type parameter in AbstractUGraphic">O</a>&gt;[]&nbsp;shared)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Adopts a driver table built elsewhere, instead of filling one through
+ registerDriver: a backend whose drivers are all stateless can hold a single
+ static table and hand it to every UGraphic it creates, rather than building
+ one per copy chain.</div>
+</div>
 </div>
 </section>
 </li>

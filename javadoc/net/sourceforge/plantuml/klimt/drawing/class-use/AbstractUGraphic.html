@@ -117,7 +117,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>protected void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">AbstractUGraphic.</span><code><a href="../AbstractUGraphic.html#copy(net.sourceforge.plantuml.klimt.drawing.AbstractUGraphic)" class="member-name-link">copy</a><wbr>(<a href="../AbstractUGraphic.html" title="class in net.sourceforge.plantuml.klimt.drawing">AbstractUGraphic</a>&lt;<a href="../AbstractUGraphic.html" title="type parameter in AbstractUGraphic">O</a>&gt;&nbsp;other)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Makes this UGraphic a copy of <code>other</code>, sharing its driver table rather
+ than building one of its own -- which is only sound because no driver
+ captures anything that differs between copies: the clip they used to hold the
+ UGraphic for now reaches them through <code>UParam#getClip()</code>, and what is
+ left (a StringBounder, a dpi factor, a FileFormat, an EpsStrategy) is fixed
+ for the whole family.</div>
+</div>
 </div>
 </section>
 </li>

@@ -76,8 +76,7 @@ public class UGraphicBraille extends AbstractUGraphic&lt;BrailleGrid&gt; impleme
 	private UGraphicBraille(UGraphicBraille other) {
 <span class="nc" id="L77">		super(other.getStringBounder());</span>
 <span class="nc" id="L78">		copy(other);</span>
-<span class="nc" id="L79">		register();</span>
-<span class="nc" id="L80">	}</span>
+<span class="nc" id="L79">	}</span>
 
 	// public UGraphicBraille(ColorMapper colorMapper, String backcolor, boolean
 	// textAsPath, double scale, String
@@ -100,22 +99,22 @@ public class UGraphicBraille extends AbstractUGraphic&lt;BrailleGrid&gt; impleme
 	// }
 
 	private void register() {
-<span class="nc" id="L103">		ignoreShape(URectangle.class);</span>
-<span class="nc" id="L104">		registerDriver(URectangle.class, new DriverRectangleBraille(this));</span>
-<span class="nc" id="L105">		registerDriver(UText.class, new DriverTextBraille());</span>
-<span class="nc" id="L106">		registerDriver(ULine.class, new DriverLineBraille(this));</span>
-<span class="nc" id="L107">		registerDriver(UPolygon.class, new DriverPolygonBraille(this));</span>
-<span class="nc" id="L108">		ignoreShape(UEllipse.class);</span>
-<span class="nc" id="L109">		ignoreShape(UImage.class);</span>
-<span class="nc" id="L110">		ignoreShape(UPath.class);</span>
-<span class="nc" id="L111">		registerDriver(DotPath.class, new DriverDotPathBraille());</span>
-<span class="nc" id="L112">		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterBraille());</span>
-<span class="nc" id="L113">	}</span>
+<span class="nc" id="L102">		ignoreShape(URectangle.class);</span>
+<span class="nc" id="L103">		registerDriver(URectangle.class, new DriverRectangleBraille());</span>
+<span class="nc" id="L104">		registerDriver(UText.class, new DriverTextBraille());</span>
+<span class="nc" id="L105">		registerDriver(ULine.class, new DriverLineBraille());</span>
+<span class="nc" id="L106">		registerDriver(UPolygon.class, new DriverPolygonBraille());</span>
+<span class="nc" id="L107">		ignoreShape(UEllipse.class);</span>
+<span class="nc" id="L108">		ignoreShape(UImage.class);</span>
+<span class="nc" id="L109">		ignoreShape(UPath.class);</span>
+<span class="nc" id="L110">		registerDriver(DotPath.class, new DriverDotPathBraille());</span>
+<span class="nc" id="L111">		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterBraille());</span>
+<span class="nc" id="L112">	}</span>
 
 	@Override
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
-<span class="nc" id="L117">		TextBlockExporter.builder(new BrailleDrawer(getGraphicObject()), new FileFormatOption(FileFormat.PNG), false)</span>
-<span class="nc" id="L118">				.metadata(metadata).build().exportTo(os);</span>
-<span class="nc" id="L119">	}</span>
+<span class="nc" id="L116">		TextBlockExporter.builder(new BrailleDrawer(getGraphicObject()), new FileFormatOption(FileFormat.PNG), false)</span>
+<span class="nc" id="L117">				.metadata(metadata).build().exportTo(os);</span>
+<span class="nc" id="L118">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -128,18 +128,23 @@ implements <a href="UParam.html" title="interface in net.sourceforge.plantuml.kl
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBackcolor()" class="member-name-link">getBackcolor</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColor()" class="member-name-link">getColor</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="UPattern.html" title="enum class in net.sourceforge.plantuml.klimt">UPattern</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPattern()" class="member-name-link">getPattern</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="UClip.html" title="class in net.sourceforge.plantuml.klimt">UClip</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getClip()" class="member-name-link">getClip</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">The clip in force for the shape being drawn, or <code>null</code> when there is none.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColor()" class="member-name-link">getColor</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="UStroke.html" title="class in net.sourceforge.plantuml.klimt">UStroke</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStroke()" class="member-name-link">getStroke</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="UPattern.html" title="enum class in net.sourceforge.plantuml.klimt">UPattern</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPattern()" class="member-name-link">getPattern</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isHidden()" class="member-name-link">isHidden</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="UStroke.html" title="class in net.sourceforge.plantuml.klimt">UStroke</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStroke()" class="member-name-link">getStroke</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isHidden()" class="member-name-link">isHidden</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -171,6 +176,24 @@ implements <a href="UParam.html" title="interface in net.sourceforge.plantuml.kl
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="getClip()">
+<h3>getClip</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="UClip.html" title="class in net.sourceforge.plantuml.klimt">UClip</a></span>&nbsp;<span class="element-name">getClip</span>()</div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="UParam.html#getClip()">UParam</a></code></span></div>
+<div class="block">The clip in force for the shape being drawn, or <code>null</code> when there is none.
+
+ This belongs here, alongside the stroke and the colors, because it is per-draw state
+ exactly as they are -- and because a driver must not reach for it any other way. A driver
+ is built once per <code>UGraphic</code> and kept for every copy that <code>UGraphic#apply</code>
+ makes of it, while the clip is one of the things those copies differ by; a driver holding
+ the <code>UGraphic</code> it was built from would therefore read the wrong instance's clip.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="UParam.html#getClip()">getClip</a></code>&nbsp;in interface&nbsp;<code><a href="UParam.html" title="interface in net.sourceforge.plantuml.klimt">UParam</a></code></dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="getColor()">
 <h3>getColor</h3>

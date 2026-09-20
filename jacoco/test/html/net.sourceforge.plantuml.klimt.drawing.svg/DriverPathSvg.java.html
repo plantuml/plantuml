@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.klimt.drawing.svg;
 
-import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.UPath;
@@ -45,37 +44,31 @@ import net.sourceforge.plantuml.klimt.color.HColorLinearGradient;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.drawing.g2d.DriverShadowedG2d;
 
-public class DriverPathSvg extends DriverShadowedG2d implements UDriver&lt;UPath, SvgGraphics&gt; {
+<span class="fc" id="L47">public class DriverPathSvg extends DriverShadowedG2d implements UDriver&lt;UPath, SvgGraphics&gt; {</span>
 	// ::remove file when __HAXE__
 
-	private final ClipContainer clipContainer;
-
-<span class="fc" id="L53">	public DriverPathSvg(ClipContainer clipContainer) {</span>
-<span class="fc" id="L54">		this.clipContainer = clipContainer;</span>
-<span class="fc" id="L55">	}</span>
-
 	public void draw(UPath shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
-<span class="fc" id="L58">		final UClip clip = clipContainer.getClip();</span>
-<span class="pc bpc" id="L59" title="3 of 4 branches missed.">		if (clip != null &amp;&amp; clip.isInside(x, y, shape) == false)</span>
-<span class="nc" id="L60">			return;</span>
+<span class="fc" id="L51">		final UClip clip = param.getClip();</span>
+<span class="pc bpc" id="L52" title="3 of 4 branches missed.">		if (clip != null &amp;&amp; clip.isInside(x, y, shape) == false)</span>
+<span class="nc" id="L53">			return;</span>
 
-<span class="fc" id="L62">		final HColor color = param.getColor();</span>
-<span class="fc" id="L63">		final HColor back = param.getBackcolor();</span>
+<span class="fc" id="L55">		final HColor color = param.getColor();</span>
+<span class="fc" id="L56">		final HColor back = param.getBackcolor();</span>
 
-<span class="pc bpc" id="L65" title="3 of 10 branches missed.">		if (color != null &amp;&amp; back != null &amp;&amp; color.equals(back) &amp;&amp; !(color instanceof HColorGradient)</span>
+<span class="pc bpc" id="L58" title="3 of 10 branches missed.">		if (color != null &amp;&amp; back != null &amp;&amp; color.equals(back) &amp;&amp; !(color instanceof HColorGradient)</span>
 				&amp;&amp; !(color instanceof HColorLinearGradient)) {
-<span class="fc" id="L67">			svg.setFillColor(color.toSvg(mapper));</span>
-<span class="fc" id="L68">			svg.setStrokeColor(&quot;&quot;);</span>
-<span class="fc" id="L69">			svg.setStrokeWidth(0, null);</span>
+<span class="fc" id="L60">			svg.setFillColor(color.toSvg(mapper));</span>
+<span class="fc" id="L61">			svg.setStrokeColor(&quot;&quot;);</span>
+<span class="fc" id="L62">			svg.setStrokeWidth(0, null);</span>
 		} else {
-<span class="fc" id="L71">			DriverRectangleSvg.applyFillColor(svg, mapper, param);</span>
-<span class="fc" id="L72">			DriverRectangleSvg.applyStrokeColor(svg, mapper, param);</span>
+<span class="fc" id="L64">			DriverRectangleSvg.applyFillColor(svg, mapper, param);</span>
+<span class="fc" id="L65">			DriverRectangleSvg.applyStrokeColor(svg, mapper, param);</span>
 
-<span class="fc" id="L74">			svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
+<span class="fc" id="L67">			svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
 		}
 
-<span class="fc" id="L77">		svg.svgPath(x, y, shape, shape.getDeltaShadow());</span>
+<span class="fc" id="L70">		svg.svgPath(x, y, shape, shape.getDeltaShadow());</span>
 
-<span class="fc" id="L79">	}</span>
+<span class="fc" id="L72">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

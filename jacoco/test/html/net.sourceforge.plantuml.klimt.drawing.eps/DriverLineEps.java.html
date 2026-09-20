@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.klimt.drawing.eps;
 
-import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -42,34 +41,28 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.geom.XLine2D;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 
-public class DriverLineEps implements UDriver&lt;ULine, EpsGraphics&gt; {
-
-	private final ClipContainer clipContainer;
-
-<span class="fc" id="L49">	public DriverLineEps(ClipContainer clipContainer) {</span>
-<span class="fc" id="L50">		this.clipContainer = clipContainer;</span>
-<span class="fc" id="L51">	}</span>
+<span class="fc" id="L44">public class DriverLineEps implements UDriver&lt;ULine, EpsGraphics&gt; {</span>
 
 	public void draw(ULine shape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
-<span class="fc" id="L54">		double x2 = x + shape.getDX();</span>
-<span class="fc" id="L55">		double y2 = y + shape.getDY();</span>
+<span class="fc" id="L47">		double x2 = x + shape.getDX();</span>
+<span class="fc" id="L48">		double y2 = y + shape.getDY();</span>
 
-<span class="fc" id="L57">		final UClip clip = clipContainer.getClip();</span>
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (clip != null) {</span>
-<span class="nc" id="L59">			final XLine2D line = clip.getClippedLine(new XLine2D(x, y, x2, y2));</span>
-<span class="nc bnc" id="L60" title="All 2 branches missed.">			if (line == null) {</span>
-<span class="nc" id="L61">				return;</span>
+<span class="fc" id="L50">		final UClip clip = param.getClip();</span>
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">		if (clip != null) {</span>
+<span class="nc" id="L52">			final XLine2D line = clip.getClippedLine(new XLine2D(x, y, x2, y2));</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">			if (line == null) {</span>
+<span class="nc" id="L54">				return;</span>
 			}
-<span class="nc" id="L63">			x = line.x1;</span>
-<span class="nc" id="L64">			y = line.y1;</span>
-<span class="nc" id="L65">			x2 = line.x2;</span>
-<span class="nc" id="L66">			y2 = line.y2;</span>
+<span class="nc" id="L56">			x = line.x1;</span>
+<span class="nc" id="L57">			y = line.y1;</span>
+<span class="nc" id="L58">			x2 = line.x2;</span>
+<span class="nc" id="L59">			y2 = line.y2;</span>
 		}
 
-<span class="fc" id="L69">		eps.setStrokeColor(param.getColor().toColor(mapper));</span>
-<span class="fc" id="L70">		eps.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashVisible(),</span>
-<span class="fc" id="L71">				param.getStroke().getDashSpace());</span>
-<span class="fc" id="L72">		eps.epsLine(x, y, x2, y2);</span>
-<span class="fc" id="L73">	}</span>
+<span class="fc" id="L62">		eps.setStrokeColor(param.getColor().toColor(mapper));</span>
+<span class="fc" id="L63">		eps.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashVisible(),</span>
+<span class="fc" id="L64">				param.getStroke().getDashSpace());</span>
+<span class="fc" id="L65">		eps.epsLine(x, y, x2, y2);</span>
+<span class="fc" id="L66">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

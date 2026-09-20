@@ -97,8 +97,8 @@ public class DriverTextAsPathG2d implements UDriver&lt;UText, Graphics2D&gt; {
 <span class="nc" id="L97">				g2d.fill(new Rectangle2D.Double(x, y - height + 1.5, width, height));</span>
 			}
 		}
-<span class="nc" id="L100">		visible.ensureVisible(x, y - height + 1.5);</span>
-<span class="nc" id="L101">		visible.ensureVisible(x + width, y + 1.5);</span>
+<span class="nc" id="L100">		visible.ensureVisible(x, y - height + 1.5, param.getClip());</span>
+<span class="nc" id="L101">		visible.ensureVisible(x + width, y + 1.5, param.getClip());</span>
 
 <span class="nc" id="L103">		g2d.setFont(font.getUnderlayingFont(text));</span>
 <span class="nc" id="L104">		g2d.setColor(fontConfiguration.getColor().toColor(mapper).toAwtColor());</span>

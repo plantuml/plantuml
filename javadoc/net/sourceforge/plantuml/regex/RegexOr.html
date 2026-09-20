@@ -130,9 +130,13 @@ implements <a href="IRegex.html" title="interface in net.sourceforge.plantuml.re
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="RegexPartialMatch.html" title="class in net.sourceforge.plantuml.regex">RegexPartialMatch</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createPartialMatch(java.util.Iterator)" class="member-name-link">createPartialMatch</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Iterator.html" title="class or interface in java.util" class="external-link">Iterator</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;it)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#fillPartialMatch(java.util.Iterator,java.util.Map)" class="member-name-link">fillPartialMatch</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Iterator.html" title="class or interface in java.util" class="external-link">Iterator</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;it,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="RegexPartialMatch.html" title="class in net.sourceforge.plantuml.regex">RegexPartialMatch</a>&gt;&nbsp;result)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Consumes from <code>it</code> the groups this node accounts for, and puts into <code>result</code> an
+ entry for each named part it holds.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPatternAsString()" class="member-name-link">getPatternAsString</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -207,14 +211,25 @@ implements <a href="IRegex.html" title="interface in net.sourceforge.plantuml.re
 </section>
 </li>
 <li>
-<section class="detail" id="createPartialMatch(java.util.Iterator)">
-<h3>createPartialMatch</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="RegexPartialMatch.html" title="class in net.sourceforge.plantuml.regex">RegexPartialMatch</a>&gt;</span>&nbsp;<span class="element-name">createPartialMatch</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Iterator.html" title="class or interface in java.util" class="external-link">Iterator</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;it)</span></div>
+<section class="detail" id="fillPartialMatch(java.util.Iterator,java.util.Map)">
+<h3>fillPartialMatch</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">fillPartialMatch</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Iterator.html" title="class or interface in java.util" class="external-link">Iterator</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;it,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="RegexPartialMatch.html" title="class in net.sourceforge.plantuml.regex">RegexPartialMatch</a>&gt;&nbsp;result)</span></div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="IRegex.html#fillPartialMatch(java.util.Iterator,java.util.Map)">IRegex</a></code></span></div>
+<div class="block">Consumes from <code>it</code> the groups this node accounts for, and puts into <code>result</code> an
+ entry for each named part it holds.
+
+ Filling a map the caller owns, rather than returning one, is what keeps a match to a single
+ map: the tree a command is built from is deep, and a node that returned its own map had
+ every entry re-hashed once more at each level on the way up.
+
+ <code>it</code> must be advanced by exactly <a href="IRegex.html#count()"><code>IRegex.count()</code></a> groups whether or not anything is
+ recorded, so that the groups stay aligned with the pattern for whatever comes next.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="IRegex.html#createPartialMatch(java.util.Iterator)">createPartialMatch</a></code>&nbsp;in interface&nbsp;<code><a href="IRegex.html" title="interface in net.sourceforge.plantuml.regex">IRegex</a></code></dd>
+<dd><code><a href="IRegex.html#fillPartialMatch(java.util.Iterator,java.util.Map)">fillPartialMatch</a></code>&nbsp;in interface&nbsp;<code><a href="IRegex.html" title="interface in net.sourceforge.plantuml.regex">IRegex</a></code></dd>
 <dt>Overrides:</dt>
-<dd><code><a href="RegexComposed.html#createPartialMatch(java.util.Iterator)">createPartialMatch</a></code>&nbsp;in class&nbsp;<code><a href="RegexComposed.html" title="class in net.sourceforge.plantuml.regex">RegexComposed</a></code></dd>
+<dd><code><a href="RegexComposed.html#fillPartialMatch(java.util.Iterator,java.util.Map)">fillPartialMatch</a></code>&nbsp;in class&nbsp;<code><a href="RegexComposed.html" title="class in net.sourceforge.plantuml.regex">RegexComposed</a></code></dd>
 </dl>
 </section>
 </li>

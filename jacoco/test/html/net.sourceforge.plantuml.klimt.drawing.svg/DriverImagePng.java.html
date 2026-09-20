@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.klimt.drawing.svg;
 
 import java.io.IOException;
 
-import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -44,31 +43,25 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.utils.Log;
 
-public class DriverImagePng implements UDriver&lt;UImage, SvgGraphics&gt; {
+<span class="fc" id="L46">public class DriverImagePng implements UDriver&lt;UImage, SvgGraphics&gt; {</span>
     // ::remove file when __HAXE__
 
-	private final ClipContainer clipContainer;
-
-<span class="fc" id="L52">	public DriverImagePng(ClipContainer clipContainer) {</span>
-<span class="fc" id="L53">		this.clipContainer = clipContainer;</span>
-<span class="fc" id="L54">	}</span>
-
 	public void draw(UImage image, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
-<span class="fc" id="L57">		final UClip clip = clipContainer.getClip();</span>
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (clip != null) {</span>
-<span class="nc bnc" id="L59" title="All 2 branches missed.">			if (clip.isInside(x, y) == false) {</span>
-<span class="nc" id="L60">				return;</span>
+<span class="fc" id="L50">		final UClip clip = param.getClip();</span>
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">		if (clip != null) {</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">			if (clip.isInside(x, y) == false) {</span>
+<span class="nc" id="L53">				return;</span>
 			}
-<span class="nc bnc" id="L62" title="All 2 branches missed.">			if (clip.isInside(x + image.getWidth(), y + image.getHeight()) == false) {</span>
-<span class="nc" id="L63">				return;</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">			if (clip.isInside(x + image.getWidth(), y + image.getHeight()) == false) {</span>
+<span class="nc" id="L56">				return;</span>
 			}
 		}
 
 		try {
-<span class="fc" id="L68">			svg.svgImage(image.getImage(1), x, y);</span>
-<span class="nc" id="L69">		} catch (IOException e) {</span>
-<span class="nc" id="L70">			Log.error(&quot;Error in svg for image &quot; + e);</span>
-<span class="fc" id="L71">		}</span>
-<span class="fc" id="L72">	}</span>
+<span class="fc" id="L61">			svg.svgImage(image.getImage(1), x, y);</span>
+<span class="nc" id="L62">		} catch (IOException e) {</span>
+<span class="nc" id="L63">			Log.error(&quot;Error in svg for image &quot; + e);</span>
+<span class="fc" id="L64">		}</span>
+<span class="fc" id="L65">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
