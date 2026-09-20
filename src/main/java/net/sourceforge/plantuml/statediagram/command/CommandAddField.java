@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.statediagram.command;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -44,6 +46,7 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -62,6 +65,12 @@ public class CommandAddField extends SingleLineCommand2<StateDiagram> {
 	public boolean isEligibleFor(ParserPass pass) {
 		return pass == ParserPass.ONE;
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FirstTokens.ANYTHING;
+	}
+
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandAddField.class.getName(), RegexLeaf.start(), //

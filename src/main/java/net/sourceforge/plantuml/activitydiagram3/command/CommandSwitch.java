@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -53,6 +56,8 @@ import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandSwitch extends SingleLineCommand2<ActivityDiagram3> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("#", "switch");
 
 	public CommandSwitch() {
 		super(getRegexConcat());
@@ -115,6 +120,11 @@ public class CommandSwitch extends SingleLineCommand2<ActivityDiagram3> {
 		diagram.startSwitch(Display.getWithNewlines(diagram.getPragma(), test), colors);
 
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

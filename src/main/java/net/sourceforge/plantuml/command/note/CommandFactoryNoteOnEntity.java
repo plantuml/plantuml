@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command.note;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
@@ -78,6 +81,8 @@ import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.Position;
 
 public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryCommand<AbstractEntityDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("note");
 
 	private final IRegex partialPattern;
 	private final String key;
@@ -172,6 +177,11 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 		return new SingleLineCommand2<AbstractEntityDiagram>(getRegexConcatSingleLine(partialPattern)) {
 
 			@Override
+			public Collection<String> mandatoryFirstTokensFast() {
+				return FIRST_TOKENS;
+			}
+
+			@Override
 			@Explain
 			protected String explainArg(LineLocation location, RegexResult arg) {
 				final StringBuilder sb = new StringBuilder(
@@ -208,6 +218,11 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 	public Command<AbstractEntityDiagram> createMultiLine(final boolean withBracket) {
 		return new CommandMultilines2<AbstractEntityDiagram>(getRegexConcatMultiLine(partialPattern, withBracket),
 				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, withBracket ? END_WITH_BRACKET : END) {
+
+			@Override
+			public Collection<String> mandatoryFirstTokensFast() {
+				return FIRST_TOKENS;
+			}
 
 			@Override
 			@Explain

@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
@@ -55,6 +57,7 @@ import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -84,6 +87,11 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 
 	public CommandLinkElement() {
 		super(getRegexConcat());
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FirstTokens.ANYTHING;
 	}
 
 	static IRegex getRegexConcat() {

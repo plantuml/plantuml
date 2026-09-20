@@ -168,7 +168,6 @@ public class PSystemBuilder {
 
 		factories.add(new PSystemDefinitionFactory());
 		factories.add(new ListSpriteDiagramFactory());
-		// factories.add(new StdlibDiagramFactory());
 		factories.add(new PSystemMathFactory());
 		factories.add(new PSystemLatexFactory());
 		factories.add(new PSystemCreoleFactory());

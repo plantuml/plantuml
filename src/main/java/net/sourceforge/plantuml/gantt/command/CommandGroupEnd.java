@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.gantt.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -46,6 +49,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandGroupEnd extends SingleLineCommand2<GanttDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("end", "endgroup");
 
 	public CommandGroupEnd() {
 		super(getRegexConcat());
@@ -65,6 +70,11 @@ public class CommandGroupEnd extends SingleLineCommand2<GanttDiagram> {
 	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		return diagram.endGroup();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

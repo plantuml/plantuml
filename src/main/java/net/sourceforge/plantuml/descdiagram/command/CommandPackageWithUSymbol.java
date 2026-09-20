@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
@@ -67,6 +70,11 @@ import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntityDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
+			"action", "artifact", "card", "cloud", "component", "database", "file", "folder",
+			"frame", "hexagon", "node", "package", "process", "queue", "rectangle", "stack",
+			"storage");
 
 	public CommandPackageWithUSymbol() {
 		super(getRegexConcat());
@@ -216,4 +224,10 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 		p.setColors(colors);
 		return CommandExecutionResult.ok();
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

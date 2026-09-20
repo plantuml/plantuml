@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -47,6 +50,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandGoto extends SingleLineCommand2<ActivityDiagram3> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("goto");
 
 	public CommandGoto() {
 		super(getRegexConcat());
@@ -73,6 +78,11 @@ public class CommandGoto extends SingleLineCommand2<ActivityDiagram3> {
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final String name = arg.get("NAME", 0);
 		return diagram.addGoto(name);
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

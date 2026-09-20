@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
@@ -68,6 +70,8 @@ import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateElementParenthesis extends SingleLineCommand2<ClassDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("(");
 
 	public CommandCreateElementParenthesis() {
 		super(getRegexConcat());
@@ -235,4 +239,10 @@ public class CommandCreateElementParenthesis extends SingleLineCommand2<ClassDia
 	private char getCharEncoding(final String codeRaw) {
 		return codeRaw != null && codeRaw.length() > 2 ? codeRaw.charAt(0) : 0;
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

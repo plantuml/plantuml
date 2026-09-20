@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -44,6 +47,10 @@ import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.url.UrlBuilder;
 
 public class CommandParticipantA extends CommandParticipant {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
+			"actor", "boundary", "collections", "control", "create", "database", "entity",
+			"participant", "queue");
 
 	public CommandParticipantA() {
 		super(getRegexConcat());
@@ -67,6 +74,11 @@ public class CommandParticipantA extends CommandParticipant {
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), RegexLeaf.end());
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

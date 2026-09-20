@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.wire;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -50,6 +53,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandSpot extends SingleLineCommand2<WireDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("spot");
 
 	public CommandSpot() {
 		super(false, getRegexConcat());
@@ -100,6 +105,11 @@ public class CommandSpot extends SingleLineCommand2<WireDiagram> {
 		final String y = arg.get("Y", 0);
 
 		return diagram.spot(name, color, x, y);
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

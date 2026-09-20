@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.wbs;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -53,6 +56,8 @@ import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandWBSItemNew extends SingleLineCommand2<WBSDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("*", "+", "-");
 
 	public CommandWBSItemNew(int mode) {
 		super(false, getRegexConcat(mode));
@@ -125,6 +130,11 @@ public class CommandWBSItemNew extends SingleLineCommand2<WBSDiagram> {
 			return CommandExecutionResult.error("Missing label for WBS node.");
 
 		return diagram.addIdea(code, backColor, diagram.getSmartLevel(type), label == null ? "" : label, dir, shape);
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

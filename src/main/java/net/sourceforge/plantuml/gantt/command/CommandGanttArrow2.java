@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.gantt.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -50,6 +53,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandGanttArrow2 extends SingleLineCommand2<GanttDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("[");
 
 	public CommandGanttArrow2() {
 		super(getRegexConcat());
@@ -86,6 +91,11 @@ public class CommandGanttArrow2 extends SingleLineCommand2<GanttDiagram> {
 		link.applyStyle(arg.get("ARROW_STYLE", 0));
 
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

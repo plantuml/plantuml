@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.descdiagram;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
@@ -63,6 +66,8 @@ import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("domain", "requirement");
 	public static final String DISPLAY_WITH_GENERIC = "[%g](.+?)(?:\\<(" + GenericRegexProducer.PATTERN + ")\\>)?[%g]";
 	public static final String CODE = "[^%s{}%g<>]+";
 
@@ -185,6 +190,11 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

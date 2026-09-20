@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.mindmap;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -50,6 +53,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandMindMapOrgmode extends SingleLineCommand2<MindMapDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("#", "*");
 
 	public CommandMindMapOrgmode() {
 		super(false, getRegexConcat());
@@ -109,4 +114,10 @@ public class CommandMindMapOrgmode extends SingleLineCommand2<MindMapDiagram> {
 		return diagram.addIdea(backColor, diagram.getSmartLevel(type), Display.getWithNewlines(diagram.getPragma(), label),
 				IdeaShape.fromDesc(arg.get("SHAPE", 0)));
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

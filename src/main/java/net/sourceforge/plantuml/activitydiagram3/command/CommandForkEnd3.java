@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.ForkStyle;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -49,6 +52,9 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandForkEnd3 extends SingleLineCommand2<ActivityDiagram3> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
+			"end", "endfork", "endmerge", "fork", "forkend");
 
 	public CommandForkEnd3() {
 		super(getRegexConcat());
@@ -108,6 +114,11 @@ public class CommandForkEnd3 extends SingleLineCommand2<ActivityDiagram3> {
 		final ForkStyle forkStyle = style.contains("merge") ? ForkStyle.MERGE : ForkStyle.FORK;
 		final String label = arg.get("LABEL", 0);
 		return diagram.endFork(forkStyle, label);
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

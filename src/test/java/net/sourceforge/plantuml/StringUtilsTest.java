@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -105,4 +106,13 @@ class StringUtilsTest {
 	void test_trimZeros(String s, String expected) {
 		assertEquals(expected, StringUtils.trimZeros(s));
 	}
+
+	@Test
+	void trinRemovesTheNonBreakingSpace() {
+		assertEquals("foo", StringUtils.trin("\u00A0 foo\u00A0"));
+		assertEquals("foo\u00A0bar", StringUtils.trin("\u00A0foo\u00A0bar\t"));
+		assertEquals("", StringUtils.trin("\u00A0\u00A0"));
+		assertEquals("foo", StringUtils.trim2("\u00A0foo \u00A0").toString());
+	}
+
 }

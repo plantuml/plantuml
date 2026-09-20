@@ -36,8 +36,11 @@
 package net.sourceforge.plantuml.command;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.ErrorUml;
@@ -55,12 +58,45 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.version.IteratorCounter2;
 
 public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
 	private final List<Command> cmds = new ArrayList<>();
+
+	// What each command of cmds declared, at the same index: its first tokens, or null for "any
+	// line". Asked once, when the commands are built, and never changed afterwards.
+	private List<Collection<String>> declared;
+
+	// Every token at least one command declared: the only tokens that get a bucket of their own.
+	private final Set<String> declaredTokens = new HashSet<>();
+
+	// Every command that can start with a given first token, in registration order -- first match
+	// wins, so an index may skip candidates but never reorder them. A bucket is only built the
+	// first time a line starts with its token (see getBucket), and a diagram uses a handful of the
+	// hundred or so tokens a factory declares: most buckets are never built at all. That is what
+	// keeps a single run -- PlantUML launched from the command line for one diagram -- from paying
+	// for all of them, with nothing afterwards to amortize the cost.
+	private final ConcurrentHashMap<String, List<Command>> cmdsByFirstToken = new ConcurrentHashMap<>();
+
+	// The commands that declared no first token at all, and so can match a line whichever one it
+	// starts with. This is the list to try when a line's first token is one no command claimed:
+	// every other command has said it cannot match such a line, which is exactly the answer
+	// asking each of them one by one used to produce -- some fifty thousand times per render of a
+	// thousand-line diagram.
+	private final List<Command> cmdsWithoutFirstToken = new ArrayList<>();
+
+	// Written last inside the synchronized block below, read first outside it. One factory is
+	// shared by every thread (PSystemBuilder keeps a static singleton holding one of each), and
+	// none of cmds, declared, declaredTokens and cmdsWithoutFirstToken changes once built, so the
+	// lock is only needed for the very first parse -- this flag is what keeps every later line from
+	// taking it. Reading it as true happens-after the write, which happens-after everything the
+	// block filled in, so those collections are fully visible without holding anything. The buckets
+	// themselves are built later, by whichever thread first needs one: the ConcurrentHashMap is
+	// what makes that safe.
+	private volatile boolean commandsReady;
 
 	protected abstract void initCommandsList(List<Command> cmds);
 
@@ -220,14 +256,71 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
 	}
 
-	private Step getCandidate(final IteratorCounter2 it) {
-		final BlocLines single = BlocLines.single(it.peek());
-		synchronized (cmds) {
-			if (cmds.size() == 0)
-				initCommandsList(cmds);
-		}
+	/**
+	 * The commands to try on a line whose first token is {@code token}, in registration order.
+	 *
+	 * A token no command declared -- a participant name, most of the time -- has no bucket of its
+	 * own: only the commands that claim every line can match it. Those tokens are deliberately not
+	 * cached, or the map would keep every name ever met, and grow for as long as a server runs.
+	 */
+	private List<Command> getBucket(String token) {
+		if (declaredTokens.contains(token) == false)
+			return cmdsWithoutFirstToken;
 
-		for (Command cmd : cmds) {
+		return cmdsByFirstToken.computeIfAbsent(token, this::buildBucket);
+	}
+
+	/**
+	 * The commands that declared {@code token}, or declared nothing at all, in registration order.
+	 * Only ever called once per token, by the ConcurrentHashMap, and it reads nothing but lists
+	 * that no longer change.
+	 */
+	private List<Command> buildBucket(String token) {
+		final List<Command> result = new ArrayList<>();
+		for (int i = 0; i < cmds.size(); i++)
+			if (declared.get(i) == null || declared.get(i).contains(token))
+				result.add(cmds.get(i));
+
+		return result;
+	}
+
+	private Step getCandidate(final IteratorCounter2 it) {
+		final StringLocated firstLine = it.peek();
+		final BlocLines single = BlocLines.single(firstLine);
+		if (commandsReady == false)
+			synchronized (cmds) {
+				if (commandsReady == false) {
+					initCommandsList(cmds);
+
+					// What each command declared, asked once here rather than once per line. A
+					// command returning null goes to cmdsWithoutFirstToken, and will go into every
+					// bucket as well, since it can match any line.
+					declared = new ArrayList<>(cmds.size());
+					for (Command cmd : cmds) {
+						final Collection<String> own = cmd.mandatoryFirstTokens();
+						declared.add(own);
+						if (own == null)
+							cmdsWithoutFirstToken.add(cmd);
+						else
+							declaredTokens.addAll(own);
+					}
+
+					// How much the index actually narrows things down for this factory: the
+					// commands left in cmdsWithoutFirstToken are the ones FirstTokens could not
+					// read, and so the next patterns worth teaching it.
+					Log.info(() -> getClass().getSimpleName() + ": " + cmdsWithoutFirstToken.size() + "/"
+							+ cmds.size() + " commands without first token, " + declaredTokens.size()
+							+ " tokens indexed");
+
+					commandsReady = true;
+				}
+			}
+
+		// Both lists are already the answer: a bucket holds the commands that claimed this token
+		// plus those that claim every line, and cmdsWithoutFirstToken holds the latter alone, for
+		// a token nobody claimed. Nothing is left to ask at this point.
+		for (Command cmd : getBucket(firstLine.getFirstToken())) {
+
 			final CommandControl result = safeIsValid(cmd, single);
 			if (result == CommandControl.OK) {
 				it.next();

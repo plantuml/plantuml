@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -54,6 +57,8 @@ import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.Position;
 
 public class CommandNote extends SingleLineCommand2<TimingDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("note");
 
 	public CommandNote() {
 		super(getRegexConcat());
@@ -122,6 +127,11 @@ public class CommandNote extends SingleLineCommand2<TimingDiagram> {
 		// diagram.getSkinParam().getIHtmlColorSet());
 		player.addNote(now, note, Position.fromString(arg.get("POSITION", 0)), stereotype);
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.Lazy;
@@ -56,6 +57,8 @@ import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public final class CommandFactorySprite implements SingleMultiFactoryCommand<TitledDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("sprite");
 
 	private final static Lazy<Pattern2> END = new Lazy<>(() -> Pattern2.cmpile("^end[%s]?sprite|\\}$"));
 
@@ -89,6 +92,11 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand<Tit
 
 	private final Command<TitledDiagram> commandMultiline = new CommandMultilines2<TitledDiagram>(multiline,
 			MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END) {
+
+		@Override
+		public Collection<String> mandatoryFirstTokensFast() {
+			return FIRST_TOKENS;
+		}
 
 		@Override
 		@Explain
@@ -128,6 +136,11 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand<Tit
 
 	public Command<TitledDiagram> createSingleLine() {
 		return new SingleLineCommand2<TitledDiagram>(singleLine) {
+
+			@Override
+			public Collection<String> mandatoryFirstTokensFast() {
+				return FIRST_TOKENS;
+			}
 
 			@Override
 			@Explain

@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.crash;
 
+import java.util.Collection;
+
 import com.plantuml.ubrex.UnicodeBracketedExpression;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexZeroOrMore;
@@ -44,6 +46,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -55,6 +58,11 @@ public class CommandCrashAny extends UBrexSingleLineCommand2<CrashDiagram> {
 
 	static UnicodeBracketedExpression getRegexConcat() {
 		return new UBrexZeroOrMore(new UBrexLeaf("〴."));
+	}
+	
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FirstTokens.ANYTHING;
 	}
 
 	@Override
@@ -69,5 +77,11 @@ public class CommandCrashAny extends UBrexSingleLineCommand2<CrashDiagram> {
 
 		return CommandExecutionResult.ok();
 	}
+	
+	@Override
+	public Collection<String> mandatoryFirstTokensSlow() {
+		return FirstTokens.ANYTHING;
+	}
+
 
 }

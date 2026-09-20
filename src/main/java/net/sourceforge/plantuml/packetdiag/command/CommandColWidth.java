@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.packetdiag.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -57,6 +60,8 @@ import net.sourceforge.plantuml.utils.LineLocation;
  * </p>
  */
 public class CommandColWidth extends SingleLineCommand2<PacketDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("colwidth");
 
 	public CommandColWidth() {
 		super(getRegexConcat());
@@ -84,4 +89,10 @@ public class CommandColWidth extends SingleLineCommand2<PacketDiagram> {
 		}
 		return CommandExecutionResult.ok();
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

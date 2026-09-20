@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.Lazy;
@@ -70,6 +72,12 @@ import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateElementMultilines extends CommandMultilines2<AbstractEntityDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
+			"action", "actor", "agent", "artifact", "boundary", "card", "circle", "cloud",
+			"collections", "component", "control", "database", "entity", "file", "folder", "frame",
+			"hexagon", "interface", "label", "node", "package", "person", "port", "portin",
+			"portout", "process", "queue", "rectangle", "stack", "storage", "usecase");
 
 	private final int type;
 
@@ -228,6 +236,11 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

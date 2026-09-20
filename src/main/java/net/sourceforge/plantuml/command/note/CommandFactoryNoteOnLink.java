@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command.note;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
@@ -66,6 +69,8 @@ import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.Position;
 
 public final class CommandFactoryNoteOnLink implements SingleMultiFactoryCommand<CucaDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("note");
 
 	private final ParserPass selectedpass;
 
@@ -115,6 +120,11 @@ public final class CommandFactoryNoteOnLink implements SingleMultiFactoryCommand
 				Trim.BOTH, END) {
 
 			@Override
+			public Collection<String> mandatoryFirstTokensFast() {
+				return FIRST_TOKENS;
+			}
+
+			@Override
 			@Explain
 			protected String explainNow(BlocLines lines) {
 				// Mirror executeNow: the lines between 'note on link' and 'end
@@ -155,6 +165,11 @@ public final class CommandFactoryNoteOnLink implements SingleMultiFactoryCommand
 
 	public Command<CucaDiagram> createSingleLine() {
 		return new SingleLineCommand2<CucaDiagram>(getRegexConcatSingleLine()) {
+
+			@Override
+			public Collection<String> mandatoryFirstTokensFast() {
+				return FIRST_TOKENS;
+			}
 
 			@Override
 			@Explain

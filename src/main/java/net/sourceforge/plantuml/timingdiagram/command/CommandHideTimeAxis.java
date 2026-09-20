@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -48,6 +51,8 @@ import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandHideTimeAxis extends SingleLineCommand2<TimingDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("hide", "manual");
 
 	public CommandHideTimeAxis() {
 		super(getRegexConcat());
@@ -78,6 +83,11 @@ public class CommandHideTimeAxis extends SingleLineCommand2<TimingDiagram> {
 		if ("MANUAL".equalsIgnoreCase(cmd))
 			return diagram.setTimeAxisStategy(TimeAxisStategy.MANUAL);
 		return diagram.setTimeAxisStategy(TimeAxisStategy.HIDDEN);
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

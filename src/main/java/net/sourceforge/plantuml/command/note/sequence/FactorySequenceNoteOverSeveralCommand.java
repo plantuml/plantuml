@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command.note.sequence;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -70,6 +73,9 @@ import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiFactoryCommand<SequenceDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
+			"&", "/", "hnote", "hnoteover", "note", "noteover", "rnote", "rnoteover");
 
 	private IRegex getRegexConcatMultiLine() {
 		return RegexConcat.build(FactorySequenceNoteOverSeveralCommand.class.getName() + "multi", RegexLeaf.start(), //
@@ -123,6 +129,11 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 
 	public Command<SequenceDiagram> createSingleLine() {
 		return new SingleLineCommand2<SequenceDiagram>(getRegexConcatSingleLine()) {
+
+			@Override
+			public Collection<String> mandatoryFirstTokensFast() {
+				return FIRST_TOKENS;
+			}
 
 			@Override
 			@Explain
@@ -193,6 +204,11 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 	public Command<SequenceDiagram> createMultiLine(boolean withBracket) {
 		return new CommandMultilines2<SequenceDiagram>(getRegexConcatMultiLine(),
 				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END) {
+
+			@Override
+			public Collection<String> mandatoryFirstTokensFast() {
+				return FIRST_TOKENS;
+			}
 
 			@Override
 			@Explain

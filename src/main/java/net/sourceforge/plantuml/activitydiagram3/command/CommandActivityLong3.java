@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -57,6 +60,8 @@ import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandActivityLong3 extends CommandMultilines3<ActivityDiagram3> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("#", ":");
 
 	private final static IRegex END = new RegexConcat(//
 			new RegexLeaf(1, "TEXT", "(.*)"), //
@@ -140,4 +145,10 @@ public class CommandActivityLong3 extends CommandMultilines3<ActivityDiagram3> {
 		lines = lines.overrideLastLine(lineLast.get("TEXT", 0));
 		return diagram.addActivity(lines.toDisplay(), style, url, stereogroup);
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
@@ -53,6 +56,8 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandBackwardLong3 extends CommandMultilines3<ActivityDiagram3> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("backward");
 
 	private final static IRegex END = new RegexConcat(//
 			new RegexLeaf(1, "TEXT", "(.*)"), //
@@ -121,4 +126,10 @@ public class CommandBackwardLong3 extends CommandMultilines3<ActivityDiagram3> {
 
 		return diagram.backward(lines.toDisplay(), style, in, out, stereotype);
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

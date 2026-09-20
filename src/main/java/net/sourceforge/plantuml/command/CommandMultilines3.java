@@ -35,8 +35,11 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
@@ -124,6 +127,13 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
 		return pass == ParserPass.ONE;
+	}
+
+	// Read from the pattern rather than declared beside it, so that the regex stays the only
+	// place this command says what it accepts.
+	@Override
+	public Collection<String> mandatoryFirstTokensSlow() {
+		return FirstTokens.from(starting);
 	}
 
 }

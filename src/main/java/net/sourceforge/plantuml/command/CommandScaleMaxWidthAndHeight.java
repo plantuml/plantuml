@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.ScaleMaxWidthAndHeight;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.core.AbstractDiagram;
@@ -45,6 +48,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandScaleMaxWidthAndHeight extends SingleLineCommand2<AbstractDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("scale");
 
 	public static final CommandScaleMaxWidthAndHeight ME = new CommandScaleMaxWidthAndHeight();
 
@@ -80,6 +85,11 @@ public class CommandScaleMaxWidthAndHeight extends SingleLineCommand2<AbstractDi
 		final double height = Double.parseDouble(arg.get("HEIGHT", 0));
 		diagram.setScale(new ScaleMaxWidthAndHeight(width, height));
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

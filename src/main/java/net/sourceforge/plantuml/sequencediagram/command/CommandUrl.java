@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -52,6 +55,8 @@ import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandUrl extends SingleLineCommand2<SequenceDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("url", "urlfor", "urlof");
 
 	public CommandUrl() {
 		super(getRegexConcat());
@@ -99,6 +104,11 @@ public class CommandUrl extends SingleLineCommand2<SequenceDiagram> {
 		final Url url = urlBuilder.getUrl(urlString);
 		p.setUrl(url);
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

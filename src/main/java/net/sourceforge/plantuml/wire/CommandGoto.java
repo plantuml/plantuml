@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.wire;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -46,6 +49,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandGoto extends SingleLineCommand2<WireDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("goto");
 
 	public CommandGoto() {
 		super(false, getRegexConcat());
@@ -81,6 +86,11 @@ public class CommandGoto extends SingleLineCommand2<WireDiagram> {
 		final double x = Double.parseDouble(arg.get("X", 0));
 		final double y = Double.parseDouble(arg.get("Y", 0));
 		return diagram.wgoto(indent, x, y);
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

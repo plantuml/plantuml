@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
@@ -57,6 +59,8 @@ import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDiagram3> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("repeat", "repeatwhile");
 
 	private final static IRegex END = new RegexConcat(//
 			new RegexLeaf(1, "TEST1", "(.*)"), new RegexLeaf("\\)"), //
@@ -134,6 +138,11 @@ public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDi
 		}
 
 		return diagram.repeatWhile(testDisplay, yes, out, linkLabel, linkColor, Stereogroup.NONE);
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

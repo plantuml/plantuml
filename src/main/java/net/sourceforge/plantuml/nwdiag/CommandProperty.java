@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.nwdiag;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -45,6 +48,9 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandProperty extends SingleLineCommand2<NwDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
+			"address", "color", "description", "width");
     // ::remove folder when __HAXE__
 
 	public CommandProperty() {
@@ -69,6 +75,11 @@ public class CommandProperty extends SingleLineCommand2<NwDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(NwDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		return diagram.setProperty(arg.get("NAME", 0), arg.get("VALUE", 0));
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

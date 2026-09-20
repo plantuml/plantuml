@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command.note.sequence;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -74,6 +77,11 @@ import net.sourceforge.plantuml.warning.Warning;
 
 public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFactoryCommand<SequenceDiagram> {
 
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
+			"hnote", "hnotebottom", "hnoteleft", "hnoteright", "hnotetop", "note", "notebottom",
+			"noteleft", "noteright", "notetop", "rnote", "rnotebottom", "rnoteleft", "rnoteright",
+			"rnotetop");
+
 	private IRegex getRegexConcatMultiLine() {
 		return RegexConcat.build(FactorySequenceNoteOnArrowCommand.class.getName() + "multi", RegexLeaf.start(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -105,6 +113,11 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 
 	public Command<SequenceDiagram> createSingleLine() {
 		return new SingleLineCommand2<SequenceDiagram>(getRegexConcatSingleLine()) {
+
+			@Override
+			public Collection<String> mandatoryFirstTokensFast() {
+				return FIRST_TOKENS;
+			}
 
 			@Override
 			@Explain
@@ -174,6 +187,11 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 	public Command<SequenceDiagram> createMultiLine(boolean withBracket) {
 		return new CommandMultilines2<SequenceDiagram>(getRegexConcatMultiLine(),
 				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END) {
+
+			@Override
+			public Collection<String> mandatoryFirstTokensFast() {
+				return FIRST_TOKENS;
+			}
 
 			@Override
 			@Explain

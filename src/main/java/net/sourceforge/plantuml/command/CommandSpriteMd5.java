@@ -36,6 +36,8 @@
 package net.sourceforge.plantuml.command;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
 
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.klimt.sprite.SpriteImage;
@@ -48,6 +50,8 @@ import net.sourceforge.plantuml.utils.Base64Coder;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandSpriteMd5 extends SingleLineCommand2<TitledDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("sprite");
 
 	public static final CommandSpriteMd5 ME = new CommandSpriteMd5();
 
@@ -83,6 +87,11 @@ public class CommandSpriteMd5 extends SingleLineCommand2<TitledDiagram> {
 		} catch (IOException e) {
 			return CommandExecutionResult.error("Cannot decode Base64 PNG sprite.");
 		}
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

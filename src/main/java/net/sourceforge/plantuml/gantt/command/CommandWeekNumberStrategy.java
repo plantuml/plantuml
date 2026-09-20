@@ -36,6 +36,8 @@
 package net.sourceforge.plantuml.gantt.command;
 
 import java.time.DayOfWeek;
+import java.util.Arrays;
+import java.util.Collection;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -49,6 +51,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandWeekNumberStrategy extends SingleLineCommand2<GanttDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("week", "weeks");
 
 	public CommandWeekNumberStrategy() {
 		super(getRegexConcat());
@@ -77,6 +81,11 @@ public class CommandWeekNumberStrategy extends SingleLineCommand2<GanttDiagram> 
 		final String num = arg.get("NUM", 0);
 		diagram.setWeekNumberStrategy(weekDay, Integer.parseInt(num));
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

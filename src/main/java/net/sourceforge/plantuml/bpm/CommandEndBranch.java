@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.bpm;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -46,6 +49,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandEndBranch extends SingleLineCommand2<BpmDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("end");
 
 	public CommandEndBranch() {
 		super(getRegexConcat());
@@ -69,6 +74,11 @@ public class CommandEndBranch extends SingleLineCommand2<BpmDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(BpmDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		return diagram.endBranch();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

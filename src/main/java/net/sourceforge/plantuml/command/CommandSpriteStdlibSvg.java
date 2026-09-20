@@ -36,6 +36,8 @@
 package net.sourceforge.plantuml.command;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
 
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.preproc.Stdlib;
@@ -47,6 +49,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandSpriteStdlibSvg extends SingleLineCommand2<TitledDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("sprite");
 
 	public static final CommandSpriteStdlibSvg ME = new CommandSpriteStdlibSvg();
 
@@ -77,6 +81,11 @@ public class CommandSpriteStdlibSvg extends SingleLineCommand2<TitledDiagram> {
 			return CommandExecutionResult.error("Cannot read sprite " + e.toString());
 		}
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

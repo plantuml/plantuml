@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -59,6 +62,9 @@ import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandElseIf3 extends SingleLineCommand2<ActivityDiagram3> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
+			"#", "(", "else", "elseif");
 
 	public CommandElseIf3() {
 		super(getRegexConcat());
@@ -164,6 +170,11 @@ public class CommandElseIf3 extends SingleLineCommand2<ActivityDiagram3> {
 		final LinkRendering when = CommandBackward3.getBackRendering(diagram, arg, "WHEN");
 
 		return diagram.elseIf(incoming, Display.getWithNewlines(diagram.getPragma(), test), when, color);
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

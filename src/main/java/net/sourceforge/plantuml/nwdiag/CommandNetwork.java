@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.nwdiag;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -45,6 +48,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandNetwork extends SingleLineCommand2<NwDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("network");
 
 	public CommandNetwork() {
 		super(getRegexConcat());
@@ -63,6 +68,19 @@ public class CommandNetwork extends SingleLineCommand2<NwDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(NwDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		return diagram.openNetwork(arg.get("NAME", 0));
+	}
+
+	// Declared by hand: the pattern also accepts the keyword glued to what follows it
+	// ("networkdmz {"), whose first token FirstTokens cannot list. Such a line is deliberately left
+	// out: it no longer reaches this command.
+	@Override
+	public Collection<String> mandatoryFirstTokensSlow() {
+		return FIRST_TOKENS;
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

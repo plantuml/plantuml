@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -50,6 +53,8 @@ import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandStyleMultilinesCSS extends CommandMultilines2<TitledDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("<");
 	// ::remove file when __HAXE__
 
 	private final static Lazy<Pattern2> END = new Lazy<>(() -> Pattern2.cmpile("^[%s]*\\</?style\\>[%s]*$"));
@@ -92,6 +97,11 @@ public class CommandStyleMultilinesCSS extends CommandMultilines2<TitledDiagram>
 			// Logme.error(e);
 			return CommandExecutionResult.error("General failure: no style available.");
 		}
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

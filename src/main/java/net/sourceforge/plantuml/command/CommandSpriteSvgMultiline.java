@@ -36,6 +36,8 @@
 package net.sourceforge.plantuml.command;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.Lazy;
@@ -53,6 +55,8 @@ import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandSpriteSvgMultiline extends CommandMultilines2<TitledDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("sprite");
 
 	private final static Lazy<Pattern2> END = new Lazy<>(() -> Pattern2.cmpile("(.*\\</svg\\>)$"));
 
@@ -105,4 +109,10 @@ public class CommandSpriteSvgMultiline extends CommandMultilines2<TitledDiagram>
 
 		return CommandExecutionResult.ok();
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.ebnf;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import com.plantuml.ubrex.UnicodeBracketedExpression;
 
 import net.sourceforge.plantuml.annotation.Explain;
@@ -46,6 +49,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class UBrexCommandComment extends UBrexSingleLineCommand2<PSystemEbnf> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("(");
 
 	public UBrexCommandComment() {
 		super(getRegexConcat());
@@ -68,6 +73,17 @@ public class UBrexCommandComment extends UBrexSingleLineCommand2<PSystemEbnf> {
 		final String tmp = arg.get("COMMENT", 0).trim();
 		final Display note = Display.getWithNewlines(diagram.getPragma(), tmp);
 		return diagram.addNote(note, null);
+	}
+
+	// Declared by hand: FirstTokens only reads regex patterns, and this one is a UBrex expression.
+	@Override
+	public Collection<String> mandatoryFirstTokensSlow() {
+		return FIRST_TOKENS;
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

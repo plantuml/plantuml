@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -55,6 +57,8 @@ import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandHideShowByVisibility extends SingleLineCommand2<TitledDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("hide", "show");
 
 	public static final CommandHideShowByVisibility ME = new CommandHideShowByVisibility();
 
@@ -175,6 +179,11 @@ public class CommandHideShowByVisibility extends SingleLineCommand2<TitledDiagra
 			return EntityPortion.FIELD;
 		}
 		throw new IllegalArgumentException();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

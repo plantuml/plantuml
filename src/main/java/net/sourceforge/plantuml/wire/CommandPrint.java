@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.wire;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -46,6 +49,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandPrint extends SingleLineCommand2<WireDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("print");
 
 	public CommandPrint() {
 		super(false, getRegexConcat());
@@ -81,6 +86,11 @@ public class CommandPrint extends SingleLineCommand2<WireDiagram> {
 		final String text = arg.get("TEXT", 0);
 		return diagram.print(indent, text);
 
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

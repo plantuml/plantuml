@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -45,6 +47,7 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -57,6 +60,11 @@ public class CommandStereotype extends SingleLineCommand2<ClassDiagram> {
 
 	public CommandStereotype() {
 		super(getRegexConcat());
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FirstTokens.ANYTHING;
 	}
 
 	static IRegex getRegexConcat() {

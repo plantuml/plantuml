@@ -35,12 +35,14 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Collection;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.teavm.TeaVM;
@@ -188,6 +190,13 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
 		return pass == ParserPass.ONE;
+	}
+
+	// Read from the pattern rather than declared beside it, so that the regex stays the only
+	// place this command says what it accepts.
+	@Override
+	public Collection<String> mandatoryFirstTokensSlow() {
+		return FirstTokens.from(pattern);
 	}
 
 }

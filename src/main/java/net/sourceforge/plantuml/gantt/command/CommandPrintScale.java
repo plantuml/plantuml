@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.gantt.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -50,6 +53,9 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandPrintScale extends SingleLineCommand2<GanttDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
+			"ganttscale", "printscale", "projectscale");
 
 	public CommandPrintScale() {
 		super(getRegexConcat());
@@ -101,6 +107,11 @@ public class CommandPrintScale extends SingleLineCommand2<GanttDiagram> {
 				diagram.setWeeklyHeaderStrategy(WeeklyHeaderStrategy.FROM_N, weekStartingNumber);
 			}
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.StringUtils;
@@ -50,6 +52,8 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandPragma extends SingleLineCommand2<TitledDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("!");
 
 	public static final CommandPragma ME = new CommandPragma();
 
@@ -134,6 +138,11 @@ public class CommandPragma extends SingleLineCommand2<TitledDiagram> {
 
 		}
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

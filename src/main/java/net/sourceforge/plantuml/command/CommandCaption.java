@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -49,6 +52,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCaption extends SingleLineCommand2<TitledDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("caption");
 
 	public static final CommandCaption ME = new CommandCaption();
 
@@ -82,6 +87,11 @@ public class CommandCaption extends SingleLineCommand2<TitledDiagram> {
 		final Display s = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy("DISPLAY", 0));
 		diagram.setCaption(DisplayPositioned.single(location, s, HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM));
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

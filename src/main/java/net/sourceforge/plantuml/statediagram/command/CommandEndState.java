@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.statediagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -48,6 +51,8 @@ import net.sourceforge.plantuml.statediagram.StateDiagram;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandEndState extends SingleLineCommand2<StateDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("end", "endstate", "}");
 
 	public CommandEndState() {
 		super(getRegexConcat());
@@ -82,6 +87,11 @@ public class CommandEndState extends SingleLineCommand2<StateDiagram> {
 
 		diagram.endGroup();
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

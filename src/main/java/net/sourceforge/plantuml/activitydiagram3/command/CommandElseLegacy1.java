@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -49,6 +52,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandElseLegacy1 extends SingleLineCommand2<ActivityDiagram3> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("else");
     // ::remove folder when __HAXE__
 
 	public CommandElseLegacy1() {
@@ -83,6 +88,11 @@ public class CommandElseLegacy1 extends SingleLineCommand2<ActivityDiagram3> {
 		// }
 		final Display when = Display.getWithNewlines(diagram.getPragma(), arg.get("WHEN", 0));
 		return diagram.else2(LinkRendering.none().withDisplay(when));
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

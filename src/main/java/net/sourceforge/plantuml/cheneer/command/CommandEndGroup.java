@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.cheneer.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.cheneer.ChenEerDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -47,6 +50,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandEndGroup extends SingleLineCommand2<ChenEerDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("}");
 
 	public CommandEndGroup() {
 		super(getRegexConcat());
@@ -71,6 +76,11 @@ public class CommandEndGroup extends SingleLineCommand2<ChenEerDiagram> {
 			return CommandExecutionResult.error("Unbalanced brackets");
 		}
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

@@ -36,6 +36,8 @@
 package net.sourceforge.plantuml.sequencediagram.command;
 
 import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.Collection;
 
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -50,6 +52,8 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandAutonumber extends SingleLineCommand2<SequenceDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("autonumber");
 
 	public CommandAutonumber() {
 		super(getConcat());
@@ -127,6 +131,11 @@ public class CommandAutonumber extends SingleLineCommand2<SequenceDiagram> {
 
 		diagram.autonumberGo(start, inc, decimalFormat);
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

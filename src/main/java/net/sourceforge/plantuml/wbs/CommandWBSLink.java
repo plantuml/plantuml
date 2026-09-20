@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.wbs;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -43,6 +45,7 @@ import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -52,10 +55,14 @@ import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandWBSLink extends SingleLineCommand2<WBSDiagram> {
-    // ::remove folder when __HAXE__
 
 	public CommandWBSLink() {
 		super(getRegexConcat());
+	}
+	
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FirstTokens.ANYTHING;
 	}
 
 	static IRegex getRegexConcat() {

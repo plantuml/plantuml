@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command.note;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
@@ -74,6 +77,8 @@ import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.Position;
 
 public final class CommandFactoryTipOnEntity implements SingleMultiFactoryCommand<AbstractEntityDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("note");
 
 	private final String key = "a";
 
@@ -137,6 +142,11 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 	public Command<AbstractEntityDiagram> createMultiLine(final boolean withBracket) {
 		return new CommandMultilines2<AbstractEntityDiagram>(getRegexConcatMultiLine(withBracket),
 				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, withBracket ? END_WITH_BRACKET : END) {
+
+			@Override
+			public Collection<String> mandatoryFirstTokensFast() {
+				return FIRST_TOKENS;
+			}
 
 			@Override
 			@Explain

@@ -45,6 +45,7 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.jaws.JawsStrange;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 final public class StringLocated {
@@ -272,6 +273,80 @@ final public class StringLocated {
 
 	public boolean containsExclamationMark() {
 		return (getFoxSignature() & EXCLAMATION_MARK) != 0L;
+	}
+
+	private String firstToken = null;
+
+	/**
+	 * The token the command index files this line under: {@code PSystemCommandFactory} only tries,
+	 * on a line, the commands that declared its first token (see
+	 * {@code Command#mandatoryFirstTokens}), plus those that declared nothing.
+	 *
+	 * <p>
+	 * Once the blanks the line opens with are skipped -- the very ones {@link #getTrimmed()}
+	 * removes, so that trimming a line never changes its token -- the token is:
+	 * <ul>
+	 * <li>for a line starting with an ASCII letter, the whole run of ASCII letters it starts with,
+	 * lower-cased: {@code "Title foo"} gives {@code "title"}, {@code "endif"} gives
+	 * {@code "endif"}, {@code "note2"} gives {@code "note"};</li>
+	 * <li>for a line starting with any other character, that character alone, as it is:
+	 * {@code "}"} gives {@code "}"}, {@code "-> B"} gives {@code "-"}, {@code "@0"} gives
+	 * {@code "@"}, {@code "12:00"} gives {@code "1"} -- every digit is a token of its own --
+	 * and a line starting with an accented letter has that letter for token;</li>
+	 * <li>for a blank line, {@code ""}.</li>
+	 * </ul>
+	 *
+	 * <p>
+	 * Why a single character rather than {@code ""} for every line that does not start with a
+	 * letter: those lines -- closing braces, arrows, dividers, activities, colors... -- used to
+	 * share one bucket, holding every command that could start that way. Measured on the Vega
+	 * corpus, they were 28% of the lines but 54% of the regex attempts. Their first character is
+	 * almost always enough to tell those commands apart.
+	 *
+	 * <p>
+	 * Letters are folded because the command patterns are compiled with {@code CASE_INSENSITIVE};
+	 * other characters are not, because that flag, without {@code UNICODE_CASE}, folds nothing
+	 * else. {@code net.sourceforge.plantuml.regex.FirstTokens} reads the tokens a pattern accepts
+	 * with this same definition: the two must change together.
+	 */
+	public String getFirstToken() {
+		if (firstToken == null) {
+			int start = 0;
+			while (start < s.length() && StringUtils.isTrimmable(s.charAt(start)))
+				start++;
+
+			if (start == s.length()) {
+				firstToken = "";
+			} else if (isLetter(s.charAt(start))) {
+				final StringBuilder sb = new StringBuilder();
+				int end = start;
+				while (end < s.length() && isLetter(s.charAt(end))) {
+					sb.append(toLowerCase(s.charAt(end)));
+					end++;
+				}
+				firstToken = sb.toString();
+			} else {
+				firstToken = String.valueOf(s.charAt(start));
+			}
+		}
+		return firstToken;
+	}
+
+	/**
+	 * Only ever called on a letter, as the loop above guarantees and the assert repeats, which is
+	 * what makes the fold a single bit: 'A'-'Z' become 'a'-'z' by setting bit 5, and 'a'-'z'
+	 * already have it. That is also exactly the folding Pattern.CASE_INSENSITIVE does without
+	 * UNICODE_CASE -- the flag the command patterns are compiled with -- so a token finds an
+	 * indexed command here whenever the pattern itself would have matched.
+	 */
+	private static char toLowerCase(char ch) {
+		if (TeaVM.a())
+			assert (isLetter(ch));
+		return (char) (ch | 0x20);
+	}
+
+	private static boolean isLetter(char ch) {
+		return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z');
 	}
 
 }

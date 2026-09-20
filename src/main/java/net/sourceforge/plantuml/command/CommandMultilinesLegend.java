@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
@@ -53,6 +56,8 @@ import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandMultilinesLegend extends CommandMultilines2<TitledDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("legend");
 
 	private final static Lazy<Pattern2> END = new Lazy<>(() -> Pattern2.cmpile("^end[%s]?legend$"));
 
@@ -130,4 +135,10 @@ public class CommandMultilinesLegend extends CommandMultilines2<TitledDiagram> {
 		}
 		return CommandExecutionResult.error("No legend defined");
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

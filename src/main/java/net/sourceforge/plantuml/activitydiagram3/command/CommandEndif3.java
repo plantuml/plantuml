@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -50,6 +53,8 @@ import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandEndif3 extends SingleLineCommand2<ActivityDiagram3> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("end", "endif");
 
 	public CommandEndif3() {
 		super(getRegexConcat());
@@ -94,6 +99,11 @@ public class CommandEndif3 extends SingleLineCommand2<ActivityDiagram3> {
 		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());
 
 		return diagram.endif(colors);
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

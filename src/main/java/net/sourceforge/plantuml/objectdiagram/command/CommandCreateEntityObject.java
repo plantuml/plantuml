@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.objectdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
@@ -63,6 +66,8 @@ import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateEntityObject extends SingleLineCommand2<AbstractClassOrObjectDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("object");
 
 	public CommandCreateEntityObject() {
 		super(getRegexConcat());
@@ -142,4 +147,10 @@ public class CommandCreateEntityObject extends SingleLineCommand2<AbstractClassO
 				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 		return CommandExecutionResult.ok();
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

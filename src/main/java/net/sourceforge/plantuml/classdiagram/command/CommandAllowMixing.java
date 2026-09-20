@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -47,6 +50,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandAllowMixing extends SingleLineCommand2<ClassDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("allow", "allowmixing");
 
 	public CommandAllowMixing() {
 		super(getRegexConcat());
@@ -77,4 +82,10 @@ public class CommandAllowMixing extends SingleLineCommand2<ClassDiagram> {
 		diagram.setAllowMixing(true);
 		return CommandExecutionResult.ok();
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

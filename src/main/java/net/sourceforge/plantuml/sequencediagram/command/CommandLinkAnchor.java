@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -47,6 +50,8 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandLinkAnchor extends SingleLineCommand2<SequenceDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("{");
 
 	public CommandLinkAnchor() {
 		super(getRegexConcat());
@@ -88,6 +93,11 @@ public class CommandLinkAnchor extends SingleLineCommand2<SequenceDiagram> {
 		final String anchor2 = arg.get("ANCHOR2", 0);
 		final String message = arg.get("MESSAGE", 0);
 		return diagram.linkAnchor(anchor1, anchor2, message);
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

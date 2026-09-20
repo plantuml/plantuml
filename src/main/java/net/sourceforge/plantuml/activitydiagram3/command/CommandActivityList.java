@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -54,6 +57,8 @@ import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandActivityList extends SingleLineCommand2<ActivityDiagram3> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("*", "-");
 
 	public CommandActivityList() {
 		super(getRegexConcat());
@@ -108,6 +113,11 @@ public class CommandActivityList extends SingleLineCommand2<ActivityDiagram3> {
 
 		return diagram.addActivity(Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0)), BoxStyle.PLAIN,
 				url, stereogroup);
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

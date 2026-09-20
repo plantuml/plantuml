@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
@@ -80,6 +83,11 @@ import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
+			"#", "+", "-", "abstract", "annotation", "class", "dataclass", "entity", "enum",
+			"exception", "interface", "metaclass", "protocol", "record", "static", "stereotype",
+			"struct", "~");
 
 	private static final String CODE = CommandLinkClass.getSeparator() + "?[%pLN_$]+" + "(?:"
 			+ CommandLinkClass.getSeparator() + "[%pLN_$]+)*";
@@ -437,4 +445,10 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 		return entity;
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

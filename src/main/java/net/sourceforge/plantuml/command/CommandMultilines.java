@@ -35,7 +35,10 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -88,6 +91,13 @@ public abstract class CommandMultilines<S extends Diagram> implements Command<S>
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
 		return pass == ParserPass.ONE;
+	}
+
+	// Read from the pattern rather than declared beside it, so that the regex stays the only
+	// place this command says what it accepts.
+	@Override
+	public Collection<String> mandatoryFirstTokensSlow() {
+		return FirstTokens.from(starting.pattern());
 	}
 
 }

@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -50,6 +53,8 @@ import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandBinary extends SingleLineCommand2<TimingDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("binary", "compact");
 
 	public CommandBinary() {
 		super(getRegexConcat());
@@ -115,6 +120,11 @@ public class CommandBinary extends SingleLineCommand2<TimingDiagram> {
 
 		diagram.createPlayerBinary(code, full, compact != null, stereotype);
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

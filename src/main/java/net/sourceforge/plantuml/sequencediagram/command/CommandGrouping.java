@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -56,6 +58,10 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandGrouping extends SingleLineCommand2<SequenceDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
+			"&", "also", "alt", "break", "critical", "else", "end", "group", "loop", "opt", "par",
+			"partition");
 
 	public CommandGrouping() {
 		super(getRegexConcat());
@@ -162,6 +168,11 @@ public class CommandGrouping extends SingleLineCommand2<SequenceDiagram> {
 		if (color == null)
 			return null;
 		return colorSet.getColor(color);
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

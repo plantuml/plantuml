@@ -34,6 +34,9 @@
  */
 package net.sourceforge.plantuml.chart.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.chart.ChartAnnotation;
 import net.sourceforge.plantuml.chart.ChartDiagram;
@@ -53,6 +56,8 @@ import net.sourceforge.plantuml.utils.LineLocation;
  * annotation "text" at (xPos, yPos) &lt;&lt;arrow&gt;&gt;
  */
 public class CommandChartAnnotation extends SingleLineCommand2<ChartDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("annotation");
 
 	public CommandChartAnnotation() {
 		super(false, getRegexConcat());
@@ -119,4 +124,10 @@ public class CommandChartAnnotation extends SingleLineCommand2<ChartDiagram> {
 
 		return diagram.addAnnotation(annotation);
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

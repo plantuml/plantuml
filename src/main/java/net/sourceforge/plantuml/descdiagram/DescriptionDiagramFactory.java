@@ -129,7 +129,6 @@ public class DescriptionDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandCreateMap());
 		cmds.add(new CommandCreateJson());
 		cmds.add(new CommandCreateJsonSingleLine());
-		// cmds.add(new CommandHideShowSpecificClass());
 
 		cmds.add(new CommandArchimate());
 		cmds.add(new CommandArchimateMultilines());

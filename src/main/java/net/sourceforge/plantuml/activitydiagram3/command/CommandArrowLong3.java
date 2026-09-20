@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.Lazy;
@@ -57,6 +59,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandArrowLong3 extends CommandMultilines2<ActivityDiagram3> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("-");
 
 	private final static Lazy<Pattern2> END = new Lazy<>(() -> Pattern2.cmpile("^(.*);$"));
 
@@ -130,6 +134,11 @@ public class CommandArrowLong3 extends CommandMultilines2<ActivityDiagram3> {
 		final int n = lines.size() - 1;
 		final CharSequence s = lines.get(n);
 		lines.set(n, (CS) s.subSequence(0, s.length() - 1));
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
@@ -61,6 +64,8 @@ import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("archimate");
 
 	public CommandArchimate() {
 		super(getRegexConcat());
@@ -158,4 +163,10 @@ public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
 
 		return CommandExecutionResult.ok();
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

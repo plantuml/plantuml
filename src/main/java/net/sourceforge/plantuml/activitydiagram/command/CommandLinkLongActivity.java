@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram.command;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.Lazy;
@@ -60,6 +61,7 @@ import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -82,6 +84,11 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 
 	public CommandLinkLongActivity() {
 		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FirstTokens.ANYTHING;
 	}
 
 	static IRegex getRegexConcat() {

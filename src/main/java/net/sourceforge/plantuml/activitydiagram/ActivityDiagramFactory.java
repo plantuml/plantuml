@@ -95,8 +95,6 @@ public class ActivityDiagramFactory extends PSystemCommandFactory {
 
 		cmds.add(new CommandLinkActivity());
 		cmds.add(new UBrexCommandHideShow2());
-		// addCommand(new CommandInnerConcurrent(system));
-
 	}
 
 }

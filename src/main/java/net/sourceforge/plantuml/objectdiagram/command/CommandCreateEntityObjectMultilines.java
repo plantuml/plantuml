@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.objectdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
@@ -69,6 +72,8 @@ import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateEntityObjectMultilines extends CommandMultilines2<AbstractClassOrObjectDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("object");
 
 	private final static Lazy<Pattern2> END = new Lazy<>(
 			() -> Pattern2.cmpile("^[%s]*\\}[%s]*$"));
@@ -174,6 +179,11 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
 				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 		return entity;
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

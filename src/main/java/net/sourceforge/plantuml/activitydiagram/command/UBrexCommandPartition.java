@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import com.plantuml.ubrex.UnicodeBracketedExpression;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
@@ -60,6 +63,8 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class UBrexCommandPartition extends UBrexSingleLineCommand2<ActivityDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("partition");
 
 	public UBrexCommandPartition() {
 		super(getRegexConcat());
@@ -123,6 +128,17 @@ public class UBrexCommandPartition extends UBrexSingleLineCommand2<ActivityDiagr
 		p.setStereotype(Stereotype.build(arg.get("STEREOTYPE", 0)));
 
 		return CommandExecutionResult.ok();
+	}
+
+	// Declared by hand: FirstTokens only reads regex patterns, and this one is a UBrex expression.
+	@Override
+	public Collection<String> mandatoryFirstTokensSlow() {
+		return FIRST_TOKENS;
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

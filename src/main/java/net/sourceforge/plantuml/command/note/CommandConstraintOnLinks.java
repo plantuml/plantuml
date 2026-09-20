@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.command.note;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import net.atmp.CucaDiagram;
@@ -54,6 +56,9 @@ import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public final class CommandConstraintOnLinks extends SingleLineCommand2<CucaDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
+			"constraint", "constrainton");
 
 	public CommandConstraintOnLinks() {
 		super(getRegexConcat());
@@ -105,6 +110,11 @@ public final class CommandConstraintOnLinks extends SingleLineCommand2<CucaDiagr
 		}
 		final BlocLines note = BlocLines.getWithNewlines(arg.get("NOTE", 0));
 		return diagram.constraintOnLinks(links.get(0), links.get(1), note.toDisplay());
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

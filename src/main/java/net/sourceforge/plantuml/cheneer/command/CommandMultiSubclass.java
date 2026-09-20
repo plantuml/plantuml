@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.cheneer.command;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.abel.Entity;
@@ -55,6 +56,7 @@ import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -65,6 +67,11 @@ public class CommandMultiSubclass extends SingleLineCommand2<ChenEerDiagram> {
 
 	public CommandMultiSubclass() {
 		super(getRegexConcat());
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FirstTokens.ANYTHING;
 	}
 
 	protected static IRegex getRegexConcat() {

@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -58,6 +61,8 @@ import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandReturn extends SingleLineCommand2<SequenceDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("&", "return");
 
 	public CommandReturn() {
 		super(getRegexConcat());
@@ -149,4 +154,18 @@ public class CommandReturn extends SingleLineCommand2<SequenceDiagram> {
 		return CommandExecutionResult.ok();
 
 	}
+
+	// Declared by hand: the pattern also accepts the keyword glued to what follows it
+	// ("returnfoo"), whose first token FirstTokens cannot list. Such a line is deliberately left
+	// out: it no longer reaches this command.
+	@Override
+	public Collection<String> mandatoryFirstTokensSlow() {
+		return FIRST_TOKENS;
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

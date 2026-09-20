@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.wbs;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.Lazy;
@@ -61,6 +63,8 @@ import net.sourceforge.plantuml.utils.Constant;
 import net.sourceforge.plantuml.utils.Direction;
 
 public class CommandWBSItemMultilineOld extends CommandMultilines2<WBSDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("*", "+", "-");
 
 	private final static Lazy<Pattern2> END = new Lazy<>(() -> Pattern2.cmpile("^(.*);\\s*(\\<\\<(.+)\\>\\>)?$"));
 
@@ -121,6 +125,11 @@ public class CommandWBSItemMultilineOld extends CommandMultilines2<WBSDiagram> {
 		return diagram.addIdea(code, backColor, diagram.getSmartLevel(type), lines.toDisplay(),
 				Stereotype.build(stereotype), dir, IdeaShape.fromDesc(line0.getLazzy("SHAPE", 0)));
 
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -106,5 +108,18 @@ public class CommandDecoratorMultine<D extends Diagram> implements Command<D> {
 		return cmd.isCommandForbidden(lines);
 	}
 
+	/**
+	 * The lines are glued into one before being handed over, so what the decorated command starts
+	 * with is what the first of them starts with.
+	 */
+	@Override
+	public Collection<String> mandatoryFirstTokensSlow() {
+		return cmd.mandatoryFirstTokensSlow();
+	}
+	
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return cmd.mandatoryFirstTokensFast();
+	}
 
 }

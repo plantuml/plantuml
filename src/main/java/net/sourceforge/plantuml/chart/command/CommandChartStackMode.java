@@ -34,6 +34,9 @@
  */
 package net.sourceforge.plantuml.chart.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.chart.ChartDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -46,6 +49,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandChartStackMode extends SingleLineCommand2<ChartDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("stackmode");
 
 	public CommandChartStackMode() {
 		super(false, getRegexConcat());
@@ -87,4 +92,10 @@ public class CommandChartStackMode extends SingleLineCommand2<ChartDiagram> {
 
 		return diagram.setStackMode(stackMode);
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

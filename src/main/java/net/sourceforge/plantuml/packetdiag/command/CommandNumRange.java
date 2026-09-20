@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.packetdiag.command;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 
@@ -68,6 +70,9 @@ import net.sourceforge.plantuml.utils.LineLocation;
  * Attributes (such as length) may be provided in brackets depending on the implementation.
  */
 public class CommandNumRange extends SingleLineCommand2<PacketDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
+			"*", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 
 	public CommandNumRange() {
 		super(getRegexConcat());
@@ -144,4 +149,10 @@ public class CommandNumRange extends SingleLineCommand2<PacketDiagram> {
 
 		return CommandExecutionResult.ok();
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

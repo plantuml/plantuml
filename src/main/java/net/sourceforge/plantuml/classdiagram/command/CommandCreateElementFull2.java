@@ -36,6 +36,8 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
@@ -69,6 +71,15 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> {
 
+	// Must stay in line with the keywords of CommandCreateElementFull.ALL_TYPES (plus "state").
+	private static final Collection<String> FIRST_TOKENS_NORMAL = Arrays.asList("state", "person", "artifact",
+			"actor", "folder", "card", "file", "package", "rectangle", "hexagon", "label", "node", "frame", "cloud",
+			"action", "process", "database", "queue", "stack", "storage", "agent", "usecase", "component", "boundary",
+			"control", "entity", "interface", "circle", "collections", "port", "portin", "portout");
+
+	// The "mix_" prefix is what the line opens with.
+	private static final Collection<String> FIRST_TOKENS_MIX = Arrays.asList("mix");
+
 	private final Mode mode;
 
 	public static enum Mode {
@@ -78,6 +89,11 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 	public CommandCreateElementFull2(Mode mode) {
 		super(getRegexConcat(mode));
 		this.mode = mode;
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return mode == Mode.WITH_MIX_PREFIX ? FIRST_TOKENS_MIX : FIRST_TOKENS_NORMAL;
 	}
 
 	private static RegexConcat getRegexConcat(Mode mode) {

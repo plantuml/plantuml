@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.gantt.command;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -42,6 +44,7 @@ import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.gantt.GanttConstraint;
 import net.sourceforge.plantuml.gantt.GanttDiagram;
 import net.sourceforge.plantuml.gantt.core.Task;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -52,6 +55,11 @@ public class CommandGanttArrow extends SingleLineCommand2<GanttDiagram> {
 
 	public CommandGanttArrow() {
 		super(getRegexConcat());
+	}
+	
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FirstTokens.ANYTHING;
 	}
 
 	static IRegex getRegexConcat() {

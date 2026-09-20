@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Collection;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.core.Diagram;
@@ -95,5 +96,18 @@ public final class ProtectedCommand<S extends Diagram> implements Command<S> {
 	public final boolean isCommandForbidden(BlocLines lines) {
 		return cmd.isCommandForbidden(lines);
 	}
+	
+	
+	@Override
+	public Collection<String> mandatoryFirstTokensSlow() {
+		return cmd.mandatoryFirstTokensSlow();
+	}
+	
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return cmd.mandatoryFirstTokensFast();
+	}
+
+
 
 }

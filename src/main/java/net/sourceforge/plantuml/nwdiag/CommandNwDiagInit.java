@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.nwdiag;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -45,6 +48,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandNwDiagInit extends SingleLineCommand2<NwDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("", "nwdiag", "{");
 
 	public CommandNwDiagInit() {
 		super(getRegexConcat());
@@ -60,6 +65,11 @@ public class CommandNwDiagInit extends SingleLineCommand2<NwDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(NwDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

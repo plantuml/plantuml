@@ -35,8 +35,12 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.regex.FirstTokens;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public interface Command<D extends Diagram> {
@@ -53,6 +57,45 @@ public interface Command<D extends Diagram> {
 
 	default boolean isCommandForbidden(BlocLines lines) {
 		return false;
+	}
+
+	/**
+	 * The first tokens a line must start with for this command to have any chance of
+	 * matching it, as {@code StringLocated#getFirstToken} computes it: the lower-cased run of
+	 * letters the line opens with, or its first character alone for a line that opens with
+	 * anything else ({@code "}"}, {@code "="} for "==", {@code "&"}, each digit...), or
+	 * {@code ""} for a blank line.
+	 *
+	 * This is the slow, reference answer: a command built on one of the usual base classes
+	 * reads it from its own pattern with {@link net.sourceforge.plantuml.regex.FirstTokens},
+	 * which keeps the regex the only place the command says what it accepts. It is not the
+	 * one used to dispatch lines: see {@link #mandatoryFirstTokensFast()}, which must agree
+	 * with it (checked by {@link #mandatoryFirstTokens()} when assertions are enabled).
+	 */
+	Collection<String> mandatoryFirstTokensSlow();
+
+	/**
+	 * The same answer as {@link #mandatoryFirstTokensSlow()}, written by hand so that it costs
+	 * nothing to get.
+	 *
+	 * Returning {@code null} ({@link net.sourceforge.plantuml.regex.FirstTokens#ANYTHING}) means
+	 * "I can match any line" and keeps the command in the list tried for every token nobody
+	 * claimed. That is the safe answer: a command that declares too much only costs the regex
+	 * attempts it could have skipped, while one that declares too few of its tokens stops being
+	 * reachable for the ones it left out. A non-null set is never empty in practice: it would
+	 * mean the command matches no line at all.
+	 */
+	Collection<String> mandatoryFirstTokensFast();
+
+	/**
+	 * The first tokens used to dispatch lines: {@link #mandatoryFirstTokensFast()}, checked
+	 * against {@link #mandatoryFirstTokensSlow()} when assertions are enabled (never under
+	 * TeaVM).
+	 */
+	default Collection<String> mandatoryFirstTokens() {
+		if (TeaVM.a())
+			assert FirstTokens.same(mandatoryFirstTokensFast(), mandatoryFirstTokensSlow());
+		return mandatoryFirstTokensFast();
 	}
 
 }

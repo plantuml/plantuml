@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -44,6 +47,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandEndPackage extends SingleLineCommand2<AbstractEntityDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("}");
 
 	public CommandEndPackage() {
 		super(getRegexConcat());
@@ -70,6 +75,11 @@ public class CommandEndPackage extends SingleLineCommand2<AbstractEntityDiagram>
 			return CommandExecutionResult.error("No package or namespace defined");
 		}
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import com.plantuml.ubrex.UnicodeBracketedExpression;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
@@ -51,17 +54,22 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class UBrexCommandEndPartition extends UBrexSingleLineCommand2<ActivityDiagram> {
 
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
+			"end", "endpartition", "}");
+
 	public UBrexCommandEndPartition() {
 		super(getRegexConcat());
 	}
 
 	static UnicodeBracketedExpression getRegexConcat() {
+		// UBrexLeaf.end() closes the whole expression. It used to sit inside the UBrexOr, as a
+		// third alternative, which made a blank line a valid "end partition".
 		return UBrexConcat.build(new UBrexOr( //
 				UBrexConcat.build(new UBrexLeaf("end"), //
 						UBrexLeaf.spaceZeroOrMore(), //
 						new UBrexLeaf("partition")), //
-				new UBrexLeaf("}"), //
-				UBrexLeaf.end())); //
+				new UBrexLeaf("}")), //
+				UBrexLeaf.end()); //
 	}
 
 	@Override
@@ -80,6 +88,17 @@ public class UBrexCommandEndPartition extends UBrexSingleLineCommand2<ActivityDi
 			return CommandExecutionResult.error("No partition defined");
 
 		return CommandExecutionResult.ok();
+	}
+
+	// Declared by hand: FirstTokens only reads regex patterns, and this one is a UBrex expression.
+	@Override
+	public Collection<String> mandatoryFirstTokensSlow() {
+		return FIRST_TOKENS;
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

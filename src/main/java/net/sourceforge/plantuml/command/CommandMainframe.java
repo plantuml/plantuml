@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -47,6 +50,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandMainframe extends SingleLineCommand2<TitledDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("mainframe");
 
 	public static final CommandMainframe ME = new CommandMainframe();
 
@@ -79,4 +84,10 @@ public class CommandMainframe extends SingleLineCommand2<TitledDiagram> {
 		diagram.setMainFrame(DisplayPositioned.single(location, label, null, null));
 		return CommandExecutionResult.ok();
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

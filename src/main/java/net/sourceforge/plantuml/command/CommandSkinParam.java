@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -46,6 +49,9 @@ import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandSkinParam extends SingleLineCommand2<TitledDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
+			"skinparam", "skinparamlocked");
 
 	public static final CommandSkinParam ME = new CommandSkinParam();
 
@@ -109,6 +115,11 @@ public class CommandSkinParam extends SingleLineCommand2<TitledDiagram> {
 			return CommandExecutionResult.error("General failure: no style available.");
 		}
 
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

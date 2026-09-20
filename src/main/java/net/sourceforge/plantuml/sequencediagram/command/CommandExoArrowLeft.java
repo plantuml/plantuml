@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -48,6 +51,9 @@ import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandExoArrowLeft extends CommandExoArrowAny {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
+			"&", "-", "/", "<", "?", "[", "\\", "]", "{");
 
 	public CommandExoArrowLeft() {
 		super(getRegexConcat());
@@ -192,6 +198,11 @@ public class CommandExoArrowLeft extends CommandExoArrowAny {
 			return MessageExoType.TO_LEFT;
 
 		throw new IllegalArgumentException();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -44,6 +47,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandNope extends SingleLineCommand2<Diagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("");
 
 	public static final CommandNope ME = new CommandNope();
 
@@ -68,6 +73,11 @@ public class CommandNope extends SingleLineCommand2<Diagram> {
 	protected CommandExecutionResult executeArg(Diagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

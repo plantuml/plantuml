@@ -36,6 +36,8 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
@@ -57,6 +59,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -103,6 +106,11 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 	public CommandLinkClass(DiagramType diagramType) {
 		super(getRegexConcat(diagramType));
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FirstTokens.ANYTHING;
 	}
 
 	static private RegexConcat getRegexConcat(DiagramType diagramType) {

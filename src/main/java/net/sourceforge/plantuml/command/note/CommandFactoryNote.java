@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command.note;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
@@ -66,6 +69,8 @@ import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public final class CommandFactoryNote implements SingleMultiFactoryCommand<AbstractEntityDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("note");
 	// ::remove folder when __HAXE__
 
 	public final static CommandFactoryNote ME = new CommandFactoryNote();
@@ -110,6 +115,11 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 		return new SingleLineCommand2<AbstractEntityDiagram>(singleLine) {
 
 			@Override
+			public Collection<String> mandatoryFirstTokensFast() {
+				return FIRST_TOKENS;
+			}
+
+			@Override
 			@Explain
 			protected String explainArg(LineLocation location, RegexResult arg) {
 				// 'note "text" as N1' creates a standalone named note, usable
@@ -134,6 +144,12 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 	public Command<AbstractEntityDiagram> createMultiLine(boolean withBracket) {
 		return new CommandMultilines2<AbstractEntityDiagram>(multiLine, MultilinesStrategy.KEEP_STARTING_QUOTE,
 				Trim.BOTH, END) {
+
+			@Override
+			public Collection<String> mandatoryFirstTokensFast() {
+				return FIRST_TOKENS;
+			}
+
 
 			@Override
 			@Explain

@@ -35,6 +35,8 @@
 package net.sourceforge.plantuml.chart.command;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.annotation.Explain;
@@ -54,6 +56,8 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandChartBar extends SingleLineCommand2<ChartDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("bar");
 
 	public CommandChartBar() {
 		super(false, getRegexConcat());
@@ -135,4 +139,10 @@ public class CommandChartBar extends SingleLineCommand2<ChartDiagram> {
 		}
 		return result;
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

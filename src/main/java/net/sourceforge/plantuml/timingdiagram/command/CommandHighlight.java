@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -54,6 +57,8 @@ import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandHighlight extends SingleLineCommand2<TimingDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("highlight");
 
 	public CommandHighlight() {
 		super(getRegexConcat());
@@ -111,6 +116,11 @@ public class CommandHighlight extends SingleLineCommand2<TimingDiagram> {
 		final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get("CAPTION", 0));
 		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		return diagram.highlight(tickFrom, tickTo, display, colors);
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

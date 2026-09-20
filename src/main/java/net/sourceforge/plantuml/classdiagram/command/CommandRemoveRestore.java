@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -47,6 +50,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandRemoveRestore extends SingleLineCommand2<CucaDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("remove", "restore");
 
 	public CommandRemoveRestore() {
 		super(getRegexConcat());
@@ -88,4 +93,10 @@ public class CommandRemoveRestore extends SingleLineCommand2<CucaDiagram> {
 		diagram.removeOrRestore(what, show);
 		return CommandExecutionResult.ok();
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

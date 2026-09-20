@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.cheneer.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -56,6 +59,8 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateEntity extends SingleLineCommand2<ChenEerDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("entity", "relationship");
 
 	public CommandCreateEntity() {
 		super(getRegexConcat());
@@ -136,6 +141,11 @@ public class CommandCreateEntity extends SingleLineCommand2<ChenEerDiagram> {
 		diagram.pushOwner(entity);
 
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

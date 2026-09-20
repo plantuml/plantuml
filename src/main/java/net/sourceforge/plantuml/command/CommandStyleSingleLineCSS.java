@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -50,6 +53,8 @@ import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandStyleSingleLineCSS extends SingleLineCommand2<TitledDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("<");
 
 	public static final CommandStyleSingleLineCSS ME = new CommandStyleSingleLineCSS();
 
@@ -90,6 +95,11 @@ public class CommandStyleSingleLineCSS extends SingleLineCommand2<TitledDiagram>
 		} catch (NoStyleAvailableException e) {
 			return CommandExecutionResult.error("General failure: no style available.");
 		}
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command.note;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
@@ -71,6 +74,8 @@ import net.sourceforge.plantuml.utils.Position;
 
 public final class CommandFactoryNoteActivity implements SingleMultiFactoryCommand<ActivityDiagram> {
 
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("note");
+
 	private IRegex getRegexConcatMultiLine() {
 		return RegexConcat.build(CommandFactoryNoteActivity.class.getName() + "multi", RegexLeaf.start(), //
 				new RegexLeaf("note"), //
@@ -93,14 +98,17 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(1, "NOTE", "(.*)"), RegexLeaf.end());
 	}
-	
-	private final static Lazy<Pattern2> END = new Lazy<>(
-			() -> Pattern2.cmpile("^[%s]*end[%s]?note$"));
 
+	private final static Lazy<Pattern2> END = new Lazy<>(() -> Pattern2.cmpile("^[%s]*end[%s]?note$"));
 
 	public Command<ActivityDiagram> createMultiLine(boolean withBracket) {
 		return new CommandMultilines2<ActivityDiagram>(getRegexConcatMultiLine(),
 				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END) {
+
+			@Override
+			public Collection<String> mandatoryFirstTokensFast() {
+				return FIRST_TOKENS;
+			}
 
 			@Override
 			@Explain
@@ -113,13 +121,12 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 					return "Adding a note";
 
 				final int bodyCount = lines.size() > 2 ? lines.size() - 2 : 0;
-				return explainInternal(arg,
-						" with " + bodyCount + (bodyCount == 1 ? " line" : " lines") + " of text");
+				return explainInternal(arg, " with " + bodyCount + (bodyCount == 1 ? " line" : " lines") + " of text");
 			}
 
 			@Override
-			public final CommandExecutionResult executeNow(final ActivityDiagram diagram, BlocLines lines, ParserPass currentPass)
-					throws NoSuchColorException {
+			public final CommandExecutionResult executeNow(final ActivityDiagram diagram, BlocLines lines,
+					ParserPass currentPass) throws NoSuchColorException {
 				// StringUtils.trim(lines, true);
 				final RegexResult arg = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 				lines = lines.subExtract(1, 1).expandsNewline(false);
@@ -151,6 +158,12 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 		return new SingleLineCommand2<ActivityDiagram>(getRegexConcatSingleLine()) {
 
 			@Override
+			public Collection<String> mandatoryFirstTokensFast() {
+				return FIRST_TOKENS;
+			}
+
+
+			@Override
 			@Explain
 			protected String explainArg(LineLocation location, RegexResult arg) {
 				// 'note left : text' (legacy activity diagram syntax).
@@ -163,17 +176,18 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 				final String tmp = diagram.getUniqueSequence("GN");
 				final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(tmp));
 
-				final Entity note = diagram.createNote(location, quark, tmp, Display.getWithNewlines(diagram.getPragma(), arg.get("NOTE", 0)));
+				final Entity note = diagram.createNote(location, quark, tmp,
+						Display.getWithNewlines(diagram.getPragma(), arg.get("NOTE", 0)));
 				return executeInternal(location, diagram, arg, note);
 			}
 		};
 	}
 
 	/**
-	 * Builds the explanation shared by the single line and the multiline
-	 * flavors, mirroring the fields read by executeInternal. The note is
-	 * linked, with a dashed line, to the last consulted activity, or to the
-	 * start node when nothing has been consulted yet.
+	 * Builds the explanation shared by the single line and the multiline flavors,
+	 * mirroring the fields read by executeInternal. The note is linked, with a
+	 * dashed line, to the last consulted activity, or to the start node when
+	 * nothing has been consulted yet.
 	 */
 	@Explain
 	private String explainInternal(RegexResult arg, String contentClause) {
@@ -187,8 +201,8 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 		return sb.toString();
 	}
 
-	private CommandExecutionResult executeInternal(LineLocation location, ActivityDiagram diagram, RegexResult arg, Entity note)
-			throws NoSuchColorException {
+	private CommandExecutionResult executeInternal(LineLocation location, ActivityDiagram diagram, RegexResult arg,
+			Entity note) throws NoSuchColorException {
 
 		final String s = arg.get("COLOR", 0);
 		note.setSpecificColorTOBEREMOVED(ColorType.BACK,
@@ -206,17 +220,17 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).goDashed();
 
 		if (position == Position.RIGHT)
-			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), activity,
-					note, type, LinkArg.noDisplay(1));
+			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), activity, note, type,
+					LinkArg.noDisplay(1));
 		else if (position == Position.LEFT)
-			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), note, activity,
-					type, LinkArg.noDisplay(1));
+			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), note, activity, type,
+					LinkArg.noDisplay(1));
 		else if (position == Position.BOTTOM)
-			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), activity,
-					note, type, LinkArg.noDisplay(2));
+			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), activity, note, type,
+					LinkArg.noDisplay(2));
 		else if (position == Position.TOP)
-			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), note, activity,
-					type, LinkArg.noDisplay(2));
+			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), note, activity, type,
+					LinkArg.noDisplay(2));
 		else
 			throw new IllegalArgumentException();
 

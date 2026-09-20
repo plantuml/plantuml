@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.gantt.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -56,6 +59,8 @@ import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandNoteBottom extends CommandMultilines2<GanttDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("note", "notebottom");
 
 	private final static Lazy<Pattern2> END = new Lazy<>(() -> Pattern2.cmpile("^end[%s]*note$"));
 
@@ -113,6 +118,11 @@ public class CommandNoteBottom extends CommandMultilines2<GanttDiagram> {
 
 		return diagram.addNote(strings, stereotype);
 
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

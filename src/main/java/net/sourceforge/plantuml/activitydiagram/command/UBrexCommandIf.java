@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram.command;
 
+import java.util.Collection;
+
 import com.plantuml.ubrex.UnicodeBracketedExpression;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
@@ -56,6 +58,7 @@ import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -64,6 +67,11 @@ public class UBrexCommandIf extends UBrexSingleLineCommand2<ActivityDiagram> {
 
 	public UBrexCommandIf() {
 		super(getRegexConcat());
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FirstTokens.ANYTHING;
 	}
 
 	static UnicodeBracketedExpression getRegexConcat() {
@@ -217,6 +225,12 @@ public class UBrexCommandIf extends UBrexSingleLineCommand2<ActivityDiagram> {
 		diagram.addLink(link);
 
 		return CommandExecutionResult.ok();
+	}
+	
+	
+	@Override
+	public Collection<String> mandatoryFirstTokensSlow() {
+		return FirstTokens.ANYTHING;
 	}
 
 }

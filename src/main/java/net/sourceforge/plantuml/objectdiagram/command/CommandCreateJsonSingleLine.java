@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.objectdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -64,6 +67,8 @@ import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractEntityDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("json");
 
 	public CommandCreateJsonSingleLine() {
 		super(getRegexConcat());
@@ -179,6 +184,11 @@ public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractEnti
 		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
 				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 		return entity;
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

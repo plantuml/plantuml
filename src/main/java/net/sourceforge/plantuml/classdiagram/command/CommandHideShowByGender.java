@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
@@ -61,6 +62,8 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandHideShowByGender extends SingleLineCommand2<TitledDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("hide", "show");
 
 	public static final CommandHideShowByGender ME = new CommandHideShowByGender();
 
@@ -301,6 +304,11 @@ public class CommandHideShowByGender extends SingleLineCommand2<TitledDiagram> {
 			return EntityPortion.STEREOTYPE;
 
 		throw new IllegalArgumentException();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

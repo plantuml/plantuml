@@ -36,6 +36,8 @@
 package net.sourceforge.plantuml.sequencediagram.command;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
@@ -59,6 +61,8 @@ import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("ref");
 
 	public CommandReferenceOverSeveral() {
 		super(getConcat());
@@ -141,6 +145,11 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 				diagram.getSkinParam().getCurrentStyleBuilder());
 		diagram.addReference(ref);
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

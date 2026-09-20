@@ -105,7 +105,6 @@ public class TimingDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandTicks());
 		cmds.add(new CommandPixelHeight());
 		cmds.add(new CommandUseDateFormat());
-		// cmds.add(new CommandStopAt());
 	}
 
 }

@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 
 import net.sourceforge.plantuml.TitledDiagram;
@@ -48,6 +50,8 @@ import net.sourceforge.plantuml.svg.parser.SvgSpriteParserFactory;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandSpriteSvg extends SingleLineCommand2<TitledDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("sprite");
 
 	public static final CommandSpriteSvg ME = new CommandSpriteSvg();
 
@@ -84,4 +88,10 @@ public class CommandSpriteSvg extends SingleLineCommand2<TitledDiagram> {
 
 		return CommandExecutionResult.ok();
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.mindmap;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.Lazy;
@@ -57,6 +59,8 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandMindMapOrgmodeMultiline extends CommandMultilines2<MindMapDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("#", "*");
 
 	private final static Lazy<Pattern2> END = new Lazy<>(
 			() -> Pattern2.cmpile("^(.*);\\s*(\\<\\<(.+)\\>\\>)?$"));
@@ -127,6 +131,11 @@ public class CommandMindMapOrgmodeMultiline extends CommandMultilines2<MindMapDi
 
 		return diagram.addIdea(Stereotype.build(stereotype), backColor, type.length() - 1, lines.toDisplay(),
 				IdeaShape.fromDesc(line0.get("SHAPE", 0)));
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

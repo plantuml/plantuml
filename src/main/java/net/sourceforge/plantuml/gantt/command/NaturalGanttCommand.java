@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.gantt.lang.Subject;
 import net.sourceforge.plantuml.gantt.ulang.VerbPhraseAction;
 import net.sourceforge.plantuml.gantt.ulang.VerbPhraseMatcher;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class NaturalGanttCommand implements Command<GanttDiagram> {
@@ -147,5 +148,17 @@ public class NaturalGanttCommand implements Command<GanttDiagram> {
 	public boolean isEligibleFor(ParserPass pass) {
 		return pass == ParserPass.ONE;
 	}
+	
+	@Override
+	public Collection<String> mandatoryFirstTokensSlow() {
+		return FirstTokens.ANYTHING;
+	}
+	
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FirstTokens.ANYTHING;
+	}
+
+
 
 }

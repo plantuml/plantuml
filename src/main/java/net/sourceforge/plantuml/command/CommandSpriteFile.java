@@ -37,6 +37,8 @@ package net.sourceforge.plantuml.command;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -58,6 +60,8 @@ import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.Log;
 
 public class CommandSpriteFile extends SingleLineCommand2<TitledDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("sprite");
 
 	public static final CommandSpriteFile ME = new CommandSpriteFile();
 
@@ -183,4 +187,10 @@ public class CommandSpriteFile extends SingleLineCommand2<TitledDiagram> {
 	private boolean isSvg(String name) {
 		return name.toLowerCase().endsWith(".svg");
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

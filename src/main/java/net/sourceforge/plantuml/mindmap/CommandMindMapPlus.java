@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.mindmap;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -50,6 +53,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandMindMapPlus extends SingleLineCommand2<MindMapDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("+", "-");
 
 	public CommandMindMapPlus() {
 		super(false, getRegexConcat());
@@ -101,6 +106,11 @@ public class CommandMindMapPlus extends SingleLineCommand2<MindMapDiagram> {
 		final boolean direction = type.contains("-") ? false : true;
 		return diagram.addIdea(backColor, type.length() - 1, Display.getWithNewlines(diagram.getPragma(), label),
 				IdeaShape.fromDesc(arg.get("SHAPE", 0)), direction);
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

@@ -601,6 +601,17 @@ public class StringUtils {
 		return s;
 	}
 
+	/**
+	 * The blanks {@link #trin(String)} removes: every control character, the space, and the
+	 * non-breaking space U+00A0. The last one is there because {@code %s} in a command pattern
+	 * accepts it too, and because it usually comes from a copy-paste rather than from any wish to
+	 * keep it: treating it as a blank here is what lets a line starting with it be read like any
+	 * other.
+	 */
+	public static boolean isTrimmable(char c) {
+		return c <= ' ' || c == '\u00A0';
+	}
+
 	public static String trin(String arg) {
 		final int len = arg.length();
 		if (len == 0)
@@ -611,13 +622,13 @@ public class StringUtils {
 
 		while (start <= end) {
 			final char cStart = arg.charAt(start);
-			if (cStart <= ' ') {
+			if (isTrimmable(cStart)) {
 				start++;
 				continue;
 			}
 
 			final char cEnd = arg.charAt(end);
-			if (cEnd <= ' ') {
+			if (isTrimmable(cEnd)) {
 				end--;
 				continue;
 			}
@@ -643,13 +654,13 @@ public class StringUtils {
 
 	    while (start <= end) {
 	        final char cStart = s.charAt(start);
-	        if (cStart <= ' ') {
+	        if (isTrimmable(cStart)) {
 	            start++;
 	            continue;
 	        }
 
 	        final char cEnd = s.charAt(end);
-	        if (cEnd <= ' ') {
+	        if (isTrimmable(cEnd)) {
 	            end--;
 	            continue;
 	        }

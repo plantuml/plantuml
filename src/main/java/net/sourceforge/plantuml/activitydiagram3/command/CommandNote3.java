@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -57,6 +60,9 @@ import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandNote3 extends SingleLineCommand2<ActivityDiagram3> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
+			"floating", "note", "noteleft", "noteright");
 
 	public CommandNote3() {
 		super(getRegexConcat());
@@ -129,6 +135,11 @@ public class CommandNote3 extends SingleLineCommand2<ActivityDiagram3> {
 			stereotype = Stereotype.build(stereotypeString);
 
 		return diagram.addNote(note, position, type, colors, stereotype);
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

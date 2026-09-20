@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.wbs;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -54,6 +57,8 @@ import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandWBSItemOld extends SingleLineCommand2<WBSDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("*", "+", "-");
 
 	private final int mode;
 
@@ -152,6 +157,11 @@ public class CommandWBSItemOld extends SingleLineCommand2<WBSDiagram> {
 	private static void appendIfPresent(StringBuilder sb, String before, String value, String after) {
 		if (value != null && value.length() > 0)
 			sb.append(before).append(value).append(after);
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

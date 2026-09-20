@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.statediagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -64,6 +67,8 @@ import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreatePackage2 extends SingleLineCommand2<StateDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("frame");
 
 	public CommandCreatePackage2() {
 		super(getRegexConcat());
@@ -184,6 +189,11 @@ public class CommandCreatePackage2 extends SingleLineCommand2<StateDiagram> {
 
 		p.setColors(colors);
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

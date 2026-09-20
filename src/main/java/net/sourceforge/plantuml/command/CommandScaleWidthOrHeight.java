@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.ScaleHeight;
 import net.sourceforge.plantuml.ScaleWidth;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -46,6 +49,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandScaleWidthOrHeight extends SingleLineCommand2<AbstractDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("scale");
 
 	public static final CommandScaleWidthOrHeight ME = new CommandScaleWidthOrHeight();
 
@@ -84,6 +89,11 @@ public class CommandScaleWidthOrHeight extends SingleLineCommand2<AbstractDiagra
 			diagram.setScale(new ScaleHeight(size));
 		}
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

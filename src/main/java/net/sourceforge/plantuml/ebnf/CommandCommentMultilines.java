@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.ebnf;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -51,6 +54,8 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandCommentMultilines extends CommandMultilines2<PSystemEbnf> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("(");
 
 	private final static Lazy<Pattern2> END = new Lazy<>(
 			() -> Pattern2.cmpile("^.*\\*\\)[%s]*$"));
@@ -80,6 +85,11 @@ public class CommandCommentMultilines extends CommandMultilines2<PSystemEbnf> {
 			throws NoSuchColorException {
 		final Display note = lines.removeFewChars(2).toDisplay();
 		return diagram.addNote(note, null);
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

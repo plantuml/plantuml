@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import com.plantuml.ubrex.UnicodeBracketedExpression;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
@@ -49,6 +52,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class UBrexCommandHideShow2 extends UBrexSingleLineCommand2<CucaDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("hide", "show");
 
 	public UBrexCommandHideShow2() {
 		super(getRegexConcat());
@@ -100,4 +105,16 @@ public class UBrexCommandHideShow2 extends UBrexSingleLineCommand2<CucaDiagram> 
 		diagram.hideOrShow2(what, show);
 		return CommandExecutionResult.ok();
 	}
+
+	// Declared by hand: FirstTokens only reads regex patterns, and this one is a UBrex expression.
+	@Override
+	public Collection<String> mandatoryFirstTokensSlow() {
+		return FIRST_TOKENS;
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -61,6 +64,9 @@ import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandNoteLong3 extends CommandMultilines2<ActivityDiagram3> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
+			"floating", "note", "noteleft", "noteright");
 
 	private final static Lazy<Pattern2> END = new Lazy<>(
 			() -> Pattern2.cmpile("^end[%s]?note$"));
@@ -141,4 +147,10 @@ public class CommandNoteLong3 extends CommandMultilines2<ActivityDiagram3> {
 				color().getRegex(), //
 				RegexLeaf.end());
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

@@ -36,6 +36,7 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
+import java.util.Collection;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
@@ -58,6 +59,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -77,6 +79,11 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 
 	public CommandCreateElementFull() {
 		super(getRegexConcat());
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FirstTokens.ANYTHING;
 	}
 
 	private static IRegex getRegexConcat() {

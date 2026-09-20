@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
@@ -50,6 +52,7 @@ import net.sourceforge.plantuml.decoration.LinkType;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -63,6 +66,11 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 
 	public CommandLinkLollipop(DiagramType diagramType) {
 		super(getRegexConcat(diagramType));
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FirstTokens.ANYTHING;
 	}
 
 	static RegexConcat getRegexConcat(DiagramType diagramType) {

@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command.note.sequence;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -72,6 +75,10 @@ import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.warning.Warning;
 
 public final class FactorySequenceNoteCommand implements SingleMultiFactoryCommand<SequenceDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
+			"&", "/", "hnote", "hnoteleft", "hnoteover", "hnoteright", "note", "noteleft",
+			"noteover", "noteright", "rnote", "rnoteleft", "rnoteover", "rnoteright");
 	// ::remove folder when __HAXE__
 
 	private IRegex getRegexConcatMultiLine() {
@@ -122,6 +129,11 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END) {
 
 			@Override
+			public Collection<String> mandatoryFirstTokensFast() {
+				return FIRST_TOKENS;
+			}
+
+			@Override
 			@Explain
 			protected String explainNow(BlocLines lines) {
 				// Mirror executeNow: the first line carries the declaration, the
@@ -153,6 +165,11 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 
 	public Command<SequenceDiagram> createSingleLine() {
 		return new SingleLineCommand2<SequenceDiagram>(getRegexConcatSingleLine()) {
+
+			@Override
+			public Collection<String> mandatoryFirstTokensFast() {
+				return FIRST_TOKENS;
+			}
 
 			@Override
 			@Explain

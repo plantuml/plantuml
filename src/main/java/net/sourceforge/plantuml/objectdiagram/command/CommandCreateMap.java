@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.objectdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
@@ -74,6 +77,8 @@ import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateMap extends CommandMultilines2<AbstractEntityDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("map");
 
 	private final static Lazy<Pattern2> END = new Lazy<>(
 			() -> Pattern2.cmpile("^[%s]*\\}[%s]*$"));
@@ -229,6 +234,11 @@ public class CommandCreateMap extends CommandMultilines2<AbstractEntityDiagram> 
 		entity.setColors(colors);
 
 		return entity;
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

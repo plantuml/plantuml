@@ -36,7 +36,10 @@
  */
 package net.sourceforge.plantuml.statediagram.command;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -46,6 +49,12 @@ public class CommandLinkStateReverse extends CommandLinkStateCommon {
 
 	public CommandLinkStateReverse() {
 		super(getRegex());
+	}
+	
+	
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FirstTokens.ANYTHING;
 	}
 
 	static RegexConcat getRegex() {

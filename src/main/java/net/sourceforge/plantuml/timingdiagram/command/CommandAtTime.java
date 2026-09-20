@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -49,6 +52,8 @@ import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandAtTime extends SingleLineCommand2<TimingDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("@");
 
 	public CommandAtTime() {
 		super(getRegexConcat());
@@ -94,6 +99,11 @@ public class CommandAtTime extends SingleLineCommand2<TimingDiagram> {
 		final String code = arg.get("CODE", 0);
 		diagram.addTime(timeTick, code);
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

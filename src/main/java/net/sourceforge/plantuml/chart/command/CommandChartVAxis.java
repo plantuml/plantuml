@@ -35,6 +35,8 @@
 package net.sourceforge.plantuml.chart.command;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +55,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandChartVAxis extends SingleLineCommand2<ChartDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("v", "y");
 
 	public CommandChartVAxis() {
 		super(false, getRegexConcat());
@@ -250,4 +254,10 @@ public class CommandChartVAxis extends SingleLineCommand2<ChartDiagram> {
 
 		return ticks;
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

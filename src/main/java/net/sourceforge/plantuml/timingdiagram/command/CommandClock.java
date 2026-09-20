@@ -36,6 +36,8 @@
 package net.sourceforge.plantuml.timingdiagram.command;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Collection;
 
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -52,6 +54,8 @@ import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandClock extends SingleLineCommand2<TimingDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("clock", "compact");
 
 	public CommandClock() {
 		super(getRegexConcat());
@@ -148,6 +152,11 @@ public class CommandClock extends SingleLineCommand2<TimingDiagram> {
 		if (value == null)
 			return BigDecimal.ZERO;
 		return new BigDecimal(value);
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -58,6 +61,8 @@ import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandNamespace extends SingleLineCommand2<ClassDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("namespace");
 
 	public static final String NAMESPACE_REGEX = "([%pLN_][-%pLN_.:\\\\/]*)";
 
@@ -135,6 +140,11 @@ public class CommandNamespace extends SingleLineCommand2<ClassDiagram> {
 			p.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColor(color));
 
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

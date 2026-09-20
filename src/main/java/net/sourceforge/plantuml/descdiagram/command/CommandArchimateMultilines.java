@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.Lazy;
@@ -67,6 +69,8 @@ import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntityDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("archimate");
 
 	private final static Lazy<Pattern2> END = new Lazy<>(
 			() -> Pattern2.cmpile("^(.*)\\]$"));
@@ -169,6 +173,11 @@ public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntit
 		entity.setColors(colors);
 
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

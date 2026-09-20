@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
@@ -69,6 +72,11 @@ import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
+			"#", "+", "-", "abstract", "annotation", "circle", "class", "dataclass", "diamond",
+			"entity", "enum", "exception", "interface", "map", "metaclass", "protocol", "record",
+			"static", "stereotype", "struct", "~");
 
 	enum Mode {
 		EXTENDS, IMPLEMENTS
@@ -242,6 +250,11 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 			entity.setStatic(true);
 
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.klimt.drawing.svg;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -118,7 +117,9 @@ public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
 				text = text.substring(1);
 			}
 		}
-		text = StringUtils.trin(text);
+		// Not StringUtils.trin(), which removes U+00A0 as well: a blank-only text has just been
+		// turned into non-breaking spaces precisely so that it survives this trim.
+		text = text.trim();
 		final XDimension2D dim = stringBounder.calculateDimension(font, text);
 		final double width = dim.getWidth();
 		final double height = dim.getHeight();

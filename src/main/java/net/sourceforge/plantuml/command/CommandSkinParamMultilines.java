@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.regex.Matcher2;
@@ -43,7 +46,10 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandSkinParamMultilines extends CommandMultilinesBracket<TitledDiagram> {
 
-	private static final Pattern2 COMMENT_SINGLE_LINE = Pattern2.cmpile(CommandMultilinesComment.COMMENT_SINGLE_LINE);
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("skinparam");
+
+	// A comment line inside the block: a single-quote comment, or a /' ... '/ one on a single line.
+	private static final Pattern2 COMMENT_SINGLE_LINE = Pattern2.cmpile("^[%s]*([%q].*|/[%q].*[%q]/[%s]*)$");
 	public static final CommandSkinParamMultilines ME = new CommandSkinParamMultilines();
 
 	private CommandSkinParamMultilines() {
@@ -106,6 +112,11 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<TitledD
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
 		return pass == ParserPass.ONE;
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

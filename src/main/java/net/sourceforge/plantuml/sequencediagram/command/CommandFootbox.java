@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -47,6 +50,9 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandFootbox extends SingleLineCommand2<SequenceDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
+			"footbox", "hide", "hidefootbox", "show", "showfootbox");
 
 	public static final IRegex HIDE_SHOW_FOOTBOX = RegexConcat.build(CommandFootbox.class.getName(), RegexLeaf.start(), //
 			new RegexLeaf(1, "TYPE", "(hide|show)?"), //
@@ -76,4 +82,10 @@ public class CommandFootbox extends SingleLineCommand2<SequenceDiagram> {
 		diagram.setShowFootbox(footbox);
 		return CommandExecutionResult.ok();
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

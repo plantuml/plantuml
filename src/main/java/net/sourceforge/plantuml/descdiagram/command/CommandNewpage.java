@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.NewpagedDiagram;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -49,6 +52,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandNewpage extends SingleLineCommand2<TitledDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("newpage");
 
 	private final PSystemCommandFactory factory;
 
@@ -86,4 +91,10 @@ public class CommandNewpage extends SingleLineCommand2<TitledDiagram> {
 				diagram.getPreprocessingArtifact());
 		return CommandExecutionResult.newDiagram(result);
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

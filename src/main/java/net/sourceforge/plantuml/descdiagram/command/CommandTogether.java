@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -48,6 +51,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandTogether extends SingleLineCommand2<AbstractEntityDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("together");
 
 	public CommandTogether() {
 		super(getRegexConcat());
@@ -75,4 +80,10 @@ public class CommandTogether extends SingleLineCommand2<AbstractEntityDiagram> {
 		final CommandExecutionResult status = diagram.gotoTogether();
 		return status;
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

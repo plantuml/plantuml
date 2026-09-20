@@ -36,6 +36,8 @@
 package net.sourceforge.plantuml.sequencediagram.command;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
 
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -49,6 +51,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandSkin extends SingleLineCommand2<TitledDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("skin");
 
 	public static final CommandSkin ME = new CommandSkin();
 
@@ -80,4 +84,10 @@ public class CommandSkin extends SingleLineCommand2<TitledDiagram> {
 			return CommandExecutionResult.error("Skin read error");
 		}
 	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
+	}
+
 }

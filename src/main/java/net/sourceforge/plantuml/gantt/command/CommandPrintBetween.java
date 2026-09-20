@@ -36,6 +36,8 @@
 package net.sourceforge.plantuml.gantt.command;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Collection;
 
 import com.plantuml.ubrex.Capture;
 import com.plantuml.ubrex.UnicodeBracketedExpression;
@@ -53,6 +55,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandPrintBetween extends UBrexSingleLineCommand2<GanttDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("print");
 
 	private static final ComplementDate pattern = ComplementDate.any();
 
@@ -94,6 +98,17 @@ public class CommandPrintBetween extends UBrexSingleLineCommand2<GanttDiagram> {
 		final LocalDate end = pattern.getMe(diagram, endCapture).get();
 		diagram.setPrintInterval(start, end);
 		return CommandExecutionResult.ok();
+	}
+
+	// Declared by hand: FirstTokens only reads regex patterns, and this one is a UBrex expression.
+	@Override
+	public Collection<String> mandatoryFirstTokensSlow() {
+		return FIRST_TOKENS;
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

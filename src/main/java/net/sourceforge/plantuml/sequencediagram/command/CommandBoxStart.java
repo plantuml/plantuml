@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -57,6 +60,8 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandBoxStart extends SingleLineCommand2<SequenceDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("box");
 
 	public CommandBoxStart() {
 		super(getRegexConcat());
@@ -128,6 +133,11 @@ public class CommandBoxStart extends SingleLineCommand2<SequenceDiagram> {
 		diagram.boxStart(Display.getWithNewlines(diagram.getPragma(), title), colors.getColor(ColorType.BACK),
 				stereotype);
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }

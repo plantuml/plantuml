@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.gantt.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import com.plantuml.ubrex.UnicodeBracketedExpression;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
@@ -51,6 +54,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandHideShowColumns extends UBrexSingleLineCommand2<GanttDiagram> {
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("hide", "show");
 
 	public CommandHideShowColumns() {
 		super(getRegexConcat());
@@ -83,6 +88,17 @@ public class CommandHideShowColumns extends UBrexSingleLineCommand2<GanttDiagram
 
 		final GanttTaskTableColumn column = GanttTaskTableColumn.of(what);
 		return diagram.hideOrShowColumn(show, column);
+	}
+
+	// Declared by hand: FirstTokens only reads regex patterns, and this one is a UBrex expression.
+	@Override
+	public Collection<String> mandatoryFirstTokensSlow() {
+		return FIRST_TOKENS;
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }
