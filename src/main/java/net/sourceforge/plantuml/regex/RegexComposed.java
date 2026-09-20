@@ -79,13 +79,10 @@ public abstract class RegexComposed implements IRegex {
 		this.partials = Collections.unmodifiableList(Arrays.asList(partial));
 	}
 
-	public Map<String, RegexPartialMatch> createPartialMatch(Iterator<String> it) {
+	public void fillPartialMatch(Iterator<String> it, Map<String, RegexPartialMatch> result) {
 		// nbCreateMatches.incrementAndGet();
-		final Map<String, RegexPartialMatch> result = new HashMap<String, RegexPartialMatch>();
 		for (IRegex r : partials)
-			result.putAll(r.createPartialMatch(it));
-
-		return result;
+			r.fillPartialMatch(it, result);
 	}
 
 	final public int count() {
@@ -106,7 +103,10 @@ public abstract class RegexComposed implements IRegex {
 			return null;
 
 		final Iterator<String> it = new MatcherIterator(matcher);
-		return new RegexResult(createPartialMatch(it));
+		// The one map of the whole match: every node below fills this same instance.
+		final Map<String, RegexPartialMatch> result = new HashMap<String, RegexPartialMatch>();
+		fillPartialMatch(it, result);
+		return new RegexResult(result);
 	}
 
 	public boolean match(StringLocated s) {
