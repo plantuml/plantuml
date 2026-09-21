@@ -57,21 +57,21 @@ import zext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 <span class="fc" id="L57">	private static final Lock lock = new ReentrantLock();</span>
 
 	public PortableImage exportFlashcode(String s, XColor fore, XColor back) {
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (lock.tryLock())</span>
-			try {
-<span class="fc" id="L62">				final QRCodeWriter writer = new QRCodeWriter();</span>
-<span class="fc" id="L63">				final Hashtable hints = new Hashtable();</span>
-<span class="fc" id="L64">				hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);</span>
-<span class="fc" id="L65">				hints.put(EncodeHintType.CHARACTER_SET, &quot;UTF8&quot;);</span>
-<span class="fc" id="L66">				final int multiple = 1;</span>
-<span class="fc" id="L67">				final BitMatrix bit = writer.encode(s, BarcodeFormat.QR_CODE, multiple, hints);</span>
-<span class="fc" id="L68">				return PortableImageFactory.build(MatrixToImageWriter.toBufferedImage(bit, fore.getRGB() | 0xFF000000,</span>
-<span class="fc" id="L69">						back.getRGB() | 0xFF000000));</span>
-<span class="nc" id="L70">			} catch (Exception e) {</span>
-<span class="nc" id="L71">				Log.debug(() -&gt; &quot;Cannot create qrcode &quot; + e);</span>
-			} finally {
-<span class="fc" id="L73">				lock.unlock();</span>
-			}
+<span class="fc" id="L60">		lock.lock();</span>
+		try {
+<span class="fc" id="L62">			final QRCodeWriter writer = new QRCodeWriter();</span>
+<span class="fc" id="L63">			final Hashtable hints = new Hashtable();</span>
+<span class="fc" id="L64">			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);</span>
+<span class="fc" id="L65">			hints.put(EncodeHintType.CHARACTER_SET, &quot;UTF8&quot;);</span>
+<span class="fc" id="L66">			final int multiple = 1;</span>
+<span class="fc" id="L67">			final BitMatrix bit = writer.encode(s, BarcodeFormat.QR_CODE, multiple, hints);</span>
+<span class="fc" id="L68">			return PortableImageFactory.build(MatrixToImageWriter.toBufferedImage(bit, fore.getRGB() | 0xFF000000,</span>
+<span class="fc" id="L69">					back.getRGB() | 0xFF000000));</span>
+<span class="nc" id="L70">		} catch (Exception e) {</span>
+<span class="nc" id="L71">			Log.debug(() -&gt; &quot;Cannot create qrcode &quot; + e);</span>
+		} finally {
+<span class="fc" id="L73">			lock.unlock();</span>
+		}
 
 <span class="nc" id="L76">		return null;</span>
 	}
