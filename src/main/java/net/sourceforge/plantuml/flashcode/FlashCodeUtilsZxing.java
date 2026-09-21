@@ -57,21 +57,21 @@ public class FlashCodeUtilsZxing implements FlashCodeUtils {
 	private static final Lock lock = new ReentrantLock();
 
 	public PortableImage exportFlashcode(String s, XColor fore, XColor back) {
-		if (lock.tryLock())
-			try {
-				final QRCodeWriter writer = new QRCodeWriter();
-				final Hashtable hints = new Hashtable();
-				hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
-				hints.put(EncodeHintType.CHARACTER_SET, "UTF8");
-				final int multiple = 1;
-				final BitMatrix bit = writer.encode(s, BarcodeFormat.QR_CODE, multiple, hints);
-				return PortableImageFactory.build(MatrixToImageWriter.toBufferedImage(bit, fore.getRGB() | 0xFF000000,
-						back.getRGB() | 0xFF000000));
-			} catch (Exception e) {
-				Log.debug(() -> "Cannot create qrcode " + e);
-			} finally {
-				lock.unlock();
-			}
+		lock.lock();
+		try {
+			final QRCodeWriter writer = new QRCodeWriter();
+			final Hashtable hints = new Hashtable();
+			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
+			hints.put(EncodeHintType.CHARACTER_SET, "UTF8");
+			final int multiple = 1;
+			final BitMatrix bit = writer.encode(s, BarcodeFormat.QR_CODE, multiple, hints);
+			return PortableImageFactory.build(MatrixToImageWriter.toBufferedImage(bit, fore.getRGB() | 0xFF000000,
+					back.getRGB() | 0xFF000000));
+		} catch (Exception e) {
+			Log.debug(() -> "Cannot create qrcode " + e);
+		} finally {
+			lock.unlock();
+		}
 
 		return null;
 	}
