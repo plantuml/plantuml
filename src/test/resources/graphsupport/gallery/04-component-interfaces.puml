@@ -1,0 +1,24 @@
+@startuml
+' Provided and required interfaces wiring three subsystems, the idiomatic component-diagram shape
+package "Ordering" {
+  [OrderService] as OS
+  () "IOrder" as IOrder
+  OS -up- IOrder
+}
+package "Billing" {
+  [InvoiceService] as IS
+  () "IInvoice" as IInvoice
+  IS -up- IInvoice
+}
+package "Shipping" {
+  [ShipmentService] as SS
+  () "IShipment" as IShipment
+  SS -up- IShipment
+}
+[Checkout] ..> IOrder : uses
+[Checkout] ..> IInvoice : uses
+OS ..> IShipment : uses
+IS ..> IOrder : uses
+[Reporting] ..> IInvoice : uses
+[Reporting] ..> IShipment : uses
+@enduml

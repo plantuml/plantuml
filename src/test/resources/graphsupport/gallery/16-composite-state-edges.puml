@@ -1,0 +1,13 @@
+@startuml
+' Transitions into and out of a composite state, the most common use of cluster-terminated edges
+state Start
+state Outer {
+  state Inner1
+  state Inner2
+  Inner1 --> Inner2
+}
+state Done
+Start --> Outer
+Outer --> Done
+Start --> Inner1
+@enduml

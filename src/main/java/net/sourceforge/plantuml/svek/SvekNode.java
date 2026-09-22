@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.svek;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.abel.Entity;
@@ -55,6 +57,7 @@ import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.svek.image.EntityImageLollipopInterface;
 import net.sourceforge.plantuml.svek.image.EntityImagePort;
 import net.sourceforge.plantuml.svek.image.EntityImageStateBorder;
+import net.sourceforge.plantuml.svek.layout.SvekLayoutModel;
 import net.sourceforge.plantuml.utils.Direction;
 
 public class SvekNode implements XNode {
@@ -117,6 +120,11 @@ public class SvekNode implements XNode {
 		return dimImage;
 	}
 
+	void invalidateMargins() {
+		dimImage = null;
+		shield = null;
+	}
+
 	public final ShapeType getType() {
 		return type;
 	}
@@ -163,6 +171,57 @@ public class SvekNode implements XNode {
 		sb.append("color=\"" + XColor.toHexRGBColor(color) + "\"");
 		sb.append("];");
 		SvekUtils.println(sb);
+	}
+
+	SvekLayoutModel.NodeSpec toLayoutSpec() {
+		if (type == ShapeType.RECTANGLE_HTML_FOR_PORTS) {
+			final List<SvekLayoutModel.CellSpec> cells = new ArrayList<>();
+			final Ports ports = ((WithPorts) image).getPorts(stringBounder);
+			for (PortGeometry port : ports.getAllPortGeometry())
+				cells.add(new SvekLayoutModel.CellSpec(port.getId(), 0, port.getPosition(), getWidth(),
+						port.getHeight()));
+			return new SvekLayoutModel.NodeSpec(getUid(), getWidth(), getHeight(), SvekLayoutModel.Shape.RECTANGLE,
+					null, cells);
+		}
+		if (type == ShapeType.RECTANGLE_PORT) {
+			final double expanded = Math.max(getWidth(), Math.max(10, getMaxWidthFromLabelForEntryExit(stringBounder) - 40));
+			final SvekLayoutModel.CellSpec body = new SvekLayoutModel.CellSpec("P", (expanded - getWidth()) / 2, 0,
+					getWidth(), getHeight());
+			return new SvekLayoutModel.NodeSpec(getUid(), expanded, getHeight(), SvekLayoutModel.Shape.RECTANGLE,
+					"P", Collections.singletonList(body));
+		}
+		if (type == ShapeType.PORT)
+			return new SvekLayoutModel.NodeSpec(getUid(), getWidth(), getHeight(), SvekLayoutModel.Shape.RECTANGLE,
+					null, Collections.emptyList());
+		if (isShielded()) {
+			final Margins margins = shield();
+			final SvekLayoutModel.CellSpec body = new SvekLayoutModel.CellSpec("h", margins.getX1(), margins.getY1(),
+					getWidth(), getHeight());
+			return new SvekLayoutModel.NodeSpec(getUid(), getWidth() + margins.getTotalWidth(),
+					getHeight() + margins.getTotalHeight(), SvekLayoutModel.Shape.RECTANGLE, "h",
+					Collections.singletonList(body));
+		}
+		return new SvekLayoutModel.NodeSpec(getUid(), getWidth(), getHeight(), toLayoutShape(), null,
+				Collections.emptyList());
+	}
+
+	private SvekLayoutModel.Shape toLayoutShape() {
+		if (type == ShapeType.RECTANGLE || type == ShapeType.FOLDER
+				|| type == ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE)
+			return SvekLayoutModel.Shape.RECTANGLE;
+		if (type == ShapeType.ROUND_RECTANGLE)
+			return SvekLayoutModel.Shape.ROUNDED_RECTANGLE;
+		if (type == ShapeType.OVAL)
+			return SvekLayoutModel.Shape.ELLIPSE;
+		if (type == ShapeType.CIRCLE)
+			return SvekLayoutModel.Shape.CIRCLE;
+		if (type == ShapeType.DIAMOND)
+			return SvekLayoutModel.Shape.DIAMOND;
+		if (type == ShapeType.OCTAGON)
+			return SvekLayoutModel.Shape.OCTAGON;
+		if (type == ShapeType.HEXAGON)
+			return SvekLayoutModel.Shape.HEXAGON;
+		throw new IllegalStateException(type.toString());
 	}
 
 	private double getMaxWidthFromLabelForEntryExit(StringBounder stringBounder) {
@@ -362,6 +421,11 @@ public class SvekNode implements XNode {
 
 	public final double getMinY() {
 		return minY;
+	}
+
+	void setPosition(double x, double y) {
+		this.minX = x;
+		this.minY = y;
 	}
 
 	public IEntityImage getImage() {
