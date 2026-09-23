@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.sequencediagram;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import net.sourceforge.plantuml.StringUtils;
 
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.style.StyleBuilder;
@@ -123,7 +124,8 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate,
 	public final Warning addNote(Note note) {
 		this.noteOnMessages.add(note);
 		if (note.getPosition() != NotePosition.LEFT && note.getPosition() != NotePosition.RIGHT)
-			return new Warning("This position is ignored: " + note.getPosition());
+			return new Warning("'note " + StringUtils.goLowerCase(note.getPosition().name())
+					+ "' is not supported after 'end': use 'note left' or 'note right'");
 		return null;
 	}
 

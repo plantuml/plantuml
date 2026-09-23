@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import net.sourceforge.plantuml.StringUtils;
 
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -165,7 +166,8 @@ public class Reference extends AbstractEvent implements EventWithNote {
 	@Override
 	public final Warning addNote(Note note) {
 		if (note.getPosition() != NotePosition.LEFT && note.getPosition() != NotePosition.RIGHT)
-			return new Warning("This position is ignored: " + note.getPosition());
+			return new Warning("'note " + StringUtils.goLowerCase(note.getPosition().name())
+					+ "' is not supported on a 'ref': this note is ignored. Use 'note left' or 'note right'");
 
 		this.noteOnMessages.add(note);
 		return null;

@@ -59,7 +59,6 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.Constant;
 import net.sourceforge.plantuml.utils.Direction;
-import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandWBSItemMultilineOld extends CommandMultilines2<WBSDiagram> {
 
@@ -118,7 +117,7 @@ public class CommandWBSItemMultilineOld extends CommandMultilines2<WBSDiagram> {
 		final String code = line0.getLazzy("CODE", 0);
 		final Direction dir = Direction.getWBSDirection(line0);
 
-		diagram.addWarning(new Warning("Please define Direction/Shape before Color/Id."));
+		diagram.addWarning(CommandWBSItemOld.orderWarning(line0, true));
 		return diagram.addIdea(code, backColor, diagram.getSmartLevel(type), lines.toDisplay(),
 				Stereotype.build(stereotype), dir, IdeaShape.fromDesc(line0.getLazzy("SHAPE", 0)));
 

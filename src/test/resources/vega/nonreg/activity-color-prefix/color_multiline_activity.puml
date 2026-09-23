@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+#F2F2F2:first line
+second line;
+:Y;
+@enduml

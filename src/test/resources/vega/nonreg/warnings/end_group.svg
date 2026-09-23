@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="127px" preserveAspectRatio="none" style="width:267px;height:127px;background:#FFFFFF;" version="1.1" viewBox="0 0 267 127" width="267px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFC" height="15" rx="2.5" ry="2.5" style="stroke:#FD8;stroke-width:3;" width="236.188" x="13" y="13"/>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="226.188" x="20" y="22">'end group' is deprecated: close the group with '}' instead</text>
+    <rect fill="none" height="71" style="stroke:#000;stroke-width:1.5;" width="48.025" x="16" y="36"/>
+    <path d="M36.85,36 L36.85,43 L26.85,53 L16,53" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" x="19" y="47.889">G</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="28.025" x="26" y="63"/>
+    <text fill="#000" font-size="12" x="36" y="82.333">A</text>
+  </g>
+</svg>

@@ -153,8 +153,7 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 
 		final boolean hasBracket = arg.get("BRACKET", 0).length() > 0;
 		if (hasBracket == false)
-			diagram.addWarning(
-					new Warning("You should use a bracket ({) when defining your container '" + type + "' " + name));
+			diagram.addWarning(new Warning("Missing '{': write '" + rebuildWithBracket(arg) + "' and close it with '}'"));
 
 		// Warning : titleColor unused in FTileGroupW
 
@@ -167,6 +166,18 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 		diagram.startGroup(Display.getWithNewlines(diagram.getPragma(), name), backColor, symbol, stylePartition);
 
 		return CommandExecutionResult.ok();
+	}
+
+	private static String rebuildWithBracket(RegexResult arg) {
+		final StringBuilder sb = new StringBuilder(arg.get("TYPE", 0));
+		if (arg.get("BACK1", 0) != null)
+			sb.append(" ").append(arg.get("BACK1", 0));
+		sb.append(" ").append(arg.get("NAME", 0));
+		if (arg.get("BACK2", 0) != null)
+			sb.append(" ").append(arg.get("BACK2", 0));
+		if (arg.get("STEREO", 0) != null)
+			sb.append(" ").append(arg.get("STEREO", 0));
+		return sb.append(" {").toString();
 	}
 
 }

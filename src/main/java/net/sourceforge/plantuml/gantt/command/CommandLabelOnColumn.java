@@ -83,7 +83,8 @@ public class CommandLabelOnColumn extends SingleLineCommand2<GanttDiagram> {
 //				: HorizontalAlignment.LEFT;
 //		final LabelStrategy strategy = new LabelStrategy(position, alignment);
 //		diagram.setLabelStrategy(strategy);
-		diagram.addWarning(new Warning("This command is deprecated"));
+		diagram.addWarning(new Warning("'labels on " + arg.get("POSITION", 0)
+				+ " column' is no longer supported: this line is ignored"));
 		return CommandExecutionResult.ok();
 	}
 

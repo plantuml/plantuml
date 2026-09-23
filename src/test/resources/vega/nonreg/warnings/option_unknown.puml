@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+!option foo bar
+A -> B
+@enduml

@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startgantt
+labels on first column and left aligned
+[T] lasts 3 days
+@endgantt

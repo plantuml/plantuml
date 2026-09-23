@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+A -> B
+ref over A : r
+note top: x
+@enduml

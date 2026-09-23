@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="181px" preserveAspectRatio="none" style="width:282px;height:181px;background:#FFFFFF;" version="1.1" viewBox="0 0 282 181" width="282px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFC" height="65" rx="2.5" ry="2.5" style="stroke:#FD8;stroke-width:3;" width="261.875" x="8" y="8"/>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="251.875" x="15" y="17">'skinparam ParticipantPadding' is ignored: use a style instead</text>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="32.313" x="15" y="27">&lt;style&gt;</text>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="49.438" x="15" y="37">participant {</text>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="47.875" x="15" y="47">Padding 40</text>
+    <text fill="#000" font-family="monospace" font-size="10" x="15" y="57">}</text>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="35.063" x="15" y="67">&lt;/style&gt;</text>
+    <g>
+      <title>A</title>
+      <rect fill="#000" fill-opacity="0" height="32" width="8" x="18.181" y="109"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="21.681" x2="21.681" y1="109" y2="141"/>
+    </g>
+    <g>
+      <title>B</title>
+      <rect fill="#000" fill-opacity="0" height="32" width="8" x="51.544" y="109"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="55.044" x2="55.044" y1="109" y2="141"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="10" y="80"/>
+    <text fill="#000" font-size="14" x="17" y="97.889">A</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="43.363" y="80"/>
+    <text fill="#000" font-size="14" x="50.363" y="97.889">B</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="10" y="141"/>
+    <text fill="#000" font-size="14" x="17" y="158.889">A</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="43.363" y="141"/>
+    <text fill="#000" font-size="14" x="50.363" y="158.889">B</text>
+    <polygon fill="#181818" points="43.044,119,53.044,123,43.044,127,47.044,123" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="21.681" x2="49.044" y1="123" y2="123"/>
+  </g>
+</svg>

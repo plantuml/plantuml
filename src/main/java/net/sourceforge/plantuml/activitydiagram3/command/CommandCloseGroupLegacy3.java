@@ -72,7 +72,7 @@ public class CommandCloseGroupLegacy3 extends SingleLineCommand2<ActivityDiagram
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-		diagram.addWarning(new Warning("You should use a bracket (}) instead of '" + arg.get("CMD", 0) + "'"));
+		diagram.addWarning(new Warning("'" + arg.get("CMD", 0) + "' is deprecated: close the group with '}' instead"));
 
 		return diagram.closeGroup();
 	}

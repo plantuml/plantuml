@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="343px" preserveAspectRatio="none" style="width:286px;height:343px;background:#FFFFFF;" version="1.1" viewBox="0 0 286 343" width="286px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFC" height="55" rx="2.5" ry="2.5" style="stroke:#FD8;stroke-width:3;" width="255.25" x="13" y="13"/>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="215.438" x="20" y="22">Missing '{': write 'partition "My part" {' and close it with '}'</text>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="214" x="20" y="42">Missing '{': write 'partition #pink P2 {' and close it with '}'</text>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="245.25" x="20" y="62">Missing '{': write 'partition P3 #cyan &lt;&lt;s&gt;&gt; {' and close it with '}'</text>
+    <rect fill="none" height="71" style="stroke:#000;stroke-width:1.5;" width="62.7" x="16" y="76"/>
+    <path d="M68.7,76 L68.7,83 L58.7,93 L16,93" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="42.7" x="19" y="87.889">My part</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="28.025" x="33.338" y="103"/>
+    <text fill="#000" font-size="12" x="43.338" y="122.333">A</text>
+    <rect fill="#FFC0CB" height="78" style="stroke:#000;stroke-width:1.5;" width="48.025" x="23.338" y="157"/>
+    <path d="M50.488,157 L50.488,164 L40.488,174 L23.338,174" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="17.15" x="26.338" y="168.889">P2</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="28.025" x="33.338" y="191"/>
+    <text fill="#000" font-size="12" x="43.338" y="210.333">B</text>
+    <rect fill="#0FF" height="78" style="stroke:#000;stroke-width:1.5;" width="48.7" x="23" y="245"/>
+    <path d="M50.15,245 L50.15,252 L40.15,262 L23,262" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="17.15" x="26" y="256.889">P3</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="28.7" x="33" y="279"/>
+    <text fill="#000" font-size="12" x="43" y="298.333">C</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="47.35" x2="47.35" y1="135" y2="191"/>
+    <polygon fill="#181818" points="43.35,181,47.35,191,51.35,181,47.35,185" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="47.35" x2="47.35" y1="223" y2="279"/>
+    <polygon fill="#181818" points="43.35,269,47.35,279,51.35,269,47.35,273" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

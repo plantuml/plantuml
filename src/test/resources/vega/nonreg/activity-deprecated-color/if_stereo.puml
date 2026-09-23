@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+if (c?) then (yes) <<#palegreen>>
+  :A;
+else (no)
+  :B;
+endif
+@enduml

@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+#F2F2F2:X;
+if (c?) then (yes)
+  :A;
+else (no)
+  :B;
+endif
+@enduml

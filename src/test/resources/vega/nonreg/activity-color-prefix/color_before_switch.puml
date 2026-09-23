@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+#F2F2F2:X;
+switch (x?)
+case (a)
+  :A;
+case (b)
+  :B;
+endswitch
+@enduml

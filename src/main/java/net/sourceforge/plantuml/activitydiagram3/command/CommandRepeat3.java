@@ -118,9 +118,12 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 		final Stereogroup stereogroup = Stereogroup.build(arg);
 		final BoxStyle boxStyle = stereogroup.getBoxStyle();
 
-		if (arg.get("COLOR", 0) != null)
-			diagram.addWarning(new Warning("This syntax is deprecated, you must add <<" + arg.get("COLOR", 0)
-					+ ">> at the end of the line, after the ';'"));
+		if (arg.get("COLOR", 0) != null) {
+			final String rawLabel = arg.get("LABEL", 0);
+			final String repeat = rawLabel == null ? "repeat" : "repeat :" + rawLabel + ";";
+			diagram.addWarning(new Warning("This syntax is deprecated and the color is ignored: write '" + repeat
+					+ " <<" + arg.get("COLOR", 0) + ">>' instead of '" + arg.get("COLOR", 0) + ":" + repeat + "'"));
+		}
 
 		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());
 		diagram.startRepeat(label, boxStyle, colors, stereogroup);

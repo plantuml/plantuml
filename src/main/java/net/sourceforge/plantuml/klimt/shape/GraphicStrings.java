@@ -181,10 +181,12 @@ public class GraphicStrings extends TextBlockMemoized implements IEntityImage {
 		if (image != null) {
 			if (position == GraphicPosition.BOTTOM)
 				dim = new XDimension2D(dim.getWidth(), dim.getHeight() + image.getHeight());
-			else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT)
-				dim = new XDimension2D(dim.getWidth() + imagePadding + image.getWidth(), dim.getHeight());
-			else if (position == GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT)
-				dim = new XDimension2D(dim.getWidth() + imagePadding + image.getWidth(), dim.getHeight());
+			else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT
+					|| position == GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT)
+				// The image may be taller than the text (e.g. a distributor logo next to a
+				// few lines): the block must be tall enough for both.
+				dim = new XDimension2D(dim.getWidth() + imagePadding + image.getWidth(),
+						Math.max(dim.getHeight(), image.getHeight()));
 
 		}
 		return dim;

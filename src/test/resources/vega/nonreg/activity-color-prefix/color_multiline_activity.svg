@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="152px" preserveAspectRatio="none" style="width:387px;height:152px;background:#FFFFFF;" version="1.1" viewBox="0 0 387 152" width="387px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFC" height="15" rx="2.5" ry="2.5" style="stroke:#FD8;stroke-width:3;" width="356.25" x="13" y="13"/>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="346.25" x="20" y="22">This syntax is deprecated, you must add &lt;&lt;#F2F2F2&gt;&gt; at the end of the line, after the ';'</text>
+    <rect fill="#F1F1F1" height="44" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="77.45" x="16" y="36"/>
+    <text fill="#000" font-size="12" textLength="38.025" x="26" y="55.333">first line</text>
+    <text fill="#000" font-size="12" textLength="57.45" x="26" y="67.333">second line</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="28.025" x="40.713" y="100"/>
+    <text fill="#000" font-size="12" x="50.713" y="119.333">Y</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="54.725" x2="54.725" y1="80" y2="100"/>
+    <polygon fill="#181818" points="50.725,90,54.725,100,58.725,90,54.725,94" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

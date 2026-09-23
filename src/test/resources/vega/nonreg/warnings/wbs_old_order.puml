@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startwbs
+* root
+**[#red](a)_> old
+**[#red]> "Lbl" as b
+**(c)[#pink]<:multi
+line;
+@endwbs

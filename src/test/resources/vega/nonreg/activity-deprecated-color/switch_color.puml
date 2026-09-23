@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+#red:switch (x?)
+case (a)
+  :A;
+case (b)
+  :B;
+endswitch
+@enduml

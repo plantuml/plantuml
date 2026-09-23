@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+#F2F2F2:X;
+while (more?)
+  :A;
+endwhile
+@enduml

@@ -150,6 +150,9 @@ public class LicenseInfo {
 		}
 		try {
 			final byte[] s1 = PLSSignature.retrieveDistributorImageSignature();
+			if (s1 == null)
+				return null;
+
 			if (SignatureUtils.toHexString(s1).equals(SignatureUtils.toHexString(licenseInfo.sha)) == false)
 				return null;
 

@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+if (c?) then (yes)
+  :A;
+elseif (d?) is (v) then <<#palegreen>>
+  :B;
+else (no)
+  :C;
+endif
+@enduml

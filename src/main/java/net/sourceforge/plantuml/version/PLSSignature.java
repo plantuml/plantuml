@@ -79,8 +79,15 @@ public class PLSSignature {
 		return new LicenseInfo(LicenseType.fromInt(type), now, exp, owner, context, sha);
 	}
 
+	/**
+	 * SHA-512 of the distributor.png resource, or null when the jar ships no
+	 * distributor logo (a distributor license may come without one).
+	 */
 	public static byte[] retrieveDistributorImageSignature() throws IOException, NoSuchAlgorithmException {
 		final InputStream dis = PSystemVersion.class.getResourceAsStream("/distributor.png");
+		if (dis == null)
+			return null;
+
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		FileUtils.copyToStream(dis, baos);
 		return SignatureUtils.getSHA512raw(baos.toByteArray());

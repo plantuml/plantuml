@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+group g
+A -> B
+end
+note top: y
+@enduml

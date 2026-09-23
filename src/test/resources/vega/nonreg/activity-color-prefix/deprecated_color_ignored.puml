@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+#red:X;
+:Y; <<#palegreen>>
+#blue:first line
+second line;
+@enduml

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="217px" preserveAspectRatio="none" style="width:405px;height:217px;background:#FFFFFF;" version="1.1" viewBox="0 0 405 217" width="405px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFC" height="55" rx="2.5" ry="2.5" style="stroke:#FD8;stroke-width:3;" width="374.75" x="13" y="13"/>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="364.75" x="20" y="22">Shape (_) and direction (&lt; &gt;) must come before color and id: start the line with '**_&gt;[#red](a)'</text>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="347" x="20" y="42">Shape (_) and direction (&lt; &gt;) must come before color and id: start the line with '**&gt;[#red]'</text>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="362.562" x="20" y="62">Shape (_) and direction (&lt; &gt;) must come before color and id: start the line with '**&lt;[#pink](c)'</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="42.675" x2="42.675" y1="132" y2="152"/>
+    <rect fill="#FFC0CB" height="44" style="stroke:#181818;stroke-width:1.5;" width="45.35" x="20" y="152"/>
+    <text fill="#000" font-size="12" textLength="25.35" x="30" y="171.333">multi</text>
+    <text fill="#000" font-size="12" textLength="18.75" x="30" y="183.333">line</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="94.875" x2="94.875" y1="132" y2="152"/>
+    <text fill="#000" font-size="12" textLength="16.05" x="85.35" y="162.333">old</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="142.425" x2="142.425" y1="132" y2="152"/>
+    <rect fill="#F00" height="32" style="stroke:#181818;stroke-width:1.5;" width="36.05" x="124.4" y="152"/>
+    <text fill="#000" font-size="12" textLength="16.05" x="134.4" y="171.333">Lbl</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="42.675" x2="142.425" y1="132" y2="132"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="40.625" x="72.238" y="80"/>
+    <text fill="#000" font-size="12" textLength="20.625" x="82.238" y="99.333">root</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="92.55" x2="92.55" y1="112" y2="132"/>
+  </g>
+</svg>

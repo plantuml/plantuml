@@ -31,7 +31,7 @@ class SyntaxCheckerTest {
 		assertNotNull(result);
 		assertTrue(result.isOk());
 		assertEquals(1, result.getWarnings().size());
-		assertEquals("[Please use '!option handwritten true' to enable handwritten ]", result.getWarnings().toString());
+		assertEquals("['skinparam handwritten' is deprecated: write '!option handwritten true' instead]", result.getWarnings().toString());
 	}
 
 	// The leading '/' (VMERGE) note-merge syntax predates the Teoz engine

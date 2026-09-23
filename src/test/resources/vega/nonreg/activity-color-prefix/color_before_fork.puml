@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+#F2F2F2:X;
+fork
+  :A;
+fork again
+  :B;
+end fork
+@enduml

@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+if (c?) then (yes)
+  :A;
+#red:elseif (d?) then (yes)
+  :B;
+else (no)
+  :C;
+endif
+@enduml

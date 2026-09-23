@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+skinparam ParticipantPadding 40
+A -> B
+@enduml

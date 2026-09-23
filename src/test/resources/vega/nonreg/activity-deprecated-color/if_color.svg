@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="152px" preserveAspectRatio="none" style="width:323px;height:152px;background:#FFFFFF;" version="1.1" viewBox="0 0 323 152" width="323px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFC" height="15" rx="2.5" ry="2.5" style="stroke:#FD8;stroke-width:3;" width="292.437" x="13" y="13"/>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="282.437" x="20" y="22">This syntax is deprecated, you must add &lt;&lt;#red&gt;&gt; at the end of the line</text>
+    <polygon fill="#F1F1F1" points="52.013,35,76.013,35,88.013,47,76.013,59,52.013,59,40.013,47,52.013,35" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="11" textLength="11.619" x="58.203" y="50.056">c?</text>
+    <text fill="#000" font-size="11" textLength="17.119" x="22.894" y="44.556">yes</text>
+    <text fill="#000" font-size="11" textLength="12.238" x="88.013" y="44.556">no</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="28.025" x="16" y="69"/>
+    <text fill="#000" font-size="12" x="26" y="88.333">A</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="28.025" x="84" y="69"/>
+    <text fill="#000" font-size="12" x="94" y="88.333">B</text>
+    <polygon fill="#F1F1F1" points="64.013,107,76.013,119,64.013,131,52.013,119,64.013,107" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="40.013" x2="30.013" y1="47" y2="47"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="30.013" x2="30.013" y1="47" y2="69"/>
+    <polygon fill="#181818" points="26.013,59,30.013,69,34.013,59,30.013,63" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="88.013" x2="98.013" y1="47" y2="47"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="98.013" x2="98.013" y1="47" y2="69"/>
+    <polygon fill="#181818" points="94.013,59,98.013,69,102.013,59,98.013,63" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="30.013" x2="30.013" y1="101" y2="119"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="30.013" x2="52.013" y1="119" y2="119"/>
+    <polygon fill="#181818" points="42.013,115,52.013,119,42.013,123,46.013,119" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="98.013" x2="98.013" y1="101" y2="119"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="98.013" x2="76.013" y1="119" y2="119"/>
+    <polygon fill="#181818" points="86.013,115,76.013,119,86.013,123,82.013,119" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

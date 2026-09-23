@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="134px" preserveAspectRatio="none" style="width:143px;height:134px;background:#FFFFFF;" version="1.1" viewBox="0 0 143 134" width="143px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="28.025" x="54.559" y="59"/>
+    <text fill="#000" font-size="12" x="64.559" y="78.333">A</text>
+    <polygon fill="#98FB98" points="53,15,84.144,15,96.144,27,84.144,39,53,39,41,27,53,15" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="11" textLength="31.144" x="53" y="30.056">more?</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="68.572" x2="68.572" y1="39" y2="59"/>
+    <polygon fill="#181818" points="64.572,49,68.572,59,72.572,49,68.572,53" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="68.572" x2="68.572" y1="91" y2="101"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="68.572" x2="108.144" y1="101" y2="101"/>
+    <polygon fill="#181818" points="104.144,73,108.144,63,112.144,73,108.144,69" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="108.144" x2="108.144" y1="27" y2="101"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="108.144" x2="96.144" y1="27" y2="27"/>
+    <polygon fill="#181818" points="106.144,23,96.144,27,106.144,31,102.144,27" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="41" x2="29" y1="27" y2="27"/>
+    <polygon fill="#181818" points="25,59,29,69,33,59,29,63" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="29" x2="29" y1="27" y2="113"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="29" x2="68.572" y1="113" y2="113"/>
+  </g>
+</svg>

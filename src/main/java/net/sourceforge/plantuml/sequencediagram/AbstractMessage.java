@@ -40,6 +40,7 @@ import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import net.sourceforge.plantuml.StringUtils;
 
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
@@ -218,7 +219,8 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	public final Warning addNote(Note note) {
 		if (note.getPosition() != NotePosition.LEFT && note.getPosition() != NotePosition.RIGHT
 				&& note.getPosition() != NotePosition.BOTTOM && note.getPosition() != NotePosition.TOP)
-			return new Warning("This position is ignored: " + note.getPosition());
+			return new Warning("'note " + StringUtils.goLowerCase(note.getPosition().name())
+					+ "' is not supported on a message: this note is ignored. Use left, right, top or bottom");
 
 		note = note.withPosition(overrideNotePosition(note.getPosition()));
 		this.noteOnMessages.add(note);

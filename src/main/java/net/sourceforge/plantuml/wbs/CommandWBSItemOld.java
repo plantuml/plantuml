@@ -55,8 +55,11 @@ import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandWBSItemOld extends SingleLineCommand2<WBSDiagram> {
 
+	private final int mode;
+
 	public CommandWBSItemOld(int mode) {
 		super(false, getRegexConcat(mode));
+		this.mode = mode;
 	}
 
 	static IRegex getRegexConcat(int mode) {
@@ -125,8 +128,30 @@ public class CommandWBSItemOld extends SingleLineCommand2<WBSDiagram> {
 		else if (label == null)
 			return CommandExecutionResult.error("Missing label for WBS node.");
 
-		diagram.addWarning(new Warning("Please define Direction/Shape before Color/Id."));
+		diagram.addWarning(orderWarning(arg, mode == 0));
 		return diagram.addIdea(code, backColor, diagram.getSmartLevel(type), label == null ? "" : label, dir, shape);
+	}
+
+	/**
+	 * Warning for the legacy order where the color and/or id come before the
+	 * shape/direction markers. It shows the prefix rewritten in the expected
+	 * order, e.g. '**_>[#red](id)' for '**[#red](id)_>'.
+	 */
+	static Warning orderWarning(RegexResult arg, boolean withCode) {
+		final StringBuilder sb = new StringBuilder(arg.get(Constant.WBS_TYPE, 0).trim());
+		appendIfPresent(sb, "", arg.getLazzy("SHAPE", 0), "");
+		appendIfPresent(sb, "", arg.getLazzy(Constant.WBS_DIRECTION, 0), "");
+		appendIfPresent(sb, "[", arg.getLazzy("BACKCOLOR", 0), "]");
+		if (withCode)
+			appendIfPresent(sb, "(", arg.getLazzy("CODE", 0), ")");
+
+		return new Warning("Shape (_) and direction (< >) must come before color and id: start the line with '"
+				+ sb + "'");
+	}
+
+	private static void appendIfPresent(StringBuilder sb, String before, String value, String after) {
+		if (value != null && value.length() > 0)
+			sb.append(before).append(value).append(after);
 	}
 
 }

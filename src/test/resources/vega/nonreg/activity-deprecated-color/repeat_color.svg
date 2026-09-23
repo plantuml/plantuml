@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="176px" preserveAspectRatio="none" style="width:433px;height:176px;background:#FFFFFF;" version="1.1" viewBox="0 0 433 176" width="433px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFC" height="15" rx="2.5" ry="2.5" style="stroke:#FD8;stroke-width:3;" width="403" x="13" y="13"/>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="393" x="20" y="22">This syntax is deprecated and the color is ignored: write 'repeat &lt;&lt;#red&gt;&gt;' instead of '#red:repeat'</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="28.025" x="38.559" y="79"/>
+    <text fill="#000" font-size="12" x="48.559" y="98.333">A</text>
+    <polygon fill="#F1F1F1" points="52.572,35,64.572,47,52.572,59,40.572,47,52.572,35" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#F1F1F1" points="37,131,68.144,131,80.144,143,68.144,155,37,155,25,143,37,131" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="11" textLength="31.144" x="37" y="146.056">more?</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="52.572" x2="52.572" y1="59" y2="79"/>
+    <polygon fill="#181818" points="48.572,69,52.572,79,56.572,69,52.572,73" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="80.144" x2="92.144" y1="143" y2="143"/>
+    <polygon fill="#181818" points="88.144,105,92.144,95,96.144,105,92.144,101" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="92.144" x2="92.144" y1="47" y2="143"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="92.144" x2="64.572" y1="47" y2="47"/>
+    <polygon fill="#181818" points="74.572,43,64.572,47,74.572,51,70.572,47" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="52.572" x2="52.572" y1="111" y2="131"/>
+    <polygon fill="#181818" points="48.572,121,52.572,131,56.572,121,52.572,125" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

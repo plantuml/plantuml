@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandSwitch extends SingleLineCommand2<ActivityDiagram3> {
 
@@ -87,9 +88,11 @@ public class CommandSwitch extends SingleLineCommand2<ActivityDiagram3> {
 		if (stereogroup.isEmpty() == false)
 			sb.append(", stereotyped ").append(arg.get("STEREOGROUP", 0));
 
-		// The leading color is parsed but no longer applied by executeArg.
+		// Mirror the deprecation warning emitted by executeArg: the leading
+		// color is parsed but no longer applied.
 		if (arg.get("COLOR", 0) != null)
-			sb.append(" (the leading color is currently ignored: use a stereotype instead)");
+			sb.append(" (deprecated and ignored color syntax: write <<").append(arg.get("COLOR", 0))
+					.append(">> at the end of the line)");
 
 		return sb.toString();
 	}
@@ -101,8 +104,9 @@ public class CommandSwitch extends SingleLineCommand2<ActivityDiagram3> {
 		final Stereogroup stereogroup = Stereogroup.build(arg);
 		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());
 
-//		final String s = arg.get("COLOR", 0);
-//		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
+		if (arg.get("COLOR", 0) != null)
+			diagram.addWarning(new Warning("This syntax is deprecated, you must add <<" + arg.get("COLOR", 0)
+					+ ">> at the end of the line"));
 
 		String test = arg.get("TEST", 0);
 		if (test.length() == 0)
