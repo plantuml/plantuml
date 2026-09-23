@@ -85,6 +85,7 @@ public enum SName {
 	description, //
 	destroy, //
 	diamond, //
+	digital, //
 	document, //
 	ebnf, //
 	element, //
