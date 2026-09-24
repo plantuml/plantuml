@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="262px" preserveAspectRatio="none" style="width:136px;height:262px;background:#FFFFFF;" version="1.1" viewBox="0 0 136 262" width="136px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Company-->
+    <g class="entity" data-qualified-name="Company" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="91.938" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="59.938" x="35" y="31.889">Company</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="96.938" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="96.938" y1="52" y2="52"/>
+    </g>
+    <!--class Person-->
+    <g class="entity" data-qualified-name="Person" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76.363" x="14" y="97"/>
+      <ellipse cx="29" cy="113" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="24" y="118">C</text>
+      <text fill="#000" font-size="14" textLength="44.363" x="43" y="116.889">Person</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="15" x2="89.363" y1="129" y2="129"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="15" x2="89.363" y1="137" y2="137"/>
+    </g>
+    <!--class Car-->
+    <g class="entity" data-qualified-name="Car" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="54.575" x="24.5" y="198"/>
+      <ellipse cx="39.5" cy="214" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="34.5" y="219">C</text>
+      <text fill="#000" font-size="14" textLength="22.575" x="53.5" y="217.889">Car</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="25.5" x2="78.075" y1="230" y2="230"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="25.5" x2="78.075" y1="238" y2="238"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="aggregation" id="lnk4">
+      <polygon fill="none" points="52,60.12,48,66.12,52,72.12,56,66.12,52,60.12" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M52,72.12 C52,83.536 52,85.278 52,96.716" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="19.419" x="32" y="92.827">0..*</text>
+      <text fill="#000" font-size="13" x="44" y="71.231">1</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="57" y="65.12"/>
+      </g>
+      <text fill="#000" font-size="13" textLength="53.463" x="67" y="71.231">employer</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="60" cy="89.716" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="13" textLength="62.888" x="67" y="92.827">employees</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="52,197.934,56,188.934,52,192.934,48,188.934,52,197.934" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M52,145.211 C52,161.099 52,177.077 52,192.934" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="34.694" x="54" y="175.111">drives</text>
+      <text fill="#000" font-size="13" textLength="19.419" x="32" y="194.045">0..*</text>
+      <text fill="#000" font-size="13" x="44" y="156.322">1</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="57" y="150.211"/>
+      </g>
+      <text fill="#000" font-size="13" textLength="32.5" x="67" y="156.322">driver</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="60,185.934,64,189.934,60,193.934,56,189.934" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="13" textLength="24.537" x="67" y="194.045">cars</text>
+    </g>
+  </g>
+</svg>

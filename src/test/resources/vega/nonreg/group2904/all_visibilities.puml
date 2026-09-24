@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+class A
+class B
+class C
+class D
+A "1"/"-priv" --> "a"/"+pub" B
+C "2"/"#prot" --> "b"/"~pkg" D
+@enduml

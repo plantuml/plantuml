@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+class Company
+class Person
+class Car
+Company "1"/"-employer" o-- "0..*"/"+employees" Person
+Person "1"/"-driver" --> "0..*"/"#cars" Car : drives
+@enduml

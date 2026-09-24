@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.elk;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -77,7 +78,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
 import net.sourceforge.plantuml.klimt.geom.MagneticBorderNone;
-import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.RectangleArea;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
@@ -89,6 +90,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
+import net.sourceforge.plantuml.svek.RoleLabels;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
@@ -278,41 +280,10 @@ public class MyElkEdge implements UDrawable {
 	private void drawRoleLabel(UGraphic ug, TextBlock role, TextBlock quantifier,
 			XPoint2D quantifierPos, XPoint2D thisEndpoint, XPoint2D otherEndpoint) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final XDimension2D qDim = quantifier.calculateDimension(stringBounder);
-		final XDimension2D rDim = role.calculateDimension(stringBounder);
-
-		final double dirX = otherEndpoint.getX() - thisEndpoint.getX();
-		final double dirY = otherEndpoint.getY() - thisEndpoint.getY();
-
-		if (Math.abs(dirX) + Math.abs(dirY) < 0.001) {
-			role.drawU(ug.apply(new UTranslate(quantifierPos.getX(),
-					quantifierPos.getY() + qDim.getHeight())));
-			return;
-		}
-
-		final double gap = 2;
-		final double roleX;
-		final double roleY;
-
-		if (Math.abs(dirY) >= Math.abs(dirX)) {
-			final double qCenterX = quantifierPos.getX() + qDim.getWidth() / 2;
-			final double lineX = thisEndpoint.getX();
-			if (qCenterX < lineX)
-				roleX = lineX + gap;
-			else
-				roleX = lineX - rDim.getWidth() - gap;
-			roleY = quantifierPos.getY();
-		} else {
-			final double qCenterY = quantifierPos.getY() + qDim.getHeight() / 2;
-			final double lineY = thisEndpoint.getY();
-			if (qCenterY < lineY)
-				roleY = lineY + gap;
-			else
-				roleY = lineY - rDim.getHeight() - gap;
-			roleX = quantifierPos.getX();
-		}
-
-		role.drawU(ug.apply(new UTranslate(roleX, roleY)));
+		final XPoint2D pos = RoleLabels.getPosition(quantifier.calculateDimension(stringBounder),
+				role.calculateDimension(stringBounder), quantifierPos, thisEndpoint, otherEndpoint, null,
+				Collections.<RectangleArea>emptyList());
+		role.drawU(ug.apply(new UTranslate(pos.getX(), pos.getY())));
 	}
 
 	private void drawSections(UGraphic ug, final Collection<ElkEdgeSection> sections, MagneticBorder magneticBorder1,

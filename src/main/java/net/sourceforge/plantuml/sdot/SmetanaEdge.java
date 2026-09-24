@@ -42,6 +42,11 @@ import h.ST_bezier;
 import h.ST_pointf;
 import h.ST_splines;
 import h.ST_textlabel_t;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkStrategy;
 import net.sourceforge.plantuml.cruise.XAbstractEdge;
@@ -58,7 +63,6 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.RectangleArea;
-import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.DotPath;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -71,6 +75,8 @@ import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
+import net.sourceforge.plantuml.svek.RoleLabels;
+import net.sourceforge.plantuml.svek.SvekNode;
 import net.sourceforge.plantuml.svek.extremity.Extremity;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.url.Url;
@@ -230,7 +236,9 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 			tailLabel.drawU(ug.apply(getLabelRectangleTranslate("tail_label")));
 
 		if (dotPath != null) {
-			DotPath pathForRoles = dotPath;
+			// Not "dotPath" mirrored again: it is already mirrored, and its ends have been
+			// moved to make room for the decorations.
+			DotPath pathForRoles = getDotPathInternal();
 			if (ymirror != null)
 				pathForRoles = ymirror.getMirrored(pathForRoles);
 
@@ -238,13 +246,13 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 				final UTranslate tailTr = getLabelRectangleTranslate("tail_label");
 				final XPoint2D tailLabelPos = new XPoint2D(tailTr.getDx(), tailTr.getDy());
 				drawRoleLabel(ug, tailRole, tailLabel, tailLabelPos,
-						pathForRoles.getStartPoint(), pathForRoles.getEndPoint());
+						pathForRoles.getStartPoint(), pathForRoles.getEndPoint(), pathForRoles.sample());
 			}
 			if (headRole != null && getLabelRectangleTranslate("head_label") != null) {
 				final UTranslate headTr = getLabelRectangleTranslate("head_label");
 				final XPoint2D headLabelPos = new XPoint2D(headTr.getDx(), headTr.getDy());
 				drawRoleLabel(ug, headRole, headLabel, headLabelPos,
-						pathForRoles.getEndPoint(), pathForRoles.getStartPoint());
+						pathForRoles.getEndPoint(), pathForRoles.getStartPoint(), pathForRoles.sample());
 			}
 		}
 
@@ -409,44 +417,26 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 		return new XPoint2D(pt.x, pt.y);
 	}
 
+	/**
+	 * The areas of the two nodes of the link, when they are already placed.
+	 */
+	private List<RectangleArea> getNodeAreas() {
+		final List<RectangleArea> result = new ArrayList<>();
+		for (Entity entity : new Entity[] { link.getEntity1(), link.getEntity2() }) {
+			final SvekNode node = bibliotekon.getNode(entity);
+			if (node != null)
+				result.add(node.getRectangleArea());
+		}
+		return result;
+	}
+
 	private void drawRoleLabel(UGraphic ug, TextBlock role, TextBlock quantifier,
-			XPoint2D quantifierPos, XPoint2D thisEndpoint, XPoint2D otherEndpoint) {
+			XPoint2D quantifierPos, XPoint2D thisEndpoint, XPoint2D otherEndpoint, Set<XPoint2D> pathSamples) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final XDimension2D qDim = quantifier.calculateDimension(stringBounder);
-		final XDimension2D rDim = role.calculateDimension(stringBounder);
-
-		final double dirX = otherEndpoint.getX() - thisEndpoint.getX();
-		final double dirY = otherEndpoint.getY() - thisEndpoint.getY();
-
-		if (Math.abs(dirX) + Math.abs(dirY) < 0.001) {
-			role.drawU(ug.apply(new UTranslate(quantifierPos.getX(),
-					quantifierPos.getY() + qDim.getHeight())));
-			return;
-		}
-
-		final double gap = 2;
-		final double roleX;
-		final double roleY;
-
-		if (Math.abs(dirY) >= Math.abs(dirX)) {
-			final double qCenterX = quantifierPos.getX() + qDim.getWidth() / 2;
-			final double lineX = thisEndpoint.getX();
-			if (qCenterX < lineX)
-				roleX = lineX + gap;
-			else
-				roleX = lineX - rDim.getWidth() - gap;
-			roleY = quantifierPos.getY();
-		} else {
-			final double qCenterY = quantifierPos.getY() + qDim.getHeight() / 2;
-			final double lineY = thisEndpoint.getY();
-			if (qCenterY < lineY)
-				roleY = lineY + gap;
-			else
-				roleY = lineY - rDim.getHeight() - gap;
-			roleX = quantifierPos.getX();
-		}
-
-		role.drawU(ug.apply(new UTranslate(roleX, roleY)));
+		final XPoint2D pos = RoleLabels.getPosition(quantifier.calculateDimension(stringBounder),
+				role.calculateDimension(stringBounder), quantifierPos, thisEndpoint, otherEndpoint, pathSamples,
+				getNodeAreas());
+		role.drawU(ug.apply(new UTranslate(pos.getX(), pos.getY())));
 	}
 
 	@Override

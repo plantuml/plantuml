@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="205px" preserveAspectRatio="none" style="width:295px;height:205px;background:#FFFFFF;" version="1.1" viewBox="0 0 295 205" width="295px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class C1-->
+    <g class="entity" data-qualified-name="C1" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="68" x="31" y="12"/>
+      <ellipse cx="54.128" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="49.128" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="17.938" x="69.934" y="31.889">C1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="32" x2="98" y1="44" y2="44"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="42" cy="56.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="36.663" x="51" y="58.889">public</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="39" y="67.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="42" x="51" y="72.889">private</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="32" x2="98" y1="80" y2="80"/>
+    </g>
+    <!--class C2-->
+    <g class="entity" data-qualified-name="C2" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.938" x="6" y="141"/>
+      <ellipse cx="21" cy="157" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="162">C</text>
+      <text fill="#000" font-size="14" textLength="17.938" x="35" y="160.889">C2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="54.938" y1="173" y2="173"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="54.938" y1="181" y2="181"/>
+    </g>
+    <!--class C3-->
+    <g class="entity" data-qualified-name="C3" data-source-line="7" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.938" x="74" y="141"/>
+      <ellipse cx="89" cy="157" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="84" y="162">C</text>
+      <text fill="#000" font-size="14" textLength="17.938" x="103" y="160.889">C3</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="75" x2="122.938" y1="173" y2="173"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="75" x2="122.938" y1="181" y2="181"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="37.992,140.762,44.416,133.296,39.433,135.974,36.755,130.991,37.992,140.762" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M53.867,88 C48.638,105.379 44.006,120.776 39.433,135.974" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="29.992" y="136.873">1</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="47.975" y="130.762"/>
+      </g>
+      <text fill="#000" font-size="13" textLength="55.656" x="57.975" y="136.873">privateC2</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="92.008,140.762,93.245,130.991,90.567,135.974,85.584,133.296,92.008,140.762" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M76.133,88 C81.362,105.379 85.994,120.776 90.567,135.974" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="93" cy="115" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="13" textLength="187.119" x="100" y="118.111">Works, but useless for bidirectional</text>
+      <text fill="#000" font-size="13" x="84.008" y="136.873">2</text>
+    </g>
+  </g>
+</svg>

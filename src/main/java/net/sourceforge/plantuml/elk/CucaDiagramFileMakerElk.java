@@ -115,6 +115,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
+import net.sourceforge.plantuml.svek.RoleLabels;
 import net.sourceforge.plantuml.svek.ClusterHeader;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.svek.GeneralImageBuilder;
@@ -269,8 +270,7 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 
 		final ISkinParam skinParam = diagram.getSkinParam();
 		final FontConfiguration labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);
-		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), role).create(labelFont,
-				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
+		final TextBlock label = RoleLabels.create(role, diagram.getPragma(), labelFont, skinParam);
 		if (TextBlockUtils.isEmpty(label, stringBounder))
 			return null;
 

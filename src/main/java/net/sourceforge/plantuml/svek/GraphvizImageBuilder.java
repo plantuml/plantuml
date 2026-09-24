@@ -229,6 +229,16 @@ public final class GraphvizImageBuilder {
 			if (link.isRemoved())
 				continue;
 
+			if (link.getRole1() != null || link.getRole2() != null)
+				SvekEdge.reserveRoomForRoles(link, dotData.getSkinParam(), stringBounder,
+						link.getStyleBuilder().getMergedStyle(getStyleArrowCardinality(link.getStereotype()))
+								.getFontConfiguration(dotData.getSkinParam().getIHtmlColorSet()));
+		}
+
+		for (Link link : dotData.getLinks()) {
+			if (link.isRemoved())
+				continue;
+
 			try {
 				final ISkinParam skinParam = dotData.getSkinParam();
 				final FontConfiguration labelFont = link.getStyleBuilder()

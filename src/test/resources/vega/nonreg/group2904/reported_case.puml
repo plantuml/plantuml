@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+Class C1{
++public
+-private
+}
+C1 --> "1"/"-privateC2" C2
+C1 --> "2" C3 : +Works, but useless for bidirectional
+@enduml

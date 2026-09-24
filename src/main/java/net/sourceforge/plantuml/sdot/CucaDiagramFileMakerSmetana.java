@@ -102,6 +102,7 @@ import net.sourceforge.plantuml.svek.ClusterHeader;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.svek.GeneralImageBuilder;
 import net.sourceforge.plantuml.svek.IEntityImage;
+import net.sourceforge.plantuml.svek.RoleLabels;
 import net.sourceforge.plantuml.svek.SvekNode;
 import net.sourceforge.plantuml.svek.image.EntityImageNote;
 import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
@@ -813,8 +814,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		ISkinParam skinParam = diagram.getSkinParam();
 		final Style style = getStyle();
 		final FontConfiguration labelFont = style.getFontConfiguration(skinParam.getIHtmlColorSet());
-		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), role).create(labelFont,
-				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
+		final TextBlock label = RoleLabels.create(role, diagram.getPragma(), labelFont, skinParam);
 		if (TextBlockUtils.isEmpty(label, stringBounder))
 			return label;
 
