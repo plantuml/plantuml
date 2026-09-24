@@ -187,8 +187,8 @@ try {
     /* vladimir */
 <span class="fc bfc" id="L188" title="All 2 branches covered.">    if (ED_head_label(e)!=null)</span>
 <span class="fc" id="L189">    	ED_head_label(e).pos.___(map_point(zz, ED_head_label(e).pos));</span>
-<span class="pc bpc" id="L190" title="1 of 2 branches missed.">    if (ED_tail_label(e)!=null)</span>
-<span class="nc" id="L191">    	ED_tail_label(e).pos.___(map_point(zz, ED_tail_label(e).pos));</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">    if (ED_tail_label(e)!=null)</span>
+<span class="fc" id="L191">    	ED_tail_label(e).pos.___(map_point(zz, ED_tail_label(e).pos));</span>
 } finally {
 <span class="fc" id="L193">LEAVING(&quot;bvq3vvonvotn47mfe5zsvchie&quot;,&quot;map_edge&quot;);</span>
 }
@@ -289,28 +289,28 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/postproc.c&quot;, name=&quot;edgeTailpoint&quot;, key=&quot;95pnpuiq4khinrz2bqkci9nfg&quot;, definition=&quot;static pointf edgeTailpoint (Agedge_t* e)&quot;)
 public static ST_pointf edgeTailpoint(ST_Agedge_s e) {
-<span class="nc" id="L292">ENTERING(&quot;95pnpuiq4khinrz2bqkci9nfg&quot;,&quot;edgeTailpoint&quot;);</span>
+<span class="fc" id="L292">ENTERING(&quot;95pnpuiq4khinrz2bqkci9nfg&quot;,&quot;edgeTailpoint&quot;);</span>
 try {
-<span class="nc" id="L294">	return edgeTailpoint_(e).copy();</span>
+<span class="fc" id="L294">	return edgeTailpoint_(e).copy();</span>
 } finally {
-<span class="nc" id="L296">LEAVING(&quot;95pnpuiq4khinrz2bqkci9nfg&quot;,&quot;edgeTailpoint&quot;);</span>
+<span class="fc" id="L296">LEAVING(&quot;95pnpuiq4khinrz2bqkci9nfg&quot;,&quot;edgeTailpoint&quot;);</span>
 }
 }
 private static ST_pointf edgeTailpoint_(ST_Agedge_s e) {
 	ST_splines spl;
 	ST_bezier bez;
-<span class="nc" id="L302">	spl = getsplinepoints(e);</span>
-<span class="nc bnc" id="L303" title="All 2 branches missed.">	if (spl == null) {</span>
+<span class="fc" id="L302">	spl = getsplinepoints(e);</span>
+<span class="pc bpc" id="L303" title="1 of 2 branches missed.">	if (spl == null) {</span>
 <span class="nc" id="L304">UNSUPPORTED(&quot;9wdrv4uc4c7ssn0qpmxgz5eu1&quot;); // 	pointf p;</span>
 <span class="nc" id="L305">UNSUPPORTED(&quot;ezy0ey6dn5uqp6peuorn615x6&quot;); // 	p.x = p.y = 0;</span>
 <span class="nc" id="L306">UNSUPPORTED(&quot;68kasxgknec72r19lohbk6n3q&quot;); // 	return p;</span>
     }
-<span class="nc" id="L308">	bez = spl.list.get__(0);</span>
+<span class="fc" id="L308">	bez = spl.list.get__(0);</span>
     //     bez = &amp;spl-&gt;list[0];
-<span class="nc bnc" id="L310" title="All 2 branches missed.">if (bez.sflag!=0) {</span>
+<span class="pc bpc" id="L310" title="1 of 2 branches missed.">if (bez.sflag!=0) {</span>
 <span class="nc" id="L311">	return bez.sp;</span>
 } else {
-<span class="nc" id="L313">	return bez.list.get__(0);</span>
+<span class="fc" id="L313">	return bez.list.get__(0);</span>
    // 	return bez-&gt;list[0];
  }
 
@@ -403,9 +403,9 @@ private static void addXLabel_(Globals zz, ST_textlabel_t lp, CArray&lt;ST_objec
 <span class="fc" id="L403">		objp.get__(0).pos.___(pos);</span>
 	}
 	
-<span class="pc bpc" id="L406" title="1 of 2 branches missed.">	if (zz.Flip) {</span>
-<span class="nc" id="L407">	xlp.get__(0).sz.x = lp.dimen.y;</span>
-<span class="nc" id="L408">	xlp.get__(0).sz.y = lp.dimen.x;</span>
+<span class="fc bfc" id="L406" title="All 2 branches covered.">	if (zz.Flip) {</span>
+<span class="fc" id="L407">	xlp.get__(0).sz.x = lp.dimen.y;</span>
+<span class="fc" id="L408">	xlp.get__(0).sz.y = lp.dimen.x;</span>
 	}
 	else {
 <span class="fc" id="L411">	xlp.get__(0).sz.___(lp.dimen);</span>
@@ -469,9 +469,9 @@ public static ST_boxf addNodeObj(Globals zz, ST_Agnode_s np, CArray&lt;ST_object
 public static ST_boxf addNodeObj_(Globals zz, ST_Agnode_s np, CArray&lt;ST_object_t&gt; objp, final ST_boxf bb) {
 <span class="fc" id="L470">ENTERING(&quot;b8tjygxnwny5qoiir1mha1d62&quot;,&quot;addNodeObj&quot;);</span>
 try {
-<span class="pc bpc" id="L472" title="1 of 2 branches missed.">	if (zz.Flip) {</span>
-<span class="nc" id="L473">		objp.get__(0).sz.x = INCH2PS(ND_height(np));</span>
-<span class="nc" id="L474">		objp.get__(0).sz.y = INCH2PS(ND_width(np));</span>
+<span class="fc bfc" id="L472" title="All 2 branches covered.">	if (zz.Flip) {</span>
+<span class="fc" id="L473">		objp.get__(0).sz.x = INCH2PS(ND_height(np));</span>
+<span class="fc" id="L474">		objp.get__(0).sz.y = INCH2PS(ND_width(np));</span>
 	}
 	else {
 <span class="fc" id="L477">		  objp.get__(0).sz.x = INCH2PS(ND_width(np));</span>
@@ -570,7 +570,7 @@ try {
     
 <span class="pc bpc" id="L571" title="1 of 2 branches missed.">    if ((GD_has_labels(gp) &amp; NODE_XLABEL) == 0 &amp;&amp;</span>
 <span class="pc bpc" id="L572" title="1 of 2 branches missed.">	(GD_has_labels(gp) &amp; EDGE_XLABEL) == 0 &amp;&amp;</span>
-<span class="pc bpc" id="L573" title="1 of 2 branches missed.">	(GD_has_labels(gp) &amp; TAIL_LABEL) == 0 &amp;&amp;</span>
+<span class="fc bfc" id="L573" title="All 2 branches covered.">	(GD_has_labels(gp) &amp; TAIL_LABEL) == 0 &amp;&amp;</span>
 <span class="fc bfc" id="L574" title="All 2 branches covered.">	(GD_has_labels(gp) &amp; HEAD_LABEL) == 0 &amp;&amp;</span>
 <span class="pc bpc" id="L575" title="1 of 4 branches missed.">	((GD_has_labels(gp) &amp; EDGE_LABEL) == 0 || zz.EdgeLabelsDone!=0))</span>
 <span class="fc" id="L576">	return;</span>
@@ -595,11 +595,11 @@ try {
 <span class="pc bpc" id="L595" title="1 of 2 branches missed.">			else if (HAVE_EDGE(ep, et))</span>
 <span class="fc" id="L596">				n_elbls++;</span>
 		}
-<span class="pc bpc" id="L598" title="1 of 2 branches missed.">		if (ED_tail_label(ep)!=null) {</span>
-<span class="nc bnc" id="L599" title="All 2 branches missed.">			if (ED_tail_label(ep).set!=0)</span>
+<span class="fc bfc" id="L598" title="All 2 branches covered.">		if (ED_tail_label(ep)!=null) {</span>
+<span class="pc bpc" id="L599" title="1 of 2 branches missed.">			if (ED_tail_label(ep).set!=0)</span>
 <span class="nc" id="L600">				n_set_lbls++;</span>
-<span class="nc bnc" id="L601" title="All 2 branches missed.">			else if (HAVE_EDGE(ep, et))</span>
-<span class="nc" id="L602">				n_elbls++;</span>
+<span class="pc bpc" id="L601" title="1 of 2 branches missed.">			else if (HAVE_EDGE(ep, et))</span>
+<span class="fc" id="L602">				n_elbls++;</span>
 		}
 <span class="fc bfc" id="L604" title="All 2 branches covered.">		if (ED_label(ep)!=null) {</span>
 <span class="fc bfc" id="L605" title="All 2 branches covered.">			if (ED_label(ep).set!=0)</span>
@@ -656,20 +656,20 @@ else {
 <span class="fc" id="L656">objp = objp.plus_(1);</span>
     	}
 <span class="fc" id="L658">    	lp = ED_tail_label(ep);</span>
-<span class="pc bpc" id="L659" title="1 of 2 branches missed.">    	if (lp != null) {</span>
-<span class="nc bnc" id="L660" title="All 2 branches missed.">if (lp.set!=0) {</span>
+<span class="fc bfc" id="L659" title="All 2 branches covered.">    	if (lp != null) {</span>
+<span class="pc bpc" id="L660" title="1 of 2 branches missed.">if (lp.set!=0) {</span>
 <span class="nc" id="L661">UNSUPPORTED(&quot;7rwrlod7lkgin3rnnzy3iw2rw&quot;); // 		    bb = addLabelObj (lp, objp, bb);</span>
 }
-<span class="nc bnc" id="L663" title="All 2 branches missed."> 		else if (HAVE_EDGE(ep, et)) {</span>
-<span class="nc" id="L664"> 		    addXLabel (zz, lp, objp, xlp, 1, edgeTailpoint(ep)); </span>
-<span class="nc" id="L665"> 		    xlp = xlp.plus_(1);</span>
+<span class="pc bpc" id="L663" title="1 of 2 branches missed."> 		else if (HAVE_EDGE(ep, et)) {</span>
+<span class="fc" id="L664"> 		    addXLabel (zz, lp, objp, xlp, 1, edgeTailpoint(ep)); </span>
+<span class="fc" id="L665"> 		    xlp = xlp.plus_(1);</span>
  		}
  		else {
 <span class="nc" id="L668">UNSUPPORTED(&quot;5ixexxcbcix5hrfl43td7pj4s&quot;); // 		    agerr(AGWARN, &quot;no position for edge with tail label %s&quot;,</span>
 <span class="nc" id="L669">UNSUPPORTED(&quot;cf9qaysecgkvv4165la4uu6cb&quot;); // 			    ED_tail_label(ep)-&gt;text);</span>
 <span class="nc" id="L670">UNSUPPORTED(&quot;2yi9az7ibt7j9bwztjilyo0v2&quot;); // 		    continue;</span>
  		}
-<span class="nc" id="L672">			objp = objp.plus_(1);</span>
+<span class="fc" id="L672">			objp = objp.plus_(1);</span>
     	}
 <span class="fc" id="L674">    	lp = ED_head_label(ep);</span>
 <span class="fc bfc" id="L675" title="All 2 branches covered.">    	if (lp != null) {</span>

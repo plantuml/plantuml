@@ -10983,8 +10983,8 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 65
-    Concrete Classes: 55
+    Total Classes: 66
+    Concrete Classes: 56
     Abstract Classes: 10
 
     Ca: 21
@@ -11053,6 +11053,7 @@ Concrete Classes:
     net.sourceforge.plantuml.svek.NamedOutputStream
     net.sourceforge.plantuml.svek.Oscillator
     net.sourceforge.plantuml.svek.PackageStyle
+    net.sourceforge.plantuml.svek.RoleLabels
     net.sourceforge.plantuml.svek.RoundedContainer
     net.sourceforge.plantuml.svek.RoundedNorth
     net.sourceforge.plantuml.svek.RoundedSouth
@@ -15525,7 +15526,7 @@ net.sourceforge.plantuml.style,22,5,68,20,0.23,0.23,0.55,1
 net.sourceforge.plantuml.style.parser,5,0,4,3,0,0.43,0.57,1
 net.sourceforge.plantuml.style.value,4,1,25,6,0.25,0.19,0.56,1
 net.sourceforge.plantuml.sudoku,4,1,0,8,0.25,1,0.25,1
-net.sourceforge.plantuml.svek,65,10,21,35,0.15,0.62,0.22,1
+net.sourceforge.plantuml.svek,66,10,21,35,0.15,0.62,0.22,1
 net.sourceforge.plantuml.svek.extremity,55,4,3,11,0.07,0.79,0.14,1
 net.sourceforge.plantuml.svek.image,37,2,13,24,0.05,0.65,0.3,1
 net.sourceforge.plantuml.svg.parser,11,1,0,13,0.09,1,0.09,1

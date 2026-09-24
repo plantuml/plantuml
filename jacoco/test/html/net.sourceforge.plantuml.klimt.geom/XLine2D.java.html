@@ -90,11 +90,11 @@ public class XLine2D implements UDrawable {
 <span class="fc" id="L90">		py -= y1;</span>
 <span class="fc" id="L91">		double dotprod = px * x2 + py * y2;</span>
 		double projlenSq;
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (dotprod &lt;= 0.0) {</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		if (dotprod &lt;= 0.0) {</span>
 			// px,py is on the side of x1,y1 away from x2,y2
 			// distance to segment is length of px,py vector
 			// &quot;length of its (clipped) projection&quot; is now 0.0
-<span class="nc" id="L97">			projlenSq = 0.0;</span>
+<span class="fc" id="L97">			projlenSq = 0.0;</span>
 		} else {
 			// switch to backwards vectors relative to x2,y2
 			// x2,y2 are already the negative of x1,y1=&gt;x2,y2
@@ -122,8 +122,8 @@ public class XLine2D implements UDrawable {
 		// (which is zero if the projection falls outside the range
 		// of the line segment).
 <span class="fc" id="L124">		double lenSq = px * px + py * py - projlenSq;</span>
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (lenSq &lt; 0) {</span>
-<span class="nc" id="L126">			lenSq = 0;</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		if (lenSq &lt; 0) {</span>
+<span class="fc" id="L126">			lenSq = 0;</span>
 		}
 <span class="fc" id="L128">		return lenSq;</span>
 	}

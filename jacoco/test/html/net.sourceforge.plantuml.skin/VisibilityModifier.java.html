@@ -134,18 +134,18 @@ import net.sourceforge.plantuml.style.StyleQuery;
 
 <span class="fc" id="L135">		ug = ug.apply(foregroundColor);</span>
 <span class="fc" id="L136">		size = ensureEven(size);</span>
-<span class="pc bpc" id="L137" title="7 of 10 branches missed.">		switch (this) {</span>
+<span class="pc bpc" id="L137" title="4 of 10 branches missed.">		switch (this) {</span>
 		case PACKAGE_PRIVATE_FIELD:
-<span class="nc" id="L139">			drawTriangle(ug, false, size, x, y);</span>
-<span class="nc" id="L140">			break;</span>
+<span class="fc" id="L139">			drawTriangle(ug, false, size, x, y);</span>
+<span class="fc" id="L140">			break;</span>
 
 		case PRIVATE_FIELD:
-<span class="nc" id="L143">			drawSquare(ug, false, size, x, y);</span>
-<span class="nc" id="L144">			break;</span>
+<span class="fc" id="L143">			drawSquare(ug, false, size, x, y);</span>
+<span class="fc" id="L144">			break;</span>
 
 		case PROTECTED_FIELD:
-<span class="nc" id="L147">			drawDiamond(ug, false, size, x, y);</span>
-<span class="nc" id="L148">			break;</span>
+<span class="fc" id="L147">			drawDiamond(ug, false, size, x, y);</span>
+<span class="fc" id="L148">			break;</span>
 
 		case PUBLIC_FIELD:
 <span class="fc" id="L151">			drawCircle(ug, false, size, x, y);</span>
@@ -177,8 +177,8 @@ import net.sourceforge.plantuml.style.StyleQuery;
 <span class="fc" id="L177">	}</span>
 
 	private void drawSquare(UGraphic ug, boolean filled, int size, double x, double y) {
-<span class="nc" id="L180">		ug.apply(new UTranslate(x + 2, y + 2)).draw(URectangle.build(size - 4, size - 4));</span>
-<span class="nc" id="L181">	}</span>
+<span class="fc" id="L180">		ug.apply(new UTranslate(x + 2, y + 2)).draw(URectangle.build(size - 4, size - 4));</span>
+<span class="fc" id="L181">	}</span>
 
 	private void drawCircle(UGraphic ug, boolean filled, int size, double x, double y) {
 <span class="fc" id="L184">		ug.apply(new UTranslate(x + 2, y + 2)).draw(UEllipse.build(size - 4, size - 4));</span>
@@ -191,14 +191,14 @@ import net.sourceforge.plantuml.style.StyleQuery;
 	}
 
 	private void drawDiamond(UGraphic ug, boolean filled, int size, double x, double y) {
-<span class="nc" id="L194">		final UPolygon poly = new UPolygon();</span>
-<span class="nc" id="L195">		size -= 2;</span>
-<span class="nc" id="L196">		poly.addPoint(size / 2.0, 0);</span>
-<span class="nc" id="L197">		poly.addPoint(size, size / 2.0);</span>
-<span class="nc" id="L198">		poly.addPoint(size / 2.0, size);</span>
-<span class="nc" id="L199">		poly.addPoint(0, size / 2.0);</span>
-<span class="nc" id="L200">		ug.apply(new UTranslate(x + 1, y)).draw(poly);</span>
-<span class="nc" id="L201">	}</span>
+<span class="fc" id="L194">		final UPolygon poly = new UPolygon();</span>
+<span class="fc" id="L195">		size -= 2;</span>
+<span class="fc" id="L196">		poly.addPoint(size / 2.0, 0);</span>
+<span class="fc" id="L197">		poly.addPoint(size, size / 2.0);</span>
+<span class="fc" id="L198">		poly.addPoint(size / 2.0, size);</span>
+<span class="fc" id="L199">		poly.addPoint(0, size / 2.0);</span>
+<span class="fc" id="L200">		ug.apply(new UTranslate(x + 1, y)).draw(poly);</span>
+<span class="fc" id="L201">	}</span>
 
 	private void drawTriangle(UGraphic ug, boolean filled, int size, double x, double y) {
 <span class="fc" id="L204">		final UPolygon poly = new UPolygon();</span>
@@ -272,16 +272,16 @@ import net.sourceforge.plantuml.style.StyleQuery;
 <span class="fc bfc" id="L272" title="All 2 branches covered.">		if (c == '#')</span>
 <span class="fc" id="L273">			return VisibilityModifier.PROTECTED_FIELD;</span>
 
-<span class="pc bpc" id="L275" title="1 of 2 branches missed.">		if (c == '+')</span>
+<span class="fc bfc" id="L275" title="All 2 branches covered.">		if (c == '+')</span>
 <span class="fc" id="L276">			return VisibilityModifier.PUBLIC_FIELD;</span>
 
-<span class="nc bnc" id="L278" title="All 2 branches missed.">		if (c == '~')</span>
-<span class="nc" id="L279">			return VisibilityModifier.PACKAGE_PRIVATE_FIELD;</span>
+<span class="fc bfc" id="L278" title="All 2 branches covered.">		if (c == '~')</span>
+<span class="fc" id="L279">			return VisibilityModifier.PACKAGE_PRIVATE_FIELD;</span>
 
-<span class="nc bnc" id="L281" title="All 2 branches missed.">		if (c == '*')</span>
+<span class="pc bpc" id="L281" title="1 of 2 branches missed.">		if (c == '*')</span>
 <span class="nc" id="L282">			return VisibilityModifier.IE_MANDATORY;</span>
 
-<span class="nc" id="L284">		return null;</span>
+<span class="fc" id="L284">		return null;</span>
 	}
 
 	private static VisibilityModifier getVisibilityModifierForMethod(char c) {
@@ -328,7 +328,7 @@ import net.sourceforge.plantuml.style.StyleQuery;
 	}
 
 	public boolean isField() {
-<span class="pc bpc" id="L331" title="3 of 8 branches missed.">		if (this == PUBLIC_FIELD || this == PRIVATE_FIELD || this == PROTECTED_FIELD || this == PACKAGE_PRIVATE_FIELD)</span>
+<span class="pc bpc" id="L331" title="2 of 8 branches missed.">		if (this == PUBLIC_FIELD || this == PRIVATE_FIELD || this == PROTECTED_FIELD || this == PACKAGE_PRIVATE_FIELD)</span>
 <span class="fc" id="L332">			return true;</span>
 
 <span class="fc" id="L334">		return false;</span>
@@ -341,8 +341,8 @@ import net.sourceforge.plantuml.style.StyleQuery;
 <span class="fc bfc" id="L341" title="All 4 branches covered.">		if (this == PUBLIC_FIELD || this == PUBLIC_METHOD)</span>
 <span class="fc" id="L342">			return StyleQueries.VISIBILITYICON_PUBLIC;</span>
 
-<span class="pc bpc" id="L344" title="2 of 4 branches missed.">		if (this == PRIVATE_FIELD || this == PRIVATE_METHOD)</span>
-<span class="nc" id="L345">			return StyleQueries.VISIBILITYICON_PRIVATE;</span>
+<span class="pc bpc" id="L344" title="1 of 4 branches missed.">		if (this == PRIVATE_FIELD || this == PRIVATE_METHOD)</span>
+<span class="fc" id="L345">			return StyleQueries.VISIBILITYICON_PRIVATE;</span>
 
 <span class="pc bpc" id="L347" title="2 of 4 branches missed.">		if (this == PROTECTED_FIELD || this == PROTECTED_METHOD)</span>
 <span class="nc" id="L348">			return StyleQueries.VISIBILITYICON_PROTECTED;</span>

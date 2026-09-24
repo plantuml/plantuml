@@ -131,27 +131,27 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	public Set&lt;XPoint2D&gt; sample() {
-<span class="nc" id="L134">		final Set&lt;XPoint2D&gt; result = new HashSet&lt;&gt;();</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">		for (XCubicCurve2D bez : beziers)</span>
-<span class="nc" id="L136">			sample(bez, result);</span>
+<span class="fc" id="L134">		final Set&lt;XPoint2D&gt; result = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">		for (XCubicCurve2D bez : beziers)</span>
+<span class="fc" id="L136">			sample(bez, result);</span>
 
-<span class="nc" id="L138">		return Collections.unmodifiableSet(result);</span>
+<span class="fc" id="L138">		return Collections.unmodifiableSet(result);</span>
 	}
 
 	private static void sample(XCubicCurve2D bez, Set&lt;XPoint2D&gt; result) {
-<span class="nc" id="L142">		final XPoint2D p1 = bez.getCtrlP1();</span>
-<span class="nc" id="L143">		final XPoint2D p2 = bez.getCtrlP2();</span>
-<span class="nc bnc" id="L144" title="All 4 branches missed.">		if (bez.getFlatnessSq() &gt; 0.5 || p1.distance(p2) &gt; 4) {</span>
-<span class="nc" id="L145">			final XCubicCurve2D left = XCubicCurve2D.none();</span>
-<span class="nc" id="L146">			final XCubicCurve2D right = XCubicCurve2D.none();</span>
-<span class="nc" id="L147">			bez.subdivide(left, right);</span>
-<span class="nc" id="L148">			sample(left, result);</span>
-<span class="nc" id="L149">			sample(right, result);</span>
-<span class="nc" id="L150">		} else {</span>
-<span class="nc" id="L151">			result.add(p1);</span>
-<span class="nc" id="L152">			result.add(p2);</span>
+<span class="fc" id="L142">		final XPoint2D p1 = bez.getCtrlP1();</span>
+<span class="fc" id="L143">		final XPoint2D p2 = bez.getCtrlP2();</span>
+<span class="pc bpc" id="L144" title="1 of 4 branches missed.">		if (bez.getFlatnessSq() &gt; 0.5 || p1.distance(p2) &gt; 4) {</span>
+<span class="fc" id="L145">			final XCubicCurve2D left = XCubicCurve2D.none();</span>
+<span class="fc" id="L146">			final XCubicCurve2D right = XCubicCurve2D.none();</span>
+<span class="fc" id="L147">			bez.subdivide(left, right);</span>
+<span class="fc" id="L148">			sample(left, result);</span>
+<span class="fc" id="L149">			sample(right, result);</span>
+<span class="fc" id="L150">		} else {</span>
+<span class="fc" id="L151">			result.add(p1);</span>
+<span class="fc" id="L152">			result.add(p2);</span>
 		}
-<span class="nc" id="L154">	}</span>
+<span class="fc" id="L154">	}</span>
 
 	public PointAndAngle getMiddle() {
 <span class="nc" id="L157">		XPoint2D result = null;</span>

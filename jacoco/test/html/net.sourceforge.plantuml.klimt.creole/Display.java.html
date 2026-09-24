@@ -412,8 +412,8 @@ public class Display implements Iterable&lt;CharSequence&gt;, AsciiBlock {
 <span class="fc" id="L412">		boolean first = true;</span>
 <span class="fc bfc" id="L413" title="All 2 branches covered.">		for (CharSequence line : displayData) {</span>
 <span class="fc" id="L414">			String lineString = line.toString();</span>
-<span class="pc bpc" id="L415" title="2 of 6 branches missed.">			if (manageVisibilityModifier &amp;&amp; first &amp;&amp; VisibilityModifier.isVisibilityCharacter(line))</span>
-<span class="nc" id="L416">				lineString = lineString.substring(1).trim();</span>
+<span class="pc bpc" id="L415" title="1 of 6 branches missed.">			if (manageVisibilityModifier &amp;&amp; first &amp;&amp; VisibilityModifier.isVisibilityCharacter(line))</span>
+<span class="fc" id="L416">				lineString = lineString.substring(1).trim();</span>
 
 <span class="fc" id="L418">			final String withGuillement = Guillemet.GUILLEMET.manageGuillemet(lineString);</span>
 <span class="fc" id="L419">			result.add(withGuillement);</span>

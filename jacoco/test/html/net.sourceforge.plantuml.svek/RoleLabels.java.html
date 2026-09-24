@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RoleLabels.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svek</a> &gt; <span class="el_source">RoleLabels.java</span></div><h1>RoleLabels.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ * 
+ */
+package net.sourceforge.plantuml.svek;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.RectangleArea;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.ISkinParam;
+
+/**
+ * Role labels of an association (&lt;code&gt;A &quot;1&quot;/&quot;-owner&quot; --&gt; B&lt;/code&gt;), shared by
+ * all the layout engines (Graphviz, Smetana and ELK).
+ * &lt;ul&gt;
+ * &lt;li&gt;{@link #create} builds the text block, turning a leading visibility
+ * character into the same icon as the one used for class attributes.&lt;/li&gt;
+ * &lt;li&gt;{@link #getPosition} decides where the block is drawn: on the other side
+ * of the line from the quantifier, and never on top of the line.&lt;/li&gt;
+ * &lt;/ul&gt;
+ */
+public final class RoleLabels {
+
+	private static final double GAP = 2;
+	private static final double MIN_DISTANCE_FOR_DIRECTION = 15;
+	private static final double SEARCH_STEP = 2;
+	private static final double SEARCH_RANGE = 30;
+
+	private RoleLabels() {
+	}
+
+	public static TextBlock create(String role, Pragma pragma, FontConfiguration font, ISkinParam skinParam) {
+		// A role is a property of the class, so it gets the icons of the fields
+		// (hollow), as the attributes do, and not the ones of the methods (filled).
+<span class="fc" id="L80">		VisibilityModifier visibilityModifier = null;</span>
+<span class="fc" id="L81">		String text = role;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		if (skinParam.classAttributeIconSize() &gt; 0) {</span>
+<span class="fc" id="L83">			visibilityModifier = VisibilityModifier.getVisibilityModifier(role, true);</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">			if (visibilityModifier != null)</span>
+<span class="fc" id="L85">				text = role.substring(1).trim();</span>
+		}
+
+<span class="fc" id="L88">		TextBlock result = Display.getWithNewlines(pragma, text).create(font,</span>
+<span class="fc" id="L89">				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);</span>
+
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (visibilityModifier != null) {</span>
+<span class="fc" id="L92">			final HColor fore = new Rose().getHtmlColor(skinParam, visibilityModifier.getForeground());</span>
+<span class="fc" id="L93">			TextBlock icon = visibilityModifier.getUBlock(skinParam.classAttributeIconSize(), fore, null, false);</span>
+<span class="fc" id="L94">			icon = TextBlockUtils.withMargin(icon, 0, 1, 2, 0);</span>
+<span class="fc" id="L95">			result = TextBlockUtils.mergeLR(icon, result, VerticalAlignment.CENTER);</span>
+		}
+<span class="fc" id="L97">		return result;</span>
+	}
+
+	/**
+	 * Computes the top-left corner of the role label.
+	 * 
+	 * The role is preferably drawn on the other side of the line from the
+	 * quantifier, at the same height (or at the same abscissa for a horizontal
+	 * line). If this collides with one of the &lt;code&gt;obstacles&lt;/code&gt; (typically the
+	 * node the line is attached to: a line leaving a node diagonally can have its
+	 * &quot;other side&quot; inside the node), the role is moved to the closest place where it has
+	 * some room.
+	 * 
+	 * @param qDim          size of the quantifier, which is drawn at
+	 *                      &lt;code&gt;quantifierPos&lt;/code&gt; by the layout engine
+	 * @param rDim          size of the role
+	 * @param thisEndpoint  end of the line where the label is attached
+	 * @param otherEndpoint the opposite end of the line
+	 * @param pathSamples   points of the line, or &lt;code&gt;null&lt;/code&gt; to use the
+	 *                      straight segment between the two endpoints
+	 * @param obstacles     areas to keep free, in the same coordinates as the
+	 *                      other parameters (may be empty)
+	 */
+	public static XPoint2D getPosition(XDimension2D qDim, XDimension2D rDim, XPoint2D quantifierPos,
+			XPoint2D thisEndpoint, XPoint2D otherEndpoint, Collection&lt;XPoint2D&gt; pathSamples,
+			Collection&lt;RectangleArea&gt; obstacles) {
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		final Collection&lt;XPoint2D&gt; samples = pathSamples != null ? pathSamples</span>
+<span class="pc" id="L124">				: sampleSegment(thisEndpoint, otherEndpoint);</span>
+
+		// Graphviz places the quantifier relatively to the direction of the line where
+		// it leaves the node, not relatively to the direction from one end to the
+		// other: a diagonal line can leave a node vertically and then bend.
+<span class="fc" id="L129">		final XPoint2D towards = getPointAwayFrom(thisEndpoint, otherEndpoint, samples);</span>
+<span class="fc" id="L130">		final double dirX = towards.getX() - thisEndpoint.getX();</span>
+<span class="fc" id="L131">		final double dirY = towards.getY() - thisEndpoint.getY();</span>
+
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (Math.abs(dirX) + Math.abs(dirY) &lt; 0.001)</span>
+<span class="nc" id="L134">			return new XPoint2D(quantifierPos.getX(), quantifierPos.getY() + qDim.getHeight());</span>
+
+<span class="fc" id="L136">		final XPoint2D preferred = getMirroredPosition(qDim, rDim, quantifierPos, thisEndpoint, dirX, dirY, samples);</span>
+
+<span class="fc" id="L138">		final List&lt;RectangleArea&gt; forbidden = new ArrayList&lt;&gt;(obstacles);</span>
+<span class="fc" id="L139">		forbidden.add(new RectangleArea(quantifierPos.getX(), quantifierPos.getY(),</span>
+<span class="fc" id="L140">				quantifierPos.getX() + qDim.getWidth(), quantifierPos.getY() + qDim.getHeight()));</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">		if (isFree(preferred, rDim, forbidden, null))</span>
+<span class="fc" id="L142">			return preferred;</span>
+
+<span class="fc" id="L144">		final XPoint2D alternative = searchFreePosition(qDim, rDim, quantifierPos, thisEndpoint, dirX, dirY, samples,</span>
+				forbidden);
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		return alternative != null ? alternative : preferred;</span>
+	}
+
+	private static XPoint2D getMirroredPosition(XDimension2D qDim, XDimension2D rDim, XPoint2D quantifierPos,
+			XPoint2D thisEndpoint, double dirX, double dirY, Collection&lt;XPoint2D&gt; samples) {
+<span class="fc bfc" id="L151" title="All 2 branches covered.">		if (Math.abs(dirY) &gt;= Math.abs(dirX)) {</span>
+			// Mostly vertical: mirror across the line X
+<span class="fc" id="L153">			final double roleY = quantifierPos.getY();</span>
+<span class="fc" id="L154">			final double qCenterX = quantifierPos.getX() + qDim.getWidth() / 2;</span>
+<span class="fc" id="L155">			final double lineX = thisEndpoint.getX();</span>
+			double roleX;
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">			if (qCenterX &lt; lineX) {</span>
+<span class="fc" id="L158">				roleX = lineX + GAP;</span>
+				// The line is not vertical: at the height of the label, it may be further
+				// to the right than at its end.
+<span class="fc bfc" id="L161" title="All 2 branches covered.">				for (XPoint2D pt : samples)</span>
+<span class="fc bfc" id="L162" title="All 4 branches covered.">					if (pt.getY() &gt;= roleY - GAP &amp;&amp; pt.getY() &lt;= roleY + rDim.getHeight() + GAP)</span>
+<span class="fc" id="L163">						roleX = Math.max(roleX, pt.getX() + GAP);</span>
+			} else {
+<span class="nc" id="L165">				roleX = lineX - rDim.getWidth() - GAP;</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">				for (XPoint2D pt : samples)</span>
+<span class="nc bnc" id="L167" title="All 4 branches missed.">					if (pt.getY() &gt;= roleY - GAP &amp;&amp; pt.getY() &lt;= roleY + rDim.getHeight() + GAP)</span>
+<span class="nc" id="L168">						roleX = Math.min(roleX, pt.getX() - rDim.getWidth() - GAP);</span>
+			}
+<span class="fc" id="L170">			return new XPoint2D(roleX, roleY);</span>
+		}
+
+		// Mostly horizontal: mirror across the line Y
+<span class="fc" id="L174">		final double roleX = quantifierPos.getX();</span>
+<span class="fc" id="L175">		final double qCenterY = quantifierPos.getY() + qDim.getHeight() / 2;</span>
+<span class="fc" id="L176">		final double lineY = thisEndpoint.getY();</span>
+		double roleY;
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if (qCenterY &lt; lineY) {</span>
+<span class="nc" id="L179">			roleY = lineY + GAP;</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">			for (XPoint2D pt : samples)</span>
+<span class="nc bnc" id="L181" title="All 4 branches missed.">				if (pt.getX() &gt;= roleX - GAP &amp;&amp; pt.getX() &lt;= roleX + rDim.getWidth() + GAP)</span>
+<span class="nc" id="L182">					roleY = Math.max(roleY, pt.getY() + GAP);</span>
+		} else {
+<span class="fc" id="L184">			roleY = lineY - rDim.getHeight() - GAP;</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">			for (XPoint2D pt : samples)</span>
+<span class="fc bfc" id="L186" title="All 4 branches covered.">				if (pt.getX() &gt;= roleX - GAP &amp;&amp; pt.getX() &lt;= roleX + rDim.getWidth() + GAP)</span>
+<span class="fc" id="L187">					roleY = Math.min(roleY, pt.getY() - rDim.getHeight() - GAP);</span>
+		}
+<span class="fc" id="L189">		return new XPoint2D(roleX, roleY);</span>
+	}
+
+	/**
+	 * Looks for the free place the closest to the mirror image of the quantifier
+	 * across the line, in the neighbourhood of the end of the line.
+	 */
+	private static XPoint2D searchFreePosition(XDimension2D qDim, XDimension2D rDim, XPoint2D quantifierPos,
+			XPoint2D endpoint, double dirX, double dirY, Collection&lt;XPoint2D&gt; samples,
+			Collection&lt;RectangleArea&gt; forbidden) {
+<span class="fc" id="L199">		final double length = Math.hypot(dirX, dirY);</span>
+<span class="fc" id="L200">		final double tx = dirX / length;</span>
+<span class="fc" id="L201">		final double ty = dirY / length;</span>
+
+<span class="fc" id="L203">		final double qx = quantifierPos.getX() + qDim.getWidth() / 2;</span>
+<span class="fc" id="L204">		final double qy = quantifierPos.getY() + qDim.getHeight() / 2;</span>
+<span class="fc" id="L205">		final double along = (qx - endpoint.getX()) * tx + (qy - endpoint.getY()) * ty;</span>
+<span class="fc" id="L206">		final double idealX = 2 * (endpoint.getX() + tx * along) - qx;</span>
+<span class="fc" id="L207">		final double idealY = 2 * (endpoint.getY() + ty * along) - qy;</span>
+
+<span class="fc" id="L209">		XPoint2D best = null;</span>
+<span class="fc" id="L210">		double bestDistance = Double.MAX_VALUE;</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">		for (double x = endpoint.getX() - rDim.getWidth() - SEARCH_RANGE; x &lt;= endpoint.getX()</span>
+<span class="fc" id="L212">				+ SEARCH_RANGE; x += SEARCH_STEP)</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">			for (double y = endpoint.getY() - rDim.getHeight() - SEARCH_RANGE; y &lt;= endpoint.getY()</span>
+<span class="fc" id="L214">					+ SEARCH_RANGE; y += SEARCH_STEP) {</span>
+				// Sliding along the line is preferred to moving away from it
+<span class="fc" id="L216">				final double deltaX = x + rDim.getWidth() / 2 - idealX;</span>
+<span class="fc" id="L217">				final double deltaY = y + rDim.getHeight() / 2 - idealY;</span>
+<span class="fc" id="L218">				final double distance = Math.abs(deltaX * tx + deltaY * ty) + 2 * Math.abs(-deltaX * ty + deltaY * tx);</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">				if (distance &gt;= bestDistance)</span>
+<span class="fc" id="L220">					continue;</span>
+
+<span class="fc" id="L222">				final XPoint2D candidate = new XPoint2D(x, y);</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">				if (isFree(candidate, rDim, forbidden, samples)) {</span>
+<span class="fc" id="L224">					best = candidate;</span>
+<span class="fc" id="L225">					bestDistance = distance;</span>
+				}
+			}
+<span class="fc" id="L228">		return best;</span>
+	}
+
+	private static boolean isFree(XPoint2D pos, XDimension2D dim, Collection&lt;RectangleArea&gt; forbidden,
+			Collection&lt;XPoint2D&gt; samples) {
+<span class="fc" id="L233">		final double x1 = pos.getX();</span>
+<span class="fc" id="L234">		final double y1 = pos.getY();</span>
+<span class="fc" id="L235">		final double x2 = x1 + dim.getWidth();</span>
+<span class="fc" id="L236">		final double y2 = y1 + dim.getHeight();</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">		for (RectangleArea area : forbidden)</span>
+<span class="fc bfc" id="L238" title="All 8 branches covered.">			if (x1 &lt; area.getMaxX() &amp;&amp; x2 &gt; area.getMinX() &amp;&amp; y1 &lt; area.getMaxY() &amp;&amp; y2 &gt; area.getMinY())</span>
+<span class="fc" id="L239">				return false;</span>
+
+<span class="fc bfc" id="L241" title="All 2 branches covered.">		if (samples != null)</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">			for (XPoint2D pt : samples)</span>
+<span class="pc bpc" id="L243" title="1 of 6 branches missed.">				if (pt.getX() &gt;= x1 - GAP &amp;&amp; pt.getX() &lt;= x2 + GAP &amp;&amp; pt.getY() &gt;= y1 - GAP</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">						&amp;&amp; pt.getY() &lt;= y2 + GAP)</span>
+<span class="fc" id="L245">					return false;</span>
+
+<span class="fc" id="L247">		return true;</span>
+	}
+
+	/**
+	 * The point of the line the closest to the endpoint, among the ones that are
+	 * far enough from it to give a meaningful direction.
+	 */
+	private static XPoint2D getPointAwayFrom(XPoint2D endpoint, XPoint2D otherEndpoint, Collection&lt;XPoint2D&gt; samples) {
+<span class="fc" id="L255">		XPoint2D result = otherEndpoint;</span>
+<span class="fc" id="L256">		double best = Double.MAX_VALUE;</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">		for (XPoint2D pt : samples) {</span>
+<span class="fc" id="L258">			final double distance = pt.distance(endpoint);</span>
+<span class="fc bfc" id="L259" title="All 4 branches covered.">			if (distance &gt;= MIN_DISTANCE_FOR_DIRECTION &amp;&amp; distance &lt; best) {</span>
+<span class="fc" id="L260">				best = distance;</span>
+<span class="fc" id="L261">				result = pt;</span>
+			}
+<span class="fc" id="L263">		}</span>
+<span class="fc" id="L264">		return result;</span>
+	}
+
+	private static Collection&lt;XPoint2D&gt; sampleSegment(XPoint2D p1, XPoint2D p2) {
+<span class="nc" id="L268">		final List&lt;XPoint2D&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L269">		final int steps = Math.max(1, (int) Math.ceil(p1.distance(p2) / 2));</span>
+<span class="nc bnc" id="L270" title="All 2 branches missed.">		for (int i = 0; i &lt;= steps; i++) {</span>
+<span class="nc" id="L271">			final double t = i / (double) steps;</span>
+<span class="nc" id="L272">			result.add(new XPoint2D(p1.getX() + (p2.getX() - p1.getX()) * t, p1.getY() + (p2.getY() - p1.getY()) * t));</span>
+		}
+<span class="nc" id="L274">		return result;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

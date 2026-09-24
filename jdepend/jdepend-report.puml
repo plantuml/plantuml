@@ -3119,7 +3119,7 @@ Total Classes: 4
 "net.sourceforge.plantuml.sudoku" --> "net.sourceforge.plantuml.regex"
 
 class "net.sourceforge.plantuml.svek" %lighten("red", 78) {
-Total Classes: 65
+Total Classes: 66
 }
 "net.sourceforge.plantuml.svek" --> "java.io"
 "net.sourceforge.plantuml.svek" --> "java.lang"

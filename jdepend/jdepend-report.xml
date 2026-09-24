@@ -15896,8 +15896,8 @@
 
         <Package name="net.sourceforge.plantuml.svek">
             <Stats>
-                <TotalClasses>65</TotalClasses>
-                <ConcreteClasses>55</ConcreteClasses>
+                <TotalClasses>66</TotalClasses>
+                <ConcreteClasses>56</ConcreteClasses>
                 <AbstractClasses>10</AbstractClasses>
                 <Ca>21</Ca>
                 <Ce>35</Ce>
@@ -16078,6 +16078,9 @@
                 </Class>
                 <Class sourceFile="PackageStyle.java">
                     net.sourceforge.plantuml.svek.PackageStyle
+                </Class>
+                <Class sourceFile="RoleLabels.java">
+                    net.sourceforge.plantuml.svek.RoleLabels
                 </Class>
                 <Class sourceFile="RoundedContainer.java">
                     net.sourceforge.plantuml.svek.RoundedContainer

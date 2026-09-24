@@ -788,11 +788,11 @@ try {
 				lfi.fontsize, lfi.fontname, lfi.fontcolor));
 <span class="fc" id="L789">    	GD_has_labels(sg, GD_has_labels(sg) | HEAD_LABEL);</span>
     }
-<span class="pc bpc" id="L791" title="5 of 6 branches missed.">    if (zz.E_taillabel!=null &amp;&amp; (str = agxget(e, zz.E_taillabel))!=null &amp;&amp; (str.charAt(0)!='\0')) {</span>
-<span class="nc" id="L792">    	initFontLabelEdgeAttr(zz, e, fi, lfi);</span>
-<span class="nc bnc" id="L793" title="All 2 branches missed.">    	ED_tail_label(e, make_label(zz, e, str, (aghtmlstr(zz, str)!=0 ? LT_HTML : LT_NONE),</span>
+<span class="pc bpc" id="L791" title="2 of 6 branches missed.">    if (zz.E_taillabel!=null &amp;&amp; (str = agxget(e, zz.E_taillabel))!=null &amp;&amp; (str.charAt(0)!='\0')) {</span>
+<span class="fc" id="L792">    	initFontLabelEdgeAttr(zz, e, fi, lfi);</span>
+<span class="pc bpc" id="L793" title="1 of 2 branches missed.">    	ED_tail_label(e, make_label(zz, e, str, (aghtmlstr(zz, str)!=0 ? LT_HTML : LT_NONE),</span>
 				lfi.fontsize, lfi.fontname, lfi.fontcolor));
-<span class="nc" id="L795">    	GD_has_labels(sg, GD_has_labels(sg) | TAIL_LABEL);</span>
+<span class="fc" id="L795">    	GD_has_labels(sg, GD_has_labels(sg) | TAIL_LABEL);</span>
     }
     /* end vladimir */
     
@@ -851,8 +851,8 @@ try {
     }
 <span class="fc" id="L852">    min = p.x - width / 2.;</span>
 <span class="fc" id="L853">    max = p.x + width / 2.;</span>
-<span class="pc bpc" id="L854" title="1 of 2 branches missed.">    if (min &lt; bb.LL.x)</span>
-<span class="nc" id="L855">	bb.LL.x = min;</span>
+<span class="fc bfc" id="L854" title="All 2 branches covered.">    if (min &lt; bb.LL.x)</span>
+<span class="fc" id="L855">	bb.LL.x = min;</span>
 <span class="fc bfc" id="L856" title="All 2 branches covered.">    if (max &gt; bb.UR.x)</span>
 <span class="fc" id="L857">	bb.UR.x = max;</span>
 <span class="fc" id="L858">    min = p.y - height / 2.;</span>
