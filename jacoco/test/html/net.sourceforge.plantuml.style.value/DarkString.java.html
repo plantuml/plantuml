@@ -51,15 +51,15 @@ public class DarkString {
 <span class="pc bpc" id="L51" title="1 of 2 branches missed.">		if (other == null)</span>
 <span class="nc" id="L52">			return this;</span>
 
-<span class="pc bpc" id="L54" title="3 of 8 branches missed.">		if ((this.value2 == null &amp;&amp; other.value2 == null) || this.value1 == null &amp;&amp; other.value1 == null) {</span>
+<span class="pc bpc" id="L54" title="1 of 8 branches missed.">		if ((this.value2 == null &amp;&amp; other.value2 == null) || this.value1 == null &amp;&amp; other.value1 == null) {</span>
 <span class="fc bfc" id="L55" title="All 2 branches covered.">			if (this.specificity.isBiggerThan(other.specificity))</span>
 <span class="fc" id="L56">				return this;</span>
 <span class="fc" id="L57">			return other;</span>
 		}
 <span class="fc bfc" id="L59" title="All 4 branches covered.">		if (this.value2 == null &amp;&amp; other.value1 == null)</span>
 <span class="fc" id="L60">			return new DarkString(this.value1, other.value2, this.specificity);</span>
-<span class="pc bpc" id="L61" title="1 of 4 branches missed.">		if (other.value2 == null &amp;&amp; this.value1 == null)</span>
-<span class="nc" id="L62">			return new DarkString(other.value1, this.value2, other.specificity);</span>
+<span class="fc bfc" id="L61" title="All 4 branches covered.">		if (other.value2 == null &amp;&amp; this.value1 == null)</span>
+<span class="fc" id="L62">			return new DarkString(other.value1, this.value2, other.specificity);</span>
 
 <span class="fc bfc" id="L64" title="All 2 branches covered.">		if (this.specificity.isBiggerThan(other.specificity))</span>
 <span class="fc" id="L65">			return this;</span>

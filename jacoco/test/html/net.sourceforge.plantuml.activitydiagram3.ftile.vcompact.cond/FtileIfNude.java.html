@@ -55,16 +55,16 @@ public class FtileIfNude extends FtileDimensionMemoize {
 	protected final Ftile tile2;
 	private final Swimlane in;
 
-<span class="nc" id="L58">	protected double xDeltaNote = 0;</span>
-<span class="nc" id="L59">	protected double yDeltaNote = 0;</span>
-<span class="nc" id="L60">	protected double suppWidthNode = 0;</span>
+<span class="fc" id="L58">	protected double xDeltaNote = 0;</span>
+<span class="fc" id="L59">	protected double yDeltaNote = 0;</span>
+<span class="fc" id="L60">	protected double suppWidthNode = 0;</span>
 
 	FtileIfNude(Ftile tile1, Ftile tile2, Swimlane in) {
-<span class="nc" id="L63">		super(tile1.skinParam());</span>
-<span class="nc" id="L64">		this.tile1 = tile1;</span>
-<span class="nc" id="L65">		this.tile2 = tile2;</span>
-<span class="nc" id="L66">		this.in = in;</span>
-<span class="nc" id="L67">	}</span>
+<span class="fc" id="L63">		super(tile1.skinParam());</span>
+<span class="fc" id="L64">		this.tile1 = tile1;</span>
+<span class="fc" id="L65">		this.tile2 = tile2;</span>
+<span class="fc" id="L66">		this.in = in;</span>
+<span class="fc" id="L67">	}</span>
 
 	@Override
 	public Collection&lt;Ftile&gt; getMyChildren() {
@@ -72,22 +72,22 @@ public class FtileIfNude extends FtileDimensionMemoize {
 	}
 
 	public boolean hasTwoBranches(StringBounder stringBounder) {
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		return tile1.calculateDimension(stringBounder).hasPointOut()</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">				&amp;&amp; tile2.calculateDimension(stringBounder).hasPointOut();</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		return tile1.calculateDimension(stringBounder).hasPointOut()</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">				&amp;&amp; tile2.calculateDimension(stringBounder).hasPointOut();</span>
 	}
 
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="nc" id="L80">		final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;();</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (getSwimlaneIn() != null)</span>
+<span class="fc" id="L80">		final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;();</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (getSwimlaneIn() != null)</span>
 <span class="nc" id="L82">			result.add(getSwimlaneIn());</span>
 
-<span class="nc" id="L84">		result.addAll(tile1.getSwimlanes());</span>
-<span class="nc" id="L85">		result.addAll(tile2.getSwimlanes());</span>
-<span class="nc" id="L86">		return Collections.unmodifiableSet(result);</span>
+<span class="fc" id="L84">		result.addAll(tile1.getSwimlanes());</span>
+<span class="fc" id="L85">		result.addAll(tile2.getSwimlanes());</span>
+<span class="fc" id="L86">		return Collections.unmodifiableSet(result);</span>
 	}
 
 	public Swimlane getSwimlaneIn() {
-<span class="nc" id="L90">		return in;</span>
+<span class="fc" id="L90">		return in;</span>
 	}
 
 	public Swimlane getSwimlaneOut() {
@@ -95,18 +95,18 @@ public class FtileIfNude extends FtileDimensionMemoize {
 	}
 
 	protected UTranslate getTranslateBranch1(StringBounder stringBounder) {
-<span class="nc" id="L98">		final double x1 = xDeltaNote;</span>
-<span class="nc" id="L99">		final double y1 = yDeltaNote;</span>
-<span class="nc" id="L100">		return new UTranslate(x1, y1);</span>
+<span class="fc" id="L98">		final double x1 = xDeltaNote;</span>
+<span class="fc" id="L99">		final double y1 = yDeltaNote;</span>
+<span class="fc" id="L100">		return new UTranslate(x1, y1);</span>
 	}
 
 	protected UTranslate getTranslateBranch2(StringBounder stringBounder) {
-<span class="nc" id="L104">		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
-<span class="nc" id="L105">		final XDimension2D dim2 = tile2.calculateDimension(stringBounder);</span>
+<span class="fc" id="L104">		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="fc" id="L105">		final XDimension2D dim2 = tile2.calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L107">		final double x2 = dimTotal.getWidth() - dim2.getWidth() - suppWidthNode;</span>
-<span class="nc" id="L108">		final double y2 = yDeltaNote;</span>
-<span class="nc" id="L109">		return new UTranslate(x2, y2);</span>
+<span class="fc" id="L107">		final double x2 = dimTotal.getWidth() - dim2.getWidth() - suppWidthNode;</span>
+<span class="fc" id="L108">		final double y2 = yDeltaNote;</span>
+<span class="fc" id="L109">		return new UTranslate(x2, y2);</span>
 
 	}
 
@@ -122,41 +122,41 @@ public class FtileIfNude extends FtileDimensionMemoize {
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L125">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L125">		final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="nc" id="L127">		ug.apply(getTranslateBranch1(stringBounder)).draw(tile1);</span>
-<span class="nc" id="L128">		ug.apply(getTranslateBranch2(stringBounder)).draw(tile2);</span>
-<span class="nc" id="L129">	}</span>
+<span class="fc" id="L127">		ug.apply(getTranslateBranch1(stringBounder)).draw(tile1);</span>
+<span class="fc" id="L128">		ug.apply(getTranslateBranch2(stringBounder)).draw(tile2);</span>
+<span class="fc" id="L129">	}</span>
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-<span class="nc" id="L133">		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);</span>
-<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (tile1.calculateDimension(stringBounder).hasPointOut()</span>
+<span class="fc" id="L133">		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		if (tile1.calculateDimension(stringBounder).hasPointOut()</span>
 <span class="nc bnc" id="L135" title="All 2 branches missed.">				|| tile2.calculateDimension(stringBounder).hasPointOut())</span>
-<span class="nc" id="L136">			return dimTotal;</span>
+<span class="fc" id="L136">			return dimTotal;</span>
 
 <span class="nc" id="L138">		return dimTotal.withoutPointOut();</span>
 	}
 
 	@Override
 	protected FtileGeometry calculateDimensionInternalSlow(StringBounder stringBounder) {
-<span class="nc" id="L143">		final FtileGeometry dim1 = tile1.calculateDimension(stringBounder);</span>
-<span class="nc" id="L144">		final FtileGeometry dim2 = tile2.calculateDimension(stringBounder);</span>
+<span class="fc" id="L143">		final FtileGeometry dim1 = tile1.calculateDimension(stringBounder);</span>
+<span class="fc" id="L144">		final FtileGeometry dim2 = tile2.calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L146">		final double innerMargin = widthInner(stringBounder);</span>
-<span class="nc" id="L147">		final double width = xDeltaNote + dim1.getLeft() + innerMargin + (dim2.getWidth() - dim2.getLeft())</span>
+<span class="fc" id="L146">		final double innerMargin = widthInner(stringBounder);</span>
+<span class="fc" id="L147">		final double width = xDeltaNote + dim1.getLeft() + innerMargin + (dim2.getWidth() - dim2.getLeft())</span>
 				+ suppWidthNode;
 
-<span class="nc" id="L150">		final XDimension2D dim12 = dim1.mergeLR(dim2);</span>
+<span class="fc" id="L150">		final XDimension2D dim12 = dim1.mergeLR(dim2);</span>
 
-<span class="nc" id="L152">		final double height = yDeltaNote + dim12.getHeight();</span>
-<span class="nc" id="L153">		return new FtileGeometry(width, height, xDeltaNote + dim1.getLeft() + innerMargin / 2, yDeltaNote, height);</span>
+<span class="fc" id="L152">		final double height = yDeltaNote + dim12.getHeight();</span>
+<span class="fc" id="L153">		return new FtileGeometry(width, height, xDeltaNote + dim1.getLeft() + innerMargin / 2, yDeltaNote, height);</span>
 	}
 
 	protected double widthInner(StringBounder stringBounder) {
-<span class="nc" id="L157">		final FtileGeometry dim1 = tile1.calculateDimension(stringBounder);</span>
-<span class="nc" id="L158">		final FtileGeometry dim2 = tile2.calculateDimension(stringBounder);</span>
-<span class="nc" id="L159">		return (dim1.getWidth() - dim1.getLeft()) + dim2.getLeft();</span>
+<span class="fc" id="L157">		final FtileGeometry dim1 = tile1.calculateDimension(stringBounder);</span>
+<span class="fc" id="L158">		final FtileGeometry dim2 = tile2.calculateDimension(stringBounder);</span>
+<span class="fc" id="L159">		return (dim1.getWidth() - dim1.getLeft()) + dim2.getLeft();</span>
 	}
 
 }

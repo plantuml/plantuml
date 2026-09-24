@@ -63,24 +63,24 @@ import java.util.Collection;
 	}
 
 	public static Ftile addVerticalMargin(Ftile ftile, double marginTop, double marginBottom) {
-<span class="nc bnc" id="L66" title="All 4 branches missed.">		if (marginTop == 0 &amp;&amp; marginBottom == 0)</span>
-<span class="nc" id="L67">			return ftile;</span>
+<span class="pc bpc" id="L66" title="1 of 4 branches missed.">		if (marginTop == 0 &amp;&amp; marginBottom == 0)</span>
+<span class="fc" id="L67">			return ftile;</span>
 
-<span class="nc" id="L69">		return new FtileMargedVertically(ftile, marginTop, marginBottom);</span>
+<span class="fc" id="L69">		return new FtileMargedVertically(ftile, marginTop, marginBottom);</span>
 	}
 
 	public static Ftile addHorizontalMargin(Ftile ftile, double margin1, double margin2) {
-<span class="pc bpc" id="L73" title="3 of 4 branches missed.">		if (margin1 == 0 &amp;&amp; margin2 == 0)</span>
-<span class="nc" id="L74">			return ftile;</span>
+<span class="pc bpc" id="L73" title="1 of 4 branches missed.">		if (margin1 == 0 &amp;&amp; margin2 == 0)</span>
+<span class="fc" id="L74">			return ftile;</span>
 
 <span class="fc" id="L76">		return new FtileMarged(ftile, margin1, margin2);</span>
 	}
 
 	public static Ftile addHorizontalMargin(Ftile ftile, double margin) {
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (margin == 0)</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (margin == 0)</span>
 <span class="nc" id="L81">			return ftile;</span>
 
-<span class="nc" id="L83">		return new FtileMarged(ftile, margin, margin);</span>
+<span class="fc" id="L83">		return new FtileMarged(ftile, margin, margin);</span>
 	}
 
 	// public static Ftile addHorizontalMargin(Ftile ftile, double margin) {

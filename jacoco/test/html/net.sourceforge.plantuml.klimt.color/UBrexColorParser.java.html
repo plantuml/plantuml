@@ -63,12 +63,12 @@ public class UBrexColorParser {
 <span class="fc" id="L63">	}</span>
 
 	public Colors getColor(RegexResult arg, HColorSet set) throws NoSuchColorException {
-<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (mainType == null)</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (mainType == null)</span>
 <span class="nc" id="L67">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L69">		final String data = arg.getLazzy(name, 0);</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (data == null)</span>
-<span class="nc" id="L71">			return Colors.empty();</span>
+<span class="fc" id="L69">		final String data = arg.getLazzy(name, 0);</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (data == null)</span>
+<span class="fc" id="L71">			return Colors.empty();</span>
 
 <span class="nc" id="L73">		return new Colors(data, set, mainType);</span>
 	}

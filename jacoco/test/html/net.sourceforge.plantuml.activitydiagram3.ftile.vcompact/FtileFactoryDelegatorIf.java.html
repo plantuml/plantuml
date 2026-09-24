@@ -71,26 +71,26 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 			LinkRendering topInlinkRendering, Url url, Collection&lt;PositionedNote&gt; notes, Stereotype stereotype,
 			StyleBuilder currentStyleBuilder) {
 
-<span class="nc" id="L74">		final ConditionStyle conditionStyle = skinParam().getConditionStyle();</span>
-<span class="nc" id="L75">		final ConditionEndStyle conditionEndStyle = skinParam().getConditionEndStyle();</span>
-<span class="nc" id="L76">		final Branch branch0 = thens.get(0);</span>
+<span class="fc" id="L74">		final ConditionStyle conditionStyle = skinParam().getConditionStyle();</span>
+<span class="fc" id="L75">		final ConditionEndStyle conditionEndStyle = skinParam().getConditionEndStyle();</span>
+<span class="fc" id="L76">		final Branch branch0 = thens.get(0);</span>
 
-<span class="nc" id="L78">		final Style styleArrow = currentStyleBuilder.getMergedStyle(getDefaultStyleDefinitionArrow());</span>
-<span class="nc" id="L79">		final Style styleDiamond = currentStyleBuilder</span>
-<span class="nc" id="L80">				.getMergedStyle(getDefaultStyleDefinitionDiamond().withStereotype(stereotype));</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		final HColor backColor = branch0.getColor() == null</span>
-<span class="nc" id="L82">				? styleDiamond.value(PName.BackGroundColor).asColor(skinParam().getIHtmlColorSet())</span>
-<span class="nc" id="L83">				: branch0.getColor();</span>
+<span class="fc" id="L78">		final Style styleArrow = currentStyleBuilder.getMergedStyle(getDefaultStyleDefinitionArrow());</span>
+<span class="fc" id="L79">		final Style styleDiamond = currentStyleBuilder</span>
+<span class="fc" id="L80">				.getMergedStyle(getDefaultStyleDefinitionDiamond().withStereotype(stereotype));</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">		final HColor backColor = branch0.getColor() == null</span>
+<span class="fc" id="L82">				? styleDiamond.value(PName.BackGroundColor).asColor(skinParam().getIHtmlColorSet())</span>
+<span class="fc" id="L83">				: branch0.getColor();</span>
 
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (thens.size() &gt; 1) {</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">			if (pragma.isTrue(PragmaKey.USE_VERTICAL_IF)/* OptionFlags.USE_IF_VERTICAL */)</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (thens.size() &gt; 1) {</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">			if (pragma.isTrue(PragmaKey.USE_VERTICAL_IF)/* OptionFlags.USE_IF_VERTICAL */)</span>
 <span class="nc" id="L87">				return FtileIfLongVertical.create(swimlane, backColor, getFactory(), conditionStyle, thens, elseBranch,</span>
 						topInlinkRendering, afterEndwhile, styleArrow, styleDiamond);
-<span class="nc" id="L89">			return FtileIfLongHorizontal.create(swimlane, backColor, getFactory(), conditionStyle, thens, elseBranch,</span>
+<span class="fc" id="L89">			return FtileIfLongHorizontal.create(swimlane, backColor, getFactory(), conditionStyle, thens, elseBranch,</span>
 					topInlinkRendering, afterEndwhile, styleArrow, styleDiamond);
 		}
-<span class="nc" id="L92">		return ConditionalBuilder.create(swimlane, backColor, getFactory(), conditionStyle, conditionEndStyle,</span>
-<span class="nc" id="L93">				thens.get(0), elseBranch, skinParam(), getStringBounder(), url, styleArrow, styleDiamond, notes);</span>
+<span class="fc" id="L92">		return ConditionalBuilder.create(swimlane, backColor, getFactory(), conditionStyle, conditionEndStyle,</span>
+<span class="fc" id="L93">				thens.get(0), elseBranch, skinParam(), getStringBounder(), url, styleArrow, styleDiamond, notes);</span>
 	}
 
 }

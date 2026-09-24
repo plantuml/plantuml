@@ -84,17 +84,17 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 <span class="fc" id="L84">	}</span>
 
 	public boolean isEmpty() {
-<span class="nc" id="L87">		return all.isEmpty();</span>
+<span class="fc" id="L87">		return all.isEmpty();</span>
 	}
 
 	public boolean isOnlySingleStopOrSpot() {
-<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (all.size() != 1)</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (all.size() != 1)</span>
 <span class="nc" id="L92">			return false;</span>
 
-<span class="nc" id="L94">		final Instruction last = getLast();</span>
+<span class="fc" id="L94">		final Instruction last = getLast();</span>
 
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (last instanceof InstructionSimple)</span>
-<span class="nc" id="L97">			return ((InstructionSimple) last).isKilled();</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (last instanceof InstructionSimple)</span>
+<span class="fc" id="L97">			return ((InstructionSimple) last).isKilled();</span>
 
 <span class="nc bnc" id="L99" title="All 2 branches missed.">		if (last instanceof InstructionSpot)</span>
 <span class="nc" id="L100">			return true;</span>

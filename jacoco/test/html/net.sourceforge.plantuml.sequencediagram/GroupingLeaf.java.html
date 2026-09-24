@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.sequencediagram;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import net.sourceforge.plantuml.StringUtils;
 
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.style.StyleBuilder;
@@ -51,84 +52,85 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate,
 
 	public GroupingLeaf(String title, String comment, GroupingType type, HColor backColorGeneral,
 			HColor backColorElement, GroupingStart start, StyleBuilder styleBuilder) {
-<span class="fc" id="L54">		super(title, comment, type, backColorElement, styleBuilder);</span>
-<span class="fc" id="L55">		this.backColorGeneral = backColorGeneral;</span>
-<span class="fc" id="L56">		this.start = Objects.requireNonNull(start);</span>
-<span class="fc" id="L57">		start.addChildren(this);</span>
-<span class="fc" id="L58">	}</span>
+<span class="fc" id="L55">		super(title, comment, type, backColorElement, styleBuilder);</span>
+<span class="fc" id="L56">		this.backColorGeneral = backColorGeneral;</span>
+<span class="fc" id="L57">		this.start = Objects.requireNonNull(start);</span>
+<span class="fc" id="L58">		start.addChildren(this);</span>
+<span class="fc" id="L59">	}</span>
 
 	public Grouping getJustAfter() {
-<span class="nc" id="L61">		final int idx = start.getChildren().indexOf(this);</span>
-<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (idx == -1)</span>
-<span class="nc" id="L63">			throw new IllegalStateException();</span>
+<span class="nc" id="L62">		final int idx = start.getChildren().indexOf(this);</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (idx == -1)</span>
+<span class="nc" id="L64">			throw new IllegalStateException();</span>
 
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (idx + 1 &gt;= start.getChildren().size())</span>
-<span class="nc" id="L66">			return null;</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (idx + 1 &gt;= start.getChildren().size())</span>
+<span class="nc" id="L67">			return null;</span>
 
-<span class="nc" id="L68">		return start.getChildren().get(idx + 1);</span>
+<span class="nc" id="L69">		return start.getChildren().get(idx + 1);</span>
 	}
 
 	public GroupingStart getGroupingStart() {
-<span class="nc" id="L72">		return start;</span>
+<span class="nc" id="L73">		return start;</span>
 	}
 
 	@Override
 	public int getLevel() {
-<span class="nc" id="L77">		return start.getLevel();</span>
+<span class="nc" id="L78">		return start.getLevel();</span>
 	}
 
 	@Override
 	public final HColor getBackColorGeneral() {
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (backColorGeneral == null)</span>
-<span class="fc" id="L83">			return start.getBackColorGeneral();</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (backColorGeneral == null)</span>
+<span class="fc" id="L84">			return start.getBackColorGeneral();</span>
 
-<span class="nc" id="L85">		return backColorGeneral;</span>
+<span class="nc" id="L86">		return backColorGeneral;</span>
 	}
 
 	public boolean dealWith(Participant someone) {
-<span class="fc" id="L89">		return false;</span>
+<span class="fc" id="L90">		return false;</span>
 	}
 
 	public Url getUrl() {
-<span class="nc" id="L93">		return null;</span>
+<span class="nc" id="L94">		return null;</span>
 	}
 
 	public boolean hasUrl() {
-<span class="nc" id="L97">		return false;</span>
+<span class="nc" id="L98">		return false;</span>
 	}
 
 	@Override
 	public boolean isParallel() {
 		// only Par2 Group Leafs should return true.
-<span class="fc" id="L103">		return start.isPar2GroupStart();</span>
+<span class="fc" id="L104">		return start.isPar2GroupStart();</span>
 	}
 
 	private double posYendLevel;
 
 	public void setPosYendLevel(double posYendLevel) {
-<span class="nc" id="L109">		this.posYendLevel = posYendLevel;</span>
-<span class="nc" id="L110">	}</span>
+<span class="nc" id="L110">		this.posYendLevel = posYendLevel;</span>
+<span class="nc" id="L111">	}</span>
 
 	public double getPosYendLevel() {
-<span class="nc" id="L113">		return posYendLevel;</span>
+<span class="nc" id="L114">		return posYendLevel;</span>
 	}
 
 	public boolean addLifeEvent(LifeEvent lifeEvent) {
-<span class="nc" id="L117">		return true;</span>
+<span class="nc" id="L118">		return true;</span>
 	}
 
-<span class="fc" id="L120">	private List&lt;Note&gt; noteOnMessages = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L121">	private List&lt;Note&gt; noteOnMessages = new ArrayList&lt;&gt;();</span>
 
 	@Override
 	public final Warning addNote(Note note) {
-<span class="fc" id="L124">		this.noteOnMessages.add(note);</span>
-<span class="pc bpc" id="L125" title="2 of 4 branches missed.">		if (note.getPosition() != NotePosition.LEFT &amp;&amp; note.getPosition() != NotePosition.RIGHT)</span>
-<span class="nc" id="L126">			return new Warning(&quot;This position is ignored: &quot; + note.getPosition());</span>
-<span class="fc" id="L127">		return null;</span>
+<span class="fc" id="L125">		this.noteOnMessages.add(note);</span>
+<span class="pc bpc" id="L126" title="1 of 4 branches missed.">		if (note.getPosition() != NotePosition.LEFT &amp;&amp; note.getPosition() != NotePosition.RIGHT)</span>
+<span class="fc" id="L127">			return new Warning(&quot;'note &quot; + StringUtils.goLowerCase(note.getPosition().name())</span>
+					+ &quot;' is not supported after 'end': use 'note left' or 'note right'&quot;);
+<span class="fc" id="L129">		return null;</span>
 	}
 
 	public final List&lt;Note&gt; getNoteOnMessages() {
-<span class="fc" id="L131">		return noteOnMessages;</span>
+<span class="fc" id="L133">		return noteOnMessages;</span>
 	}
 
 }

@@ -44,16 +44,16 @@ public abstract class FtileDimensionMemoize extends AbstractFtile {
 	// ::remove folder when __HAXE__
 
 	public FtileDimensionMemoize(ISkinParam skinParam) {
-<span class="nc" id="L47">		super(skinParam);</span>
-<span class="nc" id="L48">	}</span>
+<span class="fc" id="L47">		super(skinParam);</span>
+<span class="fc" id="L48">	}</span>
 
 	private FtileGeometry calculateDimensionInternal;
 
 	protected final FtileGeometry calculateDimensionInternal(StringBounder stringBounder) {
-<span class="nc bnc" id="L53" title="All 2 branches missed.">		if (calculateDimensionInternal == null)</span>
-<span class="nc" id="L54">			calculateDimensionInternal = calculateDimensionInternalSlow(stringBounder);</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		if (calculateDimensionInternal == null)</span>
+<span class="fc" id="L54">			calculateDimensionInternal = calculateDimensionInternalSlow(stringBounder);</span>
 
-<span class="nc" id="L56">		return calculateDimensionInternal;</span>
+<span class="fc" id="L56">		return calculateDimensionInternal;</span>
 	}
 
 	protected final void clearCacheDimensionInternal() {

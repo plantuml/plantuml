@@ -50,7 +50,7 @@ package net.sourceforge.plantuml.preproc;
 <span class="fc" id="L50">	}</span>
 
 	public final String getDefaultValue() {
-<span class="nc" id="L53">		return defaultValue;</span>
+<span class="fc" id="L53">		return defaultValue;</span>
 	}
 
 	public static String simplify(String s) {
@@ -64,10 +64,10 @@ package net.sourceforge.plantuml.preproc;
 	}
 
 	public static OptionKey lazyFrom(String s) {
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		for (OptionKey key : values())</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">		for (OptionKey key : values())</span>
 <span class="fc bfc" id="L68" title="All 2 branches covered.">			if (simplify(s).equals(simplify(key.name())))</span>
 <span class="fc" id="L69">				return key;</span>
-<span class="nc" id="L70">		return null;</span>
+<span class="fc" id="L70">		return null;</span>
 	}
 
 }

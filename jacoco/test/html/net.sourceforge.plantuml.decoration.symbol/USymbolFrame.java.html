@@ -150,8 +150,8 @@ class USymbolFrame extends USymbol {
 <span class="fc" id="L150">				final double widthTitle = title.calculateDimension(stringBounder).getWidth();</span>
 
 				// Temporary hack...
-<span class="pc bpc" id="L153" title="1 of 2 branches missed.">				if (widthFull - widthTitle &lt; 25)</span>
-<span class="nc" id="L154">					title.drawU(ug.apply(new UTranslate(3, 1)));</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">				if (widthFull - widthTitle &lt; 25)</span>
+<span class="fc" id="L154">					title.drawU(ug.apply(new UTranslate(3, 1)));</span>
 				else
 <span class="fc" id="L156">					ug.apply(new UTranslate(3, 1)).draw(new SpecialText(title));</span>
 

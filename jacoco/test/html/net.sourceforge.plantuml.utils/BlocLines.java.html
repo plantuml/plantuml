@@ -275,9 +275,9 @@ public class BlocLines implements Iterable&lt;StringLocated&gt; {
 <span class="fc" id="L275">		final List&lt;StringLocated&gt; copy = new ArrayList&lt;&gt;(lines);</span>
 <span class="fc" id="L276">		copy.set(0, new StringLocated(data, null));</span>
 <span class="fc" id="L277">		final int n = copy.size() - 1;</span>
-<span class="pc bpc" id="L278" title="1 of 2 branches missed.">		if (removeAtEnd &gt; 0) {</span>
-<span class="nc" id="L279">			final StringLocated s = copy.get(n);</span>
-<span class="nc" id="L280">			copy.set(n, s.substring(0, s.getString().length() - removeAtEnd));</span>
+<span class="fc bfc" id="L278" title="All 2 branches covered.">		if (removeAtEnd &gt; 0) {</span>
+<span class="fc" id="L279">			final StringLocated s = copy.get(n);</span>
+<span class="fc" id="L280">			copy.set(n, s.substring(0, s.getString().length() - removeAtEnd));</span>
 		}
 <span class="fc" id="L282">		return new BlocLines(copy);</span>
 	}

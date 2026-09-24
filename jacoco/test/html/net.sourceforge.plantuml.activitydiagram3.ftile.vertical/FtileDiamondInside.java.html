@@ -57,11 +57,11 @@ public class FtileDiamondInside extends FtileDiamondWIP {
 <span class="fc" id="L57">	}</span>
 
 	public FtileDiamondInside withNorth(TextBlock north) {
-<span class="nc" id="L60">		return new FtileDiamondInside(label, skinParam(), backColor, borderColor, swimlane, north, south, west, east);</span>
+<span class="fc" id="L60">		return new FtileDiamondInside(label, skinParam(), backColor, borderColor, swimlane, north, south, west, east);</span>
 	}
 
 	public FtileDiamondInside withWest(TextBlock west) {
-<span class="nc" id="L64">		return new FtileDiamondInside(label, skinParam(), backColor, borderColor, swimlane, north, south, west, east);</span>
+<span class="fc" id="L64">		return new FtileDiamondInside(label, skinParam(), backColor, borderColor, swimlane, north, south, west, east);</span>
 	}
 
 	public FtileDiamondInside withEast(TextBlock east) {
@@ -69,7 +69,7 @@ public class FtileDiamondInside extends FtileDiamondWIP {
 	}
 
 	public Ftile withWestAndEast(TextBlock tb1, TextBlock tb2) {
-<span class="nc" id="L72">		return withWest(tb1).withEast(tb2);</span>
+<span class="fc" id="L72">		return withWest(tb1).withEast(tb2);</span>
 	}
 
 	public FtileDiamondInside withSouth(TextBlock south) {
@@ -106,8 +106,8 @@ public class FtileDiamondInside extends FtileDiamondWIP {
 	private FtileGeometry calculateDimensionAlone(StringBounder stringBounder) {
 <span class="fc" id="L107">		final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
 		final XDimension2D dim;
-<span class="pc bpc" id="L109" title="2 of 4 branches missed.">		if (dimLabel.getWidth() == 0 || dimLabel.getHeight() == 0) {</span>
-<span class="nc" id="L110">			dim = new XDimension2D(Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2);</span>
+<span class="pc bpc" id="L109" title="1 of 4 branches missed.">		if (dimLabel.getWidth() == 0 || dimLabel.getHeight() == 0) {</span>
+<span class="fc" id="L110">			dim = new XDimension2D(Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2);</span>
 		} else {
 <span class="fc" id="L112">			dim = dimLabel.atLeast(Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2)</span>
 <span class="fc" id="L113">					.delta(Hexagon.hexagonHalfSize * 2, 0);</span>

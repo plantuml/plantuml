@@ -62,29 +62,29 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 
 public class InstructionWhile extends WithNote implements Instruction, InstructionCollection {
 
-<span class="nc" id="L65">	private final InstructionList repeatList = InstructionList.empty();</span>
+<span class="fc" id="L65">	private final InstructionList repeatList = InstructionList.empty();</span>
 	private final Instruction parent;
 	private final LinkRendering nextLinkRenderer;
 	private final HColor color;
-<span class="nc" id="L69">	private boolean killed = false;</span>
+<span class="fc" id="L69">	private boolean killed = false;</span>
 
 	private final Display test;
 	private Display yes;
 
-<span class="nc" id="L74">	private boolean testCalled = false;</span>
+<span class="fc" id="L74">	private boolean testCalled = false;</span>
 
-<span class="nc" id="L76">	private LinkRendering outColor = LinkRendering.none();</span>
+<span class="fc" id="L76">	private LinkRendering outColor = LinkRendering.none();</span>
 	private final Swimlane swimlane;
 
 	private Instruction specialOut;
 
 	private BoxStyle boxStyle;
 
-<span class="nc" id="L83">	private Display backward = Display.NULL;</span>
+<span class="fc" id="L83">	private Display backward = Display.NULL;</span>
 	private Stereotype stereotype;
 
-<span class="nc" id="L86">	private LinkRendering incoming1 = LinkRendering.none();</span>
-<span class="nc" id="L87">	private LinkRendering incoming2 = LinkRendering.none();</span>
+<span class="fc" id="L86">	private LinkRendering incoming1 = LinkRendering.none();</span>
+<span class="fc" id="L87">	private LinkRendering incoming2 = LinkRendering.none();</span>
 	private boolean backwardCalled;
 	private final StyleBuilder currentStyleBuilder;
 
@@ -93,19 +93,19 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 <span class="nc" id="L93">	}</span>
 
 	public InstructionWhile(Swimlane swimlane, Instruction parent, Display test, LinkRendering nextLinkRenderer,
-<span class="nc" id="L96">			Display yes, HColor color, StyleBuilder currentStyleBuilder) {</span>
-<span class="nc" id="L97">		this.parent = parent;</span>
-<span class="nc" id="L98">		this.test = Objects.requireNonNull(test);</span>
-<span class="nc" id="L99">		this.nextLinkRenderer = Objects.requireNonNull(nextLinkRenderer);</span>
-<span class="nc" id="L100">		this.yes = Objects.requireNonNull(yes);</span>
-<span class="nc" id="L101">		this.swimlane = swimlane;</span>
-<span class="nc" id="L102">		this.currentStyleBuilder = currentStyleBuilder;</span>
-<span class="nc" id="L103">		this.color = color;</span>
-<span class="nc" id="L104">	}</span>
+<span class="fc" id="L96">			Display yes, HColor color, StyleBuilder currentStyleBuilder) {</span>
+<span class="fc" id="L97">		this.parent = parent;</span>
+<span class="fc" id="L98">		this.test = Objects.requireNonNull(test);</span>
+<span class="fc" id="L99">		this.nextLinkRenderer = Objects.requireNonNull(nextLinkRenderer);</span>
+<span class="fc" id="L100">		this.yes = Objects.requireNonNull(yes);</span>
+<span class="fc" id="L101">		this.swimlane = swimlane;</span>
+<span class="fc" id="L102">		this.currentStyleBuilder = currentStyleBuilder;</span>
+<span class="fc" id="L103">		this.color = color;</span>
+<span class="fc" id="L104">	}</span>
 
 	@Override
 	public CommandExecutionResult add(Instruction ins) {
-<span class="nc" id="L108">		return repeatList.add(ins);</span>
+<span class="fc" id="L108">		return repeatList.add(ins);</span>
 	}
 
 	@Override
@@ -118,22 +118,22 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) throws NoSuchColorException {
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		final Ftile back = Display.isNull(backward) ? null</span>
-<span class="nc" id="L122">				: factory.activity(backward, swimlane, boxStyle, Colors.empty(), stereotype, null);</span>
-<span class="nc" id="L123">		Ftile tmp = repeatList.createFtile(factory);</span>
-<span class="nc" id="L124">		tmp = factory.createWhile(outColor, swimlane, tmp, test, yes, color, specialOut, back, incoming1, incoming2,</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		final Ftile back = Display.isNull(backward) ? null</span>
+<span class="pc" id="L122">				: factory.activity(backward, swimlane, boxStyle, Colors.empty(), stereotype, null);</span>
+<span class="fc" id="L123">		Ftile tmp = repeatList.createFtile(factory);</span>
+<span class="fc" id="L124">		tmp = factory.createWhile(outColor, swimlane, tmp, test, yes, color, specialOut, back, incoming1, incoming2,</span>
 				currentStyleBuilder);
-<span class="nc bnc" id="L126" title="All 2 branches missed.">		if (getPositionedNotes().size() &gt; 0)</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		if (getPositionedNotes().size() &gt; 0)</span>
 <span class="nc" id="L127">			tmp = FtileWithNoteOpale.create(tmp, getPositionedNotes(), false, VerticalAlignment.CENTER);</span>
 
-<span class="nc bnc" id="L129" title="All 4 branches missed.">		if (killed || specialOut != null)</span>
+<span class="pc bpc" id="L129" title="2 of 4 branches missed.">		if (killed || specialOut != null)</span>
 <span class="nc" id="L130">			return new FtileKilled(tmp);</span>
 
-<span class="nc" id="L132">		return tmp;</span>
+<span class="fc" id="L132">		return tmp;</span>
 	}
 
 	public Instruction getParent() {
-<span class="nc" id="L136">		return parent;</span>
+<span class="fc" id="L136">		return parent;</span>
 	}
 
 	@Override
@@ -147,12 +147,12 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 
 	@Override
 	public LinkRendering getInLinkRendering() {
-<span class="nc" id="L150">		return nextLinkRenderer;</span>
+<span class="fc" id="L150">		return nextLinkRenderer;</span>
 	}
 
 	public void outDisplay(Display out) {
-<span class="nc" id="L154">		this.outColor = outColor.withDisplay(Objects.requireNonNull(out));</span>
-<span class="nc" id="L155">	}</span>
+<span class="fc" id="L154">		this.outColor = outColor.withDisplay(Objects.requireNonNull(out));</span>
+<span class="fc" id="L155">	}</span>
 
 	public void outColor(Rainbow rainbow) {
 <span class="nc" id="L158">		this.outColor = outColor.withRainbow(rainbow);</span>
@@ -206,12 +206,12 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 <span class="nc" id="L206">	}</span>
 
 	public void incoming(LinkRendering incoming) {
-<span class="nc bnc" id="L209" title="All 2 branches missed.">		if (backwardCalled == false) {</span>
-<span class="nc" id="L210">			this.incoming1 = incoming;</span>
-<span class="nc" id="L211">			this.incoming2 = incoming;</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">		if (backwardCalled == false) {</span>
+<span class="fc" id="L210">			this.incoming1 = incoming;</span>
+<span class="fc" id="L211">			this.incoming2 = incoming;</span>
 		}
-<span class="nc" id="L213">		this.testCalled = true;</span>
-<span class="nc" id="L214">	}</span>
+<span class="fc" id="L213">		this.testCalled = true;</span>
+<span class="fc" id="L214">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

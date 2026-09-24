@@ -56,11 +56,11 @@ public class FtileFactoryDelegatorCreateGroup extends FtileFactoryDelegator {
 	@Override
 	public Ftile createGroup(Ftile list, Display name, HColor backColor, PositionedNote note, USymbol type,
 			Style style) {
-<span class="nc" id="L59">		Ftile result = new FtileGroup(list, name, backColor, skinParam(), type, style);</span>
-<span class="nc bnc" id="L60" title="All 2 branches missed.">		if (note != null)</span>
+<span class="fc" id="L59">		Ftile result = new FtileGroup(list, name, backColor, skinParam(), type, style);</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (note != null)</span>
 <span class="nc" id="L61">			result = new FtileWithNotes(result, Collections.singleton(note), VerticalAlignment.CENTER);</span>
 
-<span class="nc" id="L63">		return result;</span>
+<span class="fc" id="L63">		return result;</span>
 	}
 
 }

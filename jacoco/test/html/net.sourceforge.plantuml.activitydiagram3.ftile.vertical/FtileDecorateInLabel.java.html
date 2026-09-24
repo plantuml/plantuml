@@ -48,30 +48,30 @@ public class FtileDecorateInLabel extends FtileDecorate {
 	final private double yl;
 
 	public FtileDecorateInLabel(Ftile ftile, XDimension2D dim) {
-<span class="nc" id="L51">		this(ftile, dim.getWidth(), dim.getHeight());</span>
-<span class="nc" id="L52">	}</span>
+<span class="fc" id="L51">		this(ftile, dim.getWidth(), dim.getHeight());</span>
+<span class="fc" id="L52">	}</span>
 
 	private FtileDecorateInLabel(final Ftile ftile, double xl, double yl) {
-<span class="nc" id="L55">		super(ftile);</span>
-<span class="nc" id="L56">		this.xl = xl;</span>
-<span class="nc" id="L57">		this.yl = yl;</span>
-<span class="nc" id="L58">	}</span>
+<span class="fc" id="L55">		super(ftile);</span>
+<span class="fc" id="L56">		this.xl = xl;</span>
+<span class="fc" id="L57">		this.yl = yl;</span>
+<span class="fc" id="L58">	}</span>
 
 	@Override
 	public FtileGeometry calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L62">		FtileGeometry result = super.calculateDimension(stringBounder);</span>
-<span class="nc" id="L63">		result = result.addTop(yl);</span>
-<span class="nc" id="L64">		final double missing = xl - result.getRight();</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (missing &gt; 0)</span>
+<span class="fc" id="L62">		FtileGeometry result = super.calculateDimension(stringBounder);</span>
+<span class="fc" id="L63">		result = result.addTop(yl);</span>
+<span class="fc" id="L64">		final double missing = xl - result.getRight();</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (missing &gt; 0)</span>
 <span class="nc" id="L66">			result = result.incRight(missing);</span>
 
-<span class="nc" id="L68">		return result;</span>
+<span class="fc" id="L68">		return result;</span>
 	}
 
 	@Override
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L73">		super.drawU(ug.apply(UTranslate.dy(yl)));</span>
-<span class="nc" id="L74">	}</span>
+<span class="fc" id="L73">		super.drawU(ug.apply(UTranslate.dy(yl)));</span>
+<span class="fc" id="L74">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -72,15 +72,15 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 	private static final double SUPP_WIDTH = 20;
 	protected final Ftile diamond1;
 	protected final Ftile diamond2;
-<span class="nc" id="L75">	private TextBlock opaleLeft = TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
-<span class="nc" id="L76">	private TextBlock opaleRight = TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
+<span class="fc" id="L75">	private TextBlock opaleLeft = TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
+<span class="fc" id="L76">	private TextBlock opaleRight = TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
 
 	public FtileIfWithDiamonds(Ftile diamond1, Ftile tile1, Ftile tile2, Ftile diamond2, Swimlane in,
 			StringBounder stringBounder, Collection&lt;PositionedNote&gt; notes) {
-<span class="nc" id="L80">		super(tile1, tile2, in);</span>
-<span class="nc" id="L81">		this.diamond1 = diamond1;</span>
-<span class="nc" id="L82">		this.diamond2 = diamond2;</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		for (PositionedNote first : notes) {</span>
+<span class="fc" id="L80">		super(tile1, tile2, in);</span>
+<span class="fc" id="L81">		this.diamond1 = diamond1;</span>
+<span class="fc" id="L82">		this.diamond2 = diamond2;</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		for (PositionedNote first : notes) {</span>
 <span class="nc bnc" id="L84" title="All 2 branches missed.">			if (first.getNotePosition() == NotePosition.LEFT) {</span>
 <span class="nc bnc" id="L85" title="All 2 branches missed.">				if (this.opaleLeft != TextBlockUtils.EMPTY_TEXT_BLOCK)</span>
 <span class="nc" id="L86">					continue;</span>
@@ -108,7 +108,7 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 <span class="nc" id="L108">			clearCacheDimensionInternal();</span>
 <span class="nc" id="L109">		}</span>
 
-<span class="nc" id="L111">	}</span>
+<span class="fc" id="L111">	}</span>
 
 	public static Opale createOpale(final PositionedNote first, ISkinParam skinParam) {
 <span class="nc" id="L114">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getStyleSignature())</span>
@@ -154,15 +154,15 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 	}
 
 	protected int getYdelta1a(StringBounder stringBounder) {
-<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (getSwimlanes().size() &gt; 1)</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">		if (getSwimlanes().size() &gt; 1)</span>
 <span class="nc" id="L158">			return 20;</span>
-<span class="nc" id="L159">		return 10;</span>
+<span class="fc" id="L159">		return 10;</span>
 	}
 
 	protected int getYdelta1b(StringBounder stringBounder) {
-<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (getSwimlanes().size() &gt; 1)</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">		if (getSwimlanes().size() &gt; 1)</span>
 <span class="nc" id="L164">			return 10;</span>
-<span class="nc bnc" id="L165" title="All 2 branches missed.">		return hasTwoBranches(stringBounder) ? 6 : 0;</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		return hasTwoBranches(stringBounder) ? 6 : 0;</span>
 	}
 
 	protected double getYdeltaForLabels(StringBounder stringBounder) {
@@ -171,24 +171,24 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 
 	@Override
 	protected double widthInner(StringBounder stringBounder) {
-<span class="nc" id="L174">		final FtileGeometry dim1 = diamond1.calculateDimension(stringBounder);</span>
-<span class="nc" id="L175">		return Math.max(super.widthInner(stringBounder), dim1.getWidth() + SUPP_WIDTH);</span>
+<span class="fc" id="L174">		final FtileGeometry dim1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="fc" id="L175">		return Math.max(super.widthInner(stringBounder), dim1.getWidth() + SUPP_WIDTH);</span>
 	}
 
 	@Override
 	protected FtileGeometry calculateDimensionInternalSlow(StringBounder stringBounder) {
-<span class="nc" id="L180">		final FtileGeometry dim1 = diamond1.calculateDimension(stringBounder);</span>
-<span class="nc" id="L181">		final FtileGeometry dim2 = diamond2.calculateDimension(stringBounder);</span>
+<span class="fc" id="L180">		final FtileGeometry dim1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="fc" id="L181">		final FtileGeometry dim2 = diamond2.calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L183">		final FtileGeometry dimNude = super.calculateDimensionInternalSlow(stringBounder);</span>
+<span class="fc" id="L183">		final FtileGeometry dimNude = super.calculateDimensionInternalSlow(stringBounder);</span>
 
-<span class="nc" id="L185">		final FtileGeometry all = dim1.appendBottom(dimNude).appendBottom(dim2);</span>
+<span class="fc" id="L185">		final FtileGeometry all = dim1.appendBottom(dimNude).appendBottom(dim2);</span>
 
-<span class="nc" id="L187">		final double deltaHeight = getYdelta1a(stringBounder) + getYdelta1b(stringBounder)</span>
-<span class="nc" id="L188">				+ getYdeltaForLabels(stringBounder);</span>
+<span class="fc" id="L187">		final double deltaHeight = getYdelta1a(stringBounder) + getYdelta1b(stringBounder)</span>
+<span class="fc" id="L188">				+ getYdeltaForLabels(stringBounder);</span>
 
-<span class="nc" id="L190">		final FtileGeometry result = all.addDim(0, deltaHeight).incInY(yDeltaNote);</span>
-<span class="nc" id="L191">		return result;</span>
+<span class="fc" id="L190">		final FtileGeometry result = all.addDim(0, deltaHeight).incInY(yDeltaNote);</span>
+<span class="fc" id="L191">		return result;</span>
 
 	}
 
@@ -198,86 +198,86 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 
 	@Override
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L201">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L201">		final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="nc bnc" id="L203" title="All 2 branches missed.">		if (TextBlockUtils.isEmpty(opaleLeft, stringBounder) == false) {</span>
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">		if (TextBlockUtils.isEmpty(opaleLeft, stringBounder) == false) {</span>
 <span class="nc" id="L204">			final double xOpale = getTranslateDiamond1(stringBounder).getDx()</span>
 <span class="nc" id="L205">					- opaleLeft.calculateDimension(stringBounder).getWidth();</span>
 <span class="nc" id="L206">			opaleLeft.drawU(ug.apply(UTranslate.dx(xOpale)));</span>
 		}
 
-<span class="nc bnc" id="L209" title="All 2 branches missed.">		if (TextBlockUtils.isEmpty(opaleRight, stringBounder) == false) {</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">		if (TextBlockUtils.isEmpty(opaleRight, stringBounder) == false) {</span>
 <span class="nc" id="L210">			final double xOpale = getTranslateDiamond1(stringBounder).getDx()</span>
 <span class="nc" id="L211">					+ diamond1.calculateDimension(stringBounder).getWidth();</span>
 <span class="nc" id="L212">			opaleRight.drawU(ug.apply(UTranslate.dx(xOpale)));</span>
 		}
 
-<span class="nc" id="L215">		ug.apply(getTranslateDiamond1(stringBounder)).draw(diamond1);</span>
-<span class="nc" id="L216">		super.drawU(ug);</span>
-<span class="nc" id="L217">		ug.apply(getTranslateDiamond2(stringBounder)).draw(diamond2);</span>
-<span class="nc" id="L218">	}</span>
+<span class="fc" id="L215">		ug.apply(getTranslateDiamond1(stringBounder)).draw(diamond1);</span>
+<span class="fc" id="L216">		super.drawU(ug);</span>
+<span class="fc" id="L217">		ug.apply(getTranslateDiamond2(stringBounder)).draw(diamond2);</span>
+<span class="fc" id="L218">	}</span>
 
 	@Override
 	protected UTranslate getTranslateBranch1(StringBounder stringBounder) {
-<span class="nc" id="L222">		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
-<span class="nc" id="L223">		return super.getTranslateBranch1(stringBounder)</span>
-<span class="nc" id="L224">				.compose(UTranslate.dy(dimDiamond1.getHeight() + getYdelta1a(stringBounder)));</span>
+<span class="fc" id="L222">		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="fc" id="L223">		return super.getTranslateBranch1(stringBounder)</span>
+<span class="fc" id="L224">				.compose(UTranslate.dy(dimDiamond1.getHeight() + getYdelta1a(stringBounder)));</span>
 	}
 
 	@Override
 	protected UTranslate getTranslateBranch2(StringBounder stringBounder) {
-<span class="nc" id="L229">		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
-<span class="nc" id="L230">		return super.getTranslateBranch2(stringBounder)</span>
-<span class="nc" id="L231">				.compose(UTranslate.dy(dimDiamond1.getHeight() + getYdelta1a(stringBounder)));</span>
+<span class="fc" id="L229">		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="fc" id="L230">		return super.getTranslateBranch2(stringBounder)</span>
+<span class="fc" id="L231">				.compose(UTranslate.dy(dimDiamond1.getHeight() + getYdelta1a(stringBounder)));</span>
 	}
 
 	protected UTranslate getTranslateDiamond1(StringBounder stringBounder) {
-<span class="nc" id="L235">		final double y1 = yDeltaNote;</span>
-<span class="nc" id="L236">		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);</span>
-<span class="nc" id="L237">		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
-<span class="nc" id="L238">		final double x1 = dimTotal.getLeft() - dimDiamond1.getLeft();</span>
-<span class="nc" id="L239">		return new UTranslate(x1, y1);</span>
+<span class="fc" id="L235">		final double y1 = yDeltaNote;</span>
+<span class="fc" id="L236">		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="fc" id="L237">		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="fc" id="L238">		final double x1 = dimTotal.getLeft() - dimDiamond1.getLeft();</span>
+<span class="fc" id="L239">		return new UTranslate(x1, y1);</span>
 	}
 
 	protected UTranslate getTranslateDiamond2(StringBounder stringBounder) {
-<span class="nc" id="L243">		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);</span>
-<span class="nc" id="L244">		final FtileGeometry dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
-<span class="nc" id="L245">		final double x2 = dimTotal.getLeft() - dimDiamond2.getWidth() / 2;</span>
-<span class="nc" id="L246">		final double y2 = dimTotal.getHeight() - dimDiamond2.getHeight();</span>
-<span class="nc" id="L247">		return new UTranslate(x2, y2);</span>
+<span class="fc" id="L243">		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="fc" id="L244">		final FtileGeometry dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
+<span class="fc" id="L245">		final double x2 = dimTotal.getLeft() - dimDiamond2.getWidth() / 2;</span>
+<span class="fc" id="L246">		final double y2 = dimTotal.getHeight() - dimDiamond2.getHeight();</span>
+<span class="fc" id="L247">		return new UTranslate(x2, y2);</span>
 	}
 
 	public double computeMarginNeedForBranchLabe1(StringBounder stringBounder, XDimension2D label1) {
-<span class="nc" id="L251">		final double widthLabelBranch1 = label1.getWidth();</span>
-<span class="nc" id="L252">		final double dxDiamond = getTranslateDiamond1(stringBounder).getDx();</span>
-<span class="nc" id="L253">		final double diff = widthLabelBranch1 - dxDiamond;</span>
-<span class="nc bnc" id="L254" title="All 2 branches missed.">		if (diff &gt; 0)</span>
+<span class="fc" id="L251">		final double widthLabelBranch1 = label1.getWidth();</span>
+<span class="fc" id="L252">		final double dxDiamond = getTranslateDiamond1(stringBounder).getDx();</span>
+<span class="fc" id="L253">		final double diff = widthLabelBranch1 - dxDiamond;</span>
+<span class="pc bpc" id="L254" title="1 of 2 branches missed.">		if (diff &gt; 0)</span>
 <span class="nc" id="L255">			return diff;</span>
 
-<span class="nc" id="L257">		return 0;</span>
+<span class="fc" id="L257">		return 0;</span>
 	}
 
 	public double computeMarginNeedForBranchLabe2(StringBounder stringBounder, XDimension2D label2) {
-<span class="nc" id="L261">		final double widthLabelBranch2 = label2.getWidth();</span>
-<span class="nc" id="L262">		final double theoricalEndNeeded = getTranslateDiamond1(stringBounder).getDx()</span>
-<span class="nc" id="L263">				+ diamond1.calculateDimension(stringBounder).getWidth() + widthLabelBranch2;</span>
-<span class="nc" id="L264">		final double diff = theoricalEndNeeded - calculateDimension(stringBounder).getWidth();</span>
-<span class="nc bnc" id="L265" title="All 2 branches missed.">		if (diff &gt; 0)</span>
+<span class="fc" id="L261">		final double widthLabelBranch2 = label2.getWidth();</span>
+<span class="fc" id="L262">		final double theoricalEndNeeded = getTranslateDiamond1(stringBounder).getDx()</span>
+<span class="fc" id="L263">				+ diamond1.calculateDimension(stringBounder).getWidth() + widthLabelBranch2;</span>
+<span class="fc" id="L264">		final double diff = theoricalEndNeeded - calculateDimension(stringBounder).getWidth();</span>
+<span class="pc bpc" id="L265" title="1 of 2 branches missed.">		if (diff &gt; 0)</span>
 <span class="nc" id="L266">			return diff;</span>
 
-<span class="nc" id="L268">		return 0;</span>
+<span class="fc" id="L268">		return 0;</span>
 	}
 
 	public double computeVerticalMarginNeedForBranchs(StringBounder stringBounder, XDimension2D label1,
 			XDimension2D label2) {
-<span class="nc" id="L273">		final double heightLabels = Math.max(label1.getHeight(), label2.getHeight());</span>
-<span class="nc" id="L274">		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
-<span class="nc" id="L275">		final double dyDiamond = dimDiamond1.getHeight();</span>
-<span class="nc" id="L276">		final double diff = heightLabels - dyDiamond;</span>
-<span class="nc bnc" id="L277" title="All 2 branches missed.">		if (diff &gt; 0)</span>
+<span class="fc" id="L273">		final double heightLabels = Math.max(label1.getHeight(), label2.getHeight());</span>
+<span class="fc" id="L274">		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="fc" id="L275">		final double dyDiamond = dimDiamond1.getHeight();</span>
+<span class="fc" id="L276">		final double diff = heightLabels - dyDiamond;</span>
+<span class="pc bpc" id="L277" title="1 of 2 branches missed.">		if (diff &gt; 0)</span>
 <span class="nc" id="L278">			return diff;</span>
 
-<span class="nc" id="L280">		return 0;</span>
+<span class="fc" id="L280">		return 0;</span>
 	}
 
 }

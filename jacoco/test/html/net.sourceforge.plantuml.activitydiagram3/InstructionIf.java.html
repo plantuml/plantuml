@@ -65,9 +65,9 @@ import net.sourceforge.plantuml.url.Url;
 
 public class InstructionIf extends WithNote implements Instruction, InstructionCollection {
 
-<span class="nc" id="L68">	private final List&lt;Branch&gt; thens = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L68">	private final List&lt;Branch&gt; thens = new ArrayList&lt;&gt;();</span>
 	private Branch elseBranch;
-<span class="nc" id="L70">	private boolean endifCalled = false;</span>
+<span class="fc" id="L70">	private boolean endifCalled = false;</span>
 	private final ISkinParam skinParam;
 	private final Url url;
 
@@ -75,7 +75,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 
 	private Branch current;
 	private final LinkRendering topInlinkRendering;
-<span class="nc" id="L78">	private LinkRendering outColor = LinkRendering.none();</span>
+<span class="fc" id="L78">	private LinkRendering outColor = LinkRendering.none();</span>
 	private final Stereotype stereotype;
 
 	private final Swimlane swimlane;
@@ -94,21 +94,21 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 	}
 
 	public InstructionIf(Swimlane swimlane, Instruction parent, Display labelTest, LinkRendering whenThen,
-<span class="nc" id="L97">			LinkRendering inlinkRendering, HColor color, ISkinParam skinParam, Url url, Stereotype stereotype) {</span>
-<span class="nc" id="L98">		this.url = url;</span>
-<span class="nc" id="L99">		this.stereotype = stereotype;</span>
-<span class="nc" id="L100">		this.parent = parent;</span>
-<span class="nc" id="L101">		this.skinParam = skinParam;</span>
-<span class="nc" id="L102">		this.topInlinkRendering = Objects.requireNonNull(inlinkRendering);</span>
-<span class="nc" id="L103">		this.swimlane = swimlane;</span>
-<span class="nc" id="L104">		this.currentStyleBuilder = skinParam.getCurrentStyleBuilder();</span>
-<span class="nc" id="L105">		this.thens.add(new Branch(swimlane, whenThen, labelTest, color, LinkRendering.none(), stereotype));</span>
-<span class="nc" id="L106">		this.current = this.thens.get(0);</span>
-<span class="nc" id="L107">	}</span>
+<span class="fc" id="L97">			LinkRendering inlinkRendering, HColor color, ISkinParam skinParam, Url url, Stereotype stereotype) {</span>
+<span class="fc" id="L98">		this.url = url;</span>
+<span class="fc" id="L99">		this.stereotype = stereotype;</span>
+<span class="fc" id="L100">		this.parent = parent;</span>
+<span class="fc" id="L101">		this.skinParam = skinParam;</span>
+<span class="fc" id="L102">		this.topInlinkRendering = Objects.requireNonNull(inlinkRendering);</span>
+<span class="fc" id="L103">		this.swimlane = swimlane;</span>
+<span class="fc" id="L104">		this.currentStyleBuilder = skinParam.getCurrentStyleBuilder();</span>
+<span class="fc" id="L105">		this.thens.add(new Branch(swimlane, whenThen, labelTest, color, LinkRendering.none(), stereotype));</span>
+<span class="fc" id="L106">		this.current = this.thens.get(0);</span>
+<span class="fc" id="L107">	}</span>
 
 	@Override
 	public CommandExecutionResult add(Instruction ins) {
-<span class="nc" id="L111">		return current.add(ins);</span>
+<span class="fc" id="L111">		return current.add(ins);</span>
 	}
 
 	@Override
@@ -135,67 +135,67 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) throws NoSuchColorException {
-<span class="nc bnc" id="L138" title="All 2 branches missed.">		for (Branch branch : thens)</span>
-<span class="nc" id="L139">			branch.updateFtile(factory);</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">		for (Branch branch : thens)</span>
+<span class="fc" id="L139">			branch.updateFtile(factory);</span>
 
-<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (elseBranch == null)</span>
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">		if (elseBranch == null)</span>
 <span class="nc" id="L142">			this.elseBranch = new Branch(swimlane, LinkRendering.none(), Display.NULL, null, LinkRendering.none(),</span>
 					stereotype);
 
-<span class="nc" id="L145">		elseBranch.updateFtile(factory);</span>
-<span class="nc" id="L146">		Ftile result = factory.createIf(swimlane, thens, elseBranch, outColor, topInlinkRendering, url,</span>
-<span class="nc" id="L147">				getPositionedNotes(), stereotype, currentStyleBuilder);</span>
+<span class="fc" id="L145">		elseBranch.updateFtile(factory);</span>
+<span class="fc" id="L146">		Ftile result = factory.createIf(swimlane, thens, elseBranch, outColor, topInlinkRendering, url,</span>
+<span class="fc" id="L147">				getPositionedNotes(), stereotype, currentStyleBuilder);</span>
 //		if (getPositionedNotes().size() &gt; 0)
 //			result = FtileWithNoteOpale.create(result, getPositionedNotes(), false, VerticalAlignment.CENTER);
 
-<span class="nc" id="L151">		final List&lt;WeldingPoint&gt; weldingPoints = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L152" title="All 2 branches missed.">		for (Branch branch : thens)</span>
-<span class="nc" id="L153">			weldingPoints.addAll(branch.getWeldingPoints());</span>
+<span class="fc" id="L151">		final List&lt;WeldingPoint&gt; weldingPoints = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">		for (Branch branch : thens)</span>
+<span class="fc" id="L153">			weldingPoints.addAll(branch.getWeldingPoints());</span>
 
-<span class="nc" id="L155">		weldingPoints.addAll(elseBranch.getWeldingPoints());</span>
-<span class="nc bnc" id="L156" title="All 2 branches missed.">		if (weldingPoints.size() &gt; 0)</span>
+<span class="fc" id="L155">		weldingPoints.addAll(elseBranch.getWeldingPoints());</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">		if (weldingPoints.size() &gt; 0)</span>
 <span class="nc" id="L157">			result = new FtileDecorateWelding(result, weldingPoints);</span>
 
-<span class="nc" id="L159">		return result;</span>
+<span class="fc" id="L159">		return result;</span>
 	}
 
 	public Instruction getParent() {
-<span class="nc" id="L163">		return parent;</span>
+<span class="fc" id="L163">		return parent;</span>
 	}
 
 	public boolean switchToElse2(LinkRendering whenElse, LinkRendering nextLinkRenderer) {
-<span class="nc" id="L167">		this.current.setSpecial(nextLinkRenderer, null);</span>
+<span class="fc" id="L167">		this.current.setSpecial(nextLinkRenderer, null);</span>
 
-<span class="nc bnc" id="L169" title="All 2 branches missed.">		if (elseBranch != null)</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		if (elseBranch != null)</span>
 <span class="nc" id="L170">			return false;</span>
 
-<span class="nc" id="L172">		this.current.setInlinkRendering(nextLinkRenderer);</span>
-<span class="nc" id="L173">		this.elseBranch = new Branch(swimlane, whenElse, Display.NULL, null, LinkRendering.none(), stereotype);</span>
-<span class="nc" id="L174">		this.current = elseBranch;</span>
-<span class="nc" id="L175">		return true;</span>
+<span class="fc" id="L172">		this.current.setInlinkRendering(nextLinkRenderer);</span>
+<span class="fc" id="L173">		this.elseBranch = new Branch(swimlane, whenElse, Display.NULL, null, LinkRendering.none(), stereotype);</span>
+<span class="fc" id="L174">		this.current = elseBranch;</span>
+<span class="fc" id="L175">		return true;</span>
 	}
 
 	public boolean elseIf(LinkRendering inlabel, Display test, LinkRendering whenThen, LinkRendering nextLinkRenderer,
 			HColor color) {
-<span class="nc bnc" id="L180" title="All 2 branches missed.">		if (elseBranch != null)</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">		if (elseBranch != null)</span>
 <span class="nc" id="L181">			return false;</span>
 
-<span class="nc" id="L183">		this.current.setSpecial(nextLinkRenderer, null);</span>
-<span class="nc" id="L184">		this.current = new Branch(swimlane, whenThen, test, color, inlabel, stereotype);</span>
-<span class="nc" id="L185">		this.thens.add(current);</span>
-<span class="nc" id="L186">		return true;</span>
+<span class="fc" id="L183">		this.current.setSpecial(nextLinkRenderer, null);</span>
+<span class="fc" id="L184">		this.current = new Branch(swimlane, whenThen, test, color, inlabel, stereotype);</span>
+<span class="fc" id="L185">		this.thens.add(current);</span>
+<span class="fc" id="L186">		return true;</span>
 
 	}
 
 	public void endif(LinkRendering nextLinkRenderer, Colors colors) {
-<span class="nc" id="L191">		endifCalled = true;</span>
-<span class="nc bnc" id="L192" title="All 2 branches missed.">		if (elseBranch == null)</span>
+<span class="fc" id="L191">		endifCalled = true;</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">		if (elseBranch == null)</span>
 <span class="nc" id="L193">			this.elseBranch = new Branch(swimlane, LinkRendering.none(), Display.NULL, null, LinkRendering.none(),</span>
 					stereotype);
 
-<span class="nc" id="L196">		this.elseBranch.setSpecial(nextLinkRenderer, colors);</span>
-<span class="nc" id="L197">		this.current.setInlinkRendering(nextLinkRenderer);</span>
-<span class="nc" id="L198">	}</span>
+<span class="fc" id="L196">		this.elseBranch.setSpecial(nextLinkRenderer, colors);</span>
+<span class="fc" id="L197">		this.current.setInlinkRendering(nextLinkRenderer);</span>
+<span class="fc" id="L198">	}</span>
 
 	@Override
 	final public boolean kill() {
@@ -215,7 +215,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 
 	@Override
 	public LinkRendering getInLinkRendering() {
-<span class="nc" id="L218">		return topInlinkRendering;</span>
+<span class="fc" id="L218">		return topInlinkRendering;</span>
 	}
 
 	@Override

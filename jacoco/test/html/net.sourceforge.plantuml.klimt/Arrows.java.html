@@ -50,11 +50,11 @@ import net.sourceforge.plantuml.utils.Direction;
 	public abstract UPolygon asToLeft();
 
 	public final UPolygon asTo(Direction direction) {
-<span class="pc bpc" id="L53" title="1 of 2 branches missed.">		if (direction == Direction.UP)</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		if (direction == Direction.UP)</span>
 <span class="fc" id="L54">			return asToUp();</span>
 
-<span class="nc bnc" id="L56" title="All 2 branches missed.">		if (direction == Direction.DOWN)</span>
-<span class="nc" id="L57">			return asToDown();</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">		if (direction == Direction.DOWN)</span>
+<span class="fc" id="L57">			return asToDown();</span>
 
 <span class="nc bnc" id="L59" title="All 2 branches missed.">		if (direction == Direction.LEFT)</span>
 <span class="nc" id="L60">			return asToLeft();</span>

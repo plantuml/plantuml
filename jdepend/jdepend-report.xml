@@ -2540,8 +2540,8 @@
 
         <Package name="net.sourceforge.plantuml.activitydiagram3.command">
             <Stats>
-                <TotalClasses>30</TotalClasses>
-                <ConcreteClasses>30</ConcreteClasses>
+                <TotalClasses>24</TotalClasses>
+                <ConcreteClasses>24</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>1</Ca>
                 <Ce>17</Ce>
@@ -2573,12 +2573,6 @@
                 <Class sourceFile="CommandElse3.java">
                     net.sourceforge.plantuml.activitydiagram3.command.CommandElse3
                 </Class>
-                <Class sourceFile="CommandElseIf2.java">
-                    net.sourceforge.plantuml.activitydiagram3.command.CommandElseIf2
-                </Class>
-                <Class sourceFile="CommandElseIf3.java">
-                    net.sourceforge.plantuml.activitydiagram3.command.CommandElseIf3
-                </Class>
                 <Class sourceFile="CommandEnd3.java">
                     net.sourceforge.plantuml.activitydiagram3.command.CommandEnd3
                 </Class>
@@ -2596,12 +2590,6 @@
                 </Class>
                 <Class sourceFile="CommandForkEnd3.java">
                     net.sourceforge.plantuml.activitydiagram3.command.CommandForkEnd3
-                </Class>
-                <Class sourceFile="CommandIf2.java">
-                    net.sourceforge.plantuml.activitydiagram3.command.CommandIf2
-                </Class>
-                <Class sourceFile="CommandIf4.java">
-                    net.sourceforge.plantuml.activitydiagram3.command.CommandIf4
                 </Class>
                 <Class sourceFile="CommandKill3.java">
                     net.sourceforge.plantuml.activitydiagram3.command.CommandKill3
@@ -2635,12 +2623,6 @@
                 </Class>
                 <Class sourceFile="CommandSwimlane2.java">
                     net.sourceforge.plantuml.activitydiagram3.command.CommandSwimlane2
-                </Class>
-                <Class sourceFile="CommandSwitch.java">
-                    net.sourceforge.plantuml.activitydiagram3.command.CommandSwitch
-                </Class>
-                <Class sourceFile="CommandWhile3.java">
-                    net.sourceforge.plantuml.activitydiagram3.command.CommandWhile3
                 </Class>
                 <Class sourceFile="CommandWhileEnd3.java">
                     net.sourceforge.plantuml.activitydiagram3.command.CommandWhileEnd3
@@ -5234,13 +5216,13 @@
 
         <Package name="net.sourceforge.plantuml.command">
             <Stats>
-                <TotalClasses>30</TotalClasses>
-                <ConcreteClasses>26</ConcreteClasses>
+                <TotalClasses>29</TotalClasses>
+                <ConcreteClasses>25</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
                 <Ca>58</Ca>
-                <Ce>30</Ce>
-                <A>0.13</A>
-                <I>0.34</I>
+                <Ce>29</Ce>
+                <A>0.14</A>
+                <I>0.33</I>
                 <D>0.53</D>
                 <V>1</V>
             </Stats>
@@ -5309,9 +5291,6 @@
                 <Class sourceFile="CommandScale.java">
                     net.sourceforge.plantuml.command.CommandScale
                 </Class>
-                <Class sourceFile="CommandSkinParam.java">
-                    net.sourceforge.plantuml.command.CommandSkinParam
-                </Class>
                 <Class sourceFile="CommandSkinParamJaws.java">
                     net.sourceforge.plantuml.command.CommandSkinParamJaws
                 </Class>
@@ -5371,7 +5350,6 @@
                 <Package>net.sourceforge.plantuml.text</Package>
                 <Package>net.sourceforge.plantuml.url</Package>
                 <Package>net.sourceforge.plantuml.utils</Package>
-                <Package>net.sourceforge.plantuml.warning</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -8031,14 +8009,14 @@
 
         <Package name="net.sourceforge.plantuml.gantt.command">
             <Stats>
-                <TotalClasses>14</TotalClasses>
-                <ConcreteClasses>14</ConcreteClasses>
+                <TotalClasses>13</TotalClasses>
+                <ConcreteClasses>13</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>1</Ca>
-                <Ce>18</Ce>
+                <Ce>17</Ce>
                 <A>0</A>
-                <I>0.95</I>
-                <D>0.05</D>
+                <I>0.94</I>
+                <D>0.06</D>
                 <V>1</V>
             </Stats>
 
@@ -8069,9 +8047,6 @@
                 </Class>
                 <Class sourceFile="CommandHideShowColumns.java">
                     net.sourceforge.plantuml.gantt.command.CommandHideShowColumns
-                </Class>
-                <Class sourceFile="CommandLabelOnColumn.java">
-                    net.sourceforge.plantuml.gantt.command.CommandLabelOnColumn
                 </Class>
                 <Class sourceFile="CommandLanguage.java">
                     net.sourceforge.plantuml.gantt.command.CommandLanguage
@@ -8108,7 +8083,6 @@
                 <Package>net.sourceforge.plantuml.sequencediagram.command</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
                 <Package>net.sourceforge.plantuml.utils</Package>
-                <Package>net.sourceforge.plantuml.warning</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -18461,11 +18435,11 @@
                 <TotalClasses>2</TotalClasses>
                 <ConcreteClasses>1</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>7</Ca>
+                <Ca>5</Ca>
                 <Ce>2</Ce>
                 <A>0.5</A>
-                <I>0.22</I>
-                <D>0.28</D>
+                <I>0.29</I>
+                <D>0.21</D>
                 <V>1</V>
             </Stats>
 
@@ -18487,9 +18461,7 @@
             </DependsUpon>
 
             <UsedBy>
-                <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
-                <Package>net.sourceforge.plantuml.gantt.command</Package>
                 <Package>net.sourceforge.plantuml.mcp</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram</Package>

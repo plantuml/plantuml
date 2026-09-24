@@ -61,13 +61,13 @@ import net.sourceforge.plantuml.style.ISkinParam;
 public class InstructionSwitch extends WithNote implements Instruction, InstructionCollection {
 	// ::remove folder when __HAXE__
 
-<span class="nc" id="L64">	private final List&lt;Branch&gt; switches = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L64">	private final List&lt;Branch&gt; switches = new ArrayList&lt;&gt;();</span>
 
 	private final Instruction parent;
 
 	private Branch current;
 	private final LinkRendering topInlinkRendering;
-<span class="nc" id="L70">	private LinkRendering afterEndwhile = LinkRendering.none();</span>
+<span class="fc" id="L70">	private LinkRendering afterEndwhile = LinkRendering.none();</span>
 	private final Display labelTest;
 
 	private final Swimlane swimlane;
@@ -85,20 +85,20 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 	}
 
 	public InstructionSwitch(Swimlane swimlane, Instruction parent, Display labelTest, LinkRendering inlinkRendering,
-<span class="nc" id="L88">			Colors colors) {</span>
-<span class="nc" id="L89">		this.topInlinkRendering = Objects.requireNonNull(inlinkRendering);</span>
-<span class="nc" id="L90">		this.parent = parent;</span>
-<span class="nc" id="L91">		this.labelTest = labelTest;</span>
-<span class="nc" id="L92">		this.swimlane = swimlane;</span>
-<span class="nc" id="L93">		this.colors = colors;</span>
-<span class="nc" id="L94">	}</span>
+<span class="fc" id="L88">			Colors colors) {</span>
+<span class="fc" id="L89">		this.topInlinkRendering = Objects.requireNonNull(inlinkRendering);</span>
+<span class="fc" id="L90">		this.parent = parent;</span>
+<span class="fc" id="L91">		this.labelTest = labelTest;</span>
+<span class="fc" id="L92">		this.swimlane = swimlane;</span>
+<span class="fc" id="L93">		this.colors = colors;</span>
+<span class="fc" id="L94">	}</span>
 
 	@Override
 	public CommandExecutionResult add(Instruction ins) {
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (current == null)</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (current == null)</span>
 <span class="nc" id="L99">			return CommandExecutionResult.error(&quot;No 'case' in this switch&quot;);</span>
 
-<span class="nc" id="L101">		return current.add(ins);</span>
+<span class="fc" id="L101">		return current.add(ins);</span>
 	}
 
 	@Override
@@ -117,13 +117,13 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 	}
 
 	public Ftile createFtile(FtileFactory factory) throws NoSuchColorException {
-<span class="nc bnc" id="L120" title="All 2 branches missed.">		for (Branch branch : switches)</span>
-<span class="nc" id="L121">			branch.updateFtile(factory);</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		for (Branch branch : switches)</span>
+<span class="fc" id="L121">			branch.updateFtile(factory);</span>
 
-<span class="nc" id="L123">		Ftile result = factory.createSwitch(swimlane, switches, afterEndwhile, topInlinkRendering, labelTest, colors,</span>
-<span class="nc" id="L124">				colors.mergeWith(endColors));</span>
-<span class="nc" id="L125">		result = eventuallyAddNote(factory, result, getSwimlaneIn(), VerticalAlignment.TOP);</span>
-<span class="nc" id="L126">		return result;</span>
+<span class="fc" id="L123">		Ftile result = factory.createSwitch(swimlane, switches, afterEndwhile, topInlinkRendering, labelTest, colors,</span>
+<span class="fc" id="L124">				colors.mergeWith(endColors));</span>
+<span class="fc" id="L125">		result = eventuallyAddNote(factory, result, getSwimlaneIn(), VerticalAlignment.TOP);</span>
+<span class="fc" id="L126">		return result;</span>
 	}
 
 	@Override
@@ -133,7 +133,7 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 
 	@Override
 	public LinkRendering getInLinkRendering() {
-<span class="nc" id="L136">		return topInlinkRendering;</span>
+<span class="fc" id="L136">		return topInlinkRendering;</span>
 	}
 
 	@Override
@@ -150,7 +150,7 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 
 	@Override
 	public Swimlane getSwimlaneIn() {
-<span class="nc" id="L153">		return swimlane;</span>
+<span class="fc" id="L153">		return swimlane;</span>
 	}
 
 	@Override
@@ -164,23 +164,23 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 	}
 
 	public boolean switchCase(Display labelCase, LinkRendering nextLinkRenderer) {
-<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (this.current != null)</span>
-<span class="nc" id="L168">			this.current.setSpecial(nextLinkRenderer, null);</span>
-<span class="nc" id="L169">		this.current = new Branch(swimlane, LinkRendering.none().withDisplay(labelCase), labelCase, null,</span>
-<span class="nc" id="L170">				LinkRendering.none().withDisplay(labelCase), null);</span>
-<span class="nc" id="L171">		this.switches.add(this.current);</span>
-<span class="nc" id="L172">		return true;</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">		if (this.current != null)</span>
+<span class="fc" id="L168">			this.current.setSpecial(nextLinkRenderer, null);</span>
+<span class="fc" id="L169">		this.current = new Branch(swimlane, LinkRendering.none().withDisplay(labelCase), labelCase, null,</span>
+<span class="fc" id="L170">				LinkRendering.none().withDisplay(labelCase), null);</span>
+<span class="fc" id="L171">		this.switches.add(this.current);</span>
+<span class="fc" id="L172">		return true;</span>
 	}
 
 	public Instruction getParent() {
-<span class="nc" id="L176">		return parent;</span>
+<span class="fc" id="L176">		return parent;</span>
 	}
 
 	public void endSwitch(LinkRendering nextLinkRenderer, Colors endColors) {
-<span class="nc" id="L180">		this.endColors = endColors;</span>
-<span class="nc bnc" id="L181" title="All 2 branches missed.">		if (this.current != null)</span>
-<span class="nc" id="L182">			this.current.setSpecial(nextLinkRenderer, endColors);</span>
-<span class="nc" id="L183">	}</span>
+<span class="fc" id="L180">		this.endColors = endColors;</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">		if (this.current != null)</span>
+<span class="fc" id="L182">			this.current.setSpecial(nextLinkRenderer, endColors);</span>
+<span class="fc" id="L183">	}</span>
 
 	@Override
 	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote,

@@ -43,22 +43,22 @@ import net.sourceforge.plantuml.klimt.shape.UImage;
 public class UGraphicDispatchDrawable extends UGraphicDelegator {
 
 	public UGraphicDispatchDrawable(UGraphic ug) {
-<span class="nc" id="L46">		super(ug);</span>
-<span class="nc" id="L47">	}</span>
+<span class="fc" id="L46">		super(ug);</span>
+<span class="fc" id="L47">	}</span>
 
 	public void draw(UShape shape) {
-<span class="nc bnc" id="L50" title="All 4 branches missed.">		if (shape instanceof UDrawable &amp;&amp; !(shape instanceof UImage)) {</span>
+<span class="pc bpc" id="L50" title="1 of 4 branches missed.">		if (shape instanceof UDrawable &amp;&amp; !(shape instanceof UImage)) {</span>
 			// UImage implements TextBlock/UDrawable but must be drawn by the low-level driver
-<span class="nc" id="L52">			final UDrawable drawable = (UDrawable) shape;</span>
-<span class="nc" id="L53">			drawable.drawU(this);</span>
-<span class="nc" id="L54">		} else {</span>
-<span class="nc" id="L55">			getUg().draw(shape);</span>
+<span class="fc" id="L52">			final UDrawable drawable = (UDrawable) shape;</span>
+<span class="fc" id="L53">			drawable.drawU(this);</span>
+<span class="fc" id="L54">		} else {</span>
+<span class="fc" id="L55">			getUg().draw(shape);</span>
 		}
 
-<span class="nc" id="L58">	}</span>
+<span class="fc" id="L58">	}</span>
 
 	public UGraphic apply(UChange change) {
-<span class="nc" id="L61">		return new UGraphicDispatchDrawable(getUg().apply(change));</span>
+<span class="fc" id="L61">		return new UGraphicDispatchDrawable(getUg().apply(change));</span>
 	}
 
 }

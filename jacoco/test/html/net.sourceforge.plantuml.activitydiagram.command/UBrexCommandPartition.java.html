@@ -111,18 +111,18 @@ public class UBrexCommandPartition extends UBrexSingleLineCommand2&lt;ActivityDi
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L114">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(arg.get(&quot;NAME&quot;, 0)));</span>
+<span class="fc" id="L114">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(arg.get(&quot;NAME&quot;, 0)));</span>
 
-<span class="nc" id="L116">		diagram.gotoGroup(location, quark, Display.getWithNewlines(diagram.getPragma(), quark.getName()), GroupType.PACKAGE);</span>
-<span class="nc" id="L117">		final Entity p = diagram.getCurrentGroup();</span>
+<span class="fc" id="L116">		diagram.gotoGroup(location, quark, Display.getWithNewlines(diagram.getPragma(), quark.getName()), GroupType.PACKAGE);</span>
+<span class="fc" id="L117">		final Entity p = diagram.getCurrentGroup();</span>
 
-<span class="nc" id="L119">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (colors.isEmpty() == false)</span>
+<span class="fc" id="L119">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (colors.isEmpty() == false)</span>
 <span class="nc" id="L121">			p.setColors(colors);</span>
 
-<span class="nc" id="L123">		p.setStereotype(Stereotype.build(arg.get(&quot;STEREOTYPE&quot;, 0)));</span>
+<span class="fc" id="L123">		p.setStereotype(Stereotype.build(arg.get(&quot;STEREOTYPE&quot;, 0)));</span>
 
-<span class="nc" id="L125">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L125">		return CommandExecutionResult.ok();</span>
 	}
 
 }

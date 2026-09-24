@@ -47,46 +47,46 @@ public class FtileMinWidthCentered extends FtileDecorate {
 	private FtileGeometry calculateDimensionInternal;
 
 	public FtileMinWidthCentered(Ftile tile, double minWidth) {
-<span class="nc" id="L50">		super(tile);</span>
-<span class="nc" id="L51">		this.minWidth = minWidth;</span>
-<span class="nc" id="L52">	}</span>
+<span class="fc" id="L50">		super(tile);</span>
+<span class="fc" id="L51">		this.minWidth = minWidth;</span>
+<span class="fc" id="L52">	}</span>
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L55">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L56">		final UTranslate change = getUTranslateInternal(stringBounder);</span>
-<span class="nc" id="L57">		super.drawU(ug.apply(change));</span>
-<span class="nc" id="L58">	}</span>
+<span class="fc" id="L55">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L56">		final UTranslate change = getUTranslateInternal(stringBounder);</span>
+<span class="fc" id="L57">		super.drawU(ug.apply(change));</span>
+<span class="fc" id="L58">	}</span>
 
 	@Override
 	public FtileGeometry calculateDimension(StringBounder stringBounder) {
-<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (calculateDimensionInternal == null) </span>
-<span class="nc" id="L63">			calculateDimensionInternal = calculateDimensionSlow(stringBounder);</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">		if (calculateDimensionInternal == null) </span>
+<span class="fc" id="L63">			calculateDimensionInternal = calculateDimensionSlow(stringBounder);</span>
 		
-<span class="nc" id="L65">		return calculateDimensionInternal;</span>
+<span class="fc" id="L65">		return calculateDimensionInternal;</span>
 	}
 
 	private FtileGeometry calculateDimensionSlow(StringBounder stringBounder) {
-<span class="nc" id="L69">		final FtileGeometry geo = super.calculateDimension(stringBounder);</span>
-<span class="nc" id="L70">		final double left = getPoint2(geo.getLeft(), stringBounder);</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (geo.hasPointOut() == false) </span>
+<span class="fc" id="L69">		final FtileGeometry geo = super.calculateDimension(stringBounder);</span>
+<span class="fc" id="L70">		final double left = getPoint2(geo.getLeft(), stringBounder);</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (geo.hasPointOut() == false) </span>
 <span class="nc" id="L72">			return new FtileGeometry(getDimensionInternal(stringBounder), left, geo.getInY());</span>
 		
-<span class="nc" id="L74">		return new FtileGeometry(getDimensionInternal(stringBounder), left, geo.getInY(), geo.getOutY());</span>
+<span class="fc" id="L74">		return new FtileGeometry(getDimensionInternal(stringBounder), left, geo.getInY(), geo.getOutY());</span>
 	}
 
 	private XDimension2D getDimensionInternal(StringBounder stringBounder) {
-<span class="nc" id="L78">		final XDimension2D dim = getFtileDelegated().calculateDimension(stringBounder);</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (dim.getWidth() &lt; minWidth) </span>
-<span class="nc" id="L80">			return new XDimension2D(minWidth, dim.getHeight());</span>
+<span class="fc" id="L78">		final XDimension2D dim = getFtileDelegated().calculateDimension(stringBounder);</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (dim.getWidth() &lt; minWidth) </span>
+<span class="fc" id="L80">			return new XDimension2D(minWidth, dim.getHeight());</span>
 		
 <span class="nc" id="L82">		return dim;</span>
 	}
 
 	private UTranslate getUTranslateInternal(final StringBounder stringBounder) {
-<span class="nc" id="L86">		final XDimension2D dimTile = getFtileDelegated().calculateDimension(stringBounder);</span>
-<span class="nc" id="L87">		final XDimension2D dimTotal = getDimensionInternal(stringBounder);</span>
-<span class="nc" id="L88">		final UTranslate change = UTranslate.dx((dimTotal.getWidth() - dimTile.getWidth()) / 2);</span>
-<span class="nc" id="L89">		return change;</span>
+<span class="fc" id="L86">		final XDimension2D dimTile = getFtileDelegated().calculateDimension(stringBounder);</span>
+<span class="fc" id="L87">		final XDimension2D dimTotal = getDimensionInternal(stringBounder);</span>
+<span class="fc" id="L88">		final UTranslate change = UTranslate.dx((dimTotal.getWidth() - dimTile.getWidth()) / 2);</span>
+<span class="fc" id="L89">		return change;</span>
 	}
 
 	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
@@ -97,10 +97,10 @@ public class FtileMinWidthCentered extends FtileDecorate {
 	}
 
 	private double getPoint2(double x, StringBounder stringBounder) {
-<span class="nc" id="L100">		final XDimension2D dim = getFtileDelegated().calculateDimension(stringBounder);</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (dim.getWidth() &lt; minWidth) {</span>
-<span class="nc" id="L102">			final double diff = minWidth - dim.getWidth();</span>
-<span class="nc" id="L103">			return x + diff / 2;</span>
+<span class="fc" id="L100">		final XDimension2D dim = getFtileDelegated().calculateDimension(stringBounder);</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		if (dim.getWidth() &lt; minWidth) {</span>
+<span class="fc" id="L102">			final double diff = minWidth - dim.getWidth();</span>
+<span class="fc" id="L103">			return x + diff / 2;</span>
 		}
 <span class="nc" id="L105">		return x;</span>
 	}

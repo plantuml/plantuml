@@ -98,7 +98,7 @@ public class Worm {
 <span class="fc" id="L98">	}</span>
 
 	public boolean isPureHorizontal() {
-<span class="pc bpc" id="L101" title="1 of 4 branches missed.">		return size() == 2 &amp;&amp; getPoint(0).getY() == getPoint(1).getY();</span>
+<span class="fc bfc" id="L101" title="All 4 branches covered.">		return size() == 2 &amp;&amp; getPoint(0).getY() == getPoint(1).getY();</span>
 	}
 
 	private boolean ignoreForCompression;
@@ -161,7 +161,7 @@ public class Worm {
 
 <span class="nc" id="L162">			ug.apply(UTranslate.point(start)).apply(UStroke.simple()).draw(startDecoration);</span>
 		}
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">		if (endDecoration != null) {</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">		if (endDecoration != null) {</span>
 <span class="fc" id="L165">			ug = ug.apply(UStroke.withThickness(1.5));</span>
 <span class="fc" id="L166">			final XPoint2D end = getPoint(size() - 1);</span>
 <span class="pc bpc" id="L167" title="1 of 2 branches missed.">			if (ignoreForCompression)</span>
@@ -297,7 +297,7 @@ public class Worm {
 	}
 
 	private boolean isForwardAndBackwardAt(int i) {
-<span class="nc bnc" id="L300" title="All 2 branches missed.">		return getDirectionAtPoint(i) == getDirectionAtPoint(i + 1).getInv();</span>
+<span class="pc bpc" id="L300" title="1 of 2 branches missed.">		return getDirectionAtPoint(i) == getDirectionAtPoint(i + 1).getInv();</span>
 	}
 
 	private Direction getDirectionAtPoint(int i) {
@@ -338,10 +338,10 @@ public class Worm {
 	}
 
 	public double getMinX() {
-<span class="nc" id="L341">		double result = getPoint(0).getX();</span>
-<span class="nc bnc" id="L342" title="All 2 branches missed.">		for (XPoint2D pt : points)</span>
-<span class="nc" id="L343">			result = Math.min(result, resolve(pt).getX());</span>
-<span class="nc" id="L344">		return result;</span>
+<span class="fc" id="L341">		double result = getPoint(0).getX();</span>
+<span class="fc bfc" id="L342" title="All 2 branches covered.">		for (XPoint2D pt : points)</span>
+<span class="fc" id="L343">			result = Math.min(result, resolve(pt).getX());</span>
+<span class="fc" id="L344">		return result;</span>
 	}
 
 	public double getMaxX() {
@@ -387,7 +387,7 @@ public class Worm {
 <span class="pc bpc" id="L387" title="1 of 4 branches missed.">			change = change || removePattern5();</span>
 <span class="pc bpc" id="L388" title="1 of 4 branches missed.">			change = change || removePattern6();</span>
 <span class="pc bpc" id="L389" title="1 of 4 branches missed.">			change = change || removePattern7();</span>
-<span class="pc bpc" id="L390" title="1 of 2 branches missed.">			if (merge == MergeStrategy.FULL)</span>
+<span class="fc bfc" id="L390" title="All 2 branches covered.">			if (merge == MergeStrategy.FULL)</span>
 <span class="pc bpc" id="L391" title="1 of 4 branches missed.">				change = change || removePattern8();</span>
 
 <span class="fc bfc" id="L393" title="All 2 branches covered.">		} while (change);</span>
@@ -405,10 +405,10 @@ public class Worm {
 	}
 
 	private boolean removeRedondantDirection() {
-<span class="pc bfc" id="L408" title="All 2 branches covered.">		for (int i = 0; i &lt; size() - 2; i++) {</span>
+<span class="fc bfc" id="L408" title="All 2 branches covered.">		for (int i = 0; i &lt; size() - 2; i++) {</span>
 <span class="fc" id="L409">			final Direction dir1 = getDirectionAtPoint(i);</span>
 <span class="fc" id="L410">			final Direction dir2 = getDirectionAtPoint(i + 1);</span>
-<span class="pc bpc" id="L411" title="1 of 2 branches missed.">			if (dir1 == dir2) {</span>
+<span class="fc bfc" id="L411" title="All 2 branches covered.">			if (dir1 == dir2) {</span>
 <span class="fc" id="L412">				points.remove(i + 1);</span>
 <span class="fc" id="L413">				return true;</span>
 			}
@@ -523,8 +523,8 @@ public class Worm {
 	}
 
 	private boolean removePattern6() {
-<span class="pc bpc" id="L526" title="1 of 2 branches missed.">		for (int i = 0; i &lt; size() - 2; i++) {</span>
-<span class="nc bnc" id="L527" title="All 2 branches missed.">			if (isForwardAndBackwardAt(i)) {</span>
+<span class="fc bfc" id="L526" title="All 2 branches covered.">		for (int i = 0; i &lt; size() - 2; i++) {</span>
+<span class="pc bpc" id="L527" title="1 of 2 branches missed.">			if (isForwardAndBackwardAt(i)) {</span>
 <span class="nc" id="L528">				points.remove(i + 1);</span>
 <span class="nc" id="L529">				return true;</span>
 			}

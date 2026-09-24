@@ -181,38 +181,40 @@ public class GraphicStrings extends TextBlockMemoized implements IEntityImage {
 <span class="pc bpc" id="L181" title="1 of 2 branches missed.">		if (image != null) {</span>
 <span class="pc bpc" id="L182" title="1 of 2 branches missed.">			if (position == GraphicPosition.BOTTOM)</span>
 <span class="nc" id="L183">				dim = new XDimension2D(dim.getWidth(), dim.getHeight() + image.getHeight());</span>
-<span class="fc bfc" id="L184" title="All 2 branches covered.">			else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT)</span>
-<span class="fc" id="L185">				dim = new XDimension2D(dim.getWidth() + imagePadding + image.getWidth(), dim.getHeight());</span>
-<span class="pc bpc" id="L186" title="1 of 2 branches missed.">			else if (position == GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT)</span>
-<span class="fc" id="L187">				dim = new XDimension2D(dim.getWidth() + imagePadding + image.getWidth(), dim.getHeight());</span>
+<span class="pc bpc" id="L184" title="1 of 4 branches missed.">			else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT</span>
+					|| position == GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT)
+				// The image may be taller than the text (e.g. a distributor logo next to a
+				// few lines): the block must be tall enough for both.
+<span class="fc" id="L188">				dim = new XDimension2D(dim.getWidth() + imagePadding + image.getWidth(),</span>
+<span class="fc" id="L189">						Math.max(dim.getHeight(), image.getHeight()));</span>
 
 		}
-<span class="fc" id="L190">		return dim;</span>
+<span class="fc" id="L192">		return dim;</span>
 	}
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L194">		return ShapeType.RECTANGLE;</span>
+<span class="nc" id="L196">		return ShapeType.RECTANGLE;</span>
 	}
 
 	public HColor getBackcolor() {
-<span class="fc" id="L198">		return background;</span>
+<span class="fc" id="L200">		return background;</span>
 	}
 
 	public Margins getShield(StringBounder stringBounder) {
-<span class="nc" id="L202">		return Margins.NONE;</span>
+<span class="nc" id="L204">		return Margins.NONE;</span>
 	}
 
 	public boolean isHidden() {
-<span class="nc" id="L206">		return false;</span>
+<span class="nc" id="L208">		return false;</span>
 	}
 
 	public double getOverscanX(StringBounder stringBounder) {
-<span class="nc" id="L210">		return 0;</span>
+<span class="nc" id="L212">		return 0;</span>
 	}
 
 	@Override
 	public boolean isCrash() {
-<span class="fc" id="L215">		return isCrash;</span>
+<span class="fc" id="L217">		return isCrash;</span>
 	}
 
 }

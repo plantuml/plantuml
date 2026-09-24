@@ -44,18 +44,18 @@ public class ULineHand {
 
 	private UPath path;
 
-<span class="nc" id="L47">	public ULineHand(ULine line, Random rnd) {</span>
-<span class="nc" id="L48">		final double endX = line.getDX();</span>
-<span class="nc" id="L49">		final double endY = line.getDY();</span>
-<span class="nc" id="L50">		final HandJiggle jiggle = new HandJiggle(0, 0, 2.0, rnd);</span>
-<span class="nc" id="L51">		jiggle.lineTo(endX, endY);</span>
+<span class="fc" id="L47">	public ULineHand(ULine line, Random rnd) {</span>
+<span class="fc" id="L48">		final double endX = line.getDX();</span>
+<span class="fc" id="L49">		final double endY = line.getDY();</span>
+<span class="fc" id="L50">		final HandJiggle jiggle = new HandJiggle(0, 0, 2.0, rnd);</span>
+<span class="fc" id="L51">		jiggle.lineTo(endX, endY);</span>
 
-<span class="nc" id="L53">		this.path = jiggle.toUPath();</span>
+<span class="fc" id="L53">		this.path = jiggle.toUPath();</span>
 
-<span class="nc" id="L55">	}</span>
+<span class="fc" id="L55">	}</span>
 
 	public UPath getHanddrawn() {
-<span class="nc" id="L58">		return this.path;</span>
+<span class="fc" id="L58">		return this.path;</span>
 	}
 
 }

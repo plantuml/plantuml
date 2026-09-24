@@ -42,13 +42,13 @@ import net.sourceforge.plantuml.regex.RegexResult;
 <span class="fc" id="L42">	RIGHT, LEFT, DOWN, UP;</span>
 
 	public Direction getInv() {
-<span class="nc bnc" id="L45" title="All 5 branches missed.">		switch (this) {</span>
+<span class="pc bpc" id="L45" title="3 of 5 branches missed.">		switch (this) {</span>
 		case RIGHT:
-<span class="nc" id="L47">			return LEFT;</span>
+<span class="fc" id="L47">			return LEFT;</span>
 		case LEFT:
 <span class="nc" id="L49">			return RIGHT;</span>
 		case DOWN:
-<span class="nc" id="L51">			return UP;</span>
+<span class="fc" id="L51">			return UP;</span>
 		case UP:
 <span class="nc" id="L53">			return DOWN;</span>
 		}
@@ -121,9 +121,9 @@ import net.sourceforge.plantuml.regex.RegexResult;
 <span class="fc" id="L121">			return UP;</span>
 		}
 <span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (y1 == y2) {</span>
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">			if (x2 &gt; x1)</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">			if (x2 &gt; x1)</span>
 <span class="fc" id="L125">				return RIGHT;</span>
-<span class="nc" id="L126">			return LEFT;</span>
+<span class="fc" id="L126">			return LEFT;</span>
 		}
 <span class="nc" id="L128">		throw new IllegalArgumentException(&quot;Not a H or V line!&quot;);</span>
 

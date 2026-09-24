@@ -45,24 +45,24 @@ public class UPolygonHand {
 
 	private final UPolygon poly;
 
-<span class="nc" id="L48">	public UPolygonHand(UPolygon source, Random rnd) {</span>
-<span class="nc" id="L49">		final List&lt;XPoint2D&gt; pt = source.getPoints();</span>
-<span class="nc bnc" id="L50" title="All 2 branches missed.">		if (pt.size() == 0) {</span>
+<span class="fc" id="L48">	public UPolygonHand(UPolygon source, Random rnd) {</span>
+<span class="fc" id="L49">		final List&lt;XPoint2D&gt; pt = source.getPoints();</span>
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">		if (pt.size() == 0) {</span>
 <span class="nc" id="L51">			poly = new UPolygon();</span>
 <span class="nc" id="L52">			return;</span>
 		}
-<span class="nc" id="L54">		final HandJiggle jiggle = HandJiggle.create(pt.get(0), 1.5, rnd);</span>
-<span class="nc bnc" id="L55" title="All 2 branches missed.">		for (int i = 1; i &lt; pt.size(); i++) {</span>
-<span class="nc" id="L56">			jiggle.lineTo(pt.get(i));</span>
+<span class="fc" id="L54">		final HandJiggle jiggle = HandJiggle.create(pt.get(0), 1.5, rnd);</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">		for (int i = 1; i &lt; pt.size(); i++) {</span>
+<span class="fc" id="L56">			jiggle.lineTo(pt.get(i));</span>
 		}
-<span class="nc" id="L58">		jiggle.lineTo(pt.get(0));</span>
+<span class="fc" id="L58">		jiggle.lineTo(pt.get(0));</span>
 
-<span class="nc" id="L60">		this.poly = jiggle.toUPolygon();</span>
-<span class="nc" id="L61">		this.poly.setDeltaShadow(source.getDeltaShadow());</span>
-<span class="nc" id="L62">	}</span>
+<span class="fc" id="L60">		this.poly = jiggle.toUPolygon();</span>
+<span class="fc" id="L61">		this.poly.setDeltaShadow(source.getDeltaShadow());</span>
+<span class="fc" id="L62">	}</span>
 
 	public Shadowable getHanddrawn() {
-<span class="nc" id="L65">		return this.poly;</span>
+<span class="fc" id="L65">		return this.poly;</span>
 	}
 
 }

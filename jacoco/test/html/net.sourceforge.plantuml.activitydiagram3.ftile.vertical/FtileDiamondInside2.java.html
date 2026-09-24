@@ -51,12 +51,12 @@ public class FtileDiamondInside2 extends FtileDiamondWIP {
 
 	public FtileDiamondInside2(TextBlock label, ISkinParam skinParam, HColor backColor, HColor borderColor,
 			Swimlane swimlane) {
-<span class="nc" id="L54">		this(label, skinParam, backColor, borderColor, swimlane, TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0),</span>
-<span class="nc" id="L55">				TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0));</span>
-<span class="nc" id="L56">	}</span>
+<span class="fc" id="L54">		this(label, skinParam, backColor, borderColor, swimlane, TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0),</span>
+<span class="fc" id="L55">				TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0));</span>
+<span class="fc" id="L56">	}</span>
 
 	public FtileDiamondInside2 withNorth(TextBlock north) {
-<span class="nc" id="L59">		return new FtileDiamondInside2(label, skinParam(), backColor, borderColor, swimlane, north, south, west, east);</span>
+<span class="fc" id="L59">		return new FtileDiamondInside2(label, skinParam(), backColor, borderColor, swimlane, north, south, west, east);</span>
 	}
 
 	public FtileDiamondInside2 withWest(TextBlock west) {
@@ -64,7 +64,7 @@ public class FtileDiamondInside2 extends FtileDiamondWIP {
 	}
 
 	public FtileDiamondInside2 withEast(TextBlock east) {
-<span class="nc" id="L67">		return new FtileDiamondInside2(label, skinParam(), backColor, borderColor, swimlane, north, south, west, east);</span>
+<span class="fc" id="L67">		return new FtileDiamondInside2(label, skinParam(), backColor, borderColor, swimlane, north, south, west, east);</span>
 	}
 
 	public FtileDiamondInside2 withSouth(TextBlock south) {
@@ -73,51 +73,51 @@ public class FtileDiamondInside2 extends FtileDiamondWIP {
 
 	private FtileDiamondInside2(TextBlock label, ISkinParam skinParam, HColor backColor, HColor borderColor,
 			Swimlane swimlane, TextBlock north, TextBlock south, TextBlock west, TextBlock east) {
-<span class="nc" id="L76">		super(label, skinParam, backColor, borderColor, swimlane, north, south, east, west);</span>
-<span class="nc" id="L77">	}</span>
+<span class="fc" id="L76">		super(label, skinParam, backColor, borderColor, swimlane, north, south, east, west);</span>
+<span class="fc" id="L77">	}</span>
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L80">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L81">		final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
-<span class="nc" id="L82">		final XDimension2D dimTotal = calculateDimensionAlone(stringBounder);</span>
-<span class="nc" id="L83">		ug = ug.apply(borderColor).apply(getStyle().getStroke()).apply(backColor.bg());</span>
-<span class="nc" id="L84">		ug.draw(Hexagon.asPolygon(shadowing, dimTotal.getWidth(), dimTotal.getHeight()));</span>
+<span class="fc" id="L80">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L81">		final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
+<span class="fc" id="L82">		final XDimension2D dimTotal = calculateDimensionAlone(stringBounder);</span>
+<span class="fc" id="L83">		ug = ug.apply(borderColor).apply(getStyle().getStroke()).apply(backColor.bg());</span>
+<span class="fc" id="L84">		ug.draw(Hexagon.asPolygon(shadowing, dimTotal.getWidth(), dimTotal.getHeight()));</span>
 
-<span class="nc" id="L86">		north.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight())));</span>
-<span class="nc" id="L87">		south.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight())));</span>
+<span class="fc" id="L86">		north.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight())));</span>
+<span class="fc" id="L87">		south.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight())));</span>
 
-<span class="nc" id="L89">		final double lx = (dimTotal.getWidth() - dimLabel.getWidth()) / 2;</span>
-<span class="nc" id="L90">		final double ly = (dimTotal.getHeight() - dimLabel.getHeight()) / 2;</span>
-<span class="nc" id="L91">		label.drawU(ug.apply(new UTranslate(lx, ly)));</span>
+<span class="fc" id="L89">		final double lx = (dimTotal.getWidth() - dimLabel.getWidth()) / 2;</span>
+<span class="fc" id="L90">		final double ly = (dimTotal.getHeight() - dimLabel.getHeight()) / 2;</span>
+<span class="fc" id="L91">		label.drawU(ug.apply(new UTranslate(lx, ly)));</span>
 
-<span class="nc" id="L93">		final XDimension2D dimWeat = west.calculateDimension(stringBounder);</span>
-<span class="nc" id="L94">		west.drawU(ug.apply(new UTranslate(-dimWeat.getWidth(), -dimWeat.getHeight() + dimTotal.getHeight() / 2)));</span>
+<span class="fc" id="L93">		final XDimension2D dimWeat = west.calculateDimension(stringBounder);</span>
+<span class="fc" id="L94">		west.drawU(ug.apply(new UTranslate(-dimWeat.getWidth(), -dimWeat.getHeight() + dimTotal.getHeight() / 2)));</span>
 
-<span class="nc" id="L96">		final XDimension2D dimEast = east.calculateDimension(stringBounder);</span>
-<span class="nc" id="L97">		east.drawU(ug.apply(new UTranslate(dimTotal.getWidth(), -dimEast.getHeight() + dimTotal.getHeight() / 2)));</span>
+<span class="fc" id="L96">		final XDimension2D dimEast = east.calculateDimension(stringBounder);</span>
+<span class="fc" id="L97">		east.drawU(ug.apply(new UTranslate(dimTotal.getWidth(), -dimEast.getHeight() + dimTotal.getHeight() / 2)));</span>
 
-<span class="nc" id="L99">	}</span>
+<span class="fc" id="L99">	}</span>
 
 	private FtileGeometry calculateDimensionAlone(StringBounder stringBounder) {
-<span class="nc" id="L102">		final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
+<span class="fc" id="L102">		final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
 		final XDimension2D dim;
-<span class="nc bnc" id="L104" title="All 4 branches missed.">		if (dimLabel.getWidth() == 0 || dimLabel.getHeight() == 0) {</span>
+<span class="pc bpc" id="L104" title="2 of 4 branches missed.">		if (dimLabel.getWidth() == 0 || dimLabel.getHeight() == 0) {</span>
 <span class="nc" id="L105">			dim = new XDimension2D(Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2);</span>
 		} else {
-<span class="nc" id="L107">			dim = dimLabel.atLeast(Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2)</span>
-<span class="nc" id="L108">					.delta(Hexagon.hexagonHalfSize * 2, 0);</span>
+<span class="fc" id="L107">			dim = dimLabel.atLeast(Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2)</span>
+<span class="fc" id="L108">					.delta(Hexagon.hexagonHalfSize * 2, 0);</span>
 		}
-<span class="nc" id="L110">		return new FtileGeometry(dim, dim.getWidth() / 2, 0, dim.getHeight());</span>
+<span class="fc" id="L110">		return new FtileGeometry(dim, dim.getWidth() / 2, 0, dim.getHeight());</span>
 	}
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-<span class="nc" id="L115">		final XDimension2D diamond = calculateDimensionAlone(stringBounder);</span>
-<span class="nc" id="L116">		final XDimension2D north = this.north.calculateDimension(stringBounder);</span>
-<span class="nc" id="L117">		final double height = diamond.getHeight() + north.getHeight();</span>
-<span class="nc" id="L118">		final double left = diamond.getWidth() / 2;</span>
-<span class="nc bnc" id="L119" title="All 2 branches missed.">		final double width = north.getWidth() &gt; left ? left + north.getWidth() : diamond.getWidth();</span>
-<span class="nc" id="L120">		return new FtileGeometry(width, height, left, 0, diamond.getHeight());</span>
+<span class="fc" id="L115">		final XDimension2D diamond = calculateDimensionAlone(stringBounder);</span>
+<span class="fc" id="L116">		final XDimension2D north = this.north.calculateDimension(stringBounder);</span>
+<span class="fc" id="L117">		final double height = diamond.getHeight() + north.getHeight();</span>
+<span class="fc" id="L118">		final double left = diamond.getWidth() / 2;</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		final double width = north.getWidth() &gt; left ? left + north.getWidth() : diamond.getWidth();</span>
+<span class="fc" id="L120">		return new FtileGeometry(width, height, left, 0, diamond.getHeight());</span>
 	}
 
 }

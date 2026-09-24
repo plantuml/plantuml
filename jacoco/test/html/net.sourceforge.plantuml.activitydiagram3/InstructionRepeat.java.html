@@ -116,7 +116,7 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 
 	private boolean isLastOfTheParent() {
 <span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (parent instanceof InstructionList)</span>
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">			return ((InstructionList) parent).getLast() == this;</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">			return ((InstructionList) parent).getLast() == this;</span>
 
 <span class="nc" id="L121">		return false;</span>
 	}

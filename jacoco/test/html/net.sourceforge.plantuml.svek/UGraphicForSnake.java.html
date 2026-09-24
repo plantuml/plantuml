@@ -90,8 +90,8 @@ public class UGraphicForSnake extends UGraphicDelegator {
 		// Check if this snake's last point (translated) touches other snake's first point (translated)
 		// without creating intermediate Snake/Worm objects
 		private boolean touchesOther(PendingSnake other) {
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">			if (other.snake.cannotBeTouched())</span>
-<span class="nc" id="L94">				return false;</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">			if (other.snake.cannotBeTouched())</span>
+<span class="fc" id="L94">				return false;</span>
 
 <span class="fc" id="L96">			final XPoint2D thisLast = snake.getLast();</span>
 <span class="fc" id="L97">			final XPoint2D otherFirst = other.snake.getFirst();</span>

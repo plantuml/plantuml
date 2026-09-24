@@ -93,10 +93,10 @@ final public class WElement {
 	}
 
 	public ISkinParam withBackColor(ISkinParam skinParam) {
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (backColor == null)</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (backColor == null)</span>
 <span class="fc" id="L97">			return skinParam;</span>
 
-<span class="nc" id="L99">		return new SkinParamColors(skinParam, Colors.empty().add(ColorType.BACK, backColor));</span>
+<span class="fc" id="L99">		return new SkinParamColors(skinParam, Colors.empty().add(ColorType.BACK, backColor));</span>
 	}
 
 	/**
@@ -141,8 +141,8 @@ final public class WElement {
 	public WElement createElement(HColor backColor, int newLevel, Display newLabel, Stereotype stereotype,
 			Direction direction, IdeaShape shape, StyleBuilder styleBuilder) {
 <span class="fc" id="L143">		final WElement result = new WElement(backColor, newLevel, newLabel, stereotype, this, shape, styleBuilder);</span>
-<span class="pc bpc" id="L144" title="1 of 4 branches missed.">		if (direction == Direction.LEFT &amp;&amp; newLevel == 1)</span>
-<span class="nc" id="L145">			this.childrenRight.add(0, result);</span>
+<span class="fc bfc" id="L144" title="All 4 branches covered.">		if (direction == Direction.LEFT &amp;&amp; newLevel == 1)</span>
+<span class="fc" id="L145">			this.childrenRight.add(0, result);</span>
 <span class="fc bfc" id="L146" title="All 2 branches covered.">		if (direction == Direction.LEFT)</span>
 <span class="fc" id="L147">			this.childrenLeft.add(result);</span>
 		else

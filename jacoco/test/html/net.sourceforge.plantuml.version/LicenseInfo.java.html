@@ -150,123 +150,126 @@ public class LicenseInfo {
 		}
 		try {
 <span class="nc" id="L152">			final byte[] s1 = PLSSignature.retrieveDistributorImageSignature();</span>
-<span class="nc bnc" id="L153" title="All 2 branches missed.">			if (SignatureUtils.toHexString(s1).equals(SignatureUtils.toHexString(licenseInfo.sha)) == false)</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">			if (s1 == null)</span>
 <span class="nc" id="L154">				return null;</span>
 
-<span class="nc" id="L156">			final InputStream dis = PSystemVersion.class.getResourceAsStream(&quot;/distributor.png&quot;);</span>
-<span class="nc bnc" id="L157" title="All 2 branches missed.">			if (dis == null)</span>
-<span class="nc" id="L158">				return null;</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">			if (SignatureUtils.toHexString(s1).equals(SignatureUtils.toHexString(licenseInfo.sha)) == false)</span>
+<span class="nc" id="L157">				return null;</span>
+
+<span class="nc" id="L159">			final InputStream dis = PSystemVersion.class.getResourceAsStream(&quot;/distributor.png&quot;);</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">			if (dis == null)</span>
+<span class="nc" id="L161">				return null;</span>
 
 			try {
-<span class="nc" id="L161">				final PortableImage result = SImageIO.read(dis);</span>
-<span class="nc" id="L162">				return result;</span>
+<span class="nc" id="L164">				final PortableImage result = SImageIO.read(dis);</span>
+<span class="nc" id="L165">				return result;</span>
 			} finally {
-<span class="nc" id="L164">				dis.close();</span>
+<span class="nc" id="L167">				dis.close();</span>
 			}
-<span class="nc" id="L166">		} catch (Exception e) {</span>
-<span class="nc" id="L167">			Logme.error(e);</span>
+<span class="nc" id="L169">		} catch (Exception e) {</span>
+<span class="nc" id="L170">			Logme.error(e);</span>
 		}
-<span class="nc" id="L169">		return null;</span>
+<span class="nc" id="L172">		return null;</span>
 	}
 
 	public static LicenseInfo retrieveDistributor() {
-<span class="nc" id="L173">		final InputStream dis = PSystemVersion.class.getResourceAsStream(&quot;/distributor.txt&quot;);</span>
-<span class="nc bnc" id="L174" title="All 2 branches missed.">		if (dis == null)</span>
-<span class="nc" id="L175">			return null;</span>
+<span class="nc" id="L176">		final InputStream dis = PSystemVersion.class.getResourceAsStream(&quot;/distributor.txt&quot;);</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">		if (dis == null)</span>
+<span class="nc" id="L178">			return null;</span>
 
 		try {
-<span class="nc" id="L178">			final BufferedReader br = new BufferedReader(new InputStreamReader(dis));</span>
-<span class="nc" id="L179">			final String licenseString = br.readLine();</span>
-<span class="nc" id="L180">			br.close();</span>
-<span class="nc" id="L181">			final LicenseInfo result = PLSSignature.retrieveDistributor(licenseString);</span>
-<span class="nc" id="L182">			final Throwable creationPoint = new Throwable();</span>
-<span class="nc" id="L183">			creationPoint.fillInStackTrace();</span>
-<span class="nc bnc" id="L184" title="All 2 branches missed.">			for (StackTraceElement ste : creationPoint.getStackTrace())</span>
-<span class="nc bnc" id="L185" title="All 2 branches missed.">				if (ste.toString().contains(result.context))</span>
-<span class="nc" id="L186">					return result;</span>
+<span class="nc" id="L181">			final BufferedReader br = new BufferedReader(new InputStreamReader(dis));</span>
+<span class="nc" id="L182">			final String licenseString = br.readLine();</span>
+<span class="nc" id="L183">			br.close();</span>
+<span class="nc" id="L184">			final LicenseInfo result = PLSSignature.retrieveDistributor(licenseString);</span>
+<span class="nc" id="L185">			final Throwable creationPoint = new Throwable();</span>
+<span class="nc" id="L186">			creationPoint.fillInStackTrace();</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">			for (StackTraceElement ste : creationPoint.getStackTrace())</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">				if (ste.toString().contains(result.context))</span>
+<span class="nc" id="L189">					return result;</span>
 
-<span class="nc" id="L188">			return null;</span>
-<span class="nc" id="L189">		} catch (Exception e) {</span>
-<span class="nc" id="L190">			Logme.error(e);</span>
 <span class="nc" id="L191">			return null;</span>
+<span class="nc" id="L192">		} catch (Exception e) {</span>
+<span class="nc" id="L193">			Logme.error(e);</span>
+<span class="nc" id="L194">			return null;</span>
 		}
 	}
 
 	public static Collection&lt;SFile&gt; fileCandidates() {
-<span class="nc" id="L196">		final Set&lt;SFile&gt; result = new TreeSet&lt;&gt;();</span>
-<span class="nc" id="L197">		final String classpath = System.getProperty(&quot;java.class.path&quot;);</span>
-<span class="nc" id="L198">		String[] classpathEntries = classpath.split(SFile.pathSeparator);</span>
-<span class="nc bnc" id="L199" title="All 2 branches missed.">		for (String s : classpathEntries) {</span>
-<span class="nc bnc" id="L200" title="All 2 branches missed.">			if (s == null)</span>
-<span class="nc" id="L201">				continue;</span>
-<span class="nc" id="L202">			SFile dir = new SFile(s);</span>
-<span class="nc bnc" id="L203" title="All 2 branches missed.">			if (dir.isFile())</span>
-<span class="nc" id="L204">				dir = dir.getParentFile();</span>
+<span class="nc" id="L199">		final Set&lt;SFile&gt; result = new TreeSet&lt;&gt;();</span>
+<span class="nc" id="L200">		final String classpath = System.getProperty(&quot;java.class.path&quot;);</span>
+<span class="nc" id="L201">		String[] classpathEntries = classpath.split(SFile.pathSeparator);</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">		for (String s : classpathEntries) {</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">			if (s == null)</span>
+<span class="nc" id="L204">				continue;</span>
+<span class="nc" id="L205">			SFile dir = new SFile(s);</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">			if (dir.isFile())</span>
+<span class="nc" id="L207">				dir = dir.getParentFile();</span>
 
-<span class="nc bnc" id="L206" title="All 4 branches missed.">			if (dir != null &amp;&amp; dir.isDirectory())</span>
-<span class="nc" id="L207">				result.add(dir.file(&quot;license.txt&quot;));</span>
+<span class="nc bnc" id="L209" title="All 4 branches missed.">			if (dir != null &amp;&amp; dir.isDirectory())</span>
+<span class="nc" id="L210">				result.add(dir.file(&quot;license.txt&quot;));</span>
 
 		}
-<span class="nc" id="L210">		return result;</span>
+<span class="nc" id="L213">		return result;</span>
 	}
 
 	private static LicenseInfo setIfValid(LicenseInfo value, LicenseInfo def) {
-<span class="nc bnc" id="L214" title="All 4 branches missed.">		if (value.isValid() || def.isNone())</span>
-<span class="nc" id="L215">			return value;</span>
+<span class="nc bnc" id="L217" title="All 4 branches missed.">		if (value.isValid() || def.isNone())</span>
+<span class="nc" id="L218">			return value;</span>
 
-<span class="nc" id="L217">		return def;</span>
+<span class="nc" id="L220">		return def;</span>
 	}
 
 	private static LicenseInfo retrieve(SFile f) throws IOException {
-<span class="nc" id="L221">		final BufferedReader br = f.openBufferedReader();</span>
-<span class="nc bnc" id="L222" title="All 2 branches missed.">		if (br == null)</span>
-<span class="nc" id="L223">			return null;</span>
+<span class="nc" id="L224">		final BufferedReader br = f.openBufferedReader();</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">		if (br == null)</span>
+<span class="nc" id="L226">			return null;</span>
 
 		try {
-<span class="nc" id="L226">			final String s = br.readLine();</span>
-<span class="nc" id="L227">			final LicenseInfo result = retrieveNamed(s);</span>
-<span class="nc bnc" id="L228" title="All 2 branches missed.">			if (result != null)</span>
-<span class="nc" id="L229">				Log.info(() -&gt; &quot;Reading license from &quot; + f.getAbsolutePath());</span>
+<span class="nc" id="L229">			final String s = br.readLine();</span>
+<span class="nc" id="L230">			final LicenseInfo result = retrieveNamed(s);</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">			if (result != null)</span>
+<span class="nc" id="L232">				Log.info(() -&gt; &quot;Reading license from &quot; + f.getAbsolutePath());</span>
 
-<span class="nc" id="L231">			return result;</span>
+<span class="nc" id="L234">			return result;</span>
 		} finally {
-<span class="nc" id="L233">			br.close();</span>
+<span class="nc" id="L236">			br.close();</span>
 		}
 	}
 
 	public static void main(String[] args) {
-<span class="nc" id="L238">		LicenseInfo info = retrieveNamedSlow();</span>
-<span class="nc" id="L239">		System.err.println(&quot;valid=&quot; + info.isValid());</span>
-<span class="nc" id="L240">		System.err.println(&quot;info=&quot; + info.owner);</span>
+<span class="nc" id="L241">		LicenseInfo info = retrieveNamedSlow();</span>
+<span class="nc" id="L242">		System.err.println(&quot;valid=&quot; + info.isValid());</span>
+<span class="nc" id="L243">		System.err.println(&quot;info=&quot; + info.owner);</span>
 
-<span class="nc" id="L242">	}</span>
+<span class="nc" id="L245">	}</span>
 
 	public final Date getGenerationDate() {
-<span class="nc" id="L245">		return new Date(generationDate);</span>
+<span class="nc" id="L248">		return new Date(generationDate);</span>
 	}
 
 	public final Date getExpirationDate() {
-<span class="nc" id="L249">		return new Date(expirationDate);</span>
+<span class="nc" id="L252">		return new Date(expirationDate);</span>
 	}
 
 	public final String getOwner() {
-<span class="nc" id="L253">		return owner;</span>
+<span class="nc" id="L256">		return owner;</span>
 	}
 
 	public boolean isNone() {
-<span class="nc bnc" id="L257" title="All 2 branches missed.">		return owner == null;</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">		return owner == null;</span>
 	}
 
 	public boolean hasExpired() {
-<span class="nc bnc" id="L261" title="All 4 branches missed.">		return owner != null &amp;&amp; System.currentTimeMillis() &gt; this.expirationDate;</span>
+<span class="nc bnc" id="L264" title="All 4 branches missed.">		return owner != null &amp;&amp; System.currentTimeMillis() &gt; this.expirationDate;</span>
 	}
 
 	public final LicenseType getLicenseType() {
-<span class="nc" id="L265">		return type;</span>
+<span class="nc" id="L268">		return type;</span>
 	}
 
 	public final String getContext() {
-<span class="nc" id="L269">		return context;</span>
+<span class="nc" id="L272">		return context;</span>
 	}
 
 }

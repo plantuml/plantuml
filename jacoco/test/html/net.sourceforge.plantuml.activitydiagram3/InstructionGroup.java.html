@@ -100,15 +100,15 @@ public class InstructionGroup extends AbstractInstruction implements Instruction
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) throws NoSuchColorException {
-<span class="nc" id="L103">		Ftile tmp = list.createFtile(factory);</span>
-<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (note != null)</span>
+<span class="fc" id="L103">		Ftile tmp = list.createFtile(factory);</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (note != null)</span>
 <span class="nc" id="L105">			tmp = new FtileWithNotes(tmp, Collections.singleton(note), VerticalAlignment.CENTER);</span>
 
-<span class="nc" id="L107">		return factory.createGroup(tmp, title, backColor, null, type, style);</span>
+<span class="fc" id="L107">		return factory.createGroup(tmp, title, backColor, null, type, style);</span>
 	}
 
 	public Instruction getParent() {
-<span class="nc" id="L111">		return parent;</span>
+<span class="fc" id="L111">		return parent;</span>
 	}
 
 	@Override
@@ -118,7 +118,7 @@ public class InstructionGroup extends AbstractInstruction implements Instruction
 
 	@Override
 	public LinkRendering getInLinkRendering() {
-<span class="nc" id="L121">		return linkRendering;</span>
+<span class="fc" id="L121">		return linkRendering;</span>
 	}
 
 	@Override

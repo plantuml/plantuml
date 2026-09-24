@@ -118,14 +118,17 @@ public class CommandRepeat3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 <span class="fc" id="L118">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
 <span class="fc" id="L119">		final BoxStyle boxStyle = stereogroup.getBoxStyle();</span>
 
-<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
-<span class="nc" id="L122">			diagram.addWarning(new Warning(&quot;This syntax is deprecated, you must add &lt;&lt;&quot; + arg.get(&quot;COLOR&quot;, 0)</span>
-					+ &quot;&gt;&gt; at the end of the line, after the ';'&quot;));
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		if (arg.get(&quot;COLOR&quot;, 0) != null) {</span>
+<span class="fc" id="L122">			final String rawLabel = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">			final String repeat = rawLabel == null ? &quot;repeat&quot; : &quot;repeat :&quot; + rawLabel + &quot;;&quot;;</span>
+<span class="fc" id="L124">			diagram.addWarning(new Warning(&quot;This syntax is deprecated and the color is ignored: write '&quot; + repeat</span>
+<span class="fc" id="L125">					+ &quot; &lt;&lt;&quot; + arg.get(&quot;COLOR&quot;, 0) + &quot;&gt;&gt;' instead of '&quot; + arg.get(&quot;COLOR&quot;, 0) + &quot;:&quot; + repeat + &quot;'&quot;));</span>
+		}
 
-<span class="fc" id="L125">		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L126">		diagram.startRepeat(label, boxStyle, colors, stereogroup);</span>
+<span class="fc" id="L128">		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L129">		diagram.startRepeat(label, boxStyle, colors, stereogroup);</span>
 
-<span class="fc" id="L128">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L131">		return CommandExecutionResult.ok();</span>
 	}
 
 }

@@ -60,17 +60,17 @@ public class FtileDiamond extends FtileDiamondWIP {
 	}
 
 	public FtileDiamond withWest(TextBlock west1) {
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (west1 == null)</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (west1 == null)</span>
 <span class="nc" id="L64">			return this;</span>
 
-<span class="nc" id="L66">		return new FtileDiamond(skinParam(), backColor, borderColor, swimlane, north, south, east, west1);</span>
+<span class="fc" id="L66">		return new FtileDiamond(skinParam(), backColor, borderColor, swimlane, north, south, east, west1);</span>
 	}
 
 	public FtileDiamond withEast(TextBlock east1) {
-<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (east1 == null)</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (east1 == null)</span>
 <span class="nc" id="L71">			return this;</span>
 
-<span class="nc" id="L73">		return new FtileDiamond(skinParam(), backColor, borderColor, swimlane, north, south, east1, west);</span>
+<span class="fc" id="L73">		return new FtileDiamond(skinParam(), backColor, borderColor, swimlane, north, south, east1, west);</span>
 	}
 
 	public FtileDiamond withSouth(TextBlock south) {
@@ -116,9 +116,9 @@ public class FtileDiamond extends FtileDiamondWIP {
 	}
 
 	public double getWestEastLabelHeight(StringBounder stringBounder) {
-<span class="nc" id="L119">		final XDimension2D dimEast = east.calculateDimension(stringBounder);</span>
-<span class="nc" id="L120">		final XDimension2D dimWest = west.calculateDimension(stringBounder);</span>
-<span class="nc" id="L121">		return Math.max(dimEast.getHeight(), dimWest.getHeight());</span>
+<span class="fc" id="L119">		final XDimension2D dimEast = east.calculateDimension(stringBounder);</span>
+<span class="fc" id="L120">		final XDimension2D dimWest = west.calculateDimension(stringBounder);</span>
+<span class="fc" id="L121">		return Math.max(dimEast.getHeight(), dimWest.getHeight());</span>
 	}
 
 	public double getEastLabelWidth(StringBounder stringBounder) {

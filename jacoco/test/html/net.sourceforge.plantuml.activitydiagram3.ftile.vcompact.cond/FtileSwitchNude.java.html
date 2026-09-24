@@ -51,16 +51,16 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class FtileSwitchNude extends FtileDimensionMemoize {
 
-<span class="nc" id="L54">	protected double xSeparation = 20;</span>
+<span class="fc" id="L54">	protected double xSeparation = 20;</span>
 
 	protected final List&lt;Ftile&gt; tiles;
 	private final Swimlane in;
 
 	public FtileSwitchNude(List&lt;Ftile&gt; tiles, Swimlane in) {
-<span class="nc" id="L60">		super(tiles.get(0).skinParam());</span>
-<span class="nc" id="L61">		this.tiles = tiles;</span>
-<span class="nc" id="L62">		this.in = in;</span>
-<span class="nc" id="L63">	}</span>
+<span class="fc" id="L60">		super(tiles.get(0).skinParam());</span>
+<span class="fc" id="L61">		this.tiles = tiles;</span>
+<span class="fc" id="L62">		this.in = in;</span>
+<span class="fc" id="L63">	}</span>
 
 	@Override
 	public Collection&lt;Ftile&gt; getMyChildren() {
@@ -79,11 +79,11 @@ public class FtileSwitchNude extends FtileDimensionMemoize {
 	}
 
 	public Swimlane getSwimlaneIn() {
-<span class="nc" id="L82">		return in;</span>
+<span class="fc" id="L82">		return in;</span>
 	}
 
 	public Swimlane getSwimlaneOut() {
-<span class="nc" id="L86">		return getSwimlaneIn();</span>
+<span class="fc" id="L86">		return getSwimlaneIn();</span>
 	}
 
 	@Override
@@ -115,23 +115,23 @@ public class FtileSwitchNude extends FtileDimensionMemoize {
 
 	@Override
 	final protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-<span class="nc" id="L118">		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);</span>
-<span class="nc bnc" id="L119" title="All 2 branches missed.">		for (Ftile tile : tiles)</span>
-<span class="nc bnc" id="L120" title="All 2 branches missed.">			if (tile.calculateDimension(stringBounder).hasPointOut())</span>
-<span class="nc" id="L121">				return dimTotal;</span>
+<span class="fc" id="L118">		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		for (Ftile tile : tiles)</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">			if (tile.calculateDimension(stringBounder).hasPointOut())</span>
+<span class="fc" id="L121">				return dimTotal;</span>
 
 <span class="nc" id="L123">		return dimTotal.withoutPointOut();</span>
 	}
 
 	@Override
 	protected FtileGeometry calculateDimensionInternalSlow(StringBounder stringBounder) {
-<span class="nc" id="L128">		XDimension2D result = new XDimension2D(0, 0);</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		for (Ftile couple : tiles)</span>
-<span class="nc" id="L130">			result = result.mergeLR(couple.calculateDimension(stringBounder));</span>
+<span class="fc" id="L128">		XDimension2D result = new XDimension2D(0, 0);</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">		for (Ftile couple : tiles)</span>
+<span class="fc" id="L130">			result = result.mergeLR(couple.calculateDimension(stringBounder));</span>
 
-<span class="nc" id="L132">		result = result.delta(xSeparation * (tiles.size() - 1), 100);</span>
+<span class="fc" id="L132">		result = result.delta(xSeparation * (tiles.size() - 1), 100);</span>
 
-<span class="nc" id="L134">		return new FtileGeometry(result.getWidth(), result.getHeight(), result.getWidth() / 2, 0);</span>
+<span class="fc" id="L134">		return new FtileGeometry(result.getWidth(), result.getHeight(), result.getWidth() / 2, 0);</span>
 	}
 
 }

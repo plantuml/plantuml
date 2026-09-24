@@ -132,15 +132,15 @@ class FtileRepeat extends AbstractFtile {
 
 		final Ftile diamond1;
 		// assert swimlane == repeat.getSwimlaneIn();
-<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (entry == null)</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">		if (entry == null)</span>
 <span class="fc" id="L136">			diamond1 = new FtileDiamond(repeat.skinParam(), diamondColor1, borderColor, swimlane);</span>
 		else
-<span class="nc" id="L138">			diamond1 = entry;</span>
+<span class="fc" id="L138">			diamond1 = entry;</span>
 
 		final FtileRepeat result;
 <span class="pc bpc" id="L141" title="1 of 2 branches missed.">		if (conditionStyle == ConditionStyle.INSIDE_HEXAGON) {</span>
 			final Ftile diamond2;
-<span class="pc bpc" id="L143" title="3 of 4 branches missed.">			if (noOut &amp;&amp; Display.isNull(test))</span>
+<span class="pc bpc" id="L143" title="1 of 4 branches missed.">			if (noOut &amp;&amp; Display.isNull(test))</span>
 <span class="nc" id="L144">				diamond2 = new FtileEmpty(repeat.skinParam());</span>
 <span class="pc bpc" id="L145" title="1 of 2 branches missed.">			else if (backwardExitsOnLeft(backward, swimlaneOut))</span>
 				// The loop-back arrow exits towards the backward activity. When that

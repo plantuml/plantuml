@@ -129,15 +129,15 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 	}
 
 	final public UClip getClip() {
-<span class="pc bpc" id="L132" title="3 of 4 branches missed.">		if (enlargeClip &amp;&amp; clip != null)</span>
+<span class="pc bpc" id="L132" title="1 of 4 branches missed.">		if (enlargeClip &amp;&amp; clip != null)</span>
 <span class="nc" id="L133">			return clip.enlarge(1);</span>
 
 <span class="fc" id="L135">		return clip;</span>
 	}
 
 	final public void enlargeClip() {
-<span class="nc" id="L139">		this.enlargeClip = true;</span>
-<span class="nc" id="L140">	}</span>
+<span class="fc" id="L139">		this.enlargeClip = true;</span>
+<span class="fc" id="L140">	}</span>
 
 	final public UParam getParam() {
 <span class="fc" id="L143">		return new UParam() {</span>

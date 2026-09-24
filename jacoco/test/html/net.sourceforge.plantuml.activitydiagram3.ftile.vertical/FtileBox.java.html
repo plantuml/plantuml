@@ -108,8 +108,8 @@ public class FtileBox extends AbstractFtile {
 	}
 
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (swimlane == null)</span>
-<span class="nc" id="L112">			return Collections.emptySet();</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		if (swimlane == null)</span>
+<span class="fc" id="L112">			return Collections.emptySet();</span>
 
 <span class="fc" id="L114">		return Collections.singleton(swimlane);</span>
 	}
@@ -140,8 +140,8 @@ public class FtileBox extends AbstractFtile {
 <span class="pc bpc" id="L140" title="1 of 4 branches missed.">		if (stereotype == null &amp;&amp; boxStyle != null)</span>
 <span class="fc" id="L141">			stereotype = boxStyle.getStereotype();</span>
 
-<span class="pc bpc" id="L143" title="1 of 2 branches missed.">		if (styleBuilder == null)</span>
-<span class="nc" id="L144">			styleBuilder = skinParam.getCurrentStyleBuilder();</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">		if (styleBuilder == null)</span>
+<span class="fc" id="L144">			styleBuilder = skinParam.getCurrentStyleBuilder();</span>
 
 <span class="fc" id="L146">		final Style style = styleBuilder.getMergedStyle(getStyleQuery().withStereotype(stereotype));</span>
 <span class="fc" id="L147">		final Style styleArrow = styleBuilder.getMergedStyle(getStyleSignatureArrow());</span>

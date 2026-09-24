@@ -107,8 +107,8 @@ public class ReferenceTile extends AbstractTile implements Tile {
 <span class="fc" id="L107">		}</span>
 <span class="fc" id="L108">		final Component comp = getComponent(stringBounder);</span>
 <span class="fc" id="L109">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (reference.getParticipant().size() == 1)</span>
-<span class="nc" id="L111">			this.last = this.last.addAtLeast(0);</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">		if (reference.getParticipant().size() == 1)</span>
+<span class="fc" id="L111">			this.last = this.last.addAtLeast(0);</span>
 
 <span class="fc" id="L113">		this.last.ensureBiggerThan(this.first.addFixed(dim.getWidth()));</span>
 

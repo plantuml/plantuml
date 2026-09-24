@@ -188,7 +188,7 @@ public class FtileFactoryDelegator implements FtileFactory {
 	public Ftile createWhile(LinkRendering outColor, Swimlane swimlane, Ftile whileBlock, Display test, Display yes,
 			HColor color, Instruction specialOut, Ftile back, LinkRendering incoming1, LinkRendering incoming2,
 			StyleBuilder styleBuilder) throws NoSuchColorException {
-<span class="nc" id="L191">		return factory.createWhile(outColor, swimlane, whileBlock, test, yes, color, specialOut, back, incoming1,</span>
+<span class="fc" id="L191">		return factory.createWhile(outColor, swimlane, whileBlock, test, yes, color, specialOut, back, incoming1,</span>
 				incoming2, styleBuilder);
 	}
 
@@ -196,14 +196,14 @@ public class FtileFactoryDelegator implements FtileFactory {
 	public Ftile createIf(Swimlane swimlane, List&lt;Branch&gt; thens, Branch elseBranch, LinkRendering afterEndwhile,
 			LinkRendering topInlinkRendering, Url url, Collection&lt;PositionedNote&gt; notes, Stereotype stereotype,
 			StyleBuilder currentStyleBuilder) {
-<span class="nc" id="L199">		return factory.createIf(swimlane, thens, elseBranch, afterEndwhile, topInlinkRendering, url, notes, stereotype,</span>
+<span class="fc" id="L199">		return factory.createIf(swimlane, thens, elseBranch, afterEndwhile, topInlinkRendering, url, notes, stereotype,</span>
 				currentStyleBuilder);
 	}
 
 	@Override
 	public Ftile createSwitch(Swimlane swimlane, List&lt;Branch&gt; branches, LinkRendering afterEndwhile,
 			LinkRendering topInlinkRendering, Display labelTest, Colors colors, Colors endColors) {
-<span class="nc" id="L206">		return factory.createSwitch(swimlane, branches, afterEndwhile, topInlinkRendering, labelTest, colors,</span>
+<span class="fc" id="L206">		return factory.createSwitch(swimlane, branches, afterEndwhile, topInlinkRendering, labelTest, colors,</span>
 				endColors);
 	}
 
@@ -234,7 +234,7 @@ public class FtileFactoryDelegator implements FtileFactory {
 	}
 
 	protected FtileFactory getFactory() {
-<span class="nc" id="L237">		return factory;</span>
+<span class="fc" id="L237">		return factory;</span>
 	}
 
 }

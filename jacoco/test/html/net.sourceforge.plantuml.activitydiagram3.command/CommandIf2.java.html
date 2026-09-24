@@ -58,100 +58,103 @@ import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandIf2 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandIf2() {
-<span class="fc" id="L65">		super(getRegexConcat());</span>
-<span class="fc" id="L66">	}</span>
+<span class="fc" id="L66">		super(getRegexConcat());</span>
+<span class="fc" id="L67">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L69">		return RegexConcat.build(CommandIf2.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L70">		return RegexConcat.build(CommandIf2.class.getName(), RegexLeaf.start(), //</span>
 				UrlBuilder.OPTIONAL, //
-<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L72">				ColorParser.exp4(), //</span>
+<span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L73">				ColorParser.exp4(), //</span>
 				new RegexLeaf(&quot;if&quot;), //
-<span class="fc" id="L74">				StereotypePattern.optionalIGNORED(), //</span>
+<span class="fc" id="L75">				StereotypePattern.optionalIGNORED(), //</span>
 				new RegexLeaf(&quot;\\(&quot;), //
 				new RegexLeaf(1, &quot;TEST&quot;, &quot;(.*?)&quot;), //
 				new RegexLeaf(&quot;\\)&quot;), //
-<span class="fc" id="L78">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L79">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(&quot;then&quot;), //
-<span class="fc" id="L82">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L83">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexOptional(new RegexLeaf(1, &quot;WHEN&quot;, &quot;\\((.+?)\\)&quot;)) //
 						)), //
 				new RegexLeaf(&quot;;?&quot;), //
-<span class="fc" id="L86">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L87">				Stereogroup.optionalStereogroup(), //</span>
-<span class="fc" id="L88">				RegexLeaf.end());</span>
+<span class="fc" id="L87">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L88">				Stereogroup.optionalStereogroup(), //</span>
+<span class="fc" id="L89">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L94">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L95">		final StringBuilder sb = new StringBuilder();</span>
 
 		// 'if (test) then (label)' opens a conditional block, closed by
 		// 'endif', with optional 'else' and 'elseif' branches in between.
-<span class="nc" id="L98">		sb.append(&quot;Starting an 'if'&quot;);</span>
+<span class="nc" id="L99">		sb.append(&quot;Starting an 'if'&quot;);</span>
 
-<span class="nc" id="L100">		final String test = arg.get(&quot;TEST&quot;, 0);</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (test.length() &gt; 0)</span>
-<span class="nc" id="L102">			sb.append(&quot;, testing \&quot;&quot;).append(test).append(&quot;\&quot;&quot;);</span>
+<span class="nc" id="L101">		final String test = arg.get(&quot;TEST&quot;, 0);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (test.length() &gt; 0)</span>
+<span class="nc" id="L103">			sb.append(&quot;, testing \&quot;&quot;).append(test).append(&quot;\&quot;&quot;);</span>
 
-<span class="nc" id="L104">		final String when = arg.get(&quot;WHEN&quot;, 0);</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (when != null)</span>
-<span class="nc" id="L106">			sb.append(&quot;, 'then' arrow labelled \&quot;&quot;).append(when).append(&quot;\&quot;&quot;);</span>
+<span class="nc" id="L105">		final String when = arg.get(&quot;WHEN&quot;, 0);</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (when != null)</span>
+<span class="nc" id="L107">			sb.append(&quot;, 'then' arrow labelled \&quot;&quot;).append(when).append(&quot;\&quot;&quot;);</span>
 
-<span class="nc" id="L108">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (stereogroup.isEmpty() == false)</span>
-<span class="nc" id="L110">			sb.append(&quot;, stereotyped &quot;).append(arg.get(&quot;STEREOGROUP&quot;, 0));</span>
+<span class="nc" id="L109">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (stereogroup.isEmpty() == false)</span>
+<span class="nc" id="L111">			sb.append(&quot;, stereotyped &quot;).append(arg.get(&quot;STEREOGROUP&quot;, 0));</span>
 
-<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null)</span>
-<span class="nc" id="L113">			sb.append(&quot;, with a URL link&quot;);</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null)</span>
+<span class="nc" id="L114">			sb.append(&quot;, with a URL link&quot;);</span>
 
-		// Both the stereotype right after 'if' and the leading color are
-		// parsed but silently ignored by executeArg.
-<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (arg.get(&quot;IGNORED&quot;, 0) != null)</span>
-<span class="nc" id="L118">			sb.append(&quot; (the stereotype after 'if' is ignored: write it after the ';')&quot;);</span>
+		// The stereotype right after 'if' is parsed but silently ignored by
+		// executeArg; the leading color is ignored with a deprecation warning.
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (arg.get(&quot;IGNORED&quot;, 0) != null)</span>
+<span class="nc" id="L119">			sb.append(&quot; (the stereotype after 'if' is ignored: write it after the ';')&quot;);</span>
 
-<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
-<span class="nc" id="L121">			sb.append(&quot; (the leading color is currently ignored: use a stereotype instead)&quot;);</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L122">			sb.append(&quot; (deprecated and ignored color syntax: write &lt;&lt;&quot;).append(arg.get(&quot;COLOR&quot;, 0))</span>
+<span class="nc" id="L123">					.append(&quot;&gt;&gt; at the end of the line)&quot;);</span>
 
-<span class="nc" id="L123">		return sb.toString();</span>
+<span class="nc" id="L125">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-//		final String s = arg.get(&quot;COLOR&quot;, 0);
-//		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="fc" id="L132">			diagram.addWarning(new Warning(&quot;This syntax is deprecated, you must add &lt;&lt;&quot; + arg.get(&quot;COLOR&quot;, 0)</span>
+					+ &quot;&gt;&gt; at the end of the line&quot;));
 
-<span class="nc" id="L132">		String test = arg.get(&quot;TEST&quot;, 0);</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (test.length() == 0)</span>
-<span class="nc" id="L134">			test = null;</span>
+<span class="fc" id="L135">		String test = arg.get(&quot;TEST&quot;, 0);</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">		if (test.length() == 0)</span>
+<span class="nc" id="L137">			test = null;</span>
 
-<span class="nc" id="L136">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
-<span class="nc" id="L137">		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L139">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="fc" id="L140">		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());</span>
 
 		final Url url;
-<span class="nc bnc" id="L140" title="All 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) == null) {</span>
-<span class="nc" id="L141">			url = null;</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) == null) {</span>
+<span class="fc" id="L144">			url = null;</span>
 		} else {
-<span class="nc" id="L143">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
-<span class="nc" id="L144">			url = urlBuilder.getUrl(arg.get(UrlBuilder.URL_KEY, 0));</span>
+<span class="nc" id="L146">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="nc" id="L147">			url = urlBuilder.getUrl(arg.get(UrlBuilder.URL_KEY, 0));</span>
 		}
 
-<span class="nc" id="L147">		final Stereotype stereotype = stereogroup.buildStereotype();</span>
+<span class="fc" id="L150">		final Stereotype stereotype = stereogroup.buildStereotype();</span>
 		// final Stereotype stereotype = Stereotype.build(arg.get(&quot;STEREO&quot;, 0));
 
-<span class="nc" id="L150">		final HColor color = colors.getColor(ColorType.BACK);</span>
-<span class="nc" id="L151">		diagram.startIf(Display.getWithNewlines(diagram.getPragma(), test),</span>
-<span class="nc" id="L152">				Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;WHEN&quot;, 0)), color, url, stereotype);</span>
+<span class="fc" id="L153">		final HColor color = colors.getColor(ColorType.BACK);</span>
+<span class="fc" id="L154">		diagram.startIf(Display.getWithNewlines(diagram.getPragma(), test),</span>
+<span class="fc" id="L155">				Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;WHEN&quot;, 0)), color, url, stereotype);</span>
 
-<span class="nc" id="L154">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L157">		return CommandExecutionResult.ok();</span>
 	}
 
 }

@@ -79,12 +79,12 @@ public class CommandCase extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L82">		String test = arg.get(&quot;TEST&quot;, 0);</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (test.length() == 0) {</span>
+<span class="fc" id="L82">		String test = arg.get(&quot;TEST&quot;, 0);</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (test.length() == 0) {</span>
 <span class="nc" id="L84">			test = null;</span>
 		}
 
-<span class="nc" id="L87">		return diagram.switchCase(Display.getWithNewlines(diagram.getPragma(), test));</span>
+<span class="fc" id="L87">		return diagram.switchCase(Display.getWithNewlines(diagram.getPragma(), test));</span>
 
 	}
 

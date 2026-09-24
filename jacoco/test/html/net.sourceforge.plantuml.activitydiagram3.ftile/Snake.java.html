@@ -118,7 +118,7 @@ public class Snake implements UShape {
 	}
 
 	public Snake withMerge(MergeStrategy mergeable) {
-<span class="nc" id="L121">		return new Snake(skinParam, startDecoration, color, endDecoration, worm, mergeable, emphasizeDirection, texts);</span>
+<span class="fc" id="L121">		return new Snake(skinParam, startDecoration, color, endDecoration, worm, mergeable, emphasizeDirection, texts);</span>
 	}
 
 	public Snake withLabel(TextBlock textBlock, HorizontalAlignment horizontalAlignment) {
@@ -129,15 +129,15 @@ public class Snake implements UShape {
 	}
 
 	public Snake withLabel(TextBlock textBlock, VerticalAlignment verticalAlignment) {
-<span class="nc bnc" id="L132" title="All 4 branches missed.">		if (textBlock != null &amp;&amp; textBlock != TextBlockUtils.EMPTY_TEXT_BLOCK)</span>
-<span class="nc" id="L133">			this.texts.add(new Text(textBlock, verticalAlignment, null));</span>
+<span class="pc bpc" id="L132" title="1 of 4 branches missed.">		if (textBlock != null &amp;&amp; textBlock != TextBlockUtils.EMPTY_TEXT_BLOCK)</span>
+<span class="fc" id="L133">			this.texts.add(new Text(textBlock, verticalAlignment, null));</span>
 
-<span class="nc" id="L135">		return this;</span>
+<span class="fc" id="L135">		return this;</span>
 	}
 
 	public static Snake create(ISkinParam skinParam, Rainbow color) {
-<span class="nc" id="L139">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.ACTIVITYDIAG_ACTIVITY_ARROW);</span>
-<span class="nc" id="L140">		return new Snake(skinParam, null, color, null, new Worm(style, skinParam.arrows()), MergeStrategy.FULL, null,</span>
+<span class="fc" id="L139">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.ACTIVITYDIAG_ACTIVITY_ARROW);</span>
+<span class="fc" id="L140">		return new Snake(skinParam, null, color, null, new Worm(style, skinParam.arrows()), MergeStrategy.FULL, null,</span>
 				new ArrayList&lt;Text&gt;());
 	}
 
@@ -246,25 +246,25 @@ public class Snake implements UShape {
 <span class="fc" id="L246">		final XPoint2D pt2 = worm.getPoint(1);</span>
 <span class="fc" id="L247">		final XDimension2D dim = text.textBlock.calculateDimension(stringBounder);</span>
 <span class="fc" id="L248">		double x = Math.max(pt1.getX(), pt2.getX()) + 4;</span>
-<span class="pc bpc" id="L249" title="2 of 4 branches missed.">		final boolean zigzag = worm.getDirectionsCode().startsWith(&quot;DLD&quot;) || worm.getDirectionsCode().startsWith(&quot;DRD&quot;);</span>
+<span class="pc bpc" id="L249" title="1 of 4 branches missed.">		final boolean zigzag = worm.getDirectionsCode().startsWith(&quot;DLD&quot;) || worm.getDirectionsCode().startsWith(&quot;DRD&quot;);</span>
 <span class="fc" id="L250">		double y = (pt1.getY() + pt2.getY()) / 2 - dim.getHeight() / 2;</span>
 <span class="pc bpc" id="L251" title="1 of 2 branches missed.">		if (text.verticalAlignment == VerticalAlignment.BOTTOM) {</span>
 <span class="nc" id="L252">			x = worm.getMinX();</span>
 <span class="nc" id="L253">			y = worm.getMaxY();</span>
-<span class="pc bpc" id="L254" title="1 of 2 branches missed.">		} else if (text.verticalAlignment == VerticalAlignment.CENTER) {</span>
-<span class="nc" id="L255">			x = worm.getMinX();</span>
-<span class="nc" id="L256">			y = (worm.getFirst().getY() + worm.getLast().getY() - 10) / 2 - dim.getHeight() / 2;</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">		} else if (text.verticalAlignment == VerticalAlignment.CENTER) {</span>
+<span class="fc" id="L255">			x = worm.getMinX();</span>
+<span class="fc" id="L256">			y = (worm.getFirst().getY() + worm.getLast().getY() - 10) / 2 - dim.getHeight() / 2;</span>
 <span class="pc bpc" id="L257" title="3 of 4 branches missed.">		} else if (text.horizontalAlignment == HorizontalAlignment.CENTER &amp;&amp; zigzag) {</span>
 <span class="nc" id="L258">			final XPoint2D pt3 = worm.getPoint(2);</span>
 <span class="nc" id="L259">			x = (pt2.getX() + pt3.getX()) / 2 - dim.getWidth() / 2;</span>
 <span class="pc bpc" id="L260" title="3 of 4 branches missed.">		} else if (text.horizontalAlignment == HorizontalAlignment.RIGHT &amp;&amp; zigzag) {</span>
 <span class="nc" id="L261">			x = Math.max(pt1.getX(), pt2.getX()) - dim.getWidth() - 4;</span>
-<span class="pc bpc" id="L262" title="1 of 2 branches missed.">		} else if (worm.getDirectionsCode().equals(&quot;RD&quot;)) {</span>
-<span class="nc" id="L263">			x = Math.max(pt1.getX(), pt2.getX());</span>
-<span class="nc" id="L264">			y = (pt1.getY() + worm.getPoint(2).getY()) / 2 - dim.getHeight() / 2;</span>
-<span class="pc bpc" id="L265" title="1 of 2 branches missed.">		} else if (worm.getDirectionsCode().equals(&quot;LD&quot;)) {</span>
-<span class="nc" id="L266">			x = Math.min(pt1.getX(), pt2.getX());</span>
-<span class="nc" id="L267">			y = (pt1.getY() + worm.getPoint(2).getY()) / 2 - dim.getHeight() / 2;</span>
+<span class="fc bfc" id="L262" title="All 2 branches covered.">		} else if (worm.getDirectionsCode().equals(&quot;RD&quot;)) {</span>
+<span class="fc" id="L263">			x = Math.max(pt1.getX(), pt2.getX());</span>
+<span class="fc" id="L264">			y = (pt1.getY() + worm.getPoint(2).getY()) / 2 - dim.getHeight() / 2;</span>
+<span class="fc bfc" id="L265" title="All 2 branches covered.">		} else if (worm.getDirectionsCode().equals(&quot;LD&quot;)) {</span>
+<span class="fc" id="L266">			x = Math.min(pt1.getX(), pt2.getX());</span>
+<span class="fc" id="L267">			y = (pt1.getY() + worm.getPoint(2).getY()) / 2 - dim.getHeight() / 2;</span>
 		}
 <span class="fc" id="L269">		return new XPoint2D(x, y);</span>
 	}
@@ -289,7 +289,7 @@ public class Snake implements UShape {
 
 	// Returns true if this snake cannot be the target of a touches() check
 	public boolean cannotBeTouched() {
-<span class="pc bpc" id="L292" title="2 of 4 branches missed.">		return mergeable != MergeStrategy.FULL || worm.isPureHorizontal();</span>
+<span class="fc bfc" id="L292" title="All 4 branches covered.">		return mergeable != MergeStrategy.FULL || worm.isPureHorizontal();</span>
 	}
 
 	public XPoint2D getLast() {
@@ -302,22 +302,22 @@ public class Snake implements UShape {
 
 	public Snake merge(Snake other, StringBounder stringBounder) {
 <span class="fc" id="L304">		final MergeStrategy strategy = this.mergeable.max(other.mergeable);</span>
-<span class="pc bpc" id="L305" title="1 of 2 branches missed.">		if (strategy == MergeStrategy.NONE)</span>
-<span class="nc" id="L306">			return null;</span>
+<span class="fc bfc" id="L305" title="All 2 branches covered.">		if (strategy == MergeStrategy.NONE)</span>
+<span class="fc" id="L306">			return null;</span>
 
 <span class="fc bfc" id="L308" title="All 2 branches covered.">		for (Text text : other.texts)</span>
 <span class="fc bfc" id="L309" title="All 2 branches covered.">			if (text.hasText(stringBounder))</span>
 <span class="fc" id="L310">				return null;</span>
 
 <span class="fc bfc" id="L312" title="All 2 branches covered.">		if (same(this.getLast(), other.getFirst())) {</span>
-<span class="pc bpc" id="L313" title="1 of 2 branches missed.">			final UPolygon oneOf = other.endDecoration == null ? endDecoration : other.endDecoration;</span>
+<span class="fc bfc" id="L313" title="All 2 branches covered.">			final UPolygon oneOf = other.endDecoration == null ? endDecoration : other.endDecoration;</span>
 <span class="pc bpc" id="L314" title="2 of 4 branches missed.">			if (this.startDecoration != null || other.startDecoration != null)</span>
 <span class="nc" id="L315">				throw new UnsupportedOperationException(&quot;Not yet coded: to be done&quot;);</span>
 
 <span class="fc" id="L317">			final ArrayList&lt;Text&gt; mergeTexts = new ArrayList&lt;Text&gt;(this.texts);</span>
 <span class="fc" id="L318">			mergeTexts.addAll(other.texts);</span>
 <span class="fc" id="L319">			final Snake result = new Snake(skinParam, null, color, oneOf, this.worm.merge(other.worm, strategy),</span>
-<span class="pc bpc" id="L320" title="1 of 2 branches missed.">					strategy, emphasizeDirection == null ? other.emphasizeDirection : emphasizeDirection, mergeTexts);</span>
+<span class="fc bfc" id="L320" title="All 2 branches covered.">					strategy, emphasizeDirection == null ? other.emphasizeDirection : emphasizeDirection, mergeTexts);</span>
 <span class="fc" id="L321">			return result;</span>
 		}
 <span class="pc bpc" id="L323" title="1 of 2 branches missed.">		if (same(this.getFirst(), other.getLast()))</span>

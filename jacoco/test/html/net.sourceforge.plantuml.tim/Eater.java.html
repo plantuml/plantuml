@@ -94,8 +94,8 @@ public abstract class Eater {
 	final protected TokenStack eatTokenStack() throws EaterException {
 <span class="fc" id="L95">		final TokenStack tokenStack = new TokenStack();</span>
 <span class="fc" id="L96">		addIntoTokenStack(tokenStack, false);</span>
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		if (tokenStack.size() == 0)</span>
-<span class="nc" id="L98">			throw new EaterException(&quot;Missing expression&quot;, stringLocated);</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		if (tokenStack.size() == 0)</span>
+<span class="fc" id="L98">			throw new EaterException(&quot;Missing expression&quot;, stringLocated);</span>
 
 <span class="fc" id="L100">		return tokenStack;</span>
 	}
