@@ -54,7 +54,7 @@ public class Matcher2 {
 	}
 
 	public static Matcher2 build(Pattern pattern, CharSequence input, int pos) {
-		final long now = System.currentTimeMillis();
+		final long now = clock();
 		final String id = pattern.pattern();
 		try {
 			final Matcher matcher = pattern.matcher(input);
@@ -69,19 +69,22 @@ public class Matcher2 {
 	}
 
 	public boolean matches() {
-		final long now = System.currentTimeMillis();
+		final long now = clock();
 		try {
 			return matcher.matches();
 		} finally {
-			addTime(System.currentTimeMillis() - now);
+			addTime(now);
 		}
 	}
 
-	private void addTime(long duration) {
-		if (INSTRUMENT == false) {
-			return;
-		}
-		addTime(id, duration);
+	// Clock is read only when INSTRUMENT is true (expensive under TeaVM)
+	private static long clock() {
+		return INSTRUMENT ? System.currentTimeMillis() : 0L;
+	}
+
+	private void addTime(long start) {
+		if (INSTRUMENT)
+			addTime(id, System.currentTimeMillis() - start);
 	}
 
 	private static final Map<String, Long> durations = new HashMap<String, Long>();
@@ -119,56 +122,56 @@ public class Matcher2 {
 	}
 
 	public String group(int n) {
-		final long now = System.currentTimeMillis();
+		final long now = clock();
 		try {
 			return matcher.group(n);
 		} finally {
-			addTime(System.currentTimeMillis() - now);
+			addTime(now);
 		}
 	}
 
 	public String group() {
-		final long now = System.currentTimeMillis();
+		final long now = clock();
 		try {
 			return matcher.group();
 		} finally {
-			addTime(System.currentTimeMillis() - now);
+			addTime(now);
 		}
 	}
 
 	public int groupCount() {
-		final long now = System.currentTimeMillis();
+		final long now = clock();
 		try {
 			return matcher.groupCount();
 		} finally {
-			addTime(System.currentTimeMillis() - now);
+			addTime(now);
 		}
 	}
 
 	public boolean find() {
-		final long now = System.currentTimeMillis();
+		final long now = clock();
 		try {
 			return matcher.find();
 		} finally {
-			addTime(System.currentTimeMillis() - now);
+			addTime(now);
 		}
 	}
 
 	public int end() {
-		final long now = System.currentTimeMillis();
+		final long now = clock();
 		try {
 			return matcher.end();
 		} finally {
-			addTime(System.currentTimeMillis() - now);
+			addTime(now);
 		}
 	}
 
 	public int start() {
-		final long now = System.currentTimeMillis();
+		final long now = clock();
 		try {
 			return matcher.start();
 		} finally {
-			addTime(System.currentTimeMillis() - now);
+			addTime(now);
 		}
 	}
 
