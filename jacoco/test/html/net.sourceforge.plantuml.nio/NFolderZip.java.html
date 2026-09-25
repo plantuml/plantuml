@@ -40,6 +40,9 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
+import java.util.zip.ZipFile;
 
 /**
  * A virtual folder representing a location inside a ZIP archive.
@@ -57,33 +60,54 @@ public final class NFolderZip implements NFolder {
 
 	/** Creates a folder view of the ZIP root. */
 	public NFolderZip(File zipFile) {
-<span class="fc" id="L60">		this(zipFile, Paths.get(&quot;&quot;));</span>
-<span class="fc" id="L61">	}</span>
+<span class="fc" id="L63">		this(zipFile, Paths.get(&quot;&quot;));</span>
+<span class="fc" id="L64">	}</span>
 
-<span class="fc" id="L63">	private NFolderZip(File zipFile, Path currentPathInsideZip) {</span>
-<span class="fc" id="L64">		this.zipFile = Objects.requireNonNull(zipFile);</span>
-<span class="fc" id="L65">		this.pathInsideZip = Objects.requireNonNull(currentPathInsideZip).normalize();</span>
-<span class="fc" id="L66">	}</span>
+<span class="fc" id="L66">	private NFolderZip(File zipFile, Path currentPathInsideZip) {</span>
+<span class="fc" id="L67">		this.zipFile = Objects.requireNonNull(zipFile);</span>
+<span class="fc" id="L68">		this.pathInsideZip = Objects.requireNonNull(currentPathInsideZip).normalize();</span>
+<span class="fc" id="L69">	}</span>
 
 	@Override
 	public InputFile getInputFile(Path nameOrPath) throws IOException {
-<span class="fc" id="L70">		Objects.requireNonNull(nameOrPath);</span>
-<span class="fc" id="L71">		final String entry = toZipEntryName(nameOrPath);</span>
-<span class="fc" id="L72">		return new InputFileZip(zipFile, entry);</span>
+<span class="fc" id="L73">		Objects.requireNonNull(nameOrPath);</span>
+<span class="fc" id="L74">		final String entry = toZipEntryName(nameOrPath);</span>
+<span class="fc" id="L75">		return new InputFileZip(zipFile, entry);</span>
+	}
+
+	/**
+	 * Tells whether the given path designates an existing file (not a directory)
+	 * inside the archive. Unlike {@link #getInputFile(Path)}, which always returns
+	 * an {@link InputFile} that fails when read, this is a plain existence check,
+	 * usable when the archive is only one of several places to search.
+	 */
+	public boolean contains(Path nameOrPath) throws IOException {
+<span class="fc" id="L85">		Objects.requireNonNull(nameOrPath);</span>
+<span class="fc" id="L86">		final String entry = toZipEntryName(nameOrPath);</span>
+<span class="pc bpc" id="L87" title="2 of 4 branches missed.">		if (entry.isEmpty() || zipFile.canRead() == false)</span>
+<span class="nc" id="L88">			return false;</span>
+
+<span class="fc" id="L90">		try (ZipFile zf = new ZipFile(zipFile)) {</span>
+<span class="fc" id="L91">			final ZipEntry ze = zf.getEntry(entry);</span>
+<span class="pc bpc" id="L92" title="1 of 4 branches missed.">			return ze != null &amp;&amp; ze.isDirectory() == false;</span>
+<span class="nc" id="L93">		} catch (ZipException e) {</span>
+			// Not a valid archive
+<span class="nc" id="L95">			return false;</span>
+		}
 	}
 
 	@Override
 	public NFolder getSubfolder(Path nameOrPath) throws IOException {
-<span class="fc" id="L77">		Objects.requireNonNull(nameOrPath);</span>
-<span class="fc" id="L78">		final String entry = toZipEntryName(nameOrPath);</span>
-<span class="fc bfc" id="L79" title="All 2 branches covered.">		final Path next = entry.isEmpty() ? Paths.get(&quot;&quot;) : Paths.get(entry);</span>
-<span class="fc" id="L80">		return new NFolderZip(zipFile, next);</span>
+<span class="fc" id="L101">		Objects.requireNonNull(nameOrPath);</span>
+<span class="fc" id="L102">		final String entry = toZipEntryName(nameOrPath);</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		final Path next = entry.isEmpty() ? Paths.get(&quot;&quot;) : Paths.get(entry);</span>
+<span class="fc" id="L104">		return new NFolderZip(zipFile, next);</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="fc" id="L85">		final String prefix = pathInsideZip.toString().replace('\\', '/');</span>
-<span class="fc" id="L86">		return zipFile.getName() + &quot;!&quot; + prefix;</span>
+<span class="fc" id="L109">		final String prefix = pathInsideZip.toString().replace('\\', '/');</span>
+<span class="fc" id="L110">		return zipFile.getName() + &quot;!&quot; + prefix;</span>
 	}
 
 	/**
@@ -91,12 +115,12 @@ public final class NFolderZip implements NFolder {
 	 * any leading slash (as typically stored in ZIPs).
 	 */
 	private String toZipEntryName(Path child) {
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		final Path resolved = child.isAbsolute() ? child.normalize() : pathInsideZip.resolve(child).normalize();</span>
-<span class="fc" id="L95">		String s = resolved.toString().replace('\\', '/');</span>
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		while (s.startsWith(&quot;/&quot;))</span>
-<span class="nc" id="L97">			s = s.substring(1);</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		final Path resolved = child.isAbsolute() ? child.normalize() : pathInsideZip.resolve(child).normalize();</span>
+<span class="fc" id="L119">		String s = resolved.toString().replace('\\', '/');</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		while (s.startsWith(&quot;/&quot;))</span>
+<span class="nc" id="L121">			s = s.substring(1);</span>
 
-<span class="fc" id="L99">		return s;</span>
+<span class="fc" id="L123">		return s;</span>
 	}
 
 }
