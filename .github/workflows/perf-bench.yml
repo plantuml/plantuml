@@ -67,7 +67,7 @@ jobs:
         run: |
           cd target
           ./gradlew :plantuml-mit:npmPackage -Pci --no-daemon
-          test -f plantuml-mit/build/npm-plantuml/plantuml.js
+          test -f plantuml-other-license/plantuml-mit/build/npm-plantuml/plantuml.js
 
       - name: Resolve and build comparison engine
         run: |
@@ -93,8 +93,8 @@ jobs:
             git -C target worktree add --detach ../reference-src "$REF_SHA"
             cd reference-src
             ./gradlew :plantuml-mit:npmPackage -Pci --no-daemon
-            test -f plantuml-mit/build/npm-plantuml/plantuml.js
-            echo "COMPARE_DIR=reference-src/plantuml-mit/build/npm-plantuml" >> "$GITHUB_ENV"
+            test -f plantuml-other-license/plantuml-mit/build/npm-plantuml/plantuml.js
+            echo "COMPARE_DIR=reference-src/plantuml-other-license/plantuml-mit/build/npm-plantuml" >> "$GITHUB_ENV"
             echo "COMPARE_LABEL=git $REF (${REF_SHA:0:9})" >> "$GITHUB_ENV"
           fi
 
@@ -114,7 +114,7 @@ jobs:
       - name: Run benchmark
         run: |
           node tools/perf-bench/bench.js \
-            target=target/plantuml-mit/build/npm-plantuml \
+            target=target/plantuml-other-license/plantuml-mit/build/npm-plantuml \
             reference="$COMPARE_DIR" \
             --reps '${{ inputs.reps || 6 }}' \
             --corpus '${{ inputs.corpus }}' \

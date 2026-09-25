@@ -13,12 +13,12 @@ subproject containing the corresponding license text:
 | License                              | SPDX identifier     | Subproject        | License file                                                          |
 | ------------------------------------ | ------------------- | ----------------- | -------------------------------------------------------------------- |
 | GNU General Public License v3.0+      | `GPL-3.0-or-later`  | *(root, default)* | [`LICENSE`](LICENSE)                                                  |
-| GNU General Public License v2.0       | `GPL-2.0-only`      | `plantuml-gplv2`  | [`plantuml-gplv2/gplv2-license.txt`](plantuml-gplv2/gplv2-license.txt) |
-| GNU Lesser General Public License v3+ | `LGPL-3.0-or-later` | `plantuml-lgpl`   | [`plantuml-lgpl/lgpl-license.txt`](plantuml-lgpl/lgpl-license.txt)    |
-| Apache License 2.0                    | `Apache-2.0`        | `plantuml-asl`    | [`plantuml-asl/asl-license.txt`](plantuml-asl/asl-license.txt)        |
-| BSD 3-Clause ("Revised") License       | `BSD-3-Clause`      | `plantuml-bsd`    | [`plantuml-bsd/bsd-license.txt`](plantuml-bsd/bsd-license.txt)        |
-| Eclipse Public License v1.0           | `EPL-1.0`           | `plantuml-epl`    | [`plantuml-epl/epl-license.txt`](plantuml-epl/epl-license.txt)        |
-| MIT License                          | `MIT`               | `plantuml-mit`    | [`plantuml-mit/mit-license.txt`](plantuml-mit/mit-license.txt)        |
+| GNU General Public License v2.0       | `GPL-2.0-only`      | `plantuml-gplv2`  | [`plantuml-gplv2/gplv2-license.txt`](plantuml-other-license/plantuml-gplv2/gplv2-license.txt) |
+| GNU Lesser General Public License v3+ | `LGPL-3.0-or-later` | `plantuml-lgpl`   | [`plantuml-lgpl/lgpl-license.txt`](plantuml-other-license/plantuml-lgpl/lgpl-license.txt)    |
+| Apache License 2.0                    | `Apache-2.0`        | `plantuml-asl`    | [`plantuml-asl/asl-license.txt`](plantuml-other-license/plantuml-asl/asl-license.txt)        |
+| BSD 3-Clause ("Revised") License       | `BSD-3-Clause`      | `plantuml-bsd`    | [`plantuml-bsd/bsd-license.txt`]plantuml-other-license/(plantuml-bsd/bsd-license.txt)        |
+| Eclipse Public License v1.0           | `EPL-1.0`           | `plantuml-epl`    | [`plantuml-epl/epl-license.txt`](plantuml-other-license/plantuml-epl/epl-license.txt)        |
+| MIT License                          | `MIT`               | `plantuml-mit`    | [`plantuml-mit/mit-license.txt`](plantuml-other-license/plantuml-mit/mit-license.txt)        |
 
 You may choose to use PlantUML under any one of the licenses listed above.
 

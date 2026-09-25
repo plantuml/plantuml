@@ -214,7 +214,7 @@ signing {
 //
 // Usage:
 //   gradlew :plantuml-mit:npmPackage           # assemble build/npm-plantuml
-//   cd plantuml-mit/build/npm-plantuml
+//   cd plantuml-other-license/plantuml-mit/build/npm-plantuml
 //   npm publish --access public                # done manually by the maintainer
 //
 val teavmJsOutputDir = layout.buildDirectory.dir("generated/teavm/js")

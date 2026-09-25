@@ -16,18 +16,30 @@ println("Current Java version is " + javaVersion)
 val fastBuild = settings.providers.gradleProperty("fast").isPresent
 
 if (fastBuild) {
-    println("-Pfast: only GPL will be built (skipping licence subprojects)")
+    println("-Pfast: only GPL will be built (skipping license subprojects)")
 } else if (isCiBuild && !isGPLOnly) {
     include("plantuml-asl")
+    project(":plantuml-asl").projectDir = file("plantuml-other-license/plantuml-asl")
+
     include("plantuml-bsd")
+    project(":plantuml-bsd").projectDir = file("plantuml-other-license/plantuml-bsd")
+
     include("plantuml-epl")
+    project(":plantuml-epl").projectDir = file("plantuml-other-license/plantuml-epl")
+
     include("plantuml-lgpl")
+    project(":plantuml-lgpl").projectDir = file("plantuml-other-license/plantuml-lgpl")
+
     include("plantuml-mit")
+    project(":plantuml-mit").projectDir = file("plantuml-other-license/plantuml-mit")
+
     include("plantuml-mit-light")
+    project(":plantuml-mit-light").projectDir = file("plantuml-other-license/plantuml-mit-light")
 
     // Only include plantuml-gplv2 if Java version is 11 or higher
     if (javaVersion.isCompatibleWith(JavaVersion.VERSION_11)) {
         include("plantuml-gplv2")
+        project(":plantuml-gplv2").projectDir = file("plantuml-other-license/plantuml-gplv2")
     } else {
         println("Skipping plantuml-gplv2 as it requires Java 11 or higher")
     }

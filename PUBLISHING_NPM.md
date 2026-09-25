@@ -29,7 +29,7 @@ excluded from the MIT flavor.
 ## What gets published
 
 The Gradle `:plantuml-mit:npmPackage` task assembles a small, self-contained
-package in `plantuml-mit/build/npm-plantuml/`. It contains:
+package in `plantuml-other-license/plantuml-mit/build/npm-plantuml/`. It contains:
 
 - `plantuml.js` -- the TeaVM-compiled MIT engine. The TeaVM plugin names the
   raw output after the subproject artifact (`plantuml-mit.js`); the task copies
@@ -98,7 +98,7 @@ The task prints the resolved name, version and the exact publish command.
 ### 2. Preview the tarball (publishes nothing)
 
 ```powershell
-cd plantuml-mit\build\npm-plantuml
+cd plantuml-other-license\plantuml-mit\build\npm-plantuml
 npm pack --dry-run
 ```
 
