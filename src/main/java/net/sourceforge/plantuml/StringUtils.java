@@ -50,6 +50,10 @@ import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.utils.MyCollections;
 
+// ::comment when JAVA8
+import org.teavm.jso.JSBody;
+// ::done
+
 // Do not move
 public class StringUtils {
 
@@ -587,14 +591,26 @@ public class StringUtils {
 	// Same as s.replace(from, to), but returns s itself when it does not contain `from`.
 	// The JDK already does that, but TeaVM's String.replace(char, char) always copies
 	// the string, even when the char is absent (the common case for the rare markers
-	// of Jaws, for instance).
+	// of Jaws, for instance). Under TeaVM, the job is delegated to the native
+	// JavaScript String.replaceAll(), which returns the string itself when there is
+	// nothing to replace.
 	public static String replaceChar(String s, char from, char to) {
-		if (TeaVM.isTeaVM())
-			if (s.indexOf(from) < 0)
-				return s;
-
+		// ::comment when JAVA8
+		if (TeaVM.isTeaVM()) {
+			return replaceCharNative(s, from, to);
+		}
+		// ::done
 		return s.replace(from, to);
 	}
+
+	// ::comment when JAVA8
+	// The chars are passed as ints (their UTF-16 code units), so that they cross the
+	// Java/JavaScript boundary as plain numbers whatever the JSO version. Both patterns
+	// are plain one-char strings: no regex escaping is needed, and a lone "$" is a
+	// literal in a replacement string.
+	@JSBody(params = { "s", "from", "to" }, script = "return s.replaceAll(String.fromCharCode(from), String.fromCharCode(to));")
+	private static native String replaceCharNative(String s, int from, int to);
+	// ::done
 
 	// Removes useless trailing zeros (and the dot if it becomes orphan)
 	public static String trimZeros(String s) {
