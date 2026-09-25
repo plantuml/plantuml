@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 
+import java.util.Locale;
+import java.util.Random;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -90,6 +93,108 @@ class StringUtilsTest {
 	})
 	void test_formatDecimal_fallbackPath(double x, int decimal, String expected) {
 		assertEquals(expected, StringUtils.formatDecimal(x, decimal));
+	}
+
+	// formatDecimal writes its digits right to left into a single char[]; these cases
+	// pin every shape of that layout: no fractional part, fractional zeros dropped,
+	// leading zeros in the fractional part, sign, and the widest possible outputs.
+	@ParameterizedTest
+	@CsvSource(value = {
+			" 7        , 0  , '7'                  ",
+			" 7        , 3  , '7'                  ",
+			" 70       , 0  , '70'                 ",
+			" 1200     , 2  , '1200'               ",
+			" 0.05     , 2  , '0.05'               ",
+			" -0.05    , 2  , '-0.05'              ",
+			" 0.5      , 2  , '0.5'                ",
+			" 0.005    , 3  , '0.005'              ",
+			" 0.0000001, 7  , '0.0000001'          ",
+			" 0.000001 , 7  , '0.000001'           ",
+			" 10.05    , 2  , '10.05'              ",
+			" 10.5     , 2  , '10.5'               ",
+			" 10.0     , 2  , '10'                 ",
+			" 100.01   , 2  , '100.01'             ",
+			" 100.10   , 2  , '100.1'              ",
+			" 1234.5678, 4  , '1234.5678'          ",
+			" -1234.5678, 4 , '-1234.5678'         ",
+			" 1234.5670, 4  , '1234.567'           ",
+			" 0.999999999999999, 15, '0.999999999999999' ",
+			" 0.000000000000001, 15, '0.000000000000001' ",
+			" -0.000000000000001, 15, '-0.000000000000001' ",
+			" 19999999.99 , 2 , '19999999.99'      ",
+			" 1999999999 , 0  , '1999999999'       ",
+			" -1999999999 , 0 , '-1999999999'      ",
+			" 19999999.9 , 2  , '19999999.9'       ",
+			" 2000000000 , 0  , '2000000000'       ",
+			" 12345678901 , 0 , '12345678901'      ",
+			" 12345678.5 , 1  , '12345678.5'       ",
+	})
+	void test_formatDecimal_layout(double x, int decimal, String expected) {
+		assertEquals(expected, StringUtils.formatDecimal(x, decimal));
+	}
+
+	// A value that rounds to zero must give "0", never "-0" nor "0.00".
+	@ParameterizedTest
+	@CsvSource(value = { " 0.004 , 2 ", " -0.004 , 2 ", " 0.0000004 , 6 ", " -0.4 , 0 ", " 1e-12 , 4 " })
+	void test_formatDecimal_roundsToZero(double x, int decimal) {
+		assertEquals("0", StringUtils.formatDecimal(x, decimal));
+	}
+
+	// Every digit count of the integer part, for every number of decimals.
+	@Test
+	void test_formatDecimal_allDigitCounts() {
+		for (int decimal = 0; decimal <= 6; decimal++) {
+			long p = 1;
+			for (int digits = 1; digits <= 9; digits++) {
+				final double x = p; // 1, 10, 100, ...
+				assertEquals(reference(x, decimal), StringUtils.formatDecimal(x, decimal));
+				final double y = p * 9 + 0.123456;
+				assertEquals(reference(y, decimal), StringUtils.formatDecimal(y, decimal));
+				assertEquals(reference(-y, decimal), StringUtils.formatDecimal(-y, decimal));
+				p *= 10;
+			}
+		}
+	}
+
+	// Compares against the slow, exact String.format-based reference over many values
+	// (fixed seed, so a failure is reproducible), covering the fast path, the near-tie
+	// fallback and the out-of-range fallback.
+	@Test
+	void test_formatDecimal_matchesReference() {
+		final Random rnd = new Random(20260925L);
+		for (int i = 0; i < 200_000; i++) {
+			final double x = (rnd.nextDouble() - 0.5) * Math.pow(10, rnd.nextInt(12) - 4);
+			final int decimal = rnd.nextInt(16);
+			assertEquals(reference(x, decimal), StringUtils.formatDecimal(x, decimal),
+					"x=" + x + " decimal=" + decimal);
+		}
+	}
+
+	// Values with few significant digits are the typical SVG coordinates, and sit
+	// exactly on rounding boundaries in binary floating point (1.005, 2.675, ...).
+	@Test
+	void test_formatDecimal_matchesReferenceOnShortDecimals() {
+		for (int decimal = 0; decimal <= 8; decimal++)
+			for (int n = -3000; n <= 3000; n++) {
+				final double x = n / 1000.0;
+				assertEquals(reference(x, decimal), StringUtils.formatDecimal(x, decimal),
+						"x=" + x + " decimal=" + decimal);
+			}
+	}
+
+	@Test
+	void test_formatDecimal_specialValues() {
+		assertEquals("NaN", StringUtils.formatDecimal(Double.NaN, 2));
+		assertEquals(reference(Double.POSITIVE_INFINITY, 2), StringUtils.formatDecimal(Double.POSITIVE_INFINITY, 2));
+		assertEquals(reference(Double.NEGATIVE_INFINITY, 2), StringUtils.formatDecimal(Double.NEGATIVE_INFINITY, 2));
+		assertEquals(reference(1e15, 2), StringUtils.formatDecimal(1e15, 2));
+		assertEquals(reference(1.5, 20), StringUtils.formatDecimal(1.5, 20));
+	}
+
+	private static String reference(double x, int decimal) {
+		if (x == 0.0)
+			return "0";
+		return StringUtils.trimZeros(String.format(Locale.US, "%." + decimal + "f", x));
 	}
 
 	@ParameterizedTest

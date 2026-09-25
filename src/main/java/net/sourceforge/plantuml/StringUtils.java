@@ -544,40 +544,43 @@ public class StringUtils {
 
 	// Builds "[-]intPart[.fracPart]" from an already-rounded, non-negative int
 	// (x scaled by 10^decimal), trimming useless trailing fractional zeros.
+	//
+	// The digits are written right to left straight into a single char[], so the
+	// native string is created only once (Integer.toString followed by a StringBuilder
+	// would copy the characters twice, which is costly under TeaVM). Trailing zeros are
+	// dropped arithmetically, before writing anything.
 	private static String buildFixedDecimal(int rounded, int decimal, boolean negative) {
 		if (rounded == 0)
 			return "0";
 
-		final String digits = Integer.toString(rounded);
-		final int len = digits.length();
+		while (decimal > 0 && rounded % 10 == 0) {
+			rounded /= 10;
+			decimal--;
+		}
 
-		final StringBuilder sb = new StringBuilder(len + 2);
+		// Worst case: '-' + "0." + 15 fractional digits = 18 chars
+		final char[] buf = new char[20];
+		int pos = buf.length;
+
+		for (int i = 0; i < decimal; i++) {
+			buf[--pos] = (char) ('0' + rounded % 10);
+			rounded /= 10;
+		}
+		if (decimal > 0)
+			buf[--pos] = '.';
+
+		if (rounded == 0)
+			buf[--pos] = '0';
+		else
+			while (rounded > 0) {
+				buf[--pos] = (char) ('0' + rounded % 10);
+				rounded /= 10;
+			}
+
 		if (negative)
-			sb.append('-');
+			buf[--pos] = '-';
 
-		if (decimal == 0) {
-			sb.append(digits);
-			return sb.toString();
-		}
-
-		if (len <= decimal) {
-			sb.append('0').append('.');
-			for (int i = len; i < decimal; i++)
-				sb.append('0');
-			sb.append(digits);
-		} else {
-			sb.append(digits, 0, len - decimal).append('.').append(digits, len - decimal, len);
-		}
-
-		int end = sb.length() - 1;
-		while (sb.charAt(end) == '0')
-			end--;
-
-		if (sb.charAt(end) == '.')
-			end--;
-
-		sb.setLength(end + 1);
-		return sb.toString();
+		return new String(buf, pos, buf.length - pos);
 	}
 
 	// Removes useless trailing zeros (and the dot if it becomes orphan)
