@@ -42,7 +42,6 @@ import net.atmp.PixelImage;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
-import net.sourceforge.plantuml.flashcode.FlashCodeUtilsNone;
 import net.sourceforge.plantuml.fun.IconLoader;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;

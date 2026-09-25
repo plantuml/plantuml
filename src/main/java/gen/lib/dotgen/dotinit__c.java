@@ -124,7 +124,6 @@ import h.ST_Agraph_s;
 import h.ST_aspect_t;
 import h.ST_pack_info;
 import h.ST_rank_t;
-import smetana.core.CArray;
 import smetana.core.CFunction;
 import smetana.core.CFunctionAbstract;
 import smetana.core.CString;

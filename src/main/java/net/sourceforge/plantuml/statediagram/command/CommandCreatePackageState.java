@@ -59,8 +59,6 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
 import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.stereo.Stereotag;
-import net.sourceforge.plantuml.stereo.Stereotype;
-import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;

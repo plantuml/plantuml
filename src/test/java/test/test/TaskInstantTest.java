@@ -2,7 +2,6 @@ package test.test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static test.utils.PlantUmlTestUtils.exportDiagram;
 
 import org.junit.jupiter.api.Test;
 

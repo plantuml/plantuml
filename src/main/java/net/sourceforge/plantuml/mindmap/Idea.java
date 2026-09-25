@@ -49,7 +49,6 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
-import net.sourceforge.plantuml.wbs.WElement;
 
 class Idea {
 

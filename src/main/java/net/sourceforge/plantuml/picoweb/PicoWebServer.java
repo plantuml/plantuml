@@ -78,7 +78,6 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.syntax.LanguageDescriptor;
 import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.utils.LineLocationImpl;
 import net.sourceforge.plantuml.version.Version;
 
 public class PicoWebServer implements Runnable {

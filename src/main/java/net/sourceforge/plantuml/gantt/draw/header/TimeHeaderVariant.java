@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.gantt.time.TimePointFormat;
 import net.sourceforge.plantuml.gantt.timescale.VariantTimeScale;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;

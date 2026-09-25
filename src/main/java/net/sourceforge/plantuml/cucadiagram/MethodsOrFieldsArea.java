@@ -43,7 +43,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.EmbeddedDiagram;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.klimt.UTranslate;

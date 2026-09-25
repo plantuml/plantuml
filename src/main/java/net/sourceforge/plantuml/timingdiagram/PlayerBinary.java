@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.timingdiagram.graphic.PanelsBinary;
 import net.sourceforge.plantuml.timingdiagram.graphic.Panels;
 

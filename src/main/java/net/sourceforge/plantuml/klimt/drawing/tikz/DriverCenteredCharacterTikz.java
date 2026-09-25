@@ -40,10 +40,8 @@ import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.font.UFont;
-import net.sourceforge.plantuml.klimt.font.UFontContext;
 import net.sourceforge.plantuml.klimt.font.UnusedSpace;
 import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
-import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
 
 public class DriverCenteredCharacterTikz implements UDriver<UCenteredCharacter, TikzGraphics> {

@@ -49,7 +49,6 @@ import net.sourceforge.plantuml.klimt.creole.atom.AtomImg;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
-import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BoyerMoore;
 import net.sourceforge.plantuml.utils.SignatureUtils;

@@ -44,7 +44,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UPath;

@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import net.sourceforge.plantuml.asciiverse.ADimension2D;
 import net.sourceforge.plantuml.asciiverse.AsciiBlock;
-import net.sourceforge.plantuml.asciiverse.AsciiBlockMarginLR;
 import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;

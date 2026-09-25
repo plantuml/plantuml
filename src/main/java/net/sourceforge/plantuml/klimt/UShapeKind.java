@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.klimt;
 
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 

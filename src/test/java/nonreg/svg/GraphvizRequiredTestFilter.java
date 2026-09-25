@@ -1,7 +1,6 @@
 package nonreg.svg;
 
 import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
-import net.sourceforge.plantuml.dot.GraphvizUtils;
 import org.junit.jupiter.api.extension.ConditionEvaluationResult;
 import org.junit.jupiter.api.extension.ExecutionCondition;
 import org.junit.jupiter.api.extension.ExtensionContext;

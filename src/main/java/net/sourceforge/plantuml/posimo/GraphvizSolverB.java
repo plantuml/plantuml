@@ -47,7 +47,6 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.dot.Graphviz;
 import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
-import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.dot.ProcessState;
 import net.sourceforge.plantuml.klimt.geom.MinFinder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;

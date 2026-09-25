@@ -45,8 +45,6 @@
  */
 package h;
 
-import static smetana.core.Macro.ND_order;
-import static smetana.core.Macro.ND_rank;
 
 import smetana.core.__ptr__;
 import smetana.core.__struct__;

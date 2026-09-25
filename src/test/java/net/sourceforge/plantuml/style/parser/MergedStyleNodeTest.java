@@ -49,10 +49,6 @@ import net.sourceforge.plantuml.style.AutomaticCounterBasic;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleLoader;
-import net.sourceforge.plantuml.style.parser.MergedStyleNode;
-import net.sourceforge.plantuml.style.parser.PrioritizedValue;
-import net.sourceforge.plantuml.style.parser.RawStyleParser;
-import net.sourceforge.plantuml.style.parser.RawStyleSheet;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocationImpl;
 

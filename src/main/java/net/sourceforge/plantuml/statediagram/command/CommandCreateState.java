@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.statediagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
-import net.sourceforge.plantuml.abel.EntityPosition;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;

@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.yaml.parser.YamlParser;
  * ----
  * &#64;startuml
  * ...
- * @enduml
+ * &#64;enduml
  * </pre>
  *
  * <p>

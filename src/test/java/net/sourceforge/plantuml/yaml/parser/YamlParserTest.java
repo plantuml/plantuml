@@ -7,8 +7,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import net.sourceforge.plantuml.yaml.parser.Monomorph;
-import net.sourceforge.plantuml.yaml.parser.YamlParser;
 
 class YamlParserTest {
 

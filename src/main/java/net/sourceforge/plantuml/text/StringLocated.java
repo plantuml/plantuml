@@ -44,7 +44,6 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.jaws.Jaws;
-import net.sourceforge.plantuml.jaws.JawsFlags;
 import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.utils.LineLocation;
 

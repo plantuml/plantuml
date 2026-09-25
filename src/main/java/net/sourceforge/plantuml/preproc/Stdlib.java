@@ -64,7 +64,6 @@ import net.sourceforge.plantuml.preproc.spm.SpmChannel;
 import net.sourceforge.plantuml.svg.parser.ISvgSpriteParser;
 import net.sourceforge.plantuml.svg.parser.SvgSpriteParserFactory;
 import net.sourceforge.plantuml.teavm.TeaVM;
-import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 import net.sourceforge.plantuml.utils.Log;
 
 public class Stdlib {
