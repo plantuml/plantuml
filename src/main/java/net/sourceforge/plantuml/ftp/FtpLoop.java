@@ -155,7 +155,7 @@ class FtpLoop implements Runnable {
 			localLog("adr=" + incoming.getInetAddress().getHostAddress());
 			final String ipServer = ftpServer.getIpServer();
 			localLog("server=" + ipServer);
-			myOut("227 Entering Passive Mode (" + ipServer.replace('.', ',') + "," + p1 + "," + p2 + ").");
+			myOut("227 Entering Passive Mode (" + StringUtils.replaceChar(ipServer, '.', ',') + "," + p1 + "," + p2 + ").");
 			ipClient = ipServer;
 		} else if (upper.startsWith("RETR")) {
 			if (mode == Mode.ACTIF) {

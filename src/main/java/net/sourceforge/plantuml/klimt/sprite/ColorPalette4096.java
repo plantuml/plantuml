@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.klimt.sprite;
 
 import java.util.Objects;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -81,8 +82,8 @@ public class ColorPalette4096 {
 
 	protected XColor getColorFor(String s) {
 		// Migration
-		s = s.replace('!', '.');
-		s = s.replace('#', ',');
+		s = StringUtils.replaceChar(s, '!', '.');
+		s = StringUtils.replaceChar(s, '#', ',');
 		if (s.length() != 2)
 			throw new IllegalArgumentException();
 

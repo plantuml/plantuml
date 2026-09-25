@@ -42,6 +42,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.LineLocationImpl;
@@ -99,7 +100,7 @@ public class ReadLineReader implements ReadLine {
 		if (s.startsWith("\uFEFF"))
 			s = s.substring(1);
 
-		s = s.replace('\u2013', '-');
+		s = StringUtils.replaceChar(s, '\u2013', '-');
 		// s = BackSlash.convertHiddenNewLine(s);
 		// s = s.replace('\u00A0', ' ');
 		// s = s.replace('\u201c', '\"');

@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.asciiart.Wcwidth;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.utils.MyCollections;
@@ -226,7 +227,7 @@ public class StringUtils {
 	}
 
 	public static String manageArrowForSequence(String s) {
-		s = s.replace('=', '-').toLowerCase();
+		s = StringUtils.replaceChar(s, '=', '-').toLowerCase();
 		return s;
 	}
 
@@ -244,7 +245,7 @@ public class StringUtils {
 
 	public static String manageArrowForCuca(String s) {
 		final Direction dir = getArrowDirection(s);
-		s = s.replace('=', '-');
+		s = StringUtils.replaceChar(s, '=', '-');
 		s = s.replaceAll("\\w*", "");
 		if (dir == Direction.LEFT || dir == Direction.RIGHT)
 			s = s.replaceAll("-+", "-");
@@ -257,7 +258,7 @@ public class StringUtils {
 
 	public static String manageQueueForCuca(String s) {
 		final Direction dir = getQueueDirection(s);
-		s = s.replace('=', '-');
+		s = StringUtils.replaceChar(s, '=', '-');
 		s = s.replaceAll("\\w*", "");
 		if (dir == Direction.LEFT || dir == Direction.RIGHT)
 			s = s.replaceAll("-+", "-");
@@ -581,6 +582,18 @@ public class StringUtils {
 			buf[--pos] = '-';
 
 		return new String(buf, pos, buf.length - pos);
+	}
+
+	// Same as s.replace(from, to), but returns s itself when it does not contain `from`.
+	// The JDK already does that, but TeaVM's String.replace(char, char) always copies
+	// the string, even when the char is absent (the common case for the rare markers
+	// of Jaws, for instance).
+	public static String replaceChar(String s, char from, char to) {
+		if (TeaVM.isTeaVM())
+			if (s.indexOf(from) < 0)
+				return s;
+
+		return s.replace(from, to);
 	}
 
 	// Removes useless trailing zeros (and the dot if it becomes orphan)

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.api;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
+import net.sourceforge.plantuml.StringUtils;
 
 public class NiceNumber {
 
@@ -65,7 +66,7 @@ public class NiceNumber {
 		df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
 		df.setGroupingSize(3);
 		df.setMaximumFractionDigits(0);
-		final String t = df.format(v).replace(',', ' ');
+		final String t = StringUtils.replaceChar(df.format(v), ',', ' ');
 		return t;
 	}
 }

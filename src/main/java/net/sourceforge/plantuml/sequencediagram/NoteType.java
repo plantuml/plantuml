@@ -44,7 +44,7 @@ public enum NoteType {
 		if (s == null) {
 			return NoteType.NOTE;
 		}
-		return NoteType.valueOf(StringUtils.goUpperCase(s).replace(' ', '_'));
+		return NoteType.valueOf(StringUtils.replaceChar(StringUtils.goUpperCase(s), ' ', '_'));
 	}
 
 }

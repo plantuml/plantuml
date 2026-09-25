@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.preproc2;
 
 import java.io.IOException;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.text.StringLocated;
 
@@ -55,7 +56,7 @@ public class ReadFilterQuoteComment implements ReadFilter {
 					if (result == null) {
 						return null;
 					}
-					final String trim = result.getString().replace('\t', ' ').trim();
+					final String trim = StringUtils.replaceChar(result.getString(), '\t', ' ').trim();
 					if (longComment && trim.endsWith("'/")) {
 						longComment = false;
 						continue;

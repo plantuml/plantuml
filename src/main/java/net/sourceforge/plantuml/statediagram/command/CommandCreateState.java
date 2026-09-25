@@ -145,7 +145,7 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 			sb.append(", stereotyped ").append(arg.get("STEREOGROUP", 0));
 			final LeafType type = stereogroup.getLeafType();
 			if (type != null)
-				sb.append(" (pseudo-state type: ").append(StringUtils.goLowerCase(type.name()).replace('_', ' '))
+				sb.append(" (pseudo-state type: ").append(StringUtils.replaceChar(StringUtils.goLowerCase(type.name()), '_', ' '))
 						.append(")");
 		}
 

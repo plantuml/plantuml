@@ -700,7 +700,7 @@ public class SvgGraphics {
 					elt.setAttribute("font-family", fontFamily);
 
 				if (fontFamily.equalsIgnoreCase("monospace") || fontFamily.equalsIgnoreCase("courier"))
-					text = text.replace(' ', (char) 160);
+					text = StringUtils.replaceChar(text, ' ', (char) 160);
 
 			}
 			if (textBackColor != null) {
@@ -1013,7 +1013,7 @@ public class SvgGraphics {
 		if (svgScale * option.getScale() == 1)
 			return svg;
 
-		final String svg2 = svg.replace('\n', ' ').replace('\r', ' ');
+		final String svg2 = StringUtils.replaceChar(StringUtils.replaceChar(svg, '\n', ' '), '\r', ' ');
 		if (svg2.contains("<g ") == false && svg2.contains("<g>") == false) {
 			svg = svg.replaceFirst("\\<svg\\>", "<svg><g>");
 			svg = svg.replaceFirst("\\</svg\\>", "</g></svg>");

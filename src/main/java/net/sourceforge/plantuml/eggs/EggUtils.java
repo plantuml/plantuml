@@ -65,8 +65,8 @@ public class EggUtils {
 	public static BigInteger fromSecretSentence(String s) {
 		BigInteger result = BigInteger.ZERO;
 		final BigInteger twentySix = BigInteger.valueOf(26);
-		s = s.replace('\u00E9', 'e');
-		s = s.replace('\u00EA', 'e');
+		s = StringUtils.replaceChar(s, '\u00E9', 'e');
+		s = StringUtils.replaceChar(s, '\u00EA', 'e');
 		for (char c : s.toCharArray()) {
 			final int num = convertChar(c);
 			if (num != -1) {

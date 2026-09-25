@@ -40,6 +40,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.brotli.BrotliInputStream;
 import net.sourceforge.plantuml.preproc.Stdlib;
 
@@ -52,7 +53,7 @@ public enum SpmChannel {
 	IMAGE;
 
 	private String getFileName() {
-		return name().toLowerCase().replace('_', '-') + ".spm";
+		return StringUtils.replaceChar(name().toLowerCase(), '_', '-') + ".spm";
 	}
 
 //	public Path getPath(Path rootFolder, String name) throws IOException {

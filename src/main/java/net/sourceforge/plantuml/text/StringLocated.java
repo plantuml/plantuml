@@ -135,7 +135,7 @@ final public class StringLocated {
 //	}
 
 	public StringLocated jawsHideBackslash() {
-		return new StringLocated(s.replace('\\', Jaws.BLOCK_E1_REAL_BACKSLASH), location, preprocessorError);
+		return new StringLocated(StringUtils.replaceChar(s, '\\', Jaws.BLOCK_E1_REAL_BACKSLASH), location, preprocessorError);
 	}
 
 	public static List<String> expandsNewline(String s) {
@@ -208,7 +208,7 @@ final public class StringLocated {
 	@JawsStrange
 	public StringLocated removeInnerComment() {
 		final String string = s.toString();
-		final String trim = string.replace('\t', ' ').trim();
+		final String trim = StringUtils.replaceChar(string, '\t', ' ').trim();
 		if (trim.startsWith("/'")) {
 			final int idx = string.indexOf("'/");
 			if (idx != -1)

@@ -131,7 +131,7 @@ public class GraphvizVersionFinder {
 
 			sb.append(p.getError());
 		}
-		return StringUtils.trin(sb.toString().replace('\n', ' '));
+		return StringUtils.trin(StringUtils.replaceChar(sb.toString(), '\n', ' '));
 	}
 
 	private String[] getCommandLine() {

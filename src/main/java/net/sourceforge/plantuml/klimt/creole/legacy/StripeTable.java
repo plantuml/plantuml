@@ -40,6 +40,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
@@ -137,7 +138,7 @@ public class StripeTable implements Stripe {
 		table.newLine(lineBackColor);
 		for (final StringTokenizer st = new StringTokenizer(line, "|"); st.hasMoreTokens();) {
 			Mode mode = Mode.NORMAL;
-			String v = st.nextToken().replace(hiddenBar.charAt(0), '|');
+			String v = StringUtils.replaceChar(st.nextToken(), hiddenBar.charAt(0), '|');
 			if (v.startsWith("=")) {
 				v = v.substring(1);
 				mode = Mode.HEADER;

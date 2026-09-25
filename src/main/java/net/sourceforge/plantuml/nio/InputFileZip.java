@@ -43,6 +43,7 @@ import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import net.sourceforge.plantuml.StringUtils;
 
 /**
  * Represents an entry inside a ZIP archive as an {@link InputFile}.
@@ -148,7 +149,7 @@ public class InputFileZip implements InputFile {
 	private static Path getParentFrom(String entryName) {
 		if (entryName == null || entryName.isEmpty())
 			return Paths.get("");
-		final int idx = entryName.replace('\\', '/').lastIndexOf('/');
+		final int idx = StringUtils.replaceChar(entryName, '\\', '/').lastIndexOf('/');
 		if (idx <= 0)
 			return Paths.get("");
 		final String parent = entryName.substring(0, idx);

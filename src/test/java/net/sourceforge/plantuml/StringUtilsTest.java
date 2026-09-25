@@ -2,6 +2,7 @@ package net.sourceforge.plantuml;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 
 import java.util.Locale;
@@ -218,6 +219,38 @@ class StringUtilsTest {
 		assertEquals("foo\u00A0bar", StringUtils.trin("\u00A0foo\u00A0bar\t"));
 		assertEquals("", StringUtils.trin("\u00A0\u00A0"));
 		assertEquals("foo", StringUtils.trim2("\u00A0foo \u00A0").toString());
+	}
+
+	@ParameterizedTest
+	@CsvSource(value = {
+			" 'a,b,c'  , ',' , '.' , 'a.b.c' ",
+			" ',,'     , ',' , ';' , ';;'    ",
+			" ',a'     , ',' , '.' , '.a'    ",
+			" 'a,'     , ',' , '.' , 'a.'    ",
+			" 'abc'    , 'x' , 'y' , 'abc'   ",
+			" ''       , 'x' , 'y' , ''      ",
+			" 'aaa'    , 'a' , 'a' , 'aaa'   ",
+			" 'a b'    , ' ' , '_' , 'a_b'   ",
+	})
+	void test_replaceChar(String s, char from, char to, String expected) {
+		assertEquals(expected, StringUtils.replaceChar(s, from, to));
+		assertEquals(s.replace(from, to), StringUtils.replaceChar(s, from, to));
+	}
+
+	@Test
+	void test_replaceChar_returnsSameInstanceWhenAbsent() {
+		final String s = new String("hello world");
+		assertSame(s, StringUtils.replaceChar(s, 'z', 'y'));
+		assertSame("", StringUtils.replaceChar("", 'z', 'y'));
+	}
+
+	@Test
+	void test_replaceChar_specialChars() {
+		assertEquals("a/b/c", StringUtils.replaceChar("a\\b\\c", '\\', '/'));
+		assertEquals("a b", StringUtils.replaceChar("a\tb", '\t', ' '));
+		assertEquals("a\u00A0b", StringUtils.replaceChar("a b", ' ', (char) 160));
+		assertEquals("a\u21b5b", StringUtils.replaceChar("a\uE100b", '\uE100', '\u21b5'));
+		assertEquals("x\uD83D\uDE00", StringUtils.replaceChar("a\uD83D\uDE00", 'a', 'x'));
 	}
 
 }

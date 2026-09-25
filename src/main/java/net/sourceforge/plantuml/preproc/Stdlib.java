@@ -54,6 +54,7 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
 import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
@@ -435,7 +436,7 @@ public class Stdlib {
 	}
 
 	public InputStream newInputStream(Path path) throws IOException {
-		final String pathString = path.toString().toLowerCase().replace(".puml", "").replace('\\', '/');
+		final String pathString = StringUtils.replaceChar(path.toString().toLowerCase().replace(".puml", ""), '\\', '/');
 		final byte[] data = loadPumlResource(pathString);
 		return new ByteArrayInputStream(data);
 	}

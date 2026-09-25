@@ -46,6 +46,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.api.ApiWarning;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityProfile;
@@ -95,7 +96,7 @@ public class Defines implements Truth {
 
 	public void overrideDirPath(String fileDir) {
 		if (fileDir != null)
-			environment.put("dirpath", fileDir.replace('\\', '/'));
+			environment.put("dirpath", StringUtils.replaceChar(fileDir, '\\', '/'));
 	}
 
 	public void importFrom(Defines other) {
@@ -117,7 +118,7 @@ public class Defines implements Truth {
 		result.environment.put("filedate", new Date(file.lastModified()).toString());
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE)
 			result.environment.put("dirpath",
-					file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));
+					StringUtils.replaceChar(file.getAbsoluteFile().getParentFile().getAbsolutePath(), '\\', '/'));
 
 		return result;
 	}
@@ -129,7 +130,7 @@ public class Defines implements Truth {
 		result.environment.put("filedate", new Date(file.lastModified()).toString());
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE)
 			result.environment.put("dirpath",
-					file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));
+					StringUtils.replaceChar(file.getAbsoluteFile().getParentFile().getAbsolutePath(), '\\', '/'));
 
 		return result;
 	}
