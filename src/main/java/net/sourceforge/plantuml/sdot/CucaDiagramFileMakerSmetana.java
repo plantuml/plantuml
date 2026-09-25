@@ -104,6 +104,7 @@ import net.sourceforge.plantuml.svek.GeneralImageBuilder;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.RoleLabels;
 import net.sourceforge.plantuml.svek.SvekNode;
+import net.sourceforge.plantuml.svek.SvekUtils;
 import net.sourceforge.plantuml.svek.image.EntityImageNote;
 import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
 import net.sourceforge.plantuml.utils.Position;
@@ -468,6 +469,16 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		if (false) SMETANA_TRACE("CucaDiagramFileMakerSmetana",
 				"exportEntity: entity=" + leaf.getName() + " nodeUid=" + node.getUid());
 		agsafeset(zz, agnode, new CString("shape"), new CString("box"), new CString(""));
+		// Without an explicit empty label, Smetana (like dot) pads the node to fit its
+		// default label ("\N", the node name), so a node smaller than about 16x24 px
+		// is enlarged around its center while the image is drawn at the enlarged
+		// node's top-left corner. For the 4x4 association point (issue #2903) this
+		// left the point 6 px left of and 10 px above the edges that target the node
+		// center. Only the association point is handled here: applying it to every
+		// node also shrinks every other small node (start/end, bars...) and moves
+		// 26 existing Vega references, which is a separate change.
+		if (leaf.getLeafType() == LeafType.POINT_FOR_ASSOCIATION)
+			agsafeset(zz, agnode, new CString("label"), new CString(""), new CString(""));
 		final XDimension2D dim = getDim(node);
 		final String width = "" + dim.getWidth();
 		final String height = "" + dim.getHeight();
@@ -586,6 +597,17 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		// affects horizontal separation: the vertical gap between stacked top-level
 		// clusters is driven by ranksep, because clust_ht forces CL_OFFSET at the root.
 		agsafeset(zz, g, new CString("margin"), new CString("16"), new CString(""));
+
+		// Honor an explicit "skinparam nodesep/ranksep" (issue #2903). Only explicit
+		// values are forwarded: when they are not set, Smetana keeps its own
+		// defaults (unlike the dot pipeline, which derives a minimum of 35/60 px),
+		// so that existing diagrams are not moved.
+		if (diagram.getSkinParam().getNodesep() != 0)
+			agsafeset(zz, g, new CString("nodesep"),
+					new CString(SvekUtils.pixelToInches(diagram.getSkinParam().getNodesep())), new CString(""));
+		if (diagram.getSkinParam().getRanksep() != 0)
+			agsafeset(zz, g, new CString("ranksep"),
+					new CString(SvekUtils.pixelToInches(diagram.getSkinParam().getRanksep())), new CString(""));
 
 		exportEntities(zz, g, getUnpackagedEntities());
 		exportGroups(zz, g, root);

@@ -1,12 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="128px" preserveAspectRatio="none" style="width:205px;height:128px;background:#FFFFFF;" version="1.1" viewBox="0 0 205 128" width="205px" zoomAndPan="magnify">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="128px" preserveAspectRatio="none" style="width:193px;height:128px;background:#FFFFFF;" version="1.1" viewBox="0 0 193 128" width="193px" zoomAndPan="magnify">
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
     <!--class annotation-->
     <g class="entity" data-qualified-name="annotation" data-source-line="4" id="ent0001">
-      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="97.363" x="39" y="80"/>
-      <ellipse cx="54" cy="96" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
-      <text fill="#000" font-family="monospace" font-size="14" x="49" y="101">C</text>
-      <text fill="#000" font-size="14" textLength="65.363" x="68" y="99.889">annotation</text>
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="97.363" x="33" y="80"/>
+      <ellipse cx="48" cy="96" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="43" y="101">C</text>
+      <text fill="#000" font-size="14" textLength="65.363" x="62" y="99.889">annotation</text>
     </g>
     <!--class dog-->
     <g class="entity" data-qualified-name="dog" data-source-line="5" id="ent0002">
@@ -17,21 +17,21 @@
     </g>
     <!--class chases-->
     <g class="entity" data-qualified-name="chases" data-source-line="6" id="ent0003">
-      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76.363" x="113.5" y="12"/>
-      <ellipse cx="128.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
-      <text fill="#000" font-family="monospace" font-size="14" x="123.5" y="33">C</text>
-      <text fill="#000" font-size="14" textLength="44.363" x="142.5" y="31.889">chases</text>
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76.363" x="101.5" y="12"/>
+      <ellipse cx="116.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="111.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="44.363" x="130.5" y="31.889">chases</text>
     </g>
-    <ellipse cx="81.5" cy="18" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:1;"/>
+    <ellipse cx="81.5" cy="28" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:1;"/>
     <g class="link" data-entity-1="ent0002" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
-      <polygon fill="#181818" points="61.344,28,70.344,32,66.344,28,70.344,24,61.344,28" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M66.344,28 C72.338,28 73.332,28 79.326,28" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <polygon fill="#181818" points="61.25,28,70.25,32,66.25,28,70.25,24,61.25,28" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M66.25,28 C72.262,28 73.273,28 79.285,28" fill="none" style="stroke:#181818;stroke-width:1;"/>
     </g>
     <g class="link" data-entity-1="ent0007" data-entity-2="ent0003" data-link-type="association" id="lnk9">
-      <path d="M96,28 C101.781,28 107.563,28 113.344,28" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M83.766,28 C89.571,28 95.377,28 101.183,28" fill="none" style="stroke:#181818;stroke-width:1;"/>
     </g>
     <g class="link" data-entity-1="ent0007" data-entity-2="ent0001" data-link-type="association" id="lnk10">
-      <path d="M87.5,40.196 C87.5,51.082 87.5,67.698 87.5,79.781" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <path d="M81.5,30.146 C81.5,35.965 81.5,62.655 81.5,79.931" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
     </g>
   </g>
 </svg>

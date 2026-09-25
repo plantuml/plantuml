@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+hide circle
+skinparam nodesep 60
+skinparam ranksep 80
+class A
+class B
+class C
+A -- B
+(A, B) .. C
+@enduml

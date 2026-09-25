@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+hide circle
+skinparam classAttributeIconSize 0
+
+class Respuesta {
+  fecha: Date
+}
+class Opcion {
+  texto: String
+}
+class Voto {
+  getOpcion(): Opcion
+}
+Respuesta "*" -- "*" Opcion
+(Respuesta, Opcion) .. Voto
+@enduml
