@@ -135,7 +135,7 @@ final public class StringLocated {
 //	}
 
 	public StringLocated jawsHideBackslash() {
-<span class="nc" id="L138">		return new StringLocated(s.replace('\\', Jaws.BLOCK_E1_REAL_BACKSLASH), location, preprocessorError);</span>
+<span class="nc" id="L138">		return new StringLocated(StringUtils.replaceChar(s, '\\', Jaws.BLOCK_E1_REAL_BACKSLASH), location, preprocessorError);</span>
 	}
 
 	public static List&lt;String&gt; expandsNewline(String s) {
@@ -208,7 +208,7 @@ final public class StringLocated {
 	@JawsStrange
 	public StringLocated removeInnerComment() {
 <span class="fc" id="L210">		final String string = s.toString();</span>
-<span class="fc" id="L211">		final String trim = string.replace('\t', ' ').trim();</span>
+<span class="fc" id="L211">		final String trim = StringUtils.replaceChar(string, '\t', ' ').trim();</span>
 <span class="pc bpc" id="L212" title="1 of 2 branches missed.">		if (trim.startsWith(&quot;/'&quot;)) {</span>
 <span class="nc" id="L213">			final int idx = string.indexOf(&quot;'/&quot;);</span>
 <span class="nc bnc" id="L214" title="All 2 branches missed.">			if (idx != -1)</span>

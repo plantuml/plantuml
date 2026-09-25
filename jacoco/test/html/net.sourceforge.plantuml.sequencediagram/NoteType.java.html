@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.StringUtils;
 <span class="pc bpc" id="L44" title="1 of 2 branches missed.">		if (s == null) {</span>
 <span class="nc" id="L45">			return NoteType.NOTE;</span>
 		}
-<span class="fc" id="L47">		return NoteType.valueOf(StringUtils.goUpperCase(s).replace(' ', '_'));</span>
+<span class="fc" id="L47">		return NoteType.valueOf(StringUtils.replaceChar(StringUtils.goUpperCase(s), ' ', '_'));</span>
 	}
 
 }

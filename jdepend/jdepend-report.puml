@@ -646,13 +646,14 @@ Total Classes: 1
 "net.sourceforge.plantuml.ant" --> "java.util.concurrent"
 "net.sourceforge.plantuml.ant" --> "net.sourceforge.plantuml"
 
-class "net.sourceforge.plantuml.api" %lighten("red", 91) {
+class "net.sourceforge.plantuml.api" %lighten("red", 94) {
 Total Classes: 10
 }
 "net.sourceforge.plantuml.api" --> "java.lang"
 "net.sourceforge.plantuml.api" --> "java.lang.annotation"
 "net.sourceforge.plantuml.api" --> "java.text"
 "net.sourceforge.plantuml.api" --> "java.util"
+"net.sourceforge.plantuml.api" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.api" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.api" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.api" --> "net.sourceforge.plantuml.url"

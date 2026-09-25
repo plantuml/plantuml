@@ -404,7 +404,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 
 <span class="nc" id="L405">		String aspect = getPragma().getValue(PragmaKey.ASPECT);</span>
 <span class="nc bnc" id="L406" title="All 2 branches missed.">		if (aspect != null) {</span>
-<span class="nc" id="L407">			aspect = aspect.replace(',', '.');</span>
+<span class="nc" id="L407">			aspect = StringUtils.replaceChar(aspect, ',', '.');</span>
 <span class="nc" id="L408">			result.add(&quot;aspect=&quot; + aspect + &quot;;&quot;);</span>
 		}
 <span class="nc" id="L410">		final String ratio = getPragma().getValue(PragmaKey.RATIO);</span>

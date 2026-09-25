@@ -159,7 +159,7 @@ abstract class AbstractGraphviz implements Graphviz {
 
 <span class="nc" id="L160">			sb.append(p.getError());</span>
 		}
-<span class="nc" id="L162">		return StringUtils.trin(sb.toString().replace('\n', ' '));</span>
+<span class="nc" id="L162">		return StringUtils.trin(StringUtils.replaceChar(sb.toString(), '\n', ' '));</span>
 	}
 
 	final String[] getCommandLine() {

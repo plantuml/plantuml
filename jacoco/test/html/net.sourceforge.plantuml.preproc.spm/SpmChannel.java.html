@@ -40,19 +40,20 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.brotli.BrotliInputStream;
 import net.sourceforge.plantuml.preproc.Stdlib;
 
-<span class="fc" id="L46">public enum SpmChannel {</span>
-<span class="fc" id="L47">	INFO, //</span>
-<span class="fc" id="L48">	PUML, //</span>
-<span class="fc" id="L49">	JSON, //</span>
-<span class="fc" id="L50">	SPRITE, //</span>
-<span class="fc" id="L51">	SVG, //</span>
-<span class="fc" id="L52">	IMAGE;</span>
+<span class="fc" id="L47">public enum SpmChannel {</span>
+<span class="fc" id="L48">	INFO, //</span>
+<span class="fc" id="L49">	PUML, //</span>
+<span class="fc" id="L50">	JSON, //</span>
+<span class="fc" id="L51">	SPRITE, //</span>
+<span class="fc" id="L52">	SVG, //</span>
+<span class="fc" id="L53">	IMAGE;</span>
 
 	private String getFileName() {
-<span class="fc" id="L55">		return name().toLowerCase().replace('_', '-') + &quot;.spm&quot;;</span>
+<span class="fc" id="L56">		return StringUtils.replaceChar(name().toLowerCase(), '_', '-') + &quot;.spm&quot;;</span>
 	}
 
 //	public Path getPath(Path rootFolder, String name) throws IOException {
@@ -66,15 +67,15 @@ import net.sourceforge.plantuml.preproc.Stdlib;
 //	}
 
 	public InputStream getInternalInputStream(String libname) throws IOException {
-<span class="fc" id="L69">		final String path = &quot;stdlib/&quot; + libname + &quot;/&quot; + getFileName();</span>
-<span class="fc" id="L70">		return new BrotliInputStream(inputStream(path));</span>
+<span class="fc" id="L70">		final String path = &quot;stdlib/&quot; + libname + &quot;/&quot; + getFileName();</span>
+<span class="fc" id="L71">		return new BrotliInputStream(inputStream(path));</span>
 	}
 
 	public static InputStream inputStream(String path) throws IOException {
-<span class="fc" id="L74">		InputStream result = Stdlib.class.getResourceAsStream(&quot;/&quot; + path);</span>
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if (result == null)</span>
-<span class="nc" id="L76">			result = new BufferedInputStream(new FileInputStream(path));</span>
-<span class="fc" id="L77">		return result;</span>
+<span class="fc" id="L75">		InputStream result = Stdlib.class.getResourceAsStream(&quot;/&quot; + path);</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L77">			result = new BufferedInputStream(new FileInputStream(path));</span>
+<span class="fc" id="L78">		return result;</span>
 	}
 
 }

@@ -37,43 +37,44 @@ package net.sourceforge.plantuml.preproc2;
 
 import java.io.IOException;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.text.StringLocated;
 
-<span class="fc" id="L43">public class ReadFilterQuoteComment implements ReadFilter {</span>
+<span class="fc" id="L44">public class ReadFilterQuoteComment implements ReadFilter {</span>
 
 	public ReadLine applyFilter(final ReadLine source) {
-<span class="fc" id="L46">		return new ReadLine() {</span>
+<span class="fc" id="L47">		return new ReadLine() {</span>
 			public void close() throws IOException {
-<span class="fc" id="L48">				source.close();</span>
-<span class="fc" id="L49">			}</span>
+<span class="fc" id="L49">				source.close();</span>
+<span class="fc" id="L50">			}</span>
 
 			public StringLocated readLine() throws IOException {
-<span class="fc" id="L52">				boolean longComment = false;</span>
+<span class="fc" id="L53">				boolean longComment = false;</span>
 				while (true) {
-<span class="fc" id="L54">					final StringLocated result = source.readLine();</span>
-<span class="fc bfc" id="L55" title="All 2 branches covered.">					if (result == null) {</span>
-<span class="fc" id="L56">						return null;</span>
+<span class="fc" id="L55">					final StringLocated result = source.readLine();</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">					if (result == null) {</span>
+<span class="fc" id="L57">						return null;</span>
 					}
-<span class="fc" id="L58">					final String trim = result.getString().replace('\t', ' ').trim();</span>
-<span class="pc bpc" id="L59" title="3 of 4 branches missed.">					if (longComment &amp;&amp; trim.endsWith(&quot;'/&quot;)) {</span>
-<span class="nc" id="L60">						longComment = false;</span>
-<span class="nc" id="L61">						continue;</span>
+<span class="fc" id="L59">					final String trim = StringUtils.replaceChar(result.getString(), '\t', ' ').trim();</span>
+<span class="pc bpc" id="L60" title="3 of 4 branches missed.">					if (longComment &amp;&amp; trim.endsWith(&quot;'/&quot;)) {</span>
+<span class="nc" id="L61">						longComment = false;</span>
+<span class="nc" id="L62">						continue;</span>
 					}
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">					if (longComment) {</span>
-<span class="nc" id="L64">						continue;</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">					if (longComment) {</span>
+<span class="nc" id="L65">						continue;</span>
 					}
-<span class="pc bpc" id="L66" title="1 of 2 branches missed.">					if (trim.startsWith(&quot;'&quot;)) {</span>
-<span class="nc" id="L67">						continue;</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">					if (trim.startsWith(&quot;'&quot;)) {</span>
+<span class="nc" id="L68">						continue;</span>
 					}
-<span class="pc bpc" id="L69" title="3 of 4 branches missed.">					if (trim.startsWith(&quot;/'&quot;) &amp;&amp; trim.endsWith(&quot;'/&quot;)) {</span>
-<span class="nc" id="L70">						continue;</span>
+<span class="pc bpc" id="L70" title="3 of 4 branches missed.">					if (trim.startsWith(&quot;/'&quot;) &amp;&amp; trim.endsWith(&quot;'/&quot;)) {</span>
+<span class="nc" id="L71">						continue;</span>
 					}
-<span class="pc bpc" id="L72" title="3 of 4 branches missed.">					if (trim.startsWith(&quot;/'&quot;) &amp;&amp; trim.contains(&quot;'/&quot;) == false) {</span>
-<span class="nc" id="L73">						longComment = true;</span>
-<span class="nc" id="L74">						continue;</span>
+<span class="pc bpc" id="L73" title="3 of 4 branches missed.">					if (trim.startsWith(&quot;/'&quot;) &amp;&amp; trim.contains(&quot;'/&quot;) == false) {</span>
+<span class="nc" id="L74">						longComment = true;</span>
+<span class="nc" id="L75">						continue;</span>
 					}
-<span class="fc" id="L76">					return ((StringLocated) result).removeInnerComment();</span>
+<span class="fc" id="L77">					return ((StringLocated) result).removeInnerComment();</span>
 				}
 			}
 		};

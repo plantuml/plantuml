@@ -629,7 +629,7 @@ public class SvgGraphicsTeaVM {
 	 * Wraps SVG content with a scale transform.
 	 */
 	private String wrapWithScaleTransform(String svg, double scale) {
-<span class="nc" id="L632">		String svg2 = svg.replace('\n', ' ').replace('\r', ' ');</span>
+<span class="nc" id="L632">		String svg2 = StringUtils.replaceChar(StringUtils.replaceChar(svg, '\n', ' '), '\r', ' ');</span>
 <span class="nc bnc" id="L633" title="All 4 branches missed.">		if (!svg2.contains(&quot;&lt;g &quot;) &amp;&amp; !svg2.contains(&quot;&lt;g&gt;&quot;)) {</span>
 <span class="nc" id="L634">			svg = svg.replaceFirst(&quot;\\&lt;svg\\&gt;&quot;, &quot;&lt;svg&gt;&lt;g&gt;&quot;);</span>
 <span class="nc" id="L635">			svg = svg.replaceFirst(&quot;\\&lt;/svg\\&gt;&quot;, &quot;&lt;/g&gt;&lt;/svg&gt;&quot;);</span>

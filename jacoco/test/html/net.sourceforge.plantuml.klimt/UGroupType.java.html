@@ -35,28 +35,30 @@
  */
 package net.sourceforge.plantuml.klimt;
 
-<span class="fc" id="L38">public enum UGroupType {</span>
+import net.sourceforge.plantuml.StringUtils;
+
+<span class="fc" id="L40">public enum UGroupType {</span>
 	
-<span class="fc" id="L40">	ID,</span>
-<span class="fc" id="L41">	CLASS,</span>
-<span class="fc" id="L42">	TITLE,</span>
-<span class="fc" id="L43">	DATA_ENTITY,</span>
-<span class="fc" id="L44">	DATA_QUALIFIED_NAME,</span>
-<span class="fc" id="L45">	DATA_ENTITY_1,</span>
-<span class="fc" id="L46">	DATA_ENTITY_2,</span>
-<span class="fc" id="L47">	DATA_ENTITY_UID,</span>
-<span class="fc" id="L48">	DATA_ENTITY_1_UID,</span>
-<span class="fc" id="L49">	DATA_ENTITY_2_UID,</span>
-<span class="fc" id="L50">	DATA_PARTICIPANT,</span>
-<span class="fc" id="L51">	DATA_PARTICIPANT_1,</span>
-<span class="fc" id="L52">	DATA_PARTICIPANT_2,</span>
-<span class="fc" id="L53">	DATA_UID,</span>
-<span class="fc" id="L54">	DATA_SOURCE_LINE,</span>
-<span class="fc" id="L55">	DATA_VISIBILITY_MODIFIER,</span>
-<span class="fc" id="L56">	DATA_LINK_TYPE;</span>
+<span class="fc" id="L42">	ID,</span>
+<span class="fc" id="L43">	CLASS,</span>
+<span class="fc" id="L44">	TITLE,</span>
+<span class="fc" id="L45">	DATA_ENTITY,</span>
+<span class="fc" id="L46">	DATA_QUALIFIED_NAME,</span>
+<span class="fc" id="L47">	DATA_ENTITY_1,</span>
+<span class="fc" id="L48">	DATA_ENTITY_2,</span>
+<span class="fc" id="L49">	DATA_ENTITY_UID,</span>
+<span class="fc" id="L50">	DATA_ENTITY_1_UID,</span>
+<span class="fc" id="L51">	DATA_ENTITY_2_UID,</span>
+<span class="fc" id="L52">	DATA_PARTICIPANT,</span>
+<span class="fc" id="L53">	DATA_PARTICIPANT_1,</span>
+<span class="fc" id="L54">	DATA_PARTICIPANT_2,</span>
+<span class="fc" id="L55">	DATA_UID,</span>
+<span class="fc" id="L56">	DATA_SOURCE_LINE,</span>
+<span class="fc" id="L57">	DATA_VISIBILITY_MODIFIER,</span>
+<span class="fc" id="L58">	DATA_LINK_TYPE;</span>
 
 	public String getSvgKeyAttributeName() {
-<span class="fc" id="L59">		return name().toLowerCase().replace('_', '-');</span>
+<span class="fc" id="L61">		return StringUtils.replaceChar(name().toLowerCase(), '_', '-');</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

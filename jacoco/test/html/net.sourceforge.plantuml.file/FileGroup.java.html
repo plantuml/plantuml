@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
@@ -51,129 +52,129 @@ import net.sourceforge.plantuml.utils.MyCollections;
 public class FileGroup {
 	
 
-<span class="fc" id="L54">	private final List&lt;File&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L55">	private final List&lt;File&gt; result = new ArrayList&lt;&gt;();</span>
 	private final String pattern;
 	private final List&lt;String&gt; excluded;
 
-<span class="fc" id="L58">	private final static Pattern2 predirPath = Pattern2.cmpile(&quot;^([^*?]*[/\\\\])?(.*)$&quot;);</span>
+<span class="fc" id="L59">	private final static Pattern2 predirPath = Pattern2.cmpile(&quot;^([^*?]*[/\\\\])?(.*)$&quot;);</span>
 
-<span class="fc" id="L60">	public FileGroup(String pattern, List&lt;String&gt; excluded) {</span>
-<span class="fc" id="L61">		this.pattern = pattern;</span>
-<span class="fc" id="L62">		this.excluded = excluded;</span>
-<span class="pc bpc" id="L63" title="1 of 4 branches missed.">		if (pattern.indexOf(&quot;*&quot;) == -1 &amp;&amp; pattern.indexOf(&quot;?&quot;) == -1)</span>
-<span class="fc" id="L64">			initNoStar();</span>
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		else if (pattern.indexOf(&quot;**&quot;) != -1)</span>
-<span class="nc" id="L66">			recurse();</span>
+<span class="fc" id="L61">	public FileGroup(String pattern, List&lt;String&gt; excluded) {</span>
+<span class="fc" id="L62">		this.pattern = pattern;</span>
+<span class="fc" id="L63">		this.excluded = excluded;</span>
+<span class="pc bpc" id="L64" title="1 of 4 branches missed.">		if (pattern.indexOf(&quot;*&quot;) == -1 &amp;&amp; pattern.indexOf(&quot;?&quot;) == -1)</span>
+<span class="fc" id="L65">			initNoStar();</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		else if (pattern.indexOf(&quot;**&quot;) != -1)</span>
+<span class="nc" id="L67">			recurse();</span>
 		else
-<span class="fc" id="L68">			initWithSimpleStar();</span>
+<span class="fc" id="L69">			initWithSimpleStar();</span>
 
-<span class="fc" id="L70">		Collections.sort(result);</span>
+<span class="fc" id="L71">		Collections.sort(result);</span>
 
-<span class="fc" id="L72">	}</span>
+<span class="fc" id="L73">	}</span>
 
 	private void recurse() {
-<span class="nc" id="L75">		final Matcher2 m = predirPath.matcher(pattern, 0);</span>
-<span class="nc" id="L76">		final boolean ok = m.find();</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (ok == false)</span>
-<span class="nc" id="L78">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L76">		final Matcher2 m = predirPath.matcher(pattern, 0);</span>
+<span class="nc" id="L77">		final boolean ok = m.find();</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (ok == false)</span>
+<span class="nc" id="L79">			throw new IllegalArgumentException();</span>
 
 		final File parent;
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (m.group(1) == null)</span>
-<span class="nc" id="L82">			parent = new File(&quot;.&quot;);</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (m.group(1) == null)</span>
+<span class="nc" id="L83">			parent = new File(&quot;.&quot;);</span>
 		else
-<span class="nc" id="L84">			parent = new File(m.group(1));</span>
+<span class="nc" id="L85">			parent = new File(m.group(1));</span>
 
-<span class="nc" id="L86">		initWithDoubleStar(parent);</span>
-<span class="nc" id="L87">	}</span>
+<span class="nc" id="L87">		initWithDoubleStar(parent);</span>
+<span class="nc" id="L88">	}</span>
 
 	private void initNoStar() {
-<span class="fc" id="L90">		final File f = new File(pattern);</span>
-<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (f.isDirectory())</span>
-<span class="fc" id="L92">			addSimpleDirectory(f);</span>
-<span class="fc bfc" id="L93" title="All 2 branches covered.">		else if (f.isFile())</span>
-<span class="fc" id="L94">			addResultFile(f);</span>
+<span class="fc" id="L91">		final File f = new File(pattern);</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (f.isDirectory())</span>
+<span class="fc" id="L93">			addSimpleDirectory(f);</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		else if (f.isFile())</span>
+<span class="fc" id="L95">			addResultFile(f);</span>
 
-<span class="fc" id="L96">	}</span>
+<span class="fc" id="L97">	}</span>
 
 	private void addResultFile(final File f) {
-<span class="fc" id="L99">		final String path = getNormalizedPath(f);</span>
-<span class="fc bfc" id="L100" title="All 2 branches covered.">		for (String x : excluded)</span>
-<span class="fc bfc" id="L101" title="All 2 branches covered.">			if (path.matches(toRegexp(x)))</span>
-<span class="fc" id="L102">				return;</span>
+<span class="fc" id="L100">		final String path = getNormalizedPath(f);</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		for (String x : excluded)</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">			if (path.matches(toRegexp(x)))</span>
+<span class="fc" id="L103">				return;</span>
 
-<span class="fc" id="L104">		result.add(f);</span>
-<span class="fc" id="L105">	}</span>
+<span class="fc" id="L105">		result.add(f);</span>
+<span class="fc" id="L106">	}</span>
 
 	private void addSimpleDirectory(File dir) {
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD))</span>
-<span class="nc" id="L109">			addSimpleDirectory(dir, &quot;(?i)^.*_extr\\d+\\.txt$&quot;);</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD))</span>
+<span class="nc" id="L110">			addSimpleDirectory(dir, &quot;(?i)^.*_extr\\d+\\.txt$&quot;);</span>
 		else
-<span class="fc" id="L111">			addSimpleDirectory(dir, CliOptions.getPattern());</span>
+<span class="fc" id="L112">			addSimpleDirectory(dir, CliOptions.getPattern());</span>
 
-<span class="fc" id="L113">	}</span>
+<span class="fc" id="L114">	}</span>
 
 	private void addSimpleDirectory(File dir, String pattern) {
-<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (dir.isDirectory() == false)</span>
-<span class="nc" id="L117">			throw new IllegalArgumentException(&quot;dir=&quot; + dir);</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		if (dir.isDirectory() == false)</span>
+<span class="nc" id="L118">			throw new IllegalArgumentException(&quot;dir=&quot; + dir);</span>
 
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		if (dir.listFiles() != null)</span>
-<span class="fc bfc" id="L120" title="All 2 branches covered.">			for (File f : dir.listFiles())</span>
-<span class="fc bfc" id="L121" title="All 2 branches covered.">				if (f.getName().matches(pattern))</span>
-<span class="fc" id="L122">					addResultFile(f);</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (dir.listFiles() != null)</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">			for (File f : dir.listFiles())</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">				if (f.getName().matches(pattern))</span>
+<span class="fc" id="L123">					addResultFile(f);</span>
 
-<span class="fc" id="L124">	}</span>
+<span class="fc" id="L125">	}</span>
 
 	private static String getNormalizedPath(File f) {
-<span class="fc" id="L127">		return f.getPath().replace('\\', '/');</span>
+<span class="fc" id="L128">		return StringUtils.replaceChar(f.getPath(), '\\', '/');</span>
 	}
 
-<span class="fc" id="L130">	private final static Pattern2 noStarInDirectory = Pattern2.cmpile(&quot;^(?:([^*?]*)[/\\\\])?([^/\\\\]*)$&quot;);</span>
+<span class="fc" id="L131">	private final static Pattern2 noStarInDirectory = Pattern2.cmpile(&quot;^(?:([^*?]*)[/\\\\])?([^/\\\\]*)$&quot;);</span>
 
 	private void initWithSimpleStar() {
-<span class="pc bpc" id="L133" title="2 of 4 branches missed.">		if (TeaVM.a()) assert pattern.indexOf(&quot;**&quot;) == -1;</span>
-<span class="fc" id="L134">		final Matcher2 m = noStarInDirectory.matcher(pattern, 0);</span>
-<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (m.find()) {</span>
-<span class="fc" id="L136">			File dir = new File(&quot;.&quot;);</span>
-<span class="fc bfc" id="L137" title="All 2 branches covered.">			if (m.group(1) != null) {</span>
-<span class="fc" id="L138">				final String dirPart = m.group(1);</span>
-<span class="fc" id="L139">				dir = new File(dirPart);</span>
+<span class="pc bpc" id="L134" title="2 of 4 branches missed.">		if (TeaVM.a()) assert pattern.indexOf(&quot;**&quot;) == -1;</span>
+<span class="fc" id="L135">		final Matcher2 m = noStarInDirectory.matcher(pattern, 0);</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">		if (m.find()) {</span>
+<span class="fc" id="L137">			File dir = new File(&quot;.&quot;);</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">			if (m.group(1) != null) {</span>
+<span class="fc" id="L139">				final String dirPart = m.group(1);</span>
+<span class="fc" id="L140">				dir = new File(dirPart);</span>
 			}
 
-<span class="fc" id="L142">			final String filesPart = m.group(2);</span>
-<span class="fc" id="L143">			addSimpleDirectory(dir, toRegexp(filesPart));</span>
-<span class="fc" id="L144">		} else {</span>
-<span class="nc" id="L145">			recurse();</span>
+<span class="fc" id="L143">			final String filesPart = m.group(2);</span>
+<span class="fc" id="L144">			addSimpleDirectory(dir, toRegexp(filesPart));</span>
+<span class="fc" id="L145">		} else {</span>
+<span class="nc" id="L146">			recurse();</span>
 		}
 
-<span class="fc" id="L148">	}</span>
+<span class="fc" id="L149">	}</span>
 
 	private void initWithDoubleStar(File currentDir) {
-<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (currentDir.listFiles() != null)</span>
-<span class="nc bnc" id="L152" title="All 2 branches missed.">			for (File f : currentDir.listFiles()) {</span>
-<span class="nc bnc" id="L153" title="All 2 branches missed.">				if (f.isDirectory()) {</span>
-<span class="nc" id="L154">					initWithDoubleStar(f);</span>
-<span class="nc bnc" id="L155" title="All 2 branches missed.">				} else if (f.isFile()) {</span>
-<span class="nc" id="L156">					final String path = getNormalizedPath(f);</span>
-<span class="nc bnc" id="L157" title="All 2 branches missed.">					if (path.matches(toRegexp(pattern)))</span>
-<span class="nc" id="L158">						addResultFile(f);</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">		if (currentDir.listFiles() != null)</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">			for (File f : currentDir.listFiles()) {</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">				if (f.isDirectory()) {</span>
+<span class="nc" id="L155">					initWithDoubleStar(f);</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">				} else if (f.isFile()) {</span>
+<span class="nc" id="L157">					final String path = getNormalizedPath(f);</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">					if (path.matches(toRegexp(pattern)))</span>
+<span class="nc" id="L159">						addResultFile(f);</span>
 				}
 			}
 
-<span class="nc" id="L162">	}</span>
+<span class="nc" id="L163">	}</span>
 
 	public List&lt;File&gt; getFiles() {
-<span class="fc" id="L165">		return MyCollections.unmodifiableList(result);</span>
+<span class="fc" id="L166">		return MyCollections.unmodifiableList(result);</span>
 	}
 
 	public static String toRegexp(String pattern) {
-<span class="fc" id="L169">		pattern = pattern.replace(&quot;\\&quot;, &quot;/&quot;);</span>
-<span class="fc" id="L170">		pattern = pattern.replace(&quot;.&quot;, &quot;\\.&quot;);</span>
-<span class="fc" id="L171">		pattern = pattern.replace(&quot;?&quot;, &quot;[^/]&quot;);</span>
-<span class="fc" id="L172">		pattern = pattern.replace(&quot;/**/&quot;, &quot;(/|/.{0,}/)&quot;);</span>
-<span class="fc" id="L173">		pattern = pattern.replace(&quot;**&quot;, &quot;.{0,}&quot;);</span>
-<span class="fc" id="L174">		pattern = pattern.replace(&quot;*&quot;, &quot;[^/]{0,}&quot;);</span>
-<span class="fc" id="L175">		pattern = &quot;(?i)^(\\./)?&quot; + pattern + &quot;$&quot;;</span>
-<span class="fc" id="L176">		return pattern;</span>
+<span class="fc" id="L170">		pattern = pattern.replace(&quot;\\&quot;, &quot;/&quot;);</span>
+<span class="fc" id="L171">		pattern = pattern.replace(&quot;.&quot;, &quot;\\.&quot;);</span>
+<span class="fc" id="L172">		pattern = pattern.replace(&quot;?&quot;, &quot;[^/]&quot;);</span>
+<span class="fc" id="L173">		pattern = pattern.replace(&quot;/**/&quot;, &quot;(/|/.{0,}/)&quot;);</span>
+<span class="fc" id="L174">		pattern = pattern.replace(&quot;**&quot;, &quot;.{0,}&quot;);</span>
+<span class="fc" id="L175">		pattern = pattern.replace(&quot;*&quot;, &quot;[^/]{0,}&quot;);</span>
+<span class="fc" id="L176">		pattern = &quot;(?i)^(\\./)?&quot; + pattern + &quot;$&quot;;</span>
+<span class="fc" id="L177">		return pattern;</span>
 	}
 
 }

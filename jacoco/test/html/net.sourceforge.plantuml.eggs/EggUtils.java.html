@@ -65,8 +65,8 @@ import net.sourceforge.plantuml.StringUtils;
 	public static BigInteger fromSecretSentence(String s) {
 <span class="fc" id="L66">		BigInteger result = BigInteger.ZERO;</span>
 <span class="fc" id="L67">		final BigInteger twentySix = BigInteger.valueOf(26);</span>
-<span class="fc" id="L68">		s = s.replace('\u00E9', 'e');</span>
-<span class="fc" id="L69">		s = s.replace('\u00EA', 'e');</span>
+<span class="fc" id="L68">		s = StringUtils.replaceChar(s, '\u00E9', 'e');</span>
+<span class="fc" id="L69">		s = StringUtils.replaceChar(s, '\u00EA', 'e');</span>
 <span class="fc bfc" id="L70" title="All 2 branches covered.">		for (char c : s.toCharArray()) {</span>
 <span class="fc" id="L71">			final int num = convertChar(c);</span>
 <span class="fc bfc" id="L72" title="All 2 branches covered.">			if (num != -1) {</span>

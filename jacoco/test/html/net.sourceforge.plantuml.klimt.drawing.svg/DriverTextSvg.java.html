@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.klimt.drawing.svg;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -56,128 +57,128 @@ public class DriverTextSvg implements UDriver&lt;UText, SvgGraphics&gt; {
 
 	// Collects extra colored lines (underline/strikethrough) that cannot be
 	// expressed as simple CSS text-decoration because they use a custom color.
-<span class="fc" id="L59">	static class ExtraLines {</span>
-<span class="fc" id="L60">		private final List&lt;HColor&gt; colors = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L61">		private final List&lt;Double&gt; deltaYs = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L60">	static class ExtraLines {</span>
+<span class="fc" id="L61">		private final List&lt;HColor&gt; colors = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L62">		private final List&lt;Double&gt; deltaYs = new ArrayList&lt;&gt;();</span>
 
 		void add(HColor color, double deltaY) {
-<span class="nc" id="L64">			colors.add(color);</span>
-<span class="nc" id="L65">			deltaYs.add(deltaY);</span>
-<span class="nc" id="L66">		}</span>
+<span class="nc" id="L65">			colors.add(color);</span>
+<span class="nc" id="L66">			deltaYs.add(deltaY);</span>
+<span class="nc" id="L67">		}</span>
 
 		void drawAll(double x, double y, double width, UFont font, ColorMapper mapper, SvgGraphics svg) {
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">			for (int i = 0; i &lt; colors.size(); i++) {</span>
-<span class="nc" id="L70">				svg.setStrokeColor(colors.get(i).toSvg(mapper));</span>
-<span class="nc" id="L71">				svg.setStrokeWidth(font.getSize2D() / 28.0, null);</span>
-<span class="nc" id="L72">				svg.svgLine(x, y + deltaYs.get(i), x + width, y + deltaYs.get(i), 0);</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">			for (int i = 0; i &lt; colors.size(); i++) {</span>
+<span class="nc" id="L71">				svg.setStrokeColor(colors.get(i).toSvg(mapper));</span>
+<span class="nc" id="L72">				svg.setStrokeWidth(font.getSize2D() / 28.0, null);</span>
+<span class="nc" id="L73">				svg.svgLine(x, y + deltaYs.get(i), x + width, y + deltaYs.get(i), 0);</span>
 			}
-<span class="fc" id="L74">		}</span>
+<span class="fc" id="L75">		}</span>
 	}
 
 	private final StringBounder stringBounder;
-<span class="fc" id="L78">	public DriverTextSvg(StringBounder stringBounder) {</span>
-<span class="fc" id="L79">		this.stringBounder = stringBounder;</span>
-<span class="fc" id="L80">	}</span>
+<span class="fc" id="L79">	public DriverTextSvg(StringBounder stringBounder) {</span>
+<span class="fc" id="L80">		this.stringBounder = stringBounder;</span>
+<span class="fc" id="L81">	}</span>
 
 	public void draw(UText shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
-<span class="fc" id="L83">		final UClip clip = param.getClip();</span>
-<span class="fc bfc" id="L84" title="All 4 branches covered.">		if (clip != null &amp;&amp; clip.isInside(x, y) == false)</span>
-<span class="fc" id="L85">			return;</span>
+<span class="fc" id="L84">		final UClip clip = param.getClip();</span>
+<span class="fc bfc" id="L85" title="All 4 branches covered.">		if (clip != null &amp;&amp; clip.isInside(x, y) == false)</span>
+<span class="fc" id="L86">			return;</span>
 
-<span class="fc" id="L87">		final FontConfiguration fontConfiguration = shape.getFontConfiguration();</span>
-<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (fontConfiguration.getColor().isTransparent())</span>
-<span class="nc" id="L89">			return;</span>
+<span class="fc" id="L88">		final FontConfiguration fontConfiguration = shape.getFontConfiguration();</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (fontConfiguration.getColor().isTransparent())</span>
+<span class="nc" id="L90">			return;</span>
 
-<span class="fc" id="L91">		final UFont font = fontConfiguration.getFont();</span>
-<span class="fc" id="L92">		final UFontFace face = fontConfiguration.getFontFace();</span>
+<span class="fc" id="L92">		final UFont font = fontConfiguration.getFont();</span>
+<span class="fc" id="L93">		final UFontFace face = fontConfiguration.getFontFace();</span>
 
 		// Emit full numeric CSS weight (e.g. &quot;300&quot;, &quot;500&quot;, &quot;700&quot;) so that weights
 		// parsed by SvgSaxParser and set via FontWeight style property are preserved
 		// in SVG output rather than being collapsed to binary bold/normal.
-<span class="fc" id="L97">		String fontWeight = null;</span>
-<span class="fc bfc" id="L98" title="All 2 branches covered.">		if (fontConfiguration.containsStyle(FontStyle.BOLD))</span>
+<span class="fc" id="L98">		String fontWeight = null;</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		if (fontConfiguration.containsStyle(FontStyle.BOLD))</span>
 			// Explicit BOLD decoration: honour face weight if already &gt;= 700, else force 700
-<span class="fc bfc" id="L100" title="All 2 branches covered.">			fontWeight = (face.getCssWeight() &gt;= 700) ? face.toCssWeightString() : &quot;700&quot;;</span>
-<span class="fc bfc" id="L101" title="All 2 branches covered.">		else if (face.getCssWeight() != 400)</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">			fontWeight = (face.getCssWeight() &gt;= 700) ? face.toCssWeightString() : &quot;700&quot;;</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">		else if (face.getCssWeight() != 400)</span>
 			// Non-default weight from FontWeight style property or parsed SVG input
-<span class="fc" id="L103">			fontWeight = face.toCssWeightString();</span>
+<span class="fc" id="L104">			fontWeight = face.toCssWeightString();</span>
 
-<span class="fc" id="L105">		String fontStyle = null;</span>
-<span class="pc bpc" id="L106" title="1 of 4 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.ITALIC) || face.isItalic())</span>
-<span class="fc" id="L107">			fontStyle = &quot;italic&quot;;</span>
+<span class="fc" id="L106">		String fontStyle = null;</span>
+<span class="pc bpc" id="L107" title="1 of 4 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.ITALIC) || face.isItalic())</span>
+<span class="fc" id="L108">			fontStyle = &quot;italic&quot;;</span>
 
-<span class="fc" id="L109">		String text = shape.getText();</span>
-<span class="fc bfc" id="L110" title="All 2 branches covered.">		if (text.matches(&quot;^\\s*$&quot;))</span>
-<span class="fc" id="L111">			text = text.replace(' ', (char) 160);</span>
+<span class="fc" id="L110">		String text = shape.getText();</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		if (text.matches(&quot;^\\s*$&quot;))</span>
+<span class="fc" id="L112">			text = StringUtils.replaceChar(text, ' ', (char) 160);</span>
 
-<span class="fc bfc" id="L113" title="All 2 branches covered.">		if (text.startsWith(&quot; &quot;)) {</span>
-<span class="fc" id="L114">			final double space = stringBounder.calculateDimension(font, &quot; &quot;).getWidth();</span>
-<span class="fc bfc" id="L115" title="All 2 branches covered.">			while (text.startsWith(&quot; &quot;)) {</span>
-<span class="fc" id="L116">				x += space;</span>
-<span class="fc" id="L117">				text = text.substring(1);</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		if (text.startsWith(&quot; &quot;)) {</span>
+<span class="fc" id="L115">			final double space = stringBounder.calculateDimension(font, &quot; &quot;).getWidth();</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">			while (text.startsWith(&quot; &quot;)) {</span>
+<span class="fc" id="L117">				x += space;</span>
+<span class="fc" id="L118">				text = text.substring(1);</span>
 			}
 		}
 		// Not StringUtils.trin(), which removes U+00A0 as well: a blank-only text has just been
 		// turned into non-breaking spaces precisely so that it survives this trim.
-<span class="fc" id="L122">		text = text.trim();</span>
-<span class="fc" id="L123">		final XDimension2D dim = stringBounder.calculateDimension(font, text);</span>
-<span class="fc" id="L124">		final double width = dim.getWidth();</span>
-<span class="fc" id="L125">		final double height = dim.getHeight();</span>
+<span class="fc" id="L123">		text = text.trim();</span>
+<span class="fc" id="L124">		final XDimension2D dim = stringBounder.calculateDimension(font, text);</span>
+<span class="fc" id="L125">		final double width = dim.getWidth();</span>
+<span class="fc" id="L126">		final double height = dim.getHeight();</span>
 
-<span class="fc" id="L127">		final ExtraLines extraLines = new ExtraLines();</span>
+<span class="fc" id="L128">		final ExtraLines extraLines = new ExtraLines();</span>
 
-<span class="fc" id="L129">		final StringBuilder decorations = new StringBuilder();</span>
+<span class="fc" id="L130">		final StringBuilder decorations = new StringBuilder();</span>
 
-<span class="fc bfc" id="L131" title="All 2 branches covered.">		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)</span>
-<span class="pc bpc" id="L132" title="1 of 2 branches missed.">				&amp;&amp; fontConfiguration.getUnderlineStroke().getThickness() &gt; 0) {</span>
-<span class="pc bpc" id="L133" title="1 of 2 branches missed.">			if (fontConfiguration.getExtendedColor() == null)</span>
-<span class="fc" id="L134">				decorations.append(&quot;underline &quot;);</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">				&amp;&amp; fontConfiguration.getUnderlineStroke().getThickness() &gt; 0) {</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">			if (fontConfiguration.getExtendedColor() == null)</span>
+<span class="fc" id="L135">				decorations.append(&quot;underline &quot;);</span>
 			else
-<span class="nc" id="L136">				extraLines.add(fontConfiguration.getExtendedColor(), font.getSize2D() / 14.0);</span>
+<span class="nc" id="L137">				extraLines.add(fontConfiguration.getExtendedColor(), font.getSize2D() / 14.0);</span>
 
 		}
 
-<span class="fc bfc" id="L140" title="All 2 branches covered.">		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {</span>
-<span class="pc bpc" id="L141" title="1 of 2 branches missed.">			if (fontConfiguration.getExtendedColor() == null)</span>
-<span class="fc" id="L142">				decorations.append(&quot;line-through &quot;);</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">			if (fontConfiguration.getExtendedColor() == null)</span>
+<span class="fc" id="L143">				decorations.append(&quot;line-through &quot;);</span>
 			else
-<span class="nc" id="L144">				extraLines.add(fontConfiguration.getExtendedColor(), -font.getSize2D() / 4.0);</span>
+<span class="nc" id="L145">				extraLines.add(fontConfiguration.getExtendedColor(), -font.getSize2D() / 4.0);</span>
 
 		}
 
-<span class="fc bfc" id="L148" title="All 2 branches covered.">		if (fontConfiguration.containsStyle(FontStyle.WAVE)) {</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">		if (fontConfiguration.containsStyle(FontStyle.WAVE)) {</span>
 			// Beware that some current SVG implementations do not render the wave properly
 			// (e.g. Chrome just draws a straight line)
 			// Works ok on Firefox 85.
-<span class="fc" id="L152">			decorations.append(&quot;wavy underline &quot;);</span>
+<span class="fc" id="L153">			decorations.append(&quot;wavy underline &quot;);</span>
 		}
 
-<span class="fc bfc" id="L155" title="All 2 branches covered.">		final String textDecoration = decorations.length() &gt; 0 ? decorations.toString().trim() : null;</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">		final String textDecoration = decorations.length() &gt; 0 ? decorations.toString().trim() : null;</span>
 
-<span class="fc" id="L157">		String backColor = null;</span>
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {</span>
-<span class="nc" id="L159">			final HColor back = fontConfiguration.getExtendedColor();</span>
-<span class="nc bnc" id="L160" title="All 2 branches missed.">			if (back instanceof HColorGradient) {</span>
-<span class="nc" id="L161">				final HColorGradient gr = (HColorGradient) back;</span>
-<span class="nc" id="L162">				final String id = svg.createSvgGradient(gr.getColor1().toRGB(mapper), gr.getColor2().toRGB(mapper),</span>
-<span class="nc" id="L163">						gr.getPolicy());</span>
-<span class="nc" id="L164">				svg.setFillColor(&quot;url(#&quot; + id + &quot;)&quot;);</span>
-<span class="nc" id="L165">				svg.setStrokeColor(null);</span>
-<span class="nc" id="L166">				final double deltaPatch = 2;</span>
-<span class="nc" id="L167">				svg.svgRectangle(x, y - height + deltaPatch, width, height, 0, 0, 0/* , null, null */);</span>
+<span class="fc" id="L158">		String backColor = null;</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {</span>
+<span class="nc" id="L160">			final HColor back = fontConfiguration.getExtendedColor();</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">			if (back instanceof HColorGradient) {</span>
+<span class="nc" id="L162">				final HColorGradient gr = (HColorGradient) back;</span>
+<span class="nc" id="L163">				final String id = svg.createSvgGradient(gr.getColor1().toRGB(mapper), gr.getColor2().toRGB(mapper),</span>
+<span class="nc" id="L164">						gr.getPolicy());</span>
+<span class="nc" id="L165">				svg.setFillColor(&quot;url(#&quot; + id + &quot;)&quot;);</span>
+<span class="nc" id="L166">				svg.setStrokeColor(null);</span>
+<span class="nc" id="L167">				final double deltaPatch = 2;</span>
+<span class="nc" id="L168">				svg.svgRectangle(x, y - height + deltaPatch, width, height, 0, 0, 0/* , null, null */);</span>
 
-<span class="nc" id="L169">			} else</span>
-<span class="nc" id="L170">				backColor = back.toRGB(mapper);</span>
+<span class="nc" id="L170">			} else</span>
+<span class="nc" id="L171">				backColor = back.toRGB(mapper);</span>
 
 		}
 
-<span class="fc" id="L174">		final HColor textColor = fontConfiguration.getColor();</span>
-<span class="fc" id="L175">		svg.setFillColor(textColor.toSvg(mapper));</span>
-<span class="fc" id="L176">		svg.text(text, x, y, font.getFamily(text, UFontContext.SVG), font.getSize(), fontWeight, fontStyle,</span>
-<span class="fc" id="L177">				textDecoration, width, fontConfiguration.getAttributes(), backColor, shape.getOrientation());</span>
+<span class="fc" id="L175">		final HColor textColor = fontConfiguration.getColor();</span>
+<span class="fc" id="L176">		svg.setFillColor(textColor.toSvg(mapper));</span>
+<span class="fc" id="L177">		svg.text(text, x, y, font.getFamily(text, UFontContext.SVG), font.getSize(), fontWeight, fontStyle,</span>
+<span class="fc" id="L178">				textDecoration, width, fontConfiguration.getAttributes(), backColor, shape.getOrientation());</span>
 
-<span class="fc" id="L179">		extraLines.drawAll(x, y, width, font, mapper, svg);</span>
+<span class="fc" id="L180">		extraLines.drawAll(x, y, width, font, mapper, svg);</span>
 
-<span class="fc" id="L181">	}</span>
+<span class="fc" id="L182">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

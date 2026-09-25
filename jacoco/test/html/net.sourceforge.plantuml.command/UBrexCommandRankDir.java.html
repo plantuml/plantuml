@@ -77,7 +77,7 @@ public class UBrexCommandRankDir extends UBrexSingleLineCommand2&lt;TitledDiagra
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L80">		final String s = StringUtils.goUpperCase(arg.get(&quot;DIRECTION&quot;, 0)).replace(' ', '_');</span>
+<span class="nc" id="L80">		final String s = StringUtils.replaceChar(StringUtils.goUpperCase(arg.get(&quot;DIRECTION&quot;, 0)), ' ', '_');</span>
 <span class="nc" id="L81">		((SkinParam) diagram.getSkinParam()).setRankdir(Rankdir.valueOf(s));</span>
 		// diagram.setRankdir(Rankdir.valueOf(s));
 <span class="nc" id="L83">		return CommandExecutionResult.ok();</span>

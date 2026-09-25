@@ -1870,7 +1870,7 @@
                 <TotalClasses>37</TotalClasses>
                 <ConcreteClasses>24</ConcreteClasses>
                 <AbstractClasses>13</AbstractClasses>
-                <Ca>99</Ca>
+                <Ca>100</Ca>
                 <Ce>33</Ce>
                 <A>0.35</A>
                 <I>0.25</I>
@@ -2037,6 +2037,7 @@
                 <Package>net.sourceforge.plantuml.activitydiagram3</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3.command</Package>
                 <Package>net.sourceforge.plantuml.ant</Package>
+                <Package>net.sourceforge.plantuml.api</Package>
                 <Package>net.sourceforge.plantuml.api.v2</Package>
                 <Package>net.sourceforge.plantuml.asciiart</Package>
                 <Package>net.sourceforge.plantuml.asciiverse</Package>
@@ -3653,10 +3654,10 @@
                 <ConcreteClasses>5</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
                 <Ca>10</Ca>
-                <Ce>7</Ce>
+                <Ce>8</Ce>
                 <A>0.5</A>
-                <I>0.41</I>
-                <D>0.09</D>
+                <I>0.44</I>
+                <D>0.06</D>
                 <V>1</V>
             </Stats>
 
@@ -3701,6 +3702,7 @@
                 <Package>java.lang.annotation</Package>
                 <Package>java.text</Package>
                 <Package>java.util</Package>
+                <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
                 <Package>net.sourceforge.plantuml.url</Package>

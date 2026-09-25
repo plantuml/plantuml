@@ -131,7 +131,7 @@ public class GraphvizVersionFinder {
 
 <span class="nc" id="L132">			sb.append(p.getError());</span>
 		}
-<span class="nc" id="L134">		return StringUtils.trin(sb.toString().replace('\n', ' '));</span>
+<span class="nc" id="L134">		return StringUtils.trin(StringUtils.replaceChar(sb.toString(), '\n', ' '));</span>
 	}
 
 	private String[] getCommandLine() {

@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -66,252 +67,252 @@ public class WBlock {
 	private final double forcedHeight;
 	private final HColor color;
 
-<span class="nc" id="L69">	private final List&lt;WBlock&gt; children = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L70">	private final List&lt;WBlock&gt; children = new ArrayList&lt;&gt;();</span>
 	private final UTranslate position;
 	private WBlock parent;
 
-<span class="nc" id="L73">	private UTranslate cursor = new UTranslate(10, STARTING_Y);</span>
-<span class="nc" id="L74">	private WBlock addedToCursor = null;</span>
+<span class="nc" id="L74">	private UTranslate cursor = new UTranslate(10, STARTING_Y);</span>
+<span class="nc" id="L75">	private WBlock addedToCursor = null;</span>
 
 	private UTranslate futureOutHorizontal;
 	private UTranslate futureOutVertical;
 
-<span class="nc" id="L79">	private final List&lt;WPrint&gt; prints = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L80">	private final List&lt;WPrint&gt; prints = new ArrayList&lt;&gt;();</span>
 
 	public UTranslate getAbsolutePosition(String supx, String supy) {
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (parent == null)</span>
-<span class="nc" id="L83">			return position;</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (parent == null)</span>
+<span class="nc" id="L84">			return position;</span>
 
-<span class="nc" id="L85">		final UTranslate p = parent.getAbsolutePosition(&quot;0&quot;, &quot;0&quot;);</span>
+<span class="nc" id="L86">		final UTranslate p = parent.getAbsolutePosition(&quot;0&quot;, &quot;0&quot;);</span>
 
-<span class="nc" id="L87">		final double x = position.getDx() + p.getDx() + parseWidth(supx);</span>
-<span class="nc" id="L88">		final double y = position.getDy() + p.getDy() + parseHeight(supy);</span>
-<span class="nc" id="L89">		return new UTranslate(x, y);</span>
+<span class="nc" id="L88">		final double x = position.getDx() + p.getDx() + parseWidth(supx);</span>
+<span class="nc" id="L89">		final double y = position.getDy() + p.getDy() + parseHeight(supy);</span>
+<span class="nc" id="L90">		return new UTranslate(x, y);</span>
 
 	}
 
 	private double parseWidth(String value) {
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (value.endsWith(&quot;%&quot;)) {</span>
-<span class="nc" id="L95">			final double p = Double.parseDouble(value.substring(0, value.length() - 1)) / 100.0;</span>
-<span class="nc" id="L96">			return getMaxDimension().getWidth() * p;</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (value.endsWith(&quot;%&quot;)) {</span>
+<span class="nc" id="L96">			final double p = Double.parseDouble(value.substring(0, value.length() - 1)) / 100.0;</span>
+<span class="nc" id="L97">			return getMaxDimension().getWidth() * p;</span>
 		}
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (value.contains(&quot;%&quot;)) {</span>
-<span class="nc" id="L99">			final StringTokenizer st = new StringTokenizer(value, &quot;%&quot;);</span>
-<span class="nc" id="L100">			final String v1 = st.nextToken();</span>
-<span class="nc" id="L101">			final String v2 = st.nextToken();</span>
-<span class="nc" id="L102">			final double p = Double.parseDouble(v1) / 100.0;</span>
-<span class="nc" id="L103">			return getMaxDimension().getWidth() * p + Double.parseDouble(v2);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (value.contains(&quot;%&quot;)) {</span>
+<span class="nc" id="L100">			final StringTokenizer st = new StringTokenizer(value, &quot;%&quot;);</span>
+<span class="nc" id="L101">			final String v1 = st.nextToken();</span>
+<span class="nc" id="L102">			final String v2 = st.nextToken();</span>
+<span class="nc" id="L103">			final double p = Double.parseDouble(v1) / 100.0;</span>
+<span class="nc" id="L104">			return getMaxDimension().getWidth() * p + Double.parseDouble(v2);</span>
 		}
-<span class="nc" id="L105">		return Double.parseDouble(value);</span>
+<span class="nc" id="L106">		return Double.parseDouble(value);</span>
 	}
 
 	private double parseHeight(String value) {
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (value.endsWith(&quot;%&quot;)) {</span>
-<span class="nc" id="L110">			final double p = Double.parseDouble(value.substring(0, value.length() - 1)) / 100.0;</span>
-<span class="nc" id="L111">			return getMaxDimension().getHeight() * p;</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (value.endsWith(&quot;%&quot;)) {</span>
+<span class="nc" id="L111">			final double p = Double.parseDouble(value.substring(0, value.length() - 1)) / 100.0;</span>
+<span class="nc" id="L112">			return getMaxDimension().getHeight() * p;</span>
 		}
-<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (value.contains(&quot;%&quot;)) {</span>
-<span class="nc" id="L114">			final StringTokenizer st = new StringTokenizer(value, &quot;%&quot;);</span>
-<span class="nc" id="L115">			final String v1 = st.nextToken();</span>
-<span class="nc" id="L116">			final String v2 = st.nextToken();</span>
-<span class="nc" id="L117">			final double p = Double.parseDouble(v1) / 100.0;</span>
-<span class="nc" id="L118">			return getMaxDimension().getHeight() * p + Double.parseDouble(v2);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (value.contains(&quot;%&quot;)) {</span>
+<span class="nc" id="L115">			final StringTokenizer st = new StringTokenizer(value, &quot;%&quot;);</span>
+<span class="nc" id="L116">			final String v1 = st.nextToken();</span>
+<span class="nc" id="L117">			final String v2 = st.nextToken();</span>
+<span class="nc" id="L118">			final double p = Double.parseDouble(v1) / 100.0;</span>
+<span class="nc" id="L119">			return getMaxDimension().getHeight() * p + Double.parseDouble(v2);</span>
 		}
-<span class="nc" id="L120">		return Double.parseDouble(value);</span>
+<span class="nc" id="L121">		return Double.parseDouble(value);</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L125">		return name + &quot; &quot; + position;</span>
+<span class="nc" id="L126">		return name + &quot; &quot; + position;</span>
 	}
 
-<span class="nc" id="L128">	public WBlock(String name, UTranslate position, double width, double height, HColor color) {</span>
-<span class="nc" id="L129">		this.name = name;</span>
-<span class="nc" id="L130">		this.forcedWidth = width;</span>
-<span class="nc" id="L131">		this.forcedHeight = height;</span>
-<span class="nc" id="L132">		this.color = color;</span>
-<span class="nc" id="L133">		this.position = position;</span>
-<span class="nc" id="L134">	}</span>
+<span class="nc" id="L129">	public WBlock(String name, UTranslate position, double width, double height, HColor color) {</span>
+<span class="nc" id="L130">		this.name = name;</span>
+<span class="nc" id="L131">		this.forcedWidth = width;</span>
+<span class="nc" id="L132">		this.forcedHeight = height;</span>
+<span class="nc" id="L133">		this.color = color;</span>
+<span class="nc" id="L134">		this.position = position;</span>
+<span class="nc" id="L135">	}</span>
 
 	private WBlock getChildByName(String name) {
-<span class="nc bnc" id="L137" title="All 2 branches missed.">		for (WBlock child : children)</span>
-<span class="nc bnc" id="L138" title="All 2 branches missed.">			if (name.equals(child.getName()))</span>
-<span class="nc" id="L139">				return child;</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		for (WBlock child : children)</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">			if (name.equals(child.getName()))</span>
+<span class="nc" id="L140">				return child;</span>
 
-<span class="nc" id="L141">		return null;</span>
+<span class="nc" id="L142">		return null;</span>
 	}
 
 	public WBlock getBlock(String name) {
-<span class="nc" id="L145">		final int x = name.indexOf('.');</span>
-<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (x == -1)</span>
-<span class="nc" id="L147">			return getChildByName(name);</span>
+<span class="nc" id="L146">		final int x = name.indexOf('.');</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">		if (x == -1)</span>
+<span class="nc" id="L148">			return getChildByName(name);</span>
 
-<span class="nc" id="L149">		final WBlock first = getChildByName(name.substring(0, x));</span>
-<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (first == null)</span>
-<span class="nc" id="L151">			return null;</span>
+<span class="nc" id="L150">		final WBlock first = getChildByName(name.substring(0, x));</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (first == null)</span>
+<span class="nc" id="L152">			return null;</span>
 
-<span class="nc" id="L153">		return first.getBlock(name.substring(x + 1));</span>
+<span class="nc" id="L154">		return first.getBlock(name.substring(x + 1));</span>
 	}
 
 	private String getName() {
-<span class="nc" id="L157">		return name;</span>
+<span class="nc" id="L158">		return name;</span>
 	}
 
 	public CommandExecutionResult newColumn(int level) {
-<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (level == 0) {</span>
-<span class="nc" id="L162">			final XDimension2D max = getNaturalDimension();</span>
-<span class="nc" id="L163">			this.cursor = new UTranslate(max.getWidth() + 10, STARTING_Y);</span>
-<span class="nc" id="L164">			this.addedToCursor = null;</span>
-<span class="nc" id="L165">			return CommandExecutionResult.ok();</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (level == 0) {</span>
+<span class="nc" id="L163">			final XDimension2D max = getNaturalDimension();</span>
+<span class="nc" id="L164">			this.cursor = new UTranslate(max.getWidth() + 10, STARTING_Y);</span>
+<span class="nc" id="L165">			this.addedToCursor = null;</span>
+<span class="nc" id="L166">			return CommandExecutionResult.ok();</span>
 		}
-<span class="nc" id="L167">		return getLastChild().newColumn(level - 1);</span>
+<span class="nc" id="L168">		return getLastChild().newColumn(level - 1);</span>
 	}
 
 	public CommandExecutionResult wgoto(int level, double x, double y) {
-<span class="nc bnc" id="L171" title="All 2 branches missed.">		if (level == 0) {</span>
-<span class="nc" id="L172">			this.cursor = new UTranslate(x, y);</span>
-<span class="nc" id="L173">			this.addedToCursor = null;</span>
-<span class="nc" id="L174">			return CommandExecutionResult.ok();</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (level == 0) {</span>
+<span class="nc" id="L173">			this.cursor = new UTranslate(x, y);</span>
+<span class="nc" id="L174">			this.addedToCursor = null;</span>
+<span class="nc" id="L175">			return CommandExecutionResult.ok();</span>
 		}
-<span class="nc" id="L176">		return getLastChild().wgoto(level - 1, x, y);</span>
+<span class="nc" id="L177">		return getLastChild().wgoto(level - 1, x, y);</span>
 	}
 
 	public CommandExecutionResult wmove(int level, double x, double y) {
-<span class="nc bnc" id="L180" title="All 2 branches missed.">		if (level == 0) {</span>
-<span class="nc" id="L181">			this.cursor = this.cursor.compose(new UTranslate(x, y));</span>
-<span class="nc" id="L182">			return CommandExecutionResult.ok();</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">		if (level == 0) {</span>
+<span class="nc" id="L182">			this.cursor = this.cursor.compose(new UTranslate(x, y));</span>
+<span class="nc" id="L183">			return CommandExecutionResult.ok();</span>
 		}
-<span class="nc" id="L184">		return getLastChild().wmove(level - 1, x, y);</span>
+<span class="nc" id="L185">		return getLastChild().wmove(level - 1, x, y);</span>
 	}
 
 	public CommandExecutionResult print(StringBounder stringBounder, ISkinParam skinParam, int level, String text) {
-<span class="nc bnc" id="L188" title="All 2 branches missed.">		if (level == 0) {</span>
-<span class="nc" id="L189">			final WPrint print = new WPrint(skinParam, getNextPosition(), null, Display.getWithNewlines(skinParam.getPragma(), text));</span>
-<span class="nc" id="L190">			this.prints.add(print);</span>
-<span class="nc" id="L191">			this.cursor = this.cursor.compose(UTranslate.dy(print.getHeight(stringBounder)));</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">		if (level == 0) {</span>
+<span class="nc" id="L190">			final WPrint print = new WPrint(skinParam, getNextPosition(), null, Display.getWithNewlines(skinParam.getPragma(), text));</span>
+<span class="nc" id="L191">			this.prints.add(print);</span>
+<span class="nc" id="L192">			this.cursor = this.cursor.compose(UTranslate.dy(print.getHeight(stringBounder)));</span>
 
-<span class="nc" id="L193">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L194">			return CommandExecutionResult.ok();</span>
 		}
-<span class="nc" id="L195">		return getLastChild().print(stringBounder, skinParam, level - 1, text);</span>
+<span class="nc" id="L196">		return getLastChild().print(stringBounder, skinParam, level - 1, text);</span>
 	}
 
 	public CommandExecutionResult addBlock(int level, String name, double width, double height, HColor color) {
-<span class="nc bnc" id="L199" title="All 2 branches missed.">		if (name.contains(&quot;.&quot;)) {</span>
-<span class="nc" id="L200">			throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">		if (name.contains(&quot;.&quot;)) {</span>
+<span class="nc" id="L201">			throw new IllegalArgumentException();</span>
 		}
-<span class="nc bnc" id="L202" title="All 2 branches missed.">		if (getChildByName(name) != null) {</span>
-<span class="nc" id="L203">			return CommandExecutionResult.error(&quot;Component exists already&quot;);</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">		if (getChildByName(name) != null) {</span>
+<span class="nc" id="L204">			return CommandExecutionResult.error(&quot;Component exists already&quot;);</span>
 		}
-<span class="nc bnc" id="L205" title="All 2 branches missed.">		if (level == 0) {</span>
-<span class="nc" id="L206">			this.cursor = this.cursor.compose(UTranslate.dy(10));</span>
-<span class="nc" id="L207">			final WBlock newBlock = new WBlock(name, getNextPosition(), width, height, color);</span>
-<span class="nc" id="L208">			this.cursor = this.cursor.compose(UTranslate.dy(10));</span>
-<span class="nc" id="L209">			this.addedToCursor = newBlock;</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">		if (level == 0) {</span>
+<span class="nc" id="L207">			this.cursor = this.cursor.compose(UTranslate.dy(10));</span>
+<span class="nc" id="L208">			final WBlock newBlock = new WBlock(name, getNextPosition(), width, height, color);</span>
+<span class="nc" id="L209">			this.cursor = this.cursor.compose(UTranslate.dy(10));</span>
+<span class="nc" id="L210">			this.addedToCursor = newBlock;</span>
 
-<span class="nc" id="L211">			children.add(newBlock);</span>
-<span class="nc" id="L212">			newBlock.parent = this;</span>
-<span class="nc" id="L213">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L212">			children.add(newBlock);</span>
+<span class="nc" id="L213">			newBlock.parent = this;</span>
+<span class="nc" id="L214">			return CommandExecutionResult.ok();</span>
 		}
 
-<span class="nc" id="L216">		final WBlock last = getLastChild();</span>
-<span class="nc" id="L217">		return last.addBlock(level - 1, name, width, height, color);</span>
+<span class="nc" id="L217">		final WBlock last = getLastChild();</span>
+<span class="nc" id="L218">		return last.addBlock(level - 1, name, width, height, color);</span>
 	}
 
 	private UTranslate getNextPosition() {
-<span class="nc bnc" id="L221" title="All 2 branches missed.">		if (this.addedToCursor != null) {</span>
-<span class="nc" id="L222">			final XDimension2D dim = this.addedToCursor.getMaxDimension();</span>
-<span class="nc" id="L223">			this.cursor = this.cursor.compose(UTranslate.dy(dim.getHeight()));</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">		if (this.addedToCursor != null) {</span>
+<span class="nc" id="L223">			final XDimension2D dim = this.addedToCursor.getMaxDimension();</span>
+<span class="nc" id="L224">			this.cursor = this.cursor.compose(UTranslate.dy(dim.getHeight()));</span>
 		}
-<span class="nc" id="L225">		this.addedToCursor = null;</span>
-<span class="nc" id="L226">		return this.cursor;</span>
+<span class="nc" id="L226">		this.addedToCursor = null;</span>
+<span class="nc" id="L227">		return this.cursor;</span>
 	}
 
 	private WBlock getLastChild() {
-<span class="nc bnc" id="L230" title="All 2 branches missed.">		if (children.size() == 0)</span>
-<span class="nc" id="L231">			return null;</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">		if (children.size() == 0)</span>
+<span class="nc" id="L232">			return null;</span>
 
-<span class="nc" id="L233">		return children.get(children.size() - 1);</span>
+<span class="nc" id="L234">		return children.get(children.size() - 1);</span>
 	}
 
 	public void drawMe(UGraphic ug) {
-<span class="nc" id="L237">		drawBox(ug);</span>
-<span class="nc" id="L238">		final UFont font = UFontFactory.sansSerif(12);</span>
-<span class="nc" id="L239">		final FontConfiguration fc = FontConfiguration.create(font, getBlack(), getBlack(), null);</span>
-<span class="nc" id="L240">		final Display display = Display.create(name.replace('_', ' '));</span>
-<span class="nc" id="L241">		final TextBlock text = display.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty());</span>
-<span class="nc" id="L242">		text.drawU(ug.apply(UTranslate.dx(5)));</span>
+<span class="nc" id="L238">		drawBox(ug);</span>
+<span class="nc" id="L239">		final UFont font = UFontFactory.sansSerif(12);</span>
+<span class="nc" id="L240">		final FontConfiguration fc = FontConfiguration.create(font, getBlack(), getBlack(), null);</span>
+<span class="nc" id="L241">		final Display display = Display.create(StringUtils.replaceChar(name, '_', ' '));</span>
+<span class="nc" id="L242">		final TextBlock text = display.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty());</span>
+<span class="nc" id="L243">		text.drawU(ug.apply(UTranslate.dx(5)));</span>
 
-<span class="nc" id="L244">	}</span>
+<span class="nc" id="L245">	}</span>
 
 	private HColor getBlack() {
-<span class="nc" id="L247">		return HColors.BLACK.withDark(HColors.WHITE);</span>
+<span class="nc" id="L248">		return HColors.BLACK.withDark(HColors.WHITE);</span>
 	}
 
 	private void drawBox(UGraphic ug) {
-<span class="nc" id="L251">		ug = ug.apply(getBlack());</span>
-<span class="nc bnc" id="L252" title="All 2 branches missed.">		if (name.length() &gt; 0) {</span>
-<span class="nc" id="L253">			final URectangle rect = URectangle.build(getMaxDimension());</span>
-<span class="nc" id="L254">			UGraphic ugRect = ug;</span>
-<span class="nc bnc" id="L255" title="All 2 branches missed.">			if (color != null) {</span>
-<span class="nc" id="L256">				ugRect = ugRect.apply(color.bg());</span>
+<span class="nc" id="L252">		ug = ug.apply(getBlack());</span>
+<span class="nc bnc" id="L253" title="All 2 branches missed.">		if (name.length() &gt; 0) {</span>
+<span class="nc" id="L254">			final URectangle rect = URectangle.build(getMaxDimension());</span>
+<span class="nc" id="L255">			UGraphic ugRect = ug;</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">			if (color != null) {</span>
+<span class="nc" id="L257">				ugRect = ugRect.apply(color.bg());</span>
 			}
-<span class="nc" id="L258">			ugRect.draw(rect);</span>
+<span class="nc" id="L259">			ugRect.draw(rect);</span>
 		}
-<span class="nc bnc" id="L260" title="All 2 branches missed.">		for (WBlock child : children) {</span>
-<span class="nc" id="L261">			child.drawMe(ug.apply(child.position));</span>
-<span class="nc" id="L262">		}</span>
-<span class="nc bnc" id="L263" title="All 2 branches missed.">		for (WPrint print : prints) {</span>
-<span class="nc" id="L264">			print.drawMe(ug.apply(print.getPosition()));</span>
-<span class="nc" id="L265">		}</span>
-<span class="nc" id="L266">	}</span>
+<span class="nc bnc" id="L261" title="All 2 branches missed.">		for (WBlock child : children) {</span>
+<span class="nc" id="L262">			child.drawMe(ug.apply(child.position));</span>
+<span class="nc" id="L263">		}</span>
+<span class="nc bnc" id="L264" title="All 2 branches missed.">		for (WPrint print : prints) {</span>
+<span class="nc" id="L265">			print.drawMe(ug.apply(print.getPosition()));</span>
+<span class="nc" id="L266">		}</span>
+<span class="nc" id="L267">	}</span>
 
 	public XDimension2D getMaxDimension() {
-<span class="nc bnc" id="L269" title="All 2 branches missed.">		if (children.size() &gt; 0) {</span>
-<span class="nc bnc" id="L270" title="All 2 branches missed.">			if (forcedWidth != 0) {</span>
-<span class="nc" id="L271">				return new XDimension2D(forcedWidth, forcedHeight);</span>
+<span class="nc bnc" id="L270" title="All 2 branches missed.">		if (children.size() &gt; 0) {</span>
+<span class="nc bnc" id="L271" title="All 2 branches missed.">			if (forcedWidth != 0) {</span>
+<span class="nc" id="L272">				return new XDimension2D(forcedWidth, forcedHeight);</span>
 			}
-<span class="nc" id="L273">			return getNaturalDimension();</span>
+<span class="nc" id="L274">			return getNaturalDimension();</span>
 		}
-<span class="nc bnc" id="L275" title="All 2 branches missed.">		final double x = forcedWidth == 0 ? 100 : forcedWidth;</span>
-<span class="nc bnc" id="L276" title="All 2 branches missed.">		final double y = forcedHeight == 0 ? 100 : forcedHeight;</span>
-<span class="nc" id="L277">		return new XDimension2D(x, y);</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">		final double x = forcedWidth == 0 ? 100 : forcedWidth;</span>
+<span class="nc bnc" id="L277" title="All 2 branches missed.">		final double y = forcedHeight == 0 ? 100 : forcedHeight;</span>
+<span class="nc" id="L278">		return new XDimension2D(x, y);</span>
 	}
 
 	private XDimension2D getNaturalDimension() {
-<span class="nc" id="L281">		double x = 0;</span>
-<span class="nc" id="L282">		double y = 0;</span>
-<span class="nc bnc" id="L283" title="All 2 branches missed.">		for (WBlock child : children) {</span>
-<span class="nc" id="L284">			final XDimension2D dim = child.getMaxDimension();</span>
-<span class="nc" id="L285">			x = Math.max(x, child.position.getDx() + dim.getWidth() + 10);</span>
-<span class="nc" id="L286">			y = Math.max(y, child.position.getDy() + dim.getHeight() + 10);</span>
-<span class="nc" id="L287">		}</span>
-<span class="nc" id="L288">		return new XDimension2D(x, y);</span>
+<span class="nc" id="L282">		double x = 0;</span>
+<span class="nc" id="L283">		double y = 0;</span>
+<span class="nc bnc" id="L284" title="All 2 branches missed.">		for (WBlock child : children) {</span>
+<span class="nc" id="L285">			final XDimension2D dim = child.getMaxDimension();</span>
+<span class="nc" id="L286">			x = Math.max(x, child.position.getDx() + dim.getWidth() + 10);</span>
+<span class="nc" id="L287">			y = Math.max(y, child.position.getDy() + dim.getHeight() + 10);</span>
+<span class="nc" id="L288">		}</span>
+<span class="nc" id="L289">		return new XDimension2D(x, y);</span>
 	}
 
 	public UTranslate getNextOutHorizontal(String x, String y, WLinkType type) {
 		final UTranslate result;
-<span class="nc bnc" id="L293" title="All 4 branches missed.">		if (x != null &amp;&amp; y != null) {</span>
-<span class="nc" id="L294">			result = getAbsolutePosition(x, y);</span>
-<span class="nc bnc" id="L295" title="All 2 branches missed.">		} else if (futureOutHorizontal == null) {</span>
-<span class="nc" id="L296">			result = getAbsolutePosition(&quot;100%&quot;, &quot;5&quot;);</span>
+<span class="nc bnc" id="L294" title="All 4 branches missed.">		if (x != null &amp;&amp; y != null) {</span>
+<span class="nc" id="L295">			result = getAbsolutePosition(x, y);</span>
+<span class="nc bnc" id="L296" title="All 2 branches missed.">		} else if (futureOutHorizontal == null) {</span>
+<span class="nc" id="L297">			result = getAbsolutePosition(&quot;100%&quot;, &quot;5&quot;);</span>
 		} else {
-<span class="nc" id="L298">			result = futureOutHorizontal;</span>
+<span class="nc" id="L299">			result = futureOutHorizontal;</span>
 		}
-<span class="nc" id="L300">		futureOutHorizontal = result.compose(UTranslate.dy(type.spaceForNext()));</span>
-<span class="nc" id="L301">		return result;</span>
+<span class="nc" id="L301">		futureOutHorizontal = result.compose(UTranslate.dy(type.spaceForNext()));</span>
+<span class="nc" id="L302">		return result;</span>
 	}
 
 	public UTranslate getNextOutVertical(String x, String y, WLinkType type) {
 		final UTranslate result;
-<span class="nc bnc" id="L306" title="All 4 branches missed.">		if (x != null &amp;&amp; y != null) {</span>
-<span class="nc" id="L307">			result = getAbsolutePosition(x, y);</span>
-<span class="nc bnc" id="L308" title="All 2 branches missed.">		} else if (futureOutVertical == null) {</span>
-<span class="nc" id="L309">			result = getAbsolutePosition(&quot;5&quot;, &quot;100%&quot;);</span>
+<span class="nc bnc" id="L307" title="All 4 branches missed.">		if (x != null &amp;&amp; y != null) {</span>
+<span class="nc" id="L308">			result = getAbsolutePosition(x, y);</span>
+<span class="nc bnc" id="L309" title="All 2 branches missed.">		} else if (futureOutVertical == null) {</span>
+<span class="nc" id="L310">			result = getAbsolutePosition(&quot;5&quot;, &quot;100%&quot;);</span>
 		} else {
-<span class="nc" id="L311">			result = futureOutVertical;</span>
+<span class="nc" id="L312">			result = futureOutVertical;</span>
 		}
-<span class="nc" id="L313">		futureOutVertical = result.compose(UTranslate.dx(type.spaceForNext()));</span>
-<span class="nc" id="L314">		return result;</span>
+<span class="nc" id="L314">		futureOutVertical = result.compose(UTranslate.dx(type.spaceForNext()));</span>
+<span class="nc" id="L315">		return result;</span>
 	}
 
 }

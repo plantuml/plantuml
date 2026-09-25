@@ -155,7 +155,7 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 <span class="nc" id="L155">			localLog(&quot;adr=&quot; + incoming.getInetAddress().getHostAddress());</span>
 <span class="nc" id="L156">			final String ipServer = ftpServer.getIpServer();</span>
 <span class="nc" id="L157">			localLog(&quot;server=&quot; + ipServer);</span>
-<span class="nc" id="L158">			myOut(&quot;227 Entering Passive Mode (&quot; + ipServer.replace('.', ',') + &quot;,&quot; + p1 + &quot;,&quot; + p2 + &quot;).&quot;);</span>
+<span class="nc" id="L158">			myOut(&quot;227 Entering Passive Mode (&quot; + StringUtils.replaceChar(ipServer, '.', ',') + &quot;,&quot; + p1 + &quot;,&quot; + p2 + &quot;).&quot;);</span>
 <span class="nc" id="L159">			ipClient = ipServer;</span>
 <span class="nc bnc" id="L160" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;RETR&quot;)) {</span>
 <span class="nc bnc" id="L161" title="All 2 branches missed.">			if (mode == Mode.ACTIF) {</span>

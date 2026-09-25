@@ -145,7 +145,7 @@ public class CommandCreateState extends SingleLineCommand2&lt;StateDiagram&gt; {
 <span class="nc" id="L145">			sb.append(&quot;, stereotyped &quot;).append(arg.get(&quot;STEREOGROUP&quot;, 0));</span>
 <span class="nc" id="L146">			final LeafType type = stereogroup.getLeafType();</span>
 <span class="nc bnc" id="L147" title="All 2 branches missed.">			if (type != null)</span>
-<span class="nc" id="L148">				sb.append(&quot; (pseudo-state type: &quot;).append(StringUtils.goLowerCase(type.name()).replace('_', ' '))</span>
+<span class="nc" id="L148">				sb.append(&quot; (pseudo-state type: &quot;).append(StringUtils.replaceChar(StringUtils.goLowerCase(type.name()), '_', ' '))</span>
 <span class="nc" id="L149">						.append(&quot;)&quot;);</span>
 		}
 

@@ -49,6 +49,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import net.sourceforge.plantuml.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -65,125 +66,125 @@ public class XmiStateDiagram implements XmlDiagramTransformer {
 	private final Document document;
 	private final Element ownedElement;
 
-<span class="nc" id="L68">	public XmiStateDiagram(StateDiagram diagram) throws ParserConfigurationException {</span>
-<span class="nc" id="L69">		this.diagram = diagram;</span>
+<span class="nc" id="L69">	public XmiStateDiagram(StateDiagram diagram) throws ParserConfigurationException {</span>
+<span class="nc" id="L70">		this.diagram = diagram;</span>
 
-<span class="nc" id="L71">		final DocumentBuilder builder = XmlFactories.newDocumentBuilder();</span>
-<span class="nc" id="L72">		this.document = builder.newDocument();</span>
-<span class="nc" id="L73">		document.setXmlVersion(&quot;1.0&quot;);</span>
-<span class="nc" id="L74">		document.setXmlStandalone(true);</span>
+<span class="nc" id="L72">		final DocumentBuilder builder = XmlFactories.newDocumentBuilder();</span>
+<span class="nc" id="L73">		this.document = builder.newDocument();</span>
+<span class="nc" id="L74">		document.setXmlVersion(&quot;1.0&quot;);</span>
+<span class="nc" id="L75">		document.setXmlStandalone(true);</span>
 
-<span class="nc" id="L76">		final Element xmi = document.createElement(&quot;XMI&quot;);</span>
-<span class="nc" id="L77">		xmi.setAttribute(&quot;xmi.version&quot;, &quot;1.1&quot;);</span>
-<span class="nc" id="L78">		xmi.setAttribute(&quot;xmlns:UML&quot;, &quot;href://org.omg/UML/1.3&quot;);</span>
-<span class="nc" id="L79">		document.appendChild(xmi);</span>
+<span class="nc" id="L77">		final Element xmi = document.createElement(&quot;XMI&quot;);</span>
+<span class="nc" id="L78">		xmi.setAttribute(&quot;xmi.version&quot;, &quot;1.1&quot;);</span>
+<span class="nc" id="L79">		xmi.setAttribute(&quot;xmlns:UML&quot;, &quot;href://org.omg/UML/1.3&quot;);</span>
+<span class="nc" id="L80">		document.appendChild(xmi);</span>
 
-<span class="nc" id="L81">		final Element header = document.createElement(&quot;XMI.header&quot;);</span>
-<span class="nc" id="L82">		xmi.appendChild(header);</span>
+<span class="nc" id="L82">		final Element header = document.createElement(&quot;XMI.header&quot;);</span>
+<span class="nc" id="L83">		xmi.appendChild(header);</span>
 
-<span class="nc" id="L84">		final Element metamodel = document.createElement(&quot;XMI.metamodel&quot;);</span>
-<span class="nc" id="L85">		metamodel.setAttribute(&quot;xmi.name&quot;, &quot;UML&quot;);</span>
-<span class="nc" id="L86">		metamodel.setAttribute(&quot;xmi.version&quot;, &quot;1.3&quot;);</span>
-<span class="nc" id="L87">		header.appendChild(metamodel);</span>
+<span class="nc" id="L85">		final Element metamodel = document.createElement(&quot;XMI.metamodel&quot;);</span>
+<span class="nc" id="L86">		metamodel.setAttribute(&quot;xmi.name&quot;, &quot;UML&quot;);</span>
+<span class="nc" id="L87">		metamodel.setAttribute(&quot;xmi.version&quot;, &quot;1.3&quot;);</span>
+<span class="nc" id="L88">		header.appendChild(metamodel);</span>
 
-<span class="nc" id="L89">		final Element content = document.createElement(&quot;XMI.content&quot;);</span>
-<span class="nc" id="L90">		xmi.appendChild(content);</span>
+<span class="nc" id="L90">		final Element content = document.createElement(&quot;XMI.content&quot;);</span>
+<span class="nc" id="L91">		xmi.appendChild(content);</span>
 
-<span class="nc" id="L92">		final Element model = document.createElement(&quot;UML:Model&quot;);</span>
-<span class="nc" id="L93">		model.setAttribute(&quot;xmi.id&quot;, CucaDiagramXmiMaker.getModel(diagram));</span>
-<span class="nc" id="L94">		model.setAttribute(&quot;name&quot;, &quot;PlantUML&quot;);</span>
-<span class="nc" id="L95">		content.appendChild(model);</span>
+<span class="nc" id="L93">		final Element model = document.createElement(&quot;UML:Model&quot;);</span>
+<span class="nc" id="L94">		model.setAttribute(&quot;xmi.id&quot;, CucaDiagramXmiMaker.getModel(diagram));</span>
+<span class="nc" id="L95">		model.setAttribute(&quot;name&quot;, &quot;PlantUML&quot;);</span>
+<span class="nc" id="L96">		content.appendChild(model);</span>
 
 		// &lt;UML:Namespace.ownedElement&gt;
-<span class="nc" id="L98">		this.ownedElement = document.createElement(&quot;UML:Namespace.ownedElement&quot;);</span>
-<span class="nc" id="L99">		model.appendChild(ownedElement);</span>
+<span class="nc" id="L99">		this.ownedElement = document.createElement(&quot;UML:Namespace.ownedElement&quot;);</span>
+<span class="nc" id="L100">		model.appendChild(ownedElement);</span>
 
-<span class="nc bnc" id="L101" title="All 2 branches missed.">		for (final Entity gr : diagram.groups())</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">			if (gr.getParentContainer().isRoot())</span>
-<span class="nc" id="L103">				addState(gr, ownedElement);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		for (final Entity gr : diagram.groups())</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">			if (gr.getParentContainer().isRoot())</span>
+<span class="nc" id="L104">				addState(gr, ownedElement);</span>
 
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		for (final Entity ent : diagram.leafs())</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">			if (ent.getParentContainer().isRoot())</span>
-<span class="nc" id="L107">				addState(ent, ownedElement);</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		for (final Entity ent : diagram.leafs())</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">			if (ent.getParentContainer().isRoot())</span>
+<span class="nc" id="L108">				addState(ent, ownedElement);</span>
 
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		for (final Link link : diagram.getLinks())</span>
-<span class="nc" id="L110">			addLink(link);</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		for (final Link link : diagram.getLinks())</span>
+<span class="nc" id="L111">			addLink(link);</span>
 
-<span class="nc" id="L112">	}</span>
+<span class="nc" id="L113">	}</span>
 
 	private void addState(final Entity tobeAdded, Element container) {
-<span class="nc" id="L115">		final Element elementState = createEntityNode(tobeAdded);</span>
-<span class="nc" id="L116">		container.appendChild(elementState);</span>
-<span class="nc bnc" id="L117" title="All 2 branches missed.">		for (final Entity ent : diagram.groups())</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">			if (ent.getParentContainer() == tobeAdded)</span>
-<span class="nc" id="L119">				addState(ent, elementState);</span>
+<span class="nc" id="L116">		final Element elementState = createEntityNode(tobeAdded);</span>
+<span class="nc" id="L117">		container.appendChild(elementState);</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		for (final Entity ent : diagram.groups())</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">			if (ent.getParentContainer() == tobeAdded)</span>
+<span class="nc" id="L120">				addState(ent, elementState);</span>
 
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		for (final Entity ent : diagram.leafs())</span>
-<span class="nc bnc" id="L122" title="All 2 branches missed.">			if (ent.getParentContainer() == tobeAdded)</span>
-<span class="nc" id="L123">				addState(ent, elementState);</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		for (final Entity ent : diagram.leafs())</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">			if (ent.getParentContainer() == tobeAdded)</span>
+<span class="nc" id="L124">				addState(ent, elementState);</span>
 
-<span class="nc" id="L125">	}</span>
+<span class="nc" id="L126">	}</span>
 
 	public static String forXMI(String s) {
-<span class="nc" id="L128">		return s.replace(':', ' ');</span>
+<span class="nc" id="L129">		return StringUtils.replaceChar(s, ':', ' ');</span>
 	}
 
 	public static String forXMI(Display s) {
-<span class="nc" id="L132">		return s.get(0).toString().replace(':', ' ');</span>
+<span class="nc" id="L133">		return StringUtils.replaceChar(s.get(0).toString(), ':', ' ');</span>
 	}
 
 	private void addLink(Link link) {
-<span class="nc" id="L136">		final String assId = diagram.getUniqueSequence(&quot;ass&quot;);</span>
+<span class="nc" id="L137">		final String assId = diagram.getUniqueSequence(&quot;ass&quot;);</span>
 
-<span class="nc" id="L138">		final Element association = document.createElement(&quot;UML:Association&quot;);</span>
-<span class="nc" id="L139">		association.setAttribute(&quot;xmi.id&quot;, assId);</span>
-<span class="nc" id="L140">		association.setAttribute(&quot;namespace&quot;, CucaDiagramXmiMaker.getModel(diagram));</span>
-<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (Display.isNull(link.getLabel()) == false)</span>
-<span class="nc" id="L142">			association.setAttribute(&quot;name&quot;, forXMI(link.getLabel()));</span>
+<span class="nc" id="L139">		final Element association = document.createElement(&quot;UML:Association&quot;);</span>
+<span class="nc" id="L140">		association.setAttribute(&quot;xmi.id&quot;, assId);</span>
+<span class="nc" id="L141">		association.setAttribute(&quot;namespace&quot;, CucaDiagramXmiMaker.getModel(diagram));</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (Display.isNull(link.getLabel()) == false)</span>
+<span class="nc" id="L143">			association.setAttribute(&quot;name&quot;, forXMI(link.getLabel()));</span>
 
-<span class="nc" id="L144">		final Element connection = document.createElement(&quot;UML:Association.connection&quot;);</span>
-<span class="nc" id="L145">		final Element end1 = document.createElement(&quot;UML:AssociationEnd&quot;);</span>
-<span class="nc" id="L146">		end1.setAttribute(&quot;xmi.id&quot;, diagram.getUniqueSequence(&quot;end&quot;));</span>
-<span class="nc" id="L147">		end1.setAttribute(&quot;association&quot;, assId);</span>
-<span class="nc" id="L148">		end1.setAttribute(&quot;type&quot;, link.getEntity1().getUid());</span>
-<span class="nc bnc" id="L149" title="All 2 branches missed.">		if (link.getQuantifier1() != null)</span>
-<span class="nc" id="L150">			end1.setAttribute(&quot;name&quot;, forXMI(link.getQuantifier1()));</span>
+<span class="nc" id="L145">		final Element connection = document.createElement(&quot;UML:Association.connection&quot;);</span>
+<span class="nc" id="L146">		final Element end1 = document.createElement(&quot;UML:AssociationEnd&quot;);</span>
+<span class="nc" id="L147">		end1.setAttribute(&quot;xmi.id&quot;, diagram.getUniqueSequence(&quot;end&quot;));</span>
+<span class="nc" id="L148">		end1.setAttribute(&quot;association&quot;, assId);</span>
+<span class="nc" id="L149">		end1.setAttribute(&quot;type&quot;, link.getEntity1().getUid());</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (link.getQuantifier1() != null)</span>
+<span class="nc" id="L151">			end1.setAttribute(&quot;name&quot;, forXMI(link.getQuantifier1()));</span>
 
-<span class="nc" id="L152">		final Element endparticipant1 = document.createElement(&quot;UML:AssociationEnd.participant&quot;);</span>
+<span class="nc" id="L153">		final Element endparticipant1 = document.createElement(&quot;UML:AssociationEnd.participant&quot;);</span>
 
-<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (link.getType().getDecor2() == LinkDecor.COMPOSITION)</span>
-<span class="nc" id="L155">			end1.setAttribute(&quot;aggregation&quot;, &quot;composite&quot;);</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (link.getType().getDecor2() == LinkDecor.COMPOSITION)</span>
+<span class="nc" id="L156">			end1.setAttribute(&quot;aggregation&quot;, &quot;composite&quot;);</span>
 
-<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (link.getType().getDecor2() == LinkDecor.AGGREGATION)</span>
-<span class="nc" id="L158">			end1.setAttribute(&quot;aggregation&quot;, &quot;aggregate&quot;);</span>
-
-		// }
-<span class="nc" id="L161">		end1.appendChild(endparticipant1);</span>
-<span class="nc" id="L162">		connection.appendChild(end1);</span>
-
-<span class="nc" id="L164">		final Element end2 = document.createElement(&quot;UML:AssociationEnd&quot;);</span>
-<span class="nc" id="L165">		end2.setAttribute(&quot;xmi.id&quot;, diagram.getUniqueSequence(&quot;end&quot;));</span>
-<span class="nc" id="L166">		end2.setAttribute(&quot;association&quot;, assId);</span>
-<span class="nc" id="L167">		end2.setAttribute(&quot;type&quot;, link.getEntity2().getUid());</span>
-<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (link.getQuantifier2() != null)</span>
-<span class="nc" id="L169">			end2.setAttribute(&quot;name&quot;, forXMI(link.getQuantifier2()));</span>
-
-<span class="nc" id="L171">		final Element endparticipant2 = document.createElement(&quot;UML:AssociationEnd.participant&quot;);</span>
-<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (link.getType().getDecor1() == LinkDecor.COMPOSITION)</span>
-<span class="nc" id="L173">			end2.setAttribute(&quot;aggregation&quot;, &quot;composite&quot;);</span>
-
-<span class="nc bnc" id="L175" title="All 2 branches missed.">		if (link.getType().getDecor1() == LinkDecor.AGGREGATION)</span>
-<span class="nc" id="L176">			end2.setAttribute(&quot;aggregation&quot;, &quot;aggregate&quot;);</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (link.getType().getDecor2() == LinkDecor.AGGREGATION)</span>
+<span class="nc" id="L159">			end1.setAttribute(&quot;aggregation&quot;, &quot;aggregate&quot;);</span>
 
 		// }
-<span class="nc" id="L179">		end2.appendChild(endparticipant2);</span>
-<span class="nc" id="L180">		connection.appendChild(end2);</span>
+<span class="nc" id="L162">		end1.appendChild(endparticipant1);</span>
+<span class="nc" id="L163">		connection.appendChild(end1);</span>
 
-<span class="nc" id="L182">		association.appendChild(connection);</span>
+<span class="nc" id="L165">		final Element end2 = document.createElement(&quot;UML:AssociationEnd&quot;);</span>
+<span class="nc" id="L166">		end2.setAttribute(&quot;xmi.id&quot;, diagram.getUniqueSequence(&quot;end&quot;));</span>
+<span class="nc" id="L167">		end2.setAttribute(&quot;association&quot;, assId);</span>
+<span class="nc" id="L168">		end2.setAttribute(&quot;type&quot;, link.getEntity2().getUid());</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">		if (link.getQuantifier2() != null)</span>
+<span class="nc" id="L170">			end2.setAttribute(&quot;name&quot;, forXMI(link.getQuantifier2()));</span>
 
-<span class="nc" id="L184">		ownedElement.appendChild(association);</span>
+<span class="nc" id="L172">		final Element endparticipant2 = document.createElement(&quot;UML:AssociationEnd.participant&quot;);</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		if (link.getType().getDecor1() == LinkDecor.COMPOSITION)</span>
+<span class="nc" id="L174">			end2.setAttribute(&quot;aggregation&quot;, &quot;composite&quot;);</span>
 
-<span class="nc" id="L186">	}</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">		if (link.getType().getDecor1() == LinkDecor.AGGREGATION)</span>
+<span class="nc" id="L177">			end2.setAttribute(&quot;aggregation&quot;, &quot;aggregate&quot;);</span>
+
+		// }
+<span class="nc" id="L180">		end2.appendChild(endparticipant2);</span>
+<span class="nc" id="L181">		connection.appendChild(end2);</span>
+
+<span class="nc" id="L183">		association.appendChild(connection);</span>
+
+<span class="nc" id="L185">		ownedElement.appendChild(association);</span>
+
+<span class="nc" id="L187">	}</span>
 
 	private Element createEntityNode(Entity entity) {
 		// &lt;UML:Class xmi.id=&quot;UMLClass.5&quot; name=&quot;Class1&quot; visibility=&quot;public&quot;
@@ -191,14 +192,14 @@ public class XmiStateDiagram implements XmlDiagramTransformer {
 		// namespace=&quot;UMLModel.4&quot; isRoot=&quot;false&quot; isLeaf=&quot;false&quot;
 		// isAbstract=&quot;false&quot; participant=&quot;UMLAssociationEnd.11&quot;
 		// isActive=&quot;false&quot;&gt;
-<span class="nc" id="L194">		final Element cla = document.createElement(&quot;UML:State&quot;);</span>
+<span class="nc" id="L195">		final Element cla = document.createElement(&quot;UML:State&quot;);</span>
 
-<span class="nc" id="L196">		cla.setAttribute(&quot;xmi.id&quot;, entity.getUid());</span>
-<span class="nc" id="L197">		cla.setAttribute(&quot;name&quot;, entity.getDisplay().get(0).toString());</span>
-<span class="nc" id="L198">		cla.setAttribute(&quot;namespace&quot;, CucaDiagramXmiMaker.getModel(diagram));</span>
+<span class="nc" id="L197">		cla.setAttribute(&quot;xmi.id&quot;, entity.getUid());</span>
+<span class="nc" id="L198">		cla.setAttribute(&quot;name&quot;, entity.getDisplay().get(0).toString());</span>
+<span class="nc" id="L199">		cla.setAttribute(&quot;namespace&quot;, CucaDiagramXmiMaker.getModel(diagram));</span>
 
-<span class="nc" id="L200">		final Element feature = document.createElement(&quot;UML:Classifier.feature&quot;);</span>
-<span class="nc" id="L201">		cla.appendChild(feature);</span>
+<span class="nc" id="L201">		final Element feature = document.createElement(&quot;UML:Classifier.feature&quot;);</span>
+<span class="nc" id="L202">		cla.appendChild(feature);</span>
 
 //		for (Member m : entity.getBodier().getFieldsToDisplay()) {
 //			// &lt;UML:Attribute xmi.id=&quot;UMLAttribute.6&quot; name=&quot;Attribute1&quot;
@@ -222,21 +223,21 @@ public class XmiStateDiagram implements XmlDiagramTransformer {
 //			operation.setAttribute(&quot;name&quot;, m.getDisplay(false));
 //			feature.appendChild(operation);
 //		}
-<span class="nc" id="L225">		return cla;</span>
+<span class="nc" id="L226">		return cla;</span>
 	}
 
 	public void transformerXml(OutputStream os) throws TransformerException, ParserConfigurationException {
-<span class="nc" id="L229">		final Source source = new DOMSource(document);</span>
+<span class="nc" id="L230">		final Source source = new DOMSource(document);</span>
 
-<span class="nc" id="L231">		final Result resultat = new StreamResult(os);</span>
+<span class="nc" id="L232">		final Result resultat = new StreamResult(os);</span>
 
-<span class="nc" id="L233">		final Transformer transformer = XmlFactories.newTransformer();</span>
-<span class="nc" id="L234">		transformer.setOutputProperty(OutputKeys.INDENT, &quot;yes&quot;);</span>
+<span class="nc" id="L234">		final Transformer transformer = XmlFactories.newTransformer();</span>
+<span class="nc" id="L235">		transformer.setOutputProperty(OutputKeys.INDENT, &quot;yes&quot;);</span>
 		// transformer.setOutputProperty(OutputKeys.ENCODING, &quot;ISO-8859-1&quot;);
-<span class="nc" id="L236">		transformer.setOutputProperty(OutputKeys.ENCODING, UTF_8.name());</span>
+<span class="nc" id="L237">		transformer.setOutputProperty(OutputKeys.ENCODING, UTF_8.name());</span>
 		// tf.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, &quot;yes&quot;);
-<span class="nc" id="L238">		transformer.transform(source, resultat);</span>
-<span class="nc" id="L239">	}</span>
+<span class="nc" id="L239">		transformer.transform(source, resultat);</span>
+<span class="nc" id="L240">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
