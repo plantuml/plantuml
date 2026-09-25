@@ -70,7 +70,7 @@ jobs:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
       - name: Set environment variable
-        run: echo "GPL_ONLY=true" >> $GITHUB_ENV
+        run: echo "GPL_ONLY=true" >> "$GITHUB_ENV"
 
       - name: Set up Java JDK
         uses: actions/setup-java@v6

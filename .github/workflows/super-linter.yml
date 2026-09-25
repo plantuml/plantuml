@@ -1,29 +1,47 @@
-# This workflow executes several linters on changed files based on languages used in your code base whenever
-# you push a code or open a pull request.
+# Runs Super-Linter on the files changed by each push / pull request.
 #
-# You can adjust the behavior by modifying this file.
-# For more information, see:
-# https://github.com/github/super-linter
+# Only the linters listed below (VALIDATE_xxx: true) are run.
+# Their configuration files live in tools/linters/ (see tools/linters/README.md).
+#
+# https://github.com/super-linter/super-linter
 name: Lint Code Base
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ master ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ master ]
+
+permissions: {}
+
 jobs:
   run-lint:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+      # To report GitHub Actions status checks
+      statuses: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Lint Code Base
-        uses: github/super-linter@v4
+        uses: super-linter/super-linter/slim@v8.7.0
         env:
-          VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: "master"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Only lint the files changed by the push / pull request
+          VALIDATE_ALL_CODEBASE: false
+          LINTER_RULES_PATH: tools/linters
+          ENABLE_GITHUB_PULL_REQUEST_SUMMARY_COMMENT: false
+          # Linters to run (all others are disabled)
+          VALIDATE_EDITORCONFIG: true
+          VALIDATE_GITHUB_ACTIONS: true
+          VALIDATE_GITLEAKS: true
+          VALIDATE_JAVA: true
+          JAVA_FILE_NAME: checkstyle.xml
+          VALIDATE_YAML: true

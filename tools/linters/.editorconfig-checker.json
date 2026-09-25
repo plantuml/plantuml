@@ -1,0 +1,14 @@
+{
+  "Exclude": [
+    "\\.spm$",
+    "\\.dat$"
+  ],
+  "Disable": {
+    "EndOfLine": false,
+    "Indentation": true,
+    "IndentSize": true,
+    "InsertFinalNewline": false,
+    "TrimTrailingWhitespace": true,
+    "MaxLineLength": true
+  }
+}

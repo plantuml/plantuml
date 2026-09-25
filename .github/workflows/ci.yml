@@ -1,9 +1,9 @@
 name: CI
 
 on:
+  # Note: the `create` event does not support filters (it fires for every
+  # branch or tag creation); .github/scripts/workflow-config.sh checks ref_type.
   create:
-    tags:
-      - '*'
   pull_request:
     types: [ opened, synchronize, reopened ]
     branches: [ master ]
@@ -58,7 +58,7 @@ jobs:
             echo "::error::Unexpected exit code (expected 16, got $CODE)"
             exit 1
           fi
-        
+
       - name: Upload plantuml.jar
         if: always()
         uses: actions/upload-artifact@v7
@@ -66,8 +66,8 @@ jobs:
           name: plantuml-jdk8-jar
           path: plantuml.jar
           if-no-files-found: error
-          retention-days: 30 
-                 
+          retention-days: 30
+
       - name: Run sample diagram test (ASCII)
         run: |
           echo "Alice -> Bob : it works!" | java -jar plantuml.jar -pipe -ttxt
@@ -155,7 +155,7 @@ jobs:
           retention-days: 30
 
       - name: Add Gradle title to Summary
-        run: echo "## Gradle" >> $GITHUB_STEP_SUMMARY
+        run: echo "## Gradle" >> "$GITHUB_STEP_SUMMARY"
 
   build_artifacts:
     needs: [ workflow_config ]
@@ -205,7 +205,7 @@ jobs:
       - name: Get release version
         id: version
         run: |
-          echo "release_version=$(gradle properties -q | grep "version:" | awk '{print $2}')" >> $GITHUB_OUTPUT
+          echo "release_version=$(gradle properties -q | grep "version:" | awk '{print $2}')" >> "$GITHUB_OUTPUT"
       - name: Cache libs
         uses: actions/cache/save@v6
         with:
@@ -546,6 +546,8 @@ jobs:
         run: |
           # Build the multi-arch manifest for each image name (Docker Hub + GHCR).
           for image in "${{ github.repository }}" "ghcr.io/${{ github.repository }}"; do
+            # Word splitting of the two $(...) below is intended
+            # shellcheck disable=SC2046
             docker buildx imagetools create \
               $(jq -cr '.tags | map(select(startswith("'"$image"'")) | "-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
               $(printf "${image}@sha256:%s " *)

@@ -95,4 +95,4 @@ jobs:
           retention-days: 30
 
       - name: Add Gradle title to Summary
-        run: echo "## Gradle" >> $GITHUB_STEP_SUMMARY
+        run: echo "## Gradle" >> "$GITHUB_STEP_SUMMARY"

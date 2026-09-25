@@ -1,0 +1,22 @@
+---
+# yamllint configuration used by Super-Linter (VALIDATE_YAML)
+# https://yamllint.readthedocs.io/en/stable/configuration.html
+extends: default
+
+rules:
+  # GitHub workflows use `on:` as a key
+  truthy:
+    check-keys: false
+  # Long `run:` lines and URLs are common in workflows
+  line-length: disable
+  # `---` at the top of each file is not required
+  document-start: disable
+  # Allow both `[ a, b ]` and `[a, b]`
+  brackets:
+    min-spaces-inside: 0
+    max-spaces-inside: 1
+  comments:
+    min-spaces-from-content: 1
+  indentation:
+    spaces: consistent
+    indent-sequences: consistent

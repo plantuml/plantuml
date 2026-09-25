@@ -1,0 +1,16 @@
+# Gitleaks configuration used by Super-Linter (VALIDATE_GITLEAKS)
+# https://github.com/gitleaks/gitleaks#configuration
+title = "PlantUML gitleaks config"
+
+[extend]
+# Start from the default gitleaks rules
+useDefault = true
+
+[[allowlists]]
+description = "Smetana: @Original(... key=\"...\") annotations are Graphviz function ids, not secrets"
+regexTarget = "line"
+regexes = ['''@Original\(.*\bkey\s*=\s*"[a-z0-9]+"''']
+
+[[allowlists]]
+description = "Minified third-party JavaScript bundles"
+paths = ['''\.min\.js$''']

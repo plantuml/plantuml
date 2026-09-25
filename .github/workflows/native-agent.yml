@@ -50,6 +50,7 @@ jobs:
       - name: Run tracing agent over diagram corpus
         shell: bash
         run: |
+          # shellcheck disable=SC2010
           JAR=$(ls build/libs/plantuml-*.jar | grep -v -- '-pdf' | grep -v -- '-sources' | grep -v -- '-javadoc' | head -n 1)
           echo "Using jar: $JAR"
           bash .github/scripts/native-agent-trace.sh "$JAR" native-image-config-dir

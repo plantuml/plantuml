@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC
+	"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+	"https://checkstyle.org/dtds/configuration_1_3.dtd">
+<!--
+	Checkstyle configuration used by Super-Linter (VALIDATE_JAVA).
+
+	The default Super-Linter configuration (sun_checks.xml) is not compatible
+	with the PlantUML code style (tabs, long lines, license header...).
+	This file only keeps a small set of checks that spot real mistakes and
+	that (almost) all the current code base already passes. Only the files
+	changed by a commit or a pull request are checked.
+
+	To silence a check locally, use:
+	  // CHECKSTYLE:OFF  ...  // CHECKSTYLE:ON
+	or @SuppressWarnings("checkstyle:<CheckName>")
+-->
+<module name="Checker">
+	<property name="charset" value="UTF-8"/>
+	<property name="severity" value="error"/>
+	<property name="fileExtensions" value="java"/>
+
+	<module name="SuppressWarningsFilter"/>
+	<module name="SuppressWithPlainTextCommentFilter">
+		<property name="offCommentFormat" value="CHECKSTYLE:OFF"/>
+		<property name="onCommentFormat" value="CHECKSTYLE:ON"/>
+	</module>
+
+	<!-- Invalid Javadoc HTML is not our concern here (UnusedImports parses Javadoc) -->
+	<module name="SuppressionSingleFilter">
+		<property name="message" value="^Javadoc comment at column \d+ has parse error"/>
+	</module>
+
+	<module name="TreeWalker">
+		<module name="SuppressWarningsHolder"/>
+
+		<!-- Imports -->
+		<module name="AvoidStarImport">
+			<property name="allowStaticMemberImports" value="true"/>
+		</module>
+		<module name="IllegalImport"/>
+		<module name="RedundantImport"/>
+		<module name="UnusedImports"/>
+
+		<!-- File / package structure -->
+		<module name="PackageDeclaration"/>
+
+		<!-- Coding mistakes -->
+		<module name="DefaultComesLast"/>
+		<module name="NoFinalizer"/>
+		<module name="StringLiteralEquality"/>
+		<module name="UpperEll"/>
+	</module>
+</module>
