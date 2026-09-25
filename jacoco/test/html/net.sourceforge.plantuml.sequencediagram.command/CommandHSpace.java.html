@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -49,43 +52,51 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandHSpace extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
+<span class="fc" id="L55">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;|&quot;);</span>
+
 	public CommandHSpace() {
-<span class="fc" id="L53">		super(getRegexConcat());</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L58">		super(getRegexConcat());</span>
+<span class="fc" id="L59">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L57">		return RegexConcat.build(CommandHSpace.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L62">		return RegexConcat.build(CommandHSpace.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;\\|\\|&quot;), //
 				new RegexLeaf(1, &quot;VALUE&quot;, &quot;(\\d+)?&quot;), //
-<span class="fc" id="L60">				new RegexLeaf(&quot;\\|+&quot;), RegexLeaf.end()); //</span>
+<span class="fc" id="L65">				new RegexLeaf(&quot;\\|+&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L66">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L71">		final StringBuilder sb = new StringBuilder();</span>
 
 		// '|||' inserts extra vertical spacing between events; '||45||' gives
 		// the size in pixels (the default is 25, see SequenceDiagram.hspace).
-<span class="nc" id="L70">		sb.append(&quot;Inserting extra vertical spacing&quot;);</span>
+<span class="nc" id="L75">		sb.append(&quot;Inserting extra vertical spacing&quot;);</span>
 
-<span class="nc" id="L72">		final String value = arg.get(&quot;VALUE&quot;, 0);</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(value))</span>
-<span class="nc" id="L74">			sb.append(&quot; of &quot;).append(value).append(&quot; pixels&quot;);</span>
+<span class="nc" id="L77">		final String value = arg.get(&quot;VALUE&quot;, 0);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(value))</span>
+<span class="nc" id="L79">			sb.append(&quot; of &quot;).append(value).append(&quot; pixels&quot;);</span>
 
-<span class="nc" id="L76">		return sb.toString();</span>
+<span class="nc" id="L81">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L82">		final String size = arg.get(&quot;VALUE&quot;, 0);</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(size)) {</span>
-<span class="nc" id="L84">			diagram.hspace(Integer.parseInt(size));</span>
+<span class="nc" id="L87">		final String size = arg.get(&quot;VALUE&quot;, 0);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(size)) {</span>
+<span class="nc" id="L89">			diagram.hspace(Integer.parseInt(size));</span>
 		} else {
-<span class="nc" id="L86">			diagram.hspace();</span>
+<span class="nc" id="L91">			diagram.hspace();</span>
 		}
-<span class="nc" id="L88">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L93">		return CommandExecutionResult.ok();</span>
 	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L98">		return FIRST_TOKENS;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

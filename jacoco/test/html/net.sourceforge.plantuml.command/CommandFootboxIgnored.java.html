@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -45,15 +48,18 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandFootboxIgnored extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
+<span class="fc" id="L51">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList( //</span>
+			&quot;footbox&quot;, &quot;hide&quot;, &quot;hidefootbox&quot;, &quot;show&quot;, &quot;showfootbox&quot;);
+
 	public CommandFootboxIgnored() {
-<span class="fc" id="L49">		super(getRegexConcat());</span>
-<span class="fc" id="L50">	}</span>
+<span class="fc" id="L55">		super(getRegexConcat());</span>
+<span class="fc" id="L56">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L53">		return RegexConcat.build(CommandFootboxIgnored.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L59">		return RegexConcat.build(CommandFootboxIgnored.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;(hide|show)?&quot;), //
-<span class="fc" id="L55">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L56">				new RegexLeaf(&quot;footbox&quot;), RegexLeaf.end()); //</span>
+<span class="fc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L62">				new RegexLeaf(&quot;footbox&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override
@@ -63,12 +69,18 @@ public class CommandFootboxIgnored extends SingleLineCommand2&lt;TitledDiagram&g
 		// types where the footbox does not exist, so that the line is accepted
 		// without any effect; the real handling, for sequence diagrams, is in
 		// CommandFootbox.
-<span class="nc" id="L66">		return &quot;Accepted but ignored: 'footbox' has no effect in this diagram type&quot;;</span>
+<span class="nc" id="L72">		return &quot;Accepted but ignored: 'footbox' has no effect in this diagram type&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L71">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L77">		return CommandExecutionResult.ok();</span>
 	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L82">		return FIRST_TOKENS;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

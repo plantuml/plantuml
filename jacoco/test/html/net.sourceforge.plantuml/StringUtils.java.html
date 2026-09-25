@@ -464,7 +464,7 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="fc" id="L464">			char c = s.charAt(i);</span>
 <span class="fc bfc" id="L465" title="All 8 branches covered.">			if ((c &gt;= 'a' &amp;&amp; c &lt;= 'm') || (c &gt;= 'A' &amp;&amp; c &lt;= 'M'))</span>
 <span class="fc" id="L466">				c += 13;</span>
-<span class="pc bpc" id="L467" title="2 of 8 branches missed.">			else if ((c &gt;= 'n' &amp;&amp; c &lt;= 'z') || (c &gt;= 'N' &amp;&amp; c &lt;= 'Z'))</span>
+<span class="pc bpc" id="L467" title="1 of 8 branches missed.">			else if ((c &gt;= 'n' &amp;&amp; c &lt;= 'z') || (c &gt;= 'N' &amp;&amp; c &lt;= 'Z'))</span>
 <span class="fc" id="L468">				c -= 13;</span>
 <span class="pc bpc" id="L469" title="1 of 2 branches missed.">			else if (c &gt; 126)</span>
 <span class="nc" id="L470">				throw new IllegalArgumentException(s);</span>
@@ -601,88 +601,99 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="fc" id="L601">		return s;</span>
 	}
 
+	/**
+	 * The blanks {@link #trin(String)} removes: every control character, the space, and the
+	 * non-breaking space U+00A0. The last one is there because {@code %s} in a command pattern
+	 * accepts it too, and because it usually comes from a copy-paste rather than from any wish to
+	 * keep it: treating it as a blank here is what lets a line starting with it be read like any
+	 * other.
+	 */
+	public static boolean isTrimmable(char c) {
+<span class="fc bfc" id="L612" title="All 4 branches covered.">		return c &lt;= ' ' || c == '\u00A0';</span>
+	}
+
 	public static String trin(String arg) {
-<span class="fc" id="L605">		final int len = arg.length();</span>
-<span class="fc bfc" id="L606" title="All 2 branches covered.">		if (len == 0)</span>
-<span class="fc" id="L607">			return &quot;&quot;;</span>
+<span class="fc" id="L616">		final int len = arg.length();</span>
+<span class="fc bfc" id="L617" title="All 2 branches covered.">		if (len == 0)</span>
+<span class="fc" id="L618">			return &quot;&quot;;</span>
 
-<span class="fc" id="L609">		int start = 0;</span>
-<span class="fc" id="L610">		int end = len - 1;</span>
+<span class="fc" id="L620">		int start = 0;</span>
+<span class="fc" id="L621">		int end = len - 1;</span>
 
-<span class="fc bfc" id="L612" title="All 2 branches covered.">		while (start &lt;= end) {</span>
-<span class="fc" id="L613">			final char cStart = arg.charAt(start);</span>
-<span class="fc bfc" id="L614" title="All 2 branches covered.">			if (cStart &lt;= ' ') {</span>
-<span class="fc" id="L615">				start++;</span>
-<span class="fc" id="L616">				continue;</span>
+<span class="fc bfc" id="L623" title="All 2 branches covered.">		while (start &lt;= end) {</span>
+<span class="fc" id="L624">			final char cStart = arg.charAt(start);</span>
+<span class="fc bfc" id="L625" title="All 2 branches covered.">			if (isTrimmable(cStart)) {</span>
+<span class="fc" id="L626">				start++;</span>
+<span class="fc" id="L627">				continue;</span>
 			}
 
-<span class="fc" id="L619">			final char cEnd = arg.charAt(end);</span>
-<span class="fc bfc" id="L620" title="All 2 branches covered.">			if (cEnd &lt;= ' ') {</span>
-<span class="fc" id="L621">				end--;</span>
-<span class="fc" id="L622">				continue;</span>
+<span class="fc" id="L630">			final char cEnd = arg.charAt(end);</span>
+<span class="fc bfc" id="L631" title="All 2 branches covered.">			if (isTrimmable(cEnd)) {</span>
+<span class="fc" id="L632">				end--;</span>
+<span class="fc" id="L633">				continue;</span>
 			}
 			break;
 		}
 
-<span class="fc bfc" id="L627" title="All 4 branches covered.">		if (start == 0 &amp;&amp; end == len - 1)</span>
-<span class="fc" id="L628">			return arg;</span>
+<span class="fc bfc" id="L638" title="All 4 branches covered.">		if (start == 0 &amp;&amp; end == len - 1)</span>
+<span class="fc" id="L639">			return arg;</span>
 
-<span class="fc bfc" id="L630" title="All 2 branches covered.">		if (start &gt; end)</span>
-<span class="fc" id="L631">			return &quot;&quot;;</span>
+<span class="fc bfc" id="L641" title="All 2 branches covered.">		if (start &gt; end)</span>
+<span class="fc" id="L642">			return &quot;&quot;;</span>
 
-<span class="fc" id="L633">		return arg.substring(start, end + 1);</span>
+<span class="fc" id="L644">		return arg.substring(start, end + 1);</span>
 	}
 
 	public static CharSequence trim2(CharSequence s) {
-<span class="fc" id="L637">	    final int len = s.length();</span>
-<span class="fc bfc" id="L638" title="All 2 branches covered.">	    if (len == 0)</span>
-<span class="fc" id="L639">	        return &quot;&quot;;</span>
+<span class="fc" id="L648">	    final int len = s.length();</span>
+<span class="fc bfc" id="L649" title="All 2 branches covered.">	    if (len == 0)</span>
+<span class="fc" id="L650">	        return &quot;&quot;;</span>
 
-<span class="fc" id="L641">	    int start = 0;</span>
-<span class="fc" id="L642">	    int end = len - 1;</span>
+<span class="fc" id="L652">	    int start = 0;</span>
+<span class="fc" id="L653">	    int end = len - 1;</span>
 
-<span class="pc bpc" id="L644" title="1 of 2 branches missed.">	    while (start &lt;= end) {</span>
-<span class="fc" id="L645">	        final char cStart = s.charAt(start);</span>
-<span class="fc bfc" id="L646" title="All 2 branches covered.">	        if (cStart &lt;= ' ') {</span>
-<span class="fc" id="L647">	            start++;</span>
-<span class="fc" id="L648">	            continue;</span>
+<span class="pc bpc" id="L655" title="1 of 2 branches missed.">	    while (start &lt;= end) {</span>
+<span class="fc" id="L656">	        final char cStart = s.charAt(start);</span>
+<span class="fc bfc" id="L657" title="All 2 branches covered.">	        if (isTrimmable(cStart)) {</span>
+<span class="fc" id="L658">	            start++;</span>
+<span class="fc" id="L659">	            continue;</span>
 	        }
 
-<span class="fc" id="L651">	        final char cEnd = s.charAt(end);</span>
-<span class="pc bpc" id="L652" title="1 of 2 branches missed.">	        if (cEnd &lt;= ' ') {</span>
-<span class="nc" id="L653">	            end--;</span>
-<span class="nc" id="L654">	            continue;</span>
+<span class="fc" id="L662">	        final char cEnd = s.charAt(end);</span>
+<span class="fc bfc" id="L663" title="All 2 branches covered.">	        if (isTrimmable(cEnd)) {</span>
+<span class="fc" id="L664">	            end--;</span>
+<span class="fc" id="L665">	            continue;</span>
 	        }
 	        break;
 	    }
 
-<span class="pc bpc" id="L659" title="1 of 2 branches missed.">	    if (start &gt; end)</span>
-<span class="nc" id="L660">	        return &quot;&quot;;</span>
+<span class="pc bpc" id="L670" title="1 of 2 branches missed.">	    if (start &gt; end)</span>
+<span class="nc" id="L671">	        return &quot;&quot;;</span>
 
-<span class="pc bpc" id="L662" title="1 of 4 branches missed.">	    if (start == 0 &amp;&amp; end == len - 1)</span>
-<span class="fc" id="L663">	        return s;</span>
+<span class="pc bpc" id="L673" title="1 of 4 branches missed.">	    if (start == 0 &amp;&amp; end == len - 1)</span>
+<span class="fc" id="L674">	        return s;</span>
 	    
 
-<span class="fc" id="L666">	    return s.subSequence(start, end + 1);</span>
+<span class="fc" id="L677">	    return s.subSequence(start, end + 1);</span>
 	}
 
 	private static boolean isSpaceOrTabOrNull(char c) {
-<span class="fc bfc" id="L670" title="All 10 branches covered.">		return c == ' ' || c == '\t' || c == '\r' || c == '\n' || c == '\0';</span>
+<span class="fc bfc" id="L681" title="All 10 branches covered.">		return c == ' ' || c == '\t' || c == '\r' || c == '\n' || c == '\0';</span>
 	}
 
 	// ::comment when __TEAVM__
 	public static int getWcWidth(Display stringsToDisplay) {
-<span class="fc" id="L675">		int result = 1;</span>
-<span class="fc bfc" id="L676" title="All 2 branches covered.">		for (CharSequence s : stringsToDisplay) {</span>
-<span class="pc bpc" id="L677" title="1 of 2 branches missed.">			if (s == null)</span>
-<span class="nc" id="L678">				continue;</span>
+<span class="fc" id="L686">		int result = 1;</span>
+<span class="fc bfc" id="L687" title="All 2 branches covered.">		for (CharSequence s : stringsToDisplay) {</span>
+<span class="pc bpc" id="L688" title="1 of 2 branches missed.">			if (s == null)</span>
+<span class="nc" id="L689">				continue;</span>
 
-<span class="fc" id="L680">			final int length = Wcwidth.length(s);</span>
-<span class="pc bpc" id="L681" title="1 of 2 branches missed.">			if (result &lt; length)</span>
-<span class="nc" id="L682">				result = length;</span>
+<span class="fc" id="L691">			final int length = Wcwidth.length(s);</span>
+<span class="pc bpc" id="L692" title="1 of 2 branches missed.">			if (result &lt; length)</span>
+<span class="nc" id="L693">				result = length;</span>
 
-<span class="fc" id="L684">		}</span>
-<span class="fc" id="L685">		return result;</span>
+<span class="fc" id="L695">		}</span>
+<span class="fc" id="L696">		return result;</span>
 	}
 	// ::done
 

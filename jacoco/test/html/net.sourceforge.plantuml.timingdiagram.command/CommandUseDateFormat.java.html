@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -48,33 +51,41 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandUseDateFormat extends SingleLineCommand2&lt;TimingDiagram&gt; {
 
+<span class="fc" id="L54">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList( //</span>
+			&quot;use&quot;, &quot;usedate&quot;, &quot;usedateformat&quot;);
+
 	public CommandUseDateFormat() {
-<span class="fc" id="L52">		super(getRegexConcat());</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L58">		super(getRegexConcat());</span>
+<span class="fc" id="L59">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L56">		return RegexConcat.build(CommandUseDateFormat.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L62">		return RegexConcat.build(CommandUseDateFormat.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;use&quot;), //
-<span class="fc" id="L58">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;date&quot;), //
-<span class="fc" id="L60">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L66">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;format&quot;), //
-<span class="fc" id="L62">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L68">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;FORMAT&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
-<span class="fc" id="L64">				RegexLeaf.end());</span>
+<span class="fc" id="L70">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L70">		final String format = arg.get(&quot;FORMAT&quot;, 0);</span>
-<span class="nc" id="L71">		return &quot;Setting the date format to \&quot;&quot; + format + &quot;\&quot;&quot;;</span>
+<span class="nc" id="L76">		final String format = arg.get(&quot;FORMAT&quot;, 0);</span>
+<span class="nc" id="L77">		return &quot;Setting the date format to \&quot;&quot; + format + &quot;\&quot;&quot;;</span>
 	}
 
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L76">		final String format = arg.get(&quot;FORMAT&quot;, 0);</span>
-<span class="nc" id="L77">		return diagram.useDateFormat(format);</span>
+<span class="nc" id="L82">		final String format = arg.get(&quot;FORMAT&quot;, 0);</span>
+<span class="nc" id="L83">		return diagram.useDateFormat(format);</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L88">		return FIRST_TOKENS;</span>
 	}
 
 }

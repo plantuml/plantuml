@@ -35,10 +35,13 @@
  */
 package net.sourceforge.plantuml.bpm;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -48,27 +51,32 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandMerge extends SingleLineCommand2&lt;BpmDiagram&gt; {
 
 	public CommandMerge() {
-<span class="nc" id="L51">		super(getRegexConcat());</span>
-<span class="nc" id="L52">	}</span>
+<span class="fc" id="L54">		super(getRegexConcat());</span>
+<span class="fc" id="L55">	}</span>
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="nc" id="L59">		return FirstTokens.ANYTHING;</span>
+	}
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L55">		return RegexConcat.build(CommandMerge.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L63">		return RegexConcat.build(CommandMerge.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;ID&quot;, &quot;([%pLN_.@]+)&quot;), //
 				new RegexLeaf(&quot;:?&quot;), //
 				new RegexLeaf(&quot;\\&lt;\\+\\&gt;&quot;), //
-<span class="nc" id="L59">				RegexLeaf.end());</span>
+<span class="fc" id="L67">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L65">		return null;</span>
+<span class="nc" id="L73">		return null;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(BpmDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L70">		final BpmEvent event = new BpmEventAdd(new BpmElement(arg.get(&quot;ID&quot;, 0), BpmElementType.MERGE, null));</span>
-<span class="nc" id="L71">		return diagram.addEvent(event);</span>
+<span class="nc" id="L78">		final BpmEvent event = new BpmEventAdd(new BpmElement(arg.get(&quot;ID&quot;, 0), BpmElementType.MERGE, null));</span>
+<span class="nc" id="L79">		return diagram.addEvent(event);</span>
 	}
 
 }

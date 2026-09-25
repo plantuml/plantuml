@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.wbs;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.Lazy;
@@ -62,14 +64,16 @@ import net.sourceforge.plantuml.utils.Direction;
 
 public class CommandWBSItemMultilineOld extends CommandMultilines2&lt;WBSDiagram&gt; {
 
-<span class="fc" id="L65">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(() -&gt; Pattern2.cmpile(&quot;^(.*);\\s*(\\&lt;\\&lt;(.+)\\&gt;\\&gt;)?$&quot;));</span>
+<span class="fc" id="L67">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;*&quot;, &quot;+&quot;, &quot;-&quot;);</span>
+
+<span class="fc" id="L69">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(() -&gt; Pattern2.cmpile(&quot;^(.*);\\s*(\\&lt;\\&lt;(.+)\\&gt;\\&gt;)?$&quot;));</span>
 
 	public CommandWBSItemMultilineOld() {
-<span class="fc" id="L68">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
-<span class="fc" id="L69">	}</span>
+<span class="fc" id="L72">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L73">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L72">		return RegexConcat.build(CommandWBSItemMultilineOld.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L76">		return RegexConcat.build(CommandWBSItemMultilineOld.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, Constant.WBS_TYPE, &quot;([ \t]*[*+-]+)&quot;), //
 				new RegexOr( //
 						new RegexConcat( //
@@ -87,40 +91,45 @@ public class CommandWBSItemMultilineOld extends CommandMultilines2&lt;WBSDiagram
 						new RegexLeaf(1, &quot;SHAPE_2&quot;, &quot;(_)?&quot;)), //
 				new RegexLeaf(&quot;:&quot;), //
 				new RegexLeaf(1, &quot;DATA&quot;, &quot;(.*)&quot;), //
-<span class="fc" id="L90">				RegexLeaf.end());</span>
+<span class="fc" id="L94">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	@Explain
 	protected String explainNow(BlocLines lines) {
-<span class="nc" id="L96">		return null;</span>
+<span class="nc" id="L100">		return null;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeNow(WBSDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="fc" id="L102">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="fc" id="L106">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
 
-<span class="fc" id="L104">		final List&lt;String&gt; lineLast = StringUtils.getSplit(getEndPattern(), lines.getLast().getString());</span>
-<span class="fc" id="L105">		lines = lines.removeStartingAndEnding(line0.get(&quot;DATA&quot;, 0), 1);</span>
+<span class="fc" id="L108">		final List&lt;String&gt; lineLast = StringUtils.getSplit(getEndPattern(), lines.getLast().getString());</span>
+<span class="fc" id="L109">		lines = lines.removeStartingAndEnding(line0.get(&quot;DATA&quot;, 0), 1);</span>
 
-<span class="fc" id="L107">		final String stereotype = lineLast.get(1);</span>
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (stereotype != null)</span>
-<span class="nc" id="L109">			lines = lines.overrideLastLine(lineLast.get(0));</span>
+<span class="fc" id="L111">		final String stereotype = lineLast.get(1);</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L113">			lines = lines.overrideLastLine(lineLast.get(0));</span>
 
-<span class="fc" id="L111">		final String type = line0.get(Constant.WBS_TYPE, 0);</span>
-<span class="fc" id="L112">		final String stringColor = line0.getLazzy(&quot;BACKCOLOR&quot;, 0);</span>
-<span class="fc" id="L113">		HColor backColor = null;</span>
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (stringColor != null)</span>
-<span class="fc" id="L115">			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);</span>
+<span class="fc" id="L115">		final String type = line0.get(Constant.WBS_TYPE, 0);</span>
+<span class="fc" id="L116">		final String stringColor = line0.getLazzy(&quot;BACKCOLOR&quot;, 0);</span>
+<span class="fc" id="L117">		HColor backColor = null;</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (stringColor != null)</span>
+<span class="fc" id="L119">			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);</span>
 
-<span class="fc" id="L117">		final String code = line0.getLazzy(&quot;CODE&quot;, 0);</span>
-<span class="fc" id="L118">		final Direction dir = Direction.getWBSDirection(line0);</span>
+<span class="fc" id="L121">		final String code = line0.getLazzy(&quot;CODE&quot;, 0);</span>
+<span class="fc" id="L122">		final Direction dir = Direction.getWBSDirection(line0);</span>
 
-<span class="fc" id="L120">		diagram.addWarning(CommandWBSItemOld.orderWarning(line0, true));</span>
-<span class="fc" id="L121">		return diagram.addIdea(code, backColor, diagram.getSmartLevel(type), lines.toDisplay(),</span>
-<span class="fc" id="L122">				Stereotype.build(stereotype), dir, IdeaShape.fromDesc(line0.getLazzy(&quot;SHAPE&quot;, 0)));</span>
+<span class="fc" id="L124">		diagram.addWarning(CommandWBSItemOld.orderWarning(line0, true));</span>
+<span class="fc" id="L125">		return diagram.addIdea(code, backColor, diagram.getSmartLevel(type), lines.toDisplay(),</span>
+<span class="fc" id="L126">				Stereotype.build(stereotype), dir, IdeaShape.fromDesc(line0.getLazzy(&quot;SHAPE&quot;, 0)));</span>
 
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L132">		return FIRST_TOKENS;</span>
 	}
 
 }

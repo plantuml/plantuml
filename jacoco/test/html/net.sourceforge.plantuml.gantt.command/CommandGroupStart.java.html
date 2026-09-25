@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.gantt.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -48,26 +51,33 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandGroupStart extends SingleLineCommand2&lt;GanttDiagram&gt; {
 
+<span class="fc" id="L54">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;group&quot;);</span>
+
 	public CommandGroupStart() {
-<span class="fc" id="L52">		super(getRegexConcat());</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L57">		super(getRegexConcat());</span>
+<span class="fc" id="L58">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L56">		return RegexConcat.build(CommandGroupStart.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L61">		return RegexConcat.build(CommandGroupStart.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;group&quot;), //
-<span class="fc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;\\[&quot;), //
 				new RegexLeaf(1, &quot;NAME&quot;, &quot;([^\\[\\]]+)&quot;), //
 				new RegexLeaf(&quot;\\]&quot;), //
-<span class="fc" id="L62">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L63">				RegexLeaf.end());</span>
+<span class="fc" id="L67">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L68">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L69">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
-<span class="nc" id="L70">		return diagram.addGroup(TaskCode.fromId(name));</span>
+<span class="nc" id="L74">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
+<span class="nc" id="L75">		return diagram.addGroup(TaskCode.fromId(name));</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L80">		return FIRST_TOKENS;</span>
 	}
 
 }

@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -45,14 +48,16 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandEndPackage extends SingleLineCommand2&lt;AbstractEntityDiagram&gt; {
 
+<span class="fc" id="L51">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;}&quot;);</span>
+
 	public CommandEndPackage() {
-<span class="fc" id="L49">		super(getRegexConcat());</span>
-<span class="fc" id="L50">	}</span>
+<span class="fc" id="L54">		super(getRegexConcat());</span>
+<span class="fc" id="L55">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L53">		return RegexConcat.build(CommandEndPackage.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L58">		return RegexConcat.build(CommandEndPackage.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;\\}&quot;), //
-<span class="fc" id="L55">				RegexLeaf.end()); //</span>
+<span class="fc" id="L60">				RegexLeaf.end()); //</span>
 	}
 
 	@Override
@@ -60,16 +65,21 @@ public class CommandEndPackage extends SingleLineCommand2&lt;AbstractEntityDiagr
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// '}' closes the current container: package, namespace, together block
 		// or any other group symbol (executeArg fails if none is open).
-<span class="nc" id="L63">		return &quot;Closing the current package, namespace or container&quot;;</span>
+<span class="nc" id="L68">		return &quot;Closing the current package, namespace or container&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="fc" id="L68">		final boolean result = diagram.endGroup();</span>
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (result == false) {</span>
-<span class="nc" id="L70">			return CommandExecutionResult.error(&quot;No package or namespace defined&quot;);</span>
+<span class="fc" id="L73">		final boolean result = diagram.endGroup();</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (result == false) {</span>
+<span class="nc" id="L75">			return CommandExecutionResult.error(&quot;No package or namespace defined&quot;);</span>
 		}
-<span class="fc" id="L72">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L77">		return CommandExecutionResult.ok();</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L82">		return FIRST_TOKENS;</span>
 	}
 
 }

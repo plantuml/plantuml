@@ -52,8 +52,8 @@ import net.sourceforge.plantuml.text.StringLocated;
 	private void filterQuote(List&lt;StringLocated&gt; lines) {
 <span class="fc bfc" id="L53" title="All 2 branches covered.">		for (final Iterator&lt;StringLocated&gt; it = lines.iterator(); it.hasNext();) {</span>
 <span class="fc" id="L54">			final StringLocated s = it.next();</span>
-<span class="pc bpc" id="L55" title="1 of 2 branches missed.">			if (hasStartingQuote(s))</span>
-<span class="nc" id="L56">				it.remove();</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">			if (hasStartingQuote(s))</span>
+<span class="fc" id="L56">				it.remove();</span>
 
 <span class="fc" id="L58">		}</span>
 <span class="fc" id="L59">	}</span>

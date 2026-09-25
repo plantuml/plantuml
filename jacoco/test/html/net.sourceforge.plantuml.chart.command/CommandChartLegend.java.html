@@ -34,6 +34,9 @@
  */
 package net.sourceforge.plantuml.chart.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.chart.ChartDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -47,51 +50,59 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandChartLegend extends SingleLineCommand2&lt;ChartDiagram&gt; {
 
+<span class="fc" id="L53">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;legend&quot;);</span>
+
 	public CommandChartLegend() {
-<span class="nc" id="L51">		super(false, getRegexConcat());</span>
-<span class="nc" id="L52">	}</span>
+<span class="fc" id="L56">		super(false, getRegexConcat());</span>
+<span class="fc" id="L57">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L55">		return RegexConcat.build(CommandChartLegend.class.getName(), RegexLeaf.start(), //</span>
-<span class="nc" id="L56">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L60">		return RegexConcat.build(CommandChartLegend.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;legend&quot;), //
-<span class="nc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;POSITION&quot;, &quot;(left|right|top|bottom)&quot;), //
-<span class="nc" id="L60">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="nc" id="L61">				RegexLeaf.end());</span>
+<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L66">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L67">		return null;</span>
+<span class="nc" id="L72">		return null;</span>
 	}
 
 
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L74">		final String position = arg.get(&quot;POSITION&quot;, 0);</span>
+<span class="nc" id="L79">		final String position = arg.get(&quot;POSITION&quot;, 0);</span>
 
 		ChartDiagram.LegendPosition legendPosition;
-<span class="nc bnc" id="L77" title="All 5 branches missed.">		switch (position.toLowerCase()) {</span>
+<span class="nc bnc" id="L82" title="All 5 branches missed.">		switch (position.toLowerCase()) {</span>
 		case &quot;left&quot;:
-<span class="nc" id="L79">			legendPosition = ChartDiagram.LegendPosition.LEFT;</span>
-<span class="nc" id="L80">			break;</span>
+<span class="nc" id="L84">			legendPosition = ChartDiagram.LegendPosition.LEFT;</span>
+<span class="nc" id="L85">			break;</span>
 		case &quot;right&quot;:
-<span class="nc" id="L82">			legendPosition = ChartDiagram.LegendPosition.RIGHT;</span>
-<span class="nc" id="L83">			break;</span>
+<span class="nc" id="L87">			legendPosition = ChartDiagram.LegendPosition.RIGHT;</span>
+<span class="nc" id="L88">			break;</span>
 		case &quot;top&quot;:
-<span class="nc" id="L85">			legendPosition = ChartDiagram.LegendPosition.TOP;</span>
-<span class="nc" id="L86">			break;</span>
+<span class="nc" id="L90">			legendPosition = ChartDiagram.LegendPosition.TOP;</span>
+<span class="nc" id="L91">			break;</span>
 		case &quot;bottom&quot;:
-<span class="nc" id="L88">			legendPosition = ChartDiagram.LegendPosition.BOTTOM;</span>
-<span class="nc" id="L89">			break;</span>
+<span class="nc" id="L93">			legendPosition = ChartDiagram.LegendPosition.BOTTOM;</span>
+<span class="nc" id="L94">			break;</span>
 		default:
-<span class="nc" id="L91">			return CommandExecutionResult.error(&quot;Invalid legend position: &quot; + position);</span>
+<span class="nc" id="L96">			return CommandExecutionResult.error(&quot;Invalid legend position: &quot; + position);</span>
 		}
 
-<span class="nc" id="L94">		return diagram.setLegendPosition(legendPosition);</span>
+<span class="nc" id="L99">		return diagram.setLegendPosition(legendPosition);</span>
 	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="nc" id="L104">		return FIRST_TOKENS;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

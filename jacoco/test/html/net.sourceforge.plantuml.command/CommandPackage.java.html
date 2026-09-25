@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
@@ -66,9 +69,12 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandPackage extends SingleLineCommand2&lt;AbstractEntityDiagram&gt; {
 
+<span class="fc" id="L72">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList( //</span>
+			&quot;#&quot;, &quot;+&quot;, &quot;-&quot;, &quot;package&quot;, &quot;~&quot;);
+
 	public CommandPackage() {
-<span class="fc" id="L70">		super(getRegexConcat());</span>
-<span class="fc" id="L71">	}</span>
+<span class="fc" id="L76">		super(getRegexConcat());</span>
+<span class="fc" id="L77">	}</span>
 
 	// A bare, unquoted identifier: letters/digits/underscore/dot/dollar. '$' is
 	// included for consistency with the other entity-identifier regexes (see
@@ -83,11 +89,11 @@ public class CommandPackage extends SingleLineCommand2&lt;AbstractEntityDiagram&
 	private static final String QUOTED_DISPLAY = &quot;[%g][^%g]+[%g]&quot;;
 
 	protected static IRegex getRegexConcat() {
-<span class="fc" id="L86">		return RegexConcat.build(CommandPackage.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L87">				new RegexLeaf(1, &quot;VISIBILITY&quot;, &quot;(&quot; + VisibilityModifier.regexForVisibilityCharacter() + &quot;)?&quot;), //</span>
-<span class="fc" id="L88">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L92">		return RegexConcat.build(CommandPackage.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L93">				new RegexLeaf(1, &quot;VISIBILITY&quot;, &quot;(&quot; + VisibilityModifier.regexForVisibilityCharacter() + &quot;)?&quot;), //</span>
+<span class="fc" id="L94">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(package)&quot;), //
-<span class="fc" id="L90">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L96">				RegexLeaf.spaceOneOrMore(), //</span>
 				// Two explicit orderings, each with its own group names, instead of
 				// one NAME/AS pair reinterpreted after the fact:
 				// Branch 1: CODE1 [as DISPLAY1] -&gt; package uid as &quot;Hello&quot;
@@ -102,47 +108,47 @@ public class CommandPackage extends SingleLineCommand2&lt;AbstractEntityDiagram&
 								new RegexLeaf(1, &quot;CODE1&quot;, &quot;(&quot; + CODE_BAREWORD + &quot;|&quot; + QUOTED_DISPLAY + &quot;)&quot;), //
 								new RegexOptional( //
 										new RegexConcat( //
-<span class="fc" id="L105">												RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L111">												RegexLeaf.spaceOneOrMore(), //</span>
 												new RegexLeaf(&quot;as&quot;), //
-<span class="fc" id="L107">												RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L113">												RegexLeaf.spaceOneOrMore(), //</span>
 												new RegexLeaf(1, &quot;DISPLAY1&quot;, &quot;(&quot; + QUOTED_DISPLAY + &quot;)&quot;) //
 										)) //
 						), //
 						new RegexConcat( //
 								new RegexLeaf(1, &quot;DISPLAY2&quot;, &quot;(&quot; + QUOTED_DISPLAY + &quot;)&quot;), //
-<span class="fc" id="L113">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L119">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(&quot;as&quot;), //
-<span class="fc" id="L115">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L121">								RegexLeaf.spaceOneOrMore(), //</span>
 								// CODE2 requires at least one character: unlike CODE1, there is no
 								// legitimate 'package &quot;Hello&quot; as {' (an explicit but empty id makes
 								// no sense), so this stays one-or-more.
 								new RegexLeaf(1, &quot;CODE2&quot;, &quot;([%pLN_.]+)&quot;) //
 						) //
 				), //
-<span class="fc" id="L122">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L123">				new RegexLeaf(4, &quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
-<span class="fc" id="L124">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
-<span class="fc" id="L125">				new RegexLeaf(4, &quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
-<span class="fc" id="L126">				RegexLeaf.spaceZeroOrMore(), //</span>
-				UrlBuilder.OPTIONAL, //
 <span class="fc" id="L128">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L129">				color().getRegex(), //</span>
-<span class="fc" id="L130">				RegexLeaf.spaceZeroOrMore(), new RegexLeaf(&quot;\\{&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L129">				new RegexLeaf(4, &quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L130">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
+<span class="fc" id="L131">				new RegexLeaf(4, &quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L132">				RegexLeaf.spaceZeroOrMore(), //</span>
+				UrlBuilder.OPTIONAL, //
+<span class="fc" id="L134">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L135">				color().getRegex(), //</span>
+<span class="fc" id="L136">				RegexLeaf.spaceZeroOrMore(), new RegexLeaf(&quot;\\{&quot;), RegexLeaf.end());</span>
 	}
 
 	@Override
 	public boolean syntaxWithFinalBracket() {
-<span class="fc" id="L135">		return true;</span>
+<span class="fc" id="L141">		return true;</span>
 	}
 
 	private static ColorParser color() {
-<span class="fc" id="L139">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="fc" id="L145">		return ColorParser.simpleColor(ColorType.BACK);</span>
 	}
 
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L145">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L151">		final StringBuilder sb = new StringBuilder();</span>
 
 		// 'package Name {' (or 'package &quot;Display&quot; as code {' or
 		// 'package code as &quot;Display&quot; {') opens a package around the
@@ -150,88 +156,93 @@ public class CommandPackage extends SingleLineCommand2&lt;AbstractEntityDiagram&
 		// transparently finds whichever of CODE1/CODE2 or DISPLAY1/DISPLAY2
 		// actually matched, since only one branch of the RegexOr in
 		// getRegexConcat() ever fires for a given line.
-<span class="nc" id="L153">		final String code = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy(&quot;CODE&quot;, 0));</span>
-<span class="nc" id="L154">		final String display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy(&quot;DISPLAY&quot;, 0));</span>
+<span class="nc" id="L159">		final String code = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy(&quot;CODE&quot;, 0));</span>
+<span class="nc" id="L160">		final String display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy(&quot;DISPLAY&quot;, 0));</span>
 
-<span class="nc bnc" id="L156" title="All 2 branches missed.">		if (display == null) {</span>
-<span class="nc bnc" id="L157" title="All 2 branches missed.">			if (code.length() == 0)</span>
-<span class="nc" id="L158">				return &quot;Starting a package without a name (rejected at execution: a name is required)&quot;;</span>
-<span class="nc" id="L159">			sb.append(&quot;Starting the package '&quot;).append(code).append(&quot;'&quot;);</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (display == null) {</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">			if (code.length() == 0)</span>
+<span class="nc" id="L164">				return &quot;Starting a package without a name (rejected at execution: a name is required)&quot;;</span>
+<span class="nc" id="L165">			sb.append(&quot;Starting the package '&quot;).append(code).append(&quot;'&quot;);</span>
 		} else {
-<span class="nc" id="L161">			sb.append(&quot;Starting the package '&quot;).append(code).append(&quot;' displayed as \&quot;&quot;).append(display).append(&quot;\&quot;&quot;);</span>
+<span class="nc" id="L167">			sb.append(&quot;Starting the package '&quot;).append(code).append(&quot;' displayed as \&quot;&quot;).append(display).append(&quot;\&quot;&quot;);</span>
 		}
 
-<span class="nc" id="L164">		final String visibility = arg.get(&quot;VISIBILITY&quot;, 0);</span>
-<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (visibility != null)</span>
-<span class="nc" id="L166">			sb.append(&quot;, with the visibility modifier '&quot;).append(visibility).append(&quot;'&quot;);</span>
+<span class="nc" id="L170">		final String visibility = arg.get(&quot;VISIBILITY&quot;, 0);</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">		if (visibility != null)</span>
+<span class="nc" id="L172">			sb.append(&quot;, with the visibility modifier '&quot;).append(visibility).append(&quot;'&quot;);</span>
 
 		// When the stereotype names a USymbol (like &lt;&lt;Rectangle&gt;&gt; or
 		// &lt;&lt;Frame&gt;&gt;), it selects the shape of the package instead of being
 		// displayed, like in executeArg.
-<span class="nc" id="L171">		final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);</span>
-<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (stereotype != null)</span>
-<span class="nc" id="L173">			sb.append(&quot;, stereotype &quot;).append(stereotype)</span>
-<span class="nc" id="L174">					.append(&quot; (a symbol name here selects the shape of the package)&quot;);</span>
+<span class="nc" id="L177">		final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L179">			sb.append(&quot;, stereotype &quot;).append(stereotype)</span>
+<span class="nc" id="L180">					.append(&quot; (a symbol name here selects the shape of the package)&quot;);</span>
 
-<span class="nc" id="L176">		final String tags = arg.getLazzy(&quot;TAGS&quot;, 0);</span>
-<span class="nc bnc" id="L177" title="All 4 branches missed.">		if (tags != null &amp;&amp; tags.isEmpty() == false)</span>
-<span class="nc" id="L178">			sb.append(&quot;, tagged &quot;).append(tags);</span>
+<span class="nc" id="L182">		final String tags = arg.getLazzy(&quot;TAGS&quot;, 0);</span>
+<span class="nc bnc" id="L183" title="All 4 branches missed.">		if (tags != null &amp;&amp; tags.isEmpty() == false)</span>
+<span class="nc" id="L184">			sb.append(&quot;, tagged &quot;).append(tags);</span>
 
-<span class="nc bnc" id="L180" title="All 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null)</span>
-<span class="nc" id="L181">			sb.append(&quot;, with a URL link&quot;);</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null)</span>
+<span class="nc" id="L187">			sb.append(&quot;, with a URL link&quot;);</span>
 
-<span class="nc bnc" id="L183" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
-<span class="nc" id="L184">			sb.append(&quot;, background color &quot;).append(arg.get(&quot;COLOR&quot;, 0));</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L190">			sb.append(&quot;, background color &quot;).append(arg.get(&quot;COLOR&quot;, 0));</span>
 
-<span class="nc" id="L186">		return sb.toString();</span>
+<span class="nc" id="L192">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L192">		final String idRaw = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy(&quot;CODE&quot;, 0));</span>
-<span class="fc" id="L193">		final String display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy(&quot;DISPLAY&quot;, 0));</span>
+<span class="fc" id="L198">		final String idRaw = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy(&quot;CODE&quot;, 0));</span>
+<span class="fc" id="L199">		final String display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy(&quot;DISPLAY&quot;, 0));</span>
 
-<span class="pc bpc" id="L195" title="1 of 2 branches missed.">		if (idRaw.length() == 0)</span>
-<span class="nc" id="L196">			return CommandExecutionResult.error(&quot;Error in name&quot;);</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">		if (idRaw.length() == 0)</span>
+<span class="nc" id="L202">			return CommandExecutionResult.error(&quot;Error in name&quot;);</span>
 
-<span class="fc" id="L198">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(false, diagram.cleanId(idRaw));</span>
-<span class="fc bfc" id="L199" title="All 2 branches covered.">		final String displayResolved = display == null ? quark.getName() : display;</span>
+<span class="fc" id="L204">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(false, diagram.cleanId(idRaw));</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">		final String displayResolved = display == null ? quark.getName() : display;</span>
 
-<span class="fc" id="L201">		final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);</span>
-<span class="fc" id="L202">		final USymbol usymbol = USymbols.fromString(stereotype, diagram.getSkinParam().actorStyle(),</span>
-<span class="fc" id="L203">				diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle());</span>
+<span class="fc" id="L207">		final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);</span>
+<span class="fc" id="L208">		final USymbol usymbol = USymbols.fromString(stereotype, diagram.getSkinParam().actorStyle(),</span>
+<span class="fc" id="L209">				diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle());</span>
 
-<span class="fc" id="L205">		final CommandExecutionResult status = diagram.gotoGroup(location, quark,</span>
-<span class="fc" id="L206">				Display.getWithNewlines(diagram.getPragma(), displayResolved), GroupType.PACKAGE, usymbol);</span>
-<span class="pc bpc" id="L207" title="1 of 2 branches missed.">		if (status.isOk() == false)</span>
-<span class="nc" id="L208">			return status;</span>
+<span class="fc" id="L211">		final CommandExecutionResult status = diagram.gotoGroup(location, quark,</span>
+<span class="fc" id="L212">				Display.getWithNewlines(diagram.getPragma(), displayResolved), GroupType.PACKAGE, usymbol);</span>
+<span class="pc bpc" id="L213" title="1 of 2 branches missed.">		if (status.isOk() == false)</span>
+<span class="nc" id="L214">			return status;</span>
 
-<span class="fc" id="L210">		final Entity p = diagram.getCurrentGroup();</span>
+<span class="fc" id="L216">		final Entity p = diagram.getCurrentGroup();</span>
 
-<span class="fc" id="L212">		final String visibilityString = arg.get(&quot;VISIBILITY&quot;, 0);</span>
-<span class="fc bfc" id="L213" title="All 2 branches covered.">		if (visibilityString != null) {</span>
-<span class="fc" id="L214">			final VisibilityModifier visibilityModifier = VisibilityModifier</span>
-<span class="fc" id="L215">					.getVisibilityModifier(visibilityString + &quot;FOO&quot;, false);</span>
-<span class="fc" id="L216">			p.setVisibilityModifier(visibilityModifier);</span>
+<span class="fc" id="L218">		final String visibilityString = arg.get(&quot;VISIBILITY&quot;, 0);</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">		if (visibilityString != null) {</span>
+<span class="fc" id="L220">			final VisibilityModifier visibilityModifier = VisibilityModifier</span>
+<span class="fc" id="L221">					.getVisibilityModifier(visibilityString + &quot;FOO&quot;, false);</span>
+<span class="fc" id="L222">			p.setVisibilityModifier(visibilityModifier);</span>
 		}
 
-<span class="fc bfc" id="L219" title="All 4 branches covered.">		if (stereotype != null &amp;&amp; usymbol == null)</span>
-<span class="fc" id="L220">			p.setStereotype(Stereotype.build(stereotype));</span>
+<span class="fc bfc" id="L225" title="All 4 branches covered.">		if (stereotype != null &amp;&amp; usymbol == null)</span>
+<span class="fc" id="L226">			p.setStereotype(Stereotype.build(stereotype));</span>
 
-<span class="fc" id="L222">		CommandCreateClassMultilines.addTags(p, arg.getLazzy(&quot;TAGS&quot;, 0));</span>
+<span class="fc" id="L228">		CommandCreateClassMultilines.addTags(p, arg.getLazzy(&quot;TAGS&quot;, 0));</span>
 
-<span class="fc" id="L224">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
-<span class="pc bpc" id="L225" title="1 of 2 branches missed.">		if (urlString != null) {</span>
-<span class="nc" id="L226">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
-<span class="nc" id="L227">			final Url url = urlBuilder.getUrl(urlString);</span>
-<span class="nc" id="L228">			p.addUrl(url);</span>
+<span class="fc" id="L230">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">		if (urlString != null) {</span>
+<span class="nc" id="L232">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="nc" id="L233">			final Url url = urlBuilder.getUrl(urlString);</span>
+<span class="nc" id="L234">			p.addUrl(url);</span>
 		}
 
-<span class="fc" id="L231">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L232">		p.setColors(colors);</span>
+<span class="fc" id="L237">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L238">		p.setColors(colors);</span>
 
-<span class="fc" id="L234">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L240">		return CommandExecutionResult.ok();</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L245">		return FIRST_TOKENS;</span>
 	}
 
 }

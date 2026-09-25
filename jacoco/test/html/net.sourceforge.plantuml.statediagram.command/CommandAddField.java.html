@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.statediagram.command;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -44,6 +46,7 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -55,23 +58,29 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandAddField extends SingleLineCommand2&lt;StateDiagram&gt; {
 
 	public CommandAddField() {
-<span class="fc" id="L58">		super(getRegexConcat());</span>
-<span class="fc" id="L59">	}</span>
+<span class="fc" id="L61">		super(getRegexConcat());</span>
+<span class="fc" id="L62">	}</span>
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="fc bfc" id="L63" title="All 2 branches covered.">		return pass == ParserPass.ONE;</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">		return pass == ParserPass.ONE;</span>
 	}
 
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L71">		return FirstTokens.ANYTHING;</span>
+	}
+
+
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L67">		return RegexConcat.build(CommandAddField.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L76">		return RegexConcat.build(CommandAddField.class.getName(), RegexLeaf.start(), //</span>
 				new RegexOr( //
 						new RegexLeaf(1, &quot;CODE3&quot;, &quot;([%pLN_.]+)&quot;), //
 						new RegexLeaf(1, &quot;CODE4&quot;, &quot;[%g]([^%g]+)[%g]&quot;)), //
-<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L80">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;:&quot;), //
-<span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L74">				new RegexLeaf(1, &quot;FIELD&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L82">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L83">				new RegexLeaf(1, &quot;FIELD&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
 	}
 
 	@Override
@@ -80,29 +89,29 @@ public class CommandAddField extends SingleLineCommand2&lt;StateDiagram&gt; {
 		// 'State : text' adds a description line inside the body of a state,
 		// creating it if it does not exist yet. The name may be quoted (CODE4)
 		// or not (CODE3), hence the lazzy lookup, like in executeArg.
-<span class="nc" id="L83">		return &quot;Adding the description line \&quot;&quot; + arg.get(&quot;FIELD&quot;, 0) + &quot;\&quot; to the state '&quot;</span>
-<span class="nc" id="L84">				+ arg.getLazzy(&quot;CODE&quot;, 0) + &quot;' (created if it does not exist yet)&quot;;</span>
+<span class="nc" id="L92">		return &quot;Adding the description line \&quot;&quot; + arg.get(&quot;FIELD&quot;, 0) + &quot;\&quot; to the state '&quot;</span>
+<span class="nc" id="L93">				+ arg.getLazzy(&quot;CODE&quot;, 0) + &quot;' (created if it does not exist yet)&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L90">		final String codeString = arg.getLazzy(&quot;CODE&quot;, 0);</span>
+<span class="fc" id="L99">		final String codeString = arg.getLazzy(&quot;CODE&quot;, 0);</span>
 
 		final Quark&lt;Entity&gt; quark;
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (diagram.getCurrentGroup().getName().equals(codeString))</span>
-<span class="nc" id="L94">			quark = diagram.getCurrentGroup().getQuark();</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (diagram.getCurrentGroup().getName().equals(codeString))</span>
+<span class="nc" id="L103">			quark = diagram.getCurrentGroup().getQuark();</span>
 		else
-<span class="fc" id="L96">			quark = diagram.quarkInContext(true, diagram.cleanId(codeString));</span>
+<span class="fc" id="L105">			quark = diagram.quarkInContext(true, diagram.cleanId(codeString));</span>
 
-<span class="fc" id="L98">		Entity entity = quark.getData();</span>
-<span class="fc bfc" id="L99" title="All 2 branches covered.">		if (entity == null)</span>
-<span class="fc" id="L100">			entity = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(quark), LeafType.STATE, null);</span>
+<span class="fc" id="L107">		Entity entity = quark.getData();</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		if (entity == null)</span>
+<span class="fc" id="L109">			entity = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(quark), LeafType.STATE, null);</span>
 
-<span class="fc" id="L102">		final String field = arg.get(&quot;FIELD&quot;, 0);</span>
+<span class="fc" id="L111">		final String field = arg.get(&quot;FIELD&quot;, 0);</span>
 
-<span class="fc" id="L104">		entity.getBodier().addFieldOrMethod(field);</span>
-<span class="fc" id="L105">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L113">		entity.getBodier().addFieldOrMethod(field);</span>
+<span class="fc" id="L114">		return CommandExecutionResult.ok();</span>
 
 	}
 

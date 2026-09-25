@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.gantt.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -47,22 +50,29 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandLanguage extends SingleLineCommand2&lt;GanttDiagram&gt; {
 
+<span class="fc" id="L53">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;language&quot;);</span>
+
 	public CommandLanguage() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L56">		super(getRegexConcat());</span>
+<span class="fc" id="L57">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L55">		return RegexConcat.build(CommandLanguage.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L60">		return RegexConcat.build(CommandLanguage.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;language&quot;), //
-<span class="fc" id="L57">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L62">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;LANG&quot;, &quot;(\\w+)&quot;), //
-<span class="fc" id="L59">				RegexLeaf.end());</span>
+<span class="fc" id="L64">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="fc" id="L65">		return diagram.changeLanguage(arg.get(&quot;LANG&quot;, 0));</span>
+<span class="fc" id="L70">		return diagram.changeLanguage(arg.get(&quot;LANG&quot;, 0));</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L75">		return FIRST_TOKENS;</span>
 	}
 
 }

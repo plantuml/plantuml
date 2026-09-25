@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.ebnf;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -52,19 +55,21 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandCommentMultilines extends CommandMultilines2&lt;PSystemEbnf&gt; {
 
-<span class="fc" id="L55">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
-<span class="nc" id="L56">			() -&gt; Pattern2.cmpile(&quot;^.*\\*\\)[%s]*$&quot;));</span>
+<span class="fc" id="L58">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;(&quot;);</span>
+
+<span class="fc" id="L60">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="nc" id="L61">			() -&gt; Pattern2.cmpile(&quot;^.*\\*\\)[%s]*$&quot;));</span>
 
 	public CommandCommentMultilines() {
-<span class="fc" id="L59">		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END);</span>
-<span class="fc" id="L60">	}</span>
+<span class="fc" id="L64">		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L65">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L63">		return RegexConcat.build(CommandCommentMultilines.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L68">		return RegexConcat.build(CommandCommentMultilines.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L69">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\(\\*&quot;), //
 				new RegexLeaf(&quot;.*&quot;), //
-<span class="fc" id="L67">				RegexLeaf.end());</span>
+<span class="fc" id="L72">				RegexLeaf.end());</span>
 	}
 
 	@Override
@@ -72,14 +77,19 @@ public class CommandCommentMultilines extends CommandMultilines2&lt;PSystemEbnf&
 	protected String explainNow(BlocLines lines) {
 		// The starting pattern has no named groups; the (* ... *) delimiters share the first and last
 		// content lines, so every line carries text
-<span class="nc" id="L75">		return &quot;Adding an EBNF comment with &quot; + lines.size() + &quot; lines of text&quot;;</span>
+<span class="nc" id="L80">		return &quot;Adding an EBNF comment with &quot; + lines.size() + &quot; lines of text&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeNow(PSystemEbnf diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L81">		final Display note = lines.removeFewChars(2).toDisplay();</span>
-<span class="nc" id="L82">		return diagram.addNote(note, null);</span>
+<span class="nc" id="L86">		final Display note = lines.removeFewChars(2).toDisplay();</span>
+<span class="nc" id="L87">		return diagram.addNote(note, null);</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L92">		return FIRST_TOKENS;</span>
 	}
 
 }

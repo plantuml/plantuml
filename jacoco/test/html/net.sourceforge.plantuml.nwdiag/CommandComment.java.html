@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.nwdiag;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -46,22 +49,29 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandComment extends SingleLineCommand2&lt;NwDiagram&gt; {
 
+<span class="fc" id="L52">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;/&quot;);</span>
+
 	public CommandComment() {
-<span class="nc" id="L50">		super(getRegexConcat());</span>
-<span class="nc" id="L51">	}</span>
+<span class="fc" id="L55">		super(getRegexConcat());</span>
+<span class="fc" id="L56">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L54">		return RegexConcat.build(CommandComment.class.getName(), //</span>
-<span class="nc" id="L55">				RegexLeaf.start(), //</span>
-<span class="nc" id="L56">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L59">		return RegexConcat.build(CommandComment.class.getName(), //</span>
+<span class="fc" id="L60">				RegexLeaf.start(), //</span>
+<span class="fc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;//&quot;), //
 				new RegexLeaf(&quot;.*&quot;), //
-<span class="nc" id="L59">				RegexLeaf.end());</span>
+<span class="fc" id="L64">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(NwDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L64">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L69">		return CommandExecutionResult.ok();</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="nc" id="L74">		return FIRST_TOKENS;</span>
 	}
 
 }

@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.wbs;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -55,16 +58,18 @@ import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandWBSItemOld extends SingleLineCommand2&lt;WBSDiagram&gt; {
 
+<span class="fc" id="L61">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;*&quot;, &quot;+&quot;, &quot;-&quot;);</span>
+
 	private final int mode;
 
 	public CommandWBSItemOld(int mode) {
-<span class="fc" id="L61">		super(false, getRegexConcat(mode));</span>
-<span class="fc" id="L62">		this.mode = mode;</span>
-<span class="fc" id="L63">	}</span>
+<span class="fc" id="L66">		super(false, getRegexConcat(mode));</span>
+<span class="fc" id="L67">		this.mode = mode;</span>
+<span class="fc" id="L68">	}</span>
 
 	static IRegex getRegexConcat(int mode) {
-<span class="fc bfc" id="L66" title="All 2 branches covered.">		if (mode == 0)</span>
-<span class="fc" id="L67">			return RegexConcat.build(CommandWBSItemOld.class.getName() + mode, RegexLeaf.start(), //</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		if (mode == 0)</span>
+<span class="fc" id="L72">			return RegexConcat.build(CommandWBSItemOld.class.getName() + mode, RegexLeaf.start(), //</span>
 					new RegexLeaf(1, Constant.WBS_TYPE, &quot;([ \t]*[*+-]+)&quot;), //
 					new RegexOr( //
 						new RegexConcat( //
@@ -81,11 +86,11 @@ public class CommandWBSItemOld extends SingleLineCommand2&lt;WBSDiagram&gt; {
 							new RegexLeaf(1, Constant.WBS_DIRECTION + &quot;_2&quot;, &quot;([&lt;&gt;])?&quot;)), //
 							new RegexLeaf(1, &quot;SHAPE_2&quot;, &quot;(_)?&quot;)), //
 					new RegexOptional(new RegexConcat( //
-<span class="fc" id="L84">						RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L89">						RegexLeaf.spaceOneOrMore(), //</span>
 						new RegexLeaf(1, &quot;LABEL&quot;, &quot;([^%s].*)&quot;)))  , //
-<span class="fc" id="L86">					RegexLeaf.end());</span>
+<span class="fc" id="L91">					RegexLeaf.end());</span>
 
-<span class="fc" id="L88">		return RegexConcat.build(CommandWBSItemOld.class.getName() + mode, RegexLeaf.start(), //</span>
+<span class="fc" id="L93">		return RegexConcat.build(CommandWBSItemOld.class.getName() + mode, RegexLeaf.start(), //</span>
 				new RegexLeaf(1, Constant.WBS_TYPE, &quot;([ \t]*[*+-]+)&quot;), //
 				new RegexOptional(new RegexLeaf(1, &quot;BACKCOLOR&quot;, &quot;\\[(#\\w+)\\]&quot;)), //
 				new RegexOr( //
@@ -95,41 +100,41 @@ public class CommandWBSItemOld extends SingleLineCommand2&lt;WBSDiagram&gt; {
 					new RegexConcat( //
 						new RegexLeaf(1, Constant.WBS_DIRECTION + &quot;_2&quot;, &quot;([&lt;&gt;])?&quot;)), //
 						new RegexLeaf(1, &quot;SHAPE_2&quot;, &quot;(_)?&quot;)), //
-<span class="fc" id="L98">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L103">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;LABEL&quot;, &quot;[%g](.*)[%g]&quot;), //
-<span class="fc" id="L100">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L105">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;as&quot;), //
-<span class="fc" id="L102">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L107">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN_]+)&quot;), //
-<span class="fc" id="L104">				RegexLeaf.end());</span>
+<span class="fc" id="L109">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L110">		return null;</span>
+<span class="nc" id="L115">		return null;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(WBSDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="fc" id="L116">		final String type = arg.get(Constant.WBS_TYPE, 0);</span>
-<span class="fc" id="L117">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
-<span class="fc" id="L118">		final String code = arg.getLazzy(&quot;CODE&quot;, 0);</span>
-<span class="fc" id="L119">		final String stringColor = arg.getLazzy(&quot;BACKCOLOR&quot;, 0);</span>
-<span class="fc" id="L120">		HColor backColor = null;</span>
-<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (stringColor != null)</span>
-<span class="fc" id="L122">			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);</span>
+<span class="fc" id="L121">		final String type = arg.get(Constant.WBS_TYPE, 0);</span>
+<span class="fc" id="L122">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="fc" id="L123">		final String code = arg.getLazzy(&quot;CODE&quot;, 0);</span>
+<span class="fc" id="L124">		final String stringColor = arg.getLazzy(&quot;BACKCOLOR&quot;, 0);</span>
+<span class="fc" id="L125">		HColor backColor = null;</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		if (stringColor != null)</span>
+<span class="fc" id="L127">			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);</span>
 
-<span class="fc" id="L124">		final Direction dir = Direction.getWBSDirection(arg);</span>
-<span class="fc" id="L125">		IdeaShape shape = IdeaShape.fromDesc(arg.getLazzy(&quot;SHAPE&quot;, 0));</span>
-<span class="pc bpc" id="L126" title="3 of 4 branches missed.">		if (label == null &amp;&amp; shape == IdeaShape.NONE)</span>
-<span class="nc" id="L127">			shape = IdeaShape.PSEUDO;</span>
-<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		else if (label == null)</span>
-<span class="nc" id="L129">			return CommandExecutionResult.error(&quot;Missing label for WBS node.&quot;);</span>
+<span class="fc" id="L129">		final Direction dir = Direction.getWBSDirection(arg);</span>
+<span class="fc" id="L130">		IdeaShape shape = IdeaShape.fromDesc(arg.getLazzy(&quot;SHAPE&quot;, 0));</span>
+<span class="pc bpc" id="L131" title="3 of 4 branches missed.">		if (label == null &amp;&amp; shape == IdeaShape.NONE)</span>
+<span class="nc" id="L132">			shape = IdeaShape.PSEUDO;</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		else if (label == null)</span>
+<span class="nc" id="L134">			return CommandExecutionResult.error(&quot;Missing label for WBS node.&quot;);</span>
 
-<span class="fc bfc" id="L131" title="All 2 branches covered.">		diagram.addWarning(orderWarning(arg, mode == 0));</span>
-<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		return diagram.addIdea(code, backColor, diagram.getSmartLevel(type), label == null ? &quot;&quot; : label, dir, shape);</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		diagram.addWarning(orderWarning(arg, mode == 0));</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		return diagram.addIdea(code, backColor, diagram.getSmartLevel(type), label == null ? &quot;&quot; : label, dir, shape);</span>
 	}
 
 	/**
@@ -138,21 +143,26 @@ public class CommandWBSItemOld extends SingleLineCommand2&lt;WBSDiagram&gt; {
 	 * order, e.g. '**_&gt;[#red](id)' for '**[#red](id)_&gt;'.
 	 */
 	static Warning orderWarning(RegexResult arg, boolean withCode) {
-<span class="fc" id="L141">		final StringBuilder sb = new StringBuilder(arg.get(Constant.WBS_TYPE, 0).trim());</span>
-<span class="fc" id="L142">		appendIfPresent(sb, &quot;&quot;, arg.getLazzy(&quot;SHAPE&quot;, 0), &quot;&quot;);</span>
-<span class="fc" id="L143">		appendIfPresent(sb, &quot;&quot;, arg.getLazzy(Constant.WBS_DIRECTION, 0), &quot;&quot;);</span>
-<span class="fc" id="L144">		appendIfPresent(sb, &quot;[&quot;, arg.getLazzy(&quot;BACKCOLOR&quot;, 0), &quot;]&quot;);</span>
-<span class="fc bfc" id="L145" title="All 2 branches covered.">		if (withCode)</span>
-<span class="fc" id="L146">			appendIfPresent(sb, &quot;(&quot;, arg.getLazzy(&quot;CODE&quot;, 0), &quot;)&quot;);</span>
+<span class="fc" id="L146">		final StringBuilder sb = new StringBuilder(arg.get(Constant.WBS_TYPE, 0).trim());</span>
+<span class="fc" id="L147">		appendIfPresent(sb, &quot;&quot;, arg.getLazzy(&quot;SHAPE&quot;, 0), &quot;&quot;);</span>
+<span class="fc" id="L148">		appendIfPresent(sb, &quot;&quot;, arg.getLazzy(Constant.WBS_DIRECTION, 0), &quot;&quot;);</span>
+<span class="fc" id="L149">		appendIfPresent(sb, &quot;[&quot;, arg.getLazzy(&quot;BACKCOLOR&quot;, 0), &quot;]&quot;);</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">		if (withCode)</span>
+<span class="fc" id="L151">			appendIfPresent(sb, &quot;(&quot;, arg.getLazzy(&quot;CODE&quot;, 0), &quot;)&quot;);</span>
 
-<span class="fc" id="L148">		return new Warning(&quot;Shape (_) and direction (&lt; &gt;) must come before color and id: start the line with '&quot;</span>
+<span class="fc" id="L153">		return new Warning(&quot;Shape (_) and direction (&lt; &gt;) must come before color and id: start the line with '&quot;</span>
 				+ sb + &quot;'&quot;);
 	}
 
 	private static void appendIfPresent(StringBuilder sb, String before, String value, String after) {
-<span class="pc bpc" id="L153" title="1 of 4 branches missed.">		if (value != null &amp;&amp; value.length() &gt; 0)</span>
-<span class="fc" id="L154">			sb.append(before).append(value).append(after);</span>
-<span class="fc" id="L155">	}</span>
+<span class="pc bpc" id="L158" title="1 of 4 branches missed.">		if (value != null &amp;&amp; value.length() &gt; 0)</span>
+<span class="fc" id="L159">			sb.append(before).append(value).append(after);</span>
+<span class="fc" id="L160">	}</span>
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L164">		return FIRST_TOKENS;</span>
+	}
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -59,59 +62,61 @@ import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandActivity3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
+<span class="fc" id="L65">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;#&quot;, &quot;:&quot;, &quot;&lt;&quot;);</span>
+
 	public CommandActivity3() {
-<span class="fc" id="L63">		super(getRegexConcat());</span>
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L68">		super(getRegexConcat());</span>
+<span class="fc" id="L69">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L67">		return RegexConcat.build(CommandActivity3.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L68">				color().getRegex(), //</span>
-<span class="fc" id="L69">				StereotypePattern.optionalIGNORED(), //</span>
+<span class="fc" id="L72">		return RegexConcat.build(CommandActivity3.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L73">				color().getRegex(), //</span>
+<span class="fc" id="L74">				StereotypePattern.optionalIGNORED(), //</span>
 				new RegexLeaf(&quot;:&quot;), //
 				new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*?)&quot;), //
 				new RegexLeaf(&quot;;&quot;), //
-<span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L74">				Stereogroup.optionalStereogroup(), //</span>
-<span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L78">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L79">				Stereogroup.optionalStereogroup(), //</span>
+<span class="fc" id="L80">				RegexLeaf.spaceZeroOrMore(), //</span>
 				UrlBuilder.OPTIONAL, //
-<span class="fc" id="L77">				RegexLeaf.end());</span>
+<span class="fc" id="L82">				RegexLeaf.end());</span>
 	}
 
 	private static ColorParser color() {
-<span class="fc" id="L81">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="fc" id="L86">		return ColorParser.simpleColor(ColorType.BACK);</span>
 	}
 
 	@Override
 	@Explain(comment = &quot;outdated&quot;)
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L87">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L92">		final StringBuilder sb = new StringBuilder();</span>
 
 		// ':label;' appends an activity to the current flow. The stereotypes
 		// written after the ';' carry the colors and may select a box style
 		// (see Stereogroup).
-<span class="nc" id="L92">		sb.append(&quot;Adding the activity \&quot;&quot;).append(arg.get(&quot;LABEL&quot;, 0)).append(&quot;\&quot;&quot;);</span>
+<span class="nc" id="L97">		sb.append(&quot;Adding the activity \&quot;&quot;).append(arg.get(&quot;LABEL&quot;, 0)).append(&quot;\&quot;&quot;);</span>
 
-<span class="nc" id="L94">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (stereogroup.isEmpty() == false) {</span>
-<span class="nc" id="L96">			sb.append(&quot;, stereotyped &quot;).append(arg.get(&quot;STEREOGROUP&quot;, 0));</span>
-<span class="nc" id="L97">			final BoxStyle style = stereogroup.getBoxStyle();</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">			if (style != BoxStyle.PLAIN)</span>
-<span class="nc" id="L99">				sb.append(&quot; (box style: &quot;).append(style.name()).append(&quot;)&quot;);</span>
+<span class="nc" id="L99">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (stereogroup.isEmpty() == false) {</span>
+<span class="nc" id="L101">			sb.append(&quot;, stereotyped &quot;).append(arg.get(&quot;STEREOGROUP&quot;, 0));</span>
+<span class="nc" id="L102">			final BoxStyle style = stereogroup.getBoxStyle();</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">			if (style != BoxStyle.PLAIN)</span>
+<span class="nc" id="L104">				sb.append(&quot; (box style: &quot;).append(style.name()).append(&quot;)&quot;);</span>
 		}
 
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null)</span>
-<span class="nc" id="L103">			sb.append(&quot;, with a URL link&quot;);</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null)</span>
+<span class="nc" id="L108">			sb.append(&quot;, with a URL link&quot;);</span>
 
 		// Mirror the two deprecation warnings emitted by executeArg; note that
 		// the leading color is parsed but no longer applied.
-<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (arg.get(&quot;IGNORED&quot;, 0) != null)</span>
-<span class="nc" id="L108">			sb.append(&quot; (the stereotype before the ':' is ignored: write it after the ';')&quot;);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (arg.get(&quot;IGNORED&quot;, 0) != null)</span>
+<span class="nc" id="L113">			sb.append(&quot; (the stereotype before the ':' is ignored: write it after the ';')&quot;);</span>
 
-<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
-<span class="nc" id="L111">			sb.append(&quot; (deprecated and ignored color syntax: write &lt;&lt;&quot;).append(arg.get(&quot;COLOR&quot;, 0))</span>
-<span class="nc" id="L112">					.append(&quot;&gt;&gt; after the ';')&quot;);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L116">			sb.append(&quot; (deprecated and ignored color syntax: write &lt;&lt;&quot;).append(arg.get(&quot;COLOR&quot;, 0))</span>
+<span class="nc" id="L117">					.append(&quot;&gt;&gt; after the ';')&quot;);</span>
 
-<span class="nc" id="L114">		return sb.toString();</span>
+<span class="nc" id="L119">		return sb.toString();</span>
 	}
 
 	@Override
@@ -119,28 +124,33 @@ public class CommandActivity3 extends SingleLineCommand2&lt;ActivityDiagram3&gt;
 			ParserPass currentPass) throws NoSuchColorException {
 
 		final Url url;
-<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) == null) {</span>
-<span class="fc" id="L123">			url = null;</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) == null) {</span>
+<span class="fc" id="L128">			url = null;</span>
 		} else {
-<span class="nc" id="L125">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
-<span class="nc" id="L126">			url = urlBuilder.getUrl(arg.get(UrlBuilder.URL_KEY, 0));</span>
+<span class="nc" id="L130">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="nc" id="L131">			url = urlBuilder.getUrl(arg.get(UrlBuilder.URL_KEY, 0));</span>
 		}
 
-<span class="fc" id="L129">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="fc" id="L134">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
 
-<span class="fc" id="L131">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
-<span class="fc bfc" id="L132" title="All 2 branches covered.">		if (arg.get(&quot;IGNORED&quot;, 0) != null)</span>
-<span class="fc" id="L133">			diagram.addWarning(new Warning(&quot;The stereotype &quot; + arg.get(&quot;IGNORED&quot;, 0)</span>
-<span class="fc" id="L134">					+ &quot; before the ':' is ignored: write ':&quot; + label + &quot;; &quot; + arg.get(&quot;IGNORED&quot;, 0) + &quot;' instead&quot;));</span>
+<span class="fc" id="L136">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">		if (arg.get(&quot;IGNORED&quot;, 0) != null)</span>
+<span class="fc" id="L138">			diagram.addWarning(new Warning(&quot;The stereotype &quot; + arg.get(&quot;IGNORED&quot;, 0)</span>
+<span class="fc" id="L139">					+ &quot; before the ':' is ignored: write ':&quot; + label + &quot;; &quot; + arg.get(&quot;IGNORED&quot;, 0) + &quot;' instead&quot;));</span>
 
-<span class="fc bfc" id="L136" title="All 2 branches covered.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
-<span class="fc" id="L137">			diagram.addWarning(new Warning(&quot;This syntax is deprecated and the color is ignored: write ':&quot; + label</span>
-<span class="fc" id="L138">					+ &quot;; &lt;&lt;&quot; + arg.get(&quot;COLOR&quot;, 0) + &quot;&gt;&gt;' instead of '&quot; + arg.get(&quot;COLOR&quot;, 0) + &quot;:&quot; + label + &quot;;'&quot;));</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="fc" id="L142">			diagram.addWarning(new Warning(&quot;This syntax is deprecated and the color is ignored: write ':&quot; + label</span>
+<span class="fc" id="L143">					+ &quot;; &lt;&lt;&quot; + arg.get(&quot;COLOR&quot;, 0) + &quot;&gt;&gt;' instead of '&quot; + arg.get(&quot;COLOR&quot;, 0) + &quot;:&quot; + label + &quot;;'&quot;));</span>
 
-<span class="fc" id="L140">		final BoxStyle style = stereogroup.getBoxStyle();</span>
+<span class="fc" id="L145">		final BoxStyle style = stereogroup.getBoxStyle();</span>
 
-<span class="fc" id="L142">		final Display display = Display.getWithNewlines2(diagram.getPragma(), label);</span>
-<span class="fc" id="L143">		return diagram.addActivity(display, style, url, stereogroup);</span>
+<span class="fc" id="L147">		final Display display = Display.getWithNewlines2(diagram.getPragma(), label);</span>
+<span class="fc" id="L148">		return diagram.addActivity(display, style, url, stereogroup);</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L153">		return FIRST_TOKENS;</span>
 	}
 
 }

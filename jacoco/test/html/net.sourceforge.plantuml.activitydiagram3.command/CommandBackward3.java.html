@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
@@ -58,12 +61,14 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandBackward3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
+<span class="fc" id="L64">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;(&quot;, &quot;backward&quot;);</span>
+
 	public CommandBackward3() {
-<span class="fc" id="L62">		super(getRegexConcat());</span>
-<span class="fc" id="L63">	}</span>
+<span class="fc" id="L67">		super(getRegexConcat());</span>
+<span class="fc" id="L68">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L66">		return RegexConcat.build(CommandBackward3.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L71">		return RegexConcat.build(CommandBackward3.class.getName(), RegexLeaf.start(), //</span>
 				new RegexOptional(new RegexConcat( //
 						new RegexLeaf(&quot;\\(&quot;), //
 						new RegexOptional(new RegexOr(//
@@ -71,15 +76,15 @@ public class CommandBackward3 extends SingleLineCommand2&lt;ActivityDiagram3&gt;
 								new RegexLeaf(1, &quot;INCOMING_COLOR&quot;, CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
 						new RegexLeaf(1, &quot;INCOMING&quot;, &quot;(.*?)&quot;), //
 						new RegexLeaf(&quot;\\)&quot;))), //
-<span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L79">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;backward&quot;), //
-<span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L81">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;:&quot;), //
 				new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*?)&quot;), //
 				new RegexLeaf(&quot;;&quot;), //
-<span class="fc" id="L80">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L81">				Stereogroup.optionalStereogroup(), //</span>
-<span class="fc" id="L82">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L85">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L86">				Stereogroup.optionalStereogroup(), //</span>
+<span class="fc" id="L87">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexConcat( //
 						new RegexLeaf(&quot;\\(&quot;), //
 						new RegexOptional(new RegexOr(//
@@ -87,84 +92,89 @@ public class CommandBackward3 extends SingleLineCommand2&lt;ActivityDiagram3&gt;
 								new RegexLeaf(1, &quot;OUTCOMING_COLOR&quot;, CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
 						new RegexLeaf(1, &quot;OUTCOMING&quot;, &quot;(.*?)&quot;), //
 						new RegexLeaf(&quot;\\)&quot;))), //
-<span class="fc" id="L90">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L91">				RegexLeaf.end());</span>
+<span class="fc" id="L95">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L96">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L97">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L102">		final StringBuilder sb = new StringBuilder();</span>
 
 		// 'backward :label;' defines the activity drawn on the return edge of
 		// the enclosing repeat loop. The optional '(...)' groups decorate the
 		// arrows entering (before the keyword) and leaving (after the
 		// stereotypes) this activity.
-<span class="nc" id="L103">		sb.append(&quot;Defining the backward activity \&quot;&quot;).append(arg.get(&quot;LABEL&quot;, 0))</span>
-<span class="nc" id="L104">				.append(&quot;\&quot; on the return edge of the repeat loop&quot;);</span>
+<span class="nc" id="L108">		sb.append(&quot;Defining the backward activity \&quot;&quot;).append(arg.get(&quot;LABEL&quot;, 0))</span>
+<span class="nc" id="L109">				.append(&quot;\&quot; on the return edge of the repeat loop&quot;);</span>
 
-<span class="nc" id="L106">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (stereogroup.isEmpty() == false) {</span>
-<span class="nc" id="L108">			sb.append(&quot;, stereotyped &quot;).append(arg.get(&quot;STEREOGROUP&quot;, 0));</span>
-<span class="nc" id="L109">			final BoxStyle style = stereogroup.getBoxStyle();</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">			if (style != BoxStyle.PLAIN)</span>
-<span class="nc" id="L111">				sb.append(&quot; (box style: &quot;).append(style.name().toLowerCase()).append(&quot;)&quot;);</span>
+<span class="nc" id="L111">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (stereogroup.isEmpty() == false) {</span>
+<span class="nc" id="L113">			sb.append(&quot;, stereotyped &quot;).append(arg.get(&quot;STEREOGROUP&quot;, 0));</span>
+<span class="nc" id="L114">			final BoxStyle style = stereogroup.getBoxStyle();</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">			if (style != BoxStyle.PLAIN)</span>
+<span class="nc" id="L116">				sb.append(&quot; (box style: &quot;).append(style.name().toLowerCase()).append(&quot;)&quot;);</span>
 		}
 
-<span class="nc" id="L114">		appendArrow(sb, arg, &quot;INCOMING&quot;, &quot;incoming&quot;);</span>
-<span class="nc" id="L115">		appendArrow(sb, arg, &quot;OUTCOMING&quot;, &quot;outgoing&quot;);</span>
+<span class="nc" id="L119">		appendArrow(sb, arg, &quot;INCOMING&quot;, &quot;incoming&quot;);</span>
+<span class="nc" id="L120">		appendArrow(sb, arg, &quot;OUTCOMING&quot;, &quot;outgoing&quot;);</span>
 
-<span class="nc" id="L117">		return sb.toString();</span>
+<span class="nc" id="L122">		return sb.toString();</span>
 	}
 
 	static void appendArrow(StringBuilder sb, RegexResult arg, String key, String word) {
-<span class="nc" id="L121">		final String label = arg.get(key, 0);</span>
-<span class="nc" id="L122">		final String color = arg.get(key + &quot;_COLOR&quot;, 0);</span>
-<span class="nc bnc" id="L123" title="All 4 branches missed.">		final boolean hasLabel = label != null &amp;&amp; label.isEmpty() == false;</span>
-<span class="nc bnc" id="L124" title="All 4 branches missed.">		if (hasLabel == false &amp;&amp; color == null)</span>
-<span class="nc" id="L125">			return;</span>
+<span class="nc" id="L126">		final String label = arg.get(key, 0);</span>
+<span class="nc" id="L127">		final String color = arg.get(key + &quot;_COLOR&quot;, 0);</span>
+<span class="nc bnc" id="L128" title="All 4 branches missed.">		final boolean hasLabel = label != null &amp;&amp; label.isEmpty() == false;</span>
+<span class="nc bnc" id="L129" title="All 4 branches missed.">		if (hasLabel == false &amp;&amp; color == null)</span>
+<span class="nc" id="L130">			return;</span>
 
-<span class="nc" id="L127">		sb.append(&quot;, &quot;).append(word).append(&quot; arrow&quot;);</span>
-<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (hasLabel)</span>
-<span class="nc" id="L129">			sb.append(&quot; labelled \&quot;&quot;).append(label).append(&quot;\&quot;&quot;);</span>
-<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (color != null)</span>
-<span class="nc" id="L131">			sb.append(&quot; with color or style '&quot;).append(color).append(&quot;'&quot;);</span>
-<span class="nc" id="L132">	}</span>
+<span class="nc" id="L132">		sb.append(&quot;, &quot;).append(word).append(&quot; arrow&quot;);</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (hasLabel)</span>
+<span class="nc" id="L134">			sb.append(&quot; labelled \&quot;&quot;).append(label).append(&quot;\&quot;&quot;);</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (color != null)</span>
+<span class="nc" id="L136">			sb.append(&quot; with color or style '&quot;).append(color).append(&quot;'&quot;);</span>
+<span class="nc" id="L137">	}</span>
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L137">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
-<span class="nc" id="L138">		final BoxStyle boxStyle = stereogroup.getBoxStyle();</span>
-<span class="nc" id="L139">		final Stereotype stereotype = stereogroup.buildStereotype();</span>
+<span class="nc" id="L142">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="nc" id="L143">		final BoxStyle boxStyle = stereogroup.getBoxStyle();</span>
+<span class="nc" id="L144">		final Stereotype stereotype = stereogroup.buildStereotype();</span>
 
-<span class="nc" id="L141">		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
+<span class="nc" id="L146">		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
 
-<span class="nc" id="L143">		final LinkRendering in = getBackRendering(diagram, arg, &quot;INCOMING&quot;);</span>
-<span class="nc" id="L144">		final LinkRendering out = getBackRendering(diagram, arg, &quot;OUTCOMING&quot;);</span>
+<span class="nc" id="L148">		final LinkRendering in = getBackRendering(diagram, arg, &quot;INCOMING&quot;);</span>
+<span class="nc" id="L149">		final LinkRendering out = getBackRendering(diagram, arg, &quot;OUTCOMING&quot;);</span>
 
-<span class="nc" id="L146">		return diagram.backward(label, boxStyle, in, out, stereotype);</span>
+<span class="nc" id="L151">		return diagram.backward(label, boxStyle, in, out, stereotype);</span>
 	}
 
 	static public LinkRendering getBackRendering(ActivityDiagram3 diagram, RegexResult arg, String name)
 			throws NoSuchColorException {
 		final LinkRendering in;
-<span class="fc" id="L152">		final Rainbow incomingColor = getRainbow(name + &quot;_COLOR&quot;, diagram, arg);</span>
-<span class="pc bpc" id="L153" title="1 of 2 branches missed.">		if (incomingColor == null)</span>
-<span class="fc" id="L154">			in = LinkRendering.none();</span>
+<span class="fc" id="L157">		final Rainbow incomingColor = getRainbow(name + &quot;_COLOR&quot;, diagram, arg);</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (incomingColor == null)</span>
+<span class="fc" id="L159">			in = LinkRendering.none();</span>
 		else
-<span class="nc" id="L156">			in = LinkRendering.create(incomingColor);</span>
-<span class="fc" id="L157">		final String label = arg.get(name, 0);</span>
-<span class="fc" id="L158">		return in.withDisplay(Display.getWithNewlines(diagram.getPragma(), label));</span>
+<span class="nc" id="L161">			in = LinkRendering.create(incomingColor);</span>
+<span class="fc" id="L162">		final String label = arg.get(name, 0);</span>
+<span class="fc" id="L163">		return in.withDisplay(Display.getWithNewlines(diagram.getPragma(), label));</span>
 	}
 
 	static private Rainbow getRainbow(String key, ActivityDiagram3 diagram, RegexResult arg)
 			throws NoSuchColorException {
-<span class="fc" id="L163">		final String colorString = arg.get(key, 0);</span>
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">		if (colorString == null) {</span>
-<span class="fc" id="L165">			return null;</span>
+<span class="fc" id="L168">		final String colorString = arg.get(key, 0);</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		if (colorString == null) {</span>
+<span class="fc" id="L170">			return null;</span>
 		}
-<span class="nc" id="L167">		return Rainbow.build(diagram.getSkinParam(), colorString, diagram.getSkinParam().colorArrowSeparationSpace());</span>
+<span class="nc" id="L172">		return Rainbow.build(diagram.getSkinParam(), colorString, diagram.getSkinParam().colorArrowSeparationSpace());</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L177">		return FIRST_TOKENS;</span>
 	}
 
 }

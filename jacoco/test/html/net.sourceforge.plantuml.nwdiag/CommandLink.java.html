@@ -35,9 +35,12 @@
  */
 package net.sourceforge.plantuml.nwdiag;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -47,26 +50,31 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandLink extends SingleLineCommand2&lt;NwDiagram&gt; {
 
 	public CommandLink() {
-<span class="nc" id="L50">		super(getRegexConcat());</span>
-<span class="nc" id="L51">	}</span>
+<span class="fc" id="L53">		super(getRegexConcat());</span>
+<span class="fc" id="L54">	}</span>
+	
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="nc" id="L58">		return FirstTokens.ANYTHING;</span>
+	}
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L54">		return RegexConcat.build(CommandLink.class.getName(), RegexLeaf.start(), //</span>
-<span class="nc" id="L55">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L62">		return RegexConcat.build(CommandLink.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;NAME1&quot;, &quot;([%pLN_]+)&quot;), //
-<span class="nc" id="L57">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;--&quot;), //
-<span class="nc" id="L59">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L67">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;NAME2&quot;, &quot;([%pLN_]+)&quot;), //
-<span class="nc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="nc" id="L62">				new RegexLeaf(&quot;;?&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L69">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L70">				new RegexLeaf(&quot;;?&quot;), RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(NwDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L67">		final String name1 = arg.get(&quot;NAME1&quot;, 0);</span>
-<span class="nc" id="L68">		final String name2 = arg.get(&quot;NAME2&quot;, 0);</span>
-<span class="nc" id="L69">		return diagram.link(name1, name2);</span>
+<span class="nc" id="L75">		final String name1 = arg.get(&quot;NAME1&quot;, 0);</span>
+<span class="nc" id="L76">		final String name2 = arg.get(&quot;NAME2&quot;, 0);</span>
+<span class="nc" id="L77">		return diagram.link(name1, name2);</span>
 	}
 
 }

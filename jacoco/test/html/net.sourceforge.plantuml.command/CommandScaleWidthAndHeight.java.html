@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.ScaleWidthAndHeight;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.core.AbstractDiagram;
@@ -46,21 +49,23 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandScaleWidthAndHeight extends SingleLineCommand2&lt;AbstractDiagram&gt; {
 
-<span class="fc" id="L49">	public static final CommandScaleWidthAndHeight ME = new CommandScaleWidthAndHeight();</span>
+<span class="fc" id="L52">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;scale&quot;);</span>
+
+<span class="fc" id="L54">	public static final CommandScaleWidthAndHeight ME = new CommandScaleWidthAndHeight();</span>
 
 	private CommandScaleWidthAndHeight() {
-<span class="fc" id="L52">		super(getRegexConcat());</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L57">		super(getRegexConcat());</span>
+<span class="fc" id="L58">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L56">		return RegexConcat.build(CommandScaleWidthAndHeight.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L61">		return RegexConcat.build(CommandScaleWidthAndHeight.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;scale&quot;), //
-<span class="fc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;WIDTH&quot;, &quot;([0-9.]+)&quot;), //
-<span class="fc" id="L60">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;[*x]&quot;), //
-<span class="fc" id="L62">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L63">				new RegexLeaf(1, &quot;HEIGHT&quot;, &quot;([0-9.]+)&quot;), RegexLeaf.end()); //</span>
+<span class="fc" id="L67">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L68">				new RegexLeaf(1, &quot;HEIGHT&quot;, &quot;([0-9.]+)&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override
@@ -69,16 +74,21 @@ public class CommandScaleWidthAndHeight extends SingleLineCommand2&lt;AbstractDi
 		// 'scale WxH' resizes the final image to fit within W x H pixels,
 		// keeping its aspect ratio; unlike 'scale max WxH', it may enlarge a
 		// smaller image.
-<span class="nc" id="L72">		return &quot;Resizing the diagram to fit within &quot; + arg.get(&quot;WIDTH&quot;, 0) + &quot; x &quot; + arg.get(&quot;HEIGHT&quot;, 0) + &quot; pixels&quot;;</span>
+<span class="nc" id="L77">		return &quot;Resizing the diagram to fit within &quot; + arg.get(&quot;WIDTH&quot;, 0) + &quot; x &quot; + arg.get(&quot;HEIGHT&quot;, 0) + &quot; pixels&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(AbstractDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L78">		final double width = Double.parseDouble(arg.get(&quot;WIDTH&quot;, 0));</span>
-<span class="nc" id="L79">		final double height = Double.parseDouble(arg.get(&quot;HEIGHT&quot;, 0));</span>
-<span class="nc" id="L80">		diagram.setScale(new ScaleWidthAndHeight(width, height));</span>
-<span class="nc" id="L81">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L83">		final double width = Double.parseDouble(arg.get(&quot;WIDTH&quot;, 0));</span>
+<span class="nc" id="L84">		final double height = Double.parseDouble(arg.get(&quot;HEIGHT&quot;, 0));</span>
+<span class="nc" id="L85">		diagram.setScale(new ScaleWidthAndHeight(width, height));</span>
+<span class="nc" id="L86">		return CommandExecutionResult.ok();</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L91">		return FIRST_TOKENS;</span>
 	}
 
 }

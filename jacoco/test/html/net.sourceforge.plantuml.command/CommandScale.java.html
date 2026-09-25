@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.ScaleSimple;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.core.AbstractDiagram;
@@ -47,62 +50,69 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandScale extends SingleLineCommand2&lt;AbstractDiagram&gt; {
 
-<span class="fc" id="L50">	public static final CommandScale ME = new CommandScale();</span>
+<span class="fc" id="L53">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;scale&quot;);</span>
+
+<span class="fc" id="L55">	public static final CommandScale ME = new CommandScale();</span>
 
 	private CommandScale() {
-<span class="fc" id="L53">		super(getRegexConcat());</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L58">		super(getRegexConcat());</span>
+<span class="fc" id="L59">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L57">		return RegexConcat.build(CommandScale.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L62">		return RegexConcat.build(CommandScale.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;scale&quot;), //
-<span class="fc" id="L59">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L64">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;SCALE&quot;, &quot;([0-9.]+)&quot;), //
 				new RegexOptional( //
 						new RegexConcat( //
-<span class="fc" id="L63">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L68">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(&quot;/&quot;), //
-<span class="fc" id="L65">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L70">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(1, &quot;DIV&quot;, &quot;([0-9.]+)&quot;) //
-<span class="fc" id="L67">						)), RegexLeaf.end()); //</span>
+<span class="fc" id="L72">						)), RegexLeaf.end()); //</span>
 	}
 
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L73">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L78">		final StringBuilder sb = new StringBuilder();</span>
 
 		// 'scale 1.5' or 'scale 2/3' multiplies the size of the final image.
-<span class="nc" id="L76">		final String scale = arg.get(&quot;SCALE&quot;, 0);</span>
-<span class="nc" id="L77">		final String div = arg.get(&quot;DIV&quot;, 0);</span>
-<span class="nc" id="L78">		sb.append(&quot;Scaling the diagram by a factor of &quot;).append(scale);</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (div != null)</span>
-<span class="nc" id="L80">			sb.append(&quot; / &quot;).append(div);</span>
+<span class="nc" id="L81">		final String scale = arg.get(&quot;SCALE&quot;, 0);</span>
+<span class="nc" id="L82">		final String div = arg.get(&quot;DIV&quot;, 0);</span>
+<span class="nc" id="L83">		sb.append(&quot;Scaling the diagram by a factor of &quot;).append(scale);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (div != null)</span>
+<span class="nc" id="L85">			sb.append(&quot; / &quot;).append(div);</span>
 
 		// Zero is detected on the raw strings, to mirror the validation of
 		// executeArg without risking a NumberFormatException here.
-<span class="nc bnc" id="L84" title="All 6 branches missed.">		if (scale.matches(&quot;[0.]+&quot;) || (div != null &amp;&amp; div.matches(&quot;[0.]+&quot;)))</span>
-<span class="nc" id="L85">			sb.append(&quot; (rejected at execution: scale cannot be zero)&quot;);</span>
+<span class="nc bnc" id="L89" title="All 6 branches missed.">		if (scale.matches(&quot;[0.]+&quot;) || (div != null &amp;&amp; div.matches(&quot;[0.]+&quot;)))</span>
+<span class="nc" id="L90">			sb.append(&quot; (rejected at execution: scale cannot be zero)&quot;);</span>
 
-<span class="nc" id="L87">		return sb.toString();</span>
+<span class="nc" id="L92">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(AbstractDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="fc" id="L93">		double scale = Double.parseDouble(arg.get(&quot;SCALE&quot;, 0));</span>
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (scale == 0)</span>
-<span class="nc" id="L95">			return CommandExecutionResult.error(&quot;Scale cannot be zero&quot;);</span>
+<span class="fc" id="L98">		double scale = Double.parseDouble(arg.get(&quot;SCALE&quot;, 0));</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (scale == 0)</span>
+<span class="nc" id="L100">			return CommandExecutionResult.error(&quot;Scale cannot be zero&quot;);</span>
 
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		if (arg.get(&quot;DIV&quot;, 0) != null) {</span>
-<span class="nc" id="L98">			final double div = Double.parseDouble(arg.get(&quot;DIV&quot;, 0));</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">			if (div == 0)</span>
-<span class="nc" id="L100">				return CommandExecutionResult.error(&quot;Scale cannot be zero&quot;);</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (arg.get(&quot;DIV&quot;, 0) != null) {</span>
+<span class="nc" id="L103">			final double div = Double.parseDouble(arg.get(&quot;DIV&quot;, 0));</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">			if (div == 0)</span>
+<span class="nc" id="L105">				return CommandExecutionResult.error(&quot;Scale cannot be zero&quot;);</span>
 
-<span class="nc" id="L102">			scale /= div;</span>
+<span class="nc" id="L107">			scale /= div;</span>
 		}
-<span class="fc" id="L104">		diagram.setScale(new ScaleSimple(scale));</span>
-<span class="fc" id="L105">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L109">		diagram.setScale(new ScaleSimple(scale));</span>
+<span class="fc" id="L110">		return CommandExecutionResult.ok();</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L115">		return FIRST_TOKENS;</span>
 	}
 
 }

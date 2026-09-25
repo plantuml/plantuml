@@ -35,7 +35,10 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -45,49 +48,56 @@ public abstract class CommandMultilines&lt;S extends Diagram&gt; implements Comm
 	private final Pattern2 starting;
 	private final Pattern2 ending;
 
-<span class="fc" id="L48">	public CommandMultilines(Pattern2 starting, Pattern2 ending) {</span>
+<span class="fc" id="L51">	public CommandMultilines(Pattern2 starting, Pattern2 ending) {</span>
 		// assert patternStart.startsWith(&quot;^&quot;) &amp;&amp; patternStart.endsWith(&quot;$&quot;);
-<span class="fc" id="L50">		this.starting = starting;</span>
-<span class="fc" id="L51">		this.ending = ending;</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L53">		this.starting = starting;</span>
+<span class="fc" id="L54">		this.ending = ending;</span>
+<span class="fc" id="L55">	}</span>
 
 	public final void getPatternEnd() {
 
-<span class="nc" id="L56">	}</span>
+<span class="nc" id="L59">	}</span>
 
 	final public CommandControl isValid(BlocLines lines) {
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		if (isCommandForbidden(lines))</span>
-<span class="nc" id="L60">			return CommandControl.NOT_OK;</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (isCommandForbidden(lines))</span>
+<span class="nc" id="L63">			return CommandControl.NOT_OK;</span>
 
-<span class="fc" id="L62">		Matcher2 m1 = starting.matcher(lines.getFirst().getTrimmed().getString(), 0);</span>
-<span class="fc bfc" id="L63" title="All 2 branches covered.">		if (m1.matches() == false)</span>
-<span class="fc" id="L64">			return CommandControl.NOT_OK;</span>
+<span class="fc" id="L65">		Matcher2 m1 = starting.matcher(lines.getFirst().getTrimmed().getString(), 0);</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">		if (m1.matches() == false)</span>
+<span class="fc" id="L67">			return CommandControl.NOT_OK;</span>
 
-<span class="fc bfc" id="L66" title="All 2 branches covered.">		if (lines.size() == 1)</span>
-<span class="fc" id="L67">			return CommandControl.OK_PARTIAL;</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">		if (lines.size() == 1)</span>
+<span class="fc" id="L70">			return CommandControl.OK_PARTIAL;</span>
 
-<span class="fc" id="L69">		m1 = ending.matcher(lines.getLast().getTrimmed().getString(), 0);</span>
-<span class="fc bfc" id="L70" title="All 2 branches covered.">		if (m1.matches() == false)</span>
-<span class="fc" id="L71">			return CommandControl.OK_PARTIAL;</span>
+<span class="fc" id="L72">		m1 = ending.matcher(lines.getLast().getTrimmed().getString(), 0);</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">		if (m1.matches() == false)</span>
+<span class="fc" id="L74">			return CommandControl.OK_PARTIAL;</span>
 
-<span class="fc" id="L73">		return finalVerification();</span>
+<span class="fc" id="L76">		return finalVerification();</span>
 	}
 
 	protected CommandControl finalVerification() {
-<span class="fc" id="L77">		return CommandControl.OK;</span>
+<span class="fc" id="L80">		return CommandControl.OK;</span>
 	}
 
 	protected final Pattern2 getStartingPattern() {
-<span class="nc" id="L81">		return starting;</span>
+<span class="nc" id="L84">		return starting;</span>
 	}
 
 	protected final Pattern2 getEndingPattern() {
-<span class="nc" id="L85">		return ending;</span>
+<span class="nc" id="L88">		return ending;</span>
 	}
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		return pass == ParserPass.ONE;</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		return pass == ParserPass.ONE;</span>
+	}
+
+	// Read from the pattern rather than declared beside it, so that the regex stays the only
+	// place this command says what it accepts.
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensSlow() {
+<span class="fc" id="L100">		return FirstTokens.from(starting.pattern());</span>
 	}
 
 }

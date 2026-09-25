@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -49,15 +52,17 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandTogether extends SingleLineCommand2&lt;AbstractEntityDiagram&gt; {
 
+<span class="fc" id="L55">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;together&quot;);</span>
+
 	public CommandTogether() {
-<span class="fc" id="L53">		super(getRegexConcat());</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L58">		super(getRegexConcat());</span>
+<span class="fc" id="L59">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L57">		return RegexConcat.build(CommandTogether.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L62">		return RegexConcat.build(CommandTogether.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;together&quot;), //
-<span class="fc" id="L59">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L60">				new RegexLeaf(&quot;\\{&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L65">				new RegexLeaf(&quot;\\{&quot;), RegexLeaf.end());</span>
 	}
 
 	@Override
@@ -66,14 +71,20 @@ public class CommandTogether extends SingleLineCommand2&lt;AbstractEntityDiagram
 		// 'together {' groups the following elements so that the layout keeps
 		// them close to each other, without drawing any visible container;
 		// closed by '}'.
-<span class="nc" id="L69">		return &quot;Starting a 'together' block: the elements inside are kept close in the layout&quot;;</span>
+<span class="nc" id="L74">		return &quot;Starting a 'together' block: the elements inside are kept close in the layout&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L75">		final CommandExecutionResult status = diagram.gotoTogether();</span>
-<span class="nc" id="L76">		return status;</span>
+<span class="nc" id="L80">		final CommandExecutionResult status = diagram.gotoTogether();</span>
+<span class="nc" id="L81">		return status;</span>
 	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L86">		return FIRST_TOKENS;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

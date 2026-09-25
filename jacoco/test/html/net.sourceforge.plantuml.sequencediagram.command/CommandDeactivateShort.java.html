@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -50,15 +53,17 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandDeactivateShort extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
+<span class="fc" id="L56">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;deactivate&quot;);</span>
+
 	public CommandDeactivateShort() {
-<span class="fc" id="L54">		super(getRegexConcat());</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L59">		super(getRegexConcat());</span>
+<span class="fc" id="L60">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L58">		return RegexConcat.build(CommandDeactivateShort.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L63">		return RegexConcat.build(CommandDeactivateShort.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(0, &quot;TYPE&quot;, &quot;deactivate&quot;), //
-<span class="fc" id="L60">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L61">				RegexLeaf.end());</span>
+<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L66">				RegexLeaf.end());</span>
 	}
 
 	@Override
@@ -67,21 +72,26 @@ public class CommandDeactivateShort extends SingleLineCommand2&lt;SequenceDiagra
 		// No participant given: this deactivates the target of the latest
 		// still-active activating message (see executeArg and
 		// SequenceDiagram.getActivatingMessage).
-<span class="nc" id="L70">		return &quot;Deactivating the life line activated by the latest message&quot;;</span>
+<span class="nc" id="L75">		return &quot;Deactivating the life line activated by the latest message&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, LineLocation location,
 			RegexResult arg2, ParserPass currentPass) {
-<span class="nc" id="L76">		final AbstractMessage message = sequenceDiagram.getActivatingMessage();</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (message == null)</span>
-<span class="nc" id="L78">			return CommandExecutionResult.error(&quot;Nothing to deactivate.&quot;);</span>
+<span class="nc" id="L81">		final AbstractMessage message = sequenceDiagram.getActivatingMessage();</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (message == null)</span>
+<span class="nc" id="L83">			return CommandExecutionResult.error(&quot;Nothing to deactivate.&quot;);</span>
 
-<span class="nc" id="L80">		final String error = sequenceDiagram.activate(message.getParticipant2(), LifeEventType.DEACTIVATE, null);</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (error != null)</span>
-<span class="nc" id="L82">			return CommandExecutionResult.error(error);</span>
+<span class="nc" id="L85">		final String error = sequenceDiagram.activate(message.getParticipant2(), LifeEventType.DEACTIVATE, null);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (error != null)</span>
+<span class="nc" id="L87">			return CommandExecutionResult.error(error);</span>
 
-<span class="nc" id="L84">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L89">		return CommandExecutionResult.ok();</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L94">		return FIRST_TOKENS;</span>
 	}
 
 }

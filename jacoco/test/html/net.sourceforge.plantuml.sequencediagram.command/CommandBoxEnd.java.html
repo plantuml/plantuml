@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -48,15 +51,17 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandBoxEnd extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
+<span class="fc" id="L54">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;end&quot;, &quot;endbox&quot;);</span>
+
 	public CommandBoxEnd() {
-<span class="fc" id="L52">		super(getRegexConcat());</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L57">		super(getRegexConcat());</span>
+<span class="fc" id="L58">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L56">		return RegexConcat.build(CommandBoxEnd.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L61">		return RegexConcat.build(CommandBoxEnd.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;end&quot;), //
-<span class="fc" id="L58">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L59">				new RegexLeaf(&quot;box&quot;), RegexLeaf.end()); //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L64">				new RegexLeaf(&quot;box&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override
@@ -64,17 +69,22 @@ public class CommandBoxEnd extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// No argument to capture: this closes the box opened by the last 'box'
 		// command (executeArg fails if no box is pending).
-<span class="nc" id="L67">		return &quot;Closing the current box&quot;;</span>
+<span class="nc" id="L72">		return &quot;Closing the current box&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (diagram.isBoxPending() == false)</span>
-<span class="nc" id="L74">			return CommandExecutionResult.error(&quot;Missing starting box&quot;);</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (diagram.isBoxPending() == false)</span>
+<span class="nc" id="L79">			return CommandExecutionResult.error(&quot;Missing starting box&quot;);</span>
 
-<span class="fc" id="L76">		diagram.endBox();</span>
-<span class="fc" id="L77">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L81">		diagram.endBox();</span>
+<span class="fc" id="L82">		return CommandExecutionResult.ok();</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L87">		return FIRST_TOKENS;</span>
 	}
 
 }

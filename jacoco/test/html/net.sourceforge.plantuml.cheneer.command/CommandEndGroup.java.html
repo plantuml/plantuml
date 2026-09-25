@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.cheneer.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.cheneer.ChenEerDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -48,29 +51,36 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandEndGroup extends SingleLineCommand2&lt;ChenEerDiagram&gt; {
 
+<span class="fc" id="L54">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;}&quot;);</span>
+
 	public CommandEndGroup() {
-<span class="fc" id="L52">		super(getRegexConcat());</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L57">		super(getRegexConcat());</span>
+<span class="fc" id="L58">	}</span>
 
 	protected static IRegex getRegexConcat() {
-<span class="fc" id="L56">		return RegexConcat.build(CommandEndGroup.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L61">		return RegexConcat.build(CommandEndGroup.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;\\}&quot;), //
-<span class="fc" id="L58">				RegexLeaf.end()); //</span>
+<span class="fc" id="L63">				RegexLeaf.end()); //</span>
 	}
 
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L64">		return null;</span>
+<span class="nc" id="L69">		return null;</span>
 	}
 
 
 	@Override
 	protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (!diagram.popOwner()) {</span>
-<span class="nc" id="L71">			return CommandExecutionResult.error(&quot;Unbalanced brackets&quot;);</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if (!diagram.popOwner()) {</span>
+<span class="nc" id="L76">			return CommandExecutionResult.error(&quot;Unbalanced brackets&quot;);</span>
 		}
-<span class="fc" id="L73">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L78">		return CommandExecutionResult.ok();</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L83">		return FIRST_TOKENS;</span>
 	}
 
 }

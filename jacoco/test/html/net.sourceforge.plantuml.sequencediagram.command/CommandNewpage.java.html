@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -53,45 +56,53 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandNewpage extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
+<span class="fc" id="L59">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;@&quot;, &quot;newpage&quot;);</span>
+
 	public CommandNewpage() {
-<span class="fc" id="L57">		super(getRegexConcat());</span>
-<span class="fc" id="L58">	}</span>
+<span class="fc" id="L62">		super(getRegexConcat());</span>
+<span class="fc" id="L63">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L61">		return RegexConcat.build(CommandNewpage.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L66">		return RegexConcat.build(CommandNewpage.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;@?&quot;), //
 				new RegexLeaf(&quot;newpage&quot;), //
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(&quot;(?:[%s]*:[%s]*|[%s]+)&quot;), //
 								new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*[%pLN_.].*)&quot;) //
-<span class="fc" id="L68">						)), RegexLeaf.end()); //</span>
+<span class="fc" id="L73">						)), RegexLeaf.end()); //</span>
 	}
 
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L74">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L79">		final StringBuilder sb = new StringBuilder();</span>
 
 		// Splits the diagram into several images. The optional label is used
 		// as the title of the new page. Note that this command is a no-op once
 		// 'ignore newpage' has been issued (see SequenceDiagram.newpage).
-<span class="nc" id="L79">		sb.append(&quot;Starting a new page&quot;);</span>
+<span class="nc" id="L84">		sb.append(&quot;Starting a new page&quot;);</span>
 
-<span class="nc" id="L81">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (label != null)</span>
-<span class="nc" id="L83">			sb.append(&quot; titled \&quot;&quot;).append(label).append(&quot;\&quot;&quot;);</span>
+<span class="nc" id="L86">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (label != null)</span>
+<span class="nc" id="L88">			sb.append(&quot; titled \&quot;&quot;).append(label).append(&quot;\&quot;&quot;);</span>
 
-<span class="nc" id="L85">		return sb.toString();</span>
+<span class="nc" id="L90">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="fc" id="L91">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		final Display strings = label == null ? Display.NULL : Display.getWithNewlines(diagram.getPragma(), label);</span>
-<span class="fc" id="L93">		diagram.newpage(DisplayPositioned.single(location, strings, HorizontalAlignment.CENTER, VerticalAlignment.TOP));</span>
-<span class="fc" id="L94">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L96">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		final Display strings = label == null ? Display.NULL : Display.getWithNewlines(diagram.getPragma(), label);</span>
+<span class="fc" id="L98">		diagram.newpage(DisplayPositioned.single(location, strings, HorizontalAlignment.CENTER, VerticalAlignment.TOP));</span>
+<span class="fc" id="L99">		return CommandExecutionResult.ok();</span>
 	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L104">		return FIRST_TOKENS;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

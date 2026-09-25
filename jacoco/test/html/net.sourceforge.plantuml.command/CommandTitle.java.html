@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -50,21 +53,23 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandTitle extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L53">	public static final CommandTitle ME = new CommandTitle();</span>
+<span class="fc" id="L56">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;title&quot;);</span>
+
+<span class="fc" id="L58">	public static final CommandTitle ME = new CommandTitle();</span>
 
 	private CommandTitle() {
-<span class="fc" id="L56">		super(getRegexConcat());</span>
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L61">		super(getRegexConcat());</span>
+<span class="fc" id="L62">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L60">		return RegexConcat.build(CommandTitle.class.getName(), //</span>
-<span class="fc" id="L61">				RegexLeaf.start(), //</span>
+<span class="fc" id="L65">		return RegexConcat.build(CommandTitle.class.getName(), //</span>
+<span class="fc" id="L66">				RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;title&quot;), //
 				new RegexLeaf(&quot;(?:[%s]*:[%s]*|[%s]+)&quot;), //
 				new RegexOr(//
 						new RegexLeaf(1, &quot;TITLE1&quot;, &quot;[%g](.*)[%g]&quot;), //
 						new RegexLeaf(1, &quot;TITLE2&quot;, &quot;(.*[%pLN_.].*)&quot;)), //
-<span class="fc" id="L67">				RegexLeaf.end()); //</span>
+<span class="fc" id="L72">				RegexLeaf.end()); //</span>
 	}
 
 	@Override
@@ -73,15 +78,21 @@ public class CommandTitle extends SingleLineCommand2&lt;TitledDiagram&gt; {
 		// The title may be quoted (TITLE1) or unquoted (TITLE2); executeArg
 		// reads whichever is present through getLazzy(&quot;TITLE&quot;, 0). It is
 		// displayed centered at the top of the diagram.
-<span class="nc" id="L76">		return &quot;Setting the title of the diagram to \&quot;&quot; + arg.getLazzy(&quot;TITLE&quot;, 0) + &quot;\&quot;&quot;;</span>
+<span class="nc" id="L81">		return &quot;Setting the title of the diagram to \&quot;&quot; + arg.getLazzy(&quot;TITLE&quot;, 0) + &quot;\&quot;&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="fc" id="L82">		final Display s = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy(&quot;TITLE&quot;, 0));</span>
-<span class="fc" id="L83">		diagram.setTitle(DisplayPositioned.single(location, s, HorizontalAlignment.CENTER, VerticalAlignment.TOP));</span>
-<span class="fc" id="L84">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L87">		final Display s = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy(&quot;TITLE&quot;, 0));</span>
+<span class="fc" id="L88">		diagram.setTitle(DisplayPositioned.single(location, s, HorizontalAlignment.CENTER, VerticalAlignment.TOP));</span>
+<span class="fc" id="L89">		return CommandExecutionResult.ok();</span>
 	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L94">		return FIRST_TOKENS;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

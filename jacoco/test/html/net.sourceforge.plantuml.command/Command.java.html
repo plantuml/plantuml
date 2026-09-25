@@ -35,16 +35,20 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.regex.FirstTokens;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.BlocLines;
 
-public interface Command&lt;D extends Diagram&gt; {
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">public interface Command&lt;D extends Diagram&gt; {</span>
 
 	CommandExecutionResult execute(D diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException;
 
 	default String explain(BlocLines lines) {
-<span class="nc" id="L47">		return null;</span>
+<span class="nc" id="L51">		return null;</span>
 	}
 
 	CommandControl isValid(BlocLines lines);
@@ -52,7 +56,46 @@ public interface Command&lt;D extends Diagram&gt; {
 	boolean isEligibleFor(ParserPass pass);
 
 	default boolean isCommandForbidden(BlocLines lines) {
-<span class="fc" id="L55">		return false;</span>
+<span class="fc" id="L59">		return false;</span>
+	}
+
+	/**
+	 * The first tokens a line must start with for this command to have any chance of
+	 * matching it, as {@code StringLocated#getFirstToken} computes it: the lower-cased run of
+	 * letters the line opens with, or its first character alone for a line that opens with
+	 * anything else ({@code &quot;}&quot;}, {@code &quot;=&quot;} for &quot;==&quot;, {@code &quot;&amp;&quot;}, each digit...), or
+	 * {@code &quot;&quot;} for a blank line.
+	 *
+	 * This is the slow, reference answer: a command built on one of the usual base classes
+	 * reads it from its own pattern with {@link net.sourceforge.plantuml.regex.FirstTokens},
+	 * which keeps the regex the only place the command says what it accepts. It is not the
+	 * one used to dispatch lines: see {@link #mandatoryFirstTokensFast()}, which must agree
+	 * with it (checked by {@link #mandatoryFirstTokens()} when assertions are enabled).
+	 */
+	Collection&lt;String&gt; mandatoryFirstTokensSlow();
+
+	/**
+	 * The same answer as {@link #mandatoryFirstTokensSlow()}, written by hand so that it costs
+	 * nothing to get.
+	 *
+	 * Returning {@code null} ({@link net.sourceforge.plantuml.regex.FirstTokens#ANYTHING}) means
+	 * &quot;I can match any line&quot; and keeps the command in the list tried for every token nobody
+	 * claimed. That is the safe answer: a command that declares too much only costs the regex
+	 * attempts it could have skipped, while one that declares too few of its tokens stops being
+	 * reachable for the ones it left out. A non-null set is never empty in practice: it would
+	 * mean the command matches no line at all.
+	 */
+	Collection&lt;String&gt; mandatoryFirstTokensFast();
+
+	/**
+	 * The first tokens used to dispatch lines: {@link #mandatoryFirstTokensFast()}, checked
+	 * against {@link #mandatoryFirstTokensSlow()} when assertions are enabled (never under
+	 * TeaVM).
+	 */
+	default Collection&lt;String&gt; mandatoryFirstTokens() {
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (TeaVM.a())</span>
+<span class="pc bpc" id="L97" title="2 of 4 branches missed.">			assert FirstTokens.same(mandatoryFirstTokensFast(), mandatoryFirstTokensSlow());</span>
+<span class="fc" id="L98">		return mandatoryFirstTokensFast();</span>
 	}
 
 }

@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.gantt.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import com.plantuml.ubrex.UnicodeBracketedExpression;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
@@ -52,37 +55,50 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandHideShowColumns extends UBrexSingleLineCommand2&lt;GanttDiagram&gt; {
 
+<span class="fc" id="L58">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;hide&quot;, &quot;show&quot;);</span>
+
 	public CommandHideShowColumns() {
-<span class="fc" id="L56">		super(getRegexConcat());</span>
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L61">		super(getRegexConcat());</span>
+<span class="fc" id="L62">	}</span>
 
 	static UnicodeBracketedExpression getRegexConcat() {
 		// hide column duration
-<span class="fc" id="L61">		return UBrexConcat.build( //</span>
+<span class="fc" id="L66">		return UBrexConcat.build( //</span>
 				new UBrexNamed(&quot;COMMAND&quot;, new UBrexOr(new UBrexLeaf(&quot;hide&quot;), new UBrexLeaf(&quot;show&quot;))), //
-<span class="fc" id="L63">				UBrexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L68">				UBrexLeaf.spaceOneOrMore(), //</span>
 				new UBrexLeaf(&quot;column&quot;), //
-<span class="fc" id="L65">				UBrexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L66">				new UBrexNamed(&quot;WHAT&quot;, GanttTaskTableColumn.getUbrex()), //</span>
-<span class="fc" id="L67">				UBrexLeaf.end());</span>
+<span class="fc" id="L70">				UBrexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L71">				new UBrexNamed(&quot;WHAT&quot;, GanttTaskTableColumn.getUbrex()), //</span>
+<span class="fc" id="L72">				UBrexLeaf.end());</span>
 	}
 
 	@Override
 	@Explain(comment = &quot;to be done&quot;)
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L73">		return null;</span>
+<span class="nc" id="L78">		return null;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L79">		final char tmp = arg.get(&quot;COMMAND&quot;, 0).charAt(0);</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		final boolean show = tmp == 's';</span>
+<span class="nc" id="L84">		final char tmp = arg.get(&quot;COMMAND&quot;, 0).charAt(0);</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		final boolean show = tmp == 's';</span>
 
-<span class="nc" id="L82">		final String what = arg.get(&quot;WHAT&quot;, 0);</span>
+<span class="nc" id="L87">		final String what = arg.get(&quot;WHAT&quot;, 0);</span>
 
-<span class="nc" id="L84">		final GanttTaskTableColumn column = GanttTaskTableColumn.of(what);</span>
-<span class="nc" id="L85">		return diagram.hideOrShowColumn(show, column);</span>
+<span class="nc" id="L89">		final GanttTaskTableColumn column = GanttTaskTableColumn.of(what);</span>
+<span class="nc" id="L90">		return diagram.hideOrShowColumn(show, column);</span>
+	}
+
+	// Declared by hand: FirstTokens only reads regex patterns, and this one is a UBrex expression.
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensSlow() {
+<span class="fc" id="L96">		return FIRST_TOKENS;</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L101">		return FIRST_TOKENS;</span>
 	}
 
 }

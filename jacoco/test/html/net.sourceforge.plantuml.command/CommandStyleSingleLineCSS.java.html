@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -51,18 +54,20 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandStyleSingleLineCSS extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L54">	public static final CommandStyleSingleLineCSS ME = new CommandStyleSingleLineCSS();</span>
+<span class="fc" id="L57">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;&lt;&quot;);</span>
+
+<span class="fc" id="L59">	public static final CommandStyleSingleLineCSS ME = new CommandStyleSingleLineCSS();</span>
 
 	private CommandStyleSingleLineCSS() {
-<span class="fc" id="L57">		super(getRegexConcat());</span>
-<span class="fc" id="L58">	}</span>
+<span class="fc" id="L62">		super(getRegexConcat());</span>
+<span class="fc" id="L63">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L61">		return RegexConcat.build(CommandStyleSingleLineCSS.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L66">		return RegexConcat.build(CommandStyleSingleLineCSS.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;\\&lt;style\\&gt;&quot;), //
 				new RegexLeaf(1, &quot;STYLE&quot;, &quot;([-#.\\w%s;:{}]+)&quot;), //
 				new RegexLeaf(&quot;\\&lt;/style\\&gt;&quot;), //
-<span class="fc" id="L65">				RegexLeaf.end() //</span>
+<span class="fc" id="L70">				RegexLeaf.end() //</span>
 		);
 	}
 
@@ -72,24 +77,29 @@ public class CommandStyleSingleLineCSS extends SingleLineCommand2&lt;TitledDiagr
 		// '&lt;style&gt;...&lt;/style&gt;' on a single line defines inline styles: the
 		// content between the tags is a CSS-like style definition, merged into
 		// the current styles (executeArg fails when it cannot be parsed).
-<span class="nc" id="L75">		return &quot;Defining inline styles from \&quot;&quot; + arg.get(&quot;STYLE&quot;, 0) + &quot;\&quot;&quot;;</span>
+<span class="nc" id="L80">		return &quot;Defining inline styles from \&quot;&quot; + arg.get(&quot;STYLE&quot;, 0) + &quot;\&quot;&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L81">		final String line = arg.get(&quot;STYLE&quot;, 0);</span>
+<span class="nc" id="L86">		final String line = arg.get(&quot;STYLE&quot;, 0);</span>
 		try {
-<span class="nc" id="L83">			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();</span>
-<span class="nc" id="L84">			diagram.getSkinParam().muteStyle(StyleLoader.parseStyleText(BlocLines.singleString(line), styleBuilder));</span>
+<span class="nc" id="L88">			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();</span>
+<span class="nc" id="L89">			diagram.getSkinParam().muteStyle(StyleLoader.parseStyleText(BlocLines.singleString(line), styleBuilder));</span>
 
-<span class="nc" id="L86">			((SkinParam) diagram.getSkinParam()).applyPendingStyleMigration();</span>
-<span class="nc" id="L87">			return CommandExecutionResult.ok();</span>
-<span class="nc" id="L88">		} catch (StyleParsingException e) {</span>
-<span class="nc" id="L89">			return CommandExecutionResult.error(&quot;Error in style definition: &quot; + e.getMessage());</span>
-<span class="nc" id="L90">		} catch (NoStyleAvailableException e) {</span>
-<span class="nc" id="L91">			return CommandExecutionResult.error(&quot;General failure: no style available.&quot;);</span>
+<span class="nc" id="L91">			((SkinParam) diagram.getSkinParam()).applyPendingStyleMigration();</span>
+<span class="nc" id="L92">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L93">		} catch (StyleParsingException e) {</span>
+<span class="nc" id="L94">			return CommandExecutionResult.error(&quot;Error in style definition: &quot; + e.getMessage());</span>
+<span class="nc" id="L95">		} catch (NoStyleAvailableException e) {</span>
+<span class="nc" id="L96">			return CommandExecutionResult.error(&quot;General failure: no style available.&quot;);</span>
 		}
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L102">		return FIRST_TOKENS;</span>
 	}
 
 }

@@ -53,15 +53,15 @@ public class BoardDiagramFactory extends PSystemCommandFactory {
 
 	@Override
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
-<span class="nc" id="L56">		CommonCommands.addCommonCommands1(cmds);</span>
-<span class="nc" id="L57">		cmds.add(new CommandBoardPlus());</span>
+<span class="fc" id="L56">		CommonCommands.addCommonCommands1(cmds);</span>
+<span class="fc" id="L57">		cmds.add(new CommandBoardPlus());</span>
 		// cmds.add(new CommandMindMapTabulation());
 //		cmds.add(new CommandMindMapOrgmode());
 //		cmds.add(new CommandMindMapOrgmodeMultiline());
 //		cmds.add(new CommandMindMapRoot());
 //		cmds.add(new CommandMindMapPlus());
 //		cmds.add(new CommandMindMapDirection());
-<span class="nc" id="L64">	}</span>
+<span class="fc" id="L64">	}</span>
 
 	@Override
 	public BoardDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,

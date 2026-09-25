@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.crash;
 
+import java.util.Collection;
+
 import com.plantuml.ubrex.UnicodeBracketedExpression;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexZeroOrMore;
@@ -44,31 +46,43 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCrashAny extends UBrexSingleLineCommand2&lt;CrashDiagram&gt; {
 
 	public CommandCrashAny() {
-<span class="fc" id="L53">		super(getRegexConcat());</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L56">		super(getRegexConcat());</span>
+<span class="fc" id="L57">	}</span>
 
 	static UnicodeBracketedExpression getRegexConcat() {
-<span class="fc" id="L57">		return new UBrexZeroOrMore(new UBrexLeaf(&quot;〴.&quot;));</span>
+<span class="fc" id="L60">		return new UBrexZeroOrMore(new UBrexLeaf(&quot;〴.&quot;));</span>
+	}
+	
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L65">		return FirstTokens.ANYTHING;</span>
 	}
 
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L63">		return null;</span>
+<span class="nc" id="L71">		return null;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(CrashDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
 
-<span class="fc" id="L70">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L78">		return CommandExecutionResult.ok();</span>
 	}
+	
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensSlow() {
+<span class="fc" id="L83">		return FirstTokens.ANYTHING;</span>
+	}
+
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

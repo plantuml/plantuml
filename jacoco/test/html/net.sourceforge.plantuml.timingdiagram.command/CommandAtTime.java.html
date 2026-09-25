@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -50,22 +53,24 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandAtTime extends SingleLineCommand2&lt;TimingDiagram&gt; {
 
+<span class="fc" id="L56">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;@&quot;);</span>
+
 	public CommandAtTime() {
-<span class="fc" id="L54">		super(getRegexConcat());</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L59">		super(getRegexConcat());</span>
+<span class="fc" id="L60">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L58">		return RegexConcat.build(CommandAtTime.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L59">				TimeTickBuilder.expressionAtWithArobase(&quot;TIME&quot;), //</span>
+<span class="fc" id="L63">		return RegexConcat.build(CommandAtTime.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L64">				TimeTickBuilder.expressionAtWithArobase(&quot;TIME&quot;), //</span>
 				new RegexOptional(new RegexConcat( //
-<span class="fc" id="L61">						RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L66">						RegexLeaf.spaceOneOrMore(), //</span>
 						new RegexLeaf(&quot;as&quot;), //
-<span class="fc" id="L63">						RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L68">						RegexLeaf.spaceOneOrMore(), //</span>
 						new RegexLeaf(&quot;:&quot;), //
 						new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN_.]+)&quot;) //
 				)), //
-<span class="fc" id="L67">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L68">				RegexLeaf.end());</span>
+<span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L73">				RegexLeaf.end());</span>
 	}
 
 	@Override
@@ -73,27 +78,32 @@ public class CommandAtTime extends SingleLineCommand2&lt;TimingDiagram&gt; {
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// The actual TimeTick is resolved by TimeTickBuilder.parseTimeTick against clock/diagram state,
 		// so here we only describe the raw time expression from the matched sub-pattern.
-<span class="nc" id="L76">		final String time = TimeTickBuilder.describeTime(&quot;TIME&quot;, arg);</span>
-<span class="nc" id="L77">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="nc" id="L81">		final String time = TimeTickBuilder.describeTime(&quot;TIME&quot;, arg);</span>
+<span class="nc" id="L82">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
 
-<span class="nc" id="L79">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L80">		sb.append(&quot;Adding a time mark at &quot;).append(time);</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (code != null)</span>
-<span class="nc" id="L82">			sb.append(&quot; labelled '&quot;).append(code).append(&quot;'&quot;);</span>
+<span class="nc" id="L84">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L85">		sb.append(&quot;Adding a time mark at &quot;).append(time);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (code != null)</span>
+<span class="nc" id="L87">			sb.append(&quot; labelled '&quot;).append(code).append(&quot;'&quot;);</span>
 		// executeArg fails when the time expression cannot be resolved (&quot;What time?&quot;)
-<span class="nc" id="L84">		return sb.toString();</span>
+<span class="nc" id="L89">		return sb.toString();</span>
 	}
 
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="fc" id="L90">		final TimeTick timeTick = TimeTickBuilder.parseTimeTick(&quot;TIME&quot;, arg, diagram);</span>
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (timeTick == null)</span>
-<span class="nc" id="L92">			return CommandExecutionResult.error(&quot;What time?&quot;);</span>
+<span class="fc" id="L95">		final TimeTick timeTick = TimeTickBuilder.parseTimeTick(&quot;TIME&quot;, arg, diagram);</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (timeTick == null)</span>
+<span class="nc" id="L97">			return CommandExecutionResult.error(&quot;What time?&quot;);</span>
 
-<span class="fc" id="L94">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
-<span class="fc" id="L95">		diagram.addTime(timeTick, code);</span>
-<span class="fc" id="L96">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L99">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="fc" id="L100">		diagram.addTime(timeTick, code);</span>
+<span class="fc" id="L101">		return CommandExecutionResult.ok();</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L106">		return FIRST_TOKENS;</span>
 	}
 
 }

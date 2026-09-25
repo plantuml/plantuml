@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -48,16 +51,18 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandHideUnlinked extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
+<span class="fc" id="L54">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;hide&quot;, &quot;show&quot;);</span>
+
 	public CommandHideUnlinked() {
-<span class="fc" id="L52">		super(getRegexConcat());</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L57">		super(getRegexConcat());</span>
+<span class="fc" id="L58">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L56">		return RegexConcat.build(CommandHideUnlinked.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L61">		return RegexConcat.build(CommandHideUnlinked.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;HIDE&quot;, &quot;(hide|show)&quot;), //
-<span class="fc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;@?unlinked&quot;), //
-<span class="fc" id="L60">				RegexLeaf.end()); //</span>
+<span class="fc" id="L65">				RegexLeaf.end()); //</span>
 	}
 
 	@Override
@@ -66,18 +71,23 @@ public class CommandHideUnlinked extends SingleLineCommand2&lt;SequenceDiagram&g
 		// Unlinked participants are those not involved in any message, note or
 		// other event; when hidden, they are removed from the diagram at the
 		// end of the parsing (see SequenceDiagram.removeHiddenParticipants).
-<span class="nc" id="L69">		final boolean hide = arg.get(&quot;HIDE&quot;, 0).equalsIgnoreCase(&quot;hide&quot;);</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (hide)</span>
-<span class="nc" id="L71">			return &quot;Hiding the participants that are not linked to any event&quot;;</span>
+<span class="nc" id="L74">		final boolean hide = arg.get(&quot;HIDE&quot;, 0).equalsIgnoreCase(&quot;hide&quot;);</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (hide)</span>
+<span class="nc" id="L76">			return &quot;Hiding the participants that are not linked to any event&quot;;</span>
 
-<span class="nc" id="L73">		return &quot;Showing the participants that are not linked to any event&quot;;</span>
+<span class="nc" id="L78">		return &quot;Showing the participants that are not linked to any event&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L79">		diagram.setHideUnlinkedData(arg.get(&quot;HIDE&quot;, 0).equalsIgnoreCase(&quot;hide&quot;));</span>
-<span class="nc" id="L80">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L84">		diagram.setHideUnlinkedData(arg.get(&quot;HIDE&quot;, 0).equalsIgnoreCase(&quot;hide&quot;));</span>
+<span class="nc" id="L85">		return CommandExecutionResult.ok();</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L90">		return FIRST_TOKENS;</span>
 	}
 
 }

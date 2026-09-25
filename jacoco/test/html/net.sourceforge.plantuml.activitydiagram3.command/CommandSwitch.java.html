@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -54,67 +57,74 @@ import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandSwitch extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
+<span class="fc" id="L60">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;#&quot;, &quot;switch&quot;);</span>
+
 	public CommandSwitch() {
-<span class="fc" id="L58">		super(getRegexConcat());</span>
-<span class="fc" id="L59">	}</span>
+<span class="fc" id="L63">		super(getRegexConcat());</span>
+<span class="fc" id="L64">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L62">		return RegexConcat.build(CommandSwitch.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L63">				ColorParser.exp4(), //</span>
+<span class="fc" id="L67">		return RegexConcat.build(CommandSwitch.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L68">				ColorParser.exp4(), //</span>
 				new RegexLeaf(&quot;switch&quot;), //
-<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\(&quot;), //
 				new RegexLeaf(1, &quot;TEST&quot;, &quot;(.*?)&quot;), //
 				new RegexLeaf(&quot;\\)&quot;), //
-<span class="fc" id="L69">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L70">				Stereogroup.optionalStereogroup(), //</span>
-<span class="fc" id="L71">				RegexLeaf.end());</span>
+<span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L75">				Stereogroup.optionalStereogroup(), //</span>
+<span class="fc" id="L76">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L77">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L82">		final StringBuilder sb = new StringBuilder();</span>
 
 		// 'switch (test)' opens a multi-branch block: each branch starts with
 		// 'case (value)' and the block is closed by 'endswitch'.
-<span class="nc" id="L81">		sb.append(&quot;Starting a switch&quot;);</span>
+<span class="nc" id="L86">		sb.append(&quot;Starting a switch&quot;);</span>
 
-<span class="nc" id="L83">		final String test = arg.get(&quot;TEST&quot;, 0);</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (test.length() &gt; 0)</span>
-<span class="nc" id="L85">			sb.append(&quot;, testing \&quot;&quot;).append(test).append(&quot;\&quot;&quot;);</span>
+<span class="nc" id="L88">		final String test = arg.get(&quot;TEST&quot;, 0);</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (test.length() &gt; 0)</span>
+<span class="nc" id="L90">			sb.append(&quot;, testing \&quot;&quot;).append(test).append(&quot;\&quot;&quot;);</span>
 
-<span class="nc" id="L87">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (stereogroup.isEmpty() == false)</span>
-<span class="nc" id="L89">			sb.append(&quot;, stereotyped &quot;).append(arg.get(&quot;STEREOGROUP&quot;, 0));</span>
+<span class="nc" id="L92">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (stereogroup.isEmpty() == false)</span>
+<span class="nc" id="L94">			sb.append(&quot;, stereotyped &quot;).append(arg.get(&quot;STEREOGROUP&quot;, 0));</span>
 
 		// Mirror the deprecation warning emitted by executeArg: the leading
 		// color is parsed but no longer applied.
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
-<span class="nc" id="L94">			sb.append(&quot; (deprecated and ignored color syntax: write &lt;&lt;&quot;).append(arg.get(&quot;COLOR&quot;, 0))</span>
-<span class="nc" id="L95">					.append(&quot;&gt;&gt; at the end of the line)&quot;);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L99">			sb.append(&quot; (deprecated and ignored color syntax: write &lt;&lt;&quot;).append(arg.get(&quot;COLOR&quot;, 0))</span>
+<span class="nc" id="L100">					.append(&quot;&gt;&gt; at the end of the line)&quot;);</span>
 
-<span class="nc" id="L97">		return sb.toString();</span>
+<span class="nc" id="L102">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
 
-<span class="fc" id="L104">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
-<span class="fc" id="L105">		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L109">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="fc" id="L110">		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());</span>
 
-<span class="fc bfc" id="L107" title="All 2 branches covered.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
-<span class="fc" id="L108">			diagram.addWarning(new Warning(&quot;This syntax is deprecated, you must add &lt;&lt;&quot; + arg.get(&quot;COLOR&quot;, 0)</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="fc" id="L113">			diagram.addWarning(new Warning(&quot;This syntax is deprecated, you must add &lt;&lt;&quot; + arg.get(&quot;COLOR&quot;, 0)</span>
 					+ &quot;&gt;&gt; at the end of the line&quot;));
 
-<span class="fc" id="L111">		String test = arg.get(&quot;TEST&quot;, 0);</span>
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (test.length() == 0)</span>
-<span class="nc" id="L113">			test = null;</span>
+<span class="fc" id="L116">		String test = arg.get(&quot;TEST&quot;, 0);</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		if (test.length() == 0)</span>
+<span class="nc" id="L118">			test = null;</span>
 
-<span class="fc" id="L115">		diagram.startSwitch(Display.getWithNewlines(diagram.getPragma(), test), colors);</span>
+<span class="fc" id="L120">		diagram.startSwitch(Display.getWithNewlines(diagram.getPragma(), test), colors);</span>
 
-<span class="fc" id="L117">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L122">		return CommandExecutionResult.ok();</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L127">		return FIRST_TOKENS;</span>
 	}
 
 }

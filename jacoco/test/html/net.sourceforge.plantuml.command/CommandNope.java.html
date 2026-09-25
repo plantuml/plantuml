@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -45,29 +48,36 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandNope extends SingleLineCommand2&lt;Diagram&gt; {
 
-<span class="fc" id="L48">	public static final CommandNope ME = new CommandNope();</span>
+<span class="fc" id="L51">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;&quot;);</span>
+
+<span class="fc" id="L53">	public static final CommandNope ME = new CommandNope();</span>
 
 	private CommandNope() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L56">		super(getRegexConcat());</span>
+<span class="fc" id="L57">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L55">		return RegexConcat.build(CommandNope.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L56">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L57">				RegexLeaf.end()); //</span>
+<span class="fc" id="L60">		return RegexConcat.build(CommandNope.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L62">				RegexLeaf.end()); //</span>
 	}
 
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// This command matches blank lines only, and does nothing.
-<span class="nc" id="L64">		return null;</span>
+<span class="nc" id="L69">		return null;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(Diagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="fc" id="L70">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L75">		return CommandExecutionResult.ok();</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L80">		return FIRST_TOKENS;</span>
 	}
 
 }

@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -48,18 +51,20 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandAllowMixing extends SingleLineCommand2&lt;ClassDiagram&gt; {
 
+<span class="fc" id="L54">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;allow&quot;, &quot;allowmixing&quot;);</span>
+
 	public CommandAllowMixing() {
-<span class="fc" id="L52">		super(getRegexConcat());</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L57">		super(getRegexConcat());</span>
+<span class="fc" id="L58">	}</span>
 
 	private static IRegex getRegexConcat() {
 
-<span class="fc" id="L57">		return RegexConcat.build(CommandAllowMixing.class.getName(), //</span>
-<span class="fc" id="L58">				RegexLeaf.start(), //</span>
+<span class="fc" id="L62">		return RegexConcat.build(CommandAllowMixing.class.getName(), //</span>
+<span class="fc" id="L63">				RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;allow&quot;), //
 				new RegexLeaf(&quot;_?&quot;), //
 				new RegexLeaf(&quot;mixing&quot;), //
-<span class="fc" id="L62">				RegexLeaf.end());</span>
+<span class="fc" id="L67">				RegexLeaf.end());</span>
 	}
 
 	@Override
@@ -68,14 +73,20 @@ public class CommandAllowMixing extends SingleLineCommand2&lt;ClassDiagram&gt; {
 		// 'allowmixing' (or 'allow_mixing') permits the use of elements from
 		// other diagram types (actors, components, use cases...) inside a
 		// class diagram.
-<span class="nc" id="L71">		return &quot;Allowing elements from other diagram types to be mixed into this diagram&quot;;</span>
+<span class="nc" id="L76">		return &quot;Allowing elements from other diagram types to be mixed into this diagram&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L77">		diagram.setAllowMixing(true);</span>
-<span class="nc" id="L78">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L82">		diagram.setAllowMixing(true);</span>
+<span class="nc" id="L83">		return CommandExecutionResult.ok();</span>
 	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L88">		return FIRST_TOKENS;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

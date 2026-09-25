@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -48,16 +51,18 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandBreak extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
+<span class="fc" id="L54">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;break&quot;);</span>
+
 	public CommandBreak() {
-<span class="fc" id="L52">		super(getRegexConcat());</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L57">		super(getRegexConcat());</span>
+<span class="fc" id="L58">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L56">		return RegexConcat.build(CommandBreak.class.getName(), //</span>
-<span class="fc" id="L57">				RegexLeaf.start(), //</span>
+<span class="fc" id="L61">		return RegexConcat.build(CommandBreak.class.getName(), //</span>
+<span class="fc" id="L62">				RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;break&quot;), //
 				new RegexLeaf(&quot;;?&quot;), //
-<span class="fc" id="L60">				RegexLeaf.end());</span>
+<span class="fc" id="L65">				RegexLeaf.end());</span>
 	}
 
 	@Override
@@ -65,13 +70,18 @@ public class CommandBreak extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// 'break' exits the enclosing loop (repeat or while): the flow leaves
 		// the loop without going through its normal exit condition.
-<span class="nc" id="L68">		return &quot;Breaking out of the enclosing loop&quot;;</span>
+<span class="nc" id="L73">		return &quot;Breaking out of the enclosing loop&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L73">		diagram.breakInstruction();</span>
-<span class="nc" id="L74">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L78">		diagram.breakInstruction();</span>
+<span class="nc" id="L79">		return CommandExecutionResult.ok();</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L84">		return FIRST_TOKENS;</span>
 	}
 
 }

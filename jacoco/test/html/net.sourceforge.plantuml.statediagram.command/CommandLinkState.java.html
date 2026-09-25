@@ -36,7 +36,10 @@
  */
 package net.sourceforge.plantuml.statediagram.command;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -44,13 +47,18 @@ import net.sourceforge.plantuml.regex.RegexOptional;
 public class CommandLinkState extends CommandLinkStateCommon {
 
 	public CommandLinkState() {
-<span class="fc" id="L47">		super(getRegex());</span>
-<span class="fc" id="L48">	}</span>
+<span class="fc" id="L50">		super(getRegex());</span>
+<span class="fc" id="L51">	}</span>
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L55">		return FirstTokens.ANYTHING;</span>
+	}
 
 	static RegexConcat getRegex() {
-<span class="fc" id="L51">		return RegexConcat.build(CommandLinkState.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L52">				getStatePattern(&quot;ENT1&quot;), //</span>
-<span class="fc" id="L53">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L59">		return RegexConcat.build(CommandLinkState.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L60">				getStatePattern(&quot;ENT1&quot;), //</span>
+<span class="fc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexConcat(//
 				new RegexLeaf(1, &quot;ARROW_CROSS_START&quot;, &quot;(x)?&quot;), //
 						new RegexLeaf(1, &quot;ARROW_BODY1&quot;, &quot;(-+)&quot;), //
@@ -60,16 +68,16 @@ public class CommandLinkState extends CommandLinkStateCommon {
 						new RegexLeaf(1, &quot;ARROW_BODY2&quot;, &quot;(-*)&quot;), //
 						new RegexLeaf(&quot;\\&gt;&quot;), //
 						new RegexLeaf(1, &quot;ARROW_CIRCLE_END&quot;, &quot;(o[%s]+)?&quot;)), //
-<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L64">				getStatePattern(&quot;ENT2&quot;), //</span>
-<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L66">				getLinkStereotypePattern(), //</span>
+<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L72">				getStatePattern(&quot;ENT2&quot;), //</span>
+<span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L74">				getLinkStereotypePattern(), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(&quot;:&quot;), //
-<span class="fc" id="L70">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L78">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.+)&quot;) //
-<span class="fc" id="L72">						)), RegexLeaf.end());</span>
+<span class="fc" id="L80">						)), RegexLeaf.end());</span>
 	}
 
 }

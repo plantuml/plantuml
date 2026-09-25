@@ -35,10 +35,13 @@
  */
 package net.sourceforge.plantuml.board;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -48,28 +51,33 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandBoardPlus extends SingleLineCommand2&lt;BoardDiagram&gt; {
 
 	public CommandBoardPlus() {
-<span class="nc" id="L51">		super(false, getRegexConcat());</span>
-<span class="nc" id="L52">	}</span>
+<span class="fc" id="L54">		super(false, getRegexConcat());</span>
+<span class="fc" id="L55">	}</span>
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="nc" id="L59">		return FirstTokens.ANYTHING;</span>
+	}
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L55">		return RegexConcat.build(CommandBoardPlus.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L63">		return RegexConcat.build(CommandBoardPlus.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;PLUS&quot;, &quot;([+]*)&quot;), //
-<span class="nc" id="L57">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="nc" id="L58">				new RegexLeaf(1, &quot;LABEL&quot;, &quot;([^%s].*)&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L66">				new RegexLeaf(1, &quot;LABEL&quot;, &quot;([^%s].*)&quot;), RegexLeaf.end());</span>
 	}
 
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L64">		return null;</span>
+<span class="nc" id="L72">		return null;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(BoardDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L70">		final String plus = arg.get(&quot;PLUS&quot;, 0);</span>
-<span class="nc" id="L71">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
-<span class="nc" id="L72">		return diagram.addLine(plus, label);</span>
+<span class="nc" id="L78">		final String plus = arg.get(&quot;PLUS&quot;, 0);</span>
+<span class="nc" id="L79">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="nc" id="L80">		return diagram.addLine(plus, label);</span>
 	}
 
 }

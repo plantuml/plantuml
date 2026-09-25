@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -49,12 +52,15 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandExoArrowLeft extends CommandExoArrowAny {
 
+<span class="fc" id="L55">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList( //</span>
+			&quot;&amp;&quot;, &quot;-&quot;, &quot;/&quot;, &quot;&lt;&quot;, &quot;?&quot;, &quot;[&quot;, &quot;\\&quot;, &quot;]&quot;, &quot;{&quot;);
+
 	public CommandExoArrowLeft() {
-<span class="fc" id="L53">		super(getRegexConcat());</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L59">		super(getRegexConcat());</span>
+<span class="fc" id="L60">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L57">		return RegexConcat.build(CommandExoArrowLeft.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L63">		return RegexConcat.build(CommandExoArrowLeft.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;PARALLEL&quot;, &quot;(&amp;[%s]*)?&quot;), //
 				new RegexLeaf(2, &quot;ANCHOR&quot;, CommandArrow.ANCHOR), //
 				new RegexLeaf(1, ARROW_SUPPCIRCLE2, &quot;([?\\[\\]][ox]?)?&quot;), //
@@ -62,136 +68,141 @@ public class CommandExoArrowLeft extends CommandExoArrowAny {
 						new RegexConcat( //
 								new RegexLeaf(1, &quot;ARROW_BOTHDRESSING&quot;, &quot;(&lt;&lt;?|//?|\\\\\\\\?)?&quot;), //
 								new RegexLeaf(1, &quot;ARROW_BODYA1&quot;, &quot;(-+)&quot;), //
-<span class="fc" id="L65">								new RegexLeaf(1, &quot;ARROW_STYLE1&quot;, CommandArrow.getColorOrStylePattern()), //</span>
+<span class="fc" id="L71">								new RegexLeaf(1, &quot;ARROW_STYLE1&quot;, CommandArrow.getColorOrStylePattern()), //</span>
 								new RegexLeaf(1, &quot;ARROW_BODYB1&quot;, &quot;(-*)&quot;), //
 								new RegexLeaf(1, &quot;ARROW_DRESSING1&quot;, &quot;(&gt;&gt;?|//?|\\\\\\\\?)&quot;)), //
 						new RegexConcat( //
 								new RegexLeaf(1, &quot;ARROW_DRESSING2&quot;, &quot;(&lt;&lt;?|//?|\\\\\\\\?)&quot;), //
 								new RegexLeaf(1, &quot;ARROW_BODYB2&quot;, &quot;(-*)&quot;), //
-<span class="fc" id="L71">								new RegexLeaf(1, &quot;ARROW_STYLE2&quot;, CommandArrow.getColorOrStylePattern()), //</span>
+<span class="fc" id="L77">								new RegexLeaf(1, &quot;ARROW_STYLE2&quot;, CommandArrow.getColorOrStylePattern()), //</span>
 								new RegexLeaf(1, &quot;ARROW_BODYA2&quot;, &quot;(-+)&quot;))), //
 				new RegexLeaf(1, ARROW_SUPPCIRCLE1, &quot;([ox][%s]+)?&quot;), //
-<span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(1, &quot;PARTICIPANT&quot;, &quot;([%pLN_.@]+|[%g][^%g]+[%g])&quot;), //
-<span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(1, &quot;ACTIVATION&quot;, &quot;(?:([+*!-]+)?)&quot;), //
-<span class="fc" id="L78">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(1, &quot;LIFECOLOR&quot;, &quot;(?:(#\\w+)?)&quot;), //
 <span class="fc" id="L80">				RegexLeaf.spaceZeroOrMore(), //</span>
-				UrlBuilder.OPTIONAL, //
+				new RegexLeaf(1, &quot;PARTICIPANT&quot;, &quot;([%pLN_.@]+|[%g][^%g]+[%g])&quot;), //
 <span class="fc" id="L82">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(1, &quot;ACTIVATION&quot;, &quot;(?:([+*!-]+)?)&quot;), //
+<span class="fc" id="L84">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(1, &quot;LIFECOLOR&quot;, &quot;(?:(#\\w+)?)&quot;), //
+<span class="fc" id="L86">				RegexLeaf.spaceZeroOrMore(), //</span>
+				UrlBuilder.OPTIONAL, //
+<span class="fc" id="L88">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(&quot;:&quot;), //
-<span class="fc" id="L86">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L92">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*)&quot;) //
-<span class="fc" id="L88">						)), RegexLeaf.end());</span>
+<span class="fc" id="L94">						)), RegexLeaf.end());</span>
 	}
 
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L94">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L100">		final StringBuilder sb = new StringBuilder();</span>
 
 		// Exogenous message: one endpoint is a participant, the other is the
 		// diagram border. The side and the direction are deduced from the
 		// leading symbol ('[' or ']') and from which dressing matched, exactly
 		// as in getMessageExoType().
-<span class="nc" id="L100">		final String participant = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;PARTICIPANT&quot;, 0));</span>
+<span class="nc" id="L106">		final String participant = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;PARTICIPANT&quot;, 0));</span>
 
-<span class="nc" id="L102">		final MessageExoType type = getMessageExoType(arg);</span>
-<span class="nc bnc" id="L103" title="All 5 branches missed.">		switch (type) {</span>
+<span class="nc" id="L108">		final MessageExoType type = getMessageExoType(arg);</span>
+<span class="nc bnc" id="L109" title="All 5 branches missed.">		switch (type) {</span>
 		case FROM_LEFT:
-<span class="nc" id="L105">			sb.append(&quot;Incoming message from the left border to '&quot;).append(participant).append(&quot;'&quot;);</span>
-<span class="nc" id="L106">			break;</span>
-		case TO_LEFT:
-<span class="nc" id="L108">			sb.append(&quot;Outgoing message from '&quot;).append(participant).append(&quot;' to the left border&quot;);</span>
-<span class="nc" id="L109">			break;</span>
-		case FROM_RIGHT:
-<span class="nc" id="L111">			sb.append(&quot;Incoming message from the right border to '&quot;).append(participant).append(&quot;'&quot;);</span>
+<span class="nc" id="L111">			sb.append(&quot;Incoming message from the left border to '&quot;).append(participant).append(&quot;'&quot;);</span>
 <span class="nc" id="L112">			break;</span>
-		case TO_RIGHT:
-<span class="nc" id="L114">			sb.append(&quot;Outgoing message from '&quot;).append(participant).append(&quot;' to the right border&quot;);</span>
+		case TO_LEFT:
+<span class="nc" id="L114">			sb.append(&quot;Outgoing message from '&quot;).append(participant).append(&quot;' to the left border&quot;);</span>
 <span class="nc" id="L115">			break;</span>
+		case FROM_RIGHT:
+<span class="nc" id="L117">			sb.append(&quot;Incoming message from the right border to '&quot;).append(participant).append(&quot;'&quot;);</span>
+<span class="nc" id="L118">			break;</span>
+		case TO_RIGHT:
+<span class="nc" id="L120">			sb.append(&quot;Outgoing message from '&quot;).append(participant).append(&quot;' to the right border&quot;);</span>
+<span class="nc" id="L121">			break;</span>
 		default:
-<span class="nc" id="L117">			sb.append(&quot;Exogenous message with '&quot;).append(participant).append(&quot;'&quot;);</span>
+<span class="nc" id="L123">			sb.append(&quot;Exogenous message with '&quot;).append(participant).append(&quot;'&quot;);</span>
 			break;
 		}
 
 		// A '?' as leading symbol means a short arrow (see isShortArrow()).
-<span class="nc" id="L122">		final String start = arg.get(ARROW_SUPPCIRCLE2, 0);</span>
-<span class="nc bnc" id="L123" title="All 4 branches missed.">		if (start != null &amp;&amp; start.contains(&quot;?&quot;))</span>
-<span class="nc" id="L124">			sb.append(&quot; (short arrow)&quot;);</span>
+<span class="nc" id="L128">		final String start = arg.get(ARROW_SUPPCIRCLE2, 0);</span>
+<span class="nc bnc" id="L129" title="All 4 branches missed.">		if (start != null &amp;&amp; start.contains(&quot;?&quot;))</span>
+<span class="nc" id="L130">			sb.append(&quot; (short arrow)&quot;);</span>
 
 		// Body style: a '--' in the body means a dotted arrow.
-<span class="nc" id="L127">		final String body = arg.getLazzy(&quot;ARROW_BODYA&quot;, 0) + arg.getLazzy(&quot;ARROW_BODYB&quot;, 0);</span>
-<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (body.contains(&quot;--&quot;))</span>
-<span class="nc" id="L129">			sb.append(&quot;, dotted&quot;);</span>
+<span class="nc" id="L133">		final String body = arg.getLazzy(&quot;ARROW_BODYA&quot;, 0) + arg.getLazzy(&quot;ARROW_BODYB&quot;, 0);</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (body.contains(&quot;--&quot;))</span>
+<span class="nc" id="L135">			sb.append(&quot;, dotted&quot;);</span>
 
 		// A doubled dressing (&gt;&gt;, //, \\) means an async head.
-<span class="nc" id="L132">		final String dressing = arg.getLazzy(&quot;ARROW_DRESSING&quot;, 0);</span>
-<span class="nc bnc" id="L133" title="All 4 branches missed.">		if (dressing != null &amp;&amp; dressing.length() == 2)</span>
-<span class="nc" id="L134">			sb.append(&quot;, async&quot;);</span>
+<span class="nc" id="L138">		final String dressing = arg.getLazzy(&quot;ARROW_DRESSING&quot;, 0);</span>
+<span class="nc bnc" id="L139" title="All 4 branches missed.">		if (dressing != null &amp;&amp; dressing.length() == 2)</span>
+<span class="nc" id="L140">			sb.append(&quot;, async&quot;);</span>
 
 		// A leading '&lt;' before the body means an arrow in both directions.
-<span class="nc bnc" id="L137" title="All 2 branches missed.">		if (arg.get(&quot;ARROW_BOTHDRESSING&quot;, 0) != null)</span>
-<span class="nc" id="L138">			sb.append(&quot;, in both directions&quot;);</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (arg.get(&quot;ARROW_BOTHDRESSING&quot;, 0) != null)</span>
+<span class="nc" id="L144">			sb.append(&quot;, in both directions&quot;);</span>
 
 		// Circle ('o') and cross ('x') decorations, on the border side
 		// (ARROW_SUPPCIRCLE2) or on the participant side (ARROW_SUPPCIRCLE1).
-<span class="nc bnc" id="L142" title="All 4 branches missed.">		if (start != null &amp;&amp; start.contains(&quot;o&quot;))</span>
-<span class="nc" id="L143">			sb.append(&quot;, with a circle decoration on the border side&quot;);</span>
-<span class="nc bnc" id="L144" title="All 4 branches missed.">		if (start != null &amp;&amp; start.contains(&quot;x&quot;))</span>
-<span class="nc" id="L145">			sb.append(&quot;, with a cross head on the border side&quot;);</span>
+<span class="nc bnc" id="L148" title="All 4 branches missed.">		if (start != null &amp;&amp; start.contains(&quot;o&quot;))</span>
+<span class="nc" id="L149">			sb.append(&quot;, with a circle decoration on the border side&quot;);</span>
+<span class="nc bnc" id="L150" title="All 4 branches missed.">		if (start != null &amp;&amp; start.contains(&quot;x&quot;))</span>
+<span class="nc" id="L151">			sb.append(&quot;, with a cross head on the border side&quot;);</span>
 
-<span class="nc" id="L147">		final String suppCircle1 = arg.get(ARROW_SUPPCIRCLE1, 0);</span>
-<span class="nc bnc" id="L148" title="All 4 branches missed.">		if (suppCircle1 != null &amp;&amp; suppCircle1.contains(&quot;o&quot;))</span>
-<span class="nc" id="L149">			sb.append(&quot;, with a circle decoration on the participant side&quot;);</span>
-<span class="nc bnc" id="L150" title="All 4 branches missed.">		if (suppCircle1 != null &amp;&amp; suppCircle1.contains(&quot;x&quot;))</span>
-<span class="nc" id="L151">			sb.append(&quot;, with a cross head on the participant side&quot;);</span>
+<span class="nc" id="L153">		final String suppCircle1 = arg.get(ARROW_SUPPCIRCLE1, 0);</span>
+<span class="nc bnc" id="L154" title="All 4 branches missed.">		if (suppCircle1 != null &amp;&amp; suppCircle1.contains(&quot;o&quot;))</span>
+<span class="nc" id="L155">			sb.append(&quot;, with a circle decoration on the participant side&quot;);</span>
+<span class="nc bnc" id="L156" title="All 4 branches missed.">		if (suppCircle1 != null &amp;&amp; suppCircle1.contains(&quot;x&quot;))</span>
+<span class="nc" id="L157">			sb.append(&quot;, with a cross head on the participant side&quot;);</span>
 
 		// Activation specifier (+, -, *, !) drives the participant's life line.
-<span class="nc" id="L154">		final String activation = arg.get(&quot;ACTIVATION&quot;, 0);</span>
-<span class="nc bnc" id="L155" title="All 4 branches missed.">		if (activation != null &amp;&amp; activation.isEmpty() == false)</span>
-<span class="nc" id="L156">			sb.append(&quot;, activation '&quot;).append(activation).append(&quot;'&quot;);</span>
+<span class="nc" id="L160">		final String activation = arg.get(&quot;ACTIVATION&quot;, 0);</span>
+<span class="nc bnc" id="L161" title="All 4 branches missed.">		if (activation != null &amp;&amp; activation.isEmpty() == false)</span>
+<span class="nc" id="L162">			sb.append(&quot;, activation '&quot;).append(activation).append(&quot;'&quot;);</span>
 
-<span class="nc" id="L158">		final String lifeColor = arg.get(&quot;LIFECOLOR&quot;, 0);</span>
-<span class="nc bnc" id="L159" title="All 4 branches missed.">		if (lifeColor != null &amp;&amp; lifeColor.isEmpty() == false)</span>
-<span class="nc" id="L160">			sb.append(&quot;, life line color &quot;).append(lifeColor);</span>
+<span class="nc" id="L164">		final String lifeColor = arg.get(&quot;LIFECOLOR&quot;, 0);</span>
+<span class="nc bnc" id="L165" title="All 4 branches missed.">		if (lifeColor != null &amp;&amp; lifeColor.isEmpty() == false)</span>
+<span class="nc" id="L166">			sb.append(&quot;, life line color &quot;).append(lifeColor);</span>
 
-<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null)</span>
-<span class="nc" id="L163">			sb.append(&quot;, with a URL link&quot;);</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null)</span>
+<span class="nc" id="L169">			sb.append(&quot;, with a URL link&quot;);</span>
 
-<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (arg.get(&quot;PARALLEL&quot;, 0) != null)</span>
-<span class="nc" id="L166">			sb.append(&quot;, parallel&quot;);</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">		if (arg.get(&quot;PARALLEL&quot;, 0) != null)</span>
+<span class="nc" id="L172">			sb.append(&quot;, parallel&quot;);</span>
 
-<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (arg.get(&quot;ANCHOR&quot;, 1) != null)</span>
-<span class="nc" id="L169">			sb.append(&quot;, anchor '&quot;).append(arg.get(&quot;ANCHOR&quot;, 1)).append(&quot;'&quot;);</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">		if (arg.get(&quot;ANCHOR&quot;, 1) != null)</span>
+<span class="nc" id="L175">			sb.append(&quot;, anchor '&quot;).append(arg.get(&quot;ANCHOR&quot;, 1)).append(&quot;'&quot;);</span>
 
-<span class="nc" id="L171">		return sb.toString();</span>
+<span class="nc" id="L177">		return sb.toString();</span>
 	}
 
 	@Override
 	MessageExoType getMessageExoType(RegexResult arg2) {
-<span class="fc" id="L176">		final String start = arg2.get(ARROW_SUPPCIRCLE2, 0);</span>
-<span class="fc" id="L177">		final String dressing1 = arg2.get(&quot;ARROW_DRESSING1&quot;, 0);</span>
-<span class="fc" id="L178">		final String dressing2 = arg2.get(&quot;ARROW_DRESSING2&quot;, 0);</span>
-<span class="pc bpc" id="L179" title="2 of 4 branches missed.">		if (start != null &amp;&amp; start.contains(&quot;]&quot;)) {</span>
-<span class="nc bnc" id="L180" title="All 2 branches missed.">			if (dressing1 != null)</span>
-<span class="nc" id="L181">				return MessageExoType.FROM_RIGHT;</span>
+<span class="fc" id="L182">		final String start = arg2.get(ARROW_SUPPCIRCLE2, 0);</span>
+<span class="fc" id="L183">		final String dressing1 = arg2.get(&quot;ARROW_DRESSING1&quot;, 0);</span>
+<span class="fc" id="L184">		final String dressing2 = arg2.get(&quot;ARROW_DRESSING2&quot;, 0);</span>
+<span class="pc bpc" id="L185" title="2 of 4 branches missed.">		if (start != null &amp;&amp; start.contains(&quot;]&quot;)) {</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">			if (dressing1 != null)</span>
+<span class="nc" id="L187">				return MessageExoType.FROM_RIGHT;</span>
 
-<span class="nc bnc" id="L183" title="All 2 branches missed.">			if (dressing2 != null)</span>
-<span class="nc" id="L184">				return MessageExoType.TO_RIGHT;</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">			if (dressing2 != null)</span>
+<span class="nc" id="L190">				return MessageExoType.TO_RIGHT;</span>
 
-<span class="nc" id="L186">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L192">			throw new IllegalArgumentException();</span>
 		}
-<span class="pc bpc" id="L188" title="1 of 2 branches missed.">		if (dressing1 != null)</span>
-<span class="fc" id="L189">			return MessageExoType.FROM_LEFT;</span>
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">		if (dressing1 != null)</span>
+<span class="fc" id="L195">			return MessageExoType.FROM_LEFT;</span>
 
-<span class="nc bnc" id="L191" title="All 2 branches missed.">		if (dressing2 != null)</span>
-<span class="nc" id="L192">			return MessageExoType.TO_LEFT;</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">		if (dressing2 != null)</span>
+<span class="nc" id="L198">			return MessageExoType.TO_LEFT;</span>
 
-<span class="nc" id="L194">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L200">		throw new IllegalArgumentException();</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L205">		return FIRST_TOKENS;</span>
 	}
 
 }

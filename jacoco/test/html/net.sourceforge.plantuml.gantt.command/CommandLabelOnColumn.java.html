@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.gantt.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -49,28 +52,30 @@ import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandLabelOnColumn extends SingleLineCommand2&lt;GanttDiagram&gt; {
 
+<span class="fc" id="L55">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;label&quot;, &quot;labels&quot;);</span>
+
 	public CommandLabelOnColumn() {
-<span class="fc" id="L53">		super(getRegexConcat());</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L58">		super(getRegexConcat());</span>
+<span class="fc" id="L59">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L57">		return RegexConcat.build(CommandLabelOnColumn.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L62">		return RegexConcat.build(CommandLabelOnColumn.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;labels?&quot;), //
-<span class="fc" id="L59">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L64">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;on&quot;), //
-<span class="fc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L66">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;POSITION&quot;, &quot;(first|last)&quot;), //
-<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L68">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;column&quot;), //
 				new RegexOptional(new RegexConcat( //
-<span class="fc" id="L66">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L71">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(&quot;and&quot;), //
-<span class="fc" id="L68">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L73">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(1, &quot;ALIGNED&quot;, &quot;(left|right)&quot;), //
-<span class="fc" id="L70">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L75">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(&quot;aligned&quot;) //
 				)), //
-<span class="fc" id="L73">				RegexLeaf.end());</span>
+<span class="fc" id="L78">				RegexLeaf.end());</span>
 	}
 
 	@Override
@@ -83,9 +88,14 @@ public class CommandLabelOnColumn extends SingleLineCommand2&lt;GanttDiagram&gt;
 //				: HorizontalAlignment.LEFT;
 //		final LabelStrategy strategy = new LabelStrategy(position, alignment);
 //		diagram.setLabelStrategy(strategy);
-<span class="fc" id="L86">		diagram.addWarning(new Warning(&quot;'labels on &quot; + arg.get(&quot;POSITION&quot;, 0)</span>
+<span class="fc" id="L91">		diagram.addWarning(new Warning(&quot;'labels on &quot; + arg.get(&quot;POSITION&quot;, 0)</span>
 				+ &quot; column' is no longer supported: this line is ignored&quot;));
-<span class="fc" id="L88">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L93">		return CommandExecutionResult.ok();</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L98">		return FIRST_TOKENS;</span>
 	}
 
 }

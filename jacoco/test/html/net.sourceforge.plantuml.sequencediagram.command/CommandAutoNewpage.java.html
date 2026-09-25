@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -48,15 +51,17 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandAutoNewpage extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
+<span class="fc" id="L54">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;autonewpage&quot;);</span>
+
 	public CommandAutoNewpage() {
-<span class="fc" id="L52">		super(getRegexConcat());</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L57">		super(getRegexConcat());</span>
+<span class="fc" id="L58">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L56">		return RegexConcat.build(CommandAutoNewpage.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L61">		return RegexConcat.build(CommandAutoNewpage.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;autonewpage&quot;), //
-<span class="fc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L59">				new RegexLeaf(1, &quot;VALUE&quot;, &quot;(\\d+)&quot;), RegexLeaf.end()); //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L64">				new RegexLeaf(1, &quot;VALUE&quot;, &quot;(\\d+)&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override
@@ -65,16 +70,22 @@ public class CommandAutoNewpage extends SingleLineCommand2&lt;SequenceDiagram&gt
 		// Intent: start a new page automatically every VALUE messages. Note
 		// that SequenceDiagram.setAutonewpage() is currently a no-op, so this
 		// command is parsed but has no effect on the rendering.
-<span class="nc" id="L68">		final String value = arg.get(&quot;VALUE&quot;, 0);</span>
-<span class="nc" id="L69">		return &quot;Requesting a new page automatically every &quot; + value</span>
+<span class="nc" id="L73">		final String value = arg.get(&quot;VALUE&quot;, 0);</span>
+<span class="nc" id="L74">		return &quot;Requesting a new page automatically every &quot; + value</span>
 				+ &quot; messages (currently ignored by the rendering engine)&quot;;
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L76">		diagram.setAutonewpage(Integer.parseInt(arg.get(&quot;VALUE&quot;, 0)));</span>
-<span class="nc" id="L77">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L81">		diagram.setAutonewpage(Integer.parseInt(arg.get(&quot;VALUE&quot;, 0)));</span>
+<span class="nc" id="L82">		return CommandExecutionResult.ok();</span>
 	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L87">		return FIRST_TOKENS;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

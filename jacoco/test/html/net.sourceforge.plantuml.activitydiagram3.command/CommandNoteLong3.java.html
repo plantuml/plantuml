@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -62,15 +65,18 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandNoteLong3 extends CommandMultilines2&lt;ActivityDiagram3&gt; {
 
-<span class="fc" id="L65">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
-<span class="fc" id="L66">			() -&gt; Pattern2.cmpile(&quot;^end[%s]?note$&quot;));</span>
+<span class="fc" id="L68">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList( //</span>
+			&quot;floating&quot;, &quot;note&quot;, &quot;noteleft&quot;, &quot;noteright&quot;);
+
+<span class="fc" id="L71">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="fc" id="L72">			() -&gt; Pattern2.cmpile(&quot;^end[%s]?note$&quot;));</span>
 
 	public CommandNoteLong3() {
-<span class="fc" id="L69">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
-<span class="fc" id="L70">	}</span>
+<span class="fc" id="L75">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L76">	}</span>
 
 	private static ColorParser color() {
-<span class="fc" id="L73">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="fc" id="L79">		return ColorParser.simpleColor(ColorType.BACK);</span>
 	}
 
 	@Override
@@ -79,67 +85,73 @@ public class CommandNoteLong3 extends CommandMultilines2&lt;ActivityDiagram3&gt;
 		// Mirror executeNow: the first line carries the declaration, the lines
 		// up to 'end note' are the text of the note. A 'floating note' is not
 		// attached to anything; the default position is on the left.
-<span class="nc" id="L82">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (line0 == null)</span>
-<span class="nc" id="L84">			return &quot;Adding a note&quot;;</span>
+<span class="nc" id="L88">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (line0 == null)</span>
+<span class="nc" id="L90">			return &quot;Adding a note&quot;;</span>
 
-<span class="nc" id="L86">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (line0.get(&quot;TYPE&quot;, 0).startsWith(&quot;floating&quot;))</span>
-<span class="nc" id="L88">			sb.append(&quot;Adding a floating note&quot;);</span>
+<span class="nc" id="L92">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (line0.get(&quot;TYPE&quot;, 0).startsWith(&quot;floating&quot;))</span>
+<span class="nc" id="L94">			sb.append(&quot;Adding a floating note&quot;);</span>
 		else
-<span class="nc" id="L90">			sb.append(&quot;Adding a note attached to the latest activity&quot;);</span>
+<span class="nc" id="L96">			sb.append(&quot;Adding a note attached to the latest activity&quot;);</span>
 
-<span class="nc" id="L92">		final String position = line0.get(&quot;POSITION&quot;, 0);</span>
-<span class="nc bnc" id="L93" title="All 4 branches missed.">		if (position != null &amp;&amp; position.isEmpty() == false)</span>
-<span class="nc" id="L94">			sb.append(&quot; on the &quot;).append(position);</span>
+<span class="nc" id="L98">		final String position = line0.get(&quot;POSITION&quot;, 0);</span>
+<span class="nc bnc" id="L99" title="All 4 branches missed.">		if (position != null &amp;&amp; position.isEmpty() == false)</span>
+<span class="nc" id="L100">			sb.append(&quot; on the &quot;).append(position);</span>
 
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		final int bodyCount = lines.size() &gt; 2 ? lines.size() - 2 : 0;</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (bodyCount &gt; 0)</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">			sb.append(&quot;, with &quot;).append(bodyCount).append(bodyCount == 1 ? &quot; line&quot; : &quot; lines&quot;).append(&quot; of text&quot;);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		final int bodyCount = lines.size() &gt; 2 ? lines.size() - 2 : 0;</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (bodyCount &gt; 0)</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">			sb.append(&quot;, with &quot;).append(bodyCount).append(bodyCount == 1 ? &quot; line&quot; : &quot; lines&quot;).append(&quot; of text&quot;);</span>
 
-<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (line0.get(&quot;COLOR&quot;, 0) != null)</span>
-<span class="nc" id="L101">			sb.append(&quot;, background color &quot;).append(line0.get(&quot;COLOR&quot;, 0));</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (line0.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L107">			sb.append(&quot;, background color &quot;).append(line0.get(&quot;COLOR&quot;, 0));</span>
 
-<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (line0.get(&quot;STEREO&quot;, 0) != null)</span>
-<span class="nc" id="L104">			sb.append(&quot;, stereotype &quot;).append(line0.get(&quot;STEREO&quot;, 0));</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (line0.get(&quot;STEREO&quot;, 0) != null)</span>
+<span class="nc" id="L110">			sb.append(&quot;, stereotype &quot;).append(line0.get(&quot;STEREO&quot;, 0));</span>
 
 		// The stereotag is parsed but never read by executeNow.
-<span class="nc" id="L107">		final String tags = line0.get(&quot;TAGS&quot;, 0);</span>
-<span class="nc bnc" id="L108" title="All 4 branches missed.">		if (tags != null &amp;&amp; tags.isEmpty() == false)</span>
-<span class="nc" id="L109">			sb.append(&quot; (the tag &quot;).append(tags).append(&quot; is currently ignored)&quot;);</span>
+<span class="nc" id="L113">		final String tags = line0.get(&quot;TAGS&quot;, 0);</span>
+<span class="nc bnc" id="L114" title="All 4 branches missed.">		if (tags != null &amp;&amp; tags.isEmpty() == false)</span>
+<span class="nc" id="L115">			sb.append(&quot; (the tag &quot;).append(tags).append(&quot; is currently ignored)&quot;);</span>
 
-<span class="nc" id="L111">		return sb.toString();</span>
+<span class="nc" id="L117">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeNow(final ActivityDiagram3 diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="fc" id="L117">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="fc" id="L118">		lines = lines.subExtract(1, 1);</span>
-<span class="fc" id="L119">		lines = lines.removeEmptyColumns();</span>
-<span class="fc" id="L120">		final NotePosition position = NotePosition.defaultLeft(line0.get(&quot;POSITION&quot;, 0));</span>
-<span class="fc" id="L121">		final NoteType type = NoteType.defaultType(line0.get(&quot;TYPE&quot;, 0));</span>
-<span class="fc" id="L122">		final Display note = lines.toDisplay();</span>
-<span class="fc" id="L123">		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L123">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="fc" id="L124">		lines = lines.subExtract(1, 1);</span>
+<span class="fc" id="L125">		lines = lines.removeEmptyColumns();</span>
+<span class="fc" id="L126">		final NotePosition position = NotePosition.defaultLeft(line0.get(&quot;POSITION&quot;, 0));</span>
+<span class="fc" id="L127">		final NoteType type = NoteType.defaultType(line0.get(&quot;TYPE&quot;, 0));</span>
+<span class="fc" id="L128">		final Display note = lines.toDisplay();</span>
+<span class="fc" id="L129">		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());</span>
 
-<span class="fc" id="L125">		final String stereotypeString = line0.get(&quot;STEREO&quot;, 0);</span>
-<span class="fc" id="L126">		Stereotype stereotype = null;</span>
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (stereotypeString != null)</span>
-<span class="nc" id="L128">			stereotype = Stereotype.build(stereotypeString);</span>
+<span class="fc" id="L131">		final String stereotypeString = line0.get(&quot;STEREO&quot;, 0);</span>
+<span class="fc" id="L132">		Stereotype stereotype = null;</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (stereotypeString != null)</span>
+<span class="nc" id="L134">			stereotype = Stereotype.build(stereotypeString);</span>
 
-<span class="fc" id="L130">		return diagram.addNote(note, position, type, colors, stereotype);</span>
+<span class="fc" id="L136">		return diagram.addNote(note, position, type, colors, stereotype);</span>
 	}
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L134">		return RegexConcat.build(CommandNoteLong3.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L140">		return RegexConcat.build(CommandNoteLong3.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(note|floating note)&quot;), //
-<span class="fc" id="L136">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L142">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;POSITION&quot;, &quot;(left|right)?&quot;), //
-<span class="fc" id="L138">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L139">				new RegexLeaf(4, &quot;TAGS&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
-<span class="fc" id="L140">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
-<span class="fc" id="L141">				color().getRegex(), //</span>
-<span class="fc" id="L142">				RegexLeaf.end());</span>
+<span class="fc" id="L144">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L145">				new RegexLeaf(4, &quot;TAGS&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L146">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L147">				color().getRegex(), //</span>
+<span class="fc" id="L148">				RegexLeaf.end());</span>
 	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L153">		return FIRST_TOKENS;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

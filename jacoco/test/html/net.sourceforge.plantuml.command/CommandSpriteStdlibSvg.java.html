@@ -36,6 +36,8 @@
 package net.sourceforge.plantuml.command;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
 
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.preproc.Stdlib;
@@ -48,35 +50,42 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandSpriteStdlibSvg extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L51">	public static final CommandSpriteStdlibSvg ME = new CommandSpriteStdlibSvg();</span>
+<span class="fc" id="L53">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;sprite&quot;);</span>
+
+<span class="fc" id="L55">	public static final CommandSpriteStdlibSvg ME = new CommandSpriteStdlibSvg();</span>
 
 	private CommandSpriteStdlibSvg() {
-<span class="fc" id="L54">		super(getRegexConcat());</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L58">		super(getRegexConcat());</span>
+<span class="fc" id="L59">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L58">		return RegexConcat.build(CommandSpriteStdlibSvg.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L62">		return RegexConcat.build(CommandSpriteStdlibSvg.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;sprite&quot;), //
-<span class="fc" id="L60">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L64">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;\\$?&quot;), //
 				new RegexLeaf(1, &quot;NAME&quot;, &quot;([-%pLN_]+)&quot;), //
-<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L67">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(2, &quot;STDLIB&quot;, &quot;:([^:]+):([^%s]+)&quot;), //
-<span class="fc" id="L65">				RegexLeaf.end());</span>
+<span class="fc" id="L69">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		try {
-<span class="nc" id="L72">			final Stdlib lib = Stdlib.retrieve(arg.get(&quot;STDLIB&quot;, 0));</span>
-<span class="nc" id="L73">			final String exportedName = arg.get(&quot;STDLIB&quot;, 1);</span>
-<span class="nc" id="L74">			final String name = arg.get(&quot;NAME&quot;, 0);</span>
-<span class="nc" id="L75">			system.addSprite(name, new StdlibSpriteSvg(lib, exportedName));</span>
-<span class="nc" id="L76">		} catch (IOException e) {</span>
-<span class="nc" id="L77">			return CommandExecutionResult.error(&quot;Cannot read sprite &quot; + e.toString());</span>
-<span class="nc" id="L78">		}</span>
-<span class="nc" id="L79">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L76">			final Stdlib lib = Stdlib.retrieve(arg.get(&quot;STDLIB&quot;, 0));</span>
+<span class="nc" id="L77">			final String exportedName = arg.get(&quot;STDLIB&quot;, 1);</span>
+<span class="nc" id="L78">			final String name = arg.get(&quot;NAME&quot;, 0);</span>
+<span class="nc" id="L79">			system.addSprite(name, new StdlibSpriteSvg(lib, exportedName));</span>
+<span class="nc" id="L80">		} catch (IOException e) {</span>
+<span class="nc" id="L81">			return CommandExecutionResult.error(&quot;Cannot read sprite &quot; + e.toString());</span>
+<span class="nc" id="L82">		}</span>
+<span class="nc" id="L83">		return CommandExecutionResult.ok();</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L88">		return FIRST_TOKENS;</span>
 	}
 
 }

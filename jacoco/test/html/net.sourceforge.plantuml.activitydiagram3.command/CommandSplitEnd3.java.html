@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -49,26 +52,29 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandSplitEnd3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
+<span class="fc" id="L55">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList( //</span>
+			&quot;end&quot;, &quot;endsplit&quot;, &quot;split&quot;, &quot;splitend&quot;);
+
 	public CommandSplitEnd3() {
-<span class="fc" id="L53">		super(getRegexConcat());</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L59">		super(getRegexConcat());</span>
+<span class="fc" id="L60">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L57">		return RegexConcat.build(CommandSplitEnd3.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L63">		return RegexConcat.build(CommandSplitEnd3.class.getName(), RegexLeaf.start(), //</span>
 				new RegexOr( //
 						new RegexConcat( //
 								new RegexLeaf(&quot;end&quot;), //
-<span class="fc" id="L61">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L67">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(&quot;split&quot;) //
 						), //
 						new RegexConcat( //
 								new RegexLeaf(&quot;split&quot;), //
-<span class="fc" id="L66">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L72">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(&quot;end&quot;) //
 						) //
 				), //
 				new RegexLeaf(&quot;;?&quot;), //
-<span class="fc" id="L71">				RegexLeaf.end());</span>
+<span class="fc" id="L77">				RegexLeaf.end());</span>
 	}
 
 	@Override
@@ -76,13 +82,18 @@ public class CommandSplitEnd3 extends SingleLineCommand2&lt;ActivityDiagram3&gt;
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// 'end split' (or 'split end') closes the enclosing 'split': the
 		// branches converge back into a single flow, without synchronization.
-<span class="nc" id="L79">		return &quot;Closing the enclosing split, converging the branches&quot;;</span>
+<span class="nc" id="L85">		return &quot;Closing the enclosing split, converging the branches&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L85">		return diagram.endSplit();</span>
+<span class="nc" id="L91">		return diagram.endSplit();</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L96">		return FIRST_TOKENS;</span>
 	}
 
 }

@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.ebnf;
 
+import java.util.Collection;
+
 import com.plantuml.ubrex.UnicodeBracketedExpression;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
@@ -48,23 +50,28 @@ import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.command.UBrexCommandMultilines2;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class UBrexCommandEbnfMultilines extends UBrexCommandMultilines2&lt;PSystemEbnf&gt; {
 
-<span class="pc" id="L55">	private final static Lazy&lt;UnicodeBracketedExpression&gt; END = new Lazy&lt;&gt;(() -&gt; new UBrexLeaf(&quot;〇+〘 〄&gt;; 〙&quot;));</span>
+<span class="pc" id="L58">	private final static Lazy&lt;UnicodeBracketedExpression&gt; END = new Lazy&lt;&gt;(() -&gt; new UBrexLeaf(&quot;〇+〘 〄&gt;; 〙&quot;));</span>
 
 	public UBrexCommandEbnfMultilines() {
-<span class="fc" id="L58">		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END);</span>
-<span class="fc" id="L59">	}</span>
+<span class="fc" id="L61">		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L62">	}</span>
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L66">		return FirstTokens.ANYTHING;</span>
+	}
 
 	static UnicodeBracketedExpression getRegexConcat() {
-
-<span class="fc" id="L63">		return new UBrexNamed(&quot;LINE&quot;, //</span>
-<span class="fc" id="L64">				UBrexConcat.build( //</span>
+<span class="fc" id="L70">		return new UBrexNamed(&quot;LINE&quot;, //</span>
+<span class="fc" id="L71">				UBrexConcat.build( //</span>
 						new UBrexLeaf(&quot;「〴an_」&quot;), //
 						new UBrexLeaf(&quot;〇*「〴an_-」&quot;), //
-<span class="fc" id="L67">						UBrexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L74">						UBrexLeaf.spaceZeroOrMore(), //</span>
 						new UBrexLeaf(&quot;=&quot;), //
 						new UBrexLeaf(&quot;〇*〴.&quot;) //
 				));
@@ -76,14 +83,20 @@ public class UBrexCommandEbnfMultilines extends UBrexCommandMultilines2&lt;PSyst
 	protected String explainNow(BlocLines lines) {
 		// executeNow hands the whole block to addBlocLines without extracting fields; the rule body runs
 		// until a line ending in ';', so every line carries content
-<span class="nc" id="L79">		return &quot;Declaring an EBNF rule with &quot; + lines.size() + &quot; lines&quot;;</span>
+<span class="nc" id="L86">		return &quot;Declaring an EBNF rule with &quot; + lines.size() + &quot; lines&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeNow(PSystemEbnf diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L85">		return diagram.addBlocLines(lines, null, null);</span>
+<span class="nc" id="L92">		return diagram.addBlocLines(lines, null, null);</span>
 	}
+	
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensSlow() {
+<span class="fc" id="L97">		return FirstTokens.ANYTHING;</span>
+	}
+
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

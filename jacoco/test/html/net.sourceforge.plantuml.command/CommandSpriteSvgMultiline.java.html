@@ -36,6 +36,8 @@
 package net.sourceforge.plantuml.command;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.Lazy;
@@ -54,23 +56,25 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandSpriteSvgMultiline extends CommandMultilines2&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L57">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(() -&gt; Pattern2.cmpile(&quot;(.*\\&lt;/svg\\&gt;)$&quot;));</span>
+<span class="fc" id="L59">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;sprite&quot;);</span>
 
-<span class="fc" id="L59">	public static final CommandSpriteSvgMultiline ME = new CommandSpriteSvgMultiline();</span>
+<span class="fc" id="L61">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(() -&gt; Pattern2.cmpile(&quot;(.*\\&lt;/svg\\&gt;)$&quot;));</span>
+
+<span class="fc" id="L63">	public static final CommandSpriteSvgMultiline ME = new CommandSpriteSvgMultiline();</span>
 
 	private CommandSpriteSvgMultiline() {
-<span class="fc" id="L62">		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END);</span>
-<span class="fc" id="L63">	}</span>
+<span class="fc" id="L66">		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L67">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L66">		return RegexConcat.build(CommandSpriteSvgMultiline.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L70">		return RegexConcat.build(CommandSpriteSvgMultiline.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;sprite&quot;), //
-<span class="fc" id="L68">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L72">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;\\$?&quot;), //
 				new RegexLeaf(1, &quot;NAME&quot;, &quot;([-%pLN_]+)&quot;), //
-<span class="fc" id="L71">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L75">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;SVGSTART&quot;, &quot;(\\&lt;svg\\b.*)&quot;), //
-<span class="fc" id="L73">				RegexLeaf.end());</span>
+<span class="fc" id="L77">				RegexLeaf.end());</span>
 	}
 
 	@Override
@@ -79,31 +83,37 @@ public class CommandSpriteSvgMultiline extends CommandMultilines2&lt;TitledDiagr
 		// Mirror executeNow: the '&lt;svg' element starts on the declaration line
 		// itself and the closing '&lt;/svg&gt;' line is part of the data, so the
 		// whole block contributes to the SVG.
-<span class="nc" id="L82">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (line0 == null)</span>
-<span class="nc" id="L84">			return &quot;Defining a sprite from an inline SVG element&quot;;</span>
+<span class="nc" id="L86">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (line0 == null)</span>
+<span class="nc" id="L88">			return &quot;Defining a sprite from an inline SVG element&quot;;</span>
 
-<span class="nc" id="L86">		return &quot;Defining the sprite '&quot; + line0.get(&quot;NAME&quot;, 0) + &quot;' from an inline SVG element of &quot; + lines.size()</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">				+ (lines.size() == 1 ? &quot; line&quot; : &quot; lines&quot;);</span>
+<span class="nc" id="L90">		return &quot;Defining the sprite '&quot; + line0.get(&quot;NAME&quot;, 0) + &quot;' from an inline SVG element of &quot; + lines.size()</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">				+ (lines.size() == 1 ? &quot; line&quot; : &quot; lines&quot;);</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeNow(TitledDiagram system, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
 
-<span class="fc" id="L94">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="fc" id="L95">		final String svgStart = line0.get(&quot;SVGSTART&quot;, 0);</span>
-<span class="fc" id="L96">		lines = lines.subExtract(1, 0);</span>
+<span class="fc" id="L98">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="fc" id="L99">		final String svgStart = line0.get(&quot;SVGSTART&quot;, 0);</span>
+<span class="fc" id="L100">		lines = lines.subExtract(1, 0);</span>
 
-<span class="fc" id="L98">		final List&lt;String&gt; svg = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L99">		svg.add(svgStart);</span>
-<span class="fc bfc" id="L100" title="All 2 branches covered.">		for (StringLocated sl : lines)</span>
-<span class="fc" id="L101">			svg.add(sl.getString());</span>
+<span class="fc" id="L102">		final List&lt;String&gt; svg = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L103">		svg.add(svgStart);</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		for (StringLocated sl : lines)</span>
+<span class="fc" id="L105">			svg.add(sl.getString());</span>
 
-<span class="fc" id="L103">		final ISvgSpriteParser parser = SvgSpriteParserFactory.create(svg, system.getPragma(), system.getMd5map());</span>
-<span class="fc" id="L104">		system.addSprite(line0.get(&quot;NAME&quot;, 0), parser);</span>
+<span class="fc" id="L107">		final ISvgSpriteParser parser = SvgSpriteParserFactory.create(svg, system.getPragma(), system.getMd5map());</span>
+<span class="fc" id="L108">		system.addSprite(line0.get(&quot;NAME&quot;, 0), parser);</span>
 
-<span class="fc" id="L106">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L110">		return CommandExecutionResult.ok();</span>
 	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L115">		return FIRST_TOKENS;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

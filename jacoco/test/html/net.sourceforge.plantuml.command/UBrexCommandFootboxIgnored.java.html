@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import com.plantuml.ubrex.UnicodeBracketedExpression;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
@@ -46,17 +49,20 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class UBrexCommandFootboxIgnored extends UBrexSingleLineCommand2&lt;TitledDiagram&gt; {
 
+<span class="fc" id="L52">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList( //</span>
+			&quot;hide&quot;, &quot;hidefootbox&quot;, &quot;show&quot;, &quot;showfootbox&quot;);
+
 	public UBrexCommandFootboxIgnored() {
-<span class="fc" id="L50">		super(getRegexConcat());</span>
-<span class="fc" id="L51">	}</span>
+<span class="fc" id="L56">		super(getRegexConcat());</span>
+<span class="fc" id="L57">	}</span>
 
 	
 	static UnicodeBracketedExpression getRegexConcat() {
-<span class="fc" id="L55">		return UBrexConcat.build(</span>
+<span class="fc" id="L61">		return UBrexConcat.build(</span>
 				new UBrexLeaf(&quot;【 hide┇show 】&quot;), //
-<span class="fc" id="L57">				UBrexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L63">				UBrexLeaf.spaceZeroOrMore(), //</span>
 				new UBrexLeaf(&quot;footbox&quot;), //
-<span class="fc" id="L59">				UBrexLeaf.end()); //</span>
+<span class="fc" id="L65">				UBrexLeaf.end()); //</span>
 	}
 
 	@Override
@@ -66,12 +72,24 @@ public class UBrexCommandFootboxIgnored extends UBrexSingleLineCommand2&lt;Title
 		// 'show footbox' in diagram types where the footbox does not exist, so
 		// that the line is accepted without any effect; the real handling, for
 		// sequence diagrams, is in CommandFootbox.
-<span class="nc" id="L69">		return &quot;Accepted but ignored: 'footbox' has no effect in this diagram type&quot;;</span>
+<span class="nc" id="L75">		return &quot;Accepted but ignored: 'footbox' has no effect in this diagram type&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L74">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L80">		return CommandExecutionResult.ok();</span>
 	}
+
+	// Declared by hand: FirstTokens only reads regex patterns, and this one is a UBrex expression.
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensSlow() {
+<span class="fc" id="L86">		return FIRST_TOKENS;</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L91">		return FIRST_TOKENS;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

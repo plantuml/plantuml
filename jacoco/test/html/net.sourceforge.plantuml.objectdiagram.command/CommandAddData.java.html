@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.objectdiagram.command;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -43,6 +45,7 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -51,19 +54,23 @@ import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandAddData extends SingleLineCommand2&lt;AbstractClassOrObjectDiagram&gt; {
-    // ::remove folder when __HAXE__
 
 	public CommandAddData() {
-<span class="nc" id="L57">		super(getRegexConcat());</span>
-<span class="nc" id="L58">	}</span>
+<span class="nc" id="L59">		super(getRegexConcat());</span>
+<span class="nc" id="L60">	}</span>
+	
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="nc" id="L64">		return FirstTokens.ANYTHING;</span>
+	}
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L61">		return RegexConcat.build(CommandAddData.class.getName(), RegexLeaf.start(), //</span>
+<span class="nc" id="L68">		return RegexConcat.build(CommandAddData.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;NAME&quot;, &quot;([%pLN_.]+)&quot;), //
-<span class="nc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;:&quot;), //
-<span class="nc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="nc" id="L66">				new RegexLeaf(1, &quot;DATA&quot;, &quot;(.*)&quot;), RegexLeaf.end()); //</span>
+<span class="nc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L73">				new RegexLeaf(1, &quot;DATA&quot;, &quot;(.*)&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override
@@ -73,24 +80,24 @@ public class CommandAddData extends SingleLineCommand2&lt;AbstractClassOrObjectD
 		// object; executeArg fails when it does not exist, unlike the class
 		// and state flavors of this command, which create the entity on the
 		// fly.
-<span class="nc" id="L76">		return &quot;Adding the field \&quot;&quot; + arg.get(&quot;DATA&quot;, 0) + &quot;\&quot; to the object '&quot; + arg.get(&quot;NAME&quot;, 0) + &quot;'&quot;;</span>
+<span class="nc" id="L83">		return &quot;Adding the field \&quot;&quot; + arg.get(&quot;DATA&quot;, 0) + &quot;\&quot; to the object '&quot; + arg.get(&quot;NAME&quot;, 0) + &quot;'&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location,
 			RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L82">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
-<span class="nc" id="L83">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(name));</span>
-<span class="nc" id="L84">		final Entity entity = quark.getData();</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (entity == null)</span>
-<span class="nc" id="L86">			return CommandExecutionResult.error(&quot;No such entity &quot; + quark.getName());</span>
+<span class="nc" id="L89">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
+<span class="nc" id="L90">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(name));</span>
+<span class="nc" id="L91">		final Entity entity = quark.getData();</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (entity == null)</span>
+<span class="nc" id="L93">			return CommandExecutionResult.error(&quot;No such entity &quot; + quark.getName());</span>
 
-<span class="nc" id="L88">		final String field = arg.get(&quot;DATA&quot;, 0);</span>
-<span class="nc bnc" id="L89" title="All 4 branches missed.">		if (field.length() &gt; 0 &amp;&amp; VisibilityModifier.isVisibilityCharacter(field))</span>
-<span class="nc" id="L90">			diagram.setVisibilityModifierPresent(true);</span>
+<span class="nc" id="L95">		final String field = arg.get(&quot;DATA&quot;, 0);</span>
+<span class="nc bnc" id="L96" title="All 4 branches missed.">		if (field.length() &gt; 0 &amp;&amp; VisibilityModifier.isVisibilityCharacter(field))</span>
+<span class="nc" id="L97">			diagram.setVisibilityModifierPresent(true);</span>
 
-<span class="nc" id="L92">		entity.getBodier().addFieldOrMethod(field);</span>
-<span class="nc" id="L93">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L99">		entity.getBodier().addFieldOrMethod(field);</span>
+<span class="nc" id="L100">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

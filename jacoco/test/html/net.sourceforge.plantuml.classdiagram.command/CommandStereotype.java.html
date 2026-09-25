@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -45,6 +47,7 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -56,16 +59,21 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandStereotype extends SingleLineCommand2&lt;ClassDiagram&gt; {
 
 	public CommandStereotype() {
-<span class="fc" id="L59">		super(getRegexConcat());</span>
-<span class="fc" id="L60">	}</span>
+<span class="fc" id="L62">		super(getRegexConcat());</span>
+<span class="fc" id="L63">	}</span>
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L67">		return FirstTokens.ANYTHING;</span>
+	}
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L63">		return RegexConcat.build(CommandStereotype.class.getName(), //</span>
-<span class="fc" id="L64">				RegexLeaf.start(), //</span>
+<span class="fc" id="L71">		return RegexConcat.build(CommandStereotype.class.getName(), //</span>
+<span class="fc" id="L72">				RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;NAME&quot;, &quot;([%pLN_.]+|[%g][^%g]+[%g])&quot;), //
-<span class="fc" id="L66">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L67">				StereotypePattern.mandatory(&quot;STEREO&quot;), //</span>
-<span class="fc" id="L68">				RegexLeaf.end()); //</span>
+<span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L75">				StereotypePattern.mandatory(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L76">				RegexLeaf.end()); //</span>
 	}
 
 	@Override
@@ -73,25 +81,25 @@ public class CommandStereotype extends SingleLineCommand2&lt;ClassDiagram&gt; {
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// 'A &lt;&lt;stereotype&gt;&gt;' sets the stereotype of an already existing
 		// element (executeArg fails if it does not exist).
-<span class="nc" id="L76">		final String name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;NAME&quot;, 0));</span>
-<span class="nc" id="L77">		return &quot;Setting the stereotype of '&quot; + name + &quot;' to &quot; + arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="nc" id="L84">		final String name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;NAME&quot;, 0));</span>
+<span class="nc" id="L85">		return &quot;Setting the stereotype of '&quot; + name + &quot;' to &quot; + arg.get(&quot;STEREO&quot;, 0);</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L83">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
-<span class="nc" id="L84">		final String stereotype = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="nc" id="L91">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
+<span class="nc" id="L92">		final String stereotype = arg.get(&quot;STEREO&quot;, 0);</span>
 
-<span class="nc" id="L86">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(name));</span>
-<span class="nc" id="L87">		final Entity entity = quark.getData();</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (entity == null)</span>
-<span class="nc" id="L89">			return CommandExecutionResult.error(&quot;No such class &quot; + quark.getName());</span>
+<span class="nc" id="L94">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(name));</span>
+<span class="nc" id="L95">		final Entity entity = quark.getData();</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (entity == null)</span>
+<span class="nc" id="L97">			return CommandExecutionResult.error(&quot;No such class &quot; + quark.getName());</span>
 
-<span class="nc" id="L91">		entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),</span>
-<span class="nc" id="L92">				diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
-<span class="nc" id="L93">				diagram.getSkinParam().getIHtmlColorSet()));</span>
-<span class="nc" id="L94">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L99">		entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),</span>
+<span class="nc" id="L100">				diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
+<span class="nc" id="L101">				diagram.getSkinParam().getIHtmlColorSet()));</span>
+<span class="nc" id="L102">		return CommandExecutionResult.ok();</span>
 	}
 
 }

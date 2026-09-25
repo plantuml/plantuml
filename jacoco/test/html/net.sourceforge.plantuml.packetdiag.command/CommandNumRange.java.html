@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.packetdiag.command;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 
@@ -69,14 +71,17 @@ import net.sourceforge.plantuml.utils.LineLocation;
  */
 public class CommandNumRange extends SingleLineCommand2&lt;PacketDiagram&gt; {
 
+<span class="fc" id="L74">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList( //</span>
+			&quot;*&quot;, &quot;0&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;);
+
 	public CommandNumRange() {
-<span class="fc" id="L73">		super(getRegexConcat());</span>
-<span class="fc" id="L74">	}</span>
+<span class="fc" id="L78">		super(getRegexConcat());</span>
+<span class="fc" id="L79">	}</span>
 
 	//	^(\*|\d{1,7}(?:-\d{1,7})?)(?::)?\s+(.*?)(?:\s+\[(.*?)\])?$
 	static IRegex getRegexConcat() {
-<span class="fc" id="L78">		return RegexConcat.build(CommandNumRange.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L79">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L83">		return RegexConcat.build(CommandNumRange.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L84">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexOr( //
 										new RegexLeaf(1, &quot;RANGE_UNIT&quot;, &quot;(\\d{1,7})(?::)?&quot;),
 										new RegexLeaf(2, &quot;RANGE&quot;, &quot;(\\d{1,7})(?:-(\\d{1,7}))(?::)?&quot;), //
@@ -84,65 +89,71 @@ public class CommandNumRange extends SingleLineCommand2&lt;PacketDiagram&gt; {
 						), //
 						new RegexLeaf(1, &quot;DESC&quot;, &quot;\\s+(.*?)&quot;), //
 						new RegexLeaf(1, &quot;ATTRIBUTE&quot;, &quot;(?:\\s*\\[(.*?)\\])?&quot;), //
-<span class="fc" id="L87">						RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
+<span class="fc" id="L92">						RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
 	}
 
 	private static Integer getIntAttribute(String name, Map&lt;String, String&gt; attr, Integer defaultValue) {
-<span class="fc" id="L91">		return Optional.ofNullable(attr.get(name)).map(v -&gt; {</span>
+<span class="fc" id="L96">		return Optional.ofNullable(attr.get(name)).map(v -&gt; {</span>
 			try {
-<span class="fc" id="L93">				return Integer.parseInt(v);</span>
-<span class="nc" id="L94">			} catch (NumberFormatException ignore) {</span>
-<span class="nc" id="L95">				return defaultValue;</span>
+<span class="fc" id="L98">				return Integer.parseInt(v);</span>
+<span class="nc" id="L99">			} catch (NumberFormatException ignore) {</span>
+<span class="nc" id="L100">				return defaultValue;</span>
 			}
-<span class="fc" id="L97">		}).orElse(defaultValue);</span>
+<span class="fc" id="L102">		}).orElse(defaultValue);</span>
 	}
 
 	private static int getLengthAttribute(Map&lt;String, String&gt; attr) {
-<span class="fc" id="L101">		return getIntAttribute(&quot;len&quot;, attr, 1);</span>
+<span class="fc" id="L106">		return getIntAttribute(&quot;len&quot;, attr, 1);</span>
 	}
 
 	private static int getRotationAttribute(Map&lt;String, String&gt; attr) {
-<span class="fc" id="L105">		return getIntAttribute(&quot;rotate&quot;, attr, 0);</span>
+<span class="fc" id="L110">		return getIntAttribute(&quot;rotate&quot;, attr, 0);</span>
 	}
 
 	private static int getHeightAttribute(Map&lt;String, String&gt; attr) {
-<span class="fc" id="L109">		return getIntAttribute(&quot;height&quot;, attr, 1);</span>
+<span class="fc" id="L114">		return getIntAttribute(&quot;height&quot;, attr, 1);</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(PacketDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L114">		String r1 = arg.get(&quot;RANGE_UNIT&quot;, 0);</span>
-<span class="fc" id="L115">		String r2 = arg.get(&quot;RANGE&quot;, 0);</span>
-<span class="fc" id="L116">		String r3 = arg.get(&quot;RANGE&quot;, 1);</span>
-<span class="fc" id="L117">		String desc = arg.get(&quot;DESC&quot;, 0);</span>
-<span class="fc" id="L118">		Map&lt;String, String&gt; attr = NwDiagram.toSet(arg.get(&quot;ATTRIBUTE&quot;, 0));</span>
+<span class="fc" id="L119">		String r1 = arg.get(&quot;RANGE_UNIT&quot;, 0);</span>
+<span class="fc" id="L120">		String r2 = arg.get(&quot;RANGE&quot;, 0);</span>
+<span class="fc" id="L121">		String r3 = arg.get(&quot;RANGE&quot;, 1);</span>
+<span class="fc" id="L122">		String desc = arg.get(&quot;DESC&quot;, 0);</span>
+<span class="fc" id="L123">		Map&lt;String, String&gt; attr = NwDiagram.toSet(arg.get(&quot;ATTRIBUTE&quot;, 0));</span>
 		int start, end;
-<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (r1 != null) {</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		if (r1 != null) {</span>
 			try {
-<span class="fc" id="L122">				start = Integer.parseInt(r1);</span>
-<span class="fc" id="L123">				end = start + getLengthAttribute(attr) - 1;</span>
-<span class="nc" id="L124">			} catch (NumberFormatException e) {</span>
-<span class="nc" id="L125">				return CommandExecutionResult.error(&quot;Invalid bit start &quot; + r1, e);</span>
-<span class="fc" id="L126">			}</span>
-<span class="pc bpc" id="L127" title="1 of 4 branches missed.">		} else if (r2 != null &amp;&amp; r3 != null) {</span>
+<span class="fc" id="L127">				start = Integer.parseInt(r1);</span>
+<span class="fc" id="L128">				end = start + getLengthAttribute(attr) - 1;</span>
+<span class="nc" id="L129">			} catch (NumberFormatException e) {</span>
+<span class="nc" id="L130">				return CommandExecutionResult.error(&quot;Invalid bit start &quot; + r1, e);</span>
+<span class="fc" id="L131">			}</span>
+<span class="pc bpc" id="L132" title="1 of 4 branches missed.">		} else if (r2 != null &amp;&amp; r3 != null) {</span>
 			try {
-<span class="fc" id="L129">				start = Integer.parseInt(r2);</span>
-<span class="fc" id="L130">				end = Integer.parseInt(r3);</span>
-<span class="nc" id="L131">			} catch (NumberFormatException e) {</span>
-<span class="nc" id="L132">				return CommandExecutionResult.error(&quot;Invalid bit range &quot; + r2 + &quot; and &quot; + r3, e);</span>
-<span class="fc" id="L133">			}</span>
+<span class="fc" id="L134">				start = Integer.parseInt(r2);</span>
+<span class="fc" id="L135">				end = Integer.parseInt(r3);</span>
+<span class="nc" id="L136">			} catch (NumberFormatException e) {</span>
+<span class="nc" id="L137">				return CommandExecutionResult.error(&quot;Invalid bit range &quot; + r2 + &quot; and &quot; + r3, e);</span>
+<span class="fc" id="L138">			}</span>
 		} else {
 			// auto length and start position, requires diagram context
-<span class="fc" id="L136">			start = system.getLastPacketEnd().map(v -&gt; v + 1).orElse(0);</span>
-<span class="fc" id="L137">			end = start + getLengthAttribute(attr) - 1;</span>
+<span class="fc" id="L141">			start = system.getLastPacketEnd().map(v -&gt; v + 1).orElse(0);</span>
+<span class="fc" id="L142">			end = start + getLengthAttribute(attr) - 1;</span>
 		}
 		// local height and rotation attribute for current packet block
-<span class="fc" id="L140">		final int height = getHeightAttribute(attr);</span>
-<span class="fc" id="L141">		final int rotation = getRotationAttribute(attr);</span>
+<span class="fc" id="L145">		final int height = getHeightAttribute(attr);</span>
+<span class="fc" id="L146">		final int rotation = getRotationAttribute(attr);</span>
 
-<span class="fc" id="L143">		system.addPacketItemRange(start, end, height, desc, rotation);</span>
+<span class="fc" id="L148">		system.addPacketItemRange(start, end, height, desc, rotation);</span>
 
-<span class="fc" id="L145">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L150">		return CommandExecutionResult.ok();</span>
 	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L155">		return FIRST_TOKENS;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

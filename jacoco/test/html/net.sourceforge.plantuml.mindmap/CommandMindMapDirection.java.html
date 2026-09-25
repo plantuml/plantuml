@@ -35,10 +35,13 @@
  */
 package net.sourceforge.plantuml.mindmap;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -47,14 +50,18 @@ import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandMindMapDirection extends SingleLineCommand2&lt;MindMapDiagram&gt; {
-    // ::remove folder when __HAXE__
 
 	public CommandMindMapDirection() {
-<span class="fc" id="L53">		super(getRegexConcat());</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L55">		super(getRegexConcat());</span>
+<span class="fc" id="L56">	}</span>
+	
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L60">		return FirstTokens.ANYTHING;</span>
+	}
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L57">		return RegexConcat.build(CommandMindMapDirection.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L64">		return RegexConcat.build(CommandMindMapDirection.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;[^*#]*&quot;), //
 				new RegexLeaf(&quot;\\b&quot;), //
 				new RegexLeaf(1, &quot;DIRECTION&quot;, &quot;(left|right|top|bottom)&quot;), //
@@ -62,22 +69,22 @@ public class CommandMindMapDirection extends SingleLineCommand2&lt;MindMapDiagra
 				new RegexLeaf(&quot;[^*#]*&quot;), //
 				new RegexLeaf(1, &quot;(side|direction)&quot;), //
 				new RegexLeaf(&quot;[^*#]*&quot;), //
-<span class="fc" id="L65">				RegexLeaf.end());</span>
+<span class="fc" id="L72">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L71">		final String dir = arg.get(&quot;DIRECTION&quot;, 0);</span>
-<span class="nc" id="L72">		return &quot;Setting the default mindmap direction to &quot; + dir;</span>
+<span class="nc" id="L78">		final String dir = arg.get(&quot;DIRECTION&quot;, 0);</span>
+<span class="nc" id="L79">		return &quot;Setting the default mindmap direction to &quot; + dir;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(MindMapDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L77">		final String dir = arg.get(&quot;DIRECTION&quot;, 0);</span>
-<span class="nc" id="L78">		final Direction direction = Direction.lazzyValueOf(dir);</span>
-<span class="nc" id="L79">		diagram.setDefaultDirection(direction);</span>
-<span class="nc" id="L80">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L84">		final String dir = arg.get(&quot;DIRECTION&quot;, 0);</span>
+<span class="nc" id="L85">		final Direction direction = Direction.lazzyValueOf(dir);</span>
+<span class="nc" id="L86">		diagram.setDefaultDirection(direction);</span>
+<span class="nc" id="L87">		return CommandExecutionResult.ok();</span>
 	}
 
 }

@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.packetdiag.command;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Optional;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -57,28 +59,36 @@ import net.sourceforge.plantuml.utils.LineLocation;
  */
 public class CommandScaleDirection extends SingleLineCommand2&lt;PacketDiagram&gt; {
 
+<span class="fc" id="L62">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;scale&quot;);</span>
+
 	public CommandScaleDirection() {
-<span class="fc" id="L61">		super(getRegexConcat());</span>
-<span class="fc" id="L62">	}</span>
+<span class="fc" id="L65">		super(getRegexConcat());</span>
+<span class="fc" id="L66">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L65">		return RegexConcat.build(CommandScaleDirection.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L69">		return RegexConcat.build(CommandScaleDirection.class.getName(), RegexLeaf.start(), //</span>
 						new RegexLeaf(&quot;scale_direction&quot;), //
-<span class="fc" id="L67">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L71">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(&quot;=&quot;), //
-<span class="fc" id="L69">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L73">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(1, &quot;DIR&quot;, &quot;(ltr|rtl);?&quot;), //
-<span class="fc" id="L71">						RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
+<span class="fc" id="L75">						RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(PacketDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L76">		final String dir = Optional.ofNullable(arg.get(&quot;DIR&quot;, 0))</span>
-<span class="fc" id="L77">				.map(String::toUpperCase)</span>
-<span class="fc" id="L78">				.orElse(&quot;LTR&quot;);</span>
+<span class="fc" id="L80">		final String dir = Optional.ofNullable(arg.get(&quot;DIR&quot;, 0))</span>
+<span class="fc" id="L81">				.map(String::toUpperCase)</span>
+<span class="fc" id="L82">				.orElse(&quot;LTR&quot;);</span>
 
-<span class="fc" id="L80">		system.setScaleDirection(dir);</span>
-<span class="fc" id="L81">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L84">		system.setScaleDirection(dir);</span>
+<span class="fc" id="L85">		return CommandExecutionResult.ok();</span>
 	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L90">		return FIRST_TOKENS;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

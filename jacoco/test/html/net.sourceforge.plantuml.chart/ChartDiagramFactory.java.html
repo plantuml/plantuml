@@ -64,19 +64,19 @@ public class ChartDiagramFactory extends PSystemCommandFactory {
 	@Override
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
 		// Add chart-specific commands first to take priority
-<span class="nc" id="L67">		cmds.add(new CommandChartHAxis());</span>
-<span class="nc" id="L68">		cmds.add(new CommandChartVAxis());</span>
-<span class="nc" id="L69">		cmds.add(new CommandChartBar());</span>
-<span class="nc" id="L70">		cmds.add(new CommandChartLine());</span>
-<span class="nc" id="L71">		cmds.add(new CommandChartArea());</span>
-<span class="nc" id="L72">		cmds.add(new CommandChartScatter());</span>
-<span class="nc" id="L73">		cmds.add(new CommandChartLegend());</span>
-<span class="nc" id="L74">		cmds.add(new CommandChartStackMode());</span>
-<span class="nc" id="L75">		cmds.add(new CommandChartOrientation());</span>
-<span class="nc" id="L76">		cmds.add(new CommandChartAnnotation());</span>
+<span class="fc" id="L67">		cmds.add(new CommandChartHAxis());</span>
+<span class="fc" id="L68">		cmds.add(new CommandChartVAxis());</span>
+<span class="fc" id="L69">		cmds.add(new CommandChartBar());</span>
+<span class="fc" id="L70">		cmds.add(new CommandChartLine());</span>
+<span class="fc" id="L71">		cmds.add(new CommandChartArea());</span>
+<span class="fc" id="L72">		cmds.add(new CommandChartScatter());</span>
+<span class="fc" id="L73">		cmds.add(new CommandChartLegend());</span>
+<span class="fc" id="L74">		cmds.add(new CommandChartStackMode());</span>
+<span class="fc" id="L75">		cmds.add(new CommandChartOrientation());</span>
+<span class="fc" id="L76">		cmds.add(new CommandChartAnnotation());</span>
 		// Add common commands last so they don't override chart-specific ones
-<span class="nc" id="L78">		CommonCommands.addCommonCommands1(cmds);</span>
-<span class="nc" id="L79">	}</span>
+<span class="fc" id="L78">		CommonCommands.addCommonCommands1(cmds);</span>
+<span class="fc" id="L79">	}</span>
 
 	@Override
 	public ChartDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,

@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.packetdiag.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -55,28 +58,36 @@ import net.sourceforge.plantuml.utils.LineLocation;
  */
 public class CommandScaleInterval extends SingleLineCommand2&lt;PacketDiagram&gt; {
 
+<span class="fc" id="L61">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;scale&quot;);</span>
+
 	public CommandScaleInterval() {
-<span class="fc" id="L59">		super(getRegexConcat());</span>
-<span class="fc" id="L60">	}</span>
+<span class="fc" id="L64">		super(getRegexConcat());</span>
+<span class="fc" id="L65">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L63">		return RegexConcat.build(CommandScaleInterval.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L68">		return RegexConcat.build(CommandScaleInterval.class.getName(), RegexLeaf.start(), //</span>
 						new RegexLeaf(&quot;scale_interval&quot;), //
-<span class="fc" id="L65">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L70">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(&quot;=&quot;), //
-<span class="fc" id="L67">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L72">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(1, &quot;INTERVAL&quot;, &quot;(\\d+);?&quot;), //
-<span class="fc" id="L69">						RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
+<span class="fc" id="L74">						RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(PacketDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
 		try {
-<span class="fc" id="L75">			system.updateScaleInterval(Integer.parseInt(arg.get(&quot;INTERVAL&quot;, 0)));</span>
-<span class="nc" id="L76">		} catch (NumberFormatException e) {</span>
-<span class="nc" id="L77">			return CommandExecutionResult.error(&quot;Scale interval invalid&quot;, e);</span>
-<span class="fc" id="L78">		}</span>
-<span class="fc" id="L79">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L80">			system.updateScaleInterval(Integer.parseInt(arg.get(&quot;INTERVAL&quot;, 0)));</span>
+<span class="nc" id="L81">		} catch (NumberFormatException e) {</span>
+<span class="nc" id="L82">			return CommandExecutionResult.error(&quot;Scale interval invalid&quot;, e);</span>
+<span class="fc" id="L83">		}</span>
+<span class="fc" id="L84">		return CommandExecutionResult.ok();</span>
 	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L89">		return FIRST_TOKENS;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

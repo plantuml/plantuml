@@ -53,14 +53,14 @@ public class BpmDiagramFactory extends PSystemCommandFactory {
 
 	@Override
 	protected void initCommandsList(List&lt;Command&gt; result) {
-<span class="nc" id="L56">		result.add(new CommandDockedEvent());</span>
-<span class="nc" id="L57">		result.add(new CommandMerge());</span>
-<span class="nc" id="L58">		result.add(new CommandResume());</span>
-<span class="nc" id="L59">		result.add(new CommandGoto());</span>
-<span class="nc" id="L60">		result.add(new CommandNewBranch());</span>
-<span class="nc" id="L61">		result.add(new CommandElseBranch());</span>
-<span class="nc" id="L62">		result.add(new CommandEndBranch());</span>
-<span class="nc" id="L63">	}</span>
+<span class="fc" id="L56">		result.add(new CommandDockedEvent());</span>
+<span class="fc" id="L57">		result.add(new CommandMerge());</span>
+<span class="fc" id="L58">		result.add(new CommandResume());</span>
+<span class="fc" id="L59">		result.add(new CommandGoto());</span>
+<span class="fc" id="L60">		result.add(new CommandNewBranch());</span>
+<span class="fc" id="L61">		result.add(new CommandElseBranch());</span>
+<span class="fc" id="L62">		result.add(new CommandEndBranch());</span>
+<span class="fc" id="L63">	}</span>
 
 	@Override
 	public BpmDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,

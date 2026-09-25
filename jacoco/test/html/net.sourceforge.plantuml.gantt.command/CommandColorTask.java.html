@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.gantt.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -51,36 +54,43 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandColorTask extends SingleLineCommand2&lt;GanttDiagram&gt; {
 
+<span class="fc" id="L57">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;[&quot;);</span>
+
 	public CommandColorTask() {
-<span class="fc" id="L55">		super(getRegexConcat());</span>
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L60">		super(getRegexConcat());</span>
+<span class="fc" id="L61">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L59">		return RegexConcat.build(CommandColorTask.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L64">		return RegexConcat.build(CommandColorTask.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;CODE&quot;, &quot;\\[([%pLN_.]+)\\]&quot;), //
-<span class="fc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L66">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(2, &quot;COLORS&quot;, &quot;#(\\w+)(?:/(#?\\w+))?&quot;), //
-<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L64">				RegexLeaf.end());</span>
+<span class="fc" id="L68">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L69">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
 
-<span class="nc" id="L71">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
-<span class="nc" id="L72">		final Task task = diagram.getExistingTask(code);</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (task == null) {</span>
-<span class="nc" id="L74">			return CommandExecutionResult.error(&quot;No such task &quot; + code);</span>
+<span class="nc" id="L76">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="nc" id="L77">		final Task task = diagram.getExistingTask(code);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (task == null) {</span>
+<span class="nc" id="L79">			return CommandExecutionResult.error(&quot;No such task &quot; + code);</span>
 		}
 
-<span class="nc" id="L77">		final String color1 = arg.get(&quot;COLORS&quot;, 0);</span>
-<span class="nc" id="L78">		final String color2 = arg.get(&quot;COLORS&quot;, 1);</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		final HColor col1 = color1 == null ? null : diagram.getIHtmlColorSet().getColor(color1);</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		final HColor col2 = color2 == null ? null : diagram.getIHtmlColorSet().getColor(color2);</span>
-<span class="nc" id="L81">		task.setColors(new CenterBorderColor(col1, col2));</span>
+<span class="nc" id="L82">		final String color1 = arg.get(&quot;COLORS&quot;, 0);</span>
+<span class="nc" id="L83">		final String color2 = arg.get(&quot;COLORS&quot;, 1);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		final HColor col1 = color1 == null ? null : diagram.getIHtmlColorSet().getColor(color1);</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		final HColor col2 = color2 == null ? null : diagram.getIHtmlColorSet().getColor(color2);</span>
+<span class="nc" id="L86">		task.setColors(new CenterBorderColor(col1, col2));</span>
 
-<span class="nc" id="L83">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L88">		return CommandExecutionResult.ok();</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L93">		return FIRST_TOKENS;</span>
 	}
 
 }

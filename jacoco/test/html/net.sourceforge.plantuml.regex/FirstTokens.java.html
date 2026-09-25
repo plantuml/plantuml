@@ -1,0 +1,740 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FirstTokens.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.regex</a> &gt; <span class="el_source">FirstTokens.java</span></div><h1>FirstTokens.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.regex;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
+
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.jaws.Jaws;
+
+/**
+ * Reads, from a command pattern alone, the first tokens a line must start with for that pattern to
+ * have any chance of matching it -- so that the regex stays the only place a command says what it
+ * accepts, instead of repeating it in a hand-written declaration that nothing keeps in sync.
+ *
+ * The token is the one {@code StringLocated#getFirstToken} computes, once the blanks the line may
+ * open with are skipped:
+ * &lt;ul&gt;
+ * &lt;li&gt;the leading run of ASCII letters, lower-cased, for a line starting with a letter;&lt;/li&gt;
+ * &lt;li&gt;the first character alone, for a line starting with anything else -- {@code &quot;}&quot;},
+ * {@code &quot;-&quot;}, {@code &quot;#&quot;}, each digit on its own...;&lt;/li&gt;
+ * &lt;li&gt;{@code &quot;&quot;} for a blank line.&lt;/li&gt;
+ * &lt;/ul&gt;
+ * Case is not an issue: the patterns are compiled with {@code CASE_INSENSITIVE} and without
+ * {@code UNICODE_CASE}, which folds exactly the ASCII letters the token itself folds, and nothing
+ * else.
+ *
+ * &lt;p&gt;
+ * Everything here leans the same way on purpose. Returning a token too many only costs the regex
+ * attempt it could have saved, while returning one too few makes a command unreachable for the
+ * lines it left out, so every step that cannot be followed exactly is either widened or given up
+ * on: {@link #from(String)} answers {@code null} -- &quot;I cannot tell&quot; -- and the command then
+ * declares nothing and stays in the list tried for every line.
+ *
+ * &lt;p&gt;
+ * Two things a reader will want to have in mind, because they are what most of the care below is
+ * about:
+ * &lt;ul&gt;
+ * &lt;li&gt;a token is not over until a non-letter arrives, so {@code ^end[%s]*split$} does not describe
+ * a line starting with {@code end}: {@code [%s]*} matches nothing at all, and {@code endsplit} is a
+ * line this pattern accepts. An element that may be empty therefore leaves the token open for
+ * whatever follows to extend;&lt;/li&gt;
+ * &lt;li&gt;a blank the line opens with is skipped by the token reader -- the blanks being those of
+ * {@code StringUtils#isTrimmable}, U+00A0 included, which is exactly what {@code %s} stands for.
+ * A blank therefore contributes nothing while the line may still be in its leading blanks, and
+ * only closes the token once one has started. A character class that may be a blank &lt;em&gt;or&lt;/em&gt;
+ * something else, like {@code [%s,]}, is read both ways;&lt;/li&gt;
+ * &lt;li&gt;any other character, met where the line may still be in its leading blanks, is a token of
+ * its own. That is why a character class, {@code \d} included, must be read as the exact set of
+ * characters it holds: each of them is a token the command may start with. The ASCII letters of
+ * a class, as in {@code [hx]-axis}, are read one by one like any other letter. A class that cannot
+ * be enumerated -- negated, {@code %pLN}, {@code \w}... -- makes the whole pattern unknown;&lt;/li&gt;
+ * &lt;li&gt;a lookahead or a lookbehind only rules lines out, so it is read past as if it were not
+ * there: the worst it can cost is a token too many.&lt;/li&gt;
+ * &lt;/ul&gt;
+ */
+public final class FirstTokens {
+
+<span class="fc" id="L95">	public static final Collection&lt;String&gt; ANYTHING = null;</span>
+	
+	// A pattern whose alternatives multiply is a pattern we have no business describing token by
+	// token: past this many, giving up costs one wasted regex attempt per line and nothing else.
+	private static final int MAX_TOKENS = 64;
+
+	private final String pattern;
+	private int pos;
+	private boolean unknown;
+
+<span class="fc" id="L105">	private FirstTokens(String pattern) {</span>
+<span class="fc" id="L106">		this.pattern = pattern;</span>
+<span class="fc" id="L107">	}</span>
+
+	/**
+	 * The first tokens {@code regex} can start a line with, or {@code null} when they cannot be
+	 * determined.
+	 */
+	public static Set&lt;String&gt; from(IRegex regex) {
+<span class="fc" id="L114">		return from(regex.getPatternAsString());</span>
+	}
+
+	/**
+	 * The first tokens {@code pattern} can start a line with, or {@code null} when they cannot be
+	 * determined.
+	 */
+	public static Set&lt;String&gt; from(String pattern) {
+		// Commands are matched with find(), not matches(): a pattern that does not anchor its
+		// start can match from anywhere in the line, which constrains the first token not at all.
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		if (pattern.startsWith(&quot;^&quot;) == false)</span>
+<span class="fc" id="L125">			return null;</span>
+
+<span class="fc" id="L127">		final FirstTokens reader = new FirstTokens(pattern);</span>
+<span class="fc" id="L128">		final State state = reader.alternation(State.atLineStart());</span>
+<span class="pc bpc" id="L129" title="1 of 4 branches missed.">		if (reader.unknown || reader.pos != pattern.length())</span>
+<span class="fc" id="L130">			return null;</span>
+
+<span class="fc" id="L132">		return state.tokens();</span>
+	}
+
+	/**
+	 * Whether two declarations of first tokens say the same thing: both {@code null} -- &quot;any
+	 * line&quot; -- or the same tokens, whatever their order and whatever kind of collection holds
+	 * them. A {@code Set} and a {@code List} of the same tokens are not {@code equals()}, yet they
+	 * declare exactly the same: this is what a hand-written list is to be compared with.
+	 */
+	public static boolean same(Collection&lt;String&gt; a, Collection&lt;String&gt; b) {
+<span class="pc bpc" id="L142" title="1 of 4 branches missed.">		if (a == null || b == null)</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">			return a == b;</span>
+
+<span class="fc" id="L145">		return new HashSet&lt;&gt;(a).equals(new HashSet&lt;&gt;(b));</span>
+	}
+
+	/**
+	 * What the analysis knows once some prefix of the pattern has been read: the possible first
+	 * tokens so far, held in three parts because what a token still allows depends on how far it
+	 * has got.
+	 */
+<span class="fc" id="L153">	private static final class State {</span>
+
+		// The line may still be in the blanks it opens with, so a letter arriving now would be
+		// starting the token rather than continuing one.
+		private boolean leading;
+		// Tokens under construction: whatever comes next may still add letters to them.
+<span class="fc" id="L159">		private final Set&lt;String&gt; open = new HashSet&lt;&gt;();</span>
+		// Tokens a non-letter has already closed: nothing can change them any more.
+<span class="fc" id="L161">		private final Set&lt;String&gt; done = new HashSet&lt;&gt;();</span>
+
+		private static State atLineStart() {
+<span class="fc" id="L164">			final State result = new State();</span>
+<span class="fc" id="L165">			result.leading = true;</span>
+<span class="fc" id="L166">			return result;</span>
+		}
+
+		private State copy() {
+<span class="fc" id="L170">			final State result = new State();</span>
+<span class="fc" id="L171">			result.leading = this.leading;</span>
+<span class="fc" id="L172">			result.open.addAll(this.open);</span>
+<span class="fc" id="L173">			result.done.addAll(this.done);</span>
+<span class="fc" id="L174">			return result;</span>
+		}
+
+		/**
+		 * Nothing that follows can change the answer any more: no token is open and the line is
+		 * past its leading blanks. Reading on would only risk giving up on a pattern we have
+		 * already read enough of.
+		 */
+		private boolean isSettled() {
+<span class="fc bfc" id="L183" title="All 4 branches covered.">			return leading == false &amp;&amp; open.isEmpty();</span>
+		}
+
+		private void letters(String s) {
+<span class="fc" id="L187">			final Set&lt;String&gt; extended = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">			for (String prefix : open)</span>
+<span class="fc" id="L189">				extended.add(prefix + s);</span>
+
+<span class="fc bfc" id="L191" title="All 2 branches covered.">			if (leading)</span>
+<span class="fc" id="L192">				extended.add(s);</span>
+
+<span class="fc" id="L194">			open.clear();</span>
+<span class="fc" id="L195">			open.addAll(extended);</span>
+<span class="fc" id="L196">			leading = false;</span>
+<span class="fc" id="L197">		}</span>
+
+		/**
+		 * A character that is one of the blanks the line opens with -- {@code [%s]}, {@code \s},
+		 * a literal space or U+00A0. It closes whatever token was open, but it does not end the
+		 * leading blanks, and it contributes nothing of its own: the token reader skips it there.
+		 */
+		private void blank() {
+<span class="fc" id="L205">			done.addAll(open);</span>
+<span class="fc" id="L206">			open.clear();</span>
+<span class="fc" id="L207">		}</span>
+
+		/**
+		 * A character that is neither a letter nor a blank -- a digit, {@code #}, {@code !},
+		 * {@code &lt;}... -- known to be one of {@code chars}. The token reader stops right there:
+		 * it ends the token that was open, if any, and if the line was still in its leading
+		 * blanks, that character is the token itself. Either way the leading blanks are over, and
+		 * the answer is now final.
+		 */
+		private void separator(Collection&lt;Character&gt; chars) {
+<span class="fc" id="L217">			done.addAll(open);</span>
+<span class="fc" id="L218">			open.clear();</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">			if (leading)</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">				for (char ch : chars)</span>
+<span class="fc" id="L221">					done.add(String.valueOf(ch));</span>
+
+<span class="fc" id="L223">			leading = false;</span>
+<span class="fc" id="L224">		}</span>
+
+		private void union(State other) {
+<span class="fc bfc" id="L227" title="All 4 branches covered.">			this.leading = this.leading || other.leading;</span>
+<span class="fc" id="L228">			this.open.addAll(other.open);</span>
+<span class="fc" id="L229">			this.done.addAll(other.done);</span>
+<span class="fc" id="L230">		}</span>
+
+		private int size() {
+<span class="fc" id="L233">			return open.size() + done.size();</span>
+		}
+
+		private Set&lt;String&gt; tokens() {
+<span class="fc" id="L237">			final Set&lt;String&gt; result = new HashSet&lt;&gt;(done);</span>
+			// The pattern is over, so nothing is going to extend these any further.
+<span class="fc" id="L239">			result.addAll(open);</span>
+			// Still in the leading blanks at the end: the pattern accepts a blank line, whose
+			// token is &quot;&quot;.
+<span class="fc bfc" id="L242" title="All 2 branches covered.">			if (leading)</span>
+<span class="fc" id="L243">				result.add(&quot;&quot;);</span>
+
+<span class="fc" id="L245">			return result;</span>
+		}
+	}
+
+	private State alternation(State in) {
+<span class="fc" id="L250">		State result = sequence(in.copy());</span>
+<span class="fc bfc" id="L251" title="All 6 branches covered.">		while (unknown == false &amp;&amp; pos &lt; pattern.length() &amp;&amp; pattern.charAt(pos) == '|') {</span>
+<span class="fc" id="L252">			pos++;</span>
+<span class="fc" id="L253">			result.union(sequence(in.copy()));</span>
+		}
+<span class="fc" id="L255">		return result;</span>
+	}
+
+	private State sequence(State state) {
+<span class="fc bfc" id="L259" title="All 4 branches covered.">		while (unknown == false &amp;&amp; pos &lt; pattern.length()) {</span>
+<span class="fc" id="L260">			final char ch = pattern.charAt(pos);</span>
+<span class="fc bfc" id="L261" title="All 4 branches covered.">			if (ch == '|' || ch == ')')</span>
+<span class="fc" id="L262">				break;</span>
+
+<span class="fc bfc" id="L264" title="All 2 branches covered.">			if (state.isSettled()) {</span>
+				// The answer is already fixed: read past the rest without asking anything of it,
+				// which is also what keeps a trailing &quot;(.*)&quot; from making a perfectly clear
+				// pattern undecidable.
+<span class="fc" id="L268">				skipElement();</span>
+<span class="fc" id="L269">				continue;</span>
+			}
+
+<span class="fc" id="L272">			state = element(state);</span>
+<span class="pc bpc" id="L273" title="1 of 2 branches missed.">			if (state.size() &gt; MAX_TOKENS)</span>
+<span class="nc" id="L274">				unknown = true;</span>
+<span class="fc" id="L275">		}</span>
+<span class="fc" id="L276">		return state;</span>
+	}
+
+	private State element(State state) {
+<span class="fc" id="L280">		final char ch = pattern.charAt(pos);</span>
+
+		// Zero-width: they say where we are, not what is there.
+<span class="fc bfc" id="L283" title="All 4 branches covered.">		if (ch == '^' || ch == '$') {</span>
+<span class="fc" id="L284">			pos++;</span>
+<span class="fc" id="L285">			return state;</span>
+		}
+
+<span class="fc bfc" id="L288" title="All 2 branches covered.">		if (ch == '(') {</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">			if (isLookaround()) {</span>
+				// A lookahead or a lookbehind only ever rules lines out: reading past it as if it
+				// were not there may give a token too many, never one too few -- which is the
+				// safe way to be wrong here.
+<span class="fc" id="L293">				skipGroup();</span>
+<span class="pc bpc" id="L294" title="1 of 2 branches missed.">				if (unknown == false)</span>
+<span class="fc" id="L295">					skipQuantifier();</span>
+
+<span class="fc" id="L297">				return state;</span>
+			}
+<span class="fc" id="L299">			pos++;</span>
+<span class="fc bfc" id="L300" title="All 2 branches covered.">			if (pattern.startsWith(&quot;?:&quot;, pos))</span>
+<span class="fc" id="L301">				pos += 2;</span>
+<span class="pc bpc" id="L302" title="1 of 4 branches missed.">			else if (pos &lt; pattern.length() &amp;&amp; pattern.charAt(pos) == '?') {</span>
+				// A flag, a named group: not worth reading.
+<span class="fc" id="L304">				unknown = true;</span>
+<span class="fc" id="L305">				return state;</span>
+			}
+
+<span class="fc" id="L308">			final State inner = alternation(state.copy());</span>
+<span class="fc bfc" id="L309" title="All 2 branches covered.">			if (unknown)</span>
+<span class="fc" id="L310">				return state;</span>
+
+<span class="pc bpc" id="L312" title="2 of 4 branches missed.">			if (pos &gt;= pattern.length() || pattern.charAt(pos) != ')') {</span>
+<span class="nc" id="L313">				unknown = true;</span>
+<span class="nc" id="L314">				return state;</span>
+			}
+<span class="fc" id="L316">			pos++;</span>
+<span class="fc" id="L317">			return quantified(state, inner);</span>
+		}
+
+<span class="fc bfc" id="L320" title="All 2 branches covered.">		if (ch == '[') {</span>
+<span class="fc" id="L321">			final int end = endOfCharClass();</span>
+<span class="pc bpc" id="L322" title="1 of 2 branches missed.">			if (end &lt; 0) {</span>
+<span class="nc" id="L323">				unknown = true;</span>
+<span class="nc" id="L324">				return state;</span>
+			}
+<span class="fc" id="L326">			final CharClass charClass = CharClass.read(pattern.substring(pos + 1, end));</span>
+<span class="fc bfc" id="L327" title="All 2 branches covered.">			if (charClass == null) {</span>
+<span class="fc" id="L328">				unknown = true;</span>
+<span class="fc" id="L329">				return state;</span>
+			}
+<span class="fc" id="L331">			pos = end + 1;</span>
+			// Each thing the class may be is one way to read on, and the answer is all of them
+			// together: a blank, one of the other characters, or one of the letters.
+<span class="fc" id="L334">			State after = null;</span>
+<span class="fc bfc" id="L335" title="All 2 branches covered.">			if (charClass.blank) {</span>
+<span class="fc" id="L336">				after = state.copy();</span>
+<span class="fc" id="L337">				after.blank();</span>
+			}
+<span class="fc bfc" id="L339" title="All 2 branches covered.">			if (charClass.chars.isEmpty() == false) {</span>
+<span class="fc" id="L340">				final State asSeparator = state.copy();</span>
+<span class="fc" id="L341">				asSeparator.separator(charClass.chars);</span>
+<span class="fc" id="L342">				after = union(after, asSeparator);</span>
+			}
+<span class="fc bfc" id="L344" title="All 2 branches covered.">			for (char letter : charClass.letters) {</span>
+<span class="fc" id="L345">				final State asLetter = state.copy();</span>
+<span class="fc" id="L346">				asLetter.letters(String.valueOf(letter));</span>
+<span class="fc" id="L347">				after = union(after, asLetter);</span>
+<span class="fc" id="L348">			}</span>
+<span class="fc" id="L349">			return quantified(state, after);</span>
+		}
+
+<span class="fc bfc" id="L352" title="All 2 branches covered.">		if (ch == '\\') {</span>
+<span class="fc" id="L353">			pos++;</span>
+<span class="pc bpc" id="L354" title="1 of 2 branches missed.">			if (pos &gt;= pattern.length()) {</span>
+<span class="nc" id="L355">				unknown = true;</span>
+<span class="nc" id="L356">				return state;</span>
+			}
+<span class="fc" id="L358">			final char escaped = pattern.charAt(pos);</span>
+<span class="fc" id="L359">			pos++;</span>
+			// \s, \d and the escaped control characters are the ones we are sure keep out of the
+			// letters; \w, \p{L}, \S and the rest may well be one, and \b is not a character at all.
+<span class="pc bpc" id="L362" title="5 of 14 branches missed.">			if (isAsciiLetter(escaped) &amp;&amp; escaped != 's' &amp;&amp; escaped != 'd' &amp;&amp; escaped != 'n'</span>
+					&amp;&amp; escaped != 't' &amp;&amp; escaped != 'r' &amp;&amp; escaped != 'f') {
+<span class="fc" id="L364">				unknown = true;</span>
+<span class="fc" id="L365">				return state;</span>
+			}
+<span class="fc" id="L367">			final State after = state.copy();</span>
+<span class="fc bfc" id="L368" title="All 2 branches covered.">			if (escaped == 'd')</span>
+<span class="fc" id="L369">				after.separator(DIGITS);</span>
+<span class="pc bpc" id="L370" title="1 of 2 branches missed.">			else if (isAsciiLetter(escaped))</span>
+<span class="nc" id="L371">				after.blank();</span>
+			else
+				// An escaped punctuation sign: the character itself, and no blank.
+<span class="fc" id="L374">				after.separator(Collections.singleton(escaped));</span>
+
+<span class="fc" id="L376">			return quantified(state, after);</span>
+		}
+
+<span class="fc bfc" id="L379" title="All 2 branches covered.">		if (isAsciiLetter(ch)) {</span>
+<span class="fc" id="L380">			pos++;</span>
+<span class="fc" id="L381">			final State after = state.copy();</span>
+<span class="fc" id="L382">			after.letters(String.valueOf(toLowerCase(ch)));</span>
+<span class="fc" id="L383">			return quantified(state, after);</span>
+		}
+
+		// '.' is any character, so it may be a letter; '%' opens a macro whose expansion we would
+		// have to read as a sequence rather than as one character.
+<span class="pc bpc" id="L388" title="1 of 4 branches missed.">		if (ch == '.' || ch == '%') {</span>
+<span class="fc" id="L389">			unknown = true;</span>
+<span class="fc" id="L390">			return state;</span>
+		}
+
+		// A quantifier with nothing in front of it means we have lost track of the syntax.
+<span class="pc bpc" id="L394" title="4 of 8 branches missed.">		if (ch == '*' || ch == '+' || ch == '?' || ch == '{') {</span>
+<span class="nc" id="L395">			unknown = true;</span>
+<span class="nc" id="L396">			return state;</span>
+		}
+
+		// Any other literal character: a digit, a punctuation sign, a non-ASCII character. Not an
+		// ASCII letter, at any rate, and the pattern is not folding its case.
+<span class="fc" id="L401">		pos++;</span>
+<span class="fc" id="L402">		final State after = state.copy();</span>
+<span class="fc bfc" id="L403" title="All 2 branches covered.">		if (StringUtils.isTrimmable(ch))</span>
+<span class="fc" id="L404">			after.blank();</span>
+		else
+<span class="fc" id="L406">			after.separator(Collections.singleton(ch));</span>
+
+<span class="fc" id="L408">		return quantified(state, after);</span>
+	}
+
+	private static State union(State a, State b) {
+<span class="fc bfc" id="L412" title="All 2 branches covered.">		if (a == null)</span>
+<span class="fc" id="L413">			return b;</span>
+
+<span class="fc" id="L415">		a.union(b);</span>
+<span class="fc" id="L416">		return a;</span>
+	}
+
+	/**
+	 * Whether the group opening at {@code pos} is a lookahead or a lookbehind: {@code (?=},
+	 * {@code (?!}, {@code (?&lt;=} or {@code (?&lt;!} -- but not {@code (?&lt;name&gt;}, a named group.
+	 */
+	private boolean isLookaround() {
+<span class="pc bpc" id="L424" title="1 of 6 branches missed.">		return pattern.startsWith(&quot;(?=&quot;, pos) || pattern.startsWith(&quot;(?!&quot;, pos) || pattern.startsWith(&quot;(?&lt;=&quot;, pos)</span>
+<span class="fc bfc" id="L425" title="All 2 branches covered.">				|| pattern.startsWith(&quot;(?&lt;!&quot;, pos);</span>
+	}
+
+	/**
+	 * Applies to {@code after} -- the state the element just read leads to -- the quantifier that
+	 * element carries, {@code before} being where it started from.
+	 */
+	private State quantified(State before, State after) {
+<span class="pc bpc" id="L433" title="1 of 2 branches missed.">		if (pos &gt;= pattern.length())</span>
+<span class="nc" id="L434">			return after;</span>
+
+<span class="fc" id="L436">		final char ch = pattern.charAt(pos);</span>
+<span class="fc" id="L437">		int min = 1;</span>
+<span class="fc" id="L438">		int max = 1;</span>
+<span class="fc bfc" id="L439" title="All 2 branches covered.">		if (ch == '?') {</span>
+<span class="fc" id="L440">			pos++;</span>
+<span class="fc" id="L441">			min = 0;</span>
+<span class="fc bfc" id="L442" title="All 2 branches covered.">		} else if (ch == '*') {</span>
+<span class="fc" id="L443">			pos++;</span>
+<span class="fc" id="L444">			min = 0;</span>
+<span class="fc" id="L445">			max = Integer.MAX_VALUE;</span>
+<span class="fc bfc" id="L446" title="All 2 branches covered.">		} else if (ch == '+') {</span>
+<span class="fc" id="L447">			pos++;</span>
+<span class="fc" id="L448">			max = Integer.MAX_VALUE;</span>
+<span class="fc bfc" id="L449" title="All 2 branches covered.">		} else if (ch == '{') {</span>
+<span class="fc" id="L450">			final int end = pattern.indexOf('}', pos);</span>
+<span class="pc bpc" id="L451" title="1 of 2 branches missed.">			if (end &lt; 0) {</span>
+<span class="nc" id="L452">				unknown = true;</span>
+<span class="nc" id="L453">				return after;</span>
+			}
+<span class="fc" id="L455">			final String bounds = pattern.substring(pos + 1, end);</span>
+<span class="fc" id="L456">			pos = end + 1;</span>
+<span class="fc" id="L457">			min = 1;</span>
+<span class="fc" id="L458">			max = Integer.MAX_VALUE;</span>
+<span class="fc" id="L459">			final int comma = bounds.indexOf(',');</span>
+<span class="fc bfc" id="L460" title="All 2 branches covered.">			if (comma &lt; 0)</span>
+<span class="fc" id="L461">				max = min = parseCount(bounds);</span>
+			else {
+<span class="fc" id="L463">				min = parseCount(bounds.substring(0, comma));</span>
+<span class="fc" id="L464">				final String upper = bounds.substring(comma + 1);</span>
+<span class="pc bpc" id="L465" title="1 of 2 branches missed.">				max = upper.length() == 0 ? Integer.MAX_VALUE : parseCount(upper);</span>
+			}
+<span class="pc bpc" id="L467" title="2 of 4 branches missed.">			if (min &lt; 0 || max &lt; 0) {</span>
+<span class="nc" id="L468">				unknown = true;</span>
+<span class="nc" id="L469">				return after;</span>
+			}
+<span class="fc" id="L471">		} else</span>
+<span class="fc" id="L472">			return after;</span>
+
+		// A lazy or possessive quantifier matches the same language; only the search order
+		// differs, and the language is all we are reading here.
+<span class="pc bpc" id="L476" title="3 of 6 branches missed.">		if (pos &lt; pattern.length() &amp;&amp; (pattern.charAt(pos) == '?' || pattern.charAt(pos) == '+'))</span>
+<span class="nc" id="L477">			pos++;</span>
+
+<span class="fc bfc" id="L479" title="All 4 branches covered.">		if (max &gt; 1 &amp;&amp; before.open.containsAll(after.open) == false) {</span>
+			// The element can start or lengthen a token, and repeating it would lengthen it again
+			// -- &quot;(ab)+&quot; also matches &quot;abab&quot; -- which is more than one pass has told us.
+<span class="fc" id="L482">			unknown = true;</span>
+<span class="fc" id="L483">			return after;</span>
+		}
+
+<span class="fc bfc" id="L486" title="All 2 branches covered.">		if (min == 0)</span>
+<span class="fc" id="L487">			after.union(before);</span>
+
+<span class="fc" id="L489">		return after;</span>
+	}
+
+	private static int parseCount(String s) {
+<span class="fc" id="L493">		int result = 0;</span>
+<span class="pc bpc" id="L494" title="1 of 2 branches missed.">		if (s.length() == 0)</span>
+<span class="nc" id="L495">			return -1;</span>
+
+<span class="fc bfc" id="L497" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L498">			final char ch = s.charAt(i);</span>
+<span class="pc bpc" id="L499" title="2 of 4 branches missed.">			if (ch &lt; '0' || ch &gt; '9')</span>
+<span class="nc" id="L500">				return -1;</span>
+
+<span class="fc" id="L502">			result = result * 10 + (ch - '0');</span>
+		}
+<span class="fc" id="L504">		return result;</span>
+	}
+
+<span class="fc" id="L507">	private static final Collection&lt;Character&gt; DIGITS = new TreeSet&lt;&gt;();</span>
+	static {
+<span class="fc bfc" id="L509" title="All 2 branches covered.">		for (char ch = '0'; ch &lt;= '9'; ch++)</span>
+<span class="fc" id="L510">			DIGITS.add(ch);</span>
+<span class="fc" id="L511">	}</span>
+
+	// What %q and %g stand for, as Pattern2 expands them.
+	private static final String QUOTES = &quot;'\u2018\u2019&quot;;
+	private static final String DOUBLE_QUOTES = &quot;\&quot;\u201c\u201d&quot; + Jaws.BLOCK_E1_INVISIBLE_QUOTE;
+
+	/**
+	 * The content of a character class, read as the exact set of characters it may match -- since
+	 * every one of them that is not a blank may be a token of its own.
+	 */
+<span class="fc" id="L521">	private static final class CharClass {</span>
+
+		// Whether the class may match one of the blanks a line opens with.
+		private boolean blank;
+		// The ASCII letters it may match, lower-cased: the patterns fold their case, so &quot;[hx]&quot;
+		// matches &quot;H&quot; as well, whose token is &quot;h&quot;.
+<span class="fc" id="L527">		private final Set&lt;Character&gt; letters = new TreeSet&lt;&gt;();</span>
+		// The other characters it may match: never a blank, never an ASCII letter.
+<span class="fc" id="L529">		private final Set&lt;Character&gt; chars = new TreeSet&lt;&gt;();</span>
+
+		/**
+		 * Reads {@code content}, the text between the brackets, or answers {@code null} when the
+		 * class cannot be enumerated: a negated class, {@code %pLN}, {@code \w}, {@code \p{...}},
+		 * a nested class, a range too wide to be worth listing...
+		 */
+		private static CharClass read(String content) {
+			// A negated class holds everything it does not name, letters included.
+<span class="fc bfc" id="L538" title="All 2 branches covered.">			if (content.startsWith(&quot;^&quot;))</span>
+<span class="fc" id="L539">				return null;</span>
+
+<span class="fc" id="L541">			final CharClass result = new CharClass();</span>
+<span class="fc" id="L542">			int i = 0;</span>
+<span class="fc bfc" id="L543" title="All 2 branches covered.">			while (i &lt; content.length()) {</span>
+<span class="fc" id="L544">				final char ch = content.charAt(i);</span>
+<span class="fc bfc" id="L545" title="All 2 branches covered.">				if (ch == '%') {</span>
+<span class="fc bfc" id="L546" title="All 2 branches covered.">					if (content.startsWith(&quot;%s&quot;, i))</span>
+<span class="fc" id="L547">						result.blank = true;</span>
+<span class="fc bfc" id="L548" title="All 2 branches covered.">					else if (content.startsWith(&quot;%q&quot;, i))</span>
+<span class="fc" id="L549">						result.addAll(QUOTES);</span>
+<span class="fc bfc" id="L550" title="All 2 branches covered.">					else if (content.startsWith(&quot;%g&quot;, i))</span>
+<span class="fc" id="L551">						result.addAll(DOUBLE_QUOTES);</span>
+					else
+						// %pLN: the Unicode letters and digits.
+<span class="fc" id="L554">						return null;</span>
+
+<span class="fc" id="L556">					i += 2;</span>
+<span class="fc" id="L557">					continue;</span>
+				}
+				// A nested class or an intersection: not worth following.
+<span class="pc bpc" id="L560" title="2 of 4 branches missed.">				if (ch == '[' || content.startsWith(&quot;&amp;&amp;&quot;, i))</span>
+<span class="nc" id="L561">					return null;</span>
+
+				final char first;
+<span class="fc bfc" id="L564" title="All 2 branches covered.">				if (ch == '\\') {</span>
+<span class="pc bpc" id="L565" title="1 of 2 branches missed.">					if (i + 1 &gt;= content.length())</span>
+<span class="nc" id="L566">						return null;</span>
+
+<span class="fc" id="L568">					final char escaped = content.charAt(i + 1);</span>
+<span class="fc" id="L569">					i += 2;</span>
+<span class="pc bpc" id="L570" title="4 of 12 branches missed.">					if (escaped == 's' || escaped == 'n' || escaped == 't' || escaped == 'r' || escaped == 'f'</span>
+							|| escaped == '0') {
+<span class="fc" id="L572">						result.blank = true;</span>
+<span class="fc" id="L573">						continue;</span>
+					}
+<span class="pc bpc" id="L575" title="1 of 2 branches missed.">					if (escaped == 'd') {</span>
+<span class="nc" id="L576">						result.chars.addAll(DIGITS);</span>
+<span class="nc" id="L577">						continue;</span>
+					}
+					// \w, \p{L}, \S...: letters, or anything.
+<span class="fc bfc" id="L580" title="All 2 branches covered.">					if (isAsciiLetter(escaped))</span>
+<span class="fc" id="L581">						return null;</span>
+
+<span class="fc" id="L583">					first = escaped;</span>
+<span class="fc" id="L584">				} else {</span>
+<span class="fc" id="L585">					first = ch;</span>
+<span class="fc" id="L586">					i++;</span>
+				}
+
+				// A range, unless the '-' is the last character of the class, where it is a
+				// literal one.
+<span class="fc bfc" id="L591" title="All 4 branches covered.">				if (i + 1 &lt; content.length() &amp;&amp; content.charAt(i) == '-') {</span>
+<span class="fc" id="L592">					char last = content.charAt(i + 1);</span>
+<span class="fc" id="L593">					i += 2;</span>
+<span class="pc bpc" id="L594" title="1 of 2 branches missed.">					if (last == '\\') {</span>
+<span class="nc bnc" id="L595" title="All 2 branches missed.">						if (i &gt;= content.length())</span>
+<span class="nc" id="L596">							return null;</span>
+
+<span class="nc" id="L598">						last = content.charAt(i);</span>
+<span class="nc" id="L599">						i++;</span>
+<span class="nc bnc" id="L600" title="All 2 branches missed.">						if (isAsciiLetter(last))</span>
+<span class="nc" id="L601">							return null;</span>
+					}
+<span class="pc bpc" id="L603" title="1 of 4 branches missed.">					if (last &lt; first || last - first &gt; MAX_TOKENS)</span>
+<span class="fc" id="L604">						return null;</span>
+
+<span class="fc bfc" id="L606" title="All 2 branches covered.">					for (char c = first; c &lt;= last; c++)</span>
+<span class="fc" id="L607">						result.add(c);</span>
+
+<span class="fc" id="L609">					continue;</span>
+				}
+<span class="fc" id="L611">				result.add(first);</span>
+<span class="fc" id="L612">			}</span>
+			// A class matching nothing at all is not something to reason about.
+<span class="pc bpc" id="L614" title="1 of 6 branches missed.">			if (result.blank == false &amp;&amp; result.chars.isEmpty() &amp;&amp; result.letters.isEmpty())</span>
+<span class="nc" id="L615">				return null;</span>
+
+<span class="fc" id="L617">			return result;</span>
+		}
+
+		private void addAll(String s) {
+<span class="fc bfc" id="L621" title="All 2 branches covered.">			for (int i = 0; i &lt; s.length(); i++)</span>
+<span class="fc" id="L622">				chars.add(s.charAt(i));</span>
+<span class="fc" id="L623">		}</span>
+
+		private void add(char ch) {
+<span class="fc bfc" id="L626" title="All 2 branches covered.">			if (isAsciiLetter(ch))</span>
+<span class="fc" id="L627">				letters.add(toLowerCase(ch));</span>
+<span class="fc bfc" id="L628" title="All 2 branches covered.">			else if (StringUtils.isTrimmable(ch))</span>
+<span class="fc" id="L629">				blank = true;</span>
+			else
+<span class="fc" id="L631">				chars.add(ch);</span>
+<span class="fc" id="L632">		}</span>
+	}
+
+	private int endOfCharClass() {
+<span class="fc" id="L636">		int i = pos + 1;</span>
+<span class="pc bpc" id="L637" title="1 of 4 branches missed.">		if (i &lt; pattern.length() &amp;&amp; pattern.charAt(i) == '^')</span>
+<span class="fc" id="L638">			i++;</span>
+
+		// A ']' in first position is a literal one.
+<span class="pc bpc" id="L641" title="2 of 4 branches missed.">		if (i &lt; pattern.length() &amp;&amp; pattern.charAt(i) == ']')</span>
+<span class="nc" id="L642">			i++;</span>
+
+<span class="pc bpc" id="L644" title="1 of 2 branches missed.">		while (i &lt; pattern.length()) {</span>
+<span class="fc" id="L645">			final char ch = pattern.charAt(i);</span>
+<span class="fc bfc" id="L646" title="All 2 branches covered.">			if (ch == '\\')</span>
+<span class="fc" id="L647">				i += 2;</span>
+<span class="fc bfc" id="L648" title="All 2 branches covered.">			else if (ch == ']')</span>
+<span class="fc" id="L649">				return i;</span>
+			else
+<span class="fc" id="L651">				i++;</span>
+<span class="fc" id="L652">		}</span>
+<span class="nc" id="L653">		return -1;</span>
+	}
+
+	private void skipElement() {
+<span class="fc" id="L657">		final char ch = pattern.charAt(pos);</span>
+<span class="fc bfc" id="L658" title="All 2 branches covered.">		if (ch == '(') {</span>
+<span class="fc" id="L659">			skipGroup();</span>
+<span class="pc bpc" id="L660" title="1 of 2 branches missed.">			if (unknown)</span>
+<span class="nc" id="L661">				return;</span>
+<span class="fc bfc" id="L662" title="All 2 branches covered.">		} else if (ch == '[') {</span>
+<span class="fc" id="L663">			final int end = endOfCharClass();</span>
+<span class="pc bpc" id="L664" title="1 of 2 branches missed.">			if (end &lt; 0) {</span>
+<span class="nc" id="L665">				unknown = true;</span>
+<span class="nc" id="L666">				return;</span>
+			}
+<span class="fc" id="L668">			pos = end + 1;</span>
+<span class="fc bfc" id="L669" title="All 2 branches covered.">		} else if (ch == '\\')</span>
+<span class="fc" id="L670">			pos += 2;</span>
+		else
+<span class="fc" id="L672">			pos++;</span>
+
+<span class="pc bpc" id="L674" title="1 of 2 branches missed.">		if (pos &gt; pattern.length()) {</span>
+<span class="nc" id="L675">			unknown = true;</span>
+<span class="nc" id="L676">			return;</span>
+		}
+<span class="fc" id="L678">		skipQuantifier();</span>
+<span class="fc" id="L679">	}</span>
+
+	private void skipGroup() {
+<span class="fc" id="L682">		int depth = 0;</span>
+<span class="pc bpc" id="L683" title="1 of 2 branches missed.">		while (pos &lt; pattern.length()) {</span>
+<span class="fc" id="L684">			final char ch = pattern.charAt(pos);</span>
+<span class="fc bfc" id="L685" title="All 2 branches covered.">			if (ch == '\\') {</span>
+<span class="fc" id="L686">				pos += 2;</span>
+<span class="fc" id="L687">				continue;</span>
+			}
+<span class="fc bfc" id="L689" title="All 2 branches covered.">			if (ch == '[') {</span>
+<span class="fc" id="L690">				final int end = endOfCharClass();</span>
+<span class="pc bpc" id="L691" title="1 of 2 branches missed.">				if (end &lt; 0) {</span>
+<span class="nc" id="L692">					unknown = true;</span>
+<span class="nc" id="L693">					return;</span>
+				}
+<span class="fc" id="L695">				pos = end + 1;</span>
+<span class="fc" id="L696">				continue;</span>
+			}
+<span class="fc" id="L698">			pos++;</span>
+<span class="fc bfc" id="L699" title="All 2 branches covered.">			if (ch == '(')</span>
+<span class="fc" id="L700">				depth++;</span>
+<span class="fc bfc" id="L701" title="All 2 branches covered.">			else if (ch == ')') {</span>
+<span class="fc" id="L702">				depth--;</span>
+<span class="fc bfc" id="L703" title="All 2 branches covered.">				if (depth == 0)</span>
+<span class="fc" id="L704">					return;</span>
+			}
+<span class="fc" id="L706">		}</span>
+<span class="nc" id="L707">		unknown = true;</span>
+<span class="nc" id="L708">	}</span>
+
+	private void skipQuantifier() {
+<span class="fc bfc" id="L711" title="All 2 branches covered.">		if (pos &gt;= pattern.length())</span>
+<span class="fc" id="L712">			return;</span>
+
+<span class="fc" id="L714">		final char ch = pattern.charAt(pos);</span>
+<span class="fc bfc" id="L715" title="All 6 branches covered.">		if (ch == '?' || ch == '*' || ch == '+')</span>
+<span class="fc" id="L716">			pos++;</span>
+<span class="pc bpc" id="L717" title="1 of 2 branches missed.">		else if (ch == '{') {</span>
+<span class="nc" id="L718">			final int end = pattern.indexOf('}', pos);</span>
+<span class="nc bnc" id="L719" title="All 2 branches missed.">			if (end &lt; 0) {</span>
+<span class="nc" id="L720">				unknown = true;</span>
+<span class="nc" id="L721">				return;</span>
+			}
+<span class="nc" id="L723">			pos = end + 1;</span>
+<span class="nc" id="L724">		} else</span>
+<span class="fc" id="L725">			return;</span>
+
+<span class="pc bpc" id="L727" title="2 of 6 branches missed.">		if (pos &lt; pattern.length() &amp;&amp; (pattern.charAt(pos) == '?' || pattern.charAt(pos) == '+'))</span>
+<span class="fc" id="L728">			pos++;</span>
+<span class="fc" id="L729">	}</span>
+
+	private static boolean isAsciiLetter(char ch) {
+<span class="fc bfc" id="L732" title="All 8 branches covered.">		return (ch &gt;= 'a' &amp;&amp; ch &lt;= 'z') || (ch &gt;= 'A' &amp;&amp; ch &lt;= 'Z');</span>
+	}
+
+	private static char toLowerCase(char ch) {
+<span class="fc" id="L736">		return (char) (ch | 0x20);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

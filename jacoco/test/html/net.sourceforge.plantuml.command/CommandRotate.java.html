@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -45,16 +48,18 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandRotate extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L48">	public static final CommandRotate ME = new CommandRotate();</span>
+<span class="fc" id="L51">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;rotate&quot;);</span>
+
+<span class="fc" id="L53">	public static final CommandRotate ME = new CommandRotate();</span>
 
 	private CommandRotate() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L56">		super(getRegexConcat());</span>
+<span class="fc" id="L57">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L55">		return RegexConcat.build(CommandRotate.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L60">		return RegexConcat.build(CommandRotate.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;rotate&quot;), //
-<span class="fc" id="L57">				RegexLeaf.end()); //</span>
+<span class="fc" id="L62">				RegexLeaf.end()); //</span>
 	}
 
 	@Override
@@ -62,12 +67,17 @@ public class CommandRotate extends SingleLineCommand2&lt;TitledDiagram&gt; {
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// 'rotate' is accepted for backward compatibility but has no effect:
 		// executeArg ignores it and returns ok().
-<span class="nc" id="L65">		return &quot;Accepted but ignored: 'rotate' has no effect&quot;;</span>
+<span class="nc" id="L70">		return &quot;Accepted but ignored: 'rotate' has no effect&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L70">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L75">		return CommandExecutionResult.ok();</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L80">		return FIRST_TOKENS;</span>
 	}
 
 }

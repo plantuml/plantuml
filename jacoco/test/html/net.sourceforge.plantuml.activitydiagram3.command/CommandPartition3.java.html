@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileGroup;
@@ -64,120 +67,128 @@ import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandPartition3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
+<span class="fc" id="L70">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList( //</span>
+			&quot;card&quot;, &quot;group&quot;, &quot;package&quot;, &quot;partition&quot;, &quot;rectangle&quot;);
+
 	public CommandPartition3() {
-<span class="fc" id="L68">		super(getRegexConcat());</span>
-<span class="fc" id="L69">	}</span>
+<span class="fc" id="L74">		super(getRegexConcat());</span>
+<span class="fc" id="L75">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L72">		return RegexConcat.build(CommandPartition3.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L78">		return RegexConcat.build(CommandPartition3.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(partition|package|rectangle|card|group)&quot;), //
-<span class="fc" id="L74">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L80">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexOptional(//
 						new RegexConcat( //
-<span class="fc" id="L77">								color(&quot;BACK1&quot;).getRegex(), //</span>
-<span class="fc" id="L78">								RegexLeaf.spaceOneOrMore())), //</span>
+<span class="fc" id="L83">								color(&quot;BACK1&quot;).getRegex(), //</span>
+<span class="fc" id="L84">								RegexLeaf.spaceOneOrMore())), //</span>
 				new RegexLeaf(1, &quot;NAME&quot;, &quot;([%g][^%g]+[%g]|.*?)&quot;), //
 				new RegexOptional(//
 						new RegexConcat( //
-<span class="fc" id="L82">								RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L83">								color(&quot;BACK2&quot;).getRegex())), //</span>
-<span class="fc" id="L84">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L88">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L89">								color(&quot;BACK2&quot;).getRegex())), //</span>
+<span class="fc" id="L90">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
 				new RegexLeaf(1, &quot;BRACKET&quot;, &quot;(\\{?)&quot;), //
-<span class="fc" id="L86">				RegexLeaf.end());</span>
+<span class="fc" id="L92">				RegexLeaf.end());</span>
 	}
 
 	private USymbol getUSymbol(String type) {
-<span class="fc bfc" id="L90" title="All 2 branches covered.">		if (&quot;partition&quot;.equalsIgnoreCase(type))</span>
-<span class="fc" id="L91">			return USymbols.PARTITION;</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (&quot;partition&quot;.equalsIgnoreCase(type))</span>
+<span class="fc" id="L97">			return USymbols.PARTITION;</span>
 
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (&quot;package&quot;.equalsIgnoreCase(type))</span>
-<span class="nc" id="L94">			return USymbols.PACKAGE;</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (&quot;package&quot;.equalsIgnoreCase(type))</span>
+<span class="nc" id="L100">			return USymbols.PACKAGE;</span>
 
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (&quot;rectangle&quot;.equalsIgnoreCase(type))</span>
-<span class="nc" id="L97">			return USymbols.RECTANGLE;</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (&quot;rectangle&quot;.equalsIgnoreCase(type))</span>
+<span class="nc" id="L103">			return USymbols.RECTANGLE;</span>
 
-<span class="fc bfc" id="L99" title="All 2 branches covered.">		if (&quot;card&quot;.equalsIgnoreCase(type))</span>
-<span class="fc" id="L100">			return USymbols.CARD;</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (&quot;card&quot;.equalsIgnoreCase(type))</span>
+<span class="fc" id="L106">			return USymbols.CARD;</span>
 
-<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (&quot;group&quot;.equalsIgnoreCase(type))</span>
-<span class="fc" id="L103">			return USymbols.GROUP;</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (&quot;group&quot;.equalsIgnoreCase(type))</span>
+<span class="fc" id="L109">			return USymbols.GROUP;</span>
 
-<span class="nc" id="L105">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L111">		throw new IllegalArgumentException();</span>
 	}
 
 	private static ColorParser color(String id) {
-<span class="fc" id="L109">		return ColorParser.simpleColor(ColorType.BACK, id);</span>
+<span class="fc" id="L115">		return ColorParser.simpleColor(ColorType.BACK, id);</span>
 	}
 
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L115">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L121">		final StringBuilder sb = new StringBuilder();</span>
 
 		// 'partition Name {' (or package/rectangle/card/group) opens a
 		// container around the following activities, closed by '}'. Each
 		// keyword maps to a different visual symbol (see getUSymbol).
-<span class="nc" id="L120">		final String name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;NAME&quot;, 0));</span>
-<span class="nc" id="L121">		sb.append(&quot;Starting the &quot;).append(StringUtils.goLowerCase(arg.get(&quot;TYPE&quot;, 0))).append(&quot; '&quot;).append(name)</span>
-<span class="nc" id="L122">				.append(&quot;'&quot;);</span>
+<span class="nc" id="L126">		final String name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;NAME&quot;, 0));</span>
+<span class="nc" id="L127">		sb.append(&quot;Starting the &quot;).append(StringUtils.goLowerCase(arg.get(&quot;TYPE&quot;, 0))).append(&quot; '&quot;).append(name)</span>
+<span class="nc" id="L128">				.append(&quot;'&quot;);</span>
 
 		// The color may be written before or after the name; executeArg
 		// prefers the former.
-<span class="nc bnc" id="L126" title="All 2 branches missed.">		final String color = arg.get(&quot;BACK1&quot;, 0) == null ? arg.get(&quot;BACK2&quot;, 0) : arg.get(&quot;BACK1&quot;, 0);</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (color != null)</span>
-<span class="nc" id="L128">			sb.append(&quot;, background color &quot;).append(color);</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		final String color = arg.get(&quot;BACK1&quot;, 0) == null ? arg.get(&quot;BACK2&quot;, 0) : arg.get(&quot;BACK1&quot;, 0);</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (color != null)</span>
+<span class="nc" id="L134">			sb.append(&quot;, background color &quot;).append(color);</span>
 
-<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (arg.get(&quot;STEREO&quot;, 0) != null)</span>
-<span class="nc" id="L131">			sb.append(&quot;, stereotype &quot;).append(arg.get(&quot;STEREO&quot;, 0));</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (arg.get(&quot;STEREO&quot;, 0) != null)</span>
+<span class="nc" id="L137">			sb.append(&quot;, stereotype &quot;).append(arg.get(&quot;STEREO&quot;, 0));</span>
 
 		// Mirror the warning emitted by executeArg.
-<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (arg.get(&quot;BRACKET&quot;, 0).length() == 0)</span>
-<span class="nc" id="L135">			sb.append(&quot; (deprecated form: add a '{' bracket at the end of the line)&quot;);</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		if (arg.get(&quot;BRACKET&quot;, 0).length() == 0)</span>
+<span class="nc" id="L141">			sb.append(&quot; (deprecated form: add a '{' bracket at the end of the line)&quot;);</span>
 
-<span class="nc" id="L137">		return sb.toString();</span>
+<span class="nc" id="L143">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L143">		final String name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;NAME&quot;, 0));</span>
+<span class="fc" id="L149">		final String name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;NAME&quot;, 0));</span>
 
-<span class="fc" id="L145">		final String b1 = arg.get(&quot;BACK1&quot;, 0);</span>
-<span class="fc bfc" id="L146" title="All 2 branches covered.">		final Colors colors = color(b1 == null ? &quot;BACK2&quot; : &quot;BACK1&quot;).getColor(arg,</span>
-<span class="fc" id="L147">				diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L151">		final String b1 = arg.get(&quot;BACK1&quot;, 0);</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">		final Colors colors = color(b1 == null ? &quot;BACK2&quot; : &quot;BACK1&quot;).getColor(arg,</span>
+<span class="fc" id="L153">				diagram.getSkinParam().getIHtmlColorSet());</span>
 
-<span class="fc" id="L149">		final String type = arg.get(&quot;TYPE&quot;, 0);</span>
-<span class="fc" id="L150">		final USymbol symbol = getUSymbol(type);</span>
-<span class="fc" id="L151">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
-<span class="fc bfc" id="L152" title="All 2 branches covered.">		final Stereotype stereotype = stereo == null ? null : Stereotype.build(stereo);</span>
+<span class="fc" id="L155">		final String type = arg.get(&quot;TYPE&quot;, 0);</span>
+<span class="fc" id="L156">		final USymbol symbol = getUSymbol(type);</span>
+<span class="fc" id="L157">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">		final Stereotype stereotype = stereo == null ? null : Stereotype.build(stereo);</span>
 
-<span class="fc bfc" id="L154" title="All 2 branches covered.">		final boolean hasBracket = arg.get(&quot;BRACKET&quot;, 0).length() &gt; 0;</span>
-<span class="fc bfc" id="L155" title="All 2 branches covered.">		if (hasBracket == false)</span>
-<span class="fc" id="L156">			diagram.addWarning(new Warning(&quot;Missing '{': write '&quot; + rebuildWithBracket(arg) + &quot;' and close it with '}'&quot;));</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		final boolean hasBracket = arg.get(&quot;BRACKET&quot;, 0).length() &gt; 0;</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">		if (hasBracket == false)</span>
+<span class="fc" id="L162">			diagram.addWarning(new Warning(&quot;Missing '{': write '&quot; + rebuildWithBracket(arg) + &quot;' and close it with '}'&quot;));</span>
 
 		// Warning : titleColor unused in FTileGroupW
 
-<span class="fc" id="L160">		final Style stylePartition = diagram.getSkinParam().getCurrentStyleBuilder()</span>
-<span class="fc" id="L161">				.getMergedStyle(FtileGroup.getStyleQuery(symbol).withStereotype(stereotype));</span>
-<span class="fc" id="L162">		HColor backColor = colors.getColor(ColorType.BACK);</span>
-<span class="fc bfc" id="L163" title="All 2 branches covered.">		if (backColor == null)</span>
-<span class="fc" id="L164">			backColor = stylePartition.value(PName.BackGroundColor).asColor(diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L166">		final Style stylePartition = diagram.getSkinParam().getCurrentStyleBuilder()</span>
+<span class="fc" id="L167">				.getMergedStyle(FtileGroup.getStyleQuery(symbol).withStereotype(stereotype));</span>
+<span class="fc" id="L168">		HColor backColor = colors.getColor(ColorType.BACK);</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">		if (backColor == null)</span>
+<span class="fc" id="L170">			backColor = stylePartition.value(PName.BackGroundColor).asColor(diagram.getSkinParam().getIHtmlColorSet());</span>
 
-<span class="fc" id="L166">		diagram.startGroup(Display.getWithNewlines(diagram.getPragma(), name), backColor, symbol, stylePartition);</span>
+<span class="fc" id="L172">		diagram.startGroup(Display.getWithNewlines(diagram.getPragma(), name), backColor, symbol, stylePartition);</span>
 
-<span class="fc" id="L168">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L174">		return CommandExecutionResult.ok();</span>
 	}
 
 	private static String rebuildWithBracket(RegexResult arg) {
-<span class="fc" id="L172">		final StringBuilder sb = new StringBuilder(arg.get(&quot;TYPE&quot;, 0));</span>
-<span class="fc bfc" id="L173" title="All 2 branches covered.">		if (arg.get(&quot;BACK1&quot;, 0) != null)</span>
-<span class="fc" id="L174">			sb.append(&quot; &quot;).append(arg.get(&quot;BACK1&quot;, 0));</span>
-<span class="fc" id="L175">		sb.append(&quot; &quot;).append(arg.get(&quot;NAME&quot;, 0));</span>
-<span class="fc bfc" id="L176" title="All 2 branches covered.">		if (arg.get(&quot;BACK2&quot;, 0) != null)</span>
-<span class="fc" id="L177">			sb.append(&quot; &quot;).append(arg.get(&quot;BACK2&quot;, 0));</span>
-<span class="fc bfc" id="L178" title="All 2 branches covered.">		if (arg.get(&quot;STEREO&quot;, 0) != null)</span>
-<span class="fc" id="L179">			sb.append(&quot; &quot;).append(arg.get(&quot;STEREO&quot;, 0));</span>
-<span class="fc" id="L180">		return sb.append(&quot; {&quot;).toString();</span>
+<span class="fc" id="L178">		final StringBuilder sb = new StringBuilder(arg.get(&quot;TYPE&quot;, 0));</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">		if (arg.get(&quot;BACK1&quot;, 0) != null)</span>
+<span class="fc" id="L180">			sb.append(&quot; &quot;).append(arg.get(&quot;BACK1&quot;, 0));</span>
+<span class="fc" id="L181">		sb.append(&quot; &quot;).append(arg.get(&quot;NAME&quot;, 0));</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">		if (arg.get(&quot;BACK2&quot;, 0) != null)</span>
+<span class="fc" id="L183">			sb.append(&quot; &quot;).append(arg.get(&quot;BACK2&quot;, 0));</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">		if (arg.get(&quot;STEREO&quot;, 0) != null)</span>
+<span class="fc" id="L185">			sb.append(&quot; &quot;).append(arg.get(&quot;STEREO&quot;, 0));</span>
+<span class="fc" id="L186">		return sb.append(&quot; {&quot;).toString();</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L191">		return FIRST_TOKENS;</span>
 	}
 
 }

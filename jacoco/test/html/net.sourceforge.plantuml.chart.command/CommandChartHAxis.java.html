@@ -35,6 +35,8 @@
 package net.sourceforge.plantuml.chart.command;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.annotation.Explain;
@@ -52,37 +54,39 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandChartHAxis extends SingleLineCommand2&lt;ChartDiagram&gt; {
 
+<span class="fc" id="L57">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;h&quot;, &quot;x&quot;);</span>
+
 	public CommandChartHAxis() {
-<span class="nc" id="L56">		super(false, getRegexConcat());</span>
-<span class="nc" id="L57">	}</span>
+<span class="fc" id="L60">		super(false, getRegexConcat());</span>
+<span class="fc" id="L61">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L60">		return RegexConcat.build(CommandChartHAxis.class.getName(), RegexLeaf.start(), //</span>
-<span class="nc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L64">		return RegexConcat.build(CommandChartHAxis.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;[hx]-axis&quot;), //
-<span class="nc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L67">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(1, &quot;TITLE&quot;, &quot;\&quot;([^\&quot;]+)\&quot;&quot;)), //
-<span class="nc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L69">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(2, &quot;RANGE&quot;, &quot;(-?[0-9.]+)\\s*-?-&gt;\\s*(-?[0-9.]+)&quot;)), //
-<span class="nc" id="L67">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(1, &quot;DATA&quot;, &quot;\\[(.*)\\]&quot;)), //
-<span class="nc" id="L69">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexConcat( //
 						new RegexLeaf(&quot;spacing&quot;), //
-<span class="nc" id="L72">						RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L76">						RegexLeaf.spaceOneOrMore(), //</span>
 						new RegexLeaf(1, &quot;SPACING&quot;, &quot;([0-9]+)&quot;))), //
-<span class="nc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L78">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(1, &quot;LABELRIGHT&quot;, &quot;(label-right)&quot;)), //
-<span class="nc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L80">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(1, &quot;GRID&quot;, &quot;(grid)&quot;)), //
-<span class="nc" id="L78">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="nc" id="L79">				RegexLeaf.end());</span>
+<span class="fc" id="L82">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L83">				RegexLeaf.end());</span>
 	}
 	
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L85">		return null;</span>
+<span class="nc" id="L89">		return null;</span>
 	}
 
 
@@ -90,70 +94,76 @@ public class CommandChartHAxis extends SingleLineCommand2&lt;ChartDiagram&gt; {
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L93">		final String title = arg.get(&quot;TITLE&quot;, 0);</span>
-<span class="nc" id="L94">		final String minStr = arg.get(&quot;RANGE&quot;, 0);</span>
-<span class="nc" id="L95">		final String maxStr = arg.get(&quot;RANGE&quot;, 1);</span>
-<span class="nc" id="L96">		final String data = arg.get(&quot;DATA&quot;, 0);</span>
-<span class="nc" id="L97">		final String spacingStr = arg.get(&quot;SPACING&quot;, 0);</span>
-<span class="nc" id="L98">		final String labelRightStr = arg.get(&quot;LABELRIGHT&quot;, 0);</span>
-<span class="nc" id="L99">		final String gridStr = arg.get(&quot;GRID&quot;, 0);</span>
+<span class="nc" id="L97">		final String title = arg.get(&quot;TITLE&quot;, 0);</span>
+<span class="nc" id="L98">		final String minStr = arg.get(&quot;RANGE&quot;, 0);</span>
+<span class="nc" id="L99">		final String maxStr = arg.get(&quot;RANGE&quot;, 1);</span>
+<span class="nc" id="L100">		final String data = arg.get(&quot;DATA&quot;, 0);</span>
+<span class="nc" id="L101">		final String spacingStr = arg.get(&quot;SPACING&quot;, 0);</span>
+<span class="nc" id="L102">		final String labelRightStr = arg.get(&quot;LABELRIGHT&quot;, 0);</span>
+<span class="nc" id="L103">		final String gridStr = arg.get(&quot;GRID&quot;, 0);</span>
 
 		// Parse tick spacing if present (do this first, before any returns)
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (spacingStr != null) {</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (spacingStr != null) {</span>
 			try {
-<span class="nc" id="L104">				final int spacing = Integer.parseInt(spacingStr);</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">				if (spacing &lt;= 0) {</span>
-<span class="nc" id="L106">					return CommandExecutionResult.error(&quot;X-axis spacing must be greater than 0&quot;);</span>
+<span class="nc" id="L108">				final int spacing = Integer.parseInt(spacingStr);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">				if (spacing &lt;= 0) {</span>
+<span class="nc" id="L110">					return CommandExecutionResult.error(&quot;X-axis spacing must be greater than 0&quot;);</span>
 				}
-<span class="nc" id="L108">				diagram.setXAxisTickSpacing(spacing);</span>
-<span class="nc" id="L109">			} catch (NumberFormatException e) {</span>
-<span class="nc" id="L110">				return CommandExecutionResult.error(&quot;Invalid number format in spacing value&quot;);</span>
-<span class="nc" id="L111">			}</span>
+<span class="nc" id="L112">				diagram.setXAxisTickSpacing(spacing);</span>
+<span class="nc" id="L113">			} catch (NumberFormatException e) {</span>
+<span class="nc" id="L114">				return CommandExecutionResult.error(&quot;Invalid number format in spacing value&quot;);</span>
+<span class="nc" id="L115">			}</span>
 		}
 
 		// Set label position if label-right option is present (do this before any returns)
-<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (labelRightStr != null) {</span>
-<span class="nc" id="L116">			diagram.setXAxisLabelPosition(ChartAxis.LabelPosition.RIGHT);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (labelRightStr != null) {</span>
+<span class="nc" id="L120">			diagram.setXAxisLabelPosition(ChartAxis.LabelPosition.RIGHT);</span>
 		}
 
 		// Enable grid if grid option is present (do this before any returns)
-<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (gridStr != null) {</span>
-<span class="nc" id="L121">			diagram.setXGridMode(ChartDiagram.GridMode.MAJOR);</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (gridStr != null) {</span>
+<span class="nc" id="L125">			diagram.setXGridMode(ChartDiagram.GridMode.MAJOR);</span>
 		}
 
 		// If numeric range is provided, this is for horizontal bar chart mode
-<span class="nc bnc" id="L125" title="All 4 branches missed.">		if (minStr != null &amp;&amp; maxStr != null) {</span>
+<span class="nc bnc" id="L129" title="All 4 branches missed.">		if (minStr != null &amp;&amp; maxStr != null) {</span>
 			try {
-<span class="nc" id="L127">				final double min = Double.parseDouble(minStr);</span>
-<span class="nc" id="L128">				final double max = Double.parseDouble(maxStr);</span>
-<span class="nc" id="L129">				return diagram.setXAxis(title, min, max);</span>
-<span class="nc" id="L130">			} catch (NumberFormatException e) {</span>
-<span class="nc" id="L131">				return CommandExecutionResult.error(&quot;Invalid number format in axis range&quot;);</span>
+<span class="nc" id="L131">				final double min = Double.parseDouble(minStr);</span>
+<span class="nc" id="L132">				final double max = Double.parseDouble(maxStr);</span>
+<span class="nc" id="L133">				return diagram.setXAxis(title, min, max);</span>
+<span class="nc" id="L134">			} catch (NumberFormatException e) {</span>
+<span class="nc" id="L135">				return CommandExecutionResult.error(&quot;Invalid number format in axis range&quot;);</span>
 			}
 		}
 
 		// Otherwise, parse as labels
-<span class="nc" id="L136">		final List&lt;String&gt; labels = parseLabels(data);</span>
-<span class="nc" id="L137">		diagram.setXAxisTitle(title);</span>
+<span class="nc" id="L140">		final List&lt;String&gt; labels = parseLabels(data);</span>
+<span class="nc" id="L141">		diagram.setXAxisTitle(title);</span>
 
-<span class="nc" id="L139">		return diagram.setXAxisLabels(labels);</span>
+<span class="nc" id="L143">		return diagram.setXAxisLabels(labels);</span>
 	}
 
 	private List&lt;String&gt; parseLabels(String data) {
-<span class="nc" id="L143">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L144" title="All 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
-<span class="nc" id="L145">			return result;</span>
+<span class="nc" id="L147">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L148" title="All 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
+<span class="nc" id="L149">			return result;</span>
 
 		// Split by comma, handling quoted strings
-<span class="nc" id="L148">		final String[] parts = data.split(&quot;,&quot;);</span>
-<span class="nc bnc" id="L149" title="All 2 branches missed.">		for (String part : parts) {</span>
-<span class="nc" id="L150">			String label = part.trim();</span>
+<span class="nc" id="L152">		final String[] parts = data.split(&quot;,&quot;);</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		for (String part : parts) {</span>
+<span class="nc" id="L154">			String label = part.trim();</span>
 			// Remove quotes if present
-<span class="nc bnc" id="L152" title="All 4 branches missed.">			if (label.startsWith(&quot;\&quot;&quot;) &amp;&amp; label.endsWith(&quot;\&quot;&quot;))</span>
-<span class="nc" id="L153">				label = label.substring(1, label.length() - 1);</span>
-<span class="nc" id="L154">			result.add(label);</span>
+<span class="nc bnc" id="L156" title="All 4 branches missed.">			if (label.startsWith(&quot;\&quot;&quot;) &amp;&amp; label.endsWith(&quot;\&quot;&quot;))</span>
+<span class="nc" id="L157">				label = label.substring(1, label.length() - 1);</span>
+<span class="nc" id="L158">			result.add(label);</span>
 		}
-<span class="nc" id="L156">		return result;</span>
+<span class="nc" id="L160">		return result;</span>
 	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="nc" id="L165">		return FIRST_TOKENS;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

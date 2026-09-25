@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -48,17 +51,20 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandFootboxOld extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
+<span class="fc" id="L54">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList( //</span>
+			&quot;footbox&quot;, &quot;footboxoff&quot;, &quot;footboxon&quot;);
+
 	public CommandFootboxOld() {
-<span class="fc" id="L52">		super(getRegexConcat());</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L58">		super(getRegexConcat());</span>
+<span class="fc" id="L59">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L56">		return RegexConcat.build(CommandFootboxOld.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L62">		return RegexConcat.build(CommandFootboxOld.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;footbox&quot;), //
-<span class="fc" id="L58">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(on|off)?&quot;), //
-<span class="fc" id="L60">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L61">				RegexLeaf.end()); //</span>
+<span class="fc" id="L66">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L67">				RegexLeaf.end()); //</span>
 	}
 
 	@Override
@@ -67,19 +73,25 @@ public class CommandFootboxOld extends SingleLineCommand2&lt;SequenceDiagram&gt;
 		// Legacy syntax for 'show footbox' / 'hide footbox'. Note that 'on' is
 		// tested null-safely here, unlike in executeArg where a bare 'footbox'
 		// (TYPE is optional in the regex) would throw a NullPointerException.
-<span class="nc" id="L70">		final boolean show = &quot;on&quot;.equalsIgnoreCase(arg.get(&quot;TYPE&quot;, 0));</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (show)</span>
-<span class="nc" id="L72">			return &quot;Showing the participant boxes at the bottom of the diagram&quot;;</span>
+<span class="nc" id="L76">		final boolean show = &quot;on&quot;.equalsIgnoreCase(arg.get(&quot;TYPE&quot;, 0));</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (show)</span>
+<span class="nc" id="L78">			return &quot;Showing the participant boxes at the bottom of the diagram&quot;;</span>
 
-<span class="nc" id="L74">		return &quot;Hiding the participant boxes at the bottom of the diagram&quot;;</span>
+<span class="nc" id="L80">		return &quot;Hiding the participant boxes at the bottom of the diagram&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L80">		final boolean footbox = arg.get(&quot;TYPE&quot;, 0).equalsIgnoreCase(&quot;on&quot;);</span>
-<span class="nc" id="L81">		diagram.setShowFootbox(footbox);</span>
-<span class="nc" id="L82">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L86">		final boolean footbox = arg.get(&quot;TYPE&quot;, 0).equalsIgnoreCase(&quot;on&quot;);</span>
+<span class="nc" id="L87">		diagram.setShowFootbox(footbox);</span>
+<span class="nc" id="L88">		return CommandExecutionResult.ok();</span>
 	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L93">		return FIRST_TOKENS;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

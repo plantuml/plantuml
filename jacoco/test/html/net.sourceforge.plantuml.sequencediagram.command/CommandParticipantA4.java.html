@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -44,21 +47,30 @@ import net.sourceforge.plantuml.url.UrlBuilder;
 
 public class CommandParticipantA4 extends CommandParticipant {
 
+<span class="fc" id="L50">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList( //</span>
+			&quot;actor&quot;, &quot;boundary&quot;, &quot;collections&quot;, &quot;control&quot;, &quot;create&quot;, &quot;database&quot;, &quot;entity&quot;,
+			&quot;participant&quot;, &quot;queue&quot;);
+
 	public CommandParticipantA4() {
-<span class="fc" id="L48">		super(getRegexConcat());</span>
-<span class="fc" id="L49">	}</span>
+<span class="fc" id="L55">		super(getRegexConcat());</span>
+<span class="fc" id="L56">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L52">		return RegexConcat.build(CommandParticipantA4.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L53">				getRegexType(), //</span>
-<span class="fc" id="L54">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L59">		return RegexConcat.build(CommandParticipantA4.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L60">				getRegexType(), //</span>
+<span class="fc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;CODE&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
-<span class="fc" id="L56">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
-<span class="fc" id="L57">				getOrderRegex(), //</span>
-<span class="fc" id="L58">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L63">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L64">				getOrderRegex(), //</span>
+<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
 				UrlBuilder.OPTIONAL, //
-<span class="fc" id="L60">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L61">				ColorParser.exp1(), RegexLeaf.end());</span>
+<span class="fc" id="L67">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L68">				ColorParser.exp1(), RegexLeaf.end());</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L73">		return FIRST_TOKENS;</span>
 	}
 
 }

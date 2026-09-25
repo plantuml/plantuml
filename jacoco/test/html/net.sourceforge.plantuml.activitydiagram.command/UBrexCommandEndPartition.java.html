@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import com.plantuml.ubrex.UnicodeBracketedExpression;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
@@ -51,17 +54,22 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class UBrexCommandEndPartition extends UBrexSingleLineCommand2&lt;ActivityDiagram&gt; {
 
+<span class="fc" id="L57">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList( //</span>
+			&quot;end&quot;, &quot;endpartition&quot;, &quot;}&quot;);
+
 	public UBrexCommandEndPartition() {
-<span class="fc" id="L55">		super(getRegexConcat());</span>
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L61">		super(getRegexConcat());</span>
+<span class="fc" id="L62">	}</span>
 
 	static UnicodeBracketedExpression getRegexConcat() {
-<span class="fc" id="L59">		return UBrexConcat.build(new UBrexOr( //</span>
-<span class="fc" id="L60">				UBrexConcat.build(new UBrexLeaf(&quot;end&quot;), //</span>
-<span class="fc" id="L61">						UBrexLeaf.spaceZeroOrMore(), //</span>
+		// UBrexLeaf.end() closes the whole expression. It used to sit inside the UBrexOr, as a
+		// third alternative, which made a blank line a valid &quot;end partition&quot;.
+<span class="fc" id="L67">		return UBrexConcat.build(new UBrexOr( //</span>
+<span class="fc" id="L68">				UBrexConcat.build(new UBrexLeaf(&quot;end&quot;), //</span>
+<span class="fc" id="L69">						UBrexLeaf.spaceZeroOrMore(), //</span>
 						new UBrexLeaf(&quot;partition&quot;)), //
-				new UBrexLeaf(&quot;}&quot;), //
-<span class="fc" id="L64">				UBrexLeaf.end())); //</span>
+				new UBrexLeaf(&quot;}&quot;)), //
+<span class="fc" id="L72">				UBrexLeaf.end()); //</span>
 	}
 
 	@Override
@@ -69,17 +77,28 @@ public class UBrexCommandEndPartition extends UBrexSingleLineCommand2&lt;Activit
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// '}' (or 'end partition') closes the partition opened by the matching
 		// 'partition Name {' command (executeArg fails if none is open).
-<span class="nc" id="L72">		return &quot;Closing the current partition&quot;;</span>
+<span class="nc" id="L80">		return &quot;Closing the current partition&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L78">		final boolean result = diagram.endGroup();</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (result == false)</span>
-<span class="nc" id="L80">			return CommandExecutionResult.error(&quot;No partition defined&quot;);</span>
+<span class="nc" id="L86">		final boolean result = diagram.endGroup();</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (result == false)</span>
+<span class="nc" id="L88">			return CommandExecutionResult.error(&quot;No partition defined&quot;);</span>
 
-<span class="nc" id="L82">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L90">		return CommandExecutionResult.ok();</span>
+	}
+
+	// Declared by hand: FirstTokens only reads regex patterns, and this one is a UBrex expression.
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensSlow() {
+<span class="fc" id="L96">		return FIRST_TOKENS;</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L101">		return FIRST_TOKENS;</span>
 	}
 
 }

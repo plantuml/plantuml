@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.gantt.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -47,23 +50,30 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandSeparator extends SingleLineCommand2&lt;GanttDiagram&gt; {
 
+<span class="fc" id="L53">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;-&quot;);</span>
+
 	public CommandSeparator() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L56">		super(getRegexConcat());</span>
+<span class="fc" id="L57">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L55">		return RegexConcat.build(CommandSeparator.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L60">		return RegexConcat.build(CommandSeparator.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;--&quot;), //
-<span class="fc" id="L57">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L58">				new RegexLeaf(2, &quot;COMMENT&quot;, &quot;((.+?)[%s]*--)?&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L62">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L63">				new RegexLeaf(2, &quot;COMMENT&quot;, &quot;((.+?)[%s]*--)?&quot;), RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L64">		final String comment = arg.get(&quot;COMMENT&quot;, 1);</span>
-<span class="nc" id="L65">		diagram.addSeparator(comment);</span>
-<span class="nc" id="L66">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L69">		final String comment = arg.get(&quot;COMMENT&quot;, 1);</span>
+<span class="nc" id="L70">		diagram.addSeparator(comment);</span>
+<span class="nc" id="L71">		return CommandExecutionResult.ok();</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L76">		return FIRST_TOKENS;</span>
 	}
 
 }

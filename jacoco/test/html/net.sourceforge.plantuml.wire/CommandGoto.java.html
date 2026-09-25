@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.wire;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -47,40 +50,47 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandGoto extends SingleLineCommand2&lt;WireDiagram&gt; {
 
+<span class="fc" id="L53">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;goto&quot;);</span>
+
 	public CommandGoto() {
-<span class="nc" id="L51">		super(false, getRegexConcat());</span>
-<span class="nc" id="L52">	}</span>
+<span class="fc" id="L56">		super(false, getRegexConcat());</span>
+<span class="fc" id="L57">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L55">		return RegexConcat.build(CommandGoto.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L60">		return RegexConcat.build(CommandGoto.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;INDENT&quot;, &quot;([\\s\\t]*)&quot;), //
 				new RegexLeaf(&quot;goto&quot;), //
-<span class="nc" id="L58">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\(&quot;), //
-<span class="nc" id="L60">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;X&quot;, &quot;(\\d+)&quot;), //
-<span class="nc" id="L62">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L67">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;,&quot;), //
-<span class="nc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L69">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;Y&quot;, &quot;(\\d+)&quot;), //
-<span class="nc" id="L66">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\)&quot;), //
-<span class="nc" id="L68">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="nc" id="L69">				RegexLeaf.end());</span>
+<span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L74">				RegexLeaf.end());</span>
 	}
 	
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L75">		return null;</span>
+<span class="nc" id="L80">		return null;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L80">		final String indent = arg.get(&quot;INDENT&quot;, 0);</span>
-<span class="nc" id="L81">		final double x = Double.parseDouble(arg.get(&quot;X&quot;, 0));</span>
-<span class="nc" id="L82">		final double y = Double.parseDouble(arg.get(&quot;Y&quot;, 0));</span>
-<span class="nc" id="L83">		return diagram.wgoto(indent, x, y);</span>
+<span class="nc" id="L85">		final String indent = arg.get(&quot;INDENT&quot;, 0);</span>
+<span class="nc" id="L86">		final double x = Double.parseDouble(arg.get(&quot;X&quot;, 0));</span>
+<span class="nc" id="L87">		final double y = Double.parseDouble(arg.get(&quot;Y&quot;, 0));</span>
+<span class="nc" id="L88">		return diagram.wgoto(indent, x, y);</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="nc" id="L93">		return FIRST_TOKENS;</span>
 	}
 
 }

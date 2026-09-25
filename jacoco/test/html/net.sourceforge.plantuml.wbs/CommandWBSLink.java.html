@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.wbs;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -43,6 +45,7 @@ import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -52,35 +55,39 @@ import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandWBSLink extends SingleLineCommand2&lt;WBSDiagram&gt; {
-    // ::remove folder when __HAXE__
 
 	public CommandWBSLink() {
-<span class="fc" id="L58">		super(getRegexConcat());</span>
-<span class="fc" id="L59">	}</span>
+<span class="fc" id="L60">		super(getRegexConcat());</span>
+<span class="fc" id="L61">	}</span>
+	
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L65">		return FirstTokens.ANYTHING;</span>
+	}
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L62">		return RegexConcat.build(CommandWBSLink.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L69">		return RegexConcat.build(CommandWBSLink.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;CODE1&quot;, &quot;([%pLN_]+)&quot;), //
-<span class="fc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(0, &quot;LINK&quot;, &quot;[.-]+\\&gt;&quot;), //
-<span class="fc" id="L66">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;CODE2&quot;, &quot;([%pLN_]+)&quot;), //
-<span class="fc" id="L68">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L69">				color().getRegex(), //</span>
-<span class="fc" id="L70">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
+<span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L76">				color().getRegex(), //</span>
+<span class="fc" id="L77">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
 				new RegexLeaf(1, &quot;LABEL_LINK&quot;, &quot;(?::[%s]*(.+))?&quot;), //
-<span class="fc" id="L72">				RegexLeaf.end());</span>
+<span class="fc" id="L79">				RegexLeaf.end());</span>
 	}
 
 	private static ColorParser color() {
-<span class="fc" id="L76">		return ColorParser.simpleColor(ColorType.LINE);</span>
+<span class="fc" id="L83">		return ColorParser.simpleColor(ColorType.LINE);</span>
 	}
 
 	
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L83">		return null;</span>
+<span class="nc" id="L90">		return null;</span>
 	}
 
 
@@ -88,19 +95,19 @@ public class CommandWBSLink extends SingleLineCommand2&lt;WBSDiagram&gt; {
 	@Override
 	protected CommandExecutionResult executeArg(WBSDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="fc" id="L91">		final String code1 = arg.get(&quot;CODE1&quot;, 0);</span>
-<span class="fc" id="L92">		final String code2 = arg.get(&quot;CODE2&quot;, 0);</span>
+<span class="fc" id="L98">		final String code1 = arg.get(&quot;CODE1&quot;, 0);</span>
+<span class="fc" id="L99">		final String code2 = arg.get(&quot;CODE2&quot;, 0);</span>
 //		final String message = arg.get(&quot;LABEL_LINK&quot;, 0);
 
-<span class="fc" id="L95">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L102">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
 //		link.setColors(color);
 //		link.applyStyle(arg.getLazzy(&quot;ARROW_STYLE&quot;, 0));
-<span class="fc" id="L98">		Stereotype stereotype = null;</span>
-<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (arg.get(&quot;STEREOTYPE&quot;, 0) != null) {</span>
-<span class="nc" id="L100">			stereotype = Stereotype.build(arg.get(&quot;STEREOTYPE&quot;, 0));</span>
+<span class="fc" id="L105">		Stereotype stereotype = null;</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (arg.get(&quot;STEREOTYPE&quot;, 0) != null) {</span>
+<span class="nc" id="L107">			stereotype = Stereotype.build(arg.get(&quot;STEREOTYPE&quot;, 0));</span>
 		}
 
-<span class="fc" id="L103">		return diagram.link(code1, code2, colors, stereotype);</span>
+<span class="fc" id="L110">		return diagram.link(code1, code2, colors, stereotype);</span>
 	}
 
 }

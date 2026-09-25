@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -48,45 +51,53 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandRemoveRestore extends SingleLineCommand2&lt;CucaDiagram&gt; {
 
+<span class="fc" id="L54">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;remove&quot;, &quot;restore&quot;);</span>
+
 	public CommandRemoveRestore() {
-<span class="fc" id="L52">		super(getRegexConcat());</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L57">		super(getRegexConcat());</span>
+<span class="fc" id="L58">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L56">		return RegexConcat.build(CommandRemoveRestore.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L61">		return RegexConcat.build(CommandRemoveRestore.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;COMMAND&quot;, &quot;(remove|restore)&quot;), //
-<span class="fc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L59">				new RegexLeaf(1, &quot;WHAT&quot;, &quot;(.+)&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L64">				new RegexLeaf(1, &quot;WHAT&quot;, &quot;(.+)&quot;), RegexLeaf.end());</span>
 	}
 
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L65">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L70">		final StringBuilder sb = new StringBuilder();</span>
 
 		// Unlike 'hide' which keeps the elements in the layout, 'remove'
 		// completely removes them from the diagram; 'restore' cancels a
 		// previous removal (see CucaDiagram.removeOrRestore).
-<span class="nc" id="L70">		final boolean restore = arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;restore&quot;);</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		sb.append(restore ? &quot;Restoring&quot; : &quot;Removing&quot;);</span>
+<span class="nc" id="L75">		final boolean restore = arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;restore&quot;);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		sb.append(restore ? &quot;Restoring&quot; : &quot;Removing&quot;);</span>
 
-<span class="nc" id="L73">		final String what = arg.get(&quot;WHAT&quot;, 0).trim();</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (what.startsWith(&quot;&lt;&lt;&quot;))</span>
-<span class="nc" id="L75">			sb.append(&quot; the elements stereotyped &quot;).append(what);</span>
+<span class="nc" id="L78">		final String what = arg.get(&quot;WHAT&quot;, 0).trim();</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (what.startsWith(&quot;&lt;&lt;&quot;))</span>
+<span class="nc" id="L80">			sb.append(&quot; the elements stereotyped &quot;).append(what);</span>
 		else
-<span class="nc" id="L77">			sb.append(&quot; the elements matching '&quot;).append(what).append(&quot;'&quot;);</span>
+<span class="nc" id="L82">			sb.append(&quot; the elements matching '&quot;).append(what).append(&quot;'&quot;);</span>
 
-<span class="nc" id="L79">		return sb.toString();</span>
+<span class="nc" id="L84">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 
-<span class="nc" id="L86">		final boolean show = arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;restore&quot;);</span>
-<span class="nc" id="L87">		final String what = arg.get(&quot;WHAT&quot;, 0).trim();</span>
-<span class="nc" id="L88">		diagram.removeOrRestore(what, show);</span>
-<span class="nc" id="L89">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L91">		final boolean show = arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;restore&quot;);</span>
+<span class="nc" id="L92">		final String what = arg.get(&quot;WHAT&quot;, 0).trim();</span>
+<span class="nc" id="L93">		diagram.removeOrRestore(what, show);</span>
+<span class="nc" id="L94">		return CommandExecutionResult.ok();</span>
 	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L99">		return FIRST_TOKENS;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

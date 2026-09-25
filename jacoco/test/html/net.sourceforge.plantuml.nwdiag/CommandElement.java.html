@@ -35,9 +35,12 @@
  */
 package net.sourceforge.plantuml.nwdiag;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -47,21 +50,26 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandElement extends SingleLineCommand2&lt;NwDiagram&gt; {
 
 	public CommandElement() {
-<span class="nc" id="L50">		super(getRegexConcat());</span>
-<span class="nc" id="L51">	}</span>
+<span class="fc" id="L53">		super(getRegexConcat());</span>
+<span class="fc" id="L54">	}</span>
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="nc" id="L58">		return FirstTokens.ANYTHING;</span>
+	}
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L54">		return RegexConcat.build(CommandElement.class.getName(), RegexLeaf.start(), //</span>
-<span class="nc" id="L55">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L62">		return RegexConcat.build(CommandElement.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;NAME&quot;, &quot;([-.%pLN_]+)&quot;), //
-<span class="nc" id="L57">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(2, &quot;DEFINITION&quot;, &quot;(\\[(.*)\\])?&quot;), //
-<span class="nc" id="L59">				new RegexLeaf(&quot;;?&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L67">				new RegexLeaf(&quot;;?&quot;), RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(NwDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L64">		return diagram.addElement(arg.get(&quot;NAME&quot;, 0), arg.get(&quot;DEFINITION&quot;, 1));</span>
+<span class="nc" id="L72">		return diagram.addElement(arg.get(&quot;NAME&quot;, 0), arg.get(&quot;DEFINITION&quot;, 1));</span>
 	}
 
 }

@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import com.plantuml.ubrex.UnicodeBracketedExpression;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
@@ -50,12 +53,14 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class UBrexCommandElse extends UBrexSingleLineCommand2&lt;ActivityDiagram&gt; {
 
+<span class="fc" id="L56">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;else&quot;);</span>
+
 	public UBrexCommandElse() {
-<span class="fc" id="L54">		super(getRegexConcat());</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L59">		super(getRegexConcat());</span>
+<span class="fc" id="L60">	}</span>
 
 	static UnicodeBracketedExpression getRegexConcat() {
-<span class="fc" id="L58">		return UBrexConcat.build(new UBrexLeaf(&quot;else&quot;), UBrexLeaf.end());</span>
+<span class="fc" id="L63">		return UBrexConcat.build(new UBrexLeaf(&quot;else&quot;), UBrexLeaf.end());</span>
 	}
 
 	@Override
@@ -64,23 +69,34 @@ public class UBrexCommandElse extends UBrexSingleLineCommand2&lt;ActivityDiagram
 		// 'else' switches to the alternative branch of the enclosing 'if'
 		// (legacy activity diagram syntax); executeArg fails when no 'if' is
 		// pending.
-<span class="nc" id="L67">		return &quot;Starting the 'else' branch of the enclosing if&quot;;</span>
+<span class="nc" id="L72">		return &quot;Starting the 'else' branch of the enclosing if&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram system, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (system.getLastEntityConsulted() == null)</span>
-<span class="nc" id="L74">			return CommandExecutionResult.error(&quot;No if for this else&quot;);</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (system.getLastEntityConsulted() == null)</span>
+<span class="nc" id="L79">			return CommandExecutionResult.error(&quot;No if for this else&quot;);</span>
 
-<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if (system.getCurrentContext() == null)</span>
-<span class="nc" id="L77">			return CommandExecutionResult.error(&quot;No if for this else&quot;);</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (system.getCurrentContext() == null)</span>
+<span class="nc" id="L82">			return CommandExecutionResult.error(&quot;No if for this else&quot;);</span>
 
-<span class="fc" id="L79">		final Entity branch = system.getCurrentContext().getBranch();</span>
+<span class="fc" id="L84">		final Entity branch = system.getCurrentContext().getBranch();</span>
 
-<span class="fc" id="L81">		system.setLastEntityConsulted(branch);</span>
+<span class="fc" id="L86">		system.setLastEntityConsulted(branch);</span>
 
-<span class="fc" id="L83">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L88">		return CommandExecutionResult.ok();</span>
+	}
+
+	// Declared by hand: FirstTokens only reads regex patterns, and this one is a UBrex expression.
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensSlow() {
+<span class="fc" id="L94">		return FIRST_TOKENS;</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L99">		return FIRST_TOKENS;</span>
 	}
 
 }

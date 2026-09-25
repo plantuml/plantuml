@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -51,42 +54,49 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandEndSwitch extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
+<span class="fc" id="L57">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;endswitch&quot;);</span>
+
 	public CommandEndSwitch() {
-<span class="fc" id="L55">		super(getRegexConcat());</span>
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L60">		super(getRegexConcat());</span>
+<span class="fc" id="L61">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L59">		return RegexConcat.build(CommandEndSwitch.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L64">		return RegexConcat.build(CommandEndSwitch.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;endswitch&quot;), //
-<span class="fc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L62">				Stereogroup.optionalStereogroup(), //</span>
-<span class="fc" id="L63">				RegexLeaf.end());</span>
+<span class="fc" id="L66">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L67">				Stereogroup.optionalStereogroup(), //</span>
+<span class="fc" id="L68">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L69">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L74">		final StringBuilder sb = new StringBuilder();</span>
 
 		// 'endswitch' closes the enclosing 'switch': the case branches merge
 		// back into a single flow.
-<span class="nc" id="L73">		sb.append(&quot;Closing the enclosing switch, merging the case branches&quot;);</span>
+<span class="nc" id="L78">		sb.append(&quot;Closing the enclosing switch, merging the case branches&quot;);</span>
 
-<span class="nc" id="L75">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (stereogroup.isEmpty() == false)</span>
-<span class="nc" id="L77">			sb.append(&quot;, stereotyped &quot;).append(arg.get(&quot;STEREOGROUP&quot;, 0));</span>
+<span class="nc" id="L80">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (stereogroup.isEmpty() == false)</span>
+<span class="nc" id="L82">			sb.append(&quot;, stereotyped &quot;).append(arg.get(&quot;STEREOGROUP&quot;, 0));</span>
 
-<span class="nc" id="L79">		return sb.toString();</span>
+<span class="nc" id="L84">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
 
-<span class="fc" id="L86">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
-<span class="fc" id="L87">		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L91">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="fc" id="L92">		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());</span>
 
-<span class="fc" id="L89">		return diagram.endSwitch(colors);</span>
+<span class="fc" id="L94">		return diagram.endSwitch(colors);</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L99">		return FIRST_TOKENS;</span>
 	}
 
 }

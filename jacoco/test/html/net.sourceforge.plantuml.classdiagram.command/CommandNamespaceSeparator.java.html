@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -49,7 +52,9 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandNamespaceSeparator extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L52">	public static final CommandNamespaceSeparator ME = new CommandNamespaceSeparator();</span>
+<span class="fc" id="L55">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;set&quot;);</span>
+
+<span class="fc" id="L57">	public static final CommandNamespaceSeparator ME = new CommandNamespaceSeparator();</span>
 
 	// A namespace separator may be 'none'/'null' (disabled), one of the usual
 	// double separators ('::' or '\\', see CommandLinkClass), or a single
@@ -62,20 +67,20 @@ public class CommandNamespaceSeparator extends SingleLineCommand2&lt;TitledDiagr
 			+ SEPARATOR_CHAR_SINGLE + &quot;)&quot;;
 
 	private CommandNamespaceSeparator() {
-<span class="fc" id="L65">		super(getRegexConcat());</span>
-<span class="fc" id="L66">	}</span>
+<span class="fc" id="L70">		super(getRegexConcat());</span>
+<span class="fc" id="L71">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L69">		return RegexConcat.build(CommandNamespaceSeparator.class.getName(), //</span>
-<span class="fc" id="L70">				RegexLeaf.start(), //</span>
+<span class="fc" id="L74">		return RegexConcat.build(CommandNamespaceSeparator.class.getName(), //</span>
+<span class="fc" id="L75">				RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;set&quot;), //
-<span class="fc" id="L72">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L77">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexOr( //
 						new RegexLeaf(&quot;separator&quot;), //
 						new RegexLeaf(&quot;namespaceseparator&quot;)), //
-<span class="fc" id="L76">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L81">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;SEPARATOR&quot;, SEPARATOR),
-<span class="fc" id="L78">				RegexLeaf.end()); //</span>
+<span class="fc" id="L83">				RegexLeaf.end()); //</span>
 	}
 
 	@Override
@@ -84,23 +89,29 @@ public class CommandNamespaceSeparator extends SingleLineCommand2&lt;TitledDiagr
 		// The namespace separator is the string splitting an element name into
 		// nested namespaces (the default is '.'); 'none' or 'null' disables
 		// this splitting, so dots become plain characters of the name.
-<span class="nc" id="L87">		final String separator = arg.get(&quot;SEPARATOR&quot;, 0);</span>
-<span class="nc bnc" id="L88" title="All 4 branches missed.">		if (&quot;none&quot;.equalsIgnoreCase(separator) || &quot;null&quot;.equalsIgnoreCase(separator))</span>
-<span class="nc" id="L89">			return &quot;Disabling the namespace separator: element names are no longer split into namespaces&quot;;</span>
+<span class="nc" id="L92">		final String separator = arg.get(&quot;SEPARATOR&quot;, 0);</span>
+<span class="nc bnc" id="L93" title="All 4 branches missed.">		if (&quot;none&quot;.equalsIgnoreCase(separator) || &quot;null&quot;.equalsIgnoreCase(separator))</span>
+<span class="nc" id="L94">			return &quot;Disabling the namespace separator: element names are no longer split into namespaces&quot;;</span>
 
-<span class="nc" id="L91">		return &quot;Setting the namespace separator to '&quot; + separator + &quot;'&quot;;</span>
+<span class="nc" id="L96">		return &quot;Setting the namespace separator to '&quot; + separator + &quot;'&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="fc" id="L97">		final String s = arg.get(&quot;SEPARATOR&quot;, 0);</span>
-<span class="pc bpc" id="L98" title="2 of 4 branches missed.">		if (&quot;none&quot;.equalsIgnoreCase(s) || &quot;null&quot;.equalsIgnoreCase(s))</span>
-<span class="nc" id="L99">			diagram.setNamespaceSeparator(null);</span>
+<span class="fc" id="L102">		final String s = arg.get(&quot;SEPARATOR&quot;, 0);</span>
+<span class="pc bpc" id="L103" title="2 of 4 branches missed.">		if (&quot;none&quot;.equalsIgnoreCase(s) || &quot;null&quot;.equalsIgnoreCase(s))</span>
+<span class="nc" id="L104">			diagram.setNamespaceSeparator(null);</span>
 		else
-<span class="fc" id="L101">			diagram.setNamespaceSeparator(s);</span>
+<span class="fc" id="L106">			diagram.setNamespaceSeparator(s);</span>
 
-<span class="fc" id="L103">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L108">		return CommandExecutionResult.ok();</span>
 	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L113">		return FIRST_TOKENS;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

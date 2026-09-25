@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.gantt.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -44,18 +47,27 @@ import net.sourceforge.plantuml.sequencediagram.command.CommandFootbox;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandFootboxGantt extends SingleLineCommand2&lt;GanttDiagram&gt; {
+
+<span class="fc" id="L51">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList( //</span>
+			&quot;footbox&quot;, &quot;hide&quot;, &quot;hidefootbox&quot;, &quot;show&quot;, &quot;showfootbox&quot;);
 	// ::remove folder when __HAXE__
 
 	public CommandFootboxGantt() {
-<span class="fc" id="L50">		super(CommandFootbox.HIDE_SHOW_FOOTBOX);</span>
-<span class="fc" id="L51">	}</span>
+<span class="fc" id="L56">		super(CommandFootbox.HIDE_SHOW_FOOTBOX);</span>
+<span class="fc" id="L57">	}</span>
 
 	@Override
 	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L56">		final boolean footbox = arg.get(&quot;TYPE&quot;, 0).equalsIgnoreCase(&quot;show&quot;);</span>
-<span class="nc" id="L57">		diagram.setShowFootbox(footbox);</span>
-<span class="nc" id="L58">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L62">		final boolean footbox = arg.get(&quot;TYPE&quot;, 0).equalsIgnoreCase(&quot;show&quot;);</span>
+<span class="nc" id="L63">		diagram.setShowFootbox(footbox);</span>
+<span class="nc" id="L64">		return CommandExecutionResult.ok();</span>
 	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L69">		return FIRST_TOKENS;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

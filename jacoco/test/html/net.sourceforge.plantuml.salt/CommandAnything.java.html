@@ -35,10 +35,13 @@
  */
 package net.sourceforge.plantuml.salt;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -48,29 +51,34 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandAnything extends SingleLineCommand2&lt;PSystemSalt&gt; {
 
 	public CommandAnything() {
-<span class="fc" id="L51">		super(false, getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L54">		super(false, getRegexConcat());</span>
+<span class="fc" id="L55">	}</span>
+	
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L59">		return FirstTokens.ANYTHING;</span>
+	}
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L55">		return RegexConcat.build(CommandAnything.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L63">		return RegexConcat.build(CommandAnything.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;ALL&quot;, &quot;(.*)&quot;), //
-<span class="fc" id="L57">				RegexLeaf.end());</span>
+<span class="fc" id="L65">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L63">		return null;</span>
+<span class="nc" id="L71">		return null;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(PSystemSalt diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="fc" id="L69">		final String s = arg.get(&quot;ALL&quot;, 0);</span>
-<span class="pc bpc" id="L70" title="1 of 4 branches missed.">		if (diagram.size() == 0 &amp;&amp; s.trim().equals(&quot;salt&quot;))</span>
-<span class="nc" id="L71">			return CommandExecutionResult.error(&quot;This is not needed anymore.&quot;);</span>
-<span class="fc" id="L72">		diagram.add(s);</span>
-<span class="fc" id="L73">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L77">		final String s = arg.get(&quot;ALL&quot;, 0);</span>
+<span class="pc bpc" id="L78" title="1 of 4 branches missed.">		if (diagram.size() == 0 &amp;&amp; s.trim().equals(&quot;salt&quot;))</span>
+<span class="nc" id="L79">			return CommandExecutionResult.error(&quot;This is not needed anymore.&quot;);</span>
+<span class="fc" id="L80">		diagram.add(s);</span>
+<span class="fc" id="L81">		return CommandExecutionResult.ok();</span>
 	}
 
 }

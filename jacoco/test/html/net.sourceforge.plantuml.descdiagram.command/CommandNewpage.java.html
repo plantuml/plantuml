@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.NewpagedDiagram;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -50,16 +53,18 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandNewpage extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
+<span class="fc" id="L56">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;newpage&quot;);</span>
+
 	private final PSystemCommandFactory factory;
 
 	public CommandNewpage(PSystemCommandFactory factory) {
-<span class="fc" id="L56">		super(getRegexConcat());</span>
-<span class="fc" id="L57">		this.factory = factory;</span>
-<span class="fc" id="L58">	}</span>
+<span class="fc" id="L61">		super(getRegexConcat());</span>
+<span class="fc" id="L62">		this.factory = factory;</span>
+<span class="fc" id="L63">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L61">		return RegexConcat.build(CommandNewpage.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L62">				new RegexLeaf(&quot;newpage&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L66">		return RegexConcat.build(CommandNewpage.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L67">				new RegexLeaf(&quot;newpage&quot;), RegexLeaf.end());</span>
 	}
 
 	@Override
@@ -70,21 +75,27 @@ public class CommandNewpage extends SingleLineCommand2&lt;TitledDiagram&gt; {
 		// the elements declared before are not visible after. This differs
 		// from the sequence diagram 'newpage', which only inserts a page break
 		// in a single diagram.
-<span class="nc" id="L73">		return &quot;Starting a new page: the following lines form a new empty diagram&quot;;</span>
+<span class="nc" id="L78">		return &quot;Starting a new page: the following lines form a new empty diagram&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L79">		final int dpi = diagram.getSkinParam().getDpi();</span>
-<span class="nc" id="L80">		final TitledDiagram emptyDiagram = (TitledDiagram) factory.createEmptyDiagram(diagram.getPathSystem(),</span>
-<span class="nc" id="L81">				diagram.getSource(), diagram.getPrevious(), diagram.getPreprocessingArtifact());</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (dpi != 96)</span>
-<span class="nc" id="L83">			emptyDiagram.setParam(&quot;dpi&quot;, &quot;&quot; + dpi);</span>
+<span class="nc" id="L84">		final int dpi = diagram.getSkinParam().getDpi();</span>
+<span class="nc" id="L85">		final TitledDiagram emptyDiagram = (TitledDiagram) factory.createEmptyDiagram(diagram.getPathSystem(),</span>
+<span class="nc" id="L86">				diagram.getSource(), diagram.getPrevious(), diagram.getPreprocessingArtifact());</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (dpi != 96)</span>
+<span class="nc" id="L88">			emptyDiagram.setParam(&quot;dpi&quot;, &quot;&quot; + dpi);</span>
 
-<span class="nc" id="L85">		final NewpagedDiagram result = new NewpagedDiagram(diagram.getSource(), diagram, emptyDiagram,</span>
-<span class="nc" id="L86">				diagram.getPreprocessingArtifact());</span>
-<span class="nc" id="L87">		return CommandExecutionResult.newDiagram(result);</span>
+<span class="nc" id="L90">		final NewpagedDiagram result = new NewpagedDiagram(diagram.getSource(), diagram, emptyDiagram,</span>
+<span class="nc" id="L91">				diagram.getPreprocessingArtifact());</span>
+<span class="nc" id="L92">		return CommandExecutionResult.newDiagram(result);</span>
 	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L97">		return FIRST_TOKENS;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

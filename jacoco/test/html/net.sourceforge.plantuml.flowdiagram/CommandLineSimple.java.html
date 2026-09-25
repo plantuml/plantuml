@@ -35,11 +35,14 @@
  */
 package net.sourceforge.plantuml.flowdiagram;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.golem.TileGeometry;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -50,25 +53,30 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandLineSimple extends SingleLineCommand2&lt;FlowDiagram&gt; {
 
 	public CommandLineSimple() {
-<span class="nc" id="L53">		super(getRegexConcat());</span>
-<span class="nc" id="L54">	}</span>
+<span class="fc" id="L56">		super(getRegexConcat());</span>
+<span class="fc" id="L57">	}</span>
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="nc" id="L61">		return FirstTokens.ANYTHING;</span>
+	}
 
 	private static IRegex getRegexConcat() {
-<span class="nc" id="L57">		return RegexConcat.build(CommandLineSimple.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L65">		return RegexConcat.build(CommandLineSimple.class.getName(), RegexLeaf.start(), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(1, &quot;ORIENTATION&quot;, &quot;([nsew])&quot;), //
-<span class="nc" id="L61">								RegexLeaf.spaceOneOrMore() //</span>
+<span class="fc" id="L69">								RegexLeaf.spaceOneOrMore() //</span>
 						)), //
 				new RegexLeaf(1, &quot;ID_DEST&quot;, &quot;(\\w+)&quot;), //
-<span class="nc" id="L64">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="nc" id="L65">				new RegexLeaf(1, &quot;LABEL&quot;, &quot;[%g](.*)[%g]&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L72">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L73">				new RegexLeaf(1, &quot;LABEL&quot;, &quot;[%g](.*)[%g]&quot;), RegexLeaf.end());</span>
 	}
 	
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L71">		return null;</span>
+<span class="nc" id="L79">		return null;</span>
 	}
 
 
@@ -76,15 +84,15 @@ public class CommandLineSimple extends SingleLineCommand2&lt;FlowDiagram&gt; {
 	@Override
 	protected CommandExecutionResult executeArg(FlowDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L79">		final String idDest = arg.get(&quot;ID_DEST&quot;, 0);</span>
-<span class="nc" id="L80">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
-<span class="nc" id="L81">		final String orientationString = arg.get(&quot;ORIENTATION&quot;, 0);</span>
-<span class="nc" id="L82">		TileGeometry orientation = TileGeometry.SOUTH;</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (orientationString != null) {</span>
-<span class="nc" id="L84">			orientation = TileGeometry.fromString(orientationString);</span>
+<span class="nc" id="L87">		final String idDest = arg.get(&quot;ID_DEST&quot;, 0);</span>
+<span class="nc" id="L88">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="nc" id="L89">		final String orientationString = arg.get(&quot;ORIENTATION&quot;, 0);</span>
+<span class="nc" id="L90">		TileGeometry orientation = TileGeometry.SOUTH;</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (orientationString != null) {</span>
+<span class="nc" id="L92">			orientation = TileGeometry.fromString(orientationString);</span>
 		}
-<span class="nc" id="L86">		diagram.lineSimple(orientation, idDest, label);</span>
-<span class="nc" id="L87">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L94">		diagram.lineSimple(orientation, idDest, label);</span>
+<span class="nc" id="L95">		return CommandExecutionResult.ok();</span>
 	}
 
 }

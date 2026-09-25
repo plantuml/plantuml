@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
@@ -47,13 +50,15 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandMultilinesTitle extends CommandMultilines&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L50">	public static final CommandMultilinesTitle ME = new CommandMultilinesTitle();</span>
+<span class="fc" id="L53">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;title&quot;);</span>
+
+<span class="fc" id="L55">	public static final CommandMultilinesTitle ME = new CommandMultilinesTitle();</span>
 
 	private CommandMultilinesTitle() {
-<span class="fc" id="L53">		super(Pattern2.cmpile(&quot;^title$&quot;),</span>
-<span class="fc" id="L54">				Pattern2.cmpile(&quot;^end[%s]?title$&quot;));</span>
+<span class="fc" id="L58">		super(Pattern2.cmpile(&quot;^title$&quot;),</span>
+<span class="fc" id="L59">				Pattern2.cmpile(&quot;^end[%s]?title$&quot;));</span>
 
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L61">	}</span>
 
 	@Override
 	public String explain(BlocLines lines) {
@@ -61,26 +66,31 @@ public class CommandMultilinesTitle extends CommandMultilines&lt;TitledDiagram&g
 		// CommandMultilines2.explainNow does, so it is overridden directly.
 		// The lines between 'title' and 'end title' are the text, displayed
 		// centered at the top of the diagram.
-<span class="nc bnc" id="L64" title="All 2 branches missed.">		final int bodyCount = lines.size() &gt; 2 ? lines.size() - 2 : 0;</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (bodyCount == 0)</span>
-<span class="nc" id="L66">			return &quot;Setting the title of the diagram (rejected at execution: no title defined)&quot;;</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		final int bodyCount = lines.size() &gt; 2 ? lines.size() - 2 : 0;</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (bodyCount == 0)</span>
+<span class="nc" id="L71">			return &quot;Setting the title of the diagram (rejected at execution: no title defined)&quot;;</span>
 
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		return &quot;Setting the title of the diagram from &quot; + bodyCount + (bodyCount == 1 ? &quot; line&quot; : &quot; lines&quot;)</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		return &quot;Setting the title of the diagram from &quot; + bodyCount + (bodyCount == 1 ? &quot; line&quot; : &quot; lines&quot;)</span>
 				+ &quot; of text&quot;;
 	}
 
 	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="fc" id="L74">		final LineLocation location = lines.getLocation();</span>
-<span class="fc" id="L75">		lines = lines.subExtract(1, 1).expandsNewline(false);</span>
-<span class="fc" id="L76">		lines = lines.removeEmptyColumns();</span>
-<span class="fc" id="L77">		final Display strings = lines.toDisplay();</span>
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (strings.size() &gt; 0) {</span>
-<span class="fc" id="L79">			diagram.setTitle(DisplayPositioned.single(location, strings.replaceBackslashT(), HorizontalAlignment.CENTER,</span>
+<span class="fc" id="L79">		final LineLocation location = lines.getLocation();</span>
+<span class="fc" id="L80">		lines = lines.subExtract(1, 1).expandsNewline(false);</span>
+<span class="fc" id="L81">		lines = lines.removeEmptyColumns();</span>
+<span class="fc" id="L82">		final Display strings = lines.toDisplay();</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (strings.size() &gt; 0) {</span>
+<span class="fc" id="L84">			diagram.setTitle(DisplayPositioned.single(location, strings.replaceBackslashT(), HorizontalAlignment.CENTER,</span>
 					VerticalAlignment.TOP));
-<span class="fc" id="L81">			return CommandExecutionResult.ok();</span>
+<span class="fc" id="L86">			return CommandExecutionResult.ok();</span>
 		}
-<span class="nc" id="L83">		return CommandExecutionResult.error(&quot;No title defined&quot;);</span>
+<span class="nc" id="L88">		return CommandExecutionResult.error(&quot;No title defined&quot;);</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L93">		return FIRST_TOKENS;</span>
 	}
 
 }

@@ -34,6 +34,9 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -47,16 +50,18 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandRankDir extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
+<span class="fc" id="L53">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;left&quot;, &quot;top&quot;);</span>
+
 	public CommandRankDir() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L56">		super(getRegexConcat());</span>
+<span class="fc" id="L57">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L55">		return RegexConcat.build(CommandRankDir.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L60">		return RegexConcat.build(CommandRankDir.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;DIRECTION&quot;, &quot;(left[%s]to[%s]right|top[%s]to[%s]bottom)&quot;), //
-<span class="fc" id="L57">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L62">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;direction&quot;), //
-<span class="fc" id="L59">				RegexLeaf.end()); //</span>
+<span class="fc" id="L64">				RegexLeaf.end()); //</span>
 	}
 
 	@Override
@@ -65,15 +70,20 @@ public class CommandRankDir extends SingleLineCommand2&lt;TitledDiagram&gt; {
 		// 'left to right direction' (or 'top to bottom direction') sets the
 		// global layout direction of the diagram; the default is top to
 		// bottom.
-<span class="nc" id="L68">		return &quot;Setting the layout direction of the diagram to &quot; + StringUtils.goLowerCase(arg.get(&quot;DIRECTION&quot;, 0));</span>
+<span class="nc" id="L73">		return &quot;Setting the layout direction of the diagram to &quot; + StringUtils.goLowerCase(arg.get(&quot;DIRECTION&quot;, 0));</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="fc" id="L73">		final String s = StringUtils.goUpperCase(arg.get(&quot;DIRECTION&quot;, 0)).replace(' ', '_');</span>
-<span class="fc" id="L74">		((SkinParam) diagram.getSkinParam()).setRankdir(Rankdir.valueOf(s));</span>
+<span class="fc" id="L78">		final String s = StringUtils.goUpperCase(arg.get(&quot;DIRECTION&quot;, 0)).replace(' ', '_');</span>
+<span class="fc" id="L79">		((SkinParam) diagram.getSkinParam()).setRankdir(Rankdir.valueOf(s));</span>
 		// diagram.setRankdir(Rankdir.valueOf(s));
-<span class="fc" id="L76">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L81">		return CommandExecutionResult.ok();</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L86">		return FIRST_TOKENS;</span>
 	}
 
 }

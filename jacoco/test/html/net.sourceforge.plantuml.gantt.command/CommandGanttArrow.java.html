@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.gantt.command;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -42,6 +44,7 @@ import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.gantt.GanttConstraint;
 import net.sourceforge.plantuml.gantt.GanttDiagram;
 import net.sourceforge.plantuml.gantt.core.Task;
+import net.sourceforge.plantuml.regex.FirstTokens;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -51,42 +54,47 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandGanttArrow extends SingleLineCommand2&lt;GanttDiagram&gt; {
 
 	public CommandGanttArrow() {
-<span class="fc" id="L54">		super(getRegexConcat());</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L57">		super(getRegexConcat());</span>
+<span class="fc" id="L58">	}</span>
+	
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L62">		return FirstTokens.ANYTHING;</span>
+	}
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L58">		return RegexConcat.build(CommandGanttArrow.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L66">		return RegexConcat.build(CommandGanttArrow.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;CODE1&quot;, &quot;([%pLN_.]+)&quot;), //
-<span class="fc" id="L60">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L68">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;(-+)&quot;), //
 				new RegexLeaf(1, &quot;ARROW_STYLE&quot;, &quot;(?:\\[(&quot; + CommandLinkElement.LINE_STYLE + &quot;)\\])?&quot;), //
 				new RegexLeaf(1, &quot;(-*)&quot;), //
 				new RegexLeaf(&quot;\\&gt;&quot;), //
-<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;CODE2&quot;, &quot;([%pLN_.]+)&quot;), //
-<span class="fc" id="L67">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L68">				RegexLeaf.end());</span>
+<span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L76">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 
-<span class="nc" id="L75">		final String code1 = arg.get(&quot;CODE1&quot;, 0);</span>
-<span class="nc" id="L76">		final String code2 = arg.get(&quot;CODE2&quot;, 0);</span>
-<span class="nc" id="L77">		final Task task1 = diagram.getExistingTask(code1);</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (task1 == null) {</span>
-<span class="nc" id="L79">			return CommandExecutionResult.error(&quot;No such task &quot; + code1);</span>
+<span class="nc" id="L83">		final String code1 = arg.get(&quot;CODE1&quot;, 0);</span>
+<span class="nc" id="L84">		final String code2 = arg.get(&quot;CODE2&quot;, 0);</span>
+<span class="nc" id="L85">		final Task task1 = diagram.getExistingTask(code1);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (task1 == null) {</span>
+<span class="nc" id="L87">			return CommandExecutionResult.error(&quot;No such task &quot; + code1);</span>
 		}
-<span class="nc" id="L81">		final Task task2 = diagram.getExistingTask(code2);</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (task2 == null) {</span>
-<span class="nc" id="L83">			return CommandExecutionResult.error(&quot;No such task &quot; + code2);</span>
+<span class="nc" id="L89">		final Task task2 = diagram.getExistingTask(code2);</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (task2 == null) {</span>
+<span class="nc" id="L91">			return CommandExecutionResult.error(&quot;No such task &quot; + code2);</span>
 		}
 
-<span class="nc" id="L86">		final GanttConstraint link = diagram.forceTaskOrder(task1, task2);</span>
-<span class="nc" id="L87">		link.applyStyle(arg.get(&quot;ARROW_STYLE&quot;, 0));</span>
+<span class="nc" id="L94">		final GanttConstraint link = diagram.forceTaskOrder(task1, task2);</span>
+<span class="nc" id="L95">		link.applyStyle(arg.get(&quot;ARROW_STYLE&quot;, 0));</span>
 
-<span class="nc" id="L89">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L97">		return CommandExecutionResult.ok();</span>
 	}
 
 }
