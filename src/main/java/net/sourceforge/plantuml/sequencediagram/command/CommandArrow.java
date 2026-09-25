@@ -40,6 +40,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.annotation.Explain;
@@ -77,6 +78,8 @@ import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.MyCollections;
 
 public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
+
+	private static final Pattern AMPERSAND = Pattern.compile("&");
 
 	static final String ANCHOR = "(\\{([%pLN_]+)\\}[%s]+)?";
 
@@ -145,7 +148,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		final String multicast = arg2.get("MULTICAST", 0);
 		if (multicast != null) {
 			final List<Participant> result = new ArrayList<>();
-			for (String s : multicast.split("&")) {
+			for (String s : AMPERSAND.split(multicast)) {
 				s = s.trim();
 				if (s.length() == 0)
 					continue;

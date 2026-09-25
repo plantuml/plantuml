@@ -57,6 +57,7 @@ public class ClockwiseTopRightBottomLeft {
 		return NONE;
 	}
 
+	private static final Pattern SPACES = Pattern.compile(" +");
 	private static final Pattern NUMBERS_ONLY = Pattern.compile("[0-9 ]+");
 
 	private static boolean isOnlyNumbersAndSpaces(String value) {
@@ -67,7 +68,7 @@ public class ClockwiseTopRightBottomLeft {
 		if (isOnlyNumbersAndSpaces(value) == false)
 			return none();
 
-		final String[] split = value.trim().split(" +");
+		final String[] split = SPACES.split(value.trim());
 
 		try {
 			switch (split.length) {

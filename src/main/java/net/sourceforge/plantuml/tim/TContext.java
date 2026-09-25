@@ -176,6 +176,8 @@ import net.sourceforge.plantuml.utils.MyCollections;
 
 public class TContext {
 
+	private static final Pattern NEWLINE = Pattern.compile("\n");
+
 	private final List<StringLocated> resultList = new ArrayList<>();
 	private final List<StringLocated> debug = new ArrayList<>();
 
@@ -510,7 +512,7 @@ public class TContext {
 			return null;
 
 		if (Pragma.legacyReplaceBackslashNByNewline()) {
-			final String[] splited = result.split("\n");
+			final String[] splited = NEWLINE.split(result);
 			final StringLocated[] tab = new StringLocated[splited.length];
 			for (int i = 0; i < splited.length; i++)
 				tab[i] = new StringLocated(splited[i], located.getLocation());

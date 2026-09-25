@@ -46,10 +46,10 @@ import java.util.Map;
 import java.util.TreeMap;
 
 // ::comment when JAVA8
-import net.sourceforge.plantuml.utils.MyCollections;
 import org.teavm.jso.JSBody;
 // ::done
 
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.emoji.data.Dummy;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
