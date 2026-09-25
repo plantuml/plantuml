@@ -2684,8 +2684,8 @@ Total Classes: 10
 "net.sourceforge.plantuml.preproc2" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.preproc2" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.real" %lighten("red", 100) {
-Total Classes: 10
+class "net.sourceforge.plantuml.real" %lighten("red", 91) {
+Total Classes: 16
 }
 "net.sourceforge.plantuml.real" --> "java.io"
 "net.sourceforge.plantuml.real" --> "java.lang"

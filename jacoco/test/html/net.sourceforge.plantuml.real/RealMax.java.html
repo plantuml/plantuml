@@ -82,54 +82,49 @@ class RealMax extends AbstractReal implements Real {
 <span class="fc" id="L82">		return ((AbstractReal) reals.iterator().next()).getLine();</span>
 	}
 
-	public String getName() {
-<span class="fc" id="L86">		return &quot;max &quot; + all.size();</span>
-	}
-
-<span class="fc" id="L89">	private double cache = Double.MAX_VALUE;</span>
+<span class="fc" id="L85">	private double cache = Double.MAX_VALUE;</span>
 
 	@Override
 	double getCurrentValueInternal() {
-<span class="fc bfc" id="L93" title="All 2 branches covered.">		if (cache != Double.MAX_VALUE)</span>
-<span class="fc" id="L94">			return cache;</span>
-<span class="fc" id="L95">		final int[] depth = RECURSION_DEPTH.get();</span>
-<span class="fc" id="L96">		depth[0]++;</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (cache != Double.MAX_VALUE)</span>
+<span class="fc" id="L90">			return cache;</span>
+<span class="fc" id="L91">		final int[] depth = RECURSION_DEPTH.get();</span>
+<span class="fc" id="L92">		depth[0]++;</span>
 		try {
-<span class="fc bfc" id="L98" title="All 2 branches covered.">			if (depth[0] &gt; MAX_RECURSION_DEPTH) {</span>
-<span class="fc" id="L99">				System.err.println(&quot;The faulty RealMax &quot; + getName());</span>
-<span class="fc" id="L100">				System.err.println(&quot;has been created here:&quot;);</span>
-<span class="fc" id="L101">				printCreationStackTrace();</span>
-<span class="fc" id="L102">				throw new IllegalStateException(&quot;Infinite recursion?&quot;);</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">			if (depth[0] &gt; MAX_RECURSION_DEPTH) {</span>
+<span class="fc" id="L95">				System.err.println(&quot;The faulty RealMax has been created here:&quot;);</span>
+<span class="fc" id="L96">				printCreationStackTrace();</span>
+<span class="fc" id="L97">				throw new IllegalStateException(&quot;Infinite recursion?&quot;);</span>
 			}
-<span class="fc" id="L104">			double result = all.get(0).getCurrentValue();</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">			for (int i = 1; i &lt; all.size(); i++) {</span>
-<span class="fc" id="L106">				final double v = all.get(i).getCurrentValue();</span>
-<span class="fc bfc" id="L107" title="All 2 branches covered.">				if (v &gt; result)</span>
-<span class="fc" id="L108">					result = v;</span>
+<span class="fc" id="L99">			double result = all.get(0).getCurrentValue();</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">			for (int i = 1; i &lt; all.size(); i++) {</span>
+<span class="fc" id="L101">				final double v = all.get(i).getCurrentValue();</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">				if (v &gt; result)</span>
+<span class="fc" id="L103">					result = v;</span>
 
 			}
-<span class="fc" id="L111">			cache = result;</span>
-<span class="fc" id="L112">			return result;</span>
+<span class="fc" id="L106">			cache = result;</span>
+<span class="fc" id="L107">			return result;</span>
 		} finally {
-<span class="fc" id="L114">			depth[0]--;</span>
+<span class="fc" id="L109">			depth[0]--;</span>
 		}
 	}
 
 	public Real addFixed(double delta) {
-<span class="fc" id="L119">		return new RealDelta(this, delta);</span>
+<span class="fc" id="L114">		return new RealDelta(this, delta);</span>
 	}
 
 	public Real addAtLeast(double delta) {
-<span class="nc" id="L123">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L118">		throw new UnsupportedOperationException();</span>
 	}
 
 	public void ensureBiggerThan(Real other) {
-<span class="nc" id="L127">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L122">		throw new UnsupportedOperationException();</span>
 	}
 
 	public void printCreationStackTrace() {
-<span class="fc" id="L131">		RealDebug.printCreationStackTrace(creationPoint);</span>
-<span class="fc" id="L132">	}</span>
+<span class="fc" id="L126">		RealDebug.printCreationStackTrace(creationPoint);</span>
+<span class="fc" id="L127">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

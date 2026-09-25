@@ -13450,14 +13450,14 @@
 
         <Package name="net.sourceforge.plantuml.real">
             <Stats>
-                <TotalClasses>10</TotalClasses>
-                <ConcreteClasses>6</ConcreteClasses>
-                <AbstractClasses>4</AbstractClasses>
+                <TotalClasses>16</TotalClasses>
+                <ConcreteClasses>11</ConcreteClasses>
+                <AbstractClasses>5</AbstractClasses>
                 <Ca>4</Ca>
                 <Ce>6</Ce>
-                <A>0.4</A>
+                <A>0.31</A>
                 <I>0.6</I>
-                <D>0</D>
+                <D>0.09</D>
                 <V>1</V>
             </Stats>
 
@@ -13471,6 +13471,9 @@
                 <Class sourceFile="RealLine.java">
                     net.sourceforge.plantuml.real.RealLine$AbstractAbsolute
                 </Class>
+                <Class sourceFile="RealMoveable.java">
+                    net.sourceforge.plantuml.real.RealMoveable
+                </Class>
                 <Class sourceFile="RealOrigin.java">
                     net.sourceforge.plantuml.real.RealOrigin
                 </Class>
@@ -13480,6 +13483,12 @@
                 <Class sourceFile="RealDebug.java">
                     net.sourceforge.plantuml.real.RealDebug
                 </Class>
+                <Class sourceFile="RealDelta.java">
+                    net.sourceforge.plantuml.real.RealDelta
+                </Class>
+                <Class sourceFile="RealImpl.java">
+                    net.sourceforge.plantuml.real.RealImpl
+                </Class>
                 <Class sourceFile="RealLine.java">
                     net.sourceforge.plantuml.real.RealLine$MaxAbsolute
                 </Class>
@@ -13487,10 +13496,19 @@
                     net.sourceforge.plantuml.real.RealLine$MinAbsolute
                 </Class>
                 <Class sourceFile="RealMax.java">
+                    net.sourceforge.plantuml.real.RealMax
+                </Class>
+                <Class sourceFile="RealMax.java">
                     net.sourceforge.plantuml.real.RealMax$1
+                </Class>
+                <Class sourceFile="RealMiddle.java">
+                    net.sourceforge.plantuml.real.RealMiddle
                 </Class>
                 <Class sourceFile="RealMiddle2.java">
                     net.sourceforge.plantuml.real.RealMiddle2
+                </Class>
+                <Class sourceFile="RealMin.java">
+                    net.sourceforge.plantuml.real.RealMin
                 </Class>
                 <Class sourceFile="RealUtils.java">
                     net.sourceforge.plantuml.real.RealUtils

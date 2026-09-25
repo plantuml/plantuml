@@ -39,8 +39,8 @@ class RealImpl extends RealMoveable implements RealOrigin {
 
 	private double currentValue;
 
-	public RealImpl(String name, RealLine line, double currentValue) {
-<span class="fc" id="L43">		super(line, name);</span>
+	public RealImpl(RealLine line, double currentValue) {
+<span class="fc" id="L43">		super(line);</span>
 <span class="fc" id="L44">		this.currentValue = currentValue;</span>
 <span class="fc" id="L45">	}</span>
 
@@ -54,20 +54,17 @@ class RealImpl extends RealMoveable implements RealOrigin {
 	}
 
 	public Real addAtLeast(double delta) {
-		// See RealDelta's constructor comment: the name is kept O(1) (no
-		// getName() ancestry embedding) to avoid O(n^2) retained string data
-		// on long Real chains (Y gauge chain across a whole document).
-<span class="fc" id="L60">		final RealImpl result = new RealImpl(&quot;addAtLeast&quot; + delta, getLine(), this.currentValue + delta);</span>
-<span class="fc" id="L61">		getLine().addForce(new PositiveForce(this, result, delta));</span>
-<span class="fc" id="L62">		return result;</span>
+<span class="fc" id="L57">		final RealImpl result = new RealImpl(getLine(), this.currentValue + delta);</span>
+<span class="fc" id="L58">		getLine().addForce(new PositiveForce(this, result, delta));</span>
+<span class="fc" id="L59">		return result;</span>
 	}
 
 	public void ensureBiggerThan(Real other) {
-<span class="fc" id="L66">		getLine().addForce(new PositiveForce(other, this, 0));</span>
-<span class="fc" id="L67">	}</span>
+<span class="fc" id="L63">		getLine().addForce(new PositiveForce(other, this, 0));</span>
+<span class="fc" id="L64">	}</span>
 
 	public void compileNow() {
-<span class="fc" id="L70">		getLine().compile();</span>
-<span class="fc" id="L71">	}</span>
+<span class="fc" id="L67">		getLine().compile();</span>
+<span class="fc" id="L68">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

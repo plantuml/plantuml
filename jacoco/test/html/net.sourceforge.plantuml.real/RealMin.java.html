@@ -48,48 +48,44 @@ class RealMin extends AbstractReal implements Real {
 <span class="fc" id="L48">		this.all.addAll(reals);</span>
 <span class="fc" id="L49">	}</span>
 
-	public String getName() {
-<span class="nc" id="L52">		return &quot;min &quot; + all.size();</span>
-	}
-
-<span class="fc" id="L55">	private double cache = Double.MAX_VALUE;</span>
+<span class="fc" id="L51">	private double cache = Double.MAX_VALUE;</span>
 
 	@Override
 	double getCurrentValueInternal() {
-<span class="fc bfc" id="L59" title="All 2 branches covered.">		if (cache != Double.MAX_VALUE)</span>
-<span class="fc" id="L60">			return cache;</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">		if (cache != Double.MAX_VALUE)</span>
+<span class="fc" id="L56">			return cache;</span>
 
-<span class="fc" id="L62">		double result = all.get(0).getCurrentValue();</span>
-<span class="fc bfc" id="L63" title="All 2 branches covered.">		for (int i = 1; i &lt; all.size(); i++) {</span>
-<span class="fc" id="L64">			final double v = all.get(i).getCurrentValue();</span>
-<span class="fc bfc" id="L65" title="All 2 branches covered.">			if (v &lt; result)</span>
-<span class="fc" id="L66">				result = v;</span>
+<span class="fc" id="L58">		double result = all.get(0).getCurrentValue();</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		for (int i = 1; i &lt; all.size(); i++) {</span>
+<span class="fc" id="L60">			final double v = all.get(i).getCurrentValue();</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">			if (v &lt; result)</span>
+<span class="fc" id="L62">				result = v;</span>
 
 		}
-<span class="fc" id="L69">		cache = result;</span>
-<span class="fc" id="L70">		return result;</span>
+<span class="fc" id="L65">		cache = result;</span>
+<span class="fc" id="L66">		return result;</span>
 	}
 
 	public Real addFixed(double delta) {
-<span class="fc" id="L74">		return new RealDelta(this, delta);</span>
+<span class="fc" id="L70">		return new RealDelta(this, delta);</span>
 	}
 
 	public Real addAtLeast(double delta) {
-<span class="nc" id="L78">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L74">		throw new UnsupportedOperationException();</span>
 	}
 
 	public void ensureBiggerThan(Real other) {
-<span class="fc bfc" id="L82" title="All 2 branches covered.">		for (Real r : all)</span>
-<span class="fc" id="L83">			r.ensureBiggerThan(other);</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		for (Real r : all)</span>
+<span class="fc" id="L79">			r.ensureBiggerThan(other);</span>
 
-<span class="fc" id="L85">	}</span>
+<span class="fc" id="L81">	}</span>
 
 	public int size() {
-<span class="nc" id="L88">		return all.size();</span>
+<span class="nc" id="L84">		return all.size();</span>
 	}
 
 	public void printCreationStackTrace() {
-<span class="nc" id="L92">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L88">		throw new UnsupportedOperationException();</span>
 	}
 
 }

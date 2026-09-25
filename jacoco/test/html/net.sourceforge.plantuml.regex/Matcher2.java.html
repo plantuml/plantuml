@@ -54,7 +54,7 @@ public class Matcher2 {
 <span class="fc" id="L54">	}</span>
 
 	public static Matcher2 build(Pattern pattern, CharSequence input, int pos) {
-<span class="fc" id="L57">		final long now = System.currentTimeMillis();</span>
+<span class="fc" id="L57">		final long now = clock();</span>
 <span class="fc" id="L58">		final String id = pattern.pattern();</span>
 		try {
 <span class="fc" id="L60">			final Matcher matcher = pattern.matcher(input);</span>
@@ -69,106 +69,109 @@ public class Matcher2 {
 	}
 
 	public boolean matches() {
-<span class="fc" id="L72">		final long now = System.currentTimeMillis();</span>
+<span class="fc" id="L72">		final long now = clock();</span>
 		try {
 <span class="fc" id="L74">			return matcher.matches();</span>
 		} finally {
-<span class="fc" id="L76">			addTime(System.currentTimeMillis() - now);</span>
+<span class="fc" id="L76">			addTime(now);</span>
 		}
 	}
 
-	private void addTime(long duration) {
-		if (INSTRUMENT == false) {
-<span class="fc" id="L82">			return;</span>
-		}
-		addTime(id, duration);
+	// Clock is read only when INSTRUMENT is true (expensive under TeaVM)
+	private static long clock() {
+<span class="fc" id="L82">		return INSTRUMENT ? System.currentTimeMillis() : 0L;</span>
 	}
 
-<span class="fc" id="L87">	private static final Map&lt;String, Long&gt; durations = new HashMap&lt;String, Long&gt;();</span>
+	private void addTime(long start) {
+		if (INSTRUMENT)
+			addTime(id, System.currentTimeMillis() - start);
+<span class="fc" id="L88">	}</span>
+
+<span class="fc" id="L90">	private static final Map&lt;String, Long&gt; durations = new HashMap&lt;String, Long&gt;();</span>
 	private static long printed;
 
 	private static synchronized void addTime(String id, long duration) {
-<span class="nc" id="L91">		Long total = durations.get(id);</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (total == null)</span>
-<span class="nc" id="L93">			total = 0L;</span>
+<span class="nc" id="L94">		Long total = durations.get(id);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (total == null)</span>
+<span class="nc" id="L96">			total = 0L;</span>
 
-<span class="nc" id="L95">		total += duration;</span>
-<span class="nc" id="L96">		durations.put(id, total);</span>
-<span class="nc" id="L97">		final String longest = getLongest();</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (longest == null)</span>
-<span class="nc" id="L99">			return;</span>
+<span class="nc" id="L98">		total += duration;</span>
+<span class="nc" id="L99">		durations.put(id, total);</span>
+<span class="nc" id="L100">		final String longest = getLongest();</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (longest == null)</span>
+<span class="nc" id="L102">			return;</span>
 
-<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (durations.get(longest) &gt; printed) {</span>
-<span class="nc" id="L102">			Log.info(() -&gt; &quot;---------- Regex &quot; + longest + &quot; &quot; + durations.get(longest) + &quot;ms (&quot; + durations.size()</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (durations.get(longest) &gt; printed) {</span>
+<span class="nc" id="L105">			Log.info(() -&gt; &quot;---------- Regex &quot; + longest + &quot; &quot; + durations.get(longest) + &quot;ms (&quot; + durations.size()</span>
 					+ &quot;)&quot;);
-<span class="nc" id="L104">			printed = durations.get(longest);</span>
+<span class="nc" id="L107">			printed = durations.get(longest);</span>
 		}
 
-<span class="nc" id="L107">	}</span>
+<span class="nc" id="L110">	}</span>
 
 	private static String getLongest() {
-<span class="nc" id="L110">		long max = 0;</span>
-<span class="nc" id="L111">		String result = null;</span>
-<span class="nc bnc" id="L112" title="All 2 branches missed.">		for (Map.Entry&lt;String, Long&gt; ent : durations.entrySet()) {</span>
-<span class="nc bnc" id="L113" title="All 2 branches missed.">			if (ent.getValue() &gt; max) {</span>
-<span class="nc" id="L114">				max = ent.getValue();</span>
-<span class="nc" id="L115">				result = ent.getKey();</span>
+<span class="nc" id="L113">		long max = 0;</span>
+<span class="nc" id="L114">		String result = null;</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		for (Map.Entry&lt;String, Long&gt; ent : durations.entrySet()) {</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">			if (ent.getValue() &gt; max) {</span>
+<span class="nc" id="L117">				max = ent.getValue();</span>
+<span class="nc" id="L118">				result = ent.getKey();</span>
 			}
-<span class="nc" id="L117">		}</span>
-<span class="nc" id="L118">		return result;</span>
+<span class="nc" id="L120">		}</span>
+<span class="nc" id="L121">		return result;</span>
 	}
 
 	public String group(int n) {
-<span class="fc" id="L122">		final long now = System.currentTimeMillis();</span>
+<span class="fc" id="L125">		final long now = clock();</span>
 		try {
-<span class="fc" id="L124">			return matcher.group(n);</span>
+<span class="fc" id="L127">			return matcher.group(n);</span>
 		} finally {
-<span class="fc" id="L126">			addTime(System.currentTimeMillis() - now);</span>
+<span class="fc" id="L129">			addTime(now);</span>
 		}
 	}
 
 	public String group() {
-<span class="fc" id="L131">		final long now = System.currentTimeMillis();</span>
+<span class="fc" id="L134">		final long now = clock();</span>
 		try {
-<span class="fc" id="L133">			return matcher.group();</span>
+<span class="fc" id="L136">			return matcher.group();</span>
 		} finally {
-<span class="fc" id="L135">			addTime(System.currentTimeMillis() - now);</span>
+<span class="fc" id="L138">			addTime(now);</span>
 		}
 	}
 
 	public int groupCount() {
-<span class="fc" id="L140">		final long now = System.currentTimeMillis();</span>
+<span class="fc" id="L143">		final long now = clock();</span>
 		try {
-<span class="fc" id="L142">			return matcher.groupCount();</span>
+<span class="fc" id="L145">			return matcher.groupCount();</span>
 		} finally {
-<span class="fc" id="L144">			addTime(System.currentTimeMillis() - now);</span>
+<span class="fc" id="L147">			addTime(now);</span>
 		}
 	}
 
 	public boolean find() {
-<span class="fc" id="L149">		final long now = System.currentTimeMillis();</span>
+<span class="fc" id="L152">		final long now = clock();</span>
 		try {
-<span class="fc" id="L151">			return matcher.find();</span>
+<span class="fc" id="L154">			return matcher.find();</span>
 		} finally {
-<span class="fc" id="L153">			addTime(System.currentTimeMillis() - now);</span>
+<span class="fc" id="L156">			addTime(now);</span>
 		}
 	}
 
 	public int end() {
-<span class="fc" id="L158">		final long now = System.currentTimeMillis();</span>
+<span class="fc" id="L161">		final long now = clock();</span>
 		try {
-<span class="fc" id="L160">			return matcher.end();</span>
+<span class="fc" id="L163">			return matcher.end();</span>
 		} finally {
-<span class="fc" id="L162">			addTime(System.currentTimeMillis() - now);</span>
+<span class="fc" id="L165">			addTime(now);</span>
 		}
 	}
 
 	public int start() {
-<span class="fc" id="L167">		final long now = System.currentTimeMillis();</span>
+<span class="fc" id="L170">		final long now = clock();</span>
 		try {
-<span class="fc" id="L169">			return matcher.start();</span>
+<span class="fc" id="L172">			return matcher.start();</span>
 		} finally {
-<span class="fc" id="L171">			addTime(System.currentTimeMillis() - now);</span>
+<span class="fc" id="L174">			addTime(now);</span>
 		}
 	}
 

@@ -35,41 +35,24 @@
  */
 package net.sourceforge.plantuml.real;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 abstract class RealMoveable extends AbstractReal implements Real {
 
-<span class="fc" id="L42">	public static final AtomicInteger CPT = new AtomicInteger();</span>
-<span class="fc" id="L43">	private final int cpt = CPT.getAndIncrement();</span>
-	private final String name;
 	private final RealDebug creationPoint;
 
-	RealMoveable(RealLine line, String name) {
-<span class="fc" id="L48">		super(line);</span>
-<span class="fc" id="L49">		this.name = name;</span>
-		// See RealDebug: this constructor runs once per tile along the Y gauge
-		// chain, potentially thousands of times for a large diagram, so the
-		// stack trace capture used only for debugging is opt-in.
-<span class="fc" id="L53">		this.creationPoint = RealDebug.create();</span>
-<span class="fc" id="L54">	}</span>
-	
+	RealMoveable(RealLine line) {
+<span class="fc" id="L43">		super(line);</span>
+<span class="fc" id="L44">		this.creationPoint = RealDebug.create();</span>
+<span class="fc" id="L45">	}</span>
+
 	final public void printCreationStackTrace() {
-<span class="nc" id="L57">		RealDebug.printCreationStackTrace(creationPoint);</span>
-<span class="nc" id="L58">	}</span>
+<span class="nc" id="L48">		RealDebug.printCreationStackTrace(creationPoint);</span>
+<span class="nc" id="L49">	}</span>
 
 	abstract void move(double delta);
 
 	final public Real addFixed(double delta) {
-<span class="fc" id="L63">		return new RealDelta(this, delta);</span>
+<span class="fc" id="L54">		return new RealDelta(this, delta);</span>
 	}
 
-	@Override
-	public final String toString() {
-<span class="nc" id="L68">		return &quot;#&quot; + cpt + &quot;_&quot; + name;</span>
-	}
-
-	final public String getName() {
-<span class="nc" id="L72">		return name;</span>
-	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
