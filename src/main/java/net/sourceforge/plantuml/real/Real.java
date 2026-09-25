@@ -39,8 +39,6 @@ public interface Real {
 
 	public void printCreationStackTrace();
 
-	public String getName();
-
 	public double getCurrentValue();
 
 	public Real addFixed(double delta);
@@ -49,8 +47,4 @@ public interface Real {
 
 	public void ensureBiggerThan(Real other);
 
-//	public Real getMaxAbsolute();
-//
-//	public Real getMinAbsolute();
-//
 }

@@ -48,10 +48,6 @@ class RealMin extends AbstractReal implements Real {
 		this.all.addAll(reals);
 	}
 
-	public String getName() {
-		return "min " + all.size();
-	}
-
 	private double cache = Double.MAX_VALUE;
 
 	@Override

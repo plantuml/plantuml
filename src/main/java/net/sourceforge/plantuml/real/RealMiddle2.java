@@ -43,8 +43,9 @@ class RealMiddle2 extends RealMoveable {
 	private final RealMoveable p2;
 
 	RealMiddle2(RealMoveable p1, RealMoveable p2) {
-		super(p1.getLine(), "middle");
-		if (TeaVM.a()) assert p1.getLine() == p2.getLine();
+		super(p1.getLine());
+		if (TeaVM.a())
+			assert p1.getLine() == p2.getLine();
 		this.p1 = p1;
 		this.p2 = p2;
 	}

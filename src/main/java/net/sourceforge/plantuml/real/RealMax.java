@@ -82,10 +82,6 @@ class RealMax extends AbstractReal implements Real {
 		return ((AbstractReal) reals.iterator().next()).getLine();
 	}
 
-	public String getName() {
-		return "max " + all.size();
-	}
-
 	private double cache = Double.MAX_VALUE;
 
 	@Override
@@ -96,8 +92,7 @@ class RealMax extends AbstractReal implements Real {
 		depth[0]++;
 		try {
 			if (depth[0] > MAX_RECURSION_DEPTH) {
-				System.err.println("The faulty RealMax " + getName());
-				System.err.println("has been created here:");
+				System.err.println("The faulty RealMax has been created here:");
 				printCreationStackTrace();
 				throw new IllegalStateException("Infinite recursion?");
 			}

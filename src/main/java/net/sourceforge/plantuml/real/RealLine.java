@@ -155,10 +155,6 @@ class RealLine {
 		public void printCreationStackTrace() {
 		}
 
-		public String getName() {
-			return getClass().getName();
-		}
-
 		public Real addFixed(double delta) {
 			throw new UnsupportedOperationException();
 		}

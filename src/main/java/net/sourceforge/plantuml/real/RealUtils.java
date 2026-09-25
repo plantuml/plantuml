@@ -43,7 +43,7 @@ public class RealUtils {
 
 	public static RealOrigin createOrigin() {
 		final RealLine line = new RealLine();
-		final RealImpl result = new RealImpl("O", line, 0);
+		final RealImpl result = new RealImpl(line, 0);
 		return result;
 	}
 

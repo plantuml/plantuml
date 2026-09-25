@@ -53,7 +53,7 @@ class RealDeltaLive extends RealMoveable {
 	private final DoubleSupplier delta;
 
 	RealDeltaLive(Real delegated, DoubleSupplier delta) {
-		super(((AbstractReal) delegated).getLine(), "[DelegatedLive]");
+		super(((AbstractReal) delegated).getLine());
 		this.delegated = delegated;
 		this.delta = delta;
 	}

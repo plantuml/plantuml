@@ -70,10 +70,6 @@ class RealMiddle extends AbstractReal implements Real {
 		throw new UnsupportedOperationException();
 	}
 
-	public String getName() {
-		return "[Middle " + p1.getName() + " and " + p2.getName() + "]";
-	}
-
 	public void printCreationStackTrace() {
 		throw new UnsupportedOperationException();
 	}

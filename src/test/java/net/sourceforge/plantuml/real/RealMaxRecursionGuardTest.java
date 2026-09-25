@@ -29,10 +29,6 @@ class RealMaxRecursionGuardTest {
 			return delegate.getCurrentValue();
 		}
 
-		public String getName() {
-			return "holder";
-		}
-
 		public Real addFixed(double delta) {
 			throw new UnsupportedOperationException();
 		}
