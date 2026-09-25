@@ -83,4 +83,4 @@ public abstract class ValueAbstract implements Value {
 		throw new UnsupportedOperationException("Class=" + getClass());
 	}
 
-}
+}

@@ -65,4 +65,4 @@ public interface Value {
 
 	public Specificity getSpecificity();
 
-}
+}

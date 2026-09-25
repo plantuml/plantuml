@@ -63,4 +63,4 @@ public class ValueColor extends ValueAbstract {
 		return specificity;
 	}
 
-}
+}
