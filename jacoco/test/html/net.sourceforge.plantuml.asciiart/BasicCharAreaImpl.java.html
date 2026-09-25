@@ -37,10 +37,10 @@ package net.sourceforge.plantuml.asciiart;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class BasicCharAreaImpl implements BasicCharArea {
 
@@ -160,7 +160,7 @@ public class BasicCharAreaImpl implements BasicCharArea {
 <span class="fc bfc" id="L160" title="All 2 branches covered.">		for (int y = 0; y &lt; height; y++) {</span>
 <span class="fc" id="L161">			result.add(getLine(y));</span>
 		}
-<span class="fc" id="L163">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L163">		return MyCollections.unmodifiableList(result);</span>
 	}
 
 	public void drawHLine(char c, int line, int col1, int col2) {

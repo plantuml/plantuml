@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.activitydiagram3;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -60,6 +59,7 @@ import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class InstructionList extends WithNote implements Instruction, InstructionCollection {
 
@@ -222,7 +222,7 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 <span class="nc bnc" id="L222" title="All 2 branches missed.">		for (Instruction ins : list)</span>
 <span class="nc" id="L223">			result.addAll(ins.getSwimlanes());</span>
 
-<span class="nc" id="L225">		return Collections.unmodifiableSet(result);</span>
+<span class="nc" id="L225">		return MyCollections.unmodifiableSet(result);</span>
 	}
 
 	private LinkRendering outlinkRendering;

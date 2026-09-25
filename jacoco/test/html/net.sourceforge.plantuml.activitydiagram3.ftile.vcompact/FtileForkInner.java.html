@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -50,6 +49,7 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 class FtileForkInner extends AbstractFtile {
 
@@ -64,7 +64,7 @@ class FtileForkInner extends AbstractFtile {
 
 	@Override
 	public Collection&lt;Ftile&gt; getMyChildren() {
-<span class="nc" id="L67">		return Collections.unmodifiableCollection(forks);</span>
+<span class="nc" id="L67">		return MyCollections.unmodifiableCollection(forks);</span>
 	}
 
 	public Swimlane getSwimlaneIn() {
@@ -84,7 +84,7 @@ class FtileForkInner extends AbstractFtile {
 <span class="nc bnc" id="L84" title="All 2 branches missed.">		for (Ftile tile : tiles)</span>
 <span class="nc" id="L85">			result.addAll(tile.getSwimlanes());</span>
 
-<span class="nc" id="L87">		return Collections.unmodifiableSet(result);</span>
+<span class="nc" id="L87">		return MyCollections.unmodifiableSet(result);</span>
 	}
 
 	public void drawU(UGraphic ug) {

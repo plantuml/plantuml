@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.nwdiag.core;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -56,6 +55,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class NwGroup implements NStackable {
 
@@ -120,7 +120,7 @@ public class NwGroup implements NStackable {
 	}
 
 	public final Set&lt;String&gt; names() {
-<span class="nc" id="L123">		return Collections.unmodifiableSet(names);</span>
+<span class="nc" id="L123">		return MyCollections.unmodifiableSet(names);</span>
 	}
 
 	public boolean contains(NServer server) {

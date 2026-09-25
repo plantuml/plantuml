@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -72,6 +71,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.ConditionStyle;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 class FtileIfLongVertical extends AbstractFtile {
 
@@ -90,7 +90,7 @@ class FtileIfLongVertical extends AbstractFtile {
 	public Collection&lt;Ftile&gt; getMyChildren() {
 <span class="nc" id="L91">		final List&lt;Ftile&gt; result = new ArrayList&lt;&gt;(tiles);</span>
 <span class="nc" id="L92">		result.add(tile2);</span>
-<span class="nc" id="L93">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L93">		return MyCollections.unmodifiableList(result);</span>
 	}
 
 	private FtileIfLongVertical(List&lt;Ftile&gt; diamonds, List&lt;Ftile&gt; tiles, Ftile tile2, Rainbow arrowColor,
@@ -117,7 +117,7 @@ class FtileIfLongVertical extends AbstractFtile {
 <span class="nc" id="L117">			result.addAll(tile.getSwimlanes());</span>
 
 <span class="nc" id="L119">		result.addAll(tile2.getSwimlanes());</span>
-<span class="nc" id="L120">		return Collections.unmodifiableSet(result);</span>
+<span class="nc" id="L120">		return MyCollections.unmodifiableSet(result);</span>
 	}
 
 	public Swimlane getSwimlaneIn() {

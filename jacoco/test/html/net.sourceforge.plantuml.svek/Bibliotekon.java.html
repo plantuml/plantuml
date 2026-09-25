@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.svek;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -46,6 +45,7 @@ import java.util.Map;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Bibliotekon {
 
@@ -160,27 +160,27 @@ public class Bibliotekon {
 <span class="nc" id="L160">			final Entity entity = ent.getKey();</span>
 <span class="nc" id="L161">			result.put(entity.getName(), maxX);</span>
 <span class="nc" id="L162">		}</span>
-<span class="nc" id="L163">		return Collections.unmodifiableMap(result);</span>
+<span class="nc" id="L163">		return MyCollections.unmodifiableMap(result);</span>
 	}
 
 	public List&lt;SvekEdge&gt; allLines() {
-<span class="nc" id="L167">		return Collections.unmodifiableList(allLines);</span>
+<span class="nc" id="L167">		return MyCollections.unmodifiableList(allLines);</span>
 	}
 
 	public List&lt;SvekEdge&gt; lines0() {
-<span class="nc" id="L171">		return Collections.unmodifiableList(lines0);</span>
+<span class="nc" id="L171">		return MyCollections.unmodifiableList(lines0);</span>
 	}
 
 	public List&lt;SvekEdge&gt; lines1() {
-<span class="nc" id="L175">		return Collections.unmodifiableList(lines1);</span>
+<span class="nc" id="L175">		return MyCollections.unmodifiableList(lines1);</span>
 	}
 
 	public List&lt;Cluster&gt; allCluster() {
-<span class="nc" id="L179">		return Collections.unmodifiableList(allCluster);</span>
+<span class="nc" id="L179">		return MyCollections.unmodifiableList(allCluster);</span>
 	}
 
 	public Collection&lt;SvekNode&gt; allNodes() {
-<span class="nc" id="L183">		return Collections.unmodifiableCollection(nodeMap.values());</span>
+<span class="nc" id="L183">		return MyCollections.unmodifiableCollection(nodeMap.values());</span>
 	}
 
 	public List&lt;SvekEdge&gt; getAllLineConnectedTo(Entity leaf) {
@@ -189,7 +189,7 @@ public class Bibliotekon {
 <span class="nc bnc" id="L189" title="All 2 branches missed.">			if (line.isLinkFromOrTo(leaf))</span>
 <span class="nc" id="L190">				result.add(line);</span>
 
-<span class="nc" id="L192">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L192">		return MyCollections.unmodifiableList(result);</span>
 	}
 
 	public SvekEdge getLine(Link link) {

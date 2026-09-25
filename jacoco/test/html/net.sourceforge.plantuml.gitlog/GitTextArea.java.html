@@ -36,10 +36,10 @@
 package net.sourceforge.plantuml.gitlog;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 <span class="nc" id="L44">public class GitTextArea {</span>
 
@@ -63,7 +63,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="nc" id="L63">				commits.add(new Commit(name, new CursorPosition(this, x, y)));</span>
 			}
 
-<span class="nc" id="L66">		return Collections.unmodifiableList(commits);</span>
+<span class="nc" id="L66">		return MyCollections.unmodifiableList(commits);</span>
 	}
 
 	public char charAt(int x, int y) {

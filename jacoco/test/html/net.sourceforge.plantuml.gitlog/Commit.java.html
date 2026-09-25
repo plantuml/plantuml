@@ -36,8 +36,8 @@
 package net.sourceforge.plantuml.gitlog;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Commit {
 
@@ -87,7 +87,7 @@ public class Commit {
 <span class="nc" id="L87">				addAbove(result, current);</span>
 <span class="nc bnc" id="L88" title="All 2 branches missed.">			} else if (current.matches(&quot;-&quot;)) {</span>
 			} else {
-<span class="nc" id="L90">				return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L90">				return MyCollections.unmodifiableList(result);</span>
 			}
 
 		}
@@ -113,7 +113,7 @@ public class Commit {
 <span class="nc" id="L113">			result.add(down.getCommit());</span>
 <span class="nc" id="L114">		}</span>
 
-<span class="nc" id="L116">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L116">		return MyCollections.unmodifiableList(result);</span>
 
 	}
 

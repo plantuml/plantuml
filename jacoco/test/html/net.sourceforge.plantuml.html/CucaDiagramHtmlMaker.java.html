@@ -40,7 +40,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import net.atmp.CucaDiagram;
@@ -51,6 +50,7 @@ import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public final class CucaDiagramHtmlMaker {
 	
@@ -213,7 +213,7 @@ public final class CucaDiagramHtmlMaker {
 <span class="nc" id="L213">				result.add(link.getOther(ent));</span>
 
 <span class="nc" id="L215">		}</span>
-<span class="fc" id="L216">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L216">		return MyCollections.unmodifiableList(result);</span>
 	}
 
 	private Collection&lt;Link&gt; getLinksButNotes(Entity ent) {
@@ -227,7 +227,7 @@ public final class CucaDiagramHtmlMaker {
 
 <span class="nc" id="L228">			result.add(link);</span>
 <span class="nc" id="L229">		}</span>
-<span class="fc" id="L230">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L230">		return MyCollections.unmodifiableList(result);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

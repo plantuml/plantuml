@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.sequencediagram.graphic;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 class FrontierStackImpl implements FrontierStack {
 
@@ -46,84 +47,84 @@ class FrontierStackImpl implements FrontierStack {
 		final private FrontierComplex envelop;
 
 		Stack(FrontierComplex current) {
-<span class="nc" id="L49">			this(current, null);</span>
-<span class="nc" id="L50">		}</span>
+<span class="nc" id="L50">			this(current, null);</span>
+<span class="nc" id="L51">		}</span>
 
-<span class="nc" id="L52">		private Stack(FrontierComplex current, FrontierComplex envelop) {</span>
-<span class="nc" id="L53">			this.current = current;</span>
-<span class="nc" id="L54">			this.envelop = envelop;</span>
-<span class="nc" id="L55">		}</span>
+<span class="nc" id="L53">		private Stack(FrontierComplex current, FrontierComplex envelop) {</span>
+<span class="nc" id="L54">			this.current = current;</span>
+<span class="nc" id="L55">			this.envelop = envelop;</span>
+<span class="nc" id="L56">		}</span>
 
 		Stack addEnvelop(FrontierComplex env) {
-<span class="nc bnc" id="L58" title="All 2 branches missed.">			if (this.envelop == null) {</span>
-<span class="nc" id="L59">				return new Stack(this.current, env);</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">			if (this.envelop == null) {</span>
+<span class="nc" id="L60">				return new Stack(this.current, env);</span>
 			}
-<span class="nc" id="L61">			return new Stack(this.current, this.envelop.mergeMax(env));</span>
+<span class="nc" id="L62">			return new Stack(this.current, this.envelop.mergeMax(env));</span>
 		}
 	}
 
 	final private List&lt;Stack&gt; all;
 
-<span class="nc" id="L67">	public FrontierStackImpl(double freeY, int rangeEnd) {</span>
-<span class="nc" id="L68">		final Stack s = new Stack(FrontierComplex.create(freeY, rangeEnd));</span>
-<span class="nc" id="L69">		all = Collections.singletonList(s);</span>
-<span class="nc" id="L70">	}</span>
+<span class="nc" id="L68">	public FrontierStackImpl(double freeY, int rangeEnd) {</span>
+<span class="nc" id="L69">		final Stack s = new Stack(FrontierComplex.create(freeY, rangeEnd));</span>
+<span class="nc" id="L70">		all = Collections.singletonList(s);</span>
+<span class="nc" id="L71">	}</span>
 
-<span class="nc" id="L72">	private FrontierStackImpl(List&lt;Stack&gt; all) {</span>
-<span class="nc" id="L73">		this.all = Collections.unmodifiableList(all);</span>
-<span class="nc" id="L74">	}</span>
+<span class="nc" id="L73">	private FrontierStackImpl(List&lt;Stack&gt; all) {</span>
+<span class="nc" id="L74">		this.all = MyCollections.unmodifiableList(all);</span>
+<span class="nc" id="L75">	}</span>
 
 	private FrontierComplex getLast() {
-<span class="nc" id="L77">		return all.get(all.size() - 1).current;</span>
+<span class="nc" id="L78">		return all.get(all.size() - 1).current;</span>
 	}
 
 	public double getFreeY(ParticipantRange range) {
-<span class="nc" id="L81">		return getLast().getFreeY(range);</span>
+<span class="nc" id="L82">		return getLast().getFreeY(range);</span>
 	}
 
 	public FrontierStackImpl add(double delta, ParticipantRange range) {
-<span class="nc" id="L85">		final List&lt;Stack&gt; result = new ArrayList&lt;&gt;(all);</span>
-<span class="nc" id="L86">		final Stack s = new Stack(getLast().add(delta, range));</span>
-<span class="nc" id="L87">		result.set(result.size() - 1, s);</span>
-<span class="nc" id="L88">		return new FrontierStackImpl(result);</span>
+<span class="nc" id="L86">		final List&lt;Stack&gt; result = new ArrayList&lt;&gt;(all);</span>
+<span class="nc" id="L87">		final Stack s = new Stack(getLast().add(delta, range));</span>
+<span class="nc" id="L88">		result.set(result.size() - 1, s);</span>
+<span class="nc" id="L89">		return new FrontierStackImpl(result);</span>
 	}
 
 	public FrontierStack openBar() {
-<span class="nc" id="L92">		final List&lt;Stack&gt; result = new ArrayList&lt;&gt;(all);</span>
-<span class="nc" id="L93">		final Stack s = new Stack(getLast().copy());</span>
-<span class="nc" id="L94">		result.add(s);</span>
-<span class="nc" id="L95">		return new FrontierStackImpl(result);</span>
+<span class="nc" id="L93">		final List&lt;Stack&gt; result = new ArrayList&lt;&gt;(all);</span>
+<span class="nc" id="L94">		final Stack s = new Stack(getLast().copy());</span>
+<span class="nc" id="L95">		result.add(s);</span>
+<span class="nc" id="L96">		return new FrontierStackImpl(result);</span>
 	}
 
 	public FrontierStack restore() {
-<span class="nc" id="L99">		final List&lt;Stack&gt; result = new ArrayList&lt;&gt;(all);</span>
-<span class="nc" id="L100">		final Stack openedBar = result.get(result.size() - 2);</span>
-<span class="nc" id="L101">		final Stack lastStack = result.get(result.size() - 1);</span>
-<span class="nc" id="L102">		result.set(result.size() - 2, openedBar.addEnvelop(lastStack.current));</span>
-<span class="nc" id="L103">		result.remove(result.size() - 1);</span>
-<span class="nc" id="L104">		final Stack s = new Stack(openedBar.current.copy());</span>
-<span class="nc" id="L105">		result.add(s);</span>
-<span class="nc" id="L106">		return new FrontierStackImpl(result);</span>
+<span class="nc" id="L100">		final List&lt;Stack&gt; result = new ArrayList&lt;&gt;(all);</span>
+<span class="nc" id="L101">		final Stack openedBar = result.get(result.size() - 2);</span>
+<span class="nc" id="L102">		final Stack lastStack = result.get(result.size() - 1);</span>
+<span class="nc" id="L103">		result.set(result.size() - 2, openedBar.addEnvelop(lastStack.current));</span>
+<span class="nc" id="L104">		result.remove(result.size() - 1);</span>
+<span class="nc" id="L105">		final Stack s = new Stack(openedBar.current.copy());</span>
+<span class="nc" id="L106">		result.add(s);</span>
+<span class="nc" id="L107">		return new FrontierStackImpl(result);</span>
 	}
 
 	public FrontierStack closeBar() {
-<span class="nc" id="L110">		final List&lt;Stack&gt; result = new ArrayList&lt;&gt;(all);</span>
-<span class="nc" id="L111">		final Stack openedBar = result.get(result.size() - 2);</span>
-<span class="nc" id="L112">		final Stack lastStack = result.get(result.size() - 1);</span>
-<span class="nc" id="L113">		final Stack merge = openedBar.addEnvelop(lastStack.current);</span>
-<span class="nc" id="L114">		result.set(result.size() - 2, new Stack(merge.envelop));</span>
-<span class="nc" id="L115">		result.remove(result.size() - 1);</span>
-<span class="nc" id="L116">		return new FrontierStackImpl(result);</span>
+<span class="nc" id="L111">		final List&lt;Stack&gt; result = new ArrayList&lt;&gt;(all);</span>
+<span class="nc" id="L112">		final Stack openedBar = result.get(result.size() - 2);</span>
+<span class="nc" id="L113">		final Stack lastStack = result.get(result.size() - 1);</span>
+<span class="nc" id="L114">		final Stack merge = openedBar.addEnvelop(lastStack.current);</span>
+<span class="nc" id="L115">		result.set(result.size() - 2, new Stack(merge.envelop));</span>
+<span class="nc" id="L116">		result.remove(result.size() - 1);</span>
+<span class="nc" id="L117">		return new FrontierStackImpl(result);</span>
 	}
 
 	public FrontierStackImpl copy() {
 		// return new FrontierStackImpl(all);
-<span class="nc" id="L121">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L122">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L126">		return &quot;nb=&quot; + all.size() + &quot; &quot; + getLast().toString();</span>
+<span class="nc" id="L127">		return &quot;nb=&quot; + all.size() + &quot; &quot; + getLast().toString();</span>
 	}
 
 }

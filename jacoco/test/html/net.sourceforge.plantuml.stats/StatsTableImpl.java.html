@@ -37,13 +37,13 @@ package net.sourceforge.plantuml.stats;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 
 import net.sourceforge.plantuml.stats.api.StatsColumn;
 import net.sourceforge.plantuml.stats.api.StatsLine;
 import net.sourceforge.plantuml.stats.api.StatsTable;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class StatsTableImpl implements StatsTable {
 
@@ -61,11 +61,11 @@ public class StatsTableImpl implements StatsTable {
 	}
 
 	public Collection&lt;StatsColumn&gt; getColumnHeaders() {
-<span class="fc" id="L64">		return Collections.unmodifiableCollection(columnHeaders);</span>
+<span class="fc" id="L64">		return MyCollections.unmodifiableCollection(columnHeaders);</span>
 	}
 
 	public List&lt;StatsLine&gt; getLines() {
-<span class="fc" id="L68">		return Collections.unmodifiableList(lines);</span>
+<span class="fc" id="L68">		return MyCollections.unmodifiableList(lines);</span>
 	}
 
 	public void addLine(StatsLine line) {

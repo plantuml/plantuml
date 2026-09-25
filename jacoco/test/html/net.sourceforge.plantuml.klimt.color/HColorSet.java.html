@@ -36,9 +36,9 @@
 package net.sourceforge.plantuml.klimt.color;
 
 import java.util.Collection;
-import java.util.Collections;
 
 import net.sourceforge.plantuml.klimt.awt.XColor;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class HColorSet {
 
@@ -49,7 +49,7 @@ public class HColorSet {
 	}
 
 	public Collection&lt;String&gt; names() {
-<span class="fc" id="L52">		return Collections.unmodifiableCollection(ColorTrieNode.NAMES);</span>
+<span class="fc" id="L52">		return MyCollections.unmodifiableCollection(ColorTrieNode.NAMES);</span>
 	}
 
 	private HColorSet() {

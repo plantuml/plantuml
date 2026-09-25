@@ -95,6 +95,7 @@ import net.sourceforge.plantuml.svek.image.EntityImageState;
 import net.sourceforge.plantuml.svek.image.EntityImageStateCommon;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.utils.Position;
 
 public class Cluster implements Moveable {
@@ -106,8 +107,8 @@ public class Cluster implements Moveable {
 
 	private final Cluster parentCluster;
 	private final Entity group;
-<span class="fc" id="L109">	private final List&lt;SvekNode&gt; nodes = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L110">	private final List&lt;Cluster&gt; children = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L110">	private final List&lt;SvekNode&gt; nodes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L111">	private final List&lt;Cluster&gt; children = new ArrayList&lt;&gt;();</span>
 	private final int color;
 	private final int colorTitle;
 	private final int colorNoteTop;
@@ -126,637 +127,637 @@ public class Cluster implements Moveable {
 	private final LineLocation location;
 
 	public void moveDelta(double deltaX, double deltaY) {
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (this.xyNoteTop != null)</span>
-<span class="nc" id="L130">			this.xyNoteTop = this.xyNoteTop.move(deltaX, deltaY);</span>
-<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (this.xyNoteBottom != null)</span>
-<span class="nc" id="L132">			this.xyNoteBottom = this.xyNoteBottom.move(deltaX, deltaY);</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (this.xyTitle != null)</span>
-<span class="nc" id="L134">			this.xyTitle = this.xyTitle.move(deltaX, deltaY);</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (this.rectangleArea != null)</span>
-<span class="nc" id="L136">			this.rectangleArea = this.rectangleArea.move(deltaX, deltaY);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (this.xyNoteTop != null)</span>
+<span class="nc" id="L131">			this.xyNoteTop = this.xyNoteTop.move(deltaX, deltaY);</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (this.xyNoteBottom != null)</span>
+<span class="nc" id="L133">			this.xyNoteBottom = this.xyNoteBottom.move(deltaX, deltaY);</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (this.xyTitle != null)</span>
+<span class="nc" id="L135">			this.xyTitle = this.xyTitle.move(deltaX, deltaY);</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (this.rectangleArea != null)</span>
+<span class="nc" id="L137">			this.rectangleArea = this.rectangleArea.move(deltaX, deltaY);</span>
 
-<span class="nc" id="L138">	}</span>
+<span class="nc" id="L139">	}</span>
 
 	private Set&lt;EntityPosition&gt; entityPositionsExceptNormal() {
-<span class="fc" id="L141">		final Set&lt;EntityPosition&gt; result = EnumSet.&lt;EntityPosition&gt;noneOf(EntityPosition.class);</span>
-<span class="fc bfc" id="L142" title="All 2 branches covered.">		for (SvekNode sh : nodes)</span>
-<span class="fc bfc" id="L143" title="All 2 branches covered.">			if (sh.getEntityPosition() != EntityPosition.NORMAL)</span>
-<span class="fc" id="L144">				result.add(sh.getEntityPosition());</span>
+<span class="fc" id="L142">		final Set&lt;EntityPosition&gt; result = EnumSet.&lt;EntityPosition&gt;noneOf(EntityPosition.class);</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">		for (SvekNode sh : nodes)</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">			if (sh.getEntityPosition() != EntityPosition.NORMAL)</span>
+<span class="fc" id="L145">				result.add(sh.getEntityPosition());</span>
 
-<span class="fc" id="L146">		return Collections.unmodifiableSet(result);</span>
+<span class="fc" id="L147">		return MyCollections.unmodifiableSet(result);</span>
 	}
 
 	public Cluster(LineLocation location, CucaDiagram diagram, ColorSequence colorSequence, Entity root) {
-<span class="fc" id="L150">		this(location, diagram, null, colorSequence, root);</span>
-<span class="fc" id="L151">	}</span>
+<span class="fc" id="L151">		this(location, diagram, null, colorSequence, root);</span>
+<span class="fc" id="L152">	}</span>
 
 	private Cluster(LineLocation location, CucaDiagram diagram, Cluster parentCluster, ColorSequence colorSequence,
-<span class="fc" id="L154">			Entity group) {</span>
-<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (group == null)</span>
-<span class="nc" id="L156">			throw new IllegalStateException();</span>
+<span class="fc" id="L155">			Entity group) {</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">		if (group == null)</span>
+<span class="nc" id="L157">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L158">		this.location = location;</span>
-<span class="fc" id="L159">		this.parentCluster = parentCluster;</span>
-<span class="fc" id="L160">		this.group = group;</span>
-<span class="fc" id="L161">		this.diagram = diagram;</span>
+<span class="fc" id="L159">		this.location = location;</span>
+<span class="fc" id="L160">		this.parentCluster = parentCluster;</span>
+<span class="fc" id="L161">		this.group = group;</span>
+<span class="fc" id="L162">		this.diagram = diagram;</span>
 
-<span class="fc" id="L163">		this.color = colorSequence.getValue();</span>
-<span class="fc" id="L164">		this.colorTitle = colorSequence.getValue();</span>
-<span class="fc" id="L165">		this.colorNoteTop = colorSequence.getValue();</span>
-<span class="fc" id="L166">		this.colorNoteBottom = colorSequence.getValue();</span>
-<span class="fc" id="L167">		this.skinParam = group.getColors().mute(diagram.getSkinParam());</span>
-<span class="fc" id="L168">	}</span>
+<span class="fc" id="L164">		this.color = colorSequence.getValue();</span>
+<span class="fc" id="L165">		this.colorTitle = colorSequence.getValue();</span>
+<span class="fc" id="L166">		this.colorNoteTop = colorSequence.getValue();</span>
+<span class="fc" id="L167">		this.colorNoteBottom = colorSequence.getValue();</span>
+<span class="fc" id="L168">		this.skinParam = group.getColors().mute(diagram.getSkinParam());</span>
+<span class="fc" id="L169">	}</span>
 
 	@Override
 	public String toString() {
-<span class="fc" id="L172">		return super.toString() + &quot; &quot; + group;</span>
+<span class="fc" id="L173">		return super.toString() + &quot; &quot; + group;</span>
 	}
 
 	public final Cluster getParentCluster() {
-<span class="fc" id="L176">		return parentCluster;</span>
+<span class="fc" id="L177">		return parentCluster;</span>
 	}
 
 	public void addNode(SvekNode node) {
-<span class="fc" id="L180">		this.nodes.add(Objects.requireNonNull(node));</span>
-<span class="fc" id="L181">		node.setCluster(this);</span>
-<span class="fc" id="L182">	}</span>
+<span class="fc" id="L181">		this.nodes.add(Objects.requireNonNull(node));</span>
+<span class="fc" id="L182">		node.setCluster(this);</span>
+<span class="fc" id="L183">	}</span>
 
 	public final List&lt;SvekNode&gt; getNodes() {
-<span class="nc" id="L185">		return Collections.unmodifiableList(nodes);</span>
+<span class="nc" id="L186">		return MyCollections.unmodifiableList(nodes);</span>
 	}
 
 	public final List&lt;SvekNode&gt; getNodes(EnumSet&lt;EntityPosition&gt; position) {
-<span class="nc" id="L189">		final List&lt;SvekNode&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L190" title="All 2 branches missed.">		for (SvekNode node : nodes)</span>
-<span class="nc bnc" id="L191" title="All 2 branches missed.">			if (position.contains(node.getEntityPosition()))</span>
-<span class="nc" id="L192">				result.add(node);</span>
-<span class="nc" id="L193">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L190">		final List&lt;SvekNode&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">		for (SvekNode node : nodes)</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">			if (position.contains(node.getEntityPosition()))</span>
+<span class="nc" id="L193">				result.add(node);</span>
+<span class="nc" id="L194">		return MyCollections.unmodifiableList(result);</span>
 	}
 
 	private List&lt;SvekNode&gt; getNodesOrderedTop(Collection&lt;SvekEdge&gt; lines) {
-<span class="nc" id="L197">		final List&lt;SvekNode&gt; firsts = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L198">		final Map&lt;String, SvekNode&gt; shs = new HashMap&lt;String, SvekNode&gt;();</span>
+<span class="nc" id="L198">		final List&lt;SvekNode&gt; firsts = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L199">		final Map&lt;String, SvekNode&gt; shs = new HashMap&lt;String, SvekNode&gt;();</span>
 
-<span class="nc bnc" id="L200" title="All 2 branches missed.">		for (final Iterator&lt;SvekNode&gt; it = nodes.iterator(); it.hasNext();) {</span>
-<span class="nc" id="L201">			final SvekNode node = it.next();</span>
-<span class="nc" id="L202">			shs.put(node.getUid(), node);</span>
-<span class="nc" id="L203">		}</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">		for (final Iterator&lt;SvekNode&gt; it = nodes.iterator(); it.hasNext();) {</span>
+<span class="nc" id="L202">			final SvekNode node = it.next();</span>
+<span class="nc" id="L203">			shs.put(node.getUid(), node);</span>
+<span class="nc" id="L204">		}</span>
 
-<span class="nc bnc" id="L205" title="All 2 branches missed.">		for (SvekEdge l : lines)</span>
-<span class="nc bnc" id="L206" title="All 2 branches missed.">			if (l.isInverted()) {</span>
-<span class="nc" id="L207">				final SvekNode sh = shs.get(l.getStartUidPrefix());</span>
-<span class="nc bnc" id="L208" title="All 4 branches missed.">				if (sh != null &amp;&amp; isNormalPosition(sh))</span>
-<span class="nc" id="L209">					firsts.add(0, sh);</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">		for (SvekEdge l : lines)</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">			if (l.isInverted()) {</span>
+<span class="nc" id="L208">				final SvekNode sh = shs.get(l.getStartUidPrefix());</span>
+<span class="nc bnc" id="L209" title="All 4 branches missed.">				if (sh != null &amp;&amp; isNormalPosition(sh))</span>
+<span class="nc" id="L210">					firsts.add(0, sh);</span>
 			}
 
-<span class="nc" id="L212">		return firsts;</span>
+<span class="nc" id="L213">		return firsts;</span>
 	}
 
 	private boolean isNormalPosition(final SvekNode sh) {
-<span class="pc bpc" id="L216" title="1 of 2 branches missed.">		return sh.getEntityPosition() == EntityPosition.NORMAL;</span>
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">		return sh.getEntityPosition() == EntityPosition.NORMAL;</span>
 	}
 
 	private List&lt;SvekNode&gt; getNodesOrderedWithoutTop(Collection&lt;SvekEdge&gt; lines) {
-<span class="nc" id="L220">		final List&lt;SvekNode&gt; all = new ArrayList&lt;&gt;(nodes);</span>
-<span class="nc" id="L221">		final Map&lt;String, SvekNode&gt; shs = new HashMap&lt;String, SvekNode&gt;();</span>
+<span class="nc" id="L221">		final List&lt;SvekNode&gt; all = new ArrayList&lt;&gt;(nodes);</span>
+<span class="nc" id="L222">		final Map&lt;String, SvekNode&gt; shs = new HashMap&lt;String, SvekNode&gt;();</span>
 
-<span class="nc bnc" id="L223" title="All 2 branches missed.">		for (final Iterator&lt;SvekNode&gt; it = all.iterator(); it.hasNext();) {</span>
-<span class="nc" id="L224">			final SvekNode sh = it.next();</span>
-<span class="nc bnc" id="L225" title="All 2 branches missed.">			if (isNormalPosition(sh) == false) {</span>
-<span class="nc" id="L226">				it.remove();</span>
-<span class="nc" id="L227">				continue;</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">		for (final Iterator&lt;SvekNode&gt; it = all.iterator(); it.hasNext();) {</span>
+<span class="nc" id="L225">			final SvekNode sh = it.next();</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">			if (isNormalPosition(sh) == false) {</span>
+<span class="nc" id="L227">				it.remove();</span>
+<span class="nc" id="L228">				continue;</span>
 			}
-<span class="nc" id="L229">			shs.put(sh.getUid(), sh);</span>
-<span class="nc" id="L230">		}</span>
+<span class="nc" id="L230">			shs.put(sh.getUid(), sh);</span>
+<span class="nc" id="L231">		}</span>
 
-<span class="nc bnc" id="L232" title="All 2 branches missed.">		for (SvekEdge l : lines)</span>
-<span class="nc bnc" id="L233" title="All 2 branches missed.">			if (l.isInverted()) {</span>
-<span class="nc" id="L234">				final SvekNode sh = shs.get(l.getStartUidPrefix());</span>
-<span class="nc bnc" id="L235" title="All 2 branches missed.">				if (sh != null)</span>
-<span class="nc" id="L236">					all.remove(sh);</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">		for (SvekEdge l : lines)</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">			if (l.isInverted()) {</span>
+<span class="nc" id="L235">				final SvekNode sh = shs.get(l.getStartUidPrefix());</span>
+<span class="nc bnc" id="L236" title="All 2 branches missed.">				if (sh != null)</span>
+<span class="nc" id="L237">					all.remove(sh);</span>
 			}
 
-<span class="nc" id="L239">		return all;</span>
+<span class="nc" id="L240">		return all;</span>
 	}
 
 	public final List&lt;Cluster&gt; getChildren() {
-<span class="nc" id="L243">		return Collections.unmodifiableList(children);</span>
+<span class="nc" id="L244">		return MyCollections.unmodifiableList(children);</span>
 	}
 
 	public Cluster createChild(LineLocation location, ClusterHeader clusterHeader, ColorSequence colorSequence,
 			Entity g) {
-<span class="fc" id="L248">		final Cluster child = new Cluster(location, diagram, this, colorSequence, g);</span>
-<span class="fc" id="L249">		child.clusterHeader = clusterHeader;</span>
-<span class="fc" id="L250">		this.children.add(child);</span>
-<span class="fc" id="L251">		return child;</span>
+<span class="fc" id="L249">		final Cluster child = new Cluster(location, diagram, this, colorSequence, g);</span>
+<span class="fc" id="L250">		child.clusterHeader = clusterHeader;</span>
+<span class="fc" id="L251">		this.children.add(child);</span>
+<span class="fc" id="L252">		return child;</span>
 	}
 
 	public final Set&lt;Entity&gt; getGroups() {
-<span class="fc" id="L255">		return Collections.singleton(group);</span>
+<span class="fc" id="L256">		return Collections.singleton(group);</span>
 	}
 
 	final Entity getGroup() {
-<span class="nc" id="L259">		return group;</span>
+<span class="nc" id="L260">		return group;</span>
 	}
 
 	public final int getTitleAndAttributeWidth() {
-<span class="fc" id="L263">		final double minimumWidth = getStyle().value(PName.MinimumWidth).asDouble();</span>
-<span class="fc" id="L264">		return Math.max(clusterHeader.getTitleAndAttributeWidth(), (int) Math.ceil(minimumWidth));</span>
+<span class="fc" id="L264">		final double minimumWidth = getStyle().value(PName.MinimumWidth).asDouble();</span>
+<span class="fc" id="L265">		return Math.max(clusterHeader.getTitleAndAttributeWidth(), (int) Math.ceil(minimumWidth));</span>
 	}
 
 	public final int getTitleAndAttributeHeight() {
-<span class="fc" id="L268">		return clusterHeader.getTitleAndAttributeHeight();</span>
+<span class="fc" id="L269">		return clusterHeader.getTitleAndAttributeHeight();</span>
 	}
 
 	public RectangleArea getRectangleArea() {
-<span class="fc" id="L272">		return rectangleArea;</span>
+<span class="fc" id="L273">		return rectangleArea;</span>
 	}
 
 	public void setTitlePosition(XPoint2D pos) {
-<span class="fc" id="L276">		this.xyTitle = pos;</span>
-<span class="fc" id="L277">	}</span>
+<span class="fc" id="L277">		this.xyTitle = pos;</span>
+<span class="fc" id="L278">	}</span>
 
 	public void setNoteTopPosition(XPoint2D pos) {
-<span class="nc" id="L280">		this.xyNoteTop = pos;</span>
-<span class="nc" id="L281">	}</span>
+<span class="nc" id="L281">		this.xyNoteTop = pos;</span>
+<span class="nc" id="L282">	}</span>
 
 	public void setNoteBottomPosition(XPoint2D pos) {
-<span class="nc" id="L284">		this.xyNoteBottom = pos;</span>
-<span class="nc" id="L285">	}</span>
+<span class="nc" id="L285">		this.xyNoteBottom = pos;</span>
+<span class="nc" id="L286">	}</span>
 
 	static public StyleQuery getDefaultStyleDefinition(SName diagramStyleName, USymbol symbol,
 			GroupType groupType) {
-<span class="fc bfc" id="L289" title="All 2 branches covered.">		if (diagramStyleName == SName.stateDiagram)</span>
-<span class="fc" id="L290">			return StyleQueries.STATEDIAG_STATE_GROUP;</span>
-<span class="fc bfc" id="L291" title="All 2 branches covered.">		if (symbol != null)</span>
-<span class="fc" id="L292">			return StyleQueries.GROUP.add(diagramStyleName).addSNames(symbol.getSNames());</span>
-<span class="pc bpc" id="L293" title="1 of 2 branches missed.">		if (groupType == GroupType.PACKAGE)</span>
-<span class="fc" id="L294">			return StyleQueries.PACKAGE_GROUP.add(diagramStyleName);</span>
+<span class="fc bfc" id="L290" title="All 2 branches covered.">		if (diagramStyleName == SName.stateDiagram)</span>
+<span class="fc" id="L291">			return StyleQueries.STATEDIAG_STATE_GROUP;</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">		if (symbol != null)</span>
+<span class="fc" id="L293">			return StyleQueries.GROUP.add(diagramStyleName).addSNames(symbol.getSNames());</span>
+<span class="pc bpc" id="L294" title="1 of 2 branches missed.">		if (groupType == GroupType.PACKAGE)</span>
+<span class="fc" id="L295">			return StyleQueries.PACKAGE_GROUP.add(diagramStyleName);</span>
 
-<span class="nc" id="L296">		return StyleQueries.GROUP.add(diagramStyleName);</span>
+<span class="nc" id="L297">		return StyleQueries.GROUP.add(diagramStyleName);</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="pc bpc" id="L300" title="1 of 2 branches missed.">		if (group.isHidden())</span>
-<span class="nc" id="L301">			return;</span>
+<span class="pc bpc" id="L301" title="1 of 2 branches missed.">		if (group.isHidden())</span>
+<span class="nc" id="L302">			return;</span>
 
-<span class="pc bpc" id="L303" title="1 of 2 branches missed.">		if (diagram.getPragma().isTrue(PragmaKey.KERMOR)) {</span>
-<span class="nc bnc" id="L304" title="All 2 branches missed.">			if (xyNoteTop != null)</span>
-<span class="nc" id="L305">				getCucaNote(Position.TOP).drawU(ug.apply(UTranslate.point(xyNoteTop)));</span>
-<span class="nc bnc" id="L306" title="All 2 branches missed.">			if (xyNoteBottom != null)</span>
-<span class="nc" id="L307">				getCucaNote(Position.BOTTOM).drawU(ug.apply(UTranslate.point(xyNoteBottom)));</span>
+<span class="pc bpc" id="L304" title="1 of 2 branches missed.">		if (diagram.getPragma().isTrue(PragmaKey.KERMOR)) {</span>
+<span class="nc bnc" id="L305" title="All 2 branches missed.">			if (xyNoteTop != null)</span>
+<span class="nc" id="L306">				getCucaNote(Position.TOP).drawU(ug.apply(UTranslate.point(xyNoteTop)));</span>
+<span class="nc bnc" id="L307" title="All 2 branches missed.">			if (xyNoteBottom != null)</span>
+<span class="nc" id="L308">				getCucaNote(Position.BOTTOM).drawU(ug.apply(UTranslate.point(xyNoteBottom)));</span>
 		}
 
-<span class="fc" id="L310">		final String fullName = group.getName();</span>
-<span class="pc bpc" id="L311" title="1 of 2 branches missed.">		if (fullName.startsWith(&quot;##&quot;) == false)</span>
-<span class="fc" id="L312">			ug.draw(new UComment(&quot;cluster &quot; + fullName));</span>
+<span class="fc" id="L311">		final String fullName = group.getName();</span>
+<span class="pc bpc" id="L312" title="1 of 2 branches missed.">		if (fullName.startsWith(&quot;##&quot;) == false)</span>
+<span class="fc" id="L313">			ug.draw(new UComment(&quot;cluster &quot; + fullName));</span>
 
-<span class="fc" id="L314">		final DiagramType diagramType = diagram.getDiagramType();</span>
-<span class="fc" id="L315">		final Style style = getStyle();</span>
-<span class="fc" id="L316">		final double shadowing = style.getShadowing();</span>
+<span class="fc" id="L315">		final DiagramType diagramType = diagram.getDiagramType();</span>
+<span class="fc" id="L316">		final Style style = getStyle();</span>
+<span class="fc" id="L317">		final double shadowing = style.getShadowing();</span>
 		HColor borderColor;
-<span class="pc bpc" id="L318" title="1 of 2 branches missed.">		if (group.getColors().getColor(ColorType.LINE) != null)</span>
-<span class="nc" id="L319">			borderColor = group.getColors().getColor(ColorType.LINE);</span>
+<span class="pc bpc" id="L319" title="1 of 2 branches missed.">		if (group.getColors().getColor(ColorType.LINE) != null)</span>
+<span class="nc" id="L320">			borderColor = group.getColors().getColor(ColorType.LINE);</span>
 		else
-<span class="fc" id="L321">			borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="fc" id="L322">		double rounded = style.value(PName.RoundCorner).asDouble();</span>
+<span class="fc" id="L322">			borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L323">		double rounded = style.value(PName.RoundCorner).asDouble();</span>
 
-<span class="pc bpc" id="L324" title="1 of 2 branches missed.">		if (skinParam.strictUmlStyle())</span>
-<span class="nc" id="L325">			rounded = 0;</span>
+<span class="pc bpc" id="L325" title="1 of 2 branches missed.">		if (skinParam.strictUmlStyle())</span>
+<span class="nc" id="L326">			rounded = 0;</span>
 
-<span class="fc" id="L327">		final double diagonalCorner = style.value(PName.DiagonalCorner).asDouble();</span>
+<span class="fc" id="L328">		final double diagonalCorner = style.value(PName.DiagonalCorner).asDouble();</span>
 
 		// ug.startGroup(Collections.singletonMap(UGroupType.ID, &quot;cluster_&quot; +
 		// fullName));
 
-<span class="fc" id="L332">		final UGroup uGroup = new UGroup(group.getLocation());</span>
-<span class="fc" id="L333">		uGroup.put(UGroupType.CLASS, &quot;cluster&quot;);</span>
-<span class="fc" id="L334">		uGroup.put(UGroupType.ID, &quot;cluster_&quot; + fullName);</span>
-<span class="fc" id="L335">		uGroup.put(UGroupType.DATA_ENTITY, group.getName());</span>
-<span class="fc" id="L336">		uGroup.put(UGroupType.DATA_UID, group.getUid());</span>
-<span class="fc" id="L337">		uGroup.put(UGroupType.DATA_QUALIFIED_NAME, group.getQuark().getQualifiedName());</span>
-<span class="fc" id="L338">		ug.startGroup(uGroup);</span>
+<span class="fc" id="L333">		final UGroup uGroup = new UGroup(group.getLocation());</span>
+<span class="fc" id="L334">		uGroup.put(UGroupType.CLASS, &quot;cluster&quot;);</span>
+<span class="fc" id="L335">		uGroup.put(UGroupType.ID, &quot;cluster_&quot; + fullName);</span>
+<span class="fc" id="L336">		uGroup.put(UGroupType.DATA_ENTITY, group.getName());</span>
+<span class="fc" id="L337">		uGroup.put(UGroupType.DATA_UID, group.getUid());</span>
+<span class="fc" id="L338">		uGroup.put(UGroupType.DATA_QUALIFIED_NAME, group.getQuark().getQualifiedName());</span>
+<span class="fc" id="L339">		ug.startGroup(uGroup);</span>
 
-<span class="fc" id="L340">		final Url url = group.getUrl99();</span>
-<span class="pc bpc" id="L341" title="1 of 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L342">			ug.startUrl(url);</span>
+<span class="fc" id="L341">		final Url url = group.getUrl99();</span>
+<span class="pc bpc" id="L342" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L343">			ug.startUrl(url);</span>
 
 		try {
-<span class="fc bfc" id="L345" title="All 2 branches covered.">			if (entityPositionsExceptNormal().size() &gt; 0)</span>
-<span class="fc" id="L346">				manageEntryExitPoint(ug.getStringBounder());</span>
+<span class="fc bfc" id="L346" title="All 2 branches covered.">			if (entityPositionsExceptNormal().size() &gt; 0)</span>
+<span class="fc" id="L347">				manageEntryExitPoint(ug.getStringBounder());</span>
 
-<span class="pc bpc" id="L348" title="1 of 2 branches missed.">			if (skinParam.useSwimlanes(diagramType)) {</span>
-<span class="nc" id="L349">				drawSwinLinesState(ug, borderColor);</span>
-<span class="nc" id="L350">				return;</span>
+<span class="pc bpc" id="L349" title="1 of 2 branches missed.">			if (skinParam.useSwimlanes(diagramType)) {</span>
+<span class="nc" id="L350">				drawSwinLinesState(ug, borderColor);</span>
+<span class="nc" id="L351">				return;</span>
 			}
-<span class="fc bfc" id="L352" title="All 2 branches covered.">			final boolean isState = diagramType == DiagramType.STATE;</span>
+<span class="fc bfc" id="L353" title="All 2 branches covered.">			final boolean isState = diagramType == DiagramType.STATE;</span>
 
-<span class="pc bpc" id="L354" title="1 of 4 branches missed.">			if (isState &amp;&amp; group.getUSymbol() == null) {</span>
-<span class="fc" id="L355">				drawUState(ug, diagramType, rounded, shadowing);</span>
-<span class="fc" id="L356">				return;</span>
+<span class="pc bpc" id="L355" title="1 of 4 branches missed.">			if (isState &amp;&amp; group.getUSymbol() == null) {</span>
+<span class="fc" id="L356">				drawUState(ug, diagramType, rounded, shadowing);</span>
+<span class="fc" id="L357">				return;</span>
 			}
-<span class="fc" id="L358">			PackageStyle packageStyle = group.getPackageStyle();</span>
-<span class="pc bpc" id="L359" title="1 of 2 branches missed.">			if (packageStyle == null)</span>
-<span class="fc" id="L360">				packageStyle = skinParam.packageStyle();</span>
+<span class="fc" id="L359">			PackageStyle packageStyle = group.getPackageStyle();</span>
+<span class="pc bpc" id="L360" title="1 of 2 branches missed.">			if (packageStyle == null)</span>
+<span class="fc" id="L361">				packageStyle = skinParam.packageStyle();</span>
 
-<span class="fc" id="L362">			final UStroke stroke = getStrokeInternal(group, style);</span>
+<span class="fc" id="L363">			final UStroke stroke = getStrokeInternal(group, style);</span>
 
-<span class="fc" id="L364">			HColor backColor = getBackColor(style);</span>
-<span class="fc" id="L365">			backColor = getBackColor(backColor, group.getStereotype(), diagramType.getStyleName(), group.getUSymbol(),</span>
-<span class="fc" id="L366">					skinParam.getCurrentStyleBuilder(), skinParam.getIHtmlColorSet(), group.getGroupType());</span>
+<span class="fc" id="L365">			HColor backColor = getBackColor(style);</span>
+<span class="fc" id="L366">			backColor = getBackColor(backColor, group.getStereotype(), diagramType.getStyleName(), group.getUSymbol(),</span>
+<span class="fc" id="L367">					skinParam.getCurrentStyleBuilder(), skinParam.getIHtmlColorSet(), group.getGroupType());</span>
 
-<span class="fc" id="L368">			final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(),</span>
-<span class="fc" id="L369">					clusterHeader.getTitle(), clusterHeader.getStereo(), rectangleArea, stroke);</span>
+<span class="fc" id="L369">			final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(),</span>
+<span class="fc" id="L370">					clusterHeader.getTitle(), clusterHeader.getStereo(), rectangleArea, stroke);</span>
 //			final HorizontalAlignment horizontalAlignment = skinParam
 //			.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null);
-<span class="fc" id="L372">			final HorizontalAlignment horizontalAlignment = clusterHeader.getTitleHorizontalAlignment();</span>
+<span class="fc" id="L373">			final HorizontalAlignment horizontalAlignment = clusterHeader.getTitleHorizontalAlignment();</span>
 
-<span class="fc" id="L374">			decoration.drawU(ug, backColor, borderColor, shadowing, rounded, horizontalAlignment,</span>
-<span class="fc" id="L375">					skinParam.getStereotypeAlignment(), diagonalCorner);</span>
+<span class="fc" id="L375">			decoration.drawU(ug, backColor, borderColor, shadowing, rounded, horizontalAlignment,</span>
+<span class="fc" id="L376">					skinParam.getStereotypeAlignment(), diagonalCorner);</span>
 
-<span class="nc" id="L377">		} catch (Exception e) {</span>
-<span class="nc" id="L378">			e.printStackTrace();</span>
+<span class="nc" id="L378">		} catch (Exception e) {</span>
+<span class="nc" id="L379">			e.printStackTrace();</span>
 		} finally {
-<span class="pc bpc" id="L380" title="1 of 2 branches missed.">			if (url != null)</span>
-<span class="nc" id="L381">				ug.closeUrl();</span>
-<span class="fc" id="L382">			ug.closeGroup();</span>
+<span class="pc bpc" id="L381" title="1 of 2 branches missed.">			if (url != null)</span>
+<span class="nc" id="L382">				ug.closeUrl();</span>
+<span class="fc" id="L383">			ug.closeGroup();</span>
 		}
-<span class="fc" id="L384">	}</span>
+<span class="fc" id="L385">	}</span>
 
 	private Style getStyle() {
-<span class="fc" id="L387">		final DiagramType diagramType = diagram.getDiagramType();</span>
-<span class="fc bfc" id="L388" title="All 2 branches covered.">		final USymbol uSymbol = group.getUSymbol() == null ? USymbols.PACKAGE : group.getUSymbol();</span>
-<span class="fc" id="L389">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinition(</span>
-<span class="fc" id="L390">				diagramType.getStyleName(), uSymbol, group.getGroupType()).withStereotype(group.getStereotype()));</span>
-<span class="fc" id="L391">		return style;</span>
+<span class="fc" id="L388">		final DiagramType diagramType = diagram.getDiagramType();</span>
+<span class="fc bfc" id="L389" title="All 2 branches covered.">		final USymbol uSymbol = group.getUSymbol() == null ? USymbols.PACKAGE : group.getUSymbol();</span>
+<span class="fc" id="L390">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinition(</span>
+<span class="fc" id="L391">				diagramType.getStyleName(), uSymbol, group.getGroupType()).withStereotype(group.getStereotype()));</span>
+<span class="fc" id="L392">		return style;</span>
 	}
 
 	EntityImageNoteLink getCucaNote(Position position) {
-<span class="nc" id="L395">		final List&lt;CucaNote&gt; notes = getGroup().getNotes(position);</span>
-<span class="nc bnc" id="L396" title="All 2 branches missed.">		if (notes.size() == 0)</span>
-<span class="nc" id="L397">			return null;</span>
-<span class="nc" id="L398">		final CucaNote note = notes.get(0);</span>
-<span class="nc" id="L399">		return new EntityImageNoteLink(note.getDisplay(), note.getColors(), skinParam,</span>
-<span class="nc" id="L400">				skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L396">		final List&lt;CucaNote&gt; notes = getGroup().getNotes(position);</span>
+<span class="nc bnc" id="L397" title="All 2 branches missed.">		if (notes.size() == 0)</span>
+<span class="nc" id="L398">			return null;</span>
+<span class="nc" id="L399">		final CucaNote note = notes.get(0);</span>
+<span class="nc" id="L400">		return new EntityImageNoteLink(note.getDisplay(), note.getColors(), skinParam,</span>
+<span class="nc" id="L401">				skinParam.getCurrentStyleBuilder());</span>
 	}
 
 	static public UStroke getStrokeInternal(Entity group, Style style) {
-<span class="fc" id="L404">		final Colors colors = group.getColors();</span>
-<span class="pc bpc" id="L405" title="1 of 2 branches missed.">		if (colors.getSpecificLineStroke() != null)</span>
-<span class="nc" id="L406">			return colors.getSpecificLineStroke();</span>
+<span class="fc" id="L405">		final Colors colors = group.getColors();</span>
+<span class="pc bpc" id="L406" title="1 of 2 branches missed.">		if (colors.getSpecificLineStroke() != null)</span>
+<span class="nc" id="L407">			return colors.getSpecificLineStroke();</span>
 
-<span class="fc" id="L408">		return style.getStroke();</span>
+<span class="fc" id="L409">		return style.getStroke();</span>
 	}
 
 	void manageEntryExitPoint(StringBounder stringBounder) {
-<span class="fc" id="L412">		final Collection&lt;RectangleArea&gt; insides = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L413">		final List&lt;XPoint2D&gt; points = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L414" title="All 2 branches covered.">		for (SvekNode sh : nodes)</span>
-<span class="pc bpc" id="L415" title="1 of 2 branches missed.">			if (isNormalPosition(sh))</span>
-<span class="nc" id="L416">				insides.add(sh.getRectangleArea());</span>
+<span class="fc" id="L413">		final Collection&lt;RectangleArea&gt; insides = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L414">		final List&lt;XPoint2D&gt; points = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L415" title="All 2 branches covered.">		for (SvekNode sh : nodes)</span>
+<span class="pc bpc" id="L416" title="1 of 2 branches missed.">			if (isNormalPosition(sh))</span>
+<span class="nc" id="L417">				insides.add(sh.getRectangleArea());</span>
 			else
-<span class="fc" id="L418">				points.add(sh.getRectangleArea().getPointCenter());</span>
+<span class="fc" id="L419">				points.add(sh.getRectangleArea().getPointCenter());</span>
 
-<span class="pc bpc" id="L420" title="1 of 2 branches missed.">		for (Cluster in : children)</span>
-<span class="nc bnc" id="L421" title="All 2 branches missed.">			if (in.getRectangleArea() == null)</span>
-<span class="nc" id="L422">				System.err.println(&quot;Frontier null for &quot; + in);</span>
+<span class="pc bpc" id="L421" title="1 of 2 branches missed.">		for (Cluster in : children)</span>
+<span class="nc bnc" id="L422" title="All 2 branches missed.">			if (in.getRectangleArea() == null)</span>
+<span class="nc" id="L423">				System.err.println(&quot;Frontier null for &quot; + in);</span>
 			else
-<span class="nc" id="L424">				insides.add(in.getRectangleArea());</span>
+<span class="nc" id="L425">				insides.add(in.getRectangleArea());</span>
 
-<span class="fc" id="L426">		final FrontierCalculator frontierCalculator = new FrontierCalculator(getRectangleArea(), insides, points,</span>
-<span class="fc" id="L427">				skinParam.getRankdir());</span>
-<span class="pc bpc" id="L428" title="2 of 4 branches missed.">		if (getTitleAndAttributeWidth() &gt; 0 &amp;&amp; getTitleAndAttributeHeight() &gt; 0)</span>
-<span class="fc" id="L429">			frontierCalculator.ensureMinWidth(getTitleAndAttributeWidth() + 10);</span>
+<span class="fc" id="L427">		final FrontierCalculator frontierCalculator = new FrontierCalculator(getRectangleArea(), insides, points,</span>
+<span class="fc" id="L428">				skinParam.getRankdir());</span>
+<span class="pc bpc" id="L429" title="2 of 4 branches missed.">		if (getTitleAndAttributeWidth() &gt; 0 &amp;&amp; getTitleAndAttributeHeight() &gt; 0)</span>
+<span class="fc" id="L430">			frontierCalculator.ensureMinWidth(getTitleAndAttributeWidth() + 10);</span>
 
-<span class="fc" id="L431">		this.rectangleArea = frontierCalculator.getSuggestedPosition();</span>
+<span class="fc" id="L432">		this.rectangleArea = frontierCalculator.getSuggestedPosition();</span>
 
-<span class="fc" id="L433">		final double widthTitle = clusterHeader.getTitle().calculateDimension(stringBounder).getWidth();</span>
-<span class="fc" id="L434">		final double minX = rectangleArea.getMinX();</span>
-<span class="fc" id="L435">		final double minY = rectangleArea.getMinY();</span>
-<span class="fc" id="L436">		this.xyTitle = new XPoint2D(minX + ((rectangleArea.getWidth() - widthTitle) / 2), minY + IEntityImage.MARGIN);</span>
-<span class="fc" id="L437">	}</span>
+<span class="fc" id="L434">		final double widthTitle = clusterHeader.getTitle().calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L435">		final double minX = rectangleArea.getMinX();</span>
+<span class="fc" id="L436">		final double minY = rectangleArea.getMinY();</span>
+<span class="fc" id="L437">		this.xyTitle = new XPoint2D(minX + ((rectangleArea.getWidth() - widthTitle) / 2), minY + IEntityImage.MARGIN);</span>
+<span class="fc" id="L438">	}</span>
 
 	private void drawSwinLinesState(UGraphic ug, HColor borderColor) {
-<span class="nc" id="L440">		clusterHeader.getTitle().drawU(ug.apply(UTranslate.dx(xyTitle.x)));</span>
+<span class="nc" id="L441">		clusterHeader.getTitle().drawU(ug.apply(UTranslate.dx(xyTitle.x)));</span>
 
-<span class="nc" id="L442">		final ULine line = ULine.vline(rectangleArea.getHeight());</span>
-<span class="nc" id="L443">		ug = ug.apply(borderColor);</span>
-<span class="nc" id="L444">		ug.apply(UTranslate.dx(rectangleArea.getMinX())).draw(line);</span>
-<span class="nc" id="L445">		ug.apply(UTranslate.dx(rectangleArea.getMaxX())).draw(line);</span>
+<span class="nc" id="L443">		final ULine line = ULine.vline(rectangleArea.getHeight());</span>
+<span class="nc" id="L444">		ug = ug.apply(borderColor);</span>
+<span class="nc" id="L445">		ug.apply(UTranslate.dx(rectangleArea.getMinX())).draw(line);</span>
+<span class="nc" id="L446">		ug.apply(UTranslate.dx(rectangleArea.getMaxX())).draw(line);</span>
 
-<span class="nc" id="L447">	}</span>
+<span class="nc" id="L448">	}</span>
 
 	// GroupPngMakerState
 
 	private void drawUState(UGraphic ug, DiagramType diagramType, double rounded, double shadowing) {
 
-<span class="fc" id="L453">		HColor borderColor = group.getColors().getColor(ColorType.LINE);</span>
-<span class="fc" id="L454">		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();</span>
-<span class="fc" id="L455">		final HColorSet colorSet = skinParam.getIHtmlColorSet();</span>
-<span class="pc bpc" id="L456" title="1 of 2 branches missed.">		if (borderColor == null) {</span>
-<span class="fc" id="L457">			borderColor = EntityImageStateCommon.getStyleState(group.getStereotype(), styleBuilder)</span>
-<span class="fc" id="L458">					.value(PName.LineColor).asColor(colorSet);</span>
+<span class="fc" id="L454">		HColor borderColor = group.getColors().getColor(ColorType.LINE);</span>
+<span class="fc" id="L455">		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();</span>
+<span class="fc" id="L456">		final HColorSet colorSet = skinParam.getIHtmlColorSet();</span>
+<span class="pc bpc" id="L457" title="1 of 2 branches missed.">		if (borderColor == null) {</span>
+<span class="fc" id="L458">			borderColor = EntityImageStateCommon.getStyleState(group.getStereotype(), styleBuilder)</span>
+<span class="fc" id="L459">					.value(PName.LineColor).asColor(colorSet);</span>
 		}
 
-<span class="fc" id="L461">		HColor northBackcolor = group.getColors().getColor(ColorType.BACK);</span>
-<span class="fc" id="L462">		HColor centerBackColor = northBackcolor;</span>
-<span class="fc" id="L463">		HColor southBackcolor = northBackcolor;</span>
-<span class="fc bfc" id="L464" title="All 2 branches covered.">		if (northBackcolor == null) {</span>
-<span class="fc" id="L465">			northBackcolor = styleBuilder</span>
-<span class="fc" id="L466">					.getMergedStyle(</span>
-<span class="fc" id="L467">							EntityImageStateCommon.STYLE.add(SName.name).withStereotype(group.getStereotype()))</span>
-<span class="fc" id="L468">					.value(PName.BackGroundColor).asColor(colorSet);</span>
-<span class="fc" id="L469">			centerBackColor = styleBuilder.getMergedStyle(EntityImageStateCommon.STYLE.add(SName.description)</span>
-<span class="fc" id="L470">					.withStereotype(group.getStereotype())).value(PName.BackGroundColor).asColor(colorSet);</span>
-<span class="fc" id="L471">			southBackcolor = styleBuilder</span>
-<span class="fc" id="L472">					.getMergedStyle(</span>
-<span class="fc" id="L473">							EntityImageStateCommon.STYLE.add(SName.body).withStereotype(group.getStereotype()))</span>
-<span class="fc" id="L474">					.value(PName.BackGroundColor).asColor(colorSet);</span>
+<span class="fc" id="L462">		HColor northBackcolor = group.getColors().getColor(ColorType.BACK);</span>
+<span class="fc" id="L463">		HColor centerBackColor = northBackcolor;</span>
+<span class="fc" id="L464">		HColor southBackcolor = northBackcolor;</span>
+<span class="fc bfc" id="L465" title="All 2 branches covered.">		if (northBackcolor == null) {</span>
+<span class="fc" id="L466">			northBackcolor = styleBuilder</span>
+<span class="fc" id="L467">					.getMergedStyle(</span>
+<span class="fc" id="L468">							EntityImageStateCommon.STYLE.add(SName.name).withStereotype(group.getStereotype()))</span>
+<span class="fc" id="L469">					.value(PName.BackGroundColor).asColor(colorSet);</span>
+<span class="fc" id="L470">			centerBackColor = styleBuilder.getMergedStyle(EntityImageStateCommon.STYLE.add(SName.description)</span>
+<span class="fc" id="L471">					.withStereotype(group.getStereotype())).value(PName.BackGroundColor).asColor(colorSet);</span>
+<span class="fc" id="L472">			southBackcolor = styleBuilder</span>
+<span class="fc" id="L473">					.getMergedStyle(</span>
+<span class="fc" id="L474">							EntityImageStateCommon.STYLE.add(SName.body).withStereotype(group.getStereotype()))</span>
+<span class="fc" id="L475">					.value(PName.BackGroundColor).asColor(colorSet);</span>
 		}
 
-<span class="fc" id="L477">		final TextBlock attribute = ((Entity) group).getStateDescription(skinParam);</span>
-<span class="fc" id="L478">		final double attributeHeight = attribute.calculateDimension(ug.getStringBounder()).getHeight();</span>
-<span class="pc bpc" id="L479" title="1 of 2 branches missed.">		if (rectangleArea.getDimension().getWidth() == 0) {</span>
-<span class="nc" id="L480">			System.err.println(&quot;Cluster::drawUState issue&quot;);</span>
-<span class="nc" id="L481">			return;</span>
+<span class="fc" id="L478">		final TextBlock attribute = ((Entity) group).getStateDescription(skinParam);</span>
+<span class="fc" id="L479">		final double attributeHeight = attribute.calculateDimension(ug.getStringBounder()).getHeight();</span>
+<span class="pc bpc" id="L480" title="1 of 2 branches missed.">		if (rectangleArea.getDimension().getWidth() == 0) {</span>
+<span class="nc" id="L481">			System.err.println(&quot;Cluster::drawUState issue&quot;);</span>
+<span class="nc" id="L482">			return;</span>
 		}
 
-<span class="fc" id="L484">		UStroke stroke = group.getColors().getSpecificLineStroke();</span>
-<span class="pc bpc" id="L485" title="1 of 2 branches missed.">		if (stroke == null) {</span>
-<span class="fc" id="L486">			final StyleBuilder styleBuilder4 = skinParam.getCurrentStyleBuilder();</span>
-<span class="fc" id="L487">			stroke = EntityImageStateCommon.getStyleState(group.getStereotype(), styleBuilder4).getStroke();</span>
+<span class="fc" id="L485">		UStroke stroke = group.getColors().getSpecificLineStroke();</span>
+<span class="pc bpc" id="L486" title="1 of 2 branches missed.">		if (stroke == null) {</span>
+<span class="fc" id="L487">			final StyleBuilder styleBuilder4 = skinParam.getCurrentStyleBuilder();</span>
+<span class="fc" id="L488">			stroke = EntityImageStateCommon.getStyleState(group.getStereotype(), styleBuilder4).getStroke();</span>
 		}
 
-<span class="pc bpc" id="L490" title="1 of 2 branches missed.">		final double descriptionHeight = attributeHeight + (attributeHeight &gt; 0 ? IEntityImage.MARGIN : 0);</span>
+<span class="pc bpc" id="L491" title="1 of 2 branches missed.">		final double descriptionHeight = attributeHeight + (attributeHeight &gt; 0 ? IEntityImage.MARGIN : 0);</span>
 
-<span class="fc" id="L492">		final double nameHeight = clusterHeader.getTitle().calculateDimension(ug.getStringBounder()).getHeight()</span>
+<span class="fc" id="L493">		final double nameHeight = clusterHeader.getTitle().calculateDimension(ug.getStringBounder()).getHeight()</span>
 				+ IEntityImage.MARGIN;
 
-<span class="fc" id="L495">		final RoundedContainer r = new RoundedContainer(borderColor, rectangleArea.getDimension(), nameHeight,</span>
+<span class="fc" id="L496">		final RoundedContainer r = new RoundedContainer(borderColor, rectangleArea.getDimension(), nameHeight,</span>
 				descriptionHeight, northBackcolor, centerBackColor, southBackcolor, stroke, rounded, shadowing);
 
-<span class="fc" id="L498">		r.drawU(ug.apply(rectangleArea.getPosition()));</span>
+<span class="fc" id="L499">		r.drawU(ug.apply(rectangleArea.getPosition()));</span>
 
-<span class="fc" id="L500">		clusterHeader.getTitleHorizontalAlignment().draw(</span>
-<span class="fc" id="L501">				ug.apply(new UTranslate(rectangleArea.getMinX(), xyTitle.getY())), clusterHeader.getTitle(),</span>
-<span class="fc" id="L502">				IEntityImage.MARGIN, 0, rectangleArea.getWidth());</span>
+<span class="fc" id="L501">		clusterHeader.getTitleHorizontalAlignment().draw(</span>
+<span class="fc" id="L502">				ug.apply(new UTranslate(rectangleArea.getMinX(), xyTitle.getY())), clusterHeader.getTitle(),</span>
+<span class="fc" id="L503">				IEntityImage.MARGIN, 0, rectangleArea.getWidth());</span>
 
-<span class="pc bpc" id="L504" title="1 of 2 branches missed.">		if (attributeHeight &gt; 0)</span>
-<span class="nc" id="L505">			attribute.drawU(ug.apply(new UTranslate(rectangleArea.getMinX() + IEntityImage.MARGIN,</span>
-<span class="nc" id="L506">					rectangleArea.getMinY() + nameHeight + IEntityImage.MARGIN / 2.0)));</span>
+<span class="pc bpc" id="L505" title="1 of 2 branches missed.">		if (attributeHeight &gt; 0)</span>
+<span class="nc" id="L506">			attribute.drawU(ug.apply(new UTranslate(rectangleArea.getMinX() + IEntityImage.MARGIN,</span>
+<span class="nc" id="L507">					rectangleArea.getMinY() + nameHeight + IEntityImage.MARGIN / 2.0)));</span>
 
-<span class="fc" id="L508">		final Stereotype stereotype = group.getStereotype();</span>
-<span class="pc bpc" id="L509" title="1 of 4 branches missed.">		final boolean withSymbol = stereotype != null &amp;&amp; stereotype.isWithOOSymbol();</span>
-<span class="pc bpc" id="L510" title="1 of 2 branches missed.">		if (withSymbol)</span>
-<span class="nc" id="L511">			EntityImageState.drawSymbol(ug.apply(borderColor), rectangleArea.getMaxX(), rectangleArea.getMaxY());</span>
+<span class="fc" id="L509">		final Stereotype stereotype = group.getStereotype();</span>
+<span class="pc bpc" id="L510" title="1 of 4 branches missed.">		final boolean withSymbol = stereotype != null &amp;&amp; stereotype.isWithOOSymbol();</span>
+<span class="pc bpc" id="L511" title="1 of 2 branches missed.">		if (withSymbol)</span>
+<span class="nc" id="L512">			EntityImageState.drawSymbol(ug.apply(borderColor), rectangleArea.getMaxX(), rectangleArea.getMaxY());</span>
 
-<span class="fc" id="L513">	}</span>
+<span class="fc" id="L514">	}</span>
 
 	public void setPosition(XPoint2D min, XPoint2D max) {
-<span class="fc" id="L516">		this.rectangleArea = RectangleArea.build(min, max);</span>
-<span class="fc" id="L517">	}</span>
+<span class="fc" id="L517">		this.rectangleArea = RectangleArea.build(min, max);</span>
+<span class="fc" id="L518">	}</span>
 
 	public boolean printCluster1(StringBuilder sb, Collection&lt;SvekEdge&gt; lines, StringBounder stringBounder) {
-<span class="nc" id="L520">		final List&lt;SvekNode&gt; tmp = getNodesOrderedTop(lines);</span>
-<span class="nc bnc" id="L521" title="All 2 branches missed.">		if (tmp.size() == 0)</span>
-<span class="nc" id="L522">			return false;</span>
-<span class="nc bnc" id="L523" title="All 2 branches missed.">		for (SvekNode node : tmp)</span>
-<span class="nc" id="L524">			node.appendShape(sb, stringBounder);</span>
+<span class="nc" id="L521">		final List&lt;SvekNode&gt; tmp = getNodesOrderedTop(lines);</span>
+<span class="nc bnc" id="L522" title="All 2 branches missed.">		if (tmp.size() == 0)</span>
+<span class="nc" id="L523">			return false;</span>
+<span class="nc bnc" id="L524" title="All 2 branches missed.">		for (SvekNode node : tmp)</span>
+<span class="nc" id="L525">			node.appendShape(sb, stringBounder);</span>
 
-<span class="nc" id="L526">		return true;</span>
+<span class="nc" id="L527">		return true;</span>
 
 	}
 
-<span class="fc" id="L530">	private int togetherCounter = 0;</span>
+<span class="fc" id="L531">	private int togetherCounter = 0;</span>
 
 	private void printTogether(Together together, Collection&lt;Together&gt; otherTogethers, StringBuilder sb,
 			List&lt;SvekNode&gt; nodesOrderedWithoutTop, StringBounder stringBounder, Collection&lt;SvekEdge&gt; lines,
 			DotMode dotMode, GraphvizVersion graphvizVersion, DiagramType type) {
-<span class="nc" id="L535">		sb.append(&quot;subgraph &quot; + getClusterId() + &quot;t&quot; + togetherCounter + &quot; {\n&quot;);</span>
-<span class="nc bnc" id="L536" title="All 2 branches missed.">		for (SvekNode node : nodesOrderedWithoutTop)</span>
-<span class="nc bnc" id="L537" title="All 2 branches missed.">			if (node.getTogether() == together)</span>
-<span class="nc" id="L538">				node.appendShape(sb, stringBounder);</span>
+<span class="nc" id="L536">		sb.append(&quot;subgraph &quot; + getClusterId() + &quot;t&quot; + togetherCounter + &quot; {\n&quot;);</span>
+<span class="nc bnc" id="L537" title="All 2 branches missed.">		for (SvekNode node : nodesOrderedWithoutTop)</span>
+<span class="nc bnc" id="L538" title="All 2 branches missed.">			if (node.getTogether() == together)</span>
+<span class="nc" id="L539">				node.appendShape(sb, stringBounder);</span>
 
-<span class="nc bnc" id="L540" title="All 2 branches missed.">		for (Cluster child : children)</span>
-<span class="nc bnc" id="L541" title="All 2 branches missed.">			if (child.group.getTogether() == together)</span>
-<span class="nc" id="L542">				child.printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);</span>
+<span class="nc bnc" id="L541" title="All 2 branches missed.">		for (Cluster child : children)</span>
+<span class="nc bnc" id="L542" title="All 2 branches missed.">			if (child.group.getTogether() == together)</span>
+<span class="nc" id="L543">				child.printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);</span>
 
-<span class="nc bnc" id="L544" title="All 2 branches missed.">		for (Together otherTogether : otherTogethers)</span>
-<span class="nc bnc" id="L545" title="All 2 branches missed.">			if (otherTogether.getParent() == together)</span>
-<span class="nc" id="L546">				printTogether(otherTogether, otherTogethers, sb, nodesOrderedWithoutTop, stringBounder, lines, dotMode,</span>
+<span class="nc bnc" id="L545" title="All 2 branches missed.">		for (Together otherTogether : otherTogethers)</span>
+<span class="nc bnc" id="L546" title="All 2 branches missed.">			if (otherTogether.getParent() == together)</span>
+<span class="nc" id="L547">				printTogether(otherTogether, otherTogethers, sb, nodesOrderedWithoutTop, stringBounder, lines, dotMode,</span>
 						graphvizVersion, type);
 
-<span class="nc" id="L549">		sb.append(&quot;}\n&quot;);</span>
-<span class="nc" id="L550">		togetherCounter++;</span>
+<span class="nc" id="L550">		sb.append(&quot;}\n&quot;);</span>
+<span class="nc" id="L551">		togetherCounter++;</span>
 
-<span class="nc" id="L552">	}</span>
+<span class="nc" id="L553">	}</span>
 
 	public SvekNode printCluster2(StringBuilder sb, Collection&lt;SvekEdge&gt; lines, StringBounder stringBounder,
 			DotMode dotMode, GraphvizVersion graphvizVersion, DiagramType type) {
 
-<span class="nc" id="L557">		SvekNode added = null;</span>
-<span class="nc" id="L558">		final Collection&lt;Together&gt; togethers = new LinkedHashSet&lt;&gt;();</span>
-<span class="nc" id="L559">		final List&lt;SvekNode&gt; nodesOrderedWithoutTop = getNodesOrderedWithoutTop(lines);</span>
-<span class="nc bnc" id="L560" title="All 2 branches missed.">		for (SvekNode node : nodesOrderedWithoutTop) {</span>
-<span class="nc" id="L561">			final Together together = node.getTogether();</span>
-<span class="nc bnc" id="L562" title="All 2 branches missed.">			if (together == null)</span>
-<span class="nc" id="L563">				node.appendShape(sb, stringBounder);</span>
+<span class="nc" id="L558">		SvekNode added = null;</span>
+<span class="nc" id="L559">		final Collection&lt;Together&gt; togethers = new LinkedHashSet&lt;&gt;();</span>
+<span class="nc" id="L560">		final List&lt;SvekNode&gt; nodesOrderedWithoutTop = getNodesOrderedWithoutTop(lines);</span>
+<span class="nc bnc" id="L561" title="All 2 branches missed.">		for (SvekNode node : nodesOrderedWithoutTop) {</span>
+<span class="nc" id="L562">			final Together together = node.getTogether();</span>
+<span class="nc bnc" id="L563" title="All 2 branches missed.">			if (together == null)</span>
+<span class="nc" id="L564">				node.appendShape(sb, stringBounder);</span>
 			else
-<span class="nc" id="L565">				addTogetherWithParents(togethers, together);</span>
+<span class="nc" id="L566">				addTogetherWithParents(togethers, together);</span>
 
-<span class="nc" id="L567">			added = node;</span>
-<span class="nc" id="L568">		}</span>
-<span class="nc bnc" id="L569" title="All 2 branches missed.">		for (Cluster child : children)</span>
-<span class="nc bnc" id="L570" title="All 2 branches missed.">			if (child.group.getTogether() != null)</span>
-<span class="nc" id="L571">				addTogetherWithParents(togethers, child.group.getTogether());</span>
+<span class="nc" id="L568">			added = node;</span>
+<span class="nc" id="L569">		}</span>
+<span class="nc bnc" id="L570" title="All 2 branches missed.">		for (Cluster child : children)</span>
+<span class="nc bnc" id="L571" title="All 2 branches missed.">			if (child.group.getTogether() != null)</span>
+<span class="nc" id="L572">				addTogetherWithParents(togethers, child.group.getTogether());</span>
 
-<span class="nc bnc" id="L573" title="All 2 branches missed.">		for (Together together : togethers)</span>
-<span class="nc bnc" id="L574" title="All 2 branches missed.">			if (together.getParent() == null)</span>
-<span class="nc" id="L575">				printTogether(together, togethers, sb, nodesOrderedWithoutTop, stringBounder, lines, dotMode,</span>
+<span class="nc bnc" id="L574" title="All 2 branches missed.">		for (Together together : togethers)</span>
+<span class="nc bnc" id="L575" title="All 2 branches missed.">			if (together.getParent() == null)</span>
+<span class="nc" id="L576">				printTogether(together, togethers, sb, nodesOrderedWithoutTop, stringBounder, lines, dotMode,</span>
 						graphvizVersion, type);
 
 		// ::comment when __TEAVM__
-<span class="nc bnc" id="L579" title="All 4 branches missed.">		if (skinParam.useRankSame() &amp;&amp; dotMode != DotMode.NO_LEFT_RIGHT_AND_XLABEL</span>
-<span class="nc bnc" id="L580" title="All 2 branches missed.">				&amp;&amp; graphvizVersion.ignoreHorizontalLinks() == false)</span>
-<span class="nc" id="L581">			appendRankSame(sb, lines);</span>
+<span class="nc bnc" id="L580" title="All 4 branches missed.">		if (skinParam.useRankSame() &amp;&amp; dotMode != DotMode.NO_LEFT_RIGHT_AND_XLABEL</span>
+<span class="nc bnc" id="L581" title="All 2 branches missed.">				&amp;&amp; graphvizVersion.ignoreHorizontalLinks() == false)</span>
+<span class="nc" id="L582">			appendRankSame(sb, lines);</span>
 		// ::done
 
-<span class="nc bnc" id="L584" title="All 2 branches missed.">		for (Cluster child : children)</span>
-<span class="nc bnc" id="L585" title="All 2 branches missed.">			if (child.group.getTogether() == null)</span>
-<span class="nc" id="L586">				child.printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);</span>
+<span class="nc bnc" id="L585" title="All 2 branches missed.">		for (Cluster child : children)</span>
+<span class="nc bnc" id="L586" title="All 2 branches missed.">			if (child.group.getTogether() == null)</span>
+<span class="nc" id="L587">				child.printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);</span>
 
-<span class="nc" id="L588">		return added;</span>
+<span class="nc" id="L589">		return added;</span>
 	}
 
 	private static void addTogetherWithParents(Collection&lt;Together&gt; collection, Together together) {
-<span class="nc" id="L592">		Together t = together;</span>
-<span class="nc bnc" id="L593" title="All 2 branches missed.">		while (t != null) {</span>
-<span class="nc" id="L594">			collection.add(t);</span>
-<span class="nc" id="L595">			t = t.getParent();</span>
+<span class="nc" id="L593">		Together t = together;</span>
+<span class="nc bnc" id="L594" title="All 2 branches missed.">		while (t != null) {</span>
+<span class="nc" id="L595">			collection.add(t);</span>
+<span class="nc" id="L596">			t = t.getParent();</span>
 		}
-<span class="nc" id="L597">	}</span>
+<span class="nc" id="L598">	}</span>
 
 	public void printCluster3_forKermor(StringBuilder sb, Collection&lt;SvekEdge&gt; lines, StringBounder stringBounder,
 			DotMode dotMode, GraphvizVersion graphvizVersion, DiagramType type) {
-<span class="nc" id="L601">		final List&lt;SvekNode&gt; tmp = getNodes(EntityPosition.getNormals());</span>
+<span class="nc" id="L602">		final List&lt;SvekNode&gt; tmp = getNodes(EntityPosition.getNormals());</span>
 
-<span class="nc bnc" id="L603" title="All 2 branches missed.">		if (tmp.size() == 0) {</span>
-<span class="nc" id="L604">			sb.append(getClusterId() + &quot;empty [shape=point,label=\&quot;\&quot;];&quot;);</span>
-<span class="nc" id="L605">			SvekUtils.println(sb);</span>
+<span class="nc bnc" id="L604" title="All 2 branches missed.">		if (tmp.size() == 0) {</span>
+<span class="nc" id="L605">			sb.append(getClusterId() + &quot;empty [shape=point,label=\&quot;\&quot;];&quot;);</span>
+<span class="nc" id="L606">			SvekUtils.println(sb);</span>
 		} else {
-<span class="nc bnc" id="L607" title="All 2 branches missed.">			for (SvekNode node : tmp)</span>
-<span class="nc" id="L608">				node.appendShape(sb, stringBounder);</span>
+<span class="nc bnc" id="L608" title="All 2 branches missed.">			for (SvekNode node : tmp)</span>
+<span class="nc" id="L609">				node.appendShape(sb, stringBounder);</span>
 		}
 
-<span class="nc bnc" id="L611" title="All 2 branches missed.">		for (Cluster child : getChildren())</span>
-<span class="nc" id="L612">			child.printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);</span>
-<span class="nc" id="L613">	}</span>
+<span class="nc bnc" id="L612" title="All 2 branches missed.">		for (Cluster child : getChildren())</span>
+<span class="nc" id="L613">			child.printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);</span>
+<span class="nc" id="L614">	}</span>
 
 	private void printInternal(StringBuilder sb, Collection&lt;SvekEdge&gt; lines, StringBounder stringBounder,
 			DotMode dotMode, GraphvizVersion graphvizVersion, DiagramType type) {
-<span class="nc" id="L617">		new ClusterDotString(this, skinParam).printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);</span>
-<span class="nc" id="L618">	}</span>
+<span class="nc" id="L618">		new ClusterDotString(this, skinParam).printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);</span>
+<span class="nc" id="L619">	}</span>
 
 	private void appendRankSame(StringBuilder sb, Collection&lt;SvekEdge&gt; lines) {
-<span class="nc bnc" id="L621" title="All 2 branches missed.">		for (String same : getRankSame(lines)) {</span>
-<span class="nc" id="L622">			sb.append(same);</span>
-<span class="nc" id="L623">			SvekUtils.println(sb);</span>
-<span class="nc" id="L624">		}</span>
-<span class="nc" id="L625">	}</span>
+<span class="nc bnc" id="L622" title="All 2 branches missed.">		for (String same : getRankSame(lines)) {</span>
+<span class="nc" id="L623">			sb.append(same);</span>
+<span class="nc" id="L624">			SvekUtils.println(sb);</span>
+<span class="nc" id="L625">		}</span>
+<span class="nc" id="L626">	}</span>
 
 	private Set&lt;String&gt; getRankSame(Collection&lt;SvekEdge&gt; lines) {
-<span class="nc" id="L628">		final Set&lt;String&gt; rankSame = new HashSet&lt;&gt;();</span>
-<span class="nc bnc" id="L629" title="All 2 branches missed.">		for (SvekEdge l : lines) {</span>
-<span class="nc bnc" id="L630" title="All 2 branches missed.">			if (l.hasEntryPoint())</span>
-<span class="nc" id="L631">				continue;</span>
+<span class="nc" id="L629">		final Set&lt;String&gt; rankSame = new HashSet&lt;&gt;();</span>
+<span class="nc bnc" id="L630" title="All 2 branches missed.">		for (SvekEdge l : lines) {</span>
+<span class="nc bnc" id="L631" title="All 2 branches missed.">			if (l.hasEntryPoint())</span>
+<span class="nc" id="L632">				continue;</span>
 
-<span class="nc" id="L633">			final String startUid = l.getStartUidPrefix();</span>
-<span class="nc" id="L634">			final String endUid = l.getEndUidPrefix();</span>
-<span class="nc bnc" id="L635" title="All 4 branches missed.">			if (isInCluster(startUid) &amp;&amp; isInCluster(endUid)) {</span>
-<span class="nc" id="L636">				final String same = l.rankSame();</span>
-<span class="nc bnc" id="L637" title="All 2 branches missed.">				if (same != null)</span>
-<span class="nc" id="L638">					rankSame.add(same);</span>
+<span class="nc" id="L634">			final String startUid = l.getStartUidPrefix();</span>
+<span class="nc" id="L635">			final String endUid = l.getEndUidPrefix();</span>
+<span class="nc bnc" id="L636" title="All 4 branches missed.">			if (isInCluster(startUid) &amp;&amp; isInCluster(endUid)) {</span>
+<span class="nc" id="L637">				final String same = l.rankSame();</span>
+<span class="nc bnc" id="L638" title="All 2 branches missed.">				if (same != null)</span>
+<span class="nc" id="L639">					rankSame.add(same);</span>
 
 			}
-<span class="nc" id="L641">		}</span>
-<span class="nc" id="L642">		return rankSame;</span>
+<span class="nc" id="L642">		}</span>
+<span class="nc" id="L643">		return rankSame;</span>
 	}
 
 	private boolean isInCluster(String uid) {
-<span class="nc bnc" id="L646" title="All 2 branches missed.">		for (SvekNode node : nodes)</span>
-<span class="nc bnc" id="L647" title="All 2 branches missed.">			if (node.getUid().equals(uid))</span>
-<span class="nc" id="L648">				return true;</span>
+<span class="nc bnc" id="L647" title="All 2 branches missed.">		for (SvekNode node : nodes)</span>
+<span class="nc bnc" id="L648" title="All 2 branches missed.">			if (node.getUid().equals(uid))</span>
+<span class="nc" id="L649">				return true;</span>
 
-<span class="nc" id="L650">		return false;</span>
+<span class="nc" id="L651">		return false;</span>
 	}
 
 	public String getClusterId() {
-<span class="fc" id="L654">		return &quot;cluster&quot; + color;</span>
+<span class="fc" id="L655">		return &quot;cluster&quot; + color;</span>
 	}
 
 	static String getSpecialPointId(Entity group) {
-<span class="nc" id="L658">		return CENTER_ID + group.getUid();</span>
+<span class="nc" id="L659">		return CENTER_ID + group.getUid();</span>
 	}
 
 	String getMinPoint(DiagramType type) {
-<span class="nc bnc" id="L662" title="All 2 branches missed.">		if (skinParam.useSwimlanes(type))</span>
-<span class="nc" id="L663">			return &quot;minPoint&quot; + color;</span>
+<span class="nc bnc" id="L663" title="All 2 branches missed.">		if (skinParam.useSwimlanes(type))</span>
+<span class="nc" id="L664">			return &quot;minPoint&quot; + color;</span>
 
-<span class="nc" id="L665">		return null;</span>
+<span class="nc" id="L666">		return null;</span>
 	}
 
 	String getMaxPoint(DiagramType type) {
-<span class="nc bnc" id="L669" title="All 2 branches missed.">		if (skinParam.useSwimlanes(type))</span>
-<span class="nc" id="L670">			return &quot;maxPoint&quot; + color;</span>
+<span class="nc bnc" id="L670" title="All 2 branches missed.">		if (skinParam.useSwimlanes(type))</span>
+<span class="nc" id="L671">			return &quot;maxPoint&quot; + color;</span>
 
-<span class="nc" id="L672">		return null;</span>
+<span class="nc" id="L673">		return null;</span>
 	}
 
 	public boolean isLabel() {
-<span class="pc bpc" id="L676" title="3 of 4 branches missed.">		return getTitleAndAttributeHeight() &gt; 0 || getTitleAndAttributeWidth() &gt; 0;</span>
+<span class="pc bpc" id="L677" title="3 of 4 branches missed.">		return getTitleAndAttributeHeight() &gt; 0 || getTitleAndAttributeWidth() &gt; 0;</span>
 	}
 
 	int getColor() {
-<span class="nc" id="L680">		return color;</span>
+<span class="nc" id="L681">		return color;</span>
 	}
 
 	int getTitleColor() {
-<span class="nc" id="L684">		return colorTitle;</span>
+<span class="nc" id="L685">		return colorTitle;</span>
 	}
 
 	private final HColor getBackColor(Style style) {
-<span class="pc bpc" id="L688" title="1 of 2 branches missed.">		if (group.isRoot())</span>
-<span class="nc" id="L689">			return null;</span>
+<span class="pc bpc" id="L689" title="1 of 2 branches missed.">		if (group.isRoot())</span>
+<span class="nc" id="L690">			return null;</span>
 
-<span class="fc" id="L691">		final HColor result = group.getColors().getColor(ColorType.BACK);</span>
-<span class="fc bfc" id="L692" title="All 2 branches covered.">		if (result != null)</span>
-<span class="fc" id="L693">			return result;</span>
+<span class="fc" id="L692">		final HColor result = group.getColors().getColor(ColorType.BACK);</span>
+<span class="fc bfc" id="L693" title="All 2 branches covered.">		if (result != null)</span>
+<span class="fc" id="L694">			return result;</span>
 
-<span class="fc" id="L695">		return style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L696">		return style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
 	}
 
 	boolean isClusterOf(Entity ent) {
-<span class="nc bnc" id="L699" title="All 2 branches missed.">		if (ent.isGroup() == false)</span>
-<span class="nc" id="L700">			return false;</span>
+<span class="nc bnc" id="L700" title="All 2 branches missed.">		if (ent.isGroup() == false)</span>
+<span class="nc" id="L701">			return false;</span>
 
-<span class="nc bnc" id="L702" title="All 2 branches missed.">		return group == ent;</span>
+<span class="nc bnc" id="L703" title="All 2 branches missed.">		return group == ent;</span>
 	}
 
 	public static HColor getBackColor(HColor backColor, Stereotype stereotype, SName styleName, USymbol symbol,
 			StyleBuilder styleBuilder, HColorSet colorSet, GroupType groupType) {
 
-<span class="fc" id="L708">		final Style style = styleBuilder.getMergedStyle(getDefaultStyleDefinition(styleName, symbol, groupType));</span>
-<span class="fc bfc" id="L709" title="All 2 branches covered.">		if (backColor == null)</span>
-<span class="fc" id="L710">			backColor = style.value(PName.BackGroundColor).asColor(colorSet);</span>
+<span class="fc" id="L709">		final Style style = styleBuilder.getMergedStyle(getDefaultStyleDefinition(styleName, symbol, groupType));</span>
+<span class="fc bfc" id="L710" title="All 2 branches covered.">		if (backColor == null)</span>
+<span class="fc" id="L711">			backColor = style.value(PName.BackGroundColor).asColor(colorSet);</span>
 
-<span class="pc bpc" id="L712" title="1 of 4 branches missed.">		if (backColor == null || backColor.equals(HColors.transparent()))</span>
-<span class="fc" id="L713">			backColor = HColors.transparent();</span>
+<span class="pc bpc" id="L713" title="1 of 4 branches missed.">		if (backColor == null || backColor.equals(HColors.transparent()))</span>
+<span class="fc" id="L714">			backColor = HColors.transparent();</span>
 
-<span class="fc" id="L715">		return backColor;</span>
+<span class="fc" id="L716">		return backColor;</span>
 	}
 
 	public final int getColorNoteTop() {
-<span class="nc" id="L719">		return colorNoteTop;</span>
+<span class="nc" id="L720">		return colorNoteTop;</span>
 	}
 
 	public final int getColorNoteBottom() {
-<span class="nc" id="L723">		return colorNoteBottom;</span>
+<span class="nc" id="L724">		return colorNoteBottom;</span>
 	}
 
 	public XDimension2D getTitleDimension(StringBounder stringBounder) {
-<span class="fc" id="L727">		return clusterHeader.getTitle().calculateDimension(stringBounder);</span>
+<span class="fc" id="L728">		return clusterHeader.getTitle().calculateDimension(stringBounder);</span>
 	}
 
 	public MagneticBorder getMagneticBorder() {
 
-<span class="pc bpc" id="L732" title="1 of 4 branches missed.">		if (group.getUSymbol() == null &amp;&amp; group.getGroupType() != GroupType.PACKAGE)</span>
-<span class="fc" id="L733">			return new MagneticBorderNone();</span>
+<span class="pc bpc" id="L733" title="1 of 4 branches missed.">		if (group.getUSymbol() == null &amp;&amp; group.getGroupType() != GroupType.PACKAGE)</span>
+<span class="fc" id="L734">			return new MagneticBorderNone();</span>
 
-<span class="fc" id="L735">		final USymbol uSymbol = group.getUSymbol();</span>
-<span class="fc" id="L736">		PackageStyle packageStyle = group.getPackageStyle();</span>
-<span class="pc bpc" id="L737" title="1 of 2 branches missed.">		if (packageStyle == null)</span>
-<span class="fc" id="L738">			packageStyle = skinParam.packageStyle();</span>
+<span class="fc" id="L736">		final USymbol uSymbol = group.getUSymbol();</span>
+<span class="fc" id="L737">		PackageStyle packageStyle = group.getPackageStyle();</span>
+<span class="pc bpc" id="L738" title="1 of 2 branches missed.">		if (packageStyle == null)</span>
+<span class="fc" id="L739">			packageStyle = skinParam.packageStyle();</span>
 
-<span class="fc" id="L740">		final DiagramType diagramType = DiagramType.CLASS;</span>
+<span class="fc" id="L741">		final DiagramType diagramType = DiagramType.CLASS;</span>
 
-<span class="fc" id="L742">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinition(</span>
-<span class="fc" id="L743">				diagramType.getStyleName(), uSymbol, group.getGroupType()).withStereotype(group.getStereotype()));</span>
+<span class="fc" id="L743">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(getDefaultStyleDefinition(</span>
+<span class="fc" id="L744">				diagramType.getStyleName(), uSymbol, group.getGroupType()).withStereotype(group.getStereotype()));</span>
 
-<span class="fc" id="L745">		final UStroke stroke = getStrokeInternal(group, style);</span>
+<span class="fc" id="L746">		final UStroke stroke = getStrokeInternal(group, style);</span>
 
-<span class="fc" id="L747">		final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(),</span>
-<span class="fc" id="L748">				clusterHeader.getTitle(), clusterHeader.getStereo(), rectangleArea, stroke);</span>
+<span class="fc" id="L748">		final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(),</span>
+<span class="fc" id="L749">				clusterHeader.getTitle(), clusterHeader.getStereo(), rectangleArea, stroke);</span>
 
-<span class="fc" id="L750">		final TextBlock textBlock = decoration.getTextBlock(HColors.BLACK, HColors.BLACK, 0, 0,</span>
-<span class="fc" id="L751">				skinParam.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null),</span>
-<span class="fc" id="L752">				skinParam.getStereotypeAlignment(), 0);</span>
+<span class="fc" id="L751">		final TextBlock textBlock = decoration.getTextBlock(HColors.BLACK, HColors.BLACK, 0, 0,</span>
+<span class="fc" id="L752">				skinParam.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null),</span>
+<span class="fc" id="L753">				skinParam.getStereotypeAlignment(), 0);</span>
 
-<span class="fc" id="L754">		final MagneticBorder orig = textBlock.getMagneticBorder();</span>
+<span class="fc" id="L755">		final MagneticBorder orig = textBlock.getMagneticBorder();</span>
 
-<span class="fc" id="L756">		return new MagneticBorder() {</span>
+<span class="fc" id="L757">		return new MagneticBorder() {</span>
 			public UTranslate getForceAt(StringBounder stringBounder, XPoint2D position) {
-<span class="fc" id="L758">				return orig.getForceAt(stringBounder,</span>
-<span class="fc" id="L759">						position.move(-rectangleArea.getMinX(), -rectangleArea.getMinY()));</span>
+<span class="fc" id="L759">				return orig.getForceAt(stringBounder,</span>
+<span class="fc" id="L760">						position.move(-rectangleArea.getMinX(), -rectangleArea.getMinY()));</span>
 			}
 		};
 	}

@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 <span class="fc" id="L43">public class Stairs {</span>
 
@@ -70,7 +70,7 @@ import java.util.List;
 	}
 
 	public Collection&lt;Step&gt; getSteps() {
-<span class="fc" id="L73">		return Collections.unmodifiableCollection(values);</span>
+<span class="fc" id="L73">		return MyCollections.unmodifiableCollection(values);</span>
 	}
 
 }

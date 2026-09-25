@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.sequencediagram;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import net.sourceforge.plantuml.StringUtils;
@@ -50,6 +49,7 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.warning.Warning;
 
 public class Reference extends AbstractEvent implements EventWithNote {
@@ -118,7 +118,7 @@ public class Reference extends AbstractEvent implements EventWithNote {
 <span class="fc bfc" id="L118" title="All 2 branches covered.">		for (Participant p : all)</span>
 <span class="pc bpc" id="L119" title="1 of 2 branches missed.">			if (result.contains(p) == false)</span>
 <span class="fc" id="L120">				result.add(p);</span>
-<span class="fc" id="L121">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L121">		return MyCollections.unmodifiableList(result);</span>
 	}
 
 	public List&lt;Participant&gt; getParticipant() {

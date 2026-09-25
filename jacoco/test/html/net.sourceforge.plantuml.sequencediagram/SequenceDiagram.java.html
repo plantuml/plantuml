@@ -39,7 +39,6 @@ import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
@@ -79,6 +78,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 
 <span class="fc" id="L84">public class SequenceDiagram extends TitledDiagram {</span>
@@ -190,7 +190,7 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 <span class="fc" id="L190">	}</span>
 
 	public Collection&lt;Participant&gt; participants() {
-<span class="fc" id="L193">		return Collections.unmodifiableCollection(participantsList);</span>
+<span class="fc" id="L193">		return MyCollections.unmodifiableCollection(participantsList);</span>
 	}
 
 	public boolean participantsContainsKey(String code) {
@@ -292,7 +292,7 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 <span class="fc" id="L292">	}</span>
 
 	public List&lt;Event&gt; events() {
-<span class="fc" id="L295">		return Collections.unmodifiableList(events);</span>
+<span class="fc" id="L295">		return MyCollections.unmodifiableList(events);</span>
 	}
 
 	private FileMaker getSequenceDiagramPngMaker(int index, FileFormatOption fileFormatOption) {
@@ -622,7 +622,7 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 	}
 
 	public List&lt;LinkAnchor&gt; getLinkAnchors() {
-<span class="fc" id="L625">		return Collections.unmodifiableList(linkAnchors);</span>
+<span class="fc" id="L625">		return MyCollections.unmodifiableList(linkAnchors);</span>
 	}
 
 	@Override

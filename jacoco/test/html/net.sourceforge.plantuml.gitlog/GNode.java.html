@@ -37,10 +37,10 @@ package net.sourceforge.plantuml.gitlog;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 <span class="nc" id="L45">public class GNode {</span>
 
@@ -81,7 +81,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 	}
 
 	public Collection&lt;GNode&gt; getDowns() {
-<span class="nc" id="L84">		return Collections.unmodifiableCollection(down);</span>
+<span class="nc" id="L84">		return MyCollections.unmodifiableCollection(down);</span>
 	}
 
 	public boolean canEatTheNextOne() {

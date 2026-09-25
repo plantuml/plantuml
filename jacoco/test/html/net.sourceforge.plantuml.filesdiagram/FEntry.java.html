@@ -35,7 +35,6 @@
 package net.sourceforge.plantuml.filesdiagram;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -59,6 +58,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.svek.image.Opale;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class FEntry implements Iterable&lt;FEntry&gt; {
 
@@ -110,7 +110,7 @@ public class FEntry implements Iterable&lt;FEntry&gt; {
 
 	@Override
 	public Iterator&lt;FEntry&gt; iterator() {
-<span class="nc" id="L113">		return Collections.unmodifiableCollection(children).iterator();</span>
+<span class="nc" id="L113">		return MyCollections.unmodifiableCollection(children).iterator();</span>
 	}
 
 	public FEntry getParent() {

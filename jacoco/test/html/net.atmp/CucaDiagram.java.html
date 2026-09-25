@@ -39,7 +39,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -103,6 +102,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.xmi.CucaDiagramXmiMaker;
 import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 
@@ -646,7 +646,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 	}
 
 	public final Set&lt;VisibilityModifier&gt; getHidesVisibilityModifier() {
-<span class="fc" id="L649">		return Collections.unmodifiableSet(hideVisibilityModifier);</span>
+<span class="fc" id="L649">		return MyCollections.unmodifiableSet(hideVisibilityModifier);</span>
 	}
 
 	final public boolean isStandalone(Entity ent) {
@@ -687,7 +687,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 <span class="nc bnc" id="L687" title="All 4 branches missed.">			if (link.getEntity1().getLeafType() != LeafType.NOTE &amp;&amp; link.getEntity2().getLeafType() != LeafType.NOTE) {</span>
 <span class="nc" id="L688">				result.add(link);</span>
 <span class="nc bnc" id="L689" title="All 2 branches missed.">				if (result.size() == 2)</span>
-<span class="nc" id="L690">					return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L690">					return MyCollections.unmodifiableList(result);</span>
 
 			}
 		}
@@ -864,7 +864,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 <span class="pc bpc" id="L864" title="1 of 4 branches missed.">			if (data != null &amp;&amp; data.isGroup() == false)</span>
 <span class="fc" id="L865">				result.add(data);</span>
 <span class="fc" id="L866">		}</span>
-<span class="fc" id="L867">		return Collections.unmodifiableCollection(result);</span>
+<span class="fc" id="L867">		return MyCollections.unmodifiableCollection(result);</span>
 
 	}
 
@@ -878,7 +878,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 <span class="pc bpc" id="L878" title="1 of 4 branches missed.">			if (data != null &amp;&amp; data.isGroup())</span>
 <span class="fc" id="L879">				result.add(data);</span>
 <span class="fc" id="L880">		}</span>
-<span class="fc" id="L881">		return Collections.unmodifiableCollection(result);</span>
+<span class="fc" id="L881">		return MyCollections.unmodifiableCollection(result);</span>
 	}
 
 	public final Collection&lt;Entity&gt; groupsAndRoot() {
@@ -888,7 +888,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 <span class="pc bpc" id="L888" title="1 of 4 branches missed.">			if (data != null &amp;&amp; data.isGroup())</span>
 <span class="fc" id="L889">				result.add(data);</span>
 <span class="fc" id="L890">		}</span>
-<span class="fc" id="L891">		return Collections.unmodifiableCollection(result);</span>
+<span class="fc" id="L891">		return MyCollections.unmodifiableCollection(result);</span>
 	}
 
 	public void incRawLayout() {
@@ -896,7 +896,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 <span class="nc" id="L896">	}</span>
 
 	public final List&lt;Link&gt; getLinks() {
-<span class="fc" id="L899">		return Collections.unmodifiableList(this.links);</span>
+<span class="fc" id="L899">		return MyCollections.unmodifiableList(this.links);</span>
 	}
 
 	public void addLink(Link link) {

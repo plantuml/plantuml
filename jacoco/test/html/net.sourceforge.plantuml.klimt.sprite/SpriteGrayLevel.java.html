@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.klimt.sprite;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.code.AsciiEncoder;
@@ -53,6 +52,7 @@ import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorUtils;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 <span class="fc" id="L57">public enum SpriteGrayLevel {</span>
 
@@ -112,7 +112,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 			}
 <span class="fc" id="L113">			result.add(sb.toString());</span>
 		}
-<span class="fc" id="L115">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L115">		return MyCollections.unmodifiableList(result);</span>
 	}
 
 	private List&lt;String&gt; encode8(PortableImage img) {
@@ -134,7 +134,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 			}
 <span class="nc" id="L135">			result.add(sb.toString());</span>
 		}
-<span class="nc" id="L137">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L137">		return MyCollections.unmodifiableList(result);</span>
 	}
 
 	private List&lt;String&gt; encode4(PortableImage img) {
@@ -158,7 +158,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 			}
 <span class="nc" id="L159">			result.add(sb.toString());</span>
 		}
-<span class="nc" id="L161">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L161">		return MyCollections.unmodifiableList(result);</span>
 	}
 
 	private int getGrayOn16(PortableImage img, int x, int y) {
@@ -285,7 +285,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="nc" id="L285">			result.add(s.substring(i, j));</span>
 
 		}
-<span class="nc" id="L288">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L288">		return MyCollections.unmodifiableList(result);</span>
 	}
 	// ::done
 

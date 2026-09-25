@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.klimt;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -44,6 +43,7 @@ import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.DotPath;
 import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 <span class="nc" id="L48">public class UMotif {</span>
 	// ::remove file when __HAXE__
@@ -71,7 +71,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	List&lt;XPoint2D&gt; getPoints() {
-<span class="nc" id="L74">		return Collections.unmodifiableList(points);</span>
+<span class="nc" id="L74">		return MyCollections.unmodifiableList(points);</span>
 	}
 
 	public DotPath getRectangle(double width, double height) {

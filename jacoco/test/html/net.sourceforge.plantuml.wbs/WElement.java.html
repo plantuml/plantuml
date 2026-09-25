@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.wbs;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.annotation.DuplicateCode;
@@ -57,6 +56,7 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.utils.Direction;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 final public class WElement {
 
@@ -166,8 +166,8 @@ final public class WElement {
 
 	public Collection&lt;WElement&gt; getChildren(Direction direction) {
 <span class="fc bfc" id="L168" title="All 2 branches covered.">		if (direction == Direction.LEFT)</span>
-<span class="fc" id="L169">			return Collections.unmodifiableList(childrenLeft);</span>
-<span class="fc" id="L170">		return Collections.unmodifiableList(childrenRight);</span>
+<span class="fc" id="L169">			return MyCollections.unmodifiableList(childrenLeft);</span>
+<span class="fc" id="L170">		return MyCollections.unmodifiableList(childrenRight);</span>
 	}
 
 	public WElement getParent() {

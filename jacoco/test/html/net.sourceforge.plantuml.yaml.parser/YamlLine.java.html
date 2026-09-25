@@ -35,10 +35,10 @@
 package net.sourceforge.plantuml.yaml.parser;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.annotation.DuplicateCode;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class YamlLine {
 
@@ -249,7 +249,7 @@ public class YamlLine {
 
 	public List&lt;String&gt; getValues() {
 <span class="pc bpc" id="L251" title="1 of 2 branches missed.">		if (type == YamlLineType.KEY_AND_FLOW_SEQUENCE)</span>
-<span class="fc" id="L252">			return Collections.unmodifiableList(values);</span>
+<span class="fc" id="L252">			return MyCollections.unmodifiableList(values);</span>
 <span class="nc" id="L253">		throw new IllegalStateException(type.name());</span>
 	}
 

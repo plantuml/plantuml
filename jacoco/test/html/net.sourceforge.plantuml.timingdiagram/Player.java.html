@@ -35,7 +35,6 @@
 package net.sourceforge.plantuml.timingdiagram;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.color.Colors;
@@ -55,6 +54,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.timingdiagram.graphic.Panels;
 import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrame;
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.utils.Position;
 
 public abstract class Player {
@@ -99,7 +99,7 @@ public abstract class Player {
 	}
 
 	public final List&lt;TimingNote&gt; getNotes() {
-<span class="fc" id="L102">		return Collections.unmodifiableList(notes);</span>
+<span class="fc" id="L102">		return MyCollections.unmodifiableList(notes);</span>
 	}
 
 	public final ISkinParam getSkinParam() {

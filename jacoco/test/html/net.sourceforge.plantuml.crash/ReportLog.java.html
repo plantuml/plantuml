@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.crash;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -45,6 +44,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cli.OptionPrint;
 import net.sourceforge.plantuml.eggs.QuoteUtils;
 import net.sourceforge.plantuml.text.BackSlash;
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.version.Version;
 
 <span class="fc" id="L50">public class ReportLog implements Iterable&lt;String&gt; {</span>
@@ -63,11 +63,11 @@ import net.sourceforge.plantuml.version.Version;
 
 	@Override
 	public Iterator&lt;String&gt; iterator() {
-<span class="nc" id="L66">		return Collections.unmodifiableList(strings).iterator();</span>
+<span class="nc" id="L66">		return MyCollections.unmodifiableList(strings).iterator();</span>
 	}
 
 	public List&lt;String&gt; asList() {
-<span class="fc" id="L70">		return Collections.unmodifiableList(strings);</span>
+<span class="fc" id="L70">		return MyCollections.unmodifiableList(strings);</span>
 	}
 
 	public void youShouldSendThisDiagram() {

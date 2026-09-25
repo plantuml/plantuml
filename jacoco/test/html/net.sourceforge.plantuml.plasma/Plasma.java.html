@@ -37,10 +37,10 @@ package net.sourceforge.plantuml.plasma;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 /**
  * A namespace for {@link Quark} objects.
@@ -90,7 +90,7 @@ public class Plasma&lt;DATA&gt; {
 	}
 
 	public Collection&lt;Quark&lt;DATA&gt;&gt; quarks() {
-<span class="fc" id="L93">		return Collections.unmodifiableCollection(quarks);</span>
+<span class="fc" id="L93">		return MyCollections.unmodifiableCollection(quarks);</span>
 	}
 
 	public Quark&lt;DATA&gt; firstWithName(String name) {

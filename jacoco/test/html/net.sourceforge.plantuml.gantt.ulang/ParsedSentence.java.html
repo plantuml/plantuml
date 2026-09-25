@@ -36,10 +36,10 @@
 package net.sourceforge.plantuml.gantt.ulang;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import com.plantuml.ubrex.UMatcher;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class ParsedSentence {
 
@@ -48,7 +48,7 @@ public class ParsedSentence {
 
 <span class="nc" id="L49">	public ParsedSentence(UMatcher matcherSubject, List&lt;VerbPhraseMatcher&gt; verbPhrases) {</span>
 <span class="nc" id="L50">		this.matcherSubject = matcherSubject;</span>
-<span class="nc" id="L51">		this.verbPhrases = Collections.unmodifiableList(new ArrayList&lt;&gt;(verbPhrases));</span>
+<span class="nc" id="L51">		this.verbPhrases = MyCollections.unmodifiableList(new ArrayList&lt;&gt;(verbPhrases));</span>
 <span class="nc" id="L52">	}</span>
 
 	@Override

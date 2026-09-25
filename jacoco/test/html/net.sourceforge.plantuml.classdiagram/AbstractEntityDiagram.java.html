@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.classdiagram;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import net.atmp.CucaDiagram;
@@ -49,6 +48,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.PragmaKey;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public abstract class AbstractEntityDiagram extends CucaDiagram {
 
@@ -66,7 +66,7 @@ public abstract class AbstractEntityDiagram extends CucaDiagram {
 <span class="nc" id="L66">		final String attribute = getPragma().getValue(PragmaKey.GRAPH_ATTRIBUTES);</span>
 <span class="nc" id="L67">		final List&lt;String&gt; result = new ArrayList&lt;&gt;(def);</span>
 <span class="nc" id="L68">		result.add(attribute);</span>
-<span class="nc" id="L69">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L69">		return MyCollections.unmodifiableList(result);</span>
 	}
 
 	final public DiagramDescription getDescription() {

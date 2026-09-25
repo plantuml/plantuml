@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.mda;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.BlockUml;
@@ -47,6 +46,7 @@ import net.sourceforge.plantuml.api.mda.option2.MDADiagram;
 import net.sourceforge.plantuml.api.mda.option2.MDAPackage;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class MDADiagramImpl implements MDADiagram {
 	
@@ -77,7 +77,7 @@ public class MDADiagramImpl implements MDADiagram {
 <span class="nc" id="L77">	}</span>
 
 	public Collection&lt;MDAPackage&gt; getPackages() {
-<span class="nc" id="L80">		return Collections.unmodifiableCollection(packages);</span>
+<span class="nc" id="L80">		return MyCollections.unmodifiableCollection(packages);</span>
 	}
 
 }

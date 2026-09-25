@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.nwdiag.next;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +43,7 @@ import java.util.Map.Entry;
 
 import net.sourceforge.plantuml.nwdiag.core.NServer;
 import net.sourceforge.plantuml.nwdiag.core.NwGroup;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 <span class="nc" id="L48">public class NPlayField {</span>
 
@@ -97,7 +97,7 @@ import net.sourceforge.plantuml.nwdiag.core.NwGroup;
 <span class="nc" id="L97">				result.put(bar.getKey(), boxPos + bar.getValue());</span>
 
 <span class="nc" id="L99">		}</span>
-<span class="nc" id="L100">		return Collections.unmodifiableMap(result);</span>
+<span class="nc" id="L100">		return MyCollections.unmodifiableMap(result);</span>
 	}
 
 	public void fixGroups(List&lt;NwGroup&gt; groups, Collection&lt;NServer&gt; servers) {

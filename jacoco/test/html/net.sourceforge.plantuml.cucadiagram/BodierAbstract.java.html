@@ -36,11 +36,11 @@
 package net.sourceforge.plantuml.cucadiagram;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 <span class="fc" id="L45">abstract class BodierAbstract implements Bodier {</span>
 
@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.abel.Entity;
 
 	@Override
 	final public List&lt;CharSequence&gt; getRawBody() {
-<span class="fc" id="L57">		return Collections.unmodifiableList(rawBody);</span>
+<span class="fc" id="L57">		return MyCollections.unmodifiableList(rawBody);</span>
 	}
 
 	static private boolean isAlphanum(char c) {

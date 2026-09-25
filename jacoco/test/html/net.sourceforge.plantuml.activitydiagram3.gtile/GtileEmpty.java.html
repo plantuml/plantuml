@@ -105,7 +105,7 @@ public class GtileEmpty extends AbstractGtile {
 //		if (swimlane != null) {
 //			result.add(swimlane);
 //		}
-//		return Collections.unmodifiableSet(result);
+//		return MyCollections.unmodifiableSet(result);
 //	}
 
 }

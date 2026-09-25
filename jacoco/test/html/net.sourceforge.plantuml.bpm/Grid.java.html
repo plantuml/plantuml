@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.bpm;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -46,6 +45,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.bpm.ConnectorPuzzle.Where;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 <span class="nc" id="L50">public class Grid {</span>
 
@@ -99,7 +99,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	// // result.add(edge);
 	// // }
 	// // }
-	// // return Collections.unmodifiableSet(result);
+	// // return MyCollections.unmodifiableSet(result);
 	// throw new UnsupportedOperationException();
 	//
 	// }
@@ -115,7 +115,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	// }
 	// }
 	// }
-	// return Collections.unmodifiableSet(result);
+	// return MyCollections.unmodifiableSet(result);
 	// }
 	//
 	// private SortedSet&lt;Col&gt; getColsConnectedTo(Cell someCell) {
@@ -129,7 +129,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	// }
 	// }
 	// }
-	// return Collections.unmodifiableSortedSet(result);
+	// return MyCollections.unmodifiableSortedSet(result);
 	// }
 
 	// public SortedSet&lt;Col&gt; colsConnectedTo(Line line) {
@@ -145,7 +145,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	// result.addAll(getColsConnectedTo(ent.getValue()));
 	//
 	// }
-	// return Collections.unmodifiableSortedSet(result);
+	// return MyCollections.unmodifiableSortedSet(result);
 	// }
 
 	public Coord getById(String id) {
@@ -265,7 +265,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="nc" id="L265">				result.add(ent.getKey().getCol());</span>
 			}
 <span class="nc" id="L267">		}</span>
-<span class="nc" id="L268">		return Collections.unmodifiableSet(result);</span>
+<span class="nc" id="L268">		return MyCollections.unmodifiableSet(result);</span>
 	}
 
 	public void removeLine(Line line) {

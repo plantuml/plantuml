@@ -35,12 +35,12 @@
 package net.sourceforge.plantuml.yaml;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class YamlLines implements Iterable&lt;String&gt; {
 
@@ -201,7 +201,7 @@ public class YamlLines implements Iterable&lt;String&gt; {
 	}
 
 	public Iterator&lt;String&gt; iterator() {
-<span class="nc" id="L204">		return Collections.unmodifiableList(lines).iterator();</span>
+<span class="nc" id="L204">		return MyCollections.unmodifiableList(lines).iterator();</span>
 	}
 
 }

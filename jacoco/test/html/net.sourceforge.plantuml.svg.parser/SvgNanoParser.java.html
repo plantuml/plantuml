@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.svg.parser;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -69,6 +68,7 @@ import net.sourceforge.plantuml.klimt.shape.UImageSvg;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.openiconic.SvgPath;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 // Emojji from https://twemoji.twitter.com/
 // Shorcut from https://api.github.com/emojis
@@ -181,7 +181,7 @@ public class SvgNanoParser implements ISvgSpriteParser, GrayLevelRange {
 				}
 <span class="fc" id="L182">			}</span>
 		}
-<span class="fc" id="L184">		return Collections.unmodifiableCollection(data);</span>
+<span class="fc" id="L184">		return MyCollections.unmodifiableCollection(data);</span>
 	}
 
 	private UGraphicWithScale applyFillAndStroke(UGraphicWithScale ugs, String s, Deque&lt;String&gt; stackG) {

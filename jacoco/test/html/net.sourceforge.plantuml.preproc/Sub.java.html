@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.preproc;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.text.StringLocated;
@@ -46,6 +45,7 @@ import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterStartsub;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TMemory;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Sub {
 	// ::remove folder when __HAXE__
@@ -75,7 +75,7 @@ public class Sub {
 //			CodeIteratorImpl.indentNow(lines);
 //			indentationDone = true;
 //		}
-<span class="fc" id="L78">		return Collections.unmodifiableList(lines);</span>
+<span class="fc" id="L78">		return MyCollections.unmodifiableList(lines);</span>
 	}
 
 	public static Sub fromFile(ReadLine reader, String blocname, TContext context, TMemory memory)

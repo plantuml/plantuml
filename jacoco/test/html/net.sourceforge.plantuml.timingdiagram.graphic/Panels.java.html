@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.timingdiagram.graphic;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.Fashion;
@@ -60,6 +59,7 @@ import net.sourceforge.plantuml.timingdiagram.TimeTick;
 import net.sourceforge.plantuml.timingdiagram.TimingFormat;
 import net.sourceforge.plantuml.timingdiagram.TimingNote;
 import net.sourceforge.plantuml.timingdiagram.TimingRuler;
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.utils.Position;
 
 public abstract class Panels implements TimeProjected {
@@ -99,7 +99,7 @@ public abstract class Panels implements TimeProjected {
 	public abstract double getLeftPanelWidth(StringBounder stringBounder);
 
 	protected final List&lt;TimeConstraint&gt; getConstraints() {
-<span class="fc" id="L102">		return Collections.unmodifiableList(constraints);</span>
+<span class="fc" id="L102">		return MyCollections.unmodifiableList(constraints);</span>
 	}
 
 	protected double getConstraintDeltaY(TimeConstraint constraint) {
@@ -124,7 +124,7 @@ public abstract class Panels implements TimeProjected {
 	}
 
 	protected final List&lt;TimingNote&gt; getNotes() {
-<span class="nc" id="L127">		return Collections.unmodifiableList(notes);</span>
+<span class="nc" id="L127">		return MyCollections.unmodifiableList(notes);</span>
 	}
 
 	protected final void drawNotes(UGraphic ug, Position position) {

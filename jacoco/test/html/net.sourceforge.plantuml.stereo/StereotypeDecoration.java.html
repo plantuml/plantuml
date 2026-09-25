@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.stereo;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
@@ -54,6 +53,7 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.text.Guillemet;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class StereotypeDecoration {
 <span class="fc" id="L59">	private final static RegexComposed circleChar = new RegexConcat( //</span>
@@ -109,12 +109,12 @@ public class StereotypeDecoration {
 <span class="fc bfc" id="L109" title="All 2 branches covered.">		for (String s : cutLabels(label, Guillemet.NONE))</span>
 <span class="fc" id="L110">			result.add(s);</span>
 <span class="fc bfc" id="L111" title="All 2 branches covered.">		if (spriteName == null)</span>
-<span class="fc" id="L112">			return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L112">			return MyCollections.unmodifiableList(result);</span>
 
 <span class="fc" id="L114">		final int idx = spriteName.lastIndexOf('/');</span>
 <span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (idx != -1)</span>
 <span class="nc" id="L116">			result.add(spriteName.substring(idx + 1));</span>
-<span class="fc" id="L117">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L117">		return MyCollections.unmodifiableList(result);</span>
 	}
 
 	private StereotypeDecoration(String label, HColor htmlColor, char character, String spriteName,
@@ -192,7 +192,7 @@ public class StereotypeDecoration {
 <span class="pc bpc" id="L192" title="1 of 2 branches missed.">			if (group.startsWith(&quot;&lt;&lt;&lt;&quot;) == false)</span>
 <span class="fc" id="L193">				result.add(guillemet.manageGuillemetStrict(group));</span>
 <span class="fc" id="L194">		}</span>
-<span class="fc" id="L195">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L195">		return MyCollections.unmodifiableList(result);</span>
 	}
 
 }

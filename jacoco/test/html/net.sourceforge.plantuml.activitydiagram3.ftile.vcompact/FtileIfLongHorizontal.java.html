@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -76,6 +75,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 <span class="fc" id="L80">class FtileIfLongHorizontal extends AbstractFtile {</span>
 
@@ -137,7 +137,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="nc" id="L137">			result.addAll(tile.getSwimlanes());</span>
 
 <span class="nc" id="L139">		result.addAll(tile2.getSwimlanes());</span>
-<span class="nc" id="L140">		return Collections.unmodifiableSet(result);</span>
+<span class="nc" id="L140">		return MyCollections.unmodifiableSet(result);</span>
 	}
 
 	public Swimlane getSwimlaneIn() {
@@ -604,7 +604,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	public Collection&lt;Ftile&gt; getMyChildren() {
 <span class="nc" id="L605">		final List&lt;Ftile&gt; result = new ArrayList&lt;&gt;(tiles);</span>
 <span class="nc" id="L606">		result.add(tile2);</span>
-<span class="nc" id="L607">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L607">		return MyCollections.unmodifiableList(result);</span>
 	}
 
 	@Override

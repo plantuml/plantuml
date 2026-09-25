@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -48,6 +47,7 @@ import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 // Do not move
 <span class="nc" id="L53">public class StringUtils {</span>
@@ -441,7 +441,7 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="fc bfc" id="L441" title="All 2 branches covered.">		while (m.find())</span>
 <span class="fc" id="L442">			result.add(eventuallyRemoveStartingAndEndingDoubleQuote(m.group(0)));</span>
 
-<span class="fc" id="L444">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L444">		return MyCollections.unmodifiableList(result);</span>
 	}
 
 	public static String getUid(String uid1, int uid2) {
@@ -451,7 +451,7 @@ import net.sourceforge.plantuml.utils.Log;
 	public static &lt;O&gt; List&lt;O&gt; merge(List&lt;O&gt; l1, List&lt;O&gt; l2) {
 <span class="nc" id="L452">		final List&lt;O&gt; result = new ArrayList&lt;&gt;(l1);</span>
 <span class="nc" id="L453">		result.addAll(l2);</span>
-<span class="nc" id="L454">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L454">		return MyCollections.unmodifiableList(result);</span>
 	}
 
 	public static boolean endsWithBackslash(final String s) {

@@ -36,12 +36,12 @@
 package net.sourceforge.plantuml.bpm;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 <span class="nc" id="L46">public class ChainImpl&lt;O&gt; implements Chain&lt;O&gt; {</span>
 
@@ -101,7 +101,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="nc" id="L101">				result.add(element);</span>
 			}
 <span class="nc" id="L103">		}</span>
-<span class="nc" id="L104">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L104">		return MyCollections.unmodifiableList(result);</span>
 	}
 
 <span class="nc" id="L107">	private ChainImpl() {</span>

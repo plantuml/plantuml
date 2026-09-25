@@ -39,7 +39,6 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -65,6 +64,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class TaskImpl extends AbstractTask implements Task {
 
@@ -344,7 +344,7 @@ public class TaskImpl extends AbstractTask implements Task {
 <span class="pc bpc" id="L344" title="1 of 2 branches missed.">		for (DayOfWeek dayOfWeek : pausedDayOfWeek)</span>
 <span class="nc" id="L345">			addAll(result, dayOfWeek);</span>
 
-<span class="fc" id="L347">		return Collections.unmodifiableCollection(result);</span>
+<span class="fc" id="L347">		return MyCollections.unmodifiableCollection(result);</span>
 	}
 
 	private void addAll(SortedSet&lt;LocalDate&gt; result, DayOfWeek dayOfWeek) {

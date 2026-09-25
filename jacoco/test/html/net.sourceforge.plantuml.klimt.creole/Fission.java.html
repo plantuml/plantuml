@@ -49,197 +49,198 @@ import net.sourceforge.plantuml.klimt.creole.atom.Atom;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Fission {
 
 	private final Stripe stripe;
 	private final LineBreakStrategy maxWidth;
 
-<span class="fc" id="L58">	public Fission(Stripe stripe, LineBreakStrategy maxWidth) {</span>
-<span class="fc" id="L59">		this.stripe = stripe;</span>
-<span class="fc" id="L60">		this.maxWidth = Objects.requireNonNull(maxWidth);</span>
-<span class="fc" id="L61">	}</span>
+<span class="fc" id="L59">	public Fission(Stripe stripe, LineBreakStrategy maxWidth) {</span>
+<span class="fc" id="L60">		this.stripe = stripe;</span>
+<span class="fc" id="L61">		this.maxWidth = Objects.requireNonNull(maxWidth);</span>
+<span class="fc" id="L62">	}</span>
 
 	public List&lt;Stripe&gt; getSplitted(StringBounder stringBounder) {
-<span class="fc" id="L64">		final double valueMaxWidth = Math.abs(maxWidth.getMaxWidth());</span>
-<span class="fc bfc" id="L65" title="All 2 branches covered.">		if (valueMaxWidth == 0)</span>
-<span class="fc" id="L66">			return Arrays.asList(stripe);</span>
+<span class="fc" id="L65">		final double valueMaxWidth = Math.abs(maxWidth.getMaxWidth());</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">		if (valueMaxWidth == 0)</span>
+<span class="fc" id="L67">			return Arrays.asList(stripe);</span>
 
-<span class="fc" id="L68">		final List&lt;Stripe&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L69">		StripeSimpleInternal line = new StripeSimpleInternal(false, stringBounder, stripe.getLHeader());</span>
-<span class="fc" id="L70">		result.add(line);</span>
+<span class="fc" id="L69">		final List&lt;Stripe&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L70">		StripeSimpleInternal line = new StripeSimpleInternal(false, stringBounder, stripe.getLHeader());</span>
+<span class="fc" id="L71">		result.add(line);</span>
 
-<span class="fc" id="L72">		final Deque&lt;Neutron&gt; all = new ArrayDeque&lt;&gt;();</span>
-<span class="fc bfc" id="L73" title="All 2 branches covered.">		for (Atom atom : noHeader())</span>
-<span class="fc bfc" id="L74" title="All 2 branches covered.">			for (Neutron n : atom.getNeutrons())</span>
-<span class="fc" id="L75">				all.addLast(n);</span>
-<span class="fc bfc" id="L76" title="All 2 branches covered.">		if (all.peekLast().getType() != NeutronType.ZWSP_SEPARATOR)</span>
-<span class="fc" id="L77">			all.addLast(Neutron.zwspSeparator());</span>
+<span class="fc" id="L73">		final Deque&lt;Neutron&gt; all = new ArrayDeque&lt;&gt;();</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		for (Atom atom : noHeader())</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">			for (Neutron n : atom.getNeutrons())</span>
+<span class="fc" id="L76">				all.addLast(n);</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (all.peekLast().getType() != NeutronType.ZWSP_SEPARATOR)</span>
+<span class="fc" id="L78">			all.addLast(Neutron.zwspSeparator());</span>
 
-<span class="fc bfc" id="L79" title="All 2 branches covered.">		while (all.size() &gt; 0) {</span>
-<span class="fc" id="L80">			final Neutron current = all.removeFirst();</span>
-<span class="fc bfc" id="L81" title="All 4 branches covered.">			if (current.getType() == NeutronType.ZWSP_SEPARATOR &amp;&amp; line.getWidth() &gt; valueMaxWidth) {</span>
-<span class="fc" id="L82">				all.addFirst(current);</span>
-<span class="fc" id="L83">				final List&lt;Neutron&gt; removed = line.slightyShorten();</span>
-<span class="fc bfc" id="L84" title="All 2 branches covered.">				for (int i = removed.size() - 1; i &gt;= 0; i--)</span>
-<span class="fc" id="L85">					all.addFirst(removed.get(i));</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">		while (all.size() &gt; 0) {</span>
+<span class="fc" id="L81">			final Neutron current = all.removeFirst();</span>
+<span class="fc bfc" id="L82" title="All 4 branches covered.">			if (current.getType() == NeutronType.ZWSP_SEPARATOR &amp;&amp; line.getWidth() &gt; valueMaxWidth) {</span>
+<span class="fc" id="L83">				all.addFirst(current);</span>
+<span class="fc" id="L84">				final List&lt;Neutron&gt; removed = line.slightyShorten();</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">				for (int i = removed.size() - 1; i &gt;= 0; i--)</span>
+<span class="fc" id="L86">					all.addFirst(removed.get(i));</span>
 
-<span class="fc" id="L87">				line = new StripeSimpleInternal(true, stringBounder, blank(stripe.getLHeader()));</span>
-<span class="fc" id="L88">				result.add(line);</span>
-<span class="fc" id="L89">			} else</span>
-<span class="fc" id="L90">				line.addNeutron(current);</span>
-<span class="fc" id="L91">		}</span>
+<span class="fc" id="L88">				line = new StripeSimpleInternal(true, stringBounder, blank(stripe.getLHeader()));</span>
+<span class="fc" id="L89">				result.add(line);</span>
+<span class="fc" id="L90">			} else</span>
+<span class="fc" id="L91">				line.addNeutron(current);</span>
+<span class="fc" id="L92">		}</span>
 
-<span class="fc bfc" id="L93" title="All 2 branches covered.">		for (Stripe l : result)</span>
-<span class="fc" id="L94">			((StripeSimpleInternal) l).removeFinalSpaces();</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		for (Stripe l : result)</span>
+<span class="fc" id="L95">			((StripeSimpleInternal) l).removeFinalSpaces();</span>
 
-<span class="fc bfc" id="L96" title="All 4 branches covered.">		while (result.size() &gt; 1 &amp;&amp; ((StripeSimpleInternal) result.get(result.size() - 1)).isWhite())</span>
-<span class="fc" id="L97">			result.remove(result.size() - 1);</span>
+<span class="fc bfc" id="L97" title="All 4 branches covered.">		while (result.size() &gt; 1 &amp;&amp; ((StripeSimpleInternal) result.get(result.size() - 1)).isWhite())</span>
+<span class="fc" id="L98">			result.remove(result.size() - 1);</span>
 
-<span class="fc" id="L99">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L100">		return MyCollections.unmodifiableList(result);</span>
 
 	}
 
 	private List&lt;Atom&gt; noHeader() {
-<span class="fc" id="L104">		final List&lt;Atom&gt; atoms = stripe.getAtoms();</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (stripe.getLHeader() == null)</span>
-<span class="fc" id="L106">			return atoms;</span>
+<span class="fc" id="L105">		final List&lt;Atom&gt; atoms = stripe.getAtoms();</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">		if (stripe.getLHeader() == null)</span>
+<span class="fc" id="L107">			return atoms;</span>
 
-<span class="fc" id="L108">		return atoms.subList(1, atoms.size());</span>
+<span class="fc" id="L109">		return atoms.subList(1, atoms.size());</span>
 	}
 
 	static class StripeSimpleInternal implements Stripe {
 
 		private final boolean removeInitialSpaces;
 		private final Atom header;
-<span class="fc" id="L115">		private final List&lt;Neutron&gt; neutrons = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L116">		private final List&lt;Neutron&gt; neutrons = new ArrayList&lt;&gt;();</span>
 		private final StringBounder stringBounder;
 		private double width;
 
-<span class="fc" id="L119">		private StripeSimpleInternal(boolean removeInitialSpaces, StringBounder stringBounder, Atom header) {</span>
-<span class="fc" id="L120">			this.removeInitialSpaces = removeInitialSpaces;</span>
-<span class="fc" id="L121">			this.stringBounder = stringBounder;</span>
-<span class="fc" id="L122">			this.header = header;</span>
-<span class="fc bfc" id="L123" title="All 2 branches covered.">			if (header != null)</span>
-<span class="fc" id="L124">				width += header.calculateDimension(stringBounder).getWidth();</span>
-<span class="fc" id="L125">		}</span>
+<span class="fc" id="L120">		private StripeSimpleInternal(boolean removeInitialSpaces, StringBounder stringBounder, Atom header) {</span>
+<span class="fc" id="L121">			this.removeInitialSpaces = removeInitialSpaces;</span>
+<span class="fc" id="L122">			this.stringBounder = stringBounder;</span>
+<span class="fc" id="L123">			this.header = header;</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">			if (header != null)</span>
+<span class="fc" id="L125">				width += header.calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L126">		}</span>
 
 		public double getWidth() {
-<span class="pc bpc" id="L128" title="1 of 2 branches missed.">			if (width == -1)</span>
-<span class="nc" id="L129">				throw new IllegalStateException();</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">			if (width == -1)</span>
+<span class="nc" id="L130">				throw new IllegalStateException();</span>
 //			double width = 0;
 //			if (header != null)
 //				width += header.calculateDimension(stringBounder).getWidth();
 //			for (Neutron n : neutrons)
 //				width += n.getWidth(stringBounder);
-<span class="fc" id="L135">			return width;</span>
+<span class="fc" id="L136">			return width;</span>
 		}
 
 		@Override
 		public String toString() {
-<span class="nc bnc" id="L140" title="All 2 branches missed.">			if (header != null)</span>
-<span class="nc" id="L141">				return header.toString() + &quot; &quot; + neutrons;</span>
-<span class="nc" id="L142">			return neutrons.toString();</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">			if (header != null)</span>
+<span class="nc" id="L142">				return header.toString() + &quot; &quot; + neutrons;</span>
+<span class="nc" id="L143">			return neutrons.toString();</span>
 		}
 
 		public List&lt;Neutron&gt; slightyShorten() {
-<span class="pc bpc" id="L146" title="1 of 2 branches missed.">			if (neutrons.size() == 0)</span>
-<span class="nc" id="L147">				throw new IllegalStateException();</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">			if (neutrons.size() == 0)</span>
+<span class="nc" id="L148">				throw new IllegalStateException();</span>
 
-<span class="fc" id="L149">			final int lastZwsp = lastZwsp();</span>
-<span class="fc bfc" id="L150" title="All 2 branches covered.">			if (lastZwsp == -1)</span>
-<span class="fc" id="L151">				return Collections.emptyList();</span>
+<span class="fc" id="L150">			final int lastZwsp = lastZwsp();</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">			if (lastZwsp == -1)</span>
+<span class="fc" id="L152">				return Collections.emptyList();</span>
 
-<span class="fc" id="L153">			this.width = -1;</span>
-<span class="fc" id="L154">			final List&lt;Neutron&gt; removed = new ArrayList&lt;Neutron&gt;(neutrons.subList(lastZwsp, neutrons.size()));</span>
-<span class="fc bfc" id="L155" title="All 2 branches covered.">			while (neutrons.size() &gt; lastZwsp)</span>
-<span class="fc" id="L156">				neutrons.remove(neutrons.size() - 1);</span>
+<span class="fc" id="L154">			this.width = -1;</span>
+<span class="fc" id="L155">			final List&lt;Neutron&gt; removed = new ArrayList&lt;Neutron&gt;(neutrons.subList(lastZwsp, neutrons.size()));</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">			while (neutrons.size() &gt; lastZwsp)</span>
+<span class="fc" id="L157">				neutrons.remove(neutrons.size() - 1);</span>
 
-<span class="fc" id="L158">			return removed;</span>
+<span class="fc" id="L159">			return removed;</span>
 
 		}
 
 		private boolean isWhite() {
-<span class="fc bfc" id="L163" title="All 2 branches covered.">			for (Neutron n : neutrons)</span>
-<span class="pc bpc" id="L164" title="2 of 4 branches missed.">				if (n.getType() != NeutronType.ZWSP_SEPARATOR &amp;&amp; n.getType() != NeutronType.WHITESPACE)</span>
-<span class="fc" id="L165">					return false;</span>
-<span class="fc" id="L166">			return true;</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">			for (Neutron n : neutrons)</span>
+<span class="pc bpc" id="L165" title="2 of 4 branches missed.">				if (n.getType() != NeutronType.ZWSP_SEPARATOR &amp;&amp; n.getType() != NeutronType.WHITESPACE)</span>
+<span class="fc" id="L166">					return false;</span>
+<span class="fc" id="L167">			return true;</span>
 		}
 
 		private void removeFinalSpaces() {
-<span class="pc bpc" id="L170" title="1 of 4 branches missed.">			while (neutrons.size() &gt; 0 &amp;&amp; neutrons.get(0).getType() == NeutronType.ZWSP_SEPARATOR)</span>
-<span class="nc" id="L171">				neutrons.remove(0);</span>
-<span class="fc bfc" id="L172" title="All 2 branches covered.">			while (neutrons.size() &gt; 1</span>
-<span class="fc bfc" id="L173" title="All 4 branches covered.">					&amp;&amp; (last().getType() == NeutronType.WHITESPACE || last().getType() == NeutronType.ZWSP_SEPARATOR))</span>
-<span class="fc" id="L174">				neutrons.remove(neutrons.size() - 1);</span>
-<span class="fc" id="L175">		}</span>
+<span class="pc bpc" id="L171" title="1 of 4 branches missed.">			while (neutrons.size() &gt; 0 &amp;&amp; neutrons.get(0).getType() == NeutronType.ZWSP_SEPARATOR)</span>
+<span class="nc" id="L172">				neutrons.remove(0);</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">			while (neutrons.size() &gt; 1</span>
+<span class="fc bfc" id="L174" title="All 4 branches covered.">					&amp;&amp; (last().getType() == NeutronType.WHITESPACE || last().getType() == NeutronType.ZWSP_SEPARATOR))</span>
+<span class="fc" id="L175">				neutrons.remove(neutrons.size() - 1);</span>
+<span class="fc" id="L176">		}</span>
 
 		private Neutron last() {
-<span class="fc" id="L178">			return neutrons.get(neutrons.size() - 1);</span>
+<span class="fc" id="L179">			return neutrons.get(neutrons.size() - 1);</span>
 		}
 
 		private int lastZwsp() {
-<span class="fc bfc" id="L182" title="All 2 branches covered.">			for (int i = neutrons.size() - 1; i &gt;= 0; i--)</span>
-<span class="fc bfc" id="L183" title="All 2 branches covered.">				if (neutrons.get(i).getType() == NeutronType.ZWSP_SEPARATOR)</span>
-<span class="fc" id="L184">					return i;</span>
-<span class="fc" id="L185">			return -1;</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">			for (int i = neutrons.size() - 1; i &gt;= 0; i--)</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">				if (neutrons.get(i).getType() == NeutronType.ZWSP_SEPARATOR)</span>
+<span class="fc" id="L185">					return i;</span>
+<span class="fc" id="L186">			return -1;</span>
 		}
 
 		public List&lt;Atom&gt; getAtoms() {
-<span class="fc" id="L189">			final List&lt;Atom&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L190" title="All 2 branches covered.">			if (header != null)</span>
-<span class="fc" id="L191">				result.add(header);</span>
+<span class="fc" id="L190">			final List&lt;Atom&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">			if (header != null)</span>
+<span class="fc" id="L192">				result.add(header);</span>
 
-<span class="fc bfc" id="L193" title="All 2 branches covered.">			for (Neutron n : neutrons)</span>
-<span class="fc bfc" id="L194" title="All 2 branches covered.">				if (n.getType() != NeutronType.ZWSP_SEPARATOR) {</span>
-<span class="pc bpc" id="L195" title="1 of 6 branches missed.">					if (removeInitialSpaces &amp;&amp; result.size() == 0 &amp;&amp; n.getType() == NeutronType.WHITESPACE)</span>
-<span class="nc" id="L196">						continue;</span>
-<span class="fc" id="L197">					result.add(n.asAtom());</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">			for (Neutron n : neutrons)</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">				if (n.getType() != NeutronType.ZWSP_SEPARATOR) {</span>
+<span class="pc bpc" id="L196" title="1 of 6 branches missed.">					if (removeInitialSpaces &amp;&amp; result.size() == 0 &amp;&amp; n.getType() == NeutronType.WHITESPACE)</span>
+<span class="nc" id="L197">						continue;</span>
+<span class="fc" id="L198">					result.add(n.asAtom());</span>
 				}
-<span class="fc" id="L199">			return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L200">			return MyCollections.unmodifiableList(result);</span>
 		}
 
 		private void addNeutron(Neutron neutron) {
-<span class="pc bpc" id="L203" title="1 of 2 branches missed.">			if (width == -1)</span>
-<span class="nc" id="L204">				throw new IllegalStateException();</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">			if (width == -1)</span>
+<span class="nc" id="L205">				throw new IllegalStateException();</span>
 
-<span class="fc bfc" id="L206" title="All 4 branches covered.">			if (neutron.getType() == NeutronType.ZWSP_SEPARATOR &amp;&amp; this.neutrons.size() == 0)</span>
-<span class="fc" id="L207">				return;</span>
+<span class="fc bfc" id="L207" title="All 4 branches covered.">			if (neutron.getType() == NeutronType.ZWSP_SEPARATOR &amp;&amp; this.neutrons.size() == 0)</span>
+<span class="fc" id="L208">				return;</span>
 
-<span class="pc bpc" id="L209" title="1 of 4 branches missed.">			if (neutron.getType() == NeutronType.ZWSP_SEPARATOR &amp;&amp; this.neutrons.size() &gt; 0</span>
-<span class="pc bpc" id="L210" title="1 of 2 branches missed.">					&amp;&amp; last().getType() == NeutronType.ZWSP_SEPARATOR)</span>
-<span class="nc" id="L211">				return;</span>
+<span class="pc bpc" id="L210" title="1 of 4 branches missed.">			if (neutron.getType() == NeutronType.ZWSP_SEPARATOR &amp;&amp; this.neutrons.size() &gt; 0</span>
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">					&amp;&amp; last().getType() == NeutronType.ZWSP_SEPARATOR)</span>
+<span class="nc" id="L212">				return;</span>
 
-<span class="fc bfc" id="L213" title="All 6 branches covered.">			if (removeInitialSpaces &amp;&amp; this.neutrons.size() == 0 &amp;&amp; neutron.getType() == NeutronType.WHITESPACE)</span>
-<span class="fc" id="L214">				return;</span>
+<span class="fc bfc" id="L214" title="All 6 branches covered.">			if (removeInitialSpaces &amp;&amp; this.neutrons.size() == 0 &amp;&amp; neutron.getType() == NeutronType.WHITESPACE)</span>
+<span class="fc" id="L215">				return;</span>
 
-<span class="fc" id="L216">			this.neutrons.add(neutron);</span>
-<span class="fc" id="L217">			this.width += neutron.getWidth(stringBounder);</span>
-<span class="fc" id="L218">		}</span>
+<span class="fc" id="L217">			this.neutrons.add(neutron);</span>
+<span class="fc" id="L218">			this.width += neutron.getWidth(stringBounder);</span>
+<span class="fc" id="L219">		}</span>
 
 		public Atom getLHeader() {
-<span class="nc" id="L221">			return null;</span>
+<span class="nc" id="L222">			return null;</span>
 		}
 
 	}
 
 	private static Atom blank(final Atom header) {
-<span class="fc bfc" id="L227" title="All 2 branches covered.">		if (header == null)</span>
-<span class="fc" id="L228">			return null;</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">		if (header == null)</span>
+<span class="fc" id="L229">			return null;</span>
 
-<span class="fc" id="L230">		return new AbstractAtom() {</span>
+<span class="fc" id="L231">		return new AbstractAtom() {</span>
 
 			@Override
 			public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="fc" id="L234">				return header.calculateDimension(stringBounder);</span>
+<span class="fc" id="L235">				return header.calculateDimension(stringBounder);</span>
 			}
 
 			public double getStartingAltitude(StringBounder stringBounder) {
-<span class="fc" id="L238">				return header.getStartingAltitude(stringBounder);</span>
+<span class="fc" id="L239">				return header.getStartingAltitude(stringBounder);</span>
 			}
 
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L242">			}</span>
+<span class="fc" id="L243">			}</span>
 
 		};
 	}

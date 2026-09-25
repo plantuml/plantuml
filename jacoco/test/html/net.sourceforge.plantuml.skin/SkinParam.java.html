@@ -40,7 +40,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -106,6 +105,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.tikz.TikzFontDistortion;
 import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class SkinParam implements ISkinParam {
 
@@ -219,7 +219,7 @@ public class SkinParam implements ISkinParam {
 
 	@Override
 	public Map&lt;String, String&gt; values() {
-<span class="fc" id="L222">		return Collections.unmodifiableMap(params);</span>
+<span class="fc" id="L222">		return MyCollections.unmodifiableMap(params);</span>
 	}
 
 	public void setParam(String key, String value) {
@@ -296,7 +296,7 @@ public class SkinParam implements ISkinParam {
 <span class="fc bfc" id="L296" title="All 2 branches covered.">		if (result.size() == 0)</span>
 <span class="fc" id="L297">			result.add(key);</span>
 
-<span class="fc" id="L299">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L299">		return MyCollections.unmodifiableList(result);</span>
 	}
 
 	@Override
@@ -637,7 +637,7 @@ public class SkinParam implements ISkinParam {
 <span class="fc" id="L637">			final String h = capitalize(p.name());</span>
 <span class="fc" id="L638">			result.add(h);</span>
 <span class="fc" id="L639">		}</span>
-<span class="fc" id="L640">		return Collections.unmodifiableSet(result);</span>
+<span class="fc" id="L640">		return MyCollections.unmodifiableSet(result);</span>
 	}
 
 	private static String capitalize(String name) {
@@ -798,7 +798,7 @@ public class SkinParam implements ISkinParam {
 
 	@Override
 	public Collection&lt;String&gt; getAllSpriteNames() {
-<span class="fc" id="L801">		return Collections.unmodifiableCollection(new TreeSet&lt;&gt;(sprites.keySet()));</span>
+<span class="fc" id="L801">		return MyCollections.unmodifiableCollection(new TreeSet&lt;&gt;(sprites.keySet()));</span>
 	}
 
 	public void addSprite(String name, Sprite sprite) {

@@ -37,7 +37,6 @@
 package net.sourceforge.plantuml.svek;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
@@ -53,6 +52,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.skin.AlignmentParam;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.utils.Position;
 
 public class ClusterDotStringKermor {
@@ -209,7 +209,7 @@ public class ClusterDotStringKermor {
 <span class="nc bnc" id="L209" title="All 2 branches missed.">			if (sh.getEntityPosition() != EntityPosition.NORMAL)</span>
 <span class="nc" id="L210">				result.add(sh.getEntityPosition());</span>
 
-<span class="nc" id="L212">		return Collections.unmodifiableSet(result);</span>
+<span class="nc" id="L212">		return MyCollections.unmodifiableSet(result);</span>
 	}
 
 	private void subgraphClusterNoLabel(StringBuilder sb, String id) {

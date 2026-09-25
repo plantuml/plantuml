@@ -36,12 +36,12 @@
 package net.sourceforge.plantuml.stereo;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Stereostyles {
 
@@ -68,7 +68,7 @@ public class Stereostyles {
 	}
 
 	public Collection&lt;String&gt; getStyleNames() {
-<span class="nc" id="L71">		return Collections.unmodifiableCollection(names);</span>
+<span class="nc" id="L71">		return MyCollections.unmodifiableCollection(names);</span>
 	}
 
 }

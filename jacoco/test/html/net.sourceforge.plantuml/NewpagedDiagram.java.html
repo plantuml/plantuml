@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.command.Command;
@@ -54,6 +53,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class NewpagedDiagram extends UgDiagram {
 
@@ -203,7 +203,7 @@ public class NewpagedDiagram extends UgDiagram {
 	}
 
 	public final List&lt;UgDiagram&gt; getDiagrams() {
-<span class="nc" id="L206">		return Collections.unmodifiableList(diagrams);</span>
+<span class="nc" id="L206">		return MyCollections.unmodifiableList(diagrams);</span>
 	}
 
 }

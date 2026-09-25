@@ -63,18 +63,19 @@ import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.klimt.geom.XLine2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.utils.MyCollections;
 
-<span class="fc" id="L67">public class DotPath implements UShape, Moveable {</span>
+<span class="fc" id="L68">public class DotPath implements UShape, Moveable {</span>
 
 	public static class TriPoints {
-<span class="nc" id="L70">		public TriPoints(XPoint2D p1, XPoint2D p2, XPoint2D p) {</span>
-<span class="nc" id="L71">			x1 = p1.getX();</span>
-<span class="nc" id="L72">			y1 = p1.getY();</span>
-<span class="nc" id="L73">			x2 = p2.getX();</span>
-<span class="nc" id="L74">			y2 = p2.getY();</span>
-<span class="nc" id="L75">			x = p.getX();</span>
-<span class="nc" id="L76">			y = p.getY();</span>
-<span class="nc" id="L77">		}</span>
+<span class="nc" id="L71">		public TriPoints(XPoint2D p1, XPoint2D p2, XPoint2D p) {</span>
+<span class="nc" id="L72">			x1 = p1.getX();</span>
+<span class="nc" id="L73">			y1 = p1.getY();</span>
+<span class="nc" id="L74">			x2 = p2.getX();</span>
+<span class="nc" id="L75">			y2 = p2.getY();</span>
+<span class="nc" id="L76">			x = p.getX();</span>
+<span class="nc" id="L77">			y = p.getY();</span>
+<span class="nc" id="L78">		}</span>
 
 		public final double x1;
 		public final double y1;
@@ -90,104 +91,104 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 		// }
 	}
 
-<span class="fc" id="L93">	private final List&lt;XCubicCurve2D&gt; beziers = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L94">	private final List&lt;XCubicCurve2D&gt; beziers = new ArrayList&lt;&gt;();</span>
 	private String comment;
 	private String codeLine;
 
 	public DotPath copy() {
-<span class="nc" id="L98">		final DotPath result = new DotPath();</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		for (XCubicCurve2D c : this.beziers)</span>
-<span class="nc" id="L100">			result.beziers.add(new XCubicCurve2D(c.x1, c.y1, c.ctrlx1, c.ctrly1, c.ctrlx2, c.ctrly2, c.x2, c.y2));</span>
+<span class="nc" id="L99">		final DotPath result = new DotPath();</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		for (XCubicCurve2D c : this.beziers)</span>
+<span class="nc" id="L101">			result.beziers.add(new XCubicCurve2D(c.x1, c.y1, c.ctrlx1, c.ctrly1, c.ctrlx2, c.ctrly2, c.x2, c.y2));</span>
 
-<span class="nc" id="L102">		return result;</span>
+<span class="nc" id="L103">		return result;</span>
 	}
 
 	public static DotPath fromBeziers(List&lt;XCubicCurve2D&gt; beziers) {
-<span class="fc" id="L106">		final DotPath result = new DotPath();</span>
-<span class="fc" id="L107">		result.beziers.addAll(Objects.requireNonNull(beziers));</span>
-<span class="fc" id="L108">		return result;</span>
+<span class="fc" id="L107">		final DotPath result = new DotPath();</span>
+<span class="fc" id="L108">		result.beziers.addAll(Objects.requireNonNull(beziers));</span>
+<span class="fc" id="L109">		return result;</span>
 	}
 
-<span class="fc" id="L111">	public DotPath() {</span>
-<span class="fc" id="L112">	}</span>
+<span class="fc" id="L112">	public DotPath() {</span>
+<span class="fc" id="L113">	}</span>
 
 	public DotPath addCurve(XPoint2D pt1, XPoint2D pt2, XPoint2D pt3, XPoint2D pt4) {
-<span class="fc" id="L115">		final List&lt;XCubicCurve2D&gt; beziersNew = new ArrayList&lt;&gt;(beziers);</span>
-<span class="fc" id="L116">		beziersNew.add(new XCubicCurve2D(pt1.getX(), pt1.getY(), pt2.getX(), pt2.getY(), pt3.getX(), pt3.getY(),</span>
-<span class="fc" id="L117">				pt4.getX(), pt4.getY()));</span>
-<span class="fc" id="L118">		return fromBeziers(beziersNew);</span>
+<span class="fc" id="L116">		final List&lt;XCubicCurve2D&gt; beziersNew = new ArrayList&lt;&gt;(beziers);</span>
+<span class="fc" id="L117">		beziersNew.add(new XCubicCurve2D(pt1.getX(), pt1.getY(), pt2.getX(), pt2.getY(), pt3.getX(), pt3.getY(),</span>
+<span class="fc" id="L118">				pt4.getX(), pt4.getY()));</span>
+<span class="fc" id="L119">		return fromBeziers(beziersNew);</span>
 	}
 
 	public DotPath addCurve(XPoint2D pt2, XPoint2D pt3, XPoint2D pt4) {
-<span class="fc" id="L122">		final XCubicCurve2D last = beziers.get(beziers.size() - 1);</span>
-<span class="fc" id="L123">		final XPoint2D p1 = last.getP2();</span>
-<span class="fc" id="L124">		return addCurve(p1, pt2, pt3, pt4);</span>
+<span class="fc" id="L123">		final XCubicCurve2D last = beziers.get(beziers.size() - 1);</span>
+<span class="fc" id="L124">		final XPoint2D p1 = last.getP2();</span>
+<span class="fc" id="L125">		return addCurve(p1, pt2, pt3, pt4);</span>
 	}
 
 	// private final String print;
 
 	public XPoint2D getStartPoint() {
-<span class="fc" id="L130">		return beziers.get(0).getP1();</span>
+<span class="fc" id="L131">		return beziers.get(0).getP1();</span>
 	}
 
 	public Set&lt;XPoint2D&gt; sample() {
-<span class="fc" id="L134">		final Set&lt;XPoint2D&gt; result = new HashSet&lt;&gt;();</span>
-<span class="fc bfc" id="L135" title="All 2 branches covered.">		for (XCubicCurve2D bez : beziers)</span>
-<span class="fc" id="L136">			sample(bez, result);</span>
+<span class="fc" id="L135">		final Set&lt;XPoint2D&gt; result = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		for (XCubicCurve2D bez : beziers)</span>
+<span class="fc" id="L137">			sample(bez, result);</span>
 
-<span class="fc" id="L138">		return Collections.unmodifiableSet(result);</span>
+<span class="fc" id="L139">		return MyCollections.unmodifiableSet(result);</span>
 	}
 
 	private static void sample(XCubicCurve2D bez, Set&lt;XPoint2D&gt; result) {
-<span class="fc" id="L142">		final XPoint2D p1 = bez.getCtrlP1();</span>
-<span class="fc" id="L143">		final XPoint2D p2 = bez.getCtrlP2();</span>
-<span class="pc bpc" id="L144" title="1 of 4 branches missed.">		if (bez.getFlatnessSq() &gt; 0.5 || p1.distance(p2) &gt; 4) {</span>
-<span class="fc" id="L145">			final XCubicCurve2D left = XCubicCurve2D.none();</span>
-<span class="fc" id="L146">			final XCubicCurve2D right = XCubicCurve2D.none();</span>
-<span class="fc" id="L147">			bez.subdivide(left, right);</span>
-<span class="fc" id="L148">			sample(left, result);</span>
-<span class="fc" id="L149">			sample(right, result);</span>
-<span class="fc" id="L150">		} else {</span>
-<span class="fc" id="L151">			result.add(p1);</span>
-<span class="fc" id="L152">			result.add(p2);</span>
+<span class="fc" id="L143">		final XPoint2D p1 = bez.getCtrlP1();</span>
+<span class="fc" id="L144">		final XPoint2D p2 = bez.getCtrlP2();</span>
+<span class="pc bpc" id="L145" title="1 of 4 branches missed.">		if (bez.getFlatnessSq() &gt; 0.5 || p1.distance(p2) &gt; 4) {</span>
+<span class="fc" id="L146">			final XCubicCurve2D left = XCubicCurve2D.none();</span>
+<span class="fc" id="L147">			final XCubicCurve2D right = XCubicCurve2D.none();</span>
+<span class="fc" id="L148">			bez.subdivide(left, right);</span>
+<span class="fc" id="L149">			sample(left, result);</span>
+<span class="fc" id="L150">			sample(right, result);</span>
+<span class="fc" id="L151">		} else {</span>
+<span class="fc" id="L152">			result.add(p1);</span>
+<span class="fc" id="L153">			result.add(p2);</span>
 		}
-<span class="fc" id="L154">	}</span>
+<span class="fc" id="L155">	}</span>
 
 	public PointAndAngle getMiddle() {
-<span class="nc" id="L157">		XPoint2D result = null;</span>
-<span class="nc" id="L158">		double angle = 0;</span>
-<span class="nc bnc" id="L159" title="All 2 branches missed.">		for (XCubicCurve2D bez : beziers) {</span>
-<span class="nc" id="L160">			final XCubicCurve2D left = XCubicCurve2D.none();</span>
-<span class="nc" id="L161">			final XCubicCurve2D right = XCubicCurve2D.none();</span>
-<span class="nc" id="L162">			bez.subdivide(left, right);</span>
-<span class="nc" id="L163">			final XPoint2D p1 = left.getP1();</span>
-<span class="nc" id="L164">			final XPoint2D p2 = left.getP2();</span>
-<span class="nc" id="L165">			final XPoint2D p3 = right.getP1();</span>
-<span class="nc" id="L166">			final XPoint2D p4 = right.getP2();</span>
-<span class="nc bnc" id="L167" title="All 4 branches missed.">			if (result == null || getCost(p1) &lt; getCost(result)) {</span>
-<span class="nc" id="L168">				result = p1;</span>
-<span class="nc" id="L169">				angle = BezierUtils.getStartingAngle(left);</span>
+<span class="nc" id="L158">		XPoint2D result = null;</span>
+<span class="nc" id="L159">		double angle = 0;</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		for (XCubicCurve2D bez : beziers) {</span>
+<span class="nc" id="L161">			final XCubicCurve2D left = XCubicCurve2D.none();</span>
+<span class="nc" id="L162">			final XCubicCurve2D right = XCubicCurve2D.none();</span>
+<span class="nc" id="L163">			bez.subdivide(left, right);</span>
+<span class="nc" id="L164">			final XPoint2D p1 = left.getP1();</span>
+<span class="nc" id="L165">			final XPoint2D p2 = left.getP2();</span>
+<span class="nc" id="L166">			final XPoint2D p3 = right.getP1();</span>
+<span class="nc" id="L167">			final XPoint2D p4 = right.getP2();</span>
+<span class="nc bnc" id="L168" title="All 4 branches missed.">			if (result == null || getCost(p1) &lt; getCost(result)) {</span>
+<span class="nc" id="L169">				result = p1;</span>
+<span class="nc" id="L170">				angle = BezierUtils.getStartingAngle(left);</span>
 			}
-<span class="nc bnc" id="L171" title="All 2 branches missed.">			if (getCost(p2) &lt; getCost(result)) {</span>
-<span class="nc" id="L172">				result = p2;</span>
-<span class="nc" id="L173">				angle = BezierUtils.getEndingAngle(left);</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">			if (getCost(p2) &lt; getCost(result)) {</span>
+<span class="nc" id="L173">				result = p2;</span>
+<span class="nc" id="L174">				angle = BezierUtils.getEndingAngle(left);</span>
 			}
-<span class="nc bnc" id="L175" title="All 2 branches missed.">			if (getCost(p3) &lt; getCost(result)) {</span>
-<span class="nc" id="L176">				result = p3;</span>
-<span class="nc" id="L177">				angle = BezierUtils.getStartingAngle(right);</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">			if (getCost(p3) &lt; getCost(result)) {</span>
+<span class="nc" id="L177">				result = p3;</span>
+<span class="nc" id="L178">				angle = BezierUtils.getStartingAngle(right);</span>
 			}
-<span class="nc bnc" id="L179" title="All 2 branches missed.">			if (getCost(p4) &lt; getCost(result)) {</span>
-<span class="nc" id="L180">				result = p4;</span>
-<span class="nc" id="L181">				angle = BezierUtils.getEndingAngle(right);</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">			if (getCost(p4) &lt; getCost(result)) {</span>
+<span class="nc" id="L181">				result = p4;</span>
+<span class="nc" id="L182">				angle = BezierUtils.getEndingAngle(right);</span>
 			}
-<span class="nc" id="L183">		}</span>
-<span class="nc" id="L184">		return new PointAndAngle(result, angle);</span>
+<span class="nc" id="L184">		}</span>
+<span class="nc" id="L185">		return new PointAndAngle(result, angle);</span>
 	}
 
 	private double getCost(XPoint2D pt) {
-<span class="nc" id="L188">		final XPoint2D start = getStartPoint();</span>
-<span class="nc" id="L189">		final XPoint2D end = getEndPoint();</span>
-<span class="nc" id="L190">		return pt.distanceSq(start) + pt.distanceSq(end);</span>
+<span class="nc" id="L189">		final XPoint2D start = getStartPoint();</span>
+<span class="nc" id="L190">		final XPoint2D end = getEndPoint();</span>
+<span class="nc" id="L191">		return pt.distanceSq(start) + pt.distanceSq(end);</span>
 	}
 
 //	public void forceStartPoint(double x, double y) {
@@ -198,27 +199,27 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 //	}
 
 	public void moveStartPoint(UTranslate move) {
-<span class="fc" id="L201">		moveStartPoint(move.getDx(), move.getDy());</span>
-<span class="fc" id="L202">	}</span>
+<span class="fc" id="L202">		moveStartPoint(move.getDx(), move.getDy());</span>
+<span class="fc" id="L203">	}</span>
 
 	public void moveEndPoint(UTranslate move) {
-<span class="fc" id="L205">		moveEndPoint(move.getDx(), move.getDy());</span>
-<span class="fc" id="L206">	}</span>
+<span class="fc" id="L206">		moveEndPoint(move.getDx(), move.getDy());</span>
+<span class="fc" id="L207">	}</span>
 
 	public void moveStartPoint(double dx, double dy) {
-<span class="pc bpc" id="L209" title="1 of 4 branches missed.">		if (beziers.size() &gt; 1 &amp;&amp; Math.sqrt(dx * dx + dy * dy) &gt;= beziers.get(0).getLength()) {</span>
-<span class="nc" id="L210">			dx -= beziers.get(1).x1 - beziers.get(0).x1;</span>
-<span class="nc" id="L211">			dy -= beziers.get(1).y1 - beziers.get(0).y1;</span>
-<span class="nc" id="L212">			beziers.remove(0);</span>
+<span class="pc bpc" id="L210" title="1 of 4 branches missed.">		if (beziers.size() &gt; 1 &amp;&amp; Math.sqrt(dx * dx + dy * dy) &gt;= beziers.get(0).getLength()) {</span>
+<span class="nc" id="L211">			dx -= beziers.get(1).x1 - beziers.get(0).x1;</span>
+<span class="nc" id="L212">			dy -= beziers.get(1).y1 - beziers.get(0).y1;</span>
+<span class="nc" id="L213">			beziers.remove(0);</span>
 		}
-<span class="fc" id="L214">		beziers.get(0).x1 += dx;</span>
-<span class="fc" id="L215">		beziers.get(0).y1 += dy;</span>
-<span class="fc" id="L216">		beziers.get(0).ctrlx1 += dx;</span>
-<span class="fc" id="L217">		beziers.get(0).ctrly1 += dy;</span>
-<span class="fc" id="L218">	}</span>
+<span class="fc" id="L215">		beziers.get(0).x1 += dx;</span>
+<span class="fc" id="L216">		beziers.get(0).y1 += dy;</span>
+<span class="fc" id="L217">		beziers.get(0).ctrlx1 += dx;</span>
+<span class="fc" id="L218">		beziers.get(0).ctrly1 += dy;</span>
+<span class="fc" id="L219">	}</span>
 
 	public XPoint2D getEndPoint() {
-<span class="fc" id="L221">		return beziers.get(beziers.size() - 1).getP2();</span>
+<span class="fc" id="L222">		return beziers.get(beziers.size() - 1).getP2();</span>
 	}
 
 //	public void forceEndPoint(double x, double y) {
@@ -229,281 +230,281 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 //	}
 
 	public void moveEndPoint(double dx, double dy) {
-<span class="fc" id="L232">		beziers.get(beziers.size() - 1).x2 += dx;</span>
-<span class="fc" id="L233">		beziers.get(beziers.size() - 1).y2 += dy;</span>
-<span class="fc" id="L234">		beziers.get(beziers.size() - 1).ctrlx2 += dx;</span>
-<span class="fc" id="L235">		beziers.get(beziers.size() - 1).ctrly2 += dy;</span>
-<span class="fc" id="L236">	}</span>
+<span class="fc" id="L233">		beziers.get(beziers.size() - 1).x2 += dx;</span>
+<span class="fc" id="L234">		beziers.get(beziers.size() - 1).y2 += dy;</span>
+<span class="fc" id="L235">		beziers.get(beziers.size() - 1).ctrlx2 += dx;</span>
+<span class="fc" id="L236">		beziers.get(beziers.size() - 1).ctrly2 += dy;</span>
+<span class="fc" id="L237">	}</span>
 
 	public MinFinder getMinFinder() {
-<span class="nc" id="L239">		final MinFinder result = new MinFinder();</span>
-<span class="nc bnc" id="L240" title="All 2 branches missed.">		for (XCubicCurve2D c : beziers) {</span>
-<span class="nc" id="L241">			result.manage(c.x1, c.y1);</span>
-<span class="nc" id="L242">			result.manage(c.x2, c.y2);</span>
-<span class="nc" id="L243">			result.manage(c.ctrlx1, c.ctrly1);</span>
-<span class="nc" id="L244">			result.manage(c.ctrlx2, c.ctrly2);</span>
-<span class="nc" id="L245">		}</span>
-<span class="nc" id="L246">		return result;</span>
+<span class="nc" id="L240">		final MinFinder result = new MinFinder();</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">		for (XCubicCurve2D c : beziers) {</span>
+<span class="nc" id="L242">			result.manage(c.x1, c.y1);</span>
+<span class="nc" id="L243">			result.manage(c.x2, c.y2);</span>
+<span class="nc" id="L244">			result.manage(c.ctrlx1, c.ctrly1);</span>
+<span class="nc" id="L245">			result.manage(c.ctrlx2, c.ctrly2);</span>
+<span class="nc" id="L246">		}</span>
+<span class="nc" id="L247">		return result;</span>
 	}
 
 	public MinMax getMinMax() {
-<span class="fc" id="L250">		MinMax result = MinMax.getEmpty(false);</span>
-<span class="fc bfc" id="L251" title="All 2 branches covered.">		for (XCubicCurve2D c : beziers) {</span>
-<span class="fc" id="L252">			result = result.addPoint(c.x1, c.y1);</span>
-<span class="fc" id="L253">			result = result.addPoint(c.x2, c.y2);</span>
-<span class="fc" id="L254">			result = result.addPoint(c.ctrlx1, c.ctrly1);</span>
-<span class="fc" id="L255">			result = result.addPoint(c.ctrlx2, c.ctrly2);</span>
-<span class="fc" id="L256">		}</span>
-<span class="fc" id="L257">		return result;</span>
+<span class="fc" id="L251">		MinMax result = MinMax.getEmpty(false);</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">		for (XCubicCurve2D c : beziers) {</span>
+<span class="fc" id="L253">			result = result.addPoint(c.x1, c.y1);</span>
+<span class="fc" id="L254">			result = result.addPoint(c.x2, c.y2);</span>
+<span class="fc" id="L255">			result = result.addPoint(c.ctrlx1, c.ctrly1);</span>
+<span class="fc" id="L256">			result = result.addPoint(c.ctrlx2, c.ctrly2);</span>
+<span class="fc" id="L257">		}</span>
+<span class="fc" id="L258">		return result;</span>
 	}
 
 	public double getMinDist(XPoint2D ref) {
-<span class="nc" id="L261">		double result = Double.MAX_VALUE;</span>
-<span class="nc bnc" id="L262" title="All 2 branches missed.">		for (XCubicCurve2D c : beziers) {</span>
-<span class="nc" id="L263">			final double d1 = ref.distance(c.x1, c.y1);</span>
-<span class="nc bnc" id="L264" title="All 2 branches missed.">			if (d1 &lt; result)</span>
-<span class="nc" id="L265">				result = d1;</span>
+<span class="nc" id="L262">		double result = Double.MAX_VALUE;</span>
+<span class="nc bnc" id="L263" title="All 2 branches missed.">		for (XCubicCurve2D c : beziers) {</span>
+<span class="nc" id="L264">			final double d1 = ref.distance(c.x1, c.y1);</span>
+<span class="nc bnc" id="L265" title="All 2 branches missed.">			if (d1 &lt; result)</span>
+<span class="nc" id="L266">				result = d1;</span>
 
-<span class="nc" id="L267">			final double d2 = ref.distance(c.x2, c.y2);</span>
-<span class="nc bnc" id="L268" title="All 2 branches missed.">			if (d2 &lt; result)</span>
-<span class="nc" id="L269">				result = d2;</span>
+<span class="nc" id="L268">			final double d2 = ref.distance(c.x2, c.y2);</span>
+<span class="nc bnc" id="L269" title="All 2 branches missed.">			if (d2 &lt; result)</span>
+<span class="nc" id="L270">				result = d2;</span>
 
-<span class="nc" id="L271">			final double d3 = ref.distance(c.ctrlx1, c.ctrly1);</span>
-<span class="nc bnc" id="L272" title="All 2 branches missed.">			if (d3 &lt; result)</span>
-<span class="nc" id="L273">				result = d3;</span>
+<span class="nc" id="L272">			final double d3 = ref.distance(c.ctrlx1, c.ctrly1);</span>
+<span class="nc bnc" id="L273" title="All 2 branches missed.">			if (d3 &lt; result)</span>
+<span class="nc" id="L274">				result = d3;</span>
 
-<span class="nc" id="L275">			final double d4 = ref.distance(c.ctrlx2, c.ctrly2);</span>
-<span class="nc bnc" id="L276" title="All 2 branches missed.">			if (d4 &lt; result)</span>
-<span class="nc" id="L277">				result = d4;</span>
+<span class="nc" id="L276">			final double d4 = ref.distance(c.ctrlx2, c.ctrly2);</span>
+<span class="nc bnc" id="L277" title="All 2 branches missed.">			if (d4 &lt; result)</span>
+<span class="nc" id="L278">				result = d4;</span>
 
-<span class="nc" id="L279">		}</span>
-<span class="nc" id="L280">		return result;</span>
+<span class="nc" id="L280">		}</span>
+<span class="nc" id="L281">		return result;</span>
 
 	}
 
 	private XLine2D getEndTangeante() {
-<span class="fc" id="L285">		final XCubicCurve2D last = beziers.get(beziers.size() - 1);</span>
-<span class="fc" id="L286">		double dx = last.x2 - last.ctrlx2;</span>
-<span class="fc" id="L287">		double dy = last.y2 - last.ctrly2;</span>
-<span class="pc bpc" id="L288" title="1 of 4 branches missed.">		if (dx == 0 &amp;&amp; dy == 0) {</span>
-<span class="nc" id="L289">			dx = last.x2 - last.x1;</span>
-<span class="nc" id="L290">			dy = last.y2 - last.y1;</span>
+<span class="fc" id="L286">		final XCubicCurve2D last = beziers.get(beziers.size() - 1);</span>
+<span class="fc" id="L287">		double dx = last.x2 - last.ctrlx2;</span>
+<span class="fc" id="L288">		double dy = last.y2 - last.ctrly2;</span>
+<span class="pc bpc" id="L289" title="1 of 4 branches missed.">		if (dx == 0 &amp;&amp; dy == 0) {</span>
+<span class="nc" id="L290">			dx = last.x2 - last.x1;</span>
+<span class="nc" id="L291">			dy = last.y2 - last.y1;</span>
 		}
-<span class="fc" id="L292">		return new XLine2D(last.x2, last.y2, last.x2 + dx, last.y2 + dy);</span>
+<span class="fc" id="L293">		return new XLine2D(last.x2, last.y2, last.x2 + dx, last.y2 + dy);</span>
 	}
 
 	public double getEndAngle() {
-<span class="fc" id="L296">		final XLine2D tan = getEndTangeante();</span>
-<span class="fc" id="L297">		final double theta1 = Math.atan2(tan.getY2() - tan.getY1(), tan.getX2() - tan.getX1());</span>
-<span class="fc" id="L298">		return theta1;</span>
+<span class="fc" id="L297">		final XLine2D tan = getEndTangeante();</span>
+<span class="fc" id="L298">		final double theta1 = Math.atan2(tan.getY2() - tan.getY1(), tan.getX2() - tan.getX1());</span>
+<span class="fc" id="L299">		return theta1;</span>
 	}
 
 	public double getStartAngle() {
-<span class="fc" id="L302">		final XLine2D tan = getStartTangeante();</span>
-<span class="fc" id="L303">		final double theta1 = Math.atan2(tan.getY2() - tan.getY1(), tan.getX2() - tan.getX1());</span>
-<span class="fc" id="L304">		return theta1;</span>
+<span class="fc" id="L303">		final XLine2D tan = getStartTangeante();</span>
+<span class="fc" id="L304">		final double theta1 = Math.atan2(tan.getY2() - tan.getY1(), tan.getX2() - tan.getX1());</span>
+<span class="fc" id="L305">		return theta1;</span>
 	}
 
 	private XLine2D getStartTangeante() {
-<span class="fc" id="L308">		final XCubicCurve2D first = beziers.get(0);</span>
-<span class="fc" id="L309">		double dx = first.ctrlx1 - first.x1;</span>
-<span class="fc" id="L310">		double dy = first.ctrly1 - first.y1;</span>
-<span class="pc bpc" id="L311" title="1 of 4 branches missed.">		if (dx == 0 &amp;&amp; dy == 0) {</span>
-<span class="nc" id="L312">			dx = first.x2 - first.x1;</span>
-<span class="nc" id="L313">			dy = first.y2 - first.y1;</span>
+<span class="fc" id="L309">		final XCubicCurve2D first = beziers.get(0);</span>
+<span class="fc" id="L310">		double dx = first.ctrlx1 - first.x1;</span>
+<span class="fc" id="L311">		double dy = first.ctrly1 - first.y1;</span>
+<span class="pc bpc" id="L312" title="1 of 4 branches missed.">		if (dx == 0 &amp;&amp; dy == 0) {</span>
+<span class="nc" id="L313">			dx = first.x2 - first.x1;</span>
+<span class="nc" id="L314">			dy = first.y2 - first.y1;</span>
 		}
-<span class="fc" id="L315">		return new XLine2D(first.x1, first.y1, first.x1 + dx, first.y1 + dy);</span>
+<span class="fc" id="L316">		return new XLine2D(first.x1, first.y1, first.x1 + dx, first.y1 + dy);</span>
 	}
 
 	public DotPath addBefore(XCubicCurve2D before) {
-<span class="nc" id="L319">		final List&lt;XCubicCurve2D&gt; copy = new ArrayList&lt;&gt;(beziers);</span>
-<span class="nc" id="L320">		copy.add(0, before);</span>
-<span class="nc" id="L321">		return fromBeziers(copy);</span>
+<span class="nc" id="L320">		final List&lt;XCubicCurve2D&gt; copy = new ArrayList&lt;&gt;(beziers);</span>
+<span class="nc" id="L321">		copy.add(0, before);</span>
+<span class="nc" id="L322">		return fromBeziers(copy);</span>
 	}
 
 	private DotPath addBefore(DotPath other) {
-<span class="nc" id="L325">		final List&lt;XCubicCurve2D&gt; copy = new ArrayList&lt;&gt;(beziers);</span>
-<span class="nc" id="L326">		copy.addAll(0, other.beziers);</span>
-<span class="nc" id="L327">		return fromBeziers(copy);</span>
+<span class="nc" id="L326">		final List&lt;XCubicCurve2D&gt; copy = new ArrayList&lt;&gt;(beziers);</span>
+<span class="nc" id="L327">		copy.addAll(0, other.beziers);</span>
+<span class="nc" id="L328">		return fromBeziers(copy);</span>
 	}
 
 	public DotPath addAfter(XCubicCurve2D after) {
-<span class="nc" id="L331">		final List&lt;XCubicCurve2D&gt; copy = new ArrayList&lt;&gt;(beziers);</span>
-<span class="nc" id="L332">		copy.add(after);</span>
-<span class="nc" id="L333">		return fromBeziers(copy);</span>
+<span class="nc" id="L332">		final List&lt;XCubicCurve2D&gt; copy = new ArrayList&lt;&gt;(beziers);</span>
+<span class="nc" id="L333">		copy.add(after);</span>
+<span class="nc" id="L334">		return fromBeziers(copy);</span>
 	}
 
 	public DotPath addAfter(DotPath other) {
-<span class="nc" id="L337">		final List&lt;XCubicCurve2D&gt; copy = new ArrayList&lt;&gt;(beziers);</span>
-<span class="nc" id="L338">		copy.addAll(other.beziers);</span>
-<span class="nc" id="L339">		return fromBeziers(copy);</span>
+<span class="nc" id="L338">		final List&lt;XCubicCurve2D&gt; copy = new ArrayList&lt;&gt;(beziers);</span>
+<span class="nc" id="L339">		copy.addAll(other.beziers);</span>
+<span class="nc" id="L340">		return fromBeziers(copy);</span>
 	}
 
 	public void draw(Graphics2D g2d, double x, double y) {
-<span class="fc" id="L343">		final GeneralPath p = new GeneralPath();</span>
-<span class="fc bfc" id="L344" title="All 2 branches covered.">		for (XCubicCurve2D bez : beziers) {</span>
-<span class="fc" id="L345">			final CubicCurve2D.Double bez2 = new CubicCurve2D.Double(x + bez.x1, y + bez.y1, x + bez.ctrlx1,</span>
+<span class="fc" id="L344">		final GeneralPath p = new GeneralPath();</span>
+<span class="fc bfc" id="L345" title="All 2 branches covered.">		for (XCubicCurve2D bez : beziers) {</span>
+<span class="fc" id="L346">			final CubicCurve2D.Double bez2 = new CubicCurve2D.Double(x + bez.x1, y + bez.y1, x + bez.ctrlx1,</span>
 					y + bez.ctrly1, x + bez.ctrlx2, y + bez.ctrly2, x + bez.x2, y + bez.y2);
-<span class="fc" id="L347">			p.append(bez2, true);</span>
-<span class="fc" id="L348">		}</span>
-<span class="fc" id="L349">		g2d.draw(p);</span>
-<span class="fc" id="L350">	}</span>
+<span class="fc" id="L348">			p.append(bez2, true);</span>
+<span class="fc" id="L349">		}</span>
+<span class="fc" id="L350">		g2d.draw(p);</span>
+<span class="fc" id="L351">	}</span>
 
 	public void manageEnsureVisible(double x, double y, EnsureVisible visible, UClip clip) {
-<span class="fc bfc" id="L353" title="All 2 branches covered.">		for (XCubicCurve2D bez : beziers) {</span>
-<span class="fc" id="L354">			visible.ensureVisible(x + bez.x1, y + bez.y1, clip);</span>
-<span class="fc" id="L355">			visible.ensureVisible(x + bez.x2, y + bez.y2, clip);</span>
-<span class="fc" id="L356">		}</span>
+<span class="fc bfc" id="L354" title="All 2 branches covered.">		for (XCubicCurve2D bez : beziers) {</span>
+<span class="fc" id="L355">			visible.ensureVisible(x + bez.x1, y + bez.y1, clip);</span>
+<span class="fc" id="L356">			visible.ensureVisible(x + bez.x2, y + bez.y2, clip);</span>
+<span class="fc" id="L357">		}</span>
 
-<span class="fc" id="L358">	}</span>
+<span class="fc" id="L359">	}</span>
 
 	public UPath toUPath() {
-<span class="fc" id="L361">		final UPath result = new UPath(comment, codeLine);</span>
-<span class="fc" id="L362">		boolean start = true;</span>
-<span class="fc bfc" id="L363" title="All 2 branches covered.">		for (XCubicCurve2D bez : beziers) {</span>
-<span class="fc bfc" id="L364" title="All 2 branches covered.">			if (start) {</span>
-<span class="fc" id="L365">				result.add(new double[] { bez.x1, bez.y1 }, USegmentType.SEG_MOVETO);</span>
-<span class="fc" id="L366">				start = false;</span>
+<span class="fc" id="L362">		final UPath result = new UPath(comment, codeLine);</span>
+<span class="fc" id="L363">		boolean start = true;</span>
+<span class="fc bfc" id="L364" title="All 2 branches covered.">		for (XCubicCurve2D bez : beziers) {</span>
+<span class="fc bfc" id="L365" title="All 2 branches covered.">			if (start) {</span>
+<span class="fc" id="L366">				result.add(new double[] { bez.x1, bez.y1 }, USegmentType.SEG_MOVETO);</span>
+<span class="fc" id="L367">				start = false;</span>
 			}
-<span class="fc" id="L368">			result.add(new double[] { bez.ctrlx1, bez.ctrly1, bez.ctrlx2, bez.ctrly2, bez.x2, bez.y2 },</span>
+<span class="fc" id="L369">			result.add(new double[] { bez.ctrlx1, bez.ctrly1, bez.ctrlx2, bez.ctrly2, bez.x2, bez.y2 },</span>
 					USegmentType.SEG_CUBICTO);
 
-<span class="fc" id="L371">		}</span>
-<span class="fc" id="L372">		return result;</span>
+<span class="fc" id="L372">		}</span>
+<span class="fc" id="L373">		return result;</span>
 	}
 
 	static public String toString(XCubicCurve2D c) {
-<span class="nc" id="L376">		return &quot;(&quot; + c.x1 + &quot;,&quot; + c.y1 + &quot;) &quot; + &quot;(&quot; + c.ctrlx1 + &quot;,&quot; + c.ctrly1 + &quot;) &quot; + &quot;(&quot; + c.ctrlx2 + &quot;,&quot; + c.ctrly2</span>
+<span class="nc" id="L377">		return &quot;(&quot; + c.x1 + &quot;,&quot; + c.y1 + &quot;) &quot; + &quot;(&quot; + c.ctrlx1 + &quot;,&quot; + c.ctrly1 + &quot;) &quot; + &quot;(&quot; + c.ctrlx2 + &quot;,&quot; + c.ctrly2</span>
 				+ &quot;) &quot; + &quot;(&quot; + c.x2 + &quot;,&quot; + c.y2 + &quot;) &quot;;
 
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L383">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L384" title="All 2 branches missed.">		for (XCubicCurve2D c : beziers) {</span>
-<span class="nc" id="L385">			sb.append(toString(c));</span>
-<span class="nc" id="L386">			sb.append(&quot; - &quot;);</span>
-<span class="nc" id="L387">		}</span>
-<span class="nc" id="L388">		return sb.toString();</span>
+<span class="nc" id="L384">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L385" title="All 2 branches missed.">		for (XCubicCurve2D c : beziers) {</span>
+<span class="nc" id="L386">			sb.append(toString(c));</span>
+<span class="nc" id="L387">			sb.append(&quot; - &quot;);</span>
+<span class="nc" id="L388">		}</span>
+<span class="nc" id="L389">		return sb.toString();</span>
 	}
 
 	public static XCubicCurve2D reverse(XCubicCurve2D curv) {
-<span class="nc" id="L392">		return new XCubicCurve2D(curv.getX2(), curv.getY2(), curv.getCtrlX2(), curv.getCtrlY2(), curv.getCtrlX1(),</span>
-<span class="nc" id="L393">				curv.getCtrlY1(), curv.getX1(), curv.getY1());</span>
+<span class="nc" id="L393">		return new XCubicCurve2D(curv.getX2(), curv.getY2(), curv.getCtrlX2(), curv.getCtrlY2(), curv.getCtrlX1(),</span>
+<span class="nc" id="L394">				curv.getCtrlY1(), curv.getX1(), curv.getY1());</span>
 	}
 
 	public DotPath reverse() {
-<span class="nc" id="L397">		final List&lt;XCubicCurve2D&gt; reverse = new ArrayList&lt;&gt;(beziers);</span>
-<span class="nc" id="L398">		Collections.reverse(reverse);</span>
-<span class="nc" id="L399">		final List&lt;XCubicCurve2D&gt; copy = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L400" title="All 2 branches missed.">		for (XCubicCurve2D cub : reverse)</span>
-<span class="nc" id="L401">			copy.add(reverse(cub));</span>
+<span class="nc" id="L398">		final List&lt;XCubicCurve2D&gt; reverse = new ArrayList&lt;&gt;(beziers);</span>
+<span class="nc" id="L399">		Collections.reverse(reverse);</span>
+<span class="nc" id="L400">		final List&lt;XCubicCurve2D&gt; copy = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L401" title="All 2 branches missed.">		for (XCubicCurve2D cub : reverse)</span>
+<span class="nc" id="L402">			copy.add(reverse(cub));</span>
 
-<span class="nc" id="L403">		return fromBeziers(copy);</span>
+<span class="nc" id="L404">		return fromBeziers(copy);</span>
 
 	}
 
 	public void moveDelta(double deltaX, double deltaY) {
-<span class="nc bnc" id="L408" title="All 2 branches missed.">		for (int i = 0; i &lt; beziers.size(); i++) {</span>
-<span class="nc" id="L409">			final XCubicCurve2D c = beziers.get(i);</span>
-<span class="nc" id="L410">			beziers.set(i, new XCubicCurve2D(c.x1 + deltaX, c.y1 + deltaY, c.ctrlx1 + deltaX, c.ctrly1 + deltaY,</span>
+<span class="nc bnc" id="L409" title="All 2 branches missed.">		for (int i = 0; i &lt; beziers.size(); i++) {</span>
+<span class="nc" id="L410">			final XCubicCurve2D c = beziers.get(i);</span>
+<span class="nc" id="L411">			beziers.set(i, new XCubicCurve2D(c.x1 + deltaX, c.y1 + deltaY, c.ctrlx1 + deltaX, c.ctrly1 + deltaY,</span>
 					c.ctrlx2 + deltaX, c.ctrly2 + deltaY, c.x2 + deltaX, c.y2 + deltaY));
 		}
 
-<span class="nc" id="L414">	}</span>
+<span class="nc" id="L415">	}</span>
 
 	public final List&lt;XCubicCurve2D&gt; getBeziers() {
-<span class="fc" id="L417">		return Collections.unmodifiableList(beziers);</span>
+<span class="fc" id="L418">		return MyCollections.unmodifiableList(beziers);</span>
 	}
 
 	public DotPath simulateCompound(RectangleArea head, RectangleArea tail) {
-<span class="fc bfc" id="L421" title="All 4 branches covered.">		if (head == null &amp;&amp; tail == null)</span>
-<span class="fc" id="L422">			return this;</span>
+<span class="fc bfc" id="L422" title="All 4 branches covered.">		if (head == null &amp;&amp; tail == null)</span>
+<span class="fc" id="L423">			return this;</span>
 
 		// System.err.println(&quot;head=&quot; + head + &quot; tail=&quot; + tail);
-<span class="fc" id="L425">		DotPath me = this;</span>
-<span class="fc bfc" id="L426" title="All 2 branches covered.">		if (tail != null) {</span>
+<span class="fc" id="L426">		DotPath me = this;</span>
+<span class="fc bfc" id="L427" title="All 2 branches covered.">		if (tail != null) {</span>
 			// System.err.println(&quot;beziers1=&quot; + this.toString());
-<span class="pc bpc" id="L428" title="1 of 2 branches missed.">			if (tail.contains(getStartPoint())) {</span>
-<span class="fc" id="L429">				final DotPath result = new DotPath();</span>
-<span class="fc" id="L430">				int idx = 0;</span>
-<span class="pc bpc" id="L431" title="1 of 4 branches missed.">				while (idx + 1 &lt; this.beziers.size() &amp;&amp; tail.contains(this.beziers.get(idx).getP2())) {</span>
-<span class="nc bnc" id="L432" title="All 2 branches missed.">					if (tail.contains(this.beziers.get(idx).getP1()) == false)</span>
-<span class="nc" id="L433">						throw new IllegalStateException();</span>
+<span class="pc bpc" id="L429" title="1 of 2 branches missed.">			if (tail.contains(getStartPoint())) {</span>
+<span class="fc" id="L430">				final DotPath result = new DotPath();</span>
+<span class="fc" id="L431">				int idx = 0;</span>
+<span class="pc bpc" id="L432" title="1 of 4 branches missed.">				while (idx + 1 &lt; this.beziers.size() &amp;&amp; tail.contains(this.beziers.get(idx).getP2())) {</span>
+<span class="nc bnc" id="L433" title="All 2 branches missed.">					if (tail.contains(this.beziers.get(idx).getP1()) == false)</span>
+<span class="nc" id="L434">						throw new IllegalStateException();</span>
 
-<span class="nc" id="L435">					idx++;</span>
+<span class="nc" id="L436">					idx++;</span>
 				}
-<span class="fc bfc" id="L437" title="All 2 branches covered.">				if (tail.contains(this.beziers.get(idx).getP2())) {</span>
+<span class="fc bfc" id="L438" title="All 2 branches covered.">				if (tail.contains(this.beziers.get(idx).getP2())) {</span>
 					// System.err.println(&quot;strange1&quot;);
 				} else {
-<span class="pc bpc" id="L440" title="2 of 4 branches missed.">					if (TeaVM.a()) assert tail.contains(this.beziers.get(idx).getP1());</span>
-<span class="pc bpc" id="L441" title="2 of 4 branches missed.">					if (TeaVM.a()) assert tail.contains(this.beziers.get(idx).getP2()) == false;</span>
-<span class="fc" id="L442">					XCubicCurve2D current = this.beziers.get(idx);</span>
-<span class="fc bfc" id="L443" title="All 2 branches covered.">					for (int k = 0; k &lt; 8; k++) {</span>
-<span class="fc" id="L444">						final XCubicCurve2D part1 = XCubicCurve2D.none();</span>
-<span class="fc" id="L445">						final XCubicCurve2D part2 = XCubicCurve2D.none();</span>
-<span class="fc" id="L446">						current.subdivide(part1, part2);</span>
-<span class="pc bpc" id="L447" title="2 of 4 branches missed.">						if (TeaVM.a()) assert part1.getP2().equals(part2.getP1());</span>
-<span class="fc bfc" id="L448" title="All 2 branches covered.">						if (tail.contains(part1.getP2())) {</span>
-<span class="fc" id="L449">							current = part2;</span>
+<span class="pc bpc" id="L441" title="2 of 4 branches missed.">					if (TeaVM.a()) assert tail.contains(this.beziers.get(idx).getP1());</span>
+<span class="pc bpc" id="L442" title="2 of 4 branches missed.">					if (TeaVM.a()) assert tail.contains(this.beziers.get(idx).getP2()) == false;</span>
+<span class="fc" id="L443">					XCubicCurve2D current = this.beziers.get(idx);</span>
+<span class="fc bfc" id="L444" title="All 2 branches covered.">					for (int k = 0; k &lt; 8; k++) {</span>
+<span class="fc" id="L445">						final XCubicCurve2D part1 = XCubicCurve2D.none();</span>
+<span class="fc" id="L446">						final XCubicCurve2D part2 = XCubicCurve2D.none();</span>
+<span class="fc" id="L447">						current.subdivide(part1, part2);</span>
+<span class="pc bpc" id="L448" title="2 of 4 branches missed.">						if (TeaVM.a()) assert part1.getP2().equals(part2.getP1());</span>
+<span class="fc bfc" id="L449" title="All 2 branches covered.">						if (tail.contains(part1.getP2())) {</span>
+<span class="fc" id="L450">							current = part2;</span>
 						} else {
-<span class="fc" id="L451">							result.beziers.add(0, part2);</span>
-<span class="fc" id="L452">							current = part1;</span>
+<span class="fc" id="L452">							result.beziers.add(0, part2);</span>
+<span class="fc" id="L453">							current = part1;</span>
 						}
 					}
-<span class="fc bfc" id="L455" title="All 2 branches covered.">					for (int i = idx + 1; i &lt; this.beziers.size(); i++)</span>
-<span class="fc" id="L456">						result.beziers.add(this.beziers.get(i));</span>
+<span class="fc bfc" id="L456" title="All 2 branches covered.">					for (int i = idx + 1; i &lt; this.beziers.size(); i++)</span>
+<span class="fc" id="L457">						result.beziers.add(this.beziers.get(i));</span>
 
-<span class="fc" id="L458">					me = result;</span>
+<span class="fc" id="L459">					me = result;</span>
 				}
 			}
 		}
-<span class="fc bfc" id="L462" title="All 2 branches covered.">		if (head != null) {</span>
-<span class="fc" id="L463">			final DotPath result = new DotPath();</span>
-<span class="pc bpc" id="L464" title="1 of 2 branches missed.">			if (head.contains(getEndPoint())) {</span>
-<span class="pc bpc" id="L465" title="1 of 2 branches missed.">				for (XCubicCurve2D current : me.beziers) {</span>
-<span class="pc bpc" id="L466" title="1 of 2 branches missed.">					if (head.contains(current.getP2()) == false) {</span>
-<span class="nc" id="L467">						result.beziers.add(current);</span>
+<span class="fc bfc" id="L463" title="All 2 branches covered.">		if (head != null) {</span>
+<span class="fc" id="L464">			final DotPath result = new DotPath();</span>
+<span class="pc bpc" id="L465" title="1 of 2 branches missed.">			if (head.contains(getEndPoint())) {</span>
+<span class="pc bpc" id="L466" title="1 of 2 branches missed.">				for (XCubicCurve2D current : me.beziers) {</span>
+<span class="pc bpc" id="L467" title="1 of 2 branches missed.">					if (head.contains(current.getP2()) == false) {</span>
+<span class="nc" id="L468">						result.beziers.add(current);</span>
 					} else {
-<span class="pc bpc" id="L469" title="1 of 2 branches missed.">						if (head.contains(current.getP1())) {</span>
-<span class="nc" id="L470">							return me;</span>
+<span class="pc bpc" id="L470" title="1 of 2 branches missed.">						if (head.contains(current.getP1())) {</span>
+<span class="nc" id="L471">							return me;</span>
 						}
-<span class="pc bpc" id="L472" title="2 of 4 branches missed.">						if (TeaVM.a()) assert head.contains(current.getP1()) == false;</span>
-<span class="pc bpc" id="L473" title="2 of 4 branches missed.">						if (TeaVM.a()) assert head.contains(current.getP2());</span>
-<span class="fc bfc" id="L474" title="All 2 branches covered.">						for (int k = 0; k &lt; 8; k++) {</span>
-<span class="fc" id="L475">							final XCubicCurve2D part1 = XCubicCurve2D.none();</span>
-<span class="fc" id="L476">							final XCubicCurve2D part2 = XCubicCurve2D.none();</span>
-<span class="fc" id="L477">							current.subdivide(part1, part2);</span>
-<span class="pc bpc" id="L478" title="2 of 4 branches missed.">							if (TeaVM.a()) assert part1.getP2().equals(part2.getP1());</span>
-<span class="fc bfc" id="L479" title="All 2 branches covered.">							if (head.contains(part1.getP2())) {</span>
-<span class="fc" id="L480">								current = part1;</span>
+<span class="pc bpc" id="L473" title="2 of 4 branches missed.">						if (TeaVM.a()) assert head.contains(current.getP1()) == false;</span>
+<span class="pc bpc" id="L474" title="2 of 4 branches missed.">						if (TeaVM.a()) assert head.contains(current.getP2());</span>
+<span class="fc bfc" id="L475" title="All 2 branches covered.">						for (int k = 0; k &lt; 8; k++) {</span>
+<span class="fc" id="L476">							final XCubicCurve2D part1 = XCubicCurve2D.none();</span>
+<span class="fc" id="L477">							final XCubicCurve2D part2 = XCubicCurve2D.none();</span>
+<span class="fc" id="L478">							current.subdivide(part1, part2);</span>
+<span class="pc bpc" id="L479" title="2 of 4 branches missed.">							if (TeaVM.a()) assert part1.getP2().equals(part2.getP1());</span>
+<span class="fc bfc" id="L480" title="All 2 branches covered.">							if (head.contains(part1.getP2())) {</span>
+<span class="fc" id="L481">								current = part1;</span>
 							} else {
-<span class="fc" id="L482">								result.beziers.add(part1);</span>
-<span class="fc" id="L483">								current = part2;</span>
+<span class="fc" id="L483">								result.beziers.add(part1);</span>
+<span class="fc" id="L484">								current = part2;</span>
 							}
 						}
-<span class="fc" id="L486">						return result;</span>
+<span class="fc" id="L487">						return result;</span>
 					}
-<span class="nc" id="L488">				}</span>
+<span class="nc" id="L489">				}</span>
 			}
 
 		}
-<span class="fc" id="L492">		return me;</span>
+<span class="fc" id="L493">		return me;</span>
 	}
 
 	public boolean isLine() {
-<span class="nc bnc" id="L496" title="All 2 branches missed.">		for (XCubicCurve2D curve : beziers)</span>
-<span class="nc bnc" id="L497" title="All 2 branches missed.">			if (curve.getFlatnessSq() &gt; 0.001)</span>
-<span class="nc" id="L498">				return false;</span>
+<span class="nc bnc" id="L497" title="All 2 branches missed.">		for (XCubicCurve2D curve : beziers)</span>
+<span class="nc bnc" id="L498" title="All 2 branches missed.">			if (curve.getFlatnessSq() &gt; 0.001)</span>
+<span class="nc" id="L499">				return false;</span>
 
-<span class="nc" id="L500">		return true;</span>
+<span class="nc" id="L501">		return true;</span>
 	}
 
 	public void setCommentAndCodeLine(String comment, String codeLine) {
-<span class="nc" id="L504">		this.comment = comment;</span>
-<span class="nc" id="L505">		this.codeLine = codeLine;</span>
-<span class="nc" id="L506">	}</span>
+<span class="nc" id="L505">		this.comment = comment;</span>
+<span class="nc" id="L506">		this.codeLine = codeLine;</span>
+<span class="nc" id="L507">	}</span>
 
 	/**
 	 * Round corners in orthogonal paths by replacing sharp 90-degree corners
@@ -512,126 +513,126 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	 * @param radius Corner radius in pixels
 	 */
 	public void muteToRoundOrthogonalPaths(double radius) {
-<span class="nc bnc" id="L515" title="All 4 branches missed.">		if (radius &lt;= 0 || beziers.size() &lt; 2)</span>
-<span class="nc" id="L516">			return;</span>
+<span class="nc bnc" id="L516" title="All 4 branches missed.">		if (radius &lt;= 0 || beziers.size() &lt; 2)</span>
+<span class="nc" id="L517">			return;</span>
 
-<span class="nc bnc" id="L518" title="All 2 branches missed.">		if (!isOrthogonalPathInternal())</span>
-<span class="nc" id="L519">			return;</span>
+<span class="nc bnc" id="L519" title="All 2 branches missed.">		if (!isOrthogonalPathInternal())</span>
+<span class="nc" id="L520">			return;</span>
 
 		// Build list of all points in the path
-<span class="nc" id="L522">		final List&lt;XPoint2D&gt; points = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L523" title="All 2 branches missed.">		if (beziers.size() &gt; 0) {</span>
-<span class="nc" id="L524">			points.add(beziers.get(0).getP1());</span>
-<span class="nc bnc" id="L525" title="All 2 branches missed.">			for (XCubicCurve2D bez : beziers)</span>
-<span class="nc" id="L526">				points.add(bez.getP2());</span>
+<span class="nc" id="L523">		final List&lt;XPoint2D&gt; points = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L524" title="All 2 branches missed.">		if (beziers.size() &gt; 0) {</span>
+<span class="nc" id="L525">			points.add(beziers.get(0).getP1());</span>
+<span class="nc bnc" id="L526" title="All 2 branches missed.">			for (XCubicCurve2D bez : beziers)</span>
+<span class="nc" id="L527">				points.add(bez.getP2());</span>
 		}
 
-<span class="nc bnc" id="L529" title="All 2 branches missed.">		if (points.size() &lt; 3)</span>
-<span class="nc" id="L530">			return;</span>
+<span class="nc bnc" id="L530" title="All 2 branches missed.">		if (points.size() &lt; 3)</span>
+<span class="nc" id="L531">			return;</span>
 
 		// Detect corners
-<span class="nc" id="L533">		final List&lt;Integer&gt; corners = detectCorners(points);</span>
-<span class="nc bnc" id="L534" title="All 2 branches missed.">		if (corners.isEmpty())</span>
-<span class="nc" id="L535">			return;</span>
+<span class="nc" id="L534">		final List&lt;Integer&gt; corners = detectCorners(points);</span>
+<span class="nc bnc" id="L535" title="All 2 branches missed.">		if (corners.isEmpty())</span>
+<span class="nc" id="L536">			return;</span>
 
 		// Build new path with rounded corners
-<span class="nc" id="L538">		final List&lt;XPoint2D&gt; newPoints = buildRoundedPath(points, corners, radius);</span>
+<span class="nc" id="L539">		final List&lt;XPoint2D&gt; newPoints = buildRoundedPath(points, corners, radius);</span>
 
 		// Build beziers from new points
-<span class="nc" id="L541">		final List&lt;XCubicCurve2D&gt; newBeziers = buildBeziersFromPoints(newPoints, points, corners);</span>
+<span class="nc" id="L542">		final List&lt;XCubicCurve2D&gt; newBeziers = buildBeziersFromPoints(newPoints, points, corners);</span>
 
 		// Replace beziers
-<span class="nc" id="L544">		beziers.clear();</span>
-<span class="nc" id="L545">		beziers.addAll(newBeziers);</span>
-<span class="nc" id="L546">	}</span>
+<span class="nc" id="L545">		beziers.clear();</span>
+<span class="nc" id="L546">		beziers.addAll(newBeziers);</span>
+<span class="nc" id="L547">	}</span>
 
 	/**
 	 * Detect corners in the path where segments meet at 90 degrees
 	 */
 	private List&lt;Integer&gt; detectCorners(List&lt;XPoint2D&gt; points) {
-<span class="nc" id="L552">		final List&lt;Integer&gt; corners = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L553" title="All 2 branches missed.">		for (int i = 1; i &lt; points.size() - 1; i++) {</span>
-<span class="nc" id="L554">			final XPoint2D prev = points.get(i - 1);</span>
-<span class="nc" id="L555">			final XPoint2D curr = points.get(i);</span>
-<span class="nc" id="L556">			final XPoint2D next = points.get(i + 1);</span>
+<span class="nc" id="L553">		final List&lt;Integer&gt; corners = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L554" title="All 2 branches missed.">		for (int i = 1; i &lt; points.size() - 1; i++) {</span>
+<span class="nc" id="L555">			final XPoint2D prev = points.get(i - 1);</span>
+<span class="nc" id="L556">			final XPoint2D curr = points.get(i);</span>
+<span class="nc" id="L557">			final XPoint2D next = points.get(i + 1);</span>
 
 			// Calculate direction vectors
-<span class="nc" id="L559">			double dx1 = curr.getX() - prev.getX();</span>
-<span class="nc" id="L560">			double dy1 = curr.getY() - prev.getY();</span>
-<span class="nc" id="L561">			double dx2 = next.getX() - curr.getX();</span>
-<span class="nc" id="L562">			double dy2 = next.getY() - curr.getY();</span>
+<span class="nc" id="L560">			double dx1 = curr.getX() - prev.getX();</span>
+<span class="nc" id="L561">			double dy1 = curr.getY() - prev.getY();</span>
+<span class="nc" id="L562">			double dx2 = next.getX() - curr.getX();</span>
+<span class="nc" id="L563">			double dy2 = next.getY() - curr.getY();</span>
 
-<span class="nc" id="L564">			final double len1 = Math.sqrt(dx1 * dx1 + dy1 * dy1);</span>
-<span class="nc" id="L565">			final double len2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);</span>
+<span class="nc" id="L565">			final double len1 = Math.sqrt(dx1 * dx1 + dy1 * dy1);</span>
+<span class="nc" id="L566">			final double len2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);</span>
 
-<span class="nc bnc" id="L567" title="All 4 branches missed.">			if (len1 &lt; 0.01 || len2 &lt; 0.01)</span>
-<span class="nc" id="L568">				continue;</span>
+<span class="nc bnc" id="L568" title="All 4 branches missed.">			if (len1 &lt; 0.01 || len2 &lt; 0.01)</span>
+<span class="nc" id="L569">				continue;</span>
 
 			// Normalize
-<span class="nc" id="L571">			dx1 /= len1;</span>
-<span class="nc" id="L572">			dy1 /= len1;</span>
-<span class="nc" id="L573">			dx2 /= len2;</span>
-<span class="nc" id="L574">			dy2 /= len2;</span>
+<span class="nc" id="L572">			dx1 /= len1;</span>
+<span class="nc" id="L573">			dy1 /= len1;</span>
+<span class="nc" id="L574">			dx2 /= len2;</span>
+<span class="nc" id="L575">			dy2 /= len2;</span>
 
 			// Check if perpendicular (dot product ≈ 0 for 90 degrees)
-<span class="nc" id="L577">			final double dotProduct = dx1 * dx2 + dy1 * dy2;</span>
-<span class="nc bnc" id="L578" title="All 2 branches missed.">			if (Math.abs(dotProduct) &lt; 0.1)</span>
-<span class="nc" id="L579">				corners.add(i);</span>
+<span class="nc" id="L578">			final double dotProduct = dx1 * dx2 + dy1 * dy2;</span>
+<span class="nc bnc" id="L579" title="All 2 branches missed.">			if (Math.abs(dotProduct) &lt; 0.1)</span>
+<span class="nc" id="L580">				corners.add(i);</span>
 		}
-<span class="nc" id="L581">		return corners;</span>
+<span class="nc" id="L582">		return corners;</span>
 	}
 
 	/**
 	 * Build new path with truncated corners ready for rounding
 	 */
 	private List&lt;XPoint2D&gt; buildRoundedPath(List&lt;XPoint2D&gt; points, List&lt;Integer&gt; corners, double radius) {
-<span class="nc" id="L588">		final List&lt;XPoint2D&gt; newPoints = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L589">		newPoints.add(points.get(0)); // Start point</span>
+<span class="nc" id="L589">		final List&lt;XPoint2D&gt; newPoints = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L590">		newPoints.add(points.get(0)); // Start point</span>
 
-<span class="nc bnc" id="L591" title="All 2 branches missed.">		for (int i = 1; i &lt; points.size() - 1; i++) {</span>
-<span class="nc bnc" id="L592" title="All 2 branches missed.">			if (corners.contains(i)) {</span>
+<span class="nc bnc" id="L592" title="All 2 branches missed.">		for (int i = 1; i &lt; points.size() - 1; i++) {</span>
+<span class="nc bnc" id="L593" title="All 2 branches missed.">			if (corners.contains(i)) {</span>
 				// This is a corner - add truncated points around it
-<span class="nc" id="L594">				final XPoint2D prev = points.get(i - 1);</span>
-<span class="nc" id="L595">				final XPoint2D curr = points.get(i);</span>
-<span class="nc" id="L596">				final XPoint2D next = points.get(i + 1);</span>
+<span class="nc" id="L595">				final XPoint2D prev = points.get(i - 1);</span>
+<span class="nc" id="L596">				final XPoint2D curr = points.get(i);</span>
+<span class="nc" id="L597">				final XPoint2D next = points.get(i + 1);</span>
 
 				// Direction vectors
-<span class="nc" id="L599">				double dx1 = curr.getX() - prev.getX();</span>
-<span class="nc" id="L600">				double dy1 = curr.getY() - prev.getY();</span>
-<span class="nc" id="L601">				double dx2 = next.getX() - curr.getX();</span>
-<span class="nc" id="L602">				double dy2 = next.getY() - curr.getY();</span>
+<span class="nc" id="L600">				double dx1 = curr.getX() - prev.getX();</span>
+<span class="nc" id="L601">				double dy1 = curr.getY() - prev.getY();</span>
+<span class="nc" id="L602">				double dx2 = next.getX() - curr.getX();</span>
+<span class="nc" id="L603">				double dy2 = next.getY() - curr.getY();</span>
 
-<span class="nc" id="L604">				final double len1 = Math.sqrt(dx1 * dx1 + dy1 * dy1);</span>
-<span class="nc" id="L605">				final double len2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);</span>
+<span class="nc" id="L605">				final double len1 = Math.sqrt(dx1 * dx1 + dy1 * dy1);</span>
+<span class="nc" id="L606">				final double len2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);</span>
 
-<span class="nc" id="L607">				dx1 /= len1;</span>
-<span class="nc" id="L608">				dy1 /= len1;</span>
-<span class="nc" id="L609">				dx2 /= len2;</span>
-<span class="nc" id="L610">				dy2 /= len2;</span>
+<span class="nc" id="L608">				dx1 /= len1;</span>
+<span class="nc" id="L609">				dy1 /= len1;</span>
+<span class="nc" id="L610">				dx2 /= len2;</span>
+<span class="nc" id="L611">				dy2 /= len2;</span>
 
-<span class="nc" id="L612">				final double truncDist1 = Math.min(radius, len1 / 2);</span>
-<span class="nc" id="L613">				final double truncDist2 = Math.min(radius, len2 / 2);</span>
+<span class="nc" id="L613">				final double truncDist1 = Math.min(radius, len1 / 2);</span>
+<span class="nc" id="L614">				final double truncDist2 = Math.min(radius, len2 / 2);</span>
 
 				// Add point before corner
-<span class="nc" id="L616">				final double beforeX = curr.getX() - dx1 * truncDist1;</span>
-<span class="nc" id="L617">				final double beforeY = curr.getY() - dy1 * truncDist1;</span>
-<span class="nc" id="L618">				newPoints.add(new XPoint2D(beforeX, beforeY));</span>
+<span class="nc" id="L617">				final double beforeX = curr.getX() - dx1 * truncDist1;</span>
+<span class="nc" id="L618">				final double beforeY = curr.getY() - dy1 * truncDist1;</span>
+<span class="nc" id="L619">				newPoints.add(new XPoint2D(beforeX, beforeY));</span>
 
 				// Add the corner point itself (will be used as control point)
-<span class="nc" id="L621">				newPoints.add(curr);</span>
+<span class="nc" id="L622">				newPoints.add(curr);</span>
 
 				// Add point after corner
-<span class="nc" id="L624">				final double afterX = curr.getX() + dx2 * truncDist2;</span>
-<span class="nc" id="L625">				final double afterY = curr.getY() + dy2 * truncDist2;</span>
-<span class="nc" id="L626">				newPoints.add(new XPoint2D(afterX, afterY));</span>
-<span class="nc" id="L627">			} else {</span>
+<span class="nc" id="L625">				final double afterX = curr.getX() + dx2 * truncDist2;</span>
+<span class="nc" id="L626">				final double afterY = curr.getY() + dy2 * truncDist2;</span>
+<span class="nc" id="L627">				newPoints.add(new XPoint2D(afterX, afterY));</span>
+<span class="nc" id="L628">			} else {</span>
 				// Regular point
-<span class="nc" id="L629">				newPoints.add(points.get(i));</span>
+<span class="nc" id="L630">				newPoints.add(points.get(i));</span>
 			}
 		}
 
-<span class="nc" id="L633">		newPoints.add(points.get(points.size() - 1)); // End point</span>
-<span class="nc" id="L634">		return newPoints;</span>
+<span class="nc" id="L634">		newPoints.add(points.get(points.size() - 1)); // End point</span>
+<span class="nc" id="L635">		return newPoints;</span>
 	}
 
 	/**
@@ -639,74 +640,74 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	 */
 	private List&lt;XCubicCurve2D&gt; buildBeziersFromPoints(List&lt;XPoint2D&gt; newPoints, List&lt;XPoint2D&gt; originalPoints,
 			List&lt;Integer&gt; corners) {
-<span class="nc" id="L642">		final List&lt;XCubicCurve2D&gt; newBeziers = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L643" title="All 2 branches missed.">		for (int i = 0; i &lt; newPoints.size() - 1; i++) {</span>
-<span class="nc" id="L644">			final XPoint2D p1 = newPoints.get(i);</span>
-<span class="nc" id="L645">			final XPoint2D p2 = newPoints.get(i + 1);</span>
+<span class="nc" id="L643">		final List&lt;XCubicCurve2D&gt; newBeziers = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L644" title="All 2 branches missed.">		for (int i = 0; i &lt; newPoints.size() - 1; i++) {</span>
+<span class="nc" id="L645">			final XPoint2D p1 = newPoints.get(i);</span>
+<span class="nc" id="L646">			final XPoint2D p2 = newPoints.get(i + 1);</span>
 
 			// Check if next point is a control point (corner)
-<span class="nc bnc" id="L648" title="All 2 branches missed.">			if (i + 2 &lt; newPoints.size()) {</span>
-<span class="nc" id="L649">				final XPoint2D p3 = newPoints.get(i + 2);</span>
+<span class="nc bnc" id="L649" title="All 2 branches missed.">			if (i + 2 &lt; newPoints.size()) {</span>
+<span class="nc" id="L650">				final XPoint2D p3 = newPoints.get(i + 2);</span>
 
 				// Check if p2 was originally a corner point
-<span class="nc" id="L652">				boolean isCornerControl = false;</span>
-<span class="nc bnc" id="L653" title="All 2 branches missed.">				for (int cornerIdx : corners) {</span>
-<span class="nc bnc" id="L654" title="All 2 branches missed.">					if (originalPoints.get(cornerIdx).equals(p2)) {</span>
-<span class="nc" id="L655">						isCornerControl = true;</span>
-<span class="nc" id="L656">						break;</span>
+<span class="nc" id="L653">				boolean isCornerControl = false;</span>
+<span class="nc bnc" id="L654" title="All 2 branches missed.">				for (int cornerIdx : corners) {</span>
+<span class="nc bnc" id="L655" title="All 2 branches missed.">					if (originalPoints.get(cornerIdx).equals(p2)) {</span>
+<span class="nc" id="L656">						isCornerControl = true;</span>
+<span class="nc" id="L657">						break;</span>
 					}
-<span class="nc" id="L658">				}</span>
+<span class="nc" id="L659">				}</span>
 
-<span class="nc bnc" id="L660" title="All 2 branches missed.">				if (isCornerControl) {</span>
+<span class="nc bnc" id="L661" title="All 2 branches missed.">				if (isCornerControl) {</span>
 					// Create rounded corner with p2 as control point
 					// For circular arc approximation
-<span class="nc" id="L663">					final double dx1 = p2.getX() - p1.getX();</span>
-<span class="nc" id="L664">					final double dy1 = p2.getY() - p1.getY();</span>
-<span class="nc" id="L665">					final double dx2 = p3.getX() - p2.getX();</span>
-<span class="nc" id="L666">					final double dy2 = p3.getY() - p2.getY();</span>
-<span class="nc" id="L667">					final double len1 = Math.sqrt(dx1 * dx1 + dy1 * dy1);</span>
-<span class="nc" id="L668">					final double len2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);</span>
+<span class="nc" id="L664">					final double dx1 = p2.getX() - p1.getX();</span>
+<span class="nc" id="L665">					final double dy1 = p2.getY() - p1.getY();</span>
+<span class="nc" id="L666">					final double dx2 = p3.getX() - p2.getX();</span>
+<span class="nc" id="L667">					final double dy2 = p3.getY() - p2.getY();</span>
+<span class="nc" id="L668">					final double len1 = Math.sqrt(dx1 * dx1 + dy1 * dy1);</span>
+<span class="nc" id="L669">					final double len2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);</span>
 
-<span class="nc" id="L670">					final double controlDist = Math.min(len1, len2) * 0.55228;</span>
+<span class="nc" id="L671">					final double controlDist = Math.min(len1, len2) * 0.55228;</span>
 
-<span class="nc" id="L672">					final double ctrl1X = p1.getX() + (dx1 / len1) * controlDist;</span>
-<span class="nc" id="L673">					final double ctrl1Y = p1.getY() + (dy1 / len1) * controlDist;</span>
-<span class="nc" id="L674">					final double ctrl2X = p3.getX() - (dx2 / len2) * controlDist;</span>
-<span class="nc" id="L675">					final double ctrl2Y = p3.getY() - (dy2 / len2) * controlDist;</span>
+<span class="nc" id="L673">					final double ctrl1X = p1.getX() + (dx1 / len1) * controlDist;</span>
+<span class="nc" id="L674">					final double ctrl1Y = p1.getY() + (dy1 / len1) * controlDist;</span>
+<span class="nc" id="L675">					final double ctrl2X = p3.getX() - (dx2 / len2) * controlDist;</span>
+<span class="nc" id="L676">					final double ctrl2Y = p3.getY() - (dy2 / len2) * controlDist;</span>
 
-<span class="nc" id="L677">					newBeziers.add(new XCubicCurve2D(p1.getX(), p1.getY(), ctrl1X, ctrl1Y,</span>
-<span class="nc" id="L678">							ctrl2X, ctrl2Y, p3.getX(), p3.getY()));</span>
+<span class="nc" id="L678">					newBeziers.add(new XCubicCurve2D(p1.getX(), p1.getY(), ctrl1X, ctrl1Y,</span>
+<span class="nc" id="L679">							ctrl2X, ctrl2Y, p3.getX(), p3.getY()));</span>
 
-<span class="nc" id="L680">					i++; // Skip the control point and the next point</span>
-<span class="nc" id="L681">					continue;</span>
+<span class="nc" id="L681">					i++; // Skip the control point and the next point</span>
+<span class="nc" id="L682">					continue;</span>
 				}
 			}
 
 			// Regular straight segment
-<span class="nc" id="L686">			newBeziers.add(new XCubicCurve2D(p1.getX(), p1.getY(), p1.getX(), p1.getY(),</span>
-<span class="nc" id="L687">					p2.getX(), p2.getY(), p2.getX(), p2.getY()));</span>
+<span class="nc" id="L687">			newBeziers.add(new XCubicCurve2D(p1.getX(), p1.getY(), p1.getX(), p1.getY(),</span>
+<span class="nc" id="L688">					p2.getX(), p2.getY(), p2.getX(), p2.getY()));</span>
 		}
-<span class="nc" id="L689">		return newBeziers;</span>
+<span class="nc" id="L690">		return newBeziers;</span>
 	}
 
 	/**
 	 * Check if path consists of orthogonal (horizontal/vertical) segments
 	 */
 	private boolean isOrthogonalPathInternal() {
-<span class="nc bnc" id="L696" title="All 2 branches missed.">		for (XCubicCurve2D curve : beziers) {</span>
-<span class="nc" id="L697">			final double dx = Math.abs(curve.x2 - curve.x1);</span>
-<span class="nc" id="L698">			final double dy = Math.abs(curve.y2 - curve.y1);</span>
+<span class="nc bnc" id="L697" title="All 2 branches missed.">		for (XCubicCurve2D curve : beziers) {</span>
+<span class="nc" id="L698">			final double dx = Math.abs(curve.x2 - curve.x1);</span>
+<span class="nc" id="L699">			final double dy = Math.abs(curve.y2 - curve.y1);</span>
 
 			// Check if segment is either horizontal or vertical (not diagonal)
-<span class="nc bnc" id="L701" title="All 4 branches missed.">			if (dx &gt; 0.1 &amp;&amp; dy &gt; 0.1)</span>
-<span class="nc" id="L702">				return false;</span>
-<span class="nc" id="L703">		}</span>
-<span class="nc" id="L704">		return true;</span>
+<span class="nc bnc" id="L702" title="All 4 branches missed.">			if (dx &gt; 0.1 &amp;&amp; dy &gt; 0.1)</span>
+<span class="nc" id="L703">				return false;</span>
+<span class="nc" id="L704">		}</span>
+<span class="nc" id="L705">		return true;</span>
 	}
 
 	@Override
 	public UShapeKind getShapeKind() {
-<span class="fc" id="L709">		return UShapeKind.DOT_PATH;</span>
+<span class="fc" id="L710">		return UShapeKind.DOT_PATH;</span>
 	}
 
 }

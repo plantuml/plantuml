@@ -35,13 +35,13 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class ParticipantEnglober {
 
@@ -93,7 +93,7 @@ public class ParticipantEnglober {
 <span class="fc" id="L93">			result.addFirst(current);</span>
 <span class="fc" id="L94">			current = current.getParent();</span>
 		}
-<span class="fc" id="L96">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L96">		return MyCollections.unmodifiableList(result);</span>
 	}
 
 }

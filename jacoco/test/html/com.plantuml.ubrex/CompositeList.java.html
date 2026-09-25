@@ -35,8 +35,8 @@
 package com.plantuml.ubrex;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class CompositeList implements Challenge {
 
@@ -115,7 +115,7 @@ public class CompositeList implements Challenge {
 	}
 
 	public List&lt;Challenge&gt; getInternalChallengesList() {
-<span class="fc" id="L118">		return Collections.unmodifiableList(challenges);</span>
+<span class="fc" id="L118">		return MyCollections.unmodifiableList(challenges);</span>
 	}
 
 }

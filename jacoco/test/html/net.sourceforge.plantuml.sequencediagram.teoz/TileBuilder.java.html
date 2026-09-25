@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -58,6 +57,7 @@ import net.sourceforge.plantuml.sequencediagram.Notes;
 import net.sourceforge.plantuml.sequencediagram.Reference;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 <span class="nc" id="L62">public class TileBuilder {</span>
 
@@ -72,7 +72,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 <span class="fc" id="L72">				currentY = tile.getYGauge();</span>
 <span class="fc" id="L73">			}</span>
 <span class="fc" id="L74">		}</span>
-<span class="fc" id="L75">		return Collections.unmodifiableList(tiles);</span>
+<span class="fc" id="L75">		return MyCollections.unmodifiableList(tiles);</span>
 	}
 
 	public static List&lt;Tile&gt; buildOne(Iterator&lt;Event&gt; it, TileArguments tileArguments, final Event ev, Tile parent,

@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.activitydiagram3;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
@@ -48,6 +47,7 @@ import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 <span class="fc" id="L52">abstract class WithNote extends AbstractInstruction {</span>
 
@@ -67,7 +67,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 	}
 
 	public Collection&lt;PositionedNote&gt; getPositionedNotes() {
-<span class="fc" id="L70">		return Collections.unmodifiableCollection(notes);</span>
+<span class="fc" id="L70">		return MyCollections.unmodifiableCollection(notes);</span>
 	}
 
 	public boolean hasNotes() {

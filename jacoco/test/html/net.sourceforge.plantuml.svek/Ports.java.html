@@ -44,49 +44,50 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.utils.SignatureUtils;
 
-<span class="nc" id="L49">public class Ports {</span>
+<span class="nc" id="L50">public class Ports {</span>
 
-<span class="nc" id="L51">	private final Map&lt;String, PortGeometry&gt; ids = new HashMap&lt;String, PortGeometry&gt;();</span>
+<span class="nc" id="L52">	private final Map&lt;String, PortGeometry&gt; ids = new HashMap&lt;String, PortGeometry&gt;();</span>
 
 	public static String encodePortNameToId(String portName) {
-<span class="nc" id="L54">		return &quot;p&quot; + SignatureUtils.getMD5Hex(portName);</span>
+<span class="nc" id="L55">		return &quot;p&quot; + SignatureUtils.getMD5Hex(portName);</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L59">		return ids.toString();</span>
+<span class="nc" id="L60">		return ids.toString();</span>
 	}
 
 	public Ports translateY(double deltaY) {
-<span class="nc" id="L63">		final Ports result = new Ports();</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">		for (Map.Entry&lt;String, PortGeometry&gt; ent : ids.entrySet())</span>
-<span class="nc" id="L65">			result.ids.put(ent.getKey(), ent.getValue().translateY(deltaY));</span>
+<span class="nc" id="L64">		final Ports result = new Ports();</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		for (Map.Entry&lt;String, PortGeometry&gt; ent : ids.entrySet())</span>
+<span class="nc" id="L66">			result.ids.put(ent.getKey(), ent.getValue().translateY(deltaY));</span>
 
-<span class="nc" id="L67">		return result;</span>
+<span class="nc" id="L68">		return result;</span>
 	}
 
 	public void add(String portName, int score, double position, double height) {
-<span class="nc" id="L71">		final String id = encodePortNameToId(Objects.requireNonNull(portName));</span>
-<span class="nc" id="L72">		final PortGeometry already = ids.get(id);</span>
-<span class="nc bnc" id="L73" title="All 4 branches missed.">		if (already == null || already.getScore() &lt; score)</span>
-<span class="nc" id="L74">			ids.put(id, new PortGeometry(id, position, height, score));</span>
-<span class="nc" id="L75">	}</span>
+<span class="nc" id="L72">		final String id = encodePortNameToId(Objects.requireNonNull(portName));</span>
+<span class="nc" id="L73">		final PortGeometry already = ids.get(id);</span>
+<span class="nc bnc" id="L74" title="All 4 branches missed.">		if (already == null || already.getScore() &lt; score)</span>
+<span class="nc" id="L75">			ids.put(id, new PortGeometry(id, position, height, score));</span>
+<span class="nc" id="L76">	}</span>
 
 	public void addThis(Ports other) {
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		for (Entry&lt;String, PortGeometry&gt; ent : other.ids.entrySet()) {</span>
-<span class="nc" id="L79">			final String key = ent.getKey();</span>
-<span class="nc" id="L80">			final PortGeometry already = ids.get(key);</span>
-<span class="nc bnc" id="L81" title="All 4 branches missed.">			if (already == null || already.getScore() &lt; ent.getValue().getScore())</span>
-<span class="nc" id="L82">				ids.put(key, ent.getValue());</span>
-<span class="nc" id="L83">		}</span>
-<span class="nc" id="L84">	}</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		for (Entry&lt;String, PortGeometry&gt; ent : other.ids.entrySet()) {</span>
+<span class="nc" id="L80">			final String key = ent.getKey();</span>
+<span class="nc" id="L81">			final PortGeometry already = ids.get(key);</span>
+<span class="nc bnc" id="L82" title="All 4 branches missed.">			if (already == null || already.getScore() &lt; ent.getValue().getScore())</span>
+<span class="nc" id="L83">				ids.put(key, ent.getValue());</span>
+<span class="nc" id="L84">		}</span>
+<span class="nc" id="L85">	}</span>
 
 	public Collection&lt;PortGeometry&gt; getAllPortGeometry() {
-<span class="nc" id="L87">		final List&lt;PortGeometry&gt; result = new ArrayList&lt;PortGeometry&gt;(ids.values());</span>
-<span class="nc" id="L88">		Collections.sort(result);</span>
-<span class="nc" id="L89">		return Collections.unmodifiableCollection(result);</span>
+<span class="nc" id="L88">		final List&lt;PortGeometry&gt; result = new ArrayList&lt;PortGeometry&gt;(ids.values());</span>
+<span class="nc" id="L89">		Collections.sort(result);</span>
+<span class="nc" id="L90">		return MyCollections.unmodifiableCollection(result);</span>
 	}
 
 }

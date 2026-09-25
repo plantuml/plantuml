@@ -38,13 +38,13 @@ package net.sourceforge.plantuml.syntax;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.TreeSet;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 <span class="nc" id="L49">public class SyntaxResult {</span>
 
@@ -69,7 +69,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 	}
 
 	public Collection&lt;String&gt; getErrors() {
-<span class="nc" id="L72">		return Collections.unmodifiableCollection(errors);</span>
+<span class="nc" id="L72">		return MyCollections.unmodifiableCollection(errors);</span>
 	}
 
 	public void setDiagramType(DiagramType diagramType) {

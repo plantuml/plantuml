@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -45,6 +44,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.utils.MathUtils;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class GtileTopDown extends AbstractGtile {
 
@@ -125,7 +125,7 @@ public class GtileTopDown extends AbstractGtile {
 <span class="nc" id="L125">		final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;();</span>
 <span class="nc" id="L126">		result.addAll(tile1.getSwimlanes());</span>
 <span class="nc" id="L127">		result.addAll(tile2.getSwimlanes());</span>
-<span class="nc" id="L128">		return Collections.unmodifiableSet(result);</span>
+<span class="nc" id="L128">		return MyCollections.unmodifiableSet(result);</span>
 	}
 
 //	public Collection&lt;Gtile&gt; getMyChildren() {

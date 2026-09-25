@@ -41,6 +41,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.awt.XColor;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 /**
  * Represents an SVG-like linear gradient with multiple stops, offsets, and
@@ -63,19 +64,19 @@ public class HColorLinearGradient extends HColor {
 	 * Defines how the gradient behaves outside its vector range.
 	 * Mirrors SVG's spreadMethod values.
 	 */
-<span class="fc" id="L66">	public enum SpreadMethod {</span>
+<span class="fc" id="L67">	public enum SpreadMethod {</span>
 		/**
 		 * Default SVG behavior: extend edge colors past the end stops.
 		 */
-<span class="fc" id="L70">		PAD,</span>
+<span class="fc" id="L71">		PAD,</span>
 		/**
 		 * Reflect the gradient back and forth past the end stops.
 		 */
-<span class="fc" id="L74">		REFLECT,</span>
+<span class="fc" id="L75">		REFLECT,</span>
 		/**
 		 * Repeat the gradient in the same direction past the end stops.
 		 */
-<span class="fc" id="L78">		REPEAT</span>
+<span class="fc" id="L79">		REPEAT</span>
 	}
 
 	/**
@@ -105,11 +106,11 @@ public class HColorLinearGradient extends HColor {
 		 * @param color stop color
 		 * @param opacity stop opacity multiplier (0..1)
 		 */
-<span class="fc" id="L108">		public Stop(double offset, HColor color, double opacity) {</span>
-<span class="fc" id="L109">			this.offset = offset;</span>
-<span class="fc" id="L110">			this.color = color;</span>
-<span class="fc" id="L111">			this.opacity = opacity;</span>
-<span class="fc" id="L112">		}</span>
+<span class="fc" id="L109">		public Stop(double offset, HColor color, double opacity) {</span>
+<span class="fc" id="L110">			this.offset = offset;</span>
+<span class="fc" id="L111">			this.color = color;</span>
+<span class="fc" id="L112">			this.opacity = opacity;</span>
+<span class="fc" id="L113">		}</span>
 
 		/**
 		 * Returns the stop offset along the gradient vector.
@@ -117,7 +118,7 @@ public class HColorLinearGradient extends HColor {
 		 * @return offset in the 0..1 range
 		 */
 		public double getOffset() {
-<span class="fc" id="L120">			return offset;</span>
+<span class="fc" id="L121">			return offset;</span>
 		}
 
 		/**
@@ -126,7 +127,7 @@ public class HColorLinearGradient extends HColor {
 		 * @return stop color
 		 */
 		public HColor getColor() {
-<span class="fc" id="L129">			return color;</span>
+<span class="fc" id="L130">			return color;</span>
 		}
 
 		/**
@@ -135,7 +136,7 @@ public class HColorLinearGradient extends HColor {
 		 * @return opacity in the 0..1 range
 		 */
 		public double getOpacity() {
-<span class="fc" id="L138">			return opacity;</span>
+<span class="fc" id="L139">			return opacity;</span>
 		}
 	}
 
@@ -180,15 +181,15 @@ public class HColorLinearGradient extends HColor {
 	 * @param stops stop list (normalized, clamped, and ordered internally)
 	 */
 	public HColorLinearGradient(double x1, double y1, double x2, double y2, boolean userSpaceOnUse,
-<span class="fc" id="L183">			SpreadMethod spreadMethod, List&lt;Stop&gt; stops) {</span>
-<span class="fc" id="L184">		this.x1 = x1;</span>
-<span class="fc" id="L185">		this.y1 = y1;</span>
-<span class="fc" id="L186">		this.x2 = x2;</span>
-<span class="fc" id="L187">		this.y2 = y2;</span>
-<span class="fc" id="L188">		this.userSpaceOnUse = userSpaceOnUse;</span>
-<span class="pc bpc" id="L189" title="1 of 2 branches missed.">		this.spreadMethod = spreadMethod == null ? SpreadMethod.PAD : spreadMethod;</span>
-<span class="fc" id="L190">		this.stops = normalizeStops(stops);</span>
-<span class="fc" id="L191">	}</span>
+<span class="fc" id="L184">			SpreadMethod spreadMethod, List&lt;Stop&gt; stops) {</span>
+<span class="fc" id="L185">		this.x1 = x1;</span>
+<span class="fc" id="L186">		this.y1 = y1;</span>
+<span class="fc" id="L187">		this.x2 = x2;</span>
+<span class="fc" id="L188">		this.y2 = y2;</span>
+<span class="fc" id="L189">		this.userSpaceOnUse = userSpaceOnUse;</span>
+<span class="pc bpc" id="L190" title="1 of 2 branches missed.">		this.spreadMethod = spreadMethod == null ? SpreadMethod.PAD : spreadMethod;</span>
+<span class="fc" id="L191">		this.stops = normalizeStops(stops);</span>
+<span class="fc" id="L192">	}</span>
 
 	/**
 	 * Normalize stop ordering and offsets.
@@ -201,29 +202,29 @@ public class HColorLinearGradient extends HColor {
 	 * @return immutable normalized list
 	 */
 	private List&lt;Stop&gt; normalizeStops(List&lt;Stop&gt; input) {
-<span class="fc" id="L204">		final List&lt;Stop&gt; sorted = new ArrayList&lt;Stop&gt;(input);</span>
-<span class="fc" id="L205">		Collections.sort(sorted, new Comparator&lt;Stop&gt;() {</span>
+<span class="fc" id="L205">		final List&lt;Stop&gt; sorted = new ArrayList&lt;Stop&gt;(input);</span>
+<span class="fc" id="L206">		Collections.sort(sorted, new Comparator&lt;Stop&gt;() {</span>
 			public int compare(Stop o1, Stop o2) {
-<span class="fc" id="L207">				return Double.compare(o1.getOffset(), o2.getOffset());</span>
+<span class="fc" id="L208">				return Double.compare(o1.getOffset(), o2.getOffset());</span>
 			}
 		});
 
-<span class="fc" id="L211">		final List&lt;Stop&gt; normalized = new ArrayList&lt;Stop&gt;(sorted.size());</span>
-<span class="fc" id="L212">		double last = -1.0;</span>
-<span class="fc bfc" id="L213" title="All 2 branches covered.">		for (Stop stop : sorted) {</span>
-<span class="fc" id="L214">			double offset = stop.getOffset();</span>
-<span class="pc bpc" id="L215" title="1 of 2 branches missed.">			if (offset &lt; 0.0)</span>
-<span class="nc" id="L216">				offset = 0.0;</span>
-<span class="pc bpc" id="L217" title="1 of 2 branches missed.">			if (offset &gt; 1.0)</span>
-<span class="nc" id="L218">				offset = 1.0;</span>
-<span class="pc bpc" id="L219" title="1 of 2 branches missed.">			if (offset &lt;= last) {</span>
-<span class="nc" id="L220">				final double candidate = last + 0.000001;</span>
-<span class="nc bnc" id="L221" title="All 2 branches missed.">				offset = candidate &gt; 1.0 ? last : candidate;</span>
+<span class="fc" id="L212">		final List&lt;Stop&gt; normalized = new ArrayList&lt;Stop&gt;(sorted.size());</span>
+<span class="fc" id="L213">		double last = -1.0;</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">		for (Stop stop : sorted) {</span>
+<span class="fc" id="L215">			double offset = stop.getOffset();</span>
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">			if (offset &lt; 0.0)</span>
+<span class="nc" id="L217">				offset = 0.0;</span>
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">			if (offset &gt; 1.0)</span>
+<span class="nc" id="L219">				offset = 1.0;</span>
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">			if (offset &lt;= last) {</span>
+<span class="nc" id="L221">				final double candidate = last + 0.000001;</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">				offset = candidate &gt; 1.0 ? last : candidate;</span>
 			}
-<span class="fc" id="L223">			last = offset;</span>
-<span class="fc" id="L224">			normalized.add(new Stop(offset, stop.getColor(), stop.getOpacity()));</span>
-<span class="fc" id="L225">		}</span>
-<span class="fc" id="L226">		return Collections.unmodifiableList(normalized);</span>
+<span class="fc" id="L224">			last = offset;</span>
+<span class="fc" id="L225">			normalized.add(new Stop(offset, stop.getColor(), stop.getOpacity()));</span>
+<span class="fc" id="L226">		}</span>
+<span class="fc" id="L227">		return MyCollections.unmodifiableList(normalized);</span>
 	}
 
 	/**
@@ -232,7 +233,7 @@ public class HColorLinearGradient extends HColor {
 	 * @return start X
 	 */
 	public double getX1() {
-<span class="fc" id="L235">		return x1;</span>
+<span class="fc" id="L236">		return x1;</span>
 	}
 
 	/**
@@ -241,7 +242,7 @@ public class HColorLinearGradient extends HColor {
 	 * @return start Y
 	 */
 	public double getY1() {
-<span class="fc" id="L244">		return y1;</span>
+<span class="fc" id="L245">		return y1;</span>
 	}
 
 	/**
@@ -250,7 +251,7 @@ public class HColorLinearGradient extends HColor {
 	 * @return end X
 	 */
 	public double getX2() {
-<span class="fc" id="L253">		return x2;</span>
+<span class="fc" id="L254">		return x2;</span>
 	}
 
 	/**
@@ -259,7 +260,7 @@ public class HColorLinearGradient extends HColor {
 	 * @return end Y
 	 */
 	public double getY2() {
-<span class="fc" id="L262">		return y2;</span>
+<span class="fc" id="L263">		return y2;</span>
 	}
 
 	/**
@@ -268,7 +269,7 @@ public class HColorLinearGradient extends HColor {
 	 * @return true for userSpaceOnUse, false for objectBoundingBox
 	 */
 	public boolean isUserSpaceOnUse() {
-<span class="fc" id="L271">		return userSpaceOnUse;</span>
+<span class="fc" id="L272">		return userSpaceOnUse;</span>
 	}
 
 	/**
@@ -277,7 +278,7 @@ public class HColorLinearGradient extends HColor {
 	 * @return spread method
 	 */
 	public SpreadMethod getSpreadMethod() {
-<span class="fc" id="L280">		return spreadMethod;</span>
+<span class="fc" id="L281">		return spreadMethod;</span>
 	}
 
 	/**
@@ -286,7 +287,7 @@ public class HColorLinearGradient extends HColor {
 	 * @return immutable list of stops
 	 */
 	public List&lt;Stop&gt; getStops() {
-<span class="fc" id="L289">		return stops;</span>
+<span class="fc" id="L290">		return stops;</span>
 	}
 
 	/**
@@ -298,7 +299,7 @@ public class HColorLinearGradient extends HColor {
 	 * @return color of the first stop
 	 */
 	public HColor getColor1() {
-<span class="fc" id="L301">		return stops.get(0).getColor();</span>
+<span class="fc" id="L302">		return stops.get(0).getColor();</span>
 	}
 
 	/**
@@ -309,7 +310,7 @@ public class HColorLinearGradient extends HColor {
 	 */
 	@Override
 	public XColor toColor(ColorMapper mapper) {
-<span class="nc" id="L312">		return getColor1().toColor(mapper);</span>
+<span class="nc" id="L313">		return getColor1().toColor(mapper);</span>
 	}
 
 	/**
@@ -319,7 +320,7 @@ public class HColorLinearGradient extends HColor {
 	 */
 	@Override
 	public HColor opposite() {
-<span class="nc" id="L322">		return getColor1().opposite();</span>
+<span class="nc" id="L323">		return getColor1().opposite();</span>
 	}
 
 	/**
@@ -329,7 +330,7 @@ public class HColorLinearGradient extends HColor {
 	 */
 	@Override
 	public boolean isDark() {
-<span class="nc" id="L332">		return getColor1().isDark();</span>
+<span class="nc" id="L333">		return getColor1().isDark();</span>
 	}
 
 	/**
@@ -339,7 +340,7 @@ public class HColorLinearGradient extends HColor {
 	 */
 	@Override
 	public boolean isTransparent() {
-<span class="fc" id="L342">		return getColor1().isTransparent();</span>
+<span class="fc" id="L343">		return getColor1().isTransparent();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

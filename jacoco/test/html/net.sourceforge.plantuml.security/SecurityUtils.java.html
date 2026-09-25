@@ -49,7 +49,6 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
@@ -76,6 +75,7 @@ import net.sourceforge.plantuml.security.authentication.oauth.OAuth2ResourceOwne
 import net.sourceforge.plantuml.security.authentication.token.TokenAuthAccessInterceptor;
 import net.sourceforge.plantuml.security.authentication.token.TokenAuthAuthorizeManager;
 import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 <span class="nc" id="L80">public class SecurityUtils {</span>
 
@@ -238,7 +238,7 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="fc" id="L238">		final List&lt;SFile&gt; result = new ArrayList&lt;&gt;();</span>
 <span class="fc" id="L239">		String paths = getenv(prop);</span>
 <span class="fc bfc" id="L240" title="All 2 branches covered.">		if (paths == null) {</span>
-<span class="fc" id="L241">			return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L241">			return MyCollections.unmodifiableList(result);</span>
 		}
 <span class="fc" id="L243">		paths = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(paths);</span>
 <span class="fc" id="L244">		final StringTokenizer st = new StringTokenizer(paths, System.getProperty(&quot;path.separator&quot;));</span>
@@ -252,7 +252,7 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="nc" id="L252">				Log.info(() -&gt; &quot;Cannot access to &quot; + tmp + &quot;. &quot; + e);</span>
 <span class="fc" id="L253">			}</span>
 <span class="fc" id="L254">		}</span>
-<span class="fc" id="L255">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L255">		return MyCollections.unmodifiableList(result);</span>
 	}
 
 	public static boolean allowSvgText() {

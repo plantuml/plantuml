@@ -39,7 +39,6 @@ import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -51,6 +50,7 @@ import net.sourceforge.plantuml.gantt.core.TimeRanges;
 import net.sourceforge.plantuml.gantt.ngm.math.PiecewiseConstant;
 import net.sourceforge.plantuml.gantt.time.TimePoint;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 /**
  * Value object containing day calendar information: open/closed days, day
@@ -100,7 +100,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 	}
 
 	public Map&lt;TimePoint, String&gt; getNameDays() {
-<span class="fc" id="L103">		return Collections.unmodifiableMap(nameDays);</span>
+<span class="fc" id="L103">		return MyCollections.unmodifiableMap(nameDays);</span>
 	}
 
 	public boolean hasSeparatorBefore(LocalDate day) {

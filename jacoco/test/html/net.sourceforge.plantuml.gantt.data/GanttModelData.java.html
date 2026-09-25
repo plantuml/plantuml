@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.gantt.data;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +48,7 @@ import net.sourceforge.plantuml.gantt.core.TaskCode;
 import net.sourceforge.plantuml.gantt.core.TaskImpl;
 import net.sourceforge.plantuml.gantt.core.TaskSeparator;
 import net.sourceforge.plantuml.gantt.time.TimePoint;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 /**
  * Value object containing the core domain data of a Gantt diagram: tasks,
@@ -61,15 +61,15 @@ import net.sourceforge.plantuml.gantt.time.TimePoint;
 <span class="fc" id="L61">	private final Map&lt;String, Resource&gt; resources = new LinkedHashMap&lt;&gt;();</span>
 
 	public Collection&lt;Task&gt; getTasks() {
-<span class="fc" id="L64">		return Collections.unmodifiableCollection(tasks.values());</span>
+<span class="fc" id="L64">		return MyCollections.unmodifiableCollection(tasks.values());</span>
 	}
 
 	public Collection&lt;Resource&gt; getResources() {
-<span class="fc" id="L68">		return Collections.unmodifiableCollection(resources.values());</span>
+<span class="fc" id="L68">		return MyCollections.unmodifiableCollection(resources.values());</span>
 	}
 
 	public Collection&lt;GanttConstraint&gt; getConstraints() {
-<span class="fc" id="L72">		return Collections.unmodifiableCollection(constraints);</span>
+<span class="fc" id="L72">		return MyCollections.unmodifiableCollection(constraints);</span>
 	}
 
 	// Mutators for building the model
@@ -112,7 +112,7 @@ import net.sourceforge.plantuml.gantt.time.TimePoint;
 <span class="fc bfc" id="L112" title="All 2 branches covered.">			if (constraint.isOn(task))</span>
 <span class="fc" id="L113">				result.add(constraint);</span>
 
-<span class="fc" id="L115">		return Collections.unmodifiableCollection(result);</span>
+<span class="fc" id="L115">		return MyCollections.unmodifiableCollection(result);</span>
 	}
 
 }

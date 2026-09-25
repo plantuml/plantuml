@@ -40,6 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Explanation {
 
@@ -47,41 +48,41 @@ public class Explanation {
 	private final String explain;
 	private final LineLocation location;
 
-<span class="fc" id="L50">	public Explanation(BlocLines blocLines, String explain) {</span>
+<span class="fc" id="L51">	public Explanation(BlocLines blocLines, String explain) {</span>
 
-<span class="pc bpc" id="L52" title="1 of 2 branches missed.">		if (blocLines == null) {</span>
-<span class="nc" id="L53">			this.input = Collections.emptyList();</span>
-<span class="nc" id="L54">			this.location = null;</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">		if (blocLines == null) {</span>
+<span class="nc" id="L54">			this.input = Collections.emptyList();</span>
+<span class="nc" id="L55">			this.location = null;</span>
 		} else {
-<span class="fc" id="L56">			this.input = blocLines.asList();</span>
-<span class="fc" id="L57">			this.location = blocLines.getLocation();</span>
+<span class="fc" id="L57">			this.input = blocLines.asList();</span>
+<span class="fc" id="L58">			this.location = blocLines.getLocation();</span>
 
 		}
-<span class="fc" id="L60">		this.explain = explain;</span>
-<span class="fc" id="L61">	}</span>
+<span class="fc" id="L61">		this.explain = explain;</span>
+<span class="fc" id="L62">	}</span>
 
 	public static Explanation ofError(String error) {
-<span class="nc" id="L64">		return new Explanation(null, error);</span>
+<span class="nc" id="L65">		return new Explanation(null, error);</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (input == null)</span>
-<span class="nc" id="L70">			return explain;</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (input == null)</span>
+<span class="nc" id="L71">			return explain;</span>
 
-<span class="fc" id="L72">		return input + &quot; ==&gt; &quot; + explain;</span>
+<span class="fc" id="L73">		return input + &quot; ==&gt; &quot; + explain;</span>
 	}
 
 	public List&lt;String&gt; getInput() {
-<span class="nc" id="L76">		return Collections.unmodifiableList(input);</span>
+<span class="nc" id="L77">		return MyCollections.unmodifiableList(input);</span>
 	}
 
 	public String getExplain() {
-<span class="nc" id="L80">		return explain;</span>
+<span class="nc" id="L81">		return explain;</span>
 	}
 
 	public LineLocation getLocation() {
-<span class="nc" id="L84">		return location;</span>
+<span class="nc" id="L85">		return location;</span>
 	}
 
 }

@@ -28,11 +28,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.json.JsonObject.Member;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 /**
  * Represents a JSON object, a set of name/value pairs, where the names are
@@ -120,8 +120,8 @@ public class JsonObject extends JsonValue implements Iterable&lt;Member&gt; {
 <span class="nc" id="L120">			throw new NullPointerException(&quot;object is null&quot;);</span>
 		}
 <span class="nc bnc" id="L122" title="All 2 branches missed.">		if (unmodifiable) {</span>
-<span class="nc" id="L123">			names = Collections.unmodifiableList(object.names);</span>
-<span class="nc" id="L124">			values = Collections.unmodifiableList(object.values);</span>
+<span class="nc" id="L123">			names = MyCollections.unmodifiableList(object.names);</span>
+<span class="nc" id="L124">			values = MyCollections.unmodifiableList(object.values);</span>
 		} else {
 <span class="nc" id="L126">			names = new ArrayList&lt;&gt;(object.names);</span>
 <span class="nc" id="L127">			values = new ArrayList&lt;&gt;(object.values);</span>
@@ -752,7 +752,7 @@ public class JsonObject extends JsonValue implements Iterable&lt;Member&gt; {
 	 * @return a list of the names in this object
 	 */
 	public List&lt;String&gt; names() {
-<span class="fc" id="L755">		return Collections.unmodifiableList(names);</span>
+<span class="fc" id="L755">		return MyCollections.unmodifiableList(names);</span>
 	}
 
 	/**

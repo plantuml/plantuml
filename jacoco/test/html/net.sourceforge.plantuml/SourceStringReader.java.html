@@ -59,66 +59,67 @@ import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class SourceStringReader {
 
 	final private List&lt;BlockUml&gt; blocks;
 
 	public SourceStringReader(String source) {
-<span class="fc" id="L68">		this(Defines.createEmpty(), source, Collections.&lt;String&gt;emptyList());</span>
-<span class="fc" id="L69">	}</span>
+<span class="fc" id="L69">		this(Defines.createEmpty(), source, Collections.&lt;String&gt;emptyList());</span>
+<span class="fc" id="L70">	}</span>
 
 	public SourceStringReader(String source, String charset) {
-<span class="nc" id="L72">		this(Defines.createEmpty(), source, UTF_8.name(), Collections.&lt;String&gt;emptyList());</span>
-<span class="nc" id="L73">	}</span>
+<span class="nc" id="L73">		this(Defines.createEmpty(), source, UTF_8.name(), Collections.&lt;String&gt;emptyList());</span>
+<span class="nc" id="L74">	}</span>
 
 	public SourceStringReader(String source, Charset charset) {
-<span class="fc" id="L76">		this(Defines.createEmpty(), source, charset.name(), Collections.&lt;String&gt;emptyList());</span>
-<span class="fc" id="L77">	}</span>
+<span class="fc" id="L77">		this(Defines.createEmpty(), source, charset.name(), Collections.&lt;String&gt;emptyList());</span>
+<span class="fc" id="L78">	}</span>
 
 	public SourceStringReader(Defines defines, String source, List&lt;String&gt; config) {
-<span class="fc" id="L80">		this(defines, source, UTF_8.name(), config);</span>
-<span class="fc" id="L81">	}</span>
+<span class="fc" id="L81">		this(defines, source, UTF_8.name(), config);</span>
+<span class="fc" id="L82">	}</span>
 
 	public SourceStringReader(Defines defines, String source) {
-<span class="nc" id="L84">		this(defines, source, UTF_8.name(), Collections.&lt;String&gt;emptyList());</span>
-<span class="nc" id="L85">	}</span>
+<span class="nc" id="L85">		this(defines, source, UTF_8.name(), Collections.&lt;String&gt;emptyList());</span>
+<span class="nc" id="L86">	}</span>
 
 	public SourceStringReader(String source, SFile newCurrentDir) {
-<span class="fc" id="L88">		this(Defines.createEmpty(), source, UTF_8, Collections.&lt;String&gt;emptyList(), newCurrentDir);</span>
-<span class="fc" id="L89">	}</span>
+<span class="fc" id="L89">		this(Defines.createEmpty(), source, UTF_8, Collections.&lt;String&gt;emptyList(), newCurrentDir);</span>
+<span class="fc" id="L90">	}</span>
 
 	public SourceStringReader(Defines defines, String source, String charset, List&lt;String&gt; config) {
-<span class="fc" id="L92">		this(defines, source, charset, config, FileSystem.getInstance().getCurrentDir());</span>
-<span class="fc" id="L93">	}</span>
+<span class="fc" id="L93">		this(defines, source, charset, config, FileSystem.getInstance().getCurrentDir());</span>
+<span class="fc" id="L94">	}</span>
 
 	public SourceStringReader(Defines defines, String source, String charset, List&lt;String&gt; config,
 			SFile newCurrentDir) {
-<span class="fc" id="L97">		this(defines, source, charsetOrDefault(charset), config, newCurrentDir);</span>
-<span class="fc" id="L98">	}</span>
+<span class="fc" id="L98">		this(defines, source, charsetOrDefault(charset), config, newCurrentDir);</span>
+<span class="fc" id="L99">	}</span>
 
 	public SourceStringReader(Defines defines, String source, Charset charset, List&lt;String&gt; config,
-<span class="fc" id="L101">			SFile newCurrentDir) {</span>
+<span class="fc" id="L102">			SFile newCurrentDir) {</span>
 		try {
-<span class="fc" id="L103">			final BlockUmlBuilder builder = new BlockUmlBuilder(config, charset, defines, new StringReader(source),</span>
+<span class="fc" id="L104">			final BlockUmlBuilder builder = new BlockUmlBuilder(config, charset, defines, new StringReader(source),</span>
 					newCurrentDir, &quot;string&quot;);
-<span class="fc" id="L105">			this.blocks = builder.getBlockUmls();</span>
-<span class="nc" id="L106">		} catch (IOException e) {</span>
-<span class="nc" id="L107">			Log.error(&quot;error &quot; + e);</span>
-<span class="nc" id="L108">			throw new IllegalStateException(e);</span>
-<span class="fc" id="L109">		}</span>
-<span class="fc" id="L110">	}</span>
+<span class="fc" id="L106">			this.blocks = builder.getBlockUmls();</span>
+<span class="nc" id="L107">		} catch (IOException e) {</span>
+<span class="nc" id="L108">			Log.error(&quot;error &quot; + e);</span>
+<span class="nc" id="L109">			throw new IllegalStateException(e);</span>
+<span class="fc" id="L110">		}</span>
+<span class="fc" id="L111">	}</span>
 
 	/**
 	 * @deprecated Use {@link #outputImage(OutputStream)} instead
 	 */
 	@Deprecated
 	public String generateImage(OutputStream os) throws IOException {
-<span class="nc" id="L117">		return outputImage(os).getDescription();</span>
+<span class="nc" id="L118">		return outputImage(os).getDescription();</span>
 	}
 
 	public DiagramDescription outputImage(OutputStream os) throws IOException {
-<span class="nc" id="L121">		return outputImage(os, 0);</span>
+<span class="nc" id="L122">		return outputImage(os, 0);</span>
 	}
 
 	// ::comment when __TEAVM__
@@ -127,12 +128,12 @@ public class SourceStringReader {
 	 */
 	@Deprecated
 	public String generateImage(SFile f) throws IOException {
-<span class="nc" id="L130">		return outputImage(f).getDescription();</span>
+<span class="nc" id="L131">		return outputImage(f).getDescription();</span>
 	}
 
 	public DiagramDescription outputImage(SFile f) throws IOException {
-<span class="nc" id="L134">		try (OutputStream os = f.createBufferedOutputStream()) {</span>
-<span class="nc" id="L135">			return outputImage(os, 0);</span>
+<span class="nc" id="L135">		try (OutputStream os = f.createBufferedOutputStream()) {</span>
+<span class="nc" id="L136">			return outputImage(os, 0);</span>
 		}
 	}
 	// ::done
@@ -142,11 +143,11 @@ public class SourceStringReader {
 	 */
 	@Deprecated
 	public String generateImage(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
-<span class="nc" id="L145">		return outputImage(os, fileFormatOption).getDescription();</span>
+<span class="nc" id="L146">		return outputImage(os, fileFormatOption).getDescription();</span>
 	}
 
 	public DiagramDescription outputImage(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
-<span class="fc" id="L149">		return outputImage(os, 0, fileFormatOption);</span>
+<span class="fc" id="L150">		return outputImage(os, 0, fileFormatOption);</span>
 	}
 
 	/**
@@ -154,11 +155,11 @@ public class SourceStringReader {
 	 */
 	@Deprecated
 	public String generateImage(OutputStream os, int numImage) throws IOException {
-<span class="nc" id="L157">		return outputImage(os, numImage).getDescription();</span>
+<span class="nc" id="L158">		return outputImage(os, numImage).getDescription();</span>
 	}
 
 	public DiagramDescription outputImage(OutputStream os, int numImage) throws IOException {
-<span class="nc" id="L161">		return outputImage(os, numImage, new FileFormatOption(FileFormat.PNG));</span>
+<span class="nc" id="L162">		return outputImage(os, numImage, new FileFormatOption(FileFormat.PNG));</span>
 	}
 
 	/**
@@ -167,118 +168,118 @@ public class SourceStringReader {
 	 */
 	@Deprecated
 	public String generateImage(OutputStream os, int numImage, FileFormatOption fileFormatOption) throws IOException {
-<span class="nc" id="L170">		return outputImage(os, numImage, fileFormatOption).getDescription();</span>
+<span class="nc" id="L171">		return outputImage(os, numImage, fileFormatOption).getDescription();</span>
 	}
 
 	public DiagramDescription outputImage(OutputStream os, int numImage, FileFormatOption fileFormatOption)
 			throws IOException {
-<span class="pc bpc" id="L175" title="1 of 2 branches missed.">		if (blocks.size() == 0) {</span>
-<span class="nc" id="L176">			noValidStartFound(os, fileFormatOption);</span>
-<span class="nc" id="L177">			return null;</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">		if (blocks.size() == 0) {</span>
+<span class="nc" id="L177">			noValidStartFound(os, fileFormatOption);</span>
+<span class="nc" id="L178">			return null;</span>
 		}
-<span class="fc bfc" id="L179" title="All 2 branches covered.">		if (fileFormatOption.getFileFormat() == FileFormat.PREPROC) {</span>
-<span class="fc" id="L180">			final BlockUml first = blocks.get(0);</span>
-<span class="fc bfc" id="L181" title="All 2 branches covered.">			for (StringLocated s : first.getData()) {</span>
-<span class="fc" id="L182">				os.write(s.getString().getBytes(UTF_8));</span>
-<span class="fc" id="L183">				os.write(&quot;\n&quot;.getBytes(UTF_8));</span>
-<span class="fc" id="L184">			}</span>
-<span class="fc" id="L185">			return new DiagramDescription(&quot;PREPROC&quot;);</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">		if (fileFormatOption.getFileFormat() == FileFormat.PREPROC) {</span>
+<span class="fc" id="L181">			final BlockUml first = blocks.get(0);</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">			for (StringLocated s : first.getData()) {</span>
+<span class="fc" id="L183">				os.write(s.getString().getBytes(UTF_8));</span>
+<span class="fc" id="L184">				os.write(&quot;\n&quot;.getBytes(UTF_8));</span>
+<span class="fc" id="L185">			}</span>
+<span class="fc" id="L186">			return new DiagramDescription(&quot;PREPROC&quot;);</span>
 		}
-<span class="pc bpc" id="L187" title="1 of 2 branches missed.">		for (BlockUml b : blocks) {</span>
-<span class="fc" id="L188">			final Diagram system = b.getDiagram();</span>
-<span class="fc" id="L189">			final int nbInSystem = system.getNbImages();</span>
-<span class="pc bpc" id="L190" title="1 of 2 branches missed.">			if (numImage &lt; nbInSystem) {</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">		for (BlockUml b : blocks) {</span>
+<span class="fc" id="L189">			final Diagram system = b.getDiagram();</span>
+<span class="fc" id="L190">			final int nbInSystem = system.getNbImages();</span>
+<span class="pc bpc" id="L191" title="1 of 2 branches missed.">			if (numImage &lt; nbInSystem) {</span>
 				// final CMapData cmap = new CMapData();
-<span class="fc" id="L192">				final ImageData imageData = system.exportDiagram(os, numImage, fileFormatOption);</span>
+<span class="fc" id="L193">				final ImageData imageData = system.exportDiagram(os, numImage, fileFormatOption);</span>
 				// if (imageData.containsCMapData()) {
 				// return system.getDescription().getDescription() + BackSlash.BS_N +
 				// imageData.getCMapData(&quot;plantuml&quot;);
 				// }
-<span class="fc" id="L197">				return system.getDescription().withImageData(imageData);</span>
+<span class="fc" id="L198">				return system.getDescription().withImageData(imageData);</span>
 			}
-<span class="nc" id="L199">			numImage -= nbInSystem;</span>
-<span class="nc" id="L200">		}</span>
-<span class="nc" id="L201">		Log.error(&quot;numImage is too big = &quot; + numImage);</span>
-<span class="nc" id="L202">		return null;</span>
+<span class="nc" id="L200">			numImage -= nbInSystem;</span>
+<span class="nc" id="L201">		}</span>
+<span class="nc" id="L202">		Log.error(&quot;numImage is too big = &quot; + numImage);</span>
+<span class="nc" id="L203">		return null;</span>
 
 	}
 
 	public DiagramDescription generateDiagramDescription(int numImage, FileFormatOption fileFormatOption) {
-<span class="nc bnc" id="L207" title="All 2 branches missed.">		if (blocks.size() == 0)</span>
-<span class="nc" id="L208">			return null;</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">		if (blocks.size() == 0)</span>
+<span class="nc" id="L209">			return null;</span>
 
-<span class="nc bnc" id="L210" title="All 2 branches missed.">		for (BlockUml b : blocks) {</span>
-<span class="nc" id="L211">			final Diagram system = b.getDiagram();</span>
-<span class="nc" id="L212">			final int nbInSystem = system.getNbImages();</span>
-<span class="nc bnc" id="L213" title="All 2 branches missed.">			if (numImage &lt; nbInSystem) {</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">		for (BlockUml b : blocks) {</span>
+<span class="nc" id="L212">			final Diagram system = b.getDiagram();</span>
+<span class="nc" id="L213">			final int nbInSystem = system.getNbImages();</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">			if (numImage &lt; nbInSystem) {</span>
 				// final ImageData imageData = system.exportDiagram(os, numImage,
 				// fileFormatOption);
 				// if (imageData.containsCMapData()) {
 				// return
 				// system.getDescription().withCMapData(imageData.getCMapData(&quot;plantuml&quot;));
 				// }
-<span class="nc" id="L220">				return system.getDescription();</span>
+<span class="nc" id="L221">				return system.getDescription();</span>
 			}
-<span class="nc" id="L222">			numImage -= nbInSystem;</span>
-<span class="nc" id="L223">		}</span>
-<span class="nc" id="L224">		Log.error(&quot;numImage is too big = &quot; + numImage);</span>
-<span class="nc" id="L225">		return null;</span>
+<span class="nc" id="L223">			numImage -= nbInSystem;</span>
+<span class="nc" id="L224">		}</span>
+<span class="nc" id="L225">		Log.error(&quot;numImage is too big = &quot; + numImage);</span>
+<span class="nc" id="L226">		return null;</span>
 	}
 
 	public DiagramDescription generateDiagramDescription() {
-<span class="nc" id="L229">		return generateDiagramDescription(0);</span>
+<span class="nc" id="L230">		return generateDiagramDescription(0);</span>
 	}
 
 	public DiagramDescription generateDiagramDescription(FileFormatOption fileFormatOption) {
-<span class="nc" id="L233">		return generateDiagramDescription(0, fileFormatOption);</span>
+<span class="nc" id="L234">		return generateDiagramDescription(0, fileFormatOption);</span>
 	}
 
 	public DiagramDescription generateDiagramDescription(int numImage) {
-<span class="nc" id="L237">		return generateDiagramDescription(numImage, new FileFormatOption(FileFormat.PNG));</span>
+<span class="nc" id="L238">		return generateDiagramDescription(numImage, new FileFormatOption(FileFormat.PNG));</span>
 	}
 
 	public String getCMapData(int numImage, FileFormatOption fileFormatOption) throws IOException {
-<span class="pc bpc" id="L241" title="1 of 2 branches missed.">		if (blocks.size() == 0)</span>
-<span class="nc" id="L242">			return null;</span>
+<span class="pc bpc" id="L242" title="1 of 2 branches missed.">		if (blocks.size() == 0)</span>
+<span class="nc" id="L243">			return null;</span>
 
-<span class="pc bpc" id="L244" title="1 of 2 branches missed.">		for (BlockUml b : blocks) {</span>
-<span class="fc" id="L245">			final Diagram system = b.getDiagram();</span>
-<span class="fc" id="L246">			final int nbInSystem = system.getNbImages();</span>
-<span class="pc bpc" id="L247" title="1 of 2 branches missed.">			if (numImage &lt; nbInSystem) {</span>
-<span class="fc" id="L248">				final ImageData imageData = system.exportDiagram(new NullOutputStream(), numImage, fileFormatOption);</span>
-<span class="fc bfc" id="L249" title="All 2 branches covered.">				if (imageData.containsCMapData())</span>
-<span class="fc" id="L250">					return imageData.getCMapData(&quot;plantuml&quot;);</span>
+<span class="pc bpc" id="L245" title="1 of 2 branches missed.">		for (BlockUml b : blocks) {</span>
+<span class="fc" id="L246">			final Diagram system = b.getDiagram();</span>
+<span class="fc" id="L247">			final int nbInSystem = system.getNbImages();</span>
+<span class="pc bpc" id="L248" title="1 of 2 branches missed.">			if (numImage &lt; nbInSystem) {</span>
+<span class="fc" id="L249">				final ImageData imageData = system.exportDiagram(new NullOutputStream(), numImage, fileFormatOption);</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">				if (imageData.containsCMapData())</span>
+<span class="fc" id="L251">					return imageData.getCMapData(&quot;plantuml&quot;);</span>
 
-<span class="fc" id="L252">				return null;</span>
+<span class="fc" id="L253">				return null;</span>
 			}
-<span class="nc" id="L254">			numImage -= nbInSystem;</span>
-<span class="nc" id="L255">		}</span>
-<span class="nc" id="L256">		return null;</span>
+<span class="nc" id="L255">			numImage -= nbInSystem;</span>
+<span class="nc" id="L256">		}</span>
+<span class="nc" id="L257">		return null;</span>
 
 	}
 
 	public ImageData noValidStartFound(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
-<span class="nc" id="L261">		final TextBlock error = GraphicStrings.createForError(</span>
-<span class="nc" id="L262">				Arrays.asList(&quot;No valid @start/@end found, please check the version&quot;),</span>
-<span class="nc" id="L263">				fileFormatOption.isUseRedForError());</span>
+<span class="nc" id="L262">		final TextBlock error = GraphicStrings.createForError(</span>
+<span class="nc" id="L263">				Arrays.asList(&quot;No valid @start/@end found, please check the version&quot;),</span>
+<span class="nc" id="L264">				fileFormatOption.isUseRedForError());</span>
 
-<span class="nc" id="L265">		return TextBlockExporter.builder(error, fileFormatOption, false).build().exportTo(os);</span>
+<span class="nc" id="L266">		return TextBlockExporter.builder(error, fileFormatOption, false).build().exportTo(os);</span>
 	}
 
 	public final List&lt;BlockUml&gt; getBlocks() {
-<span class="fc" id="L269">		return Collections.unmodifiableList(blocks);</span>
+<span class="fc" id="L270">		return MyCollections.unmodifiableList(blocks);</span>
 	}
 
 	public void updateStatus(ExitStatus exitStatus) {
-<span class="fc" id="L273">		exitStatus.goesHasFiles();</span>
-<span class="fc bfc" id="L274" title="All 2 branches covered.">		for (BlockUml blockUml : getBlocks()) {</span>
-<span class="fc" id="L275">			exitStatus.goesHasBlocks();</span>
-<span class="fc" id="L276">			final Diagram system = blockUml.getDiagram();</span>
-<span class="pc bpc" id="L277" title="1 of 4 branches missed.">			if (system instanceof PSystemError || system instanceof PSystemUnsupported)</span>
-<span class="fc" id="L278">				exitStatus.goesHasErrors();</span>
-<span class="fc" id="L279">		}</span>
+<span class="fc" id="L274">		exitStatus.goesHasFiles();</span>
+<span class="fc bfc" id="L275" title="All 2 branches covered.">		for (BlockUml blockUml : getBlocks()) {</span>
+<span class="fc" id="L276">			exitStatus.goesHasBlocks();</span>
+<span class="fc" id="L277">			final Diagram system = blockUml.getDiagram();</span>
+<span class="pc bpc" id="L278" title="1 of 4 branches missed.">			if (system instanceof PSystemError || system instanceof PSystemUnsupported)</span>
+<span class="fc" id="L279">				exitStatus.goesHasErrors();</span>
+<span class="fc" id="L280">		}</span>
 
-<span class="fc" id="L281">	}</span>
+<span class="fc" id="L282">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

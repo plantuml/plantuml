@@ -8,10 +8,10 @@
                 <ConcreteClasses>25</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
                 <Ca>10</Ca>
-                <Ce>4</Ce>
+                <Ce>5</Ce>
                 <A>0.14</A>
-                <I>0.29</I>
-                <D>0.58</D>
+                <I>0.33</I>
+                <D>0.53</D>
                 <V>1</V>
             </Stats>
 
@@ -113,6 +113,7 @@
                 <Package>java.util</Package>
                 <Package>java.util.concurrent.atomic</Package>
                 <Package>java.util.function</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -2405,10 +2406,10 @@
                 <ConcreteClasses>23</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
                 <Ca>6</Ca>
-                <Ce>25</Ce>
+                <Ce>26</Ce>
                 <A>0.15</A>
                 <I>0.81</I>
-                <D>0.05</D>
+                <D>0.04</D>
                 <V>1</V>
             </Stats>
 
@@ -2525,6 +2526,7 @@
                 <Package>net.sourceforge.plantuml.stereo</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.url</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -4097,10 +4099,10 @@
                 <ConcreteClasses>20</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
                 <Ca>3</Ca>
-                <Ce>14</Ce>
+                <Ce>15</Ce>
                 <A>0.13</A>
-                <I>0.82</I>
-                <D>0.05</D>
+                <I>0.83</I>
+                <D>0.04</D>
                 <V>1</V>
             </Stats>
 
@@ -4194,6 +4196,7 @@
                 <Package>net.sourceforge.plantuml.skin</Package>
                 <Package>net.sourceforge.plantuml.skin.rose</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -4489,10 +4492,10 @@
                 <ConcreteClasses>11</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>2</Ca>
-                <Ce>11</Ce>
+                <Ce>12</Ce>
                 <A>0</A>
-                <I>0.85</I>
-                <D>0.15</D>
+                <I>0.86</I>
+                <D>0.14</D>
                 <V>1</V>
             </Stats>
 
@@ -4547,6 +4550,7 @@
                 <Package>net.sourceforge.plantuml.klimt.font</Package>
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -5821,10 +5825,10 @@
                 <ConcreteClasses>24</ConcreteClasses>
                 <AbstractClasses>6</AbstractClasses>
                 <Ca>7</Ca>
-                <Ce>22</Ce>
+                <Ce>23</Ce>
                 <A>0.2</A>
-                <I>0.76</I>
-                <D>0.04</D>
+                <I>0.77</I>
+                <D>0.03</D>
                 <V>1</V>
             </Stats>
 
@@ -5947,6 +5951,7 @@
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.teavm</Package>
                 <Package>net.sourceforge.plantuml.url</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -5966,10 +5971,10 @@
                 <ConcreteClasses>3</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>12</Ca>
-                <Ce>7</Ce>
+                <Ce>8</Ce>
                 <A>0.25</A>
-                <I>0.37</I>
-                <D>0.38</D>
+                <I>0.4</I>
+                <D>0.35</D>
                 <V>1</V>
             </Stats>
 
@@ -5999,6 +6004,7 @@
                 <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.style.value</Package>
                 <Package>net.sourceforge.plantuml.svek.extremity</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -6735,9 +6741,9 @@
                 <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
                 <Ca>5</Ca>
-                <Ce>29</Ce>
+                <Ce>30</Ce>
                 <A>0.17</A>
-                <I>0.85</I>
+                <I>0.86</I>
                 <D>0.02</D>
                 <V>1</V>
             </Stats>
@@ -6831,6 +6837,7 @@
                 <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.teavm</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
                 <Package>net.sourceforge.plantuml.windowsdot</Package>
             </DependsUpon>
 
@@ -7636,7 +7643,7 @@
                 <ConcreteClasses>4</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>0</Ca>
-                <Ce>15</Ce>
+                <Ce>16</Ce>
                 <A>0</A>
                 <I>1</I>
                 <D>0</D>
@@ -7677,6 +7684,7 @@
                 <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.style.parser</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -7864,7 +7872,7 @@
                 <ConcreteClasses>22</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
                 <Ca>8</Ca>
-                <Ce>38</Ce>
+                <Ce>39</Ce>
                 <A>0.12</A>
                 <I>0.83</I>
                 <D>0.05</D>
@@ -7991,6 +7999,7 @@
                 <Package>net.sourceforge.plantuml.stereo</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.style.value</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -8094,10 +8103,10 @@
                 <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
                 <Ca>9</Ca>
-                <Ce>13</Ce>
+                <Ce>14</Ce>
                 <A>0.25</A>
-                <I>0.59</I>
-                <D>0.16</D>
+                <I>0.61</I>
+                <D>0.14</D>
                 <V>1</V>
             </Stats>
 
@@ -8157,6 +8166,7 @@
                 <Package>net.sourceforge.plantuml.stereo</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.url</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -8178,7 +8188,7 @@
                 <ConcreteClasses>8</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>4</Ca>
-                <Ce>19</Ce>
+                <Ce>20</Ce>
                 <A>0</A>
                 <I>0.83</I>
                 <D>0.17</D>
@@ -8235,6 +8245,7 @@
                 <Package>net.sourceforge.plantuml.skin</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.style.value</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -8966,7 +8977,7 @@
                 <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>0</Ca>
-                <Ce>21</Ce>
+                <Ce>22</Ce>
                 <A>0</A>
                 <I>1</I>
                 <D>0</D>
@@ -9027,6 +9038,7 @@
                 <Package>net.sourceforge.plantuml.style.value</Package>
                 <Package>net.sourceforge.plantuml.teavm</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
                 <Package>smetana.core</Package>
             </DependsUpon>
 
@@ -9040,10 +9052,10 @@
                 <ConcreteClasses>10</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>1</Ca>
-                <Ce>10</Ce>
+                <Ce>11</Ce>
                 <A>0</A>
-                <I>0.91</I>
-                <D>0.09</D>
+                <I>0.92</I>
+                <D>0.08</D>
                 <V>1</V>
             </Stats>
 
@@ -9094,6 +9106,7 @@
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.teavm</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -9156,7 +9169,7 @@
                 <ConcreteClasses>3</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>0</Ca>
-                <Ce>10</Ce>
+                <Ce>11</Ce>
                 <A>0</A>
                 <I>1</I>
                 <D>0</D>
@@ -9189,6 +9202,7 @@
                 <Package>net.sourceforge.plantuml.log</Package>
                 <Package>net.sourceforge.plantuml.nio</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -9337,10 +9351,10 @@
                 <ConcreteClasses>16</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
                 <Ca>11</Ca>
-                <Ce>3</Ce>
+                <Ce>4</Ce>
                 <A>0.11</A>
-                <I>0.21</I>
-                <D>0.67</D>
+                <I>0.27</I>
+                <D>0.62</D>
                 <V>1</V>
             </Stats>
 
@@ -9408,6 +9422,7 @@
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -10047,10 +10062,10 @@
                 <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
                 <Ca>65</Ca>
-                <Ce>13</Ce>
+                <Ce>14</Ce>
                 <A>0.21</A>
-                <I>0.17</I>
-                <D>0.62</D>
+                <I>0.18</I>
+                <D>0.61</D>
                 <V>1</V>
             </Stats>
 
@@ -10131,6 +10146,7 @@
                 <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.style.value</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -10823,7 +10839,7 @@
                 <ConcreteClasses>13</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>4</Ca>
-                <Ce>19</Ce>
+                <Ce>20</Ce>
                 <A>0.07</A>
                 <I>0.83</I>
                 <D>0.1</D>
@@ -10898,6 +10914,7 @@
                 <Package>net.sourceforge.plantuml.security</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
                 <Package>net.sourceforge.plantuml.url</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -12299,10 +12316,10 @@
                 <ConcreteClasses>2</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>1</Ca>
-                <Ce>4</Ce>
+                <Ce>5</Ce>
                 <A>0</A>
-                <I>0.8</I>
-                <D>0.2</D>
+                <I>0.83</I>
+                <D>0.17</D>
                 <V>1</V>
             </Stats>
 
@@ -12323,6 +12340,7 @@
                 <Package>java.util</Package>
                 <Package>net.sourceforge.plantuml.abel</Package>
                 <Package>net.sourceforge.plantuml.api.mda.option2</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -12622,10 +12640,10 @@
                 <ConcreteClasses>5</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>1</Ca>
-                <Ce>11</Ce>
+                <Ce>12</Ce>
                 <A>0.17</A>
                 <I>0.92</I>
-                <D>0.08</D>
+                <D>0.09</D>
                 <V>1</V>
             </Stats>
 
@@ -12665,6 +12683,7 @@
                 <Package>net.sourceforge.plantuml.nwdiag.core</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.style.value</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -13012,10 +13031,10 @@
                 <ConcreteClasses>2</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>6</Ca>
-                <Ce>2</Ce>
+                <Ce>3</Ce>
                 <A>0</A>
-                <I>0.25</I>
-                <D>0.75</D>
+                <I>0.33</I>
+                <D>0.67</D>
                 <V>1</V>
             </Stats>
 
@@ -13034,6 +13053,7 @@
             <DependsUpon>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -13183,10 +13203,10 @@
                 <ConcreteClasses>3</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
                 <Ca>1</Ca>
-                <Ce>10</Ce>
+                <Ce>11</Ce>
                 <A>0.4</A>
-                <I>0.91</I>
-                <D>0.31</D>
+                <I>0.92</I>
+                <D>0.32</D>
                 <V>1</V>
             </Stats>
 
@@ -13222,6 +13242,7 @@
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.skin.rose</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -13538,10 +13559,10 @@
                 <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
                 <Ca>37</Ca>
-                <Ce>8</Ce>
+                <Ce>9</Ce>
                 <A>0.18</A>
-                <I>0.18</I>
-                <D>0.64</D>
+                <I>0.2</I>
+                <D>0.62</D>
                 <V>1</V>
             </Stats>
 
@@ -13593,6 +13614,7 @@
                 <Package>net.sourceforge.plantuml.jaws</Package>
                 <Package>net.sourceforge.plantuml.teavm</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -13642,7 +13664,7 @@
                 <ConcreteClasses>5</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>0</Ca>
-                <Ce>13</Ce>
+                <Ce>14</Ce>
                 <A>0</A>
                 <I>1</I>
                 <D>0</D>
@@ -13684,6 +13706,7 @@
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.nio</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -14788,7 +14811,7 @@
                 <ConcreteClasses>37</ConcreteClasses>
                 <AbstractClasses>6</AbstractClasses>
                 <Ca>0</Ca>
-                <Ce>20</Ce>
+                <Ce>21</Ce>
                 <A>0.14</A>
                 <I>1</I>
                 <D>0.14</D>
@@ -14951,6 +14974,7 @@
                 <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.style.value</Package>
                 <Package>net.sourceforge.plantuml.teavm</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -15382,7 +15406,7 @@
                 <ConcreteClasses>13</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>1</Ca>
-                <Ce>11</Ce>
+                <Ce>12</Ce>
                 <A>0.07</A>
                 <I>0.92</I>
                 <D>0.01</D>
@@ -15449,6 +15473,7 @@
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.stats.api</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -15503,10 +15528,10 @@
                 <ConcreteClasses>2</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>35</Ca>
-                <Ce>4</Ce>
+                <Ce>5</Ce>
                 <A>0</A>
-                <I>0.1</I>
-                <D>0.9</D>
+                <I>0.12</I>
+                <D>0.88</D>
                 <V>1</V>
             </Stats>
 
@@ -15527,6 +15552,7 @@
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
                 <Package>net.sourceforge.plantuml.regex</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -15574,10 +15600,10 @@
                 <ConcreteClasses>17</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
                 <Ca>68</Ca>
-                <Ce>20</Ce>
+                <Ce>21</Ce>
                 <A>0.23</A>
-                <I>0.23</I>
-                <D>0.55</D>
+                <I>0.24</I>
+                <D>0.54</D>
                 <V>1</V>
             </Stats>
 
@@ -15674,6 +15700,7 @@
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
                 <Package>net.sourceforge.plantuml.tikz</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -16648,7 +16675,7 @@
                 <ConcreteClasses>36</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>0</Ca>
-                <Ce>15</Ce>
+                <Ce>16</Ce>
                 <A>0</A>
                 <I>1</I>
                 <D>0</D>
@@ -16785,6 +16812,7 @@
                 <Package>net.sourceforge.plantuml.klimt.awt</Package>
                 <Package>net.sourceforge.plantuml.log</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -17728,10 +17756,10 @@
                 <ConcreteClasses>13</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
                 <Ca>1</Ca>
-                <Ce>8</Ce>
+                <Ce>9</Ce>
                 <A>0.19</A>
-                <I>0.89</I>
-                <D>0.08</D>
+                <I>0.9</I>
+                <D>0.09</D>
                 <V>1</V>
             </Stats>
 
@@ -17798,6 +17826,7 @@
                 <Package>net.sourceforge.plantuml.text</Package>
                 <Package>net.sourceforge.plantuml.tim</Package>
                 <Package>net.sourceforge.plantuml.tim.expression</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -18170,14 +18199,14 @@
 
         <Package name="net.sourceforge.plantuml.utils">
             <Stats>
-                <TotalClasses>19</TotalClasses>
-                <ConcreteClasses>14</ConcreteClasses>
+                <TotalClasses>20</TotalClasses>
+                <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
-                <Ca>60</Ca>
+                <Ca>90</Ca>
                 <Ce>21</Ce>
-                <A>0.26</A>
-                <I>0.26</I>
-                <D>0.48</D>
+                <A>0.25</A>
+                <I>0.19</I>
+                <D>0.56</D>
                 <V>1</V>
             </Stats>
 
@@ -18224,6 +18253,9 @@
                 <Class sourceFile="MathUtils.java">
                     net.sourceforge.plantuml.utils.MathUtils
                 </Class>
+                <Class sourceFile="MyCollections.java">
+                    net.sourceforge.plantuml.utils.MyCollections
+                </Class>
                 <Class sourceFile="ObjectUtils.java">
                     net.sourceforge.plantuml.utils.ObjectUtils
                 </Class>
@@ -18269,18 +18301,22 @@
             </DependsUpon>
 
             <UsedBy>
+                <Package>com.plantuml.ubrex</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.abel</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram.command</Package>
+                <Package>net.sourceforge.plantuml.activitydiagram3</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3.command</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3.ftile</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3.ftile.vcompact</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3.gtile</Package>
                 <Package>net.sourceforge.plantuml.api.v2</Package>
+                <Package>net.sourceforge.plantuml.asciiart</Package>
                 <Package>net.sourceforge.plantuml.board</Package>
                 <Package>net.sourceforge.plantuml.bpm</Package>
+                <Package>net.sourceforge.plantuml.braille</Package>
                 <Package>net.sourceforge.plantuml.chart.command</Package>
                 <Package>net.sourceforge.plantuml.cheneer.command</Package>
                 <Package>net.sourceforge.plantuml.classdiagram.command</Package>
@@ -18289,43 +18325,69 @@
                 <Package>net.sourceforge.plantuml.command.note.sequence</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.crash</Package>
+                <Package>net.sourceforge.plantuml.cucadiagram</Package>
+                <Package>net.sourceforge.plantuml.decoration</Package>
                 <Package>net.sourceforge.plantuml.dedication</Package>
                 <Package>net.sourceforge.plantuml.descdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.ditaa</Package>
+                <Package>net.sourceforge.plantuml.dot</Package>
                 <Package>net.sourceforge.plantuml.ebnf</Package>
                 <Package>net.sourceforge.plantuml.elk</Package>
+                <Package>net.sourceforge.plantuml.filesdiagram</Package>
                 <Package>net.sourceforge.plantuml.flowdiagram</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
                 <Package>net.sourceforge.plantuml.gantt.command</Package>
+                <Package>net.sourceforge.plantuml.gantt.core</Package>
+                <Package>net.sourceforge.plantuml.gantt.data</Package>
+                <Package>net.sourceforge.plantuml.gitlog</Package>
+                <Package>net.sourceforge.plantuml.golem</Package>
                 <Package>net.sourceforge.plantuml.graphml</Package>
+                <Package>net.sourceforge.plantuml.hcl</Package>
                 <Package>net.sourceforge.plantuml.jaws</Package>
+                <Package>net.sourceforge.plantuml.json</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.klimt.compress</Package>
+                <Package>net.sourceforge.plantuml.klimt.creole</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole.legacy</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing</Package>
+                <Package>net.sourceforge.plantuml.klimt.drawing.g2d</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.tikz</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
+                <Package>net.sourceforge.plantuml.mda</Package>
                 <Package>net.sourceforge.plantuml.mindmap</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
+                <Package>net.sourceforge.plantuml.nwdiag.next</Package>
                 <Package>net.sourceforge.plantuml.objectdiagram</Package>
                 <Package>net.sourceforge.plantuml.packetdiag.command</Package>
+                <Package>net.sourceforge.plantuml.plasma</Package>
+                <Package>net.sourceforge.plantuml.posimo</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.preproc2</Package>
+                <Package>net.sourceforge.plantuml.regex</Package>
+                <Package>net.sourceforge.plantuml.regexdiagram</Package>
                 <Package>net.sourceforge.plantuml.salt</Package>
                 <Package>net.sourceforge.plantuml.salt.element</Package>
                 <Package>net.sourceforge.plantuml.security</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.command</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.graphic</Package>
+                <Package>net.sourceforge.plantuml.sequencediagram.teoz</Package>
                 <Package>net.sourceforge.plantuml.statediagram.command</Package>
+                <Package>net.sourceforge.plantuml.stats</Package>
+                <Package>net.sourceforge.plantuml.stereo</Package>
+                <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.svek.image</Package>
+                <Package>net.sourceforge.plantuml.swing</Package>
                 <Package>net.sourceforge.plantuml.syntax</Package>
                 <Package>net.sourceforge.plantuml.tim</Package>
+                <Package>net.sourceforge.plantuml.tim.iterator</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram.graphic</Package>
+                <Package>net.sourceforge.plantuml.version</Package>
                 <Package>net.sourceforge.plantuml.wbs</Package>
                 <Package>net.sourceforge.plantuml.wire</Package>
                 <Package>net.sourceforge.plantuml.xmlsc</Package>
@@ -18338,10 +18400,10 @@
                 <ConcreteClasses>6</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>5</Ca>
-                <Ce>14</Ce>
+                <Ce>15</Ce>
                 <A>0.14</A>
-                <I>0.74</I>
-                <D>0.12</D>
+                <I>0.75</I>
+                <D>0.11</D>
                 <V>1</V>
             </Stats>
 
@@ -18387,6 +18449,7 @@
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -19813,6 +19876,33 @@
     </Packages>
 
     <Cycles>
+        <Package Name="com.plantuml.ubrex">
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>net.sourceforge.plantuml.teavm</Package>
+        </Package>
+
+        <Package Name="com.plantuml.ubrex.builder">
+            <Package>com.plantuml.ubrex</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>net.sourceforge.plantuml.teavm</Package>
+        </Package>
+
         <Package Name="gen.lib.cdt">
             <Package>smetana.core</Package>
             <Package>h</Package>
@@ -19899,8 +19989,7 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.activitydiagram.command">
-            <Package>net.sourceforge.plantuml.regex</Package>
-            <Package>net.sourceforge.plantuml.jaws</Package>
+            <Package>com.plantuml.ubrex</Package>
             <Package>net.sourceforge.plantuml.utils</Package>
             <Package>net.sourceforge.plantuml.klimt.geom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
@@ -20010,11 +20099,16 @@
 
         <Package Name="net.sourceforge.plantuml.api.mda.option2">
             <Package>net.sourceforge.plantuml.mda</Package>
-            <Package>net.sourceforge.plantuml.abel</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.teavm</Package>
             <Package>net.sourceforge.plantuml.klimt.color</Package>
             <Package>net.sourceforge.plantuml.klimt.awt</Package>
             <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.api.v2">
@@ -20527,7 +20621,7 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.gantt.core">
-            <Package>net.sourceforge.plantuml.url</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
             <Package>net.sourceforge.plantuml.klimt.geom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.core</Package>
@@ -20541,7 +20635,7 @@
 
         <Package Name="net.sourceforge.plantuml.gantt.data">
             <Package>net.sourceforge.plantuml.gantt.core</Package>
-            <Package>net.sourceforge.plantuml.url</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
             <Package>net.sourceforge.plantuml.klimt.geom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.core</Package>
@@ -20555,7 +20649,7 @@
 
         <Package Name="net.sourceforge.plantuml.gantt.draw">
             <Package>net.sourceforge.plantuml.gantt.core</Package>
-            <Package>net.sourceforge.plantuml.url</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
             <Package>net.sourceforge.plantuml.klimt.geom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.core</Package>
@@ -20603,7 +20697,7 @@
 
         <Package Name="net.sourceforge.plantuml.gantt.timescale">
             <Package>net.sourceforge.plantuml.gantt.core</Package>
-            <Package>net.sourceforge.plantuml.url</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
             <Package>net.sourceforge.plantuml.klimt.geom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.core</Package>
@@ -20616,6 +20710,12 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.gitlog">
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
             <Package>net.sourceforge.plantuml.teavm</Package>
             <Package>net.sourceforge.plantuml.klimt.color</Package>
             <Package>net.sourceforge.plantuml.klimt.awt</Package>
@@ -20640,6 +20740,9 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.hcl">
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
@@ -20673,6 +20776,19 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.jcckit">
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>net.sourceforge.plantuml.teavm</Package>
+        </Package>
+
+        <Package Name="net.sourceforge.plantuml.json">
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
@@ -20924,11 +21040,16 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.mda">
-            <Package>net.sourceforge.plantuml.abel</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.teavm</Package>
             <Package>net.sourceforge.plantuml.klimt.color</Package>
             <Package>net.sourceforge.plantuml.klimt.awt</Package>
             <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.mindmap">
@@ -20961,11 +21082,16 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.nwdiag.next">
-            <Package>net.sourceforge.plantuml.nwdiag.core</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.teavm</Package>
             <Package>net.sourceforge.plantuml.klimt.color</Package>
             <Package>net.sourceforge.plantuml.klimt.awt</Package>
             <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.objectdiagram">
@@ -20978,11 +21104,17 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.openiconic">
-            <Package>net.sourceforge.plantuml</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>com.plantuml.ubrex</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
             <Package>net.sourceforge.plantuml.teavm</Package>
             <Package>net.sourceforge.plantuml.klimt.color</Package>
             <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>net.sourceforge.plantuml.teavm</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.openpdf">
@@ -21007,6 +21139,33 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.packetdiag.command">
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>net.sourceforge.plantuml.teavm</Package>
+        </Package>
+
+        <Package Name="net.sourceforge.plantuml.picoweb">
+            <Package>net.sourceforge.plantuml.json</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>net.sourceforge.plantuml.teavm</Package>
+        </Package>
+
+        <Package Name="net.sourceforge.plantuml.plasma">
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
@@ -21063,7 +21222,6 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.regex">
-            <Package>net.sourceforge.plantuml.jaws</Package>
             <Package>net.sourceforge.plantuml.utils</Package>
             <Package>net.sourceforge.plantuml.klimt.geom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
@@ -21077,6 +21235,9 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.regexdiagram">
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
@@ -21249,8 +21410,8 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.stereo">
-            <Package>net.sourceforge.plantuml.regex</Package>
-            <Package>net.sourceforge.plantuml.jaws</Package>
+            <Package>com.plantuml.ubrex.builder</Package>
+            <Package>com.plantuml.ubrex</Package>
             <Package>net.sourceforge.plantuml.utils</Package>
             <Package>net.sourceforge.plantuml.klimt.geom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
@@ -21339,11 +21500,16 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.swing">
-            <Package>net.sourceforge.plantuml</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
             <Package>net.sourceforge.plantuml.teavm</Package>
             <Package>net.sourceforge.plantuml.klimt.color</Package>
             <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>net.sourceforge.plantuml.teavm</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.syntax">
@@ -21543,6 +21709,20 @@
             <Package>net.sourceforge.plantuml.teavm</Package>
             <Package>net.sourceforge.plantuml.klimt.color</Package>
             <Package>net.sourceforge.plantuml.klimt.awt</Package>
+        </Package>
+
+        <Package Name="net.sourceforge.plantuml.yaml.parser">
+            <Package>net.sourceforge.plantuml.json</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>net.sourceforge.plantuml.teavm</Package>
         </Package>
 
         <Package Name="org.stathissideris.ascii2image.core">

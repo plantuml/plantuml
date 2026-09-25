@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.style;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +44,7 @@ import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.style.value.Value;
 import net.sourceforge.plantuml.style.value.ValueImpl;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class FromSkinparamToStyle {
 	// ::remove file when __HAXE__
@@ -412,7 +412,7 @@ public class FromSkinparamToStyle {
 <span class="fc" id="L412">	}</span>
 
 	public List&lt;Style&gt; getStyles() {
-<span class="fc" id="L415">		return Collections.unmodifiableList(styles);</span>
+<span class="fc" id="L415">		return MyCollections.unmodifiableList(styles);</span>
 	}
 
 	private static void addConvert(String skinparam, PName propertyName, SName... styleNames) {

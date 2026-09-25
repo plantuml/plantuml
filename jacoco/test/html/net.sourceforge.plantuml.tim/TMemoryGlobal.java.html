@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.tim;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -44,6 +43,7 @@ import java.util.TreeMap;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.expression.TValue;
 import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 <span class="fc" id="L48">public class TMemoryGlobal extends ExecutionContexts implements TMemory {</span>
 
@@ -95,7 +95,7 @@ import net.sourceforge.plantuml.utils.Log;
 
 	@Override
 	public Set&lt;String&gt; variablesNames() {
-<span class="nc" id="L98">		return Collections.unmodifiableSet(globalVariables.keySet());</span>
+<span class="nc" id="L98">		return MyCollections.unmodifiableSet(globalVariables.keySet());</span>
 	}
 
 	@Override

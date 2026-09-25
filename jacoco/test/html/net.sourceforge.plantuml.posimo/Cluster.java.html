@@ -37,10 +37,10 @@ package net.sourceforge.plantuml.posimo;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Cluster implements Clusterable {
 
@@ -72,13 +72,13 @@ public class Cluster implements Clusterable {
 <span class="fc" id="L72">	}</span>
 
 	public Collection&lt;Cluster&gt; getSubClusters() {
-<span class="nc" id="L75">		return Collections.unmodifiableCollection(children);</span>
+<span class="nc" id="L75">		return MyCollections.unmodifiableCollection(children);</span>
 	}
 
 	public Collection&lt;Block&gt; getRecursiveContents() {
 <span class="nc" id="L79">		final Collection&lt;Block&gt; result = new ArrayList&lt;&gt;();</span>
 <span class="nc" id="L80">		addContentRecurse(result);</span>
-<span class="nc" id="L81">		return Collections.unmodifiableCollection(result);</span>
+<span class="nc" id="L81">		return MyCollections.unmodifiableCollection(result);</span>
 	}
 
 	private void addContentRecurse(Collection&lt;Block&gt; result) {
@@ -102,7 +102,7 @@ public class Cluster implements Clusterable {
 	}
 
 	public Collection&lt;Block&gt; getContents() {
-<span class="nc" id="L105">		return Collections.unmodifiableCollection(blocs);</span>
+<span class="nc" id="L105">		return MyCollections.unmodifiableCollection(blocs);</span>
 	}
 
 	public Block getBlock(int uid) {

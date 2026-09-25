@@ -27,9 +27,9 @@ package net.sourceforge.plantuml.json;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 /**
  * Represents a JSON array, an ordered collection of JSON values.
@@ -102,7 +102,7 @@ public class JsonArray extends JsonValue implements Iterable&lt;JsonValue&gt; {
 <span class="nc" id="L102">			throw new NullPointerException(&quot;array is null&quot;);</span>
 		}
 <span class="nc bnc" id="L104" title="All 2 branches missed.">		if (unmodifiable) {</span>
-<span class="nc" id="L105">			values = Collections.unmodifiableList(array.values);</span>
+<span class="nc" id="L105">			values = MyCollections.unmodifiableList(array.values);</span>
 		} else {
 <span class="nc" id="L107">			values = new ArrayList&lt;&gt;(array.values);</span>
 		}
@@ -419,7 +419,7 @@ public class JsonArray extends JsonValue implements Iterable&lt;JsonValue&gt; {
 	 * @return a list of the values in this array
 	 */
 	public List&lt;JsonValue&gt; values() {
-<span class="nc" id="L422">		return Collections.unmodifiableList(values);</span>
+<span class="nc" id="L422">		return MyCollections.unmodifiableList(values);</span>
 	}
 
 	/**

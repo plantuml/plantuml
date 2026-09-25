@@ -37,11 +37,11 @@ package net.sourceforge.plantuml.mda;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.api.mda.option2.MDAEntity;
 import net.sourceforge.plantuml.api.mda.option2.MDAPackage;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class MDAPackageImpl implements MDAPackage {
 
@@ -56,7 +56,7 @@ public class MDAPackageImpl implements MDAPackage {
 <span class="nc" id="L56">	}</span>
 
 	public Collection&lt;MDAEntity&gt; getEntities() {
-<span class="nc" id="L59">		return Collections.unmodifiableCollection(entities);</span>
+<span class="nc" id="L59">		return MyCollections.unmodifiableCollection(entities);</span>
 	}
 
 	public String getName() {

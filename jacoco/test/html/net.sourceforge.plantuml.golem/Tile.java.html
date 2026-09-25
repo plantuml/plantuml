@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.golem;
 
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -54,6 +53,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Tile implements TextBlock {
 
@@ -70,7 +70,7 @@ public class Tile implements TextBlock {
 <span class="nc bnc" id="L70" title="All 2 branches missed.">		for (TileGeometry g : TileGeometry.values()) {</span>
 <span class="nc" id="L71">			tmp.put(g, new TileArea(this, g));</span>
 		}
-<span class="nc" id="L73">		this.geometries = Collections.unmodifiableMap(tmp);</span>
+<span class="nc" id="L73">		this.geometries = MyCollections.unmodifiableMap(tmp);</span>
 <span class="nc" id="L74">	}</span>
 
 	public TileArea getArea(TileGeometry geometry) {

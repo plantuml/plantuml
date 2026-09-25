@@ -36,11 +36,11 @@
 package net.sourceforge.plantuml.text;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.font.FontStyle;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class StyledString {
 
@@ -86,7 +86,7 @@ public class StyledString {
 <span class="nc" id="L86">				s = s.substring(i2 + 1);</span>
 			}
 <span class="nc" id="L88">		}</span>
-<span class="fc" id="L89">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L89">		return MyCollections.unmodifiableList(result);</span>
 
 	}
 
