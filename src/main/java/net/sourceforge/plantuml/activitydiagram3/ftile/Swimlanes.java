@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,6 +91,7 @@ import net.sourceforge.plantuml.style.Styleable;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.MathUtils;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Swimlanes implements TextBlock, Styleable {
 
@@ -110,7 +110,7 @@ public class Swimlanes implements TextBlock, Styleable {
 	private Style style;
 
 	private List<Swimlane> swimlanes() {
-		return Collections.unmodifiableList(swimlanesRaw);
+		return MyCollections.unmodifiableList(swimlanesRaw);
 	}
 
 	private List<Swimlane> swimlanesSpecial() {
@@ -120,7 +120,7 @@ public class Swimlanes implements TextBlock, Styleable {
 			last.setMinMax(MinMax.getEmpty(true));
 			swimlanesSpecial.add(last);
 		}
-		return Collections.unmodifiableList(swimlanesSpecial);
+		return MyCollections.unmodifiableList(swimlanesSpecial);
 	}
 
 	@Override

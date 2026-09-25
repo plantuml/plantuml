@@ -35,7 +35,6 @@
 package net.sourceforge.plantuml.filesdiagram;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -53,6 +52,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class FilesDiagram extends TitledDiagram {
 
@@ -96,7 +96,7 @@ public class FilesDiagram extends TitledDiagram {
 				return result;
 			result.add(line);
 		}
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	public DiagramDescription getDescription() {

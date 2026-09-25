@@ -37,10 +37,10 @@ package net.sourceforge.plantuml.regexdiagram;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class ShuntingYard {
 
@@ -105,7 +105,7 @@ public class ShuntingYard {
 	}
 
 	public final List<ReToken> getOuputQueue() {
-		return Collections.unmodifiableList(ouputQueue);
+		return MyCollections.unmodifiableList(ouputQueue);
 	}
 
 }

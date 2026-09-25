@@ -28,11 +28,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.json.JsonObject.Member;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 /**
  * Represents a JSON object, a set of name/value pairs, where the names are
@@ -120,8 +120,8 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
 			throw new NullPointerException("object is null");
 		}
 		if (unmodifiable) {
-			names = Collections.unmodifiableList(object.names);
-			values = Collections.unmodifiableList(object.values);
+			names = MyCollections.unmodifiableList(object.names);
+			values = MyCollections.unmodifiableList(object.values);
 		} else {
 			names = new ArrayList<>(object.names);
 			values = new ArrayList<>(object.values);
@@ -752,7 +752,7 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
 	 * @return a list of the names in this object
 	 */
 	public List<String> names() {
-		return Collections.unmodifiableList(names);
+		return MyCollections.unmodifiableList(names);
 	}
 
 	/**

@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.salt;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import net.sourceforge.plantuml.salt.element.Element;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Positionner2 {
 
@@ -99,7 +99,7 @@ public class Positionner2 {
 	}
 
 	public Map<Element, Cell> getAll() {
-		return Collections.unmodifiableMap(positions);
+		return MyCollections.unmodifiableMap(positions);
 	}
 
 	public final int getNbRows() {

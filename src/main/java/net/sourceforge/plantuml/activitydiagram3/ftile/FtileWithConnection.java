@@ -38,12 +38,12 @@ package net.sourceforge.plantuml.activitydiagram3.ftile;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDecorate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 class FtileWithConnection extends FtileDecorate {
 
@@ -76,7 +76,7 @@ class FtileWithConnection extends FtileDecorate {
 	public Collection<Connection> getInnerConnections() {
 		final List<Connection> result = new ArrayList<>(super.getInnerConnections());
 		result.addAll(connections);
-		return Collections.unmodifiableList(connections);
+		return MyCollections.unmodifiableList(connections);
 	}
 
 }

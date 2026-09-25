@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.syntax.LanguageDescriptor;
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.version.CompilationInfo;
 import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.PSystemVersion;
@@ -99,7 +100,7 @@ public class OptionPrint {
 				strings.add("Thread Active Count: " + threadActiveCount);
 			}
 		}
-		return Collections.unmodifiableCollection(strings);
+		return MyCollections.unmodifiableCollection(strings);
 	}
 
 	// ::comment when __TEAVM__

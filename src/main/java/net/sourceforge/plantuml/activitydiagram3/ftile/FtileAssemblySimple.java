@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class FtileAssemblySimple implements Ftile {
 
@@ -149,7 +150,7 @@ public class FtileAssemblySimple implements Ftile {
 		final Set<Swimlane> result = new HashSet<>();
 		result.addAll(tile1.getSwimlanes());
 		result.addAll(tile2.getSwimlanes());
-		return Collections.unmodifiableSet(result);
+		return MyCollections.unmodifiableSet(result);
 	}
 
 	@Override
@@ -161,7 +162,7 @@ public class FtileAssemblySimple implements Ftile {
 	public List<WeldingPoint> getWeldingPoints() {
 		final List<WeldingPoint> result = new ArrayList<>(tile1.getWeldingPoints());
 		result.addAll(tile2.getWeldingPoints());
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	public Collection<Ftile> getMyChildren() {

@@ -35,10 +35,10 @@
 package net.sourceforge.plantuml.version;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class IteratorCounter2Impl implements IteratorCounter2 {
 
@@ -98,7 +98,7 @@ public class IteratorCounter2Impl implements IteratorCounter2 {
 	}
 
 	public final List<StringLocated> getTrace() {
-		return Collections.unmodifiableList(trace);
+		return MyCollections.unmodifiableList(trace);
 	}
 
 }

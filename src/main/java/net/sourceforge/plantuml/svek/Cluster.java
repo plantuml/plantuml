@@ -95,6 +95,7 @@ import net.sourceforge.plantuml.svek.image.EntityImageState;
 import net.sourceforge.plantuml.svek.image.EntityImageStateCommon;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.utils.Position;
 
 public class Cluster implements Moveable {
@@ -143,7 +144,7 @@ public class Cluster implements Moveable {
 			if (sh.getEntityPosition() != EntityPosition.NORMAL)
 				result.add(sh.getEntityPosition());
 
-		return Collections.unmodifiableSet(result);
+		return MyCollections.unmodifiableSet(result);
 	}
 
 	public Cluster(LineLocation location, CucaDiagram diagram, ColorSequence colorSequence, Entity root) {
@@ -182,7 +183,7 @@ public class Cluster implements Moveable {
 	}
 
 	public final List<SvekNode> getNodes() {
-		return Collections.unmodifiableList(nodes);
+		return MyCollections.unmodifiableList(nodes);
 	}
 
 	public final List<SvekNode> getNodes(EnumSet<EntityPosition> position) {
@@ -190,7 +191,7 @@ public class Cluster implements Moveable {
 		for (SvekNode node : nodes)
 			if (position.contains(node.getEntityPosition()))
 				result.add(node);
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	private List<SvekNode> getNodesOrderedTop(Collection<SvekEdge> lines) {
@@ -240,7 +241,7 @@ public class Cluster implements Moveable {
 	}
 
 	public final List<Cluster> getChildren() {
-		return Collections.unmodifiableList(children);
+		return MyCollections.unmodifiableList(children);
 	}
 
 	public Cluster createChild(LineLocation location, ClusterHeader clusterHeader, ColorSequence colorSequence,

@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -51,6 +50,7 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.drawing.UGraphicDelegator;
 import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class UGraphicInterceptorOneSwimlane extends UGraphicDelegator {
 
@@ -122,7 +122,7 @@ public class UGraphicInterceptorOneSwimlane extends UGraphicDelegator {
 	}
 
 	public final List<Swimlane> getOrderedListOfAllSwimlanes() {
-		return Collections.unmodifiableList(orderedList);
+		return MyCollections.unmodifiableList(orderedList);
 	}
 
 }

@@ -85,6 +85,7 @@ import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.warning.JawsWarning;
 import net.sourceforge.plantuml.warning.Warning;
 
@@ -254,7 +255,7 @@ public class Display implements Iterable<CharSequence>, AsciiBlock {
 			}
 		}
 		result.add(current.toString());
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	private final static Warning MORE_INFO = new Warning("More info on https://plantuml.com/newline");
@@ -549,7 +550,7 @@ public class Display implements Iterable<CharSequence>, AsciiBlock {
 	}
 
 	public ListIterator<CharSequence> iterator() {
-		return Collections.unmodifiableList(displayData).listIterator();
+		return MyCollections.unmodifiableList(displayData).listIterator();
 	}
 
 	public Display subList(int i, int size) {
@@ -560,7 +561,7 @@ public class Display implements Iterable<CharSequence>, AsciiBlock {
 	public List<? extends CharSequence> asList() {
 		if (displayData == null)
 			return Collections.emptyList();
-		return Collections.unmodifiableList(displayData);
+		return MyCollections.unmodifiableList(displayData);
 	}
 
 	public boolean hasUrl() {
@@ -595,7 +596,7 @@ public class Display implements Iterable<CharSequence>, AsciiBlock {
 				pending.displayData.add(line);
 			}
 		}
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	public String toTooltipText() {

@@ -35,7 +35,6 @@
  */
 package net.atmp;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -48,6 +47,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.style.LengthAdjust;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class SvgOption {
 
@@ -172,7 +172,7 @@ public class SvgOption {
 	}
 
 	public Map<String, String> getRootAttributes() {
-		return Collections.unmodifiableMap(rootAttributes);
+		return MyCollections.unmodifiableMap(rootAttributes);
 	}
 
 	public SvgOption withRootAttribute(String key, String value) {

@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.golem;
 
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -54,6 +53,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Tile implements TextBlock {
 
@@ -70,7 +70,7 @@ public class Tile implements TextBlock {
 		for (TileGeometry g : TileGeometry.values()) {
 			tmp.put(g, new TileArea(this, g));
 		}
-		this.geometries = Collections.unmodifiableMap(tmp);
+		this.geometries = MyCollections.unmodifiableMap(tmp);
 	}
 
 	public TileArea getArea(TileGeometry geometry) {

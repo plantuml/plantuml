@@ -37,12 +37,12 @@ package net.sourceforge.plantuml.preproc;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class ReadLineWithYamlHeader implements ReadLine {
 
@@ -92,7 +92,7 @@ public class ReadLineWithYamlHeader implements ReadLine {
 	}
 
 	public Map<String, String> getMetadata() {
-		return Collections.unmodifiableMap(metadata);
+		return MyCollections.unmodifiableMap(metadata);
 	}
 
 	public static List<StringLocated> removeYamlHeader(List<StringLocated> input) {

@@ -39,7 +39,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.file.SuggestedFile;
@@ -50,6 +49,7 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.skin.SplitParam;
 import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class PngSplitter {
 	
@@ -122,7 +122,7 @@ public class PngSplitter {
 	}
 
 	public List<SFile> getFiles() {
-		return Collections.unmodifiableList(files);
+		return MyCollections.unmodifiableList(files);
 	}
 
 }

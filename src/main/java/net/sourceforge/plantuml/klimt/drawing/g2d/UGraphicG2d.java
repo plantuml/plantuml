@@ -41,7 +41,6 @@ import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -74,6 +73,7 @@ import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureVisible {
 
@@ -88,7 +88,7 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 	private Set<Url> allUrls = new HashSet<>();
 
 	public final Set<Url> getAllUrlsEncountered() {
-		return Collections.unmodifiableSet(allUrls);
+		return MyCollections.unmodifiableSet(allUrls);
 	}
 
 	@Override

@@ -36,10 +36,10 @@
 package net.sourceforge.plantuml.regexdiagram;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.jaws.JawsStrange;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class GroupSplitter {
 
@@ -59,7 +59,7 @@ public class GroupSplitter {
 			} else
 				result.add("" + group.charAt(i));
 		}
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 }

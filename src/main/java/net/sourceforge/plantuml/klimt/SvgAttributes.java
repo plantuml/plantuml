@@ -35,13 +35,13 @@
  */
 package net.sourceforge.plantuml.klimt;
 
-import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class SvgAttributes {
 
@@ -74,7 +74,7 @@ public class SvgAttributes {
 	}
 
 	public Map<String, String> attributes() {
-		return Collections.unmodifiableMap(attributes);
+		return MyCollections.unmodifiableMap(attributes);
 	}
 
 	public SvgAttributes add(String key, String value) {

@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.mindmap;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.annotation.DuplicateCode;
@@ -49,6 +48,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 class Idea {
 
@@ -143,7 +143,7 @@ class Idea {
 	}
 
 	public Collection<Idea> getChildren() {
-		return Collections.unmodifiableList(children);
+		return MyCollections.unmodifiableList(children);
 	}
 
 	public boolean hasChildren() {

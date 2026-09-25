@@ -37,12 +37,12 @@ package net.sourceforge.plantuml.syntax;
 
 import java.io.PrintStream;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.skin.SkinParam;
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.utils.Obfuscate;
 
 public class LanguageDescriptor {
@@ -358,15 +358,15 @@ public class LanguageDescriptor {
 	}
 
 	public final Set<String> getType() {
-		return Collections.unmodifiableSet(type);
+		return MyCollections.unmodifiableSet(type);
 	}
 
 	public final Set<String> getKeyword() {
-		return Collections.unmodifiableSet(keyword);
+		return MyCollections.unmodifiableSet(keyword);
 	}
 
 	public final Set<String> getPreproc() {
-		return Collections.unmodifiableSet(preproc);
+		return MyCollections.unmodifiableSet(preproc);
 	}
 
 	public static void main(String[] args) {

@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.tim.expression;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
@@ -48,6 +47,7 @@ import net.sourceforge.plantuml.tim.Eater;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TMemory;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class TokenStack {
 
@@ -66,7 +66,7 @@ public class TokenStack {
 	}
 
 	public TokenStack subTokenStack(int i) {
-		return new TokenStack(Collections.unmodifiableList(tokens.subList(i, tokens.size())));
+		return new TokenStack(MyCollections.unmodifiableList(tokens.subList(i, tokens.size())));
 	}
 
 	@Override

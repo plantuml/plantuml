@@ -36,9 +36,9 @@
 package net.sourceforge.plantuml.regex;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class RegexPartialMatch implements Iterable<String> {
     // ::remove folder when __HAXE__
@@ -62,7 +62,7 @@ public class RegexPartialMatch implements Iterable<String> {
 	}
 
 	public Iterator<String> iterator() {
-		return Collections.unmodifiableCollection(data).iterator();
+		return MyCollections.unmodifiableCollection(data).iterator();
 	}
 
 	@Override

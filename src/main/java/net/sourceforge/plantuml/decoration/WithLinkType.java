@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.decoration;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -45,6 +44,7 @@ import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public abstract class WithLinkType {
 
@@ -74,7 +74,7 @@ public abstract class WithLinkType {
 	}
 
 	public List<Colors> getSupplementaryColors() {
-		return Collections.unmodifiableList(supplementary);
+		return MyCollections.unmodifiableList(supplementary);
 	}
 
 	public void setColors(Colors colors) {

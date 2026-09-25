@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Stairs {
 
@@ -90,7 +91,7 @@ public class Stairs {
 	}
 
 	public List<Double> getYs() {
-		return Collections.unmodifiableList(ys);
+		return MyCollections.unmodifiableList(ys);
 	}
 
 	private double getLastY() {

@@ -39,7 +39,6 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -65,6 +64,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class TaskImpl extends AbstractTask implements Task {
 
@@ -344,7 +344,7 @@ public class TaskImpl extends AbstractTask implements Task {
 		for (DayOfWeek dayOfWeek : pausedDayOfWeek)
 			addAll(result, dayOfWeek);
 
-		return Collections.unmodifiableCollection(result);
+		return MyCollections.unmodifiableCollection(result);
 	}
 
 	private void addAll(SortedSet<LocalDate> result, DayOfWeek dayOfWeek) {

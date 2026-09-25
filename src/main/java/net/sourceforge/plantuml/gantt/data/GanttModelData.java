@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.gantt.data;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +48,7 @@ import net.sourceforge.plantuml.gantt.core.TaskCode;
 import net.sourceforge.plantuml.gantt.core.TaskImpl;
 import net.sourceforge.plantuml.gantt.core.TaskSeparator;
 import net.sourceforge.plantuml.gantt.time.TimePoint;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 /**
  * Value object containing the core domain data of a Gantt diagram: tasks,
@@ -61,15 +61,15 @@ public class GanttModelData {
 	private final Map<String, Resource> resources = new LinkedHashMap<>();
 
 	public Collection<Task> getTasks() {
-		return Collections.unmodifiableCollection(tasks.values());
+		return MyCollections.unmodifiableCollection(tasks.values());
 	}
 
 	public Collection<Resource> getResources() {
-		return Collections.unmodifiableCollection(resources.values());
+		return MyCollections.unmodifiableCollection(resources.values());
 	}
 
 	public Collection<GanttConstraint> getConstraints() {
-		return Collections.unmodifiableCollection(constraints);
+		return MyCollections.unmodifiableCollection(constraints);
 	}
 
 	// Mutators for building the model
@@ -112,7 +112,7 @@ public class GanttModelData {
 			if (constraint.isOn(task))
 				result.add(constraint);
 
-		return Collections.unmodifiableCollection(result);
+		return MyCollections.unmodifiableCollection(result);
 	}
 
 }

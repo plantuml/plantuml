@@ -37,11 +37,11 @@ package net.sourceforge.plantuml.klimt.sprite;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.awt.XColor;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class SpriteColorBuilder4096 {
 
@@ -79,7 +79,7 @@ public class SpriteColorBuilder4096 {
 			}
 			result.add(sb.toString());
 		}
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 }

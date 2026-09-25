@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.Guillemet;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Stereotype implements CharSequence {
 
@@ -129,7 +130,7 @@ public class Stereotype implements CharSequence {
 		while (m.find())
 			result.add(m.group(1));
 
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	public boolean isSpotted() {
@@ -189,7 +190,7 @@ public class Stereotype implements CharSequence {
 			if (TeaVM.a()) assert (style != null);
 			result.add(style);
 		}
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	public List<String> getStyleNames() {

@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class FileGroup {
 	
@@ -161,7 +162,7 @@ public class FileGroup {
 	}
 
 	public List<File> getFiles() {
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	public static String toRegexp(String pattern) {

@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.tim.iterator;
 
-import java.util.Collections;
 import java.util.Map;
 
 import net.sourceforge.plantuml.preproc.Sub;
@@ -44,6 +43,7 @@ import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterStartsub;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TMemory;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class CodeIteratorSub extends AbstractCodeIterator {
 
@@ -62,7 +62,7 @@ public class CodeIteratorSub extends AbstractCodeIterator {
 	}
 
 	public Map<String, Sub> getSubs() {
-		return Collections.unmodifiableMap(subs);
+		return MyCollections.unmodifiableMap(subs);
 	}
 
 	public StringLocated peek() throws EaterException {

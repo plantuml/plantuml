@@ -34,10 +34,10 @@
  */
 package net.sourceforge.plantuml.nwdiag.next;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class NTetris<S extends Staged> {
 
@@ -65,7 +65,7 @@ public class NTetris<S extends Staged> {
 	}
 
 	public final Map<S, Integer> getPositions() {
-		return Collections.unmodifiableMap(all);
+		return MyCollections.unmodifiableMap(all);
 	}
 
 	public int getNWidth() {

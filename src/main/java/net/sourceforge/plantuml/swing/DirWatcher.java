@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.file.FileWatcher;
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 @Deprecated
 public class DirWatcher {
@@ -98,7 +99,7 @@ public class DirWatcher {
 				}
 			}
 		Collections.sort(result);
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	public File getErrorFile() throws IOException, InterruptedException {

@@ -41,7 +41,6 @@ import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
@@ -103,6 +102,7 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class GanttDiagram extends TitledDiagram implements GanttStyle {
 
@@ -530,7 +530,7 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 				result.add(draw);
 			}
 
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	public void setIt(Task result) {

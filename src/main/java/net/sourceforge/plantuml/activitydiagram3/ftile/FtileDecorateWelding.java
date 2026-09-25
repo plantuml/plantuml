@@ -36,10 +36,10 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDecorate;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class FtileDecorateWelding extends FtileDecorate {
 
@@ -52,7 +52,7 @@ public class FtileDecorateWelding extends FtileDecorate {
 
 	@Override
 	public List<WeldingPoint> getWeldingPoints() {
-		return Collections.unmodifiableList(breaks);
+		return MyCollections.unmodifiableList(breaks);
 	}
 
 }

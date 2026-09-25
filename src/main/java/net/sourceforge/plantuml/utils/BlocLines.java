@@ -40,7 +40,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -73,7 +72,7 @@ public class BlocLines implements Iterable<StringLocated> {
 		for (StringLocated line : lines)
 			result.add(line.getString());
 
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	@JawsStrange
@@ -118,7 +117,7 @@ public class BlocLines implements Iterable<StringLocated> {
 	}
 
 	private BlocLines(List<StringLocated> lines) {
-		this.lines = Collections.unmodifiableList(lines);
+		this.lines = MyCollections.unmodifiableList(lines);
 	}
 
 	public Display toDisplay() throws NoSuchColorException {

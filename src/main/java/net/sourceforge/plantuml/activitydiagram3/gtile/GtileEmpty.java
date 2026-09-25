@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UEmpty;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class GtileEmpty extends AbstractGtile {
 
@@ -105,7 +106,7 @@ public class GtileEmpty extends AbstractGtile {
 //		if (swimlane != null) {
 //			result.add(swimlane);
 //		}
-//		return Collections.unmodifiableSet(result);
+//		return MyCollections.unmodifiableSet(result);
 //	}
 
 }

@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.sequencediagram;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -44,6 +43,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class GroupingStart extends Grouping {
 
@@ -69,7 +69,7 @@ public class GroupingStart extends Grouping {
 	}
 
 	List<GroupingLeaf> getChildren() {
-		return Collections.unmodifiableList(children);
+		return MyCollections.unmodifiableList(children);
 	}
 
 	public void addChildren(GroupingLeaf g) {

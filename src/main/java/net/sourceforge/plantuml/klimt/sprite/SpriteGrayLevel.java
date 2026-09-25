@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.klimt.sprite;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.code.AsciiEncoder;
@@ -53,6 +52,7 @@ import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorUtils;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public enum SpriteGrayLevel {
 
@@ -112,7 +112,7 @@ public enum SpriteGrayLevel {
 			}
 			result.add(sb.toString());
 		}
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	private List<String> encode8(PortableImage img) {
@@ -134,7 +134,7 @@ public enum SpriteGrayLevel {
 			}
 			result.add(sb.toString());
 		}
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	private List<String> encode4(PortableImage img) {
@@ -158,7 +158,7 @@ public enum SpriteGrayLevel {
 			}
 			result.add(sb.toString());
 		}
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	private int getGrayOn16(PortableImage img, int x, int y) {
@@ -285,7 +285,7 @@ public enum SpriteGrayLevel {
 			result.add(s.substring(i, j));
 
 		}
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 	// ::done
 

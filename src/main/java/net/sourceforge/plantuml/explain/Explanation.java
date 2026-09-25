@@ -40,6 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Explanation {
 
@@ -73,7 +74,7 @@ public class Explanation {
 	}
 
 	public List<String> getInput() {
-		return Collections.unmodifiableList(input);
+		return MyCollections.unmodifiableList(input);
 	}
 
 	public String getExplain() {

@@ -36,9 +36,9 @@
 package net.sourceforge.plantuml.preproc;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class DefineSignature {
 
@@ -80,7 +80,7 @@ public class DefineSignature {
 	}
 
 	public List<Variables> getVariationVariables() {
-		return Collections.unmodifiableList(variables);
+		return MyCollections.unmodifiableList(variables);
 	}
 
 	public final String getFonctionName() {

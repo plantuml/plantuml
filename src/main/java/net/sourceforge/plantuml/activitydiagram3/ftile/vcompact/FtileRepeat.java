@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -75,6 +74,7 @@ import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.utils.Direction;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 class FtileRepeat extends AbstractFtile {
 
@@ -112,7 +112,7 @@ class FtileRepeat extends AbstractFtile {
 		result.addAll(diamond2.getSwimlanes());
 		if (backward != null)
 			result.addAll(backward.getSwimlanes());
-		return Collections.unmodifiableSet(result);
+		return MyCollections.unmodifiableSet(result);
 	}
 
 	public static Ftile create(Swimlane swimlane, Swimlane swimlaneOut, Ftile entry, Ftile repeat, Display test,

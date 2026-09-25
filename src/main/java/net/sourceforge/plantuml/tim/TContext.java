@@ -43,7 +43,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -173,6 +172,7 @@ import net.sourceforge.plantuml.tim.iterator.CodeIteratorShortComment;
 import net.sourceforge.plantuml.tim.iterator.CodeIteratorSub;
 import net.sourceforge.plantuml.tim.iterator.CodeIteratorWhile;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class TContext {
 
@@ -193,7 +193,7 @@ public class TContext {
 	private PathSystem pathSystem;
 
 	public Set<File> getFilesUsedCurrent() {
-		return Collections.unmodifiableSet(filesUsedCurrent);
+		return MyCollections.unmodifiableSet(filesUsedCurrent);
 	}
 
 	private void addStandardFunctions(Defines defines) {

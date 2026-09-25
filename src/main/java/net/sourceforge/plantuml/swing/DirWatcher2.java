@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.file.FileWatcher;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class DirWatcher2 {
 
@@ -100,7 +101,7 @@ public class DirWatcher2 {
 										final Set<File> files = sourceFileReader.getIncludedFiles();
 										files.add(f);
 										modifieds.put(f, new FileWatcher(files));
-										return Collections.unmodifiableList(generatedImages);
+										return MyCollections.unmodifiableList(generatedImages);
 									} catch (Exception e) {
 										Logme.error(e);
 										return Collections.emptyList();
@@ -110,7 +111,7 @@ public class DirWatcher2 {
 					result.put(f, value);
 				}
 			}
-		return Collections.unmodifiableMap(result);
+		return MyCollections.unmodifiableMap(result);
 	}
 
 	private boolean fileToProcess(String name) {

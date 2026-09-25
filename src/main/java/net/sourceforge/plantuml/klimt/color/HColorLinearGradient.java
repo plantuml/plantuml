@@ -41,6 +41,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.awt.XColor;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 /**
  * Represents an SVG-like linear gradient with multiple stops, offsets, and
@@ -223,7 +224,7 @@ public class HColorLinearGradient extends HColor {
 			last = offset;
 			normalized.add(new Stop(offset, stop.getColor(), stop.getOpacity()));
 		}
-		return Collections.unmodifiableList(normalized);
+		return MyCollections.unmodifiableList(normalized);
 	}
 
 	/**

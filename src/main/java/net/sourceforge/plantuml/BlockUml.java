@@ -69,6 +69,7 @@ import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.TimLoader;
 import net.sourceforge.plantuml.utils.LineLocationImpl;
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.version.Version;
 
@@ -85,7 +86,7 @@ public class BlockUml {
 	private final PathSystem pathSystem;
 
 	public Set<File> getIncluded() {
-		return Collections.unmodifiableSet(included);
+		return MyCollections.unmodifiableSet(included);
 	}
 
 	@Deprecated
@@ -249,9 +250,9 @@ public class BlockUml {
 			result.add(s.getString());
 
 		if (withHeader)
-			return Collections.unmodifiableList(result);
+			return MyCollections.unmodifiableList(result);
 
-		return Collections.unmodifiableList(result.subList(1, result.size() - 1));
+		return MyCollections.unmodifiableList(result.subList(1, result.size() - 1));
 	}
 
 	public Defines getLocalDefines() {

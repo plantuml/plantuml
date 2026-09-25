@@ -46,6 +46,7 @@ import java.util.Objects;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 /**
  * Defines a configuration for credentials.
@@ -323,7 +324,7 @@ public class SecurityCredentials implements SecurityCredentialsContainer {
 	}
 
 	public Map<String, Object> getProperties() {
-		return Collections.unmodifiableMap(properties);
+		return MyCollections.unmodifiableMap(properties);
 	}
 
 	/**

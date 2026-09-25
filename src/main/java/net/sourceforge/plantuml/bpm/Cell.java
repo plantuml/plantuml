@@ -36,8 +36,8 @@
 package net.sourceforge.plantuml.bpm;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Cell {
 
@@ -69,7 +69,7 @@ public class Cell {
 	}
 
 	public List<Placeable> getDestinations2() {
-		return Collections.unmodifiableList(destinations);
+		return MyCollections.unmodifiableList(destinations);
 	}
 
 }

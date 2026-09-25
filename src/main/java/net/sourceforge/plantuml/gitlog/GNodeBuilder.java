@@ -37,11 +37,11 @@ package net.sourceforge.plantuml.gitlog;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class GNodeBuilder {
 	// ::remove folder when __HAXE__
@@ -87,7 +87,7 @@ public class GNodeBuilder {
 	}
 
 	public Collection<GNode> getAllNodes() {
-		return Collections.unmodifiableCollection(all);
+		return MyCollections.unmodifiableCollection(all);
 	}
 
 }

@@ -42,7 +42,6 @@ import static gen.lib.gvc.gvc__c.gvContext;
 import static gen.lib.gvc.gvlayout__c.gvLayoutJobs;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import h.ST_Agedge_s;
@@ -63,6 +62,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.yaml.Highlighted;
 import smetana.core.CString;
 import smetana.core.Globals;
@@ -150,7 +150,7 @@ public class SmetanaForJson {
 			if (parent != null)
 				result.add(parent);
 		}
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	public void drawMe(JsonValue root, List<Highlighted> highlighted) {

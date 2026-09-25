@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.golem;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +50,7 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlockMemoized;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class TilesField extends TextBlockMemoized {
 
@@ -231,7 +231,7 @@ public class TilesField extends TextBlockMemoized {
 	}
 
 	public List<Path> getPaths() {
-		return Collections.unmodifiableList(paths);
+		return MyCollections.unmodifiableList(paths);
 	}
 
 	// -----------

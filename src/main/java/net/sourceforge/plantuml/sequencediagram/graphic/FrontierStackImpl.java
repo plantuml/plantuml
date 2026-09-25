@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.sequencediagram.graphic;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 class FrontierStackImpl implements FrontierStack {
 
@@ -70,7 +71,7 @@ class FrontierStackImpl implements FrontierStack {
 	}
 
 	private FrontierStackImpl(List<Stack> all) {
-		this.all = Collections.unmodifiableList(all);
+		this.all = MyCollections.unmodifiableList(all);
 	}
 
 	private FrontierComplex getLast() {

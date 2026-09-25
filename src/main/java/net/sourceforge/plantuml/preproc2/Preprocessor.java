@@ -41,6 +41,7 @@ import java.util.List;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineNumbered;
 import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Preprocessor implements ReadLineNumbered {
 
@@ -65,6 +66,6 @@ public class Preprocessor implements ReadLineNumbered {
 //	public Set<FileWithSuffix> getFilesUsedTOBEREMOVED() {
 //		// System.err.println("************************** WARNING **************************");
 //		return PatchUtils.emptySet();
-//		// return Collections.unmodifiableSet(include.getFilesUsedGlobal());
+//		// return MyCollections.unmodifiableSet(include.getFilesUsedGlobal());
 //	}
 }

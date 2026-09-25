@@ -37,7 +37,6 @@
 package net.sourceforge.plantuml.svek;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
@@ -53,6 +52,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.skin.AlignmentParam;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.utils.Position;
 
 public class ClusterDotStringKermor {
@@ -209,7 +209,7 @@ public class ClusterDotStringKermor {
 			if (sh.getEntityPosition() != EntityPosition.NORMAL)
 				result.add(sh.getEntityPosition());
 
-		return Collections.unmodifiableSet(result);
+		return MyCollections.unmodifiableSet(result);
 	}
 
 	private void subgraphClusterNoLabel(StringBuilder sb, String id) {

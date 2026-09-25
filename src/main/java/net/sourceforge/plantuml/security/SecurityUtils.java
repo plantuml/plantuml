@@ -49,7 +49,6 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
@@ -76,6 +75,7 @@ import net.sourceforge.plantuml.security.authentication.oauth.OAuth2ResourceOwne
 import net.sourceforge.plantuml.security.authentication.token.TokenAuthAccessInterceptor;
 import net.sourceforge.plantuml.security.authentication.token.TokenAuthAuthorizeManager;
 import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class SecurityUtils {
 
@@ -238,7 +238,7 @@ public class SecurityUtils {
 		final List<SFile> result = new ArrayList<>();
 		String paths = getenv(prop);
 		if (paths == null) {
-			return Collections.unmodifiableList(result);
+			return MyCollections.unmodifiableList(result);
 		}
 		paths = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(paths);
 		final StringTokenizer st = new StringTokenizer(paths, System.getProperty("path.separator"));
@@ -252,7 +252,7 @@ public class SecurityUtils {
 				Log.info(() -> "Cannot access to " + tmp + ". " + e);
 			}
 		}
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	public static boolean allowSvgText() {

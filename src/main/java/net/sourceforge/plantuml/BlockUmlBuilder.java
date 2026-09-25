@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.preproc.UncommentReadLine;
 import net.sourceforge.plantuml.preproc2.Preprocessor;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.utils.StartUtils;
 
 public final class BlockUmlBuilder implements DefinitionsContainer {
@@ -140,7 +141,7 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 	}
 
 	public List<BlockUml> getBlockUmls() {
-		return Collections.unmodifiableList(blocks);
+		return MyCollections.unmodifiableList(blocks);
 	}
 
 	public final Set<File> getIncludedFiles() {

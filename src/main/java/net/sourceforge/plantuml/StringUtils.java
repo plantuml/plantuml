@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -48,6 +47,7 @@ import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 // Do not move
 public class StringUtils {
@@ -441,7 +441,7 @@ public class StringUtils {
 		while (m.find())
 			result.add(eventuallyRemoveStartingAndEndingDoubleQuote(m.group(0)));
 
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	public static String getUid(String uid1, int uid2) {
@@ -451,7 +451,7 @@ public class StringUtils {
 	public static <O> List<O> merge(List<O> l1, List<O> l2) {
 		final List<O> result = new ArrayList<>(l1);
 		result.addAll(l2);
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	public static boolean endsWithBackslash(final String s) {

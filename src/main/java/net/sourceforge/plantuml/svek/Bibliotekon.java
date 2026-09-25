@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.svek;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -46,6 +45,7 @@ import java.util.Map;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Bibliotekon {
 
@@ -160,27 +160,27 @@ public class Bibliotekon {
 			final Entity entity = ent.getKey();
 			result.put(entity.getName(), maxX);
 		}
-		return Collections.unmodifiableMap(result);
+		return MyCollections.unmodifiableMap(result);
 	}
 
 	public List<SvekEdge> allLines() {
-		return Collections.unmodifiableList(allLines);
+		return MyCollections.unmodifiableList(allLines);
 	}
 
 	public List<SvekEdge> lines0() {
-		return Collections.unmodifiableList(lines0);
+		return MyCollections.unmodifiableList(lines0);
 	}
 
 	public List<SvekEdge> lines1() {
-		return Collections.unmodifiableList(lines1);
+		return MyCollections.unmodifiableList(lines1);
 	}
 
 	public List<Cluster> allCluster() {
-		return Collections.unmodifiableList(allCluster);
+		return MyCollections.unmodifiableList(allCluster);
 	}
 
 	public Collection<SvekNode> allNodes() {
-		return Collections.unmodifiableCollection(nodeMap.values());
+		return MyCollections.unmodifiableCollection(nodeMap.values());
 	}
 
 	public List<SvekEdge> getAllLineConnectedTo(Entity leaf) {
@@ -189,7 +189,7 @@ public class Bibliotekon {
 			if (line.isLinkFromOrTo(leaf))
 				result.add(line);
 
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	public SvekEdge getLine(Link link) {

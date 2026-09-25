@@ -35,7 +35,6 @@
 package net.sourceforge.plantuml.tim;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +42,7 @@ import java.util.Map;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.expression.TValue;
 import net.sourceforge.plantuml.tim.expression.TokenStack;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class EaterFunctionCall extends Eater {
 
@@ -126,11 +126,11 @@ public class EaterFunctionCall extends Eater {
 	}
 
 	public final List<TValue> getValues() {
-		return Collections.unmodifiableList(values);
+		return MyCollections.unmodifiableList(values);
 	}
 
 	public final Map<String, TValue> getNamedArguments() {
-		return Collections.unmodifiableMap(namedArguments);
+		return MyCollections.unmodifiableMap(namedArguments);
 	}
 
 	public final String getEndOfLine() throws EaterException {

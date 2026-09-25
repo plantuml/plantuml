@@ -40,7 +40,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import net.atmp.CucaDiagram;
@@ -51,6 +50,7 @@ import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public final class CucaDiagramHtmlMaker {
 	
@@ -213,7 +213,7 @@ public final class CucaDiagramHtmlMaker {
 				result.add(link.getOther(ent));
 
 		}
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	private Collection<Link> getLinksButNotes(Entity ent) {
@@ -227,6 +227,6 @@ public final class CucaDiagramHtmlMaker {
 
 			result.add(link);
 		}
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 }

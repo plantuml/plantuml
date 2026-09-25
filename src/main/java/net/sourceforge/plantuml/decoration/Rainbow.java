@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.decoration;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -49,6 +48,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.value.Value;
 import net.sourceforge.plantuml.style.value.ValueNull;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Rainbow {
     // ::remove folder when __HAXE__
@@ -128,7 +128,7 @@ public class Rainbow {
 	}
 
 	public List<HtmlColorAndStyle> getColors() {
-		return Collections.unmodifiableList(colors);
+		return MyCollections.unmodifiableList(colors);
 	}
 
 	public HColor getColor() {

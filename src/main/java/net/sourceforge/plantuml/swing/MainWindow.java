@@ -83,6 +83,7 @@ import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.cli.CliOptions;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class MainWindow extends JFrame {
@@ -406,7 +407,7 @@ public class MainWindow extends JFrame {
 	}
 
 	public List<SimpleLine> getCurrentDirectoryListing2() {
-		return Collections.unmodifiableList(currentDirectoryListing2);
+		return MyCollections.unmodifiableList(currentDirectoryListing2);
 	}
 
 }

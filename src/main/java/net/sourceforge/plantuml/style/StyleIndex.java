@@ -43,6 +43,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import net.sourceforge.plantuml.style.value.DarkString;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 /**
  * The fast, queryable counterpart of the old {@code StyleStorage}: every loaded {@link Style}
@@ -130,7 +131,7 @@ public final class StyleIndex {
 		final List<Style> updated = new ArrayList<Style>(allStyles.size() + 1);
 		updated.addAll(allStyles);
 		mergeOrAppend(updated, newStyle);
-		return new StyleIndex(Collections.unmodifiableList(updated));
+		return new StyleIndex(MyCollections.unmodifiableList(updated));
 	}
 
 	/**
@@ -147,7 +148,7 @@ public final class StyleIndex {
 		updated.addAll(allStyles);
 		for (Style modifiedStyle : newStyles)
 			mergeOrAppend(updated, modifiedStyle);
-		return new StyleIndex(Collections.unmodifiableList(updated));
+		return new StyleIndex(MyCollections.unmodifiableList(updated));
 	}
 
 	/**

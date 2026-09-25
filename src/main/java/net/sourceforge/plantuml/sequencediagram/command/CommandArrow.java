@@ -74,6 +74,7 @@ import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 
@@ -154,7 +155,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 					result.add(participant);
 
 			}
-			return Collections.unmodifiableList(result);
+			return MyCollections.unmodifiableList(result);
 		}
 		return Collections.emptyList();
 	}

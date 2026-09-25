@@ -68,6 +68,7 @@ import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 
@@ -230,7 +231,7 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 
 		Log.info(() -> "Number of image(s): " + result.size());
 
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	abstract protected SuggestedFile getSuggestedFile(BlockUml blockUml) throws FileNotFoundException;

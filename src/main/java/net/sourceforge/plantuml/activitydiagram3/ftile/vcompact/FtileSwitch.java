@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -63,6 +62,7 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.svek.ConditionStyle;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 class FtileSwitch extends AbstractFtile {
     // ::remove folder when __HAXE__
@@ -85,7 +85,7 @@ class FtileSwitch extends AbstractFtile {
 		if (getSwimlaneIn() != null)
 			result.add(getSwimlaneIn());
 
-		return Collections.unmodifiableSet(result);
+		return MyCollections.unmodifiableSet(result);
 	}
 
 	public Swimlane getSwimlaneIn() {
@@ -134,7 +134,7 @@ class FtileSwitch extends AbstractFtile {
 	@Override
 	public Collection<Ftile> getMyChildren() {
 		final List<Ftile> result = new ArrayList<>(tiles);
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	@Override

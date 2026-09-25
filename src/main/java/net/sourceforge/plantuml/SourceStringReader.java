@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class SourceStringReader {
 
@@ -266,7 +267,7 @@ public class SourceStringReader {
 	}
 
 	public final List<BlockUml> getBlocks() {
-		return Collections.unmodifiableList(blocks);
+		return MyCollections.unmodifiableList(blocks);
 	}
 
 	public void updateStatus(ExitStatus exitStatus) {

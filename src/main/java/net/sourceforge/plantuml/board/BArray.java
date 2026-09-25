@@ -35,10 +35,10 @@
  */
 package net.sourceforge.plantuml.board;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class BArray implements Iterable<BNode> {
 
@@ -66,7 +66,7 @@ public class BArray implements Iterable<BNode> {
 	}
 
 	public Iterator<BNode> iterator() {
-		return Collections.unmodifiableCollection(data.values()).iterator();
+		return MyCollections.unmodifiableCollection(data.values()).iterator();
 	}
 
 	public final int getMaxX() {

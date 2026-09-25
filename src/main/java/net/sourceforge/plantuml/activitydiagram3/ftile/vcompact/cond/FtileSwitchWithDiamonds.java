@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.activitydiagram3.Branch;
@@ -47,6 +46,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class FtileSwitchWithDiamonds extends FtileSwitchNude {
 
@@ -94,7 +94,7 @@ public class FtileSwitchWithDiamonds extends FtileSwitchNude {
 		final Collection<Ftile> result = new ArrayList<>(super.getMyChildren());
 		result.add(diamond1);
 		result.add(diamond2);
-		return Collections.unmodifiableCollection(result);
+		return MyCollections.unmodifiableCollection(result);
 	}
 
 	protected double getYdelta1a(StringBounder stringBounder) {

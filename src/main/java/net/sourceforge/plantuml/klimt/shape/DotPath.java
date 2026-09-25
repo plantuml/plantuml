@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.klimt.geom.XLine2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class DotPath implements UShape, Moveable {
 
@@ -135,7 +136,7 @@ public class DotPath implements UShape, Moveable {
 		for (XCubicCurve2D bez : beziers)
 			sample(bez, result);
 
-		return Collections.unmodifiableSet(result);
+		return MyCollections.unmodifiableSet(result);
 	}
 
 	private static void sample(XCubicCurve2D bez, Set<XPoint2D> result) {
@@ -414,7 +415,7 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	public final List<XCubicCurve2D> getBeziers() {
-		return Collections.unmodifiableList(beziers);
+		return MyCollections.unmodifiableList(beziers);
 	}
 
 	public DotPath simulateCompound(RectangleArea head, RectangleArea tail) {

@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.klimt.creole.legacy;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -70,6 +69,7 @@ import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.CharHidder;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class StripeSimple implements Stripe {
 
@@ -125,7 +125,7 @@ public class StripeSimple implements Stripe {
 		if (atoms.size() == 0)
 			atoms.add(AtomTextUtils.createLegacy(" ", fontConfiguration));
 
-		return Collections.unmodifiableList(atoms);
+		return MyCollections.unmodifiableList(atoms);
 	}
 
 	public FontConfiguration getActualFontConfiguration() {

@@ -37,10 +37,10 @@ package net.sourceforge.plantuml.posimo;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Cluster implements Clusterable {
 
@@ -72,13 +72,13 @@ public class Cluster implements Clusterable {
 	}
 
 	public Collection<Cluster> getSubClusters() {
-		return Collections.unmodifiableCollection(children);
+		return MyCollections.unmodifiableCollection(children);
 	}
 
 	public Collection<Block> getRecursiveContents() {
 		final Collection<Block> result = new ArrayList<>();
 		addContentRecurse(result);
-		return Collections.unmodifiableCollection(result);
+		return MyCollections.unmodifiableCollection(result);
 	}
 
 	private void addContentRecurse(Collection<Block> result) {
@@ -102,7 +102,7 @@ public class Cluster implements Clusterable {
 	}
 
 	public Collection<Block> getContents() {
-		return Collections.unmodifiableCollection(blocs);
+		return MyCollections.unmodifiableCollection(blocs);
 	}
 
 	public Block getBlock(int uid) {

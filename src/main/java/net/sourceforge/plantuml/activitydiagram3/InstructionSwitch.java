@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.activitydiagram3;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -57,6 +56,7 @@ import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class InstructionSwitch extends WithNote implements Instruction, InstructionCollection {
 	// ::remove folder when __HAXE__
@@ -145,7 +145,7 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 		for (Branch branch : switches)
 			result.addAll(branch.getSwimlanes());
 
-		return Collections.unmodifiableSet(result);
+		return MyCollections.unmodifiableSet(result);
 	}
 
 	@Override

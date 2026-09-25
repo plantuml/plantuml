@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -48,6 +47,7 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class FtileIfNude extends FtileDimensionMemoize {
 
@@ -83,7 +83,7 @@ public class FtileIfNude extends FtileDimensionMemoize {
 
 		result.addAll(tile1.getSwimlanes());
 		result.addAll(tile2.getSwimlanes());
-		return Collections.unmodifiableSet(result);
+		return MyCollections.unmodifiableSet(result);
 	}
 
 	public Swimlane getSwimlaneIn() {

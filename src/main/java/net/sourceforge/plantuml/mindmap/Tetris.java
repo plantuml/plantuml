@@ -36,11 +36,11 @@
 package net.sourceforge.plantuml.mindmap;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.geom.XLine2D;
 import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Tetris {
 
@@ -135,7 +135,7 @@ public class Tetris {
 	}
 
 	public List<SymetricalTeePositioned> getElements() {
-		return Collections.unmodifiableList(elements);
+		return MyCollections.unmodifiableList(elements);
 	}
 
 }

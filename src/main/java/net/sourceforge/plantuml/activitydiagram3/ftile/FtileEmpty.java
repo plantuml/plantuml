@@ -43,6 +43,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class FtileEmpty extends AbstractFtile {
 
@@ -105,7 +106,7 @@ public class FtileEmpty extends AbstractFtile {
 		if (swimlane != null) {
 			result.add(swimlane);
 		}
-		return Collections.unmodifiableSet(result);
+		return MyCollections.unmodifiableSet(result);
 	}
 
 }

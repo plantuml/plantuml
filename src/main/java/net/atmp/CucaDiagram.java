@@ -39,7 +39,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -103,6 +102,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.xmi.CucaDiagramXmiMaker;
 import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 
@@ -646,7 +646,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 	}
 
 	public final Set<VisibilityModifier> getHidesVisibilityModifier() {
-		return Collections.unmodifiableSet(hideVisibilityModifier);
+		return MyCollections.unmodifiableSet(hideVisibilityModifier);
 	}
 
 	final public boolean isStandalone(Entity ent) {
@@ -687,7 +687,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 			if (link.getEntity1().getLeafType() != LeafType.NOTE && link.getEntity2().getLeafType() != LeafType.NOTE) {
 				result.add(link);
 				if (result.size() == 2)
-					return Collections.unmodifiableList(result);
+					return MyCollections.unmodifiableList(result);
 
 			}
 		}
@@ -864,7 +864,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 			if (data != null && data.isGroup() == false)
 				result.add(data);
 		}
-		return Collections.unmodifiableCollection(result);
+		return MyCollections.unmodifiableCollection(result);
 
 	}
 
@@ -878,7 +878,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 			if (data != null && data.isGroup())
 				result.add(data);
 		}
-		return Collections.unmodifiableCollection(result);
+		return MyCollections.unmodifiableCollection(result);
 	}
 
 	public final Collection<Entity> groupsAndRoot() {
@@ -888,7 +888,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 			if (data != null && data.isGroup())
 				result.add(data);
 		}
-		return Collections.unmodifiableCollection(result);
+		return MyCollections.unmodifiableCollection(result);
 	}
 
 	public void incRawLayout() {
@@ -896,7 +896,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 	}
 
 	public final List<Link> getLinks() {
-		return Collections.unmodifiableList(this.links);
+		return MyCollections.unmodifiableList(this.links);
 	}
 
 	public void addLink(Link link) {

@@ -37,9 +37,9 @@ package net.sourceforge.plantuml.gantt.core;
 
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class TimeRanges implements Iterable<TimeRange> {
 
@@ -65,7 +65,7 @@ public class TimeRanges implements Iterable<TimeRange> {
 
 	@Override
 	public Iterator<TimeRange> iterator() {
-		return Collections.unmodifiableCollection(timeRanges).iterator();
+		return MyCollections.unmodifiableCollection(timeRanges).iterator();
 	}
 
 	public Duration totalWorkingDuration() {

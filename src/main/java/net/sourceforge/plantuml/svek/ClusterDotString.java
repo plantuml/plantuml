@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.svek;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
@@ -55,6 +54,7 @@ import net.sourceforge.plantuml.skin.AlignmentParam;
 import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class ClusterDotString {
 
@@ -239,7 +239,7 @@ public class ClusterDotString {
 			if (sh.getEntityPosition() != EntityPosition.NORMAL)
 				result.add(sh.getEntityPosition());
 
-		return Collections.unmodifiableSet(result);
+		return MyCollections.unmodifiableSet(result);
 	}
 
 	private void subgraphClusterNoLabel(StringBuilder sb, String id) {

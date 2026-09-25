@@ -40,7 +40,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -106,6 +105,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.tikz.TikzFontDistortion;
 import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class SkinParam implements ISkinParam {
 
@@ -219,7 +219,7 @@ public class SkinParam implements ISkinParam {
 
 	@Override
 	public Map<String, String> values() {
-		return Collections.unmodifiableMap(params);
+		return MyCollections.unmodifiableMap(params);
 	}
 
 	public void setParam(String key, String value) {
@@ -296,7 +296,7 @@ public class SkinParam implements ISkinParam {
 		if (result.size() == 0)
 			result.add(key);
 
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	@Override
@@ -637,7 +637,7 @@ public class SkinParam implements ISkinParam {
 			final String h = capitalize(p.name());
 			result.add(h);
 		}
-		return Collections.unmodifiableSet(result);
+		return MyCollections.unmodifiableSet(result);
 	}
 
 	private static String capitalize(String name) {
@@ -798,7 +798,7 @@ public class SkinParam implements ISkinParam {
 
 	@Override
 	public Collection<String> getAllSpriteNames() {
-		return Collections.unmodifiableCollection(new TreeSet<>(sprites.keySet()));
+		return MyCollections.unmodifiableCollection(new TreeSet<>(sprites.keySet()));
 	}
 
 	public void addSprite(String name, Sprite sprite) {

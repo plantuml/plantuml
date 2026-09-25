@@ -61,6 +61,7 @@ import net.sourceforge.plantuml.style.StyleLoader;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Stereogroup {
 
@@ -143,7 +144,7 @@ public class Stereogroup {
 		while (matcher.find())
 			result.add(matcher.group(1).trim());
 
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	public Style mute(Style style, HColorSet colorSet) throws NoSuchColorException {

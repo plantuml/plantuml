@@ -45,7 +45,6 @@ import java.io.UncheckedIOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +64,7 @@ import net.sourceforge.plantuml.svg.parser.ISvgSpriteParser;
 import net.sourceforge.plantuml.svg.parser.SvgSpriteParserFactory;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Stdlib {
 
@@ -280,7 +280,7 @@ public class Stdlib {
 //		final List<String> result = new ArrayList<>();
 //		final DataInputStream dataStream = getDataStream();
 //		if (dataStream == null)
-//			return Collections.unmodifiableList(result);
+//			return MyCollections.unmodifiableList(result);
 //
 //		dataStream.readUTF();
 //		final InputStream spriteStream = getSpriteStream();
@@ -288,7 +288,7 @@ public class Stdlib {
 //			while (true) {
 //				final String filename = dataStream.readUTF();
 //				if (filename.equals(SEPARATOR))
-//					return Collections.unmodifiableList(result);
+//					return MyCollections.unmodifiableList(result);
 //
 //				while (true) {
 //					final String s = dataStream.readUTF();
@@ -350,7 +350,7 @@ public class Stdlib {
 	}
 
 	public Map<String, String> getMetadata() {
-		return Collections.unmodifiableMap(info);
+		return MyCollections.unmodifiableMap(info);
 
 	}
 

@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.utils.Peeker;
 import net.sourceforge.plantuml.utils.PeekerUtils;
 
@@ -129,7 +130,7 @@ public class CliParsed {
 				result.put(keyValue[0], keyValue[1]);
 		}
 
-		return Collections.unmodifiableMap(result);
+		return MyCollections.unmodifiableMap(result);
 
 	}
 
@@ -226,7 +227,7 @@ public class CliParsed {
 	}
 
 	public List<String> getRemainingArgs() {
-		return Collections.unmodifiableList(args);
+		return MyCollections.unmodifiableList(args);
 	}
 
 }

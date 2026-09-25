@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.klimt.creole.atom.Atom;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Fission {
 
@@ -96,7 +97,7 @@ public class Fission {
 		while (result.size() > 1 && ((StripeSimpleInternal) result.get(result.size() - 1)).isWhite())
 			result.remove(result.size() - 1);
 
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 
 	}
 
@@ -196,7 +197,7 @@ public class Fission {
 						continue;
 					result.add(n.asAtom());
 				}
-			return Collections.unmodifiableList(result);
+			return MyCollections.unmodifiableList(result);
 		}
 
 		private void addNeutron(Neutron neutron) {

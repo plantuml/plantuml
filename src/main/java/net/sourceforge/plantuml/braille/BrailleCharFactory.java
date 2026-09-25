@@ -36,8 +36,8 @@
 package net.sourceforge.plantuml.braille;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class BrailleCharFactory {
 
@@ -46,7 +46,7 @@ public class BrailleCharFactory {
 		for (int i = 0; i < s.length(); i++) {
 			result.add(BrailleChar.fromChar(s.charAt(i)));
 		}
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 }

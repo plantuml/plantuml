@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.file.FileGroup;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class CliOptions {
 
@@ -220,7 +221,7 @@ public class CliOptions {
 			final List<String> result = new ArrayList<>();
 			for (Object s : flags.getList(CliFlag.EXCLUDE))
 				result.add(s.toString());
-			return Collections.unmodifiableList(result);
+			return MyCollections.unmodifiableList(result);
 		}
 
 		return Collections.emptyList();
@@ -262,11 +263,11 @@ public class CliOptions {
 
 	private Map<String, String> defines() {
 		final Map<String, String> result = flags.getMap(CliFlag.DEFINE, CliFlag.DEFINE_LONG);
-		return Collections.unmodifiableMap(result);
+		return MyCollections.unmodifiableMap(result);
 	}
 
 	public List<String> getConfig() {
-		return Collections.unmodifiableList(config);
+		return MyCollections.unmodifiableList(config);
 	}
 
 	public final List<String> getRemainingArgs() {

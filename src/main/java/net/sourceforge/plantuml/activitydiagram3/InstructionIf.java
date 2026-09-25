@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.activitydiagram3;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -62,6 +61,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class InstructionIf extends WithNote implements Instruction, InstructionCollection {
 
@@ -240,7 +240,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		if (elseBranch != null)
 			result.addAll(elseBranch.getSwimlanes());
 
-		return Collections.unmodifiableSet(result);
+		return MyCollections.unmodifiableSet(result);
 	}
 
 	@Override

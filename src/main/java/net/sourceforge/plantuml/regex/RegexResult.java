@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.plantuml.ubrex.UMatcher;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class RegexResult {
 
@@ -51,7 +52,7 @@ public class RegexResult {
 	}
 
 	public RegexResult(Map<String, RegexPartialMatch> data) {
-		this.data = Collections.unmodifiableMap(data);
+		this.data = MyCollections.unmodifiableMap(data);
 		this.matcher = null;
 	}
 

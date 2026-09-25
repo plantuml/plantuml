@@ -36,9 +36,9 @@
 package net.sourceforge.plantuml.hcl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class HclSource implements Iterable<Character> {
     // ::remove folder when __HAXE__
@@ -54,7 +54,7 @@ public class HclSource implements Iterable<Character> {
 
 	@Override
 	public Iterator<Character> iterator() {
-		return Collections.unmodifiableList(all).iterator();
+		return MyCollections.unmodifiableList(all).iterator();
 	}
 
 }

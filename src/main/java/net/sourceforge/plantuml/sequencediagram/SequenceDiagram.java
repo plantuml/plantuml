@@ -39,7 +39,6 @@ import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
@@ -79,6 +78,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 
 public class SequenceDiagram extends TitledDiagram {
@@ -190,7 +190,7 @@ public class SequenceDiagram extends TitledDiagram {
 	}
 
 	public Collection<Participant> participants() {
-		return Collections.unmodifiableCollection(participantsList);
+		return MyCollections.unmodifiableCollection(participantsList);
 	}
 
 	public boolean participantsContainsKey(String code) {
@@ -292,7 +292,7 @@ public class SequenceDiagram extends TitledDiagram {
 	}
 
 	public List<Event> events() {
-		return Collections.unmodifiableList(events);
+		return MyCollections.unmodifiableList(events);
 	}
 
 	private FileMaker getSequenceDiagramPngMaker(int index, FileFormatOption fileFormatOption) {
@@ -622,7 +622,7 @@ public class SequenceDiagram extends TitledDiagram {
 	}
 
 	public List<LinkAnchor> getLinkAnchors() {
-		return Collections.unmodifiableList(linkAnchors);
+		return MyCollections.unmodifiableList(linkAnchors);
 	}
 
 	@Override

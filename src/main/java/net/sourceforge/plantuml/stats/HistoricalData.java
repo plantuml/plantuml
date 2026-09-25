@@ -43,6 +43,7 @@ import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.version.Version;
 
 public class HistoricalData {
@@ -116,7 +117,7 @@ public class HistoricalData {
 	}
 
 	public List<ParsedGenerated> getHistorical() {
-		return Collections.unmodifiableList(historical);
+		return MyCollections.unmodifiableList(historical);
 	}
 
 }

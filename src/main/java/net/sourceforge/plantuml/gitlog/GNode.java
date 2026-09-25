@@ -37,10 +37,10 @@ package net.sourceforge.plantuml.gitlog;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class GNode {
 
@@ -81,7 +81,7 @@ public class GNode {
 	}
 
 	public Collection<GNode> getDowns() {
-		return Collections.unmodifiableCollection(down);
+		return MyCollections.unmodifiableCollection(down);
 	}
 
 	public boolean canEatTheNextOne() {

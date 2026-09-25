@@ -36,6 +36,8 @@
  */
 package net.sourceforge.plantuml.svek;
 
+import net.sourceforge.plantuml.utils.MyCollections;
+
 public enum SingleStrategy {
     // ::remove folder when __HAXE__
 
@@ -64,7 +66,7 @@ public enum SingleStrategy {
 //			}
 //			result.add(link);
 //		}
-//		return Collections.unmodifiableCollection(result);
+//		return MyCollections.unmodifiableCollection(result);
 //	}
 
 	static int computeBranch(int size) {

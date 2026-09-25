@@ -36,9 +36,9 @@
 package net.sourceforge.plantuml.plasma;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 /**
  * A named node in the entity graph.
@@ -151,7 +151,7 @@ public class Quark<DATA> {
 	}
 
 	public Collection<Quark<DATA>> getChildren() {
-		return Collections.unmodifiableCollection(children.values());
+		return MyCollections.unmodifiableCollection(children.values());
 	}
 
 	public int countChildren() {

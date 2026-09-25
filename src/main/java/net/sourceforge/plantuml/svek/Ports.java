@@ -44,6 +44,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.utils.SignatureUtils;
 
 public class Ports {
@@ -86,7 +87,7 @@ public class Ports {
 	public Collection<PortGeometry> getAllPortGeometry() {
 		final List<PortGeometry> result = new ArrayList<PortGeometry>(ids.values());
 		Collections.sort(result);
-		return Collections.unmodifiableCollection(result);
+		return MyCollections.unmodifiableCollection(result);
 	}
 
 }

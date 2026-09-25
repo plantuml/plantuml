@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.jsondiagram;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.core.DiagramType;
@@ -66,6 +65,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.yaml.Highlighted;
 
 //See TextBlockMap
@@ -210,7 +210,7 @@ public class TextBlockJson extends TextBlockMemoized {
 				else
 					result.add(null);
 
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	public List<String> keys() {
@@ -228,7 +228,7 @@ public class TextBlockJson extends TextBlockMemoized {
 				i++;
 			}
 		}
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	@Override

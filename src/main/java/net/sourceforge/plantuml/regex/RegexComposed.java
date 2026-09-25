@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.regex;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -44,6 +43,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public abstract class RegexComposed implements IRegex {
 
@@ -76,7 +76,7 @@ public abstract class RegexComposed implements IRegex {
 	}
 
 	public RegexComposed(IRegex... partial) {
-		this.partials = Collections.unmodifiableList(Arrays.asList(partial));
+		this.partials = MyCollections.unmodifiableList(Arrays.asList(partial));
 	}
 
 	public void fillPartialMatch(Iterator<String> it, Map<String, RegexPartialMatch> result) {

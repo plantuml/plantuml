@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.cucadiagram;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.regex.Matcher;
@@ -62,6 +61,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.WithPorts;
 import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, WithPorts {
 
@@ -234,7 +234,7 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 	}
 
 	public List<Url> getUrls() {
-		return Collections.unmodifiableList(urls);
+		return MyCollections.unmodifiableList(urls);
 	}
 
 	@Override

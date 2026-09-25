@@ -84,6 +84,7 @@ import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.utils.Position;
 
 final public class Entity implements SpecificBackcolorable, Hideable, Removeable, LineConfigurable, Bag {
@@ -144,9 +145,9 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 	//
 	public List<CucaNote> getNotes(Position position) {
 		if (position == Position.TOP)
-			return Collections.unmodifiableList(notesTop);
+			return MyCollections.unmodifiableList(notesTop);
 		if (position == Position.BOTTOM)
-			return Collections.unmodifiableList(notesBottom);
+			return MyCollections.unmodifiableList(notesBottom);
 		throw new IllegalArgumentException();
 	}
 
@@ -155,7 +156,7 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 	}
 
 	public Set<Stereotag> stereotags() {
-		return Collections.unmodifiableSet(tags);
+		return MyCollections.unmodifiableSet(tags);
 	}
 
 	// Back to Entity
@@ -513,7 +514,7 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 	}
 
 	public Map<String, Tip> getTips() {
-		return Collections.unmodifiableMap(tips);
+		return MyCollections.unmodifiableMap(tips);
 	}
 
 	public Colors getColors() {
@@ -532,7 +533,7 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 
 	public Collection<String> getPortShortNames() {
 		checkNotGroup();
-		return Collections.unmodifiableCollection(portShortNames);
+		return MyCollections.unmodifiableCollection(portShortNames);
 	}
 
 	public void addPortShortName(String portShortName) {
@@ -590,7 +591,7 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 		final List<Kal> result = kals.get(position);
 		if (result == null)
 			return Collections.emptyList();
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	public CucaDiagram getDiagram() {
@@ -653,7 +654,7 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 			if (data != null && data.isGroup() == false)
 				result.add(data);
 		}
-		return Collections.unmodifiableCollection(result);
+		return MyCollections.unmodifiableCollection(result);
 	}
 
 	public Collection<Entity> groups() {
@@ -663,7 +664,7 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 			if (data != null && data.isGroup())
 				result.add(data);
 		}
-		return Collections.unmodifiableCollection(result);
+		return MyCollections.unmodifiableCollection(result);
 	}
 
 	public int countChildren() {

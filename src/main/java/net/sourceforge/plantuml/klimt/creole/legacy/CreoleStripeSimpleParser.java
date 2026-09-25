@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.klimt.creole.legacy;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -53,6 +52,7 @@ import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.utils.CharHidder;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class CreoleStripeSimpleParser {
 
@@ -167,7 +167,7 @@ public class CreoleStripeSimpleParser {
 			stripe.analyzeAndAdd(singleLine);
 			result.add(stripe);
 		}
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 }

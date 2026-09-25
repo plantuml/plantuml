@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.dot;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -51,6 +50,7 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.cucadiagram.GroupHierarchy;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 final public class DotData {
 
@@ -100,11 +100,11 @@ final public class DotData {
 	}
 
 	public List<Link> getLinks() {
-		return Collections.unmodifiableList(links);
+		return MyCollections.unmodifiableList(links);
 	}
 
 	public Collection<Entity> getLeafs() {
-		return Collections.unmodifiableCollection(leafs);
+		return MyCollections.unmodifiableCollection(leafs);
 	}
 
 	public final Entity getTopParent() {

@@ -43,6 +43,7 @@ import java.util.List;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class SlotSet implements Iterable<Slot> {
     // ::remove file when __HAXE__
@@ -97,7 +98,7 @@ public class SlotSet implements Iterable<Slot> {
 	}
 
 	public List<Slot> getSlots() {
-		return Collections.unmodifiableList(all);
+		return MyCollections.unmodifiableList(all);
 	}
 
 	public Iterator<Slot> iterator() {

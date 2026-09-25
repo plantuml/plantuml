@@ -74,6 +74,7 @@ import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.style.Styleable;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.utils.Direction;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Styleable {
 
@@ -94,7 +95,7 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 		if (swimlaneNote != null) {
 			final Set<Swimlane> result = new HashSet<>(tile.getSwimlanes());
 			result.add(swimlaneNote);
-			return Collections.unmodifiableSet(result);
+			return MyCollections.unmodifiableSet(result);
 		}
 		return tile.getSwimlanes();
 	}

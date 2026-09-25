@@ -39,7 +39,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -51,6 +50,7 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class FtpConnection {
 	
@@ -83,7 +83,7 @@ public class FtpConnection {
 		final List<String> result = new ArrayList<>(incoming.keySet());
 		result.addAll(outgoing.keySet());
 		result.addAll(futureOutgoing);
-		return Collections.unmodifiableCollection(result);
+		return MyCollections.unmodifiableCollection(result);
 	}
 
 	public synchronized boolean willExist(String fileName) {

@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BoyerMoore;
+import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.utils.SignatureUtils;
 import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.version.IteratorCounter2;
@@ -184,7 +185,7 @@ final public class UmlSource {
 	}
 
 //	public Iterator<StringLocated> iteratorRaw() {
-//		return Collections.unmodifiableCollection(rawSource).iterator();
+//		return MyCollections.unmodifiableCollection(rawSource).iterator();
 //	}
 
 	/**

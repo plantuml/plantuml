@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.bpm;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -46,6 +45,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.bpm.ConnectorPuzzle.Where;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Grid {
 
@@ -99,7 +99,7 @@ public class Grid {
 	// // result.add(edge);
 	// // }
 	// // }
-	// // return Collections.unmodifiableSet(result);
+	// // return MyCollections.unmodifiableSet(result);
 	// throw new UnsupportedOperationException();
 	//
 	// }
@@ -115,7 +115,7 @@ public class Grid {
 	// }
 	// }
 	// }
-	// return Collections.unmodifiableSet(result);
+	// return MyCollections.unmodifiableSet(result);
 	// }
 	//
 	// private SortedSet<Col> getColsConnectedTo(Cell someCell) {
@@ -129,7 +129,7 @@ public class Grid {
 	// }
 	// }
 	// }
-	// return Collections.unmodifiableSortedSet(result);
+	// return MyCollections.unmodifiableSortedSet(result);
 	// }
 
 	// public SortedSet<Col> colsConnectedTo(Line line) {
@@ -145,7 +145,7 @@ public class Grid {
 	// result.addAll(getColsConnectedTo(ent.getValue()));
 	//
 	// }
-	// return Collections.unmodifiableSortedSet(result);
+	// return MyCollections.unmodifiableSortedSet(result);
 	// }
 
 	public Coord getById(String id) {
@@ -265,7 +265,7 @@ public class Grid {
 				result.add(ent.getKey().getCol());
 			}
 		}
-		return Collections.unmodifiableSet(result);
+		return MyCollections.unmodifiableSet(result);
 	}
 
 	public void removeLine(Line line) {

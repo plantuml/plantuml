@@ -35,12 +35,12 @@
  */
 package net.sourceforge.plantuml.klimt;
 
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class UGroup {
 
@@ -73,7 +73,7 @@ public class UGroup {
 	}
 
 	public Map<UGroupType, String> asMap() {
-		return Collections.unmodifiableMap(map);
+		return MyCollections.unmodifiableMap(map);
 	}
 
 }

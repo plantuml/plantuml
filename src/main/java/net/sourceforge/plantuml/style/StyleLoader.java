@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocationImpl;
 import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public final class StyleLoader {
 	private static final ConcurrentMap<String, StyleBuilder> cache = new ConcurrentHashMap<>();
@@ -205,7 +206,7 @@ public final class StyleLoader {
 			if (root == null || root.hasValue(property) == false)
 				result.add(property);
 
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 	}
 
 	public static Map<PName, Value> addStereotypeCount(Map<PName, Value> tmp, int count) {

@@ -36,8 +36,8 @@
 package net.sourceforge.plantuml.gitlog;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Commit {
 
@@ -87,7 +87,7 @@ public class Commit {
 				addAbove(result, current);
 			} else if (current.matches("-")) {
 			} else {
-				return Collections.unmodifiableList(result);
+				return MyCollections.unmodifiableList(result);
 			}
 
 		}
@@ -113,7 +113,7 @@ public class Commit {
 			result.add(down.getCommit());
 		}
 
-		return Collections.unmodifiableList(result);
+		return MyCollections.unmodifiableList(result);
 
 	}
 

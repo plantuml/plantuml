@@ -41,6 +41,7 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 public class FunctionsSet {
 
@@ -71,7 +72,7 @@ public class FunctionsSet {
 	}
 
 	public Map<TFunctionSignature, TFunction> functions() {
-		return Collections.unmodifiableMap(functions);
+		return MyCollections.unmodifiableMap(functions);
 	}
 
 	public String getLonguestMatchStartingIn(String s, int pos) {
