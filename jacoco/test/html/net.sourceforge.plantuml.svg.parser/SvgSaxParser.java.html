@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
@@ -100,79 +99,79 @@ import net.sourceforge.plantuml.utils.Base64Coder;
  */
 public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 
-<span class="fc" id="L103">	private static final Logger LOG = Logger.getLogger(SvgSaxParser.class.getName());</span>
+<span class="fc" id="L102">	private static final Logger LOG = Logger.getLogger(SvgSaxParser.class.getName());</span>
 
 	private final String svg;
 
-<span class="fc" id="L107">	public SvgSaxParser(String svg) {</span>
-<span class="fc" id="L108">		this.svg = svg;</span>
-<span class="fc" id="L109">	}</span>
+<span class="fc" id="L106">	public SvgSaxParser(String svg) {</span>
+<span class="fc" id="L107">		this.svg = svg;</span>
+<span class="fc" id="L108">	}</span>
 
 	@Override
 	public void drawU(UGraphic ug, double scale, HColor fontColor, HColor forcedColor) {
-<span class="fc" id="L113">		final ColorResolver colorResolver = new ColorResolver(fontColor, forcedColor, this);</span>
-<span class="fc" id="L114">		UGraphicWithScale ugs = new UGraphicWithScale(ug, colorResolver, scale);</span>
+<span class="fc" id="L112">		final ColorResolver colorResolver = new ColorResolver(fontColor, forcedColor, this);</span>
+<span class="fc" id="L113">		UGraphicWithScale ugs = new UGraphicWithScale(ug, colorResolver, scale);</span>
 
 		try {
-<span class="fc" id="L117">			parseSvg(svg, ugs, colorResolver);</span>
-<span class="nc" id="L118">		} catch (Exception e) {</span>
-<span class="nc" id="L119">			LOG.warning(&quot;Failed to parse SVG: &quot; + e.getMessage());</span>
-<span class="nc" id="L120">			throw new RuntimeException(&quot;Failed to parse SVG&quot;, e);</span>
-<span class="fc" id="L121">		}</span>
-<span class="fc" id="L122">	}</span>
+<span class="fc" id="L116">			parseSvg(svg, ugs, colorResolver);</span>
+<span class="nc" id="L117">		} catch (Exception e) {</span>
+<span class="nc" id="L118">			LOG.warning(&quot;Failed to parse SVG: &quot; + e.getMessage());</span>
+<span class="nc" id="L119">			throw new RuntimeException(&quot;Failed to parse SVG&quot;, e);</span>
+<span class="fc" id="L120">		}</span>
+<span class="fc" id="L121">	}</span>
 
 	@Override
 	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale,
 			final HColor backColor) {
-<span class="fc" id="L127">		final UImageSvg data = new UImageSvg(svg, scale);</span>
-<span class="fc" id="L128">		final double width = data.getWidth();</span>
-<span class="fc" id="L129">		final double height = data.getHeight();</span>
+<span class="fc" id="L126">		final UImageSvg data = new UImageSvg(svg, scale);</span>
+<span class="fc" id="L127">		final double width = data.getWidth();</span>
+<span class="fc" id="L128">		final double height = data.getHeight();</span>
 
-<span class="fc" id="L131">		return new TextBlock() {</span>
+<span class="fc" id="L130">		return new TextBlock() {</span>
 			public void drawU(UGraphic ug) {
-<span class="pc bpc" id="L133" title="1 of 2 branches missed.">				if (backColor != null)</span>
-<span class="nc" id="L134">					ug.apply(backColor.bg()).apply(backColor)</span>
-<span class="nc" id="L135">							.draw(URectangle.build(calculateDimension(ug.getStringBounder())));</span>
-<span class="fc" id="L136">				SvgSaxParser.this.drawU(ug, scale, fontColor, forcedColor);</span>
-<span class="fc" id="L137">			}</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">				if (backColor != null)</span>
+<span class="nc" id="L133">					ug.apply(backColor.bg()).apply(backColor)</span>
+<span class="nc" id="L134">							.draw(URectangle.build(calculateDimension(ug.getStringBounder())));</span>
+<span class="fc" id="L135">				SvgSaxParser.this.drawU(ug, scale, fontColor, forcedColor);</span>
+<span class="fc" id="L136">			}</span>
 
 			@Fast
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L141">				return new XDimension2D(width, height);</span>
+<span class="fc" id="L140">				return new XDimension2D(width, height);</span>
 			}
 		};
 	}
 
 	@Override
 	public int getMinGrayLevel() {
-<span class="fc" id="L148">		return 0;</span>
+<span class="fc" id="L147">		return 0;</span>
 	}
 
 	@Override
 	public int getMaxGrayLevel() {
-<span class="fc" id="L153">		return 255;</span>
+<span class="fc" id="L152">		return 255;</span>
 	}
 
 	/**
 	 * Parses SVG using two-pass SAX parsing.
 	 */
 	private void parseSvg(String svgContent, UGraphicWithScale ugs, ColorResolver colorResolver) throws Exception {
-<span class="fc" id="L160">		SAXParserFactory factory = SAXParserFactory.newInstance();</span>
-<span class="fc" id="L161">		factory.setNamespaceAware(true);</span>
+<span class="fc" id="L159">		SAXParserFactory factory = SAXParserFactory.newInstance();</span>
+<span class="fc" id="L160">		factory.setNamespaceAware(true);</span>
 		// Disable external entities to prevent XXE attacks
-<span class="fc" id="L163">		factory.setFeature(&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;, true);</span>
-<span class="fc" id="L164">		factory.setFeature(&quot;http://xml.org/sax/features/external-general-entities&quot;, false);</span>
-<span class="fc" id="L165">		factory.setFeature(&quot;http://xml.org/sax/features/external-parameter-entities&quot;, false);</span>
-<span class="fc" id="L166">		SAXParser parser = factory.newSAXParser();</span>
+<span class="fc" id="L162">		factory.setFeature(&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;, true);</span>
+<span class="fc" id="L163">		factory.setFeature(&quot;http://xml.org/sax/features/external-general-entities&quot;, false);</span>
+<span class="fc" id="L164">		factory.setFeature(&quot;http://xml.org/sax/features/external-parameter-entities&quot;, false);</span>
+<span class="fc" id="L165">		SAXParser parser = factory.newSAXParser();</span>
 
 		// Pass 1: Collect definitions
-<span class="fc" id="L169">		DefsCollector defsCollector = new DefsCollector();</span>
-<span class="fc" id="L170">		parser.parse(new InputSource(new StringReader(svgContent)), defsCollector);</span>
+<span class="fc" id="L168">		DefsCollector defsCollector = new DefsCollector();</span>
+<span class="fc" id="L169">		parser.parse(new InputSource(new StringReader(svgContent)), defsCollector);</span>
 
 		// Pass 2: Render elements
-<span class="fc" id="L173">		RenderHandler renderer = new RenderHandler(ugs, colorResolver, defsCollector.getDefinitions());</span>
-<span class="fc" id="L174">		parser.parse(new InputSource(new StringReader(svgContent)), renderer);</span>
-<span class="fc" id="L175">	}</span>
+<span class="fc" id="L172">		RenderHandler renderer = new RenderHandler(ugs, colorResolver, defsCollector.getDefinitions());</span>
+<span class="fc" id="L173">		parser.parse(new InputSource(new StringReader(svgContent)), renderer);</span>
+<span class="fc" id="L174">	}</span>
 
 	/**
 	 * Pass 1: Collects SVG definitions (defs, symbols, gradients) by ID.
@@ -183,118 +182,118 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 	 * also captured for gradient resolution.
 	 * &lt;/p&gt;
 	 */
-<span class="fc" id="L186">	private static class DefsCollector extends DefaultHandler {</span>
-<span class="fc" id="L187">		private final Map&lt;String, BufferedElement&gt; definitions = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L188">		private int depth = 0;</span>
-<span class="fc" id="L189">		private boolean inDefs = false;</span>
-<span class="fc" id="L190">		private StringBuilder currentContent = new StringBuilder();</span>
-<span class="fc" id="L191">		private String currentId = null;</span>
-<span class="fc" id="L192">		private String currentTag = null;</span>
-<span class="fc" id="L193">		private Map&lt;String, String&gt; currentAttrs = null;</span>
-<span class="fc" id="L194">		private BufferedElement currentElement = null;</span>
+<span class="fc" id="L185">	private static class DefsCollector extends DefaultHandler {</span>
+<span class="fc" id="L186">		private final Map&lt;String, BufferedElement&gt; definitions = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L187">		private int depth = 0;</span>
+<span class="fc" id="L188">		private boolean inDefs = false;</span>
+<span class="fc" id="L189">		private StringBuilder currentContent = new StringBuilder();</span>
+<span class="fc" id="L190">		private String currentId = null;</span>
+<span class="fc" id="L191">		private String currentTag = null;</span>
+<span class="fc" id="L192">		private Map&lt;String, String&gt; currentAttrs = null;</span>
+<span class="fc" id="L193">		private BufferedElement currentElement = null;</span>
 
 		public Map&lt;String, BufferedElement&gt; getDefinitions() {
-<span class="fc" id="L197">			return definitions;</span>
+<span class="fc" id="L196">			return definitions;</span>
 		}
 
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attrs) {
-<span class="fc" id="L202">			depth++;</span>
+<span class="fc" id="L201">			depth++;</span>
 
-<span class="fc bfc" id="L204" title="All 6 branches covered.">			if (&quot;defs&quot;.equals(qName) || &quot;symbol&quot;.equals(qName) || &quot;linearGradient&quot;.equals(qName)</span>
-<span class="fc bfc" id="L205" title="All 2 branches covered.">					|| &quot;radialGradient&quot;.equals(qName)) {</span>
-<span class="fc" id="L206">				inDefs = true;</span>
+<span class="fc bfc" id="L203" title="All 6 branches covered.">			if (&quot;defs&quot;.equals(qName) || &quot;symbol&quot;.equals(qName) || &quot;linearGradient&quot;.equals(qName)</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">					|| &quot;radialGradient&quot;.equals(qName)) {</span>
+<span class="fc" id="L205">				inDefs = true;</span>
 			}
 
-<span class="pc bpc" id="L209" title="1 of 4 branches missed.">			if (inDefs || &quot;symbol&quot;.equals(qName)) {</span>
-<span class="fc" id="L210">				String id = attrs.getValue(&quot;id&quot;);</span>
-<span class="pc bpc" id="L211" title="1 of 4 branches missed.">				if (id != null &amp;&amp; !id.isEmpty()) {</span>
-<span class="fc" id="L212">					currentId = id;</span>
-<span class="fc" id="L213">					currentTag = qName;</span>
-<span class="fc" id="L214">					currentContent = new StringBuilder();</span>
-<span class="fc" id="L215">					currentAttrs = new HashMap&lt;&gt;();</span>
+<span class="pc bpc" id="L208" title="1 of 4 branches missed.">			if (inDefs || &quot;symbol&quot;.equals(qName)) {</span>
+<span class="fc" id="L209">				String id = attrs.getValue(&quot;id&quot;);</span>
+<span class="pc bpc" id="L210" title="1 of 4 branches missed.">				if (id != null &amp;&amp; !id.isEmpty()) {</span>
+<span class="fc" id="L211">					currentId = id;</span>
+<span class="fc" id="L212">					currentTag = qName;</span>
+<span class="fc" id="L213">					currentContent = new StringBuilder();</span>
+<span class="fc" id="L214">					currentAttrs = new HashMap&lt;&gt;();</span>
 					// Store all attributes for gradient processing
-<span class="fc bfc" id="L217" title="All 2 branches covered.">					for (int i = 0; i &lt; attrs.getLength(); i++) {</span>
-<span class="fc" id="L218">						currentAttrs.put(attrs.getQName(i), attrs.getValue(i));</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">					for (int i = 0; i &lt; attrs.getLength(); i++) {</span>
+<span class="fc" id="L217">						currentAttrs.put(attrs.getQName(i), attrs.getValue(i));</span>
 					}
-<span class="fc" id="L220">					currentElement = new BufferedElement(qName, &quot;&quot;, currentAttrs);</span>
+<span class="fc" id="L219">					currentElement = new BufferedElement(qName, &quot;&quot;, currentAttrs);</span>
 				}
 
 				// Handle gradient stops
-<span class="pc bpc" id="L224" title="1 of 4 branches missed.">				if (&quot;stop&quot;.equals(qName) &amp;&amp; currentElement != null) {</span>
-<span class="fc" id="L225">					String offset = attrs.getValue(&quot;offset&quot;);</span>
-<span class="fc" id="L226">					String stopColor = attrs.getValue(&quot;stop-color&quot;);</span>
-<span class="fc" id="L227">					String stopOpacity = attrs.getValue(&quot;stop-opacity&quot;);</span>
-<span class="fc" id="L228">					final String style = attrs.getValue(&quot;style&quot;);</span>
-<span class="pc bpc" id="L229" title="3 of 4 branches missed.">					if (style != null &amp;&amp; style.isEmpty() == false) {</span>
-<span class="nc bnc" id="L230" title="All 2 branches missed.">						if (stopColor == null)</span>
-<span class="nc" id="L231">							stopColor = getStyleValue(style, &quot;stop-color&quot;);</span>
-<span class="nc bnc" id="L232" title="All 2 branches missed.">						if (stopOpacity == null)</span>
-<span class="nc" id="L233">							stopOpacity = getStyleValue(style, &quot;stop-opacity&quot;);</span>
+<span class="pc bpc" id="L223" title="1 of 4 branches missed.">				if (&quot;stop&quot;.equals(qName) &amp;&amp; currentElement != null) {</span>
+<span class="fc" id="L224">					String offset = attrs.getValue(&quot;offset&quot;);</span>
+<span class="fc" id="L225">					String stopColor = attrs.getValue(&quot;stop-color&quot;);</span>
+<span class="fc" id="L226">					String stopOpacity = attrs.getValue(&quot;stop-opacity&quot;);</span>
+<span class="fc" id="L227">					final String style = attrs.getValue(&quot;style&quot;);</span>
+<span class="pc bpc" id="L228" title="3 of 4 branches missed.">					if (style != null &amp;&amp; style.isEmpty() == false) {</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">						if (stopColor == null)</span>
+<span class="nc" id="L230">							stopColor = getStyleValue(style, &quot;stop-color&quot;);</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">						if (stopOpacity == null)</span>
+<span class="nc" id="L232">							stopOpacity = getStyleValue(style, &quot;stop-opacity&quot;);</span>
 					}
-<span class="pc bpc" id="L235" title="2 of 4 branches missed.">					if (offset != null &amp;&amp; stopColor != null) {</span>
-<span class="fc" id="L236">						currentElement.stops.add(new GradientStop(offset, stopColor, stopOpacity));</span>
+<span class="pc bpc" id="L234" title="2 of 4 branches missed.">					if (offset != null &amp;&amp; stopColor != null) {</span>
+<span class="fc" id="L235">						currentElement.stops.add(new GradientStop(offset, stopColor, stopOpacity));</span>
 					}
 				}
 
 				// Store element as buffered XML
-<span class="fc" id="L241">				currentContent.append(&quot;&lt;&quot;).append(qName);</span>
-<span class="fc bfc" id="L242" title="All 2 branches covered.">				for (int i = 0; i &lt; attrs.getLength(); i++) {</span>
-<span class="fc" id="L243">					currentContent.append(&quot; &quot;).append(attrs.getQName(i)).append(&quot;=\&quot;&quot;)</span>
-<span class="fc" id="L244">							.append(escapeXml(attrs.getValue(i))).append(&quot;\&quot;&quot;);</span>
+<span class="fc" id="L240">				currentContent.append(&quot;&lt;&quot;).append(qName);</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">				for (int i = 0; i &lt; attrs.getLength(); i++) {</span>
+<span class="fc" id="L242">					currentContent.append(&quot; &quot;).append(attrs.getQName(i)).append(&quot;=\&quot;&quot;)</span>
+<span class="fc" id="L243">							.append(escapeXml(attrs.getValue(i))).append(&quot;\&quot;&quot;);</span>
 				}
-<span class="fc" id="L246">				currentContent.append(&quot;&gt;&quot;);</span>
+<span class="fc" id="L245">				currentContent.append(&quot;&gt;&quot;);</span>
 			}
-<span class="fc" id="L248">		}</span>
+<span class="fc" id="L247">		}</span>
 
 		@Override
 		public void endElement(String uri, String localName, String qName) {
-<span class="fc bfc" id="L252" title="All 2 branches covered.">			if (inDefs) {</span>
-<span class="fc" id="L253">				currentContent.append(&quot;&lt;/&quot;).append(qName).append(&quot;&gt;&quot;);</span>
+<span class="fc bfc" id="L251" title="All 2 branches covered.">			if (inDefs) {</span>
+<span class="fc" id="L252">				currentContent.append(&quot;&lt;/&quot;).append(qName).append(&quot;&gt;&quot;);</span>
 
-<span class="pc bpc" id="L255" title="1 of 6 branches missed.">				if (currentId != null &amp;&amp; currentTag != null &amp;&amp; currentTag.equals(qName)) {</span>
-<span class="pc bpc" id="L256" title="1 of 2 branches missed.">					if (currentElement != null) {</span>
-<span class="fc" id="L257">						final BufferedElement buffered = new BufferedElement(currentTag, currentContent.toString(),</span>
+<span class="pc bpc" id="L254" title="1 of 6 branches missed.">				if (currentId != null &amp;&amp; currentTag != null &amp;&amp; currentTag.equals(qName)) {</span>
+<span class="pc bpc" id="L255" title="1 of 2 branches missed.">					if (currentElement != null) {</span>
+<span class="fc" id="L256">						final BufferedElement buffered = new BufferedElement(currentTag, currentContent.toString(),</span>
 								currentAttrs);
-<span class="fc" id="L259">						buffered.stops.addAll(currentElement.stops);</span>
-<span class="fc" id="L260">						definitions.put(currentId, buffered);</span>
+<span class="fc" id="L258">						buffered.stops.addAll(currentElement.stops);</span>
+<span class="fc" id="L259">						definitions.put(currentId, buffered);</span>
 					}
-<span class="fc" id="L262">					currentId = null;</span>
-<span class="fc" id="L263">					currentTag = null;</span>
-<span class="fc" id="L264">					currentAttrs = null;</span>
-<span class="fc" id="L265">					currentElement = null;</span>
+<span class="fc" id="L261">					currentId = null;</span>
+<span class="fc" id="L262">					currentTag = null;</span>
+<span class="fc" id="L263">					currentAttrs = null;</span>
+<span class="fc" id="L264">					currentElement = null;</span>
 				}
 			}
 
-<span class="fc" id="L269">			depth--;</span>
-<span class="fc bfc" id="L270" title="All 6 branches covered.">			if ((&quot;defs&quot;.equals(qName) || &quot;symbol&quot;.equals(qName)) &amp;&amp; depth == 1) {</span>
-<span class="fc" id="L271">				inDefs = false;</span>
+<span class="fc" id="L268">			depth--;</span>
+<span class="fc bfc" id="L269" title="All 6 branches covered.">			if ((&quot;defs&quot;.equals(qName) || &quot;symbol&quot;.equals(qName)) &amp;&amp; depth == 1) {</span>
+<span class="fc" id="L270">				inDefs = false;</span>
 			}
-<span class="fc" id="L273">		}</span>
+<span class="fc" id="L272">		}</span>
 
 		@Override
 		public void characters(char[] ch, int start, int length) {
-<span class="pc bpc" id="L277" title="1 of 4 branches missed.">			if (inDefs &amp;&amp; currentContent != null) {</span>
-<span class="fc" id="L278">				currentContent.append(escapeXml(new String(ch, start, length)));</span>
+<span class="pc bpc" id="L276" title="1 of 4 branches missed.">			if (inDefs &amp;&amp; currentContent != null) {</span>
+<span class="fc" id="L277">				currentContent.append(escapeXml(new String(ch, start, length)));</span>
 			}
-<span class="fc" id="L280">		}</span>
+<span class="fc" id="L279">		}</span>
 
 		private String escapeXml(String text) {
-<span class="fc" id="L283">			return text.replace(&quot;&amp;&quot;, &quot;&amp;amp;&quot;).replace(&quot;&lt;&quot;, &quot;&amp;lt;&quot;).replace(&quot;&gt;&quot;, &quot;&amp;gt;&quot;).replace(&quot;\&quot;&quot;, &quot;&amp;quot;&quot;);</span>
+<span class="fc" id="L282">			return text.replace(&quot;&amp;&quot;, &quot;&amp;amp;&quot;).replace(&quot;&lt;&quot;, &quot;&amp;lt;&quot;).replace(&quot;&gt;&quot;, &quot;&amp;gt;&quot;).replace(&quot;\&quot;&quot;, &quot;&amp;quot;&quot;);</span>
 		}
 
 		private String getStyleValue(String style, String key) {
-<span class="nc" id="L287">			final String[] parts = style.split(&quot;;&quot;);</span>
-<span class="nc bnc" id="L288" title="All 2 branches missed.">			for (String part : parts) {</span>
-<span class="nc" id="L289">				final int idx = part.indexOf(':');</span>
-<span class="nc bnc" id="L290" title="All 2 branches missed.">				if (idx &lt;= 0)</span>
-<span class="nc" id="L291">					continue;</span>
+<span class="nc" id="L286">			final String[] parts = style.split(&quot;;&quot;);</span>
+<span class="nc bnc" id="L287" title="All 2 branches missed.">			for (String part : parts) {</span>
+<span class="nc" id="L288">				final int idx = part.indexOf(':');</span>
+<span class="nc bnc" id="L289" title="All 2 branches missed.">				if (idx &lt;= 0)</span>
+<span class="nc" id="L290">					continue;</span>
 
-<span class="nc" id="L293">				final String name = part.substring(0, idx).trim();</span>
-<span class="nc bnc" id="L294" title="All 2 branches missed.">				if (name.equalsIgnoreCase(key))</span>
-<span class="nc" id="L295">					return part.substring(idx + 1).trim();</span>
+<span class="nc" id="L292">				final String name = part.substring(0, idx).trim();</span>
+<span class="nc bnc" id="L293" title="All 2 branches missed.">				if (name.equalsIgnoreCase(key))</span>
+<span class="nc" id="L294">					return part.substring(idx + 1).trim();</span>
 			}
-<span class="nc" id="L297">			return null;</span>
+<span class="nc" id="L296">			return null;</span>
 		}
 	}
 
@@ -307,12 +306,12 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 		final Map&lt;String, String&gt; attributes;
 		final List&lt;GradientStop&gt; stops;
 
-<span class="fc" id="L310">		BufferedElement(String tagName, String xmlContent, Map&lt;String, String&gt; attributes) {</span>
-<span class="fc" id="L311">			this.tagName = tagName;</span>
-<span class="fc" id="L312">			this.xmlContent = xmlContent;</span>
-<span class="fc" id="L313">			this.attributes = attributes;</span>
-<span class="fc" id="L314">			this.stops = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L315">		}</span>
+<span class="fc" id="L309">		BufferedElement(String tagName, String xmlContent, Map&lt;String, String&gt; attributes) {</span>
+<span class="fc" id="L310">			this.tagName = tagName;</span>
+<span class="fc" id="L311">			this.xmlContent = xmlContent;</span>
+<span class="fc" id="L312">			this.attributes = attributes;</span>
+<span class="fc" id="L313">			this.stops = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L314">		}</span>
 	}
 
 	/**
@@ -323,11 +322,11 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 		final String color;
 		final String opacity;
 
-<span class="fc" id="L326">		GradientStop(String offset, String color, String opacity) {</span>
-<span class="fc" id="L327">			this.offset = offset;</span>
-<span class="fc" id="L328">			this.color = color;</span>
-<span class="fc" id="L329">			this.opacity = opacity;</span>
-<span class="fc" id="L330">		}</span>
+<span class="fc" id="L325">		GradientStop(String offset, String color, String opacity) {</span>
+<span class="fc" id="L326">			this.offset = offset;</span>
+<span class="fc" id="L327">			this.color = color;</span>
+<span class="fc" id="L328">			this.opacity = opacity;</span>
+<span class="fc" id="L329">		}</span>
 	}
 
 	/**
@@ -346,70 +345,70 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 		private UGraphicWithScale ugs;
 		private final ColorResolver colorResolver;
 		private final Map&lt;String, BufferedElement&gt; definitions;
-<span class="fc" id="L349">		private final Deque&lt;GroupState&gt; groupStack = new ArrayDeque&lt;&gt;();</span>
-<span class="fc" id="L350">		private final List&lt;UGraphicWithScale&gt; ugsStack = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L351">		private int defsDepth = 0;</span>
+<span class="fc" id="L348">		private final Deque&lt;GroupState&gt; groupStack = new ArrayDeque&lt;&gt;();</span>
+<span class="fc" id="L349">		private final List&lt;UGraphicWithScale&gt; ugsStack = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L350">		private int defsDepth = 0;</span>
 
-<span class="fc" id="L353">		private boolean inText = false;</span>
-<span class="fc" id="L354">		private StringBuilder textContent = new StringBuilder();</span>
-<span class="fc" id="L355">		private Attributes textAttrs = null;</span>
+<span class="fc" id="L352">		private boolean inText = false;</span>
+<span class="fc" id="L353">		private StringBuilder textContent = new StringBuilder();</span>
+<span class="fc" id="L354">		private Attributes textAttrs = null;</span>
 
-<span class="fc" id="L357">		RenderHandler(UGraphicWithScale ugs, ColorResolver colorResolver, Map&lt;String, BufferedElement&gt; definitions) {</span>
-<span class="fc" id="L358">			this.initialUgs = ugs;</span>
-<span class="fc" id="L359">			this.ugs = ugs;</span>
-<span class="fc" id="L360">			this.colorResolver = colorResolver;</span>
-<span class="fc" id="L361">			this.definitions = definitions;</span>
-<span class="fc" id="L362">		}</span>
+<span class="fc" id="L356">		RenderHandler(UGraphicWithScale ugs, ColorResolver colorResolver, Map&lt;String, BufferedElement&gt; definitions) {</span>
+<span class="fc" id="L357">			this.initialUgs = ugs;</span>
+<span class="fc" id="L358">			this.ugs = ugs;</span>
+<span class="fc" id="L359">			this.colorResolver = colorResolver;</span>
+<span class="fc" id="L360">			this.definitions = definitions;</span>
+<span class="fc" id="L361">		}</span>
 
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attrs) throws SAXException {
-<span class="fc bfc" id="L366" title="All 2 branches covered.">			if (&quot;defs&quot;.equals(qName)) {</span>
-<span class="fc" id="L367">				defsDepth++;</span>
-<span class="fc" id="L368">				return;</span>
+<span class="fc bfc" id="L365" title="All 2 branches covered.">			if (&quot;defs&quot;.equals(qName)) {</span>
+<span class="fc" id="L366">				defsDepth++;</span>
+<span class="fc" id="L367">				return;</span>
 			}
-<span class="fc bfc" id="L370" title="All 2 branches covered.">			if (defsDepth &gt; 0) {</span>
-<span class="fc" id="L371">				return;</span>
+<span class="fc bfc" id="L369" title="All 2 branches covered.">			if (defsDepth &gt; 0) {</span>
+<span class="fc" id="L370">				return;</span>
 			}
-<span class="fc" id="L373">			LOG.fine(&quot;Starting element: &quot; + qName + &quot; with &quot; + attrs.getLength() + &quot; attributes&quot;);</span>
-<span class="pc bpc" id="L374" title="2 of 15 branches missed.">			switch (qName) {</span>
+<span class="fc" id="L372">			LOG.fine(&quot;Starting element: &quot; + qName + &quot; with &quot; + attrs.getLength() + &quot; attributes&quot;);</span>
+<span class="pc bpc" id="L373" title="2 of 15 branches missed.">			switch (qName) {</span>
 			case &quot;svg&quot;:
 				// Root element, just continue
-<span class="fc" id="L377">				break;</span>
+<span class="fc" id="L376">				break;</span>
 			case &quot;g&quot;:
-<span class="fc" id="L379">				handleGroupStart(attrs);</span>
-<span class="fc" id="L380">				break;</span>
+<span class="fc" id="L378">				handleGroupStart(attrs);</span>
+<span class="fc" id="L379">				break;</span>
 			case &quot;rect&quot;:
-<span class="fc" id="L382">				handleRect(attrs);</span>
-<span class="fc" id="L383">				break;</span>
+<span class="fc" id="L381">				handleRect(attrs);</span>
+<span class="fc" id="L382">				break;</span>
 			case &quot;circle&quot;:
-<span class="fc" id="L385">				handleCircle(attrs);</span>
-<span class="fc" id="L386">				break;</span>
+<span class="fc" id="L384">				handleCircle(attrs);</span>
+<span class="fc" id="L385">				break;</span>
 			case &quot;ellipse&quot;:
-<span class="fc" id="L388">				handleEllipse(attrs);</span>
-<span class="fc" id="L389">				break;</span>
+<span class="fc" id="L387">				handleEllipse(attrs);</span>
+<span class="fc" id="L388">				break;</span>
 			case &quot;line&quot;:
-<span class="fc" id="L391">				handleLine(attrs);</span>
-<span class="fc" id="L392">				break;</span>
+<span class="fc" id="L390">				handleLine(attrs);</span>
+<span class="fc" id="L391">				break;</span>
 			case &quot;polyline&quot;:
-<span class="fc" id="L394">				handlePolyline(attrs);</span>
-<span class="fc" id="L395">				break;</span>
+<span class="fc" id="L393">				handlePolyline(attrs);</span>
+<span class="fc" id="L394">				break;</span>
 			case &quot;polygon&quot;:
-<span class="fc" id="L397">				handlePolygon(attrs);</span>
-<span class="fc" id="L398">				break;</span>
+<span class="fc" id="L396">				handlePolygon(attrs);</span>
+<span class="fc" id="L397">				break;</span>
 			case &quot;path&quot;:
-<span class="fc" id="L400">				handlePath(attrs);</span>
-<span class="fc" id="L401">				break;</span>
+<span class="fc" id="L399">				handlePath(attrs);</span>
+<span class="fc" id="L400">				break;</span>
 			case &quot;text&quot;:
-<span class="fc" id="L403">				inText = true;</span>
-<span class="fc" id="L404">				textContent = new StringBuilder();</span>
-<span class="fc" id="L405">				textAttrs = new AttributesAdapter(attrs);</span>
-<span class="fc" id="L406">				break;</span>
+<span class="fc" id="L402">				inText = true;</span>
+<span class="fc" id="L403">				textContent = new StringBuilder();</span>
+<span class="fc" id="L404">				textAttrs = new AttributesAdapter(attrs);</span>
+<span class="fc" id="L405">				break;</span>
 			case &quot;image&quot;:
-<span class="fc" id="L408">				handleImage(attrs);</span>
-<span class="fc" id="L409">				break;</span>
+<span class="fc" id="L407">				handleImage(attrs);</span>
+<span class="fc" id="L408">				break;</span>
 			case &quot;use&quot;:
-<span class="fc" id="L411">				handleUse(attrs);</span>
-<span class="fc" id="L412">				break;</span>
+<span class="fc" id="L410">				handleUse(attrs);</span>
+<span class="fc" id="L411">				break;</span>
 			case &quot;defs&quot;:
 			case &quot;symbol&quot;:
 			case &quot;title&quot;:
@@ -424,492 +423,492 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 				// Skip: CSS style blocks not supported (use inline attributes)
 				// Supporting CSS would require a full CSS parser for selectors,
 				// specificity, cascade, and inheritance rules
-<span class="fc" id="L427">				break;</span>
+<span class="fc" id="L426">				break;</span>
 			case &quot;script&quot;:
 				// Skip these elements
-<span class="nc" id="L430">				break;</span>
+<span class="nc" id="L429">				break;</span>
 			default:
 				// Unknown element, skip
 				break;
 			}
-<span class="fc" id="L435">		}</span>
+<span class="fc" id="L434">		}</span>
 
 		@Override
 		public void endElement(String uri, String localName, String qName) {
-<span class="pc bpc" id="L439" title="1 of 4 branches missed.">			if (&quot;defs&quot;.equals(qName) &amp;&amp; defsDepth &gt; 0) {</span>
-<span class="fc" id="L440">				defsDepth--;</span>
-<span class="fc" id="L441">				return;</span>
+<span class="pc bpc" id="L438" title="1 of 4 branches missed.">			if (&quot;defs&quot;.equals(qName) &amp;&amp; defsDepth &gt; 0) {</span>
+<span class="fc" id="L439">				defsDepth--;</span>
+<span class="fc" id="L440">				return;</span>
 			}
-<span class="fc bfc" id="L443" title="All 2 branches covered.">			if (defsDepth &gt; 0) {</span>
-<span class="fc" id="L444">				return;</span>
+<span class="fc bfc" id="L442" title="All 2 branches covered.">			if (defsDepth &gt; 0) {</span>
+<span class="fc" id="L443">				return;</span>
 			}
-<span class="fc" id="L446">			LOG.fine(&quot;Ending element: &quot; + qName);</span>
-<span class="fc bfc" id="L447" title="All 2 branches covered.">			if (&quot;g&quot;.equals(qName)) {</span>
-<span class="fc" id="L448">				handleGroupEnd();</span>
-<span class="pc bpc" id="L449" title="1 of 4 branches missed.">			} else if (&quot;text&quot;.equals(qName) &amp;&amp; inText) {</span>
-<span class="fc" id="L450">				handleText(textAttrs, textContent.toString());</span>
-<span class="fc" id="L451">				inText = false;</span>
-<span class="fc" id="L452">				textContent = new StringBuilder();</span>
-<span class="fc" id="L453">				textAttrs = null;</span>
+<span class="fc" id="L445">			LOG.fine(&quot;Ending element: &quot; + qName);</span>
+<span class="fc bfc" id="L446" title="All 2 branches covered.">			if (&quot;g&quot;.equals(qName)) {</span>
+<span class="fc" id="L447">				handleGroupEnd();</span>
+<span class="pc bpc" id="L448" title="1 of 4 branches missed.">			} else if (&quot;text&quot;.equals(qName) &amp;&amp; inText) {</span>
+<span class="fc" id="L449">				handleText(textAttrs, textContent.toString());</span>
+<span class="fc" id="L450">				inText = false;</span>
+<span class="fc" id="L451">				textContent = new StringBuilder();</span>
+<span class="fc" id="L452">				textAttrs = null;</span>
 			}
-<span class="fc" id="L455">		}</span>
+<span class="fc" id="L454">		}</span>
 
 		@Override
 		public void characters(char[] ch, int start, int length) {
-<span class="fc bfc" id="L459" title="All 2 branches covered.">			if (inText) {</span>
-<span class="fc" id="L460">				textContent.append(ch, start, length);</span>
+<span class="fc bfc" id="L458" title="All 2 branches covered.">			if (inText) {</span>
+<span class="fc" id="L459">				textContent.append(ch, start, length);</span>
 			}
-<span class="fc" id="L462">		}</span>
+<span class="fc" id="L461">		}</span>
 
 		// ---- Group Handling ----
 
 		private void handleGroupStart(Attributes attrs) {
-<span class="fc" id="L467">			GroupState gs = new GroupState(attrs);</span>
-<span class="fc" id="L468">			groupStack.addFirst(gs);</span>
-<span class="fc" id="L469">			ugsStack.add(0, ugs);</span>
+<span class="fc" id="L466">			GroupState gs = new GroupState(attrs);</span>
+<span class="fc" id="L467">			groupStack.addFirst(gs);</span>
+<span class="fc" id="L468">			ugsStack.add(0, ugs);</span>
 
-<span class="pc bpc" id="L471" title="1 of 4 branches missed.">			if (gs.transform != null &amp;&amp; !gs.transform.isEmpty()) {</span>
-<span class="fc" id="L472">				ugs = applyTransform(ugs, gs.transform);</span>
+<span class="pc bpc" id="L470" title="1 of 4 branches missed.">			if (gs.transform != null &amp;&amp; !gs.transform.isEmpty()) {</span>
+<span class="fc" id="L471">				ugs = applyTransform(ugs, gs.transform);</span>
 			}
-<span class="fc" id="L474">		}</span>
+<span class="fc" id="L473">		}</span>
 
 		private void handleGroupEnd() {
-<span class="pc bpc" id="L477" title="1 of 2 branches missed.">			if (!groupStack.isEmpty()) {</span>
-<span class="fc" id="L478">				groupStack.removeFirst();</span>
+<span class="pc bpc" id="L476" title="1 of 2 branches missed.">			if (!groupStack.isEmpty()) {</span>
+<span class="fc" id="L477">				groupStack.removeFirst();</span>
 			}
-<span class="pc bpc" id="L480" title="1 of 2 branches missed.">			if (!ugsStack.isEmpty()) {</span>
-<span class="fc" id="L481">				ugs = ugsStack.remove(0);</span>
+<span class="pc bpc" id="L479" title="1 of 2 branches missed.">			if (!ugsStack.isEmpty()) {</span>
+<span class="fc" id="L480">				ugs = ugsStack.remove(0);</span>
 			}
-<span class="fc" id="L483">		}</span>
+<span class="fc" id="L482">		}</span>
 
 		// ---- Shape Handlers ----
 
 		private void handleRect(Attributes attrs) {
-<span class="fc" id="L488">			UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);</span>
+<span class="fc" id="L487">			UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);</span>
 
-<span class="fc" id="L490">			double x = getDoubleAttr(attrs, &quot;x&quot;, 0);</span>
-<span class="fc" id="L491">			double y = getDoubleAttr(attrs, &quot;y&quot;, 0);</span>
-<span class="fc" id="L492">			double width = getDoubleAttr(attrs, &quot;width&quot;, 0);</span>
-<span class="fc" id="L493">			double height = getDoubleAttr(attrs, &quot;height&quot;, 0);</span>
+<span class="fc" id="L489">			double x = getDoubleAttr(attrs, &quot;x&quot;, 0);</span>
+<span class="fc" id="L490">			double y = getDoubleAttr(attrs, &quot;y&quot;, 0);</span>
+<span class="fc" id="L491">			double width = getDoubleAttr(attrs, &quot;width&quot;, 0);</span>
+<span class="fc" id="L492">			double height = getDoubleAttr(attrs, &quot;height&quot;, 0);</span>
 
-<span class="fc" id="L495">			net.sourceforge.plantuml.klimt.UPath path = net.sourceforge.plantuml.klimt.UPath.none();</span>
-<span class="fc" id="L496">			path.moveTo(x, y);</span>
-<span class="fc" id="L497">			path.lineTo(x + width, y);</span>
-<span class="fc" id="L498">			path.lineTo(x + width, y + height);</span>
-<span class="fc" id="L499">			path.lineTo(x, y + height);</span>
-<span class="fc" id="L500">			path.lineTo(x, y);</span>
+<span class="fc" id="L494">			net.sourceforge.plantuml.klimt.UPath path = net.sourceforge.plantuml.klimt.UPath.none();</span>
+<span class="fc" id="L495">			path.moveTo(x, y);</span>
+<span class="fc" id="L496">			path.lineTo(x + width, y);</span>
+<span class="fc" id="L497">			path.lineTo(x + width, y + height);</span>
+<span class="fc" id="L498">			path.lineTo(x, y + height);</span>
+<span class="fc" id="L499">			path.lineTo(x, y);</span>
 
-<span class="fc" id="L502">			path = path.affine(elementUgs.getAffineTransform(), elementUgs.getAngle(), elementUgs.getInitialScale());</span>
-<span class="fc" id="L503">			elementUgs.draw(path);</span>
-<span class="fc" id="L504">		}</span>
+<span class="fc" id="L501">			path = path.affine(elementUgs.getAffineTransform(), elementUgs.getAngle(), elementUgs.getInitialScale());</span>
+<span class="fc" id="L502">			elementUgs.draw(path);</span>
+<span class="fc" id="L503">		}</span>
 
 		private void handleCircle(Attributes attrs) {
-<span class="fc" id="L507">			UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);</span>
+<span class="fc" id="L506">			UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);</span>
 
-<span class="fc" id="L509">			double cx = getDoubleAttr(attrs, &quot;cx&quot;, 0);</span>
-<span class="fc" id="L510">			double cy = getDoubleAttr(attrs, &quot;cy&quot;, 0);</span>
-<span class="fc" id="L511">			double r = getDoubleAttr(attrs, &quot;r&quot;, 0);</span>
+<span class="fc" id="L508">			double cx = getDoubleAttr(attrs, &quot;cx&quot;, 0);</span>
+<span class="fc" id="L509">			double cy = getDoubleAttr(attrs, &quot;cy&quot;, 0);</span>
+<span class="fc" id="L510">			double r = getDoubleAttr(attrs, &quot;r&quot;, 0);</span>
 
-<span class="fc" id="L513">			net.sourceforge.plantuml.klimt.UPath path = buildEllipsePath(cx, cy, r, r);</span>
-<span class="fc" id="L514">			path = path.affine(elementUgs.getAffineTransform(), elementUgs.getAngle(), elementUgs.getInitialScale());</span>
-<span class="fc" id="L515">			elementUgs.draw(path);</span>
-<span class="fc" id="L516">		}</span>
+<span class="fc" id="L512">			net.sourceforge.plantuml.klimt.UPath path = buildEllipsePath(cx, cy, r, r);</span>
+<span class="fc" id="L513">			path = path.affine(elementUgs.getAffineTransform(), elementUgs.getAngle(), elementUgs.getInitialScale());</span>
+<span class="fc" id="L514">			elementUgs.draw(path);</span>
+<span class="fc" id="L515">		}</span>
 
 		private void handleEllipse(Attributes attrs) {
-<span class="fc" id="L519">			UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);</span>
+<span class="fc" id="L518">			UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);</span>
 
-<span class="fc" id="L521">			double cx = getDoubleAttr(attrs, &quot;cx&quot;, 0);</span>
-<span class="fc" id="L522">			double cy = getDoubleAttr(attrs, &quot;cy&quot;, 0);</span>
-<span class="fc" id="L523">			double rx = getDoubleAttr(attrs, &quot;rx&quot;, 0);</span>
-<span class="fc" id="L524">			double ry = getDoubleAttr(attrs, &quot;ry&quot;, 0);</span>
+<span class="fc" id="L520">			double cx = getDoubleAttr(attrs, &quot;cx&quot;, 0);</span>
+<span class="fc" id="L521">			double cy = getDoubleAttr(attrs, &quot;cy&quot;, 0);</span>
+<span class="fc" id="L522">			double rx = getDoubleAttr(attrs, &quot;rx&quot;, 0);</span>
+<span class="fc" id="L523">			double ry = getDoubleAttr(attrs, &quot;ry&quot;, 0);</span>
 
-<span class="fc" id="L526">			net.sourceforge.plantuml.klimt.UPath path = buildEllipsePath(cx, cy, rx, ry);</span>
-<span class="fc" id="L527">			path = path.affine(elementUgs.getAffineTransform(), elementUgs.getAngle(), elementUgs.getInitialScale());</span>
-<span class="fc" id="L528">			elementUgs.draw(path);</span>
-<span class="fc" id="L529">		}</span>
+<span class="fc" id="L525">			net.sourceforge.plantuml.klimt.UPath path = buildEllipsePath(cx, cy, rx, ry);</span>
+<span class="fc" id="L526">			path = path.affine(elementUgs.getAffineTransform(), elementUgs.getAngle(), elementUgs.getInitialScale());</span>
+<span class="fc" id="L527">			elementUgs.draw(path);</span>
+<span class="fc" id="L528">		}</span>
 
 		private void handleLine(Attributes attrs) {
-<span class="fc" id="L532">			UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);</span>
+<span class="fc" id="L531">			UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);</span>
 
-<span class="fc" id="L534">			double x1 = getDoubleAttr(attrs, &quot;x1&quot;, 0);</span>
-<span class="fc" id="L535">			double y1 = getDoubleAttr(attrs, &quot;y1&quot;, 0);</span>
-<span class="fc" id="L536">			double x2 = getDoubleAttr(attrs, &quot;x2&quot;, 0);</span>
-<span class="fc" id="L537">			double y2 = getDoubleAttr(attrs, &quot;y2&quot;, 0);</span>
+<span class="fc" id="L533">			double x1 = getDoubleAttr(attrs, &quot;x1&quot;, 0);</span>
+<span class="fc" id="L534">			double y1 = getDoubleAttr(attrs, &quot;y1&quot;, 0);</span>
+<span class="fc" id="L535">			double x2 = getDoubleAttr(attrs, &quot;x2&quot;, 0);</span>
+<span class="fc" id="L536">			double y2 = getDoubleAttr(attrs, &quot;y2&quot;, 0);</span>
 
-<span class="fc" id="L539">			net.sourceforge.plantuml.klimt.UPath path = net.sourceforge.plantuml.klimt.UPath.none();</span>
-<span class="fc" id="L540">			path.moveTo(x1, y1);</span>
-<span class="fc" id="L541">			path.lineTo(x2, y2);</span>
+<span class="fc" id="L538">			net.sourceforge.plantuml.klimt.UPath path = net.sourceforge.plantuml.klimt.UPath.none();</span>
+<span class="fc" id="L539">			path.moveTo(x1, y1);</span>
+<span class="fc" id="L540">			path.lineTo(x2, y2);</span>
 
-<span class="fc" id="L543">			path = path.affine(elementUgs.getAffineTransform(), elementUgs.getAngle(), elementUgs.getInitialScale());</span>
-<span class="fc" id="L544">			elementUgs.draw(path);</span>
-<span class="fc" id="L545">		}</span>
+<span class="fc" id="L542">			path = path.affine(elementUgs.getAffineTransform(), elementUgs.getAngle(), elementUgs.getInitialScale());</span>
+<span class="fc" id="L543">			elementUgs.draw(path);</span>
+<span class="fc" id="L544">		}</span>
 
 		private void handlePolyline(Attributes attrs) {
-<span class="fc" id="L548">			handlePolyShape(attrs, false);</span>
-<span class="fc" id="L549">		}</span>
+<span class="fc" id="L547">			handlePolyShape(attrs, false);</span>
+<span class="fc" id="L548">		}</span>
 
 		private void handlePolygon(Attributes attrs) {
-<span class="fc" id="L552">			handlePolyShape(attrs, true);</span>
-<span class="fc" id="L553">		}</span>
+<span class="fc" id="L551">			handlePolyShape(attrs, true);</span>
+<span class="fc" id="L552">		}</span>
 
 		private void handlePolyShape(Attributes attrs, boolean closed) {
-<span class="fc" id="L556">			final UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);</span>
+<span class="fc" id="L555">			final UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);</span>
 
-<span class="fc" id="L558">			String pointsStr = attrs.getValue(&quot;points&quot;);</span>
-<span class="pc bpc" id="L559" title="2 of 4 branches missed.">			if (pointsStr == null || pointsStr.isEmpty()) {</span>
-<span class="nc" id="L560">				return;</span>
+<span class="fc" id="L557">			String pointsStr = attrs.getValue(&quot;points&quot;);</span>
+<span class="pc bpc" id="L558" title="2 of 4 branches missed.">			if (pointsStr == null || pointsStr.isEmpty()) {</span>
+<span class="nc" id="L559">				return;</span>
 			}
 
 			// Per SVG 1.1 §9.7.1, whitespace alone is a valid separator between coordinates.
 			// All of these are equivalent: &quot;x,y x,y&quot; / &quot;x y x y&quot; / &quot;x,y,x,y&quot; / mixed.
 			// Extract all numeric tokens in order and pair them as (x, y).
-<span class="fc" id="L566">			final Matcher numMatcher = P_POINTS_NUMBER.matcher(pointsStr);</span>
-<span class="fc" id="L567">			final List&lt;Double&gt; nums = new ArrayList&lt;Double&gt;();</span>
-<span class="fc bfc" id="L568" title="All 2 branches covered.">			while (numMatcher.find()) {</span>
+<span class="fc" id="L565">			final Matcher numMatcher = P_POINTS_NUMBER.matcher(pointsStr);</span>
+<span class="fc" id="L566">			final List&lt;Double&gt; nums = new ArrayList&lt;Double&gt;();</span>
+<span class="fc bfc" id="L567" title="All 2 branches covered.">			while (numMatcher.find()) {</span>
 				try {
-<span class="fc" id="L570">					nums.add(Double.parseDouble(numMatcher.group()));</span>
-<span class="nc" id="L571">				} catch (NumberFormatException e) {</span>
+<span class="fc" id="L569">					nums.add(Double.parseDouble(numMatcher.group()));</span>
+<span class="nc" id="L570">				} catch (NumberFormatException e) {</span>
 					// skip malformed token
-<span class="pc" id="L573">				}</span>
+<span class="pc" id="L572">				}</span>
 			}
 
-<span class="fc" id="L576">			net.sourceforge.plantuml.klimt.UPath path = new net.sourceforge.plantuml.klimt.UPath(</span>
-<span class="fc bfc" id="L577" title="All 2 branches covered.">					closed ? &quot;polygon&quot; : &quot;polyline&quot;, null);</span>
+<span class="fc" id="L575">			net.sourceforge.plantuml.klimt.UPath path = new net.sourceforge.plantuml.klimt.UPath(</span>
+<span class="fc bfc" id="L576" title="All 2 branches covered.">					closed ? &quot;polygon&quot; : &quot;polyline&quot;, null);</span>
 
-<span class="fc" id="L579">			boolean first = true;</span>
-<span class="fc" id="L580">			double firstX = 0;</span>
-<span class="fc" id="L581">			double firstY = 0;</span>
-<span class="fc bfc" id="L582" title="All 2 branches covered.">			for (int i = 0; i + 1 &lt; nums.size(); i += 2) {</span>
-<span class="fc" id="L583">				final double x = nums.get(i);</span>
-<span class="fc" id="L584">				final double y = nums.get(i + 1);</span>
-<span class="fc bfc" id="L585" title="All 2 branches covered.">				if (first) {</span>
-<span class="fc" id="L586">					path.moveTo(x, y);</span>
-<span class="fc" id="L587">					firstX = x;</span>
-<span class="fc" id="L588">					firstY = y;</span>
-<span class="fc" id="L589">					first = false;</span>
+<span class="fc" id="L578">			boolean first = true;</span>
+<span class="fc" id="L579">			double firstX = 0;</span>
+<span class="fc" id="L580">			double firstY = 0;</span>
+<span class="fc bfc" id="L581" title="All 2 branches covered.">			for (int i = 0; i + 1 &lt; nums.size(); i += 2) {</span>
+<span class="fc" id="L582">				final double x = nums.get(i);</span>
+<span class="fc" id="L583">				final double y = nums.get(i + 1);</span>
+<span class="fc bfc" id="L584" title="All 2 branches covered.">				if (first) {</span>
+<span class="fc" id="L585">					path.moveTo(x, y);</span>
+<span class="fc" id="L586">					firstX = x;</span>
+<span class="fc" id="L587">					firstY = y;</span>
+<span class="fc" id="L588">					first = false;</span>
 				} else {
-<span class="fc" id="L591">					path.lineTo(x, y);</span>
+<span class="fc" id="L590">					path.lineTo(x, y);</span>
 				}
 			}
 
-<span class="fc bfc" id="L595" title="All 2 branches covered.">			if (closed) {</span>
+<span class="fc bfc" id="L594" title="All 2 branches covered.">			if (closed) {</span>
 				// NOTE: Keep polygons open to avoid SEG_CLOSE dependency in klimt.
 				// path.closePath();
-<span class="pc bpc" id="L598" title="1 of 2 branches missed.">				if (first == false)</span>
-<span class="fc" id="L599">					path.lineTo(firstX, firstY);</span>
+<span class="pc bpc" id="L597" title="1 of 2 branches missed.">				if (first == false)</span>
+<span class="fc" id="L598">					path.lineTo(firstX, firstY);</span>
 			}
 
-<span class="fc" id="L602">			path = path.affine(elementUgs.getAffineTransform(), elementUgs.getAngle(), elementUgs.getInitialScale());</span>
-<span class="fc" id="L603">			elementUgs.draw(path);</span>
-<span class="fc" id="L604">		}</span>
+<span class="fc" id="L601">			path = path.affine(elementUgs.getAffineTransform(), elementUgs.getAngle(), elementUgs.getInitialScale());</span>
+<span class="fc" id="L602">			elementUgs.draw(path);</span>
+<span class="fc" id="L603">		}</span>
 
 		private net.sourceforge.plantuml.klimt.UPath buildEllipsePath(double cx, double cy, double rx, double ry) {
-<span class="fc" id="L607">			net.sourceforge.plantuml.klimt.UPath path = net.sourceforge.plantuml.klimt.UPath.none();</span>
-<span class="fc" id="L608">			path.moveTo(0, ry);</span>
-<span class="fc" id="L609">			path.arcTo(rx, ry, 0, 0, 1, rx, 0);</span>
-<span class="fc" id="L610">			path.arcTo(rx, ry, 0, 0, 1, 2 * rx, ry);</span>
-<span class="fc" id="L611">			path.arcTo(rx, ry, 0, 0, 1, rx, 2 * ry);</span>
-<span class="fc" id="L612">			path.arcTo(rx, ry, 0, 0, 1, 0, ry);</span>
-<span class="fc" id="L613">			path.lineTo(0, ry);</span>
+<span class="fc" id="L606">			net.sourceforge.plantuml.klimt.UPath path = net.sourceforge.plantuml.klimt.UPath.none();</span>
+<span class="fc" id="L607">			path.moveTo(0, ry);</span>
+<span class="fc" id="L608">			path.arcTo(rx, ry, 0, 0, 1, rx, 0);</span>
+<span class="fc" id="L609">			path.arcTo(rx, ry, 0, 0, 1, 2 * rx, ry);</span>
+<span class="fc" id="L610">			path.arcTo(rx, ry, 0, 0, 1, rx, 2 * ry);</span>
+<span class="fc" id="L611">			path.arcTo(rx, ry, 0, 0, 1, 0, ry);</span>
+<span class="fc" id="L612">			path.lineTo(0, ry);</span>
 
-<span class="fc" id="L615">			return path.translate(cx - rx, cy - ry);</span>
+<span class="fc" id="L614">			return path.translate(cx - rx, cy - ry);</span>
 		}
 
 		private void handlePath(Attributes attrs) {
-<span class="fc" id="L619">			final UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);</span>
+<span class="fc" id="L618">			final UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);</span>
 
-<span class="fc" id="L621">			String pathData = attrs.getValue(&quot;d&quot;);</span>
-<span class="pc bpc" id="L622" title="2 of 4 branches missed.">			if (pathData != null &amp;&amp; !pathData.isEmpty()) {</span>
-<span class="fc" id="L623">				SvgPath svgPath = new SvgPath(pathData, UTranslate.none());</span>
-<span class="fc" id="L624">				svgPath.drawMe(elementUgs.getUg(), elementUgs.getAffineTransform());</span>
+<span class="fc" id="L620">			String pathData = attrs.getValue(&quot;d&quot;);</span>
+<span class="pc bpc" id="L621" title="2 of 4 branches missed.">			if (pathData != null &amp;&amp; !pathData.isEmpty()) {</span>
+<span class="fc" id="L622">				SvgPath svgPath = new SvgPath(pathData, UTranslate.none());</span>
+<span class="fc" id="L623">				svgPath.drawMe(elementUgs.getUg(), elementUgs.getAffineTransform());</span>
 			}
-<span class="fc" id="L626">		}</span>
+<span class="fc" id="L625">		}</span>
 
 		private void handleText(Attributes attrs, String content) {
-<span class="fc" id="L629">			final UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);</span>
-<span class="fc" id="L630">			String fontFamily = getAttrOrStyle(attrs, &quot;font-family&quot;, &quot;font-family&quot;);</span>
-<span class="fc" id="L631">			String fontSize = getAttrOrStyle(attrs, &quot;font-size&quot;, &quot;font-size&quot;);</span>
-<span class="fc" id="L632">			String fontWeight = getAttrOrStyle(attrs, &quot;font-weight&quot;, &quot;font-weight&quot;);</span>
-<span class="fc" id="L633">			String fontStyle = getAttrOrStyle(attrs, &quot;font-style&quot;, &quot;font-style&quot;);</span>
-<span class="fc" id="L634">			String textDecoration = getAttrOrStyle(attrs, &quot;text-decoration&quot;, &quot;text-decoration&quot;);</span>
-<span class="fc" id="L635">			String fillString = getAttrOrStyle(attrs, &quot;fill&quot;, &quot;fill&quot;);</span>
-<span class="fc" id="L636">			String textAnchor = attrs.getValue(&quot;text-anchor&quot;);</span>
-<span class="fc" id="L637">			String xLocation = attrs.getValue(&quot;x&quot;);</span>
-<span class="fc" id="L638">			String yLocation = attrs.getValue(&quot;y&quot;);</span>
+<span class="fc" id="L628">			final UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);</span>
+<span class="fc" id="L629">			String fontFamily = getAttrOrStyle(attrs, &quot;font-family&quot;, &quot;font-family&quot;);</span>
+<span class="fc" id="L630">			String fontSize = getAttrOrStyle(attrs, &quot;font-size&quot;, &quot;font-size&quot;);</span>
+<span class="fc" id="L631">			String fontWeight = getAttrOrStyle(attrs, &quot;font-weight&quot;, &quot;font-weight&quot;);</span>
+<span class="fc" id="L632">			String fontStyle = getAttrOrStyle(attrs, &quot;font-style&quot;, &quot;font-style&quot;);</span>
+<span class="fc" id="L633">			String textDecoration = getAttrOrStyle(attrs, &quot;text-decoration&quot;, &quot;text-decoration&quot;);</span>
+<span class="fc" id="L634">			String fillString = getAttrOrStyle(attrs, &quot;fill&quot;, &quot;fill&quot;);</span>
+<span class="fc" id="L635">			String textAnchor = attrs.getValue(&quot;text-anchor&quot;);</span>
+<span class="fc" id="L636">			String xLocation = attrs.getValue(&quot;x&quot;);</span>
+<span class="fc" id="L637">			String yLocation = attrs.getValue(&quot;y&quot;);</span>
 
-<span class="fc" id="L640">			String textContent = content.trim();</span>
-<span class="fc" id="L641">			int fontSizeValue = parseFontSize(fontSize, 12);</span>
-<span class="fc" id="L642">			UFontFace face = parseFontFace(fontWeight, fontStyle);</span>
+<span class="fc" id="L639">			String textContent = content.trim();</span>
+<span class="fc" id="L640">			int fontSizeValue = parseFontSize(fontSize, 12);</span>
+<span class="fc" id="L641">			UFontFace face = parseFontFace(fontWeight, fontStyle);</span>
 
 			// Use default font family if not specified
-<span class="pc bpc" id="L645" title="1 of 4 branches missed.">			if (fontFamily == null || fontFamily.isEmpty()) {</span>
-<span class="fc" id="L646">				fontFamily = &quot;SansSerif&quot;;</span>
+<span class="pc bpc" id="L644" title="1 of 4 branches missed.">			if (fontFamily == null || fontFamily.isEmpty()) {</span>
+<span class="fc" id="L645">				fontFamily = &quot;SansSerif&quot;;</span>
 			}
 
-<span class="fc" id="L649">			UFont font = UFontFactory.build(fontFamily, face, fontSizeValue);</span>
+<span class="fc" id="L648">			UFont font = UFontFactory.build(fontFamily, face, fontSizeValue);</span>
 
-<span class="fc" id="L651">			HColor textColor = elementUgs.getDefaultColor();</span>
-<span class="pc bpc" id="L652" title="3 of 6 branches missed.">			if (fillString != null &amp;&amp; !fillString.isEmpty() &amp;&amp; !&quot;none&quot;.equals(fillString)) {</span>
-<span class="fc" id="L653">				HColor fc = elementUgs.getTrueColor(fillString);</span>
-<span class="pc bpc" id="L654" title="1 of 2 branches missed.">				if (fc != null) {</span>
-<span class="fc" id="L655">					textColor = fc;</span>
+<span class="fc" id="L650">			HColor textColor = elementUgs.getDefaultColor();</span>
+<span class="pc bpc" id="L651" title="3 of 6 branches missed.">			if (fillString != null &amp;&amp; !fillString.isEmpty() &amp;&amp; !&quot;none&quot;.equals(fillString)) {</span>
+<span class="fc" id="L652">				HColor fc = elementUgs.getTrueColor(fillString);</span>
+<span class="pc bpc" id="L653" title="1 of 2 branches missed.">				if (fc != null) {</span>
+<span class="fc" id="L654">					textColor = fc;</span>
 				}
 			}
 
-<span class="fc" id="L659">			FontConfiguration fontConfig = FontConfiguration.create(font, textColor, textColor, UStroke.simple(), 8);</span>
-<span class="fc" id="L660">			fontConfig = applyTextDecoration(fontConfig, textDecoration);</span>
+<span class="fc" id="L658">			FontConfiguration fontConfig = FontConfiguration.create(font, textColor, textColor, UStroke.simple(), 8);</span>
+<span class="fc" id="L659">			fontConfig = applyTextDecoration(fontConfig, textDecoration);</span>
 
-<span class="fc" id="L662">			UText utext = UText.build(textContent, fontConfig);</span>
+<span class="fc" id="L661">			UText utext = UText.build(textContent, fontConfig);</span>
 
-<span class="pc bpc" id="L664" title="2 of 4 branches missed.">			double x = xLocation != null &amp;&amp; !xLocation.isEmpty() ? Double.parseDouble(xLocation) : 0;</span>
-<span class="pc bpc" id="L665" title="2 of 4 branches missed.">			double y = yLocation != null &amp;&amp; !yLocation.isEmpty() ? Double.parseDouble(yLocation) : 0;</span>
-<span class="fc" id="L666">			double anchorShift = 0;</span>
-<span class="pc bpc" id="L667" title="1 of 4 branches missed.">			if (textAnchor != null &amp;&amp; textAnchor.isEmpty() == false) {</span>
-<span class="fc" id="L668">				double textWidth = utext.calculateDimension(elementUgs.getUg().getStringBounder()).getWidth();</span>
-<span class="fc bfc" id="L669" title="All 2 branches covered.">				if (&quot;middle&quot;.equalsIgnoreCase(textAnchor)) {</span>
-<span class="fc" id="L670">					anchorShift = -textWidth / 2.0;</span>
-<span class="fc bfc" id="L671" title="All 2 branches covered.">				} else if (&quot;end&quot;.equalsIgnoreCase(textAnchor)) {</span>
-<span class="fc" id="L672">					anchorShift = -textWidth;</span>
+<span class="pc bpc" id="L663" title="2 of 4 branches missed.">			double x = xLocation != null &amp;&amp; !xLocation.isEmpty() ? Double.parseDouble(xLocation) : 0;</span>
+<span class="pc bpc" id="L664" title="2 of 4 branches missed.">			double y = yLocation != null &amp;&amp; !yLocation.isEmpty() ? Double.parseDouble(yLocation) : 0;</span>
+<span class="fc" id="L665">			double anchorShift = 0;</span>
+<span class="pc bpc" id="L666" title="1 of 4 branches missed.">			if (textAnchor != null &amp;&amp; textAnchor.isEmpty() == false) {</span>
+<span class="fc" id="L667">				double textWidth = utext.calculateDimension(elementUgs.getUg().getStringBounder()).getWidth();</span>
+<span class="fc bfc" id="L668" title="All 2 branches covered.">				if (&quot;middle&quot;.equalsIgnoreCase(textAnchor)) {</span>
+<span class="fc" id="L669">					anchorShift = -textWidth / 2.0;</span>
+<span class="fc bfc" id="L670" title="All 2 branches covered.">				} else if (&quot;end&quot;.equalsIgnoreCase(textAnchor)) {</span>
+<span class="fc" id="L671">					anchorShift = -textWidth;</span>
 				}
 			}
 
-<span class="fc" id="L676">			UTranslate textTranslate = new UTranslate(x + anchorShift, y);</span>
-<span class="fc" id="L677">			elementUgs.apply(textTranslate).draw(utext);</span>
-<span class="fc" id="L678">		}</span>
+<span class="fc" id="L675">			UTranslate textTranslate = new UTranslate(x + anchorShift, y);</span>
+<span class="fc" id="L676">			elementUgs.apply(textTranslate).draw(utext);</span>
+<span class="fc" id="L677">		}</span>
 
 		private void handleImage(Attributes attrs) {
-<span class="fc" id="L681">			final String href = getHref(attrs);</span>
-<span class="pc bpc" id="L682" title="2 of 4 branches missed.">			if (href == null || href.isEmpty())</span>
-<span class="nc" id="L683">				return;</span>
+<span class="fc" id="L680">			final String href = getHref(attrs);</span>
+<span class="pc bpc" id="L681" title="2 of 4 branches missed.">			if (href == null || href.isEmpty())</span>
+<span class="nc" id="L682">				return;</span>
 
-<span class="fc" id="L685">			final DataImage dataImage = decodeDataImage(href);</span>
-<span class="pc bpc" id="L686" title="1 of 2 branches missed.">			if (dataImage == null)</span>
-<span class="nc" id="L687">				return;</span>
+<span class="fc" id="L684">			final DataImage dataImage = decodeDataImage(href);</span>
+<span class="pc bpc" id="L685" title="1 of 2 branches missed.">			if (dataImage == null)</span>
+<span class="nc" id="L686">				return;</span>
 
-<span class="fc" id="L689">			final PortableImage image = dataImage.image;</span>
-<span class="pc bpc" id="L690" title="1 of 2 branches missed.">			if (image == null)</span>
-<span class="nc" id="L691">				return;</span>
+<span class="fc" id="L688">			final PortableImage image = dataImage.image;</span>
+<span class="pc bpc" id="L689" title="1 of 2 branches missed.">			if (image == null)</span>
+<span class="nc" id="L690">				return;</span>
 
-<span class="fc" id="L693">			final UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);</span>
-<span class="fc" id="L694">			final double x = getDoubleAttr(attrs, &quot;x&quot;, 0);</span>
-<span class="fc" id="L695">			final double y = getDoubleAttr(attrs, &quot;y&quot;, 0);</span>
+<span class="fc" id="L692">			final UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);</span>
+<span class="fc" id="L693">			final double x = getDoubleAttr(attrs, &quot;x&quot;, 0);</span>
+<span class="fc" id="L694">			final double y = getDoubleAttr(attrs, &quot;y&quot;, 0);</span>
 
-<span class="fc" id="L697">			final String widthAttr = attrs.getValue(&quot;width&quot;);</span>
-<span class="fc" id="L698">			final String heightAttr = attrs.getValue(&quot;height&quot;);</span>
-<span class="fc" id="L699">			final double width = getDoubleAttr(attrs, &quot;width&quot;, image.getWidth());</span>
-<span class="fc" id="L700">			final double height = getDoubleAttr(attrs, &quot;height&quot;, image.getHeight());</span>
+<span class="fc" id="L696">			final String widthAttr = attrs.getValue(&quot;width&quot;);</span>
+<span class="fc" id="L697">			final String heightAttr = attrs.getValue(&quot;height&quot;);</span>
+<span class="fc" id="L698">			final double width = getDoubleAttr(attrs, &quot;width&quot;, image.getWidth());</span>
+<span class="fc" id="L699">			final double height = getDoubleAttr(attrs, &quot;height&quot;, image.getHeight());</span>
 
-<span class="pc bpc" id="L702" title="2 of 4 branches missed.">			if (width &lt;= 0 || height &lt;= 0)</span>
-<span class="nc" id="L703">				return;</span>
+<span class="pc bpc" id="L701" title="2 of 4 branches missed.">			if (width &lt;= 0 || height &lt;= 0)</span>
+<span class="nc" id="L702">				return;</span>
 
-<span class="fc" id="L705">			final double scale = resolveImageScale(widthAttr, heightAttr, width, height, image.getWidth(),</span>
-<span class="fc" id="L706">					image.getHeight());</span>
-<span class="pc bpc" id="L707" title="1 of 2 branches missed.">			if (scale &lt;= 0)</span>
-<span class="nc" id="L708">				return;</span>
+<span class="fc" id="L704">			final double scale = resolveImageScale(widthAttr, heightAttr, width, height, image.getWidth(),</span>
+<span class="fc" id="L705">					image.getHeight());</span>
+<span class="pc bpc" id="L706" title="1 of 2 branches missed.">			if (scale &lt;= 0)</span>
+<span class="nc" id="L707">				return;</span>
 
-<span class="fc bfc" id="L710" title="All 2 branches covered.">			if (elementUgs.getUg().matchesProperty(&quot;SVG&quot;)) {</span>
-<span class="fc" id="L711">				final String svgImage = buildSvgImage(href, width, height);</span>
-<span class="fc" id="L712">				final UImageSvg imageSvg = new UImageSvg(svgImage, 1.0);</span>
-<span class="fc" id="L713">				elementUgs.apply(new UTranslate(x, y)).draw(imageSvg);</span>
-<span class="fc" id="L714">				return;</span>
+<span class="fc bfc" id="L709" title="All 2 branches covered.">			if (elementUgs.getUg().matchesProperty(&quot;SVG&quot;)) {</span>
+<span class="fc" id="L710">				final String svgImage = buildSvgImage(href, width, height);</span>
+<span class="fc" id="L711">				final UImageSvg imageSvg = new UImageSvg(svgImage, 1.0);</span>
+<span class="fc" id="L712">				elementUgs.apply(new UTranslate(x, y)).draw(imageSvg);</span>
+<span class="fc" id="L713">				return;</span>
 			}
 
-<span class="fc" id="L717">			UImage uimage = new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR));</span>
-<span class="pc bpc" id="L718" title="1 of 2 branches missed.">			if (scale != 1.0) {</span>
-<span class="fc" id="L719">				final PortableImage scaled = uimage.getImage(scale);</span>
-<span class="fc" id="L720">				uimage = new UImage(new PixelImage(scaled, AffineTransformType.TYPE_BILINEAR));</span>
+<span class="fc" id="L716">			UImage uimage = new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR));</span>
+<span class="pc bpc" id="L717" title="1 of 2 branches missed.">			if (scale != 1.0) {</span>
+<span class="fc" id="L718">				final PortableImage scaled = uimage.getImage(scale);</span>
+<span class="fc" id="L719">				uimage = new UImage(new PixelImage(scaled, AffineTransformType.TYPE_BILINEAR));</span>
 			}
 
-<span class="fc" id="L723">			elementUgs.apply(new UTranslate(x, y)).draw(uimage);</span>
-<span class="fc" id="L724">		}</span>
+<span class="fc" id="L722">			elementUgs.apply(new UTranslate(x, y)).draw(uimage);</span>
+<span class="fc" id="L723">		}</span>
 
 		private String getHref(Attributes attrs) {
-<span class="fc" id="L727">			String href = attrs.getValue(&quot;href&quot;);</span>
-<span class="pc bpc" id="L728" title="2 of 4 branches missed.">			if (href == null || href.isEmpty())</span>
-<span class="nc" id="L729">				href = attrs.getValue(&quot;xlink:href&quot;);</span>
+<span class="fc" id="L726">			String href = attrs.getValue(&quot;href&quot;);</span>
+<span class="pc bpc" id="L727" title="2 of 4 branches missed.">			if (href == null || href.isEmpty())</span>
+<span class="nc" id="L728">				href = attrs.getValue(&quot;xlink:href&quot;);</span>
 
-<span class="fc" id="L731">			return href;</span>
+<span class="fc" id="L730">			return href;</span>
 		}
 
 		private double resolveImageScale(String widthAttr, String heightAttr, double width, double height,
 				int imageWidth, int imageHeight) {
-<span class="pc bpc" id="L736" title="2 of 4 branches missed.">			if (imageWidth &lt;= 0 || imageHeight &lt;= 0)</span>
-<span class="nc" id="L737">				return 1.0;</span>
+<span class="pc bpc" id="L735" title="2 of 4 branches missed.">			if (imageWidth &lt;= 0 || imageHeight &lt;= 0)</span>
+<span class="nc" id="L736">				return 1.0;</span>
 
-<span class="fc" id="L739">			final double scaleX = width / imageWidth;</span>
-<span class="fc" id="L740">			final double scaleY = height / imageHeight;</span>
+<span class="fc" id="L738">			final double scaleX = width / imageWidth;</span>
+<span class="fc" id="L739">			final double scaleY = height / imageHeight;</span>
 
-<span class="pc bpc" id="L742" title="3 of 4 branches missed.">			if (widthAttr == null &amp;&amp; heightAttr == null)</span>
-<span class="nc" id="L743">				return 1.0;</span>
+<span class="pc bpc" id="L741" title="3 of 4 branches missed.">			if (widthAttr == null &amp;&amp; heightAttr == null)</span>
+<span class="nc" id="L742">				return 1.0;</span>
 
-<span class="pc bpc" id="L745" title="1 of 2 branches missed.">			if (Math.abs(scaleX - scaleY) &lt; 0.0001)</span>
-<span class="nc" id="L746">				return scaleX;</span>
+<span class="pc bpc" id="L744" title="1 of 2 branches missed.">			if (Math.abs(scaleX - scaleY) &lt; 0.0001)</span>
+<span class="nc" id="L745">				return scaleX;</span>
 
-<span class="pc bpc" id="L748" title="1 of 2 branches missed.">			if (widthAttr != null)</span>
-<span class="fc" id="L749">				return scaleX;</span>
+<span class="pc bpc" id="L747" title="1 of 2 branches missed.">			if (widthAttr != null)</span>
+<span class="fc" id="L748">				return scaleX;</span>
 
-<span class="nc" id="L751">			return scaleY;</span>
+<span class="nc" id="L750">			return scaleY;</span>
 		}
 
 		private DataImage decodeDataImage(String href) {
-<span class="fc" id="L755">			final String lowerHref = href.toLowerCase();</span>
-<span class="pc bpc" id="L756" title="1 of 2 branches missed.">			if (lowerHref.startsWith(&quot;data:image/svg+xml;base64,&quot;)) {</span>
-<span class="nc" id="L757">				LOG.fine(&quot;Skipping embedded SVG image data URI&quot;);</span>
-<span class="nc" id="L758">				return null;</span>
+<span class="fc" id="L754">			final String lowerHref = href.toLowerCase();</span>
+<span class="pc bpc" id="L755" title="1 of 2 branches missed.">			if (lowerHref.startsWith(&quot;data:image/svg+xml;base64,&quot;)) {</span>
+<span class="nc" id="L756">				LOG.fine(&quot;Skipping embedded SVG image data URI&quot;);</span>
+<span class="nc" id="L757">				return null;</span>
 			}
 
-<span class="fc" id="L761">			final String prefix = getDataImagePrefix(lowerHref);</span>
-<span class="pc bpc" id="L762" title="1 of 2 branches missed.">			if (prefix == null) {</span>
-<span class="nc" id="L763">				LOG.fine(&quot;Skipping non-data image href&quot;);</span>
-<span class="nc" id="L764">				return null;</span>
+<span class="fc" id="L760">			final String prefix = getDataImagePrefix(lowerHref);</span>
+<span class="pc bpc" id="L761" title="1 of 2 branches missed.">			if (prefix == null) {</span>
+<span class="nc" id="L762">				LOG.fine(&quot;Skipping non-data image href&quot;);</span>
+<span class="nc" id="L763">				return null;</span>
 			}
 
-<span class="fc" id="L767">			final String data = href.substring(prefix.length());</span>
+<span class="fc" id="L766">			final String data = href.substring(prefix.length());</span>
 			final byte[] bytes;
 			try {
-<span class="fc" id="L770">				bytes = Base64Coder.decode(data);</span>
-<span class="nc" id="L771">			} catch (IllegalArgumentException e) {</span>
-<span class="nc" id="L772">				LOG.warning(&quot;Failed to decode embedded image: &quot; + e.getMessage());</span>
-<span class="nc" id="L773">				return null;</span>
-<span class="fc" id="L774">			}</span>
+<span class="fc" id="L769">				bytes = Base64Coder.decode(data);</span>
+<span class="nc" id="L770">			} catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L771">				LOG.warning(&quot;Failed to decode embedded image: &quot; + e.getMessage());</span>
+<span class="nc" id="L772">				return null;</span>
+<span class="fc" id="L773">			}</span>
 
 			try {
-<span class="fc" id="L777">				final PortableImage image = SImageIO.read(bytes);</span>
-<span class="pc bpc" id="L778" title="1 of 2 branches missed.">				if (image == null)</span>
-<span class="nc" id="L779">					return null;</span>
+<span class="fc" id="L776">				final PortableImage image = SImageIO.read(bytes);</span>
+<span class="pc bpc" id="L777" title="1 of 2 branches missed.">				if (image == null)</span>
+<span class="nc" id="L778">					return null;</span>
 
-<span class="fc" id="L781">				return new DataImage(image);</span>
-<span class="nc" id="L782">			} catch (IOException e) {</span>
-<span class="nc" id="L783">				LOG.warning(&quot;Failed to read embedded image: &quot; + e.getMessage());</span>
-<span class="nc" id="L784">				return null;</span>
+<span class="fc" id="L780">				return new DataImage(image);</span>
+<span class="nc" id="L781">			} catch (IOException e) {</span>
+<span class="nc" id="L782">				LOG.warning(&quot;Failed to read embedded image: &quot; + e.getMessage());</span>
+<span class="nc" id="L783">				return null;</span>
 			}
 		}
 
 		private String getDataImagePrefix(String lowerHref) {
-<span class="fc bfc" id="L789" title="All 2 branches covered.">			if (lowerHref.startsWith(&quot;data:image/png;base64,&quot;))</span>
-<span class="fc" id="L790">				return &quot;data:image/png;base64,&quot;;</span>
+<span class="fc bfc" id="L788" title="All 2 branches covered.">			if (lowerHref.startsWith(&quot;data:image/png;base64,&quot;))</span>
+<span class="fc" id="L789">				return &quot;data:image/png;base64,&quot;;</span>
 
-<span class="pc bpc" id="L792" title="1 of 2 branches missed.">			if (lowerHref.startsWith(&quot;data:image/jpeg;base64,&quot;))</span>
-<span class="fc" id="L793">				return &quot;data:image/jpeg;base64,&quot;;</span>
+<span class="pc bpc" id="L791" title="1 of 2 branches missed.">			if (lowerHref.startsWith(&quot;data:image/jpeg;base64,&quot;))</span>
+<span class="fc" id="L792">				return &quot;data:image/jpeg;base64,&quot;;</span>
 
-<span class="nc bnc" id="L795" title="All 2 branches missed.">			if (lowerHref.startsWith(&quot;data:image/jpg;base64,&quot;))</span>
-<span class="nc" id="L796">				return &quot;data:image/jpg;base64,&quot;;</span>
+<span class="nc bnc" id="L794" title="All 2 branches missed.">			if (lowerHref.startsWith(&quot;data:image/jpg;base64,&quot;))</span>
+<span class="nc" id="L795">				return &quot;data:image/jpg;base64,&quot;;</span>
 
-<span class="nc" id="L798">			return null;</span>
+<span class="nc" id="L797">			return null;</span>
 		}
 
 		private String buildSvgImage(String href, double width, double height) {
-<span class="fc" id="L802">			final String safeHref = href.replace(&quot;&amp;&quot;, &quot;&amp;amp;&quot;).replace(&quot;\&quot;&quot;, &quot;&amp;quot;&quot;);</span>
-<span class="fc" id="L803">			return &quot;&lt;svg xmlns=\&quot;http://www.w3.org/2000/svg\&quot; xmlns:xlink=\&quot;http://www.w3.org/1999/xlink\&quot; &quot;</span>
-<span class="fc" id="L804">					+ &quot;width=\&quot;&quot; + formatNumber(width) + &quot;\&quot; height=\&quot;&quot; + formatNumber(height) + &quot;\&quot;&gt;&quot;</span>
-<span class="fc" id="L805">					+ &quot;&lt;image x=\&quot;0\&quot; y=\&quot;0\&quot; width=\&quot;&quot; + formatNumber(width) + &quot;\&quot; height=\&quot;&quot; + formatNumber(height)</span>
+<span class="fc" id="L801">			final String safeHref = href.replace(&quot;&amp;&quot;, &quot;&amp;amp;&quot;).replace(&quot;\&quot;&quot;, &quot;&amp;quot;&quot;);</span>
+<span class="fc" id="L802">			return &quot;&lt;svg xmlns=\&quot;http://www.w3.org/2000/svg\&quot; xmlns:xlink=\&quot;http://www.w3.org/1999/xlink\&quot; &quot;</span>
+<span class="fc" id="L803">					+ &quot;width=\&quot;&quot; + formatNumber(width) + &quot;\&quot; height=\&quot;&quot; + formatNumber(height) + &quot;\&quot;&gt;&quot;</span>
+<span class="fc" id="L804">					+ &quot;&lt;image x=\&quot;0\&quot; y=\&quot;0\&quot; width=\&quot;&quot; + formatNumber(width) + &quot;\&quot; height=\&quot;&quot; + formatNumber(height)</span>
 					+ &quot;\&quot; xlink:href=\&quot;&quot; + safeHref + &quot;\&quot;/&gt;&quot; + &quot;&lt;/svg&gt;&quot;;
 		}
 
 		private String formatNumber(double value) {
-<span class="pc bpc" id="L810" title="1 of 2 branches missed.">			if (value == Math.rint(value))</span>
-<span class="fc" id="L811">				return Long.toString(Math.round(value));</span>
+<span class="pc bpc" id="L809" title="1 of 2 branches missed.">			if (value == Math.rint(value))</span>
+<span class="fc" id="L810">				return Long.toString(Math.round(value));</span>
 
-<span class="nc" id="L813">			return Double.toString(value);</span>
+<span class="nc" id="L812">			return Double.toString(value);</span>
 		}
 
 		private void handleUse(Attributes attrs) {
-<span class="fc" id="L817">			String href = attrs.getValue(&quot;href&quot;);</span>
-<span class="pc bpc" id="L818" title="1 of 4 branches missed.">			if (href == null || href.isEmpty()) {</span>
-<span class="fc" id="L819">				href = attrs.getValue(&quot;xlink:href&quot;);</span>
+<span class="fc" id="L816">			String href = attrs.getValue(&quot;href&quot;);</span>
+<span class="pc bpc" id="L817" title="1 of 4 branches missed.">			if (href == null || href.isEmpty()) {</span>
+<span class="fc" id="L818">				href = attrs.getValue(&quot;xlink:href&quot;);</span>
 			}
-<span class="pc bpc" id="L821" title="3 of 6 branches missed.">			if (href == null || href.isEmpty() || !href.startsWith(&quot;#&quot;)) {</span>
-<span class="nc" id="L822">				return;</span>
+<span class="pc bpc" id="L820" title="3 of 6 branches missed.">			if (href == null || href.isEmpty() || !href.startsWith(&quot;#&quot;)) {</span>
+<span class="nc" id="L821">				return;</span>
 			}
 
-<span class="fc" id="L825">			String refId = href.substring(1);</span>
-<span class="fc" id="L826">			BufferedElement referenced = definitions.get(refId);</span>
-<span class="pc bpc" id="L827" title="1 of 2 branches missed.">			if (referenced == null) {</span>
-<span class="nc" id="L828">				LOG.warning(&quot;Referenced element not found: &quot; + refId);</span>
-<span class="nc" id="L829">				return;</span>
+<span class="fc" id="L824">			String refId = href.substring(1);</span>
+<span class="fc" id="L825">			BufferedElement referenced = definitions.get(refId);</span>
+<span class="pc bpc" id="L826" title="1 of 2 branches missed.">			if (referenced == null) {</span>
+<span class="nc" id="L827">				LOG.warning(&quot;Referenced element not found: &quot; + refId);</span>
+<span class="nc" id="L828">				return;</span>
 			}
 
 			// Apply positioning from &lt;use&gt; element
-<span class="fc" id="L833">			double x = getDoubleAttr(attrs, &quot;x&quot;, 0);</span>
-<span class="fc" id="L834">			double y = getDoubleAttr(attrs, &quot;y&quot;, 0);</span>
-<span class="fc" id="L835">			double width = getDoubleAttr(attrs, &quot;width&quot;, -1);</span>
-<span class="fc" id="L836">			double height = getDoubleAttr(attrs, &quot;height&quot;, -1);</span>
+<span class="fc" id="L832">			double x = getDoubleAttr(attrs, &quot;x&quot;, 0);</span>
+<span class="fc" id="L833">			double y = getDoubleAttr(attrs, &quot;y&quot;, 0);</span>
+<span class="fc" id="L834">			double width = getDoubleAttr(attrs, &quot;width&quot;, -1);</span>
+<span class="fc" id="L835">			double height = getDoubleAttr(attrs, &quot;height&quot;, -1);</span>
 
-<span class="fc" id="L838">			UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);</span>
+<span class="fc" id="L837">			UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);</span>
 
-<span class="pc bpc" id="L840" title="3 of 4 branches missed.">			if (x != 0 || y != 0) {</span>
-<span class="fc" id="L841">				double scalex = elementUgs.getAffineTransform().getScaleX();</span>
-<span class="fc" id="L842">				double scaley = elementUgs.getAffineTransform().getScaleY();</span>
-<span class="fc" id="L843">				UTranslate translate = new UTranslate(x * scalex, y * scaley);</span>
-<span class="fc" id="L844">				elementUgs = elementUgs.apply(translate);</span>
+<span class="pc bpc" id="L839" title="3 of 4 branches missed.">			if (x != 0 || y != 0) {</span>
+<span class="fc" id="L840">				double scalex = elementUgs.getAffineTransform().getScaleX();</span>
+<span class="fc" id="L841">				double scaley = elementUgs.getAffineTransform().getScaleY();</span>
+<span class="fc" id="L842">				UTranslate translate = new UTranslate(x * scalex, y * scaley);</span>
+<span class="fc" id="L843">				elementUgs = elementUgs.apply(translate);</span>
 			}
 
-<span class="fc" id="L847">			renderUseReference(refId, referenced, elementUgs, width, height);</span>
-<span class="fc" id="L848">		}</span>
+<span class="fc" id="L846">			renderUseReference(refId, referenced, elementUgs, width, height);</span>
+<span class="fc" id="L847">		}</span>
 
 		private void renderUseReference(String refId, BufferedElement referenced, UGraphicWithScale elementUgs,
 				double width, double height) {
-<span class="pc bpc" id="L852" title="2 of 4 branches missed.">			if (referenced.xmlContent == null || referenced.xmlContent.isEmpty()) {</span>
-<span class="nc" id="L853">				LOG.fine(&quot;Referenced element has no buffered content: &quot; + refId);</span>
-<span class="nc" id="L854">				return;</span>
+<span class="pc bpc" id="L851" title="2 of 4 branches missed.">			if (referenced.xmlContent == null || referenced.xmlContent.isEmpty()) {</span>
+<span class="nc" id="L852">				LOG.fine(&quot;Referenced element has no buffered content: &quot; + refId);</span>
+<span class="nc" id="L853">				return;</span>
 			}
 
-<span class="fc bfc" id="L857" title="All 2 branches covered.">			if (&quot;symbol&quot;.equals(referenced.tagName)) {</span>
-<span class="fc" id="L858">				elementUgs = applySymbolViewport(referenced, elementUgs, width, height);</span>
+<span class="fc bfc" id="L856" title="All 2 branches covered.">			if (&quot;symbol&quot;.equals(referenced.tagName)) {</span>
+<span class="fc" id="L857">				elementUgs = applySymbolViewport(referenced, elementUgs, width, height);</span>
 			}
 
-<span class="fc" id="L861">			final String wrapped = wrapSvgFragment(referenced.xmlContent);</span>
-<span class="fc" id="L862">			parseSvgFragment(wrapped, elementUgs);</span>
-<span class="fc" id="L863">		}</span>
+<span class="fc" id="L860">			final String wrapped = wrapSvgFragment(referenced.xmlContent);</span>
+<span class="fc" id="L861">			parseSvgFragment(wrapped, elementUgs);</span>
+<span class="fc" id="L862">		}</span>
 
 		private UGraphicWithScale applySymbolViewport(BufferedElement referenced, UGraphicWithScale elementUgs,
 				double width, double height) {
-<span class="fc" id="L867">			final String viewBox = referenced.attributes.get(&quot;viewBox&quot;);</span>
-<span class="pc bpc" id="L868" title="2 of 4 branches missed.">			if (viewBox == null || viewBox.isEmpty()) {</span>
-<span class="nc" id="L869">				return elementUgs;</span>
+<span class="fc" id="L866">			final String viewBox = referenced.attributes.get(&quot;viewBox&quot;);</span>
+<span class="pc bpc" id="L867" title="2 of 4 branches missed.">			if (viewBox == null || viewBox.isEmpty()) {</span>
+<span class="nc" id="L868">				return elementUgs;</span>
 			}
 
-<span class="fc" id="L872">			final double[] values = parseNumberList(viewBox);</span>
-<span class="pc bpc" id="L873" title="1 of 2 branches missed.">			if (values.length &lt; 4) {</span>
-<span class="nc" id="L874">				return elementUgs;</span>
+<span class="fc" id="L871">			final double[] values = parseNumberList(viewBox);</span>
+<span class="pc bpc" id="L872" title="1 of 2 branches missed.">			if (values.length &lt; 4) {</span>
+<span class="nc" id="L873">				return elementUgs;</span>
 			}
 
-<span class="fc" id="L877">			final double minX = values[0];</span>
-<span class="fc" id="L878">			final double minY = values[1];</span>
-<span class="fc" id="L879">			final double vbWidth = values[2];</span>
-<span class="fc" id="L880">			final double vbHeight = values[3];</span>
+<span class="fc" id="L876">			final double minX = values[0];</span>
+<span class="fc" id="L877">			final double minY = values[1];</span>
+<span class="fc" id="L878">			final double vbWidth = values[2];</span>
+<span class="fc" id="L879">			final double vbHeight = values[3];</span>
 
-<span class="pc bpc" id="L882" title="2 of 4 branches missed.">			if (vbWidth == 0 || vbHeight == 0) {</span>
-<span class="nc" id="L883">				return elementUgs;</span>
+<span class="pc bpc" id="L881" title="2 of 4 branches missed.">			if (vbWidth == 0 || vbHeight == 0) {</span>
+<span class="nc" id="L882">				return elementUgs;</span>
 			}
 
-<span class="pc bpc" id="L886" title="1 of 2 branches missed.">			final double scaleX = width &gt; 0 ? width / vbWidth : 1.0;</span>
-<span class="pc bpc" id="L887" title="1 of 2 branches missed.">			final double scaleY = height &gt; 0 ? height / vbHeight : 1.0;</span>
+<span class="pc bpc" id="L885" title="1 of 2 branches missed.">			final double scaleX = width &gt; 0 ? width / vbWidth : 1.0;</span>
+<span class="pc bpc" id="L886" title="1 of 2 branches missed.">			final double scaleY = height &gt; 0 ? height / vbHeight : 1.0;</span>
 
-<span class="fc" id="L889">			elementUgs = elementUgs.applyTranslate(-minX, -minY);</span>
-<span class="fc" id="L890">			elementUgs = elementUgs.applyScale(scaleX, scaleY);</span>
-<span class="fc" id="L891">			return elementUgs;</span>
+<span class="fc" id="L888">			elementUgs = elementUgs.applyTranslate(-minX, -minY);</span>
+<span class="fc" id="L889">			elementUgs = elementUgs.applyScale(scaleX, scaleY);</span>
+<span class="fc" id="L890">			return elementUgs;</span>
 		}
 
 		private String wrapSvgFragment(String fragment) {
-<span class="fc" id="L895">			return &quot;&lt;svg xmlns=\&quot;http://www.w3.org/2000/svg\&quot;&gt;&quot; + fragment + &quot;&lt;/svg&gt;&quot;;</span>
+<span class="fc" id="L894">			return &quot;&lt;svg xmlns=\&quot;http://www.w3.org/2000/svg\&quot;&gt;&quot; + fragment + &quot;&lt;/svg&gt;&quot;;</span>
 		}
 
 		private void parseSvgFragment(String svgFragment, UGraphicWithScale elementUgs) {
 			try {
-<span class="fc" id="L900">				SAXParserFactory factory = SAXParserFactory.newInstance();</span>
-<span class="fc" id="L901">				factory.setNamespaceAware(true);</span>
+<span class="fc" id="L899">				SAXParserFactory factory = SAXParserFactory.newInstance();</span>
+<span class="fc" id="L900">				factory.setNamespaceAware(true);</span>
 				// Disable external entities to prevent XXE attacks
-<span class="fc" id="L903">				factory.setFeature(&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;, true);</span>
-<span class="fc" id="L904">				factory.setFeature(&quot;http://xml.org/sax/features/external-general-entities&quot;, false);</span>
-<span class="fc" id="L905">				factory.setFeature(&quot;http://xml.org/sax/features/external-parameter-entities&quot;, false);</span>
-<span class="fc" id="L906">				SAXParser parser = factory.newSAXParser();</span>
-<span class="fc" id="L907">				RenderHandler renderer = new RenderHandler(elementUgs, colorResolver, definitions);</span>
-<span class="fc" id="L908">				parser.parse(new InputSource(new StringReader(svgFragment)), renderer);</span>
-<span class="nc" id="L909">			} catch (Exception e) {</span>
-<span class="nc" id="L910">				LOG.warning(&quot;Failed to parse &lt;use&gt; reference: &quot; + e.getMessage());</span>
-<span class="fc" id="L911">			}</span>
-<span class="fc" id="L912">		}</span>
+<span class="fc" id="L902">				factory.setFeature(&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;, true);</span>
+<span class="fc" id="L903">				factory.setFeature(&quot;http://xml.org/sax/features/external-general-entities&quot;, false);</span>
+<span class="fc" id="L904">				factory.setFeature(&quot;http://xml.org/sax/features/external-parameter-entities&quot;, false);</span>
+<span class="fc" id="L905">				SAXParser parser = factory.newSAXParser();</span>
+<span class="fc" id="L906">				RenderHandler renderer = new RenderHandler(elementUgs, colorResolver, definitions);</span>
+<span class="fc" id="L907">				parser.parse(new InputSource(new StringReader(svgFragment)), renderer);</span>
+<span class="nc" id="L908">			} catch (Exception e) {</span>
+<span class="nc" id="L909">				LOG.warning(&quot;Failed to parse &lt;use&gt; reference: &quot; + e.getMessage());</span>
+<span class="fc" id="L910">			}</span>
+<span class="fc" id="L911">		}</span>
 
 		// ---- Style and Transform Helpers ----
 
@@ -919,114 +918,114 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 		 * creation fails, returns the first stop color.
 		 */
 		private HColor extractGradientColor(String gradientId) {
-<span class="fc" id="L922">			final BufferedElement gradientElement = definitions.get(gradientId);</span>
-<span class="pc bpc" id="L923" title="1 of 2 branches missed.">			if (gradientElement == null) {</span>
-<span class="nc" id="L924">				LOG.fine(&quot;Gradient not found: &quot; + gradientId);</span>
-<span class="nc" id="L925">				return null;</span>
+<span class="fc" id="L921">			final BufferedElement gradientElement = definitions.get(gradientId);</span>
+<span class="pc bpc" id="L922" title="1 of 2 branches missed.">			if (gradientElement == null) {</span>
+<span class="nc" id="L923">				LOG.fine(&quot;Gradient not found: &quot; + gradientId);</span>
+<span class="nc" id="L924">				return null;</span>
 			}
 
-<span class="fc" id="L928">			final String tagName = gradientElement.tagName;</span>
-<span class="fc" id="L929">			LOG.fine(&quot;Extracting gradient: &quot; + gradientId + &quot; (tagName=&quot; + tagName + &quot;, stops=&quot;</span>
-<span class="fc" id="L930">					+ gradientElement.stops.size() + &quot;)&quot;);</span>
+<span class="fc" id="L927">			final String tagName = gradientElement.tagName;</span>
+<span class="fc" id="L928">			LOG.fine(&quot;Extracting gradient: &quot; + gradientId + &quot; (tagName=&quot; + tagName + &quot;, stops=&quot;</span>
+<span class="fc" id="L929">					+ gradientElement.stops.size() + &quot;)&quot;);</span>
 
-<span class="fc bfc" id="L932" title="All 2 branches covered.">			if (&quot;linearGradient&quot;.equals(tagName)) {</span>
-<span class="fc" id="L933">				final List&lt;HColorLinearGradient.Stop&gt; stops = buildGradientStops(gradientElement.stops);</span>
-<span class="pc bpc" id="L934" title="1 of 2 branches missed.">				if (stops.size() &gt;= 2) {</span>
-<span class="fc" id="L935">					final boolean userSpaceOnUse = &quot;userSpaceOnUse&quot;</span>
-<span class="fc" id="L936">							.equals(gradientElement.attributes.get(&quot;gradientUnits&quot;));</span>
-<span class="fc" id="L937">					final HColorLinearGradient.SpreadMethod spreadMethod = parseSpreadMethod(</span>
-<span class="fc" id="L938">							gradientElement.attributes.get(&quot;spreadMethod&quot;));</span>
-<span class="fc" id="L939">					final double x1 = parsePercentOrNumber(gradientElement.attributes.get(&quot;x1&quot;), 0.0);</span>
-<span class="fc" id="L940">					final double y1 = parsePercentOrNumber(gradientElement.attributes.get(&quot;y1&quot;), 0.0);</span>
-<span class="fc" id="L941">					final double x2 = parsePercentOrNumber(gradientElement.attributes.get(&quot;x2&quot;), 1.0);</span>
-<span class="fc" id="L942">					final double y2 = parsePercentOrNumber(gradientElement.attributes.get(&quot;y2&quot;), 0.0);</span>
-<span class="fc" id="L943">					return new HColorLinearGradient(x1, y1, x2, y2, userSpaceOnUse, spreadMethod, stops);</span>
+<span class="fc bfc" id="L931" title="All 2 branches covered.">			if (&quot;linearGradient&quot;.equals(tagName)) {</span>
+<span class="fc" id="L932">				final List&lt;HColorLinearGradient.Stop&gt; stops = buildGradientStops(gradientElement.stops);</span>
+<span class="pc bpc" id="L933" title="1 of 2 branches missed.">				if (stops.size() &gt;= 2) {</span>
+<span class="fc" id="L934">					final boolean userSpaceOnUse = &quot;userSpaceOnUse&quot;</span>
+<span class="fc" id="L935">							.equals(gradientElement.attributes.get(&quot;gradientUnits&quot;));</span>
+<span class="fc" id="L936">					final HColorLinearGradient.SpreadMethod spreadMethod = parseSpreadMethod(</span>
+<span class="fc" id="L937">							gradientElement.attributes.get(&quot;spreadMethod&quot;));</span>
+<span class="fc" id="L938">					final double x1 = parsePercentOrNumber(gradientElement.attributes.get(&quot;x1&quot;), 0.0);</span>
+<span class="fc" id="L939">					final double y1 = parsePercentOrNumber(gradientElement.attributes.get(&quot;y1&quot;), 0.0);</span>
+<span class="fc" id="L940">					final double x2 = parsePercentOrNumber(gradientElement.attributes.get(&quot;x2&quot;), 1.0);</span>
+<span class="fc" id="L941">					final double y2 = parsePercentOrNumber(gradientElement.attributes.get(&quot;y2&quot;), 0.0);</span>
+<span class="fc" id="L942">					return new HColorLinearGradient(x1, y1, x2, y2, userSpaceOnUse, spreadMethod, stops);</span>
 				}
-<span class="nc bnc" id="L945" title="All 2 branches missed.">				if (gradientElement.stops.size() &gt; 0) {</span>
-<span class="nc" id="L946">					final HColor fallback = getStopColor(gradientElement.stops.get(0));</span>
-<span class="nc bnc" id="L947" title="All 2 branches missed.">					if (fallback != null)</span>
-<span class="nc" id="L948">						return fallback;</span>
-				}
-			}
-
-<span class="pc bpc" id="L952" title="1 of 2 branches missed.">			if (&quot;radialGradient&quot;.equals(tagName)) {</span>
-<span class="pc bpc" id="L953" title="1 of 2 branches missed.">				if (gradientElement.stops.size() &gt; 0) {</span>
-<span class="fc" id="L954">					final HColor fallback = getStopColor(gradientElement.stops.get(0));</span>
-<span class="pc bpc" id="L955" title="1 of 2 branches missed.">					if (fallback != null)</span>
-<span class="fc" id="L956">						return fallback;</span>
+<span class="nc bnc" id="L944" title="All 2 branches missed.">				if (gradientElement.stops.size() &gt; 0) {</span>
+<span class="nc" id="L945">					final HColor fallback = getStopColor(gradientElement.stops.get(0));</span>
+<span class="nc bnc" id="L946" title="All 2 branches missed.">					if (fallback != null)</span>
+<span class="nc" id="L947">						return fallback;</span>
 				}
 			}
 
-<span class="nc" id="L960">			return null;</span>
+<span class="pc bpc" id="L951" title="1 of 2 branches missed.">			if (&quot;radialGradient&quot;.equals(tagName)) {</span>
+<span class="pc bpc" id="L952" title="1 of 2 branches missed.">				if (gradientElement.stops.size() &gt; 0) {</span>
+<span class="fc" id="L953">					final HColor fallback = getStopColor(gradientElement.stops.get(0));</span>
+<span class="pc bpc" id="L954" title="1 of 2 branches missed.">					if (fallback != null)</span>
+<span class="fc" id="L955">						return fallback;</span>
+				}
+			}
+
+<span class="nc" id="L959">			return null;</span>
 		}
 
 		private List&lt;HColorLinearGradient.Stop&gt; buildGradientStops(List&lt;GradientStop&gt; stops) {
-<span class="fc" id="L964">			final List&lt;HColorLinearGradient.Stop&gt; result = new ArrayList&lt;HColorLinearGradient.Stop&gt;();</span>
-<span class="fc bfc" id="L965" title="All 2 branches covered.">			for (GradientStop stop : stops) {</span>
-<span class="fc" id="L966">				final HColor color = getStopColor(stop);</span>
-<span class="pc bpc" id="L967" title="1 of 2 branches missed.">				if (color == null)</span>
-<span class="nc" id="L968">					continue;</span>
+<span class="fc" id="L963">			final List&lt;HColorLinearGradient.Stop&gt; result = new ArrayList&lt;HColorLinearGradient.Stop&gt;();</span>
+<span class="fc bfc" id="L964" title="All 2 branches covered.">			for (GradientStop stop : stops) {</span>
+<span class="fc" id="L965">				final HColor color = getStopColor(stop);</span>
+<span class="pc bpc" id="L966" title="1 of 2 branches missed.">				if (color == null)</span>
+<span class="nc" id="L967">					continue;</span>
 
-<span class="fc" id="L970">				final double offset = parseOffset(stop.offset);</span>
-<span class="fc" id="L971">				final double opacity = parseOpacity(stop.opacity);</span>
-<span class="fc" id="L972">				result.add(new HColorLinearGradient.Stop(offset, color, opacity));</span>
-<span class="fc" id="L973">			}</span>
-<span class="fc" id="L974">			return result;</span>
+<span class="fc" id="L969">				final double offset = parseOffset(stop.offset);</span>
+<span class="fc" id="L970">				final double opacity = parseOpacity(stop.opacity);</span>
+<span class="fc" id="L971">				result.add(new HColorLinearGradient.Stop(offset, color, opacity));</span>
+<span class="fc" id="L972">			}</span>
+<span class="fc" id="L973">			return result;</span>
 		}
 
 		private HColor getStopColor(GradientStop stop) {
-<span class="pc bpc" id="L978" title="1 of 2 branches missed.">			if (stop == null)</span>
-<span class="nc" id="L979">				return null;</span>
-<span class="pc bpc" id="L980" title="2 of 4 branches missed.">			if (stop.color == null || stop.color.isEmpty())</span>
-<span class="nc" id="L981">				return null;</span>
-<span class="pc bpc" id="L982" title="1 of 2 branches missed.">			if (&quot;none&quot;.equalsIgnoreCase(stop.color))</span>
-<span class="nc" id="L983">				return null;</span>
-<span class="fc" id="L984">			return ugs.getTrueColor(stop.color);</span>
+<span class="pc bpc" id="L977" title="1 of 2 branches missed.">			if (stop == null)</span>
+<span class="nc" id="L978">				return null;</span>
+<span class="pc bpc" id="L979" title="2 of 4 branches missed.">			if (stop.color == null || stop.color.isEmpty())</span>
+<span class="nc" id="L980">				return null;</span>
+<span class="pc bpc" id="L981" title="1 of 2 branches missed.">			if (&quot;none&quot;.equalsIgnoreCase(stop.color))</span>
+<span class="nc" id="L982">				return null;</span>
+<span class="fc" id="L983">			return ugs.getTrueColor(stop.color);</span>
 		}
 
 		private double parseOffset(String value) {
-<span class="pc bpc" id="L988" title="2 of 4 branches missed.">			if (value == null || value.isEmpty())</span>
-<span class="nc" id="L989">				return 0.0;</span>
+<span class="pc bpc" id="L987" title="2 of 4 branches missed.">			if (value == null || value.isEmpty())</span>
+<span class="nc" id="L988">				return 0.0;</span>
 
 			try {
-<span class="pc bpc" id="L992" title="1 of 2 branches missed.">				if (value.endsWith(&quot;%&quot;))</span>
-<span class="fc" id="L993">					return clamp01(Double.parseDouble(value.substring(0, value.length() - 1)) / 100.0);</span>
-<span class="nc" id="L994">				return clamp01(Double.parseDouble(value));</span>
-<span class="nc" id="L995">			} catch (NumberFormatException e) {</span>
-<span class="nc" id="L996">				return 0.0;</span>
+<span class="pc bpc" id="L991" title="1 of 2 branches missed.">				if (value.endsWith(&quot;%&quot;))</span>
+<span class="fc" id="L992">					return clamp01(Double.parseDouble(value.substring(0, value.length() - 1)) / 100.0);</span>
+<span class="nc" id="L993">				return clamp01(Double.parseDouble(value));</span>
+<span class="nc" id="L994">			} catch (NumberFormatException e) {</span>
+<span class="nc" id="L995">				return 0.0;</span>
 			}
 		}
 
 		private double parseOpacity(String value) {
-<span class="pc bpc" id="L1001" title="1 of 4 branches missed.">			if (value == null || value.isEmpty())</span>
-<span class="fc" id="L1002">				return 1.0;</span>
+<span class="pc bpc" id="L1000" title="1 of 4 branches missed.">			if (value == null || value.isEmpty())</span>
+<span class="fc" id="L1001">				return 1.0;</span>
 
 			try {
-<span class="fc" id="L1005">				return clamp01(Double.parseDouble(value));</span>
-<span class="nc" id="L1006">			} catch (NumberFormatException e) {</span>
-<span class="nc" id="L1007">				return 1.0;</span>
+<span class="fc" id="L1004">				return clamp01(Double.parseDouble(value));</span>
+<span class="nc" id="L1005">			} catch (NumberFormatException e) {</span>
+<span class="nc" id="L1006">				return 1.0;</span>
 			}
 		}
 
 		private double clamp01(double value) {
-<span class="pc bpc" id="L1012" title="1 of 2 branches missed.">			if (value &lt; 0.0)</span>
-<span class="nc" id="L1013">				return 0.0;</span>
-<span class="pc bpc" id="L1014" title="1 of 2 branches missed.">			if (value &gt; 1.0)</span>
-<span class="nc" id="L1015">				return 1.0;</span>
-<span class="fc" id="L1016">			return value;</span>
+<span class="pc bpc" id="L1011" title="1 of 2 branches missed.">			if (value &lt; 0.0)</span>
+<span class="nc" id="L1012">				return 0.0;</span>
+<span class="pc bpc" id="L1013" title="1 of 2 branches missed.">			if (value &gt; 1.0)</span>
+<span class="nc" id="L1014">				return 1.0;</span>
+<span class="fc" id="L1015">			return value;</span>
 		}
 
 		private HColorLinearGradient.SpreadMethod parseSpreadMethod(String value) {
-<span class="pc bpc" id="L1020" title="1 of 4 branches missed.">			if (value == null || value.isEmpty())</span>
-<span class="fc" id="L1021">				return HColorLinearGradient.SpreadMethod.PAD;</span>
+<span class="pc bpc" id="L1019" title="1 of 4 branches missed.">			if (value == null || value.isEmpty())</span>
+<span class="fc" id="L1020">				return HColorLinearGradient.SpreadMethod.PAD;</span>
 
-<span class="fc" id="L1023">			final String lower = value.toLowerCase();</span>
-<span class="fc bfc" id="L1024" title="All 2 branches covered.">			if (&quot;reflect&quot;.equals(lower))</span>
-<span class="fc" id="L1025">				return HColorLinearGradient.SpreadMethod.REFLECT;</span>
-<span class="fc bfc" id="L1026" title="All 2 branches covered.">			if (&quot;repeat&quot;.equals(lower))</span>
-<span class="fc" id="L1027">				return HColorLinearGradient.SpreadMethod.REPEAT;</span>
+<span class="fc" id="L1022">			final String lower = value.toLowerCase();</span>
+<span class="fc bfc" id="L1023" title="All 2 branches covered.">			if (&quot;reflect&quot;.equals(lower))</span>
+<span class="fc" id="L1024">				return HColorLinearGradient.SpreadMethod.REFLECT;</span>
+<span class="fc bfc" id="L1025" title="All 2 branches covered.">			if (&quot;repeat&quot;.equals(lower))</span>
+<span class="fc" id="L1026">				return HColorLinearGradient.SpreadMethod.REPEAT;</span>
 
-<span class="fc" id="L1029">			return HColorLinearGradient.SpreadMethod.PAD;</span>
+<span class="fc" id="L1028">			return HColorLinearGradient.SpreadMethod.PAD;</span>
 		}
 
 		/**
@@ -1034,233 +1033,233 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 		 * attributes. Maps SVG x1/y1/x2/y2 to PlantUML's | - \\ / policy.
 		 */
 		private char determineGradientPolicy(Map&lt;String, String&gt; attrs) {
-<span class="nc" id="L1037">			final String x1 = attrs.get(&quot;x1&quot;);</span>
-<span class="nc" id="L1038">			final String y1 = attrs.get(&quot;y1&quot;);</span>
-<span class="nc" id="L1039">			final String x2 = attrs.get(&quot;x2&quot;);</span>
-<span class="nc" id="L1040">			final String y2 = attrs.get(&quot;y2&quot;);</span>
+<span class="nc" id="L1036">			final String x1 = attrs.get(&quot;x1&quot;);</span>
+<span class="nc" id="L1037">			final String y1 = attrs.get(&quot;y1&quot;);</span>
+<span class="nc" id="L1038">			final String x2 = attrs.get(&quot;x2&quot;);</span>
+<span class="nc" id="L1039">			final String y2 = attrs.get(&quot;y2&quot;);</span>
 
 			// Parse percentage or numeric values
-<span class="nc" id="L1043">			final double dx1 = parsePercentOrNumber(x1, 0.0);</span>
-<span class="nc" id="L1044">			final double dy1 = parsePercentOrNumber(y1, 0.0);</span>
-<span class="nc" id="L1045">			final double dx2 = parsePercentOrNumber(x2, 1.0);</span>
-<span class="nc" id="L1046">			final double dy2 = parsePercentOrNumber(y2, 0.0);</span>
+<span class="nc" id="L1042">			final double dx1 = parsePercentOrNumber(x1, 0.0);</span>
+<span class="nc" id="L1043">			final double dy1 = parsePercentOrNumber(y1, 0.0);</span>
+<span class="nc" id="L1044">			final double dx2 = parsePercentOrNumber(x2, 1.0);</span>
+<span class="nc" id="L1045">			final double dy2 = parsePercentOrNumber(y2, 0.0);</span>
 
 			// Determine direction based on differences
-<span class="nc" id="L1049">			final double deltaX = dx2 - dx1;</span>
-<span class="nc" id="L1050">			final double deltaY = dy2 - dy1;</span>
+<span class="nc" id="L1048">			final double deltaX = dx2 - dx1;</span>
+<span class="nc" id="L1049">			final double deltaY = dy2 - dy1;</span>
 
 			// Horizontal gradient: x changes, y constant
-<span class="nc bnc" id="L1053" title="All 4 branches missed.">			if (Math.abs(deltaY) &lt; 0.1 &amp;&amp; Math.abs(deltaX) &gt; 0.5) {</span>
-<span class="nc" id="L1054">				return '|'; // left to right</span>
+<span class="nc bnc" id="L1052" title="All 4 branches missed.">			if (Math.abs(deltaY) &lt; 0.1 &amp;&amp; Math.abs(deltaX) &gt; 0.5) {</span>
+<span class="nc" id="L1053">				return '|'; // left to right</span>
 			}
 
 			// Vertical gradient: y changes, x constant
-<span class="nc bnc" id="L1058" title="All 4 branches missed.">			if (Math.abs(deltaX) &lt; 0.1 &amp;&amp; Math.abs(deltaY) &gt; 0.5) {</span>
-<span class="nc" id="L1059">				return '-'; // top to bottom</span>
+<span class="nc bnc" id="L1057" title="All 4 branches missed.">			if (Math.abs(deltaX) &lt; 0.1 &amp;&amp; Math.abs(deltaY) &gt; 0.5) {</span>
+<span class="nc" id="L1058">				return '-'; // top to bottom</span>
 			}
 
 			// Diagonal: both change
-<span class="nc bnc" id="L1063" title="All 4 branches missed.">			if (Math.abs(deltaX) &gt; 0.3 &amp;&amp; Math.abs(deltaY) &gt; 0.3) {</span>
+<span class="nc bnc" id="L1062" title="All 4 branches missed.">			if (Math.abs(deltaX) &gt; 0.3 &amp;&amp; Math.abs(deltaY) &gt; 0.3) {</span>
 				// Determine diagonal direction
-<span class="nc bnc" id="L1065" title="All 2 branches missed.">				if (deltaX * deltaY &gt; 0) {</span>
-<span class="nc" id="L1066">					return '/'; // top-left to bottom-right</span>
+<span class="nc bnc" id="L1064" title="All 2 branches missed.">				if (deltaX * deltaY &gt; 0) {</span>
+<span class="nc" id="L1065">					return '/'; // top-left to bottom-right</span>
 				} else {
-<span class="nc" id="L1068">					return '\\'; // bottom-left to top-right</span>
+<span class="nc" id="L1067">					return '\\'; // bottom-left to top-right</span>
 				}
 			}
 
 			// Default to horizontal
-<span class="nc" id="L1073">			return '|';</span>
+<span class="nc" id="L1072">			return '|';</span>
 		}
 
 		/**
 		 * Parse a percentage value (e.g., &quot;50%&quot;) or number into a 0-1 range.
 		 */
 		private double parsePercentOrNumber(String value, double defaultValue) {
-<span class="pc bpc" id="L1080" title="2 of 4 branches missed.">			if (value == null || value.isEmpty()) {</span>
-<span class="nc" id="L1081">				return defaultValue;</span>
+<span class="pc bpc" id="L1079" title="2 of 4 branches missed.">			if (value == null || value.isEmpty()) {</span>
+<span class="nc" id="L1080">				return defaultValue;</span>
 			}
 			try {
-<span class="pc bpc" id="L1084" title="1 of 2 branches missed.">				if (value.endsWith(&quot;%&quot;)) {</span>
-<span class="fc" id="L1085">					return Double.parseDouble(value.substring(0, value.length() - 1)) / 100.0;</span>
+<span class="pc bpc" id="L1083" title="1 of 2 branches missed.">				if (value.endsWith(&quot;%&quot;)) {</span>
+<span class="fc" id="L1084">					return Double.parseDouble(value.substring(0, value.length() - 1)) / 100.0;</span>
 				} else {
-<span class="nc" id="L1087">					return Double.parseDouble(value);</span>
+<span class="nc" id="L1086">					return Double.parseDouble(value);</span>
 				}
-<span class="nc" id="L1089">			} catch (NumberFormatException e) {</span>
-<span class="nc" id="L1090">				return defaultValue;</span>
+<span class="nc" id="L1088">			} catch (NumberFormatException e) {</span>
+<span class="nc" id="L1089">				return defaultValue;</span>
 			}
 		}
 
 		private UGraphicWithScale applyStyleAndTransform(Attributes attrs, UGraphicWithScale ugs) {
-<span class="fc" id="L1095">			String transform = attrs.getValue(&quot;transform&quot;);</span>
-<span class="pc bpc" id="L1096" title="1 of 4 branches missed.">			if (transform != null &amp;&amp; !transform.isEmpty()) {</span>
-<span class="fc" id="L1097">				ugs = applyTransform(ugs, transform);</span>
+<span class="fc" id="L1094">			String transform = attrs.getValue(&quot;transform&quot;);</span>
+<span class="pc bpc" id="L1095" title="1 of 4 branches missed.">			if (transform != null &amp;&amp; !transform.isEmpty()) {</span>
+<span class="fc" id="L1096">				ugs = applyTransform(ugs, transform);</span>
 			}
 
-<span class="fc" id="L1100">			String fill = getAttrOrStyle(attrs, &quot;fill&quot;, &quot;fill&quot;);</span>
-<span class="fc" id="L1101">			String stroke = getAttrOrStyle(attrs, &quot;stroke&quot;, &quot;stroke&quot;);</span>
-<span class="fc" id="L1102">			String strokeWidth = getAttrOrStyle(attrs, &quot;stroke-width&quot;, &quot;stroke-width&quot;);</span>
+<span class="fc" id="L1099">			String fill = getAttrOrStyle(attrs, &quot;fill&quot;, &quot;fill&quot;);</span>
+<span class="fc" id="L1100">			String stroke = getAttrOrStyle(attrs, &quot;stroke&quot;, &quot;stroke&quot;);</span>
+<span class="fc" id="L1101">			String strokeWidth = getAttrOrStyle(attrs, &quot;stroke-width&quot;, &quot;stroke-width&quot;);</span>
 
-<span class="pc bpc" id="L1104" title="1 of 4 branches missed.">			if (strokeWidth != null &amp;&amp; !strokeWidth.isEmpty()) {</span>
+<span class="pc bpc" id="L1103" title="1 of 4 branches missed.">			if (strokeWidth != null &amp;&amp; !strokeWidth.isEmpty()) {</span>
 				try {
-<span class="fc" id="L1106">					double scale = ugs.getInitialScale();</span>
-<span class="fc" id="L1107">					ugs = ugs.apply(UStroke.withThickness(scale * Double.parseDouble(strokeWidth)));</span>
-<span class="nc" id="L1108">				} catch (NumberFormatException ex) {</span>
+<span class="fc" id="L1105">					double scale = ugs.getInitialScale();</span>
+<span class="fc" id="L1106">					ugs = ugs.apply(UStroke.withThickness(scale * Double.parseDouble(strokeWidth)));</span>
+<span class="nc" id="L1107">				} catch (NumberFormatException ex) {</span>
 					// ignore
-<span class="fc" id="L1110">				}</span>
+<span class="fc" id="L1109">				}</span>
 			}
 
-<span class="pc bpc" id="L1113" title="1 of 4 branches missed.">			if (stroke != null &amp;&amp; !stroke.isEmpty()) {</span>
-<span class="fc" id="L1114">				HColor sc = ugs.getTrueColor(stroke);</span>
-<span class="pc bpc" id="L1115" title="1 of 2 branches missed.">				if (sc != null) {</span>
-<span class="fc" id="L1116">					ugs = ugs.apply(sc);</span>
+<span class="pc bpc" id="L1112" title="1 of 4 branches missed.">			if (stroke != null &amp;&amp; !stroke.isEmpty()) {</span>
+<span class="fc" id="L1113">				HColor sc = ugs.getTrueColor(stroke);</span>
+<span class="pc bpc" id="L1114" title="1 of 2 branches missed.">				if (sc != null) {</span>
+<span class="fc" id="L1115">					ugs = ugs.apply(sc);</span>
 				}
-<span class="pc bpc" id="L1118" title="1 of 4 branches missed.">				if (fill == null || fill.isEmpty()) {</span>
-<span class="fc" id="L1119">					ugs = ugs.apply(ugs.getDefaultColor().bg());</span>
+<span class="pc bpc" id="L1117" title="1 of 4 branches missed.">				if (fill == null || fill.isEmpty()) {</span>
+<span class="fc" id="L1118">					ugs = ugs.apply(ugs.getDefaultColor().bg());</span>
 				}
 			}
 
-<span class="pc bpc" id="L1123" title="1 of 4 branches missed.">			if (fill != null &amp;&amp; !fill.isEmpty()) {</span>
-<span class="fc bfc" id="L1124" title="All 2 branches covered.">				if (&quot;none&quot;.equals(fill)) {</span>
-<span class="fc" id="L1125">					ugs = ugs.apply(HColors.none().bg());</span>
-<span class="fc bfc" id="L1126" title="All 2 branches covered.">				} else if (fill.startsWith(&quot;url(#&quot;)) {</span>
+<span class="pc bpc" id="L1122" title="1 of 4 branches missed.">			if (fill != null &amp;&amp; !fill.isEmpty()) {</span>
+<span class="fc bfc" id="L1123" title="All 2 branches covered.">				if (&quot;none&quot;.equals(fill)) {</span>
+<span class="fc" id="L1124">					ugs = ugs.apply(HColors.none().bg());</span>
+<span class="fc bfc" id="L1125" title="All 2 branches covered.">				} else if (fill.startsWith(&quot;url(#&quot;)) {</span>
 					// Extract gradient reference: url(#Gradient) -&gt; Gradient
-<span class="fc" id="L1128">					final String gradientId = fill.substring(5, fill.length() - 1);</span>
-<span class="fc" id="L1129">					LOG.fine(&quot;Detected gradient fill: &quot; + gradientId);</span>
-<span class="fc" id="L1130">					final HColor gradientColor = extractGradientColor(gradientId);</span>
-<span class="pc bpc" id="L1131" title="1 of 2 branches missed.">					if (gradientColor != null) {</span>
-<span class="fc" id="L1132">						LOG.fine(&quot;Applied gradient color: &quot; + gradientColor);</span>
+<span class="fc" id="L1127">					final String gradientId = fill.substring(5, fill.length() - 1);</span>
+<span class="fc" id="L1128">					LOG.fine(&quot;Detected gradient fill: &quot; + gradientId);</span>
+<span class="fc" id="L1129">					final HColor gradientColor = extractGradientColor(gradientId);</span>
+<span class="pc bpc" id="L1130" title="1 of 2 branches missed.">					if (gradientColor != null) {</span>
+<span class="fc" id="L1131">						LOG.fine(&quot;Applied gradient color: &quot; + gradientColor);</span>
 						// If no stroke specified, also set as foreground
-<span class="pc bpc" id="L1134" title="1 of 4 branches missed.">						if (stroke == null || stroke.isEmpty()) {</span>
-<span class="fc" id="L1135">							ugs = ugs.apply(gradientColor);</span>
+<span class="pc bpc" id="L1133" title="1 of 4 branches missed.">						if (stroke == null || stroke.isEmpty()) {</span>
+<span class="fc" id="L1134">							ugs = ugs.apply(gradientColor);</span>
 						}
 						// Always set as background/fill
-<span class="fc" id="L1138">						ugs = ugs.apply(gradientColor.bg());</span>
+<span class="fc" id="L1137">						ugs = ugs.apply(gradientColor.bg());</span>
 					} else {
-<span class="nc" id="L1140">						LOG.warning(&quot;Failed to extract gradient color for: &quot; + gradientId);</span>
+<span class="nc" id="L1139">						LOG.warning(&quot;Failed to extract gradient color for: &quot; + gradientId);</span>
 					}
-<span class="fc" id="L1142">				} else {</span>
-<span class="fc" id="L1143">					HColor fc = ugs.getTrueColor(fill);</span>
-<span class="pc bpc" id="L1144" title="1 of 2 branches missed.">					if (fc != null) {</span>
-<span class="pc bpc" id="L1145" title="1 of 4 branches missed.">						if (stroke == null || stroke.isEmpty()) {</span>
-<span class="fc" id="L1146">							ugs = ugs.apply(fc);</span>
+<span class="fc" id="L1141">				} else {</span>
+<span class="fc" id="L1142">					HColor fc = ugs.getTrueColor(fill);</span>
+<span class="pc bpc" id="L1143" title="1 of 2 branches missed.">					if (fc != null) {</span>
+<span class="pc bpc" id="L1144" title="1 of 4 branches missed.">						if (stroke == null || stroke.isEmpty()) {</span>
+<span class="fc" id="L1145">							ugs = ugs.apply(fc);</span>
 						}
-<span class="fc" id="L1148">						ugs = ugs.apply(fc.bg());</span>
+<span class="fc" id="L1147">						ugs = ugs.apply(fc.bg());</span>
 					}
 				}
 			}
 
-<span class="fc" id="L1153">			return ugs;</span>
+<span class="fc" id="L1152">			return ugs;</span>
 		}
 
 		private String getAttrOrStyle(Attributes attrs, String attrName, String styleKey) {
-<span class="fc" id="L1157">			final String styleValue = getStyleValue(attrs, styleKey);</span>
-<span class="pc bpc" id="L1158" title="1 of 4 branches missed.">			if (styleValue != null &amp;&amp; styleValue.isEmpty() == false)</span>
-<span class="fc" id="L1159">				return styleValue;</span>
+<span class="fc" id="L1156">			final String styleValue = getStyleValue(attrs, styleKey);</span>
+<span class="pc bpc" id="L1157" title="1 of 4 branches missed.">			if (styleValue != null &amp;&amp; styleValue.isEmpty() == false)</span>
+<span class="fc" id="L1158">				return styleValue;</span>
 
-<span class="fc" id="L1161">			return attrs.getValue(attrName);</span>
+<span class="fc" id="L1160">			return attrs.getValue(attrName);</span>
 		}
 
 		private String getStyleValue(Attributes attrs, String key) {
-<span class="fc" id="L1165">			final String style = attrs.getValue(&quot;style&quot;);</span>
-<span class="pc bpc" id="L1166" title="1 of 4 branches missed.">			if (style == null || style.isEmpty())</span>
-<span class="fc" id="L1167">				return null;</span>
+<span class="fc" id="L1164">			final String style = attrs.getValue(&quot;style&quot;);</span>
+<span class="pc bpc" id="L1165" title="1 of 4 branches missed.">			if (style == null || style.isEmpty())</span>
+<span class="fc" id="L1166">				return null;</span>
 
-<span class="fc" id="L1169">			final String[] parts = style.split(&quot;;&quot;);</span>
-<span class="fc bfc" id="L1170" title="All 2 branches covered.">			for (String part : parts) {</span>
-<span class="fc" id="L1171">				final int idx = part.indexOf(':');</span>
-<span class="pc bpc" id="L1172" title="1 of 2 branches missed.">				if (idx &lt;= 0)</span>
-<span class="nc" id="L1173">					continue;</span>
+<span class="fc" id="L1168">			final String[] parts = style.split(&quot;;&quot;);</span>
+<span class="fc bfc" id="L1169" title="All 2 branches covered.">			for (String part : parts) {</span>
+<span class="fc" id="L1170">				final int idx = part.indexOf(':');</span>
+<span class="pc bpc" id="L1171" title="1 of 2 branches missed.">				if (idx &lt;= 0)</span>
+<span class="nc" id="L1172">					continue;</span>
 
-<span class="fc" id="L1175">				final String name = part.substring(0, idx).trim();</span>
-<span class="fc bfc" id="L1176" title="All 2 branches covered.">				if (name.equalsIgnoreCase(key))</span>
-<span class="fc" id="L1177">					return part.substring(idx + 1).trim();</span>
+<span class="fc" id="L1174">				final String name = part.substring(0, idx).trim();</span>
+<span class="fc bfc" id="L1175" title="All 2 branches covered.">				if (name.equalsIgnoreCase(key))</span>
+<span class="fc" id="L1176">					return part.substring(idx + 1).trim();</span>
 			}
-<span class="fc" id="L1179">			return null;</span>
+<span class="fc" id="L1178">			return null;</span>
 		}
 
 		// ---- Transform Parsing (Shared DOM/SAX helpers) ----
 
-<span class="fc" id="L1184">		private static final Pattern P_TRANSFORM_OP = Pattern</span>
-<span class="fc" id="L1185">				.compile(&quot;(translate|rotate|scale|matrix)\\s*\\(([^)]*)\\)&quot;);</span>
+<span class="fc" id="L1183">		private static final Pattern P_TRANSFORM_OP = Pattern</span>
+<span class="fc" id="L1184">				.compile(&quot;(translate|rotate|scale|matrix)\\s*\\(([^)]*)\\)&quot;);</span>
 
-<span class="fc" id="L1187">		private static final Pattern P_POINTS_NUMBER = Pattern</span>
-<span class="fc" id="L1188">				.compile(&quot;[+-]?(?:\\d+\\.\\d*|\\.\\d+|\\d+)(?:[eE][+-]?\\d+)?&quot;);</span>
+<span class="fc" id="L1186">		private static final Pattern P_POINTS_NUMBER = Pattern</span>
+<span class="fc" id="L1187">				.compile(&quot;[+-]?(?:\\d+\\.\\d*|\\.\\d+|\\d+)(?:[eE][+-]?\\d+)?&quot;);</span>
 
 		private UGraphicWithScale applyTransform(UGraphicWithScale ugs, String transform) {
-<span class="pc bpc" id="L1191" title="2 of 4 branches missed.">			if (transform == null || transform.isEmpty()) {</span>
-<span class="nc" id="L1192">				return ugs;</span>
+<span class="pc bpc" id="L1190" title="2 of 4 branches missed.">			if (transform == null || transform.isEmpty()) {</span>
+<span class="nc" id="L1191">				return ugs;</span>
 			}
 
-<span class="fc" id="L1195">			Matcher matcher = P_TRANSFORM_OP.matcher(transform);</span>
-<span class="fc bfc" id="L1196" title="All 2 branches covered.">			while (matcher.find()) {</span>
-<span class="fc" id="L1197">				String op = matcher.group(1);</span>
-<span class="fc" id="L1198">				double[] values = parseNumberList(matcher.group(2));</span>
+<span class="fc" id="L1194">			Matcher matcher = P_TRANSFORM_OP.matcher(transform);</span>
+<span class="fc bfc" id="L1195" title="All 2 branches covered.">			while (matcher.find()) {</span>
+<span class="fc" id="L1196">				String op = matcher.group(1);</span>
+<span class="fc" id="L1197">				double[] values = parseNumberList(matcher.group(2));</span>
 
-<span class="fc bfc" id="L1200" title="All 2 branches covered.">				if (&quot;translate&quot;.equals(op)) {</span>
-<span class="pc bpc" id="L1201" title="1 of 2 branches missed.">					double tx = values.length &gt; 0 ? values[0] : 0;</span>
-<span class="pc bpc" id="L1202" title="1 of 2 branches missed.">					double ty = values.length &gt; 1 ? values[1] : 0;</span>
-<span class="fc" id="L1203">					ugs = ugs.applyTranslate(tx, ty);</span>
-<span class="fc bfc" id="L1204" title="All 2 branches covered.">				} else if (&quot;scale&quot;.equals(op)) {</span>
-<span class="pc bpc" id="L1205" title="1 of 2 branches missed.">					double sx = values.length &gt; 0 ? values[0] : 1;</span>
-<span class="pc bpc" id="L1206" title="1 of 2 branches missed.">					double sy = values.length &gt; 1 ? values[1] : sx;</span>
-<span class="pc bpc" id="L1207" title="1 of 2 branches missed.">					if (sx == sy) {</span>
-<span class="fc" id="L1208">						ugs = ugs.applyScale(sx, sy);</span>
+<span class="fc bfc" id="L1199" title="All 2 branches covered.">				if (&quot;translate&quot;.equals(op)) {</span>
+<span class="pc bpc" id="L1200" title="1 of 2 branches missed.">					double tx = values.length &gt; 0 ? values[0] : 0;</span>
+<span class="pc bpc" id="L1201" title="1 of 2 branches missed.">					double ty = values.length &gt; 1 ? values[1] : 0;</span>
+<span class="fc" id="L1202">					ugs = ugs.applyTranslate(tx, ty);</span>
+<span class="fc bfc" id="L1203" title="All 2 branches covered.">				} else if (&quot;scale&quot;.equals(op)) {</span>
+<span class="pc bpc" id="L1204" title="1 of 2 branches missed.">					double sx = values.length &gt; 0 ? values[0] : 1;</span>
+<span class="pc bpc" id="L1205" title="1 of 2 branches missed.">					double sy = values.length &gt; 1 ? values[1] : sx;</span>
+<span class="pc bpc" id="L1206" title="1 of 2 branches missed.">					if (sx == sy) {</span>
+<span class="fc" id="L1207">						ugs = ugs.applyScale(sx, sy);</span>
 					} else {
-<span class="nc" id="L1210">						ugs = ugs.applyMatrix(sx, 0, 0, sy, 0, 0);</span>
+<span class="nc" id="L1209">						ugs = ugs.applyMatrix(sx, 0, 0, sy, 0, 0);</span>
 					}
-<span class="fc bfc" id="L1212" title="All 2 branches covered.">				} else if (&quot;rotate&quot;.equals(op)) {</span>
-<span class="pc bpc" id="L1213" title="1 of 2 branches missed.">					double angle = values.length &gt; 0 ? values[0] : 0;</span>
-<span class="pc bpc" id="L1214" title="1 of 2 branches missed.">					double cx = values.length &gt; 2 ? values[1] : 0;</span>
-<span class="pc bpc" id="L1215" title="1 of 2 branches missed.">					double cy = values.length &gt; 2 ? values[2] : 0;</span>
-<span class="fc" id="L1216">					ugs = ugs.applyRotate(angle, cx, cy);</span>
-<span class="pc bpc" id="L1217" title="1 of 2 branches missed.">				} else if (&quot;matrix&quot;.equals(op)) {</span>
-<span class="pc bpc" id="L1218" title="1 of 2 branches missed.">					if (values.length &gt;= 6) {</span>
-<span class="fc" id="L1219">						ugs = ugs.applyMatrix(values[0], values[1], values[2], values[3], values[4], values[5]);</span>
+<span class="fc bfc" id="L1211" title="All 2 branches covered.">				} else if (&quot;rotate&quot;.equals(op)) {</span>
+<span class="pc bpc" id="L1212" title="1 of 2 branches missed.">					double angle = values.length &gt; 0 ? values[0] : 0;</span>
+<span class="pc bpc" id="L1213" title="1 of 2 branches missed.">					double cx = values.length &gt; 2 ? values[1] : 0;</span>
+<span class="pc bpc" id="L1214" title="1 of 2 branches missed.">					double cy = values.length &gt; 2 ? values[2] : 0;</span>
+<span class="fc" id="L1215">					ugs = ugs.applyRotate(angle, cx, cy);</span>
+<span class="pc bpc" id="L1216" title="1 of 2 branches missed.">				} else if (&quot;matrix&quot;.equals(op)) {</span>
+<span class="pc bpc" id="L1217" title="1 of 2 branches missed.">					if (values.length &gt;= 6) {</span>
+<span class="fc" id="L1218">						ugs = ugs.applyMatrix(values[0], values[1], values[2], values[3], values[4], values[5]);</span>
 					}
 				}
-<span class="fc" id="L1222">			}</span>
+<span class="fc" id="L1221">			}</span>
 
-<span class="fc" id="L1224">			return ugs;</span>
+<span class="fc" id="L1223">			return ugs;</span>
 		}
 
 		private double[] parseNumberList(String raw) {
-<span class="pc bpc" id="L1228" title="2 of 4 branches missed.">			if (raw == null || raw.trim().isEmpty()) {</span>
-<span class="nc" id="L1229">				return new double[0];</span>
+<span class="pc bpc" id="L1227" title="2 of 4 branches missed.">			if (raw == null || raw.trim().isEmpty()) {</span>
+<span class="nc" id="L1228">				return new double[0];</span>
 			}
-<span class="fc" id="L1231">			String[] parts = raw.trim().split(&quot;[,\\s]+&quot;);</span>
-<span class="fc" id="L1232">			double[] values = new double[parts.length];</span>
-<span class="fc" id="L1233">			int idx = 0;</span>
-<span class="fc bfc" id="L1234" title="All 2 branches covered.">			for (String part : parts) {</span>
-<span class="pc bpc" id="L1235" title="1 of 2 branches missed.">				if (part.isEmpty()) {</span>
-<span class="nc" id="L1236">					continue;</span>
+<span class="fc" id="L1230">			String[] parts = raw.trim().split(&quot;[,\\s]+&quot;);</span>
+<span class="fc" id="L1231">			double[] values = new double[parts.length];</span>
+<span class="fc" id="L1232">			int idx = 0;</span>
+<span class="fc bfc" id="L1233" title="All 2 branches covered.">			for (String part : parts) {</span>
+<span class="pc bpc" id="L1234" title="1 of 2 branches missed.">				if (part.isEmpty()) {</span>
+<span class="nc" id="L1235">					continue;</span>
 				}
 				try {
-<span class="fc" id="L1239">					values[idx++] = Double.parseDouble(part);</span>
-<span class="nc" id="L1240">				} catch (NumberFormatException e) {</span>
+<span class="fc" id="L1238">					values[idx++] = Double.parseDouble(part);</span>
+<span class="nc" id="L1239">				} catch (NumberFormatException e) {</span>
 					// ignore invalid numbers
-<span class="fc" id="L1242">				}</span>
+<span class="fc" id="L1241">				}</span>
 			}
-<span class="pc bpc" id="L1244" title="1 of 2 branches missed.">			if (idx == values.length) {</span>
-<span class="fc" id="L1245">				return values;</span>
+<span class="pc bpc" id="L1243" title="1 of 2 branches missed.">			if (idx == values.length) {</span>
+<span class="fc" id="L1244">				return values;</span>
 			}
-<span class="nc" id="L1247">			double[] trimmed = new double[idx];</span>
-<span class="nc" id="L1248">			System.arraycopy(values, 0, trimmed, 0, idx);</span>
-<span class="nc" id="L1249">			return trimmed;</span>
+<span class="nc" id="L1246">			double[] trimmed = new double[idx];</span>
+<span class="nc" id="L1247">			System.arraycopy(values, 0, trimmed, 0, idx);</span>
+<span class="nc" id="L1248">			return trimmed;</span>
 		}
 
 		// ---- Font/Text Helpers (Shared DOM/SAX helpers) ----
 
 		private static int parseFontSize(String fontSizeStr, int defaultSize) {
-<span class="pc bpc" id="L1255" title="2 of 4 branches missed.">			if (fontSizeStr == null || fontSizeStr.isEmpty()) {</span>
-<span class="nc" id="L1256">				return defaultSize;</span>
+<span class="pc bpc" id="L1254" title="2 of 4 branches missed.">			if (fontSizeStr == null || fontSizeStr.isEmpty()) {</span>
+<span class="nc" id="L1255">				return defaultSize;</span>
 			}
 
 			try {
-<span class="fc" id="L1260">				String cleaned = fontSizeStr.trim().replaceAll(&quot;(?i)(px|pt|em|rem)$&quot;, &quot;&quot;);</span>
-<span class="fc" id="L1261">				return Integer.parseInt(cleaned);</span>
-<span class="nc" id="L1262">			} catch (NumberFormatException e) {</span>
-<span class="nc" id="L1263">				return defaultSize;</span>
+<span class="fc" id="L1259">				String cleaned = fontSizeStr.trim().replaceAll(&quot;(?i)(px|pt|em|rem)$&quot;, &quot;&quot;);</span>
+<span class="fc" id="L1260">				return Integer.parseInt(cleaned);</span>
+<span class="nc" id="L1261">			} catch (NumberFormatException e) {</span>
+<span class="nc" id="L1262">				return defaultSize;</span>
 			}
 		}
 
@@ -1283,50 +1282,50 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 		 *         {@link UFontFactory#build(String, UFontFace, int)}
 		 */
 		private static UFontFace parseFontFace(String fontWeight, String fontStyle) {
-<span class="fc" id="L1286">			UFontFace face = UFontFace.normal();</span>
+<span class="fc" id="L1285">			UFontFace face = UFontFace.normal();</span>
 
-<span class="pc bpc" id="L1288" title="1 of 4 branches missed.">			if (fontWeight != null &amp;&amp; !fontWeight.isEmpty()) {</span>
-<span class="fc" id="L1289">				final UFontFace wf = UFontFace.fromCssWeight(fontWeight.trim());</span>
-<span class="pc bpc" id="L1290" title="1 of 2 branches missed.">				if (wf != null)</span>
-<span class="fc" id="L1291">					face = face.withWeight(wf.getCssWeight());</span>
+<span class="pc bpc" id="L1287" title="1 of 4 branches missed.">			if (fontWeight != null &amp;&amp; !fontWeight.isEmpty()) {</span>
+<span class="fc" id="L1288">				final UFontFace wf = UFontFace.fromCssWeight(fontWeight.trim());</span>
+<span class="pc bpc" id="L1289" title="1 of 2 branches missed.">				if (wf != null)</span>
+<span class="fc" id="L1290">					face = face.withWeight(wf.getCssWeight());</span>
 			}
 
-<span class="pc bpc" id="L1294" title="1 of 4 branches missed.">			if (fontStyle != null &amp;&amp; !fontStyle.isEmpty()) {</span>
-<span class="fc" id="L1295">				final String s = fontStyle.trim();</span>
-<span class="fc bfc" id="L1296" title="All 4 branches covered.">				if (&quot;italic&quot;.equalsIgnoreCase(s) || &quot;oblique&quot;.equalsIgnoreCase(s))</span>
-<span class="fc" id="L1297">					face = face.withStyle(UFontStyle.ITALIC);</span>
+<span class="pc bpc" id="L1293" title="1 of 4 branches missed.">			if (fontStyle != null &amp;&amp; !fontStyle.isEmpty()) {</span>
+<span class="fc" id="L1294">				final String s = fontStyle.trim();</span>
+<span class="fc bfc" id="L1295" title="All 4 branches covered.">				if (&quot;italic&quot;.equalsIgnoreCase(s) || &quot;oblique&quot;.equalsIgnoreCase(s))</span>
+<span class="fc" id="L1296">					face = face.withStyle(UFontStyle.ITALIC);</span>
 			}
 
-<span class="fc" id="L1300">			return face;</span>
+<span class="fc" id="L1299">			return face;</span>
 		}
 
 		private static FontConfiguration applyTextDecoration(FontConfiguration fontConfig, String textDecoration) {
-<span class="pc bpc" id="L1304" title="1 of 6 branches missed.">			if (textDecoration == null || textDecoration.isEmpty() || &quot;none&quot;.equalsIgnoreCase(textDecoration)) {</span>
-<span class="fc" id="L1305">				return fontConfig;</span>
+<span class="pc bpc" id="L1303" title="1 of 6 branches missed.">			if (textDecoration == null || textDecoration.isEmpty() || &quot;none&quot;.equalsIgnoreCase(textDecoration)) {</span>
+<span class="fc" id="L1304">				return fontConfig;</span>
 			}
 
-<span class="fc bfc" id="L1308" title="All 2 branches covered.">			if (textDecoration.contains(&quot;underline&quot;)) {</span>
-<span class="fc" id="L1309">				fontConfig = fontConfig.add(FontStyle.UNDERLINE);</span>
+<span class="fc bfc" id="L1307" title="All 2 branches covered.">			if (textDecoration.contains(&quot;underline&quot;)) {</span>
+<span class="fc" id="L1308">				fontConfig = fontConfig.add(FontStyle.UNDERLINE);</span>
 			}
 
-<span class="fc bfc" id="L1312" title="All 2 branches covered.">			if (textDecoration.contains(&quot;line-through&quot;)) {</span>
-<span class="fc" id="L1313">				fontConfig = fontConfig.add(FontStyle.STRIKE);</span>
+<span class="fc bfc" id="L1311" title="All 2 branches covered.">			if (textDecoration.contains(&quot;line-through&quot;)) {</span>
+<span class="fc" id="L1312">				fontConfig = fontConfig.add(FontStyle.STRIKE);</span>
 			}
 
-<span class="fc" id="L1316">			return fontConfig;</span>
+<span class="fc" id="L1315">			return fontConfig;</span>
 		}
 
 		// ---- Utility Methods ----
 
 		private double getDoubleAttr(Attributes attrs, String name, double defaultValue) {
-<span class="fc" id="L1322">			String value = attrs.getValue(name);</span>
-<span class="pc bpc" id="L1323" title="1 of 4 branches missed.">			if (value == null || value.isEmpty()) {</span>
-<span class="fc" id="L1324">				return defaultValue;</span>
+<span class="fc" id="L1321">			String value = attrs.getValue(name);</span>
+<span class="pc bpc" id="L1322" title="1 of 4 branches missed.">			if (value == null || value.isEmpty()) {</span>
+<span class="fc" id="L1323">				return defaultValue;</span>
 			}
 			try {
-<span class="fc" id="L1327">				return Double.parseDouble(value);</span>
-<span class="nc" id="L1328">			} catch (NumberFormatException e) {</span>
-<span class="nc" id="L1329">				return defaultValue;</span>
+<span class="fc" id="L1326">				return Double.parseDouble(value);</span>
+<span class="nc" id="L1327">			} catch (NumberFormatException e) {</span>
+<span class="nc" id="L1328">				return defaultValue;</span>
 			}
 		}
 	}
@@ -1339,91 +1338,91 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 		final String className;
 		final String transform;
 
-<span class="fc" id="L1342">		GroupState(Attributes attrs) {</span>
-<span class="fc" id="L1343">			this.id = attrs.getValue(&quot;id&quot;);</span>
-<span class="fc" id="L1344">			this.className = attrs.getValue(&quot;class&quot;);</span>
-<span class="fc" id="L1345">			this.transform = attrs.getValue(&quot;transform&quot;);</span>
-<span class="fc" id="L1346">		}</span>
+<span class="fc" id="L1341">		GroupState(Attributes attrs) {</span>
+<span class="fc" id="L1342">			this.id = attrs.getValue(&quot;id&quot;);</span>
+<span class="fc" id="L1343">			this.className = attrs.getValue(&quot;class&quot;);</span>
+<span class="fc" id="L1344">			this.transform = attrs.getValue(&quot;transform&quot;);</span>
+<span class="fc" id="L1345">		}</span>
 	}
 
 	private static class DataImage {
 		private final PortableImage image;
 
-<span class="fc" id="L1352">		private DataImage(PortableImage image) {</span>
-<span class="fc" id="L1353">			this.image = image;</span>
-<span class="fc" id="L1354">		}</span>
+<span class="fc" id="L1351">		private DataImage(PortableImage image) {</span>
+<span class="fc" id="L1352">			this.image = image;</span>
+<span class="fc" id="L1353">		}</span>
 	}
 
 	/**
 	 * Adapter to make SAX Attributes persist beyond the event callback.
 	 */
 	private static class AttributesAdapter implements Attributes {
-<span class="fc" id="L1361">		private final Map&lt;String, String&gt; attrs = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L1360">		private final Map&lt;String, String&gt; attrs = new HashMap&lt;&gt;();</span>
 
-<span class="fc" id="L1363">		AttributesAdapter(Attributes source) {</span>
-<span class="fc bfc" id="L1364" title="All 2 branches covered.">			for (int i = 0; i &lt; source.getLength(); i++) {</span>
-<span class="fc" id="L1365">				attrs.put(source.getQName(i), source.getValue(i));</span>
+<span class="fc" id="L1362">		AttributesAdapter(Attributes source) {</span>
+<span class="fc bfc" id="L1363" title="All 2 branches covered.">			for (int i = 0; i &lt; source.getLength(); i++) {</span>
+<span class="fc" id="L1364">				attrs.put(source.getQName(i), source.getValue(i));</span>
 			}
-<span class="fc" id="L1367">		}</span>
+<span class="fc" id="L1366">		}</span>
 
 		@Override
 		public int getLength() {
-<span class="nc" id="L1371">			return attrs.size();</span>
+<span class="nc" id="L1370">			return attrs.size();</span>
 		}
 
 		@Override
 		public String getURI(int index) {
-<span class="nc" id="L1376">			return &quot;&quot;;</span>
+<span class="nc" id="L1375">			return &quot;&quot;;</span>
 		}
 
 		@Override
 		public String getLocalName(int index) {
-<span class="nc" id="L1381">			return getQName(index);</span>
+<span class="nc" id="L1380">			return getQName(index);</span>
 		}
 
 		@Override
 		public String getQName(int index) {
-<span class="nc" id="L1386">			return new ArrayList&lt;&gt;(attrs.keySet()).get(index);</span>
+<span class="nc" id="L1385">			return new ArrayList&lt;&gt;(attrs.keySet()).get(index);</span>
 		}
 
 		@Override
 		public String getType(int index) {
-<span class="nc" id="L1391">			return &quot;CDATA&quot;;</span>
+<span class="nc" id="L1390">			return &quot;CDATA&quot;;</span>
 		}
 
 		@Override
 		public String getValue(int index) {
-<span class="nc" id="L1396">			return attrs.get(getQName(index));</span>
+<span class="nc" id="L1395">			return attrs.get(getQName(index));</span>
 		}
 
 		@Override
 		public int getIndex(String uri, String localName) {
-<span class="nc" id="L1401">			return new ArrayList&lt;&gt;(attrs.keySet()).indexOf(localName);</span>
+<span class="nc" id="L1400">			return new ArrayList&lt;&gt;(attrs.keySet()).indexOf(localName);</span>
 		}
 
 		@Override
 		public int getIndex(String qName) {
-<span class="nc" id="L1406">			return new ArrayList&lt;&gt;(attrs.keySet()).indexOf(qName);</span>
+<span class="nc" id="L1405">			return new ArrayList&lt;&gt;(attrs.keySet()).indexOf(qName);</span>
 		}
 
 		@Override
 		public String getType(String uri, String localName) {
-<span class="nc" id="L1411">			return &quot;CDATA&quot;;</span>
+<span class="nc" id="L1410">			return &quot;CDATA&quot;;</span>
 		}
 
 		@Override
 		public String getType(String qName) {
-<span class="nc" id="L1416">			return &quot;CDATA&quot;;</span>
+<span class="nc" id="L1415">			return &quot;CDATA&quot;;</span>
 		}
 
 		@Override
 		public String getValue(String uri, String localName) {
-<span class="nc" id="L1421">			return attrs.get(localName);</span>
+<span class="nc" id="L1420">			return attrs.get(localName);</span>
 		}
 
 		@Override
 		public String getValue(String qName) {
-<span class="fc" id="L1426">			return attrs.get(qName);</span>
+<span class="fc" id="L1425">			return attrs.get(qName);</span>
 		}
 	}
 }

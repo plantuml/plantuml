@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.timingdiagram.graphic.PanelsBinary;
 import net.sourceforge.plantuml.timingdiagram.graphic.Panels;
 
@@ -53,52 +52,52 @@ public class PlayerBinary extends Player {
 	private static final String LOW_STRING = &quot;0&quot;;
 	private static final String HIGH_STRING = &quot;1&quot;;
 
-<span class="fc" id="L56">	private final List&lt;TimeConstraint&gt; constraints = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L57">	private final SortedMap&lt;TimeTick, ChangeState&gt; values = new TreeMap&lt;&gt;();</span>
+<span class="fc" id="L55">	private final List&lt;TimeConstraint&gt; constraints = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L56">	private final SortedMap&lt;TimeTick, ChangeState&gt; values = new TreeMap&lt;&gt;();</span>
 	private ChangeState initialState;
 
 	public PlayerBinary(String code, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype) {
-<span class="fc" id="L61">		super(code, skinParam, ruler, compact, stereotype, null, SName.binary, 30);</span>
-<span class="fc" id="L62">	}</span>
+<span class="fc" id="L60">		super(code, skinParam, ruler, compact, stereotype, null, SName.binary, 30);</span>
+<span class="fc" id="L61">	}</span>
 
 	@Override
 	protected Panels buildPlayerPanels() {
-<span class="fc" id="L66">		return new PanelsBinary(getRuler(), getSkinParam(), getSuggestedHeight(), getStyle(), values, constraints,</span>
-<span class="fc" id="L67">				initialState, getNotes());</span>
+<span class="fc" id="L65">		return new PanelsBinary(getRuler(), getSkinParam(), getSuggestedHeight(), getStyle(), values, constraints,</span>
+<span class="fc" id="L66">				initialState, getNotes());</span>
 
 	}
 
 	@Override
 	public void defineState(String stateCode, String label) {
-<span class="nc" id="L73">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L72">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void setState(TimeTick now, String comment, Colors color, String... states) {
-<span class="fc" id="L78">		final ChangeState cs = new ChangeState(now, comment, color, convert(states));</span>
-<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (now == null)</span>
-<span class="nc" id="L80">			this.initialState = cs;</span>
+<span class="fc" id="L77">		final ChangeState cs = new ChangeState(now, comment, color, convert(states));</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (now == null)</span>
+<span class="nc" id="L79">			this.initialState = cs;</span>
 		else
-<span class="fc" id="L82">			this.values.put(now, cs);</span>
+<span class="fc" id="L81">			this.values.put(now, cs);</span>
 
-<span class="fc" id="L84">	}</span>
+<span class="fc" id="L83">	}</span>
 
 	private String[] convert(String[] states) {
-<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (states.length == 1)</span>
-<span class="fc" id="L88">			return new String[] { convert(states[0]) };</span>
-<span class="nc" id="L89">		return new String[] { convert(states[0]), convert(states[1]) };</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		if (states.length == 1)</span>
+<span class="fc" id="L87">			return new String[] { convert(states[0]) };</span>
+<span class="nc" id="L88">		return new String[] { convert(states[0]), convert(states[1]) };</span>
 	}
 
 	private String convert(String value) {
-<span class="pc bpc" id="L93" title="1 of 4 branches missed.">		if (&quot;1&quot;.equals(value) || &quot;high&quot;.equalsIgnoreCase(value))</span>
-<span class="fc" id="L94">			return HIGH_STRING;</span>
-<span class="fc" id="L95">		return LOW_STRING;</span>
+<span class="pc bpc" id="L92" title="1 of 4 branches missed.">		if (&quot;1&quot;.equals(value) || &quot;high&quot;.equalsIgnoreCase(value))</span>
+<span class="fc" id="L93">			return HIGH_STRING;</span>
+<span class="fc" id="L94">		return LOW_STRING;</span>
 	}
 
 	@Override
 	public void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config) {
-<span class="nc" id="L100">		this.constraints.add(new TimeConstraint(2.5, tick1, tick2, message, getSkinParam(), config));</span>
-<span class="nc" id="L101">	}</span>
+<span class="nc" id="L99">		this.constraints.add(new TimeConstraint(2.5, tick1, tick2, message, getSkinParam(), config));</span>
+<span class="nc" id="L100">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

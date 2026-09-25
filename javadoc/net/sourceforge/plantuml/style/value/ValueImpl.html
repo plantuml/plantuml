@@ -157,9 +157,7 @@ implements <a href="Value.html" title="interface in net.sourceforge.plantuml.sty
  <a href="Specificity.html" title="class in net.sourceforge.plantuml.style.value">Specificity</a>&nbsp;specificity)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">A value that may already carry both a light and a dark half at an explicit specificity --
-
  unlike <a href="#regular(java.lang.String,net.sourceforge.plantuml.style.AutomaticCounter)"><code>regular(java.lang.String, net.sourceforge.plantuml.style.AutomaticCounter)</code></a> and <a href="#dark(java.lang.String,net.sourceforge.plantuml.style.AutomaticCounter)"><code>dark(java.lang.String, net.sourceforge.plantuml.style.AutomaticCounter)</code></a>, which always create a one-sided value from a
-
  counter.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ValueImpl.html" title="class in net.sourceforge.plantuml.style.value">ValueImpl</a></code></div>
@@ -224,17 +222,11 @@ implements <a href="Value.html" title="interface in net.sourceforge.plantuml.sty
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;dark,
  <a href="Specificity.html" title="class in net.sourceforge.plantuml.style.value">Specificity</a>&nbsp;specificity)</span></div>
 <div class="block">A value that may already carry both a light and a dark half at an explicit specificity --
-
  unlike <a href="#regular(java.lang.String,net.sourceforge.plantuml.style.AutomaticCounter)"><code>regular(java.lang.String, net.sourceforge.plantuml.style.AutomaticCounter)</code></a> and <a href="#dark(java.lang.String,net.sourceforge.plantuml.style.AutomaticCounter)"><code>dark(java.lang.String, net.sourceforge.plantuml.style.AutomaticCounter)</code></a>, which always create a one-sided value from a
-
  counter. Used when converting an already-resolved
-
  <code>net.sourceforge.plantuml.style.parser2.PrioritizedValue</code> (light and dark already
-
  folded together by <code>MergedStyleNode#mergeRule</code>) back into this legacy representation,
-
  so that fold is not redone here. Either <code>light</code> or <code>dark</code> (never both) may be
-
  null.</div>
 </section>
 </li>

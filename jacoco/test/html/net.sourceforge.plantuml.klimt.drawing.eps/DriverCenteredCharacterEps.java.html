@@ -40,27 +40,25 @@ import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.font.UFont;
-import net.sourceforge.plantuml.klimt.font.UFontContext;
 import net.sourceforge.plantuml.klimt.font.UnusedSpace;
 import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
-import net.sourceforge.plantuml.klimt.shape.UText;
 
-<span class="fc" id="L48">public class DriverCenteredCharacterEps implements UDriver&lt;UCenteredCharacter, EpsGraphics&gt; {</span>
+<span class="fc" id="L46">public class DriverCenteredCharacterEps implements UDriver&lt;UCenteredCharacter, EpsGraphics&gt; {</span>
 	
 
 	public void draw(UCenteredCharacter centeredCharacter, double x, double y, ColorMapper mapper, UParam param,
 			EpsGraphics eps) {
-<span class="nc" id="L53">		final char c = centeredCharacter.getChar();</span>
-<span class="nc" id="L54">		final UFont font = centeredCharacter.getFont();</span>
-<span class="nc" id="L55">		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);</span>
+<span class="nc" id="L51">		final char c = centeredCharacter.getChar();</span>
+<span class="nc" id="L52">		final UFont font = centeredCharacter.getFont();</span>
+<span class="nc" id="L53">		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);</span>
 
-<span class="nc" id="L57">		final double xpos = x - unusedSpace.getCenterX() - 0.5;</span>
-<span class="nc" id="L58">		final double ypos = y - unusedSpace.getCenterY() - 0.5;</span>
+<span class="nc" id="L55">		final double xpos = x - unusedSpace.getCenterX() - 0.5;</span>
+<span class="nc" id="L56">		final double ypos = y - unusedSpace.getCenterY() - 0.5;</span>
 
-<span class="nc" id="L60">		final TextLayout t = font.createTextLayout(&quot;&quot; + c);</span>
-<span class="nc" id="L61">		eps.setStrokeColor(param.getColor().toColor(mapper));</span>
-<span class="nc" id="L62">		DriverTextEps.drawPathIterator(eps, xpos, ypos, t.getOutline(null));</span>
-<span class="nc" id="L63">	}</span>
+<span class="nc" id="L58">		final TextLayout t = font.createTextLayout(&quot;&quot; + c);</span>
+<span class="nc" id="L59">		eps.setStrokeColor(param.getColor().toColor(mapper));</span>
+<span class="nc" id="L60">		DriverTextEps.drawPathIterator(eps, xpos, ypos, t.getOutline(null));</span>
+<span class="nc" id="L61">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

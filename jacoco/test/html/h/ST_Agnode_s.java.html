@@ -45,17 +45,15 @@
  */
 package h;
 
-import static smetana.core.Macro.ND_order;
-import static smetana.core.Macro.ND_rank;
 
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
 
-<span class="fc" id="L54">final public class ST_Agnode_s extends ST_Agobj_s {</span>
+<span class="fc" id="L52">final public class ST_Agnode_s extends ST_Agobj_s {</span>
 
-<span class="fc" id="L56">	public final ST_Agobj_s base = this;</span>
+<span class="fc" id="L54">	public final ST_Agobj_s base = this;</span>
 	public ST_Agraph_s root;
-<span class="fc" id="L58">	public final ST_Agsubnode_s mainsub = new ST_Agsubnode_s();</span>
+<span class="fc" id="L56">	public final ST_Agsubnode_s mainsub = new ST_Agsubnode_s();</span>
 
 	public String NAME;
 
@@ -70,13 +68,13 @@ import smetana.core.__struct__;
 
 	@Override
 	public void ___(__struct__ arg) {
-<span class="nc" id="L73">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L71">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public boolean isSameThan(__ptr__ other) {
-<span class="nc" id="L78">		ST_Agnode_s other2 = (ST_Agnode_s) other;</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		return this == other2;</span>
+<span class="nc" id="L76">		ST_Agnode_s other2 = (ST_Agnode_s) other;</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		return this == other2;</span>
 	}
 
 }
