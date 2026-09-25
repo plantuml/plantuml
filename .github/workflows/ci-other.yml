@@ -13,6 +13,14 @@ defaults:
 
 jobs:
 
+  lint:
+    name: Super-Linter
+    permissions:
+      contents: read
+      packages: read
+      statuses: write
+    uses: ./.github/workflows/super-linter.yml
+
   jdk8:
     name: Build & Run with Ant (Java 8)
     runs-on: ubuntu-latest
