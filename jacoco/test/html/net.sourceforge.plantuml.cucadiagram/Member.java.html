@@ -148,8 +148,8 @@ public class Member implements CharSequence {
 <span class="fc" id="L148">	}</span>
 
 	public String getDisplay(boolean withVisibilityChar) {
-<span class="pc bpc" id="L151" title="1 of 2 branches missed.">		if (withVisibilityChar)</span>
-<span class="nc" id="L152">			return getDisplayWithVisibilityChar();</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">		if (withVisibilityChar)</span>
+<span class="fc" id="L152">			return getDisplayWithVisibilityChar();</span>
 
 <span class="fc" id="L154">		return getDisplayWithoutVisibilityChar();</span>
 	}
@@ -159,22 +159,22 @@ public class Member implements CharSequence {
 	}
 
 	private String getDisplayWithVisibilityChar() {
-<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (isPrivate())</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">		if (isPrivate())</span>
 <span class="nc" id="L163">			return &quot;-&quot; + display;</span>
 
-<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (isPublic())</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		if (isPublic())</span>
 <span class="nc" id="L166">			return &quot;+&quot; + display;</span>
 
-<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (isPackagePrivate())</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">		if (isPackagePrivate())</span>
 <span class="nc" id="L169">			return &quot;~&quot; + display;</span>
 
-<span class="nc bnc" id="L171" title="All 2 branches missed.">		if (isProtected())</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">		if (isProtected())</span>
 <span class="nc" id="L172">			return &quot;#&quot; + display;</span>
 
-<span class="nc bnc" id="L174" title="All 2 branches missed.">		if (isIEMandatory())</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		if (isIEMandatory())</span>
 <span class="nc" id="L175">			return &quot;*&quot; + display;</span>
 
-<span class="nc" id="L177">		return display;</span>
+<span class="fc" id="L177">		return display;</span>
 	}
 
 	@Override
@@ -197,27 +197,27 @@ public class Member implements CharSequence {
 	}
 
 	private boolean isPrivate() {
-<span class="nc bnc" id="L200" title="All 4 branches missed.">		return visibilityModifier == VisibilityModifier.PRIVATE_FIELD</span>
+<span class="pc bpc" id="L200" title="2 of 4 branches missed.">		return visibilityModifier == VisibilityModifier.PRIVATE_FIELD</span>
 				|| visibilityModifier == VisibilityModifier.PRIVATE_METHOD;
 	}
 
 	private boolean isProtected() {
-<span class="nc bnc" id="L205" title="All 4 branches missed.">		return visibilityModifier == VisibilityModifier.PROTECTED_FIELD</span>
+<span class="pc bpc" id="L205" title="2 of 4 branches missed.">		return visibilityModifier == VisibilityModifier.PROTECTED_FIELD</span>
 				|| visibilityModifier == VisibilityModifier.PROTECTED_METHOD;
 	}
 
 	private boolean isPublic() {
-<span class="nc bnc" id="L210" title="All 4 branches missed.">		return visibilityModifier == VisibilityModifier.PUBLIC_FIELD</span>
+<span class="pc bpc" id="L210" title="2 of 4 branches missed.">		return visibilityModifier == VisibilityModifier.PUBLIC_FIELD</span>
 				|| visibilityModifier == VisibilityModifier.PUBLIC_METHOD;
 	}
 
 	private boolean isPackagePrivate() {
-<span class="nc bnc" id="L215" title="All 4 branches missed.">		return visibilityModifier == VisibilityModifier.PACKAGE_PRIVATE_FIELD</span>
+<span class="pc bpc" id="L215" title="2 of 4 branches missed.">		return visibilityModifier == VisibilityModifier.PACKAGE_PRIVATE_FIELD</span>
 				|| visibilityModifier == VisibilityModifier.PACKAGE_PRIVATE_METHOD;
 	}
 
 	private boolean isIEMandatory() {
-<span class="nc bnc" id="L220" title="All 2 branches missed.">		return visibilityModifier == VisibilityModifier.IE_MANDATORY;</span>
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">		return visibilityModifier == VisibilityModifier.IE_MANDATORY;</span>
 	}
 
 	public final VisibilityModifier getVisibilityModifier() {

@@ -1562,7 +1562,7 @@ try {
 	
 	/* construct reverse topological sort order in temprank */
 <span class="fc bfc" id="L1564" title="All 2 branches covered.">	for (i = 0; i &lt; GD_rank(g).get__(r).n; i++) {</span>
-<span class="pc bpc" id="L1565" title="1 of 2 branches missed.">	    if (GD_flip(g)) v = (ST_Agnode_s) GD_rank(g).get__(r).v.get_(i);</span>
+<span class="fc bfc" id="L1565" title="All 2 branches covered.">	    if (GD_flip(g)) v = (ST_Agnode_s) GD_rank(g).get__(r).v.get_(i);</span>
 <span class="fc" id="L1566">	    else v = GD_rank(g).get__(r).v.get_(GD_rank(g).get__(r).n - i - 1);</span>
 	    
 <span class="fc" id="L1568">	    local_in_cnt = local_out_cnt = 0;</span>
@@ -1586,7 +1586,7 @@ try {
 	}
 	
 <span class="pc bpc" id="L1588" title="1 of 2 branches missed.">	if (pos!=0) {</span>
-<span class="pc bpc" id="L1589" title="1 of 2 branches missed.">	    if (GD_flip(g) == false) {</span>
+<span class="fc bfc" id="L1589" title="All 2 branches covered.">	    if (GD_flip(g) == false) {</span>
 <span class="fc" id="L1590">		left = temprank;</span>
 <span class="fc" id="L1591">		right = temprank.plus_(pos - 1);</span>
 <span class="fc bfc" id="L1592" title="All 2 branches covered.">		while (left.comparePointer_(right) &lt; 0) {</span>
@@ -1608,8 +1608,8 @@ try {
 <span class="fc" id="L1608">		v = GD_rank(g).get__(r).v.get_(i);</span>
 <span class="fc bfc" id="L1609" title="All 2 branches covered.">		if (ND_flat_out(v).list!=null) {</span>
 <span class="fc bfc" id="L1610" title="All 2 branches covered.">		    for (j = 0; (e = (ST_Agedge_s) ND_flat_out(v).list.get_(j))!=null; j++) {</span>
-<span class="pc bpc" id="L1611" title="2 of 4 branches missed.">			if ( ((GD_flip(g) == false) &amp;&amp; (ND_order(aghead(e)) &lt; ND_order(agtail(e)))) ||</span>
-<span class="pc bpc" id="L1612" title="3 of 4 branches missed.">				 ( (GD_flip(g)) &amp;&amp; (ND_order(aghead(e)) &gt; ND_order(agtail(e)) ))) {</span>
+<span class="pc bpc" id="L1611" title="1 of 4 branches missed.">			if ( ((GD_flip(g) == false) &amp;&amp; (ND_order(aghead(e)) &lt; ND_order(agtail(e)))) ||</span>
+<span class="pc bpc" id="L1612" title="1 of 4 branches missed.">				 ( (GD_flip(g)) &amp;&amp; (ND_order(aghead(e)) &gt; ND_order(agtail(e)) ))) {</span>
 <span class="nc bnc" id="L1613" title="All 2 branches missed.">			    assert(constraining_flat_edge(zz, g,v,e) == false);</span>
 <span class="nc" id="L1614">			    delete_flat_edge(e);</span>
 <span class="nc" id="L1615">			    j--;</span>

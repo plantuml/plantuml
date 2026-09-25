@@ -276,12 +276,12 @@ try {
     
     
 <span class="fc" id="L278">    p = late_string(g, agfindgraphattr(zz, g, &quot;ranksep&quot;), null);</span>
-<span class="pc bpc" id="L279" title="1 of 2 branches missed.">    if (p!=null) {</span>
-<span class="nc" id="L280">    	xf = atof(p);</span>
-<span class="nc bnc" id="L281" title="All 2 branches missed.">    	if (xf &lt; 0.02)</span>
+<span class="fc bfc" id="L279" title="All 2 branches covered.">    if (p!=null) {</span>
+<span class="fc" id="L280">    	xf = atof(p);</span>
+<span class="pc bpc" id="L281" title="1 of 2 branches missed.">    	if (xf &lt; 0.02)</span>
 <span class="nc" id="L282">    		xf = 0.02;</span>
 
-<span class="nc bnc" id="L284" title="All 2 branches missed.">	if (p.isSame(new CString(&quot;equally&quot;)))</span>
+<span class="pc bpc" id="L284" title="1 of 2 branches missed.">	if (p.isSame(new CString(&quot;equally&quot;)))</span>
 <span class="nc" id="L285">	    GD_exact_ranksep(g, 1);</span>
     } else
 <span class="fc" id="L287">	xf = DEFAULT_RANKSEP;</span>

@@ -240,9 +240,9 @@ public class MethodsOrFieldsArea extends TextBlockMemoized implements WithPorts 
 
 <span class="pc bpc" id="L241" title="1 of 2 branches missed.">		if (cs instanceof Member) {</span>
 <span class="fc" id="L242">			final Member m = (Member) cs;</span>
-<span class="pc bpc" id="L243" title="1 of 2 branches missed.">			final boolean withVisibilityChar = skinParam.classAttributeIconSize() == 0;</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">			final boolean withVisibilityChar = skinParam.classAttributeIconSize() == 0;</span>
 <span class="fc" id="L244">			String s = m.getDisplay(withVisibilityChar);</span>
-<span class="pc bpc" id="L245" title="3 of 4 branches missed.">			if (withVisibilityChar &amp;&amp; s.startsWith(&quot;#&quot;))</span>
+<span class="pc bpc" id="L245" title="1 of 4 branches missed.">			if (withVisibilityChar &amp;&amp; s.startsWith(&quot;#&quot;))</span>
 <span class="nc" id="L246">				s = CharHidder.addTileAtBegin(s);</span>
 
 <span class="pc bpc" id="L248" title="1 of 2 branches missed.">			if (m.isAbstract())</span>

@@ -88,7 +88,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 <span class="fc" id="L88">		final List&lt;Link&gt; links = getLinks();</span>
 <span class="pc bpc" id="L89" title="1 of 2 branches missed.">		for (int i = links.size() - 1; i &gt;= 0; i--) {</span>
 <span class="fc" id="L90">			final Link l = links.get(i);</span>
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">			if (l.isBetween(entity1, entity2))</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">			if (l.isBetween(entity1, entity2))</span>
 <span class="fc" id="L92">				return l;</span>
 
 		}
@@ -198,8 +198,8 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 	private List&lt;Association&gt; getExistingAssociatedPoints(final Entity entity1, final Entity entity2) {
 <span class="fc" id="L200">		final List&lt;Association&gt; same = new ArrayList&lt;&gt;();</span>
-<span class="pc bpc" id="L201" title="1 of 2 branches missed.">		for (Association existing : associations)</span>
-<span class="nc bnc" id="L202" title="All 2 branches missed.">			if (existing.sameCouple(entity1, entity2))</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">		for (Association existing : associations)</span>
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">			if (existing.sameCouple(entity1, entity2))</span>
 <span class="nc" id="L203">				same.add(existing);</span>
 
 <span class="fc" id="L205">		return same;</span>
@@ -339,13 +339,13 @@ import net.sourceforge.plantuml.utils.LineLocation;
 <span class="nc" id="L339">		}</span>
 
 		boolean sameCouple(Entity entity1, Entity entity2) {
-<span class="nc bnc" id="L342" title="All 4 branches missed.">			if (this.entity1 == entity1 &amp;&amp; this.entity2 == entity2)</span>
+<span class="pc bpc" id="L342" title="3 of 4 branches missed.">			if (this.entity1 == entity1 &amp;&amp; this.entity2 == entity2)</span>
 <span class="nc" id="L343">				return true;</span>
 
-<span class="nc bnc" id="L345" title="All 4 branches missed.">			if (this.entity1 == entity2 &amp;&amp; this.entity2 == entity1)</span>
+<span class="pc bpc" id="L345" title="3 of 4 branches missed.">			if (this.entity1 == entity2 &amp;&amp; this.entity2 == entity1)</span>
 <span class="nc" id="L346">				return true;</span>
 
-<span class="nc" id="L348">			return false;</span>
+<span class="fc" id="L348">			return false;</span>
 		}
 	}
 
