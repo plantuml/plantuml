@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="178px" preserveAspectRatio="none" style="width:228px;height:178px;background:#FFFFFF;" version="1.1" viewBox="0 0 228 178" width="228px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Carol</title>
+      <rect fill="#000" fill-opacity="0" height="99" width="8" x="30.256" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="33.756" x2="33.756" y1="39" y2="138"/>
+    </g>
+    <g>
+      <title>Dave</title>
+      <rect fill="#000" fill-opacity="0" height="99" width="8" x="87.375" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="90.875" x2="90.875" y1="39" y2="138"/>
+    </g>
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="99" width="8" x="140.206" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="143.706" x2="143.706" y1="39" y2="138"/>
+    </g>
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="99" width="8" x="191.9" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="195.4" x2="195.4" y1="39" y2="138"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="47.513" x="10" y="10"/>
+    <text fill="#000" font-size="14" textLength="33.513" x="17" y="27.889">Carol</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="46.725" x="67.513" y="10"/>
+    <text fill="#000" font-size="14" textLength="32.725" x="74.513" y="27.889">Dave</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="124.238" y="10"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="131.238" y="27.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="173.175" y="10"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="180.175" y="27.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="47.513" x="10" y="138"/>
+    <text fill="#000" font-size="14" textLength="33.513" x="17" y="155.889">Carol</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="46.725" x="67.513" y="138"/>
+    <text fill="#000" font-size="14" textLength="32.725" x="74.513" y="155.889">Dave</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="124.238" y="138"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="131.238" y="155.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="173.175" y="138"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="180.175" y="155.889">Alice</text>
+    <polygon fill="#181818" points="78.875,62,88.875,66,78.875,70,82.875,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="33.756" x2="84.875" y1="66" y2="66"/>
+    <text fill="#000" font-size="13" x="40.756" y="61.111">C</text>
+    <polygon fill="#181818" points="44.756,89,34.756,93,44.756,97,40.756,93" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="38.756" x2="142.706" y1="93" y2="93"/>
+    <text fill="#000" font-size="13" x="50.756" y="88.111">B</text>
+    <polygon fill="#181818" points="154.706,116,144.706,120,154.706,124,150.706,120" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="148.706" x2="194.4" y1="120" y2="120"/>
+    <text fill="#000" font-size="13" x="160.706" y="115.111">A</text>
+  </g>
+</svg>

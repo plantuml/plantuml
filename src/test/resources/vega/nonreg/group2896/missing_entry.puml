@@ -1,0 +1,9 @@
+---
+output: svg
+expected-status: 400
+expected-error-line: 2
+---
+@startuml
+!import archive.zip
+!include lib/missing.iuml
+@enduml

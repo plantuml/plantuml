@@ -607,8 +607,13 @@ public class TContext {
 			_import.analyze(this, memory);
 
 			try {
-				final SFile file = FileSystem.getInstance().getFile(
-						applyFunctionsAndVariables(memory, new StringLocated(_import.getWhat(), s.getLocation())));
+				final String what = applyFunctionsAndVariables(memory,
+						new StringLocated(_import.getWhat(), s.getLocation()));
+				// Same lookup as !include (relative to the directory of the current diagram)
+				// and only then the historical one, based on the global current directory.
+				final boolean special = what.startsWith("<") || what.startsWith("http://") || what.startsWith("https://");
+				final InputFile found = special ? null : pathSystem.getInputFile(what);
+				final SFile file = found instanceof SFile ? (SFile) found : FileSystem.getInstance().getFile(what);
 				if (file.exists() && file.isDirectory() == false) {
 					pathSystem.addImportFile(file);
 					return;

@@ -1,0 +1,8 @@
+---
+output: svg
+expected-description: (4 participants)
+---
+@startuml
+!import archive.zip
+!include lib/a.iuml
+@enduml
