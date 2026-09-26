@@ -133,12 +133,19 @@ final class OrthoStem {
 		final double min = range[0];
 		final double max = range[1];
 
+		// A round node has one point per side: edges there share it only when
+		// every other point is taken.
+		final boolean round = isRound(node.getType());
 		final double x0 = q.get(0).getX();
 		final boolean perpendicular = same(x0, q.get(1).getX());
-		if (perpendicular && q.get(1).getY() - bottom >= STEM && x0 >= min - EPSILON && x0 <= max + EPSILON)
+		final boolean fine = perpendicular && q.get(1).getY() - bottom >= STEM && x0 >= min - EPSILON
+				&& x0 <= max + EPSILON;
+		if (fine && (round == false || sideTaken(box, inside, points) == false))
 			return path;
 
 		final RectangleArea farBox = far == null ? null : far.getRectangleArea();
+		// The far end keeps a stem of its own; into an edge label, a short one will do.
+		final double farStem = isStemNode(far) ? STEM : SHORT_STEM;
 		final List<Double> slots = slots(x0, range);
 		for (double x : slots(x0, range(node.getType(), local, TIGHT_CORNER)))
 			if (slots.contains(x) == false)
@@ -149,32 +156,49 @@ final class OrthoStem {
 
 		// Last resort: leave from the neighbouring side the edge turns towards,
 		// either straight to where it turns next, or a stem away and then back
-		// onto its way.
-		if (s + 2 < q.size()) {
+		// onto its way - as long as can be, but even a short one beats sharing
+		// the point of a round node.
+		if (s + 1 < q.size()) {
 			final XPoint2D runEnd = q.get(s + 1);
 			final double dir = Math.signum(runEnd.getX() - x0);
 			final double sideX = dir > 0 ? local.getMaxX() : local.getMinX();
 			final double centerY = local.getPointCenter().getY();
-			final double sideY = isRound(node.getType()) ? centerY : Math.max(centerY, bottom - CORNER);
+			final double sideY = round ? centerY : Math.max(centerY, bottom - CORNER);
 			final XPoint2D side = new XPoint2D(sideX, sideY);
-			if ((runEnd.getX() - sideX) * dir > 0)
+			if (s + 2 < q.size() && (runEnd.getX() - sideX) * dir > 0)
 				candidates.add(join(Arrays.asList(side, new XPoint2D(runEnd.getX(), sideY)),
 						q.subList(s + 2, q.size())));
-			for (int i = 0; i < LANES; i++) {
-				final double x = sideX + dir * (STEM + i * LANE);
+			final List<Double> stems = new ArrayList<>();
+			for (int i = 0; i < LANES; i++)
+				stems.add(STEM + i * LANE);
+			for (double stem = STEM - LANE; stem >= SHORT_STEM - EPSILON; stem -= LANE)
+				stems.add(stem);
+			for (double stem : stems) {
+				final double x = sideX + dir * stem;
 				if ((runEnd.getX() - x) * dir > EPSILON)
 					candidates.add(join(Arrays.asList(side, new XPoint2D(x, sideY), new XPoint2D(x, q.get(s).getY())),
 							q.subList(s + 1, q.size())));
 			}
+			// Or the far side, going round the node.
+			if (round) {
+				final double farX = dir > 0 ? local.getMinX() : local.getMaxX();
+				for (double stem : stems) {
+					final double x = farX - dir * stem;
+					candidates.add(join(Arrays.asList(new XPoint2D(farX, sideY), new XPoint2D(x, sideY),
+							new XPoint2D(x, Math.max(q.get(s).getY(), bottom + STEM))), q.subList(s + 1, q.size())));
+				}
+			}
 		}
 
-		for (double stem : new double[] { STEM, SHORT_STEM })
-			for (List<XPoint2D> candidate : candidates) {
-				final List<XPoint2D> result = frame.toWorld(BorderPointPath.simplify(candidate));
-				if (result.size() >= 2 && result.get(0).distance(result.get(1)) >= stem
-						&& acceptable(points, result, box, farBox, isRound(node.getType())))
-					return BorderPointPath.toDotPath(result);
-			}
+		for (boolean share : round && fine == false ? new boolean[] { false, true } : new boolean[] { false })
+			for (double stem : new double[] { STEM, SHORT_STEM })
+				for (List<XPoint2D> candidate : candidates) {
+					final List<XPoint2D> result = frame.toWorld(BorderPointPath.simplify(candidate));
+					if (result.size() >= 2 && result.get(0).distance(result.get(1)) >= stem
+							&& (round == false || share || sideTaken(box, inside, result) == false)
+							&& acceptable(points, result, box, farBox, farStem, share ? box : null))
+						return BorderPointPath.toDotPath(result);
+				}
 
 		return path;
 	}
@@ -326,10 +350,12 @@ final class OrthoStem {
 
 	/**
 	 * Whether {@code after} may replace {@code before}: it reaches the far node
-	 * the same way, and hits no more obstacles, frames and edges.
+	 * the same way, leaving it a stem of {@code farStem} if it had one, and hits
+	 * no more obstacles, frames and edges; it may share its first segment with
+	 * the other edges ending at {@code shared}, if any.
 	 */
 	private boolean acceptable(List<XPoint2D> before, List<XPoint2D> after, RectangleArea own, RectangleArea far,
-			boolean shareable) {
+			double farStem, RectangleArea shared) {
 		final XPoint2D b1 = before.get(before.size() - 2);
 		final XPoint2D b2 = before.get(before.size() - 1);
 		final XPoint2D a1 = after.get(after.size() - 2);
@@ -342,11 +368,11 @@ final class OrthoStem {
 		if (same(a1.getX(), a2.getX()) != same(b1.getX(), b2.getX())
 				|| (a2.getX() - a1.getX()) * (b2.getX() - b1.getX()) < 0
 				|| (a2.getY() - a1.getY()) * (b2.getY() - b1.getY()) < 0
-				|| lengthAfter < Math.min(lengthBefore, STEM) - EPSILON)
+				|| lengthAfter < Math.min(lengthBefore, farStem) - EPSILON)
 			return false;
 
 		return hits(after, own, far) <= hits(before, own, far)
-				&& overlaps(after, shareable) <= overlaps(before, shareable)
+				&& overlaps(after, shared) <= overlaps(before, shared)
 				&& crossings(after) <= crossings(before);
 	}
 
@@ -374,17 +400,16 @@ final class OrthoStem {
 	}
 
 	/**
-	 * How many segments of {@code path} run along one of the other edges. If the
-	 * start is {@code shareable}, as the one point of a side of a round node is,
-	 * other edges leaving from the same point may share its first segment.
+	 * How many segments of {@code path} run along one of the other edges. Other
+	 * edges ending at the {@code shared} node, if any, may share the first
+	 * segment of {@code path}.
 	 */
-	private int overlaps(List<XPoint2D> path, boolean shareable) {
-		final XPoint2D start = path.get(0);
+	private int overlaps(List<XPoint2D> path, RectangleArea shared) {
 		int result = 0;
 		for (List<XPoint2D> other : others)
 			for (int i = 0; i < path.size() - 1; i++)
 				for (int j = 0; j < other.size() - 1; j++) {
-					if (shareable && i == 0 && (start.distance(other.get(j)) < 1 || start.distance(other.get(j + 1)) < 1))
+					if (shared != null && i == 0 && (near(shared, other.get(j)) || near(shared, other.get(j + 1))))
 						continue;
 					if (overlap(path.get(i), path.get(i + 1), other.get(j), other.get(j + 1)))
 						result++;
@@ -409,6 +434,30 @@ final class OrthoStem {
 				&& Math.min(a.getX(), b.getX()) < area.getMaxX() - EPSILON
 				&& Math.max(a.getY(), b.getY()) > area.getMinY() + EPSILON
 				&& Math.min(a.getY(), b.getY()) < area.getMaxY() - EPSILON;
+	}
+
+	/**
+	 * Whether another edge already ends on the side of {@code box} that
+	 * {@code path} starts from.
+	 */
+	private boolean sideTaken(RectangleArea box, double inside, List<XPoint2D> path) {
+		final Frame frame = Frame.of(box, path.get(0), path.get(1), inside);
+		for (List<XPoint2D> other : others) {
+			final int n = other.size();
+			if (n < 2)
+				continue;
+			if (near(box, other.get(0)) && Frame.of(box, other.get(0), other.get(1), inside) == frame)
+				return true;
+			if (near(box, other.get(n - 1)) && Frame.of(box, other.get(n - 1), other.get(n - 2), inside) == frame)
+				return true;
+		}
+		return false;
+	}
+
+	/** Whether {@code pt} is where an edge ending at {@code area} would end. */
+	private static boolean near(RectangleArea area, XPoint2D pt) {
+		return pt.getX() >= area.getMinX() - TOUCH && pt.getX() <= area.getMaxX() + TOUCH
+				&& pt.getY() >= area.getMinY() - TOUCH && pt.getY() <= area.getMaxY() + TOUCH;
 	}
 
 	private static boolean inside(RectangleArea area, XPoint2D pt) {

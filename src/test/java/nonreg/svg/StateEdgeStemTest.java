@@ -3,6 +3,7 @@ package nonreg.svg;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -27,7 +28,8 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
  * state but may then run it along that side, or turn a few pixels away from
  * it. Every edge end at a state or pseudo-state must leave its side at right
  * angles for at least three arrowhead widths, clear of the rounded corners of
- * a state, and on the centre line of a round or diamond pseudo-state.
+ * a state, and on the centre line of a round or diamond pseudo-state - one
+ * edge per point, while a point is free.
  * <p>
  * Geometry is Graphviz's, so this runs through Svek (not Smetana, which has no
  * orthogonal routing) and is skipped when dot is not installed.
@@ -71,10 +73,64 @@ class StateEdgeStemTest extends SvekSvgTest {
 			"xpNo --> Idle", //
 			"@enduml");
 
+	/**
+	 * Two choices with four edges each, crowded by labels and edges: each point
+	 * of a diamond takes one edge, some of them only by going round it.
+	 */
+	private static final String CROWDED = String.join("\n", //
+			"@startuml", //
+			"skinparam linetype ortho", //
+			"skinparam stateDiagramEdgeLabelStyle node", //
+			"hide empty description", //
+			"state InService {", //
+			"  state WaitingForDriver", //
+			"  WaitingForDriver : entry / showWelcome()", //
+			"  WaitingForDriver : do / pollRfidReader()", //
+			"  WaitingForDriver --> WaitingForDriver : cardPresented [!isReadable] / beep(2)", //
+			"  state Authorising {", //
+			"    state \"full\" as authFull <<entryPoint>>", //
+			"    state \"cachedToken\" as authCached <<entryPoint>>", //
+			"    state \"authorised\" as authOk <<exitPoint>>", //
+			"    state \"refused\" as authNo <<exitPoint>>", //
+			"    authFull -[hidden]right-> authCached", //
+			"    authOk -[hidden]right-> authNo", //
+			"  }", //
+			"  authFull <-- WaitingForDriver : connectorInserted [connectorLocks()]\\n/ lockConnector()", //
+			"  authCached <-- WaitingForDriver : cardPresented [tokenCached && isReadable]\\n/ reuseToken()", //
+			"  state PickProfile <<choice>>", //
+			"  authOk --> PickProfile", //
+			"  PickProfile --> ChargeSession : [request.kW > 150 && pack.degC < 35]\\n/ setLimit(500 A)", //
+			"  PickProfile --> ChargeSession : [request.kW > 150 && pack.degC >= 35]\\n/ setLimit(125 A) ; warnDerated()", //
+			"  PickProfile --> ChargeSession : [else]\\n/ setLimit(request.kW)", //
+			"  state RetryOrBlock <<choice>>", //
+			"  authNo --> RetryOrBlock", //
+			"  RetryOrBlock --> WaitingForDriver : [strikes < 2] /\\lunlockConnector();\\lshowRetry()", //
+			"  RetryOrBlock --> CardBlocked : [strikes >= 2] / captureAudit()", //
+			"  CardBlocked : entry / holdCard(60 s)", //
+			"  CardBlocked --> WaitingForDriver : holdExpired / unlockConnector()", //
+			"  state \"Charge Session\" as ChargeSession", //
+			"  ChargeSession : do / deliverEnergy()", //
+			"  state Suspended", //
+			"  Suspended : entry / openContactors() ; showHoldMessage()", //
+			"  Suspended <-- ChargeSession : gridBrownout / openContactors()", //
+			"  Suspended --> ChargeSession : gridRestored [insulationOk]\\n/ closeContactors()", //
+			"  Suspended --> RetryOrBlock : holdTimeout(15 min) / endSessionEarly()", //
+			"  ChargeSession --> Finalising", //
+			"  state \"Finalising Session\" as Finalising", //
+			"  Finalising --> WaitingForDriver : / printReceipt()", //
+			"}", //
+			"@enduml");
+
 	private static final double EPSILON = 0.5;
 
 	/** Three arrowhead widths. */
 	private static final double STEM = 24;
+
+	/**
+	 * A round pseudo-state has one point per side: leaving it from a free one on
+	 * a short stem beats sharing another.
+	 */
+	private static final double SHORT_STEM = 8;
 
 	/** The least distance kept from the rounded corner of a state. */
 	private static final double CORNER = 8;
@@ -112,15 +168,33 @@ class StateEdgeStemTest extends SvekSvgTest {
 
 	@Test
 	void edges_leave_states_at_right_angles() throws IOException {
-		final String svg = render(DIAGRAM);
+		assertStems(DIAGRAM, 20, "OfflineWhitelist", "PickProfile");
+	}
+
+	@Test
+	void edges_spread_over_the_points_of_a_crowded_choice() throws IOException {
+		assertStems(CROWDED, 20, "PickProfile", "RetryOrBlock");
+	}
+
+	/**
+	 * Checks every edge end at a state of {@code diagram}, at least
+	 * {@code expected} of them, among them ends at each of the {@code round}
+	 * pseudo-states.
+	 */
+	private static void assertStems(String diagram, int expected, String... round) throws IOException {
+		final String svg = render(diagram);
+		// Older Graphviz (2.42 at least) can crash in its orthogonal router on
+		// these diagrams, whatever PlantUML does with the edges afterwards.
+		assumeFalse(svg.contains("UnparsableGraphvizException"), "Graphviz crashed on this diagram");
 		final Map<String, Shape> shapes = shapes(svg);
 		final List<String> names = new ArrayList<>();
 		for (Shape shape : shapes.values())
 			names.add(shape.name);
-		assertTrue(names.contains("OfflineWhitelist"), "junction found in " + names);
-		assertTrue(names.contains("PickProfile"), "choice found in " + names);
+		for (String name : round)
+			assertTrue(names.contains(name), name + " found in " + names);
 
 		int checked = 0;
+		final Map<String, Integer> points = new HashMap<>();
 		final Matcher m = LINK.matcher(svg);
 		while (m.find()) {
 			final Matcher mp = PATH.matcher(m.group(3));
@@ -132,18 +206,27 @@ class StateEdgeStemTest extends SvekSvgTest {
 			final Shape start = shapes.get(m.group(1));
 			final Shape end = shapes.get(m.group(2));
 			if (start != null) {
-				assertStem(start, corners.get(0), corners.get(1));
+				count(points, start, assertStem(start, corners.get(0), corners.get(1)));
 				checked++;
 			}
 			if (end != null) {
-				assertStem(end, corners.get(n - 1), corners.get(n - 2));
+				count(points, end, assertStem(end, corners.get(n - 1), corners.get(n - 2)));
 				checked++;
 			}
 		}
-		assertTrue(checked >= 20, "edge ends at states checked: " + checked);
+		assertTrue(checked >= expected, "edge ends at states checked: " + checked);
+		// No round pseudo-state here has more than four edges.
+		for (Map.Entry<String, Integer> point : points.entrySet())
+			assertEquals(1, point.getValue(), "edges sharing " + point.getKey());
 	}
 
-	private static void assertStem(Shape shape, XPoint2D end, XPoint2D next) {
+	private static void count(Map<String, Integer> points, Shape shape, int side) {
+		if (shape.round)
+			points.merge(shape.name + " side " + side, 1, Integer::sum);
+	}
+
+	/** Checks the stem of an edge end at {@code shape}, and returns its side. */
+	private static int assertStem(Shape shape, XPoint2D end, XPoint2D next) {
 		final double[] gaps = { shape.minY - end.getY(), end.getY() - shape.maxY, shape.minX - end.getX(),
 				end.getX() - shape.maxX };
 		int side = -1;
@@ -162,12 +245,14 @@ class StateEdgeStemTest extends SvekSvgTest {
 		else
 			assertEquals(end.getY(), next.getY(), EPSILON, where + " does not leave its side at right angles");
 
-		assertTrue(end.distance(next) + Math.max(0, gaps[side]) >= STEM - EPSILON, where + " has a short stem");
+		final double stem = shape.round ? SHORT_STEM : STEM;
+		assertTrue(end.distance(next) + Math.max(0, gaps[side]) >= stem - EPSILON, where + " has a short stem");
 		if (shape.round)
 			assertEquals((min + max) / 2, along, EPSILON, where + " is off the centre line");
 		else
 			assertTrue(along >= min + CORNER - EPSILON && along <= max - CORNER + EPSILON,
 					where + " is on a rounded corner");
+		return side;
 	}
 
 	/** States, and the round and diamond pseudo-states, by entity id. */
