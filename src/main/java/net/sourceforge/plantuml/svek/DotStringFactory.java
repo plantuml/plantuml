@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.Moveable;
 import net.sourceforge.plantuml.klimt.geom.Rankdir;
+import net.sourceforge.plantuml.klimt.geom.RectangleArea;
 import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.security.SFile;
@@ -451,8 +452,17 @@ public final class DotStringFactory implements Moveable {
 			line.solveLine(svgResult);
 
 		// Align edges at label nodes for orthogonal routing
-		if (skinParam.getDotSplines() == DotSplines.ORTHO)
+		if (skinParam.getDotSplines() == DotSplines.ORTHO) {
 			alignEdgesAtLabelNodes();
+
+			// Entry/exit points: done last, on the final paths, so a jog added
+			// next to a point can keep clear of every node and label.
+			final List<RectangleArea> labels = new ArrayList<>();
+			for (SvekEdge line : getBibliotekon().allLines())
+				labels.addAll(line.getLabelAreas());
+			for (SvekEdge line : getBibliotekon().allLines())
+				line.alignOnBorderPoints(getBibliotekon().allNodes(), labels);
+		}
 
 		for (SvekEdge line : getBibliotekon().allLines())
 			line.manageCollision(getBibliotekon().allNodes());

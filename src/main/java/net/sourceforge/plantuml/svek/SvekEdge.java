@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.svek;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -795,6 +796,58 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		if (isOpalisable() == false)
 			setOpale(false);
 
+	}
+
+	/**
+	 * With orthogonal routing, rewrites the ends of this edge that touch an
+	 * entry/exit point so they meet its circle perpendicularly (see
+	 * {@link BorderPointPath}), keeping any jog added clear of the other
+	 * {@code nodes} and of {@code labels}. Must run once every edge is solved.
+	 */
+	public void alignOnBorderPoints(Collection<SvekNode> nodes, Collection<RectangleArea> labels) {
+		if (dotPath == null || isAutolink() || getLinkStrategy() != LinkStrategy.SIMPLEST)
+			return;
+
+		final SvekNode svekNode1 = getSvekNode1();
+		final SvekNode svekNode2 = getSvekNode2();
+		final LinkType linkType = link.getType();
+
+		final List<RectangleArea> obstacles = new ArrayList<>(labels);
+		for (SvekNode node : nodes)
+			if (node != svekNode1 && node != svekNode2)
+				obstacles.add(node.getRectangleArea());
+
+		if (ltail == null) {
+			final DotPath aligned = BorderPointPath.alignStart(dotPath, svekNode1, svekNode2, stringBounder,
+					obstacles);
+			if (aligned != dotPath) {
+				dotPath = aligned;
+				this.extremity1 = getExtremitySimplier(dotPath.getStartPoint(),
+						linkType.getDecor2().getExtremityFactoryComplete(backgroundColor),
+						dotPath.getStartAngle() + Math.PI, ltail, svekNode1, true, kal1);
+			}
+		}
+		if (lhead == null) {
+			final DotPath aligned = BorderPointPath.alignEnd(dotPath, svekNode2, svekNode1, stringBounder,
+					obstacles);
+			if (aligned != dotPath) {
+				dotPath = aligned;
+				this.extremity2 = getExtremitySimplier(dotPath.getEndPoint(),
+						linkType.getDecor1().getExtremityFactoryComplete(backgroundColor), dotPath.getEndAngle(),
+						lhead, svekNode2, false, kal2);
+			}
+		}
+	}
+
+	/** Where this edge's labels are drawn, once solved. */
+	public List<RectangleArea> getLabelAreas() {
+		final List<RectangleArea> result = new ArrayList<>();
+		for (Positionable label : Arrays.asList(labelXY, startTailLabelXY, endHeadLabelXY))
+			if (label != null && label.getPosition() != null)
+				result.add(new RectangleArea(label.getPosition().getX(), label.getPosition().getY(),
+						label.getPosition().getX() + label.getSize().getWidth(),
+						label.getPosition().getY() + label.getSize().getHeight()));
+		return result;
 	}
 
 	private boolean isThereTwo(final LinkType linkType) {
