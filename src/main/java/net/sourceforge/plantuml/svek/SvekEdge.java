@@ -810,33 +810,66 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 
 		final SvekNode svekNode1 = getSvekNode1();
 		final SvekNode svekNode2 = getSvekNode2();
-		final LinkType linkType = link.getType();
+		final List<RectangleArea> obstacles = getObstacles(nodes, labels);
 
-		final List<RectangleArea> obstacles = new ArrayList<>(labels);
+		if (ltail == null)
+			setStartPath(BorderPointPath.alignStart(dotPath, svekNode1, svekNode2, stringBounder, obstacles));
+		if (lhead == null)
+			setEndPath(BorderPointPath.alignEnd(dotPath, svekNode2, svekNode1, stringBounder, obstacles));
+	}
+
+	/**
+	 * With orthogonal routing, rewrites the ends of this edge that touch a state
+	 * or pseudo-state so they leave it at right angles (see {@link OrthoStem}),
+	 * without hitting more of the other {@code nodes}, {@code labels},
+	 * {@code frames} and {@code lines} than before. Must run once every edge is
+	 * solved.
+	 */
+	public void alignStems(Collection<SvekNode> nodes, Collection<RectangleArea> labels, List<RectangleArea> frames,
+			Collection<SvekEdge> lines) {
+		if (dotPath == null || isAutolink() || getLinkStrategy() != LinkStrategy.SIMPLEST)
+			return;
+
+		final List<DotPath> others = new ArrayList<>();
+		for (SvekEdge line : lines)
+			if (line != this && line.dotPath != null)
+				others.add(line.dotPath);
+
+		final OrthoStem stem = new OrthoStem(getObstacles(nodes, labels), frames, others);
+		if (ltail == null)
+			setStartPath(stem.alignStart(dotPath, getSvekNode1(), getSvekNode2()));
+		if (lhead == null)
+			setEndPath(stem.alignEnd(dotPath, getSvekNode2(), getSvekNode1()));
+	}
+
+	private List<RectangleArea> getObstacles(Collection<SvekNode> nodes, Collection<RectangleArea> labels) {
+		final List<RectangleArea> result = new ArrayList<>(labels);
 		for (SvekNode node : nodes)
-			if (node != svekNode1 && node != svekNode2)
-				obstacles.add(node.getRectangleArea());
+			if (node != getSvekNode1() && node != getSvekNode2())
+				result.add(node.getRectangleArea());
+		return result;
+	}
 
-		if (ltail == null) {
-			final DotPath aligned = BorderPointPath.alignStart(dotPath, svekNode1, svekNode2, stringBounder,
-					obstacles);
-			if (aligned != dotPath) {
-				dotPath = aligned;
-				this.extremity1 = getExtremitySimplier(dotPath.getStartPoint(),
-						linkType.getDecor2().getExtremityFactoryComplete(backgroundColor),
-						dotPath.getStartAngle() + Math.PI, ltail, svekNode1, true, kal1);
-			}
-		}
-		if (lhead == null) {
-			final DotPath aligned = BorderPointPath.alignEnd(dotPath, svekNode2, svekNode1, stringBounder,
-					obstacles);
-			if (aligned != dotPath) {
-				dotPath = aligned;
-				this.extremity2 = getExtremitySimplier(dotPath.getEndPoint(),
-						linkType.getDecor1().getExtremityFactoryComplete(backgroundColor), dotPath.getEndAngle(),
-						lhead, svekNode2, false, kal2);
-			}
-		}
+	/** Replaces the path by {@code path}, which starts right on the first node. */
+	private void setStartPath(DotPath path) {
+		if (path == dotPath)
+			return;
+
+		dotPath = path;
+		this.extremity1 = getExtremitySimplier(dotPath.getStartPoint(),
+				link.getType().getDecor2().getExtremityFactoryComplete(backgroundColor),
+				dotPath.getStartAngle() + Math.PI, ltail, getSvekNode1(), true, kal1);
+	}
+
+	/** Replaces the path by {@code path}, which ends right on the second node. */
+	private void setEndPath(DotPath path) {
+		if (path == dotPath)
+			return;
+
+		dotPath = path;
+		this.extremity2 = getExtremitySimplier(dotPath.getEndPoint(),
+				link.getType().getDecor1().getExtremityFactoryComplete(backgroundColor), dotPath.getEndAngle(),
+				lhead, getSvekNode2(), false, kal2);
 	}
 
 	/** Where this edge's labels are drawn, once solved. */

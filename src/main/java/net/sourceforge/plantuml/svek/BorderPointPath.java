@@ -264,7 +264,7 @@ final class BorderPointPath {
 	 * The corners of {@code path}, or null if it is not made only of horizontal
 	 * and vertical straight segments.
 	 */
-	private static List<XPoint2D> toOrthogonalPolyline(DotPath path) {
+	static List<XPoint2D> toOrthogonalPolyline(DotPath path) {
 		final List<XCubicCurve2D> beziers = path.getBeziers();
 		if (beziers.size() == 0)
 			return null;
@@ -284,12 +284,12 @@ final class BorderPointPath {
 		return result;
 	}
 
-	private static boolean same(double a, double b) {
+	static boolean same(double a, double b) {
 		return Math.abs(a - b) < EPSILON;
 	}
 
 	/** Drops repeated points and merges consecutive collinear segments. */
-	private static List<XPoint2D> simplify(List<XPoint2D> points) {
+	static List<XPoint2D> simplify(List<XPoint2D> points) {
 		final List<XPoint2D> result = new ArrayList<>();
 		for (XPoint2D pt : points) {
 			if (result.size() > 0) {
@@ -310,7 +310,7 @@ final class BorderPointPath {
 		return result;
 	}
 
-	private static DotPath toDotPath(List<XPoint2D> points) {
+	static DotPath toDotPath(List<XPoint2D> points) {
 		final List<XCubicCurve2D> beziers = new ArrayList<>();
 		for (int i = 0; i < points.size() - 1; i++) {
 			final XPoint2D a = points.get(i);
