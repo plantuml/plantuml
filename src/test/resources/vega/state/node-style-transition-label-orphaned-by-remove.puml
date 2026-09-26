@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+' https://forum.plantuml.net/20492
+' With "stateDiagramEdgeLabelStyle node" a transition label is its own node.
+' Removing Faulted must drop the "fault" label too, not leave it dangling.
+skinparam stateDiagramEdgeLabelStyle node
+
+state Idle
+state Charging
+state Faulted $fault
+
+Idle --> Charging : start
+Charging --> Faulted : fault
+
+remove $fault
+@enduml
