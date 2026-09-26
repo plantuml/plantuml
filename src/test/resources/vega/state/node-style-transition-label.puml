@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+skinparam stateDiagramEdgeLabelStyle node
+
+state Idle
+state Charging
+state Faulted
+
+Idle -> Charging : start / begin()
+Charging -> Faulted : fault(5 s)
+@enduml

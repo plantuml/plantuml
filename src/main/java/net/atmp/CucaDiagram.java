@@ -778,6 +778,9 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 		for (HideOrShow hide : this.hides2)
 			hidden = hide.apply(hidden, leaf);
 
+		if (hidden == false && isOrphanedTransitionLabel(leaf))
+			hidden = true;
+
 		return hidden;
 	}
 
@@ -793,7 +796,31 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 		for (HideOrShow hide : this.removed)
 			result = hide.apply(result, leaf);
 
+		if (result == false && isOrphanedTransitionLabel(leaf))
+			result = true;
+
 		return result;
+	}
+
+	// A "stateDiagramEdgeLabelStyle node" transition label (see
+	// CommandLinkStateCommon.createTransitionWithIntermediateNode) is a node
+	// synthesized between a transition's real source and target; it carries
+	// none of their tags, so a 'remove'/'hide' that only matches one of those
+	// two endpoints would otherwise leave the label floating with a dangling
+	// arrow to nowhere. Once either real endpoint is gone, drop the label too.
+	private boolean isOrphanedTransitionLabel(Entity leaf) {
+		if (leaf.getLeafType() != LeafType.STATE_TRANSITION_LABEL)
+			return false;
+
+		for (Link link : getLinks()) {
+			if (link.contains(leaf) == false)
+				continue;
+			final Entity other = link.getOther(leaf);
+			if (other != leaf && (other.isRemoved() || other.isHidden()))
+				return true;
+		}
+
+		return false;
 	}
 
 	private Entity isNoteWithSingleLinkAttachedTo(Entity note) {

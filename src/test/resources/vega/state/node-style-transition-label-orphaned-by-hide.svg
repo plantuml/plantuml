@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="224px" preserveAspectRatio="none" style="width:171px;height:224px;background:#FFFFFF;" version="1.1" viewBox="0 0 171 224" width="171px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="Idle" data-source-line="6" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="19.5" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="19.5" x2="69.5" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="22.575" x="33.213" y="27.889">Idle</text>
+    </g>
+    <g class="entity" data-qualified-name="Charging" data-source-line="7" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="76.875" x="6" y="158"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="82.875" y1="182" y2="182"/>
+      <text fill="#000" font-size="14" textLength="56.875" x="16" y="173.889">Charging</text>
+    </g>
+    <g class="entity" data-qualified-name="Faulted" data-source-line="8" id="ent0003">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="66.725" x="88" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="88" x2="154.725" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="46.725" x="98" y="27.889">Faulted</text>
+    </g>
+    <rect fill="none" height="21" rx="2.5" ry="2.5" style="stroke:none;" width="33.188" x="28" y="98"/>
+    <text fill="#000" font-size="13" textLength="25.188" x="32" y="112.111">start</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="association" id="lnk5">
+      <path d="M44.5,62.037 C44.5,74.106 44.5,88.155 44.5,97.72" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="44.5,157.764,48.5,148.764,44.5,152.764,40.5,148.764,44.5,157.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M44.5,122.094 C44.5,131.61 44.5,140.662 44.5,152.764" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>
