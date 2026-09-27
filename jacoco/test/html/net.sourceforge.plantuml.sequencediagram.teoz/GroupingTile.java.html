@@ -421,8 +421,24 @@ public class GroupingTile extends AbstractTile {
 <span class="fc bfc" id="L421" title="All 2 branches covered.">		if (next == null)</span>
 <span class="fc" id="L422">			return;</span>
 
-<span class="fc" id="L424">		final Real nextPosA = next.getPosA(getStringBounder());</span>
-<span class="fc" id="L425">		final double frameMargin = MARGINX + EXTERNAL_MARGINX2;</span>
+		// Pushed on `next`'s own LIFELINE (posC), not its box edge (posA): the
+		// frame only ever needs to clear a lifeline (the box itself sits in the
+		// header/footer row, never inside the frame's vertical span), and this
+		// is what makes the pushed quantity comparable, on both sides, to what
+		// ensurePrecedingParticipantClearsFrame() already pushes on the LEFT
+		// (leftmost.getPosC(), also a lifeline -- see its own comment). Using
+		// posA here used to leave `frameMargin` measured up to `next`'s own BOX
+		// EDGE instead of its lifeline, silently adding `next`'s own half-width
+		// (plus its posA/posC marginBefore offset) on top of the margin -- on a
+		// diagram with ordinary-width participants this alone was often wider
+		// than the group's actual content, which is what issue #2788's last
+		// example (&quot;too much space between group and d&quot;, or seen the other way,
+		// &quot;not enough space between x and group&quot;) was really reporting: the two
+		// sides of the SAME frame measured their margin to two different kinds
+		// of landmark (a lifeline on the left, a box edge on the right), so they
+		// never matched even though both used the same numeric constants.
+<span class="fc" id="L440">		final Real nextPosC = next.getPosC(getStringBounder());</span>
+<span class="fc" id="L441">		final double frameMargin = MARGINX + EXTERNAL_MARGINX2;</span>
 
 		// Baseline: the rightmost touched participant's own lifeline, plus the
 		// frame's margin. For a normal (non-self) message this already matches
@@ -430,14 +446,14 @@ public class GroupingTile extends AbstractTile {
 		// addConstraints() guarantees its target's posC clears the arrow+label,
 		// so the target's posC alone dominates the same RealUtils.max() the
 		// constructor would otherwise have computed.
-<span class="fc" id="L433">		nextPosA.ensureBiggerThan(rightmost.getPosC(getStringBounder()).addFixed(frameMargin));</span>
+<span class="fc" id="L449">		nextPosC.ensureBiggerThan(rightmost.getPosC(getStringBounder()).addFixed(frameMargin));</span>
 
 		// Everything else that can widen the frame beyond that baseline: a
 		// self-message loop, a right-hand note, a note over a participant, the
 		// group's own title, and the same list again for every nested group
 		// (whose frame carries its own margins on top of ours).
-<span class="fc" id="L439">		ensureClearsFrameOf(this, nextPosA, frameMargin, livingSpaces);</span>
-<span class="fc" id="L440">	}</span>
+<span class="fc" id="L455">		ensureClearsFrameOf(this, nextPosC, frameMargin, livingSpaces);</span>
+<span class="fc" id="L456">	}</span>
 
 	// Mirror of ensureFollowingParticipantClearsFrame(), for the LEFT edge: a
 	// participant declared right BEFORE the group, but never itself used inside
@@ -463,31 +479,31 @@ public class GroupingTile extends AbstractTile {
 	// `previous`'s own posC is a completely independent Real, so there is
 	// nothing circular about constraining one against the other.
 	private void ensurePrecedingParticipantClearsFrame() {
-<span class="fc" id="L466">		final LivingSpaces livingSpaces = tileArguments.getLivingSpaces();</span>
-<span class="fc" id="L467">		final Set&lt;LivingSpace&gt; touched = new HashSet&lt;&gt;();</span>
-<span class="fc" id="L468">		collectTouchedLivingSpaces(tiles, livingSpaces, touched);</span>
+<span class="fc" id="L482">		final LivingSpaces livingSpaces = tileArguments.getLivingSpaces();</span>
+<span class="fc" id="L483">		final Set&lt;LivingSpace&gt; touched = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L484">		collectTouchedLivingSpaces(tiles, livingSpaces, touched);</span>
 
-<span class="fc" id="L470">		final LivingSpace leftmost = leftmostOf(livingSpaces, touched);</span>
-<span class="pc bpc" id="L471" title="1 of 2 branches missed.">		if (leftmost == null)</span>
-<span class="nc" id="L472">			return;</span>
+<span class="fc" id="L486">		final LivingSpace leftmost = leftmostOf(livingSpaces, touched);</span>
+<span class="pc bpc" id="L487" title="1 of 2 branches missed.">		if (leftmost == null)</span>
+<span class="nc" id="L488">			return;</span>
 
-<span class="fc" id="L474">		final LivingSpace previous = livingSpaces.previous(leftmost);</span>
-<span class="fc bfc" id="L475" title="All 2 branches covered.">		if (previous == null)</span>
-<span class="fc" id="L476">			return;</span>
+<span class="fc" id="L490">		final LivingSpace previous = livingSpaces.previous(leftmost);</span>
+<span class="fc bfc" id="L491" title="All 2 branches covered.">		if (previous == null)</span>
+<span class="fc" id="L492">			return;</span>
 
-<span class="fc" id="L478">		final Real previousPosC = previous.getPosC(getStringBounder());</span>
-<span class="fc" id="L479">		final double frameMargin = MARGINX + EXTERNAL_MARGINX2;</span>
+<span class="fc" id="L494">		final Real previousPosC = previous.getPosC(getStringBounder());</span>
+<span class="fc" id="L495">		final double frameMargin = MARGINX + EXTERNAL_MARGINX2;</span>
 
 		// Baseline: leftmost's own lifeline, plus the frame's margin -- the
 		// mirror of ensureFollowingParticipantClearsFrame()'s own baseline.
-<span class="fc" id="L483">		leftmost.getPosC(getStringBounder()).ensureBiggerThan(previousPosC.addFixed(frameMargin));</span>
+<span class="fc" id="L499">		leftmost.getPosC(getStringBounder()).ensureBiggerThan(previousPosC.addFixed(frameMargin));</span>
 
 		// Everything else that can widen the frame past that baseline: a
 		// reverse self-message loop, a left-hand note (wherever in the group
 		// it is anchored), and the same list again for every nested group
 		// (issue #2788, `group` inside `group`).
-<span class="fc" id="L489">		ensureClearsFrameOfLeft(this, previousPosC, frameMargin);</span>
-<span class="fc" id="L490">	}</span>
+<span class="fc" id="L505">		ensureClearsFrameOfLeft(this, previousPosC, frameMargin);</span>
+<span class="fc" id="L506">	}</span>
 
 	// Pushes `previousPosC.addFixed(margin)` as a lower bound onto every left
 	// edge `group`'s own frame is built on -- the left-side mirror of
@@ -505,17 +521,17 @@ public class GroupingTile extends AbstractTile {
 	// participant, not just `leftmost`, is pushed against `previous` the same
 	// way, correctly covering e.g. a `note left of b` inside the group).
 	private void ensureClearsFrameOfLeft(GroupingTile group, Real previousPosC, double margin) {
-<span class="fc bfc" id="L508" title="All 2 branches covered.">		for (Tile tile : group.tiles) {</span>
-<span class="fc bfc" id="L509" title="All 2 branches covered.">			if (tile instanceof GroupingTile) {</span>
-<span class="fc" id="L510">				final GroupingTile nested = (GroupingTile) tile;</span>
-<span class="fc" id="L511">				final double notes = nested.getNotesWidth(getStringBounder(), NotePosition.LEFT);</span>
-<span class="fc" id="L512">				ensureClearsFrameOfLeft(nested, previousPosC, margin + MARGINX + EXTERNAL_MARGINX2 + notes);</span>
-<span class="fc" id="L513">				continue;</span>
+<span class="fc bfc" id="L524" title="All 2 branches covered.">		for (Tile tile : group.tiles) {</span>
+<span class="fc bfc" id="L525" title="All 2 branches covered.">			if (tile instanceof GroupingTile) {</span>
+<span class="fc" id="L526">				final GroupingTile nested = (GroupingTile) tile;</span>
+<span class="fc" id="L527">				final double notes = nested.getNotesWidth(getStringBounder(), NotePosition.LEFT);</span>
+<span class="fc" id="L528">				ensureClearsFrameOfLeft(nested, previousPosC, margin + MARGINX + EXTERNAL_MARGINX2 + notes);</span>
+<span class="fc" id="L529">				continue;</span>
 			}
-<span class="fc bfc" id="L515" title="All 2 branches covered.">			for (Real minX : stableMinX(tile))</span>
-<span class="fc" id="L516">				minX.ensureBiggerThan(previousPosC.addFixed(margin));</span>
-<span class="fc" id="L517">		}</span>
-<span class="fc" id="L518">	}</span>
+<span class="fc bfc" id="L531" title="All 2 branches covered.">			for (Real minX : stableMinX(tile))</span>
+<span class="fc" id="L532">				minX.ensureBiggerThan(previousPosC.addFixed(margin));</span>
+<span class="fc" id="L533">		}</span>
+<span class="fc" id="L534">	}</span>
 
 	// The contributors to `max2`/`min2` (see the constructor) that this method is
 	// allowed to replay, and the ONE reason the list is a whitelist rather than a
@@ -536,10 +552,10 @@ public class GroupingTile extends AbstractTile {
 	// under it; that width is questionable in its own right and is not something
 	// this method can decide.
 	private static List&lt;Real&gt; stableMaxX(Tile tile) {
-<span class="fc bfc" id="L539" title="All 2 branches covered.">		if (tile instanceof NoteTile)</span>
-<span class="fc" id="L540">			return ((NoteTile) tile).getStableMaxX();</span>
+<span class="fc bfc" id="L555" title="All 2 branches covered.">		if (tile instanceof NoteTile)</span>
+<span class="fc" id="L556">			return ((NoteTile) tile).getStableMaxX();</span>
 
-<span class="fc bfc" id="L542" title="All 12 branches covered.">		if (tile instanceof CommunicationTileSelf //</span>
+<span class="fc bfc" id="L558" title="All 12 branches covered.">		if (tile instanceof CommunicationTileSelf //</span>
 				|| tile instanceof CommunicationTileNoteRight //
 				|| tile instanceof CommunicationTileSelfNoteRight //
 				|| tile instanceof LifeEventTile //
@@ -549,9 +565,9 @@ public class GroupingTile extends AbstractTile {
 			// self-message entries above (see Tile.getDrawnMinX()/getDrawnMaxX()),
 			// identically getMaxX() for the other three (no override, so the
 			// push is unchanged for them).
-<span class="fc" id="L552">			return Collections.singletonList(tile.getDrawnMaxX());</span>
+<span class="fc" id="L568">			return Collections.singletonList(tile.getDrawnMaxX());</span>
 
-<span class="fc" id="L554">		return Collections.emptyList();</span>
+<span class="fc" id="L570">		return Collections.emptyList();</span>
 	}
 
 	// Left-side mirror of stableMaxX(), same whitelist reasoning, same safety
@@ -565,7 +581,7 @@ public class GroupingTile extends AbstractTile {
 	// DividerTile is deliberately absent here, UNLIKE on the right side: its
 	// getMaxX() reaches from `xorigin` (the whole diagram's own left edge, not
 	// any participant here) rightward by the divider's drawn width -- safe to
-	// use as a lower bound on `nextPosA`, since `xorigin` is an independent
+	// use as a lower bound on `nextPosC`, since `xorigin` is an independent
 	// root nothing here pushes on. Its getMinX(), by contrast, IS `xorigin`
 	// itself: `previous`'s own posC is ultimately measured FROM xorigin (every
 	// LivingSpace chains back to it), so constraining xorigin to be bigger
@@ -575,21 +591,21 @@ public class GroupingTile extends AbstractTile {
 	// therefore still isn't guaranteed clear of a preceding participant; same
 	// class of known, unfixable gap as DelayTile on the other side.
 	private static List&lt;Real&gt; stableMinX(Tile tile) {
-<span class="fc bfc" id="L578" title="All 2 branches covered.">		if (tile instanceof NoteTile)</span>
-<span class="fc" id="L579">			return ((NoteTile) tile).getStableMinX();</span>
+<span class="fc bfc" id="L594" title="All 2 branches covered.">		if (tile instanceof NoteTile)</span>
+<span class="fc" id="L595">			return ((NoteTile) tile).getStableMinX();</span>
 
-<span class="pc bpc" id="L581" title="1 of 10 branches missed.">		if (tile instanceof CommunicationTileSelf //</span>
+<span class="pc bpc" id="L597" title="1 of 10 branches missed.">		if (tile instanceof CommunicationTileSelf //</span>
 				|| tile instanceof CommunicationTileNoteLeft //
 				|| tile instanceof CommunicationTileSelfNoteLeft //
 				|| tile instanceof LifeEventTile //
 				|| tile instanceof ReferenceTile)
 			// getDrawnMinX(): see the matching comment in stableMaxX() above.
-<span class="fc" id="L587">			return Collections.singletonList(tile.getDrawnMinX());</span>
+<span class="fc" id="L603">			return Collections.singletonList(tile.getDrawnMinX());</span>
 
-<span class="fc" id="L589">		return Collections.emptyList();</span>
+<span class="fc" id="L605">		return Collections.emptyList();</span>
 	}
 
-	// Pushes `nextPosA` past every right edge `group`'s own frame is built on,
+	// Pushes `nextPosC` past every right edge `group`'s own frame is built on,
 	// `margin` beyond each of them. Each push stands on its own -- stacked
 	// ensureBiggerThan() calls are exactly the &quot;max&quot; the constructor computes
 	// with RealUtils.max(), minus the caching trap, since the solver reads each
@@ -599,25 +615,25 @@ public class GroupingTile extends AbstractTile {
 	// nothing else knows that an inner frame sits MARGINX + EXTERNAL_MARGINX2
 	// outside the content it wraps, and that offset stacks once per nesting
 	// level (issue #2788, `group` inside `group`).
-	private void ensureClearsFrameOf(GroupingTile group, Real nextPosA, double margin, LivingSpaces livingSpaces) {
-<span class="fc" id="L603">		ensureClearsTitleOf(group, nextPosA, margin, livingSpaces);</span>
+	private void ensureClearsFrameOf(GroupingTile group, Real nextPosC, double margin, LivingSpaces livingSpaces) {
+<span class="fc" id="L619">		ensureClearsTitleOf(group, nextPosC, margin, livingSpaces);</span>
 
-<span class="fc bfc" id="L605" title="All 2 branches covered.">		for (Tile tile : group.tiles) {</span>
-<span class="fc bfc" id="L606" title="All 2 branches covered.">			if (tile instanceof GroupingTile) {</span>
+<span class="fc bfc" id="L621" title="All 2 branches covered.">		for (Tile tile : group.tiles) {</span>
+<span class="fc bfc" id="L622" title="All 2 branches covered.">			if (tile instanceof GroupingTile) {</span>
 				// A nested group's own right-hand notes are part of what it reports
 				// as its getMaxX(), so the parent frame is stretched to cover them
 				// too -- they hang INSIDE the parent, unlike this group's own notes,
 				// which hang outside its frame and push nothing. A plain distance
 				// again, so it just joins the margin.
-<span class="fc" id="L612">				final GroupingTile nested = (GroupingTile) tile;</span>
-<span class="fc" id="L613">				final double notes = nested.getNotesWidth(getStringBounder(), NotePosition.RIGHT);</span>
-<span class="fc" id="L614">				ensureClearsFrameOf(nested, nextPosA, margin + MARGINX + EXTERNAL_MARGINX2 + notes, livingSpaces);</span>
-<span class="fc" id="L615">				continue;</span>
+<span class="fc" id="L628">				final GroupingTile nested = (GroupingTile) tile;</span>
+<span class="fc" id="L629">				final double notes = nested.getNotesWidth(getStringBounder(), NotePosition.RIGHT);</span>
+<span class="fc" id="L630">				ensureClearsFrameOf(nested, nextPosC, margin + MARGINX + EXTERNAL_MARGINX2 + notes, livingSpaces);</span>
+<span class="fc" id="L631">				continue;</span>
 			}
-<span class="fc bfc" id="L617" title="All 2 branches covered.">			for (Real maxX : stableMaxX(tile))</span>
-<span class="fc" id="L618">				nextPosA.ensureBiggerThan(maxX.addFixed(margin));</span>
-<span class="fc" id="L619">		}</span>
-<span class="fc" id="L620">	}</span>
+<span class="fc bfc" id="L633" title="All 2 branches covered.">			for (Real maxX : stableMaxX(tile))</span>
+<span class="fc" id="L634">				nextPosC.ensureBiggerThan(maxX.addFixed(margin));</span>
+<span class="fc" id="L635">		}</span>
+<span class="fc" id="L636">	}</span>
 
 	// A group whose title is wider than its content is stretched by its own
 	// header, not by anything a child tile reports: the constructor says so with
@@ -634,19 +650,19 @@ public class GroupingTile extends AbstractTile {
 	// Anything left unaccounted for still over-estimates the left edge and
 	// therefore the push, which is the harmless direction -- under-estimating
 	// would put the participant back under the frame.
-	private void ensureClearsTitleOf(GroupingTile group, Real nextPosA, double margin, LivingSpaces livingSpaces) {
-<span class="fc" id="L638">		final Set&lt;LivingSpace&gt; touched = new HashSet&lt;&gt;();</span>
-<span class="fc" id="L639">		collectTouchedLivingSpaces(group.tiles, livingSpaces, touched);</span>
+	private void ensureClearsTitleOf(GroupingTile group, Real nextPosC, double margin, LivingSpaces livingSpaces) {
+<span class="fc" id="L654">		final Set&lt;LivingSpace&gt; touched = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L655">		collectTouchedLivingSpaces(group.tiles, livingSpaces, touched);</span>
 
-<span class="fc" id="L641">		LivingSpace leftmost = null;</span>
-<span class="pc bpc" id="L642" title="1 of 2 branches missed.">		for (LivingSpace candidate : livingSpaces.values())</span>
-<span class="fc bfc" id="L643" title="All 2 branches covered.">			if (touched.contains(candidate)) {</span>
-<span class="fc" id="L644">				leftmost = candidate;</span>
-<span class="fc" id="L645">				break;</span>
+<span class="fc" id="L657">		LivingSpace leftmost = null;</span>
+<span class="pc bpc" id="L658" title="1 of 2 branches missed.">		for (LivingSpace candidate : livingSpaces.values())</span>
+<span class="fc bfc" id="L659" title="All 2 branches covered.">			if (touched.contains(candidate)) {</span>
+<span class="fc" id="L660">				leftmost = candidate;</span>
+<span class="fc" id="L661">				break;</span>
 			}
 
-<span class="pc bpc" id="L648" title="1 of 2 branches missed.">		if (leftmost == null)</span>
-<span class="nc" id="L649">			return;</span>
+<span class="pc bpc" id="L664" title="1 of 2 branches missed.">		if (leftmost == null)</span>
+<span class="nc" id="L665">			return;</span>
 
 		// Two corrections to `margin`, both from the constructor's own formulas:
 		// the left edge is `min = leftmost.posC - MARGINX` (min2 is built from
@@ -655,24 +671,24 @@ public class GroupingTile extends AbstractTile {
 		// unlike every child tile. So only EXTERNAL_MARGINX2 separates it from the
 		// drawn frame edge, and pushing a full frameMargin here would leave 16px of
 		// dead space to the right of every group whose title drives its width.
-<span class="fc" id="L658">		double overhang = 0;</span>
-<span class="fc bfc" id="L659" title="All 2 branches covered.">		for (Tile tile : group.tiles)</span>
-<span class="fc bfc" id="L660" title="All 4 branches covered.">			if (tile instanceof NoteTile &amp;&amp; ((NoteTile) tile).getLeftAnchor() == leftmost)</span>
-<span class="fc" id="L661">				overhang = Math.max(overhang, ((NoteTile) tile).getLeftOverhang());</span>
+<span class="fc" id="L674">		double overhang = 0;</span>
+<span class="fc bfc" id="L675" title="All 2 branches covered.">		for (Tile tile : group.tiles)</span>
+<span class="fc bfc" id="L676" title="All 4 branches covered.">			if (tile instanceof NoteTile &amp;&amp; ((NoteTile) tile).getLeftAnchor() == leftmost)</span>
+<span class="fc" id="L677">				overhang = Math.max(overhang, ((NoteTile) tile).getLeftOverhang());</span>
 
-<span class="fc" id="L663">		final double width = group.getPreferredDimensionIfEmpty(getStringBounder()).getWidth();</span>
-<span class="fc" id="L664">		nextPosA.ensureBiggerThan(</span>
-<span class="fc" id="L665">				leftmost.getPosC(getStringBounder()).addFixed(width + 16 - MARGINX - MARGINX - overhang + margin));</span>
-<span class="fc" id="L666">	}</span>
+<span class="fc" id="L679">		final double width = group.getPreferredDimensionIfEmpty(getStringBounder()).getWidth();</span>
+<span class="fc" id="L680">		nextPosC.ensureBiggerThan(</span>
+<span class="fc" id="L681">				leftmost.getPosC(getStringBounder()).addFixed(width + 16 - MARGINX - MARGINX - overhang + margin));</span>
+<span class="fc" id="L682">	}</span>
 
 	private static void addTouched(Set&lt;LivingSpace&gt; touched, LivingSpaces livingSpaces, Participant participant) {
-<span class="fc bfc" id="L669" title="All 2 branches covered.">		if (participant == null)</span>
-<span class="fc" id="L670">			return;</span>
+<span class="fc bfc" id="L685" title="All 2 branches covered.">		if (participant == null)</span>
+<span class="fc" id="L686">			return;</span>
 
-<span class="fc" id="L672">		final LivingSpace livingSpace = livingSpaces.get(participant);</span>
-<span class="pc bpc" id="L673" title="1 of 2 branches missed.">		if (livingSpace != null)</span>
-<span class="fc" id="L674">			touched.add(livingSpace);</span>
-<span class="fc" id="L675">	}</span>
+<span class="fc" id="L688">		final LivingSpace livingSpace = livingSpaces.get(participant);</span>
+<span class="pc bpc" id="L689" title="1 of 2 branches missed.">		if (livingSpace != null)</span>
+<span class="fc" id="L690">			touched.add(livingSpace);</span>
+<span class="fc" id="L691">	}</span>
 
 	// `note across` builds its Note with both participants null (see
 	// FactorySequenceNoteAcrossCommand): TileBuilder resolves that null/null
@@ -689,31 +705,31 @@ public class GroupingTile extends AbstractTile {
 	// rightmostOf() land on the diagram's true last participant, after which
 	// there is nothing left to push.
 	private static void addNoteTouched(Set&lt;LivingSpace&gt; touched, LivingSpaces livingSpaces, Note note) {
-<span class="pc bpc" id="L692" title="1 of 4 branches missed.">		if (note.getParticipant() == null &amp;&amp; note.getParticipant2() == null) {</span>
-<span class="fc bfc" id="L693" title="All 2 branches covered.">			for (LivingSpace ls : livingSpaces.values())</span>
-<span class="fc" id="L694">				touched.add(ls);</span>
-<span class="fc" id="L695">			return;</span>
+<span class="pc bpc" id="L708" title="1 of 4 branches missed.">		if (note.getParticipant() == null &amp;&amp; note.getParticipant2() == null) {</span>
+<span class="fc bfc" id="L709" title="All 2 branches covered.">			for (LivingSpace ls : livingSpaces.values())</span>
+<span class="fc" id="L710">				touched.add(ls);</span>
+<span class="fc" id="L711">			return;</span>
 		}
 
-<span class="fc" id="L698">		addTouched(touched, livingSpaces, note.getParticipant());</span>
-<span class="fc" id="L699">		addTouched(touched, livingSpaces, note.getParticipant2());</span>
-<span class="fc" id="L700">	}</span>
+<span class="fc" id="L714">		addTouched(touched, livingSpaces, note.getParticipant());</span>
+<span class="fc" id="L715">		addTouched(touched, livingSpaces, note.getParticipant2());</span>
+<span class="fc" id="L716">	}</span>
 
 	private static LivingSpace rightmostOf(LivingSpaces livingSpaces, Set&lt;LivingSpace&gt; touched) {
-<span class="fc" id="L703">		LivingSpace rightmost = null;</span>
-<span class="fc bfc" id="L704" title="All 2 branches covered.">		for (LivingSpace candidate : livingSpaces.values())</span>
-<span class="fc bfc" id="L705" title="All 2 branches covered.">			if (touched.contains(candidate))</span>
-<span class="fc" id="L706">				rightmost = candidate;</span>
+<span class="fc" id="L719">		LivingSpace rightmost = null;</span>
+<span class="fc bfc" id="L720" title="All 2 branches covered.">		for (LivingSpace candidate : livingSpaces.values())</span>
+<span class="fc bfc" id="L721" title="All 2 branches covered.">			if (touched.contains(candidate))</span>
+<span class="fc" id="L722">				rightmost = candidate;</span>
 
-<span class="fc" id="L708">		return rightmost;</span>
+<span class="fc" id="L724">		return rightmost;</span>
 	}
 
 	private static LivingSpace leftmostOf(LivingSpaces livingSpaces, Set&lt;LivingSpace&gt; touched) {
-<span class="pc bpc" id="L712" title="1 of 2 branches missed.">		for (LivingSpace candidate : livingSpaces.values())</span>
-<span class="fc bfc" id="L713" title="All 2 branches covered.">			if (touched.contains(candidate))</span>
-<span class="fc" id="L714">				return candidate;</span>
+<span class="pc bpc" id="L728" title="1 of 2 branches missed.">		for (LivingSpace candidate : livingSpaces.values())</span>
+<span class="fc bfc" id="L729" title="All 2 branches covered.">			if (touched.contains(candidate))</span>
+<span class="fc" id="L730">				return candidate;</span>
 
-<span class="nc" id="L716">		return null;</span>
+<span class="nc" id="L732">		return null;</span>
 	}
 
 	// Walks this group's tiles (and any nested groups) to find every
@@ -724,40 +740,40 @@ public class GroupingTile extends AbstractTile {
 	// rightmost content&quot; without reading any not-yet-resolved Real position.
 	private static void collectTouchedLivingSpaces(List&lt;Tile&gt; tiles, LivingSpaces livingSpaces,
 			Set&lt;LivingSpace&gt; touched) {
-<span class="fc bfc" id="L727" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
-<span class="fc" id="L728">			final Event ev = tile.getEvent();</span>
-<span class="fc bfc" id="L729" title="All 2 branches covered.">			if (ev instanceof Message) {</span>
-<span class="fc" id="L730">				final LivingSpace ls1 = livingSpaces.get(((Message) ev).getParticipant1());</span>
-<span class="fc" id="L731">				final LivingSpace ls2 = livingSpaces.get(((Message) ev).getParticipant2());</span>
-<span class="fc" id="L732">				touched.add(ls1);</span>
-<span class="fc" id="L733">				touched.add(ls2);</span>
-<span class="fc bfc" id="L734" title="All 2 branches covered.">			} else if (ev instanceof MessageExo) {</span>
-<span class="fc" id="L735">				touched.add(livingSpaces.get(((MessageExo) ev).getParticipant()));</span>
-<span class="fc bfc" id="L736" title="All 2 branches covered.">			} else if (ev instanceof LifeEvent) {</span>
-<span class="fc" id="L737">				touched.add(livingSpaces.get(((LifeEvent) ev).getParticipant()));</span>
-<span class="fc bfc" id="L738" title="All 2 branches covered.">			} else if (ev instanceof Note) {</span>
+<span class="fc bfc" id="L743" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
+<span class="fc" id="L744">			final Event ev = tile.getEvent();</span>
+<span class="fc bfc" id="L745" title="All 2 branches covered.">			if (ev instanceof Message) {</span>
+<span class="fc" id="L746">				final LivingSpace ls1 = livingSpaces.get(((Message) ev).getParticipant1());</span>
+<span class="fc" id="L747">				final LivingSpace ls2 = livingSpaces.get(((Message) ev).getParticipant2());</span>
+<span class="fc" id="L748">				touched.add(ls1);</span>
+<span class="fc" id="L749">				touched.add(ls2);</span>
+<span class="fc bfc" id="L750" title="All 2 branches covered.">			} else if (ev instanceof MessageExo) {</span>
+<span class="fc" id="L751">				touched.add(livingSpaces.get(((MessageExo) ev).getParticipant()));</span>
+<span class="fc bfc" id="L752" title="All 2 branches covered.">			} else if (ev instanceof LifeEvent) {</span>
+<span class="fc" id="L753">				touched.add(livingSpaces.get(((LifeEvent) ev).getParticipant()));</span>
+<span class="fc bfc" id="L754" title="All 2 branches covered.">			} else if (ev instanceof Note) {</span>
 				// A note anchored on a participant counts as touching it, exactly
 				// like a message would. Leaving it out is not merely incomplete:
 				// the participant it is drawn over would then be seen as the FIRST
 				// one after the group, and ensureClearsFrameOf() would push its own
 				// posA past a Real derived from its own posC -- a cycle the solver
 				// reports as `IllegalStateException: Infinite Loop?`.
-<span class="fc" id="L745">				addNoteTouched(touched, livingSpaces, (Note) ev);</span>
-<span class="fc bfc" id="L746" title="All 2 branches covered.">			} else if (ev instanceof Notes) {</span>
-<span class="fc bfc" id="L747" title="All 2 branches covered.">				for (Note note : (Notes) ev)</span>
-<span class="fc" id="L748">					addNoteTouched(touched, livingSpaces, note);</span>
-<span class="fc bfc" id="L749" title="All 2 branches covered.">			} else if (ev instanceof Reference) {</span>
+<span class="fc" id="L761">				addNoteTouched(touched, livingSpaces, (Note) ev);</span>
+<span class="fc bfc" id="L762" title="All 2 branches covered.">			} else if (ev instanceof Notes) {</span>
+<span class="fc bfc" id="L763" title="All 2 branches covered.">				for (Note note : (Notes) ev)</span>
+<span class="fc" id="L764">					addNoteTouched(touched, livingSpaces, note);</span>
+<span class="fc bfc" id="L765" title="All 2 branches covered.">			} else if (ev instanceof Reference) {</span>
 				// Same reasoning as a note, and the same cycle if it is left out:
 				// `ref over b, c` inside a group must make c a participant OF the
 				// group, or c would be seen as the first one after it.
-<span class="fc bfc" id="L753" title="All 2 branches covered.">				for (Participant participant : ((Reference) ev).getParticipant())</span>
-<span class="fc" id="L754">					addTouched(touched, livingSpaces, participant);</span>
+<span class="fc bfc" id="L769" title="All 2 branches covered.">				for (Participant participant : ((Reference) ev).getParticipant())</span>
+<span class="fc" id="L770">					addTouched(touched, livingSpaces, participant);</span>
 			}
 
-<span class="fc bfc" id="L757" title="All 2 branches covered.">			if (tile instanceof GroupingTile)</span>
-<span class="fc" id="L758">				collectTouchedLivingSpaces(((GroupingTile) tile).tiles, livingSpaces, touched);</span>
-<span class="fc" id="L759">		}</span>
-<span class="fc" id="L760">	}</span>
+<span class="fc bfc" id="L773" title="All 2 branches covered.">			if (tile instanceof GroupingTile)</span>
+<span class="fc" id="L774">				collectTouchedLivingSpaces(((GroupingTile) tile).tiles, livingSpaces, touched);</span>
+<span class="fc" id="L775">		}</span>
+<span class="fc" id="L776">	}</span>
 
 	// ===================== ASCII =====================
 	//
@@ -788,9 +804,9 @@ public class GroupingTile extends AbstractTile {
 	// passed to ADimension2D here is irrelevant (getBodyRowOffset() only reads
 	// the width), so 0 is fine.
 	private int asciiHeaderRows() {
-<span class="fc" id="L791">		final int[] cols = asciiFrameColumns();</span>
-<span class="fc" id="L792">		final int width = cols[1] - cols[0] + 1;</span>
-<span class="fc" id="L793">		return new AGroupFrame(new ADimension2D(width, 0), asciiTitle(), asciiFrameHasTab()).getBodyRowOffset();</span>
+<span class="fc" id="L807">		final int[] cols = asciiFrameColumns();</span>
+<span class="fc" id="L808">		final int width = cols[1] - cols[0] + 1;</span>
+<span class="fc" id="L809">		return new AGroupFrame(new ADimension2D(width, 0), asciiTitle(), asciiFrameHasTab()).getBodyRowOffset();</span>
 	}
 
 	// Whether this group's ASCII frame uses the pentagon-style cut-corner tab
@@ -800,7 +816,7 @@ public class GroupingTile extends AbstractTile {
 	// a tab, only a plain rectangle with a centered title — see AGroupFrame's
 	// useTab field for the actual shape difference.
 	protected boolean asciiFrameHasTab() {
-<span class="fc" id="L803">		return true;</span>
+<span class="fc" id="L819">		return true;</span>
 	}
 
 	@Override
@@ -810,9 +826,9 @@ public class GroupingTile extends AbstractTile {
 		// apart. The frame's own title width is not (yet) reserved on the
 		// ASCII column solver — a very long group title could overflow
 		// the frame past the participants; same class of known gap as notes.
-<span class="fc bfc" id="L813" title="All 2 branches covered.">		for (Tile tile : tiles)</span>
-<span class="fc" id="L814">			tile.asciiAddConstraints();</span>
-<span class="fc" id="L815">	}</span>
+<span class="fc bfc" id="L829" title="All 2 branches covered.">		for (Tile tile : tiles)</span>
+<span class="fc" id="L830">			tile.asciiAddConstraints();</span>
+<span class="fc" id="L831">	}</span>
 
 	// The union of the children's own ascii ranges, expressed as composable
 	// Real (not yet resolved columns) — exactly the same shape as the pixel
@@ -825,47 +841,47 @@ public class GroupingTile extends AbstractTile {
 	// own (null, e.g. EmptyTile) are skipped; if none has any, null is
 	// returned, same contract as the Tile default.
 	private Real asciiChildrenMin() {
-<span class="fc" id="L828">		final List&lt;Real&gt; mins = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L829" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
-<span class="fc" id="L830">			final Real m = tile.getAsciiMinX();</span>
-<span class="fc bfc" id="L831" title="All 2 branches covered.">			if (m != null)</span>
-<span class="fc" id="L832">				mins.add(m);</span>
-<span class="fc" id="L833">		}</span>
-<span class="pc bpc" id="L834" title="1 of 2 branches missed.">		if (mins.isEmpty())</span>
-<span class="nc" id="L835">			return null;</span>
+<span class="fc" id="L844">		final List&lt;Real&gt; mins = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L845" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
+<span class="fc" id="L846">			final Real m = tile.getAsciiMinX();</span>
+<span class="fc bfc" id="L847" title="All 2 branches covered.">			if (m != null)</span>
+<span class="fc" id="L848">				mins.add(m);</span>
+<span class="fc" id="L849">		}</span>
+<span class="pc bpc" id="L850" title="1 of 2 branches missed.">		if (mins.isEmpty())</span>
+<span class="nc" id="L851">			return null;</span>
 
-<span class="fc" id="L837">		return RealUtils.min(mins);</span>
+<span class="fc" id="L853">		return RealUtils.min(mins);</span>
 	}
 
 	private Real asciiChildrenMax() {
-<span class="fc" id="L841">		final List&lt;Real&gt; maxs = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L842" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
-<span class="fc" id="L843">			final Real m = tile.getAsciiMaxX();</span>
-<span class="fc bfc" id="L844" title="All 2 branches covered.">			if (m != null)</span>
-<span class="fc" id="L845">				maxs.add(m);</span>
-<span class="fc" id="L846">		}</span>
-<span class="pc bpc" id="L847" title="1 of 2 branches missed.">		if (maxs.isEmpty())</span>
-<span class="nc" id="L848">			return null;</span>
+<span class="fc" id="L857">		final List&lt;Real&gt; maxs = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L858" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
+<span class="fc" id="L859">			final Real m = tile.getAsciiMaxX();</span>
+<span class="fc bfc" id="L860" title="All 2 branches covered.">			if (m != null)</span>
+<span class="fc" id="L861">				maxs.add(m);</span>
+<span class="fc" id="L862">		}</span>
+<span class="pc bpc" id="L863" title="1 of 2 branches missed.">		if (maxs.isEmpty())</span>
+<span class="nc" id="L864">			return null;</span>
 
-<span class="fc" id="L850">		return RealUtils.max(maxs);</span>
+<span class="fc" id="L866">		return RealUtils.max(maxs);</span>
 	}
 
 	@Override
 	public Real getAsciiMinX() {
-<span class="fc" id="L855">		final Real childMin = asciiChildrenMin();</span>
-<span class="pc bpc" id="L856" title="1 of 2 branches missed.">		if (childMin == null)</span>
-<span class="nc" id="L857">			return null;</span>
+<span class="fc" id="L871">		final Real childMin = asciiChildrenMin();</span>
+<span class="pc bpc" id="L872" title="1 of 2 branches missed.">		if (childMin == null)</span>
+<span class="nc" id="L873">			return null;</span>
 
-<span class="fc" id="L859">		return childMin.addFixed(-ASCII_FRAME_MARGIN);</span>
+<span class="fc" id="L875">		return childMin.addFixed(-ASCII_FRAME_MARGIN);</span>
 	}
 
 	@Override
 	public Real getAsciiMaxX() {
-<span class="fc" id="L864">		final Real childMax = asciiChildrenMax();</span>
-<span class="pc bpc" id="L865" title="1 of 2 branches missed.">		if (childMax == null)</span>
-<span class="nc" id="L866">			return null;</span>
+<span class="fc" id="L880">		final Real childMax = asciiChildrenMax();</span>
+<span class="pc bpc" id="L881" title="1 of 2 branches missed.">		if (childMax == null)</span>
+<span class="nc" id="L882">			return null;</span>
 
-<span class="fc" id="L868">		return childMax.addFixed(ASCII_FRAME_MARGIN);</span>
+<span class="fc" id="L884">		return childMax.addFixed(ASCII_FRAME_MARGIN);</span>
 	}
 
 	// The [left, right] resolved ASCII columns of the frame border itself,
@@ -876,27 +892,27 @@ public class GroupingTile extends AbstractTile {
 	// child with any columns (e.g. an empty group), so it still draws a
 	// sensible frame instead of crashing on a null range.
 	protected int[] asciiFrameColumns() {
-<span class="fc" id="L879">		final Real min = getAsciiMinX();</span>
-<span class="fc" id="L880">		final Real max = getAsciiMaxX();</span>
-<span class="pc bpc" id="L881" title="2 of 4 branches missed.">		if (min != null &amp;&amp; max != null)</span>
-<span class="fc" id="L882">			return new int[] { (int) min.getCurrentValue(), (int) max.getCurrentValue() };</span>
+<span class="fc" id="L895">		final Real min = getAsciiMinX();</span>
+<span class="fc" id="L896">		final Real max = getAsciiMaxX();</span>
+<span class="pc bpc" id="L897" title="2 of 4 branches missed.">		if (min != null &amp;&amp; max != null)</span>
+<span class="fc" id="L898">			return new int[] { (int) min.getCurrentValue(), (int) max.getCurrentValue() };</span>
 
 		// Spans the participant BOXES (posB .. posD - 1), not their lifeline centres:
 		// same convention as PartitionTile.asciiFrameColumns(), so an empty group and
 		// a partition frame agree on where the diagram's edges are. (Using the life
 		// columns here would draw an empty group's frame narrower than the heads it
 		// is supposed to enclose.)
-<span class="nc" id="L889">		int lo = Integer.MAX_VALUE;</span>
-<span class="nc" id="L890">		int hi = Integer.MIN_VALUE;</span>
-<span class="nc bnc" id="L891" title="All 2 branches missed.">		for (LivingSpace ls : getTileArguments().getLivingSpaces().values()) {</span>
+<span class="nc" id="L905">		int lo = Integer.MAX_VALUE;</span>
+<span class="nc" id="L906">		int hi = Integer.MIN_VALUE;</span>
+<span class="nc bnc" id="L907" title="All 2 branches missed.">		for (LivingSpace ls : getTileArguments().getLivingSpaces().values()) {</span>
 			// posB is the box's left column, posD its EXCLUSIVE right edge
-<span class="nc" id="L893">			lo = Math.min(lo, (int) ls.getAsciiPosB().getCurrentValue());</span>
-<span class="nc" id="L894">			hi = Math.max(hi, (int) ls.getAsciiPosD().getCurrentValue() - 1);</span>
-<span class="nc" id="L895">		}</span>
-<span class="nc bnc" id="L896" title="All 2 branches missed.">		if (lo == Integer.MAX_VALUE)</span>
-<span class="nc" id="L897">			return new int[] { 0, 0 };</span>
+<span class="nc" id="L909">			lo = Math.min(lo, (int) ls.getAsciiPosB().getCurrentValue());</span>
+<span class="nc" id="L910">			hi = Math.max(hi, (int) ls.getAsciiPosD().getCurrentValue() - 1);</span>
+<span class="nc" id="L911">		}</span>
+<span class="nc bnc" id="L912" title="All 2 branches missed.">		if (lo == Integer.MAX_VALUE)</span>
+<span class="nc" id="L913">			return new int[] { 0, 0 };</span>
 
-<span class="nc" id="L899">		return new int[] { lo - ASCII_FRAME_MARGIN, hi + ASCII_FRAME_MARGIN };</span>
+<span class="nc" id="L915">		return new int[] { lo - ASCII_FRAME_MARGIN, hi + ASCII_FRAME_MARGIN };</span>
 	}
 
 	// Body height, between the header (top border) and footer (bottom border)
@@ -907,15 +923,15 @@ public class GroupingTile extends AbstractTile {
 	// UnsupportedOperationException: a child with no ASCII support crashes
 	// here, naming itself, exactly like the orchestrator's own policy.
 	private int asciiBodyHeight() {
-<span class="fc" id="L910">		return computeAsciiLayout(tiles).totalHeight;</span>
+<span class="fc" id="L926">		return computeAsciiLayout(tiles).totalHeight;</span>
 	}
 
 	@Override
 	public ADimension2D asciiDimension() {
-<span class="fc" id="L915">		final int[] cols = asciiFrameColumns();</span>
-<span class="fc" id="L916">		final int width = cols[1] - cols[0] + 1;</span>
-<span class="fc" id="L917">		final int height = asciiHeaderRows() + asciiBodyHeight() + ASCII_FOOTER_ROWS;</span>
-<span class="fc" id="L918">		return new ADimension2D(width, height);</span>
+<span class="fc" id="L931">		final int[] cols = asciiFrameColumns();</span>
+<span class="fc" id="L932">		final int width = cols[1] - cols[0] + 1;</span>
+<span class="fc" id="L933">		final int height = asciiHeaderRows() + asciiBodyHeight() + ASCII_FOOTER_ROWS;</span>
+<span class="fc" id="L934">		return new ADimension2D(width, height);</span>
 	}
 
 	// ASCII counterpart of drawU(): delegate the frame box + title to an
@@ -933,15 +949,15 @@ public class GroupingTile extends AbstractTile {
 	// Component rather than nesting them inside it.
 	@Override
 	public void asciiDraw(InfinitePlan plan) {
-<span class="fc" id="L936">		final int[] cols = asciiFrameColumns();</span>
-<span class="fc" id="L937">		final int left = cols[0];</span>
-<span class="fc" id="L938">		final int width = cols[1] - cols[0] + 1;</span>
+<span class="fc" id="L952">		final int[] cols = asciiFrameColumns();</span>
+<span class="fc" id="L953">		final int left = cols[0];</span>
+<span class="fc" id="L954">		final int width = cols[1] - cols[0] + 1;</span>
 
 		// The frame draws itself (border, sides, footer, and title tab) at its
 		// absolute left column; the same instance is reused just below to know
 		// where the body starts, rather than re-deriving that separately.
-<span class="fc" id="L943">		final AGroupFrame frame = new AGroupFrame(asciiDimension(), asciiTitle(), asciiFrameHasTab());</span>
-<span class="fc" id="L944">		frame.asciiDraw(plan.move(left, 0));</span>
+<span class="fc" id="L959">		final AGroupFrame frame = new AGroupFrame(asciiDimension(), asciiTitle(), asciiFrameHasTab());</span>
+<span class="fc" id="L960">		frame.asciiDraw(plan.move(left, 0));</span>
 
 		// Children stacked in the body, below the header, using the SAME cluster
 		// layout as asciiBodyHeight() (via computeAsciiLayout()) so the declared
@@ -953,17 +969,17 @@ public class GroupingTile extends AbstractTile {
 		// it via an AElseSeparator (the counterpart of drawAllElses()) at the
 		// frame's absolute left column and full width. The ElseTile still owns its
 		// own row height via asciiDimension() (and is never itself a `&amp;` member).
-<span class="fc" id="L956">		final AsciiLayout layout = computeAsciiLayout(tiles);</span>
-<span class="fc" id="L957">		final int bodyStart = frame.getBodyRowOffset();</span>
-<span class="fc bfc" id="L958" title="All 2 branches covered.">		for (int i = 0; i &lt; tiles.size(); i++) {</span>
-<span class="fc" id="L959">			final Tile tile = tiles.get(i);</span>
-<span class="fc" id="L960">			final int y = bodyStart + layout.rowOf[i];</span>
-<span class="fc bfc" id="L961" title="All 2 branches covered.">			if (tile instanceof ElseTile)</span>
-<span class="fc" id="L962">				new AElseSeparator(width, ((ElseTile) tile).asciiLabel()).asciiDraw(plan.move(left, y));</span>
+<span class="fc" id="L972">		final AsciiLayout layout = computeAsciiLayout(tiles);</span>
+<span class="fc" id="L973">		final int bodyStart = frame.getBodyRowOffset();</span>
+<span class="fc bfc" id="L974" title="All 2 branches covered.">		for (int i = 0; i &lt; tiles.size(); i++) {</span>
+<span class="fc" id="L975">			final Tile tile = tiles.get(i);</span>
+<span class="fc" id="L976">			final int y = bodyStart + layout.rowOf[i];</span>
+<span class="fc bfc" id="L977" title="All 2 branches covered.">			if (tile instanceof ElseTile)</span>
+<span class="fc" id="L978">				new AElseSeparator(width, ((ElseTile) tile).asciiLabel()).asciiDraw(plan.move(left, y));</span>
 			else
-<span class="fc" id="L964">				tile.asciiDraw(plan.move(0, y));</span>
+<span class="fc" id="L980">				tile.asciiDraw(plan.move(0, y));</span>
 		}
-<span class="fc" id="L966">	}</span>
+<span class="fc" id="L982">	}</span>
 
 	// The group's title as a single flat line: for a plain &quot;group&quot;/partition
 	// it is just the comment, otherwise &quot;title comment&quot; — mirroring how the
@@ -972,72 +988,72 @@ public class GroupingTile extends AbstractTile {
 	// Display became an AsciiBlock; good enough for the single-word
 	// partition/group titles the current tests use.
 	protected String asciiTitle() {
-<span class="fc" id="L975">		final StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L976" title="All 2 branches covered.">		for (CharSequence cs : display) {</span>
-<span class="fc bfc" id="L977" title="All 2 branches covered.">			if (sb.length() &gt; 0)</span>
-<span class="fc" id="L978">				sb.append(' ');</span>
-<span class="fc" id="L979">			sb.append(cs);</span>
-<span class="fc" id="L980">		}</span>
-<span class="fc" id="L981">		return sb.toString();</span>
+<span class="fc" id="L991">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L992" title="All 2 branches covered.">		for (CharSequence cs : display) {</span>
+<span class="fc bfc" id="L993" title="All 2 branches covered.">			if (sb.length() &gt; 0)</span>
+<span class="fc" id="L994">				sb.append(' ');</span>
+<span class="fc" id="L995">			sb.append(cs);</span>
+<span class="fc" id="L996">		}</span>
+<span class="fc" id="L997">		return sb.toString();</span>
 	}
 
 	public Real getMinX() {
-<span class="fc" id="L985">		return min.addFixed(-EXTERNAL_MARGINX1 - getNotesWidth(getStringBounder(), NotePosition.LEFT));</span>
+<span class="fc" id="L1001">		return min.addFixed(-EXTERNAL_MARGINX1 - getNotesWidth(getStringBounder(), NotePosition.LEFT));</span>
 	}
 
 	public Real getMaxX() {
-<span class="fc" id="L989">		return max.addFixed(EXTERNAL_MARGINX2 + getNotesWidth(getStringBounder(), NotePosition.RIGHT));</span>
+<span class="fc" id="L1005">		return max.addFixed(EXTERNAL_MARGINX2 + getNotesWidth(getStringBounder(), NotePosition.RIGHT));</span>
 	}
 
 	// Notes attached to the group (&quot;note left&quot;/&quot;note right&quot; just after the end
 	// keyword) are drawn like in Puma: at the top corner of the group frame, on
 	// the requested side (see GroupingGraphicalElementHeader)
 	private void drawNotes(UGraphic ug) {
-<span class="fc" id="L996">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L1012">		final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="fc" id="L998">		double xRight = max.getCurrentValue();</span>
-<span class="fc bfc" id="L999" title="All 2 branches covered.">		for (Component note : getNoteComponents(NotePosition.RIGHT)) {</span>
-<span class="fc" id="L1000">			final XDimension2D dimNote = note.getPreferredDimension(stringBounder);</span>
-<span class="fc" id="L1001">			note.drawU(ug.apply(UTranslate.dx(xRight)), Area.create(dimNote.getWidth(), dimNote.getHeight()),</span>
+<span class="fc" id="L1014">		double xRight = max.getCurrentValue();</span>
+<span class="fc bfc" id="L1015" title="All 2 branches covered.">		for (Component note : getNoteComponents(NotePosition.RIGHT)) {</span>
+<span class="fc" id="L1016">			final XDimension2D dimNote = note.getPreferredDimension(stringBounder);</span>
+<span class="fc" id="L1017">			note.drawU(ug.apply(UTranslate.dx(xRight)), Area.create(dimNote.getWidth(), dimNote.getHeight()),</span>
 					(Context2D) ug);
-<span class="fc" id="L1003">			xRight += dimNote.getWidth();</span>
-<span class="fc" id="L1004">		}</span>
+<span class="fc" id="L1019">			xRight += dimNote.getWidth();</span>
+<span class="fc" id="L1020">		}</span>
 
-<span class="fc" id="L1006">		double xLeft = min.getCurrentValue();</span>
-<span class="pc bpc" id="L1007" title="1 of 2 branches missed.">		for (Component note : getNoteComponents(NotePosition.LEFT)) {</span>
-<span class="nc" id="L1008">			final XDimension2D dimNote = note.getPreferredDimension(stringBounder);</span>
-<span class="nc" id="L1009">			note.drawU(ug.apply(UTranslate.dx(xLeft - dimNote.getWidth())),</span>
-<span class="nc" id="L1010">					Area.create(dimNote.getWidth(), dimNote.getHeight()), (Context2D) ug);</span>
-<span class="nc" id="L1011">			xLeft -= dimNote.getWidth();</span>
-<span class="nc" id="L1012">		}</span>
-<span class="fc" id="L1013">	}</span>
+<span class="fc" id="L1022">		double xLeft = min.getCurrentValue();</span>
+<span class="pc bpc" id="L1023" title="1 of 2 branches missed.">		for (Component note : getNoteComponents(NotePosition.LEFT)) {</span>
+<span class="nc" id="L1024">			final XDimension2D dimNote = note.getPreferredDimension(stringBounder);</span>
+<span class="nc" id="L1025">			note.drawU(ug.apply(UTranslate.dx(xLeft - dimNote.getWidth())),</span>
+<span class="nc" id="L1026">					Area.create(dimNote.getWidth(), dimNote.getHeight()), (Context2D) ug);</span>
+<span class="nc" id="L1027">			xLeft -= dimNote.getWidth();</span>
+<span class="nc" id="L1028">		}</span>
+<span class="fc" id="L1029">	}</span>
 
 	private double getNotesWidth(StringBounder stringBounder, NotePosition position) {
-<span class="fc" id="L1016">		double result = 0;</span>
-<span class="fc bfc" id="L1017" title="All 2 branches covered.">		for (Component note : getNoteComponents(position))</span>
-<span class="fc" id="L1018">			result += note.getPreferredDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L1032">		double result = 0;</span>
+<span class="fc bfc" id="L1033" title="All 2 branches covered.">		for (Component note : getNoteComponents(position))</span>
+<span class="fc" id="L1034">			result += note.getPreferredDimension(stringBounder).getWidth();</span>
 
-<span class="fc" id="L1020">		return result;</span>
+<span class="fc" id="L1036">		return result;</span>
 	}
 
 	private List&lt;Component&gt; getNoteComponents(NotePosition position) {
-<span class="pc bpc" id="L1024" title="1 of 2 branches missed.">		if (end == null)</span>
-<span class="nc" id="L1025">			return Collections.emptyList();</span>
+<span class="pc bpc" id="L1040" title="1 of 2 branches missed.">		if (end == null)</span>
+<span class="nc" id="L1041">			return Collections.emptyList();</span>
 
-<span class="fc" id="L1027">		final List&lt;Component&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L1028" title="All 2 branches covered.">		for (Note noteOnMessage : end.getNoteOnMessages()) {</span>
+<span class="fc" id="L1043">		final List&lt;Component&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L1044" title="All 2 branches covered.">		for (Note noteOnMessage : end.getNoteOnMessages()) {</span>
 			// A &quot;note left&quot; is drawn on the left side of the frame, everything
 			// else (right, or a position that defaulted to right) on the right
-<span class="pc bpc" id="L1031" title="1 of 2 branches missed.">			final boolean isLeft = noteOnMessage.getPosition() == NotePosition.LEFT;</span>
-<span class="fc bfc" id="L1032" title="All 4 branches covered.">			if (isLeft != (position == NotePosition.LEFT))</span>
-<span class="fc" id="L1033">				continue;</span>
+<span class="pc bpc" id="L1047" title="1 of 2 branches missed.">			final boolean isLeft = noteOnMessage.getPosition() == NotePosition.LEFT;</span>
+<span class="fc bfc" id="L1048" title="All 4 branches covered.">			if (isLeft != (position == NotePosition.LEFT))</span>
+<span class="fc" id="L1049">				continue;</span>
 
-<span class="fc" id="L1035">			final ISkinParam sk = noteOnMessage.getSkinParamBackcolored(skinParam);</span>
-<span class="fc" id="L1036">			result.add(skin.createComponentNote(noteOnMessage.getUsedStyles(),</span>
-<span class="fc" id="L1037">					noteOnMessage.getNoteStyle().getNoteComponentType(), sk, noteOnMessage.getDisplay(),</span>
-<span class="fc" id="L1038">					noteOnMessage.getColors()));</span>
-<span class="fc" id="L1039">		}</span>
-<span class="fc" id="L1040">		return result;</span>
+<span class="fc" id="L1051">			final ISkinParam sk = noteOnMessage.getSkinParamBackcolored(skinParam);</span>
+<span class="fc" id="L1052">			result.add(skin.createComponentNote(noteOnMessage.getUsedStyles(),</span>
+<span class="fc" id="L1053">					noteOnMessage.getNoteStyle().getNoteComponentType(), sk, noteOnMessage.getDisplay(),</span>
+<span class="fc" id="L1054">					noteOnMessage.getColors()));</span>
+<span class="fc" id="L1055">		}</span>
+<span class="fc" id="L1056">		return result;</span>
 	}
 
 	// Walks the tile tree to run each tile's notifyPositioned() -- which no longer
@@ -1046,20 +1062,20 @@ public class GroupingTile extends AbstractTile {
 	// for LinkAnchor lookups.
 	public static void fillPositionelTiles(StringBounder stringBounder, List&lt;Tile&gt; tiles,
 			final List&lt;CommonTile&gt; local, List&lt;CommonTile&gt; full) {
-<span class="fc bfc" id="L1049" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
-<span class="fc" id="L1050">			tile.onGaugeResolved();</span>
-<span class="fc" id="L1051">			local.add((CommonTile) tile);</span>
-<span class="fc" id="L1052">			full.add((CommonTile) tile);</span>
-<span class="fc bfc" id="L1053" title="All 2 branches covered.">			if (tile instanceof GroupingTile)</span>
-<span class="fc" id="L1054">				fillPositionalSubGroupTiles(stringBounder, full, (GroupingTile) tile);</span>
-<span class="fc" id="L1055">		}</span>
-<span class="fc" id="L1056">	}</span>
+<span class="fc bfc" id="L1065" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
+<span class="fc" id="L1066">			tile.onGaugeResolved();</span>
+<span class="fc" id="L1067">			local.add((CommonTile) tile);</span>
+<span class="fc" id="L1068">			full.add((CommonTile) tile);</span>
+<span class="fc bfc" id="L1069" title="All 2 branches covered.">			if (tile instanceof GroupingTile)</span>
+<span class="fc" id="L1070">				fillPositionalSubGroupTiles(stringBounder, full, (GroupingTile) tile);</span>
+<span class="fc" id="L1071">		}</span>
+<span class="fc" id="L1072">	}</span>
 
 	private static void fillPositionalSubGroupTiles(StringBounder stringBounder, List&lt;CommonTile&gt; full,
 			GroupingTile groupingTile) {
-<span class="fc" id="L1060">		final ArrayList&lt;CommonTile&gt; local2 = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L1061">		fillPositionelTiles(stringBounder, groupingTile.tiles, local2, full);</span>
-<span class="fc" id="L1062">	}</span>
+<span class="fc" id="L1076">		final ArrayList&lt;CommonTile&gt; local2 = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L1077">		fillPositionelTiles(stringBounder, groupingTile.tiles, local2, full);</span>
+<span class="fc" id="L1078">	}</span>
 
 	// Sum of the tiles' heights, counting each run of parallel (&amp;) tiles ONCE:
 	// the members of a &amp; cluster share a contact line, so they overlap, and the
@@ -1091,33 +1107,33 @@ public class GroupingTile extends AbstractTile {
 	// having to be subtracted back (exactly what the former code achieved by
 	// moving tiles out of `result` and into the TileParallel).
 	private static double computeBodyHeight(List&lt;Tile&gt; tiles) {
-<span class="fc" id="L1094">		double total = 0;</span>
+<span class="fc" id="L1110">		double total = 0;</span>
 		// Tiles held back, still eligible to be pulled into a cluster by a
 		// following `&amp;`: a lone seed possibly trailed by life events, or (once a
 		// `&amp;` has been seen) the growing cluster itself.
-<span class="fc" id="L1098">		final List&lt;Tile&gt; pending = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L1099">		boolean clusterOpen = false;</span>
+<span class="fc" id="L1114">		final List&lt;Tile&gt; pending = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L1115">		boolean clusterOpen = false;</span>
 
-<span class="fc bfc" id="L1101" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
-<span class="fc bfc" id="L1102" title="All 2 branches covered.">			if (isParallel(tile)) {</span>
+<span class="fc bfc" id="L1117" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
+<span class="fc bfc" id="L1118" title="All 2 branches covered.">			if (isParallel(tile)) {</span>
 				// Joins/opens the cluster, pulling in whatever is pending.
-<span class="fc" id="L1104">				clusterOpen = true;</span>
-<span class="fc" id="L1105">				pending.add(tile);</span>
-<span class="fc bfc" id="L1106" title="All 2 branches covered.">			} else if (tile instanceof LifeEventTile) {</span>
+<span class="fc" id="L1120">				clusterOpen = true;</span>
+<span class="fc" id="L1121">				pending.add(tile);</span>
+<span class="fc bfc" id="L1122" title="All 2 branches covered.">			} else if (tile instanceof LifeEventTile) {</span>
 				// Never a separator: held in pending so a later `&amp;` can still
 				// pull it (and everything before it in the run) into a cluster.
-<span class="fc" id="L1109">				pending.add(tile);</span>
+<span class="fc" id="L1125">				pending.add(tile);</span>
 			} else {
 				// A real separator: flush the pending run, then start a fresh
 				// one seeded with this tile.
-<span class="fc" id="L1113">				total += flushPending(pending, clusterOpen);</span>
-<span class="fc" id="L1114">				clusterOpen = false;</span>
-<span class="fc" id="L1115">				pending.add(tile);</span>
+<span class="fc" id="L1129">				total += flushPending(pending, clusterOpen);</span>
+<span class="fc" id="L1130">				clusterOpen = false;</span>
+<span class="fc" id="L1131">				pending.add(tile);</span>
 			}
-<span class="fc" id="L1117">		}</span>
-<span class="fc" id="L1118">		total += flushPending(pending, clusterOpen);</span>
+<span class="fc" id="L1133">		}</span>
+<span class="fc" id="L1134">		total += flushPending(pending, clusterOpen);</span>
 
-<span class="fc" id="L1120">		return total;</span>
+<span class="fc" id="L1136">		return total;</span>
 	}
 
 	// Consumes `pending` (clearing it) and returns its total height. When the run
@@ -1127,28 +1143,28 @@ public class GroupingTile extends AbstractTile {
 	// plain sum of the members' preferred heights (a lone seed, possibly trailed
 	// by life events that were never pulled into a cluster).
 	private static double flushPending(List&lt;Tile&gt; pending, boolean wasCluster) {
-<span class="fc bfc" id="L1130" title="All 2 branches covered.">		if (pending.isEmpty())</span>
-<span class="fc" id="L1131">			return 0;</span>
+<span class="fc bfc" id="L1146" title="All 2 branches covered.">		if (pending.isEmpty())</span>
+<span class="fc" id="L1147">			return 0;</span>
 
-<span class="fc" id="L1133">		double result = 0;</span>
-<span class="fc bfc" id="L1134" title="All 2 branches covered.">		if (wasCluster) {</span>
-<span class="fc" id="L1135">			double contact = 0;</span>
-<span class="fc" id="L1136">			double after = 0;</span>
-<span class="fc bfc" id="L1137" title="All 2 branches covered.">			for (Tile tile : pending) {</span>
-<span class="fc" id="L1138">				contact = Math.max(contact, tile.getContactPointRelative());</span>
-<span class="fc" id="L1139">				after = Math.max(after, tile.getZZZ());</span>
-<span class="fc" id="L1140">			}</span>
-<span class="fc" id="L1141">			result = contact + after;</span>
-<span class="fc" id="L1142">		} else {</span>
-<span class="fc bfc" id="L1143" title="All 2 branches covered.">			for (Tile tile : pending)</span>
-<span class="fc" id="L1144">				result += tile.getPreferredHeight();</span>
+<span class="fc" id="L1149">		double result = 0;</span>
+<span class="fc bfc" id="L1150" title="All 2 branches covered.">		if (wasCluster) {</span>
+<span class="fc" id="L1151">			double contact = 0;</span>
+<span class="fc" id="L1152">			double after = 0;</span>
+<span class="fc bfc" id="L1153" title="All 2 branches covered.">			for (Tile tile : pending) {</span>
+<span class="fc" id="L1154">				contact = Math.max(contact, tile.getContactPointRelative());</span>
+<span class="fc" id="L1155">				after = Math.max(after, tile.getZZZ());</span>
+<span class="fc" id="L1156">			}</span>
+<span class="fc" id="L1157">			result = contact + after;</span>
+<span class="fc" id="L1158">		} else {</span>
+<span class="fc bfc" id="L1159" title="All 2 branches covered.">			for (Tile tile : pending)</span>
+<span class="fc" id="L1160">				result += tile.getPreferredHeight();</span>
 		}
-<span class="fc" id="L1146">		pending.clear();</span>
-<span class="fc" id="L1147">		return result;</span>
+<span class="fc" id="L1162">		pending.clear();</span>
+<span class="fc" id="L1163">		return result;</span>
 	}
 
 	public static boolean isParallel(Tile tile) {
-<span class="fc" id="L1151">		return tile.getEvent().isParallel();</span>
+<span class="fc" id="L1167">		return tile.getEvent().isParallel();</span>
 	}
 
 	// ===================== ASCII height-only clustering =====================
@@ -1184,37 +1200,37 @@ public class GroupingTile extends AbstractTile {
 		final int[] rowOf;
 		final int totalHeight;
 
-<span class="fc" id="L1187">		AsciiLayout(int[] rowOf, int totalHeight) {</span>
-<span class="fc" id="L1188">			this.rowOf = rowOf;</span>
-<span class="fc" id="L1189">			this.totalHeight = totalHeight;</span>
-<span class="fc" id="L1190">		}</span>
+<span class="fc" id="L1203">		AsciiLayout(int[] rowOf, int totalHeight) {</span>
+<span class="fc" id="L1204">			this.rowOf = rowOf;</span>
+<span class="fc" id="L1205">			this.totalHeight = totalHeight;</span>
+<span class="fc" id="L1206">		}</span>
 	}
 
 	static AsciiLayout computeAsciiLayout(List&lt;Tile&gt; tiles) {
-<span class="fc" id="L1194">		final int[] rowOf = new int[tiles.size()];</span>
-<span class="fc" id="L1195">		int y = 0;</span>
+<span class="fc" id="L1210">		final int[] rowOf = new int[tiles.size()];</span>
+<span class="fc" id="L1211">		int y = 0;</span>
 		// Indices into `tiles`, mirroring computeBodyHeight()'s `pending` list of
 		// Tile references -- kept as indices here since we must also WRITE each
 		// member's row, not just read its height.
-<span class="fc" id="L1199">		final List&lt;Integer&gt; pending = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L1200">		boolean clusterOpen = false;</span>
+<span class="fc" id="L1215">		final List&lt;Integer&gt; pending = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L1216">		boolean clusterOpen = false;</span>
 
-<span class="fc bfc" id="L1202" title="All 2 branches covered.">		for (int i = 0; i &lt; tiles.size(); i++) {</span>
-<span class="fc" id="L1203">			final Tile tile = tiles.get(i);</span>
-<span class="fc bfc" id="L1204" title="All 2 branches covered.">			if (isParallel(tile)) {</span>
-<span class="fc" id="L1205">				clusterOpen = true;</span>
-<span class="fc" id="L1206">				pending.add(i);</span>
-<span class="fc bfc" id="L1207" title="All 2 branches covered.">			} else if (tile instanceof LifeEventTile) {</span>
-<span class="fc" id="L1208">				pending.add(i);</span>
+<span class="fc bfc" id="L1218" title="All 2 branches covered.">		for (int i = 0; i &lt; tiles.size(); i++) {</span>
+<span class="fc" id="L1219">			final Tile tile = tiles.get(i);</span>
+<span class="fc bfc" id="L1220" title="All 2 branches covered.">			if (isParallel(tile)) {</span>
+<span class="fc" id="L1221">				clusterOpen = true;</span>
+<span class="fc" id="L1222">				pending.add(i);</span>
+<span class="fc bfc" id="L1223" title="All 2 branches covered.">			} else if (tile instanceof LifeEventTile) {</span>
+<span class="fc" id="L1224">				pending.add(i);</span>
 			} else {
-<span class="fc" id="L1210">				y += flushAsciiPending(tiles, pending, clusterOpen, rowOf, y);</span>
-<span class="fc" id="L1211">				clusterOpen = false;</span>
-<span class="fc" id="L1212">				pending.add(i);</span>
+<span class="fc" id="L1226">				y += flushAsciiPending(tiles, pending, clusterOpen, rowOf, y);</span>
+<span class="fc" id="L1227">				clusterOpen = false;</span>
+<span class="fc" id="L1228">				pending.add(i);</span>
 			}
 		}
-<span class="fc" id="L1215">		y += flushAsciiPending(tiles, pending, clusterOpen, rowOf, y);</span>
+<span class="fc" id="L1231">		y += flushAsciiPending(tiles, pending, clusterOpen, rowOf, y);</span>
 
-<span class="fc" id="L1217">		return new AsciiLayout(rowOf, y);</span>
+<span class="fc" id="L1233">		return new AsciiLayout(rowOf, y);</span>
 	}
 
 	// Consumes `pending` (clearing it), writes each member's row into `rowOf`,
@@ -1225,41 +1241,41 @@ public class GroupingTile extends AbstractTile {
 	// members stack one after another starting at `y`, height = their sum.
 	private static int flushAsciiPending(List&lt;Tile&gt; tiles, List&lt;Integer&gt; pending, boolean wasCluster, int[] rowOf,
 			int y) {
-<span class="fc bfc" id="L1228" title="All 2 branches covered.">		if (pending.isEmpty())</span>
-<span class="fc" id="L1229">			return 0;</span>
+<span class="fc bfc" id="L1244" title="All 2 branches covered.">		if (pending.isEmpty())</span>
+<span class="fc" id="L1245">			return 0;</span>
 
 		int height;
-<span class="fc bfc" id="L1232" title="All 2 branches covered.">		if (wasCluster) {</span>
-<span class="fc" id="L1233">			int max = 0;</span>
-<span class="fc bfc" id="L1234" title="All 2 branches covered.">			for (int idx : pending)</span>
-<span class="fc" id="L1235">				max = Math.max(max, tiles.get(idx).asciiDimension().getHeight());</span>
-<span class="fc bfc" id="L1236" title="All 2 branches covered.">			for (int idx : pending)</span>
-<span class="fc" id="L1237">				rowOf[idx] = y;</span>
-<span class="fc" id="L1238">			height = max;</span>
-<span class="fc" id="L1239">		} else {</span>
-<span class="fc" id="L1240">			int localY = y;</span>
-<span class="fc bfc" id="L1241" title="All 2 branches covered.">			for (int idx : pending) {</span>
-<span class="fc" id="L1242">				rowOf[idx] = localY;</span>
-<span class="fc" id="L1243">				localY += tiles.get(idx).asciiDimension().getHeight();</span>
-<span class="fc" id="L1244">			}</span>
-<span class="fc" id="L1245">			height = localY - y;</span>
+<span class="fc bfc" id="L1248" title="All 2 branches covered.">		if (wasCluster) {</span>
+<span class="fc" id="L1249">			int max = 0;</span>
+<span class="fc bfc" id="L1250" title="All 2 branches covered.">			for (int idx : pending)</span>
+<span class="fc" id="L1251">				max = Math.max(max, tiles.get(idx).asciiDimension().getHeight());</span>
+<span class="fc bfc" id="L1252" title="All 2 branches covered.">			for (int idx : pending)</span>
+<span class="fc" id="L1253">				rowOf[idx] = y;</span>
+<span class="fc" id="L1254">			height = max;</span>
+<span class="fc" id="L1255">		} else {</span>
+<span class="fc" id="L1256">			int localY = y;</span>
+<span class="fc bfc" id="L1257" title="All 2 branches covered.">			for (int idx : pending) {</span>
+<span class="fc" id="L1258">				rowOf[idx] = localY;</span>
+<span class="fc" id="L1259">				localY += tiles.get(idx).asciiDimension().getHeight();</span>
+<span class="fc" id="L1260">			}</span>
+<span class="fc" id="L1261">			height = localY - y;</span>
 		}
-<span class="fc" id="L1247">		pending.clear();</span>
-<span class="fc" id="L1248">		return height;</span>
+<span class="fc" id="L1263">		pending.clear();</span>
+<span class="fc" id="L1264">		return height;</span>
 	}
 
 	void addNewpageTiles(List&lt;NewpageTile&gt; newpages) {
-<span class="fc bfc" id="L1252" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
-<span class="fc bfc" id="L1253" title="All 2 branches covered.">			if (tile instanceof GroupingTile)</span>
-<span class="fc" id="L1254">				((GroupingTile) tile).addNewpageTiles(newpages);</span>
+<span class="fc bfc" id="L1268" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
+<span class="fc bfc" id="L1269" title="All 2 branches covered.">			if (tile instanceof GroupingTile)</span>
+<span class="fc" id="L1270">				((GroupingTile) tile).addNewpageTiles(newpages);</span>
 
-<span class="pc bpc" id="L1256" title="1 of 2 branches missed.">			if (tile instanceof NewpageTile)</span>
-<span class="nc" id="L1257">				newpages.add((NewpageTile) tile);</span>
-<span class="fc" id="L1258">		}</span>
-<span class="fc" id="L1259">	}</span>
+<span class="pc bpc" id="L1272" title="1 of 2 branches missed.">			if (tile instanceof NewpageTile)</span>
+<span class="nc" id="L1273">				newpages.add((NewpageTile) tile);</span>
+<span class="fc" id="L1274">		}</span>
+<span class="fc" id="L1275">	}</span>
 	
 	public GroupingStart getGroupingStart() {
-<span class="fc" id="L1262">		return start;</span>
+<span class="fc" id="L1278">		return start;</span>
 	}
 
 	// Package-private child-list accessor for PlayingSpace's parallel-sibling
@@ -1269,15 +1285,15 @@ public class GroupingTile extends AbstractTile {
 	// min/max (see the ASCII_FRAME_MARGIN / MARGINX comments on why that's
 	// unsafe pre-compile).
 	List&lt;Tile&gt; getChildTilesForAnchor() {
-<span class="fc" id="L1272">		return tiles;</span>
+<span class="fc" id="L1288">		return tiles;</span>
 	}
 
 	public TileArguments getTileArguments() {
-<span class="fc" id="L1276">		return tileArguments;</span>
+<span class="fc" id="L1292">		return tileArguments;</span>
 	}
 
 	public ISkinParam getSkinParam() {
-<span class="fc" id="L1280">		return skinParam;</span>
+<span class="fc" id="L1296">		return skinParam;</span>
 	}
 
 
