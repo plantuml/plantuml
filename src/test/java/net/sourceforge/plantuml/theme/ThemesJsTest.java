@@ -8,6 +8,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,13 +26,20 @@ import org.junit.jupiter.api.Test;
  * <p>
  * The bundled theme files in <code>/themes</code> are mirrored twice for the
  * browser build: {@link ThemesJsGenerator} writes their content into
- * teavm/themes.js (committed, like emoji.js), and {@link ThemeListGenerator}
+ * src/main/teavm/generated/themes.js (committed, like emoji.js), and {@link ThemeListGenerator}
  * writes their names into {@link ThemeList}. A theme added or edited without
  * re-running the generators would silently stop being available, or stop being
  * listed, in the browser. These tests fail in that case.
  */
 @IndicativeSentencesGeneration(separator = ": ", generator = ReplaceUnderscores.class)
 class ThemesJsTest {
+
+	/**
+	 * themes.js is not on the classpath (src/main/teavm is outside
+	 * src/main/resources, see issue #2870), so it is read from the working
+	 * tree. Gradle runs the tests from the project directory.
+	 */
+	private static final Path THEMES_JS = Paths.get("src/main/teavm/generated/themes.js");
 
 	private static final Pattern ENTRY = Pattern
 			.compile("^g\\.PLANTUML_THEMES\\[\"(.*?)\"\\]=\"(.*)\";$", Pattern.MULTILINE);
@@ -62,7 +72,7 @@ class ThemesJsTest {
 
 	@Test
 	void themes_js_is_pure_ascii() throws IOException {
-		final String content = read("/teavm/themes.js");
+		final String content = readThemesJs();
 		for (int i = 0; i < content.length(); i++)
 			assertTrue(content.charAt(i) < 0x80,
 					"themes.js must stay pure ASCII, found a non-ASCII char at offset " + i);
@@ -70,7 +80,7 @@ class ThemesJsTest {
 
 	private Map<String, String> parseThemesJs() throws IOException {
 		final Map<String, String> result = new LinkedHashMap<>();
-		final Matcher m = ENTRY.matcher(read("/teavm/themes.js"));
+		final Matcher m = ENTRY.matcher(readThemesJs());
 		while (m.find())
 			result.put(unescape(m.group(1)), unescape(m.group(2)));
 
@@ -79,6 +89,11 @@ class ThemesJsTest {
 
 	private String readTheme(String name) throws IOException {
 		return read("/themes/" + ThemeUtils.getFilename(name)).replace("\r\n", "\n");
+	}
+
+	private String readThemesJs() throws IOException {
+		assertTrue(Files.isRegularFile(THEMES_JS), "Missing file " + THEMES_JS.toAbsolutePath());
+		return new String(Files.readAllBytes(THEMES_JS), UTF_8);
 	}
 
 	private String read(String resource) throws IOException {

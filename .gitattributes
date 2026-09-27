@@ -1,1 +1,7 @@
 *.java text=auto
+
+# Files shipped next to plantuml.js that are not hand-written (issue #2870):
+# collapsed in GitHub diffs and left out of the language statistics.
+src/main/teavm/generated/** linguist-generated=true
+src/main/teavm/stdlib/** linguist-generated=true
+src/main/teavm/vendor/** linguist-vendored=true

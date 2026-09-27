@@ -44,7 +44,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Generates <code>src/main/resources/teavm/themes.js</code>, the companion
+ * Generates <code>src/main/teavm/generated/themes.js</code>, the companion
  * script that makes the bundled themes available to the TeaVM (browser) build.
  * <p>
  * The browser build has no classpath, so
@@ -64,7 +64,7 @@ public final class ThemesJsGenerator {
 
 	private static final String THEMES_DIR = "src/main/resources/themes";
 
-	private static final String OUTPUT = "src/main/resources/teavm/themes.js";
+	private static final String OUTPUT = "src/main/teavm/generated/themes.js";
 
 	private static final String THEME_FILE_PREFIX = "puml-theme-";
 
