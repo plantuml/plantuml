@@ -2,7 +2,7 @@
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
     <g class="start_entity" data-qualified-name="junction1" data-source-line="1" id="ent0001">
-      <ellipse cx="77" cy="83" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+      <ellipse cx="75" cy="79" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
     </g>
     <g class="start_entity" data-qualified-name=".start." data-source-line="3" id="ent0002">
       <ellipse cx="77" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
