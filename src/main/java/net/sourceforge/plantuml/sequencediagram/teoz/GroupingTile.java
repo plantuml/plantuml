@@ -421,7 +421,23 @@ public class GroupingTile extends AbstractTile {
 		if (next == null)
 			return;
 
-		final Real nextPosA = next.getPosA(getStringBounder());
+		// Pushed on `next`'s own LIFELINE (posC), not its box edge (posA): the
+		// frame only ever needs to clear a lifeline (the box itself sits in the
+		// header/footer row, never inside the frame's vertical span), and this
+		// is what makes the pushed quantity comparable, on both sides, to what
+		// ensurePrecedingParticipantClearsFrame() already pushes on the LEFT
+		// (leftmost.getPosC(), also a lifeline -- see its own comment). Using
+		// posA here used to leave `frameMargin` measured up to `next`'s own BOX
+		// EDGE instead of its lifeline, silently adding `next`'s own half-width
+		// (plus its posA/posC marginBefore offset) on top of the margin -- on a
+		// diagram with ordinary-width participants this alone was often wider
+		// than the group's actual content, which is what issue #2788's last
+		// example ("too much space between group and d", or seen the other way,
+		// "not enough space between x and group") was really reporting: the two
+		// sides of the SAME frame measured their margin to two different kinds
+		// of landmark (a lifeline on the left, a box edge on the right), so they
+		// never matched even though both used the same numeric constants.
+		final Real nextPosC = next.getPosC(getStringBounder());
 		final double frameMargin = MARGINX + EXTERNAL_MARGINX2;
 
 		// Baseline: the rightmost touched participant's own lifeline, plus the
@@ -430,13 +446,13 @@ public class GroupingTile extends AbstractTile {
 		// addConstraints() guarantees its target's posC clears the arrow+label,
 		// so the target's posC alone dominates the same RealUtils.max() the
 		// constructor would otherwise have computed.
-		nextPosA.ensureBiggerThan(rightmost.getPosC(getStringBounder()).addFixed(frameMargin));
+		nextPosC.ensureBiggerThan(rightmost.getPosC(getStringBounder()).addFixed(frameMargin));
 
 		// Everything else that can widen the frame beyond that baseline: a
 		// self-message loop, a right-hand note, a note over a participant, the
 		// group's own title, and the same list again for every nested group
 		// (whose frame carries its own margins on top of ours).
-		ensureClearsFrameOf(this, nextPosA, frameMargin, livingSpaces);
+		ensureClearsFrameOf(this, nextPosC, frameMargin, livingSpaces);
 	}
 
 	// Mirror of ensureFollowingParticipantClearsFrame(), for the LEFT edge: a
@@ -565,7 +581,7 @@ public class GroupingTile extends AbstractTile {
 	// DividerTile is deliberately absent here, UNLIKE on the right side: its
 	// getMaxX() reaches from `xorigin` (the whole diagram's own left edge, not
 	// any participant here) rightward by the divider's drawn width -- safe to
-	// use as a lower bound on `nextPosA`, since `xorigin` is an independent
+	// use as a lower bound on `nextPosC`, since `xorigin` is an independent
 	// root nothing here pushes on. Its getMinX(), by contrast, IS `xorigin`
 	// itself: `previous`'s own posC is ultimately measured FROM xorigin (every
 	// LivingSpace chains back to it), so constraining xorigin to be bigger
@@ -589,7 +605,7 @@ public class GroupingTile extends AbstractTile {
 		return Collections.emptyList();
 	}
 
-	// Pushes `nextPosA` past every right edge `group`'s own frame is built on,
+	// Pushes `nextPosC` past every right edge `group`'s own frame is built on,
 	// `margin` beyond each of them. Each push stands on its own -- stacked
 	// ensureBiggerThan() calls are exactly the "max" the constructor computes
 	// with RealUtils.max(), minus the caching trap, since the solver reads each
@@ -599,8 +615,8 @@ public class GroupingTile extends AbstractTile {
 	// nothing else knows that an inner frame sits MARGINX + EXTERNAL_MARGINX2
 	// outside the content it wraps, and that offset stacks once per nesting
 	// level (issue #2788, `group` inside `group`).
-	private void ensureClearsFrameOf(GroupingTile group, Real nextPosA, double margin, LivingSpaces livingSpaces) {
-		ensureClearsTitleOf(group, nextPosA, margin, livingSpaces);
+	private void ensureClearsFrameOf(GroupingTile group, Real nextPosC, double margin, LivingSpaces livingSpaces) {
+		ensureClearsTitleOf(group, nextPosC, margin, livingSpaces);
 
 		for (Tile tile : group.tiles) {
 			if (tile instanceof GroupingTile) {
@@ -611,11 +627,11 @@ public class GroupingTile extends AbstractTile {
 				// again, so it just joins the margin.
 				final GroupingTile nested = (GroupingTile) tile;
 				final double notes = nested.getNotesWidth(getStringBounder(), NotePosition.RIGHT);
-				ensureClearsFrameOf(nested, nextPosA, margin + MARGINX + EXTERNAL_MARGINX2 + notes, livingSpaces);
+				ensureClearsFrameOf(nested, nextPosC, margin + MARGINX + EXTERNAL_MARGINX2 + notes, livingSpaces);
 				continue;
 			}
 			for (Real maxX : stableMaxX(tile))
-				nextPosA.ensureBiggerThan(maxX.addFixed(margin));
+				nextPosC.ensureBiggerThan(maxX.addFixed(margin));
 		}
 	}
 
@@ -634,7 +650,7 @@ public class GroupingTile extends AbstractTile {
 	// Anything left unaccounted for still over-estimates the left edge and
 	// therefore the push, which is the harmless direction -- under-estimating
 	// would put the participant back under the frame.
-	private void ensureClearsTitleOf(GroupingTile group, Real nextPosA, double margin, LivingSpaces livingSpaces) {
+	private void ensureClearsTitleOf(GroupingTile group, Real nextPosC, double margin, LivingSpaces livingSpaces) {
 		final Set<LivingSpace> touched = new HashSet<>();
 		collectTouchedLivingSpaces(group.tiles, livingSpaces, touched);
 
@@ -661,7 +677,7 @@ public class GroupingTile extends AbstractTile {
 				overhang = Math.max(overhang, ((NoteTile) tile).getLeftOverhang());
 
 		final double width = group.getPreferredDimensionIfEmpty(getStringBounder()).getWidth();
-		nextPosA.ensureBiggerThan(
+		nextPosC.ensureBiggerThan(
 				leftmost.getPosC(getStringBounder()).addFixed(width + 16 - MARGINX - MARGINX - overhang + margin));
 	}
 

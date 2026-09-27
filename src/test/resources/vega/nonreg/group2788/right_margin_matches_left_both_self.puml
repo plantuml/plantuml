@@ -1,0 +1,16 @@
+---
+output: svg
+expected-description: (4 participants)
+---
+@startuml
+' https://github.com/plantuml/plantuml/issues/2788#issuecomment-5857214829 ,
+' second example: both the first and last messages inside the group are
+' self-messages (one reversed, one forward), and `x` is a plain idle
+' `participant` with nothing touching it before the group.
+participant x
+group test
+a <- a: 1
+b -> b: 2
+end
+d -> d: next
+@enduml

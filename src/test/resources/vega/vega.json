@@ -240,12 +240,13 @@
       "message": "This is a normal crash when DRAWING",
       "stacktrace": [
         "java.lang.IllegalStateException: This is a normal crash when DRAWING",
-        "net.sourceforge.plantuml.crash.CrashDiagram.getTextBlock(CrashDiagram.java:64)",
-        "net.sourceforge.plantuml.UgDiagram.getExporter(UgDiagram.java:121)",
-        "net.sourceforge.plantuml.UgDiagram.exportDiagram(UgDiagram.java:93)",
-        "net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java:192)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:319)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:262)",
+        "net.sourceforge.plantuml.crash.CrashDiagram.getTextBlock(CrashDiagram.java:65)",
+        "net.sourceforge.plantuml.UgDiagram.getExporter(UgDiagram.java:125)",
+        "net.sourceforge.plantuml.UgDiagram.exportDiagram(UgDiagram.java:97)",
+        "net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java:193)",
+        "test.vega.VegaInputFile.renderCapturingStderr(VegaInputFile.java:330)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:392)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:269)",
         "test.vega.VegaTest.lambda$testAllPumlFiles$10(VegaTest.java:193)"
       ]
     },
@@ -258,14 +259,14 @@
       "message": "This is a normal crash when FINALIZING",
       "stacktrace": [
         "java.lang.IllegalStateException: This is a normal crash when FINALIZING",
-        "net.sourceforge.plantuml.crash.CrashDiagram.checkFinalError(CrashDiagram.java:100)",
-        "net.sourceforge.plantuml.command.PSystemCommandFactory.finalizeDiagram(PSystemCommandFactory.java:150)",
-        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:141)",
-        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:61)",
-        "net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java:264)",
-        "net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java:194)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:300)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:262)",
+        "net.sourceforge.plantuml.crash.CrashDiagram.checkFinalError(CrashDiagram.java:101)",
+        "net.sourceforge.plantuml.command.PSystemCommandFactory.finalizeDiagram(PSystemCommandFactory.java:187)",
+        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:178)",
+        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:66)",
+        "net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java:262)",
+        "net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java:196)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:373)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:269)",
         "test.vega.VegaTest.lambda$testAllPumlFiles$10(VegaTest.java:193)"
       ]
     },
@@ -278,18 +279,18 @@
       "message": "This is a normal crash when PARSING",
       "stacktrace": [
         "java.lang.IllegalStateException: This is a normal crash when PARSING",
-        "net.sourceforge.plantuml.crash.CommandSelectCrash.executeArg(CommandSelectCrash.java:89)",
-        "net.sourceforge.plantuml.crash.CommandSelectCrash.executeArg(CommandSelectCrash.java:52)",
-        "net.sourceforge.plantuml.command.UBrexSingleLineCommand2.execute(UBrexSingleLineCommand2.java:178)",
-        "net.sourceforge.plantuml.command.ProtectedCommand.execute(ProtectedCommand.java:57)",
-        "net.sourceforge.plantuml.core.AbstractDiagram.executeCommand(AbstractDiagram.java:176)",
-        "net.sourceforge.plantuml.command.PSystemCommandFactory.executeFewLines(PSystemCommandFactory.java:180)",
-        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:136)",
-        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:61)",
-        "net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java:264)",
-        "net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java:194)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:300)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:262)",
+        "net.sourceforge.plantuml.crash.CommandSelectCrash.executeArg(CommandSelectCrash.java:95)",
+        "net.sourceforge.plantuml.crash.CommandSelectCrash.executeArg(CommandSelectCrash.java:56)",
+        "net.sourceforge.plantuml.command.UBrexSingleLineCommand2.execute(UBrexSingleLineCommand2.java:179)",
+        "net.sourceforge.plantuml.command.ProtectedCommand.execute(ProtectedCommand.java:59)",
+        "net.sourceforge.plantuml.core.AbstractDiagram.executeCommand(AbstractDiagram.java:177)",
+        "net.sourceforge.plantuml.command.PSystemCommandFactory.executeFewLines(PSystemCommandFactory.java:217)",
+        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:173)",
+        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:66)",
+        "net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java:262)",
+        "net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java:196)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:373)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:269)",
         "test.vega.VegaTest.lambda$testAllPumlFiles$10(VegaTest.java:193)"
       ]
     },
@@ -381,14 +382,18 @@
       "description": "(2 participants)",
       "allow-failure": "true",
       "diagram_class": "SequenceDiagram",
-      "message": "DEBUG output should not contain 'hello' for src\\test\\resources\\vega\\mvp\\hello-debug-skipped.puml [image 1] ==> expected: <false> but was: <true>",
+      "message": "DEBUG output should not contain 'hello' for src/test/resources/vega/mvp/hello-debug-skipped.puml [image 1] ==> expected: <false> but was: <true>",
       "stacktrace": [
-        "org.opentest4j.AssertionFailedError: DEBUG output should not contain 'hello' for src\\test\\resources\\vega\\mvp\\hello-debug-skipped.puml [image 1] ==> expected: <false> but was: <true>",
-        "org.junit.jupiter.api.Assertions.assertFalse(Assertions.java:266)",
+        "org.opentest4j.AssertionFailedError: DEBUG output should not contain 'hello' for src/test/resources/vega/mvp/hello-debug-skipped.puml [image 1] ==> expected: <false> but was: <true>",
+        "org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)",
+        "org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)",
+        "org.junit.jupiter.api.AssertFalse.failNotFalse(AssertFalse.java:63)",
+        "org.junit.jupiter.api.AssertFalse.assertFalse(AssertFalse.java:36)",
+        "org.junit.jupiter.api.Assertions.assertFalse(Assertions.java:239)",
         "test.vega.VegaCheckerDebug.checkDebugContains(VegaCheckerDebug.java:33)",
         "test.vega.VegaCheckerDebug.checkOutput(VegaCheckerDebug.java:19)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:366)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:262)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:441)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:269)",
         "test.vega.VegaTest.lambda$testAllPumlFiles$10(VegaTest.java:193)"
       ]
     },
@@ -405,6 +410,1084 @@
       "status": "pass",
       "description": "(2 participants)",
       "tag": "debug",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/activity-color-prefix/color_before_fork.puml",
+      "folder": "nonreg/activity-color-prefix",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity-color-prefix/color_before_if.puml",
+      "folder": "nonreg/activity-color-prefix",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity-color-prefix/color_before_switch.puml",
+      "folder": "nonreg/activity-color-prefix",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity-color-prefix/color_before_switch_three_cases.puml",
+      "folder": "nonreg/activity-color-prefix",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity-color-prefix/color_before_while.puml",
+      "folder": "nonreg/activity-color-prefix",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity-color-prefix/color_inside_case.puml",
+      "folder": "nonreg/activity-color-prefix",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity-color-prefix/color_multiline_activity.puml",
+      "folder": "nonreg/activity-color-prefix",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity-color-prefix/color_then_action.puml",
+      "folder": "nonreg/activity-color-prefix",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity-color-prefix/deprecated_color_ignored.puml",
+      "folder": "nonreg/activity-color-prefix",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity-color-prefix/stereotype_color_before_switch.puml",
+      "folder": "nonreg/activity-color-prefix",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity-deprecated-color/elseif_color.puml",
+      "folder": "nonreg/activity-deprecated-color",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity-deprecated-color/elseif_is_color.puml",
+      "folder": "nonreg/activity-deprecated-color",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity-deprecated-color/elseif_is_stereo.puml",
+      "folder": "nonreg/activity-deprecated-color",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity-deprecated-color/elseif_stereo.puml",
+      "folder": "nonreg/activity-deprecated-color",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity-deprecated-color/if_color.puml",
+      "folder": "nonreg/activity-deprecated-color",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity-deprecated-color/if_is_color.puml",
+      "folder": "nonreg/activity-deprecated-color",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity-deprecated-color/if_is_stereo.puml",
+      "folder": "nonreg/activity-deprecated-color",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity-deprecated-color/if_stereo.puml",
+      "folder": "nonreg/activity-deprecated-color",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity-deprecated-color/repeat_color.puml",
+      "folder": "nonreg/activity-deprecated-color",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity-deprecated-color/repeat_label_color.puml",
+      "folder": "nonreg/activity-deprecated-color",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity-deprecated-color/repeat_stereo.puml",
+      "folder": "nonreg/activity-deprecated-color",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity-deprecated-color/switch_color.puml",
+      "folder": "nonreg/activity-deprecated-color",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity-deprecated-color/switch_stereo.puml",
+      "folder": "nonreg/activity-deprecated-color",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity-deprecated-color/while_color.puml",
+      "folder": "nonreg/activity-deprecated-color",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity-deprecated-color/while_stereo.puml",
+      "folder": "nonreg/activity-deprecated-color",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/activity/style-block-unclosed-at-eof.puml",
+      "folder": "nonreg/activity",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/group2679/border_thickness_style.puml",
+      "folder": "nonreg/group2679",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2679/group_header_legacy_flat.puml",
+      "folder": "nonreg/group2679",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2679/group_header_nested.puml",
+      "folder": "nonreg/group2679",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2679/group_header_nested_overrides_flat.puml",
+      "folder": "nonreg/group2679",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2679/long_title.puml",
+      "folder": "nonreg/group2679",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2679/reference_header_nested.puml",
+      "folder": "nonreg/group2679",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2679/round_corner.puml",
+      "folder": "nonreg/group2679",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2679/title_padding.puml",
+      "folder": "nonreg/group2679",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2712/down_direction.puml",
+      "folder": "nonreg/group2712",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2712/left_direction.puml",
+      "folder": "nonreg/group2712",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2712/reported_case.puml",
+      "folder": "nonreg/group2712",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2712/right_direction.puml",
+      "folder": "nonreg/group2712",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2727/dump_memory_shown_with_verbose.puml",
+      "folder": "nonreg/group2727",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
+      "file": "nonreg/group2727/dump_memory_silent_by_default.puml",
+      "folder": "nonreg/group2727",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
+      "file": "nonreg/group2727/log_basic.puml",
+      "folder": "nonreg/group2727",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
+      "file": "nonreg/group2727/log_multiple_calls_sequence_diagram.puml",
+      "folder": "nonreg/group2727",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2727/log_still_clean_with_verbose.puml",
+      "folder": "nonreg/group2727",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
+      "file": "nonreg/group2727/log_with_variable.puml",
+      "folder": "nonreg/group2727",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
+      "file": "nonreg/group2729/bare_activate_after_divider.puml",
+      "folder": "nonreg/group2729",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2729/bare_activate_before_any_message.puml",
+      "folder": "nonreg/group2729",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2729/bare_activate_two_participants_after_divider.puml",
+      "folder": "nonreg/group2729",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2729/destroy_after_divider.puml",
+      "folder": "nonreg/group2729",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2729/message_before_activate_after_divider.puml",
+      "folder": "nonreg/group2729",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2730/table_baseline.puml",
+      "folder": "nonreg/group2730",
+      "status": "pass",
+      "description": "(Salt)",
+      "diagram_class": "PSystemSalt"
+    },
+    {
+      "file": "nonreg/group2730/tree_table_multiline.puml",
+      "folder": "nonreg/group2730",
+      "status": "pass",
+      "description": "(Salt)",
+      "diagram_class": "PSystemSalt"
+    },
+    {
+      "file": "nonreg/group2730/tree_table_toplevel.puml",
+      "folder": "nonreg/group2730",
+      "status": "pass",
+      "description": "(Salt)",
+      "diagram_class": "PSystemSalt"
+    },
+    {
+      "file": "nonreg/group2730/tree_table_wrapped.puml",
+      "folder": "nonreg/group2730",
+      "status": "pass",
+      "description": "(Salt)",
+      "diagram_class": "PSystemSalt"
+    },
+    {
+      "file": "nonreg/group2731/pipe_escape.puml",
+      "folder": "nonreg/group2731",
+      "status": "pass",
+      "description": "(Salt)",
+      "diagram_class": "PSystemSalt"
+    },
+    {
+      "file": "nonreg/group2732/brace_escape.puml",
+      "folder": "nonreg/group2732",
+      "status": "pass",
+      "description": "(Salt)",
+      "diagram_class": "PSystemSalt"
+    },
+    {
+      "file": "nonreg/group2732/plain_text_braces.puml",
+      "folder": "nonreg/group2732",
+      "status": "pass",
+      "description": "(Salt)",
+      "diagram_class": "PSystemSalt"
+    },
+    {
+      "file": "nonreg/group2783/composite_with_usymbol_unaffected.puml",
+      "folder": "nonreg/group2783",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
+      "file": "nonreg/group2783/hide_stereotype.puml",
+      "folder": "nonreg/group2783",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
+      "file": "nonreg/group2783/nested_styled_composite.puml",
+      "folder": "nonreg/group2783",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
+      "file": "nonreg/group2783/reported_case.puml",
+      "folder": "nonreg/group2783",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
+      "file": "nonreg/group2788/activation.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/alt_else.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/cedeti_10_bufu072.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/create.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/delay.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/divider.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/exo_message.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/explicit_participants.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(4 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/forum7710_amp_group.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/forum7710_delay.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/forum7710_notes_arrows.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/forum7710_rightmost.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/group_at_end.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/issue_ok.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/lirasa_26_tazo607.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(4 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/long_title.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(4 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/loop_long_label.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/nested_group.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/nested_twice.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/note_left_leftmost.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/note_over.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/note_over_several.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/note_right.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/par_amp.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(4 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/ref_over.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/right_margin_matches_left_both_self.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(4 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/right_margin_matches_left_mixed_self.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/self_message.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/self_note_right.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/x_outside_explicit_participant.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/x_outside_nested_group.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/x_outside_note_left.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2788/x_outside_reverse_self.puml",
+      "folder": "nonreg/group2788",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2791/box_between_external_participants.puml",
+      "folder": "nonreg/group2791",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2791/box_forward_self_message_clears_next_participant.puml",
+      "folder": "nonreg/group2791",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2791/box_reverse_self_message_clears_previous_participant.puml",
+      "folder": "nonreg/group2791",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2791/hnote_left_on_self_message.puml",
+      "folder": "nonreg/group2791",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2791/nested_boxes_self_messages.puml",
+      "folder": "nonreg/group2791",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2791/note_left_on_self_message.puml",
+      "folder": "nonreg/group2791",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2791/note_left_on_self_message_clears_previous_participant.puml",
+      "folder": "nonreg/group2791",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2791/note_on_self_message_inside_group_at_box_edge.puml",
+      "folder": "nonreg/group2791",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2791/note_over_solo_box_participant.puml",
+      "folder": "nonreg/group2791",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2791/note_right_on_self_message.puml",
+      "folder": "nonreg/group2791",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2791/self_message_leftmost_of_multi.puml",
+      "folder": "nonreg/group2791",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2791/self_message_leftmost_participant.puml",
+      "folder": "nonreg/group2791",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2791/self_message_reverse_only.puml",
+      "folder": "nonreg/group2791",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2791/self_message_solo.puml",
+      "folder": "nonreg/group2791",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2791/standalone_note_left_of_box_participant.puml",
+      "folder": "nonreg/group2791",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2814/class_level_note_unaffected.puml",
+      "folder": "nonreg/group2814",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2814/field_and_method_note.puml",
+      "folder": "nonreg/group2814",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2814/reported_case.puml",
+      "folder": "nonreg/group2814",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2814/reversed_order.puml",
+      "folder": "nonreg/group2814",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2814/stereotype_colors.puml",
+      "folder": "nonreg/group2814",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2814/three_members.puml",
+      "folder": "nonreg/group2814",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2834/nested_groups_and_notes.puml",
+      "folder": "nonreg/group2834",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2834/reported_case.puml",
+      "folder": "nonreg/group2834",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2846/bug.puml",
+      "folder": "nonreg/group2846",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2846/correct_code.puml",
+      "folder": "nonreg/group2846",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2846/dollar_sign_code.puml",
+      "folder": "nonreg/group2846",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2882/open_droplist_overlaps_following_row.puml",
+      "folder": "nonreg/group2882",
+      "status": "pass",
+      "description": "(Salt)",
+      "diagram_class": "PSystemSalt"
+    },
+    {
+      "file": "nonreg/group2882/open_droplist_wide_item.puml",
+      "folder": "nonreg/group2882",
+      "status": "pass",
+      "description": "(Salt)",
+      "diagram_class": "PSystemSalt"
+    },
+    {
+      "file": "nonreg/group2882/reported_example.puml",
+      "folder": "nonreg/group2882",
+      "status": "pass",
+      "description": "(Salt)",
+      "diagram_class": "PSystemSalt"
+    },
+    {
+      "file": "nonreg/group2883/left_right_over_parallel.puml",
+      "folder": "nonreg/group2883",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2883/message_and_parallel_notes.puml",
+      "folder": "nonreg/group2883",
+      "status": "pass",
+      "description": "(4 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2883/mixed_same_and_different_participant_parallel_notes.puml",
+      "folder": "nonreg/group2883",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2883/reported_example.puml",
+      "folder": "nonreg/group2883",
+      "status": "pass",
+      "description": "(4 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2883/same_participant_parallel_notes_stack.puml",
+      "folder": "nonreg/group2883",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2896/import_zip_include.puml",
+      "folder": "nonreg/group2896",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2896/include_before_import.puml",
+      "folder": "nonreg/group2896",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "nonreg/group2896/included_file_has_startuml.puml",
+      "folder": "nonreg/group2896",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2896/includesub_from_zip.puml",
+      "folder": "nonreg/group2896",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2896/missing_entry.puml",
+      "folder": "nonreg/group2896",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "nonreg/group2896/nested_relative_include.puml",
+      "folder": "nonreg/group2896",
+      "status": "pass",
+      "description": "(4 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2896/root_relative_from_nested.puml",
+      "folder": "nonreg/group2896",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2903/left_to_right.puml",
+      "folder": "nonreg/group2903",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2903/nodesep_ranksep.puml",
+      "folder": "nonreg/group2903",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2903/reported_case.puml",
+      "folder": "nonreg/group2903",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2903/two_association_classes.puml",
+      "folder": "nonreg/group2903",
+      "status": "pass",
+      "description": "(7 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2903/without_association_class.puml",
+      "folder": "nonreg/group2903",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2904/all_visibilities.puml",
+      "folder": "nonreg/group2904",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2904/diamond_at_tail.puml",
+      "folder": "nonreg/group2904",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2904/icon_size_zero.puml",
+      "folder": "nonreg/group2904",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2904/left_to_right.puml",
+      "folder": "nonreg/group2904",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2904/reported_case.puml",
+      "folder": "nonreg/group2904",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2904/role_tail_only.puml",
+      "folder": "nonreg/group2904",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2904/role_without_visibility.puml",
+      "folder": "nonreg/group2904",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/json/style-highlight-with-style-tags.puml",
+      "folder": "nonreg/json",
+      "status": "pass",
+      "description": "(Json)",
+      "diagram_class": "JsonDiagram"
+    },
+    {
+      "file": "nonreg/mindmap/mindmap-boxless-and-leaf-variants.puml",
+      "folder": "nonreg/mindmap",
+      "status": "pass",
+      "description": "MindMap",
+      "diagram_class": "MindMapDiagram"
+    },
+    {
+      "file": "nonreg/mindmap/mindmap-deep-ancestor-cascade-with-stereotype.puml",
+      "folder": "nonreg/mindmap",
+      "status": "pass",
+      "description": "MindMap",
+      "diagram_class": "MindMapDiagram"
+    },
+    {
+      "file": "nonreg/note_across_group/message_after_group.puml",
+      "folder": "nonreg/note_across_group",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/note_across_group/nested_group.puml",
+      "folder": "nonreg/note_across_group",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/note_across_group/participant_declared_after_group.puml",
+      "folder": "nonreg/note_across_group",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/note_across_group/reported.puml",
+      "folder": "nonreg/note_across_group",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/note_across_group/two_notes_across.puml",
+      "folder": "nonreg/note_across_group",
+      "status": "pass",
+      "description": "(3 participants)",
       "diagram_class": "SequenceDiagram"
     },
     {
@@ -429,6 +1512,13 @@
       "diagram_class": "DescriptionDiagram"
     },
     {
+      "file": "nonreg/simple/NamespaceSeparatorColon001.puml",
+      "folder": "nonreg/simple",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
       "file": "nonreg/simple/QualifiedAssoc001.puml",
       "folder": "nonreg/simple",
       "status": "pass",
@@ -441,6 +1531,20 @@
       "status": "pass",
       "description": "(4 entities)",
       "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/stereogroup/inline-semicolon-property-list.puml",
+      "folder": "nonreg/stereogroup",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/stereotype/stereotype-selector-with-embedded-space.puml",
+      "folder": "nonreg/stereotype",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "DescriptionDiagram"
     },
     {
       "file": "nonreg/svg/SVG0001.puml",
@@ -462,6 +1566,132 @@
       "status": "pass",
       "description": "(16 participants)",
       "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/warnings/activity_color.puml",
+      "folder": "nonreg/warnings",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/warnings/activity_stereotype_before_colon.puml",
+      "folder": "nonreg/warnings",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/warnings/end_group.puml",
+      "folder": "nonreg/warnings",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/warnings/gantt_labels.puml",
+      "folder": "nonreg/warnings",
+      "status": "pass",
+      "description": "(Gantt)",
+      "diagram_class": "GanttDiagram"
+    },
+    {
+      "file": "nonreg/warnings/note_top_after_group.puml",
+      "folder": "nonreg/warnings",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/warnings/note_top_on_ref.puml",
+      "folder": "nonreg/warnings",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/warnings/option_novalue.puml",
+      "folder": "nonreg/warnings",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/warnings/option_unknown.puml",
+      "folder": "nonreg/warnings",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/warnings/partition_no_bracket.puml",
+      "folder": "nonreg/warnings",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/warnings/repeat_color.puml",
+      "folder": "nonreg/warnings",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/warnings/repeat_label_color.puml",
+      "folder": "nonreg/warnings",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/warnings/skinparam_handwritten.puml",
+      "folder": "nonreg/warnings",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/warnings/skinparam_participantpadding.puml",
+      "folder": "nonreg/warnings",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/warnings/wbs_old_order.puml",
+      "folder": "nonreg/warnings",
+      "status": "pass",
+      "description": "Work Breakdown Structure",
+      "diagram_class": "WBSDiagram"
+    },
+    {
+      "file": "nonreg/wbs/star-and-plain-same-stereotype.puml",
+      "folder": "nonreg/wbs",
+      "status": "pass",
+      "description": "Work Breakdown Structure",
+      "diagram_class": "WBSDiagram"
+    },
+    {
+      "file": "nonreg/wbs/wbs-boxless-and-leaf-variants.puml",
+      "folder": "nonreg/wbs",
+      "status": "pass",
+      "description": "Work Breakdown Structure",
+      "diagram_class": "WBSDiagram"
+    },
+    {
+      "file": "nonreg/wbs/wbs-deep-ancestor-cascade-with-stereotype.puml",
+      "folder": "nonreg/wbs",
+      "status": "pass",
+      "description": "Work Breakdown Structure",
+      "diagram_class": "WBSDiagram"
+    },
+    {
+      "file": "nonreg/yaml/theme-with-empty-style-block.puml",
+      "folder": "nonreg/yaml",
+      "status": "pass",
+      "description": "(Yaml)",
+      "diagram_class": "JsonDiagram"
     },
     {
       "file": "packet/R01.01-simple.puml",
@@ -681,13 +1911,14 @@
         "net.sourceforge.plantuml.klimt.geom.XDimension2D.<init>(XDimension2D.java:52)",
         "net.sourceforge.plantuml.packetdiag.PacketBlock$1.calculateDimension(PacketBlock.java:273)",
         "net.sourceforge.plantuml.packetdiag.PacketDiagram$1.calculateDimension(PacketDiagram.java:168)",
-        "net.sourceforge.plantuml.klimt.shape.TextBlockUtils$2.calculateDimension(TextBlockUtils.java:170)",
-        "net.sourceforge.plantuml.core.TextBlockExporter.calculateFinalDimension(TextBlockExporter.java:200)",
-        "net.sourceforge.plantuml.core.TextBlockExporter.exportTo(TextBlockExporter.java:160)",
-        "net.sourceforge.plantuml.UgDiagram.exportDiagram(UgDiagram.java:93)",
-        "net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java:192)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:319)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:262)",
+        "net.sourceforge.plantuml.klimt.shape.TextBlockUtils$2.calculateDimension(TextBlockUtils.java:171)",
+        "net.sourceforge.plantuml.core.TextBlockExporter.calculateFinalDimension(TextBlockExporter.java:196)",
+        "net.sourceforge.plantuml.core.TextBlockExporter.exportTo(TextBlockExporter.java:156)",
+        "net.sourceforge.plantuml.UgDiagram.exportDiagram(UgDiagram.java:97)",
+        "net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java:193)",
+        "test.vega.VegaInputFile.renderCapturingStderr(VegaInputFile.java:330)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:392)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:269)",
         "test.vega.VegaTest.lambda$testAllPumlFiles$10(VegaTest.java:193)"
       ]
     },
@@ -716,13 +1947,13 @@
         "net.sourceforge.plantuml.packetdiag.PacketDiagram.adjustIndicators(PacketDiagram.java:404)",
         "net.sourceforge.plantuml.packetdiag.PacketDiagram.build(PacketDiagram.java:380)",
         "net.sourceforge.plantuml.packetdiag.PacketDiagram.checkFinalError(PacketDiagram.java:227)",
-        "net.sourceforge.plantuml.command.PSystemCommandFactory.finalizeDiagram(PSystemCommandFactory.java:150)",
-        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:141)",
-        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:61)",
-        "net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java:264)",
-        "net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java:194)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:300)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:262)",
+        "net.sourceforge.plantuml.command.PSystemCommandFactory.finalizeDiagram(PSystemCommandFactory.java:187)",
+        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:178)",
+        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:66)",
+        "net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java:262)",
+        "net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java:196)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:373)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:269)",
         "test.vega.VegaTest.lambda$testAllPumlFiles$10(VegaTest.java:193)"
       ]
     },
@@ -823,13 +2054,13 @@
         "net.sourceforge.plantuml.packetdiag.PacketDiagram.adjustIndicators(PacketDiagram.java:404)",
         "net.sourceforge.plantuml.packetdiag.PacketDiagram.build(PacketDiagram.java:380)",
         "net.sourceforge.plantuml.packetdiag.PacketDiagram.checkFinalError(PacketDiagram.java:227)",
-        "net.sourceforge.plantuml.command.PSystemCommandFactory.finalizeDiagram(PSystemCommandFactory.java:150)",
-        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:141)",
-        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:61)",
-        "net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java:264)",
-        "net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java:194)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:300)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:262)",
+        "net.sourceforge.plantuml.command.PSystemCommandFactory.finalizeDiagram(PSystemCommandFactory.java:187)",
+        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:178)",
+        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:66)",
+        "net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java:262)",
+        "net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java:196)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:373)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:269)",
         "test.vega.VegaTest.lambda$testAllPumlFiles$10(VegaTest.java:193)"
       ]
     },
@@ -1085,13 +2316,14 @@
         "net.sourceforge.plantuml.klimt.geom.XDimension2D.<init>(XDimension2D.java:52)",
         "net.sourceforge.plantuml.packetdiag.PacketBlock$1.calculateDimension(PacketBlock.java:273)",
         "net.sourceforge.plantuml.packetdiag.PacketDiagram$1.calculateDimension(PacketDiagram.java:168)",
-        "net.sourceforge.plantuml.klimt.shape.TextBlockUtils$2.calculateDimension(TextBlockUtils.java:170)",
-        "net.sourceforge.plantuml.core.TextBlockExporter.calculateFinalDimension(TextBlockExporter.java:200)",
-        "net.sourceforge.plantuml.core.TextBlockExporter.exportTo(TextBlockExporter.java:160)",
-        "net.sourceforge.plantuml.UgDiagram.exportDiagram(UgDiagram.java:93)",
-        "net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java:192)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:319)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:262)",
+        "net.sourceforge.plantuml.klimt.shape.TextBlockUtils$2.calculateDimension(TextBlockUtils.java:171)",
+        "net.sourceforge.plantuml.core.TextBlockExporter.calculateFinalDimension(TextBlockExporter.java:196)",
+        "net.sourceforge.plantuml.core.TextBlockExporter.exportTo(TextBlockExporter.java:156)",
+        "net.sourceforge.plantuml.UgDiagram.exportDiagram(UgDiagram.java:97)",
+        "net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java:193)",
+        "test.vega.VegaInputFile.renderCapturingStderr(VegaInputFile.java:330)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:392)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:269)",
         "test.vega.VegaTest.lambda$testAllPumlFiles$10(VegaTest.java:193)"
       ]
     },
@@ -1275,6 +2507,48 @@
       "folder": "state",
       "status": "pass",
       "description": "(6 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
+      "file": "state/node-style-transition-label-orphaned-by-hide.puml",
+      "folder": "state",
+      "status": "pass",
+      "description": "(5 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
+      "file": "state/node-style-transition-label-orphaned-by-remove-both-sides.puml",
+      "folder": "state",
+      "status": "pass",
+      "description": "(5 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
+      "file": "state/node-style-transition-label-orphaned-by-remove-source.puml",
+      "folder": "state",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
+      "file": "state/node-style-transition-label-orphaned-by-remove.puml",
+      "folder": "state",
+      "status": "pass",
+      "description": "(5 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
+      "file": "state/node-style-transition-label-remove-then-restore.puml",
+      "folder": "state",
+      "status": "pass",
+      "description": "(5 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
+      "file": "state/node-style-transition-label.puml",
+      "folder": "state",
+      "status": "pass",
+      "description": "(5 entities)",
       "diagram_class": "StateDiagram"
     },
     {
@@ -1516,6 +2790,20 @@
       "diagram_class": "TimingDiagram"
     },
     {
+      "file": "timing/clock-message-from-binary.puml",
+      "folder": "timing",
+      "status": "pass",
+      "description": "(Timing Diagram)",
+      "diagram_class": "TimingDiagram"
+    },
+    {
+      "file": "timing/clock-message-to-binary.puml",
+      "folder": "timing",
+      "status": "pass",
+      "description": "(Timing Diagram)",
+      "diagram_class": "TimingDiagram"
+    },
+    {
       "file": "wbs/autowidth.puml",
       "folder": "wbs",
       "status": "pass",
@@ -1693,8 +2981,8 @@
     }
   ],
   "summary": {
-    "total": 205,
-    "passed": 201,
+    "total": 388,
+    "passed": 384,
     "failed": 0,
     "skipped": 4
   }

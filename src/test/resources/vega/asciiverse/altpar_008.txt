@@ -81,8 +81,8 @@ RECTANGLE:
   backcolor: ffffffff
 
 RECTANGLE:
-  pt1: [ 262.7807 ; 39.0000 ]
-  pt2: [ 270.7807 ; 197.0000 ]
+  pt1: [ 249.0886 ; 39.0000 ]
+  pt2: [ 257.0886 ; 197.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -91,15 +91,15 @@ RECTANGLE:
   backcolor: NULL_COLOR
 
 LINE:
-  pt1: [ 266.2807 ; 39.0000 ]
-  pt2: [ 266.2807 ; 197.0000 ]
+  pt1: [ 252.5886 ; 39.0000 ]
+  pt2: [ 252.5886 ; 197.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 RECTANGLE:
-  pt1: [ 261.2807 ; 165.0000 ]
-  pt2: [ 271.2807 ; 197.0000 ]
+  pt1: [ 247.5886 ; 165.0000 ]
+  pt2: [ 257.5886 ; 197.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
@@ -188,8 +188,8 @@ TEXT:
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 252.5886 ; 10.0000 ]
-  pt2: [ 279.9728 ; 38.0000 ]
+  pt1: [ 238.8964 ; 10.0000 ]
+  pt2: [ 266.2807 ; 38.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -199,7 +199,7 @@ RECTANGLE:
 
 TEXT:
   text: c
-  position: [ 259.5886 ; 27.8889 ]
+  position: [ 245.8964 ; 27.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
@@ -278,8 +278,8 @@ TEXT:
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 252.5886 ; 197.0000 ]
-  pt2: [ 279.9728 ; 225.0000 ]
+  pt1: [ 238.8964 ; 197.0000 ]
+  pt2: [ 266.2807 ; 225.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -289,7 +289,7 @@ RECTANGLE:
 
 TEXT:
   text: c
-  position: [ 259.5886 ; 214.8889 ]
+  position: [ 245.8964 ; 214.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
@@ -447,10 +447,10 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 249.2807 ; 161.0000 ]
-   - [ 259.2807 ; 165.0000 ]
-   - [ 249.2807 ; 169.0000 ]
-   - [ 253.2807 ; 165.0000 ]
+   - [ 235.5886 ; 161.0000 ]
+   - [ 245.5886 ; 165.0000 ]
+   - [ 235.5886 ; 169.0000 ]
+   - [ 239.5886 ; 165.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -458,7 +458,7 @@ POLYGON:
 
 LINE:
   pt1: [ 86.2877 ; 165.0000 ]
-  pt2: [ 255.2807 ; 165.0000 ]
+  pt2: [ 241.5886 ; 165.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818

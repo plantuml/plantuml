@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="280px" preserveAspectRatio="none" style="width:323px;height:280px;background:#FFFFFF;" version="1.1" viewBox="0 0 323 280" width="323px" zoomAndPan="magnify">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="280px" preserveAspectRatio="none" style="width:312px;height:280px;background:#FFFFFF;" version="1.1" viewBox="0 0 312 280" width="312px" zoomAndPan="magnify">
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
     <rect fill="none" height="85" style="stroke:#000;stroke-width:1.5;" width="213.313" x="29.5" y="91"/>
@@ -24,8 +24,8 @@
     </g>
     <g>
       <title>d</title>
-      <rect fill="#000" fill-opacity="0" height="201" width="8" x="259.206" y="39"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="262.706" x2="262.706" y1="39" y2="240"/>
+      <rect fill="#000" fill-opacity="0" height="201" width="8" x="248.313" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="251.813" x2="251.813" y1="39" y2="240"/>
     </g>
     <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21" x="10" y="10"/>
     <text fill="#000" font-size="14" x="17" y="27.889">x</text>
@@ -35,8 +35,8 @@
     <text fill="#000" font-size="14" x="98.394" y="27.889">b</text>
     <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21" x="125.656" y="10"/>
     <text fill="#000" font-size="14" x="132.656" y="27.889">c</text>
-    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="251.813" y="10"/>
-    <text fill="#000" font-size="14" x="258.813" y="27.889">d</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="240.919" y="10"/>
+    <text fill="#000" font-size="14" x="247.919" y="27.889">d</text>
     <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21" x="10" y="240"/>
     <text fill="#000" font-size="14" x="17" y="257.889">x</text>
     <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="59.606" y="240"/>
@@ -45,8 +45,8 @@
     <text fill="#000" font-size="14" x="98.394" y="257.889">b</text>
     <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21" x="125.656" y="240"/>
     <text fill="#000" font-size="14" x="132.656" y="257.889">c</text>
-    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="251.813" y="240"/>
-    <text fill="#000" font-size="14" x="258.813" y="257.889">d</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="240.919" y="240"/>
+    <text fill="#000" font-size="14" x="247.919" y="257.889">d</text>
     <line style="stroke:#181818;stroke-width:1;" x1="20.5" x2="62.5" y1="66" y2="66"/>
     <line style="stroke:#181818;stroke-width:1;" x1="62.5" x2="62.5" y1="66" y2="79"/>
     <line style="stroke:#181818;stroke-width:1;" x1="21.5" x2="62.5" y1="79" y2="79"/>
@@ -61,10 +61,10 @@
     <path d="M50.5,148 L50.5,171 L221.5,171 L221.5,158 L211.5,148 L50.5,148" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
     <path d="M211.5,148 L211.5,158 L221.5,158 L211.5,148" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
     <text fill="#000" font-size="13" textLength="150.313" x="56.5" y="163.111">a note over c that is quite wide</text>
-    <line style="stroke:#181818;stroke-width:1;" x1="262.706" x2="304.706" y1="209" y2="209"/>
-    <line style="stroke:#181818;stroke-width:1;" x1="304.706" x2="304.706" y1="209" y2="222"/>
-    <line style="stroke:#181818;stroke-width:1;" x1="263.706" x2="304.706" y1="222" y2="222"/>
-    <polygon fill="#181818" points="273.706,218,263.706,222,273.706,226,269.706,222" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-    <text fill="#000" font-size="13" textLength="24.538" x="269.706" y="204.111">next</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="251.813" x2="293.813" y1="209" y2="209"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="293.813" x2="293.813" y1="209" y2="222"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="252.813" x2="293.813" y1="222" y2="222"/>
+    <polygon fill="#181818" points="262.813,218,252.813,222,262.813,226,258.813,222" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="24.538" x="258.813" y="204.111">next</text>
   </g>
 </svg>

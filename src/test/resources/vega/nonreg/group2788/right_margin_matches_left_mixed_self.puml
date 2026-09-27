@@ -1,0 +1,18 @@
+---
+output: svg
+expected-description: (5 participants)
+---
+@startuml
+' https://github.com/plantuml/plantuml/issues/2788#issuecomment-5857214829 :
+' the group's right margin (frame to `d`) must match its left margin (`x` to
+' frame), not the roughly 2x gap left by only accounting for the OUTSIDE
+' participant's own box width on the right side.
+x -> a: start
+group test
+a<-a
+a -> b: 1
+b->c
+c->c
+end
+c -> d: next
+@enduml
