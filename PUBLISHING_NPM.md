@@ -40,9 +40,13 @@ package in `plantuml-mit/build/npm-plantuml/`. It contains:
   renaming at copy time is sufficient.
 - `viz-global.js` -- the Graphviz / Viz.js layout engine (required at runtime)
 - `emoji.js`, `openiconic.js`
+- `themes.js`
 - the demo pages: `index.html`, `index-basic.html`, `index-basic-dark.html`,
   `index-collection.html`, `main.js`, `main.css`, the two
   `github-integration-*-poc.html` files and `GITHUB_INTEGRATION.md`
+- what the `index.html` playground needs besides the engine: `plantuml-codec.js`
+  and `zoom.js` (imported by `main.js`) and `vendor/fflate-*.min.js` with its
+  license
 - generated `package.json` and `README.md`
 
 The companion files (everything except `plantuml.js`) are copied verbatim from
@@ -103,7 +107,7 @@ cd plantuml-mit\build\npm-plantuml
 npm pack --dry-run
 ```
 
-Check the file list (should be ~17 files, no heavy `*.min.js` stdlib bundles),
+Check the file list (should be ~23 files, no heavy `*.min.js` stdlib bundles),
 that `plantuml.js` is present (not `plantuml-mit.js`), and the resulting
 filename / version.
 

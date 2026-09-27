@@ -891,7 +891,9 @@ tasks.register("npmPackage") {
 			?: "@plantuml/core"
 
 		// Files that make up the package. Everything the demo pages reference,
-		// minus the heavy stdlib bundles.
+		// minus the heavy stdlib bundles. main.js imports plantuml-codec.js and
+		// zoom.js, and index.html loads vendor/fflate-*.min.js: without them the
+		// playground cannot start when opened from the package (e.g. via unpkg).
 		val include = listOf(
 			"plantuml.js",
 			"viz-global.js",
@@ -899,6 +901,9 @@ tasks.register("npmPackage") {
 			"openiconic.js",
 			"themes.js",
 			"main.js",
+			"plantuml-codec.js",
+			"zoom.js",
+			"vendor/**",
 			"main.css",
 			"favicon.svg",
 			"favicon.ico",
@@ -939,6 +944,9 @@ tasks.register("npmPackage") {
 			    "openiconic.js",
 			    "themes.js",
 			    "main.js",
+			    "plantuml-codec.js",
+			    "zoom.js",
+			    "vendor/",
 			    "main.css",
 			    "favicon.svg",
 			    "favicon.ico",
@@ -1032,7 +1040,8 @@ tasks.register("npmPackage") {
 			  `globalThis.PLANTUML_THEMES` yourself, e.g. inside a Web Worker. Without it,
 			  `!theme` renders the diagram unthemed and warns on the console; an unknown
 			  theme name in a loaded themes.js still reports "Cannot load theme"
-			- demo pages: `index.html` (playground), `index-basic.html`,
+			- demo pages: `index.html` (playground, with its `main.js`,
+			  `plantuml-codec.js`, `zoom.js` and `vendor/fflate`), `index-basic.html`,
 			  `index-basic-dark.html`, `index-collection.html`, and two GitHub
 			  integration proofs of concept
 
