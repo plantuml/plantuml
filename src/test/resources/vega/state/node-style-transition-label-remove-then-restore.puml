@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+' https://forum.plantuml.net/20492
+' Non-regression guard: remove followed by restore on the same tag must
+' bring the label back exactly as if nothing had happened.
+skinparam stateDiagramEdgeLabelStyle node
+
+state Idle
+state Charging
+state Faulted $fault
+
+Idle --> Charging : start
+Charging --> Faulted : fault
+
+remove $fault
+restore $fault
+@enduml

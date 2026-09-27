@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+' https://forum.plantuml.net/20492
+' Removing a state that sits in the middle of the chain must drop BOTH its
+' incoming and outgoing node-style labels, not just one side.
+skinparam stateDiagramEdgeLabelStyle node
+
+state Idle
+state Charging $charging
+state Faulted
+
+Idle --> Charging : start
+Charging --> Faulted : fault
+
+remove $charging
+@enduml
