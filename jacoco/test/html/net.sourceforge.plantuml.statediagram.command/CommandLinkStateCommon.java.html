@@ -193,9 +193,9 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2&lt;StateDiagram
 
 		// Check if we have a non-empty label that should become an intermediate
 		// transition node
-<span class="pc bpc" id="L196" title="7 of 8 branches missed.">		if (useNodeStyle &amp;&amp; label != null &amp;&amp; !Display.isNull(label) &amp;&amp; !label.toString().trim().isEmpty()) {</span>
+<span class="pc bpc" id="L196" title="3 of 8 branches missed.">		if (useNodeStyle &amp;&amp; label != null &amp;&amp; !Display.isNull(label) &amp;&amp; !label.toString().trim().isEmpty()) {</span>
 			// Create intermediate transition node for the label
-<span class="nc" id="L198">			return createTransitionWithIntermediateNode(diagram, location, cl1, cl2, label, linkType, length, dir, arg);</span>
+<span class="fc" id="L198">			return createTransitionWithIntermediateNode(diagram, location, cl1, cl2, label, linkType, length, dir, arg);</span>
 		} else {
 			// Original direct link behavior for unlabeled transitions or when node style is
 			// not requested
@@ -299,8 +299,8 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2&lt;StateDiagram
 
 		// Fall back to global skinparam setting
 <span class="fc" id="L301">		final String globalSetting = diagram.getSkinParam().getValue(&quot;statediagramedgelabelstyle&quot;);</span>
-<span class="pc bpc" id="L302" title="3 of 4 branches missed.">		if (globalSetting != null &amp;&amp; globalSetting.equalsIgnoreCase(&quot;node&quot;))</span>
-<span class="nc" id="L303">			return true;</span>
+<span class="pc bpc" id="L302" title="1 of 4 branches missed.">		if (globalSetting != null &amp;&amp; globalSetting.equalsIgnoreCase(&quot;node&quot;))</span>
+<span class="fc" id="L303">			return true;</span>
 
 		// Default to normal (original behavior)
 <span class="fc" id="L306">		return false;</span>
@@ -311,47 +311,47 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2&lt;StateDiagram
 			throws NoSuchColorException {
 
 		// Generate unique ID for the transition node
-<span class="nc" id="L314">		final String transitionNodeId = generateTransitionNodeId(source, target, label);</span>
+<span class="fc" id="L314">		final String transitionNodeId = generateTransitionNodeId(source, target, label);</span>
 
 		// Create the intermediate transition node
-<span class="nc" id="L317">		final Quark&lt;Entity&gt; transitionQuark = diagram.quarkInContext(true, diagram.cleanId(transitionNodeId));</span>
-<span class="nc" id="L318">		final Entity transitionNode = diagram.reallyCreateLeaf(location, transitionQuark, label,</span>
+<span class="fc" id="L317">		final Quark&lt;Entity&gt; transitionQuark = diagram.quarkInContext(true, diagram.cleanId(transitionNodeId));</span>
+<span class="fc" id="L318">		final Entity transitionNode = diagram.reallyCreateLeaf(location, transitionQuark, label,</span>
 				LeafType.STATE_TRANSITION_LABEL, null);
 
 		// Set transition node stereotype to make it visually distinct
-<span class="nc" id="L322">		transitionNode.setStereotype(Stereotype.build(&quot;&lt;&lt;transition&gt;&gt;&quot;));</span>
+<span class="fc" id="L322">		transitionNode.setStereotype(Stereotype.build(&quot;&lt;&lt;transition&gt;&gt;&quot;));</span>
 
 		// STEP 1: Create first link: source -&gt; transition node (no arrow decoration on
 		// intermediate link)
 		// Use length=2 to get minlen=1, which places transition node at rank(source)+1
-<span class="nc" id="L327">		final LinkType firstLinkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);</span>
-<span class="nc" id="L328">		final LinkArg firstLinkArg = LinkArg.build(Display.NULL, 2,</span>
-<span class="nc bnc" id="L329" title="All 2 branches missed.">				diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
-<span class="nc" id="L330">		Link firstLink = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), source,</span>
+<span class="fc" id="L327">		final LinkType firstLinkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);</span>
+<span class="fc" id="L328">		final LinkArg firstLinkArg = LinkArg.build(Display.NULL, 2,</span>
+<span class="pc bpc" id="L329" title="1 of 2 branches missed.">				diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
+<span class="fc" id="L330">		Link firstLink = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), source,</span>
 				transitionNode, firstLinkType, firstLinkArg);
 		// High weight to control horizontal positioning - keeps this edge straight
-<span class="nc" id="L333">		firstLink.setWeight(10.0);</span>
+<span class="fc" id="L333">		firstLink.setWeight(10.0);</span>
 
 		// STEP 2: Create second link: transition node -&gt; target (with original arrow
 		// decoration)
 		// Use length=2 to get minlen=1, placing target at rank(transition)+1 =
 		// rank(source)+2
-<span class="nc" id="L339">		final LinkArg secondLinkArg = LinkArg.build(Display.NULL, 2,</span>
-<span class="nc bnc" id="L340" title="All 2 branches missed.">				diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
-<span class="nc" id="L341">		Link secondLink = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), transitionNode,</span>
+<span class="fc" id="L339">		final LinkArg secondLinkArg = LinkArg.build(Display.NULL, 2,</span>
+<span class="pc bpc" id="L340" title="1 of 2 branches missed.">				diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
+<span class="fc" id="L341">		Link secondLink = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), transitionNode,</span>
 				target, linkType, secondLinkArg);
 		// High weight to control horizontal positioning - keeps this edge straight
-<span class="nc" id="L344">		secondLink.setWeight(10.0);</span>
+<span class="fc" id="L344">		secondLink.setWeight(10.0);</span>
 
 		// Handle direction for visible links
-<span class="nc bnc" id="L347" title="All 4 branches missed.">		if (dir == Direction.LEFT || dir == Direction.UP) {</span>
+<span class="pc bpc" id="L347" title="2 of 4 branches missed.">		if (dir == Direction.LEFT || dir == Direction.UP) {</span>
 <span class="nc" id="L348">			firstLink = firstLink.getInv();</span>
 <span class="nc" id="L349">			secondLink = secondLink.getInv();</span>
 		}
 
 		// Apply styles (but filter out &quot;node&quot; keyword to avoid issues)
-<span class="nc" id="L353">		final String arrowStyle = arg.getLazzy(&quot;ARROW_STYLE&quot;, 0);</span>
-<span class="nc bnc" id="L354" title="All 2 branches missed.">		if (arrowStyle != null) {</span>
+<span class="fc" id="L353">		final String arrowStyle = arg.getLazzy(&quot;ARROW_STYLE&quot;, 0);</span>
+<span class="pc bpc" id="L354" title="1 of 2 branches missed.">		if (arrowStyle != null) {</span>
 			// Remove &quot;node&quot; from the style string since it's not a visual style
 <span class="nc" id="L356">			final String filteredStyle = arrowStyle.replaceAll(&quot;(?i),?node,?&quot;, &quot;&quot;).replaceAll(&quot;,,&quot;, &quot;,&quot;)</span>
 <span class="nc" id="L357">					.replaceAll(&quot;^,|,$&quot;, &quot;&quot;);</span>
@@ -362,19 +362,19 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2&lt;StateDiagram
 		}
 
 		// Add visible links to the diagram - high weight keeps them straight/aligned
-<span class="nc" id="L365">		diagram.addLink(firstLink);</span>
-<span class="nc" id="L366">		diagram.addLink(secondLink);</span>
+<span class="fc" id="L365">		diagram.addLink(firstLink);</span>
+<span class="fc" id="L366">		diagram.addLink(secondLink);</span>
 
-<span class="nc" id="L368">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L368">		return CommandExecutionResult.ok();</span>
 	}
 
 	private String generateTransitionNodeId(Entity source, Entity target, Display label) {
 		// Generate a unique ID for the transition node based on source, target, and
 		// label
-<span class="nc" id="L374">		final String sourceId = source.getName();</span>
-<span class="nc" id="L375">		final String targetId = target.getName();</span>
-<span class="nc" id="L376">		final String labelText = label.toString().replaceAll(&quot;[^a-zA-Z0-9_]&quot;, &quot;_&quot;);</span>
-<span class="nc" id="L377">		return &quot;transition_&quot; + sourceId + &quot;_&quot; + targetId + &quot;_&quot; + labelText + &quot;_&quot; + System.currentTimeMillis();</span>
+<span class="fc" id="L374">		final String sourceId = source.getName();</span>
+<span class="fc" id="L375">		final String targetId = target.getName();</span>
+<span class="fc" id="L376">		final String labelText = label.toString().replaceAll(&quot;[^a-zA-Z0-9_]&quot;, &quot;_&quot;);</span>
+<span class="fc" id="L377">		return &quot;transition_&quot; + sourceId + &quot;_&quot; + targetId + &quot;_&quot; + labelText + &quot;_&quot; + System.currentTimeMillis();</span>
 	}
 
 }

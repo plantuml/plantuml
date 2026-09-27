@@ -327,16 +327,16 @@ public class CommandCreateClassMultilines extends CommandMultilines2&lt;ClassDia
 	}
 
 	public static void addTags(Entity entity, String tags) {
-<span class="pc bpc" id="L330" title="1 of 2 branches missed.">		if (tags == null)</span>
+<span class="fc bfc" id="L330" title="All 2 branches covered.">		if (tags == null)</span>
 <span class="fc" id="L331">			return;</span>
 
-<span class="nc bnc" id="L333" title="All 2 branches missed.">		for (String tag : tags.split(&quot;[ ]+&quot;)) {</span>
-<span class="nc bnc" id="L334" title="All 2 branches missed.">			if (TeaVM.a())</span>
-<span class="nc bnc" id="L335" title="All 2 branches missed.">				assert tag.startsWith(&quot;$&quot;);</span>
-<span class="nc" id="L336">			tag = tag.substring(1);</span>
-<span class="nc" id="L337">			entity.addStereotag(new Stereotag(tag));</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">		for (String tag : tags.split(&quot;[ ]+&quot;)) {</span>
+<span class="pc bpc" id="L334" title="1 of 2 branches missed.">			if (TeaVM.a())</span>
+<span class="pc bpc" id="L335" title="1 of 2 branches missed.">				assert tag.startsWith(&quot;$&quot;);</span>
+<span class="fc" id="L336">			tag = tag.substring(1);</span>
+<span class="fc" id="L337">			entity.addStereotag(new Stereotag(tag));</span>
 		}
-<span class="nc" id="L339">	}</span>
+<span class="fc" id="L339">	}</span>
 
 	public static void manageExtends(LineLocation location, String keyword, ClassDiagram diagram, RegexResult arg,
 			final Entity entity) {

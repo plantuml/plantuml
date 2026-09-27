@@ -416,8 +416,8 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 	private void printEntities(StringBounder stringBounder, Collection&lt;Entity&gt; entities) {
 <span class="fc bfc" id="L418" title="All 2 branches covered.">		for (Entity ent : entities) {</span>
-<span class="pc bpc" id="L419" title="1 of 2 branches missed.">			if (ent.isRemoved())</span>
-<span class="nc" id="L420">				continue;</span>
+<span class="fc bfc" id="L419" title="All 2 branches covered.">			if (ent.isRemoved())</span>
+<span class="fc" id="L420">				continue;</span>
 
 <span class="fc" id="L422">			this.printEntity(stringBounder, ent);</span>
 <span class="fc" id="L423">		}</span>
@@ -425,8 +425,8 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 	private void exportEntities(Globals zz, ST_Agraph_s cluster, Collection&lt;Entity&gt; entities) {
 <span class="fc bfc" id="L427" title="All 2 branches covered.">		for (Entity ent : entities) {</span>
-<span class="pc bpc" id="L428" title="1 of 2 branches missed.">			if (ent.isRemoved())</span>
-<span class="nc" id="L429">				continue;</span>
+<span class="fc bfc" id="L428" title="All 2 branches covered.">			if (ent.isRemoved())</span>
+<span class="fc" id="L429">				continue;</span>
 <span class="fc" id="L430">			exportEntity(zz, cluster, ent);</span>
 <span class="fc" id="L431">		}</span>
 <span class="fc" id="L432">	}</span>
@@ -545,8 +545,8 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 <span class="fc" id="L545">		this.printEntities(stringBounder, getUnpackagedEntities());</span>
 
 <span class="fc bfc" id="L547" title="All 2 branches covered.">		for (Link link : getLocalLinks()) {</span>
-<span class="pc bpc" id="L548" title="1 of 2 branches missed.">			if (link.isRemoved())</span>
-<span class="nc" id="L549">				continue;</span>
+<span class="fc bfc" id="L548" title="All 2 branches covered.">			if (link.isRemoved())</span>
+<span class="fc" id="L549">				continue;</span>
 
 <span class="fc bfc" id="L551" title="All 2 branches covered.">			if (isOpalisable(link.getEntity1())) {</span>
 <span class="fc" id="L552">				final SvekNode node = getBibliotekon().getNode(link.getEntity1());</span>
@@ -613,8 +613,8 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 <span class="fc" id="L613">		exportGroups(zz, g, root);</span>
 
 <span class="fc bfc" id="L615" title="All 2 branches covered.">		for (Link link : getLocalLinks()) {</span>
-<span class="pc bpc" id="L616" title="1 of 2 branches missed.">			if (link.isRemoved())</span>
-<span class="nc" id="L617">				continue;</span>
+<span class="fc bfc" id="L616" title="All 2 branches covered.">			if (link.isRemoved())</span>
+<span class="fc" id="L617">				continue;</span>
 
 <span class="fc" id="L619">			final ST_Agedge_s e = createEdge(stringBounder, zz, g, link);</span>
 <span class="pc bpc" id="L620" title="1 of 2 branches missed.">			if (e != null)</span>

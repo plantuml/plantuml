@@ -94,11 +94,11 @@ public class CommandHideShow2 extends SingleLineCommand2&lt;CucaDiagram&gt; {
 	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 
-<span class="nc" id="L97">		final char tmp = arg.get(&quot;COMMAND&quot;, 0).charAt(0);</span>
-<span class="nc bnc" id="L98" title="All 4 branches missed.">		final boolean show = tmp == 's' || tmp == 'S';</span>
-<span class="nc" id="L99">		final String what = arg.get(&quot;WHAT&quot;, 0).trim();</span>
-<span class="nc" id="L100">		diagram.hideOrShow2(what, show);</span>
-<span class="nc" id="L101">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L97">		final char tmp = arg.get(&quot;COMMAND&quot;, 0).charAt(0);</span>
+<span class="pc bpc" id="L98" title="2 of 4 branches missed.">		final boolean show = tmp == 's' || tmp == 'S';</span>
+<span class="fc" id="L99">		final String what = arg.get(&quot;WHAT&quot;, 0).trim();</span>
+<span class="fc" id="L100">		diagram.hideOrShow2(what, show);</span>
+<span class="fc" id="L101">		return CommandExecutionResult.ok();</span>
 	}
 
 	@Override

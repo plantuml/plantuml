@@ -322,8 +322,8 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public final void setWeight(double weight) {
-<span class="nc" id="L325">		this.weight = weight;</span>
-<span class="nc" id="L326">	}</span>
+<span class="fc" id="L325">		this.weight = weight;</span>
+<span class="fc" id="L326">	}</span>
 
 	public final CucaNote getNote() {
 <span class="fc" id="L329">		return note;</span>
@@ -494,7 +494,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 <span class="pc bpc" id="L494" title="3 of 4 branches missed.">		if (stereotype != null &amp;&amp; cucaDiagram.isStereotypeRemoved(stereotype))</span>
 <span class="nc" id="L495">			return true;</span>
 
-<span class="pc bpc" id="L497" title="2 of 4 branches missed.">		return cl1.isRemoved() || cl2.isRemoved();</span>
+<span class="fc bfc" id="L497" title="All 4 branches covered.">		return cl1.isRemoved() || cl2.isRemoved();</span>
 	}
 
 	public boolean hasUrl() {

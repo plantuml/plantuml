@@ -210,8 +210,8 @@ import net.sourceforge.plantuml.text.Guillemet;
 <span class="pc bpc" id="L210" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.PSEUDO_STATE)</span>
 <span class="nc" id="L211">			return new EntityImagePseudoState(leaf);</span>
 
-<span class="pc bpc" id="L213" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.STATE_TRANSITION_LABEL)</span>
-<span class="nc" id="L214">			return new EntityImageTransitionLabel(leaf);</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.STATE_TRANSITION_LABEL)</span>
+<span class="fc" id="L214">			return new EntityImageTransitionLabel(leaf);</span>
 
 <span class="pc bpc" id="L216" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.DEEP_HISTORY)</span>
 <span class="nc" id="L217">			return new EntityImageDeepHistory(leaf);</span>

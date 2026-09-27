@@ -47,20 +47,20 @@ public class Stereotag {
 
 	private String name;
 
-<span class="nc" id="L50">	public Stereotag(String name) {</span>
-<span class="nc bnc" id="L51" title="All 2 branches missed.">		if (Objects.requireNonNull(name).startsWith(&quot;$&quot;)) {</span>
+<span class="fc" id="L50">	public Stereotag(String name) {</span>
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">		if (Objects.requireNonNull(name).startsWith(&quot;$&quot;)) {</span>
 <span class="nc" id="L52">			throw new IllegalArgumentException(name);</span>
 		}
-<span class="nc" id="L54">		this.name = name;</span>
-<span class="nc" id="L55">	}</span>
+<span class="fc" id="L54">		this.name = name;</span>
+<span class="fc" id="L55">	}</span>
 
 	public String getName() {
-<span class="nc" id="L58">		return name;</span>
+<span class="fc" id="L58">		return name;</span>
 	}
 
 	@Override
 	public int hashCode() {
-<span class="nc" id="L63">		return name.hashCode();</span>
+<span class="fc" id="L63">		return name.hashCode();</span>
 	}
 
 	@Override

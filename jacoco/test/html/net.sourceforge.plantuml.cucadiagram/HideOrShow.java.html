@@ -51,11 +51,11 @@ public class HideOrShow {
 	}
 
 	private boolean isApplyable(Entity leaf) {
-<span class="nc bnc" id="L54" title="All 2 branches missed.">		if (leaf.isRoot())</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">		if (leaf.isRoot())</span>
 <span class="nc" id="L55">			throw new IllegalArgumentException();</span>
 
-<span class="nc bnc" id="L57" title="All 2 branches missed.">		if (what.startsWith(&quot;$&quot;))</span>
-<span class="nc" id="L58">			return isApplyableTag(leaf, what.substring(1));</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">		if (what.startsWith(&quot;$&quot;))</span>
+<span class="fc" id="L58">			return isApplyableTag(leaf, what.substring(1));</span>
 
 <span class="nc bnc" id="L60" title="All 4 branches missed.">		if (what.startsWith(&quot;&lt;&lt;&quot;) &amp;&amp; what.endsWith(&quot;&gt;&gt;&quot;))</span>
 <span class="nc" id="L61">			return isApplyableStereotype(leaf.getStereotype(), what.substring(2, what.length() - 2).trim());</span>
@@ -97,20 +97,20 @@ public class HideOrShow {
 	}
 
 	private boolean isApplyableTag(Entity leaf, String pattern) {
-<span class="nc bnc" id="L100" title="All 2 branches missed.">		for (Stereotag tag : leaf.stereotags())</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">			if (match(tag.getName(), pattern))</span>
-<span class="nc" id="L102">				return true;</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		for (Stereotag tag : leaf.stereotags())</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">			if (match(tag.getName(), pattern))</span>
+<span class="fc" id="L102">				return true;</span>
 
-<span class="nc" id="L104">		return false;</span>
+<span class="fc" id="L104">		return false;</span>
 	}
 
 	private boolean match(String name, String pattern) {
 
-<span class="nc" id="L109">		final int idx = name.lastIndexOf(Plasma.MAGIC_SEPARATOR);</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (idx != -1)</span>
+<span class="fc" id="L109">		final int idx = name.lastIndexOf(Plasma.MAGIC_SEPARATOR);</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (idx != -1)</span>
 <span class="nc" id="L111">			name = name.substring(idx + 1);</span>
 
-<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (pattern.contains(&quot;*&quot;)) {</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (pattern.contains(&quot;*&quot;)) {</span>
 			// System.err.println(&quot;f1=&quot; + pattern);
 			// System.err.println(&quot;f2=&quot; + Pattern.quote(pattern));
 			// System.err.println(&quot;f3=&quot; + Matcher.quoteReplacement(pattern));
@@ -118,19 +118,19 @@ public class HideOrShow {
 <span class="nc" id="L118">			return name.matches(reg);</span>
 		}
 
-<span class="nc" id="L121">		return name.equals(pattern);</span>
+<span class="fc" id="L121">		return name.equals(pattern);</span>
 	}
 
-<span class="nc" id="L124">	public HideOrShow(String what, boolean show) {</span>
-<span class="nc" id="L125">		this.what = what;</span>
-<span class="nc" id="L126">		this.show = show;</span>
-<span class="nc" id="L127">	}</span>
+<span class="fc" id="L124">	public HideOrShow(String what, boolean show) {</span>
+<span class="fc" id="L125">		this.what = what;</span>
+<span class="fc" id="L126">		this.show = show;</span>
+<span class="fc" id="L127">	}</span>
 
 	public boolean apply(boolean hidden, Entity leaf) {
-<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (isApplyable(leaf))</span>
-<span class="nc bnc" id="L131" title="All 2 branches missed.">			return !show;</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">		if (isApplyable(leaf))</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">			return !show;</span>
 
-<span class="nc" id="L133">		return hidden;</span>
+<span class="fc" id="L133">		return hidden;</span>
 	}
 
 	public boolean apply(boolean hidden, Stereotype stereotype) {
