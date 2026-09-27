@@ -202,7 +202,7 @@ signing {
 // engine file produced here is `plantuml-mit.js`. It is copied into the
 // package renamed to `plantuml.js` so that:
 //   - the demo pages and main.js (which `import` "./plantuml.js") keep working
-//     unchanged -- they are copied verbatim from src/main/resources/teavm;
+//     unchanged -- they are copied verbatim from src/main/teavm;
 //   - existing CDN URLs (unpkg/jsdelivr .../plantuml.js) keep resolving.
 // All references to the engine in the bundle are relative imports from the
 // HTML/JS files, never a self-reference baked into the .js, so renaming at
@@ -225,7 +225,7 @@ tasks.register("npmPackage") {
 
 	// generateJavaScript produces plantuml-mit.js in build/generated/teavm/js.
 	// processResources is not needed: the bundle's companion files are copied
-	// directly from the root src/main/resources/teavm tree below.
+	// directly from the root src/main/teavm tree below.
 	dependsOn("generateJavaScript")
 
 	val outputDir = layout.buildDirectory.dir("npm-plantuml")
@@ -269,7 +269,7 @@ tasks.register("npmPackage") {
 		}
 
 		// Companion files that make up the package, copied verbatim from the
-		// shared teavm resources. Everything the demo pages reference, minus the
+		// shared teavm sources. Everything the demo pages reference, minus the
 		// heavy stdlib bundles (and minus plantuml.js, supplied above from the
 		// MIT build).
 		val include = listOf(
@@ -290,9 +290,14 @@ tasks.register("npmPackage") {
 			"GITHUB_INTEGRATION.md"
 		)
 
+		// The companion files are split by origin under the root
+		// src/main/teavm tree (issue #2870); the package itself stays flat.
+		val teavmSrcDir = rootProject.layout.projectDirectory.dir("src/main/teavm")
 		copy {
-			from(rootProject.layout.projectDirectory.dir("src/main/resources/teavm")) {
-				include(*include.toTypedArray())
+			for (sub in listOf("web", "generated", "vendor")) {
+				from(teavmSrcDir.dir(sub)) {
+					include(*include.toTypedArray())
+				}
 			}
 			into(pkgDir)
 		}

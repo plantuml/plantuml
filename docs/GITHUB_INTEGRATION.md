@@ -16,8 +16,9 @@ Two live demos, no setup required:
   below.
 
 To run them locally instead, open `github-integration-poc.html` or
-`github-integration-web-worker-poc.html` from
-[`src/main/resources/teavm/`](../src/main/resources/teavm/) in a browser.
+`github-integration-web-worker-poc.html` from `build/generated/teavm/js/`
+after `gradlew teavm` (their sources are in
+[`src/main/teavm/web/`](../src/main/teavm/web/)) in a browser.
 Because they sit alongside `plantuml.js` and `viz-global.js` in that
 directory, the example diagrams are rendered live by the real
 TeaVM-compiled engine.
@@ -280,7 +281,7 @@ with dozens.
 ## Files
 
 This document lives in `docs/`. The engine and the PoC pages it describes
-live in [`src/main/resources/teavm/`](../src/main/resources/teavm/):
+live in [`src/main/teavm/`](../src/main/teavm/) (sources split by origin, see its README; `gradlew teavm` assembles them flat next to `plantuml.js`):
 
 | File | Description |
 |------|-------------|

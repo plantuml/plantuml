@@ -46,7 +46,8 @@ package in `plantuml-mit/build/npm-plantuml/`. It contains:
 - generated `package.json` and `README.md`
 
 The companion files (everything except `plantuml.js`) are copied verbatim from
-the shared `src/main/resources/teavm` tree in the root project, so the MIT and
+the shared `src/main/teavm` tree (`web/`, `generated/`, `vendor/`) in the root
+project, so the MIT and
 GPL bundles stay in sync automatically.
 
 The heavy optional sprite bundles (`ibm.min.js`, `tupadr3.min.js`,
@@ -189,5 +190,5 @@ be loaded as a classic script first.
   `onSuccess(svg)`; errors go to `onError(message)`.
 
 Rendering is asynchronous: `render()` returns immediately and writes the SVG
-into the target element later. See `src/main/resources/teavm/GITHUB_INTEGRATION.md`
+into the target element later. See `src/main/teavm/web/GITHUB_INTEGRATION.md`
 for the full integration guide.

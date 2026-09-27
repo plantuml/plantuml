@@ -157,7 +157,7 @@ experience Mermaid users already get.
 
 This document lives in `docs/`, alongside `GITHUB_INTEGRATION.md` and
 `NOTION_INTEGRATION.md`. The engine files it describes live in
-[`src/main/resources/teavm/`](../src/main/resources/teavm/):
+[`src/main/teavm/`](../src/main/teavm/) (sources split by origin, see its README; `gradlew teavm` assembles them flat next to `plantuml.js`):
 
 | File | Description |
 |------|-------------|
