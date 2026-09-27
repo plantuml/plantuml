@@ -12,7 +12,9 @@
 // - NEITHER global set: behaviour is byte-for-byte what it always was. A
 //   bundle served next to the page loads through a relative script tag; a
 //   missing bundle fails the include loudly instead of hanging; diagrams
-//   without stdlib includes are untouched.
+//   without stdlib includes are untouched. A library whose info carries a
+//   `link` (material7 -> material7.4.47) is followed for `%load_json` too,
+//   not only for `!include`.
 //
 // - PLANTUML_STDLIB_BASE set: the script tag URL is prefixed, so the bundle
 //   is fetched from the configured location and the page's own origin is
@@ -27,8 +29,8 @@
 //   check asserts no .min.js is requested at all, that concurrent includes
 //   of one library coalesce into a single loader call, that a library whose
 //   info carries a `link` to another library resolves through two loader
-//   calls, and that a loader failure surfaces as a visible include error
-//   rather than a hang. Every lazily loaded support script (themes.js,
+//   calls (for `!include` and for `%load_json`), and that a loader failure
+//   surfaces as a visible include error rather than a hang. Every lazily loaded support script (themes.js,
 //   emoji.js, openiconic.js) comes through the same loader, so a hook that
 //   only handles stdlib bundles must be able to opt out: returning false
 //   (strictly) declines the URL and loading falls back to the script tag,
@@ -53,14 +55,27 @@ const pw = loadPlaywright();
 // its scenario is supposed to use (fakelib at the page root, baselib under
 // /cdn/, hooklib as JSON), so a wrong loading path cannot render by accident.
 const greetingLine = lib => 'participant "Hello from ' + lib + '" as FAKEHELLO';
+// Each library also carries one JSON resource, <lib/data.json>, for %load_json.
+const jsonData = lib => ({ origin: 'json of ' + lib });
 const bundleScript = lib => `(function(){
 window.PLANTUML_STDLIB=window.PLANTUML_STDLIB||{};
 window.PLANTUML_STDLIB.${lib}=window.PLANTUML_STDLIB.${lib}||{};
 window.PLANTUML_STDLIB.${lib}["greeting"]=[${JSON.stringify(greetingLine(lib))}];
+window.PLANTUML_STDLIB_JSON=window.PLANTUML_STDLIB_JSON||{};
+window.PLANTUML_STDLIB_JSON.${lib}={"data":${JSON.stringify(jsonData(lib))}};
 window.PLANTUML_STDLIB_INFO=window.PLANTUML_STDLIB_INFO||{};
 window.PLANTUML_STDLIB_INFO.${lib}={name:${JSON.stringify(lib)}};
 })();`;
-const hooklibJson = JSON.stringify({ info: { name: 'hooklib' }, files: { greeting: [greetingLine('hooklib')] }, json: {} });
+// A link-only bundle, like material7.min.js: no content, just info.link.
+const linkScript = (lib, target) => `(function(){
+window.PLANTUML_STDLIB=window.PLANTUML_STDLIB||{};
+window.PLANTUML_STDLIB.${lib}=window.PLANTUML_STDLIB.${lib}||{};
+window.PLANTUML_STDLIB_JSON=window.PLANTUML_STDLIB_JSON||{};
+window.PLANTUML_STDLIB_JSON.${lib}=window.PLANTUML_STDLIB_JSON.${lib}||{};
+window.PLANTUML_STDLIB_INFO=window.PLANTUML_STDLIB_INFO||{};
+window.PLANTUML_STDLIB_INFO.${lib}={name:${JSON.stringify(lib)},link:${JSON.stringify(target)}};
+})();`;
+const hooklibJson = JSON.stringify({ info: { name: 'hooklib' }, files: { greeting: [greetingLine('hooklib')] }, json: { data: jsonData('hooklib') } });
 const linklibJson = JSON.stringify({ info: { name: 'linklib', link: 'hooklib' }, files: {}, json: {} });
 
 // One hook body shared by the hook pages: fetch /json/<lib>.json, populate
@@ -114,6 +129,7 @@ const server = createMountedServer({
     '/index-hookfail.html': { contentType: 'text/html', body: pageHtml('hookfail') },
     '/index-decline.html': { contentType: 'text/html', body: pageHtml('decline') },
     '/fakelib.min.js': { contentType: 'application/javascript', body: bundleScript('fakelib') },
+    '/fakelink.min.js': { contentType: 'application/javascript', body: linkScript('fakelink', 'fakelib') },
     '/cdn/baselib.min.js': { contentType: 'application/javascript', body: bundleScript('baselib') },
     '/json/hooklib.json': { contentType: 'application/json', body: hooklibJson },
     '/json/linklib.json': { contentType: 'application/json', body: linklibJson },
@@ -128,11 +144,19 @@ const server = createMountedServer({
 const { check, finish } = createCheckReporter();
 
 const includeOf = lib => ['@startuml', '!include <' + lib + '/greeting>', 'FAKEHELLO -> FAKEHELLO : ping', '@enduml'];
+const loadJsonOf = lib => ['@startjson', "!$d = %load_json('<" + lib + "/data.json>')", '$d', '@endjson'];
 const SEQUENCE = ['@startuml', 'Alice -> Bob: hello', 'Bob --> Alice: hi', '@enduml'];
 
 const rendersGreeting = (r, lib) => !r.thrown && !!r.svg && !isErrorImage(r.svg)
   && r.svg.includes('Hello from ' + lib);
-const failsVisibly = r => !r.thrown && (!!r.text.trim() || (!!r.svg && isErrorImage(r.svg)));
+const rendersJsonOf = (r, lib) => !r.thrown && !!r.svg && !isErrorImage(r.svg)
+  && r.svg.includes('json of ' + lib);
+// A bundle that cannot be loaded (missing, refused by the hook) must end as an
+// ordinary PlantUML error image pointing at the !include, not as the raw text
+// of the loader's Java exception dumped in place of the diagram.
+const failsAsIncludeError = r => !r.thrown && !!r.svg && isErrorImage(r.svg);
+const renderedAs = r => r.thrown || (r.svg ? (isErrorImage(r.svg) ? 'error image' : 'svg without the expected content')
+  : 'no svg: ' + r.text.slice(0, 120));
 
 (async () => {
   const port = await startServer(server);
@@ -154,8 +178,12 @@ const failsVisibly = r => !r.thrown && (!!r.text.trim() || (!!r.svg && isErrorIm
   check('relative bundle was fetched from the page origin', requested.includes('/fakelib.min.js'),
     'requests seen: ' + requested.join(', '));
   r = await renderOn(bare.page, includeOf('nosuchlib'), { includeLoaderCalls: true, maxTextLength: 120 });
-  check('missing bundle fails the include visibly, no hang', failsVisibly(r),
-    r.thrown || 'no visible failure output');
+  check('missing bundle fails the include as a PlantUML error image, no hang', failsAsIncludeError(r),
+    renderedAs(r));
+  r = await renderOn(bare.page, includeOf('fakelink'), { includeLoaderCalls: true, maxTextLength: 120 });
+  check('!include follows a link-only bundle to its target', rendersGreeting(r, 'fakelib'), renderedAs(r));
+  r = await renderOn(bare.page, loadJsonOf('fakelink'), { includeLoaderCalls: true, maxTextLength: 120 });
+  check('%load_json follows a link-only bundle to its target', rendersJsonOf(r, 'fakelib'), renderedAs(r));
   check('no unhandled page errors on the bare page', bare.errors.length === 0, bare.errors.join(' | '));
 
   // Page 2: PLANTUML_STDLIB_BASE points at /cdn/. The page origin is never
@@ -188,13 +216,15 @@ const failsVisibly = r => !r.thrown && (!!r.text.trim() || (!!r.svg && isErrorIm
     && r.loaderCalls.includes('linklib.min.js'),
     r.thrown || (rendersGreeting(r, 'hooklib') ? 'loader calls: ' + (r.loaderCalls || []).join(', ')
       : (r.svg ? 'include content missing from svg' : 'no svg: ' + r.text.slice(0, 120))));
+  r = await renderOn(hook.page, loadJsonOf('linklib'), { includeLoaderCalls: true, maxTextLength: 120 });
+  check('%load_json of a library with info.link resolves through the loader', rendersJsonOf(r, 'hooklib'),
+    renderedAs(r));
   check('no unhandled page errors on the hook page', hook.errors.length === 0, hook.errors.join(' | '));
 
   // Page 4: the loader refuses the library. The include must fail visibly.
   const hookfail = await openPage('index-hookfail.html');
   r = await renderOn(hookfail.page, includeOf('fakelib'), { includeLoaderCalls: true, maxTextLength: 120 });
-  check('loader failure surfaces as a visible include error, no hang', failsVisibly(r),
-    r.thrown || 'no visible failure output');
+  check('loader failure surfaces as a PlantUML error image, no hang', failsAsIncludeError(r), renderedAs(r));
   check('no unhandled page errors on the hook-failure page', hookfail.errors.length === 0,
     hookfail.errors.join(' | '));
 

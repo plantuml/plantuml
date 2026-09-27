@@ -73,14 +73,21 @@ public class PathSystem {
 		return new PathSystem(new NFolderRegular(Paths.get("")), new ArrayList<NFolderZip>());
 	}
 
+	// Same resolution as for !include (see loadTeaVMStdlib): a library such as
+	// material7 only carries a link to the versioned one that holds the data.
 	public JsonValue getTeaVMStdlibJson(String path) {
 		// ::revert when JAVA8
 		// return null;
 		path = path.replaceAll("\\.json$", "");
 		final String full = path.toLowerCase();
-		final String libname = full.substring(0, full.indexOf('/'));
-		final String filepath = full.substring(libname.length() + 1);
-		TeaVmScriptLoader.loadOnceSync(libname + ".min.js");
+		final int slash = full.indexOf('/');
+		if (slash == -1)
+			return null;
+
+		final String filepath = full.substring(slash + 1);
+		final String libname = loadTeaVMStdlib(full.substring(0, slash));
+		if (libname == null)
+			return null;
 
 		final JSObject data = TeaVmScriptLoader.getRaw_PLANTUML_STDLIB_JSON(libname, filepath);
 		if (data == null)
@@ -94,18 +101,14 @@ public class PathSystem {
 		// ::revert when JAVA8
 		// return null;
 		final String full = path.substring(1, path.length() - 1).toLowerCase();
-		String libname = full.substring(0, full.indexOf('/'));
-		final String filepath = full.substring(libname.length() + 1);
-		TeaVmScriptLoader.loadOnceSync(libname + ".min.js");
+		final int slash = full.indexOf('/');
+		if (slash == -1)
+			return null;
 
-		final Map<String, String> infos = getInfo(libname);
-		final String link = infos.get("link");
-
-		if (link != null) {
-			libname = link;
-			BrowserLog.consoleLog(getClass(), "Following link to " + libname);
-			TeaVmScriptLoader.loadOnceSync(libname + ".min.js");
-		}
+		final String filepath = full.substring(slash + 1);
+		final String libname = loadTeaVMStdlib(full.substring(0, slash));
+		if (libname == null)
+			return null;
 
 		final JSObject data = TeaVmScriptLoader.getRaw_PLANTUML_STDLIB(libname, filepath);
 		if (data == null)
@@ -116,6 +119,44 @@ public class PathSystem {
 	}
 
 	// ::comment when JAVA8
+	/**
+	 * Loads the bundle <code>&lt;libname&gt;.min.js</code> and, when its info
+	 * carries a <code>link</code> (e.g. material7 -&gt; material7.4.47), the
+	 * bundle it points to.
+	 *
+	 * @param libname the library name, lower case
+	 * @return the name of the library that actually holds the data, or
+	 *         <code>null</code> if a bundle could not be loaded (unknown library,
+	 *         network error, refused by a PLANTUML_STDLIB_LOADER hook). The
+	 *         caller then reports an ordinary "cannot include" error instead of
+	 *         letting the loader's exception abort the whole rendering.
+	 */
+	private String loadTeaVMStdlib(String libname) {
+		if (loadTeaVMStdlibBundle(libname) == false)
+			return null;
+
+		final String link = getInfo(libname).get("link");
+		if (link == null)
+			return libname;
+
+		BrowserLog.consoleLog(getClass(), "Following link to " + link);
+		if (loadTeaVMStdlibBundle(link) == false)
+			return null;
+
+		return link;
+	}
+
+	private boolean loadTeaVMStdlibBundle(String libname) {
+		try {
+			TeaVmScriptLoader.loadOnceSync(libname + ".min.js");
+			return true;
+		} catch (RuntimeException e) {
+			TeaVmScriptLoader
+					.consoleWarn("PlantUML: cannot load stdlib bundle " + libname + ".min.js: " + e.getMessage());
+			return false;
+		}
+	}
+
 	private Map<String, String> getInfo(final String libname) {
 		final JSObject info = TeaVmScriptLoader.getRaw_PLANTUML_STDLIB_INFO(libname);
 		final Map<String, String> map = new HashMap<>();
