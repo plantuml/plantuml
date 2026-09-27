@@ -271,13 +271,17 @@ tasks.register("npmPackage") {
 		// Companion files that make up the package, copied verbatim from the
 		// shared teavm sources. Everything the demo pages reference, minus the
 		// heavy stdlib bundles (and minus plantuml.js, supplied above from the
-		// MIT build).
+		// MIT build). main.js imports plantuml-codec.js and zoom.js, and
+		// index.html loads vendor/fflate-*.min.js (copied below): without them
+		// the playground cannot start when opened from the package.
 		val include = listOf(
 			"viz-global.js",
 			"emoji.js",
 			"openiconic.js",
 			"themes.js",
 			"main.js",
+			"plantuml-codec.js",
+			"zoom.js",
 			"main.css",
 			"favicon.svg",
 			"favicon.ico",
@@ -298,6 +302,13 @@ tasks.register("npmPackage") {
 				from(teavmSrcDir.dir(sub)) {
 					include(*include.toTypedArray())
 				}
+			}
+			// Same rule as the root `teavm` task: apart from viz-global.js
+			// (loaded from the root), third-party code keeps its vendor/ folder,
+			// license included.
+			from(teavmSrcDir.dir("vendor")) {
+				exclude("viz-global.js")
+				into("vendor")
 			}
 			into(pkgDir)
 		}
@@ -338,6 +349,9 @@ tasks.register("npmPackage") {
 			    "openiconic.js",
 			    "themes.js",
 			    "main.js",
+			    "plantuml-codec.js",
+			    "zoom.js",
+			    "vendor/",
 			    "main.css",
 			    "favicon.svg",
 			    "favicon.ico",
@@ -432,7 +446,8 @@ tasks.register("npmPackage") {
 			  `globalThis.PLANTUML_THEMES` yourself, e.g. inside a Web Worker. Without it,
 			  `!theme` renders the diagram unthemed and warns on the console; an unknown
 			  theme name in a loaded themes.js still reports "Cannot load theme"
-			- demo pages: `index.html` (playground), `index-basic.html`,
+			- demo pages: `index.html` (playground, with its `main.js`,
+			  `plantuml-codec.js`, `zoom.js` and `vendor/fflate`), `index-basic.html`,
 			  `index-basic-dark.html`, `index-collection.html`, and two GitHub
 			  integration proofs of concept
 
