@@ -123,6 +123,7 @@ public class Stereogroup {
 		case "join":
 			return LeafType.STATE_FORK_JOIN;
 		case "start":
+		case "junction":
 			return LeafType.CIRCLE_START;
 		case "end":
 			return LeafType.CIRCLE_END;
