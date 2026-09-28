@@ -142,7 +142,12 @@ public final class GeneralImageBuilder {
 			return new EntityImageState(leaf);
 
 		}
-		if (leaf.getLeafType() == LeafType.CIRCLE_START)
+		if (leaf.getLeafType() == LeafType.CIRCLE_START || leaf.getLeafType() == LeafType.JUNCTION)
+			// A junction pseudostate is rendered identically to the initial pseudostate (a
+			// small filled circle, per the UML spec), but it must stay a distinct LeafType:
+			// LeafType.CIRCLE_START also marks "the diagram's real entry point" for other
+			// consumers (see ScxmlStateDiagramStandard.getInitial()), and a junction must
+			// never be mistaken for that.
 			return new EntityImageCircleStart(leaf);
 
 		if (leaf.getLeafType() == LeafType.CIRCLE_END)

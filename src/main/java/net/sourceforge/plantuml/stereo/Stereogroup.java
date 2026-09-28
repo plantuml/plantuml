@@ -124,6 +124,8 @@ public class Stereogroup {
 			return LeafType.STATE_FORK_JOIN;
 		case "start":
 			return LeafType.CIRCLE_START;
+		case "junction":
+			return LeafType.JUNCTION;
 		case "end":
 			return LeafType.CIRCLE_END;
 		case "history":

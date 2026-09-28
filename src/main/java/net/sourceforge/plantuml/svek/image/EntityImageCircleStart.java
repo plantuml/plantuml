@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.svek.image;
 
 
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -60,7 +61,11 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 	public EntityImageCircleStart(Entity entity) {
 		super(entity);
 		final Style style = getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery());
-		this.circle = new CircleStart(getSkinParam(), style, entity.getColors());
+		// A junction pseudostate shares this renderer with the initial pseudostate (both
+		// are a filled circle), but UML 2.5.1 draws it smaller than the initial one, so
+		// it stays visually distinct even though the two are otherwise the same shape.
+		final boolean junction = entity.getLeafType() == LeafType.JUNCTION;
+		this.circle = new CircleStart(getSkinParam(), style, entity.getColors(), junction);
 	}
 
 	@Override

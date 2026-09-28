@@ -477,7 +477,10 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		// center. Only the association point is handled here: applying it to every
 		// node also shrinks every other small node (start/end, bars...) and moves
 		// 26 existing Vega references, which is a separate change.
-		if (leaf.getLeafType() == LeafType.POINT_FOR_ASSOCIATION)
+		// The same applies to the 12x12 junction pseudostate: with the default label its
+		// node grew to 16x24, drawing the circle off-center and leaving a visible gap
+		// between the circle and its outgoing edges.
+		if (leaf.getLeafType() == LeafType.POINT_FOR_ASSOCIATION || leaf.getLeafType() == LeafType.JUNCTION)
 			agsafeset(zz, agnode, new CString("label"), new CString(""), new CString(""));
 		final XDimension2D dim = getDim(node);
 		final String width = "" + dim.getWidth();

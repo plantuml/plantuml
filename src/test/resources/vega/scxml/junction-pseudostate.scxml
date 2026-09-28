@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><scxml xmlns="http://www.w3.org/2005/07/scxml" initial="start" version="1.0">
+    <state id="junction1" stereotype="junction">
+        <transition event="[x &gt; 0]" target="StateA"/>
+        <transition event="[x &lt;= 0]" target="StateB"/>
+    </state>
+    <state id="start">
+        <transition target="junction1"/>
+    </state>
+    <state id="StateA"/>
+    <state id="StateB"/>
+</scxml>

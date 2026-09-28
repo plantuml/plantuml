@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+state junction1 <<junction>>
+
+[*] --> junction1
+junction1 --> StateA : [x > 0]
+junction1 --> StateB : [x <= 0]
+@enduml
