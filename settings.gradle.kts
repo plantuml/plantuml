@@ -13,21 +13,29 @@ println("Version is " + version)
 val javaVersion = JavaVersion.current()
 println("Current Java version is " + javaVersion)
 
+// License variants (same sources, re-licensed via SJPP) live under license-variants/.
+// Gradle project paths stay ":plantuml-xxx" so task names and published
+// artifactIds are unchanged; only the physical directory moves.
+fun includeLicenseVariant(name: String) {
+    include(name)
+    project(":$name").projectDir = file("license-variants/$name")
+}
+
 val fastBuild = settings.providers.gradleProperty("fast").isPresent
 
 if (fastBuild) {
     println("-Pfast: only GPL will be built (skipping licence subprojects)")
 } else if (isCiBuild && !isGPLOnly) {
-    include("plantuml-asl")
-    include("plantuml-bsd")
-    include("plantuml-epl")
-    include("plantuml-lgpl")
-    include("plantuml-mit")
-    include("plantuml-mit-light")
+    includeLicenseVariant("plantuml-asl")
+    includeLicenseVariant("plantuml-bsd")
+    includeLicenseVariant("plantuml-epl")
+    includeLicenseVariant("plantuml-lgpl")
+    includeLicenseVariant("plantuml-mit")
+    includeLicenseVariant("plantuml-mit-light")
 
     // Only include plantuml-gplv2 if Java version is 11 or higher
     if (javaVersion.isCompatibleWith(JavaVersion.VERSION_11)) {
-        include("plantuml-gplv2")
+        includeLicenseVariant("plantuml-gplv2")
     } else {
         println("Skipping plantuml-gplv2 as it requires Java 11 or higher")
     }

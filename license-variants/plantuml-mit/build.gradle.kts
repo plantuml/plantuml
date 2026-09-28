@@ -191,7 +191,7 @@ signing {
 // npm package - assemble a publishable npm package for the MIT JS engine
 // ============================================
 //
-// Produces plantuml-mit/build/npm-plantuml/, a self-contained npm package
+// Produces license-variants/plantuml-mit/build/npm-plantuml/, a self-contained npm package
 // exposing the MIT-licensed TeaVM-compiled PlantUML engine (issue #2715).
 //
 // This mirrors the root project's `npmPackage` task (which produces the GPL
@@ -214,7 +214,7 @@ signing {
 //
 // Usage:
 //   gradlew :plantuml-mit:npmPackage           # assemble build/npm-plantuml
-//   cd plantuml-mit/build/npm-plantuml
+//   cd license-variants/plantuml-mit/build/npm-plantuml
 //   npm publish --access public                # done manually by the maintainer
 //
 val teavmJsOutputDir = layout.buildDirectory.dir("generated/teavm/js")

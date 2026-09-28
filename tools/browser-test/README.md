@@ -94,7 +94,7 @@ accident, no real bundle is needed, and no layout engine is involved.
 ```
 gradlew :plantuml-mit:npmPackage -Pci
 cd tools/browser-test && npm ci && npx playwright install --with-deps --only-shell chromium
-node check-themes.js target=../../plantuml-mit/build/npm-plantuml
+node check-themes.js target=../../license-variants/plantuml-mit/build/npm-plantuml
 ```
 
 `target` also accepts a path to the engine `.js` itself, and any directory holding a published

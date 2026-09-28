@@ -36,7 +36,7 @@ This flat layout is a public contract: `TeaVmScriptLoader` fetches
 names, and the integration docs tell hosts to deploy the files side by side.
 **Do not change it** when reorganizing this folder: only the Gradle copy rules
 (`teavm` task in the root `build.gradle.kts`, `npmPackage` in
-`plantuml-mit/build.gradle.kts`) need to know about the subfolders.
+`license-variants/plantuml-mit/build.gradle.kts`) need to know about the subfolders.
 
 This folder is deliberately **outside** `src/main/resources`: none of these files
 belong on the Java classpath, and keeping them out spares `processResources`

@@ -168,7 +168,7 @@ JVM: OpenJDK 64-Bit Server VM
 ### License Variants
 
 All license subprojects (plantuml-asl, plantuml-bsd, plantuml-epl, plantuml-lgpl,
-plantuml-mit, plantuml-gplv2) inherit the same build info injection. Their `syncSources`
+plantuml-mit, plantuml-gplv2), located under `license-variants/`, inherit the same build info injection. Their `syncSources`
 task depends on `filterSourcesWithBuildInfo` from the root project, ensuring consistent
 metadata across all distribution variants.
 
