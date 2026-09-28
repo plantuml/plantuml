@@ -1,5 +1,11 @@
 // https://docs.gradle.org/current/javadoc/org/gradle/api/initialization/Settings.html
 
+pluginManagement {
+    // Convention plugin "plantuml.license-variant" shared by license-variants/plantuml-*.
+    // Only built when a license variant is part of the build (-Pci).
+    includeBuild("license-variants/build-logic")
+}
+
 rootProject.name = "plantuml"
 
 val isCiBuild = System.getenv("CI") != null || settings.providers.gradleProperty("ci").isPresent

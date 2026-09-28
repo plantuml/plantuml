@@ -19,6 +19,8 @@ target/
 
 # Gradle build folders
 /.gradle
+/license-variants/build-logic/.gradle
+/license-variants/build-logic/.kotlin
 build/
 
 # Eclipse Project files
