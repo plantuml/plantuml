@@ -51,36 +51,47 @@ public class CircleStart implements TextBlock {
 
 	private static final int SIZE = 20;
 
+	// UML 2.5.1 draws the junction pseudostate as a filled circle, smaller than the one
+	// used for the initial pseudostate. The spec does not give an exact ratio, so this
+	// keeps it clearly smaller while still an easy target to read and to click on.
+	private static final int JUNCTION_SIZE = 12;
+
 	private final ISkinParam skinParam;
 	private final Style style;
 	private final Colors colors;
+	private final int size;
 
-<span class="fc" id="L58">	public CircleStart(ISkinParam skinParam, Style style, Colors colors) {</span>
-<span class="fc" id="L59">		this.style = style;</span>
-<span class="fc" id="L60">		this.colors = colors;</span>
-<span class="fc" id="L61">		this.skinParam = skinParam;</span>
-<span class="fc" id="L62">	}</span>
+	public CircleStart(ISkinParam skinParam, Style style, Colors colors) {
+<span class="fc" id="L65">		this(skinParam, style, colors, false);</span>
+<span class="fc" id="L66">	}</span>
+
+<span class="fc" id="L68">	public CircleStart(ISkinParam skinParam, Style style, Colors colors, boolean junction) {</span>
+<span class="fc" id="L69">		this.style = style;</span>
+<span class="fc" id="L70">		this.colors = colors;</span>
+<span class="fc" id="L71">		this.skinParam = skinParam;</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		this.size = junction ? JUNCTION_SIZE : SIZE;</span>
+<span class="fc" id="L73">	}</span>
 
 	@Fast
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L66">		return new XDimension2D(SIZE, SIZE);</span>
+<span class="fc" id="L77">		return new XDimension2D(size, size);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="fc" id="L70">		final UEllipse circle = UEllipse.build(SIZE, SIZE);</span>
+<span class="fc" id="L81">		final UEllipse circle = UEllipse.build(size, size);</span>
 
-<span class="fc" id="L72">		final HColor backColor = colors.getColor(style, PName.BackGroundColor, skinParam.getIHtmlColorSet());</span>
-<span class="fc" id="L73">		final HColor lineColor = colors.getColor(style, PName.LineColor, skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L83">		final HColor backColor = colors.getColor(style, PName.BackGroundColor, skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L84">		final HColor lineColor = colors.getColor(style, PName.LineColor, skinParam.getIHtmlColorSet());</span>
 //		if (colors.getColor(ColorType.BACK) != null) {
 //			lineColor = colors.getColor(ColorType.BACK);
 //			backColor = colors.getColor(ColorType.BACK);
 //		}
 
-<span class="fc" id="L79">		final double shadowing = style.getShadowing();</span>
+<span class="fc" id="L90">		final double shadowing = style.getShadowing();</span>
 
-<span class="fc" id="L81">		circle.setDeltaShadow(shadowing);</span>
-<span class="fc" id="L82">		ug.apply(lineColor).apply(backColor.bg()).apply(style.getStroke()).draw(circle);</span>
-<span class="fc" id="L83">	}</span>
+<span class="fc" id="L92">		circle.setDeltaShadow(shadowing);</span>
+<span class="fc" id="L93">		ug.apply(lineColor).apply(backColor.bg()).apply(style.getStroke()).draw(circle);</span>
+<span class="fc" id="L94">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

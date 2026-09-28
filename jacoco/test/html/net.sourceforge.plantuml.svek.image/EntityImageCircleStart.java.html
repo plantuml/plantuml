@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.svek.image;
 
 
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -54,34 +55,38 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 
 	@Override
 	public StyleQuery getStyleQuery() {
-<span class="fc" id="L57">		return StyleQueries.CIRCLE_START.add(getSkinParam().getDiagramType().getStyleName());</span>
+<span class="fc" id="L58">		return StyleQueries.CIRCLE_START.add(getSkinParam().getDiagramType().getStyleName());</span>
 	}
 
 	public EntityImageCircleStart(Entity entity) {
-<span class="fc" id="L61">		super(entity);</span>
-<span class="fc" id="L62">		final Style style = getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery());</span>
-<span class="fc" id="L63">		this.circle = new CircleStart(getSkinParam(), style, entity.getColors());</span>
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L62">		super(entity);</span>
+<span class="fc" id="L63">		final Style style = getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery());</span>
+		// A junction pseudostate shares this renderer with the initial pseudostate (both
+		// are a filled circle), but UML 2.5.1 draws it smaller than the initial one, so
+		// it stays visually distinct even though the two are otherwise the same shape.
+<span class="fc bfc" id="L67" title="All 2 branches covered.">		final boolean junction = entity.getLeafType() == LeafType.JUNCTION;</span>
+<span class="fc" id="L68">		this.circle = new CircleStart(getSkinParam(), style, entity.getColors(), junction);</span>
+<span class="fc" id="L69">	}</span>
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="fc" id="L68">		return circle.calculateDimension(stringBounder);</span>
+<span class="fc" id="L73">		return circle.calculateDimension(stringBounder);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="fc" id="L72">		final UGroup group = new UGroup(getEntity().getLocation());</span>
-<span class="fc" id="L73">		group.put(UGroupType.CLASS, &quot;start_entity&quot;);</span>
-<span class="fc" id="L74">		group.put(UGroupType.ID, &quot;entity_&quot; + getEntity().getName());</span>
-<span class="fc" id="L75">		group.put(UGroupType.DATA_ENTITY, getEntity().getName());</span>
-<span class="fc" id="L76">		group.put(UGroupType.DATA_UID, getEntity().getUid());</span>
-<span class="fc" id="L77">		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());</span>
-<span class="fc" id="L78">		ug.startGroup(group);</span>
-<span class="fc" id="L79">		circle.drawU(ug);</span>
-<span class="fc" id="L80">		ug.closeGroup();</span>
-<span class="fc" id="L81">	}</span>
+<span class="fc" id="L77">		final UGroup group = new UGroup(getEntity().getLocation());</span>
+<span class="fc" id="L78">		group.put(UGroupType.CLASS, &quot;start_entity&quot;);</span>
+<span class="fc" id="L79">		group.put(UGroupType.ID, &quot;entity_&quot; + getEntity().getName());</span>
+<span class="fc" id="L80">		group.put(UGroupType.DATA_ENTITY, getEntity().getName());</span>
+<span class="fc" id="L81">		group.put(UGroupType.DATA_UID, getEntity().getUid());</span>
+<span class="fc" id="L82">		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());</span>
+<span class="fc" id="L83">		ug.startGroup(group);</span>
+<span class="fc" id="L84">		circle.drawU(ug);</span>
+<span class="fc" id="L85">		ug.closeGroup();</span>
+<span class="fc" id="L86">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="fc" id="L84">		return ShapeType.CIRCLE;</span>
+<span class="fc" id="L89">		return ShapeType.CIRCLE;</span>
 	}
 
 }

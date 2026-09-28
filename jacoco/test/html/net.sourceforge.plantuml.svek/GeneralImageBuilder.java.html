@@ -142,125 +142,130 @@ import net.sourceforge.plantuml.text.Guillemet;
 <span class="fc" id="L142">			return new EntityImageState(leaf);</span>
 
 		}
-<span class="fc bfc" id="L145" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.CIRCLE_START)</span>
-<span class="fc" id="L146">			return new EntityImageCircleStart(leaf);</span>
+<span class="fc bfc" id="L145" title="All 4 branches covered.">		if (leaf.getLeafType() == LeafType.CIRCLE_START || leaf.getLeafType() == LeafType.JUNCTION)</span>
+			// A junction pseudostate is rendered identically to the initial pseudostate (a
+			// small filled circle, per the UML spec), but it must stay a distinct LeafType:
+			// LeafType.CIRCLE_START also marks &quot;the diagram's real entry point&quot; for other
+			// consumers (see ScxmlStateDiagramStandard.getInitial()), and a junction must
+			// never be mistaken for that.
+<span class="fc" id="L151">			return new EntityImageCircleStart(leaf);</span>
 
-<span class="fc bfc" id="L148" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.CIRCLE_END)</span>
-<span class="fc" id="L149">			return new EntityImageCircleEnd(leaf);</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.CIRCLE_END)</span>
+<span class="fc" id="L154">			return new EntityImageCircleEnd(leaf);</span>
 
-<span class="pc bpc" id="L151" title="1 of 4 branches missed.">		if (leaf.getLeafType() == LeafType.BRANCH || leaf.getLeafType() == LeafType.STATE_CHOICE)</span>
-<span class="fc" id="L152">			return new EntityImageBranch(leaf);</span>
+<span class="pc bpc" id="L156" title="1 of 4 branches missed.">		if (leaf.getLeafType() == LeafType.BRANCH || leaf.getLeafType() == LeafType.STATE_CHOICE)</span>
+<span class="fc" id="L157">			return new EntityImageBranch(leaf);</span>
 
-<span class="pc bpc" id="L154" title="2 of 4 branches missed.">		if (leaf.getLeafType() == LeafType.LOLLIPOP_FULL || leaf.getLeafType() == LeafType.LOLLIPOP_HALF)</span>
-<span class="nc" id="L155">			return new EntityImageLollipopInterface(leaf);</span>
+<span class="pc bpc" id="L159" title="2 of 4 branches missed.">		if (leaf.getLeafType() == LeafType.LOLLIPOP_FULL || leaf.getLeafType() == LeafType.LOLLIPOP_HALF)</span>
+<span class="nc" id="L160">			return new EntityImageLollipopInterface(leaf);</span>
 
-<span class="pc bpc" id="L157" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.CIRCLE)</span>
-<span class="nc" id="L158">			return new EntityImageDescription(leaf, portionShower, links, bibliotekon);</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.CIRCLE)</span>
+<span class="nc" id="L163">			return new EntityImageDescription(leaf, portionShower, links, bibliotekon);</span>
 
-<span class="fc bfc" id="L160" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.DESCRIPTION) {</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.DESCRIPTION) {</span>
 			if (GlobalConfig.USE_INTERFACE_EYE1 &amp;&amp; leaf.getUSymbol() instanceof USymbolInterface) {
 				return new EntityImageLollipopInterfaceEye1(leaf, bibliotekon);
 			} else if (GlobalConfig.USE_INTERFACE_EYE2 &amp;&amp; leaf.getUSymbol() instanceof USymbolInterface) {
 				return new EntityImageLollipopInterfaceEye2(leaf, portionShower);
 			} else {
-<span class="fc" id="L166">				return new EntityImageDescription(leaf, portionShower, links, bibliotekon);</span>
+<span class="fc" id="L171">				return new EntityImageDescription(leaf, portionShower, links, bibliotekon);</span>
 			}
 		}
-<span class="fc bfc" id="L169" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.USECASE)</span>
-<span class="fc" id="L170">			return new EntityImageDescription(leaf, portionShower, links, bibliotekon);</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.USECASE)</span>
+<span class="fc" id="L175">			return new EntityImageDescription(leaf, portionShower, links, bibliotekon);</span>
 			// return new EntityImageUseCase(leaf, portionShower);
 
-<span class="pc bpc" id="L173" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.USECASE_BUSINESS)</span>
-<span class="nc" id="L174">			return new EntityImageDescription(leaf, portionShower, links, bibliotekon);</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.USECASE_BUSINESS)</span>
+<span class="nc" id="L179">			return new EntityImageDescription(leaf, portionShower, links, bibliotekon);</span>
 			// return new EntityImageUseCase(leaf, portionShower);
 
 		// if (leaf.getEntityType() == LeafType.CIRCLE_INTERFACE) {
 		// return new EntityImageCircleInterface(leaf, skinParam);
 		// }
-<span class="fc bfc" id="L180" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.OBJECT)</span>
-<span class="fc" id="L181">			return new EntityImageObject(leaf, portionShower);</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.OBJECT)</span>
+<span class="fc" id="L186">			return new EntityImageObject(leaf, portionShower);</span>
 
-<span class="pc bpc" id="L183" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.MAP)</span>
-<span class="nc" id="L184">			return new EntityImageMap(leaf, portionShower);</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.MAP)</span>
+<span class="nc" id="L189">			return new EntityImageMap(leaf, portionShower);</span>
 
-<span class="pc bpc" id="L186" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.JSON)</span>
-<span class="nc" id="L187">			return new EntityImageJson(leaf, portionShower);</span>
+<span class="pc bpc" id="L191" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.JSON)</span>
+<span class="nc" id="L192">			return new EntityImageJson(leaf, portionShower);</span>
 
-<span class="pc bpc" id="L189" title="1 of 4 branches missed.">		if (leaf.getLeafType() == LeafType.SYNCHRO_BAR || leaf.getLeafType() == LeafType.STATE_FORK_JOIN)</span>
-<span class="fc" id="L190">			return new EntityImageSynchroBar(leaf);</span>
+<span class="pc bpc" id="L194" title="1 of 4 branches missed.">		if (leaf.getLeafType() == LeafType.SYNCHRO_BAR || leaf.getLeafType() == LeafType.STATE_FORK_JOIN)</span>
+<span class="fc" id="L195">			return new EntityImageSynchroBar(leaf);</span>
 
-<span class="pc bpc" id="L192" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.ARC_CIRCLE)</span>
-<span class="nc" id="L193">			return new EntityImageArcCircle(leaf);</span>
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.ARC_CIRCLE)</span>
+<span class="nc" id="L198">			return new EntityImageArcCircle(leaf);</span>
 
-<span class="fc bfc" id="L195" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.POINT_FOR_ASSOCIATION)</span>
-<span class="fc" id="L196">			return new EntityImageAssociationPoint(leaf);</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.POINT_FOR_ASSOCIATION)</span>
+<span class="fc" id="L201">			return new EntityImageAssociationPoint(leaf);</span>
 
-<span class="pc bpc" id="L198" title="1 of 2 branches missed.">		if (leaf.isGroup())</span>
-<span class="nc" id="L199">			return new EntityImageGroup(leaf);</span>
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">		if (leaf.isGroup())</span>
+<span class="nc" id="L204">			return new EntityImageGroup(leaf);</span>
 
-<span class="fc bfc" id="L201" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.EMPTY_PACKAGE) {</span>
-<span class="pc bpc" id="L202" title="1 of 2 branches missed.">			if (leaf.getUSymbol() != null)</span>
-<span class="fc" id="L203">				return new EntityImageDescription(leaf, portionShower, links, bibliotekon);</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.EMPTY_PACKAGE) {</span>
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">			if (leaf.getUSymbol() != null)</span>
+<span class="fc" id="L208">				return new EntityImageDescription(leaf, portionShower, links, bibliotekon);</span>
 
-<span class="nc" id="L205">			return new EntityImageEmptyPackage(leaf, portionShower);</span>
+<span class="nc" id="L210">			return new EntityImageEmptyPackage(leaf, portionShower);</span>
 		}
-<span class="pc bpc" id="L207" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.ASSOCIATION)</span>
-<span class="nc" id="L208">			return new EntityImageAssociation(leaf);</span>
+<span class="pc bpc" id="L212" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.ASSOCIATION)</span>
+<span class="nc" id="L213">			return new EntityImageAssociation(leaf);</span>
 
-<span class="pc bpc" id="L210" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.PSEUDO_STATE)</span>
-<span class="nc" id="L211">			return new EntityImagePseudoState(leaf);</span>
+<span class="pc bpc" id="L215" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.PSEUDO_STATE)</span>
+<span class="nc" id="L216">			return new EntityImagePseudoState(leaf);</span>
 
-<span class="fc bfc" id="L213" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.STATE_TRANSITION_LABEL)</span>
-<span class="fc" id="L214">			return new EntityImageTransitionLabel(leaf);</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.STATE_TRANSITION_LABEL)</span>
+<span class="fc" id="L219">			return new EntityImageTransitionLabel(leaf);</span>
 
-<span class="pc bpc" id="L216" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.DEEP_HISTORY)</span>
-<span class="nc" id="L217">			return new EntityImageDeepHistory(leaf);</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.DEEP_HISTORY)</span>
+<span class="nc" id="L222">			return new EntityImageDeepHistory(leaf);</span>
 
-<span class="fc bfc" id="L219" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.TIPS)</span>
-<span class="fc" id="L220">			return new EntityImageTips(leaf, bibliotekon);</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.TIPS)</span>
+<span class="fc" id="L225">			return new EntityImageTips(leaf, bibliotekon);</span>
 
-<span class="fc bfc" id="L222" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.CHEN_ENTITY)</span>
-<span class="fc" id="L223">			return new EntityImageChenEntity(leaf);</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.CHEN_ENTITY)</span>
+<span class="fc" id="L228">			return new EntityImageChenEntity(leaf);</span>
 
-<span class="fc bfc" id="L225" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.CHEN_RELATIONSHIP)</span>
-<span class="fc" id="L226">			return new EntityImageChenRelationship(leaf);</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.CHEN_RELATIONSHIP)</span>
+<span class="fc" id="L231">			return new EntityImageChenRelationship(leaf);</span>
 
-<span class="fc bfc" id="L228" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.CHEN_ATTRIBUTE)</span>
-<span class="fc" id="L229">			return new EntityImageChenAttribute(leaf);</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.CHEN_ATTRIBUTE)</span>
+<span class="fc" id="L234">			return new EntityImageChenAttribute(leaf);</span>
 
-<span class="pc bpc" id="L231" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.CHEN_CIRCLE)</span>
-<span class="fc" id="L232">			return new EntityImageChenCircle(leaf);</span>
+<span class="pc bpc" id="L236" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.CHEN_CIRCLE)</span>
+<span class="fc" id="L237">			return new EntityImageChenCircle(leaf);</span>
 
 		// TODO Clean
-<span class="nc bnc" id="L235" title="All 4 branches missed.">		if (leaf.getLeafType() == LeafType.DOMAIN &amp;&amp; leaf.getStereotype() != null</span>
-<span class="nc bnc" id="L236" title="All 2 branches missed.">				&amp;&amp; leaf.getStereotype().isMachineOrSpecification())</span>
-<span class="nc" id="L237">			return new EntityImageMachine(leaf);</span>
-<span class="nc bnc" id="L238" title="All 4 branches missed.">		else if (leaf.getLeafType() == LeafType.DOMAIN &amp;&amp; leaf.getStereotype() != null</span>
-<span class="nc bnc" id="L239" title="All 2 branches missed.">				&amp;&amp; leaf.getStereotype().isDesignedOrSolved())</span>
-<span class="nc" id="L240">			return new EntityImageDesignedDomain(leaf);</span>
-<span class="nc bnc" id="L241" title="All 2 branches missed.">		else if (leaf.getLeafType() == LeafType.REQUIREMENT)</span>
-<span class="nc" id="L242">			return new EntityImageRequirement(leaf);</span>
+<span class="nc bnc" id="L240" title="All 4 branches missed.">		if (leaf.getLeafType() == LeafType.DOMAIN &amp;&amp; leaf.getStereotype() != null</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">				&amp;&amp; leaf.getStereotype().isMachineOrSpecification())</span>
+<span class="nc" id="L242">			return new EntityImageMachine(leaf);</span>
 <span class="nc bnc" id="L243" title="All 4 branches missed.">		else if (leaf.getLeafType() == LeafType.DOMAIN &amp;&amp; leaf.getStereotype() != null</span>
-<span class="nc bnc" id="L244" title="All 2 branches missed.">				&amp;&amp; leaf.getStereotype().isLexicalOrGiven())</span>
-<span class="nc" id="L245">			return new EntityImageDomain(leaf, 'X');</span>
-<span class="nc bnc" id="L246" title="All 4 branches missed.">		else if (leaf.getLeafType() == LeafType.DOMAIN &amp;&amp; leaf.getStereotype() != null</span>
-<span class="nc bnc" id="L247" title="All 2 branches missed.">				&amp;&amp; leaf.getStereotype().isCausal())</span>
-<span class="nc" id="L248">			return new EntityImageDomain(leaf, 'C');</span>
-<span class="nc bnc" id="L249" title="All 4 branches missed.">		else if (leaf.getLeafType() == LeafType.DOMAIN &amp;&amp; leaf.getStereotype() != null</span>
-<span class="nc bnc" id="L250" title="All 2 branches missed.">				&amp;&amp; leaf.getStereotype().isBiddableOrUncertain())</span>
-<span class="nc" id="L251">			return new EntityImageDomain(leaf, 'B');</span>
-<span class="nc bnc" id="L252" title="All 2 branches missed.">		else if (leaf.getLeafType() == LeafType.DOMAIN)</span>
-<span class="nc" id="L253">			return new EntityImageDomain(leaf, 'P');</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">				&amp;&amp; leaf.getStereotype().isDesignedOrSolved())</span>
+<span class="nc" id="L245">			return new EntityImageDesignedDomain(leaf);</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">		else if (leaf.getLeafType() == LeafType.REQUIREMENT)</span>
+<span class="nc" id="L247">			return new EntityImageRequirement(leaf);</span>
+<span class="nc bnc" id="L248" title="All 4 branches missed.">		else if (leaf.getLeafType() == LeafType.DOMAIN &amp;&amp; leaf.getStereotype() != null</span>
+<span class="nc bnc" id="L249" title="All 2 branches missed.">				&amp;&amp; leaf.getStereotype().isLexicalOrGiven())</span>
+<span class="nc" id="L250">			return new EntityImageDomain(leaf, 'X');</span>
+<span class="nc bnc" id="L251" title="All 4 branches missed.">		else if (leaf.getLeafType() == LeafType.DOMAIN &amp;&amp; leaf.getStereotype() != null</span>
+<span class="nc bnc" id="L252" title="All 2 branches missed.">				&amp;&amp; leaf.getStereotype().isCausal())</span>
+<span class="nc" id="L253">			return new EntityImageDomain(leaf, 'C');</span>
+<span class="nc bnc" id="L254" title="All 4 branches missed.">		else if (leaf.getLeafType() == LeafType.DOMAIN &amp;&amp; leaf.getStereotype() != null</span>
+<span class="nc bnc" id="L255" title="All 2 branches missed.">				&amp;&amp; leaf.getStereotype().isBiddableOrUncertain())</span>
+<span class="nc" id="L256">			return new EntityImageDomain(leaf, 'B');</span>
+<span class="nc bnc" id="L257" title="All 2 branches missed.">		else if (leaf.getLeafType() == LeafType.DOMAIN)</span>
+<span class="nc" id="L258">			return new EntityImageDomain(leaf, 'P');</span>
 		else
-<span class="nc" id="L255">			throw new UnsupportedOperationException(leaf.getLeafType().toString());</span>
+<span class="nc" id="L260">			throw new UnsupportedOperationException(leaf.getLeafType().toString());</span>
 	}
 
 	public static UStroke getForcedStroke(Stereotype stereotype, ISkinParam skinParam) {
-<span class="nc" id="L259">		UStroke stroke = skinParam.getThickness(LineParam.packageBorder, stereotype);</span>
-<span class="nc bnc" id="L260" title="All 2 branches missed.">		if (stroke == null)</span>
-<span class="nc" id="L261">			stroke = UStroke.withThickness(1.5);</span>
+<span class="nc" id="L264">		UStroke stroke = skinParam.getThickness(LineParam.packageBorder, stereotype);</span>
+<span class="nc bnc" id="L265" title="All 2 branches missed.">		if (stroke == null)</span>
+<span class="nc" id="L266">			stroke = UStroke.withThickness(1.5);</span>
 
-<span class="nc" id="L263">		return stroke;</span>
+<span class="nc" id="L268">		return stroke;</span>
 	}
 
 }
