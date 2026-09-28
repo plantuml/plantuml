@@ -51,8 +51,8 @@ import net.sourceforge.plantuml.utils.LineLocationImpl;
  * &lt;li&gt;Trailing blank lines are removed.&lt;/li&gt;
  * &lt;li&gt;If a line starts with {@code @startxxx}, everything before it is
  * ignored (blank lines, but also any text pasted before the diagram, as when
- * reading a file). If no {@code @endxxx} line follows, the matching one is
- * added.&lt;/li&gt;
+ * reading a file), and the {@code @startxxx} line itself is trimmed. If no
+ * {@code @endxxx} line follows, the matching one is added.&lt;/li&gt;
  * &lt;li&gt;If there is no {@code @startxxx} line at all, leading blank lines are
  * removed and the text is wrapped in {@code @startuml} / {@code @enduml}
  * (the {@code @enduml} is not added if the text already has one).&lt;/li&gt;
@@ -100,39 +100,42 @@ public class TextareaSource {
 <span class="fc" id="L100">			final Matcher m = START.matcher(trim(all.get(start)));</span>
 <span class="fc" id="L101">			m.find();</span>
 <span class="pc bpc" id="L102" title="1 of 2 branches missed.">			type = m.group(1).length() == 0 ? &quot;uml&quot; : m.group(1);</span>
-<span class="fc" id="L103">			result.addAll(all.subList(start, all.size()));</span>
+			// The @start line itself is trimmed: UmlSource does not accept a
+			// non-breaking space before it (pasted from a web page)
+<span class="fc" id="L105">			result.add(all.get(start).getTrimmed());</span>
+<span class="fc" id="L106">			result.addAll(all.subList(start + 1, all.size()));</span>
 		}
 
-<span class="fc bfc" id="L106" title="All 2 branches covered.">		if (hasEnd(result) == false) {</span>
-<span class="fc bfc" id="L107" title="All 2 branches covered.">			final LineLocationImpl last = locations.isEmpty() ? beforeFirst : locations.get(locations.size() - 1);</span>
-<span class="fc" id="L108">			result.add(new StringLocated(&quot;@end&quot; + type, last.oneLineRead()));</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (hasEnd(result) == false) {</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">			final LineLocationImpl last = locations.isEmpty() ? beforeFirst : locations.get(locations.size() - 1);</span>
+<span class="fc" id="L111">			result.add(new StringLocated(&quot;@end&quot; + type, last.oneLineRead()));</span>
 		}
 
-<span class="fc" id="L111">		return result;</span>
+<span class="fc" id="L114">		return result;</span>
 	}
 
 	private static int indexOfStart(List&lt;StringLocated&gt; lines) {
-<span class="fc bfc" id="L115" title="All 2 branches covered.">		for (int i = 0; i &lt; lines.size(); i++)</span>
-<span class="fc bfc" id="L116" title="All 2 branches covered.">			if (START.matcher(trim(lines.get(i))).find())</span>
-<span class="fc" id="L117">				return i;</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		for (int i = 0; i &lt; lines.size(); i++)</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">			if (trim(lines.get(i)).startsWith(&quot;@start&quot;))</span>
+<span class="fc" id="L120">				return i;</span>
 
-<span class="fc" id="L119">		return -1;</span>
+<span class="fc" id="L122">		return -1;</span>
 	}
 
 	private static boolean hasEnd(List&lt;StringLocated&gt; lines) {
-<span class="fc bfc" id="L123" title="All 2 branches covered.">		for (StringLocated s : lines)</span>
-<span class="fc bfc" id="L124" title="All 2 branches covered.">			if (trim(s).startsWith(&quot;@end&quot;))</span>
-<span class="fc" id="L125">				return true;</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		for (StringLocated s : lines)</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">			if (trim(s).startsWith(&quot;@end&quot;))</span>
+<span class="fc" id="L128">				return true;</span>
 
-<span class="fc" id="L127">		return false;</span>
+<span class="fc" id="L130">		return false;</span>
 	}
 
 	private static boolean isBlank(StringLocated s) {
-<span class="fc" id="L131">		return trim(s).isEmpty();</span>
+<span class="fc" id="L134">		return trim(s).isEmpty();</span>
 	}
 
 	private static String trim(StringLocated s) {
-<span class="fc" id="L135">		return s.getString().trim();</span>
+<span class="fc" id="L138">		return s.getTrimmed().getString();</span>
 	}
 
 }

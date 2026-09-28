@@ -100,8 +100,8 @@ loadScripts(document, 'script');</script>
  <li>Trailing blank lines are removed.</li>
  <li>If a line starts with <code>@startxxx</code>, everything before it is
  ignored (blank lines, but also any text pasted before the diagram, as when
- reading a file). If no <code>@endxxx</code> line follows, the matching one is
- added.</li>
+ reading a file), and the <code>@startxxx</code> line itself is trimmed. If no
+ <code>@endxxx</code> line follows, the matching one is added.</li>
  <li>If there is no <code>@startxxx</code> line at all, leading blank lines are
  removed and the text is wrapped in <code>@startuml</code> / <code>@enduml</code>
  (the <code>@enduml</code> is not added if the text already has one).</li>
