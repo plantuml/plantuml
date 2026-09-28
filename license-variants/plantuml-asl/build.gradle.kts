@@ -1,6 +1,6 @@
 import java.util.jar.JarFile
 
-// PlantUML under the Apache license.
+// PlantUML under the Apache License 2.0.
 // Everything shared by the license variants lives in the convention plugin:
 // license-variants/build-logic/src/main/kotlin/plantuml.license-variant.gradle.kts
 
@@ -10,8 +10,8 @@ plugins {
 
 licenseVariant {
 	id = "asl"
-	pomLicenseName = "ASL License"
-	pomLicenseUrl = "https://opensource.org/license/apache-2-0/"
+	pomLicenseName = "Apache License 2.0"
+	pomLicenseUrl = "https://www.apache.org/licenses/LICENSE-2.0"
 }
 
 val checkJarEntries by tasks.registering {

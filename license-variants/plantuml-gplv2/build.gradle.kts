@@ -1,4 +1,4 @@
-// PlantUML under the GPL v2 license.
+// PlantUML under the GNU General Public License v2.0.
 // Everything shared by the license variants lives in the convention plugin:
 // license-variants/build-logic/src/main/kotlin/plantuml.license-variant.gradle.kts
 
@@ -10,7 +10,7 @@ plugins {
 
 licenseVariant {
 	id = "gplv2"
-	pomLicenseName = "GPLv2 License"
+	pomLicenseName = "GNU General Public License v2.0"
 	pomLicenseUrl = "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
 }
 

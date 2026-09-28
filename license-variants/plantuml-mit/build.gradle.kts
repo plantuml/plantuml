@@ -1,4 +1,4 @@
-// PlantUML under the MIT license.
+// PlantUML under the MIT License.
 // Everything shared by the license variants lives in the convention plugin:
 // license-variants/build-logic/src/main/kotlin/plantuml.license-variant.gradle.kts
 

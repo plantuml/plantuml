@@ -111,42 +111,34 @@ public class CompilationInfo {
 
 ### Injection Process
 
+Injection is done by the root task `patchCompilationInfo` (see `build.gradle.kts`),
+which **patches `src/main/java/.../CompilationInfo.java` in place**:
+
 ```
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                        CompilationInfo Injection Pipeline                       │
-├─────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                 │
-│   ┌────────────────────────┐                                                    │
-│   │  generateGitProperties │  Gradle plugin: gradle-git-properties              │
-│   │                        │  Output: build/resources/main/git.properties       │
-│   │  Extracts:             │                                                    │
-│   │  • git.commit.id.abbrev│  (short commit hash, e.g., "a1b2c3d")              │
-│   │  • git.commit.id       │  (full commit hash)                                │
-│   │  • git.branch          │                                                    │
-│   └───────────┬────────────┘                                                    │
-│               │                                                                 │
-│               ▼                                                                 │
-│   ┌─────────────────────────────┐                                               │
-│   │  filterSourcesWithBuildInfo │  Custom Gradle task                           │
-│   │                             │                                               │
-│   │  1. Copy src/main/java/ to  │                                               │
-│   │     build/generated/sources/git-filtered/                                   │
-│   │                             │                                               │
-│   │  2. Replace placeholders:   │                                               │
-│   │     • $version$             │  → version from gradle.properties             │
-│   │     • $git.commit.id$       │  → actual commit hash (abbrev)                │
-│   │     • COMPILE_TIMESTAMP = 000L → current epoch millis                       │
-│   │                             │                                               │
-│   └───────────┬─────────────────┘                                               │
-│               │                                                                 │
-│               ▼                                                                 │
-│   ┌─────────────────────────────┐                                               │
-│   │  compileJava / sourcesJar   │  Uses filtered sources                        │
-│   │                             │  from build/generated/sources/git-filtered/   │
-│   └─────────────────────────────┘                                               │
-│                                                                                 │
-└─────────────────────────────────────────────────────────────────────────────────┘
+generateGitProperties          (gradle-git-properties plugin)
+        │  build/.../git.properties (git.commit.id.abbrev, ...)
+        ▼
+patchCompilationInfo           (Ant <replace> in src/main/java)
+        │  $version$          → version from gradle.properties
+        │  $git.commit.id$    → abbreviated commit hash
+        │  COMPILE_TIMESTAMP = 000L → current epoch millis
+        ▼
+gradle build                   (compiles the patched sources)
 ```
+
+This task is intentionally **not** wired to `compileJava`: the main source set
+stays plain `src/main/java`, which keeps IDEs happy. CI calls it explicitly before
+the build (`ci.yml`, `native-image-release.yml`):
+
+```bash
+gradle patchCompilationInfo
+gradle clean build ...
+```
+
+Consequences:
+- local builds keep the placeholder values (`$version$`, `$git.commit.id$`, `0L`);
+- after running it locally, the working tree contains a modified
+  `CompilationInfo.java`: restore it with `git restore`.
 
 ### Result at Runtime
 
@@ -167,40 +159,28 @@ JVM: OpenJDK 64-Bit Server VM
 
 ### License Variants
 
-All license subprojects (plantuml-asl, plantuml-bsd, plantuml-epl, plantuml-lgpl,
-plantuml-mit, plantuml-gplv2), located under `license-variants/`, inherit the same build info injection. Their `syncSources`
-task depends on `filterSourcesWithBuildInfo` from the root project, ensuring consistent
-metadata across all distribution variants.
+The license subprojects (`license-variants/plantuml-*`, see
+[`license-variants/README.md`](../../license-variants/README.md)) do not have
+their own injection step. Their `syncSources` task copies the root
+`src/main/java`, which in CI has **already been patched** by
+`patchCompilationInfo`, before SJPP rewrites the license headers:
 
 ```
-rootProject                          subproject (e.g., plantuml-asl)
-─────────────────────────────────    ─────────────────────────────────────────
-src/main/java/                       
-       │                             
-       ▼                             
-filterSourcesWithBuildInfo           
-       │                             
-       ▼                             
-build/generated/sources/git-filtered/
-       │                                    │
-       │                                    ▼
-       │                             syncSources (depends on filterSourcesWithBuildInfo)
-       │                                    │
-       │                                    ▼
-       │                             build/sources/sjpp/java/
-       │                                    │
-       │                                    ▼
-       │                             preprocessLicenceAntTask (SJPP with license header)
-       │                                    │
-       │                                    ▼
-       ▼                             build/generated/sjpp/
-compileJava                                 │
-       │                                    ▼
-       ▼                             compileJava
-build/classes/                              │
-                                            ▼
-                                     build/classes/
+src/main/java/  (patched in place by patchCompilationInfo in CI)
+       │
+       ├──────────────────────────────┐
+       ▼                              ▼
+root compileJava               syncSources          (each license variant)
+                                      │  build/sources/sjpp/java/
+                                      ▼
+                               preprocessLicenceAntTask  (SJPP, __<ID>__ + license header)
+                                      │  build/generated/sjpp/
+                                      ▼
+                               compileJava
 ```
+
+So all variants built in the same CI run carry the same version, commit and
+timestamp as the GPL artifact.
 
 ---
 

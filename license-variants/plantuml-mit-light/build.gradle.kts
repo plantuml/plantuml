@@ -36,10 +36,8 @@ val mitMain = mitSourceSets.getByName("main")
 val mitClassesOutput = mitMain.output
 val mitAllSources = mitMain.allSource
 
-// We reuse the completed MIT javadoc jar file.
-val mitJavadocJarFile = mitProject.layout.buildDirectory.file(
-    "libs/${mitProject.name}-${mitProject.version}-javadoc.jar"
-)
+// We reuse the completed MIT javadoc jar.
+val mitJavadocJar = mitProject.tasks.named<Jar>("javadocJar")
 
 //
 // MAIN LIGHT JAR
@@ -86,10 +84,11 @@ tasks.named<Jar>("sourcesJar") {
 tasks.named<Jar>("javadocJar") {
     archiveBaseName.set("plantuml-mit-light")
 
-    dependsOn(mitProject.tasks.named("javadocJar"))
+    dependsOn(mitJavadocJar)
 
-    from(mitJavadocJarFile) {
-        eachFile { relativePath = relativePath }
+    // Unpack the MIT javadoc jar (copying the file itself would nest a jar in the jar)
+    from({ zipTree(mitJavadocJar.get().archiveFile) }) {
+        exclude("META-INF/MANIFEST.MF")
     }
 
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
