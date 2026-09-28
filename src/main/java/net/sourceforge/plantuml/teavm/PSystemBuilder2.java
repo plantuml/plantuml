@@ -78,7 +78,6 @@ import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.TimLoader;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagramFactory;
-import net.sourceforge.plantuml.utils.LineLocationImpl;
 import net.sourceforge.plantuml.version.PSystemVersionFactory;
 import net.sourceforge.plantuml.wbs.WBSDiagramFactory;
 import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
@@ -130,12 +129,7 @@ public class PSystemBuilder2 {
 
 	public Diagram createDiagram(String[] split) {
 		BrowserLog.consoleLog(PSystemBuilder2.class, "createDiagram start");
-		final List<StringLocated> rawSource = new ArrayList<>();
-		LineLocationImpl location = new LineLocationImpl("textarea", null);
-		for (String s : clean(split)) {
-			location = location.oneLineRead();
-			rawSource.add(new StringLocated(s, location));
-		}
+		final List<StringLocated> rawSource = TextareaSource.create(split, "textarea");
 
 		final PathSystem pathSystem = PathSystem.fetch();
 		final Defines defines = Defines.createEmpty();
@@ -257,17 +251,6 @@ public class PSystemBuilder2 {
 		}
 
 		return null;
-	}
-
-	private List<String> clean(String[] tab) {
-		final List<String> lines = new ArrayList<>();
-		for (String s : tab)
-			lines.add(s);
-
-		while (lines.size() > 2 && lines.get(lines.size() - 1).trim().isEmpty())
-			lines.remove(lines.size() - 1);
-
-		return lines;
 	}
 
 }
