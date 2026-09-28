@@ -133,6 +133,10 @@ jobs:
         if: needs.workflow_config.outputs.do_test_linux == 'true'
         run: gradle test --no-daemon -i
 
+      - name: Check Javadoc (fails on warnings)
+        if: needs.workflow_config.outputs.do_test_linux == 'true'
+        run: gradle javadoc --no-daemon
+
       - name: Test Summary
         if: needs.workflow_config.outputs.do_test_linux == 'true' && always()
         run: .github/scripts/test-summary.sh

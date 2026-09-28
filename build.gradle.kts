@@ -190,6 +190,10 @@ tasks.withType<Javadoc>().configureEach {
 		this as StandardJavadocDocletOptions
 		addBooleanOption("Xdoclint:none", true)
 		addStringOption("Xmaxwarns", "50")
+		// Fail the build on any javadoc warning (e.g. a broken {@link}) instead of
+		// silently generating docs with dead references. See CI jobs "CI" and
+		// "CI other", which both now run the javadoc task on every build.
+		addBooleanOption("Werror", true)
 		encoding = "UTF-8"
 		isUse = true
 	}

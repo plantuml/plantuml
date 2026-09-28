@@ -82,6 +82,9 @@ jobs:
       - name: Build (GPL only) & Test
         run: ./gradlew test -Pfast --no-daemon -i
 
+      - name: Check Javadoc (fails on warnings)
+        run: ./gradlew javadoc --no-daemon
+
       - name: Test Summary
         if: always()
         run: .github/scripts/test-summary.sh
