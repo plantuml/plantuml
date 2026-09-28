@@ -85,7 +85,7 @@ public final class PrioritizedValue {
 	/**
 	 * The light value if there is one, else the dark one -- for callers that do not (yet) care
 	 * about the light/dark distinction and just want a single string, the way
-	 * {@link #getProperties()}-style call sites used before this class carried both.
+	 * {@code getProperties()}-style call sites used before this class carried both.
 	 */
 	public String getValue() {
 		return light != null ? light : dark;

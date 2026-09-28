@@ -20,7 +20,7 @@ import test.utils.PlantUmlTestUtils;
 /**
  * Visual integration tests verifying that SVG sprite text elements carrying
  * CSS font-weight variants (100–900) survive the full pipeline from
- * {@code !pragma svgparser sax} → {@link SvgSaxParser} → {@link UFontFace} →
+ * {@code !pragma svgparser sax} → {@link SvgSaxParser} → {@link net.sourceforge.plantuml.klimt.font.UFontFace} →
  * {@code DriverTextSvg} → SVG {@code <text font-weight="…">} output.
  *
  * <p><b>Two test scenarios:</b>
