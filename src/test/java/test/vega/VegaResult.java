@@ -5,12 +5,25 @@ import java.io.StringWriter;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.json.JsonArray;
 import net.sourceforge.plantuml.json.JsonObject;
 
 public record VegaResult(Path path, VegaStatus status, long durationMs, Class<?> diagramClass, Throwable e, String tag,
 		boolean allowFailure, String description) {
+
+	// What in a stack frame depends on the compiler rather than on the code:
+	// javac and the Eclipse compiler number the lines of a multi-line expression
+	// differently, and name the synthetic method of a lambda differently
+	// (lambda$testAllPumlFiles$10 vs lambda$11). Left in vega.json, the same test
+	// run from Ant and from an IDE rewrites the file even though nothing changed.
+	private static final Pattern LINE_NUMBER = Pattern.compile("\\.java:\\d+\\)");
+	private static final Pattern LAMBDA_NAME = Pattern.compile("lambda\\$(?:[A-Za-z_][A-Za-z0-9_]*\\$)?\\d+");
+
+	static String stableFrame(final String frame) {
+		return LAMBDA_NAME.matcher(LINE_NUMBER.matcher(frame).replaceAll(".java)")).replaceAll("lambda\\$");
+	}
 
 	public JsonObject toJsonObject() {
 		final JsonObject entry = new JsonObject() //
@@ -53,7 +66,7 @@ public record VegaResult(Path path, VegaStatus status, long durationMs, Class<?>
 
 			final JsonArray stacktrace = new JsonArray();
 			for (String line : tmp.subList(0, pos))
-				stacktrace.add(line);
+				stacktrace.add(stableFrame(line));
 
 			entry.add("stacktrace", stacktrace);
 		}

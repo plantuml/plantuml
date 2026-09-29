@@ -24,7 +24,7 @@ public class VegaCheckerDebug extends VegaChecker {
 	private void checkDebugContains(VegaInputFile data, String actualOutput, int nbImages, int imageIndex) {
 		// "expected-debug" for single image, "expected-debug-N" for multi-image
 		final String yamlKey = nbImages == 1 ? "expected-debug" : "expected-debug-" + (imageIndex + 1);
-		final String label = data.getPath() + " [image " + (imageIndex + 1) + "]";
+		final String label = data.getDisplayPath() + " [image " + (imageIndex + 1) + "]";
 
 		for (final String needle : data.getYamlSubList(yamlKey, "contains"))
 			assertTrue(actualOutput.contains(needle), "DEBUG output should contain '" + needle + "' for " + label);

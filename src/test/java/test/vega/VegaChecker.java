@@ -24,7 +24,7 @@ public abstract class VegaChecker {
 		}
 
 		final String expectedOutput = normalizeLineEndings(new String(Files.readAllBytes(expectedFile), UTF_8));
-		assertEquals(expectedOutput, actualOutput, label + " output mismatch for " + data.getPath());
+		assertEquals(expectedOutput, actualOutput, label + " output mismatch for " + data.getDisplayPath());
 		return null;
 	}
 

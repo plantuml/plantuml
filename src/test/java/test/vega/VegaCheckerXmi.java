@@ -22,7 +22,7 @@ public class VegaCheckerXmi extends VegaChecker {
 		}
 
 		final String expectedOutput = normalizeLineEndings(new String(Files.readAllBytes(expectedFile), UTF_8));
-		assertEquals(cleanXmi(expectedOutput), cleanXmi(actualOutput), "XMI output mismatch for " + data.getPath());
+		assertEquals(cleanXmi(expectedOutput), cleanXmi(actualOutput), "XMI output mismatch for " + data.getDisplayPath());
 		return null;
 
 	}

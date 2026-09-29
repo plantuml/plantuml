@@ -240,14 +240,14 @@
       "message": "This is a normal crash when DRAWING",
       "stacktrace": [
         "java.lang.IllegalStateException: This is a normal crash when DRAWING",
-        "net.sourceforge.plantuml.crash.CrashDiagram.getTextBlock(CrashDiagram.java:65)",
-        "net.sourceforge.plantuml.UgDiagram.getExporter(UgDiagram.java:125)",
-        "net.sourceforge.plantuml.UgDiagram.exportDiagram(UgDiagram.java:97)",
-        "net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java:193)",
-        "test.vega.VegaInputFile.renderCapturingStderr(VegaInputFile.java:330)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:392)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:269)",
-        "test.vega.VegaTest.lambda$testAllPumlFiles$10(VegaTest.java:193)"
+        "net.sourceforge.plantuml.crash.CrashDiagram.getTextBlock(CrashDiagram.java)",
+        "net.sourceforge.plantuml.UgDiagram.getExporter(UgDiagram.java)",
+        "net.sourceforge.plantuml.UgDiagram.exportDiagram(UgDiagram.java)",
+        "net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java)",
+        "test.vega.VegaInputFile.renderCapturingStderr(VegaInputFile.java)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java)",
+        "test.vega.VegaTest.lambda$(VegaTest.java)"
       ]
     },
     {
@@ -259,15 +259,15 @@
       "message": "This is a normal crash when FINALIZING",
       "stacktrace": [
         "java.lang.IllegalStateException: This is a normal crash when FINALIZING",
-        "net.sourceforge.plantuml.crash.CrashDiagram.checkFinalError(CrashDiagram.java:101)",
-        "net.sourceforge.plantuml.command.PSystemCommandFactory.finalizeDiagram(PSystemCommandFactory.java:187)",
-        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:178)",
-        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:66)",
-        "net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java:262)",
-        "net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java:196)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:373)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:269)",
-        "test.vega.VegaTest.lambda$testAllPumlFiles$10(VegaTest.java:193)"
+        "net.sourceforge.plantuml.crash.CrashDiagram.checkFinalError(CrashDiagram.java)",
+        "net.sourceforge.plantuml.command.PSystemCommandFactory.finalizeDiagram(PSystemCommandFactory.java)",
+        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java)",
+        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java)",
+        "net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java)",
+        "net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java)",
+        "test.vega.VegaTest.lambda$(VegaTest.java)"
       ]
     },
     {
@@ -279,19 +279,19 @@
       "message": "This is a normal crash when PARSING",
       "stacktrace": [
         "java.lang.IllegalStateException: This is a normal crash when PARSING",
-        "net.sourceforge.plantuml.crash.CommandSelectCrash.executeArg(CommandSelectCrash.java:95)",
-        "net.sourceforge.plantuml.crash.CommandSelectCrash.executeArg(CommandSelectCrash.java:56)",
-        "net.sourceforge.plantuml.command.UBrexSingleLineCommand2.execute(UBrexSingleLineCommand2.java:179)",
-        "net.sourceforge.plantuml.command.ProtectedCommand.execute(ProtectedCommand.java:59)",
-        "net.sourceforge.plantuml.core.AbstractDiagram.executeCommand(AbstractDiagram.java:177)",
-        "net.sourceforge.plantuml.command.PSystemCommandFactory.executeFewLines(PSystemCommandFactory.java:217)",
-        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:173)",
-        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:66)",
-        "net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java:262)",
-        "net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java:196)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:373)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:269)",
-        "test.vega.VegaTest.lambda$testAllPumlFiles$10(VegaTest.java:193)"
+        "net.sourceforge.plantuml.crash.CommandSelectCrash.executeArg(CommandSelectCrash.java)",
+        "net.sourceforge.plantuml.crash.CommandSelectCrash.executeArg(CommandSelectCrash.java)",
+        "net.sourceforge.plantuml.command.UBrexSingleLineCommand2.execute(UBrexSingleLineCommand2.java)",
+        "net.sourceforge.plantuml.command.ProtectedCommand.execute(ProtectedCommand.java)",
+        "net.sourceforge.plantuml.core.AbstractDiagram.executeCommand(AbstractDiagram.java)",
+        "net.sourceforge.plantuml.command.PSystemCommandFactory.executeFewLines(PSystemCommandFactory.java)",
+        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java)",
+        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java)",
+        "net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java)",
+        "net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java)",
+        "test.vega.VegaTest.lambda$(VegaTest.java)"
       ]
     },
     {
@@ -385,16 +385,12 @@
       "message": "DEBUG output should not contain 'hello' for src/test/resources/vega/mvp/hello-debug-skipped.puml [image 1] ==> expected: <false> but was: <true>",
       "stacktrace": [
         "org.opentest4j.AssertionFailedError: DEBUG output should not contain 'hello' for src/test/resources/vega/mvp/hello-debug-skipped.puml [image 1] ==> expected: <false> but was: <true>",
-        "org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)",
-        "org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)",
-        "org.junit.jupiter.api.AssertFalse.failNotFalse(AssertFalse.java:63)",
-        "org.junit.jupiter.api.AssertFalse.assertFalse(AssertFalse.java:36)",
-        "org.junit.jupiter.api.Assertions.assertFalse(Assertions.java:239)",
-        "test.vega.VegaCheckerDebug.checkDebugContains(VegaCheckerDebug.java:33)",
-        "test.vega.VegaCheckerDebug.checkOutput(VegaCheckerDebug.java:19)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:441)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:269)",
-        "test.vega.VegaTest.lambda$testAllPumlFiles$10(VegaTest.java:193)"
+        "org.junit.jupiter.api.Assertions.assertFalse(Assertions.java)",
+        "test.vega.VegaCheckerDebug.checkDebugContains(VegaCheckerDebug.java)",
+        "test.vega.VegaCheckerDebug.checkOutput(VegaCheckerDebug.java)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java)",
+        "test.vega.VegaTest.lambda$(VegaTest.java)"
       ]
     },
     {
@@ -593,6 +589,41 @@
       "status": "pass",
       "description": "activity3",
       "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/group20505/min_width_center.puml",
+      "folder": "nonreg/group20505",
+      "status": "pass",
+      "description": "(4 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group20505/min_width_default.puml",
+      "folder": "nonreg/group20505",
+      "status": "pass",
+      "description": "(4 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group20505/min_width_left.puml",
+      "folder": "nonreg/group20505",
+      "status": "pass",
+      "description": "(4 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group20505/min_width_right.puml",
+      "folder": "nonreg/group20505",
+      "status": "pass",
+      "description": "(4 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group20505/min_width_skinparam.puml",
+      "folder": "nonreg/group20505",
+      "status": "pass",
+      "description": "(4 participants)",
+      "diagram_class": "SequenceDiagram"
     },
     {
       "file": "nonreg/group2679/border_thickness_style.puml",
@@ -1908,18 +1939,18 @@
       "diagram_class": "PacketDiagram",
       "stacktrace": [
         "java.lang.IllegalArgumentException",
-        "net.sourceforge.plantuml.klimt.geom.XDimension2D.<init>(XDimension2D.java:52)",
-        "net.sourceforge.plantuml.packetdiag.PacketBlock$1.calculateDimension(PacketBlock.java:273)",
-        "net.sourceforge.plantuml.packetdiag.PacketDiagram$1.calculateDimension(PacketDiagram.java:168)",
-        "net.sourceforge.plantuml.klimt.shape.TextBlockUtils$2.calculateDimension(TextBlockUtils.java:171)",
-        "net.sourceforge.plantuml.core.TextBlockExporter.calculateFinalDimension(TextBlockExporter.java:196)",
-        "net.sourceforge.plantuml.core.TextBlockExporter.exportTo(TextBlockExporter.java:156)",
-        "net.sourceforge.plantuml.UgDiagram.exportDiagram(UgDiagram.java:97)",
-        "net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java:193)",
-        "test.vega.VegaInputFile.renderCapturingStderr(VegaInputFile.java:330)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:392)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:269)",
-        "test.vega.VegaTest.lambda$testAllPumlFiles$10(VegaTest.java:193)"
+        "net.sourceforge.plantuml.klimt.geom.XDimension2D.<init>(XDimension2D.java)",
+        "net.sourceforge.plantuml.packetdiag.PacketBlock$1.calculateDimension(PacketBlock.java)",
+        "net.sourceforge.plantuml.packetdiag.PacketDiagram$1.calculateDimension(PacketDiagram.java)",
+        "net.sourceforge.plantuml.klimt.shape.TextBlockUtils$2.calculateDimension(TextBlockUtils.java)",
+        "net.sourceforge.plantuml.core.TextBlockExporter.calculateFinalDimension(TextBlockExporter.java)",
+        "net.sourceforge.plantuml.core.TextBlockExporter.exportTo(TextBlockExporter.java)",
+        "net.sourceforge.plantuml.UgDiagram.exportDiagram(UgDiagram.java)",
+        "net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java)",
+        "test.vega.VegaInputFile.renderCapturingStderr(VegaInputFile.java)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java)",
+        "test.vega.VegaTest.lambda$(VegaTest.java)"
       ]
     },
     {
@@ -1933,28 +1964,28 @@
       "message": "/ by zero",
       "stacktrace": [
         "java.lang.ArithmeticException: / by zero",
-        "net.sourceforge.plantuml.packetdiag.PacketDiagram.lambda$adjustIndicators$2(PacketDiagram.java:401)",
-        "java.base/java.util.stream.IntPipeline$1$1.accept(IntPipeline.java:180)",
-        "java.base/java.util.stream.SliceOps$2$1.accept(SliceOps.java:315)",
-        "java.base/java.util.stream.IntStream$1.tryAdvance(IntStream.java:960)",
-        "java.base/java.util.stream.IntPipeline.forEachWithCancel(IntPipeline.java:163)",
-        "java.base/java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:527)",
-        "java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:513)",
-        "java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)",
-        "java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)",
-        "java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)",
-        "java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)",
-        "net.sourceforge.plantuml.packetdiag.PacketDiagram.adjustIndicators(PacketDiagram.java:404)",
-        "net.sourceforge.plantuml.packetdiag.PacketDiagram.build(PacketDiagram.java:380)",
-        "net.sourceforge.plantuml.packetdiag.PacketDiagram.checkFinalError(PacketDiagram.java:227)",
-        "net.sourceforge.plantuml.command.PSystemCommandFactory.finalizeDiagram(PSystemCommandFactory.java:187)",
-        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:178)",
-        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:66)",
-        "net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java:262)",
-        "net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java:196)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:373)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:269)",
-        "test.vega.VegaTest.lambda$testAllPumlFiles$10(VegaTest.java:193)"
+        "net.sourceforge.plantuml.packetdiag.PacketDiagram.lambda$(PacketDiagram.java)",
+        "java.base/java.util.stream.IntPipeline$1$1.accept(IntPipeline.java)",
+        "java.base/java.util.stream.SliceOps$2$1.accept(SliceOps.java)",
+        "java.base/java.util.stream.IntStream$1.tryAdvance(IntStream.java)",
+        "java.base/java.util.stream.IntPipeline.forEachWithCancel(IntPipeline.java)",
+        "java.base/java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java)",
+        "java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java)",
+        "java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java)",
+        "java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java)",
+        "java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java)",
+        "java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java)",
+        "net.sourceforge.plantuml.packetdiag.PacketDiagram.adjustIndicators(PacketDiagram.java)",
+        "net.sourceforge.plantuml.packetdiag.PacketDiagram.build(PacketDiagram.java)",
+        "net.sourceforge.plantuml.packetdiag.PacketDiagram.checkFinalError(PacketDiagram.java)",
+        "net.sourceforge.plantuml.command.PSystemCommandFactory.finalizeDiagram(PSystemCommandFactory.java)",
+        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java)",
+        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java)",
+        "net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java)",
+        "net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java)",
+        "test.vega.VegaTest.lambda$(VegaTest.java)"
       ]
     },
     {
@@ -2040,28 +2071,28 @@
       "message": "/ by zero",
       "stacktrace": [
         "java.lang.ArithmeticException: / by zero",
-        "net.sourceforge.plantuml.packetdiag.PacketDiagram.lambda$adjustIndicators$2(PacketDiagram.java:401)",
-        "java.base/java.util.stream.IntPipeline$1$1.accept(IntPipeline.java:180)",
-        "java.base/java.util.stream.SliceOps$2$1.accept(SliceOps.java:315)",
-        "java.base/java.util.stream.IntStream$1.tryAdvance(IntStream.java:960)",
-        "java.base/java.util.stream.IntPipeline.forEachWithCancel(IntPipeline.java:163)",
-        "java.base/java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:527)",
-        "java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:513)",
-        "java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)",
-        "java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)",
-        "java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)",
-        "java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)",
-        "net.sourceforge.plantuml.packetdiag.PacketDiagram.adjustIndicators(PacketDiagram.java:404)",
-        "net.sourceforge.plantuml.packetdiag.PacketDiagram.build(PacketDiagram.java:380)",
-        "net.sourceforge.plantuml.packetdiag.PacketDiagram.checkFinalError(PacketDiagram.java:227)",
-        "net.sourceforge.plantuml.command.PSystemCommandFactory.finalizeDiagram(PSystemCommandFactory.java:187)",
-        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:178)",
-        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:66)",
-        "net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java:262)",
-        "net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java:196)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:373)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:269)",
-        "test.vega.VegaTest.lambda$testAllPumlFiles$10(VegaTest.java:193)"
+        "net.sourceforge.plantuml.packetdiag.PacketDiagram.lambda$(PacketDiagram.java)",
+        "java.base/java.util.stream.IntPipeline$1$1.accept(IntPipeline.java)",
+        "java.base/java.util.stream.SliceOps$2$1.accept(SliceOps.java)",
+        "java.base/java.util.stream.IntStream$1.tryAdvance(IntStream.java)",
+        "java.base/java.util.stream.IntPipeline.forEachWithCancel(IntPipeline.java)",
+        "java.base/java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java)",
+        "java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java)",
+        "java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java)",
+        "java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java)",
+        "java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java)",
+        "java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java)",
+        "net.sourceforge.plantuml.packetdiag.PacketDiagram.adjustIndicators(PacketDiagram.java)",
+        "net.sourceforge.plantuml.packetdiag.PacketDiagram.build(PacketDiagram.java)",
+        "net.sourceforge.plantuml.packetdiag.PacketDiagram.checkFinalError(PacketDiagram.java)",
+        "net.sourceforge.plantuml.command.PSystemCommandFactory.finalizeDiagram(PSystemCommandFactory.java)",
+        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java)",
+        "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java)",
+        "net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java)",
+        "net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java)",
+        "test.vega.VegaTest.lambda$(VegaTest.java)"
       ]
     },
     {
@@ -2313,18 +2344,18 @@
       "diagram_class": "PacketDiagram",
       "stacktrace": [
         "java.lang.IllegalArgumentException",
-        "net.sourceforge.plantuml.klimt.geom.XDimension2D.<init>(XDimension2D.java:52)",
-        "net.sourceforge.plantuml.packetdiag.PacketBlock$1.calculateDimension(PacketBlock.java:273)",
-        "net.sourceforge.plantuml.packetdiag.PacketDiagram$1.calculateDimension(PacketDiagram.java:168)",
-        "net.sourceforge.plantuml.klimt.shape.TextBlockUtils$2.calculateDimension(TextBlockUtils.java:171)",
-        "net.sourceforge.plantuml.core.TextBlockExporter.calculateFinalDimension(TextBlockExporter.java:196)",
-        "net.sourceforge.plantuml.core.TextBlockExporter.exportTo(TextBlockExporter.java:156)",
-        "net.sourceforge.plantuml.UgDiagram.exportDiagram(UgDiagram.java:97)",
-        "net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java:193)",
-        "test.vega.VegaInputFile.renderCapturingStderr(VegaInputFile.java:330)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:392)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:269)",
-        "test.vega.VegaTest.lambda$testAllPumlFiles$10(VegaTest.java:193)"
+        "net.sourceforge.plantuml.klimt.geom.XDimension2D.<init>(XDimension2D.java)",
+        "net.sourceforge.plantuml.packetdiag.PacketBlock$1.calculateDimension(PacketBlock.java)",
+        "net.sourceforge.plantuml.packetdiag.PacketDiagram$1.calculateDimension(PacketDiagram.java)",
+        "net.sourceforge.plantuml.klimt.shape.TextBlockUtils$2.calculateDimension(TextBlockUtils.java)",
+        "net.sourceforge.plantuml.core.TextBlockExporter.calculateFinalDimension(TextBlockExporter.java)",
+        "net.sourceforge.plantuml.core.TextBlockExporter.exportTo(TextBlockExporter.java)",
+        "net.sourceforge.plantuml.UgDiagram.exportDiagram(UgDiagram.java)",
+        "net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java)",
+        "test.vega.VegaInputFile.renderCapturingStderr(VegaInputFile.java)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java)",
+        "test.vega.VegaTest.lambda$(VegaTest.java)"
       ]
     },
     {
@@ -2340,6 +2371,13 @@
       "status": "pass",
       "description": "PREPROC",
       "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "scxml/junction-pseudostate.puml",
+      "folder": "scxml",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "StateDiagram"
     },
     {
       "file": "scxml/state1.puml",
@@ -2507,6 +2545,13 @@
       "folder": "state",
       "status": "pass",
       "description": "(6 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
+      "file": "state/junction-pseudostate.puml",
+      "folder": "state",
+      "status": "pass",
+      "description": "(4 entities)",
       "diagram_class": "StateDiagram"
     },
     {
@@ -2981,8 +3026,8 @@
     }
   ],
   "summary": {
-    "total": 388,
-    "passed": 384,
+    "total": 395,
+    "passed": 391,
     "failed": 0,
     "skipped": 4
   }

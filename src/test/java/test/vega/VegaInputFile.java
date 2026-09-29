@@ -146,6 +146,16 @@ public class VegaInputFile {
 		return path;
 	}
 
+	/**
+	 * The path as written in failure messages: always with '/', whatever the
+	 * platform. Path.toString() gives '\\' on Windows, and a message that
+	 * carries it differs from the same message produced on Linux, so vega.json
+	 * and the summaries would change depending on who ran the tests.
+	 */
+	public String getDisplayPath() {
+		return path.toString().replace('\\', '/');
+	}
+
 	public List<String> getPumlSource() {
 		return pumlSource;
 	}
@@ -274,7 +284,7 @@ public class VegaInputFile {
 		} catch (Throwable e) {
 			if (allowFailure) {
 				recordResult(VegaStatus.SKIPPED, System.currentTimeMillis() - startTime, e, allowFailure);
-				assumeTrue(false, "Known failure (allow-failure: true): " + path + " - " + e.getMessage());
+				assumeTrue(false, "Known failure (allow-failure: true): " + getDisplayPath() + " - " + e.getMessage());
 			} else {
 				recordResult(VegaStatus.FAIL, System.currentTimeMillis() - startTime, e, allowFailure);
 				throw e;
@@ -356,7 +366,7 @@ public class VegaInputFile {
 	 */
 	private void checkStderrExpectations(int nbImages, int imageIndex) {
 		final String yamlKey = nbImages == 1 ? "expected-stderr" : "expected-stderr-" + (imageIndex + 1);
-		final String label = path + " [image " + (imageIndex + 1) + "]";
+		final String label = getDisplayPath() + " [image " + (imageIndex + 1) + "]";
 
 		for (final String needle : getYamlSubList(yamlKey, "contains"))
 			assertTrue(lastStderr.contains(needle), "stderr should contain '" + needle + "' for " + label);
@@ -366,7 +376,7 @@ public class VegaInputFile {
 	}
 
 	private void doRunSingleFile() throws IOException {
-		assertFalse(getPumlSource().isEmpty(), "PlantUML source in " + path);
+		assertFalse(getPumlSource().isEmpty(), "PlantUML source in " + getDisplayPath());
 
 		final String source = getPumlSourceAsString();
 		final SourceStringReader ssr = new SourceStringReader(source, getCurrentDir());
@@ -399,28 +409,28 @@ public class VegaInputFile {
 					this.rootCause = description.getImageData().getRootCause();
 
 				assertNotNull(description,
-						"No diagram generated for " + path + " [" + fileFormat + " image " + (imageIndex + 1) + "]");
+						"No diagram generated for " + getDisplayPath() + " [" + fileFormat + " image " + (imageIndex + 1) + "]");
 				assertFalse(baos.size() == 0,
-						"Empty output for " + path + " [" + fileFormat + " image " + (imageIndex + 1) + "]");
+						"Empty output for " + getDisplayPath() + " [" + fileFormat + " image " + (imageIndex + 1) + "]");
 
 				if (getActualStringException() != null)
 					assertNotNull(getExpectedException(),
-							"No expected-exception declared in " + path + " " + getActualStringException());
+							"No expected-exception declared in " + getDisplayPath() + " " + getActualStringException());
 
 				if (getExpectedException() != null || getActualStringException() != null)
 					assertEquals(getExpectedException(), getActualStringException(),
-							"Exception mismatch for " + path + " [" + fileFormat + " image " + (imageIndex + 1) + "]");
+							"Exception mismatch for " + getDisplayPath() + " [" + fileFormat + " image " + (imageIndex + 1) + "]");
 
 				if (fileFormat != FileFormat.PREPROC) {
 					final ImageData imageData = description.getImageData();
 					assertNotNull(imageData);
 					final int status = imageData.getStatus();
 
-					assertEquals(getExpectedStatus(), status, "Bad status for " + path);
+					assertEquals(getExpectedStatus(), status, "Bad status for " + getDisplayPath());
 
 					if (status != 0 && imageData.getRootCause() != null) {
 						assertNotNull(getExpectedException(), "Rendering failed with status " + status
-								+ " but no expected-exception declared in " + path);
+								+ " but no expected-exception declared in " + getDisplayPath());
 //					} else if (expectedException != null) {
 //						throw new AssertionError(
 //								"Expected exception " + expectedException + " but rendering succeeded for " + path);
@@ -466,10 +476,10 @@ public class VegaInputFile {
 			return;
 
 		final List<BlockUml> blocks = ssr.getBlocks();
-		assertFalse(blocks.isEmpty(), "No blocks found in " + path);
+		assertFalse(blocks.isEmpty(), "No blocks found in " + getDisplayPath());
 
 		final Diagram diagram = blocks.get(0).getDiagram();
-		assertEquals(expectedDescription, diagram.getDescription().getDescription(), "Bad description for " + path);
+		assertEquals(expectedDescription, diagram.getDescription().getDescription(), "Bad description for " + getDisplayPath());
 	}
 
 	// ----------------------------------------------------------
@@ -482,10 +492,10 @@ public class VegaInputFile {
 			expectedImageCount = "1";
 
 		final List<BlockUml> blocks = ssr.getBlocks();
-		assertFalse(blocks.isEmpty(), "No blocks found in " + path);
+		assertFalse(blocks.isEmpty(), "No blocks found in " + getDisplayPath());
 
 		final Diagram diagram = blocks.get(0).getDiagram();
-		assertEquals(Integer.parseInt(expectedImageCount), diagram.getNbImages(), "Image count mismatch for " + path);
+		assertEquals(Integer.parseInt(expectedImageCount), diagram.getNbImages(), "Image count mismatch for " + getDisplayPath());
 	}
 
 	private String getExpectedException() {
@@ -510,7 +520,7 @@ public class VegaInputFile {
 	private void checkErrorExpectations(SourceStringReader ssr) {
 
 		if (getExpectedException() != null)
-			assertEquals(getExpectedException(), getActualStringException(), "Error in expected exception for " + path);
+			assertEquals(getExpectedException(), getActualStringException(), "Error in expected exception for " + getDisplayPath());
 
 		if (getExpectedErrorLine() == null && getExpectedErrorMessage() == null)
 			return;
@@ -521,23 +531,23 @@ public class VegaInputFile {
 //		}
 
 		final List<BlockUml> blocks = ssr.getBlocks();
-		assertFalse(blocks.isEmpty(), "No blocks found in " + path);
+		assertFalse(blocks.isEmpty(), "No blocks found in " + getDisplayPath());
 
 		final Diagram diagram = blocks.get(0).getDiagram();
 		if (diagram instanceof PSystemError == false)
 			throw new AssertionError(
-					"Expected a PSystemError but got " + diagram.getClass().getSimpleName() + " for " + path);
+					"Expected a PSystemError but got " + diagram.getClass().getSimpleName() + " for " + getDisplayPath());
 
 		final PSystemError error = (PSystemError) diagram;
 		final ErrorUml firstError = error.getFirstError();
-		assertNotNull(firstError, "No error found in PSystemError for " + path);
+		assertNotNull(firstError, "No error found in PSystemError for " + getDisplayPath());
 
 		if (getExpectedErrorLine() != null)
 			assertEquals(Integer.parseInt(getExpectedErrorLine()), firstError.getPosition(),
-					"Error line mismatch for " + path);
+					"Error line mismatch for " + getDisplayPath());
 
 		if (getExpectedErrorMessage() != null)
-			assertEquals(getExpectedErrorMessage(), firstError.getError(), "Error message mismatch for " + path);
+			assertEquals(getExpectedErrorMessage(), firstError.getError(), "Error message mismatch for " + getDisplayPath());
 
 	}
 

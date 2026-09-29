@@ -24,7 +24,7 @@ public class VegaCheckerSvg extends VegaChecker {
 
 		final String expectedSvg = new String(Files.readAllBytes(expectedFile), UTF_8);
 		assertEquals(SvgCleaner.normalise(expectedSvg), SvgCleaner.normalise(cleanedSvg),
-				"SVG output mismatch for " + data.getPath());
+				"SVG output mismatch for " + data.getDisplayPath());
 		return null;
 
 	}

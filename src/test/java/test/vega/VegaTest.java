@@ -120,10 +120,10 @@ class VegaTest {
 		sb.append("===========================================\n");
 		sb.append(" VEGA TEST SUMMARY\n");
 		sb.append("===========================================\n");
-		sb.append(String.format(" Total:    %d%n", total));
-		sb.append(String.format(" Passed:   %d%n", passed));
-		sb.append(String.format(" Failed:   %d%n", failed));
-		sb.append(String.format(" Skipped:  %d%n", skipped));
+		sb.append(String.format(" Total:    %d\n", total));
+		sb.append(String.format(" Passed:   %d\n", passed));
+		sb.append(String.format(" Failed:   %d\n", failed));
+		sb.append(String.format(" Skipped:  %d\n", skipped));
 		sb.append("===========================================");
 		if (failed > 0) {
 			sb.append("\n Failed tests:");
@@ -147,10 +147,10 @@ class VegaTest {
 		md.append("## Vega Test Summary\n\n");
 		md.append("| Metric | Icon | Count |\n");
 		md.append("|---|:---:|---:|\n");
-		md.append(String.format("| Total   | = | %d |%n", total));
-		md.append(String.format("| Passed  | :white_check_mark: | %d |%n", passed));
-		md.append(String.format("| Failed  | :x: | %d |%n", failed));
-		md.append(String.format("| Skipped | :fast_forward: | %d |%n", skipped));
+		md.append(String.format("| Total   | = | %d |\n", total));
+		md.append(String.format("| Passed  | :white_check_mark: | %d |\n", passed));
+		md.append(String.format("| Failed  | :x: | %d |\n", failed));
+		md.append(String.format("| Skipped | :fast_forward: | %d |\n", skipped));
 
 		if (failed > 0) {
 			md.append("\n<details>\n<summary><h3>Failed tests</h3></summary>\n\n");
@@ -181,7 +181,7 @@ class VegaTest {
 		final Map<String, List<Path>> byDirectory = new LinkedHashMap<>();
 		for (final Path path : pumlFiles) {
 			final Path relative = VEGA_RESOURCES.relativize(path);
-			final String dirName = relative.getParent() == null ? "" : relative.getParent().toString();
+			final String dirName = relative.getParent() == null ? "" : relative.getParent().toString().replace('\\', '/');
 			byDirectory.computeIfAbsent(dirName, k -> new ArrayList<>()).add(path);
 		}
 
