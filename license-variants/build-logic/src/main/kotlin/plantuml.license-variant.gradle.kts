@@ -28,8 +28,7 @@
 
 plugins {
 	java
-	`maven-publish`
-	signing
+	id("plantuml.publishing")
 }
 
 val licenseVariant = extensions.create<LicenseVariantExtension>("licenseVariant")
@@ -159,64 +158,17 @@ tasks.named("sourcesJar") {
 }
 
 // ============================================
-// Publishing
+// Publishing (POM, repository and signing: see plantuml.publishing)
 // ============================================
+
+// (no type-safe accessor here: the extension is registered by a plugin of this same build)
+extensions.configure<PlantumlPublishingExtension>("plantumlPublishing") {
+	pomLicenseName.set(licenseVariant.pomLicenseName)
+	pomLicenseUrl.set(licenseVariant.pomLicenseUrl)
+}
 
 publishing {
 	publications.create<MavenPublication>("maven") {
 		from(components["java"])
-		pom {
-			name.set("PlantUML")
-			description.set("PlantUML is a component that allows to quickly write diagrams from text.")
-			groupId = project.group as String
-			artifactId = project.name
-			version = project.version as String
-			url.set("https://plantuml.com/")
-			licenses {
-				license {
-					name.set(licenseVariant.pomLicenseName)
-					url.set(licenseVariant.pomLicenseUrl)
-				}
-			}
-			developers {
-				developer {
-					id.set("arnaud.roques")
-					name.set("Arnaud Roques")
-					email.set("plantuml@gmail.com")
-				}
-			}
-			scm {
-				connection.set("scm:git:git://github.com:plantuml/plantuml.git")
-				developerConnection.set("scm:git:ssh://git@github.com:plantuml/plantuml.git")
-				url.set("https://github.com/plantuml/plantuml")
-			}
-		}
-	}
-	repositories {
-		maven {
-			name = "CentralPortal"
-			val releasesRepoUrl = "https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/"
-			val snapshotsRepoUrl = "https://central.sonatype.com/repository/maven-snapshots/"
-			url = uri(
-				if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
-			)
-			credentials {
-				username = System.getenv("CENTRAL_USERNAME")
-				password = System.getenv("CENTRAL_PASSWORD")
-			}
-		}
-	}
-}
-
-signing {
-	if (hasProperty("signing.gnupg.keyName") && hasProperty("signing.gnupg.passphrase")) {
-		useGpgCmd()
-	} else if (hasProperty("signingKey") && hasProperty("signingPassword")) {
-		val signingKey: String? by project
-		val signingPassword: String? by project
-		useInMemoryPgpKeys(signingKey, signingPassword)
-	}
-	if (hasProperty("signing.gnupg.passphrase") || hasProperty("signingPassword")) {
-		sign(publishing.publications["maven"])
 	}
 }

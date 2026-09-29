@@ -1,0 +1,61 @@
+{
+  "name": "@npmName@",
+  "version": "@npmVersion@",
+  "description": "PlantUML diagram rendering engine compiled to JavaScript with TeaVM. Renders UML and many other diagrams entirely in the browser, with no server and no Java.",
+  "type": "module",
+  "main": "plantuml.js",
+  "module": "plantuml.js",
+  "exports": {
+    ".": "./plantuml.js",
+    "./plantuml.js": "./plantuml.js",
+    "./viz-global.js": "./viz-global.js",
+    "./emoji.js": "./emoji.js",
+    "./openiconic.js": "./openiconic.js",
+    "./themes.js": "./themes.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "plantuml.js",
+    "viz-global.js",
+    "emoji.js",
+    "openiconic.js",
+    "themes.js",
+    "main.js",
+    "plantuml-codec.js",
+    "zoom.js",
+    "vendor/",
+    "main.css",
+    "favicon.svg",
+    "favicon.ico",
+    "index.html",
+    "index-basic.html",
+    "index-basic-dark.html",
+    "index-collection.html",
+    "github-integration-poc.html",
+    "github-integration-web-worker-poc.html",
+    "GITHUB_INTEGRATION.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "plantuml",
+    "uml",
+    "diagram",
+    "teavm",
+    "svg",
+    "graphviz",
+    "sequence-diagram",
+    "browser"
+  ],
+  "homepage": "https://plantuml.com/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/plantuml/plantuml.git"
+  },
+  "bugs": {
+    "url": "https://github.com/plantuml/plantuml/issues"
+  },
+  "author": "Arnaud Roques",
+  "license": "MIT",
+  "sideEffects": ["./viz-global.js"]
+}

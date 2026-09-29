@@ -8,8 +8,7 @@ import org.gradle.kotlin.dsl.named
 //
 plugins {
     java
-    `maven-publish`
-    signing
+    id("plantuml.publishing")
 }
 
 group = "net.sourceforge.plantuml"
@@ -33,147 +32,77 @@ val mitProject = project(":plantuml-mit")
 val mitSourceSets = mitProject.extensions.getByType<SourceSetContainer>()
 val mitMain = mitSourceSets.getByName("main")
 
-val mitClassesOutput = mitMain.output
-val mitAllSources = mitMain.allSource
+// What "light" removes from the MIT jars (compiled classes and sources alike)
+val lightExcludes = listOf("**/*.spm", "net/sourceforge/plantuml/emoji/data/**")
 
 // We reuse the completed MIT javadoc jar.
 val mitJavadocJar = mitProject.tasks.named<Jar>("javadocJar")
+
+// Settings shared by the jar, sourcesJar and javadocJar tasks
+tasks.withType<Jar>().configureEach {
+    archiveBaseName.set("plantuml-mit-light")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
 
 //
 // MAIN LIGHT JAR
 //
 tasks.named<Jar>("jar") {
-    archiveBaseName.set("plantuml-mit-light")
-
     dependsOn(mitProject.tasks.named("classes"))
 
-    from(mitClassesOutput) {
-        exclude("**/*.spm")
-        exclude("net/sourceforge/plantuml/emoji/data/**")
+    from(mitMain.output) {
+        exclude(lightExcludes)
         exclude("teavm/**")
     }
 
     manifest {
         attributes["Main-Class"] = "net.sourceforge.plantuml.Run"
     }
-
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 //
 // SOURCES JAR
 //
 tasks.named<Jar>("sourcesJar") {
-    archiveBaseName.set("plantuml-mit-light")
-
     dependsOn(mitProject.tasks.named("sourcesJar"))
     dependsOn(mitProject.tasks.named("classes"))
 
-    from(mitAllSources) {
+    from(mitMain.allSource) {
         include("**/*.java")
-        exclude("**/*.spm")
-        exclude("net/sourceforge/plantuml/emoji/data/**")
+        exclude(lightExcludes)
     }
-
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 //
 // JAVADOC JAR
 //
 tasks.named<Jar>("javadocJar") {
-    archiveBaseName.set("plantuml-mit-light")
-
     dependsOn(mitJavadocJar)
 
     // Unpack the MIT javadoc jar (copying the file itself would nest a jar in the jar)
     from({ zipTree(mitJavadocJar.get().archiveFile) }) {
         exclude("META-INF/MANIFEST.MF")
     }
-
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 //
-// PUBLISHING (identical behavior to all other subprojects)
+// PUBLISHING
+// POM, CentralPortal repository and signing come from the plantuml.publishing
+// convention plugin (license-variants/build-logic); only the content of the
+// publication is specific here.
 //
+plantumlPublishing {
+    pomName.set("PlantUML MIT Light")
+    pomDescription.set("Filtered MIT distribution of PlantUML.")
+    pomLicenseName.set("MIT License")
+    pomLicenseUrl.set("https://opensource.org/license/mit/")
+    developer("nicolas.baumann", "Nicolas Baumann", "nicolas.baumann1@gmail.com")
+}
+
 publishing {
     publications.create<MavenPublication>("maven") {
         artifact(tasks.named("jar"))
         artifact(tasks.named("sourcesJar"))
         artifact(tasks.named("javadocJar"))
-
-        groupId = project.group as String
-        artifactId = "plantuml-mit-light"
-        version = project.version as String
-
-        pom {
-            name.set("PlantUML MIT Light")
-            description.set("Filtered MIT distribution of PlantUML.")
-            url.set("https://plantuml.com/")
-
-            licenses {
-                license {
-                    name.set("MIT License")
-                    url.set("https://opensource.org/license/mit/")
-                }
-            }
-
-            developers {
-                developer {
-                    id.set("arnaud.roques")
-                    name.set("Arnaud Roques")
-                    email.set("plantuml@gmail.com")
-                }
-                developer {
-                    id.set("nicolas.baumann")
-                    name.set("Nicolas Baumann")
-                    email.set("nicolas.baumann1@gmail.com")
-                }
-            }
-
-            scm {
-                connection.set("scm:git:git://github.com:plantuml/plantuml.git")
-                developerConnection.set("scm:git:ssh://git@github.com:plantuml/plantuml.git")
-                url.set("https://github.com/plantuml/plantuml")
-            }
-        }
-    }
-
-    repositories {
-        maven {
-            name = "CentralPortal"
-            val releasesRepoUrl =
-                "https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/"
-            val snapshotsRepoUrl =
-                "https://central.sonatype.com/repository/maven-snapshots/"
-
-            url = uri(
-                if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl
-                else releasesRepoUrl
-            )
-
-            credentials {
-                username = System.getenv("CENTRAL_USERNAME")
-                password = System.getenv("CENTRAL_PASSWORD")
-            }
-        }
-    }
-}
-
-//
-// SIGNING (identical behavior to all other subprojects)
-//
-signing {
-    if (hasProperty("signing.gnupg.keyName") && hasProperty("signing.gnupg.passphrase")) {
-        useGpgCmd()
-    } else if (hasProperty("signingKey") && hasProperty("signingPassword")) {
-        val signingKey: String? by project
-        val signingPassword: String? by project
-        useInMemoryPgpKeys(signingKey, signingPassword)
-    }
-
-    if (hasProperty("signing.gnupg.passphrase") || hasProperty("signingPassword")) {
-        sign(publishing.publications["maven"])
     }
 }
