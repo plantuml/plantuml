@@ -111,39 +111,38 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 <span class="fc" id="L111">		ug.draw(rect);</span>
 <span class="fc" id="L112">		ug = ug.apply(UStroke.simple());</span>
 
-		// Text: centered inside the box, offset by padding
-<span class="fc" id="L115">		final TextBlock textBlock = getTextBlock();</span>
-		// textBlock.drawU(ug.apply(new UTranslate(padding.getLeft() +
-		// suppWidth(stringBounder) / 2, padding.getTop())));
-<span class="fc" id="L118">		textBlock.drawU(ug.apply(padding.getTranslate()));</span>
-<span class="fc" id="L119">	}</span>
+		// Text: offset by padding, and placed according to HorizontalAlignment
+		// inside the extra room created by MinimumWidth (if any). The text block
+		// itself is only as wide as its own content, so it cannot align itself.
+<span class="fc" id="L117">		final TextBlock textBlock = getTextBlock();</span>
+<span class="fc" id="L118">		final double textWidth = textBlock.calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L119">		final double extra = getPureTextWidth(stringBounder) - textWidth;</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		final double dx = extra &gt; 0 ? getHorizontalAlignment().getPosition(textWidth, textWidth + extra) : 0;</span>
+<span class="fc" id="L121">		textBlock.drawU(ug.apply(padding.getTranslate()).apply(UTranslate.dx(dx)));</span>
+<span class="fc" id="L122">	}</span>
 
 	private double getDeltaCollection() {
-<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (collections)</span>
-<span class="fc" id="L123">			return 4;</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		if (collections)</span>
+<span class="fc" id="L126">			return 4;</span>
 
-<span class="fc" id="L125">		return 0;</span>
+<span class="fc" id="L128">		return 0;</span>
 	}
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="fc" id="L130">		return getTextHeight(stringBounder) + margin.getTop() + margin.getBottom() + deltaShadow + 1</span>
-<span class="fc" id="L131">				+ getDeltaCollection();</span>
+<span class="fc" id="L133">		return getTextHeight(stringBounder) + margin.getTop() + margin.getBottom() + deltaShadow + 1</span>
+<span class="fc" id="L134">				+ getDeltaCollection();</span>
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="fc" id="L136">		return getTextWidth(stringBounder) + margin.getLeft() + margin.getRight() + deltaShadow + getDeltaCollection();</span>
+<span class="fc" id="L139">		return getTextWidth(stringBounder) + margin.getLeft() + margin.getRight() + deltaShadow + getDeltaCollection();</span>
 	}
 
 	@Override
 	protected double getPureTextWidth(StringBounder stringBounder) {
-<span class="fc" id="L141">		return Math.max(super.getPureTextWidth(stringBounder), minWidth);</span>
+<span class="fc" id="L144">		return Math.max(super.getPureTextWidth(stringBounder), minWidth);</span>
 	}
-
-//	private final double suppWidth(StringBounder stringBounder) {
-//		return getPureTextWidth(stringBounder) - super.getPureTextWidth(stringBounder);
-//	}
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

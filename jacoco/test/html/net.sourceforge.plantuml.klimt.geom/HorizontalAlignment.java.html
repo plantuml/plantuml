@@ -90,11 +90,11 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 <span class="fc" id="L90">	}</span>
 
 	public double getPosition(double width, double fullWidth) {
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (this == HorizontalAlignment.RIGHT)</span>
-<span class="nc" id="L94">			return fullWidth - width;</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">		else if (this == HorizontalAlignment.CENTER)</span>
-<span class="nc" id="L96">			return (fullWidth - width) / 2;</span>
-<span class="nc" id="L97">		return 0;</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		if (this == HorizontalAlignment.RIGHT)</span>
+<span class="fc" id="L94">			return fullWidth - width;</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">		else if (this == HorizontalAlignment.CENTER)</span>
+<span class="fc" id="L96">			return (fullWidth - width) / 2;</span>
+<span class="fc" id="L97">		return 0;</span>
 	}
 
 	public PlacementStrategy asPlacementStrategy(StringBounder sb) {

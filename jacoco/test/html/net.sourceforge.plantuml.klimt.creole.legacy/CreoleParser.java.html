@@ -165,10 +165,10 @@ public class CreoleParser implements SheetBuilder {
 							}
 						});
 					}
-<span class="pc bpc" id="L168" title="1 of 2 branches missed.">				} else if (cs instanceof Stereotype) {</span>
-<span class="nc bnc" id="L169" title="All 2 branches missed.">					if (display.showStereotype())</span>
-<span class="nc bnc" id="L170" title="All 2 branches missed.">						for (String st : ((Stereotype) cs).getLabels(skinParam.guillemet()))</span>
-<span class="nc" id="L171">							sheet.add(createStripes(st, context, sheet.getLastStripe(), stereotype));</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">				} else if (cs instanceof Stereotype) {</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">					if (display.showStereotype())</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">						for (String st : ((Stereotype) cs).getLabels(skinParam.guillemet()))</span>
+<span class="fc" id="L171">							sheet.add(createStripes(st, context, sheet.getLastStripe(), stereotype));</span>
 
 					continue;
 				} else {

@@ -122,7 +122,7 @@ public class Display implements Iterable&lt;CharSequence&gt;, AsciiBlock {
 	}
 
 	public boolean showStereotype() {
-<span class="nc" id="L125">		return showStereotype;</span>
+<span class="fc" id="L125">		return showStereotype;</span>
 	}
 
 	public Display withoutStereotypeIfNeeded(Style usedStyle) {
@@ -652,8 +652,8 @@ public class Display implements Iterable&lt;CharSequence&gt;, AsciiBlock {
 <span class="fc" id="L652">		final FontConfiguration stereotypeConfiguration = fontConfiguration.forceFont(fontForStereotype,</span>
 				htmlColorForStereotype);
 <span class="fc bfc" id="L654" title="All 2 branches covered.">		if (size() &gt; 0) {</span>
-<span class="pc bpc" id="L655" title="1 of 2 branches missed.">			if (get(0) instanceof Stereotype)</span>
-<span class="nc" id="L656">				return createStereotype(fontConfiguration, horizontalAlignment, spriteContainer, 0, fontForStereotype,</span>
+<span class="fc bfc" id="L655" title="All 2 branches covered.">			if (get(0) instanceof Stereotype)</span>
+<span class="fc" id="L656">				return createStereotype(fontConfiguration, horizontalAlignment, spriteContainer, 0, fontForStereotype,</span>
 						htmlColorForStereotype, maxMessageSize, creoleMode, marginX1, marginX2);
 
 <span class="pc bpc" id="L659" title="1 of 2 branches missed.">			if (get(size() - 1) instanceof Stereotype)</span>
@@ -672,22 +672,22 @@ public class Display implements Iterable&lt;CharSequence&gt;, AsciiBlock {
 	private TextBlock createStereotype(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			SpriteContainer spriteContainer, int position, UFont fontForStereotype, HColor htmlColorForStereotype,
 			LineBreakStrategy maxMessageSize, CreoleMode creoleMode, double marginX1, double marginX2) {
-<span class="nc" id="L675">		final Stereotype stereotype = (Stereotype) get(position);</span>
-<span class="nc" id="L676">		TextBlock circledCharacter = null;</span>
-<span class="nc bnc" id="L677" title="All 2 branches missed.">		if (stereotype.isSpotted())</span>
+<span class="fc" id="L675">		final Stereotype stereotype = (Stereotype) get(position);</span>
+<span class="fc" id="L676">		TextBlock circledCharacter = null;</span>
+<span class="pc bpc" id="L677" title="1 of 2 branches missed.">		if (stereotype.isSpotted())</span>
 <span class="nc" id="L678">			circledCharacter = new CircledCharacter(stereotype.getCharacter(), stereotype.getRadius(),</span>
 <span class="nc" id="L679">					stereotype.getCircledFont(), stereotype.getHtmlColor(), null, fontConfiguration.getColor());</span>
 		else
-<span class="nc" id="L681">			circledCharacter = stereotype.getSprite(spriteContainer);</span>
+<span class="fc" id="L681">			circledCharacter = stereotype.getSprite(spriteContainer);</span>
 
-<span class="nc" id="L683">		final FontConfiguration stereotypeConfiguration = fontConfiguration.forceFont(fontForStereotype,</span>
+<span class="fc" id="L683">		final FontConfiguration stereotypeConfiguration = fontConfiguration.forceFont(fontForStereotype,</span>
 				htmlColorForStereotype);
-<span class="nc" id="L685">		final TextBlock result = getCreole(fontConfiguration, horizontalAlignment, (ISkinSimple) spriteContainer,</span>
+<span class="fc" id="L685">		final TextBlock result = getCreole(fontConfiguration, horizontalAlignment, (ISkinSimple) spriteContainer,</span>
 				maxMessageSize, creoleMode, stereotypeConfiguration, marginX1, marginX2);
-<span class="nc bnc" id="L687" title="All 2 branches missed.">		if (circledCharacter != null)</span>
+<span class="pc bpc" id="L687" title="1 of 2 branches missed.">		if (circledCharacter != null)</span>
 <span class="nc" id="L688">			return new TextBlockSprited(circledCharacter, result);</span>
 
-<span class="nc" id="L690">		return result;</span>
+<span class="fc" id="L690">		return result;</span>
 	}
 
 	private TextBlock getCreole(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,

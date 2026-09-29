@@ -173,12 +173,12 @@ public abstract class CommandParticipant extends SingleLineCommand2&lt;SequenceD
 
 <span class="fc" id="L174">		final String stereotype = arg.get(&quot;STEREO&quot;, 0);</span>
 
-<span class="pc bpc" id="L176" title="1 of 2 branches missed.">		if (stereotype != null) {</span>
-<span class="nc" id="L177">			final ISkinParam skinParam = diagram.getSkinParam();</span>
-<span class="nc" id="L178">			final boolean stereotypePositionTop = skinParam.stereotypePositionTop();</span>
-<span class="nc" id="L179">			final UFont font = skinParam.getFont(null, false, FontParam.CIRCLED_CHARACTER);</span>
-<span class="nc" id="L180">			participant.setStereotype(Stereotype.build(stereotype, skinParam.getCircledCharacterRadius(), font,</span>
-<span class="nc" id="L181">					diagram.getSkinParam().getIHtmlColorSet()), stereotypePositionTop);</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">		if (stereotype != null) {</span>
+<span class="fc" id="L177">			final ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="fc" id="L178">			final boolean stereotypePositionTop = skinParam.stereotypePositionTop();</span>
+<span class="fc" id="L179">			final UFont font = skinParam.getFont(null, false, FontParam.CIRCLED_CHARACTER);</span>
+<span class="fc" id="L180">			participant.setStereotype(Stereotype.build(stereotype, skinParam.getCircledCharacterRadius(), font,</span>
+<span class="fc" id="L181">					diagram.getSkinParam().getIHtmlColorSet()), stereotypePositionTop);</span>
 		}
 <span class="fc" id="L183">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
 <span class="fc" id="L184">		participant.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>

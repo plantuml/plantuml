@@ -124,9 +124,9 @@ public class Participant implements SpecificBackcolorable, WithStyle, AsciiBlock
 
 	public Display getDisplay(boolean underlined) {
 <span class="pc bpc" id="L126" title="1 of 2 branches missed.">		Display result = underlined ? display.underlined() : display;</span>
-<span class="pc bpc" id="L127" title="3 of 4 branches missed.">		if (stereotype != null &amp;&amp; hiddenPortions.contains(EntityPortion.STEREOTYPE) == false) {</span>
-<span class="nc bnc" id="L128" title="All 2 branches missed.">			if (stereotypePositionTop)</span>
-<span class="nc" id="L129">				result = result.addFirst(stereotype);</span>
+<span class="pc bpc" id="L127" title="1 of 4 branches missed.">		if (stereotype != null &amp;&amp; hiddenPortions.contains(EntityPortion.STEREOTYPE) == false) {</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">			if (stereotypePositionTop)</span>
+<span class="fc" id="L129">				result = result.addFirst(stereotype);</span>
 			else
 <span class="nc" id="L131">				result = result.add(stereotype);</span>
 
@@ -139,12 +139,12 @@ public class Participant implements SpecificBackcolorable, WithStyle, AsciiBlock
 	}
 
 	public final void setStereotype(Stereotype stereotype, boolean stereotypePositionTop) {
-<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (this.stereotype != null)</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">		if (this.stereotype != null)</span>
 <span class="nc" id="L143">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L145">		this.stereotype = Objects.requireNonNull(stereotype);</span>
-<span class="nc" id="L146">		this.stereotypePositionTop = stereotypePositionTop;</span>
-<span class="nc" id="L147">	}</span>
+<span class="fc" id="L145">		this.stereotype = Objects.requireNonNull(stereotype);</span>
+<span class="fc" id="L146">		this.stereotypePositionTop = stereotypePositionTop;</span>
+<span class="fc" id="L147">	}</span>
 
 	public final int getInitialLife() {
 <span class="nc" id="L150">		return initialLife;</span>
