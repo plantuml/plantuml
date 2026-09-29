@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="214px" preserveAspectRatio="none" style="width:454px;height:214px;background:#FFFFFF;" version="1.1" viewBox="0 0 454 214" width="454px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>A</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="63.5" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="67" x2="67" y1="84" y2="129"/>
+    </g>
+    <g>
+      <title>LongNameParticipant</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="204.831" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="208.331" x2="208.331" y1="84" y2="129"/>
+    </g>
+    <g>
+      <title>X</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="302.663" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="306.163" x2="306.163" y1="84" y2="129"/>
+    </g>
+    <g>
+      <title>..st..</title>
+      <rect fill="#000" fill-opacity="0" height="45" width="8" x="383.163" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="386.663" x2="386.663" y1="84" y2="129"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="114" x="10" y="55"/>
+    <text fill="#000" font-size="14" x="17" y="72.889">A</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="148.663" x="134" y="55"/>
+    <text fill="#000" font-size="14" textLength="134.663" x="141" y="72.889">LongNameParticipant</text>
+    <text fill="#000" font-size="14" x="298.481" y="80.889">X</text>
+    <ellipse cx="306.163" cy="18.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M306.163,26.5 L306.163,53.5 M293.163,34.5 L319.163,34.5 M306.163,53.5 L293.163,68.5 M306.163,53.5 L319.163,68.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#E2E2F0" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="114" x="329.663" y="41"/>
+    <text fill="#000" font-size="14" font-style="italic" textLength="26.425" x="336.663" y="58.889">«st»</text>
+    <text fill="#000" font-size="14" x="336.663" y="72.889">C</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="114" x="10" y="129"/>
+    <text fill="#000" font-size="14" x="17" y="146.889">A</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="148.663" x="134" y="129"/>
+    <text fill="#000" font-size="14" textLength="134.663" x="141" y="146.889">LongNameParticipant</text>
+    <text fill="#000" font-size="14" x="298.481" y="139.889">X</text>
+    <ellipse cx="306.163" cy="151.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M306.163,159.5 L306.163,186.5 M293.163,167.5 L319.163,167.5 M306.163,186.5 L293.163,201.5 M306.163,186.5 L319.163,201.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#E2E2F0" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="114" x="329.663" y="129"/>
+    <text fill="#000" font-size="14" font-style="italic" textLength="26.425" x="336.663" y="146.889">«st»</text>
+    <text fill="#000" font-size="14" x="336.663" y="160.889">C</text>
+    <polygon fill="#181818" points="196.331,107,206.331,111,196.331,115,200.331,111" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="67" x2="202.331" y1="111" y2="111"/>
+    <text fill="#000" font-size="13" textLength="52.731" x="74" y="106.111">Message</text>
+  </g>
+</svg>

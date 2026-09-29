@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+skinparam MinClassWidth 100
+participant "A" as A
+participant "LongNameParticipant" as B
+actor "X" as X
+participant "C" as C <<st>>
+
+A -> B : Message
+@enduml

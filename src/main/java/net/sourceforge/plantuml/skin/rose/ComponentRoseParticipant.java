@@ -111,11 +111,14 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 		ug.draw(rect);
 		ug = ug.apply(UStroke.simple());
 
-		// Text: centered inside the box, offset by padding
+		// Text: offset by padding, and placed according to HorizontalAlignment
+		// inside the extra room created by MinimumWidth (if any). The text block
+		// itself is only as wide as its own content, so it cannot align itself.
 		final TextBlock textBlock = getTextBlock();
-		// textBlock.drawU(ug.apply(new UTranslate(padding.getLeft() +
-		// suppWidth(stringBounder) / 2, padding.getTop())));
-		textBlock.drawU(ug.apply(padding.getTranslate()));
+		final double textWidth = textBlock.calculateDimension(stringBounder).getWidth();
+		final double extra = getPureTextWidth(stringBounder) - textWidth;
+		final double dx = extra > 0 ? getHorizontalAlignment().getPosition(textWidth, textWidth + extra) : 0;
+		textBlock.drawU(ug.apply(padding.getTranslate()).apply(UTranslate.dx(dx)));
 	}
 
 	private double getDeltaCollection() {
@@ -140,9 +143,5 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 	protected double getPureTextWidth(StringBounder stringBounder) {
 		return Math.max(super.getPureTextWidth(stringBounder), minWidth);
 	}
-
-//	private final double suppWidth(StringBounder stringBounder) {
-//		return getPureTextWidth(stringBounder) - super.getPureTextWidth(stringBounder);
-//	}
 
 }
