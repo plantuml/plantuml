@@ -51,11 +51,18 @@ java {
 dependencies {
 	compileOnly(lib("ant"))
 	compileOnly(lib("teavm-jso-apis"))
-	compileOnly(lib("teavm-classlib"))
 	compileOnly(lib("openpdf"))
 	testImplementation(lib("junit-jupiter"))
 	testImplementation(lib("jlatexmath"))
 	testImplementation(lib("xmlunit-core"))
+}
+
+// teavm-classlib 0.15+ is published for JVM 17+ only, while we compile with
+// --release 11. The sources only need the JSO/interop APIs (Java 11 compatible),
+// never the classlib, so keep it off compileClasspath (the TeaVM plugin adds it
+// in plantuml-mit). Same rule as in the root build.gradle.kts.
+configurations.compileClasspath {
+	exclude(group = "org.teavm", module = "teavm-classlib")
 }
 
 repositories {

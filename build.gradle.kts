@@ -85,6 +85,26 @@ tasks.compileJava {
 	options.release.set(Integer.parseInt(javacRelease))
 }
 
+// teavm-classlib 0.15+ is published for JVM 17+ only, and the TeaVM plugin adds it
+// to compileClasspath. With --release 11 Gradle refuses to resolve it. The Java
+// sources only need the JSO/interop APIs (Java 11 compatible), never the classlib
+// (it is only needed by the TeaVM compiler itself, which has its own classpath).
+configurations.compileClasspath {
+	exclude(group = "org.teavm", module = "teavm-classlib")
+}
+
+// TeaVM 0.15+ must RUN on Java 17+, but it can still consume Java 11 bytecode.
+// So the JAR stays compiled with --release 11 (see javacRelease above), and only
+// the JavaScript generation needs a JDK 17+ running Gradle.
+tasks.matching { it.name == "generateJavaScript" }.configureEach {
+	doFirst {
+		check(JavaVersion.current() >= JavaVersion.VERSION_17) {
+			"TeaVM requires running Gradle on JDK 17+ (current: ${JavaVersion.current()}). " +
+				"The Java bytecode itself remains --release $javacRelease."
+		}
+	}
+}
+
 tasks.withType<Jar>().configureEach {
     manifest {
         attributes["Main-Class"] = "net.sourceforge.plantuml.Run"
