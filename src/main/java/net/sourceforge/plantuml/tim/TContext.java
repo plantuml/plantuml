@@ -836,32 +836,31 @@ public class TContext {
 				// reader = PreprocessorUtils.getReaderNonstandardInclude(s, what.substring(1,
 				// what.length() - 1));
 			} else {
-				if (!TeaVM.isTeaVM()) {
-					final InputFile f2 = this.pathSystem.getInputFile(what);
-					if (f2 != null) {
-						final File used = f2 instanceof SFile ? ((SFile) f2).getCanonicalFile().conv() : null;
-						if (strategy == PreprocessorIncludeStrategy.DEFAULT && filesUsedCurrent.contains(used))
-							return;
+				final InputFile f2 = this.pathSystem.getInputFile(what);
+				if (f2 != null) {
+					final File used = f2 instanceof SFile ? ((SFile) f2).getCanonicalFile().conv()
+							: this.pathSystem.getTeaVMFileIdentity(f2);
+					if (strategy == PreprocessorIncludeStrategy.DEFAULT && filesUsedCurrent.contains(used))
+						return;
 
-						if (strategy == PreprocessorIncludeStrategy.ONCE && filesUsedCurrent.contains(used))
-							throw new EaterException("This file has already been included", s);
+					if (strategy == PreprocessorIncludeStrategy.ONCE && filesUsedCurrent.contains(used))
+						throw new EaterException("This file has already been included", s);
 
-						reader = DiagramDetector.extractFromFile(f2, "desc2");
+					reader = DiagramDetector.extractFromFile(f2, "desc2");
 
-						if (reader == null) {
-							final Reader tmp = f2.getReader(charset);
-							if (tmp == null)
-								throw new EaterException("Cannot include file", s);
+					if (reader == null) {
+						final Reader tmp = f2.getReader(charset);
+						if (tmp == null)
+							throw new EaterException("Cannot include file", s);
 
-							reader = ReadLineReader.create(tmp, what, s.getLocation());
-						}
-						saveImportedFiles = this.pathSystem;
-						this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());
-						if (TeaVM.a())
-							assert reader != null;
-						if (used != null)
-							filesUsedCurrent.add(used);
+						reader = ReadLineReader.create(tmp, what, s.getLocation());
 					}
+					saveImportedFiles = this.pathSystem;
+					this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());
+					if (TeaVM.a())
+						assert reader != null;
+					if (used != null)
+						filesUsedCurrent.add(used);
 				}
 			}
 			if (reader != null)

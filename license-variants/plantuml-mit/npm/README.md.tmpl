@@ -74,6 +74,11 @@ assets. Hosts that cannot load scripts at all (Web Workers, browser
 extensions) set a `PLANTUML_STDLIB_LOADER` callback instead -- see
 [GITHUB_INTEGRATION.md](./GITHUB_INTEGRATION.md).
 
+The engine has no file system, so a local `!include styles/common.puml`
+fails unless the host delivers the file: set a `PLANTUML_FILE_LOADER`
+callback, which also decides which files may be read -- see
+[GITHUB_INTEGRATION.md](./GITHUB_INTEGRATION.md).
+
 ## License
 
 [MIT](https://opensource.org/license/mit/).

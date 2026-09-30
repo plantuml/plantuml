@@ -255,6 +255,55 @@ data but not executing remote code) and for a Web Worker (no document to
 append a script tag to). With neither global set, behaviour is unchanged.
 `tools/browser-test/check-stdlib-loader.js` pins the whole contract.
 
+## Local Files
+
+A local `!include` names a file rather than a library or a URL:
+
+```
+@startuml
+!include styles/common.puml
+Alice -> Bob
+@enduml
+```
+
+The engine has no file system, so on its own such an include fails with
+"cannot include". A host that does have the files (an editor extension, a
+desktop application, a documentation build) can deliver them through one
+more global, set before rendering:
+
+```html
+<script>
+  // path: the name written after !include, variables expanded.
+  // from: null for an include written in the diagram itself, otherwise the id
+  //       you gave the file that contains the include.
+  // ok(id, text): the file. The id is yours to choose (here a path); the engine
+  //       only compares ids for !include_once and hands one back as `from`.
+  // err(message): the include fails; the message goes to the console.
+  window.PLANTUML_FILE_LOADER = function (path, from, ok, err) {
+    var base = from === null ? "/docs/architecture/" : from.replace(/[^/]*$/, "");
+    var id = new URL(path, "file://" + base).pathname;
+    if (id.indexOf("/docs/") !== 0) { err("outside /docs: " + path); return; }
+    fetch("/files" + id)
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
+      .then(function (text) { ok(id, text); })
+      .catch(function (e) { err(String(e)); });
+  };
+</script>
+```
+
+It covers `!include`, `!include_once` and `!include_many`, with the same
+meaning as in the Java build: a repeated `!include` of one file is skipped,
+`!include_many` includes it again, `!include_once` reports the second
+include as an error, and a file that holds a whole `@startuml` ... `@enduml`
+diagram contributes the inside of it. The loader may answer synchronously or
+later. Returning `false` (strictly), without calling either callback,
+declines the file, which then fails as if no loader were set.
+
+The engine never reads anything itself: the loader decides which files may be
+read, so reject what should stay out of reach (above, anything outside
+`/docs/`). Without the global, behaviour is unchanged.
+`tools/browser-test/check-file-loader.js` pins the contract.
+
 ## Multiple Diagrams per Page
 
 Each ` ```plantuml ` block gets its own iframe and its own `requestId`.

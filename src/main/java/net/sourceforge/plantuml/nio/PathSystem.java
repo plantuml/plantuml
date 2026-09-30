@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.nio;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
@@ -55,6 +56,7 @@ import net.sourceforge.plantuml.security.SURL;
 import org.teavm.jso.JSObject;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.teavm.browser.BrowserLog;
+import net.sourceforge.plantuml.teavm.browser.TeaVmFileLoader;
 import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
 //::done
 
@@ -115,6 +117,18 @@ public class PathSystem {
 			return null;
 		final String content = TeaVmScriptLoader.joinLines(data);
 		return new ByteArrayInputStream(content.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+		// ::done
+	}
+
+	/**
+	 * What <code>!include_once</code> compares to recognise a file delivered by
+	 * the host's file loader when it is included again, or <code>null</code> for
+	 * any other file.
+	 */
+	public File getTeaVMFileIdentity(InputFile file) {
+		// ::revert when JAVA8
+		// return null;
+		return TeaVmFileLoader.getIdentity(file);
 		// ::done
 	}
 
@@ -216,11 +230,6 @@ public class PathSystem {
 	}
 
 	public PathSystem withCurrentDir(NFolder parentFile) {
-		// ::comment when JAVA8
-		if (TeaVM.isTeaVM())
-			return this;
-		// ::done
-
 		return new PathSystem(parentFile, importedFolders);
 	}
 
@@ -238,6 +247,13 @@ public class PathSystem {
 	}
 
 	public InputFile getInputFile(String path) throws IOException {
+		// ::comment when JAVA8
+		// The browser build has no file system: a local file is whatever the host's
+		// file loader delivers, or null when there is none.
+		if (TeaVM.isTeaVM())
+			return TeaVmFileLoader.getInputFile(path, currentFolder);
+		// ::done
+
 		if (path.startsWith("http://") || path.startsWith("https://")) {
 			final SURL url = SURL.create(path);
 			if (url == null)
