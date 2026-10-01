@@ -595,22 +595,9 @@ public class StringUtils {
 	// JavaScript String.replaceAll(), which returns the string itself when there is
 	// nothing to replace.
 	public static String replaceChar(String s, char from, char to) {
-		// ::comment when JAVA8
-		if (TeaVM.isTeaVM()) {
-			return replaceCharNative(s, from, to);
-		}
-		// ::done
+		// see https://github.com/plantuml/plantuml/issues/2834#issuecomment-5938248216
 		return s.replace(from, to);
 	}
-
-	// ::comment when JAVA8
-	// The chars are passed as ints (their UTF-16 code units), so that they cross the
-	// Java/JavaScript boundary as plain numbers whatever the JSO version. Both patterns
-	// are plain one-char strings: no regex escaping is needed, and a lone "$" is a
-	// literal in a replacement string.
-	@JSBody(params = { "s", "from", "to" }, script = "return s.replaceAll(String.fromCharCode(from), String.fromCharCode(to));")
-	private static native String replaceCharNative(String s, int from, int to);
-	// ::done
 
 	// Removes useless trailing zeros (and the dot if it becomes orphan)
 	public static String trimZeros(String s) {

@@ -1,6 +1,13 @@
 // https://docs.gradle.org/current/javadoc/org/gradle/api/initialization/Settings.html
 
 pluginManagement {
+    // TeaVM preview builds (0.16.0-dev-N) are not on Maven Central / Plugin Portal.
+    // Remove this repository once 0.16.0 is released on Maven Central.
+    repositories {
+        maven { url = uri("https://teavm.org/maven/repository") }
+        gradlePluginPortal()
+        mavenCentral()
+    }
     // Convention plugin "plantuml.license-variant" shared by license-variants/plantuml-*.
     // Only built when a license variant is part of the build (-Pci).
     includeBuild("license-variants/build-logic")
