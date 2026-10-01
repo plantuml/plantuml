@@ -49,8 +49,9 @@ public class MyCollections {
 
 	@SuppressWarnings("unchecked")
 	public static <K, V> Map<K, V> unmodifiableMap(Map<? extends K, ? extends V> map) {
-		if (TeaVM.isTeaVM())
-			return (Map<K, V>) map;
+// see https://github.com/plantuml/plantuml/issues/2834#issuecomment-5938248216
+//		if (TeaVM.isTeaVM())
+//			return (Map<K, V>) map;
 		return Collections.unmodifiableMap(map);
 	}
 
