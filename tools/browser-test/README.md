@@ -97,18 +97,24 @@ host-provided `PLANTUML_FILE_LOADER` callback, since it has no file system:
 - with no loader set, behaviour is unchanged: a local include fails as a PlantUML error image,
   and diagrams without one are untouched;
 - with a loader, a file delivered asynchronously or synchronously is included; the loader
-  receives the name as written and `from = null` for an include in the diagram itself, and the
-  including file's identifier for a nested include, so relative names resolve against that
-  file;
-- the identifier the host returns is what the include strategies compare: a repeated
-  `!include` is skipped, `!include_many` includes again and `!include_once` reports an error,
-  as in the Java build; a file holding a whole `@startuml` ... `@enduml` diagram contributes the
-  inside of it; non-ASCII text arrives unchanged;
+  receives the name the directive asks for (variables expanded, a `file!tag` selector split off
+  and not applied, as for a local file in the Java build) and `from = null` for an include in
+  the diagram itself, and the including file's identifier for a nested include, so relative
+  names resolve against that file;
+- the identifier the host returns, compared as it is, is what the include strategies use: a
+  repeated `!include` is skipped, `!include_many` includes again and `!include_once` reports an
+  error, as in the Java build; a file holding a whole `@startuml` ... `@enduml` diagram
+  contributes the inside of it; non-ASCII text arrives unchanged;
+- the first outcome wins (a second `ok`, an `err` after `ok` and an `ok` after a `false` decline
+  change nothing), and only a non-empty string id with a string text is a delivery;
 - a loader that fails, throws, declines (returns `false`) or returns a promise that rejects
   makes the include fail as a PlantUML error image, never a hang or an unhandled page error,
-  and a failure's message reaches the console;
-- a standard-library include (`!include <lib/...>`) never reaches the file loader, and neither
-  does a relative include written in a standard-library file or in a bundled theme.
+  and a failure's message reaches the console; the engine has no timeout, so a loader that
+  never settles leaves the rendering waiting, which is documented rather than exercised here;
+- a standard-library include, a URL include and `!includesub` never reach the file loader,
+  and neither does a relative include written in a standard-library file or in a bundled theme,
+  whether the diagram or a delivered file brought it in; the delivered file is `from` again
+  afterwards.
 
 The files live in an in-memory map on the page, keyed by an absolute path the page's loader
 resolves itself, so no file system is involved and no layout engine either.

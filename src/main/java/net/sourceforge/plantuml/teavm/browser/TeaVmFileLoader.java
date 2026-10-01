@@ -116,11 +116,13 @@ public final class TeaVmFileLoader {
 
 	/**
 	 * Asks the host for a file. Returns <code>false</code> when the host declines
-	 * it before any callback; <code>true</code> otherwise, and then a callback
-	 * has been or will be invoked exactly once. A missing identifier, a text
-	 * that is not a string, an exception, a rejected promise and a reason that
-	 * cannot be turned into a string all become a failure; anything after the
-	 * first outcome is ignored.
+	 * it before any callback; <code>true</code> otherwise. When it returns
+	 * <code>true</code>, the caller waits until a callback or a rejected promise
+	 * settles the request. If neither happens, the caller keeps waiting because
+	 * the engine has no timeout. A missing identifier, a text that is not a
+	 * string, an exception, a rejected promise and a reason that cannot be turned
+	 * into a string all become a failure; anything after the first outcome is
+	 * ignored.
 	 */
 	@JSBody(params = { "path", "from", "onOk", "onErr" }, script = "var g = (typeof globalThis !== 'undefined') ? globalThis"
 			+ " : ((typeof self !== 'undefined') ? self : this);"

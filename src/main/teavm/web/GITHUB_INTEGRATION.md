@@ -273,11 +273,14 @@ more global, set before rendering:
 
 ```html
 <script>
-  // path: the name written after !include, variables expanded.
+  // path: the local file name the directive asks for, after variables are
+  //       expanded and a `file!tag` selector is split off. The engine does
+  //       not resolve it.
   // from: null for an include written in the diagram itself, otherwise the id
   //       you gave the file that contains the include.
   // ok(id, text): the file. The id is yours to choose (here a path); the engine
-  //       only compares ids for !include_once and hands one back as `from`.
+  //       compares it for a repeated !include and for !include_once, and hands
+  //       it back as `from` to the includes written in that file.
   // err(message): the include fails; the message goes to the console.
   window.PLANTUML_FILE_LOADER = function (path, from, ok, err) {
     var base = from === null ? "/docs/architecture/" : from.replace(/[^/]*$/, "");
@@ -296,9 +299,18 @@ meaning as in the Java build: a repeated `!include` of one file is skipped,
 `!include_many` includes it again, `!include_once` reports the second
 include as an error, and a file that holds a whole `@startuml` ... `@enduml`
 diagram contributes the inside of it. The loader may answer synchronously or
-later, or be an `async` function: a rejection of the promise it returns
-fails the include. Returning `false` (strictly), without calling either
-callback, declines the file, which then fails as if no loader were set. A
+later, or be an `async` function: the rejection of the promise it returns
+fails the include, while a fulfilled value delivers nothing, so the file must
+still come through `ok`. The first outcome wins; a later callback or
+rejection is ignored. Returning `false` (strictly), without calling either
+callback, declines the file, which then fails as if no loader were set. The
+engine has no timeout: a loader that neither calls a callback, returns
+`false`, nor rejects leaves the rendering waiting, so a host that performs
+network I/O should enforce its own timeout and call `err` when it expires.
+
+The loader is only asked for the local names of `!include`, `!include_once`
+and `!include_many`. Standard-library includes, URL includes, `!includesub`,
+`!includedef` and `!theme ... from` keep their existing routes, and a
 relative include written in a standard-library file or in a bundled theme
 never reaches the loader: those files are the engine's own.
 
