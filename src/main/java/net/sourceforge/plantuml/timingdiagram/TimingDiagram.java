@@ -406,6 +406,11 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 		return CommandExecutionResult.ok();
 	}
 
+	public CommandExecutionResult setTimeAxisUnit(String unit) {
+		ruler.setUnit(unit);
+		return CommandExecutionResult.ok();
+	}
+
 	public CommandExecutionResult highlight(TimeTick tickFrom, TimeTick tickTo, Display caption, Colors colors) {
 		this.highlights.add(new Highlight(getSkinParam(), tickFrom, tickTo, caption, colors));
 		return CommandExecutionResult.ok();
