@@ -296,8 +296,11 @@ meaning as in the Java build: a repeated `!include` of one file is skipped,
 `!include_many` includes it again, `!include_once` reports the second
 include as an error, and a file that holds a whole `@startuml` ... `@enduml`
 diagram contributes the inside of it. The loader may answer synchronously or
-later. Returning `false` (strictly), without calling either callback,
-declines the file, which then fails as if no loader were set.
+later, or be an `async` function: a rejection of the promise it returns
+fails the include. Returning `false` (strictly), without calling either
+callback, declines the file, which then fails as if no loader were set. A
+relative include written in a standard-library file or in a bundled theme
+never reaches the loader: those files are the engine's own.
 
 The engine never reads anything itself: the loader decides which files may be
 read, so reject what should stay out of reach (above, anything outside

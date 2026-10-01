@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.nio;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
@@ -70,9 +69,9 @@ public class PathSystem {
 	public static PathSystem fetch() {
 		// ::comment when JAVA8
 		if (TeaVM.isTeaVM())
-			return new PathSystem(null, new ArrayList<NFolderZip>());
+			return new PathSystem(null, new ArrayList<NFolderZip>(), true);
 		// ::done
-		return new PathSystem(new NFolderRegular(Paths.get("")), new ArrayList<NFolderZip>());
+		return new PathSystem(new NFolderRegular(Paths.get("")), new ArrayList<NFolderZip>(), true);
 	}
 
 	// Same resolution as for !include (see loadTeaVMStdlib): a library such as
@@ -121,15 +120,30 @@ public class PathSystem {
 	}
 
 	/**
-	 * What <code>!include_once</code> compares to recognise a file delivered by
-	 * the host's file loader when it is included again, or <code>null</code> for
-	 * any other file.
+	 * The identifier the browser host gave to a file its file loader delivered,
+	 * which is what an include strategy compares for such a file; <code>null</code>
+	 * for any other file, and always on the JVM, which never reaches the browser
+	 * classes.
 	 */
-	public File getTeaVMFileIdentity(InputFile file) {
+	public String getTeaVMFileId(InputFile file) {
 		// ::revert when JAVA8
 		// return null;
-		return TeaVmFileLoader.getIdentity(file);
+		if (TeaVM.isTeaVM() == false)
+			return null;
+
+		return TeaVmFileLoader.getId(file);
 		// ::done
+	}
+
+	/**
+	 * This path system with the host's file loader out of reach. The browser
+	 * build evaluates a standard-library file or a bundled theme in it: those
+	 * are the engine's own, so a relative include written in one of them is not
+	 * handed to the host as if the diagram had written it. The host is reached
+	 * again when the caller restores the previous path system.
+	 */
+	public PathSystem withoutHostFiles() {
+		return new PathSystem(currentFolder, importedFolders, false);
 	}
 
 	// ::comment when JAVA8
@@ -198,9 +212,17 @@ public class PathSystem {
 	 */
 	private final List<NFolderZip> importedFolders;
 
-	private PathSystem(NFolder currentFolder, List<NFolderZip> importedFolders) {
+	/**
+	 * Whether the browser host's file loader may be asked for a local file. False
+	 * while a standard-library file or a bundled theme is being evaluated (see
+	 * {@link #withoutHostFiles()}); meaningless on the JVM.
+	 */
+	private final boolean hostFiles;
+
+	private PathSystem(NFolder currentFolder, List<NFolderZip> importedFolders, boolean hostFiles) {
 		this.currentFolder = currentFolder;
 		this.importedFolders = importedFolders;
+		this.hostFiles = hostFiles;
 	}
 
 	public PathSystem changeCurrentDirectory(NFolder newCurrentDir) {
@@ -209,7 +231,7 @@ public class PathSystem {
 			return this;
 		// ::done
 
-		return new PathSystem(newCurrentDir, importedFolders);
+		return new PathSystem(newCurrentDir, importedFolders, hostFiles);
 	}
 
 	public PathSystem changeCurrentDirectory(SFile newCurrentDir) throws IOException {
@@ -226,11 +248,11 @@ public class PathSystem {
 			return this;
 
 		final NFolder folder = currentFolder.getSubfolder(path);
-		return new PathSystem(folder, importedFolders);
+		return new PathSystem(folder, importedFolders, hostFiles);
 	}
 
 	public PathSystem withCurrentDir(NFolder parentFile) {
-		return new PathSystem(parentFile, importedFolders);
+		return new PathSystem(parentFile, importedFolders, hostFiles);
 	}
 
 	public NFolder getCurrentDir() {
@@ -249,9 +271,15 @@ public class PathSystem {
 	public InputFile getInputFile(String path) throws IOException {
 		// ::comment when JAVA8
 		// The browser build has no file system: a local file is whatever the host's
-		// file loader delivers, or null when there is none.
-		if (TeaVM.isTeaVM())
+		// file loader delivers, or null when there is none. A URL and a
+		// standard-library path keep their own routes (TContext handles both
+		// before coming here), and the engine's own files have no host to ask.
+		if (TeaVM.isTeaVM()) {
+			if (hostFiles == false || path.startsWith("http://") || path.startsWith("https://")
+					|| (path.startsWith("<") && path.endsWith(">")))
+				return null;
 			return TeaVmFileLoader.getInputFile(path, currentFolder);
+		}
 		// ::done
 
 		if (path.startsWith("http://") || path.startsWith("https://")) {

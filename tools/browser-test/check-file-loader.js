@@ -52,6 +52,10 @@ const FILES = {
   '/project/docs/counter.puml': '!$n = $n + 1',
   '/project/docs/whole.puml': "' a comment before the diagram\n@startuml\nparticipant \"Hello from inside\" as INSIDE\n@enduml\nparticipant \"Hello from after\" as AFTER",
   '/project/docs/unicode.puml': 'participant "Hello 日本語 ünïcödé" as UNI',
+  // What the host would deliver if a relative include written in a library or
+  // a theme wrongly reached it: a name that must never appear in a drawing.
+  '/project/docs/leaf.puml': 'participant "WRONG_HOST" as WRONG',
+  '/project/docs/via-lib.puml': '!include <guardlib/relative>',
 };
 
 // The page's loader: resolves `path` against the directory of `from` (or of
@@ -73,11 +77,26 @@ window.PLANTUML_FILE_LOADER = function (path, from, onOk, onErr) {
   window.__loaderCalls.push({ path: path, from: from });
   ${mode === 'decline' ? 'return false;' : ''}
   ${mode === 'throw' ? "throw new Error('loader exploded (simulated)');" : ''}
+  ${mode === 'reject' ? "return (async function () { await new Promise(function (r) { setTimeout(r, 5); }); throw new Error('rejected after await (simulated)'); })();" : ''}
   var base = from === null ? '/project/docs' : from.replace(/\\/[^/]*$/, '');
   var id = resolve(base, path);
   if (!Object.prototype.hasOwnProperty.call(FILES, id)) { onErr('no such file: ' + id); return; }
+  var twist = window.__twist; window.__twist = null;
+  if (twist === 'ok-twice') { onOk(id, FILES[id]); onOk(id, 'participant "SECOND_CALL" as SC'); return; }
+  if (twist === 'ok-then-err') { onOk(id, FILES[id]); onErr('error after ok (simulated)'); return; }
+  if (twist === 'empty-id') { onOk('', FILES[id]); return; }
+  if (twist === 'number-text') { onOk(id, 42); return; }
   ${mode === 'sync' ? 'onOk(id, FILES[id]);' : 'setTimeout(function () { onOk(id, FILES[id]); }, 5);'}
 };
+// A synthetic standard library and a synthetic bundled theme, registered the
+// way a host may, each with a relative include that must never reach the loader.
+window.PLANTUML_STDLIB = window.PLANTUML_STDLIB || {};
+window.PLANTUML_STDLIB.guardlib = { greeting: ['participant "Hello from guardlib" as LIB'], relative: ['!include leaf.puml'] };
+window.PLANTUML_STDLIB_INFO = window.PLANTUML_STDLIB_INFO || {};
+window.PLANTUML_STDLIB_INFO.guardlib = { name: 'guardlib' };
+window.__pl_script_state = window.__pl_script_state || Object.create(null);
+window.__pl_script_state['guardlib.min.js'] = { state: 'loaded' };
+globalThis.PLANTUML_THEMES = { guardtheme: '!include leaf.puml' };
 </script>`;
 
 const pageHtml = mode => createModulePageHtml({
@@ -96,6 +115,7 @@ const server = createMountedServer({
     '/index-sync.html': { contentType: HTML, body: pageHtml('sync') },
     '/index-decline.html': { contentType: HTML, body: pageHtml('decline') },
     '/index-throw.html': { contentType: HTML, body: pageHtml('throw') },
+    '/index-reject.html': { contentType: HTML, body: pageHtml('reject') },
   },
   mounts: [{ prefix: '/', dir }],
 });
@@ -170,9 +190,54 @@ const calls = r => JSON.stringify(r.loaderCalls || []);
   check('the failure message reaches the console',
     hook.consoleLines.some(l => l.includes('no such file: /project/docs/missing.puml')),
     hook.consoleLines.slice(-3).join(' | '));
+  // The first outcome wins, and only a non-empty string id with a string text
+  // is a delivery.
+  for (const [twist, label, expected] of [
+    ['ok-twice', 'a second ok is ignored', r => renders(r, 'Hello from greeting') && !r.svg.includes('SECOND_CALL')],
+    ['ok-then-err', 'an err after ok is ignored', r => renders(r, 'Hello from greeting')],
+    ['empty-id', 'an empty id is not a delivery and fails the include', failsAsIncludeError],
+    ['number-text', 'a text that is not a string is not a delivery and fails the include', failsAsIncludeError],
+  ]) {
+    await hook.page.evaluate(t => { window.__twist = t; }, twist);
+    r = await renderOn(hook.page, diagram('!include greeting.puml'), opts);
+    check(label, expected(r), renderedAs(r));
+  }
   await hook.page.evaluate(() => { window.__loaderCalls.length = 0; });
-  r = await renderOn(hook.page, diagram('!include <nosuchlib/greeting>'), opts);
-  check('a standard-library include never reaches the file loader', r.loaderCalls.length === 0, calls(r));
+  r = await renderOn(hook.page, diagram('!include greeting.puml!1'), opts);
+  check('a diagram selector is split off the name and not applied, as for a local file in the Java build',
+    renders(r, 'Hello from greeting') && r.loaderCalls.length === 1 && r.loaderCalls[0].path === 'greeting.puml',
+    renderedAs(r) + '; calls: ' + calls(r));
+  // Other routes keep their existing browser behaviour and never reach the loader.
+  for (const [what, label] of [
+    ['!include <nosuchlib/greeting>', 'a standard-library include'],
+    ['!include https://example.invalid/x.puml', 'a URL include'],
+    ['!includesub greeting.puml!PART', '!includesub'],
+  ]) {
+    await hook.page.evaluate(() => { window.__loaderCalls.length = 0; });
+    r = await renderOn(hook.page, diagram(what), opts);
+    check(label + ' never reaches the file loader', !r.thrown && r.loaderCalls.length === 0
+      && !(r.svg || '').includes('Hello from greeting'), renderedAs(r) + '; calls: ' + calls(r));
+  }
+  // The engine's own files never ask the host: a relative include written in
+  // a library file or a theme fails as it always did, whether the diagram or
+  // a delivered file brought the library in, and the host is reachable again
+  // afterwards.
+  for (const [what, label] of [
+    ['!include <guardlib/relative>', 'a library file'],
+    ['!theme guardtheme', 'a theme'],
+    ['!include via-lib.puml', 'a library file brought in by a delivered file'],
+  ]) {
+    await hook.page.evaluate(() => { window.__loaderCalls.length = 0; });
+    r = await renderOn(hook.page, diagram(what), opts);
+    check('a relative include written in ' + label + ' does not reach the file loader',
+      failsAsIncludeError(r) && !r.svg.includes('WRONG_HOST') && !r.loaderCalls.some(c => c.path === 'leaf.puml'),
+      renderedAs(r) + '; calls: ' + calls(r));
+  }
+  await hook.page.evaluate(() => { window.__loaderCalls.length = 0; });
+  r = await renderOn(hook.page, diagram('!include <guardlib/greeting>', '!include greeting.puml'), opts);
+  check('the file loader is reachable again after a library file',
+    renders(r, 'Hello from guardlib', 'Hello from greeting') && r.loaderCalls.length === 1,
+    renderedAs(r) + '; calls: ' + calls(r));
   check('no unhandled page errors on the hook page', hook.errors.length === 0, hook.errors.join(' | '));
 
   // Page 3: a loader that answers synchronously, from inside the call.
@@ -194,6 +259,14 @@ const calls = r => JSON.stringify(r.loaderCalls || []);
   r = await renderOn(thrown.page, diagram('!include greeting.puml'), opts);
   check('a throwing loader fails the include as a PlantUML error image', failsAsIncludeError(r), renderedAs(r));
   check('no unhandled page errors on the throw page', thrown.errors.length === 0, thrown.errors.join(' | '));
+
+  // Page 6: an async loader that throws after awaiting, so the promise it
+  // returned rejects once the call is over.
+  const reject = await openPage('index-reject.html');
+  r = await renderOn(reject.page, diagram('!include greeting.puml'), Object.assign({ timeoutMs: 8000 }, opts));
+  check('a loader whose promise rejects fails the include as a PlantUML error image, no hang',
+    failsAsIncludeError(r), renderedAs(r));
+  check('no unhandled page errors on the reject page', reject.errors.length === 0, reject.errors.join(' | '));
 
   await browser.close();
   server.close();

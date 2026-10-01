@@ -104,10 +104,11 @@ host-provided `PLANTUML_FILE_LOADER` callback, since it has no file system:
   `!include` is skipped, `!include_many` includes again and `!include_once` reports an error,
   as in the Java build; a file holding a whole `@startuml` ... `@enduml` diagram contributes the
   inside of it; non-ASCII text arrives unchanged;
-- a loader that fails, throws or declines (returns `false`) makes the include fail as a
-  PlantUML error image, never a hang or an unhandled page error, and a failure's message
-  reaches the console;
-- a standard-library include (`!include <lib/...>`) never reaches the file loader.
+- a loader that fails, throws, declines (returns `false`) or returns a promise that rejects
+  makes the include fail as a PlantUML error image, never a hang or an unhandled page error,
+  and a failure's message reaches the console;
+- a standard-library include (`!include <lib/...>`) never reaches the file loader, and neither
+  does a relative include written in a standard-library file or in a bundled theme.
 
 The files live in an in-memory map on the page, keyed by an absolute path the page's loader
 resolves itself, so no file system is involved and no layout engine either.
