@@ -64,14 +64,14 @@ public final class StringBuilder2 {
 
 	public StringBuilder2 append(CharSequence csq) {
 		if (csq == null)
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Input cannot be null");
 
 		return append(csq, 0, csq.length());
 	}
 
 	public StringBuilder2 append(CharSequence csq, int start, int end) {
 		if (csq == null)
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Input cannot be null");
 		final int len = end - start;
 		if (length + len > buffer.length)
 			throw new IllegalStateException("Capacity exceeded");
@@ -82,7 +82,7 @@ public final class StringBuilder2 {
 
 	public StringBuilder2 append(String str) {
 		if (str == null)
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Input cannot be null");
 		final int len = str.length();
 		if (length + len > buffer.length)
 			throw new IllegalStateException("Capacity exceeded");
