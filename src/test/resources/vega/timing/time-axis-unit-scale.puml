@@ -1,0 +1,20 @@
+---
+output: svg, debug
+expected-description: (Timing Diagram)
+---
+@startuml
+scale 100 as 50 pixels
+time-axis unit "ns"
+robust "Signal" as S
+concise "Bus" as B
+
+@0
+S is Idle
+B is Free
+@100
+S is Busy
+@200
+B is Data
+@300
+S is Idle
+@enduml
