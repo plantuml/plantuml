@@ -35,37 +35,43 @@
  */
 package net.sourceforge.plantuml.preproc;
 
-public class DefineVariable {
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-	private final String name;
-	private final String defaultValue;
+/**
+ * What the preprocessor knows about where the diagram comes from: the version,
+ * the name and the directory of the file, its date... The preprocessor functions
+ * that give those values (%filename(), %dirpath()...) read them here, through the
+ * context, at the time they are called, so that they do not depend on a
+ * particular diagram and can be shared.
+ */
+public class Environment {
 
-	public DefineVariable(String name) {
-		name = name.trim();
-		final int idx = name.indexOf('=');
-		if (idx == -1) {
-			this.name = name;
-			this.defaultValue = null;
-		} else {
-			this.name = name.substring(0, idx).trim();
-			final String right = name.substring(idx + 1).trim();
-			this.defaultValue = right.substring(1, right.length() - 1);
-		}
+	private final Map<String, String> values = new LinkedHashMap<String, String>();
+
+	public void put(String key, String value) {
+		values.put(key, value);
 	}
 
-	public String getName() {
-		return name;
+	/**
+	 * Returns the value, or <code>null</code> if there is none.
+	 */
+	public String get(String key) {
+		return values.get(key);
 	}
 
-	public String getDefaultValue() {
-		return defaultValue;
+	public void putAll(Environment other) {
+		values.putAll(other.values);
 	}
 
-	public DefineVariable removeDefault() {
-		if (defaultValue == null) {
-			throw new IllegalStateException();
-		}
-		return new DefineVariable(name);
+	public Environment copy() {
+		final Environment result = new Environment();
+		result.putAll(this);
+		return result;
 	}
 
+	@Override
+	public String toString() {
+		return values.keySet().toString();
+	}
 }

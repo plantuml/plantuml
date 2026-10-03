@@ -235,6 +235,14 @@ public enum FileFormat {
 		}
 	};
 
+	private static final Map<FontTextKey, Double> DESCENT_CACHE = new LinkedHashMap<FontTextKey, Double>(CACHE_SIZE,
+			0.75f, true) {
+		@Override
+		protected boolean removeEldestEntry(Map.Entry<FontTextKey, Double> eldest) {
+			return size() > CACHE_SIZE;
+		}
+	};
+
 	private static class FontTextKey {
 		private final UFont font;
 		private final String text;
@@ -273,6 +281,21 @@ public enum FileFormat {
 			final Rectangle2D rect = fm.getStringBounds(text, gg);
 			final XDimension2D result = new XDimension2D(rect.getWidth(), rect.getHeight());
 			DIMENSION_CACHE.put(key, result);
+			return result;
+		}
+	}
+
+	static public double getJavaDescent(UFont font, String text) {
+		final FontTextKey key = new FontTextKey(font, text);
+
+		synchronized (DESCENT_CACHE) {
+			final Double cached = DESCENT_CACHE.get(key);
+			if (cached != null)
+				return cached;
+
+			final double result = font.getUnderlayingFont(text).getLineMetrics(text, gg.getFontRenderContext())
+					.getDescent();
+			DESCENT_CACHE.put(key, result);
 			return result;
 		}
 	}

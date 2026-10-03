@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.nio.InputFile;
 import net.sourceforge.plantuml.nio.PathSystem;
-import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc.Environment;
 import net.sourceforge.plantuml.preproc.DiagramDetector;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.ReadLine;
@@ -82,80 +82,6 @@ import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.theme.Theme;
-import net.sourceforge.plantuml.tim.builtin.AlwaysFalse;
-import net.sourceforge.plantuml.tim.builtin.AlwaysTrue;
-import net.sourceforge.plantuml.tim.builtin.Backslash;
-import net.sourceforge.plantuml.tim.builtin.BoolVal;
-import net.sourceforge.plantuml.tim.builtin.Breakline;
-import net.sourceforge.plantuml.tim.builtin.CallUserFunction;
-import net.sourceforge.plantuml.tim.builtin.Chr;
-import net.sourceforge.plantuml.tim.builtin.Darken;
-import net.sourceforge.plantuml.tim.builtin.DateFunction;
-import net.sourceforge.plantuml.tim.builtin.Dec2hex;
-import net.sourceforge.plantuml.tim.builtin.Dirpath;
-import net.sourceforge.plantuml.tim.builtin.Dollar;
-import net.sourceforge.plantuml.tim.builtin.Eval;
-import net.sourceforge.plantuml.tim.builtin.Feature;
-import net.sourceforge.plantuml.tim.builtin.FileExists;
-import net.sourceforge.plantuml.tim.builtin.Filedate;
-import net.sourceforge.plantuml.tim.builtin.Filename;
-import net.sourceforge.plantuml.tim.builtin.FilenameNoExtension;
-import net.sourceforge.plantuml.tim.builtin.FunctionExists;
-import net.sourceforge.plantuml.tim.builtin.GetAllStdlib;
-import net.sourceforge.plantuml.tim.builtin.GetAllTheme;
-import net.sourceforge.plantuml.tim.builtin.GetCurrentTheme;
-import net.sourceforge.plantuml.tim.builtin.GetJsonKey;
-import net.sourceforge.plantuml.tim.builtin.GetJsonType;
-import net.sourceforge.plantuml.tim.builtin.GetStdlib;
-import net.sourceforge.plantuml.tim.builtin.GetVariableValue;
-import net.sourceforge.plantuml.tim.builtin.GetVersion;
-import net.sourceforge.plantuml.tim.builtin.Getenv;
-import net.sourceforge.plantuml.tim.builtin.Hex2dec;
-import net.sourceforge.plantuml.tim.builtin.HslColor;
-import net.sourceforge.plantuml.tim.builtin.IntVal;
-import net.sourceforge.plantuml.tim.builtin.InvokeProcedure;
-import net.sourceforge.plantuml.tim.builtin.IsDark;
-import net.sourceforge.plantuml.tim.builtin.IsLight;
-import net.sourceforge.plantuml.tim.builtin.JsonAdd;
-import net.sourceforge.plantuml.tim.builtin.JsonKeyExists;
-import net.sourceforge.plantuml.tim.builtin.JsonMerge;
-import net.sourceforge.plantuml.tim.builtin.JsonRemove;
-import net.sourceforge.plantuml.tim.builtin.JsonSet;
-import net.sourceforge.plantuml.tim.builtin.LeftAlign;
-import net.sourceforge.plantuml.tim.builtin.Lighten;
-import net.sourceforge.plantuml.tim.builtin.LoadJson;
-import net.sourceforge.plantuml.tim.builtin.LogicalAnd;
-import net.sourceforge.plantuml.tim.builtin.LogicalNand;
-import net.sourceforge.plantuml.tim.builtin.LogicalNor;
-import net.sourceforge.plantuml.tim.builtin.LogicalNot;
-import net.sourceforge.plantuml.tim.builtin.LogicalNxor;
-import net.sourceforge.plantuml.tim.builtin.LogicalOr;
-import net.sourceforge.plantuml.tim.builtin.LogicalXor;
-import net.sourceforge.plantuml.tim.builtin.Lower;
-import net.sourceforge.plantuml.tim.builtin.Modulo;
-import net.sourceforge.plantuml.tim.builtin.Newline;
-import net.sourceforge.plantuml.tim.builtin.NewlineShort;
-import net.sourceforge.plantuml.tim.builtin.Now;
-import net.sourceforge.plantuml.tim.builtin.Ord;
-import net.sourceforge.plantuml.tim.builtin.Percent;
-import net.sourceforge.plantuml.tim.builtin.RandomFunction;
-import net.sourceforge.plantuml.tim.builtin.RetrieveProcedure;
-import net.sourceforge.plantuml.tim.builtin.ReverseColor;
-import net.sourceforge.plantuml.tim.builtin.ReverseHsluvColor;
-import net.sourceforge.plantuml.tim.builtin.RightAlign;
-import net.sourceforge.plantuml.tim.builtin.SetVariableValue;
-import net.sourceforge.plantuml.tim.builtin.Size;
-import net.sourceforge.plantuml.tim.builtin.SplitStr;
-import net.sourceforge.plantuml.tim.builtin.SplitStrRegex;
-import net.sourceforge.plantuml.tim.builtin.Str2Json;
-import net.sourceforge.plantuml.tim.builtin.StringFunction;
-import net.sourceforge.plantuml.tim.builtin.Strlen;
-import net.sourceforge.plantuml.tim.builtin.Strpos;
-import net.sourceforge.plantuml.tim.builtin.Substr;
-import net.sourceforge.plantuml.tim.builtin.Tabulation;
-import net.sourceforge.plantuml.tim.builtin.Upper;
-import net.sourceforge.plantuml.tim.builtin.VariableExists;
-import net.sourceforge.plantuml.tim.builtin.Xargs;
 import net.sourceforge.plantuml.tim.expression.Knowledge;
 import net.sourceforge.plantuml.tim.expression.TValue;
 import net.sourceforge.plantuml.tim.iterator.CodeIterator;
@@ -181,7 +107,9 @@ public class TContext {
 	private final List<StringLocated> resultList = new ArrayList<>();
 	private final List<StringLocated> debug = new ArrayList<>();
 
-	public final FunctionsSet functionsSet = new FunctionsSet();
+	public final FunctionsSet functionsSet = new FunctionsSet(StandardFunctions.get());
+
+	private final Environment environment;
 
 	private final Charset charset;
 
@@ -203,103 +131,20 @@ public class TContext {
 		return MyCollections.unmodifiableSet(filesUsedCurrent);
 	}
 
-	private void addStandardFunctions(Defines defines) {
-		functionsSet.addFunction(new AlwaysFalse());
-		functionsSet.addFunction(new AlwaysTrue());
-		functionsSet.addFunction(new Backslash());
-		functionsSet.addFunction(new BoolVal());
-		functionsSet.addFunction(new Breakline());
-		functionsSet.addFunction(new CallUserFunction());
-		functionsSet.addFunction(new Chr());
-		functionsSet.addFunction(new Darken());
-		functionsSet.addFunction(new DateFunction());
-		functionsSet.addFunction(new Dec2hex());
-		functionsSet.addFunction(new Dirpath(defines));
-		functionsSet.addFunction(new Dollar());
-		functionsSet.addFunction(new Eval());
-		functionsSet.addFunction(new Feature());
-		functionsSet.addFunction(new Filedate(defines));
-		functionsSet.addFunction(new FileExists());
-		functionsSet.addFunction(new Filename(defines));
-		functionsSet.addFunction(new FilenameNoExtension(defines));
-		functionsSet.addFunction(new FunctionExists());
-		if (!TeaVM.isTeaVM()) {
-			functionsSet.addFunction(new GetAllStdlib());
-		}
-		functionsSet.addFunction(new GetAllTheme());
-		functionsSet.addFunction(new GetCurrentTheme());
-		functionsSet.addFunction(new GetJsonKey());
-		functionsSet.addFunction(new GetJsonType());
-		if (!TeaVM.isTeaVM()) {
-			functionsSet.addFunction(new GetStdlib());
-		}
-		functionsSet.addFunction(new GetVariableValue());
-		functionsSet.addFunction(new GetVersion());
-		functionsSet.addFunction(new Getenv());
-		functionsSet.addFunction(new Hex2dec());
-		functionsSet.addFunction(new HslColor());
-		functionsSet.addFunction(new IntVal());
-		functionsSet.addFunction(new InvokeProcedure());
-		functionsSet.addFunction(new IsDark());
-		functionsSet.addFunction(new IsLight());
-		functionsSet.addFunction(new JsonAdd());
-		functionsSet.addFunction(new JsonKeyExists());
-		functionsSet.addFunction(new JsonMerge());
-		functionsSet.addFunction(new JsonRemove());
-		functionsSet.addFunction(new JsonSet());
-		functionsSet.addFunction(new LeftAlign());
-		functionsSet.addFunction(new Lighten());
-		functionsSet.addFunction(new LoadJson());
-		// functionsSet.addFunction(new LoadJsonLegacy());
-		functionsSet.addFunction(new LogicalAnd());
-		functionsSet.addFunction(new LogicalNand());
-		functionsSet.addFunction(new LogicalNor());
-		functionsSet.addFunction(new LogicalNot());
-		functionsSet.addFunction(new LogicalNxor());
-		functionsSet.addFunction(new LogicalOr());
-		functionsSet.addFunction(new LogicalXor());
-		functionsSet.addFunction(new Lower());
-		functionsSet.addFunction(new Modulo());
-		functionsSet.addFunction(new Newline());
-		functionsSet.addFunction(new NewlineShort());
-		functionsSet.addFunction(new Now());
-		functionsSet.addFunction(new Ord());
-		functionsSet.addFunction(new Percent());
-		functionsSet.addFunction(new RandomFunction());
-		functionsSet.addFunction(new RetrieveProcedure());
-		functionsSet.addFunction(new ReverseColor());
-		functionsSet.addFunction(new ReverseHsluvColor());
-		functionsSet.addFunction(new RightAlign());
-		functionsSet.addFunction(new SetVariableValue());
-		functionsSet.addFunction(new Size());
-		functionsSet.addFunction(new SplitStr());
-		functionsSet.addFunction(new SplitStrRegex());
-		functionsSet.addFunction(new Str2Json());
-		functionsSet.addFunction(new StringFunction());
-		functionsSet.addFunction(new Strlen());
-		functionsSet.addFunction(new Strpos());
-		functionsSet.addFunction(new Substr());
-		functionsSet.addFunction(new Tabulation());
-		functionsSet.addFunction(new Upper());
-		functionsSet.addFunction(new VariableExists());
-		functionsSet.addFunction(new Xargs());
-		// %standard_exists_function
-		// %str_replace
-		// !exit
-		// !log
-		// %min
-		// %max
-		// Regexp
-		// %time
-		// %trim
-	}
-
-	public TContext(PathSystem pathSystem, Defines defines, Charset charset,
+	public TContext(PathSystem pathSystem, Environment environment, Charset charset,
 			DefinitionsContainer definitionsContainer) {
+		this.environment = requireNonNull(environment);
 		this.pathSystem = pathSystem;
 		this.definitionsContainer = definitionsContainer;
 		this.charset = requireNonNull(charset);
-		this.addStandardFunctions(defines);
+	}
+
+	/**
+	 * Returns a value of the environment (see {@link Environment}), or
+	 * <code>null</code> if there is none.
+	 */
+	public String getEnvironmentValue(String key) {
+		return environment.get(key);
 	}
 
 	public Knowledge asKnowledge(final TMemory memory, final LineLocation location) {
@@ -509,9 +354,6 @@ public class TContext {
 	@JawsStrange
 	private StringLocated[] applyFunctionsAndVariablesInternal(TMemory memory, StringLocated located)
 			throws EaterException {
-		if (memory.isEmpty() && functionsSet.size() == 0)
-			return new StringLocated[] { located };
-
 		final String result = applyFunctionsAndVariables(memory, located);
 		if (result == null)
 			return null;
@@ -539,9 +381,6 @@ public class TContext {
 		// https://en.wikipedia.org/wiki/String-searching_algorithm
 		// https://www.quora.com/What-is-the-most-efficient-algorithm-to-replace-all-occurrences-of-a-pattern-P-in-a-string-with-a-pattern-P
 		// https://en.wikipedia.org/wiki/Trie
-		if (memory.isEmpty() && functionsSet.size() == 0)
-			return str.getString();
-
 		final StringBuilder result = new StringBuilder();
 		for (int i = 0; i < str.length(); i++) {
 			final char c = str.charAt(i);

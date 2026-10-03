@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml;
 
 import java.awt.font.FontRenderContext;
-import java.awt.font.LineMetrics;
 
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
@@ -70,9 +69,7 @@ public class StringBounderSvg implements StringBounder {
 
 	@Override
 	public double getDescent(UFont font, String text) {
-		final LineMetrics lineMetrics = font.getUnderlayingFont(text).getLineMetrics(text, fontRenderContext);
-		final double descent = lineMetrics.getDescent();
-		return descent;
+		return FileFormat.getJavaDescent(font, text);
 	}
 
 }

@@ -95,6 +95,28 @@ class StringUtilsTest {
 		assertEquals(expected, StringUtils.formatDecimal(x, decimal));
 	}
 
+	// A value that is an exact multiple of 2^-(decimal+1) is exactly on a rounding
+	// boundary when its last bit is set (30.5625 with 3 decimals); formatDecimal
+	// resolves it without String.format and must give what String.format gives (half up).
+	@Test
+	void test_formatDecimal_exactTies() {
+		assertEquals("30.563", StringUtils.formatDecimal(30.5625, 3));
+		assertEquals("-30.563", StringUtils.formatDecimal(-30.5625, 3));
+		assertEquals("3", StringUtils.formatDecimal(2.5, 0));
+		assertEquals("1", StringUtils.formatDecimal(0.5, 0));
+		assertEquals("0.13", StringUtils.formatDecimal(0.125, 2));
+
+		for (int decimal = 0; decimal <= 7; decimal++) {
+			final double step = 1.0 / (1L << (decimal + 1));
+			for (int j = -2000; j <= 2000; j++) {
+				final double x = j * step;
+				final String reference = x == 0.0 ? "0"
+						: StringUtils.trimZeros(String.format(Locale.US, "%." + decimal + "f", x));
+				assertEquals(reference, StringUtils.formatDecimal(x, decimal), "x=" + x + " decimal=" + decimal);
+			}
+		}
+	}
+
 	// formatDecimal writes its digits right to left into a single char[]; these cases
 	// pin every shape of that layout: no fractional part, fractional zeros dropped,
 	// leading zeros in the fractional part, sign, and the widest possible outputs.

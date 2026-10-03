@@ -38,7 +38,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TContext;
@@ -49,11 +48,6 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 public class Dirpath extends SimpleReturnFunction {
 
 	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%dirpath", 0);
-	private final String value;
-
-	public Dirpath(Defines defines) {
-		this.value = defines.getEnvironmentValue("dirpath");
-	}
 
 	public TFunctionSignature getSignature() {
 		return SIGNATURE;
@@ -67,6 +61,7 @@ public class Dirpath extends SimpleReturnFunction {
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException {
+		final String value = context.getEnvironmentValue("dirpath");
 		if (value == null)
 			return TValue.fromString("");
 
