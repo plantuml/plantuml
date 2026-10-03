@@ -35,16 +35,12 @@
  */
 package net.sourceforge.plantuml.preproc;
 
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.api.ApiWarning;
 import net.sourceforge.plantuml.security.SFile;
@@ -190,22 +186,6 @@ public class Defines implements Truth {
 		// magic = null;
 	}
 
-	public List<String> applyDefines(String line) {
-		// System.err.println("line=" + line + " " + values.size());
-		line = manageDate(line);
-		line = environment.manageEnvironment(line);
-		line = method1(line);
-		// line = values.size() < 10 ? method1(line) : method2(line);
-		return Arrays.asList(line.split("\n"));
-	}
-
-	private String method1(String line) {
-		for (Define def : values.values())
-			line = def.apply(line);
-
-		return line;
-	}
-
 //	private Map<String, Collection<Define>> getAll() {
 //		final Map<String, Collection<Define>> result = new LinkedHashMap<String, Collection<Define>>();
 //		for (Define def : values.values()) {
@@ -250,26 +230,6 @@ public class Defines implements Truth {
 //		return words;
 //	}
 
-	private static final String DATE = "(?i)%date(\\[(.+?)\\])?%";
-	private final static Pattern datePattern = Pattern.compile(DATE);
 
-	private String manageDate(String line) {
-		final Matcher m = datePattern.matcher(line);
-		if (m.find()) {
-			final String format = m.group(2);
-			String replace;
-			if (format == null) {
-				replace = new Date().toString();
-			} else {
-				try {
-					replace = new SimpleDateFormat(format).format(new Date());
-				} catch (Exception e) {
-					replace = "(BAD DATE PATTERN:" + format + ")";
-				}
-			}
-			line = line.replaceAll(DATE, replace);
-		}
-		return line;
-	}
 
 }
