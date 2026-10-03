@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.tim.builtin;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -64,15 +63,17 @@ public class BoolVal extends SimpleReturnFunction {
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException {
 		final String s = values.get(0).toString().toLowerCase();
-		if (trueValues.contains(s)) {
+		switch (s) {
+		case "true":
+		case "1":
 			return TValue.fromBoolean(true);
-		} else if (falseValues.contains(s)) {
+
+		case "false":
+		case "0":
 			return TValue.fromBoolean(false);
+
+		default:
+			throw new EaterException("Cannot convert " + s + " to boolean.", location);
 		}
-
-		throw new EaterException("Cannot convert " + s + " to boolean.", location);
 	}
-
-	private final List<String> trueValues = Arrays.asList("true", "1");
-	private final List<String> falseValues = Arrays.asList("false", "0");
 }
