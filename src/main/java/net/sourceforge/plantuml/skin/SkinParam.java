@@ -49,7 +49,6 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Previous;
@@ -265,19 +264,29 @@ public class SkinParam implements ISkinParam {
 	}
 
 	// cleanForKeySlow() is a pure function of the key, so its results are shared by
-	// all the SkinParam instances (one per diagram). The size is bounded because
-	// the keys come from the diagram source.
+	// all the SkinParam instances (one per diagram). The keys come from the diagram
+	// source (a stereotype is part of the key), so the size is bounded, and the least
+	// recently used entries are the ones dropped: a cache that stopped accepting
+	// entries once full would stay stuck on the first keys it saw, in a long-running
+	// server.
 	private static final int CACHE_CLEAN_FOR_KEY_MAX = 2000;
-	private static final Map<String, List<String>> cacheCleanForKey = new ConcurrentHashMap<String, List<String>>();
+	private static final Map<String, List<String>> cacheCleanForKey = new LinkedHashMap<String, List<String>>(
+			CACHE_CLEAN_FOR_KEY_MAX, 0.75f, true) {
+		@Override
+		protected boolean removeEldestEntry(Map.Entry<String, List<String>> eldest) {
+			return size() > CACHE_CLEAN_FOR_KEY_MAX;
+		}
+	};
 
 	List<String> cleanForKey(String key) {
-		List<String> result = cacheCleanForKey.get(key);
-		if (result == null) {
-			result = cleanForKeySlow(key);
-			if (cacheCleanForKey.size() < CACHE_CLEAN_FOR_KEY_MAX)
+		synchronized (cacheCleanForKey) {
+			List<String> result = cacheCleanForKey.get(key);
+			if (result == null) {
+				result = cleanForKeySlow(key);
 				cacheCleanForKey.put(key, result);
+			}
+			return result;
 		}
-		return result;
 	}
 
 	private static final Pattern patternCleanUnderscoreDot = Pattern.compile("_|\\.");
