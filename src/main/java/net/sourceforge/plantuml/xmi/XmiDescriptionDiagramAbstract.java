@@ -151,10 +151,10 @@ public abstract class XmiDescriptionDiagramAbstract implements XmlDiagramTransfo
 	}
 
 	public static String forXMI(String s) {
-		return StringUtils.replaceCharXXX(s, ':', ' ');
+		return s.replace(':', ' ');
 	}
 
 	public static String forXMI(Display s) {
-		return StringUtils.replaceCharXXX(s.get(0).toString(), ':', ' ');
+		return s.get(0).toString().replace(':', ' ');
 	}
 }

@@ -191,7 +191,7 @@ public class WBSDiagram extends TitledDiagram implements TextBlock {
 			first = type;
 			return 0;
 		}
-		type = StringUtils.replaceCharXXX(type, '\t', ' ');
+		type = type.replace('\t', ' ');
 		if (type.contains(" ") == false)
 			return type.length() - 1;
 
