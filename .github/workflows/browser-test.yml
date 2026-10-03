@@ -87,5 +87,8 @@ jobs:
       - name: Check stdlib loader
         run: node tools/browser-test/check-stdlib-loader.js target=license-variants/plantuml-mit/build/npm-plantuml
 
+      - name: Check file loader
+        run: node tools/browser-test/check-file-loader.js target=license-variants/plantuml-mit/build/npm-plantuml
+
       - name: Add Gradle title to Summary
         run: echo "## Gradle" >> "$GITHUB_STEP_SUMMARY"

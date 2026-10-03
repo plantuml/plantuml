@@ -2,6 +2,7 @@ package net.sourceforge.plantuml.nio;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
@@ -14,6 +15,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Locale;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,6 +24,28 @@ import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.api.io.TempDir;
 
 class PathSystemTest {
+
+	@Test
+	@DisplayName("on the JVM, no file has a browser-host identifier, not even one that is not a plain file")
+	void noBrowserHostIdOnTheJvm(@TempDir Path tempDir) throws Exception {
+		// arrange: a ZIP entry is what the include strategies see besides a plain
+		// file; the browser host's file loader never delivers anything here
+		final Path zip = tempDir.resolve("lib.zip");
+		try (ZipOutputStream out = new ZipOutputStream(Files.newOutputStream(zip))) {
+			out.putNextEntry(new ZipEntry("common.puml"));
+			out.write("A -> B".getBytes(StandardCharsets.UTF_8));
+			out.closeEntry();
+		}
+		final Path plain = tempDir.resolve("plain.puml");
+		Files.writeString(plain, "A -> B", StandardCharsets.UTF_8);
+
+		final PathSystem cut = PathSystem.fetch();
+
+		// act / assert
+		assertNull(cut.getTeaVMFileId(new InputFileZip(zip.toFile(), "common.puml")));
+		assertNull(cut.getTeaVMFileId(cut.getInputFile(plain.toAbsolutePath().toString())));
+		assertNull(cut.withoutHostFiles().getTeaVMFileId(new InputFileZip(zip.toFile(), "common.puml")));
+	}
 
 	@Test
 	void foo() throws Exception {

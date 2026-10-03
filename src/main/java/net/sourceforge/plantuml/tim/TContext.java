@@ -190,6 +190,11 @@ public class TContext {
 
 	// private final Set<FileWithSuffix> usedFiles = new HashSet<>();
 	private final Set<File> filesUsedCurrent = new HashSet<>();
+	/**
+	 * The files the browser host delivered, by the identifier it gave them: a
+	 * string compared as it is, which a File would normalise.
+	 */
+	private final Set<String> hostFilesUsedCurrent = new HashSet<>();
 
 	private final PreprocessingArtifact preprocessingArtifact = new PreprocessingArtifact();
 	private PathSystem pathSystem;
@@ -738,6 +743,10 @@ public class TContext {
 
 		final PathSystem saveImportedFiles = this.pathSystem;
 		this.pathSystem = eater.getNewImportedFiles();
+		if (TeaVM.isTeaVM())
+			// A bundled theme is the engine's own: a relative include written in it
+			// must not reach the browser host (restored in the finally below).
+			this.pathSystem = this.pathSystem.withoutHostFiles();
 
 		try {
 			final List<StringLocated> body = new ArrayList<>();
@@ -816,8 +825,12 @@ public class TContext {
 				saveImportedFiles = this.pathSystem;
 				if (TeaVM.isTeaVM()) {
 					final InputStream is = this.pathSystem.getTeaVMStdlibInputStream(what);
-					if (is != null)
+					if (is != null) {
+						// The library's file is the engine's own: a relative include written
+						// in it must not reach the browser host (restored with the rest).
+						this.pathSystem = this.pathSystem.withoutHostFiles();
 						reader = ReadLineReader.create(new InputStreamReader(is), what);
+					}
 				} else {
 					InputFile tmp = this.pathSystem.getInputFile(what);
 					this.pathSystem = this.pathSystem.changeCurrentDirectory(tmp.getParentFolder());
@@ -836,32 +849,35 @@ public class TContext {
 				// reader = PreprocessorUtils.getReaderNonstandardInclude(s, what.substring(1,
 				// what.length() - 1));
 			} else {
-				if (!TeaVM.isTeaVM()) {
-					final InputFile f2 = this.pathSystem.getInputFile(what);
-					if (f2 != null) {
-						final File used = f2 instanceof SFile ? ((SFile) f2).getCanonicalFile().conv() : null;
-						if (strategy == PreprocessorIncludeStrategy.DEFAULT && filesUsedCurrent.contains(used))
-							return;
+				final InputFile f2 = this.pathSystem.getInputFile(what);
+				if (f2 != null) {
+					final File used = f2 instanceof SFile ? ((SFile) f2).getCanonicalFile().conv() : null;
+					final String hostId = used == null ? this.pathSystem.getTeaVMFileId(f2) : null;
+					final boolean seen = used != null ? filesUsedCurrent.contains(used)
+							: hostId != null && hostFilesUsedCurrent.contains(hostId);
+					if (strategy == PreprocessorIncludeStrategy.DEFAULT && seen)
+						return;
 
-						if (strategy == PreprocessorIncludeStrategy.ONCE && filesUsedCurrent.contains(used))
-							throw new EaterException("This file has already been included", s);
+					if (strategy == PreprocessorIncludeStrategy.ONCE && seen)
+						throw new EaterException("This file has already been included", s);
 
-						reader = DiagramDetector.extractFromFile(f2, "desc2");
+					reader = DiagramDetector.extractFromFile(f2, "desc2");
 
-						if (reader == null) {
-							final Reader tmp = f2.getReader(charset);
-							if (tmp == null)
-								throw new EaterException("Cannot include file", s);
+					if (reader == null) {
+						final Reader tmp = f2.getReader(charset);
+						if (tmp == null)
+							throw new EaterException("Cannot include file", s);
 
-							reader = ReadLineReader.create(tmp, what, s.getLocation());
-						}
-						saveImportedFiles = this.pathSystem;
-						this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());
-						if (TeaVM.a())
-							assert reader != null;
-						if (used != null)
-							filesUsedCurrent.add(used);
+						reader = ReadLineReader.create(tmp, what, s.getLocation());
 					}
+					saveImportedFiles = this.pathSystem;
+					this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());
+					if (TeaVM.a())
+						assert reader != null;
+					if (used != null)
+						filesUsedCurrent.add(used);
+					if (hostId != null)
+						hostFilesUsedCurrent.add(hostId);
 				}
 			}
 			if (reader != null)
