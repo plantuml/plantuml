@@ -49,6 +49,10 @@ import net.sourceforge.plantuml.utils.Log;
 
 public class ReadLineReader implements ReadLine {
 
+	// BufferedReader's default buffer is 8192 chars (16 KB), allocated for every
+	// source read, while a diagram source is usually far smaller.
+	private static final int BUFFER_SIZE = 1024;
+
 	private final BufferedReader br;
 	private LineLocationImpl location;
 	private final String description;
@@ -57,7 +61,7 @@ public class ReadLineReader implements ReadLine {
 		if (description == null)
 			description = "?";
 
-		this.br = new BufferedReader(reader);
+		this.br = reader instanceof BufferedReader ? (BufferedReader) reader : new BufferedReader(reader, BUFFER_SIZE);
 		this.location = new LineLocationImpl(description, parent);
 		this.description = description;
 		Log.info(() -> "Reading from " + this.description);
@@ -74,7 +78,7 @@ public class ReadLineReader implements ReadLine {
 
 	public static ReadLine create(byte[] data, String description) {
 		final BufferedReader br = new BufferedReader(
-				new InputStreamReader(new ByteArrayInputStream(data), StandardCharsets.UTF_8));
+				new InputStreamReader(new ByteArrayInputStream(data), StandardCharsets.UTF_8), BUFFER_SIZE);
 		return new ReadLineReader(br, description, null);
 	}
 

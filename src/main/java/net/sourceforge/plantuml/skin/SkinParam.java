@@ -49,6 +49,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Previous;
@@ -263,13 +264,18 @@ public class SkinParam implements ISkinParam {
 		return new SkinParam(pathSystem, type, pragma, option, md5map);
 	}
 
-	private final Map<String, List<String>> cacheCleanForKey = new HashMap<String, List<String>>();
+	// cleanForKeySlow() is a pure function of the key, so its results are shared by
+	// all the SkinParam instances (one per diagram). The size is bounded because
+	// the keys come from the diagram source.
+	private static final int CACHE_CLEAN_FOR_KEY_MAX = 2000;
+	private static final Map<String, List<String>> cacheCleanForKey = new ConcurrentHashMap<String, List<String>>();
 
 	List<String> cleanForKey(String key) {
 		List<String> result = cacheCleanForKey.get(key);
 		if (result == null) {
 			result = cleanForKeySlow(key);
-			cacheCleanForKey.put(key, result);
+			if (cacheCleanForKey.size() < CACHE_CLEAN_FOR_KEY_MAX)
+				cacheCleanForKey.put(key, result);
 		}
 		return result;
 	}
