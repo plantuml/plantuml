@@ -1013,7 +1013,7 @@ public class SvgGraphics {
 		if (svgScale * option.getScale() == 1)
 			return svg;
 
-		final String svg2 = StringUtils.replaceCharXXX(svg.replace('\n', ' '), '\r', ' ');
+		final String svg2 = svg.replace('\n', ' ').replace('\r', ' ');
 		if (svg2.contains("<g ") == false && svg2.contains("<g>") == false) {
 			svg = svg.replaceFirst("\\<svg\\>", "<svg><g>");
 			svg = svg.replaceFirst("\\</svg\\>", "</g></svg>");

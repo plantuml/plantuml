@@ -58,6 +58,6 @@ public enum UGroupType {
 	DATA_LINK_TYPE;
 
 	public String getSvgKeyAttributeName() {
-		return StringUtils.replaceCharXXX(name().toLowerCase(), '_', '-');
+		return name().toLowerCase().replace('_', '-');
 	}
 }

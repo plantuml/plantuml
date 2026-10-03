@@ -149,7 +149,7 @@ public class InputFileZip implements InputFile {
 	private static Path getParentFrom(String entryName) {
 		if (entryName == null || entryName.isEmpty())
 			return Paths.get("");
-		final int idx = StringUtils.replaceCharXXX(entryName, '\\', '/').lastIndexOf('/');
+		final int idx = entryName.replace('\\', '/').lastIndexOf('/');
 		if (idx <= 0)
 			return Paths.get("");
 		final String parent = entryName.substring(0, idx);
