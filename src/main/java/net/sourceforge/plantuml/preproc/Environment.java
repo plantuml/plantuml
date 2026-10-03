@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,41 +30,58 @@
  *
  *
  * Original Author:  Arnaud Roques
+ * 
  *
  */
-package net.sourceforge.plantuml.tim.builtin;
+package net.sourceforge.plantuml.preproc;
 
-import java.util.List;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.tim.EaterException;
-import net.sourceforge.plantuml.tim.TContext;
-import net.sourceforge.plantuml.tim.TFunctionSignature;
-import net.sourceforge.plantuml.tim.TMemory;
-import net.sourceforge.plantuml.tim.expression.TValue;
+/**
+ * What the preprocessor knows about where the diagram comes from: the version,
+ * the name and the directory of the file, its date... The preprocessor functions
+ * that give those values (%filename(), %dirpath()...) read them here, through the
+ * context, at the time they are called, so that they do not depend on a
+ * particular diagram and can be shared.
+ */
+public class Environment {
 
-public class Dirpath extends SimpleReturnFunction {
+	private final Map<String, String> values = new LinkedHashMap<String, String>();
 
-	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%dirpath", 0);
+	public void put(String key, String value) {
+		values.put(key, value);
+	}
 
-	public TFunctionSignature getSignature() {
-		return SIGNATURE;
+	/**
+	 * Returns the value, or <code>null</code> if there is none.
+	 */
+	public String get(String key) {
+		return values.get(key);
+	}
+
+	public void putAll(Environment other) {
+		values.putAll(other.values);
+	}
+
+	public Environment copy() {
+		final Environment result = new Environment();
+		result.putAll(this);
+		return result;
+	}
+
+	public Set<Map.Entry<String, String>> entrySet() {
+		return Collections.unmodifiableMap(values).entrySet();
+	}
+
+	public Set<String> keySet() {
+		return Collections.unmodifiableMap(values).keySet();
 	}
 
 	@Override
-	public boolean canCover(int nbArg, Set<String> namedArgument) {
-		return nbArg == 0;
-	}
-
-	@Override
-	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
-			Map<String, TValue> named) throws EaterException {
-		final String value = context.getEnvironmentValue("dirpath");
-		if (value == null)
-			return TValue.fromString("");
-
-		return TValue.fromString(value);
+	public String toString() {
+		return values.keySet().toString();
 	}
 }

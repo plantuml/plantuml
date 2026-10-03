@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.version.Version;
 
 public class Defines implements Truth {
 
-	private final Map<String, String> environment = new LinkedHashMap<String, String>();
+	private final Environment environment = new Environment();
 	private final Map<String, Define> values = new LinkedHashMap<String, Define>();
 
 	@Deprecated
@@ -144,6 +144,14 @@ public class Defines implements Truth {
 
 	public String getEnvironmentValue(String key) {
 		return this.environment.get(key);
+	}
+
+	/**
+	 * Returns a snapshot of the environment: later changes of this object are not
+	 * seen by it.
+	 */
+	public Environment getEnvironment() {
+		return this.environment.copy();
 	}
 
 	private static String nameNoExtension(String name) {

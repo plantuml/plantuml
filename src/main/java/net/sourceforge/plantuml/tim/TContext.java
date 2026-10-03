@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.nio.InputFile;
 import net.sourceforge.plantuml.nio.PathSystem;
-import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc.Environment;
 import net.sourceforge.plantuml.preproc.DiagramDetector;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.ReadLine;
@@ -183,6 +183,8 @@ public class TContext {
 
 	public final FunctionsSet functionsSet = new FunctionsSet();
 
+	private final Environment environment;
+
 	private final Charset charset;
 
 	private final Map<String, Sub> subs = new HashMap<String, Sub>();
@@ -203,7 +205,7 @@ public class TContext {
 		return MyCollections.unmodifiableSet(filesUsedCurrent);
 	}
 
-	private void addStandardFunctions(Defines defines) {
+	private void addStandardFunctions() {
 		functionsSet.addFunction(new AlwaysFalse());
 		functionsSet.addFunction(new AlwaysTrue());
 		functionsSet.addFunction(new Backslash());
@@ -214,14 +216,14 @@ public class TContext {
 		functionsSet.addFunction(new Darken());
 		functionsSet.addFunction(new DateFunction());
 		functionsSet.addFunction(new Dec2hex());
-		functionsSet.addFunction(new Dirpath(defines));
+		functionsSet.addFunction(new Dirpath());
 		functionsSet.addFunction(new Dollar());
 		functionsSet.addFunction(new Eval());
 		functionsSet.addFunction(new Feature());
-		functionsSet.addFunction(new Filedate(defines));
+		functionsSet.addFunction(new Filedate());
 		functionsSet.addFunction(new FileExists());
-		functionsSet.addFunction(new Filename(defines));
-		functionsSet.addFunction(new FilenameNoExtension(defines));
+		functionsSet.addFunction(new Filename());
+		functionsSet.addFunction(new FilenameNoExtension());
 		functionsSet.addFunction(new FunctionExists());
 		if (!TeaVM.isTeaVM()) {
 			functionsSet.addFunction(new GetAllStdlib());
@@ -294,12 +296,21 @@ public class TContext {
 		// %trim
 	}
 
-	public TContext(PathSystem pathSystem, Defines defines, Charset charset,
+	public TContext(PathSystem pathSystem, Environment environment, Charset charset,
 			DefinitionsContainer definitionsContainer) {
+		this.environment = requireNonNull(environment);
 		this.pathSystem = pathSystem;
 		this.definitionsContainer = definitionsContainer;
 		this.charset = requireNonNull(charset);
-		this.addStandardFunctions(defines);
+		this.addStandardFunctions();
+	}
+
+	/**
+	 * Returns a value of the environment (see {@link Environment}), or
+	 * <code>null</code> if there is none.
+	 */
+	public String getEnvironmentValue(String key) {
+		return environment.get(key);
 	}
 
 	public Knowledge asKnowledge(final TMemory memory, final LineLocation location) {

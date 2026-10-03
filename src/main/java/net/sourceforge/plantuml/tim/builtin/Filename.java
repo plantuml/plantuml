@@ -38,7 +38,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TContext;
@@ -49,11 +48,6 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 public class Filename extends SimpleReturnFunction {
 
 	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%filename", 0);
-	private final String value;
-
-	public Filename(Defines defines) {
-		this.value = defines.getEnvironmentValue("filename");
-	}
 
 	public TFunctionSignature getSignature() {
 		return SIGNATURE;
@@ -67,9 +61,10 @@ public class Filename extends SimpleReturnFunction {
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException {
-		if (value == null) {
+		final String value = context.getEnvironmentValue("filename");
+		if (value == null)
 			return TValue.fromString("");
-		}
+
 		return TValue.fromString(value);
 	}
 }
