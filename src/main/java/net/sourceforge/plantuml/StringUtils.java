@@ -227,7 +227,7 @@ public class StringUtils {
 	}
 
 	public static String manageArrowForSequence(String s) {
-		s = StringUtils.replaceCharXXX(s, '=', '-').toLowerCase();
+		s = s.replace('=', '-').toLowerCase();
 		return s;
 	}
 
@@ -245,7 +245,7 @@ public class StringUtils {
 
 	public static String manageArrowForCuca(String s) {
 		final Direction dir = getArrowDirection(s);
-		s = StringUtils.replaceCharXXX(s, '=', '-');
+		s = s.replace('=', '-');
 		s = s.replaceAll("\\w*", "");
 		if (dir == Direction.LEFT || dir == Direction.RIGHT)
 			s = s.replaceAll("-+", "-");
@@ -258,7 +258,7 @@ public class StringUtils {
 
 	public static String manageQueueForCuca(String s) {
 		final Direction dir = getQueueDirection(s);
-		s = StringUtils.replaceCharXXX(s, '=', '-');
+		s = s.replace('=', '-');
 		s = s.replaceAll("\\w*", "");
 		if (dir == Direction.LEFT || dir == Direction.RIGHT)
 			s = s.replaceAll("-+", "-");

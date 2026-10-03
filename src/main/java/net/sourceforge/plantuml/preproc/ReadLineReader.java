@@ -100,7 +100,7 @@ public class ReadLineReader implements ReadLine {
 		if (s.startsWith("\uFEFF"))
 			s = s.substring(1);
 
-		s = StringUtils.replaceCharXXX(s, '\u2013', '-');
+		s = s.replace('\u2013', '-');
 		// s = BackSlash.convertHiddenNewLine(s);
 		// s = s.replace('\u00A0', ' ');
 		// s = s.replace('\u201c', '\"');

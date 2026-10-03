@@ -629,7 +629,7 @@ public class SvgGraphicsTeaVM {
 	 * Wraps SVG content with a scale transform.
 	 */
 	private String wrapWithScaleTransform(String svg, double scale) {
-		String svg2 = StringUtils.replaceCharXXX(StringUtils.replaceCharXXX(svg, '\n', ' '), '\r', ' ');
+		String svg2 = StringUtils.replaceCharXXX(svg.replace('\n', ' '), '\r', ' ');
 		if (!svg2.contains("<g ") && !svg2.contains("<g>")) {
 			svg = svg.replaceFirst("\\<svg\\>", "<svg><g>");
 			svg = svg.replaceFirst("\\</svg\\>", "</g></svg>");

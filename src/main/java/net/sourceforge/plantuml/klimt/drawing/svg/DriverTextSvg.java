@@ -109,7 +109,7 @@ public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
 
 		String text = shape.getText();
 		if (text.matches("^\\s*$"))
-			text = StringUtils.replaceCharXXX(text, ' ', (char) 160);
+			text = text.replace(' ', (char) 160);
 
 		if (text.startsWith(" ")) {
 			final double space = stringBounder.calculateDimension(font, " ").getWidth();

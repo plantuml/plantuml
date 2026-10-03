@@ -233,24 +233,24 @@ class StringUtilsTest {
 			" 'a b'    , ' ' , '_' , 'a_b'   ",
 	})
 	void test_replaceChar(String s, char from, char to, String expected) {
-		assertEquals(expected, StringUtils.replaceCharXXX(s, from, to));
-		assertEquals(s.replace(from, to), StringUtils.replaceCharXXX(s, from, to));
+		assertEquals(expected, s.replace(from, to));
+		assertEquals(s.replace(from, to), s.replace(from, to));
 	}
 
 	@Test
 	void test_replaceChar_returnsSameInstanceWhenAbsent() {
 		final String s = new String("hello world");
-		assertSame(s, StringUtils.replaceCharXXX(s, 'z', 'y'));
-		assertSame("", StringUtils.replaceCharXXX("", 'z', 'y'));
+		assertSame(s, s.replace('z', 'y'));
+		assertSame("", "".replace('z', 'y'));
 	}
 
 	@Test
 	void test_replaceChar_specialChars() {
-		assertEquals("a/b/c", StringUtils.replaceCharXXX("a\\b\\c", '\\', '/'));
-		assertEquals("a b", StringUtils.replaceCharXXX("a\tb", '\t', ' '));
-		assertEquals("a\u00A0b", StringUtils.replaceCharXXX("a b", ' ', (char) 160));
-		assertEquals("a\u21b5b", StringUtils.replaceCharXXX("a\uE100b", '\uE100', '\u21b5'));
-		assertEquals("x\uD83D\uDE00", StringUtils.replaceCharXXX("a\uD83D\uDE00", 'a', 'x'));
+		assertEquals("a/b/c", "a\\b\\c".replace('\\', '/'));
+		assertEquals("a b", "a\tb".replace('\t', ' '));
+		assertEquals("a\u00A0b", "a b".replace(' ', (char) 160));
+		assertEquals("a\u21b5b", "a\uE100b".replace('\uE100', '\u21b5'));
+		assertEquals("x\uD83D\uDE00", "a\uD83D\uDE00".replace('a', 'x'));
 	}
 
 }

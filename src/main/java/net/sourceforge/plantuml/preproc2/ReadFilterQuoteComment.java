@@ -56,7 +56,7 @@ public class ReadFilterQuoteComment implements ReadFilter {
 					if (result == null) {
 						return null;
 					}
-					final String trim = StringUtils.replaceCharXXX(result.getString(), '\t', ' ').trim();
+					final String trim = result.getString().replace('\t', ' ').trim();
 					if (longComment && trim.endsWith("'/")) {
 						longComment = false;
 						continue;
