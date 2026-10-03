@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.UShapeKind;
 import java.awt.font.TextLayout;
 

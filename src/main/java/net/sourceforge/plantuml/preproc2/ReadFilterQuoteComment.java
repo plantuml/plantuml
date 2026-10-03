@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.preproc2;
 
 import java.io.IOException;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.text.StringLocated;
 

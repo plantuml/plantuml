@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.api;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
-import net.sourceforge.plantuml.StringUtils;
 
 public class NiceNumber {
 

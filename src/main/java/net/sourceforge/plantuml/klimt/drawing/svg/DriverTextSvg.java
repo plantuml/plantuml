@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.klimt.drawing.svg;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;

@@ -43,7 +43,6 @@ import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import net.sourceforge.plantuml.StringUtils;
 
 /**
  * Represents an entry inside a ZIP archive as an {@link InputFile}.

@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.klimt.sprite;
 
 import java.util.Objects;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
 import net.sourceforge.plantuml.klimt.color.HColors;

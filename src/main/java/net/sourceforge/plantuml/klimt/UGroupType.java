@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.klimt;
 
-import net.sourceforge.plantuml.StringUtils;
 
 public enum UGroupType {
 	

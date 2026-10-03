@@ -39,7 +39,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.preproc.Stdlib;
 
 public class InputFileStdlib implements InputFile {

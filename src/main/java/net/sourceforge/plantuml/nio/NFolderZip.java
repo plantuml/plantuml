@@ -43,7 +43,6 @@ import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
-import net.sourceforge.plantuml.StringUtils;
 
 /**
  * A virtual folder representing a location inside a ZIP archive.

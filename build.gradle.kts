@@ -85,6 +85,9 @@ tasks.compileJava {
 	options.release.set(Integer.parseInt(javacRelease))
 }
 
+// Local Super-Linter (same as the CI workflow): gradlew superLinter
+apply(from = "tools/linters/superlinter.gradle.kts")
+
 // teavm-classlib 0.15+ is published for JVM 17+ only, and the TeaVM plugin adds it
 // to compileClasspath. With --release 11 Gradle refuses to resolve it. The Java
 // sources only need the JSO/interop APIs (Java 11 compatible), never the classlib

@@ -40,7 +40,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.brotli.BrotliInputStream;
 import net.sourceforge.plantuml.preproc.Stdlib;
 
