@@ -82,8 +82,8 @@ public class ColorPalette4096 {
 
 	protected XColor getColorFor(String s) {
 		// Migration
-		s = StringUtils.replaceChar(s, '!', '.');
-		s = StringUtils.replaceChar(s, '#', ',');
+		s = StringUtils.replaceCharXXX(s, '!', '.');
+		s = StringUtils.replaceCharXXX(s, '#', ',');
 		if (s.length() != 2)
 			throw new IllegalArgumentException();
 

@@ -139,9 +139,9 @@ public class MindMapDiagram extends TitledDiagram {
 			first = type;
 
 		if (type.endsWith("**"))
-			type = StringUtils.replaceChar(type, '\t', ' ').trim();
+			type = type.replace('\t', ' ').trim();
 
-		type = StringUtils.replaceChar(type, '\t', ' ');
+		type = type.replace('\t', ' ');
 		if (type.contains(" ") == false)
 			return type.length() - 1;
 

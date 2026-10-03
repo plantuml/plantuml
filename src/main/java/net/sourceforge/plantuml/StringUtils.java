@@ -227,7 +227,7 @@ public class StringUtils {
 	}
 
 	public static String manageArrowForSequence(String s) {
-		s = StringUtils.replaceChar(s, '=', '-').toLowerCase();
+		s = StringUtils.replaceCharXXX(s, '=', '-').toLowerCase();
 		return s;
 	}
 
@@ -245,7 +245,7 @@ public class StringUtils {
 
 	public static String manageArrowForCuca(String s) {
 		final Direction dir = getArrowDirection(s);
-		s = StringUtils.replaceChar(s, '=', '-');
+		s = StringUtils.replaceCharXXX(s, '=', '-');
 		s = s.replaceAll("\\w*", "");
 		if (dir == Direction.LEFT || dir == Direction.RIGHT)
 			s = s.replaceAll("-+", "-");
@@ -258,7 +258,7 @@ public class StringUtils {
 
 	public static String manageQueueForCuca(String s) {
 		final Direction dir = getQueueDirection(s);
-		s = StringUtils.replaceChar(s, '=', '-');
+		s = StringUtils.replaceCharXXX(s, '=', '-');
 		s = s.replaceAll("\\w*", "");
 		if (dir == Direction.LEFT || dir == Direction.RIGHT)
 			s = s.replaceAll("-+", "-");
@@ -590,7 +590,7 @@ public class StringUtils {
 	// of Jaws, for instance). Under TeaVM, the job is delegated to the native
 	// JavaScript String.replaceAll(), which returns the string itself when there is
 	// nothing to replace.
-	public static String replaceChar(String s, char from, char to) {
+	public static String replaceCharXXX(String s, char from, char to) {
 		return s.replace(from, to);
 	}
 

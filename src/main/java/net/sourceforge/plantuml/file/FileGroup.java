@@ -125,7 +125,7 @@ public class FileGroup {
 	}
 
 	private static String getNormalizedPath(File f) {
-		return StringUtils.replaceChar(f.getPath(), '\\', '/');
+		return StringUtils.replaceCharXXX(f.getPath(), '\\', '/');
 	}
 
 	private final static Pattern2 noStarInDirectory = Pattern2.cmpile("^(?:([^*?]*)[/\\\\])?([^/\\\\]*)$");

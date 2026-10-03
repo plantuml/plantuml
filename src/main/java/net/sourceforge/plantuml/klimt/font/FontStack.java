@@ -185,7 +185,7 @@ public class FontStack {
 		case MONOSPACE:
 			return "monospace";
 		}
-		return StringUtils.replaceChar(fullDefinition, '\"', '\'');
+		return fullDefinition.replace('\"', '\'');
 	}
 
 }

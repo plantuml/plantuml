@@ -53,7 +53,7 @@ public enum SpmChannel {
 	IMAGE;
 
 	private String getFileName() {
-		return StringUtils.replaceChar(name().toLowerCase(), '_', '-') + ".spm";
+		return StringUtils.replaceCharXXX(name().toLowerCase(), '_', '-') + ".spm";
 	}
 
 //	public Path getPath(Path rootFolder, String name) throws IOException {
