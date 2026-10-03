@@ -71,7 +71,7 @@ public final class NFolderStdlib implements NFolder {
 
 	@Override
 	public String toString() {
-		final String prefix = StringUtils.replaceChar(pathInsideStdlib.toString(), '\\', '/');
+		final String prefix = pathInsideStdlib.toString().replace('\\', '/');
 		return stdlib.getName() + "!" + prefix;
 	}
 

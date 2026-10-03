@@ -226,7 +226,7 @@ public class StringUtils {
 	}
 
 	public static String manageArrowForSequence(String s) {
-		s = StringUtils.replaceChar(s, '=', '-').toLowerCase();
+		s = s.replace('=', '-').toLowerCase();
 		return s;
 	}
 
@@ -244,7 +244,7 @@ public class StringUtils {
 
 	public static String manageArrowForCuca(String s) {
 		final Direction dir = getArrowDirection(s);
-		s = StringUtils.replaceChar(s, '=', '-');
+		s = s.replace('=', '-');
 		s = s.replaceAll("\\w*", "");
 		if (dir == Direction.LEFT || dir == Direction.RIGHT)
 			s = s.replaceAll("-+", "-");
@@ -257,7 +257,7 @@ public class StringUtils {
 
 	public static String manageQueueForCuca(String s) {
 		final Direction dir = getQueueDirection(s);
-		s = StringUtils.replaceChar(s, '=', '-');
+		s = s.replace('=', '-');
 		s = s.replaceAll("\\w*", "");
 		if (dir == Direction.LEFT || dir == Direction.RIGHT)
 			s = s.replaceAll("-+", "-");
@@ -583,17 +583,6 @@ public class StringUtils {
 		return new String(buf, pos, buf.length - pos);
 	}
 
-	// Same as s.replace(from, to), but returns s itself when it does not contain `from`.
-	// The JDK already does that, but TeaVM's String.replace(char, char) always copies
-	// the string, even when the char is absent (the common case for the rare markers
-	// of Jaws, for instance). Under TeaVM, the job is delegated to the native
-	// JavaScript String.replaceAll(), which returns the string itself when there is
-	// nothing to replace.
-	public static String replaceChar(String s, char from, char to) {
-		// see https://github.com/plantuml/plantuml/issues/2834#issuecomment-5938248216
-		return s.replace(from, to);
-	}
-
 	// Removes useless trailing zeros (and the dot if it becomes orphan)
 	public static String trimZeros(String s) {
 		final int dot = s.indexOf('.');
@@ -695,7 +684,6 @@ public class StringUtils {
 		return c == ' ' || c == '\t' || c == '\r' || c == '\n' || c == '\0';
 	}
 
-	// ::comment when __TEAVM__
 	public static int getWcWidth(Display stringsToDisplay) {
 		int result = 1;
 		for (CharSequence s : stringsToDisplay) {
@@ -709,7 +697,6 @@ public class StringUtils {
 		}
 		return result;
 	}
-	// ::done
 
 	// http://docs.oracle.com/javase/tutorial/i18n/format/dateFormat.html
 }

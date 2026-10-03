@@ -16,7 +16,7 @@ adarshr-test-logger = "4.0.0"
 xmlunit-core        = "2.14.0"
 xtext-xbase         = "2.44.0"
 junit-pioneer       = "2.3.0"
-teavm               = "0.16.0-dev-7"
+teavm               = "0.16.0"
 sonarqube           = "7.5.0.8588"
 openpdf             = "3.0.5"
 

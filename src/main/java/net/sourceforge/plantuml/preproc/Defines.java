@@ -96,7 +96,7 @@ public class Defines implements Truth {
 
 	public void overrideDirPath(String fileDir) {
 		if (fileDir != null)
-			environment.put("dirpath", StringUtils.replaceChar(fileDir, '\\', '/'));
+			environment.put("dirpath", fileDir.replace('\\', '/'));
 	}
 
 	public void importFrom(Defines other) {
@@ -118,7 +118,7 @@ public class Defines implements Truth {
 		result.environment.put("filedate", new Date(file.lastModified()).toString());
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE)
 			result.environment.put("dirpath",
-					StringUtils.replaceChar(file.getAbsoluteFile().getParentFile().getAbsolutePath(), '\\', '/'));
+					file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));
 
 		return result;
 	}
@@ -130,7 +130,7 @@ public class Defines implements Truth {
 		result.environment.put("filedate", new Date(file.lastModified()).toString());
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE)
 			result.environment.put("dirpath",
-					StringUtils.replaceChar(file.getAbsoluteFile().getParentFile().getAbsolutePath(), '\\', '/'));
+					file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));
 
 		return result;
 	}

@@ -126,11 +126,11 @@ public class XmiStateDiagram implements XmlDiagramTransformer {
 	}
 
 	public static String forXMI(String s) {
-		return StringUtils.replaceChar(s, ':', ' ');
+		return s.replace(':', ' ');
 	}
 
 	public static String forXMI(Display s) {
-		return StringUtils.replaceChar(s.get(0).toString(), ':', ' ');
+		return s.get(0).toString().replace(':', ' ');
 	}
 
 	private void addLink(Link link) {

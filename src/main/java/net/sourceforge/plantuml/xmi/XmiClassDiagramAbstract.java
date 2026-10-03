@@ -128,14 +128,14 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 	}
 
 	final protected String forXMI(String s) {
-		return StringUtils.replaceChar(s, ':', ' ');
+		return s.replace(':', ' ');
 	}
 
 	final protected String forXMI(Display s) {
 		if (Display.isNull(s)) {
 			return "";
 		}
-		return StringUtils.replaceChar(s.get(0).toString(), ':', ' ');
+		return s.get(0).toString().replace(':', ' ');
 	}
 
 	final public void transformerXml(OutputStream os) throws TransformerException, ParserConfigurationException {

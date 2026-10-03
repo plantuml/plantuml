@@ -98,7 +98,7 @@ public enum LeafType {
 
 
 	public String toHtml() {
-		final String html = StringUtils.goLowerCase(StringUtils.replaceChar(toString(), '_', ' '));
+		final String html = StringUtils.goLowerCase(toString().replace('_', ' '));
 		return StringUtils.capitalize(html);
 	}
 

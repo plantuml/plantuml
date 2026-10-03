@@ -159,7 +159,7 @@ public class PSystemDonors extends UgDiagram {
 		final Transcoder t = TranscoderImpl.utf8(new AsciiEncoder(), new StringCompressorNone(),
 				new CompressionBrotli());
 		try {
-			final String s = StringUtils.replaceChar(t.decode(DONORS), '*', '.');
+			final String s = t.decode(DONORS).replace('*', '.');
 			final StringTokenizer st = new StringTokenizer(s, BackSlash.NEWLINE);
 			while (st.hasMoreTokens()) {
 				lines.add(st.nextToken());

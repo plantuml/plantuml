@@ -65,7 +65,7 @@ public class InputFileStdlib implements InputFile {
 
 	@Override
 	public String toString() {
-		return stdlib.getName() + "!" + StringUtils.replaceChar(stdlibPath.toString(), '\\', '/');
+		return stdlib.getName() + "!" + stdlibPath.toString().replace('\\', '/');
 	}
 
 }
