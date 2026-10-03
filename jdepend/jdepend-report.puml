@@ -349,8 +349,8 @@ Total Classes: 3
 "net.atmp" --> "net.sourceforge.plantuml.klimt.geom"
 "net.atmp" --> "net.sourceforge.plantuml.klimt.shape"
 
-class "net.sourceforge.plantuml" %lighten("red", 60) {
-Total Classes: 37
+class "net.sourceforge.plantuml" %lighten("red", 59) {
+Total Classes: 38
 }
 "net.sourceforge.plantuml" --> "java.awt"
 "net.sourceforge.plantuml" --> "java.awt.font"
@@ -2237,8 +2237,8 @@ Total Classes: 3
 "net.sourceforge.plantuml.klimt.drawing.html5" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.klimt.drawing.html5" --> "net.sourceforge.plantuml.klimt.shape"
 
-class "net.sourceforge.plantuml.klimt.drawing.svg" %lighten("red", 99) {
-Total Classes: 20
+class "net.sourceforge.plantuml.klimt.drawing.svg" %lighten("red", 98) {
+Total Classes: 21
 }
 "net.sourceforge.plantuml.klimt.drawing.svg" --> "java.awt"
 "net.sourceforge.plantuml.klimt.drawing.svg" --> "java.awt.font"
@@ -2983,7 +2983,7 @@ Total Classes: 43
 "net.sourceforge.plantuml.sequencediagram.teoz" --> "net.sourceforge.plantuml.utils"
 
 class "net.sourceforge.plantuml.skin" %lighten("red", 56) {
-Total Classes: 34
+Total Classes: 35
 }
 "net.sourceforge.plantuml.skin" --> "java.io"
 "net.sourceforge.plantuml.skin" --> "java.lang"
@@ -3283,7 +3283,7 @@ Total Classes: 2
 "net.sourceforge.plantuml.syntax" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.syntax" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.teavm" %lighten("red", 31) {
+class "net.sourceforge.plantuml.teavm" %lighten("red", 30) {
 Total Classes: 20
 }
 "net.sourceforge.plantuml.teavm" --> "java.io"
@@ -3347,8 +3347,8 @@ Total Classes: 1
 }
 "net.sourceforge.plantuml.tikz" --> "java.util"
 
-class "net.sourceforge.plantuml.tim" %lighten("red", 93) {
-Total Classes: 39
+class "net.sourceforge.plantuml.tim" %lighten("red", 94) {
+Total Classes: 40
 }
 "net.sourceforge.plantuml.tim" --> "java.lang"
 "net.sourceforge.plantuml.tim" --> "java.nio.charset"
@@ -3359,13 +3359,15 @@ Total Classes: 39
 "net.sourceforge.plantuml.tim" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.tim" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.tim" --> "net.sourceforge.plantuml.preproc2"
+"net.sourceforge.plantuml.tim" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.tim" --> "net.sourceforge.plantuml.teavm.browser"
 "net.sourceforge.plantuml.tim" --> "net.sourceforge.plantuml.text"
+"net.sourceforge.plantuml.tim" --> "net.sourceforge.plantuml.tim.builtin"
 "net.sourceforge.plantuml.tim" --> "net.sourceforge.plantuml.tim.expression"
 "net.sourceforge.plantuml.tim" --> "net.sourceforge.plantuml.tim.iterator"
 "net.sourceforge.plantuml.tim" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.tim.builtin" %lighten("red", 99) {
+class "net.sourceforge.plantuml.tim.builtin" %lighten("red", 95) {
 Total Classes: 68
 }
 "net.sourceforge.plantuml.tim.builtin" --> "java.io"

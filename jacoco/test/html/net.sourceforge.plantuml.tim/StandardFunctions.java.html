@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StandardFunctions.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.tim</a> &gt; <span class="el_source">StandardFunctions.java</span></div><h1>StandardFunctions.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.tim;
+
+import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.tim.builtin.AlwaysFalse;
+import net.sourceforge.plantuml.tim.builtin.AlwaysTrue;
+import net.sourceforge.plantuml.tim.builtin.Backslash;
+import net.sourceforge.plantuml.tim.builtin.BoolVal;
+import net.sourceforge.plantuml.tim.builtin.Breakline;
+import net.sourceforge.plantuml.tim.builtin.CallUserFunction;
+import net.sourceforge.plantuml.tim.builtin.Chr;
+import net.sourceforge.plantuml.tim.builtin.Darken;
+import net.sourceforge.plantuml.tim.builtin.DateFunction;
+import net.sourceforge.plantuml.tim.builtin.Dec2hex;
+import net.sourceforge.plantuml.tim.builtin.Dirpath;
+import net.sourceforge.plantuml.tim.builtin.Dollar;
+import net.sourceforge.plantuml.tim.builtin.Eval;
+import net.sourceforge.plantuml.tim.builtin.Feature;
+import net.sourceforge.plantuml.tim.builtin.FileExists;
+import net.sourceforge.plantuml.tim.builtin.Filedate;
+import net.sourceforge.plantuml.tim.builtin.Filename;
+import net.sourceforge.plantuml.tim.builtin.FilenameNoExtension;
+import net.sourceforge.plantuml.tim.builtin.FunctionExists;
+import net.sourceforge.plantuml.tim.builtin.GetAllStdlib;
+import net.sourceforge.plantuml.tim.builtin.GetAllTheme;
+import net.sourceforge.plantuml.tim.builtin.GetCurrentTheme;
+import net.sourceforge.plantuml.tim.builtin.GetJsonKey;
+import net.sourceforge.plantuml.tim.builtin.GetJsonType;
+import net.sourceforge.plantuml.tim.builtin.GetStdlib;
+import net.sourceforge.plantuml.tim.builtin.GetVariableValue;
+import net.sourceforge.plantuml.tim.builtin.GetVersion;
+import net.sourceforge.plantuml.tim.builtin.Getenv;
+import net.sourceforge.plantuml.tim.builtin.Hex2dec;
+import net.sourceforge.plantuml.tim.builtin.HslColor;
+import net.sourceforge.plantuml.tim.builtin.IntVal;
+import net.sourceforge.plantuml.tim.builtin.InvokeProcedure;
+import net.sourceforge.plantuml.tim.builtin.IsDark;
+import net.sourceforge.plantuml.tim.builtin.IsLight;
+import net.sourceforge.plantuml.tim.builtin.JsonAdd;
+import net.sourceforge.plantuml.tim.builtin.JsonKeyExists;
+import net.sourceforge.plantuml.tim.builtin.JsonMerge;
+import net.sourceforge.plantuml.tim.builtin.JsonRemove;
+import net.sourceforge.plantuml.tim.builtin.JsonSet;
+import net.sourceforge.plantuml.tim.builtin.LeftAlign;
+import net.sourceforge.plantuml.tim.builtin.Lighten;
+import net.sourceforge.plantuml.tim.builtin.LoadJson;
+import net.sourceforge.plantuml.tim.builtin.LogicalAnd;
+import net.sourceforge.plantuml.tim.builtin.LogicalNand;
+import net.sourceforge.plantuml.tim.builtin.LogicalNor;
+import net.sourceforge.plantuml.tim.builtin.LogicalNot;
+import net.sourceforge.plantuml.tim.builtin.LogicalNxor;
+import net.sourceforge.plantuml.tim.builtin.LogicalOr;
+import net.sourceforge.plantuml.tim.builtin.LogicalXor;
+import net.sourceforge.plantuml.tim.builtin.Lower;
+import net.sourceforge.plantuml.tim.builtin.Modulo;
+import net.sourceforge.plantuml.tim.builtin.Newline;
+import net.sourceforge.plantuml.tim.builtin.NewlineShort;
+import net.sourceforge.plantuml.tim.builtin.Now;
+import net.sourceforge.plantuml.tim.builtin.Ord;
+import net.sourceforge.plantuml.tim.builtin.Percent;
+import net.sourceforge.plantuml.tim.builtin.RandomFunction;
+import net.sourceforge.plantuml.tim.builtin.RetrieveProcedure;
+import net.sourceforge.plantuml.tim.builtin.ReverseColor;
+import net.sourceforge.plantuml.tim.builtin.ReverseHsluvColor;
+import net.sourceforge.plantuml.tim.builtin.RightAlign;
+import net.sourceforge.plantuml.tim.builtin.SetVariableValue;
+import net.sourceforge.plantuml.tim.builtin.Size;
+import net.sourceforge.plantuml.tim.builtin.SplitStr;
+import net.sourceforge.plantuml.tim.builtin.SplitStrRegex;
+import net.sourceforge.plantuml.tim.builtin.Str2Json;
+import net.sourceforge.plantuml.tim.builtin.StringFunction;
+import net.sourceforge.plantuml.tim.builtin.Strlen;
+import net.sourceforge.plantuml.tim.builtin.Strpos;
+import net.sourceforge.plantuml.tim.builtin.Substr;
+import net.sourceforge.plantuml.tim.builtin.Tabulation;
+import net.sourceforge.plantuml.tim.builtin.Upper;
+import net.sourceforge.plantuml.tim.builtin.VariableExists;
+import net.sourceforge.plantuml.tim.builtin.Xargs;
+
+/**
+ * The functions that every diagram knows, built once and shared by all the
+ * {@link TContext}: they hold no state, so they can be used concurrently.
+ */
+public final class StandardFunctions {
+
+<span class="fc" id="L119">	private static final FunctionsSet INSTANCE = build();</span>
+
+	private StandardFunctions() {
+	}
+
+	/**
+	 * Returns the shared registry. It must never be modified.
+	 */
+	static FunctionsSet get() {
+<span class="fc" id="L128">		return INSTANCE;</span>
+	}
+
+	private static FunctionsSet build() {
+<span class="fc" id="L132">		final FunctionsSet functionsSet = new FunctionsSet();</span>
+<span class="fc" id="L133">		functionsSet.addFunction(new AlwaysFalse());</span>
+<span class="fc" id="L134">		functionsSet.addFunction(new AlwaysTrue());</span>
+<span class="fc" id="L135">		functionsSet.addFunction(new Backslash());</span>
+<span class="fc" id="L136">		functionsSet.addFunction(new BoolVal());</span>
+<span class="fc" id="L137">		functionsSet.addFunction(new Breakline());</span>
+<span class="fc" id="L138">		functionsSet.addFunction(new CallUserFunction());</span>
+<span class="fc" id="L139">		functionsSet.addFunction(new Chr());</span>
+<span class="fc" id="L140">		functionsSet.addFunction(new Darken());</span>
+<span class="fc" id="L141">		functionsSet.addFunction(new DateFunction());</span>
+<span class="fc" id="L142">		functionsSet.addFunction(new Dec2hex());</span>
+<span class="fc" id="L143">		functionsSet.addFunction(new Dirpath());</span>
+<span class="fc" id="L144">		functionsSet.addFunction(new Dollar());</span>
+<span class="fc" id="L145">		functionsSet.addFunction(new Eval());</span>
+<span class="fc" id="L146">		functionsSet.addFunction(new Feature());</span>
+<span class="fc" id="L147">		functionsSet.addFunction(new Filedate());</span>
+<span class="fc" id="L148">		functionsSet.addFunction(new FileExists());</span>
+<span class="fc" id="L149">		functionsSet.addFunction(new Filename());</span>
+<span class="fc" id="L150">		functionsSet.addFunction(new FilenameNoExtension());</span>
+<span class="fc" id="L151">		functionsSet.addFunction(new FunctionExists());</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="fc" id="L153">			functionsSet.addFunction(new GetAllStdlib());</span>
+		}
+<span class="fc" id="L155">		functionsSet.addFunction(new GetAllTheme());</span>
+<span class="fc" id="L156">		functionsSet.addFunction(new GetCurrentTheme());</span>
+<span class="fc" id="L157">		functionsSet.addFunction(new GetJsonKey());</span>
+<span class="fc" id="L158">		functionsSet.addFunction(new GetJsonType());</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="fc" id="L160">			functionsSet.addFunction(new GetStdlib());</span>
+		}
+<span class="fc" id="L162">		functionsSet.addFunction(new GetVariableValue());</span>
+<span class="fc" id="L163">		functionsSet.addFunction(new GetVersion());</span>
+<span class="fc" id="L164">		functionsSet.addFunction(new Getenv());</span>
+<span class="fc" id="L165">		functionsSet.addFunction(new Hex2dec());</span>
+<span class="fc" id="L166">		functionsSet.addFunction(new HslColor());</span>
+<span class="fc" id="L167">		functionsSet.addFunction(new IntVal());</span>
+<span class="fc" id="L168">		functionsSet.addFunction(new InvokeProcedure());</span>
+<span class="fc" id="L169">		functionsSet.addFunction(new IsDark());</span>
+<span class="fc" id="L170">		functionsSet.addFunction(new IsLight());</span>
+<span class="fc" id="L171">		functionsSet.addFunction(new JsonAdd());</span>
+<span class="fc" id="L172">		functionsSet.addFunction(new JsonKeyExists());</span>
+<span class="fc" id="L173">		functionsSet.addFunction(new JsonMerge());</span>
+<span class="fc" id="L174">		functionsSet.addFunction(new JsonRemove());</span>
+<span class="fc" id="L175">		functionsSet.addFunction(new JsonSet());</span>
+<span class="fc" id="L176">		functionsSet.addFunction(new LeftAlign());</span>
+<span class="fc" id="L177">		functionsSet.addFunction(new Lighten());</span>
+<span class="fc" id="L178">		functionsSet.addFunction(new LoadJson());</span>
+		// functionsSet.addFunction(new LoadJsonLegacy());
+<span class="fc" id="L180">		functionsSet.addFunction(new LogicalAnd());</span>
+<span class="fc" id="L181">		functionsSet.addFunction(new LogicalNand());</span>
+<span class="fc" id="L182">		functionsSet.addFunction(new LogicalNor());</span>
+<span class="fc" id="L183">		functionsSet.addFunction(new LogicalNot());</span>
+<span class="fc" id="L184">		functionsSet.addFunction(new LogicalNxor());</span>
+<span class="fc" id="L185">		functionsSet.addFunction(new LogicalOr());</span>
+<span class="fc" id="L186">		functionsSet.addFunction(new LogicalXor());</span>
+<span class="fc" id="L187">		functionsSet.addFunction(new Lower());</span>
+<span class="fc" id="L188">		functionsSet.addFunction(new Modulo());</span>
+<span class="fc" id="L189">		functionsSet.addFunction(new Newline());</span>
+<span class="fc" id="L190">		functionsSet.addFunction(new NewlineShort());</span>
+<span class="fc" id="L191">		functionsSet.addFunction(new Now());</span>
+<span class="fc" id="L192">		functionsSet.addFunction(new Ord());</span>
+<span class="fc" id="L193">		functionsSet.addFunction(new Percent());</span>
+<span class="fc" id="L194">		functionsSet.addFunction(new RandomFunction());</span>
+<span class="fc" id="L195">		functionsSet.addFunction(new RetrieveProcedure());</span>
+<span class="fc" id="L196">		functionsSet.addFunction(new ReverseColor());</span>
+<span class="fc" id="L197">		functionsSet.addFunction(new ReverseHsluvColor());</span>
+<span class="fc" id="L198">		functionsSet.addFunction(new RightAlign());</span>
+<span class="fc" id="L199">		functionsSet.addFunction(new SetVariableValue());</span>
+<span class="fc" id="L200">		functionsSet.addFunction(new Size());</span>
+<span class="fc" id="L201">		functionsSet.addFunction(new SplitStr());</span>
+<span class="fc" id="L202">		functionsSet.addFunction(new SplitStrRegex());</span>
+<span class="fc" id="L203">		functionsSet.addFunction(new Str2Json());</span>
+<span class="fc" id="L204">		functionsSet.addFunction(new StringFunction());</span>
+<span class="fc" id="L205">		functionsSet.addFunction(new Strlen());</span>
+<span class="fc" id="L206">		functionsSet.addFunction(new Strpos());</span>
+<span class="fc" id="L207">		functionsSet.addFunction(new Substr());</span>
+<span class="fc" id="L208">		functionsSet.addFunction(new Tabulation());</span>
+<span class="fc" id="L209">		functionsSet.addFunction(new Upper());</span>
+<span class="fc" id="L210">		functionsSet.addFunction(new VariableExists());</span>
+<span class="fc" id="L211">		functionsSet.addFunction(new Xargs());</span>
+		// %standard_exists_function
+		// %str_replace
+		// !exit
+		// !log
+		// %min
+		// %max
+		// Regexp
+		// %time
+		// %trim
+<span class="fc" id="L221">		return functionsSet;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -49,57 +49,61 @@ import net.sourceforge.plantuml.utils.Log;
 
 public class ReadLineReader implements ReadLine {
 
+	// BufferedReader's default buffer is 8192 chars (16 KB), allocated for every
+	// source read, while a diagram source is usually far smaller.
+	private static final int BUFFER_SIZE = 1024;
+
 	private final BufferedReader br;
 	private LineLocationImpl location;
 	private final String description;
 
-<span class="fc" id="L56">	private ReadLineReader(Reader reader, String description, LineLocation parent) {</span>
-<span class="pc bpc" id="L57" title="1 of 2 branches missed.">		if (description == null)</span>
-<span class="nc" id="L58">			description = &quot;?&quot;;</span>
+<span class="fc" id="L60">	private ReadLineReader(Reader reader, String description, LineLocation parent) {</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">		if (description == null)</span>
+<span class="nc" id="L62">			description = &quot;?&quot;;</span>
 
-<span class="fc" id="L60">		this.br = new BufferedReader(reader);</span>
-<span class="fc" id="L61">		this.location = new LineLocationImpl(description, parent);</span>
-<span class="fc" id="L62">		this.description = description;</span>
-<span class="fc" id="L63">		Log.info(() -&gt; &quot;Reading from &quot; + this.description);</span>
-<span class="fc" id="L64">	}</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		this.br = reader instanceof BufferedReader ? (BufferedReader) reader : new BufferedReader(reader, BUFFER_SIZE);</span>
+<span class="fc" id="L65">		this.location = new LineLocationImpl(description, parent);</span>
+<span class="fc" id="L66">		this.description = description;</span>
+<span class="fc" id="L67">		Log.info(() -&gt; &quot;Reading from &quot; + this.description);</span>
+<span class="fc" id="L68">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L68">		return super.toString() + &quot; &quot; + description;</span>
+<span class="nc" id="L72">		return super.toString() + &quot; &quot; + description;</span>
 	}
 
 	private ReadLineReader(Reader reader, String desc) {
-<span class="nc" id="L72">		this(reader, desc, null);</span>
-<span class="nc" id="L73">	}</span>
+<span class="nc" id="L76">		this(reader, desc, null);</span>
+<span class="nc" id="L77">	}</span>
 
 	public static ReadLine create(byte[] data, String description) {
-<span class="fc" id="L76">		final BufferedReader br = new BufferedReader(</span>
-				new InputStreamReader(new ByteArrayInputStream(data), StandardCharsets.UTF_8));
-<span class="fc" id="L78">		return new ReadLineReader(br, description, null);</span>
+<span class="fc" id="L80">		final BufferedReader br = new BufferedReader(</span>
+				new InputStreamReader(new ByteArrayInputStream(data), StandardCharsets.UTF_8), BUFFER_SIZE);
+<span class="fc" id="L82">		return new ReadLineReader(br, description, null);</span>
 	}
 
 	public static ReadLine create(Reader reader, String description) {
-<span class="fc" id="L82">		return new ReadLineReader(reader, description, null);</span>
+<span class="fc" id="L86">		return new ReadLineReader(reader, description, null);</span>
 	}
 
 	public static ReadLine create(Reader reader, String description, LineLocation parent) {
-<span class="fc" id="L86">		return new ReadLineReader(reader, description, parent);</span>
+<span class="fc" id="L90">		return new ReadLineReader(reader, description, parent);</span>
 	}
 
 	public StringLocated readLine() throws IOException {
-<span class="fc" id="L90">		String s = br.readLine();</span>
-<span class="fc" id="L91">		location = location.oneLineRead();</span>
-<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (s == null)</span>
-<span class="fc" id="L93">			return null;</span>
+<span class="fc" id="L94">		String s = br.readLine();</span>
+<span class="fc" id="L95">		location = location.oneLineRead();</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (s == null)</span>
+<span class="fc" id="L97">			return null;</span>
 
 		// if (s.length() &gt; LIMIT) {
 		// Log.debug(&quot;Line truncated from &quot; + s.length() + &quot; to &quot; + LIMIT);
 		// s = s.substring(0, LIMIT);
 		// }
-<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (s.startsWith(&quot;\uFEFF&quot;))</span>
-<span class="nc" id="L100">			s = s.substring(1);</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (s.startsWith(&quot;\uFEFF&quot;))</span>
+<span class="nc" id="L104">			s = s.substring(1);</span>
 
-<span class="fc" id="L102">		s = s.replace('\u2013', '-');</span>
+<span class="fc" id="L106">		s = s.replace('\u2013', '-');</span>
 		// s = BackSlash.convertHiddenNewLine(s);
 		// s = s.replace('\u00A0', ' ');
 		// s = s.replace('\u201c', '\&quot;');
@@ -112,12 +116,12 @@ public class ReadLineReader implements ReadLine {
 		// char c = s.charAt(i);
 		// System.err.println(&quot;X &quot; + Integer.toHexString((int) c) + &quot; &quot; + c);
 		// }
-<span class="fc" id="L115">		return new StringLocated(s, location);</span>
+<span class="fc" id="L119">		return new StringLocated(s, location);</span>
 	}
 
 	public void close() throws IOException {
-<span class="fc" id="L119">		br.close();</span>
-<span class="fc" id="L120">	}</span>
+<span class="fc" id="L123">		br.close();</span>
+<span class="fc" id="L124">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

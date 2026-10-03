@@ -1867,14 +1867,14 @@
 
         <Package name="net.sourceforge.plantuml">
             <Stats>
-                <TotalClasses>37</TotalClasses>
-                <ConcreteClasses>24</ConcreteClasses>
+                <TotalClasses>38</TotalClasses>
+                <ConcreteClasses>25</ConcreteClasses>
                 <AbstractClasses>13</AbstractClasses>
                 <Ca>99</Ca>
                 <Ce>33</Ce>
-                <A>0.35</A>
+                <A>0.34</A>
                 <I>0.25</I>
-                <D>0.4</D>
+                <D>0.41</D>
                 <V>1</V>
             </Stats>
 
@@ -1932,6 +1932,9 @@
                 </Class>
                 <Class sourceFile="FileFormat.java">
                     net.sourceforge.plantuml.FileFormat$1
+                </Class>
+                <Class sourceFile="FileFormat.java">
+                    net.sourceforge.plantuml.FileFormat$2
                 </Class>
                 <Class sourceFile="FileFormat.java">
                     net.sourceforge.plantuml.FileFormat$FontTextKey
@@ -11030,14 +11033,14 @@
 
         <Package name="net.sourceforge.plantuml.klimt.drawing.svg">
             <Stats>
-                <TotalClasses>20</TotalClasses>
-                <ConcreteClasses>17</ConcreteClasses>
+                <TotalClasses>21</TotalClasses>
+                <ConcreteClasses>18</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
                 <Ca>3</Ca>
                 <Ce>16</Ce>
-                <A>0.15</A>
+                <A>0.14</A>
                 <I>0.84</I>
-                <D>0.01</D>
+                <D>0.02</D>
                 <V>1</V>
             </Stats>
 
@@ -11054,6 +11057,9 @@
             </AbstractClasses>
 
             <ConcreteClasses>
+                <Class sourceFile="DriverCenteredCharacterSvg.java">
+                    net.sourceforge.plantuml.klimt.drawing.svg.DriverCenteredCharacterSvg$1
+                </Class>
                 <Class sourceFile="DriverCenteredCharacterSvgDeterministic.java">
                     net.sourceforge.plantuml.klimt.drawing.svg.DriverCenteredCharacterSvgDeterministic
                 </Class>
@@ -13283,11 +13289,11 @@
                 <Class sourceFile="ConfigurationStore.java">
                     net.sourceforge.plantuml.preproc.ConfigurationStore
                 </Class>
-                <Class sourceFile="DefineVariable.java">
-                    net.sourceforge.plantuml.preproc.DefineVariable
-                </Class>
                 <Class sourceFile="DiagramDetector.java">
                     net.sourceforge.plantuml.preproc.DiagramDetector
+                </Class>
+                <Class sourceFile="Environment.java">
+                    net.sourceforge.plantuml.preproc.Environment
                 </Class>
                 <Class sourceFile="FutureImage.java">
                     net.sourceforge.plantuml.preproc.FutureImage
@@ -14984,12 +14990,12 @@
 
         <Package name="net.sourceforge.plantuml.skin">
             <Stats>
-                <TotalClasses>34</TotalClasses>
-                <ConcreteClasses>29</ConcreteClasses>
+                <TotalClasses>35</TotalClasses>
+                <ConcreteClasses>30</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
                 <Ca>38</Ca>
                 <Ce>27</Ce>
-                <A>0.15</A>
+                <A>0.14</A>
                 <I>0.42</I>
                 <D>0.44</D>
                 <V>1</V>
@@ -15076,6 +15082,9 @@
                 </Class>
                 <Class sourceFile="SkinParam.java">
                     net.sourceforge.plantuml.skin.SkinParam$1
+                </Class>
+                <Class sourceFile="SkinParam.java">
+                    net.sourceforge.plantuml.skin.SkinParam$2
                 </Class>
                 <Class sourceFile="SkinParamBackcoloredReference.java">
                     net.sourceforge.plantuml.skin.SkinParamBackcoloredReference
@@ -16866,11 +16875,11 @@
                 <TotalClasses>20</TotalClasses>
                 <ConcreteClasses>19</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>43</Ca>
+                <Ca>44</Ca>
                 <Ce>15</Ce>
                 <A>0.05</A>
-                <I>0.26</I>
-                <D>0.69</D>
+                <I>0.25</I>
+                <D>0.7</D>
                 <V>1</V>
             </Stats>
 
@@ -16998,6 +17007,7 @@
                 <Package>net.sourceforge.plantuml.sequencediagram.puma</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.teoz</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
+                <Package>net.sourceforge.plantuml.tim</Package>
                 <Package>net.sourceforge.plantuml.tim.iterator</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram.graphic</Package>
                 <Package>net.sourceforge.plantuml.utils</Package>
@@ -17285,14 +17295,14 @@
 
         <Package name="net.sourceforge.plantuml.tim">
             <Stats>
-                <TotalClasses>39</TotalClasses>
-                <ConcreteClasses>35</ConcreteClasses>
+                <TotalClasses>40</TotalClasses>
+                <ConcreteClasses>36</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
                 <Ca>3</Ca>
-                <Ce>14</Ce>
+                <Ce>16</Ce>
                 <A>0.1</A>
-                <I>0.82</I>
-                <D>0.07</D>
+                <I>0.84</I>
+                <D>0.06</D>
                 <V>1</V>
             </Stats>
 
@@ -17390,6 +17400,9 @@
                 <Class sourceFile="ExecutionContextIf.java">
                     net.sourceforge.plantuml.tim.ExecutionContextIf
                 </Class>
+                <Class sourceFile="StandardFunctions.java">
+                    net.sourceforge.plantuml.tim.StandardFunctions
+                </Class>
                 <Class sourceFile="StringEater.java">
                     net.sourceforge.plantuml.tim.StringEater
                 </Class>
@@ -17429,8 +17442,10 @@
                 <Package>net.sourceforge.plantuml.nio</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.preproc2</Package>
+                <Package>net.sourceforge.plantuml.teavm</Package>
                 <Package>net.sourceforge.plantuml.teavm.browser</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
+                <Package>net.sourceforge.plantuml.tim.builtin</Package>
                 <Package>net.sourceforge.plantuml.tim.expression</Package>
                 <Package>net.sourceforge.plantuml.tim.iterator</Package>
                 <Package>net.sourceforge.plantuml.utils</Package>
@@ -17448,11 +17463,11 @@
                 <TotalClasses>68</TotalClasses>
                 <ConcreteClasses>67</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>0</Ca>
+                <Ca>1</Ca>
                 <Ce>14</Ce>
                 <A>0.01</A>
-                <I>1</I>
-                <D>0.01</D>
+                <I>0.93</I>
+                <D>0.05</D>
                 <V>1</V>
             </Stats>
 
@@ -17684,6 +17699,7 @@
             </DependsUpon>
 
             <UsedBy>
+                <Package>net.sourceforge.plantuml.tim</Package>
             </UsedBy>
         </Package>
 

@@ -93,6 +93,9 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">FunctionsSet</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">The functions known by a diagram. They are kept in two layers: the shared and
+ read-only registry of the standard functions, and the functions that the
+ diagram defines itself, which take precedence.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -106,6 +109,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">FunctionsSet</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.tim.FunctionsSet)" class="member-name-link">FunctionsSet</a><wbr>(<a href="FunctionsSet.html" title="class in net.sourceforge.plantuml.tim">FunctionsSet</a>&nbsp;base)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -151,26 +156,20 @@ loadScripts(document, 'script');</script>
  <a href="TMemory.html" title="interface in net.sourceforge.plantuml.tim">TMemory</a>&nbsp;memory,
  <a href="../text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&nbsp;s)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="TFunctionSignature.html" title="class in net.sourceforge.plantuml.tim">TFunctionSignature</a>,<wbr><a href="TFunction.html" title="interface in net.sourceforge.plantuml.tim">TFunction</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#functions()" class="member-name-link">functions</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a><wbr>&lt;<a href="TFunction.html" title="interface in net.sourceforge.plantuml.tim">TFunction</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFunctionsByName(java.lang.String)" class="member-name-link">getFunctionsByName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;functionName)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a><wbr>&lt;<a href="TFunction.html" title="interface in net.sourceforge.plantuml.tim">TFunction</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFunctionsByName(java.lang.String)" class="member-name-link">getFunctionsByName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;functionName)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the functions matching the given name, or an empty collection.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="TFunction.html" title="interface in net.sourceforge.plantuml.tim">TFunction</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFunctionSmart(net.sourceforge.plantuml.tim.TFunctionSignature)" class="member-name-link">getFunctionSmart</a><wbr>(<a href="TFunctionSignature.html" title="class in net.sourceforge.plantuml.tim">TFunctionSignature</a>&nbsp;searched)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLonguestMatchStartingIn(java.lang.String,int)" class="member-name-link">getLonguestMatchStartingIn</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s,
- int&nbsp;pos)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="TFunction.html" title="interface in net.sourceforge.plantuml.tim">TFunction</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFunctionSmart(net.sourceforge.plantuml.tim.TFunctionSignature)" class="member-name-link">getFunctionSmart</a><wbr>(<a href="TFunctionSignature.html" title="class in net.sourceforge.plantuml.tim">TFunctionSignature</a>&nbsp;searched)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="TFunctionImpl.html" title="class in net.sourceforge.plantuml.tim">TFunctionImpl</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pendingFunction()" class="member-name-link">pendingFunction</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLonguestMatchStartingIn(java.lang.String,int)" class="member-name-link">getLonguestMatchStartingIn</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s,
+ int&nbsp;pos)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#size()" class="member-name-link">size</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="TFunctionImpl.html" title="class in net.sourceforge.plantuml.tim">TFunctionImpl</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pendingFunction()" class="member-name-link">pendingFunction</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
@@ -195,6 +194,16 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">FunctionsSet</span>()</div>
 </section>
 </li>
+<li>
+<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.tim.FunctionsSet)">
+<h3>FunctionsSet</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">FunctionsSet</span><wbr><span class="parameters">(<a href="FunctionsSet.html" title="class in net.sourceforge.plantuml.tim">FunctionsSet</a>&nbsp;base)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>base</code> - a registry that is only read, never modified, or null</dd>
+</dl>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -207,18 +216,6 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getFunctionSmart(net.sourceforge.plantuml.tim.TFunctionSignature)">
 <h3>getFunctionSmart</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TFunction.html" title="interface in net.sourceforge.plantuml.tim">TFunction</a></span>&nbsp;<span class="element-name">getFunctionSmart</span><wbr><span class="parameters">(<a href="TFunctionSignature.html" title="class in net.sourceforge.plantuml.tim">TFunctionSignature</a>&nbsp;searched)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="size()">
-<h3>size</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">size</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="functions()">
-<h3>functions</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="TFunctionSignature.html" title="class in net.sourceforge.plantuml.tim">TFunctionSignature</a>,<wbr><a href="TFunction.html" title="interface in net.sourceforge.plantuml.tim">TFunction</a>&gt;</span>&nbsp;<span class="element-name">functions</span>()</div>
 </section>
 </li>
 <li>

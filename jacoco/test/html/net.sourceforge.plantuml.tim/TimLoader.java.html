@@ -57,7 +57,7 @@ public class TimLoader {
 
 	public TimLoader(PathSystem pathSystem, Defines defines, Charset charset, DefinitionsContainer definitionsContainer,
 <span class="fc" id="L59">			StringLocated location) {</span>
-<span class="fc" id="L60">		this.context = new TContext(pathSystem, defines, charset, definitionsContainer);</span>
+<span class="fc" id="L60">		this.context = new TContext(pathSystem, defines.getEnvironment(), charset, definitionsContainer);</span>
 		try {
 <span class="fc" id="L62">			defines.copyTo(global, location);</span>
 <span class="nc" id="L63">		} catch (EaterException e) {</span>

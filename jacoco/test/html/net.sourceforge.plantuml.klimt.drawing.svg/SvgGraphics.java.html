@@ -850,322 +850,337 @@ import net.sourceforge.plantuml.version.Version;
 		}
 <span class="fc" id="L851">	}</span>
 
-	private void fillMe(XmlNode elt) {
-<span class="fc bfc" id="L854" title="All 2 branches covered.">		if (fill.matches(&quot;#[0-9A-Fa-f]{8}&quot;)) {</span>
-<span class="fc" id="L855">			elt.setAttribute(&quot;fill&quot;, shortenColor(fill.substring(0, 7)));</span>
-<span class="fc" id="L856">			final double opacity = Integer.parseInt(fill.substring(7), 16) / 255.0;</span>
-<span class="fc" id="L857">			elt.setAttribute(&quot;fill-opacity&quot;, formatOpacity(opacity));</span>
-<span class="fc" id="L858">		} else {</span>
-<span class="fc" id="L859">			elt.setAttribute(&quot;fill&quot;, shortenColor(fill));</span>
+	// Same as fill.matches(&quot;#[0-9A-Fa-f]{8}&quot;), without compiling a regex at each call.
+	private static boolean isHexColorWithAlpha(String color) {
+<span class="pc bpc" id="L855" title="1 of 4 branches missed.">		if (color.length() != 9 || color.charAt(0) != '#')</span>
+<span class="fc" id="L856">			return false;</span>
+
+<span class="fc bfc" id="L858" title="All 2 branches covered.">		for (int i = 1; i &lt; 9; i++) {</span>
+<span class="fc" id="L859">			final char c = color.charAt(i);</span>
+<span class="pc bpc" id="L860" title="6 of 12 branches missed.">			if ((c &gt;= '0' &amp;&amp; c &lt;= '9') || (c &gt;= 'a' &amp;&amp; c &lt;= 'f') || (c &gt;= 'A' &amp;&amp; c &lt;= 'F'))</span>
+<span class="fc" id="L861">				continue;</span>
+
+<span class="nc" id="L863">			return false;</span>
 		}
-<span class="fc" id="L861">	}</span>
+<span class="fc" id="L865">		return true;</span>
+	}
+
+	private void fillMe(XmlNode elt) {
+<span class="fc bfc" id="L869" title="All 2 branches covered.">		if (isHexColorWithAlpha(fill)) {</span>
+<span class="fc" id="L870">			elt.setAttribute(&quot;fill&quot;, shortenColor(fill.substring(0, 7)));</span>
+<span class="fc" id="L871">			final double opacity = Integer.parseInt(fill.substring(7), 16) / 255.0;</span>
+<span class="fc" id="L872">			elt.setAttribute(&quot;fill-opacity&quot;, formatOpacity(opacity));</span>
+<span class="fc" id="L873">		} else {</span>
+<span class="fc" id="L874">			elt.setAttribute(&quot;fill&quot;, shortenColor(fill));</span>
+		}
+<span class="fc" id="L876">	}</span>
 
 	private void addFilterShadowId(final XmlNode elt, double deltaShadow) {
-<span class="fc bfc" id="L864" title="All 2 branches covered.">		if (deltaShadow &gt; 0)</span>
-<span class="fc" id="L865">			elt.setAttribute(&quot;filter&quot;, &quot;url(#&quot; + shadowId + &quot;)&quot;);</span>
+<span class="fc bfc" id="L879" title="All 2 branches covered.">		if (deltaShadow &gt; 0)</span>
+<span class="fc" id="L880">			elt.setAttribute(&quot;filter&quot;, &quot;url(#&quot; + shadowId + &quot;)&quot;);</span>
 
-<span class="fc" id="L867">	}</span>
+<span class="fc" id="L882">	}</span>
 
-<span class="fc" id="L869">	private StringBuilder currentPath = null;</span>
+<span class="fc" id="L884">	private StringBuilder currentPath = null;</span>
 
 	public void newpath() {
-<span class="fc" id="L872">		currentPath = new StringBuilder();</span>
-
-<span class="fc" id="L874">	}</span>
-
-	public void moveto(double x, double y) {
-<span class="fc" id="L877">		currentPath.append(&quot;M&quot; + format(x) + &quot;,&quot; + format(y) + &quot; &quot;);</span>
-<span class="fc" id="L878">		ensureVisible(x, y);</span>
-<span class="fc" id="L879">	}</span>
-
-	public void lineto(double x, double y) {
-<span class="fc" id="L882">		currentPath.append(&quot;L&quot; + format(x) + &quot;,&quot; + format(y) + &quot; &quot;);</span>
-<span class="fc" id="L883">		ensureVisible(x, y);</span>
-<span class="fc" id="L884">	}</span>
-
-	public void closepath() {
-<span class="fc" id="L887">		currentPath.append(&quot;Z &quot;);</span>
+<span class="fc" id="L887">		currentPath = new StringBuilder();</span>
 
 <span class="fc" id="L889">	}</span>
 
-	public void curveto(double x1, double y1, double x2, double y2, double x3, double y3) {
-<span class="nc" id="L892">		currentPath.append(&quot;C&quot; + format(x1) + &quot;,&quot; + format(y1) + &quot; &quot; + format(x2) + &quot;,&quot; + format(y2) + &quot; &quot; + format(x3)</span>
-<span class="nc" id="L893">				+ &quot;,&quot; + format(y3) + &quot; &quot;);</span>
-<span class="nc" id="L894">		ensureVisible(x1, y1);</span>
-<span class="nc" id="L895">		ensureVisible(x2, y2);</span>
-<span class="nc" id="L896">		ensureVisible(x3, y3);</span>
+	public void moveto(double x, double y) {
+<span class="fc" id="L892">		currentPath.append(&quot;M&quot; + format(x) + &quot;,&quot; + format(y) + &quot; &quot;);</span>
+<span class="fc" id="L893">		ensureVisible(x, y);</span>
+<span class="fc" id="L894">	}</span>
 
-<span class="nc" id="L898">	}</span>
+	public void lineto(double x, double y) {
+<span class="fc" id="L897">		currentPath.append(&quot;L&quot; + format(x) + &quot;,&quot; + format(y) + &quot; &quot;);</span>
+<span class="fc" id="L898">		ensureVisible(x, y);</span>
+<span class="fc" id="L899">	}</span>
 
-	public void quadto(double x1, double y1, double x2, double y2) {
-<span class="fc" id="L901">		currentPath.append(&quot;Q&quot; + format(x1) + &quot;,&quot; + format(y1) + &quot; &quot; + format(x2) + &quot;,&quot; + format(y2) + &quot; &quot;);</span>
-<span class="fc" id="L902">		ensureVisible(x1, y1);</span>
-<span class="fc" id="L903">		ensureVisible(x2, y2);</span>
+	public void closepath() {
+<span class="fc" id="L902">		currentPath.append(&quot;Z &quot;);</span>
+
 <span class="fc" id="L904">	}</span>
 
-	public void fill(int windingRule) {
-<span class="pc bpc" id="L907" title="1 of 2 branches missed.">		if (hidden == false) {</span>
-<span class="fc" id="L908">			final XmlNode elt = document.createElement(&quot;path&quot;);</span>
-<span class="fc" id="L909">			elt.setAttribute(&quot;d&quot;, currentPath.toString());</span>
-<span class="fc" id="L910">			fillMe(elt);</span>
-<span class="fc" id="L911">			getG().appendChild(elt);</span>
-		}
-<span class="fc" id="L913">		currentPath = null;</span>
+	public void curveto(double x1, double y1, double x2, double y2, double x3, double y3) {
+<span class="nc" id="L907">		currentPath.append(&quot;C&quot; + format(x1) + &quot;,&quot; + format(y1) + &quot; &quot; + format(x2) + &quot;,&quot; + format(y2) + &quot; &quot; + format(x3)</span>
+<span class="nc" id="L908">				+ &quot;,&quot; + format(y3) + &quot; &quot;);</span>
+<span class="nc" id="L909">		ensureVisible(x1, y1);</span>
+<span class="nc" id="L910">		ensureVisible(x2, y2);</span>
+<span class="nc" id="L911">		ensureVisible(x3, y3);</span>
 
-<span class="fc" id="L915">	}</span>
+<span class="nc" id="L913">	}</span>
+
+	public void quadto(double x1, double y1, double x2, double y2) {
+<span class="fc" id="L916">		currentPath.append(&quot;Q&quot; + format(x1) + &quot;,&quot; + format(y1) + &quot; &quot; + format(x2) + &quot;,&quot; + format(y2) + &quot; &quot;);</span>
+<span class="fc" id="L917">		ensureVisible(x1, y1);</span>
+<span class="fc" id="L918">		ensureVisible(x2, y2);</span>
+<span class="fc" id="L919">	}</span>
+
+	public void fill(int windingRule) {
+<span class="pc bpc" id="L922" title="1 of 2 branches missed.">		if (hidden == false) {</span>
+<span class="fc" id="L923">			final XmlNode elt = document.createElement(&quot;path&quot;);</span>
+<span class="fc" id="L924">			elt.setAttribute(&quot;d&quot;, currentPath.toString());</span>
+<span class="fc" id="L925">			fillMe(elt);</span>
+<span class="fc" id="L926">			getG().appendChild(elt);</span>
+		}
+<span class="fc" id="L928">		currentPath = null;</span>
+
+<span class="fc" id="L930">	}</span>
 
 	public void drawPathIterator(double x, double y, PathIterator path) {
 
-<span class="fc" id="L919">		this.newpath();</span>
-<span class="fc" id="L920">		final double coord[] = new double[6];</span>
-<span class="fc bfc" id="L921" title="All 2 branches covered.">		while (path.isDone() == false) {</span>
-<span class="fc" id="L922">			final int code = path.currentSegment(coord);</span>
-<span class="fc bfc" id="L923" title="All 2 branches covered.">			if (code == PathIterator.SEG_MOVETO)</span>
-<span class="fc" id="L924">				this.moveto(coord[0] + x, coord[1] + y);</span>
-<span class="fc bfc" id="L925" title="All 2 branches covered.">			else if (code == PathIterator.SEG_LINETO)</span>
-<span class="fc" id="L926">				this.lineto(coord[0] + x, coord[1] + y);</span>
-<span class="fc bfc" id="L927" title="All 2 branches covered.">			else if (code == PathIterator.SEG_CLOSE)</span>
-<span class="fc" id="L928">				this.closepath();</span>
-<span class="pc bpc" id="L929" title="1 of 2 branches missed.">			else if (code == PathIterator.SEG_CUBICTO)</span>
-<span class="nc" id="L930">				this.curveto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);</span>
-<span class="pc bpc" id="L931" title="1 of 2 branches missed.">			else if (code == PathIterator.SEG_QUADTO)</span>
-<span class="fc" id="L932">				this.quadto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);</span>
+<span class="fc" id="L934">		this.newpath();</span>
+<span class="fc" id="L935">		final double coord[] = new double[6];</span>
+<span class="fc bfc" id="L936" title="All 2 branches covered.">		while (path.isDone() == false) {</span>
+<span class="fc" id="L937">			final int code = path.currentSegment(coord);</span>
+<span class="fc bfc" id="L938" title="All 2 branches covered.">			if (code == PathIterator.SEG_MOVETO)</span>
+<span class="fc" id="L939">				this.moveto(coord[0] + x, coord[1] + y);</span>
+<span class="fc bfc" id="L940" title="All 2 branches covered.">			else if (code == PathIterator.SEG_LINETO)</span>
+<span class="fc" id="L941">				this.lineto(coord[0] + x, coord[1] + y);</span>
+<span class="fc bfc" id="L942" title="All 2 branches covered.">			else if (code == PathIterator.SEG_CLOSE)</span>
+<span class="fc" id="L943">				this.closepath();</span>
+<span class="pc bpc" id="L944" title="1 of 2 branches missed.">			else if (code == PathIterator.SEG_CUBICTO)</span>
+<span class="nc" id="L945">				this.curveto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);</span>
+<span class="pc bpc" id="L946" title="1 of 2 branches missed.">			else if (code == PathIterator.SEG_QUADTO)</span>
+<span class="fc" id="L947">				this.quadto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);</span>
 			else
-<span class="nc" id="L934">				throw new UnsupportedOperationException(&quot;code=&quot; + code);</span>
+<span class="nc" id="L949">				throw new UnsupportedOperationException(&quot;code=&quot; + code);</span>
 
-<span class="fc" id="L936">			path.next();</span>
-<span class="fc" id="L937">		}</span>
+<span class="fc" id="L951">			path.next();</span>
+<span class="fc" id="L952">		}</span>
 
-<span class="fc" id="L939">		this.fill(path.getWindingRule());</span>
+<span class="fc" id="L954">		this.fill(path.getWindingRule());</span>
 
-<span class="fc" id="L941">	}</span>
-
-	public void svgImage(PortableImage image, double x, double y) throws IOException {
-<span class="pc bpc" id="L944" title="1 of 2 branches missed.">		if (hidden == false) {</span>
-<span class="fc" id="L945">			final XmlNode elt = document.createElement(&quot;image&quot;);</span>
-<span class="fc" id="L946">			elt.setAttribute(&quot;width&quot;, format(image.getWidth()));</span>
-<span class="fc" id="L947">			elt.setAttribute(&quot;height&quot;, format(image.getHeight()));</span>
-<span class="fc" id="L948">			elt.setAttribute(&quot;x&quot;, format(x));</span>
-<span class="fc" id="L949">			elt.setAttribute(&quot;y&quot;, format(y));</span>
-<span class="fc" id="L950">			final String s = toBase64(image);</span>
-<span class="fc" id="L951">			elt.setAttribute(&quot;xlink:href&quot;, &quot;data:image/png;base64,&quot; + s);</span>
-<span class="fc" id="L952">			getG().appendChild(elt);</span>
-		}
-<span class="fc" id="L954">		ensureVisible(x, y);</span>
-<span class="fc" id="L955">		ensureVisible(x + image.getWidth(), y + image.getHeight());</span>
 <span class="fc" id="L956">	}</span>
 
-<span class="fc" id="L958">	private final Map&lt;String, String&gt; images = new HashMap&lt;String, String&gt;();</span>
+	public void svgImage(PortableImage image, double x, double y) throws IOException {
+<span class="pc bpc" id="L959" title="1 of 2 branches missed.">		if (hidden == false) {</span>
+<span class="fc" id="L960">			final XmlNode elt = document.createElement(&quot;image&quot;);</span>
+<span class="fc" id="L961">			elt.setAttribute(&quot;width&quot;, format(image.getWidth()));</span>
+<span class="fc" id="L962">			elt.setAttribute(&quot;height&quot;, format(image.getHeight()));</span>
+<span class="fc" id="L963">			elt.setAttribute(&quot;x&quot;, format(x));</span>
+<span class="fc" id="L964">			elt.setAttribute(&quot;y&quot;, format(y));</span>
+<span class="fc" id="L965">			final String s = toBase64(image);</span>
+<span class="fc" id="L966">			elt.setAttribute(&quot;xlink:href&quot;, &quot;data:image/png;base64,&quot; + s);</span>
+<span class="fc" id="L967">			getG().appendChild(elt);</span>
+		}
+<span class="fc" id="L969">		ensureVisible(x, y);</span>
+<span class="fc" id="L970">		ensureVisible(x + image.getWidth(), y + image.getHeight());</span>
+<span class="fc" id="L971">	}</span>
+
+<span class="fc" id="L973">	private final Map&lt;String, String&gt; images = new HashMap&lt;String, String&gt;();</span>
 
 	private void svgImageUnsecure(UImageSvg image, double x, double y) {
-<span class="nc bnc" id="L961" title="All 2 branches missed.">		if (hidden == false) {</span>
-<span class="nc" id="L962">			String svg = manageScale(image);</span>
-<span class="nc" id="L963">			final String pos = &quot;&lt;svg x=\&quot;&quot; + format(x) + &quot;\&quot; y=\&quot;&quot; + format(y) + &quot;\&quot;&gt;&quot;;</span>
-<span class="nc" id="L964">			svg = pos + svg.substring(5);</span>
-<span class="nc" id="L965">			final String key = &quot;imagesvginlined&quot; + image.getMD5Hex() + images.size();</span>
-<span class="nc" id="L966">			final XmlNode elt = document.createElement(key);</span>
-<span class="nc" id="L967">			getG().appendChild(elt);</span>
-<span class="nc" id="L968">			images.put(key, svg);</span>
+<span class="nc bnc" id="L976" title="All 2 branches missed.">		if (hidden == false) {</span>
+<span class="nc" id="L977">			String svg = manageScale(image);</span>
+<span class="nc" id="L978">			final String pos = &quot;&lt;svg x=\&quot;&quot; + format(x) + &quot;\&quot; y=\&quot;&quot; + format(y) + &quot;\&quot;&gt;&quot;;</span>
+<span class="nc" id="L979">			svg = pos + svg.substring(5);</span>
+<span class="nc" id="L980">			final String key = &quot;imagesvginlined&quot; + image.getMD5Hex() + images.size();</span>
+<span class="nc" id="L981">			final XmlNode elt = document.createElement(key);</span>
+<span class="nc" id="L982">			getG().appendChild(elt);</span>
+<span class="nc" id="L983">			images.put(key, svg);</span>
 		}
-<span class="nc" id="L970">		ensureVisible(x, y);</span>
-<span class="nc" id="L971">		ensureVisible(x + image.getData(&quot;width&quot;), y + image.getData(&quot;height&quot;));</span>
-<span class="nc" id="L972">	}</span>
+<span class="nc" id="L985">		ensureVisible(x, y);</span>
+<span class="nc" id="L986">		ensureVisible(x + image.getData(&quot;width&quot;), y + image.getData(&quot;height&quot;));</span>
+<span class="nc" id="L987">	}</span>
 
 	public void svgImage(UImageSvg image, double x, double y) {
-<span class="pc bpc" id="L975" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE) {</span>
-<span class="nc" id="L976">			svgImageUnsecure(image, x, y);</span>
-<span class="nc" id="L977">			return;</span>
+<span class="pc bpc" id="L990" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE) {</span>
+<span class="nc" id="L991">			svgImageUnsecure(image, x, y);</span>
+<span class="nc" id="L992">			return;</span>
 		}
 
 		// https://developer.mozilla.org/fr/docs/Web/SVG/Element/image
-<span class="pc bpc" id="L981" title="1 of 2 branches missed.">		if (hidden == false) {</span>
-<span class="fc" id="L982">			final XmlNode elt = document.createElement(&quot;image&quot;);</span>
-<span class="fc" id="L983">			elt.setAttribute(&quot;width&quot;, format(image.getWidth()));</span>
-<span class="fc" id="L984">			elt.setAttribute(&quot;height&quot;, format(image.getHeight()));</span>
-<span class="fc" id="L985">			elt.setAttribute(&quot;x&quot;, format(x));</span>
-<span class="fc" id="L986">			elt.setAttribute(&quot;y&quot;, format(y));</span>
+<span class="pc bpc" id="L996" title="1 of 2 branches missed.">		if (hidden == false) {</span>
+<span class="fc" id="L997">			final XmlNode elt = document.createElement(&quot;image&quot;);</span>
+<span class="fc" id="L998">			elt.setAttribute(&quot;width&quot;, format(image.getWidth()));</span>
+<span class="fc" id="L999">			elt.setAttribute(&quot;height&quot;, format(image.getHeight()));</span>
+<span class="fc" id="L1000">			elt.setAttribute(&quot;x&quot;, format(x));</span>
+<span class="fc" id="L1001">			elt.setAttribute(&quot;y&quot;, format(y));</span>
 
-<span class="fc" id="L988">			String svg = manageScale(image);</span>
+<span class="fc" id="L1003">			String svg = manageScale(image);</span>
 
 			final String svgHeader;
-<span class="pc bpc" id="L991" title="1 of 2 branches missed.">			if (image.containsXlink())</span>
-<span class="fc" id="L992">				svgHeader = &quot;&lt;svg height=\&quot;&quot; + (int) (image.getHeight() * option.getScale()) + &quot;\&quot; width=\&quot;&quot;</span>
-<span class="fc" id="L993">						+ (int) (image.getWidth() * option.getScale())</span>
+<span class="pc bpc" id="L1006" title="1 of 2 branches missed.">			if (image.containsXlink())</span>
+<span class="fc" id="L1007">				svgHeader = &quot;&lt;svg height=\&quot;&quot; + (int) (image.getHeight() * option.getScale()) + &quot;\&quot; width=\&quot;&quot;</span>
+<span class="fc" id="L1008">						+ (int) (image.getWidth() * option.getScale())</span>
 						+ &quot;\&quot; xmlns:xlink=\&quot;http://www.w3.org/1999/xlink\&quot; xmlns=\&quot;http://www.w3.org/2000/svg\&quot; &gt;&quot;;
 			else
-<span class="nc" id="L996">				svgHeader = &quot;&lt;svg height=\&quot;&quot; + (int) (image.getHeight() * option.getScale()) + &quot;\&quot; width=\&quot;&quot;</span>
-<span class="nc" id="L997">						+ (int) (image.getWidth() * option.getScale()) + &quot;\&quot; xmlns=\&quot;http://www.w3.org/2000/svg\&quot; &gt;&quot;;</span>
+<span class="nc" id="L1011">				svgHeader = &quot;&lt;svg height=\&quot;&quot; + (int) (image.getHeight() * option.getScale()) + &quot;\&quot; width=\&quot;&quot;</span>
+<span class="nc" id="L1012">						+ (int) (image.getWidth() * option.getScale()) + &quot;\&quot; xmlns=\&quot;http://www.w3.org/2000/svg\&quot; &gt;&quot;;</span>
 
-<span class="fc" id="L999">			svg = svgHeader + svg.substring(5);</span>
+<span class="fc" id="L1014">			svg = svgHeader + svg.substring(5);</span>
 
-<span class="fc" id="L1001">			final String s = toBase64(svg);</span>
-<span class="fc" id="L1002">			elt.setAttribute(&quot;xlink:href&quot;, &quot;data:image/svg+xml;base64,&quot; + s);</span>
+<span class="fc" id="L1016">			final String s = toBase64(svg);</span>
+<span class="fc" id="L1017">			elt.setAttribute(&quot;xlink:href&quot;, &quot;data:image/svg+xml;base64,&quot; + s);</span>
 
-<span class="fc" id="L1004">			getG().appendChild(elt);</span>
+<span class="fc" id="L1019">			getG().appendChild(elt);</span>
 		}
-<span class="fc" id="L1006">		ensureVisible(x, y);</span>
-<span class="fc" id="L1007">		ensureVisible(x + image.getData(&quot;width&quot;), y + image.getData(&quot;height&quot;));</span>
-<span class="fc" id="L1008">	}</span>
+<span class="fc" id="L1021">		ensureVisible(x, y);</span>
+<span class="fc" id="L1022">		ensureVisible(x + image.getData(&quot;width&quot;), y + image.getData(&quot;height&quot;));</span>
+<span class="fc" id="L1023">	}</span>
 
 	private String manageScale(UImageSvg svgImage) {
-<span class="fc" id="L1011">		final double svgScale = svgImage.getScale();</span>
-<span class="fc" id="L1012">		String svg = svgImage.getSvg(false);</span>
-<span class="fc bfc" id="L1013" title="All 2 branches covered.">		if (svgScale * option.getScale() == 1)</span>
-<span class="fc" id="L1014">			return svg;</span>
+<span class="fc" id="L1026">		final double svgScale = svgImage.getScale();</span>
+<span class="fc" id="L1027">		String svg = svgImage.getSvg(false);</span>
+<span class="fc bfc" id="L1028" title="All 2 branches covered.">		if (svgScale * option.getScale() == 1)</span>
+<span class="fc" id="L1029">			return svg;</span>
 
-<span class="fc" id="L1016">		final String svg2 = svg.replace('\n', ' ').replace('\r', ' ');</span>
-<span class="pc bpc" id="L1017" title="3 of 4 branches missed.">		if (svg2.contains(&quot;&lt;g &quot;) == false &amp;&amp; svg2.contains(&quot;&lt;g&gt;&quot;) == false) {</span>
-<span class="nc" id="L1018">			svg = svg.replaceFirst(&quot;\\&lt;svg\\&gt;&quot;, &quot;&lt;svg&gt;&lt;g&gt;&quot;);</span>
-<span class="nc" id="L1019">			svg = svg.replaceFirst(&quot;\\&lt;/svg\\&gt;&quot;, &quot;&lt;/g&gt;&lt;/svg&gt;&quot;);</span>
+<span class="fc" id="L1031">		final String svg2 = svg.replace('\n', ' ').replace('\r', ' ');</span>
+<span class="pc bpc" id="L1032" title="3 of 4 branches missed.">		if (svg2.contains(&quot;&lt;g &quot;) == false &amp;&amp; svg2.contains(&quot;&lt;g&gt;&quot;) == false) {</span>
+<span class="nc" id="L1033">			svg = svg.replaceFirst(&quot;\\&lt;svg\\&gt;&quot;, &quot;&lt;svg&gt;&lt;g&gt;&quot;);</span>
+<span class="nc" id="L1034">			svg = svg.replaceFirst(&quot;\\&lt;/svg\\&gt;&quot;, &quot;&lt;/g&gt;&lt;/svg&gt;&quot;);</span>
 		}
-<span class="fc" id="L1021">		final String factor = format(svgScale);</span>
-<span class="fc" id="L1022">		final String s1 = &quot;\\&lt;g\\b&quot;;</span>
-<span class="fc" id="L1023">		final String s2 = &quot;&lt;g transform=\&quot;scale(&quot; + factor + &quot;,&quot; + factor + &quot;)\&quot; &quot;;</span>
-<span class="fc" id="L1024">		svg = svg.replaceFirst(s1, s2);</span>
-<span class="fc" id="L1025">		return svg;</span>
+<span class="fc" id="L1036">		final String factor = format(svgScale);</span>
+<span class="fc" id="L1037">		final String s1 = &quot;\\&lt;g\\b&quot;;</span>
+<span class="fc" id="L1038">		final String s2 = &quot;&lt;g transform=\&quot;scale(&quot; + factor + &quot;,&quot; + factor + &quot;)\&quot; &quot;;</span>
+<span class="fc" id="L1039">		svg = svg.replaceFirst(s1, s2);</span>
+<span class="fc" id="L1040">		return svg;</span>
 	}
 
 	private String toBase64(PortableImage image) throws IOException {
-<span class="fc" id="L1029">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
-<span class="fc" id="L1030">		SImageIO.write(image, &quot;png&quot;, baos);</span>
-<span class="fc" id="L1031">		final byte data[] = baos.toByteArray();</span>
-<span class="fc" id="L1032">		return new String(Base64Coder.encode(data));</span>
+<span class="fc" id="L1044">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="fc" id="L1045">		SImageIO.write(image, &quot;png&quot;, baos);</span>
+<span class="fc" id="L1046">		final byte data[] = baos.toByteArray();</span>
+<span class="fc" id="L1047">		return new String(Base64Coder.encode(data));</span>
 	}
 
 	private String toBase64(String s) {
-<span class="fc" id="L1036">		final byte data[] = s.getBytes(java.nio.charset.StandardCharsets.UTF_8);</span>
-<span class="fc" id="L1037">		return new String(Base64Coder.encode(data));</span>
+<span class="fc" id="L1051">		final byte data[] = s.getBytes(java.nio.charset.StandardCharsets.UTF_8);</span>
+<span class="fc" id="L1052">		return new String(Base64Coder.encode(data));</span>
 	}
 
 	// Shadow
 
-<span class="fc" id="L1042">	private boolean withShadow = false;</span>
+<span class="fc" id="L1057">	private boolean withShadow = false;</span>
 
 	private void manageShadow(double deltaShadow) {
-<span class="fc bfc" id="L1045" title="All 2 branches covered.">		if (deltaShadow != 0) {</span>
-<span class="fc bfc" id="L1046" title="All 2 branches covered.">			if (withShadow == false) {</span>
+<span class="fc bfc" id="L1060" title="All 2 branches covered.">		if (deltaShadow != 0) {</span>
+<span class="fc bfc" id="L1061" title="All 2 branches covered.">			if (withShadow == false) {</span>
 				// &lt;filter id=&quot;f1&quot; x=&quot;0&quot; y=&quot;0&quot; width=&quot;120%&quot; height=&quot;120%&quot;&gt;
-<span class="fc" id="L1048">				final XmlNode filter = document.createElement(&quot;filter&quot;);</span>
-<span class="fc" id="L1049">				filter.setAttribute(&quot;id&quot;, shadowId);</span>
-<span class="fc" id="L1050">				filter.setAttribute(&quot;x&quot;, &quot;-1&quot;);</span>
-<span class="fc" id="L1051">				filter.setAttribute(&quot;y&quot;, &quot;-1&quot;);</span>
-<span class="fc" id="L1052">				filter.setAttribute(&quot;width&quot;, &quot;300%&quot;);</span>
-<span class="fc" id="L1053">				filter.setAttribute(&quot;height&quot;, &quot;300%&quot;);</span>
-<span class="fc" id="L1054">				addFilter(filter, &quot;feGaussianBlur&quot;, &quot;result&quot;, &quot;blurOut&quot;, &quot;stdDeviation&quot;, format(2));</span>
-<span class="fc" id="L1055">				addFilter(filter, &quot;feColorMatrix&quot;, &quot;type&quot;, &quot;matrix&quot;, &quot;in&quot;, &quot;blurOut&quot;, &quot;result&quot;, &quot;blurOut2&quot;, &quot;values&quot;,</span>
+<span class="fc" id="L1063">				final XmlNode filter = document.createElement(&quot;filter&quot;);</span>
+<span class="fc" id="L1064">				filter.setAttribute(&quot;id&quot;, shadowId);</span>
+<span class="fc" id="L1065">				filter.setAttribute(&quot;x&quot;, &quot;-1&quot;);</span>
+<span class="fc" id="L1066">				filter.setAttribute(&quot;y&quot;, &quot;-1&quot;);</span>
+<span class="fc" id="L1067">				filter.setAttribute(&quot;width&quot;, &quot;300%&quot;);</span>
+<span class="fc" id="L1068">				filter.setAttribute(&quot;height&quot;, &quot;300%&quot;);</span>
+<span class="fc" id="L1069">				addFilter(filter, &quot;feGaussianBlur&quot;, &quot;result&quot;, &quot;blurOut&quot;, &quot;stdDeviation&quot;, format(2));</span>
+<span class="fc" id="L1070">				addFilter(filter, &quot;feColorMatrix&quot;, &quot;type&quot;, &quot;matrix&quot;, &quot;in&quot;, &quot;blurOut&quot;, &quot;result&quot;, &quot;blurOut2&quot;, &quot;values&quot;,</span>
 						&quot;0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0&quot;);
-<span class="fc" id="L1057">				addFilter(filter, &quot;feOffset&quot;, &quot;result&quot;, &quot;blurOut3&quot;, &quot;in&quot;, &quot;blurOut2&quot;, &quot;dx&quot;, format(4), &quot;dy&quot;, format(4));</span>
-<span class="fc" id="L1058">				addFilter(filter, &quot;feBlend&quot;, &quot;in&quot;, &quot;SourceGraphic&quot;, &quot;in2&quot;, &quot;blurOut3&quot;, &quot;mode&quot;, &quot;normal&quot;);</span>
-<span class="fc" id="L1059">				defs.appendChild(filter);</span>
+<span class="fc" id="L1072">				addFilter(filter, &quot;feOffset&quot;, &quot;result&quot;, &quot;blurOut3&quot;, &quot;in&quot;, &quot;blurOut2&quot;, &quot;dx&quot;, format(4), &quot;dy&quot;, format(4));</span>
+<span class="fc" id="L1073">				addFilter(filter, &quot;feBlend&quot;, &quot;in&quot;, &quot;SourceGraphic&quot;, &quot;in2&quot;, &quot;blurOut3&quot;, &quot;mode&quot;, &quot;normal&quot;);</span>
+<span class="fc" id="L1074">				defs.appendChild(filter);</span>
 
 			}
-<span class="fc" id="L1062">			withShadow = true;</span>
+<span class="fc" id="L1077">			withShadow = true;</span>
 		}
-<span class="fc" id="L1064">	}</span>
+<span class="fc" id="L1079">	}</span>
 
 	private void addFilter(XmlNode filter, String name, String... data) {
-<span class="pc bpc" id="L1067" title="1 of 2 branches missed.">		if (TeaVM.a())</span>
-<span class="pc bpc" id="L1068" title="1 of 2 branches missed.">			assert data.length % 2 == 0;</span>
-<span class="fc" id="L1069">		final XmlNode elt = document.createElement(name);</span>
-<span class="fc bfc" id="L1070" title="All 2 branches covered.">		for (int i = 0; i &lt; data.length; i += 2)</span>
-<span class="fc" id="L1071">			elt.setAttribute(data[i], data[i + 1]);</span>
+<span class="pc bpc" id="L1082" title="1 of 2 branches missed.">		if (TeaVM.a())</span>
+<span class="pc bpc" id="L1083" title="1 of 2 branches missed.">			assert data.length % 2 == 0;</span>
+<span class="fc" id="L1084">		final XmlNode elt = document.createElement(name);</span>
+<span class="fc bfc" id="L1085" title="All 2 branches covered.">		for (int i = 0; i &lt; data.length; i += 2)</span>
+<span class="fc" id="L1086">			elt.setAttribute(data[i], data[i + 1]);</span>
 
-<span class="fc" id="L1073">		filter.appendChild(elt);</span>
-<span class="fc" id="L1074">	}</span>
+<span class="fc" id="L1088">		filter.appendChild(elt);</span>
+<span class="fc" id="L1089">	}</span>
 
 	private boolean hidden;
 
 	public void setHidden(boolean hidden) {
-<span class="fc" id="L1079">		this.hidden = hidden;</span>
-<span class="fc" id="L1080">	}</span>
+<span class="fc" id="L1094">		this.hidden = hidden;</span>
+<span class="fc" id="L1095">	}</span>
 
 	public static final String META_HEADER = &quot;&lt;!--SRC=[&quot;;
 
 	public static String getMetadataHex(String comment) {
 		try {
-<span class="fc" id="L1086">			final String encoded = TranscoderUtil.getDefaultTranscoderProtected().encode(comment);</span>
-<span class="fc" id="L1087">			return encoded;</span>
-<span class="nc" id="L1088">		} catch (IOException e) {</span>
-<span class="nc" id="L1089">			return &quot;ERROR42&quot;;</span>
+<span class="fc" id="L1101">			final String encoded = TranscoderUtil.getDefaultTranscoderProtected().encode(comment);</span>
+<span class="fc" id="L1102">			return encoded;</span>
+<span class="nc" id="L1103">		} catch (IOException e) {</span>
+<span class="nc" id="L1104">			return &quot;ERROR42&quot;;</span>
 		}
 	}
 
 	public void addCommentMetadata(String metadata) {
 		// https://github.com/plantuml/plantuml/issues/2306
-<span class="fc" id="L1095">		final String signature = getMetadataHex(metadata);</span>
-<span class="fc" id="L1096">		getG().appendProcessingInstruction(&quot;plantuml-src&quot;, signature);</span>
-<span class="fc" id="L1097">	}</span>
+<span class="fc" id="L1110">		final String signature = getMetadataHex(metadata);</span>
+<span class="fc" id="L1111">		getG().appendProcessingInstruction(&quot;plantuml-src&quot;, signature);</span>
+<span class="fc" id="L1112">	}</span>
 
 	public void addComment(String comment) {
-<span class="fc" id="L1100">		getG().appendComment(comment);</span>
-<span class="fc" id="L1101">	}</span>
+<span class="fc" id="L1115">		getG().appendComment(comment);</span>
+<span class="fc" id="L1116">	}</span>
 
 	private static class LinkData {
 		private final String url;
 		private final String title;
 		private final String target;
 
-<span class="fc" id="L1108">		public LinkData(String url, String title, String target) {</span>
+<span class="fc" id="L1123">		public LinkData(String url, String title, String target) {</span>
 			// javascript: security issue
-<span class="pc bpc" id="L1110" title="1 of 2 branches missed.">			if (SecurityUtils.ignoreThisLink(Objects.requireNonNull(url)))</span>
-<span class="nc" id="L1111">				this.url = &quot;&quot;;</span>
+<span class="pc bpc" id="L1125" title="1 of 2 branches missed.">			if (SecurityUtils.ignoreThisLink(Objects.requireNonNull(url)))</span>
+<span class="nc" id="L1126">				this.url = &quot;&quot;;</span>
 			else
-<span class="fc" id="L1113">				this.url = url;</span>
-<span class="fc" id="L1114">			this.title = title;</span>
-<span class="fc" id="L1115">			this.target = target;</span>
-<span class="fc" id="L1116">		}</span>
+<span class="fc" id="L1128">				this.url = url;</span>
+<span class="fc" id="L1129">			this.title = title;</span>
+<span class="fc" id="L1130">			this.target = target;</span>
+<span class="fc" id="L1131">		}</span>
 
-<span class="fc" id="L1118">		private static final Pattern p = Pattern.compile(&quot;\\&lt;U\\+([0-9A-Fa-f]+)\\&gt;&quot;);</span>
+<span class="fc" id="L1133">		private static final Pattern p = Pattern.compile(&quot;\\&lt;U\\+([0-9A-Fa-f]+)\\&gt;&quot;);</span>
 
 		String getXlinkTitle() {
-<span class="pc bpc" id="L1121" title="1 of 2 branches missed.">			if (title == null)</span>
-<span class="nc" id="L1122">				return url;</span>
+<span class="pc bpc" id="L1136" title="1 of 2 branches missed.">			if (title == null)</span>
+<span class="nc" id="L1137">				return url;</span>
 
-<span class="fc" id="L1124">			final Matcher m = p.matcher(title);</span>
-<span class="fc" id="L1125">			final StringBuffer sb = new StringBuffer(); // Can't be switched to StringBuilder in order to support Java 8</span>
-<span class="pc bpc" id="L1126" title="1 of 2 branches missed.">			while (m.find()) {</span>
-<span class="nc" id="L1127">				final String num = m.group(1);</span>
-<span class="nc" id="L1128">				final char c = (char) Integer.parseInt(num, 16);</span>
-<span class="nc" id="L1129">				m.appendReplacement(sb, &quot;&quot; + c);</span>
-<span class="nc" id="L1130">			}</span>
-<span class="fc" id="L1131">			m.appendTail(sb);</span>
+<span class="fc" id="L1139">			final Matcher m = p.matcher(title);</span>
+<span class="fc" id="L1140">			final StringBuffer sb = new StringBuffer(); // Can't be switched to StringBuilder in order to support Java 8</span>
+<span class="pc bpc" id="L1141" title="1 of 2 branches missed.">			while (m.find()) {</span>
+<span class="nc" id="L1142">				final String num = m.group(1);</span>
+<span class="nc" id="L1143">				final char c = (char) Integer.parseInt(num, 16);</span>
+<span class="nc" id="L1144">				m.appendReplacement(sb, &quot;&quot; + c);</span>
+<span class="nc" id="L1145">			}</span>
+<span class="fc" id="L1146">			m.appendTail(sb);</span>
 
-<span class="fc" id="L1133">			return sb.toString().replaceAll(&quot;\\\\n&quot;, &quot;\n&quot;);</span>
+<span class="fc" id="L1148">			return sb.toString().replaceAll(&quot;\\\\n&quot;, &quot;\n&quot;);</span>
 		}
 
 		public void updateAttributesOf(XmlNode element) {
-<span class="fc" id="L1137">			element.setAttribute(&quot;target&quot;, target);</span>
-<span class="fc" id="L1138">			element.setAttribute(XLINK_HREF1, url);</span>
-<span class="fc" id="L1139">			element.setAttribute(XLINK_HREF2, url);</span>
-<span class="fc" id="L1140">			element.setAttribute(&quot;xlink:type&quot;, &quot;simple&quot;);</span>
-<span class="fc" id="L1141">			element.setAttribute(&quot;xlink:actuate&quot;, &quot;onRequest&quot;);</span>
-<span class="fc" id="L1142">			element.setAttribute(&quot;xlink:show&quot;, &quot;new&quot;);</span>
-<span class="fc" id="L1143">			final String title = getXlinkTitle();</span>
-<span class="fc" id="L1144">			element.setAttribute(XLINK_TITLE1, title);</span>
-<span class="fc" id="L1145">			element.setAttribute(XLINK_TITLE2, title);</span>
+<span class="fc" id="L1152">			element.setAttribute(&quot;target&quot;, target);</span>
+<span class="fc" id="L1153">			element.setAttribute(XLINK_HREF1, url);</span>
+<span class="fc" id="L1154">			element.setAttribute(XLINK_HREF2, url);</span>
+<span class="fc" id="L1155">			element.setAttribute(&quot;xlink:type&quot;, &quot;simple&quot;);</span>
+<span class="fc" id="L1156">			element.setAttribute(&quot;xlink:actuate&quot;, &quot;onRequest&quot;);</span>
+<span class="fc" id="L1157">			element.setAttribute(&quot;xlink:show&quot;, &quot;new&quot;);</span>
+<span class="fc" id="L1158">			final String title = getXlinkTitle();</span>
+<span class="fc" id="L1159">			element.setAttribute(XLINK_TITLE1, title);</span>
+<span class="fc" id="L1160">			element.setAttribute(XLINK_TITLE2, title);</span>
 
-<span class="fc" id="L1147">		}</span>
+<span class="fc" id="L1162">		}</span>
 	}
 
-<span class="fc" id="L1150">	private final List&lt;XmlNode&gt; pendingElements = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L1165">	private final List&lt;XmlNode&gt; pendingElements = new ArrayList&lt;&gt;();</span>
 
 	/*
 	 * Note: SVG does not support nested links (&lt;a&gt; within &lt;a&gt;). Thus, we manage
 	 * link openings carefully to ensure only the topmost link remains active at any
 	 * given time.
 	 */
-<span class="fc" id="L1157">	private final List&lt;LinkData&gt; activeLinks = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L1172">	private final List&lt;LinkData&gt; activeLinks = new ArrayList&lt;&gt;();</span>
 
 	/**
 	 * Moves the first pending element (typically a link or group) to the document's
 	 * SVG group.
 	 */
 	private void closeTopPendingElement() {
-<span class="fc" id="L1164">		final XmlNode element = pendingElements.get(0);</span>
-<span class="fc" id="L1165">		pendingElements.remove(0);</span>
-<span class="fc bfc" id="L1166" title="All 2 branches covered.">		if (element.getFirstChild() != null)</span>
-<span class="fc" id="L1167">			getG().appendChild(element);</span>
-<span class="fc" id="L1168">	}</span>
+<span class="fc" id="L1179">		final XmlNode element = pendingElements.get(0);</span>
+<span class="fc" id="L1180">		pendingElements.remove(0);</span>
+<span class="fc bfc" id="L1181" title="All 2 branches covered.">		if (element.getFirstChild() != null)</span>
+<span class="fc" id="L1182">			getG().appendChild(element);</span>
+<span class="fc" id="L1183">	}</span>
 
 	/**
 	 * Closes the most recently opened link if necessary.
@@ -1173,27 +1188,27 @@ import net.sourceforge.plantuml.version.Version;
 	 * Validates state to ensure no nested or invalid link closures occur.
 	 */
 	private void closeTopActiveLinkIfNeeded() {
-<span class="fc bfc" id="L1176" title="All 2 branches covered.">		if (activeLinks.size() &gt; 0) {</span>
-<span class="pc bpc" id="L1177" title="1 of 2 branches missed.">			if (pendingElements.get(0).getTagName().equals(&quot;a&quot;) == false)</span>
-<span class="nc" id="L1178">				throw new IllegalStateException(&quot;Expected top pending element to be a link.&quot;);</span>
+<span class="fc bfc" id="L1191" title="All 2 branches covered.">		if (activeLinks.size() &gt; 0) {</span>
+<span class="pc bpc" id="L1192" title="1 of 2 branches missed.">			if (pendingElements.get(0).getTagName().equals(&quot;a&quot;) == false)</span>
+<span class="nc" id="L1193">				throw new IllegalStateException(&quot;Expected top pending element to be a link.&quot;);</span>
 			// Move active link element to document since it's being closed
-<span class="fc" id="L1180">			closeTopPendingElement();</span>
+<span class="fc" id="L1195">			closeTopPendingElement();</span>
 		}
 
 		// Check for invalid state: no links should remain pending
-<span class="fc bfc" id="L1184" title="All 2 branches covered.">		for (XmlNode elt : pendingElements)</span>
-<span class="pc bpc" id="L1185" title="1 of 2 branches missed.">			if (elt.getTagName().equals(&quot;a&quot;))</span>
-<span class="nc" id="L1186">				throw new IllegalStateException();</span>
+<span class="fc bfc" id="L1199" title="All 2 branches covered.">		for (XmlNode elt : pendingElements)</span>
+<span class="pc bpc" id="L1200" title="1 of 2 branches missed.">			if (elt.getTagName().equals(&quot;a&quot;))</span>
+<span class="nc" id="L1201">				throw new IllegalStateException();</span>
 
-<span class="fc" id="L1188">	}</span>
+<span class="fc" id="L1203">	}</span>
 
 	private void addTopOpenedLinkIfNeeded() {
-<span class="fc bfc" id="L1191" title="All 2 branches covered.">		if (activeLinks.size() &gt; 0) {</span>
-<span class="fc" id="L1192">			final LinkData link = activeLinks.get(0);</span>
-<span class="fc" id="L1193">			pendingElements.add(0, document.createElement(&quot;a&quot;));</span>
-<span class="fc" id="L1194">			link.updateAttributesOf(pendingElements.get(0));</span>
+<span class="fc bfc" id="L1206" title="All 2 branches covered.">		if (activeLinks.size() &gt; 0) {</span>
+<span class="fc" id="L1207">			final LinkData link = activeLinks.get(0);</span>
+<span class="fc" id="L1208">			pendingElements.add(0, document.createElement(&quot;a&quot;));</span>
+<span class="fc" id="L1209">			link.updateAttributesOf(pendingElements.get(0));</span>
 		}
-<span class="fc" id="L1196">	}</span>
+<span class="fc" id="L1211">	}</span>
 
 	/**
 	 * Opens a new link and adds it to the list of active links.
@@ -1205,62 +1220,62 @@ import net.sourceforge.plantuml.version.Version;
 		// https://github.com/plantuml/plantuml/issues/2148
 
 		// Ensure previous active link is closed before opening a new one
-<span class="fc" id="L1208">		closeTopActiveLinkIfNeeded();</span>
-<span class="fc" id="L1209">		activeLinks.add(0, new LinkData(url, title, target));</span>
+<span class="fc" id="L1223">		closeTopActiveLinkIfNeeded();</span>
+<span class="fc" id="L1224">		activeLinks.add(0, new LinkData(url, title, target));</span>
 
 		// Create a new pending link element based on provided details
-<span class="fc" id="L1212">		addTopOpenedLinkIfNeeded();</span>
-<span class="fc" id="L1213">	}</span>
+<span class="fc" id="L1227">		addTopOpenedLinkIfNeeded();</span>
+<span class="fc" id="L1228">	}</span>
 
 	/**
 	 * Closes the currently active link and updates the pending elements
 	 * accordingly.
 	 */
 	public void closeLink() {
-<span class="pc bpc" id="L1220" title="2 of 4 branches missed.">		if (pendingElements.size() == 0 || activeLinks.size() == 0</span>
-<span class="pc bpc" id="L1221" title="1 of 2 branches missed.">				|| pendingElements.get(0).getTagName().equals(&quot;a&quot;) == false)</span>
-<span class="nc" id="L1222">			throw new IllegalStateException(&quot;Attempting to close a link in an invalid state.&quot;);</span>
+<span class="pc bpc" id="L1235" title="2 of 4 branches missed.">		if (pendingElements.size() == 0 || activeLinks.size() == 0</span>
+<span class="pc bpc" id="L1236" title="1 of 2 branches missed.">				|| pendingElements.get(0).getTagName().equals(&quot;a&quot;) == false)</span>
+<span class="nc" id="L1237">			throw new IllegalStateException(&quot;Attempting to close a link in an invalid state.&quot;);</span>
 
 		// Close active link properly
-<span class="fc" id="L1225">		closeTopActiveLinkIfNeeded();</span>
-<span class="fc" id="L1226">		activeLinks.remove(0);</span>
+<span class="fc" id="L1240">		closeTopActiveLinkIfNeeded();</span>
+<span class="fc" id="L1241">		activeLinks.remove(0);</span>
 
 		// Re-create pending link element if necessary
-<span class="fc" id="L1229">		addTopOpenedLinkIfNeeded();</span>
+<span class="fc" id="L1244">		addTopOpenedLinkIfNeeded();</span>
 
-<span class="fc" id="L1231">	}</span>
+<span class="fc" id="L1246">	}</span>
 
 	/**
 	 * Closes the current SVG group element.
 	 */
 	public void closeGroup() {
-<span class="pc bpc" id="L1237" title="1 of 2 branches missed.">		if (pendingElements.size() == 0)</span>
-<span class="nc" id="L1238">			throw new IllegalStateException();</span>
+<span class="pc bpc" id="L1252" title="1 of 2 branches missed.">		if (pendingElements.size() == 0)</span>
+<span class="nc" id="L1253">			throw new IllegalStateException();</span>
 
 		// Ensure any active links are closed first
-<span class="fc" id="L1241">		closeTopActiveLinkIfNeeded();</span>
+<span class="fc" id="L1256">		closeTopActiveLinkIfNeeded();</span>
 
-<span class="fc" id="L1243">		closeTopPendingElement();</span>
+<span class="fc" id="L1258">		closeTopPendingElement();</span>
 
 		// Restore link state after closing group if needed
-<span class="fc" id="L1246">		addTopOpenedLinkIfNeeded();</span>
-<span class="fc" id="L1247">	}</span>
+<span class="fc" id="L1261">		addTopOpenedLinkIfNeeded();</span>
+<span class="fc" id="L1262">	}</span>
 
 	public void startGroup(Map&lt;UGroupType, String&gt; typeIdents) {
-<span class="pc bpc" id="L1250" title="1 of 2 branches missed.">		if (typeIdents.isEmpty())</span>
-<span class="nc" id="L1251">			throw new IllegalArgumentException();</span>
+<span class="pc bpc" id="L1265" title="1 of 2 branches missed.">		if (typeIdents.isEmpty())</span>
+<span class="nc" id="L1266">			throw new IllegalArgumentException();</span>
 
 		// Close any active link before starting a new group
-<span class="fc" id="L1254">		closeTopActiveLinkIfNeeded();</span>
+<span class="fc" id="L1269">		closeTopActiveLinkIfNeeded();</span>
 
-<span class="fc" id="L1256">		pendingElements.add(0, document.createElement(&quot;g&quot;));</span>
-<span class="fc bfc" id="L1257" title="All 2 branches covered.">		for (Map.Entry&lt;UGroupType, String&gt; entry : typeIdents.entrySet())</span>
-<span class="fc" id="L1258">			document.applyGroupAttribute(pendingElements.get(0), entry.getKey(), entry.getValue());</span>
+<span class="fc" id="L1271">		pendingElements.add(0, document.createElement(&quot;g&quot;));</span>
+<span class="fc bfc" id="L1272" title="All 2 branches covered.">		for (Map.Entry&lt;UGroupType, String&gt; entry : typeIdents.entrySet())</span>
+<span class="fc" id="L1273">			document.applyGroupAttribute(pendingElements.get(0), entry.getKey(), entry.getValue());</span>
 
 		// Restore link state after group creation if needed
-<span class="fc" id="L1261">		addTopOpenedLinkIfNeeded();</span>
+<span class="fc" id="L1276">		addTopOpenedLinkIfNeeded();</span>
 
-<span class="fc" id="L1263">	}</span>
+<span class="fc" id="L1278">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

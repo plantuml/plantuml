@@ -34,8 +34,12 @@
  */
 package net.sourceforge.plantuml.klimt.drawing.svg;
 
-import java.awt.font.TextLayout;
+import java.awt.Shape;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.klimt.UParam;
@@ -50,35 +54,57 @@ public class DriverCenteredCharacterSvg implements UDriver&lt;UCenteredCharacter
 
 	private final FileFormat fileFormat;
 
-<span class="fc" id="L53">	public DriverCenteredCharacterSvg(FileFormat fileFormat) {</span>
-<span class="fc" id="L54">		this.fileFormat = fileFormat;</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L57">	public DriverCenteredCharacterSvg(FileFormat fileFormat) {</span>
+<span class="fc" id="L58">		this.fileFormat = fileFormat;</span>
+<span class="fc" id="L59">	}</span>
 
 	public void draw(UCenteredCharacter characterCircled, double x, double y, ColorMapper mapper, UParam param,
 			SvgGraphics svg) {
-<span class="fc" id="L59">		final char c = characterCircled.getChar();</span>
-<span class="fc" id="L60">		final HColor textColor = param.getColor();</span>
+<span class="fc" id="L63">		final char c = characterCircled.getChar();</span>
+<span class="fc" id="L64">		final HColor textColor = param.getColor();</span>
 
 		// For deterministic SVG output (used by tests), avoid rendering the glyph as a
 		// vector path derived from the system font (which differs across OS/JVM).
 		// Instead, emit a simple &lt;text&gt; element with a fixed font-family.
-<span class="fc bfc" id="L65" title="All 2 branches covered.">		if (fileFormat == FileFormat.SVG_DETERMINISTIC) {</span>
-<span class="fc" id="L66">			svg.setFillColor(textColor.toSvg(mapper));</span>
-<span class="fc" id="L67">			svg.text(String.valueOf(c), x - 5, y + 5, &quot;monospace&quot;, 14, null, null, null, 0,</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">		if (fileFormat == FileFormat.SVG_DETERMINISTIC) {</span>
+<span class="fc" id="L70">			svg.setFillColor(textColor.toSvg(mapper));</span>
+<span class="fc" id="L71">			svg.text(String.valueOf(c), x - 5, y + 5, &quot;monospace&quot;, 14, null, null, null, 0,</span>
 					new HashMap&lt;String, String&gt;(), null);
-<span class="fc" id="L69">			return;</span>
+<span class="fc" id="L73">			return;</span>
 		}
 
-<span class="fc" id="L72">		final UFont font = characterCircled.getFont();</span>
-<span class="fc" id="L73">		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);</span>
+<span class="fc" id="L76">		final UFont font = characterCircled.getFont();</span>
+<span class="fc" id="L77">		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);</span>
 
-<span class="fc" id="L75">		final double xpos = x - unusedSpace.getCenterX() - 0.5;</span>
-<span class="fc" id="L76">		final double ypos = y - unusedSpace.getCenterY() - 0.5;</span>
+<span class="fc" id="L79">		final double xpos = x - unusedSpace.getCenterX() - 0.5;</span>
+<span class="fc" id="L80">		final double ypos = y - unusedSpace.getCenterY() - 0.5;</span>
 
-<span class="fc" id="L78">		final TextLayout t = font.createTextLayout(&quot;&quot; + c);</span>
-<span class="fc" id="L79">		svg.setFillColor(textColor.toSvg(mapper));</span>
+<span class="fc" id="L82">		svg.setFillColor(textColor.toSvg(mapper));</span>
 
-<span class="fc" id="L81">		svg.drawPathIterator(xpos, ypos, t.getOutline(null).getPathIterator(null));</span>
-<span class="fc" id="L82">	}</span>
+<span class="fc" id="L84">		svg.drawPathIterator(xpos, ypos, getOutline(font, c).getPathIterator(null));</span>
+<span class="fc" id="L85">	}</span>
+
+	// The outline of a glyph never changes, and building it (a TextLayout) is costly
+	// compared to the few distinct (font, char) pairs a diagram uses (circled C, I, E...).
+	private static final int OUTLINE_CACHE_SIZE = 500;
+<span class="fc" id="L90">	private static final Map&lt;List&lt;Object&gt;, Shape&gt; OUTLINE_CACHE = new LinkedHashMap&lt;List&lt;Object&gt;, Shape&gt;(</span>
+<span class="fc" id="L91">			OUTLINE_CACHE_SIZE, 0.75f, true) {</span>
+		@Override
+		protected boolean removeEldestEntry(Map.Entry&lt;List&lt;Object&gt;, Shape&gt; eldest) {
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">			return size() &gt; OUTLINE_CACHE_SIZE;</span>
+		}
+	};
+
+	private static Shape getOutline(UFont font, char c) {
+<span class="fc" id="L99">		final List&lt;Object&gt; key = Arrays.&lt;Object&gt;asList(font, c);</span>
+<span class="fc" id="L100">		synchronized (OUTLINE_CACHE) {</span>
+<span class="fc" id="L101">			Shape result = OUTLINE_CACHE.get(key);</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">			if (result == null) {</span>
+<span class="fc" id="L103">				result = font.createTextLayout(&quot;&quot; + c).getOutline(null);</span>
+<span class="fc" id="L104">				OUTLINE_CACHE.put(key, result);</span>
+			}
+<span class="fc" id="L106">			return result;</span>
+		}
+	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
