@@ -436,7 +436,7 @@ public class Stdlib {
 <span class="nc" id="L436">	}</span>
 
 	public InputStream newInputStream(Path path) throws IOException {
-<span class="fc" id="L439">		final String pathString = StringUtils.replaceChar(path.toString().toLowerCase().replace(&quot;.puml&quot;, &quot;&quot;), '\\', '/');</span>
+<span class="fc" id="L439">		final String pathString = path.toString().toLowerCase().replace(&quot;.puml&quot;, &quot;&quot;).replace('\\', '/');</span>
 <span class="fc" id="L440">		final byte[] data = loadPumlResource(pathString);</span>
 <span class="fc" id="L441">		return new ByteArrayInputStream(data);</span>
 	}

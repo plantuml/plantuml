@@ -138,7 +138,7 @@ public class StripeTable implements Stripe {
 <span class="fc" id="L138">		table.newLine(lineBackColor);</span>
 <span class="fc bfc" id="L139" title="All 2 branches covered.">		for (final StringTokenizer st = new StringTokenizer(line, &quot;|&quot;); st.hasMoreTokens();) {</span>
 <span class="fc" id="L140">			Mode mode = Mode.NORMAL;</span>
-<span class="fc" id="L141">			String v = StringUtils.replaceChar(st.nextToken(), hiddenBar.charAt(0), '|');</span>
+<span class="fc" id="L141">			String v = st.nextToken().replace(hiddenBar.charAt(0), '|');</span>
 <span class="fc bfc" id="L142" title="All 2 branches covered.">			if (v.startsWith(&quot;=&quot;)) {</span>
 <span class="fc" id="L143">				v = v.substring(1);</span>
 <span class="fc" id="L144">				mode = Mode.HEADER;</span>

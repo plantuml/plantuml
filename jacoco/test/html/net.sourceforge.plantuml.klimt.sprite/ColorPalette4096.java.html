@@ -82,8 +82,8 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 
 	protected XColor getColorFor(String s) {
 		// Migration
-<span class="nc" id="L85">		s = StringUtils.replaceChar(s, '!', '.');</span>
-<span class="nc" id="L86">		s = StringUtils.replaceChar(s, '#', ',');</span>
+<span class="nc" id="L85">		s = s.replace('!', '.');</span>
+<span class="nc" id="L86">		s = s.replace('#', ',');</span>
 <span class="nc bnc" id="L87" title="All 2 branches missed.">		if (s.length() != 2)</span>
 <span class="nc" id="L88">			throw new IllegalArgumentException();</span>
 

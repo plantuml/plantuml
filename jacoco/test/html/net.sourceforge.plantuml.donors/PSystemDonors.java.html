@@ -159,7 +159,7 @@ public class PSystemDonors extends UgDiagram {
 <span class="nc" id="L159">		final Transcoder t = TranscoderImpl.utf8(new AsciiEncoder(), new StringCompressorNone(),</span>
 				new CompressionBrotli());
 		try {
-<span class="nc" id="L162">			final String s = StringUtils.replaceChar(t.decode(DONORS), '*', '.');</span>
+<span class="nc" id="L162">			final String s = t.decode(DONORS).replace('*', '.');</span>
 <span class="nc" id="L163">			final StringTokenizer st = new StringTokenizer(s, BackSlash.NEWLINE);</span>
 <span class="nc bnc" id="L164" title="All 2 branches missed.">			while (st.hasMoreTokens()) {</span>
 <span class="nc" id="L165">				lines.add(st.nextToken());</span>

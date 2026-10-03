@@ -109,7 +109,7 @@ public class DriverTextSvg implements UDriver&lt;UText, SvgGraphics&gt; {
 
 <span class="fc" id="L110">		String text = shape.getText();</span>
 <span class="fc bfc" id="L111" title="All 2 branches covered.">		if (text.matches(&quot;^\\s*$&quot;))</span>
-<span class="fc" id="L112">			text = StringUtils.replaceChar(text, ' ', (char) 160);</span>
+<span class="fc" id="L112">			text = text.replace(' ', (char) 160);</span>
 
 <span class="fc bfc" id="L114" title="All 2 branches covered.">		if (text.startsWith(&quot; &quot;)) {</span>
 <span class="fc" id="L115">			final double space = stringBounder.calculateDimension(font, &quot; &quot;).getWidth();</span>

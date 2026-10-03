@@ -191,7 +191,7 @@ public class WBSDiagram extends TitledDiagram implements TextBlock {
 <span class="fc" id="L191">			first = type;</span>
 <span class="fc" id="L192">			return 0;</span>
 		}
-<span class="fc" id="L194">		type = StringUtils.replaceChar(type, '\t', ' ');</span>
+<span class="fc" id="L194">		type = type.replace('\t', ' ');</span>
 <span class="pc bpc" id="L195" title="1 of 2 branches missed.">		if (type.contains(&quot; &quot;) == false)</span>
 <span class="fc" id="L196">			return type.length() - 1;</span>
 

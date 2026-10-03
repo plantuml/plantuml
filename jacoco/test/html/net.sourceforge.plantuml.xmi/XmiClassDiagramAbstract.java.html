@@ -128,14 +128,14 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 	}
 
 	final protected String forXMI(String s) {
-<span class="nc" id="L131">		return StringUtils.replaceChar(s, ':', ' ');</span>
+<span class="nc" id="L131">		return s.replace(':', ' ');</span>
 	}
 
 	final protected String forXMI(Display s) {
 <span class="nc bnc" id="L135" title="All 2 branches missed.">		if (Display.isNull(s)) {</span>
 <span class="nc" id="L136">			return &quot;&quot;;</span>
 		}
-<span class="nc" id="L138">		return StringUtils.replaceChar(s.get(0).toString(), ':', ' ');</span>
+<span class="nc" id="L138">		return s.get(0).toString().replace(':', ' ');</span>
 	}
 
 	final public void transformerXml(OutputStream os) throws TransformerException, ParserConfigurationException {

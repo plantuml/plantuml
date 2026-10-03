@@ -65,7 +65,7 @@ public class InputFileStdlib implements InputFile {
 
 	@Override
 	public String toString() {
-<span class="fc" id="L68">		return stdlib.getName() + &quot;!&quot; + StringUtils.replaceChar(stdlibPath.toString(), '\\', '/');</span>
+<span class="fc" id="L68">		return stdlib.getName() + &quot;!&quot; + stdlibPath.toString().replace('\\', '/');</span>
 	}
 
 }

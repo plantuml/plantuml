@@ -100,7 +100,7 @@ public class ReadLineReader implements ReadLine {
 <span class="pc bpc" id="L100" title="1 of 2 branches missed.">		if (s.startsWith(&quot;\uFEFF&quot;))</span>
 <span class="nc" id="L101">			s = s.substring(1);</span>
 
-<span class="fc" id="L103">		s = StringUtils.replaceChar(s, '\u2013', '-');</span>
+<span class="fc" id="L103">		s = s.replace('\u2013', '-');</span>
 		// s = BackSlash.convertHiddenNewLine(s);
 		// s = s.replace('\u00A0', ' ');
 		// s = s.replace('\u201c', '\&quot;');

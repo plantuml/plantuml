@@ -60,7 +60,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="fc" id="L60">	private UText(String text, FontConfiguration font, int orientation) {</span>
 <span class="pc bpc" id="L61" title="1 of 2 branches missed.">		if (TeaVM.a())</span>
 <span class="pc bpc" id="L62" title="1 of 2 branches missed.">			assert text.indexOf('\t') == -1;</span>
-<span class="fc" id="L63">		this.text = StringUtils.replaceChar(StringUtils.replaceChar(text, Jaws.BLOCK_E1_NEWLINE, '\u21b5'), Jaws.BLOCK_E1_BREAKLINE, '\u23ce');</span>
+<span class="fc" id="L63">		this.text = text.replace(Jaws.BLOCK_E1_NEWLINE, '\u21b5').replace(Jaws.BLOCK_E1_BREAKLINE, '\u23ce');</span>
 <span class="fc" id="L64">		this.font = font;</span>
 <span class="fc" id="L65">		this.orientation = orientation;</span>
 <span class="fc" id="L66">	}</span>

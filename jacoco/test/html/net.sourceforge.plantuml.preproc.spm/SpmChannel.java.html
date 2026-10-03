@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.preproc.Stdlib;
 <span class="fc" id="L53">	IMAGE;</span>
 
 	private String getFileName() {
-<span class="fc" id="L56">		return StringUtils.replaceChar(name().toLowerCase(), '_', '-') + &quot;.spm&quot;;</span>
+<span class="fc" id="L56">		return name().toLowerCase().replace('_', '-') + &quot;.spm&quot;;</span>
 	}
 
 //	public Path getPath(Path rootFolder, String name) throws IOException {

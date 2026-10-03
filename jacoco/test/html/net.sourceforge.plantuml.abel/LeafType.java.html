@@ -98,7 +98,7 @@ import net.sourceforge.plantuml.StringUtils;
 
 
 	public String toHtml() {
-<span class="fc" id="L101">		final String html = StringUtils.goLowerCase(StringUtils.replaceChar(toString(), '_', ' '));</span>
+<span class="fc" id="L101">		final String html = StringUtils.goLowerCase(toString().replace('_', ' '));</span>
 <span class="fc" id="L102">		return StringUtils.capitalize(html);</span>
 	}
 

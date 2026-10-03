@@ -96,7 +96,7 @@ public class Defines implements Truth {
 
 	public void overrideDirPath(String fileDir) {
 <span class="fc bfc" id="L98" title="All 2 branches covered.">		if (fileDir != null)</span>
-<span class="fc" id="L99">			environment.put(&quot;dirpath&quot;, StringUtils.replaceChar(fileDir, '\\', '/'));</span>
+<span class="fc" id="L99">			environment.put(&quot;dirpath&quot;, fileDir.replace('\\', '/'));</span>
 <span class="fc" id="L100">	}</span>
 
 	public void importFrom(Defines other) {
@@ -118,7 +118,7 @@ public class Defines implements Truth {
 <span class="nc" id="L118">		result.environment.put(&quot;filedate&quot;, new Date(file.lastModified()).toString());</span>
 <span class="nc bnc" id="L119" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE)</span>
 <span class="nc" id="L120">			result.environment.put(&quot;dirpath&quot;,</span>
-<span class="nc" id="L121">					StringUtils.replaceChar(file.getAbsoluteFile().getParentFile().getAbsolutePath(), '\\', '/'));</span>
+<span class="nc" id="L121">					file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));</span>
 
 <span class="nc" id="L123">		return result;</span>
 	}
@@ -130,7 +130,7 @@ public class Defines implements Truth {
 <span class="fc" id="L130">		result.environment.put(&quot;filedate&quot;, new Date(file.lastModified()).toString());</span>
 <span class="pc bpc" id="L131" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE)</span>
 <span class="nc" id="L132">			result.environment.put(&quot;dirpath&quot;,</span>
-<span class="nc" id="L133">					StringUtils.replaceChar(file.getAbsoluteFile().getParentFile().getAbsolutePath(), '\\', '/'));</span>
+<span class="nc" id="L133">					file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));</span>
 
 <span class="fc" id="L135">		return result;</span>
 	}

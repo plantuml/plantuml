@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.StringUtils;
 <span class="fc" id="L58">	DATA_LINK_TYPE;</span>
 
 	public String getSvgKeyAttributeName() {
-<span class="fc" id="L61">		return StringUtils.replaceChar(name().toLowerCase(), '_', '-');</span>
+<span class="fc" id="L61">		return name().toLowerCase().replace('_', '-');</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

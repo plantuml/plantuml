@@ -149,7 +149,7 @@ public class InputFileZip implements InputFile {
 	private static Path getParentFrom(String entryName) {
 <span class="pc bpc" id="L150" title="2 of 4 branches missed.">		if (entryName == null || entryName.isEmpty())</span>
 <span class="nc" id="L151">			return Paths.get(&quot;&quot;);</span>
-<span class="fc" id="L152">		final int idx = StringUtils.replaceChar(entryName, '\\', '/').lastIndexOf('/');</span>
+<span class="fc" id="L152">		final int idx = entryName.replace('\\', '/').lastIndexOf('/');</span>
 <span class="fc bfc" id="L153" title="All 2 branches covered.">		if (idx &lt;= 0)</span>
 <span class="fc" id="L154">			return Paths.get(&quot;&quot;);</span>
 <span class="fc" id="L155">		final String parent = entryName.substring(0, idx);</span>

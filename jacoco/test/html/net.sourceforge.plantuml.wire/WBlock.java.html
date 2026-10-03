@@ -238,7 +238,7 @@ public class WBlock {
 <span class="nc" id="L238">		drawBox(ug);</span>
 <span class="nc" id="L239">		final UFont font = UFontFactory.sansSerif(12);</span>
 <span class="nc" id="L240">		final FontConfiguration fc = FontConfiguration.create(font, getBlack(), getBlack(), null);</span>
-<span class="nc" id="L241">		final Display display = Display.create(StringUtils.replaceChar(name, '_', ' '));</span>
+<span class="nc" id="L241">		final Display display = Display.create(name.replace('_', ' '));</span>
 <span class="nc" id="L242">		final TextBlock text = display.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty());</span>
 <span class="nc" id="L243">		text.drawU(ug.apply(UTranslate.dx(5)));</span>
 

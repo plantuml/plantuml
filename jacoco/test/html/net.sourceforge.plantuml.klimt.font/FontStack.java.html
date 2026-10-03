@@ -185,7 +185,7 @@ public class FontStack {
 		case MONOSPACE:
 <span class="fc" id="L186">			return &quot;monospace&quot;;</span>
 		}
-<span class="fc" id="L188">		return StringUtils.replaceChar(fullDefinition, '\&quot;', '\'');</span>
+<span class="fc" id="L188">		return fullDefinition.replace('\&quot;', '\'');</span>
 	}
 
 }

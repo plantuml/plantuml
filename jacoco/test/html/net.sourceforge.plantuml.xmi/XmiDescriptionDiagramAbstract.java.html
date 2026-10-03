@@ -151,11 +151,11 @@ public abstract class XmiDescriptionDiagramAbstract implements XmlDiagramTransfo
 <span class="fc" id="L151">	}</span>
 
 	public static String forXMI(String s) {
-<span class="nc" id="L154">		return StringUtils.replaceChar(s, ':', ' ');</span>
+<span class="nc" id="L154">		return s.replace(':', ' ');</span>
 	}
 
 	public static String forXMI(Display s) {
-<span class="nc" id="L158">		return StringUtils.replaceChar(s.get(0).toString(), ':', ' ');</span>
+<span class="nc" id="L158">		return s.get(0).toString().replace(':', ' ');</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

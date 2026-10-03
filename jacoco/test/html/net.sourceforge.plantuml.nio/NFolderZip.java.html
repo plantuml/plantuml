@@ -107,7 +107,7 @@ public final class NFolderZip implements NFolder {
 
 	@Override
 	public String toString() {
-<span class="fc" id="L110">		final String prefix = StringUtils.replaceChar(pathInsideZip.toString(), '\\', '/');</span>
+<span class="fc" id="L110">		final String prefix = pathInsideZip.toString().replace('\\', '/');</span>
 <span class="fc" id="L111">		return zipFile.getName() + &quot;!&quot; + prefix;</span>
 	}
 
@@ -117,7 +117,7 @@ public final class NFolderZip implements NFolder {
 	 */
 	private String toZipEntryName(Path child) {
 <span class="pc bpc" id="L119" title="1 of 2 branches missed.">		final Path resolved = child.isAbsolute() ? child.normalize() : pathInsideZip.resolve(child).normalize();</span>
-<span class="fc" id="L120">		String s = StringUtils.replaceChar(resolved.toString(), '\\', '/');</span>
+<span class="fc" id="L120">		String s = resolved.toString().replace('\\', '/');</span>
 <span class="pc bpc" id="L121" title="1 of 2 branches missed.">		while (s.startsWith(&quot;/&quot;))</span>
 <span class="nc" id="L122">			s = s.substring(1);</span>
 

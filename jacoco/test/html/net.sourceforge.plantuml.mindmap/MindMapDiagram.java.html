@@ -139,9 +139,9 @@ public class MindMapDiagram extends TitledDiagram {
 <span class="fc" id="L139">			first = type;</span>
 
 <span class="fc bfc" id="L141" title="All 2 branches covered.">		if (type.endsWith(&quot;**&quot;))</span>
-<span class="fc" id="L142">			type = StringUtils.replaceChar(type, '\t', ' ').trim();</span>
+<span class="fc" id="L142">			type = type.replace('\t', ' ').trim();</span>
 
-<span class="fc" id="L144">		type = StringUtils.replaceChar(type, '\t', ' ');</span>
+<span class="fc" id="L144">		type = type.replace('\t', ' ');</span>
 <span class="fc bfc" id="L145" title="All 2 branches covered.">		if (type.contains(&quot; &quot;) == false)</span>
 <span class="fc" id="L146">			return type.length() - 1;</span>
 
