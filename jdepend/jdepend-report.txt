@@ -8554,11 +8554,11 @@ Stats:
     Concrete Classes: 1
     Abstract Classes: 2
 
-    Ca: 38
+    Ca: 39
     Ce: 5
 
     A: 0.67
-    I: 0.12
+    I: 0.11
     D: 0.22
 
 Abstract Classes:
@@ -8609,6 +8609,7 @@ Used By:
     net.sourceforge.plantuml.skin
     net.sourceforge.plantuml.statediagram
     net.sourceforge.plantuml.style
+    net.sourceforge.plantuml.teavm.browser
     net.sourceforge.plantuml.tim
     net.sourceforge.plantuml.timingdiagram
     net.sourceforge.plantuml.wbs
@@ -11622,26 +11623,34 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 3
-    Concrete Classes: 0
-    Abstract Classes: 3
+    Total Classes: 7
+    Concrete Classes: 3
+    Abstract Classes: 4
 
     Ca: 1
-    Ce: 2
+    Ce: 6
 
-    A: 1
-    I: 0.67
-    D: 0.67
+    A: 0.57
+    I: 0.86
+    D: 0.43
 
 Abstract Classes:
     net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser$StringCallback
+    net.sourceforge.plantuml.teavm.browser.TeaVmFileLoader$Loaded
     net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader$Err
     net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader$Ok
 
 Concrete Classes:
+    net.sourceforge.plantuml.teavm.browser.TeaVmFileLoader$Answer
+    net.sourceforge.plantuml.teavm.browser.TeaVmFileLoader$HostFile
+    net.sourceforge.plantuml.teavm.browser.TeaVmFileLoader$HostFolder
 
 Depends Upon:
+    java.io
     java.lang
+    java.nio.charset
+    java.nio.file
+    net.sourceforge.plantuml.nio
     org.teavm.jso
 
 Used By:
@@ -15522,15 +15531,15 @@ java.awt.event,0,0,1,0,0,0,1,1
 java.awt.font,0,0,3,0,0,0,1,1
 java.awt.geom,0,0,6,0,0,0,1,1
 java.awt.image,0,0,13,0,0,0,1,1
-java.io,0,0,76,0,0,0,1,1
+java.io,0,0,77,0,0,0,1,1
 java.lang,0,0,233,0,0,0,1,1
 java.lang.annotation,0,0,5,0,0,0,1,1
 java.lang.reflect,0,0,4,0,0,0,1,1
 java.math,0,0,6,0,0,0,1,1
 java.net,0,0,5,0,0,0,1,1
 java.nio,0,0,1,0,0,0,1,1
-java.nio.charset,0,0,20,0,0,0,1,1
-java.nio.file,0,0,3,0,0,0,1,1
+java.nio.charset,0,0,21,0,0,0,1,1
+java.nio.file,0,0,4,0,0,0,1,1
 java.security,0,0,3,0,0,0,1,1
 java.security.spec,0,0,2,0,0,0,1,1
 java.text,0,0,5,0,0,0,1,1
@@ -15688,7 +15697,7 @@ net.sourceforge.plantuml.math,13,1,3,18,0.08,0.86,0.07,1
 net.sourceforge.plantuml.mcp,3,0,0,9,0,1,0,1
 net.sourceforge.plantuml.mda,2,0,1,5,0,0.83,0.17,1
 net.sourceforge.plantuml.mindmap,11,1,1,22,0.09,0.96,0.05,1
-net.sourceforge.plantuml.nio,3,2,38,5,0.67,0.12,0.22,1
+net.sourceforge.plantuml.nio,3,2,39,5,0.67,0.11,0.22,1
 net.sourceforge.plantuml.nwdiag,12,0,1,16,0,0.94,0.06,1
 net.sourceforge.plantuml.nwdiag.core,2,1,1,14,0.5,0.93,0.43,1
 net.sourceforge.plantuml.nwdiag.next,6,1,1,12,0.17,0.92,0.09,1
@@ -15741,7 +15750,7 @@ net.sourceforge.plantuml.svg.parser,11,1,0,13,0.09,1,0.09,1
 net.sourceforge.plantuml.swing,36,0,0,16,0,1,0,1
 net.sourceforge.plantuml.syntax,2,0,0,9,0,1,0,1
 net.sourceforge.plantuml.teavm,20,1,43,15,0.05,0.26,0.69,1
-net.sourceforge.plantuml.teavm.browser,3,3,1,2,1,0.67,0.67,1
+net.sourceforge.plantuml.teavm.browser,7,4,1,6,0.57,0.86,0.43,1
 net.sourceforge.plantuml.teavm.headless,3,1,0,2,0.33,1,0.33,1
 net.sourceforge.plantuml.telnet,1,0,0,2,0,1,0,1
 net.sourceforge.plantuml.text,5,1,38,4,0.2,0.1,0.7,1

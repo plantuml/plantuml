@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TeaVmFileLoader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.teavm.browser</a> &gt; <span class="el_source">TeaVmFileLoader.java</span></div><h1>TeaVmFileLoader.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+
+package net.sourceforge.plantuml.teavm.browser;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.io.StringReader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+
+import org.teavm.jso.JSBody;
+import org.teavm.jso.JSFunctor;
+import org.teavm.jso.JSObject;
+
+import net.sourceforge.plantuml.nio.InputFile;
+import net.sourceforge.plantuml.nio.NFolder;
+
+/**
+ * Reads the file of a local &lt;code&gt;!include&lt;/code&gt;, &lt;code&gt;!include_once&lt;/code&gt;
+ * or &lt;code&gt;!include_many&lt;/code&gt; in the browser engine, through a function the
+ * host provides.
+ * &lt;p&gt;
+ * The browser engine has no file system, so on its own such an include can
+ * only fail. A host that does have files (an editor extension, a desktop
+ * application, a documentation build running the engine) sets
+ * &lt;code&gt;PLANTUML_FILE_LOADER&lt;/code&gt; on the global object:
+ *
+ * &lt;pre&gt;
+ * globalThis.PLANTUML_FILE_LOADER = function (path, from, onOk, onErr) { ... };
+ * &lt;/pre&gt;
+ * &lt;ul&gt;
+ * &lt;li&gt;&lt;code&gt;path&lt;/code&gt;: the file name the directive asks for, after variables
+ * are expanded and a diagram selector (&lt;code&gt;file!tag&lt;/code&gt;) is split off.
+ * It is handed over as it is: the engine resolves nothing.&lt;/li&gt;
+ * &lt;li&gt;&lt;code&gt;from&lt;/code&gt;: the file whose include is being resolved —
+ * &lt;code&gt;null&lt;/code&gt; for the diagram itself, otherwise the identifier the host
+ * gave to the delivered file being evaluated, so that a relative name can be
+ * resolved against that file. A standard-library file or a bundled theme being
+ * evaluated never asks the host (see
+ * {@link net.sourceforge.plantuml.nio.PathSystem#withoutHostFiles()}).&lt;/li&gt;
+ * &lt;li&gt;&lt;code&gt;onOk(id, text)&lt;/code&gt;: delivers the file. &lt;code&gt;id&lt;/code&gt; is any
+ * non-empty string that identifies it for the host (typically its absolute
+ * path or URI), compared as it is: &lt;code&gt;!include_once&lt;/code&gt; and a repeated
+ * &lt;code&gt;!include&lt;/code&gt; recognise a file by it, and the includes written in
+ * that file receive it as &lt;code&gt;from&lt;/code&gt;.&lt;/li&gt;
+ * &lt;li&gt;&lt;code&gt;onErr(reason)&lt;/code&gt;: the include fails. The reason is written to
+ * the console.&lt;/li&gt;
+ * &lt;/ul&gt;
+ * The first outcome wins: a second callback, an exception or a rejection after
+ * it changes nothing. Returning &lt;code&gt;false&lt;/code&gt; (strictly) before either
+ * callback declines the file, which then fails as if no loader were set, and a
+ * callback arriving later is ignored. A loader may be an &lt;code&gt;async&lt;/code&gt;
+ * function: the rejection of the promise it returns fails the include, while
+ * the value it fulfils with is ignored, so a file is only ever delivered
+ * through &lt;code&gt;onOk&lt;/code&gt;. A host that neither calls a callback, nor
+ * returns &lt;code&gt;false&lt;/code&gt;, nor rejects, leaves the rendering waiting: there
+ * is no timeout in the engine. The engine never reads anything itself: which
+ * files may be read is decided by the host.
+ * &lt;p&gt;
+ * The same shape as &lt;code&gt;PLANTUML_STDLIB_LOADER&lt;/code&gt; in
+ * {@link TeaVmScriptLoader}. With no loader set, local includes fail exactly
+ * as before.
+ */
+public final class TeaVmFileLoader {
+	// ::remove file when JAVA8
+
+	@JSFunctor
+	public interface Loaded extends JSObject {
+		void invoke(String id, String text);
+	}
+
+	/**
+	 * Whether the host has set &lt;code&gt;PLANTUML_FILE_LOADER&lt;/code&gt;.
+	 */
+	@JSBody(params = {}, script = &quot;var g = (typeof globalThis !== 'undefined') ? globalThis&quot;
+			+ &quot; : ((typeof self !== 'undefined') ? self : this);&quot;
+			+ &quot;return typeof g.PLANTUML_FILE_LOADER === 'function';&quot;)
+	private static native boolean isAvailable();
+
+	/**
+	 * Asks the host for a file. Returns &lt;code&gt;false&lt;/code&gt; when the host declines
+	 * it before any callback; &lt;code&gt;true&lt;/code&gt; otherwise. When it returns
+	 * &lt;code&gt;true&lt;/code&gt;, the caller waits until a callback or a rejected promise
+	 * settles the request. If neither happens, the caller keeps waiting because
+	 * the engine has no timeout. A missing identifier, a text that is not a
+	 * string, an exception, a rejected promise and a reason that cannot be turned
+	 * into a string all become a failure; anything after the first outcome is
+	 * ignored.
+	 */
+	@JSBody(params = { &quot;path&quot;, &quot;from&quot;, &quot;onOk&quot;, &quot;onErr&quot; }, script = &quot;var g = (typeof globalThis !== 'undefined') ? globalThis&quot;
+			+ &quot; : ((typeof self !== 'undefined') ? self : this);&quot;
+			+ &quot;var settled = false;&quot;
+			+ &quot;var reasonOf = function(e) {&quot;
+			+ &quot;  try { return (e &amp;&amp; e.message !== undefined) ? String(e.message) : ((e === undefined || e === null) ? '' : String(e)); }&quot;
+			+ &quot;  catch (x) { return ''; }&quot;
+			+ &quot;};&quot;
+			+ &quot;var fail = function(reason) {&quot;
+			+ &quot;  if (settled) return;&quot;
+			+ &quot;  settled = true;&quot;
+			+ &quot;  onErr(reasonOf(reason) || ('PLANTUML_FILE_LOADER failed for ' + path));&quot;
+			+ &quot;};&quot;
+			+ &quot;var ok = function(id, text) {&quot;
+			+ &quot;  if (settled) return;&quot;
+			+ &quot;  if (typeof id !== 'string' || id === '' || typeof text !== 'string') {&quot;
+			+ &quot;    fail('PLANTUML_FILE_LOADER must pass a non-empty string id and a string text for ' + path); return;&quot;
+			+ &quot;  }&quot;
+			+ &quot;  settled = true; onOk(id, text);&quot;
+			+ &quot;};&quot;
+			+ &quot;var result;&quot;
+			+ &quot;try { result = g.PLANTUML_FILE_LOADER(path, from, ok, fail); }&quot;
+			+ &quot;catch (e) { fail(e); return true; }&quot;
+			+ &quot;if (result !== null &amp;&amp; (typeof result === 'object' || typeof result === 'function')) {&quot;
+			+ &quot;  try { Promise.resolve(result).then(null, fail); } catch (e) { fail(e); }&quot;
+			+ &quot;}&quot;
+			+ &quot;if (result === false &amp;&amp; settled === false) { settled = true; return false; }&quot;
+			+ &quot;return true;&quot;)
+	private static native boolean load(String path, String from, Loaded onOk, TeaVmScriptLoader.Err onErr);
+
+	/**
+	 * The file the host delivers for &lt;code&gt;path&lt;/code&gt;, or &lt;code&gt;null&lt;/code&gt; when
+	 * no loader is set, when the host declines, or when it fails (the reason is
+	 * written to the console, and the include then reports the usual &quot;cannot
+	 * include&quot;). Blocks until the host answers, so it MUST be called from a
+	 * TeaVM thread context, like {@link TeaVmScriptLoader#loadOnceSync(String)}.
+	 *
+	 * @param path   the file name the directive asks for
+	 * @param folder where the include is written: &lt;code&gt;null&lt;/code&gt; for the
+	 *               diagram itself, or the folder of a file this loader
+	 *               delivered. Any other folder has no host to ask.
+	 */
+	public static InputFile getInputFile(String path, NFolder folder) {
+<span class="nc bnc" id="L169" title="All 2 branches missed.">		if (isAvailable() == false)</span>
+<span class="nc" id="L170">			return null;</span>
+<span class="nc bnc" id="L171" title="All 4 branches missed.">		if (folder != null &amp;&amp; folder instanceof HostFolder == false)</span>
+<span class="nc" id="L172">			return null;</span>
+
+<span class="nc bnc" id="L174" title="All 2 branches missed.">		final String from = folder == null ? null : ((HostFolder) folder).from;</span>
+<span class="nc" id="L175">		final Answer answer = new Answer();</span>
+<span class="nc" id="L176">		synchronized (answer) {</span>
+<span class="nc" id="L177">			final boolean handled = load(path, from, (id, text) -&gt; {</span>
+<span class="nc" id="L178">				synchronized (answer) {</span>
+<span class="nc" id="L179">					answer.id = id;</span>
+<span class="nc" id="L180">					answer.text = text;</span>
+<span class="nc" id="L181">					answer.complete = true;</span>
+<span class="nc" id="L182">					answer.notify();</span>
+<span class="nc" id="L183">				}</span>
+<span class="nc" id="L184">			}, (reason) -&gt; {</span>
+<span class="nc" id="L185">				synchronized (answer) {</span>
+<span class="nc" id="L186">					answer.error = reason;</span>
+<span class="nc" id="L187">					answer.complete = true;</span>
+<span class="nc" id="L188">					answer.notify();</span>
+<span class="nc" id="L189">				}</span>
+<span class="nc" id="L190">			});</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">			if (handled == false)</span>
+<span class="nc" id="L192">				return null;</span>
+
+<span class="nc bnc" id="L194" title="All 2 branches missed.">			while (answer.complete == false) {</span>
+				try {
+<span class="nc" id="L196">					answer.wait();</span>
+<span class="nc" id="L197">				} catch (InterruptedException e) {</span>
+					// retry
+<span class="nc" id="L199">				}</span>
+			}
+<span class="nc" id="L201">		}</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">		if (answer.error != null) {</span>
+<span class="nc" id="L203">			TeaVmScriptLoader.consoleWarn(&quot;PlantUML: cannot include &quot; + path + &quot;: &quot; + answer.error);</span>
+<span class="nc" id="L204">			return null;</span>
+		}
+<span class="nc" id="L206">		return new HostFile(answer.id, answer.text);</span>
+	}
+
+	/**
+	 * The identifier the host gave to a file this loader delivered, or
+	 * &lt;code&gt;null&lt;/code&gt; for any other file. It is what an include strategy
+	 * compares, as it is: two identifiers are the same file only when the
+	 * strings are equal.
+	 */
+	public static String getId(InputFile file) {
+<span class="nc bnc" id="L216" title="All 2 branches missed.">		if (file instanceof HostFile)</span>
+<span class="nc" id="L217">			return ((HostFile) file).id;</span>
+
+<span class="nc" id="L219">		return null;</span>
+	}
+
+	private static final class Answer {
+		private boolean complete;
+		private String id;
+		private String text;
+		private String error;
+	}
+
+	private static final class HostFile implements InputFile {
+
+		private final String id;
+		private final String text;
+
+<span class="nc" id="L234">		private HostFile(String id, String text) {</span>
+<span class="nc" id="L235">			this.id = id;</span>
+<span class="nc" id="L236">			this.text = text;</span>
+<span class="nc" id="L237">		}</span>
+
+		@Override
+		public InputStream newInputStream() {
+<span class="nc" id="L241">			return new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));</span>
+		}
+
+		@Override
+		public Reader getReader(Charset charset) {
+			// The host delivered text, not bytes: there is nothing to decode.
+<span class="nc" id="L247">			return new StringReader(text);</span>
+		}
+
+		@Override
+		public NFolder getParentFolder() {
+<span class="nc" id="L252">			return new HostFolder(id);</span>
+		}
+	}
+
+	/**
+	 * Marks the includes written in a delivered file: it carries that file's
+	 * identifier, which the host receives as &lt;code&gt;from&lt;/code&gt;, and nothing
+	 * else. It is not a directory — only the host knows how identifiers map to
+	 * directories — so the engine's own lookups through it fail as an ordinary
+	 * &quot;cannot include&quot; rather than reaching the host with a name it would have
+	 * normalised.
+	 */
+	private static final class HostFolder implements NFolder {
+
+		private final String from;
+
+<span class="nc" id="L268">		private HostFolder(String from) {</span>
+<span class="nc" id="L269">			this.from = from;</span>
+<span class="nc" id="L270">		}</span>
+
+		@Override
+		public InputFile getInputFile(Path nameOrPath) throws IOException {
+<span class="nc" id="L274">			throw new IOException(&quot;The browser engine resolves no path through a delivered file&quot;);</span>
+		}
+
+		@Override
+		public NFolder getSubfolder(Path nameOrPath) throws IOException {
+<span class="nc" id="L279">			throw new IOException(&quot;The browser engine resolves no path through a delivered file&quot;);</span>
+		}
+	}
+
+	private TeaVmFileLoader() {
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

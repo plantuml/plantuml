@@ -3302,10 +3302,14 @@ Total Classes: 20
 "net.sourceforge.plantuml.teavm" --> "org.teavm.jso"
 "net.sourceforge.plantuml.teavm" --> "org.teavm.jso.dom.xml"
 
-class "net.sourceforge.plantuml.teavm.browser" %lighten("red", 33) {
-Total Classes: 3
+class "net.sourceforge.plantuml.teavm.browser" %lighten("red", 57) {
+Total Classes: 7
 }
+"net.sourceforge.plantuml.teavm.browser" --> "java.io"
 "net.sourceforge.plantuml.teavm.browser" --> "java.lang"
+"net.sourceforge.plantuml.teavm.browser" --> "java.nio.charset"
+"net.sourceforge.plantuml.teavm.browser" --> "java.nio.file"
+"net.sourceforge.plantuml.teavm.browser" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.teavm.browser" --> "org.teavm.jso"
 
 class "net.sourceforge.plantuml.teavm.headless" %lighten("red", 67) {

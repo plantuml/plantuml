@@ -22384,6 +22384,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/svek/PortGeometry.html#getId()" class="member-name-link">getId()</a> - Method in class net.sourceforge.plantuml.svek.<a href="net/sourceforge/plantuml/svek/PortGeometry.html" title="class in net.sourceforge.plantuml.svek">PortGeometry</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/teavm/browser/TeaVmFileLoader.html#getId(net.sourceforge.plantuml.nio.InputFile)" class="member-name-link">getId(InputFile)</a> - Static method in class net.sourceforge.plantuml.teavm.browser.<a href="net/sourceforge/plantuml/teavm/browser/TeaVmFileLoader.html" title="class in net.sourceforge.plantuml.teavm.browser">TeaVmFileLoader</a></dt>
+<dd>
+<div class="block">The identifier the host gave to a file this loader delivered, or
+ <code>null</code> for any other file.</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/security/authentication/SecurityCredentials.html#getIdentifier()" class="member-name-link">getIdentifier()</a> - Method in class net.sourceforge.plantuml.security.authentication.<a href="net/sourceforge/plantuml/security/authentication/SecurityCredentials.html" title="class in net.sourceforge.plantuml.security.authentication">SecurityCredentials</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/activitydiagram3/ftile/AbstractFtile.html#getIHtmlColorSet()" class="member-name-link">getIHtmlColorSet()</a> - Method in class net.sourceforge.plantuml.activitydiagram3.ftile.<a href="net/sourceforge/plantuml/activitydiagram3/ftile/AbstractFtile.html" title="class in net.sourceforge.plantuml.activitydiagram3.ftile">AbstractFtile</a></dt>
@@ -22642,6 +22647,13 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/nio/PathSystem.html#getInputFile(java.lang.String)" class="member-name-link">getInputFile(String)</a> - Method in class net.sourceforge.plantuml.nio.<a href="net/sourceforge/plantuml/nio/PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/teavm/browser/TeaVmFileLoader.html#getInputFile(java.lang.String,net.sourceforge.plantuml.nio.NFolder)" class="member-name-link">getInputFile(String, NFolder)</a> - Static method in class net.sourceforge.plantuml.teavm.browser.<a href="net/sourceforge/plantuml/teavm/browser/TeaVmFileLoader.html" title="class in net.sourceforge.plantuml.teavm.browser">TeaVmFileLoader</a></dt>
+<dd>
+<div class="block">The file the host delivers for <code>path</code>, or <code>null</code> when
+ no loader is set, when the host declines, or when it fails (the reason is
+ written to the console, and the include then reports the usual "cannot
+ include").</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/nio/NFolder.html#getInputFile(java.nio.file.Path)" class="member-name-link">getInputFile(Path)</a> - Method in interface net.sourceforge.plantuml.nio.<a href="net/sourceforge/plantuml/nio/NFolder.html" title="interface in net.sourceforge.plantuml.nio">NFolder</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/nio/NFolderRegular.html#getInputFile(java.nio.file.Path)" class="member-name-link">getInputFile(Path)</a> - Method in class net.sourceforge.plantuml.nio.<a href="net/sourceforge/plantuml/nio/NFolderRegular.html" title="class in net.sourceforge.plantuml.nio">NFolderRegular</a></dt>
@@ -27835,6 +27847,13 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/gantt/data/GanttModelData.html#getTasks()" class="member-name-link">getTasks()</a> - Method in class net.sourceforge.plantuml.gantt.data.<a href="net/sourceforge/plantuml/gantt/data/GanttModelData.html" title="class in net.sourceforge.plantuml.gantt.data">GanttModelData</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/nio/PathSystem.html#getTeaVMFileId(net.sourceforge.plantuml.nio.InputFile)" class="member-name-link">getTeaVMFileId(InputFile)</a> - Method in class net.sourceforge.plantuml.nio.<a href="net/sourceforge/plantuml/nio/PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a></dt>
+<dd>
+<div class="block">The identifier the browser host gave to a file its file loader delivered,
+ which is what an include strategy compares for such a file; <code>null</code>
+ for any other file, and always on the JVM, which never reaches the browser
+ classes.</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/nio/PathSystem.html#getTeaVMStdlibInputStream(java.lang.String)" class="member-name-link">getTeaVMStdlibInputStream(String)</a> - Method in class net.sourceforge.plantuml.nio.<a href="net/sourceforge/plantuml/nio/PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/nio/PathSystem.html#getTeaVMStdlibJson(java.lang.String)" class="member-name-link">getTeaVMStdlibJson(String)</a> - Method in class net.sourceforge.plantuml.nio.<a href="net/sourceforge/plantuml/nio/PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a></dt>
@@ -31798,6 +31817,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="net/sourceforge/plantuml/teavm/browser/TeaVmScriptLoader.Ok.html#invoke()" class="member-name-link">invoke()</a> - Method in interface net.sourceforge.plantuml.teavm.browser.<a href="net/sourceforge/plantuml/teavm/browser/TeaVmScriptLoader.Ok.html" title="interface in net.sourceforge.plantuml.teavm.browser">TeaVmScriptLoader.Ok</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/teavm/browser/TeaVmScriptLoader.Err.html#invoke(java.lang.String)" class="member-name-link">invoke(String)</a> - Method in interface net.sourceforge.plantuml.teavm.browser.<a href="net/sourceforge/plantuml/teavm/browser/TeaVmScriptLoader.Err.html" title="interface in net.sourceforge.plantuml.teavm.browser">TeaVmScriptLoader.Err</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/teavm/browser/TeaVmFileLoader.Loaded.html#invoke(java.lang.String,java.lang.String)" class="member-name-link">invoke(String, String)</a> - Method in interface net.sourceforge.plantuml.teavm.browser.<a href="net/sourceforge/plantuml/teavm/browser/TeaVmFileLoader.Loaded.html" title="interface in net.sourceforge.plantuml.teavm.browser">TeaVmFileLoader.Loaded</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/tim/builtin/InvokeProcedure.html" class="type-name-link" title="class in net.sourceforge.plantuml.tim.builtin">InvokeProcedure</a> - Class in <a href="net/sourceforge/plantuml/tim/builtin/package-summary.html">net.sourceforge.plantuml.tim.builtin</a></dt>
 <dd>&nbsp;</dd>
@@ -47721,6 +47742,14 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/teavm/TeaVMElementAdapter.html#%3Cinit%3E(org.teavm.jso.dom.xml.Element)" class="member-name-link">TeaVMElementAdapter(Element)</a> - Constructor for class net.sourceforge.plantuml.teavm.<a href="net/sourceforge/plantuml/teavm/TeaVMElementAdapter.html" title="class in net.sourceforge.plantuml.teavm">TeaVMElementAdapter</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/teavm/browser/TeaVmFileLoader.html" class="type-name-link" title="class in net.sourceforge.plantuml.teavm.browser">TeaVmFileLoader</a> - Class in <a href="net/sourceforge/plantuml/teavm/browser/package-summary.html">net.sourceforge.plantuml.teavm.browser</a></dt>
+<dd>
+<div class="block">Reads the file of a local <code>!include</code>, <code>!include_once</code>
+ or <code>!include_many</code> in the browser engine, through a function the
+ host provides.</div>
+</dd>
+<dt><a href="net/sourceforge/plantuml/teavm/browser/TeaVmFileLoader.Loaded.html" class="type-name-link" title="interface in net.sourceforge.plantuml.teavm.browser">TeaVmFileLoader.Loaded</a> - Interface in <a href="net/sourceforge/plantuml/teavm/browser/package-summary.html">net.sourceforge.plantuml.teavm.browser</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/teavm/headless/TeaVmJson.html" class="type-name-link" title="class in net.sourceforge.plantuml.teavm.headless">TeaVmJson</a> - Class in <a href="net/sourceforge/plantuml/teavm/headless/package-summary.html">net.sourceforge.plantuml.teavm.headless</a></dt>
 <dd>
 <div class="block">Small TeaVM helper to build JSON results from Java without hand-rolling the
@@ -53065,6 +53094,10 @@ the order they are declared.</div>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/activitydiagram3/gtile/Gtiles.html#withOutgoingArrow(net.sourceforge.plantuml.activitydiagram3.gtile.Gtile,double)" class="member-name-link">withOutgoingArrow(Gtile, double)</a> - Static method in class net.sourceforge.plantuml.activitydiagram3.gtile.<a href="net/sourceforge/plantuml/activitydiagram3/gtile/Gtiles.html" title="class in net.sourceforge.plantuml.activitydiagram3.gtile">Gtiles</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/nio/PathSystem.html#withoutHostFiles()" class="member-name-link">withoutHostFiles()</a> - Method in class net.sourceforge.plantuml.nio.<a href="net/sourceforge/plantuml/nio/PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a></dt>
+<dd>
+<div class="block">This path system with the host's file loader out of reach.</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/activitydiagram3/ftile/FtileGeometry.html#withoutPointOut()" class="member-name-link">withoutPointOut()</a> - Method in class net.sourceforge.plantuml.activitydiagram3.ftile.<a href="net/sourceforge/plantuml/activitydiagram3/ftile/FtileGeometry.html" title="class in net.sourceforge.plantuml.activitydiagram3.ftile">FtileGeometry</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/tim/expression/TokenStack.html#withoutSpace()" class="member-name-link">withoutSpace()</a> - Method in class net.sourceforge.plantuml.tim.expression.<a href="net/sourceforge/plantuml/tim/expression/TokenStack.html" title="class in net.sourceforge.plantuml.tim.expression">TokenStack</a></dt>

@@ -12435,10 +12435,10 @@
                 <TotalClasses>3</TotalClasses>
                 <ConcreteClasses>1</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>38</Ca>
+                <Ca>39</Ca>
                 <Ce>5</Ce>
                 <A>0.67</A>
-                <I>0.12</I>
+                <I>0.11</I>
                 <D>0.22</D>
                 <V>1</V>
             </Stats>
@@ -12500,6 +12500,7 @@
                 <Package>net.sourceforge.plantuml.skin</Package>
                 <Package>net.sourceforge.plantuml.statediagram</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
+                <Package>net.sourceforge.plantuml.teavm.browser</Package>
                 <Package>net.sourceforge.plantuml.tim</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram</Package>
                 <Package>net.sourceforge.plantuml.wbs</Package>
@@ -17006,20 +17007,23 @@
 
         <Package name="net.sourceforge.plantuml.teavm.browser">
             <Stats>
-                <TotalClasses>3</TotalClasses>
-                <ConcreteClasses>0</ConcreteClasses>
-                <AbstractClasses>3</AbstractClasses>
+                <TotalClasses>7</TotalClasses>
+                <ConcreteClasses>3</ConcreteClasses>
+                <AbstractClasses>4</AbstractClasses>
                 <Ca>1</Ca>
-                <Ce>2</Ce>
-                <A>1</A>
-                <I>0.67</I>
-                <D>0.67</D>
+                <Ce>6</Ce>
+                <A>0.57</A>
+                <I>0.86</I>
+                <D>0.43</D>
                 <V>1</V>
             </Stats>
 
             <AbstractClasses>
                 <Class sourceFile="PlantUMLBrowser.java">
                     net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser$StringCallback
+                </Class>
+                <Class sourceFile="TeaVmFileLoader.java">
+                    net.sourceforge.plantuml.teavm.browser.TeaVmFileLoader$Loaded
                 </Class>
                 <Class sourceFile="TeaVmScriptLoader.java">
                     net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader$Err
@@ -17030,10 +17034,23 @@
             </AbstractClasses>
 
             <ConcreteClasses>
+                <Class sourceFile="TeaVmFileLoader.java">
+                    net.sourceforge.plantuml.teavm.browser.TeaVmFileLoader$Answer
+                </Class>
+                <Class sourceFile="TeaVmFileLoader.java">
+                    net.sourceforge.plantuml.teavm.browser.TeaVmFileLoader$HostFile
+                </Class>
+                <Class sourceFile="TeaVmFileLoader.java">
+                    net.sourceforge.plantuml.teavm.browser.TeaVmFileLoader$HostFolder
+                </Class>
             </ConcreteClasses>
 
             <DependsUpon>
+                <Package>java.io</Package>
                 <Package>java.lang</Package>
+                <Package>java.nio.charset</Package>
+                <Package>java.nio.file</Package>
+                <Package>net.sourceforge.plantuml.nio</Package>
                 <Package>org.teavm.jso</Package>
             </DependsUpon>
 
