@@ -115,9 +115,6 @@ public class StringUtils {
 	public static final char BOLD_START = '\uEEF2';
 	public static final char BOLD_END = '\uEEF1';
 
-	// Used in BackSlash
-	public static final char PRIVATE_BLOCK = '\uE000';
-
 	public static final char INTERNAL_BOLD = '\uE100';
 
 	public static String toInternalBoldNumber(String s) {

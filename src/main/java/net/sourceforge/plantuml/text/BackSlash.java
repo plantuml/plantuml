@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.text;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.jaws.JawsStrange;
 
@@ -54,51 +53,6 @@ public class BackSlash {
 	@JawsStrange
 	public static char hiddenNewLine() {
 		return Jaws.BLOCK_E1_NEWLINE;
-	}
-
-	public static String translateBackSlashes(CharSequence s) {
-		if (s == null)
-			return null;
-
-		final StringBuilder result = new StringBuilder();
-		for (int i = 0; i < s.length(); i++) {
-			final char c = s.charAt(i);
-			if (c == '\\' && i < s.length() - 1 && isEnglishLetterOfBackSlash(s.charAt(i + 1))) {
-				result.append('\\');
-				result.append(translateChar(s.charAt(i + 1)));
-				i++;
-			} else {
-				result.append(c);
-			}
-		}
-		return result.toString();
-	}
-
-	private static boolean isEnglishLetterOfBackSlash(char c) {
-		return c == 'n';
-		// return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
-	}
-
-	public static String untranslateBackSlashes(CharSequence s) {
-		if (s == null)
-			return null;
-
-		final StringBuilder result = new StringBuilder();
-		for (int i = 0; i < s.length(); i++) {
-			char c = s.charAt(i);
-			if (c > StringUtils.PRIVATE_BLOCK && c < '\uE07F')
-				c = (char) (c - StringUtils.PRIVATE_BLOCK);
-
-			result.append(c);
-		}
-		return result.toString();
-	}
-
-	private static char translateChar(char c) {
-		if (c > 128)
-			throw new IllegalArgumentException();
-
-		return (char) (StringUtils.PRIVATE_BLOCK + c);
 	}
 
 }

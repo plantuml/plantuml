@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.TVariableScope;
-import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.Version;
 
 public class Defines implements Truth {
@@ -94,7 +93,7 @@ public class Defines implements Truth {
 			environment.put("dirpath", fileDir.replace('\\', '/'));
 	}
 
-	public void importFrom(Defines other) {
+	private void importFrom(Defines other) {
 		this.environment.putAll(other.environment);
 		this.values.putAll(other.values);
 		// magic = null;
@@ -158,19 +157,13 @@ public class Defines implements Truth {
 		return name.substring(0, x);
 	}
 
+	/**
+	 * @param emptyParentheses not used anymore, kept so that the signature stays the
+	 *                         same
+	 */
 	public void define(String name, List<String> value, boolean emptyParentheses) {
-		values.put(name, new Define(name, value, emptyParentheses));
+		values.put(name, new Define(name, value));
 		// magic = null;
-	}
-
-	public boolean isDefine(String expression) {
-		try {
-			final EvalBoolean eval = new EvalBoolean(expression, this);
-			return eval.eval();
-		} catch (IllegalArgumentException e) {
-			Log.info(() -> "Error in " + expression);
-			return false;
-		}
 	}
 
 	public boolean isTrue(String name) {
@@ -179,11 +172,6 @@ public class Defines implements Truth {
 				return true;
 
 		return false;
-	}
-
-	public void undefine(String name) {
-		values.remove(name);
-		// magic = null;
 	}
 
 //	private Map<String, Collection<Define>> getAll() {
