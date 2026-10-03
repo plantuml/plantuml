@@ -234,7 +234,7 @@ public class CliOptions {
 			if (value == null)
 				value = "";
 
-			result.define(ent.getKey(), Arrays.asList(value), false);
+			result.define(ent.getKey(), Arrays.asList(value));
 		}
 		return result;
 	}
@@ -246,7 +246,7 @@ public class CliOptions {
 			if (value == null)
 				value = "";
 
-			result.define(ent.getKey(), Arrays.asList(value), false);
+			result.define(ent.getKey(), Arrays.asList(value));
 		}
 		return result;
 	}
@@ -256,7 +256,7 @@ public class CliOptions {
 		result.overrideFilename(flags.getString(CliFlag.FILENAME));
 		result.overrideDirPath(flags.getString(CliFlag.FILE_DIR));
 		for (Map.Entry<String, String> ent : defines().entrySet())
-			result.define(ent.getKey(), Arrays.asList(ent.getValue()), false);
+			result.define(ent.getKey(), Arrays.asList(ent.getValue()));
 
 		return result;
 	}

@@ -50,12 +50,13 @@ import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.TVariableScope;
+import net.sourceforge.plantuml.tim.expression.TValue;
 import net.sourceforge.plantuml.version.Version;
 
 public class Defines implements Truth {
 
 	private final Environment environment = new Environment();
-	private final Map<String, Define> values = new LinkedHashMap<String, Define>();
+	private final Map<String, TValue> values = new LinkedHashMap<String, TValue>();
 
 	@Deprecated
 	@ApiWarning(willBeRemoved = "in next major release")
@@ -73,11 +74,8 @@ public class Defines implements Truth {
 	}
 
 	public void copyTo(TMemory memory, StringLocated location) throws EaterException {
-		for (Entry<String, Define> ent : values.entrySet()) {
-			final String name = ent.getKey();
-			final Define def = ent.getValue();
-			memory.putVariable(name, def.asTVariable(), TVariableScope.GLOBAL, location);
-		}
+		for (Entry<String, TValue> ent : values.entrySet())
+			memory.putVariable(ent.getKey(), ent.getValue(), TVariableScope.GLOBAL, location);
 
 	}
 
@@ -129,14 +127,6 @@ public class Defines implements Truth {
 		return result;
 	}
 
-//	private static Defines createWithMap(Map<String, String> init) {
-//		final Defines result = createEmpty();
-//		for (Map.Entry<String, String> ent : init.entrySet()) {
-//			result.environment.put(ent.getKey(), ent.getValue());
-//		}
-//		return result;
-//	}
-
 	public String getEnvironmentValue(String key) {
 		return this.environment.get(key);
 	}
@@ -158,12 +148,11 @@ public class Defines implements Truth {
 	}
 
 	/**
-	 * @param emptyParentheses not used anymore, kept so that the signature stays the
-	 *                         same
+	 * Defines <code>name</code>; the lines of <code>value</code> are joined with
+	 * newlines.
 	 */
-	public void define(String name, List<String> value, boolean emptyParentheses) {
-		values.put(name, new Define(name, value));
-		// magic = null;
+	public void define(String name, List<String> value) {
+		values.put(name, TValue.fromString(String.join("\n", value)));
 	}
 
 	public boolean isTrue(String name) {
@@ -173,51 +162,4 @@ public class Defines implements Truth {
 
 		return false;
 	}
-
-//	private Map<String, Collection<Define>> getAll() {
-//		final Map<String, Collection<Define>> result = new LinkedHashMap<String, Collection<Define>>();
-//		for (Define def : values.values()) {
-//			Collection<Define> tmp = result.get(def.getFunctionName());
-//			if (tmp == null) {
-//				tmp = new ArrayList<>();
-//				result.put(def.getFunctionName(), tmp);
-//			}
-//			tmp.add(def);
-//		}
-//		return result;
-//	}
-//
-//	private Map<String, Collection<Define>> magic;
-
-//	private String method2(String line) {
-//		final Set<String> words = words(line);
-//		if (magic == null)
-//			magic = getAll();
-//
-//		for (String w : words) {
-//			Collection<Define> tmp = magic.get(w);
-//			if (tmp == null)
-//				continue;
-//
-//			for (Define def : tmp)
-//				line = def.apply(line);
-//
-//		}
-//		return line;
-//	}
-//	
-//	private static final Pattern p = Pattern.compile("[A-Za-z_][A-Za-z_0-9]*");
-//
-//
-//	private Set<String> words(String line) {
-//		Matcher m = p.matcher(line);
-//		final Set<String> words = new HashSet<>();
-//		while (m.find())
-//			words.add(m.group(0));
-//
-//		return words;
-//	}
-
-
-
 }
