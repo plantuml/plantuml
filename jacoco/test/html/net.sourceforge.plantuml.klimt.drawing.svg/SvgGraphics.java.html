@@ -334,7 +334,7 @@ import net.sourceforge.plantuml.version.Version;
 
 	public void svgEllipse(double x, double y, double xRadius, double yRadius, double deltaShadow) {
 <span class="fc" id="L336">		manageShadow(deltaShadow);</span>
-<span class="pc bpc" id="L337" title="1 of 2 branches missed.">		if (hidden == false) {</span>
+<span class="fc bfc" id="L337" title="All 2 branches covered.">		if (hidden == false) {</span>
 <span class="fc" id="L338">			final XmlNode elt = document.createElement(&quot;ellipse&quot;);</span>
 <span class="fc" id="L339">			elt.setAttribute(&quot;cx&quot;, format(x));</span>
 <span class="fc" id="L340">			elt.setAttribute(&quot;cy&quot;, format(y));</span>
@@ -549,7 +549,7 @@ import net.sourceforge.plantuml.version.Version;
 			// throw new IllegalArgumentException();
 		}
 <span class="fc" id="L551">		manageShadow(deltaShadow);</span>
-<span class="pc bpc" id="L552" title="1 of 2 branches missed.">		if (hidden == false) {</span>
+<span class="fc bfc" id="L552" title="All 2 branches covered.">		if (hidden == false) {</span>
 <span class="fc" id="L553">			final XmlNode elt = createRectangleInternal(x, y, width, height);</span>
 <span class="fc" id="L554">			addFilterShadowId(elt, deltaShadow);</span>
 <span class="pc bpc" id="L555" title="1 of 4 branches missed.">			if (rx &gt; 0 &amp;&amp; ry &gt; 0) {</span>
@@ -580,7 +580,7 @@ import net.sourceforge.plantuml.version.Version;
 
 	public void svgLine(double x1, double y1, double x2, double y2, double deltaShadow) {
 <span class="fc" id="L582">		manageShadow(deltaShadow);</span>
-<span class="pc bpc" id="L583" title="1 of 2 branches missed.">		if (hidden == false) {</span>
+<span class="fc bfc" id="L583" title="All 2 branches covered.">		if (hidden == false) {</span>
 <span class="fc" id="L584">			final XmlNode elt = document.createElement(&quot;line&quot;);</span>
 <span class="fc" id="L585">			elt.setAttribute(&quot;x1&quot;, format(x1));</span>
 <span class="fc" id="L586">			elt.setAttribute(&quot;y1&quot;, format(y1));</span>
@@ -651,7 +651,7 @@ import net.sourceforge.plantuml.version.Version;
 	public void text(String text, double x, double y, String fontFamily, int fontSize, String fontWeight,
 			String fontStyle, String textDecoration, double textLength, Map&lt;String, String&gt; attributes,
 			String textBackColor, int orientation) {
-<span class="pc bpc" id="L654" title="1 of 2 branches missed.">		if (hidden == false) {</span>
+<span class="fc bfc" id="L654" title="All 2 branches covered.">		if (hidden == false) {</span>
 <span class="fc" id="L655">			final XmlNode elt = document.createElement(&quot;text&quot;);</span>
 			// required for web-kit based browsers
 			// elt.setAttribute(&quot;text-rendering&quot;, &quot;geometricPrecision&quot;);
@@ -1163,7 +1163,7 @@ import net.sourceforge.plantuml.version.Version;
 	private void closeTopPendingElement() {
 <span class="fc" id="L1164">		final XmlNode element = pendingElements.get(0);</span>
 <span class="fc" id="L1165">		pendingElements.remove(0);</span>
-<span class="pc bpc" id="L1166" title="1 of 2 branches missed.">		if (element.getFirstChild() != null)</span>
+<span class="fc bfc" id="L1166" title="All 2 branches covered.">		if (element.getFirstChild() != null)</span>
 <span class="fc" id="L1167">			getG().appendChild(element);</span>
 <span class="fc" id="L1168">	}</span>
 
