@@ -70,7 +70,7 @@ public class Defines implements Truth {
 
 	@Override
 	public String toString() {
-		return values.keySet().toString() + " " + environment.keySet();
+		return values.keySet().toString() + " " + environment;
 	}
 
 	public static Defines createEmpty() {
@@ -193,7 +193,7 @@ public class Defines implements Truth {
 	public List<String> applyDefines(String line) {
 		// System.err.println("line=" + line + " " + values.size());
 		line = manageDate(line);
-		line = manageEnvironment(line);
+		line = environment.manageEnvironment(line);
 		line = method1(line);
 		// line = values.size() < 10 ? method1(line) : method2(line);
 		return Arrays.asList(line.split("\n"));
@@ -249,14 +249,6 @@ public class Defines implements Truth {
 //
 //		return words;
 //	}
-
-	private String manageEnvironment(String line) {
-		for (Map.Entry<String, String> ent : environment.entrySet()) {
-			final String key = Pattern.quote("%" + ent.getKey() + "%");
-			line = line.replaceAll(key, ent.getValue());
-		}
-		return line;
-	}
 
 	private static final String DATE = "(?i)%date(\\[(.+?)\\])?%";
 	private final static Pattern datePattern = Pattern.compile(DATE);

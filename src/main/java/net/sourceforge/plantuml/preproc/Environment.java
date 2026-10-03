@@ -39,6 +39,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * What the preprocessor knows about where the diagram comes from: the version,
@@ -72,13 +73,14 @@ public class Environment {
 		return result;
 	}
 
-	public Set<Map.Entry<String, String>> entrySet() {
-		return Collections.unmodifiableMap(values).entrySet();
+	public String manageEnvironment(String line) {
+		for (Map.Entry<String, String> ent : values.entrySet()) {
+			final String key = Pattern.quote("%" + ent.getKey() + "%");
+			line = line.replaceAll(key, ent.getValue());
+		}
+		return line;
 	}
 
-	public Set<String> keySet() {
-		return Collections.unmodifiableMap(values).keySet();
-	}
 
 	@Override
 	public String toString() {
