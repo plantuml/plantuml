@@ -34,86 +34,139 @@
  */
 package net.sourceforge.plantuml.tim;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import net.sourceforge.plantuml.teavm.TeaVM;
-
+/**
+ * Prefix tree used by the preprocessor to find variable and function names.
+ * <p>
+ * {@link #getLonguestMatchStartingIn(String, int)} is called for every
+ * character of every preprocessed line, so this class avoids boxing, hashing
+ * and any allocation when there is no match.
+ * <p>
+ * Small nodes keep their children in a short unsorted list. Once a node has
+ * many children (typically the root, or the node after <code>$</code>), its
+ * ASCII children move to a table indexed directly by the character.
+ */
 public class TrieImpl implements Trie {
 
-	private final Map<Character, TrieImpl> brothers = new HashMap<Character, TrieImpl>();
+	private static final int SMALL_LIMIT = 8;
+	private static final int ASCII = 128;
+
+	// Children not stored in ascii[] (all of them while the node is small)
+	private char[] keys;
+	private TrieImpl[] children;
+	private int size;
+
+	// Direct table for ASCII children, allocated once the node is large
+	private TrieImpl[] ascii;
+
+	// Total number of children
+	private int count;
+
+	// True if a word ends on this node
+	private boolean terminal;
 
 	public void add(String s) {
 		if (s.indexOf('\0') != -1)
 			throw new IllegalArgumentException();
 
-		addInternal(this, s + "\0");
-	}
-
-	private static void addInternal(TrieImpl current, String s) {
-		if (s.isEmpty())
-			throw new UnsupportedOperationException();
-
+		TrieImpl current = this;
 		for (int i = 0; i < s.length(); i++)
 			current = current.getOrCreate(s.charAt(i));
 
+		current.terminal = true;
 	}
 
 	public boolean remove(String s) {
-		return removeInternal(this, s + "\0");
-	}
+		if (s.isEmpty())
+			throw new UnsupportedOperationException();
 
-	private static boolean removeInternal(TrieImpl current, String s) {
-	    if (s.length() <= 1)
-	        throw new UnsupportedOperationException();
-
-	    for (int i = 0; i < s.length(); i++) {
-	        final Character first = s.charAt(i);
-	        final TrieImpl child = current.brothers.get(first);
-	        if (child == null)
-	            return false;
-
-	        if (i == s.length() - 2) {
-	            if (TeaVM.a()) assert s.charAt(i + 1) == '\0';
-	            return child.brothers.remove('\0') != null;
-	        }
-
-	        current = child;
-	    }
-	    throw new IllegalStateException();
-	}
-
-
-	private TrieImpl getOrCreate(Character added) {
-		return brothers.computeIfAbsent(added, k -> new TrieImpl());
+		TrieImpl current = this;
+		for (int i = 0; i < s.length(); i++) {
+			current = current.get(s.charAt(i));
+			if (current == null)
+				return false;
+		}
+		final boolean result = current.terminal;
+		current.terminal = false;
+		return result;
 	}
 
 	public String getLonguestMatchStartingIn(String s, int pos) {
-		return getLonguestMatchStartingIn(this, s, pos);
+		TrieImpl current = this;
+		int i = pos;
+		final int length = s.length();
+		while (i < length) {
+			final TrieImpl child = current.get(s.charAt(i));
+			// A node left without any word after a remove() stops the walk
+			if (child == null || (child.count == 0 && child.terminal == false))
+				break;
+			current = child;
+			i++;
+		}
+		return current.terminal ? s.substring(pos, i) : "";
 	}
 
-	private static String getLonguestMatchStartingIn(TrieImpl current, String s, int pos) {
-		final StringBuilder result = new StringBuilder();
-		while (current != null) {
-			if (s.length() == pos)
-				if (current.brothers.containsKey('\0'))
-					return result.toString();
-				else
-					return "";
+	private TrieImpl get(char c) {
+		if (ascii != null && c < ASCII)
+			return ascii[c];
 
-			final TrieImpl child = current.brothers.get(s.charAt(pos));
-			if (child == null || child.brothers.size() == 0)
-				if (current.brothers.containsKey('\0'))
-					return result.toString();
-				else
-					return "";
+		for (int i = 0; i < size; i++)
+			if (keys[i] == c)
+				return children[i];
 
-			result.append(s.charAt(pos));
-			current = child;
-			pos++;
+		return null;
+	}
+
+	private TrieImpl getOrCreate(char c) {
+		final TrieImpl existing = get(c);
+		if (existing != null)
+			return existing;
+
+		if (ascii == null && count >= SMALL_LIMIT)
+			switchToAsciiTable();
+
+		final TrieImpl result = new TrieImpl();
+		if (ascii != null && c < ASCII)
+			ascii[c] = result;
+		else
+			append(c, result);
+
+		count++;
+		return result;
+	}
+
+	private void append(char c, TrieImpl child) {
+		if (keys == null) {
+			keys = new char[2];
+			children = new TrieImpl[2];
+		} else if (size == keys.length) {
+			final char[] newKeys = new char[size * 2];
+			final TrieImpl[] newChildren = new TrieImpl[size * 2];
+			System.arraycopy(keys, 0, newKeys, 0, size);
+			System.arraycopy(children, 0, newChildren, 0, size);
+			keys = newKeys;
+			children = newChildren;
 		}
-		return "";
+		keys[size] = c;
+		children[size] = child;
+		size++;
+	}
 
+	private void switchToAsciiTable() {
+		ascii = new TrieImpl[ASCII];
+		int kept = 0;
+		for (int i = 0; i < size; i++) {
+			if (keys[i] < ASCII) {
+				ascii[keys[i]] = children[i];
+			} else {
+				keys[kept] = keys[i];
+				children[kept] = children[i];
+				kept++;
+			}
+		}
+		for (int i = kept; i < size; i++)
+			children[i] = null;
+
+		size = kept;
 	}
 
 }
