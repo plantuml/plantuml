@@ -850,8 +850,23 @@ public class SvgGraphics {
 		}
 	}
 
+	// Same as fill.matches("#[0-9A-Fa-f]{8}"), without compiling a regex at each call.
+	private static boolean isHexColorWithAlpha(String color) {
+		if (color.length() != 9 || color.charAt(0) != '#')
+			return false;
+
+		for (int i = 1; i < 9; i++) {
+			final char c = color.charAt(i);
+			if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'))
+				continue;
+
+			return false;
+		}
+		return true;
+	}
+
 	private void fillMe(XmlNode elt) {
-		if (fill.matches("#[0-9A-Fa-f]{8}")) {
+		if (isHexColorWithAlpha(fill)) {
 			elt.setAttribute("fill", shortenColor(fill.substring(0, 7)));
 			final double opacity = Integer.parseInt(fill.substring(7), 16) / 255.0;
 			elt.setAttribute("fill-opacity", formatOpacity(opacity));

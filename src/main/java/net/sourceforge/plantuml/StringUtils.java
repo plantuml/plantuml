@@ -535,6 +535,16 @@ public class StringUtils {
 					final int rounded = (int) floor + (frac < 0.5 ? 0 : 1);
 					return buildFixedDecimal(rounded, decimal, negative);
 				}
+				// A true tie: abs is an exact multiple of 2^-(decimal+1) (the scaling by a
+				// power of two is exact), so abs is exactly the decimal number
+				// (2k+1)/(2*10^decimal), scaled is exact, and String.format rounds it half up.
+				// Common with coordinates like 30.5625. Unlike a near-tie (1.005, 0.145...),
+				// there is nothing to decide, so the slow path is not needed.
+				final double dyadic = abs * (double) (1L << (decimal + 1));
+				if (dyadic == Math.floor(dyadic) && frac == 0.5) {
+					final int rounded = (int) floor + 1;
+					return buildFixedDecimal(rounded, decimal, negative);
+				}
 			}
 		}
 
