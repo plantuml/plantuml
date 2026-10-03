@@ -71,6 +71,40 @@ function graph(target, ref) {
   const ftr = '\n```\n\n';
   return(hdr + 'x-axis "# test"\n  line target [' + target.join(', ') + ']\n  line ref [' + ref.join(', ') + ']' + ftr);
 }
+// Radar diagram showing normalized ratio target/reference
+function radarGraph(target, ref) {
+  if (!Array.isArray(target) || !Array.isArray(ref) || target.length === 0 || target.length !== ref.length) {
+    return '';
+  }
+
+  // Keep only valid pairs; fallback to 1 when invalid to keep radar shape stable
+  const ratios = target.map((t, i) => {
+    const r = ref[i];
+    if (!Number.isFinite(t) || !Number.isFinite(r) || r <= 0) return 1;
+    return Number((t / r).toFixed(2));
+  });
+
+  const axis = ratios.map((_, i) => `T${i + 1}`).join(',');
+  const refCurve = ratios.map(() => '1').join(',');
+  const targetCurve = ratios.join(', ');
+
+  return [
+    '```mermaid',
+    '---',
+    'config:',
+    '  themeVariables:',
+    '    cScale0: "#FF0000"',
+    '    cScale1: "#0000FF"',
+    '---',
+    'radar-beta',
+    '  title target VS ref',
+    `  axis ${axis}`,
+    `  curve ref{${refCurve}}`,
+    `  curve target{${targetCurve}}`,
+    '```',
+    '',
+  ].join('\n');
+}
 
 (async () => {
   const port = await startServer(server);
@@ -192,7 +226,13 @@ function graph(target, ref) {
   const outDir = path.resolve(opt.out);
   fs.mkdirSync(outDir, { recursive: true });
   fs.writeFileSync(path.join(outDir, 'results.json'), JSON.stringify({ opt, engines: engineInfo, reps, env: { cpu: os.cpus()[0].model, cores: os.cpus().length, node: process.versions.node, chromium: browserVersion, platform: os.platform() } }, null, 1));
-  fs.writeFileSync(path.join(outDir, 'summary.md'), graph(lines_target, lines_ref) + lines.join('\n') + '\n');
+  fs.writeFileSync(
+    path.join(outDir, 'summary.md'),
+    (hasRef ? radarGraph(lines_target, lines_ref) : '') +
+    graph(lines_target, lines_ref) +
+    lines.join('\n') +
+    '\n'
+  );
   console.log(lines.join('\n'));
   process.exit(0); // non-blocking by design: results are informational
 })().catch(e => { console.error('FATAL', e && e.stack || e); process.exit(1); });
