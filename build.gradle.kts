@@ -62,8 +62,6 @@ dependencies {
 
 repositories {
 	mavenLocal()
-	// TeaVM preview builds (0.16.0-dev-N); remove once 0.16.0 is on Maven Central
-	maven { url = uri("https://teavm.org/maven/repository") }
 	mavenCentral()
 }
 
