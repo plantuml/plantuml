@@ -3348,7 +3348,7 @@ Total Classes: 1
 "net.sourceforge.plantuml.tikz" --> "java.util"
 
 class "net.sourceforge.plantuml.tim" %lighten("red", 93) {
-Total Classes: 38
+Total Classes: 39
 }
 "net.sourceforge.plantuml.tim" --> "java.lang"
 "net.sourceforge.plantuml.tim" --> "java.nio.charset"

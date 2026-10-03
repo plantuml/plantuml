@@ -11853,14 +11853,14 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 38
-    Concrete Classes: 34
+    Total Classes: 39
+    Concrete Classes: 35
     Abstract Classes: 4
 
     Ca: 3
     Ce: 14
 
-    A: 0.11
+    A: 0.1
     I: 0.82
     D: 0.07
 
@@ -11904,6 +11904,7 @@ Concrete Classes:
     net.sourceforge.plantuml.tim.TMode
     net.sourceforge.plantuml.tim.TVariableScope
     net.sourceforge.plantuml.tim.TimLoader
+    net.sourceforge.plantuml.tim.TrieImpl
     net.sourceforge.plantuml.tim.VariableManager
 
 Depends Upon:
@@ -15756,7 +15757,7 @@ net.sourceforge.plantuml.telnet,1,0,0,2,0,1,0,1
 net.sourceforge.plantuml.text,5,1,38,4,0.2,0.1,0.7,1
 net.sourceforge.plantuml.theme,2,0,1,6,0,0.86,0.14,1
 net.sourceforge.plantuml.tikz,1,0,4,1,0,0.2,0.8,1
-net.sourceforge.plantuml.tim,38,4,3,14,0.11,0.82,0.07,1
+net.sourceforge.plantuml.tim,39,4,3,14,0.1,0.82,0.07,1
 net.sourceforge.plantuml.tim.builtin,68,1,0,14,0.01,1,0.01,1
 net.sourceforge.plantuml.tim.expression,17,3,3,3,0.18,0.5,0.32,1
 net.sourceforge.plantuml.tim.iterator,16,3,1,9,0.19,0.9,0.09,1

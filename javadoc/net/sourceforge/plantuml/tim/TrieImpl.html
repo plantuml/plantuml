@@ -98,6 +98,15 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">TrieImpl</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="Trie.html" title="interface in net.sourceforge.plantuml.tim">Trie</a></span></div>
+<div class="block">Prefix tree used by the preprocessor to find variable and function names.
+ <p>
+ <a href="#getLonguestMatchStartingIn(java.lang.String,int)"><code>getLonguestMatchStartingIn(String, int)</code></a> is called for every
+ character of every preprocessed line, so this class avoids boxing, hashing
+ and any allocation when there is no match.
+ <p>
+ Small nodes keep their children in a short unsorted list. Once a node has
+ many children (typically the root, or the node after <code>$</code>), its
+ ASCII children move to a table indexed directly by the character.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">

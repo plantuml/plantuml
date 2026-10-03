@@ -34,87 +34,140 @@
  */
 package net.sourceforge.plantuml.tim;
 
-import java.util.HashMap;
-import java.util.Map;
+/**
+ * Prefix tree used by the preprocessor to find variable and function names.
+ * &lt;p&gt;
+ * {@link #getLonguestMatchStartingIn(String, int)} is called for every
+ * character of every preprocessed line, so this class avoids boxing, hashing
+ * and any allocation when there is no match.
+ * &lt;p&gt;
+ * Small nodes keep their children in a short unsorted list. Once a node has
+ * many children (typically the root, or the node after &lt;code&gt;$&lt;/code&gt;), its
+ * ASCII children move to a table indexed directly by the character.
+ */
+<span class="fc" id="L48">public class TrieImpl implements Trie {</span>
 
-import net.sourceforge.plantuml.teavm.TeaVM;
+	private static final int SMALL_LIMIT = 8;
+	private static final int ASCII = 128;
 
-<span class="fc" id="L42">public class TrieImpl implements Trie {</span>
+	// Children not stored in ascii[] (all of them while the node is small)
+	private char[] keys;
+	private TrieImpl[] children;
+	private int size;
 
-<span class="fc" id="L44">	private final Map&lt;Character, TrieImpl&gt; brothers = new HashMap&lt;Character, TrieImpl&gt;();</span>
+	// Direct table for ASCII children, allocated once the node is large
+	private TrieImpl[] ascii;
+
+	// Total number of children
+	private int count;
+
+	// True if a word ends on this node
+	private boolean terminal;
 
 	public void add(String s) {
-<span class="pc bpc" id="L47" title="1 of 2 branches missed.">		if (s.indexOf('\0') != -1)</span>
-<span class="nc" id="L48">			throw new IllegalArgumentException();</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (s.indexOf('\0') != -1)</span>
+<span class="fc" id="L69">			throw new IllegalArgumentException();</span>
 
-<span class="fc" id="L50">		addInternal(this, s + &quot;\0&quot;);</span>
-<span class="fc" id="L51">	}</span>
+<span class="fc" id="L71">		TrieImpl current = this;</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++)</span>
+<span class="fc" id="L73">			current = current.getOrCreate(s.charAt(i));</span>
 
-	private static void addInternal(TrieImpl current, String s) {
-<span class="pc bpc" id="L54" title="1 of 2 branches missed.">		if (s.isEmpty())</span>
-<span class="nc" id="L55">			throw new UnsupportedOperationException();</span>
-
-<span class="fc bfc" id="L57" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++)</span>
-<span class="fc" id="L58">			current = current.getOrCreate(s.charAt(i));</span>
-
-<span class="fc" id="L60">	}</span>
+<span class="fc" id="L75">		current.terminal = true;</span>
+<span class="fc" id="L76">	}</span>
 
 	public boolean remove(String s) {
-<span class="nc" id="L63">		return removeInternal(this, s + &quot;\0&quot;);</span>
-	}
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (s.isEmpty())</span>
+<span class="fc" id="L80">			throw new UnsupportedOperationException();</span>
 
-	private static boolean removeInternal(TrieImpl current, String s) {
-<span class="nc bnc" id="L67" title="All 2 branches missed.">	    if (s.length() &lt;= 1)</span>
-<span class="nc" id="L68">	        throw new UnsupportedOperationException();</span>
-
-<span class="nc bnc" id="L70" title="All 2 branches missed.">	    for (int i = 0; i &lt; s.length(); i++) {</span>
-<span class="nc" id="L71">	        final Character first = s.charAt(i);</span>
-<span class="nc" id="L72">	        final TrieImpl child = current.brothers.get(first);</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">	        if (child == null)</span>
-<span class="nc" id="L74">	            return false;</span>
-
-<span class="nc bnc" id="L76" title="All 2 branches missed.">	        if (i == s.length() - 2) {</span>
-<span class="nc bnc" id="L77" title="All 4 branches missed.">	            if (TeaVM.a()) assert s.charAt(i + 1) == '\0';</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">	            return child.brothers.remove('\0') != null;</span>
-	        }
-
-<span class="nc" id="L81">	        current = child;</span>
-	    }
-<span class="nc" id="L83">	    throw new IllegalStateException();</span>
-	}
-
-
-	private TrieImpl getOrCreate(Character added) {
-<span class="fc" id="L88">		return brothers.computeIfAbsent(added, k -&gt; new TrieImpl());</span>
+<span class="fc" id="L82">		TrieImpl current = this;</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L84">			current = current.get(s.charAt(i));</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">			if (current == null)</span>
+<span class="fc" id="L86">				return false;</span>
+		}
+<span class="fc" id="L88">		final boolean result = current.terminal;</span>
+<span class="fc" id="L89">		current.terminal = false;</span>
+<span class="fc" id="L90">		return result;</span>
 	}
 
 	public String getLonguestMatchStartingIn(String s, int pos) {
-<span class="fc" id="L92">		return getLonguestMatchStartingIn(this, s, pos);</span>
+<span class="fc" id="L94">		TrieImpl current = this;</span>
+<span class="fc" id="L95">		int i = pos;</span>
+<span class="fc" id="L96">		final int length = s.length();</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		while (i &lt; length) {</span>
+<span class="fc" id="L98">			final TrieImpl child = current.get(s.charAt(i));</span>
+			// A node left without any word after a remove() stops the walk
+<span class="fc bfc" id="L100" title="All 6 branches covered.">			if (child == null || (child.count == 0 &amp;&amp; child.terminal == false))</span>
+<span class="fc" id="L101">				break;</span>
+<span class="fc" id="L102">			current = child;</span>
+<span class="fc" id="L103">			i++;</span>
+<span class="fc" id="L104">		}</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		return current.terminal ? s.substring(pos, i) : &quot;&quot;;</span>
 	}
 
-	private static String getLonguestMatchStartingIn(TrieImpl current, String s, int pos) {
-<span class="fc" id="L96">		final StringBuilder result = new StringBuilder();</span>
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		while (current != null) {</span>
-<span class="fc bfc" id="L98" title="All 2 branches covered.">			if (s.length() == pos)</span>
-<span class="fc bfc" id="L99" title="All 2 branches covered.">				if (current.brothers.containsKey('\0'))</span>
-<span class="fc" id="L100">					return result.toString();</span>
-				else
-<span class="fc" id="L102">					return &quot;&quot;;</span>
+	private TrieImpl get(char c) {
+<span class="fc bfc" id="L109" title="All 4 branches covered.">		if (ascii != null &amp;&amp; c &lt; ASCII)</span>
+<span class="fc" id="L110">			return ascii[c];</span>
 
-<span class="fc" id="L104">			final TrieImpl child = current.brothers.get(s.charAt(pos));</span>
-<span class="pc bpc" id="L105" title="1 of 4 branches missed.">			if (child == null || child.brothers.size() == 0)</span>
-<span class="fc bfc" id="L106" title="All 2 branches covered.">				if (current.brothers.containsKey('\0'))</span>
-<span class="fc" id="L107">					return result.toString();</span>
-				else
-<span class="fc" id="L109">					return &quot;&quot;;</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		for (int i = 0; i &lt; size; i++)</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">			if (keys[i] == c)</span>
+<span class="fc" id="L114">				return children[i];</span>
 
-<span class="fc" id="L111">			result.append(s.charAt(pos));</span>
-<span class="fc" id="L112">			current = child;</span>
-<span class="fc" id="L113">			pos++;</span>
-<span class="fc" id="L114">		}</span>
-<span class="nc" id="L115">		return &quot;&quot;;</span>
-
+<span class="fc" id="L116">		return null;</span>
 	}
+
+	private TrieImpl getOrCreate(char c) {
+<span class="fc" id="L120">		final TrieImpl existing = get(c);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		if (existing != null)</span>
+<span class="fc" id="L122">			return existing;</span>
+
+<span class="fc bfc" id="L124" title="All 4 branches covered.">		if (ascii == null &amp;&amp; count &gt;= SMALL_LIMIT)</span>
+<span class="fc" id="L125">			switchToAsciiTable();</span>
+
+<span class="fc" id="L127">		final TrieImpl result = new TrieImpl();</span>
+<span class="fc bfc" id="L128" title="All 4 branches covered.">		if (ascii != null &amp;&amp; c &lt; ASCII)</span>
+<span class="fc" id="L129">			ascii[c] = result;</span>
+		else
+<span class="fc" id="L131">			append(c, result);</span>
+
+<span class="fc" id="L133">		count++;</span>
+<span class="fc" id="L134">		return result;</span>
+	}
+
+	private void append(char c, TrieImpl child) {
+<span class="fc bfc" id="L138" title="All 2 branches covered.">		if (keys == null) {</span>
+<span class="fc" id="L139">			keys = new char[2];</span>
+<span class="fc" id="L140">			children = new TrieImpl[2];</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">		} else if (size == keys.length) {</span>
+<span class="fc" id="L142">			final char[] newKeys = new char[size * 2];</span>
+<span class="fc" id="L143">			final TrieImpl[] newChildren = new TrieImpl[size * 2];</span>
+<span class="fc" id="L144">			System.arraycopy(keys, 0, newKeys, 0, size);</span>
+<span class="fc" id="L145">			System.arraycopy(children, 0, newChildren, 0, size);</span>
+<span class="fc" id="L146">			keys = newKeys;</span>
+<span class="fc" id="L147">			children = newChildren;</span>
+		}
+<span class="fc" id="L149">		keys[size] = c;</span>
+<span class="fc" id="L150">		children[size] = child;</span>
+<span class="fc" id="L151">		size++;</span>
+<span class="fc" id="L152">	}</span>
+
+	private void switchToAsciiTable() {
+<span class="fc" id="L155">		ascii = new TrieImpl[ASCII];</span>
+<span class="fc" id="L156">		int kept = 0;</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">		for (int i = 0; i &lt; size; i++) {</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">			if (keys[i] &lt; ASCII) {</span>
+<span class="fc" id="L159">				ascii[keys[i]] = children[i];</span>
+			} else {
+<span class="fc" id="L161">				keys[kept] = keys[i];</span>
+<span class="fc" id="L162">				children[kept] = children[i];</span>
+<span class="fc" id="L163">				kept++;</span>
+			}
+		}
+<span class="fc bfc" id="L166" title="All 2 branches covered.">		for (int i = kept; i &lt; size; i++)</span>
+<span class="fc" id="L167">			children[i] = null;</span>
+
+<span class="fc" id="L169">		size = kept;</span>
+<span class="fc" id="L170">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

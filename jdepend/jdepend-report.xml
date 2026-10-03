@@ -17285,12 +17285,12 @@
 
         <Package name="net.sourceforge.plantuml.tim">
             <Stats>
-                <TotalClasses>38</TotalClasses>
-                <ConcreteClasses>34</ConcreteClasses>
+                <TotalClasses>39</TotalClasses>
+                <ConcreteClasses>35</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
                 <Ca>3</Ca>
                 <Ce>14</Ce>
-                <A>0.11</A>
+                <A>0.1</A>
                 <I>0.82</I>
                 <D>0.07</D>
                 <V>1</V>
@@ -17410,6 +17410,9 @@
                 </Class>
                 <Class sourceFile="TimLoader.java">
                     net.sourceforge.plantuml.tim.TimLoader
+                </Class>
+                <Class sourceFile="TrieImpl.java">
+                    net.sourceforge.plantuml.tim.TrieImpl
                 </Class>
                 <Class sourceFile="VariableManager.java">
                     net.sourceforge.plantuml.tim.VariableManager
