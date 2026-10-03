@@ -34,8 +34,12 @@
  */
 package net.sourceforge.plantuml.klimt.drawing.svg;
 
-import java.awt.font.TextLayout;
+import java.awt.Shape;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.klimt.UParam;
@@ -75,9 +79,31 @@ public class DriverCenteredCharacterSvg implements UDriver<UCenteredCharacter, S
 		final double xpos = x - unusedSpace.getCenterX() - 0.5;
 		final double ypos = y - unusedSpace.getCenterY() - 0.5;
 
-		final TextLayout t = font.createTextLayout("" + c);
 		svg.setFillColor(textColor.toSvg(mapper));
 
-		svg.drawPathIterator(xpos, ypos, t.getOutline(null).getPathIterator(null));
+		svg.drawPathIterator(xpos, ypos, getOutline(font, c).getPathIterator(null));
+	}
+
+	// The outline of a glyph never changes, and building it (a TextLayout) is costly
+	// compared to the few distinct (font, char) pairs a diagram uses (circled C, I, E...).
+	private static final int OUTLINE_CACHE_SIZE = 500;
+	private static final Map<List<Object>, Shape> OUTLINE_CACHE = new LinkedHashMap<List<Object>, Shape>(
+			OUTLINE_CACHE_SIZE, 0.75f, true) {
+		@Override
+		protected boolean removeEldestEntry(Map.Entry<List<Object>, Shape> eldest) {
+			return size() > OUTLINE_CACHE_SIZE;
+		}
+	};
+
+	private static Shape getOutline(UFont font, char c) {
+		final List<Object> key = Arrays.<Object>asList(font, c);
+		synchronized (OUTLINE_CACHE) {
+			Shape result = OUTLINE_CACHE.get(key);
+			if (result == null) {
+				result = font.createTextLayout("" + c).getOutline(null);
+				OUTLINE_CACHE.put(key, result);
+			}
+			return result;
+		}
 	}
 }

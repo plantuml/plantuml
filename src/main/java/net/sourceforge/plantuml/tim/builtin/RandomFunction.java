@@ -59,23 +59,28 @@ public class RandomFunction extends SimpleReturnFunction {
 		return nbArg == 0 || nbArg == 1 || nbArg == 2;
 	}
 
-	private final Random random = new Random();
+	// Shared by all the diagrams (and threads): the function holds no state of its own.
+	private static final Random RANDOM = new Random();
+
+	private static synchronized int nextInt(int bound) {
+		return RANDOM.nextInt(bound);
+	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException {
 		switch (values.size()) {
 		case 0:
-			return TValue.fromInt(random.nextInt(2));
+			return TValue.fromInt(nextInt(2));
 
 		case 1:
 			final Integer mx = values.get(0).toInt();
-			return TValue.fromInt(random.nextInt(mx));
+			return TValue.fromInt(nextInt(mx));
 
 		case 2:
 			final Integer min = values.get(0).toInt();
 			final Integer max = values.get(1).toInt();
-			return TValue.fromInt(random.nextInt(max - min) + min);
+			return TValue.fromInt(nextInt(max - min) + min);
 
 		default:
 			assert false; // Should not append because of canCover()

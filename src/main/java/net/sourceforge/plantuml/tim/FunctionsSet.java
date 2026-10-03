@@ -34,49 +34,81 @@
  */
 package net.sourceforge.plantuml.tim;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.utils.MyCollections;
 
+/**
+ * The functions known by a diagram. They are kept in two layers: the shared and
+ * read-only registry of the standard functions, and the functions that the
+ * diagram defines itself, which take precedence.
+ */
 public class FunctionsSet {
 
+	private final FunctionsSet base;
 	private final Map<TFunctionSignature, TFunction> functions = new HashMap<TFunctionSignature, TFunction>();
 	private final Map<String, Map<TFunctionSignature, TFunction>> functionsByName = new HashMap<>();
 	private final Set<TFunctionSignature> functionsFinal = new HashSet<>();
 	private final Trie functions3 = new TrieImpl();
 	private TFunctionImpl pendingFunction;
 
-	public TFunction getFunctionSmart(TFunctionSignature searched) {
+	public FunctionsSet() {
+		this(null);
+	}
+
+	/**
+	 * @param base a registry that is only read, never modified, or null
+	 */
+	public FunctionsSet(FunctionsSet base) {
+		this.base = base;
+	}
+
+	private TFunction getExact(TFunctionSignature searched) {
 		final TFunction func = this.functions.get(searched);
+		if (func == null && base != null)
+			return base.getExact(searched);
+		return func;
+	}
+
+	public TFunction getFunctionSmart(TFunctionSignature searched) {
+		final TFunction func = getExact(searched);
 		if (func != null)
 			return func;
 
-		for (TFunction candidate : this.functions.values()) {
-			if (candidate.getSignature().sameFunctionNameAs(searched) == false)
-				continue;
+		return searchCovering(searched);
+	}
 
-			if (candidate.canCover(searched.getNbArg(), searched.getNamedArguments()))
+	private TFunction searchCovering(TFunctionSignature searched) {
+		for (TFunction candidate : this.functions.values())
+			if (isCovering(candidate, searched))
 				return candidate;
 
-		}
+		if (base == null)
+			return null;
+
+		for (TFunction candidate : base.functions.values())
+			if (this.functions.containsKey(candidate.getSignature()) == false && isCovering(candidate, searched))
+				return candidate;
+
 		return null;
 	}
 
-	public int size() {
-		return functions().size();
-	}
-
-	public Map<TFunctionSignature, TFunction> functions() {
-		return MyCollections.unmodifiableMap(functions);
+	private static boolean isCovering(TFunction candidate, TFunctionSignature searched) {
+		return candidate.getSignature().sameFunctionNameAs(searched)
+				&& candidate.canCover(searched.getNbArg(), searched.getNamedArguments());
 	}
 
 	public String getLonguestMatchStartingIn(String s, int pos) {
-		return functions3.getLonguestMatchStartingIn(s, pos);
+		final String result = functions3.getLonguestMatchStartingIn(s, pos);
+		if (base == null || result.length() > 0)
+			return result;
+		return base.getLonguestMatchStartingIn(s, pos);
 	}
 
 	public TFunctionImpl pendingFunction() {
@@ -101,17 +133,24 @@ public class FunctionsSet {
 	 * Returns true if at least one function with the given name exists.
 	 */
 	public boolean doesFunctionExist(String functionName) {
-		return this.functionsByName.containsKey(functionName);
+		return this.functionsByName.containsKey(functionName) || (base != null && base.doesFunctionExist(functionName));
 	}
 
 	/**
 	 * Returns the functions matching the given name, or an empty collection.
 	 */
 	public Iterable<TFunction> getFunctionsByName(String functionName) {
-		final Map<TFunctionSignature, TFunction> map = this.functionsByName.get(functionName);
-		if (map == null)
-			return Collections.emptyList();
-		return map.values();
+		final Map<TFunctionSignature, TFunction> own = this.functionsByName.get(functionName);
+		final Iterable<TFunction> inherited = base == null ? Collections.<TFunction>emptyList()
+				: base.getFunctionsByName(functionName);
+		if (own == null)
+			return inherited;
+
+		final List<TFunction> result = new ArrayList<>(own.values());
+		for (TFunction func : inherited)
+			if (own.containsKey(func.getSignature()) == false)
+				result.add(func);
+		return result;
 	}
 
 	public void executeEndfunction() {
@@ -151,7 +190,7 @@ public class FunctionsSet {
 		declareFunction.analyze(context, memory);
 		final boolean finalFlag = declareFunction.getFinalFlag();
 		final TFunctionSignature declaredSignature = declareFunction.getFunction().getSignature();
-		final TFunction previous = this.functions.get(declaredSignature);
+		final TFunction previous = this.getExact(declaredSignature);
 		if (previous != null && (finalFlag || this.functionsFinal.contains(declaredSignature)))
 			throw new EaterException("This function is already defined", s);
 
@@ -174,7 +213,7 @@ public class FunctionsSet {
 		declareFunction.analyze(context, memory);
 		final boolean finalFlag = declareFunction.getFinalFlag();
 		final TFunctionSignature declaredSignature = declareFunction.getFunction().getSignature();
-		final TFunction previous = this.functions.get(declaredSignature);
+		final TFunction previous = this.getExact(declaredSignature);
 		if (previous != null && (finalFlag || this.functionsFinal.contains(declaredSignature)))
 			throw new EaterException("This function is already defined", s);
 

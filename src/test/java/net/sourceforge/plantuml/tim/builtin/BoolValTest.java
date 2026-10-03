@@ -27,6 +27,8 @@ class BoolValTest {
 			"False, false",
 			"false, false",
 			"0, false",
+			"TRUE, true",
+			"FALSE, false",
 	})
 	void executeReturnFunctionWithValidBooleanValueStringTest(String input, Boolean expected) throws EaterException {
 		BoolVal cut = new BoolVal();
@@ -40,6 +42,9 @@ class BoolValTest {
 	@CsvSource(nullValues = "null", value = {
 		"2",
 		"hello",
+		"10",
+		"truee",
+		"fal\u017fe",
 	})
 	void executeReturnFunctionWithInvalidBooleanValueStringTest(String input) throws EaterException {
 		BoolVal cut = new BoolVal();

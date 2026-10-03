@@ -447,6 +447,21 @@ class SkinParamTest {
 		assertEquals(123, skinParam.getTabSize());
 	}
 
+	// The cleaned form of a key is cached for all the SkinParam instances, in a cache
+	// that is bounded and evicts the least recently used keys: whatever the number of
+	// distinct keys seen (the stereotype is part of the key), the answers stay the same.
+	@Test
+	public void testKeysStayCorrectWhenTheKeyCacheOverflows() {
+		for (int i = 0; i < 5000; i++) {
+			final SkinParam other = createSkinParam("Class_Background.Color<<s" + i + ">>", "red");
+			assertEquals("red", other.getValue("classbackgroundcolor<<s" + i + ">>"));
+		}
+		final SkinParam skinParam = createSkinParam("Some_Key.Name", "v", "SequenceParticipantFontSize", "20");
+		assertEquals("v", skinParam.getValue("somekeyname"));
+		assertEquals("v", skinParam.getValue("Some_Key.Name"));
+		assertEquals("20", skinParam.getValue("participantfontsize"));
+	}
+
 	//
 	// Test DSL
 	//
