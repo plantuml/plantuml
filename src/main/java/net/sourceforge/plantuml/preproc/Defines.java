@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.preproc;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
@@ -148,11 +147,11 @@ public class Defines implements Truth {
 	}
 
 	/**
-	 * Defines <code>name</code>; the lines of <code>value</code> are joined with
-	 * newlines.
+	 * Defines <code>name</code>; a <code>null</code> value is defined as an empty
+	 * one.
 	 */
-	public void define(String name, List<String> value) {
-		values.put(name, TValue.fromString(String.join("\n", value)));
+	public void define(String name, String value) {
+		values.put(name, TValue.fromString(value == null ? "" : value));
 	}
 
 	public boolean isTrue(String name) {

@@ -40,7 +40,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -229,25 +228,17 @@ public class CliOptions {
 
 	public Defines getDefaultDefines(SFile f) {
 		final Defines result = Defines.createWithFileName(f);
-		for (Map.Entry<String, String> ent : defines().entrySet()) {
-			String value = ent.getValue();
-			if (value == null)
-				value = "";
+		for (Map.Entry<String, String> ent : defines().entrySet())
+			result.define(ent.getKey(), ent.getValue());
 
-			result.define(ent.getKey(), Arrays.asList(value));
-		}
 		return result;
 	}
 
 	public Defines getDefaultDefines(java.io.File f) {
 		final Defines result = Defines.createWithFileName(f);
-		for (Map.Entry<String, String> ent : defines().entrySet()) {
-			String value = ent.getValue();
-			if (value == null)
-				value = "";
+		for (Map.Entry<String, String> ent : defines().entrySet())
+			result.define(ent.getKey(), ent.getValue());
 
-			result.define(ent.getKey(), Arrays.asList(value));
-		}
 		return result;
 	}
 
@@ -256,7 +247,7 @@ public class CliOptions {
 		result.overrideFilename(flags.getString(CliFlag.FILENAME));
 		result.overrideDirPath(flags.getString(CliFlag.FILE_DIR));
 		for (Map.Entry<String, String> ent : defines().entrySet())
-			result.define(ent.getKey(), Arrays.asList(ent.getValue()));
+			result.define(ent.getKey(), ent.getValue());
 
 		return result;
 	}
