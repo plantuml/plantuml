@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (3 entities)
+---
+@startuml
+!pragma layout smetana
+state A
+state B $x
+state C
+A --> B : go
+B --> C : next
+A --> C
+hide $x
+@enduml

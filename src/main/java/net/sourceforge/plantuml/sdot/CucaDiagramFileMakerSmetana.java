@@ -77,6 +77,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.shape.UHidden;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
@@ -291,7 +292,10 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 				node.resetMove();
 				node.moveDelta(corner.getX(), corner.getY());
 				final IEntityImage image = node.getImage();
-				image.drawU(ug.apply(UTranslate.point(corner)));
+				// Same as SvekResult on the dot pipeline: 'hide' (as opposed to 'remove')
+				// keeps the node in the layout but must not paint it.
+				final UGraphic ugNode = node.isHidden() ? ug.apply(UHidden.HIDDEN) : ug;
+				image.drawU(ugNode.apply(UTranslate.point(corner)));
 			}
 
 			for (Entry<Link, SmetanaEdge> ent : smetanaPathes.entrySet())

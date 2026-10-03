@@ -1466,6 +1466,27 @@
       "diagram_class": "ClassDiagram"
     },
     {
+      "file": "nonreg/group2917/smetana_hide_class.puml",
+      "folder": "nonreg/group2917",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2917/smetana_hide_state_node_label.puml",
+      "folder": "nonreg/group2917",
+      "status": "pass",
+      "description": "(5 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
+      "file": "nonreg/group2917/smetana_hide_state_plain_edges.puml",
+      "folder": "nonreg/group2917",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
       "file": "nonreg/json/style-highlight-with-style-tags.puml",
       "folder": "nonreg/json",
       "status": "pass",
@@ -3026,8 +3047,8 @@
     }
   ],
   "summary": {
-    "total": 395,
-    "passed": 391,
+    "total": 398,
+    "passed": 394,
     "failed": 0,
     "skipped": 4
   }
