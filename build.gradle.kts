@@ -87,7 +87,10 @@ teavm {
 	wasmGC {
 		mainClass.set("net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser")
 		targetFileName.set("plantuml.wasm")
-		obfuscated.set(true)
+		// Not obfuscated for now: keeps class names, so that exceptions are
+		// readable while the Wasm build is being validated. Switch back to true
+		// (smaller .wasm) once it is stable.
+		obfuscated.set(false)
 		// BALANCED, like the JS build. AGGRESSIVE (the Wasm GC default) crashes
 		// TeaVM 0.16.0 while inlining UBrexNamed.<init> (super(create(...)), i.e. a
 		// static call with two branches as argument of the super constructor) into

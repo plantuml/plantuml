@@ -519,8 +519,8 @@ public class PlantUMLBrowser {
 			final SvgGraphicsTeaVM svg = buildSvg(lines, darkMode, maxSvgSize);
 			removeAllChildren(out);
 			appendSvgElement(out, svg.getSvgRoot());
-		} catch (Exception e) {
-			out.setTextContent(String.valueOf(e));
+		} catch (Throwable e) {
+			out.setTextContent(describe(e));
 		}
 		BrowserLog.jsStatusDuration();
 	}
@@ -529,9 +529,32 @@ public class PlantUMLBrowser {
 			boolean darkMode, int maxSvgSize) {
 		try {
 			onSuccess.call(serializeSvg(buildSvg(lines, darkMode, maxSvgSize).getSvgRoot()));
-		} catch (Exception e) {
-			onError.call(String.valueOf(e));
+		} catch (Throwable e) {
+			onError.call(describe(e));
 		}
+	}
+
+	/**
+	 * Human-readable description of a rendering failure, never {@code null}.
+	 *
+	 * <p>
+	 * {@code String.valueOf(e)} is not enough: when the class name is not kept
+	 * (obfuscated Wasm GC build) and the exception has no message,
+	 * {@code Throwable.toString()} returns {@code null}. The stack trace is also
+	 * printed to the browser console.
+	 *
+	 * <p>
+	 * {@code Throwable} (not only {@code Exception}) is caught by the callers so
+	 * that an {@code Error} (e.g. {@code StackOverflowError}) reports a message
+	 * instead of silently killing the worker thread.
+	 */
+	private static String describe(Throwable e) {
+		e.printStackTrace();
+		final String s = e.toString();
+		if (s != null)
+			return s;
+		final String message = e.getMessage();
+		return "Rendering error (" + (message == null ? "no message" : message) + ")";
 	}
 
 	// =========================================================================
