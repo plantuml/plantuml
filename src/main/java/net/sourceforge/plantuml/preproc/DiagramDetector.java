@@ -68,11 +68,26 @@ public class DiagramDetector {
 		return null;
 	}
 
-	public static ReadLine extractFromFile(InputFile f2, String description) throws IOException {
+	/**
+	 * The diagram a selector chooses in a file (<code>file!1</code>,
+	 * <code>file!ID</code>), or its first diagram without one; <code>null</code>
+	 * when the file holds no diagram, so that it is included whole.
+	 */
+	public static ReadLine extractFromFile(InputFile f2, String description, String suf) throws IOException {
 		final ReadLine raw = newReadLineFromInputStream(f2.newInputStream(), description);
 		if (containsStartDiagram(raw)) {
 			final ReadLine raw1 = newReadLineFromInputStream(f2.newInputStream(), description);
-			return new DiagramExtractor(raw1, null);
+			try {
+				return new DiagramExtractor(raw1, suf);
+			} catch (RuntimeException e) {
+				// Construction can fail before the caller receives the reader to close.
+				try {
+					raw1.close();
+				} catch (IOException closeException) {
+					e.addSuppressed(closeException);
+				}
+				throw e;
+			}
 		}
 		return null;
 	}
