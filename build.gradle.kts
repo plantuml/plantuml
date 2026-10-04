@@ -92,14 +92,14 @@ teavm {
 	wasmGC {
 		mainClass.set("net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser")
 		targetFileName.set("plantuml.wasm")
-		// Not obfuscated for now: keeps class names, so that exceptions are
-		// readable while the Wasm build is being validated. Switch back to true
-		// (smaller .wasm) once it is stable.
-		obfuscated.set(false)
-		// Emits plantuml.wasm.teadbg + plantuml.wasm-deobfuscator.wasm, so that Java
-		// stack traces can be mapped back to classes/methods/lines. Only used when
-		// the page opts in (plantuml-wasm.js, '?wasmdebug' in the page URL).
-		debugInformation.set(true)
+		// Diagnostic switch: -PwasmDebug=true keeps class names (obfuscated=false)
+		// and emits plantuml.wasm.teadbg + plantuml.wasm-deobfuscator.wasm, so that
+		// Java stack traces can be mapped back to classes/methods/lines when the
+		// page opts in ('?wasmdebug' in the page URL, see plantuml-wasm.js).
+		// Default: production build (obfuscated, no debug files).
+		val wasmDebug = providers.gradleProperty("wasmDebug").map { it.toBoolean() }.getOrElse(false)
+		obfuscated.set(!wasmDebug)
+		debugInformation.set(wasmDebug)
 		// BALANCED, like the JS build. AGGRESSIVE (the Wasm GC default) crashes
 		// TeaVM 0.16.0 while inlining UBrexNamed.<init> (super(create(...)), i.e. a
 		// static call with two branches as argument of the super constructor) into

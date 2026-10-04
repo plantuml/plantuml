@@ -17,12 +17,28 @@ public class BrowserLog {
 	}
 
 	public static void consoleLog(Class<?> clazz, String msg) {
+		if (enabled() == false)
+			return;
 		consoleMessage("[" + clazz.getSimpleName() + "] " + msg);
+	}
+
+	/**
+	 * Debug traces are off by default: about ten of them are emitted per
+	 * rendered diagram (String.format, getSimpleName and a console.log each),
+	 * which is measurable in benchmarks, especially with DevTools open. Set
+	 * {@code window.PLANTUML_LOG = true} before rendering to turn them on.
+	 */
+	private static boolean enabled() {
+		// ::comment when JAVA8
+		if (TeaVM.isTeaVM())
+			return isLogEnabled();
+		// ::done
+		return false;
 	}
 
 	private static void consoleMessage(String msg) {
 		// ::comment when JAVA8
-		if (TeaVM.isTeaVM()) {
+		if (TeaVM.isTeaVM() && enabled()) {
 			final String message = getMessage(msg);
 			jsLog(message);
 		}
@@ -42,6 +58,9 @@ public class BrowserLog {
 	}
 
 	// ::comment when JAVA8
+	@JSBody(script = "return typeof window !== 'undefined' && window.PLANTUML_LOG === true;")
+	private static native boolean isLogEnabled();
+
 	@JSBody(params = "msg", script = "console.log(msg);")
 	public static native void jsLog(String msg);
 

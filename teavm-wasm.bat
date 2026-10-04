@@ -5,6 +5,7 @@ rem
 rem Extra arguments are passed to Gradle, e.g. the diagnostic switches:
 rem   teavm-wasm.bat -PjsStrict=true
 rem   teavm-wasm.bat -PwasmStrict=false
+rem   teavm-wasm.bat -PwasmDebug=true     (then open bench.html?wasmdebug)
 call gradlew.bat clean teavmWasm -Pfast %*
 if errorlevel 1 exit /b %errorlevel%
 pushd build\generated\teavm\js
