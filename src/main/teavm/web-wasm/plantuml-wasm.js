@@ -35,6 +35,27 @@ if (WASM_DEBUG && typeof Error.stackTraceLimit === "number" && Error.stackTraceL
 
 let enginePromise = null;
 
+// renderToString() requests whose callbacks have not been called yet.
+const pending = new Set();
+
+// A Wasm trap (e.g. an integer division by zero: TeaVM's Wasm GC backend does
+// not turn it into an ArithmeticException) cannot be caught by Java code. It
+// escapes as a WebAssembly.RuntimeError from a TeaVM event-loop callback and
+// leaves the instance unusable: every later request would hang forever. So
+// fail the pending requests and drop the instance: the next call loads a
+// fresh one.
+function onWasmTrap(error) {
+	if (typeof WebAssembly === "undefined" || error instanceof WebAssembly.RuntimeError === false)
+		return;
+	enginePromise = null;
+	// Copy first: each fail() removes its request from the set.
+	for (const request of [...pending])
+		request.fail("PlantUML Wasm engine crashed (" + error.message + "); it has been reset.");
+}
+
+if (typeof window !== "undefined" && typeof window.addEventListener === "function")
+	window.addEventListener("error", ev => onWasmTrap(ev.error));
+
 function engine() {
 	if (enginePromise === null) {
 		const options = WASM_DEBUG ? { stackDeobfuscator: { enabled: true } } : {};
@@ -83,7 +104,14 @@ export async function render(lines, elementId, options) {
  * onError(message) is called once the diagram has been rendered.
  */
 export function renderToString(lines, onSuccess, onError, options) {
+	const request = {};
+	const settle = callback => value => {
+		if (pending.delete(request))
+			callback(value);
+	};
+	request.fail = settle(onError);
+	pending.add(request);
 	engine().then(
-		e => e.renderToString(lines, onSuccess, onError, options ?? null),
-		err => onError("Could not load plantuml.wasm: " + err));
+		e => e.renderToString(lines, settle(onSuccess), request.fail, options ?? null),
+		err => request.fail("Could not load plantuml.wasm: " + err));
 }

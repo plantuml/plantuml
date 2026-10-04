@@ -552,6 +552,12 @@ public class PlantUMLBrowser {
 	 * instead of silently killing the worker thread.
 	 */
 	private static String describe(Throwable e) {
+		// Not possible in Java, but seen on the Wasm GC build: TeaVM 0.16.0
+		// miscompiled some try/finally blocks into a "throw null".
+		if (e == null) {
+			consoleError("Rendering error: null exception (TeaVM miscompilation?)");
+			return "Rendering error: null exception";
+		}
 		final StringBuilder sb = new StringBuilder();
 		appendThrowable(sb, e);
 		Throwable cause = e.getCause();
