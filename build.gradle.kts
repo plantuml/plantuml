@@ -91,6 +91,10 @@ teavm {
 		// readable while the Wasm build is being validated. Switch back to true
 		// (smaller .wasm) once it is stable.
 		obfuscated.set(false)
+		// Emits plantuml.wasm.teadbg + plantuml.wasm-deobfuscator.wasm, so that Java
+		// stack traces can be mapped back to classes/methods/lines. Only used when
+		// the page opts in (plantuml-wasm.js, '?wasmdebug' in the page URL).
+		debugInformation.set(true)
 		// BALANCED, like the JS build. AGGRESSIVE (the Wasm GC default) crashes
 		// TeaVM 0.16.0 while inlining UBrexNamed.<init> (super(create(...)), i.e. a
 		// static call with two branches as argument of the super constructor) into

@@ -21,11 +21,19 @@ import { load } from "./plantuml.wasm-runtime.js";
 
 const WASM_URL = new URL("./plantuml.wasm", import.meta.url).href;
 
+// Readable Java stack traces (classes, methods, lines) instead of
+// "Throwable$FakeClass.fakeMethod": opt in with '?wasmdebug' in the page URL.
+// Needs plantuml.wasm.teadbg and plantuml.wasm-deobfuscator.wasm next to
+// plantuml.wasm (built when debugInformation is enabled in build.gradle.kts).
+const WASM_DEBUG = typeof location !== "undefined"
+	&& new URLSearchParams(location.search).has("wasmdebug");
+
 let enginePromise = null;
 
 function engine() {
 	if (enginePromise === null) {
-		enginePromise = load(WASM_URL).then(teavm => teavm.exports);
+		const options = WASM_DEBUG ? { stackDeobfuscator: { enabled: true } } : {};
+		enginePromise = load(WASM_URL, options).then(teavm => teavm.exports);
 		// Allow a retry after a failed load (network error, unsupported runtime...).
 		enginePromise.catch(() => { enginePromise = null; });
 	}
