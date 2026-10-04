@@ -64,7 +64,7 @@ import net.sourceforge.plantuml.nio.NFolder;
  * <code>PLANTUML_FILE_LOADER</code> on the global object:
  *
  * <pre>
- * globalThis.PLANTUML_FILE_LOADER = function (path, from, onOk, onErr) { ... };
+ * globalThis.PLANTUML_FILE_LOADER = function (path, from, onOk, onErr, request) { ... };
  * </pre>
  * <ul>
  * <li><code>path</code>: the file name the directive asks for, after variables
@@ -88,6 +88,14 @@ import net.sourceforge.plantuml.nio.NFolder;
  * <code>from</code>; a local theme instead keeps its caller's context.</li>
  * <li><code>onErr(reason)</code>: the include fails. The reason is written to
  * the console.</li>
+ * <li><code>request.kind</code>: <code>"include"</code> (also for
+ * <code>!include_once</code> and <code>!include_many</code>),
+ * <code>"includesub"</code> or <code>"theme"</code>. Hosts can distinguish
+ * resource policies and diagnostics without inferring the operation from
+ * the file name. This describes this request, not whether the file's contents
+ * will be evaluated. The host still delivers the whole file; the engine
+ * handles selectors, sub extraction and repeated includes. Existing loaders
+ * can ignore the fifth argument.</li>
  * </ul>
  * The first outcome wins: a second callback, an exception or a rejection after
  * it changes nothing. Returning <code>false</code> (strictly) before either
@@ -131,7 +139,7 @@ public final class TeaVmFileLoader {
 	 * into a string all become a failure; anything after the first outcome is
 	 * ignored.
 	 */
-	@JSBody(params = { "path", "from", "onOk", "onErr" }, script = "var g = (typeof globalThis !== 'undefined') ? globalThis"
+	@JSBody(params = { "path", "from", "kind", "onOk", "onErr" }, script = "var g = (typeof globalThis !== 'undefined') ? globalThis"
 			+ " : ((typeof self !== 'undefined') ? self : this);"
 			+ "var settled = false;"
 			+ "var reasonOf = function(e) {"
@@ -151,14 +159,14 @@ public final class TeaVmFileLoader {
 			+ "  settled = true; onOk(id, text);"
 			+ "};"
 			+ "var result;"
-			+ "try { result = g.PLANTUML_FILE_LOADER(path, from, ok, fail); }"
+			+ "try { result = g.PLANTUML_FILE_LOADER(path, from, ok, fail, { kind: kind }); }"
 			+ "catch (e) { fail(e); return true; }"
 			+ "if (result !== null && (typeof result === 'object' || typeof result === 'function')) {"
 			+ "  try { Promise.resolve(result).then(null, fail); } catch (e) { fail(e); }"
 			+ "}"
 			+ "if (result === false && settled === false) { settled = true; return false; }"
 			+ "return true;")
-	private static native boolean load(String path, String from, Loaded onOk, TeaVmScriptLoader.Err onErr);
+	private static native boolean load(String path, String from, String kind, Loaded onOk, TeaVmScriptLoader.Err onErr);
 
 	/**
 	 * The file the host delivers for <code>path</code>, or <code>null</code> when
@@ -171,8 +179,10 @@ public final class TeaVmFileLoader {
 	 * @param folder where the include is written: <code>null</code> for the
 	 *               diagram itself, or the folder of a file this loader
 	 *               delivered. Any other folder has no host to ask.
+	 * @param kind   <code>"include"</code>, <code>"includesub"</code> or
+	 *               <code>"theme"</code>
 	 */
-	public static InputFile getInputFile(String path, NFolder folder) {
+	public static InputFile getInputFile(String path, NFolder folder, String kind) {
 		if (isAvailable() == false)
 			return null;
 		if (folder != null && folder instanceof HostFolder == false)
@@ -181,7 +191,7 @@ public final class TeaVmFileLoader {
 		final String from = folder == null ? null : ((HostFolder) folder).from;
 		final Answer answer = new Answer();
 		synchronized (answer) {
-			final boolean handled = load(path, from, (id, text) -> {
+			final boolean handled = load(path, from, kind, (id, text) -> {
 				synchronized (answer) {
 					answer.id = id;
 					answer.text = text;

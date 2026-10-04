@@ -170,7 +170,7 @@ public class ThemeUtils {
 		}
 
 		// Then try local file
-		final InputFile localFile = pathSystem.getInputFile(getFilename(name));
+		final InputFile localFile = pathSystem.getInputFile(getFilename(name), "theme");
 		if (localFile != null) {
 			final Reader br = localFile.getReader(UTF_8);
 			if (br != null)
@@ -210,7 +210,7 @@ public class ThemeUtils {
 	}
 
 	private static Theme loadFileTheme(PathSystem pathSystem, String name, String from) throws IOException {
-		final InputFile file = pathSystem.getInputFile(getFullPath(from, name));
+		final InputFile file = pathSystem.getInputFile(getFullPath(from, name), "theme");
 		if (file == null)
 			return null;
 

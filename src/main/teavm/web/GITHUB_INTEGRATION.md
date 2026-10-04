@@ -306,6 +306,25 @@ the one a selector chooses (`file!1`, `file!ID`), or of its first diagram.
 An unmatched or invalid selector is an include error. A file with no diagram
 is included whole. `!includesub file!PART` takes its `!startsub PART` sections.
 
+The engine also passes a fifth argument, `request`, with a `kind` field:
+
+| `request.kind` | Directive |
+| --- | --- |
+| `"include"` | `!include`, `!include_once`, `!include_many` |
+| `"includesub"` | `!includesub FILE!PART` |
+| `"theme"` | `!theme NAME from DIR` for a local folder |
+
+A host can use this to apply resource policies or identify a failed request
+without parsing PlantUML or guessing from a filename. The same file can be
+requested as an include or as a theme. Existing four-parameter functions,
+including the example above, may ignore this argument. A host supporting an
+older engine should allow for it to be absent.
+
+This is the kind of the immediate request: an `!include` inside a local theme
+has kind `"include"`. It does not report an applied theme, a selected section
+or whether a repeated include will be skipped. Always deliver the whole file;
+the engine selects diagrams and sub sections and applies include strategies.
+
 The loader may answer synchronously or later, or be an `async` function: the
 rejection of the promise it returns fails the include, while a fulfilled value
 delivers nothing, so the file must still come through `ok`. The first outcome
