@@ -28,6 +28,11 @@ const WASM_URL = new URL("./plantuml.wasm", import.meta.url).href;
 const WASM_DEBUG = typeof location !== "undefined"
 	&& new URLSearchParams(location.search).has("wasmdebug");
 
+// TeaVM builds Java stack traces from the JS Error stack, which V8 truncates to
+// 10 frames by default: far too few to reach PlantUML code from the runtime.
+if (WASM_DEBUG && typeof Error.stackTraceLimit === "number" && Error.stackTraceLimit < 200)
+	Error.stackTraceLimit = 200;
+
 let enginePromise = null;
 
 function engine() {
