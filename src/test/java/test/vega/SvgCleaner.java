@@ -36,6 +36,15 @@ class SvgCleaner {
 
 	private static final Transformer XML_TRANSFORMER = createPrettyPrintTransformer();
 
+	// Looking the factory up (a service lookup) for every SVG was a measurable share of the suite.
+	private static final DocumentBuilderFactory DOCUMENT_BUILDER_FACTORY = createDocumentBuilderFactory();
+
+	private static DocumentBuilderFactory createDocumentBuilderFactory() {
+		final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		factory.setNamespaceAware(true);
+		return factory;
+	}
+
 	/**
 	 * Cleans the raw SVG string: removes processing instructions and
 	 * all coordinate / dimension attributes that vary between platforms.
@@ -79,9 +88,7 @@ class SvgCleaner {
 
 	private static Document parseXml(String xml) {
 		try {
-			final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			factory.setNamespaceAware(true);
-			final DocumentBuilder builder = factory.newDocumentBuilder();
+			final DocumentBuilder builder = DOCUMENT_BUILDER_FACTORY.newDocumentBuilder();
 			return builder.parse(new InputSource(new StringReader(xml)));
 		} catch (Exception e) {
 			throw new RuntimeException("Failed to parse XML", e);

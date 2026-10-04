@@ -23,6 +23,13 @@ public class VegaCheckerSvg extends VegaChecker {
 		}
 
 		final String expectedSvg = new String(Files.readAllBytes(expectedFile), UTF_8);
+		// The reference file is a former cleanedSvg written as is: when nothing changed, the two
+		// strings are identical and the two extra parse + pretty-print passes can be skipped.
+		// Normalising both sides is only needed when they differ (line endings of a Windows
+		// checkout, for instance), to tell a real change from a whitespace one.
+		if (expectedSvg.equals(cleanedSvg))
+			return null;
+
 		assertEquals(SvgCleaner.normalise(expectedSvg), SvgCleaner.normalise(cleanedSvg),
 				"SVG output mismatch for " + data.getDisplayPath());
 		return null;

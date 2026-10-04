@@ -382,6 +382,9 @@ public class TContext {
 		// https://www.quora.com/What-is-the-most-efficient-algorithm-to-replace-all-occurrences-of-a-pattern-P-in-a-string-with-a-pattern-P
 		// https://en.wikipedia.org/wiki/Trie
 		final StringBuilder result = new StringBuilder();
+		// One VariableManager for the whole line: it only holds final references, and building
+		// two of them per character was a visible share of the preprocessor allocations.
+		final VariableManager variableManager = new VariableManager(this, memory, str);
 		for (int i = 0; i < str.length(); i++) {
 			final char c = str.charAt(i);
 			final String presentFunction = getFunctionNameAt(str.getString(), i);
@@ -428,8 +431,8 @@ public class TContext {
 				// }
 				result.append(tmp);
 				i += call.getCurrentPosition() - 1;
-			} else if (new VariableManager(this, memory, str).getVarnameAt(str.getString(), i) != null) {
-				i = new VariableManager(this, memory, str).replaceVariables(str.getString(), i, result);
+			} else if (variableManager.getVarnameAt(str.getString(), i) != null) {
+				i = variableManager.replaceVariables(str.getString(), i, result);
 			} else {
 				result.append(c);
 			}
