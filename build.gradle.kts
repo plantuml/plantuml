@@ -88,7 +88,12 @@ teavm {
 		mainClass.set("net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser")
 		targetFileName.set("plantuml.wasm")
 		obfuscated.set(true)
-		optimization.set(org.teavm.gradle.api.OptimizationLevel.AGGRESSIVE)
+		// BALANCED, like the JS build. AGGRESSIVE (the Wasm GC default) crashes
+		// TeaVM 0.16.0 while inlining UBrexNamed.<init> (super(create(...)), i.e. a
+		// static call with two branches as argument of the super constructor) into
+		// UBrexCommandPartition.executeArg:
+		//   AssertionError: Variable used before definition: @149 at $26
+		optimization.set(org.teavm.gradle.api.OptimizationLevel.BALANCED)
 		// Keep Java semantics (bounds checks, NPE, ClassCastException). Setting
 		// this to false is faster, but must be validated before being used.
 		strict.set(true)
