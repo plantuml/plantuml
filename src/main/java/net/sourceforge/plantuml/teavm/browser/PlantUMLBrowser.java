@@ -549,7 +549,14 @@ public class PlantUMLBrowser {
 	 * instead of silently killing the worker thread.
 	 */
 	private static String describe(Throwable e) {
-		e.printStackTrace();
+		// Printing the stack trace must never kill the worker thread: on the Wasm
+		// GC build, printStackTrace() itself was seen throwing a
+		// NullPointerException, which escaped to the uncaught exception handler.
+		try {
+			e.printStackTrace();
+		} catch (Throwable ignored) {
+			// Best effort only.
+		}
 		final String s = e.toString();
 		if (s != null)
 			return s;

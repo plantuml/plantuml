@@ -73,7 +73,12 @@ teavm {
 	js {
 		mainClass.set("net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser")
 		moduleType.set(org.teavm.gradle.api.JSModuleType.ES2015)
-		obfuscated.set(true)
+		// Diagnostic switch: -PjsStrict=true makes the JS build check nulls, array
+		// bounds and casts like the JVM (and like the Wasm GC build, which is strict
+		// by default), with readable names. Default: false, unchanged behavior.
+		val jsStrict = providers.gradleProperty("jsStrict").map { it.toBoolean() }.getOrElse(false)
+		strict.set(jsStrict)
+		obfuscated.set(!jsStrict)
 		optimization.set(org.teavm.gradle.api.OptimizationLevel.BALANCED)
 		// obfuscated.set(false)
 		// optimization.set(org.teavm.gradle.api.OptimizationLevel.NONE)
@@ -103,7 +108,8 @@ teavm {
 		optimization.set(org.teavm.gradle.api.OptimizationLevel.BALANCED)
 		// Keep Java semantics (bounds checks, NPE, ClassCastException). Setting
 		// this to false is faster, but must be validated before being used.
-		strict.set(true)
+		// -PwasmStrict=false to compare with the JS build, which is not strict.
+		strict.set(providers.gradleProperty("wasmStrict").map { it.toBoolean() }.getOrElse(true))
 		// Emit plantuml.wasm-runtime.js as an ES module exporting load(), so
 		// that plantuml-wasm.js can import it like plantuml.js is imported.
 		copyRuntime.set(true)
