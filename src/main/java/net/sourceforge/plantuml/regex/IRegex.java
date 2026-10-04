@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.regex;
 
 import java.util.Iterator;
-import java.util.Map;
 
 import net.sourceforge.plantuml.text.StringLocated;
 
@@ -57,7 +56,7 @@ public interface IRegex {
 	 * {@code it} must be advanced by exactly {@link #count()} groups whether or not anything is
 	 * recorded, so that the groups stay aligned with the pattern for whatever comes next.
 	 */
-	public void fillPartialMatch(Iterator<String> it, Map<String, RegexPartialMatch> result);
+	public void fillPartialMatch(Iterator<String> it, RegexResult result);
 
 	public boolean match(StringLocated full);
 

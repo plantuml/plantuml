@@ -35,39 +35,36 @@
  */
 package net.sourceforge.plantuml.regex;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import net.sourceforge.plantuml.utils.MyCollections;
+import java.util.Arrays;
 
-public class RegexPartialMatch implements Iterable<String> {
-    // ::remove folder when __HAXE__
+public class RegexPartialMatch {
 
-	private final List<String> data = new ArrayList<>();
+	// The groups of one named node. Their number is known before the first one is added (one
+	// for RegexOr and the repeated nodes, count() for a RegexLeaf), hence a plain array.
+	private final String[] data;
+	private int size;
 
-	public RegexPartialMatch(String name) {
-
+	public RegexPartialMatch(int capacity) {
+		this.data = new String[capacity];
 	}
 
 	public void add(String group) {
-		data.add(group);
+		data[size++] = group;
 	}
 
 	public int size() {
-		return data.size();
+		return size;
 	}
 
 	public String get(int i) {
-		return data.get(i);
-	}
-
-	public Iterator<String> iterator() {
-		return MyCollections.unmodifiableCollection(data).iterator();
+		if (i < 0 || i >= size)
+			throw new IndexOutOfBoundsException("Index: " + i + ", Size: " + size);
+		return data[i];
 	}
 
 	@Override
 	public String toString() {
-		return "{" + data + "}";
+		return "{" + Arrays.asList(data) + "}";
 	}
 
 }

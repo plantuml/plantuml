@@ -36,10 +36,8 @@
 package net.sourceforge.plantuml.regex;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 import net.sourceforge.plantuml.text.StringLocated;
@@ -79,7 +77,7 @@ public abstract class RegexComposed implements IRegex {
 		this.partials = MyCollections.unmodifiableList(Arrays.asList(partial));
 	}
 
-	public void fillPartialMatch(Iterator<String> it, Map<String, RegexPartialMatch> result) {
+	public void fillPartialMatch(Iterator<String> it, RegexResult result) {
 		// nbCreateMatches.incrementAndGet();
 		for (IRegex r : partials)
 			r.fillPartialMatch(it, result);
@@ -103,19 +101,14 @@ public abstract class RegexComposed implements IRegex {
 			return null;
 
 		final Iterator<String> it = new MatcherIterator(matcher);
-		// The one map of the whole match: every node below fills this same instance.
-		final Map<String, RegexPartialMatch> result = new HashMap<String, RegexPartialMatch>();
+		// The one result of the whole match: every node below fills this same instance.
+		final RegexResult result = new RegexResult();
 		fillPartialMatch(it, result);
-		return new RegexResult(result);
+		return result;
 	}
 
 	public boolean match(StringLocated s) {
-		final String tmp = s.getString();
-		final Matcher2 matcher = getPattern2().matcher(tmp, 0);
-		if (matcher == null)
-			return false;
-
-		return matcher.find();
+		return getPattern2().find(s.getString());
 	}
 
 	final public String getPattern() {

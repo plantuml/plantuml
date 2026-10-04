@@ -35,43 +35,79 @@
  */
 package net.sourceforge.plantuml.regex;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import com.plantuml.ubrex.UMatcher;
-import net.sourceforge.plantuml.utils.MyCollections;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class RegexResult {
 
-	private final Map<String, RegexPartialMatch> data;
+	// The named groups of one match, in the order fillPartialMatch added them. A match has at
+	// most a few dozen of them (28 for the largest regex of the test suite), read a handful of
+	// times by one command: two arrays scanned linearly cost less than a HashMap, its table and
+	// one node per entry, built for every line recognized.
+	private String[] names;
+	private RegexPartialMatch[] values;
+	private int size;
 	private final UMatcher matcher;
 
 	public UMatcher getUMatcher() {
 		return matcher;
 	}
 
-	public RegexResult(Map<String, RegexPartialMatch> data) {
-		this.data = MyCollections.unmodifiableMap(data);
+	// Filled by RegexComposed.matcher, through fillPartialMatch.
+	RegexResult() {
+		this.names = new String[16];
+		this.values = new RegexPartialMatch[16];
 		this.matcher = null;
 	}
 
 	public RegexResult(UMatcher matcher) {
-		this.data = Collections.emptyMap();
+		this.names = new String[0];
+		this.values = new RegexPartialMatch[0];
 		this.matcher = matcher;
+	}
+
+	void add(String name, RegexPartialMatch value) {
+		// A name appears once per regex: nothing in the test suite ever adds it twice. The
+		// HashMap used before would silently have kept the last one.
+		if (TeaVM.a())
+			assert indexOf(name) == -1 : "Duplicate group name " + name;
+		if (size == names.length) {
+			names = Arrays.copyOf(names, size * 2);
+			values = Arrays.copyOf(values, size * 2);
+		}
+		names[size] = name;
+		values[size] = value;
+		size++;
+	}
+
+	private int indexOf(String key) {
+		for (int i = 0; i < size; i++)
+			if (names[i].equals(key))
+				return i;
+		return -1;
 	}
 
 	@Override
 	public String toString() {
 		if (matcher != null)
 			return matcher.toString();
-		return data.toString();
+		final StringBuilder sb = new StringBuilder("{");
+		for (int i = 0; i < size; i++) {
+			if (i > 0)
+				sb.append(", ");
+			sb.append(names[i]).append('=').append(values[i]);
+		}
+		return sb.append('}').toString();
 	}
 
 	public RegexPartialMatch get(String key) {
 		if (matcher != null)
 			throw new UnsupportedOperationException();
-		return data.get(key);
+		final int idx = indexOf(key);
+		return idx == -1 ? null : values[idx];
 	}
 
 	public String get(String key, int num) {
@@ -82,7 +118,7 @@ public class RegexResult {
 			return list.get(num);
 
 		}
-		final RegexPartialMatch reg = data.get(key);
+		final RegexPartialMatch reg = get(key);
 		if (reg == null)
 			return null;
 
@@ -97,25 +133,43 @@ public class RegexResult {
 			return list.get(num);
 		}
 
-		for (Map.Entry<String, RegexPartialMatch> ent : data.entrySet()) {
-			if (ent.getKey().startsWith(key) == false)
-				continue;
-
-			final RegexPartialMatch match = ent.getValue();
-			if (num >= match.size())
-				continue;
-
-			if (match.get(num) != null)
-				return ent.getValue().get(num);
-
+		for (int i = 0; i < size; i++) {
+			final String value = lazzyValue(i, key, num);
+			if (value != null) {
+				// The first one found is the answer only because there is no other: the
+				// alternatives sharing a prefix (DISPLAY1, DISPLAY2...) belong to different
+				// branches of a RegexOr, so at most one of them has matched. Checked over the
+				// whole test suite. The HashMap used before had no defined order to fall back on.
+				if (TeaVM.a())
+					assert lazzyUnique(i, key, num) : "Several groups match " + key + " in " + this;
+				return value;
+			}
 		}
 		return null;
+	}
+
+	private String lazzyValue(int i, String key, int num) {
+		if (names[i].startsWith(key) == false)
+			return null;
+
+		final RegexPartialMatch match = values[i];
+		if (num >= match.size())
+			return null;
+
+		return match.get(num);
+	}
+
+	private boolean lazzyUnique(int found, String key, int num) {
+		for (int i = found + 1; i < size; i++)
+			if (lazzyValue(i, key, num) != null)
+				return false;
+		return true;
 	}
 
 	public int size() {
 		if (matcher != null)
 			throw new UnsupportedOperationException();
-		return data.size();
+		return size;
 	}
 
 }

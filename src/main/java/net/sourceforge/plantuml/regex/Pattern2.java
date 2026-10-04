@@ -37,8 +37,7 @@ package net.sourceforge.plantuml.regex;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -60,9 +59,6 @@ public class Pattern2 {
 	}
 
 	private static final Pattern TRANSFORM_PATTERN = Pattern.compile("%(pLN|s|q|g)");
-
-	private static final ConcurrentHashMap<String, AtomicInteger> COUNT = new ConcurrentHashMap<>();
-
 	private static final Pattern2 EMPTY = new Pattern2("");
 
 	private final String patternString;
@@ -70,19 +66,33 @@ public class Pattern2 {
 
 	private Pattern2(String s) {
 		this.patternString = s;
-		// ::uncomment when __TEAVM__
-		// //System.out.println("=====================");
-		// //System.out.println("Pattern2 begin " + s);
-		// //System.out.println("Pattern2 test " + compileInternal(s));
-		// //System.out.println("Pattern2 ok " + s);
-		// //System.out.println("=====================");
-		// ::done
 		this.pattern = new Lazy<>(() -> compileInternal(patternString));
 
 	}
 
 	public Matcher2 matcher(CharSequence input, int pos) {
 		return Matcher2.build(pattern.get(), input, pos);
+	}
+
+	// A Matcher kept for find(): reset() on it costs nothing, while pattern.matcher() allocates
+	// its group and state arrays every time. Command recognition asks find() of many patterns
+	// for every line, almost always for a "no", so this was the first allocation site of the
+	// parsing. One spare instance, borrowed with getAndSet(null): a concurrent caller finding
+	// the slot empty just builds its own, and no Matcher is ever used by two threads at once.
+	private final AtomicReference<Matcher> spare = new AtomicReference<>();
+
+	public boolean find(CharSequence input) {
+		Matcher m = spare.getAndSet(null);
+		if (m == null)
+			m = pattern.get().matcher(input);
+		else
+			m.reset(input);
+
+		final boolean result = m.find();
+		// Do not keep a reference to the line once done.
+		m.reset("");
+		spare.set(m);
+		return result;
 	}
 
 	public String pattern() {
@@ -108,20 +118,11 @@ public class Pattern2 {
 	public static Pattern compileInternal(String patternString) {
 		final String regex = transform(patternString);
 
-		// ::uncomment when __TEAVM__
-		// //System.out.println("compileInternal in "+regex);
-		// ::done
 		final Pattern result = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-		// ::uncomment when __TEAVM__
-		// //System.out.println("compileInternal ok "+result);
-		// ::done
 		return result;
 	}
 
 	public static String transform(String input) {
-		// ::uncomment when __TEAVM__
-		// //System.out.println("transform10 "+input);
-		// ::done
 		final Matcher m = TRANSFORM_PATTERN.matcher(input);
 		final StringBuffer sb = new StringBuffer(input.length());
 		while (m.find()) {
@@ -129,9 +130,6 @@ public class Pattern2 {
 			m.appendReplacement(sb, replacement);
 		}
 		m.appendTail(sb);
-		// ::uncomment when __TEAVM__
-		// //System.out.println("transform80 "+sb);
-		// ::done
 		return sb.toString();
 	}
 
