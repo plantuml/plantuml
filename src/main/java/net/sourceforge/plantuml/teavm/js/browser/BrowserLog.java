@@ -22,7 +22,7 @@ public class BrowserLog {
 
 	private static void consoleMessage(String msg) {
 		// ::comment when JAVA8
-		if (TeaVM.isJavaScript() && isDebug()) {
+		if (TeaVM.isTeaVM() && TeaVM.isC() == false && isDebug()) {
 			final String message = getMessage(msg);
 			jsLog(message);
 		}
@@ -36,7 +36,7 @@ public class BrowserLog {
 
 	public static void jsStatusDuration() {
 		// ::comment when JAVA8
-		if (TeaVM.isJavaScript() == false || isDebug() == false)
+		if (TeaVM.isTeaVM() == false || TeaVM.isC() || isDebug() == false)
 			return;
 		final String msg = START == 0 ? "" : Version.fullDescription();
 		jsStatus(getMessage(msg));

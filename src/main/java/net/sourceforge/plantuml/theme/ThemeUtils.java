@@ -86,7 +86,7 @@ public class ThemeUtils {
 			// regular "Cannot load theme" error instead of silently ignoring the
 			// directive.
 			if (from == null)
-				return TeaVM.isJavaScript() ? loadJsTheme(name) : null;
+				return (TeaVM.isTeaVM() && TeaVM.isC() == false) ? loadJsTheme(name) : null;
 			if (isLocalFolder(from) == false)
 				return null;
 		}

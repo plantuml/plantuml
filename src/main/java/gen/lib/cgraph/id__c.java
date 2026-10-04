@@ -87,12 +87,10 @@ public static CFunction idopen = new CFunctionAbstract("idopen") {
 @Unused
 @Original(version="2.38.0", path="lib/cgraph/id.c", name="", key="a0a2zxsu8n019hzm1rwf1jc7f", definition="static void *idopen(Agraph_t * g, Agdisc_t* disc)")
 public static Object idopen(ST_Agraph_s g, ST_Agdisc_s disc) {
-ENTERING("a0a2zxsu8n019hzm1rwf1jc7f","idopen");
-try {
+	// No ENTERING/LEAVING try/finally here: TeaVM 0.16.0 (Wasm GC backend)
+	// miscompiles "try { return param; } finally { call(); }" into an
+	// unconditional throw of a null exception. Both calls are no-ops anyway.
 	return g;
-} finally {
-LEAVING("a0a2zxsu8n019hzm1rwf1jc7f","idopen");
-}
 }
 
 

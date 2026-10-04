@@ -10,6 +10,7 @@ import org.teavm.jso.canvas.CanvasRenderingContext2D;
 import org.teavm.jso.canvas.ImageData;
 import org.teavm.jso.dom.html.HTMLCanvasElement;
 import org.teavm.jso.dom.html.HTMLDocument;
+import org.teavm.jso.typedarrays.Int8Array;
 import org.teavm.jso.typedarrays.Uint8ClampedArray;
 // ::done
 
@@ -173,26 +174,34 @@ class PortableImageTeaVM implements PortableImage {
 
 		CanvasRenderingContext2D ctx = (CanvasRenderingContext2D) canvas.getContext("2d");
 		ImageData imageData = ctx.createImageData(width, height);
-		Uint8ClampedArray data = imageData.getData();
 
-		// Convert ARGB (0xAARRGGBB) to RGBA bytes
+		// Convert ARGB (0xAARRGGBB) to RGBA bytes in a plain Java array first, then
+		// hand the whole buffer to JavaScript in ONE call. Writing the pixels one
+		// component at a time through Uint8ClampedArray.set(index, value) costs one
+		// Java -> JS call per byte: cheap with the JS backend, but on the Wasm GC
+		// backend every such call crosses the Wasm/JS boundary, i.e. millions of
+		// crossings for a single large image.
+		final byte[] rgba = new byte[pixels.length * 4];
 		int p = 0;
 		for (int i = 0; i < pixels.length; i++) {
-			int c = pixels[i];
-			int a = (c >>> 24) & 0xFF;
-			int r = (c >>> 16) & 0xFF;
-			int g = (c >>> 8) & 0xFF;
-			int b = c & 0xFF;
-
-			data.set(p++, r);
-			data.set(p++, g);
-			data.set(p++, b);
-			data.set(p++, a);
+			final int c = pixels[i];
+			rgba[p++] = (byte) (c >>> 16); // r
+			rgba[p++] = (byte) (c >>> 8); // g
+			rgba[p++] = (byte) c; // b
+			rgba[p++] = (byte) (c >>> 24); // a
 		}
+		copyRgba(imageData.getData(), Int8Array.copyFromJavaArray(rgba));
 
 		ctx.putImageData(imageData, 0, 0);
 		return canvasToDataUrl(canvas);
 	}
+
+	/**
+	 * Bulk copy of RGBA bytes into the ImageData buffer. The Int8Array is
+	 * reinterpreted as unsigned bytes (same bits), so (byte) 0xFF becomes 255.
+	 */
+	@JSBody(params = { "dst", "src" }, script = "dst.set(new Uint8ClampedArray(src.buffer, src.byteOffset, src.length));")
+	private static native void copyRgba(Uint8ClampedArray dst, Int8Array src);
 
 	@JSBody(params = { "canvas" }, script = "return canvas.toDataURL('image/png');")
 	private static native String canvasToDataUrl(HTMLCanvasElement canvas);

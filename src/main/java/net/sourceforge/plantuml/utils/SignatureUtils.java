@@ -69,7 +69,7 @@ public class SignatureUtils {
 	}
 
 	public static String getMD5Hex(String s) {
-		if (TeaVM.isJavaScript()) {
+		if (TeaVM.isTeaVM() && TeaVM.isC() == false) {
 			// ::revert when JAVA8
 			return md5Native(s);
 			// return null;

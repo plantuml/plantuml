@@ -486,7 +486,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 		// The browser build renders the diagram again once the Viz.js instance is
 		// ready (PendingResources): an attempt made before is discarded, so it stops
 		// here instead of computing a layout for nothing.
-		if (TeaVM.isJavaScript() && maker instanceof CucaDiagramFileMakerTeaVM
+		if (TeaVM.isTeaVM() && TeaVM.isC() == false && maker instanceof CucaDiagramFileMakerTeaVM
 				&& net.sourceforge.plantuml.teavm.js.GraphVizEngineJs.isAvailable() == false)
 			throw new IOException("Viz is loading");
 		// ::done

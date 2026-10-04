@@ -75,8 +75,13 @@ public class TeaVM {
 
 	/**
 	 * Platform marker resolved to {@code true} only when TeaVM compiles to
-	 * JavaScript. Use it to guard code that needs a browser or a JavaScript engine
-	 * ({@code @JSBody}, DOM, canvas, viz.js...).
+	 * JavaScript, and {@code false} for the Wasm GC build. To guard code that needs
+	 * a browser or a JavaScript host ({@code @JSBody}, DOM, canvas, viz.js...) and
+	 * must also work in the Wasm GC build, write
+	 * {@code TeaVM.isTeaVM() && TeaVM.isC() == false} directly in the condition:
+	 * TeaVM only prunes the unreachable branch (and its classes, e.g.
+	 * {@code java.security.MessageDigest}) when the markers appear in the method
+	 * itself, not behind a helper method.
 	 *
 	 * Note: TeaVM requires platform markers to be static methods returning
 	 * {@code boolean}; this is why there is one method per target rather than a

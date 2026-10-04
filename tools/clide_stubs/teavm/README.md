@@ -54,6 +54,7 @@ Produces `teavm-stub.jar`. Copy it into a project's `.clide/` directory (see
 | `org.teavm.jso.dom.html.HTMLCanvasElement` | interface |
 | `org.teavm.jso.canvas.CanvasRenderingContext2D` | interface |
 | `org.teavm.jso.canvas.ImageData` | interface |
+| `org.teavm.jso.typedarrays.Int8Array` | interface (`copyFromJavaArray` throws) |
 | `org.teavm.jso.typedarrays.Uint8ClampedArray` | interface |
 
 Validated against PlantUML: with this jar in `.clide/`, every
