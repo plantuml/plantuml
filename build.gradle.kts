@@ -79,6 +79,25 @@ teavm {
 		// optimization.set(org.teavm.gradle.api.OptimizationLevel.NONE)
 		// outputDir defaults to build/generated/teavm/js
 	}
+	// Experimental WebAssembly (Wasm GC) build of the very same browser entry
+	// point, shipped NEXT TO the JS build, never instead of it: Wasm GC needs a
+	// recent runtime (Chrome 119+, Firefox 120+, Safari 18.2+, Node 22+) and is
+	// not available in every sandbox (e.g. GitHub's rendering pipeline).
+	// Build with: gradlew teavmWasm   (see the 'teavmWasm' task below)
+	wasmGC {
+		mainClass.set("net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser")
+		targetFileName.set("plantuml.wasm")
+		obfuscated.set(true)
+		optimization.set(org.teavm.gradle.api.OptimizationLevel.AGGRESSIVE)
+		// Keep Java semantics (bounds checks, NPE, ClassCastException). Setting
+		// this to false is faster, but must be validated before being used.
+		strict.set(true)
+		// Emit plantuml.wasm-runtime.js as an ES module exporting load(), so
+		// that plantuml-wasm.js can import it like plantuml.js is imported.
+		copyRuntime.set(true)
+		modularRuntime.set(true)
+		// outputDir defaults to build/generated/teavm/wasm-gc
+	}
 }
 
 tasks.compileJava {
@@ -98,8 +117,8 @@ configurations.compileClasspath {
 
 // TeaVM 0.15+ must RUN on Java 17+, but it can still consume Java 11 bytecode.
 // So the JAR stays compiled with --release 11 (see javacRelease above), and only
-// the JavaScript generation needs a JDK 17+ running Gradle.
-tasks.matching { it.name == "generateJavaScript" }.configureEach {
+// the JavaScript / WebAssembly generation needs a JDK 17+ running Gradle.
+tasks.matching { it.name == "generateJavaScript" || it.name == "generateWasmGC" }.configureEach {
 	doFirst {
 		check(JavaVersion.current() >= JavaVersion.VERSION_17) {
 			"TeaVM requires running Gradle on JDK 17+ (current: ${JavaVersion.current()}). " +
@@ -838,6 +857,63 @@ tasks.register("teavm") {
 	}
 }
 
+// ============================================
+// TeaVM Wasm GC (experimental) - same engine, compiled to WebAssembly
+// ============================================
+//
+// Assembles the Wasm GC build INTO the JS output directory, so that a single
+// deployment folder offers both engines side by side, sharing the same
+// companion files (viz-global.js, themes.js, <lib>.min.js...):
+//
+//   build/generated/teavm/js/
+//     plantuml.js                 <- JS engine (unchanged)
+//     plantuml.wasm               <- Wasm GC engine
+//     plantuml.wasm-runtime.js    <- TeaVM Wasm GC runtime (ES module)
+//     plantuml-wasm.js            <- same API as plantuml.js (render, renderToString)
+//     index-wasm.html, bench.html <- demo page and JS-vs-Wasm benchmark
+//
+// Usage:
+//   gradlew teavmWasm
+//   cd build/generated/teavm/js && python3 -m http.server 8080
+//   open http://localhost:8080/bench.html
+val teavmWasmGcOutputDir = layout.buildDirectory.dir("generated/teavm/wasm-gc")
+
+tasks.register("teavmWasm") {
+	description = "Builds the experimental Wasm GC engine next to the TeaVM JS version"
+	group = "teavm"
+
+	dependsOn("teavm", "buildWasmGC")
+
+	val outputDir = teavmJsOutputDir.get().asFile
+	val wasmDir = teavmWasmGcOutputDir.get().asFile
+
+	doLast {
+		copy {
+			from(wasmDir) {
+				include("plantuml.wasm", "plantuml.wasm-runtime.js", "plantuml.wasm-deobfuscator.wasm",
+					"plantuml.wasm.teadbg")
+			}
+			from(teavmSrcDir.dir("web-wasm"))
+			into(outputDir)
+		}
+
+		fun sizeInMB(bytes: Long): String = "%.2f MB".format(bytes.toDouble() / (1024.0 * 1024.0))
+		val js = File(outputDir, "plantuml.js")
+		val wasm = File(outputDir, "plantuml.wasm")
+		println("")
+		println("======================")
+		if (js.exists())
+			println("plantuml.js   : ${sizeInMB(js.length())}")
+		if (wasm.exists())
+			println("plantuml.wasm : ${sizeInMB(wasm.length())}")
+		else
+			println("WARNING: plantuml.wasm not found in ${wasmDir.absolutePath}")
+		println("TeaVM Wasm Ready!  --> ${outputDir.absolutePath}/bench.html")
+		println("======================")
+		println("")
+	}
+}
+
 // Task to create a ZIP archive of the TeaVM JS version
 tasks.register<Zip>("teavmZip") {
 	description = "Creates a ZIP archive of the TeaVM JS version"
@@ -847,7 +923,7 @@ tasks.register<Zip>("teavmZip") {
 	
 	// Use lazy evaluation to ensure files are read after teavm task completes
 	from(teavmJsOutputDir) {
-		include("*.js", "*.html", "*.css", "*.svg", "*.ico", "preview/**", "vendor/**")
+		include("*.js", "*.html", "*.css", "*.svg", "*.ico", "*.wasm", "preview/**", "vendor/**")
 	}
 	
 	destinationDirectory.set(layout.buildDirectory.dir("libs"))

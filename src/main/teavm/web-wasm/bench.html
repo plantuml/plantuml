@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PlantUML JS vs Wasm benchmark</title>
+<style>
+body { font-family: system-ui, sans-serif; margin: 16px; }
+table { border-collapse: collapse; margin-top: 12px; }
+th, td { border: 1px solid #ccc; padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; }
+th:first-child, td:first-child { text-align: left; }
+.ok { color: #1a7f37; }
+.ko { color: #cf222e; }
+textarea { width: 100%; box-sizing: border-box; font-family: monospace; }
+#log { font-family: monospace; white-space: pre-wrap; color: #555; margin-top: 12px; }
+</style>
+</head>
+<body>
+	<h2>PlantUML engine benchmark: TeaVM JS vs TeaVM Wasm GC</h2>
+	<p>
+		Each diagram is rendered with <code>renderToString</code> by both engines
+		(same Java code, two TeaVM backends). Times are wall-clock milliseconds,
+		measured from the request to the SVG callback. The first call of each
+		engine is reported apart (cold), then the median of the measured runs.
+	</p>
+	<p>
+		Warmup runs: <input id="warmup" type="number" value="3" min="0" style="width: 4em" />
+		Measured runs: <input id="runs" type="number" value="10" min="1" style="width: 4em" />
+		Order: <select id="order">
+			<option value="js,wasm">JS then Wasm</option>
+			<option value="wasm,js">Wasm then JS</option>
+		</select>
+		<button id="go">Run</button>
+	</p>
+	<details>
+		<summary>Custom diagram (optional, added to the suite when not empty)</summary>
+		<textarea id="custom" rows="8"></textarea>
+	</details>
+	<div id="result"></div>
+	<div id="log"></div>
+
+	<script src="viz-global.js"></script>
+	<script type="module">
+		import * as jsEngine from "./plantuml.js";
+		import * as wasmEngine from "./plantuml-wasm.js";
+
+		const log = msg => { document.getElementById("log").textContent += msg + "\n"; };
+
+		function bigSequence(n) {
+			const out = ["@startuml", "participant Alice", "participant Bob", "participant Carol"];
+			for (let i = 0; i < n; i++) {
+				out.push(i % 3 === 0 ? `Alice -> Bob : message ${i}` : i % 3 === 1 ? `Bob -> Carol : message ${i}` : `Carol --> Alice : reply ${i}`);
+				if (i % 25 === 0) out.push(`note over Bob : step ${i}`);
+			}
+			out.push("@enduml");
+			return out.join("\n");
+		}
+
+		function bigClass(n, smetana) {
+			const out = ["@startuml"];
+			if (smetana) out.push("!pragma layout smetana");
+			for (let i = 0; i < n; i++) {
+				out.push(`class C${i} {\n  +field${i} : int\n  +method${i}() : void\n}`);
+				if (i > 0) out.push(`C${Math.floor(i / 2)} <|-- C${i}`);
+			}
+			out.push("@enduml");
+			return out.join("\n");
+		}
+
+		const SUITE = [
+			["sequence (small)", "@startuml\nAlice -> Bob : Hello\nBob --> Alice : ok\n@enduml"],
+			["sequence (200 messages)", bigSequence(200)],
+			["activity", "@startuml\nstart\n:read;\nif (ok?) then (yes)\n  :process;\n  repeat\n    :step;\n  repeat while (more?)\nelse (no)\n  :fail;\nendif\nfork\n  :a;\nfork again\n  :b;\nend fork\nstop\n@enduml"],
+			["mindmap", "@startmindmap\n* root\n** a\n*** a1\n*** a2\n** b\n*** b1\n**** b11\n** c\n@endmindmap"],
+			["class (30, Graphviz/Viz.js)", bigClass(30, false)],
+			["class (30, Smetana)", bigClass(30, true)],
+		];
+
+		const toSvg = (eng, lines) => new Promise((resolve, reject) =>
+			eng.renderToString(lines, resolve, reject, { maxSvgSize: 0 }));
+
+		async function timeOne(eng, lines) {
+			const t0 = performance.now();
+			const svg = await toSvg(eng, lines);
+			return [performance.now() - t0, svg];
+		}
+
+		const median = a => { const s = [...a].sort((x, y) => x - y); const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
+		const fmt = x => x.toFixed(1);
+
+		async function bench(name, eng, lines, warmup, runs) {
+			const [cold, svg] = await timeOne(eng, lines);
+			for (let i = 0; i < warmup; i++) await timeOne(eng, lines);
+			const times = [];
+			for (let i = 0; i < runs; i++) times.push((await timeOne(eng, lines))[0]);
+			log(`${name}: cold ${fmt(cold)} ms, median ${fmt(median(times))} ms`);
+			return { cold, median: median(times), min: Math.min(...times), svg };
+		}
+
+		async function run() {
+			document.getElementById("go").disabled = true;
+			document.getElementById("log").textContent = "";
+			const warmup = +document.getElementById("warmup").value;
+			const runs = +document.getElementById("runs").value;
+			const order = document.getElementById("order").value.split(",");
+			const engines = { js: jsEngine, wasm: wasmEngine };
+			try {
+				if (!wasmEngine.isWasmGCSupported())
+					throw new Error("This browser does not support Wasm GC.");
+				const t0 = performance.now();
+				await wasmEngine.ready();
+				log(`plantuml.wasm fetched + compiled + instantiated in ${fmt(performance.now() - t0)} ms`);
+
+				const suite = [...SUITE];
+				const custom = document.getElementById("custom").value.trim();
+				if (custom) suite.push(["custom", custom]);
+
+				const rows = [];
+				for (const [label, src] of suite) {
+					const lines = src.split(/\r\n|\r|\n/);
+					const res = {};
+					for (const k of order) res[k] = await bench(`${label} [${k}]`, engines[k], lines, warmup, runs);
+					rows.push({ label, ...res });
+				}
+				showTable(rows, warmup, runs);
+			} catch (e) {
+				log("ERROR: " + (e && e.stack ? e.stack : e));
+			} finally {
+				document.getElementById("go").disabled = false;
+			}
+		}
+
+		function showTable(rows, warmup, runs) {
+			let html = `<table><tr><th>Diagram</th><th>JS cold</th><th>Wasm cold</th>`
+				+ `<th>JS median</th><th>Wasm median</th><th>Wasm / JS</th><th>Same SVG?</th></tr>`;
+			for (const r of rows) {
+				const ratio = r.wasm.median / r.js.median;
+				const same = r.js.svg === r.wasm.svg;
+				html += `<tr><td>${r.label}</td><td>${fmt(r.js.cold)}</td><td>${fmt(r.wasm.cold)}</td>`
+					+ `<td>${fmt(r.js.median)}</td><td>${fmt(r.wasm.median)}</td>`
+					+ `<td class="${ratio < 1 ? "ok" : "ko"}">${ratio.toFixed(2)}</td>`
+					+ `<td class="${same ? "ok" : "ko"}">${same ? "yes" : `no (${r.js.svg.length} / ${r.wasm.svg.length} chars)`}</td></tr>`;
+			}
+			html += `</table><p>${warmup} warmup + ${runs} measured runs per engine and diagram. `
+				+ `${navigator.userAgent}</p>`;
+			document.getElementById("result").innerHTML = html;
+		}
+
+		document.getElementById("go").addEventListener("click", run);
+	</script>
+</body>
+</html>
