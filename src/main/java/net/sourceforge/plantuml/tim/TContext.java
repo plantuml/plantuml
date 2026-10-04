@@ -495,52 +495,50 @@ public class TContext {
 //	}
 
 	private void executeIncludesub(TMemory memory, StringLocated s) throws EaterException {
-		if (!TeaVM.isTeaVM()) {
-			PathSystem saveImportedFiles = null;
-			try {
-				final EaterIncludesub include = new EaterIncludesub(s.getTrimmed());
-				include.analyze(this, memory);
-				final String what = include.getWhat();
-				final int idx = what.indexOf('!');
-				Sub sub = null;
-				if (idx != -1) {
-					final String filename = what.substring(0, idx);
-					final String blocname = what.substring(idx + 1);
-					try {
-						final InputFile f2 = pathSystem.getFile(filename, null);
-						if (f2 != null) {
-							saveImportedFiles = this.pathSystem;
-							this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());
-							final Reader reader = f2.getReader(charset);
-							if (reader == null)
-								throw new EaterException("cannot include " + what, s);
+		PathSystem saveImportedFiles = null;
+		try {
+			final EaterIncludesub include = new EaterIncludesub(s.getTrimmed());
+			include.analyze(this, memory);
+			final String what = include.getWhat();
+			final int idx = what.indexOf('!');
+			Sub sub = null;
+			if (idx != -1) {
+				final String filename = what.substring(0, idx);
+				final String blocname = what.substring(idx + 1);
+				try {
+					final InputFile f2 = pathSystem.getFile(filename, null);
+					if (f2 != null) {
+						saveImportedFiles = this.pathSystem;
+						this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());
+						final Reader reader = f2.getReader(charset);
+						if (reader == null)
+							throw new EaterException("cannot include " + what, s);
 
-							try {
-								ReadLine readerline = ReadLineReader.create(reader, what, s.getLocation());
-								readerline = new UncommentReadLine(readerline);
-								readerline = new ReadFilterMergeLines().applyFilter(readerline);
-								sub = Sub.fromFile(readerline, blocname, this, memory);
-							} finally {
-								reader.close();
-							}
+						try {
+							ReadLine readerline = ReadLineReader.create(reader, what, s.getLocation());
+							readerline = new UncommentReadLine(readerline);
+							readerline = new ReadFilterMergeLines().applyFilter(readerline);
+							sub = Sub.fromFile(readerline, blocname, this, memory);
+						} finally {
+							reader.close();
 						}
-					} catch (IOException e) {
-						Logme.error(e);
-						throw new EaterException("cannot include " + what, s);
 					}
-				}
-				if (sub == null)
-					sub = subs.get(what);
-
-				if (sub == null)
+				} catch (IOException e) {
+					Logme.error(e);
 					throw new EaterException("cannot include " + what, s);
-
-				executeLinesInternal(memory, sub.lines(), null);
-			} finally {
-				if (saveImportedFiles != null)
-					this.pathSystem = saveImportedFiles;
-
+				}
 			}
+			if (sub == null)
+				sub = subs.get(what);
+
+			if (sub == null)
+				throw new EaterException("cannot include " + what, s);
+
+			executeLinesInternal(memory, sub.lines(), null);
+		} finally {
+			if (saveImportedFiles != null)
+				this.pathSystem = saveImportedFiles;
+
 		}
 	}
 
@@ -591,11 +589,14 @@ public class TContext {
 
 		final PathSystem saveImportedFiles = this.pathSystem;
 		this.pathSystem = eater.getNewImportedFiles();
-		if (TeaVM.isTeaVM())
+		if (TeaVM.isTeaVM() && eater.isFromLocalFolder() == false)
 			// A bundled theme is the engine's own: a relative include written in it
-			// must not reach the browser host (restored in the finally below).
+			// must not reach the browser host (restored in the finally below). One
+			// read from a local folder came from the host, as an included file does.
 			this.pathSystem = this.pathSystem.withoutHostFiles();
 
+		// Local themes keep the caller's current directory, also in the browser:
+		// includes in their body resolve from the !theme line, not the theme file.
 		try {
 			final List<StringLocated> body = new ArrayList<>();
 			do {

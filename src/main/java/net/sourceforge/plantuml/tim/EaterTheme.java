@@ -94,6 +94,14 @@ public class EaterTheme extends Eater {
 		return name;
 	}
 
+	/**
+	 * Whether the theme is read from a folder (<code>!theme NAME from DIR</code>)
+	 * rather than bundled, from the standard library or from a URL.
+	 */
+	public boolean isFromLocalFolder() {
+		return ThemeUtils.isLocalFolder(from);
+	}
+
 	public PathSystem getNewImportedFiles() {
 		return pathSystem;
 	}

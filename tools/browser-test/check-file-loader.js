@@ -7,9 +7,10 @@
 //
 // The contract checked here:
 //
-// - NO loader set: behaviour is what it always was. The browser engine has no
-//   file system, so a local include fails as a PlantUML error image, and
-//   diagrams without one are untouched.
+// - NO loader set: the browser engine has no file system, so a local include
+//   fails as a PlantUML error image, and so does `!includesub` of a file (it
+//   used to be dropped silently); `!includesub PART` of a sub of the diagram
+//   itself needs no loader. Diagrams without a local include are untouched.
 //
 // - PLANTUML_FILE_LOADER set: the engine asks the host for the file with
 //   (path, from, onOk, onErr) and waits for the outcome, whether it comes
@@ -18,7 +19,8 @@
 //   selector is split off (the engine resolves nothing); `from` is null for an
 //   include in the diagram itself, or the identifier the host gave to the
 //   delivered file that contains the include, so relative names resolve
-//   against that file. The identifier, compared as it is, is also what the
+//   against that file. A local theme keeps its caller's `from` in its body,
+//   matching the Java build. The identifier, compared as it is, is also what the
 //   include strategies use, with the selector: a repeated `!include` is
 //   skipped, `!include_many` includes again, `!include_once` reports the second
 //   include as an error, and two diagrams of one file are two includes. A file
@@ -37,12 +39,16 @@
 //   no timeout, so a loader that never settles leaves the rendering waiting;
 //   that case is documented, not exercised here.
 //
-// - The loader is only asked for local names: standard-library includes, URL
-//   includes and `!includesub` keep their existing routes, and a relative
-//   include written in a standard-library file or in a bundled theme never
-//   reaches it (those files are the engine's own), whether the diagram or a
-//   delivered file brought the library or theme in; the delivered file is
-//   `from` again afterwards.
+// - `!includesub file!PART` and `!theme NAME from DIR` read their file through
+//   the loader too (DIR/puml-theme-NAME.puml).
+//
+// - The loader is only asked for local names: a standard-library include, a URL
+//   `!include` or `!includesub` and a theme from a URL never reach it, and a
+//   relative include written in a standard-library file or in a bundled theme
+//   never does either (those files are the engine's own), whether the diagram
+//   or a delivered file brought the library or theme in; the delivered file is
+//   `from` again afterwards. One written in a theme the loader delivered does
+//   reach it.
 //
 // The files live in an in-memory map on the page, keyed by an absolute path
 // the page's loader resolves itself, so the check pins the engine's side of the
@@ -74,9 +80,19 @@ const FILES = {
   // local file: that local include must still come from the delivered file.
   '/project/docs/via-lib-ok.puml': '!include <guardlib/greeting>\n!include greeting.puml',
   '/project/docs/via-theme-ok.puml': '!theme guardtheme-ok\n!include greeting.puml',
-  // Two diagrams for the selectors.
+  // Two diagrams for the selectors, a sub for !includesub, and local themes.
   '/project/docs/two.puml': '@startuml(id=FIRST)\nparticipant "Hello from first" as FIRST\n@enduml\n'
     + '@startuml(id=SECOND)\nparticipant "Hello from second" as SECOND\n@enduml',
+  '/project/docs/subs.puml': '!startsub PART\nparticipant "Hello from sub" as SUB\n!endsub\n'
+    + 'participant "Hello outside the sub" as OUTSIDE',
+  '/project/docs/themes/puml-theme-local.puml': '---\nname: local\n---\nskinparam backgroundColor #FEDCBA\n'
+    + 'title Theme 日本語 ünïcödé',
+  '/project/docs/themes/puml-theme-including.puml': '!include greeting.puml',
+  '/project/docs/themes/greeting.puml': 'participant "WRONG_THEME_FOLDER" as WRONG_THEME',
+  '/project/docs/common/themed.puml': '!theme including from ../themes\n!include after.puml',
+  '/project/docs/common/greeting.puml': 'participant "Hello from theme caller" as CALLER',
+  '/project/docs/common/after.puml': 'participant "Hello after theme" as AFTER_THEME',
+  '/project/docs/common/subs.puml': '!startsub PART\n!include ../parts/leaf.puml\n!endsub',
 };
 
 // The page's loader: resolves `path` against the directory of `from` (or of
@@ -114,11 +130,15 @@ window.PLANTUML_FILE_LOADER = function (path, from, onOk, onErr) {
 // way a host may, each with a relative include that must never reach the loader.
 window.PLANTUML_STDLIB = window.PLANTUML_STDLIB || {};
 window.PLANTUML_STDLIB.guardlib = { greeting: ['participant "Hello from guardlib" as LIB'], relative: ['!include leaf.puml'] };
+window.PLANTUML_STDLIB.guardlib.sub = ['!includesub subs.puml!PART'];
+window.PLANTUML_STDLIB.guardlib.theme = ['!theme local from themes'];
 window.PLANTUML_STDLIB_INFO = window.PLANTUML_STDLIB_INFO || {};
 window.PLANTUML_STDLIB_INFO.guardlib = { name: 'guardlib' };
 window.__pl_script_state = window.__pl_script_state || Object.create(null);
 window.__pl_script_state['guardlib.min.js'] = { state: 'loaded' };
 globalThis.PLANTUML_THEMES = { guardtheme: '!include leaf.puml', 'guardtheme-ok': 'skinparam backgroundColor #ABCDEF' };
+globalThis.PLANTUML_THEMES['guardtheme-sub'] = '!includesub subs.puml!PART';
+globalThis.PLANTUML_THEMES['guardtheme-local'] = '!theme local from themes';
 </script>`;
 
 const pageHtml = mode => createModulePageHtml({
@@ -170,12 +190,19 @@ const calls = r => JSON.stringify(r.loaderCalls || []);
     return ready;
   }
 
-  // Page 1: no loader. A local include fails exactly as it always did.
+  // Page 1: no loader. A local include fails as it always did, and so does an
+  // !includesub of a file; a sub of the diagram itself needs no loader.
   const bare = await openPage('index.html');
   let r = await renderOn(bare.page, SEQUENCE, opts);
   check('plain diagram renders with no loader set', renders(r), renderedAs(r));
   r = await renderOn(bare.page, diagram('!include greeting.puml'), opts);
   check('without a loader a local include fails as a PlantUML error image', failsAsIncludeError(r), renderedAs(r));
+  r = await renderOn(bare.page, diagram('!includesub subs.puml!PART'), opts);
+  check('without a loader !includesub of a file fails as a PlantUML error image too',
+    failsAsIncludeError(r) && r.svg.includes('cannot include subs.puml!PART'), renderedAs(r));
+  r = await renderOn(bare.page, ['@startuml', '!$n = 0', '!startsub COUNT', '!$n = $n + 1', '!endsub',
+    '!includesub COUNT', 'participant "count $n" as COUNT', 'Alice -> Alice : ping', '@enduml'], opts);
+  check('!includesub of a sub of the diagram itself needs no loader', renders(r, 'count 2'), renderedAs(r));
   check('no unhandled page errors on the bare page', bare.errors.length === 0, bare.errors.join(' | '));
 
   // Page 2: a loader that answers asynchronously.
@@ -257,18 +284,79 @@ const calls = r => JSON.stringify(r.loaderCalls || []);
   await hook.page.evaluate(() => { window.__loaderCalls.length = 0; });
   r = await renderOn(hook.page, diagram('!include <nosuchlib/greeting>'), opts);
   check('a standard-library include never reaches the file loader', r.loaderCalls.length === 0, calls(r));
-  // A URL include and !includesub keep their existing browser behaviour (the
-  // former fails with "cannot include", the latter includes nothing and
-  // reports no error) and never reach the loader.
-  for (const [what, label, expected] of [
-    ['!include https://example.invalid/x.puml', 'a URL include',
-      r => failsAsIncludeError(r) && r.svg.includes('cannot include https://example.invalid/x.puml')],
-    ['!includesub greeting.puml!PART', '!includesub', r => renders(r) && !r.svg.includes('Hello from greeting')],
+  // A URL include, a URL includesub and a theme from a URL fail as a PlantUML
+  // error image (the browser engine fetches nothing) and never reach the loader.
+  for (const [what, label] of [
+    ['!include https://example.invalid/x.puml', 'a URL include'],
+    ['!includesub https://example.invalid/x.puml!PART', 'a URL includesub'],
+    ['!theme local from https://example.invalid/themes', 'a theme from a URL'],
   ]) {
     await hook.page.evaluate(() => { window.__loaderCalls.length = 0; });
     r = await renderOn(hook.page, diagram(what), opts);
-    check(label + ' keeps its existing browser behaviour and never reaches the file loader',
-      expected(r) && r.loaderCalls.length === 0, renderedAs(r) + '; calls: ' + calls(r));
+    check(label + ' fails as a PlantUML error image and never reaches the file loader',
+      failsAsIncludeError(r) && r.loaderCalls.length === 0, renderedAs(r) + '; calls: ' + calls(r));
+  }
+  // !includesub reads its file through the loader.
+  await hook.page.evaluate(() => { window.__loaderCalls.length = 0; });
+  r = await renderOn(hook.page, diagram('!includesub subs.puml!PART'), opts);
+  check('!includesub takes the sub of a file the loader delivers, and nothing else of it',
+    renders(r, 'Hello from sub') && !r.svg.includes('Hello outside the sub')
+    && r.loaderCalls.length === 1 && r.loaderCalls[0].path === 'subs.puml' && r.loaderCalls[0].from === null,
+    renderedAs(r) + '; calls: ' + calls(r));
+  r = await renderOn(hook.page, diagram('!includesub subs.puml!NOSUCH'), opts);
+  check('!includesub of a sub the file does not have fails as a PlantUML error image', failsAsIncludeError(r),
+    renderedAs(r));
+  await hook.page.evaluate(() => { window.__loaderCalls.length = 0; });
+  r = await renderOn(hook.page, diagram('!includesub common/subs.puml!PART', '!include greeting.puml'), opts);
+  check('!includesub uses the delivered file as from and restores its caller afterwards',
+    renders(r, 'Hello from leaf', 'Hello from greeting')
+    && calls(r) === JSON.stringify([
+      { path: 'common/subs.puml', from: null },
+      { path: '../parts/leaf.puml', from: '/project/docs/common/subs.puml' },
+      { path: 'greeting.puml', from: null },
+    ]), renderedAs(r) + '; calls: ' + calls(r));
+  // !theme ... from a local folder reads DIR/puml-theme-NAME.puml through the
+  // loader, its text unchanged, and an include written in it reaches the loader.
+  await hook.page.evaluate(() => { window.__loaderCalls.length = 0; });
+  r = await renderOn(hook.page, diagram('!theme local from themes'), opts);
+  check('!theme ... from a local folder is read through the loader',
+    renders(r, 'Theme 日本語 ünïcödé') && r.svg.toUpperCase().includes('#FEDCBA')
+    && r.loaderCalls.length === 1 && r.loaderCalls[0].path === 'themes/puml-theme-local.puml'
+    && r.loaderCalls[0].from === null,
+    renderedAs(r) + '; calls: ' + calls(r));
+  await hook.page.evaluate(() => { window.__loaderCalls.length = 0; });
+  r = await renderOn(hook.page, diagram('!theme including from themes'), opts);
+  check('a local theme called by the diagram keeps from = null for its relative include',
+    renders(r, 'Hello from greeting') && !r.svg.includes('WRONG_THEME_FOLDER')
+    && calls(r) === JSON.stringify([
+      { path: 'themes/puml-theme-including.puml', from: null },
+      { path: 'greeting.puml', from: null },
+    ]),
+    renderedAs(r) + '; calls: ' + calls(r));
+  await hook.page.evaluate(() => { window.__loaderCalls.length = 0; });
+  r = await renderOn(hook.page, diagram('!include common/themed.puml', '!include greeting.puml'), opts);
+  check('a local theme keeps the calling file as from and restores the diagram afterwards',
+    renders(r, 'Hello from theme caller', 'Hello after theme', 'Hello from greeting')
+    && !r.svg.includes('WRONG_THEME_FOLDER') && calls(r) === JSON.stringify([
+      { path: 'common/themed.puml', from: null },
+      { path: '../themes/puml-theme-including.puml', from: '/project/docs/common/themed.puml' },
+      { path: 'greeting.puml', from: '/project/docs/common/themed.puml' },
+      { path: 'after.puml', from: '/project/docs/common/themed.puml' },
+      { path: 'greeting.puml', from: null },
+    ]), renderedAs(r) + '; calls: ' + calls(r));
+  await hook.page.evaluate(() => { window.__loaderCalls.length = 0; });
+  r = await renderOn(hook.page, diagram('!theme missing from themes'), opts);
+  check('a theme file refused by the loader reports the theme name without a fatal parsing error',
+    failsAsIncludeError(r) && r.svg.includes('Cannot load theme missing in themes')
+    && !r.svg.includes('Fatal parsing error') && calls(r) === JSON.stringify([
+      { path: 'themes/puml-theme-missing.puml', from: null },
+    ]), renderedAs(r) + '; calls: ' + calls(r));
+  for (const what of ['!include <guardlib/sub>', '!include <guardlib/theme>',
+    '!theme guardtheme-sub', '!theme guardtheme-local']) {
+    await hook.page.evaluate(() => { window.__loaderCalls.length = 0; });
+    r = await renderOn(hook.page, diagram(what), opts);
+    check(what + ' cannot reach the host through !includesub or a local theme',
+      failsAsIncludeError(r) && r.loaderCalls.length === 0, renderedAs(r) + '; calls: ' + calls(r));
   }
   // The engine's own files never ask the host: a relative include written in
   // a library file or a theme fails as it always did, whether the diagram or

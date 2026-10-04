@@ -78,12 +78,18 @@ public class ThemeUtils {
 	public static Theme loadTheme(PathSystem pathSystem, String name, String from, StringLocated location)
 			throws IOException, EaterException {
 		// ::comment when JAVA8
-		if (TeaVM.isTeaVM())
+		if (TeaVM.isTeaVM()) {
 			// The browser build has no classpath, no filesystem and no synchronous URL
-			// fetch, so only the bundled themes (shipped in themes.js) resolve here.
-			// Any "from" variant returns null, which the caller reports as a regular
-			// "Cannot load theme" error instead of silently ignoring the directive.
-			return from == null ? loadJsTheme(name) : null;
+			// fetch: a bundled theme comes from themes.js, and one from a local folder
+			// from the host's file loader, as an included file does (loadFileTheme).
+			// Any other "from" variant returns null, which the caller reports as a
+			// regular "Cannot load theme" error instead of silently ignoring the
+			// directive.
+			if (from == null)
+				return loadJsTheme(name);
+			if (isLocalFolder(from) == false)
+				return null;
+		}
 		// ::done
 
 		if (from == null)
@@ -96,6 +102,18 @@ public class ThemeUtils {
 			return loadHttpTheme(name, from, location);
 
 		return loadFileTheme(pathSystem, name, from);
+	}
+
+	/**
+	 * Whether <code>from</code>, as written after <code>!theme NAME from</code>,
+	 * is a folder rather than a library (<code>&lt;...&gt;</code>) or a URL.
+	 */
+	public static boolean isLocalFolder(String from) {
+		if (from == null)
+			return false;
+		if (from.startsWith("<") && from.endsWith(">"))
+			return false;
+		return from.startsWith("http://") == false && from.startsWith("https://") == false;
 	}
 
 	// ::comment when JAVA8
@@ -193,6 +211,9 @@ public class ThemeUtils {
 
 	private static Theme loadFileTheme(PathSystem pathSystem, String name, String from) throws IOException {
 		final InputFile file = pathSystem.getInputFile(getFullPath(from, name));
+		if (file == null)
+			return null;
+
 		final InputStream is = file.newInputStream();
 		if (is == null)
 			return null;
