@@ -33,7 +33,7 @@ jobs:
           persist-credentials: false
 
       - name: Lint Code Base
-        uses: super-linter/super-linter/slim@v8.7.0
+        uses: super-linter/super-linter/slim@v9.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Only lint the files changed by the push / pull request
