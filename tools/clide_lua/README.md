@@ -123,3 +123,44 @@ render the old and new `.svg` yourself. The four cases marked `allow-failure` ar
 reported as skipped, not failed. A whitespace-only change after `</svg>` does not
 make a case fail (the comparison cleans the SVG) but does change the md5, so
 `vega_update.lua` lists it.
+
+## list_could_be_private.lua
+
+Lists the `public` methods that could be `private`: those whose every real usage
+(as jdtls sees it) stays inside the type that declares them. A method that is
+never called at all is listed too, marked `(never called)`: it is as narrowable
+as one used only from inside its own type (and is often better deleted).
+
+```
+python3 clide.py --lua tools/clide_lua/list_could_be_private.lua /path/to/plantuml
+```
+
+(the daemon must be running, see above). Output: one line per candidate,
+grouped by file, then a summary line.
+
+```
+  src/main/java/net/sourceforge/plantuml/abel/Link.java:320: Link.getWeight  (never called)
+  ...
+23 type(s) examined: 13 public method(s) could be private, 0 more cannot be narrowed (implement/override)
+```
+
+### How it works
+
+`list_could_be_private` takes one type at a time. The script finds every type
+declaration (top-level and nested) with `search_regex`, computes the position of
+its name, and calls the command on each one (inside `pcall`: a type that fails is
+reported as `FAILED`, the audit goes on). A method that implements or overrides
+something cannot be narrowed: it is only counted, unless `SHOW_OVERRIDES` is set
+to `true` at the top of the script.
+
+### Limits
+
+- It is slow: one `find_reference` per public method, so a run on the whole of
+  `src/main/java` takes a long time. Set `ROOT` at the top of the script to one
+  package for a quick run.
+- Only usages jdtls can see are counted. Reflection, serialization hooks and
+  anything discovered by name are invisible: check each candidate before
+  narrowing it.
+- `public` is read as text off the declaration line (see clide's
+  `CLAUDE.md`, known limitations).
+- The script only reports; it changes nothing.
