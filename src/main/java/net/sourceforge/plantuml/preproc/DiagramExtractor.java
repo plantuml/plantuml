@@ -49,6 +49,7 @@ public class DiagramExtractor implements ReadLine {
 
 	private final ReadLine raw;
 	private boolean finished = false;
+	private boolean found = false;
 
 	public DiagramExtractor(ReadLine raw, String suf) {
 		int block = 0;
@@ -66,8 +67,10 @@ public class DiagramExtractor implements ReadLine {
 		try {
 			while ((s = raw.readLine()) != null) {
 				if (StartUtils.isStartDirective(s.getString()) && checkUid(uid, s)) {
-					if (block == 0)
+					if (block == 0) {
+						found = true;
 						return;
+					}
 					block--;
 				}
 			}
@@ -102,6 +105,13 @@ public class DiagramExtractor implements ReadLine {
 
 	public void close() throws IOException {
 		raw.close();
+	}
+
+	/**
+	 * Whether the diagram asked for is there: when it is not, nothing is read.
+	 */
+	public boolean isFound() {
+		return found;
 	}
 
 }

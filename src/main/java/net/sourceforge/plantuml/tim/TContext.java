@@ -43,6 +43,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -50,6 +51,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.FileSystem;
@@ -64,6 +66,7 @@ import net.sourceforge.plantuml.nio.InputFile;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Environment;
 import net.sourceforge.plantuml.preproc.DiagramDetector;
+import net.sourceforge.plantuml.preproc.DiagramExtractor;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineList;
@@ -116,13 +119,16 @@ public class TContext {
 	private final Map<String, Sub> subs = new HashMap<String, Sub>();
 	private final DefinitionsContainer definitionsContainer;
 
-	// private final Set<FileWithSuffix> usedFiles = new HashSet<>();
 	private final Set<File> filesUsedCurrent = new HashSet<>();
 	/**
-	 * The files the browser host delivered, by the identifier it gave them: a
-	 * string compared as it is, which a File would normalise.
+	 * What the include strategies count as included: a file with its selector,
+	 * as FileWithSuffix did, so that two diagrams of one file
+	 * (<code>file!0</code>, <code>file!1</code>) are two includes. A local file
+	 * is its canonical path; a file the browser host delivered is the
+	 * identifier the host gave it, a string compared as it is, which a File
+	 * would normalise.
 	 */
-	private final Set<String> hostFilesUsedCurrent = new HashSet<>();
+	private final Set<List<String>> includedCurrent = new HashSet<>();
 
 	private final PreprocessingArtifact preprocessingArtifact = new PreprocessingArtifact();
 	private PathSystem pathSystem;
@@ -694,16 +700,25 @@ public class TContext {
 				final InputFile f2 = this.pathSystem.getInputFile(what);
 				if (f2 != null) {
 					final File used = f2 instanceof SFile ? ((SFile) f2).getCanonicalFile().conv() : null;
-					final String hostId = used == null ? this.pathSystem.getTeaVMFileId(f2) : null;
-					final boolean seen = used != null ? filesUsedCurrent.contains(used)
-							: hostId != null && hostFilesUsedCurrent.contains(hostId);
+					final String identity = used != null ? used.getPath() : this.pathSystem.getTeaVMFileId(f2);
+					final List<String> included = identity == null ? null : Arrays.asList(identity, suf);
+					final boolean seen = included != null && includedCurrent.contains(included);
 					if (strategy == PreprocessorIncludeStrategy.DEFAULT && seen)
 						return;
 
 					if (strategy == PreprocessorIncludeStrategy.ONCE && seen)
 						throw new EaterException("This file has already been included", s);
 
-					reader = DiagramDetector.extractFromFile(f2, "desc2");
+					if (used != null)
+						filesUsedCurrent.add(used);
+
+					try {
+						reader = DiagramDetector.extractFromFile(f2, "desc2", suf);
+					} catch (NumberFormatException | PatternSyntaxException e) {
+						throw new EaterException("cannot include " + what + "!" + suf, s);
+					}
+					if (reader instanceof DiagramExtractor && ((DiagramExtractor) reader).isFound() == false)
+						throw new EaterException("cannot include " + what + "!" + suf, s);
 
 					if (reader == null) {
 						final Reader tmp = f2.getReader(charset);
@@ -716,10 +731,8 @@ public class TContext {
 					this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());
 					if (TeaVM.a())
 						assert reader != null;
-					if (used != null)
-						filesUsedCurrent.add(used);
-					if (hostId != null)
-						hostFilesUsedCurrent.add(hostId);
+					if (included != null)
+						includedCurrent.add(included);
 				}
 			}
 			if (reader != null)

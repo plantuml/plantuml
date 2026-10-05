@@ -19,11 +19,12 @@
 //   include in the diagram itself, or the identifier the host gave to the
 //   delivered file that contains the include, so relative names resolve
 //   against that file. The identifier, compared as it is, is also what the
-//   include strategies use: a repeated `!include` is skipped, `!include_many`
-//   includes again, and `!include_once` reports the second include as an
-//   error. A file that holds a whole @startuml...@enduml diagram contributes
-//   the inside of that diagram, as in the desktop build. Text arrives as a
-//   string, so nothing is decoded along the way.
+//   include strategies use, with the selector: a repeated `!include` is
+//   skipped, `!include_many` includes again, `!include_once` reports the second
+//   include as an error, and two diagrams of one file are two includes. A file
+//   that holds a whole @startuml...@enduml diagram contributes the inside of
+//   the diagram the selector chooses, or of its first one, as in the desktop
+//   build. Text arrives as a string, so nothing is decoded along the way.
 //
 // - The first outcome wins: a second ok, an err after ok, or an ok after a
 //   false decline changes nothing. Only a non-empty string id with a string
@@ -73,6 +74,9 @@ const FILES = {
   // local file: that local include must still come from the delivered file.
   '/project/docs/via-lib-ok.puml': '!include <guardlib/greeting>\n!include greeting.puml',
   '/project/docs/via-theme-ok.puml': '!theme guardtheme-ok\n!include greeting.puml',
+  // Two diagrams for the selectors.
+  '/project/docs/two.puml': '@startuml(id=FIRST)\nparticipant "Hello from first" as FIRST\n@enduml\n'
+    + '@startuml(id=SECOND)\nparticipant "Hello from second" as SECOND\n@enduml',
 };
 
 // The page's loader: resolves `path` against the directory of `from` (or of
@@ -225,9 +229,31 @@ const calls = r => JSON.stringify(r.loaderCalls || []);
   await hook.page.waitForTimeout(50);
   await hook.page.evaluate(() => { window.__loaderCalls.length = 0; });
   r = await renderOn(hook.page, diagram('!include greeting.puml!1'), opts);
-  check('a diagram selector is split off the name and not applied, as for a local file in the Java build',
+  check('a selector is split off the name, and a file without a diagram is included whole',
     renders(r, 'Hello from greeting') && r.loaderCalls.length === 1 && r.loaderCalls[0].path === 'greeting.puml',
     renderedAs(r) + '; calls: ' + calls(r));
+  // The selector chooses a diagram of a delivered file, as in the desktop build.
+  for (const [lines, label, expected] of [
+    [['!include two.puml!1'], 'an index chooses the diagram at that place',
+      r => renders(r, 'Hello from second') && !r.svg.includes('Hello from first')],
+    [['!include two.puml!SECOND'], 'an id chooses the diagram that declares it',
+      r => renders(r, 'Hello from second') && !r.svg.includes('Hello from first')],
+    [['!include two.puml'], 'without a selector the first diagram is taken',
+      r => renders(r, 'Hello from first') && !r.svg.includes('Hello from second')],
+    [['!include two.puml!0', '!include two.puml!1'], 'two diagrams of one file are two includes',
+      r => renders(r, 'Hello from first', 'Hello from second')],
+    [['!include_once two.puml!0', '!include_once two.puml!1'], '!include_once counts each diagram of a file',
+      r => renders(r, 'Hello from first', 'Hello from second')],
+    [['!include two.puml!2'], 'a selector that chooses no diagram fails as a PlantUML error image',
+      r => failsAsIncludeError(r) && r.svg.includes('cannot include two.puml!2')],
+    [['!include two.puml!('], 'an invalid id pattern fails as an include error',
+      r => failsAsIncludeError(r) && r.svg.includes('cannot include two.puml!(')],
+    [['!include two.puml!2147483648'], 'an index outside the integer range fails as an include error',
+      r => failsAsIncludeError(r) && r.svg.includes('cannot include two.puml!2147483648')],
+  ]) {
+    r = await renderOn(hook.page, diagram(...lines), opts);
+    check(label, expected(r), renderedAs(r));
+  }
   await hook.page.evaluate(() => { window.__loaderCalls.length = 0; });
   r = await renderOn(hook.page, diagram('!include <nosuchlib/greeting>'), opts);
   check('a standard-library include never reaches the file loader', r.loaderCalls.length === 0, calls(r));
