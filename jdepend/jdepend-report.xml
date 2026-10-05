@@ -7,11 +7,11 @@
                 <TotalClasses>29</TotalClasses>
                 <ConcreteClasses>25</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
-                <Ca>10</Ca>
+                <Ca>9</Ca>
                 <Ce>5</Ce>
                 <A>0.14</A>
-                <I>0.33</I>
-                <D>0.53</D>
+                <I>0.36</I>
+                <D>0.5</D>
                 <V>1</V>
             </Stats>
 
@@ -125,7 +125,6 @@
                 <Package>net.sourceforge.plantuml.gantt.command</Package>
                 <Package>net.sourceforge.plantuml.gantt.lang</Package>
                 <Package>net.sourceforge.plantuml.openiconic</Package>
-                <Package>net.sourceforge.plantuml.regex</Package>
                 <Package>net.sourceforge.plantuml.url</Package>
             </UsedBy>
         </Package>
@@ -13562,13 +13561,13 @@
 
         <Package name="net.sourceforge.plantuml.regex">
             <Stats>
-                <TotalClasses>11</TotalClasses>
-                <ConcreteClasses>9</ConcreteClasses>
+                <TotalClasses>10</TotalClasses>
+                <ConcreteClasses>8</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
                 <Ca>37</Ca>
-                <Ce>9</Ce>
-                <A>0.18</A>
-                <I>0.2</I>
+                <Ce>8</Ce>
+                <A>0.2</A>
+                <I>0.18</I>
                 <D>0.62</D>
                 <V>1</V>
             </Stats>
@@ -13607,13 +13606,9 @@
                 <Class sourceFile="RegexRepeatedZeroOrMore.java">
                     net.sourceforge.plantuml.regex.RegexRepeatedZeroOrMore
                 </Class>
-                <Class sourceFile="RegexResult.java">
-                    net.sourceforge.plantuml.regex.RegexResult
-                </Class>
             </ConcreteClasses>
 
             <DependsUpon>
-                <Package>com.plantuml.ubrex</Package>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
                 <Package>java.util.concurrent.atomic</Package>
@@ -21258,6 +21253,7 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.regex">
+            <Package>net.sourceforge.plantuml.jaws</Package>
             <Package>net.sourceforge.plantuml.utils</Package>
             <Package>net.sourceforge.plantuml.klimt.geom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>

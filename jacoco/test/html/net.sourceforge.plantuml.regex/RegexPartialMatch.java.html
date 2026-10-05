@@ -35,39 +35,36 @@
  */
 package net.sourceforge.plantuml.regex;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import net.sourceforge.plantuml.utils.MyCollections;
+import java.util.Arrays;
 
-public class RegexPartialMatch implements Iterable&lt;String&gt; {
-    // ::remove folder when __HAXE__
+public class RegexPartialMatch {
 
-<span class="fc" id="L46">	private final List&lt;String&gt; data = new ArrayList&lt;&gt;();</span>
+	// The groups of one named node. Their number is known before the first one is added (one
+	// for RegexOr and the repeated nodes, count() for a RegexLeaf), hence a plain array.
+	private final String[] data;
+	private int size;
 
-<span class="fc" id="L48">	public RegexPartialMatch(String name) {</span>
-
-<span class="fc" id="L50">	}</span>
+<span class="fc" id="L47">	public RegexPartialMatch(int capacity) {</span>
+<span class="fc" id="L48">		this.data = new String[capacity];</span>
+<span class="fc" id="L49">	}</span>
 
 	public void add(String group) {
-<span class="fc" id="L53">		data.add(group);</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L52">		data[size++] = group;</span>
+<span class="fc" id="L53">	}</span>
 
 	public int size() {
-<span class="fc" id="L57">		return data.size();</span>
+<span class="fc" id="L56">		return size;</span>
 	}
 
 	public String get(int i) {
-<span class="fc" id="L61">		return data.get(i);</span>
-	}
-
-	public Iterator&lt;String&gt; iterator() {
-<span class="nc" id="L65">		return MyCollections.unmodifiableCollection(data).iterator();</span>
+<span class="pc bpc" id="L60" title="2 of 4 branches missed.">		if (i &lt; 0 || i &gt;= size)</span>
+<span class="nc" id="L61">			throw new IndexOutOfBoundsException(&quot;Index: &quot; + i + &quot;, Size: &quot; + size);</span>
+<span class="fc" id="L62">		return data[i];</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L70">		return &quot;{&quot; + data + &quot;}&quot;;</span>
+<span class="nc" id="L67">		return &quot;{&quot; + Arrays.asList(data) + &quot;}&quot;;</span>
 	}
 
 }

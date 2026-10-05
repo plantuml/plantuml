@@ -8,7 +8,7 @@ end title
 set separator none
 hide empty members
 
-class "com.plantuml.ubrex" %lighten("red", 47) {
+class "com.plantuml.ubrex" %lighten("red", 50) {
 Total Classes: 29
 }
 "com.plantuml.ubrex" --> "java.lang"
@@ -2716,9 +2716,8 @@ Total Classes: 16
 "net.sourceforge.plantuml.real" --> "net.sourceforge.plantuml.teavm"
 
 class "net.sourceforge.plantuml.regex" %lighten("red", 38) {
-Total Classes: 11
+Total Classes: 10
 }
-"net.sourceforge.plantuml.regex" --> "com.plantuml.ubrex"
 "net.sourceforge.plantuml.regex" --> "java.lang"
 "net.sourceforge.plantuml.regex" --> "java.util"
 "net.sourceforge.plantuml.regex" --> "java.util.concurrent.atomic"

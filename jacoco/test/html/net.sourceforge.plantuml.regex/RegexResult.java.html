@@ -35,87 +35,141 @@
  */
 package net.sourceforge.plantuml.regex;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import com.plantuml.ubrex.UMatcher;
-import net.sourceforge.plantuml.utils.MyCollections;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
-public class RegexResult {
+<span class="fc" id="L44">public class RegexResult {</span>
 
-	private final Map&lt;String, RegexPartialMatch&gt; data;
+	// The named groups of one match, in the order fillPartialMatch added them. A match has at
+	// most a few dozen of them (28 for the largest regex of the test suite), read a handful of
+	// times by one command: two arrays scanned linearly cost less than a HashMap, its table and
+	// one node per entry, built for every line recognized.
+	private String[] names;
+	private RegexPartialMatch[] values;
+	private int size;
 	private final UMatcher matcher;
 
 	public UMatcher getUMatcher() {
-<span class="nc" id="L51">		return matcher;</span>
+<span class="nc" id="L56">		return matcher;</span>
 	}
 
-<span class="fc" id="L54">	public RegexResult(Map&lt;String, RegexPartialMatch&gt; data) {</span>
-<span class="fc" id="L55">		this.data = MyCollections.unmodifiableMap(data);</span>
-<span class="fc" id="L56">		this.matcher = null;</span>
-<span class="fc" id="L57">	}</span>
+	// Filled by RegexComposed.matcher, through fillPartialMatch.
+<span class="fc" id="L60">	RegexResult() {</span>
+<span class="fc" id="L61">		this.names = new String[16];</span>
+<span class="fc" id="L62">		this.values = new RegexPartialMatch[16];</span>
+<span class="fc" id="L63">		this.matcher = null;</span>
+<span class="fc" id="L64">	}</span>
 
-<span class="fc" id="L59">	public RegexResult(UMatcher matcher) {</span>
-<span class="fc" id="L60">		this.data = Collections.emptyMap();</span>
-<span class="fc" id="L61">		this.matcher = matcher;</span>
-<span class="fc" id="L62">	}</span>
+<span class="fc" id="L66">	public RegexResult(UMatcher matcher) {</span>
+<span class="fc" id="L67">		this.names = new String[0];</span>
+<span class="fc" id="L68">		this.values = new RegexPartialMatch[0];</span>
+<span class="fc" id="L69">		this.matcher = matcher;</span>
+<span class="fc" id="L70">	}</span>
+
+	void add(String name, RegexPartialMatch value) {
+		// A name appears once per regex: nothing in the test suite ever adds it twice. The
+		// HashMap used before would silently have kept the last one.
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if (TeaVM.a())</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">			assert indexOf(name) == -1 : &quot;Duplicate group name &quot; + name;</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (size == names.length) {</span>
+<span class="fc" id="L78">			names = Arrays.copyOf(names, size * 2);</span>
+<span class="fc" id="L79">			values = Arrays.copyOf(values, size * 2);</span>
+		}
+<span class="fc" id="L81">		names[size] = name;</span>
+<span class="fc" id="L82">		values[size] = value;</span>
+<span class="fc" id="L83">		size++;</span>
+<span class="fc" id="L84">	}</span>
+
+	private int indexOf(String key) {
+<span class="fc bfc" id="L87" title="All 2 branches covered.">		for (int i = 0; i &lt; size; i++)</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">			if (names[i].equals(key))</span>
+<span class="fc" id="L89">				return i;</span>
+<span class="fc" id="L90">		return -1;</span>
+	}
 
 	@Override
 	public String toString() {
-<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (matcher != null)</span>
-<span class="nc" id="L67">			return matcher.toString();</span>
-<span class="nc" id="L68">		return data.toString();</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (matcher != null)</span>
+<span class="nc" id="L96">			return matcher.toString();</span>
+<span class="nc" id="L97">		final StringBuilder sb = new StringBuilder(&quot;{&quot;);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		for (int i = 0; i &lt; size; i++) {</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">			if (i &gt; 0)</span>
+<span class="nc" id="L100">				sb.append(&quot;, &quot;);</span>
+<span class="nc" id="L101">			sb.append(names[i]).append('=').append(values[i]);</span>
+		}
+<span class="nc" id="L103">		return sb.append('}').toString();</span>
 	}
 
 	public RegexPartialMatch get(String key) {
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (matcher != null)</span>
-<span class="nc" id="L73">			throw new UnsupportedOperationException();</span>
-<span class="fc" id="L74">		return data.get(key);</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (matcher != null)</span>
+<span class="nc" id="L108">			throw new UnsupportedOperationException();</span>
+<span class="fc" id="L109">		final int idx = indexOf(key);</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">		return idx == -1 ? null : values[idx];</span>
 	}
 
 	public String get(String key, int num) {
-<span class="fc bfc" id="L78" title="All 2 branches covered.">		if (matcher != null) {</span>
-<span class="fc" id="L79">			final List&lt;String&gt; list = matcher.findValuesByKey(key);</span>
-<span class="pc bpc" id="L80" title="1 of 4 branches missed.">			if (list == null || list.size() == 0)</span>
-<span class="fc" id="L81">				return null;</span>
-<span class="fc" id="L82">			return list.get(num);</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		if (matcher != null) {</span>
+<span class="fc" id="L115">			final List&lt;String&gt; list = matcher.findValuesByKey(key);</span>
+<span class="pc bpc" id="L116" title="1 of 4 branches missed.">			if (list == null || list.size() == 0)</span>
+<span class="fc" id="L117">				return null;</span>
+<span class="fc" id="L118">			return list.get(num);</span>
 
 		}
-<span class="fc" id="L85">		final RegexPartialMatch reg = data.get(key);</span>
-<span class="fc bfc" id="L86" title="All 2 branches covered.">		if (reg == null)</span>
-<span class="fc" id="L87">			return null;</span>
+<span class="fc" id="L121">		final RegexPartialMatch reg = get(key);</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (reg == null)</span>
+<span class="fc" id="L123">			return null;</span>
 
-<span class="fc" id="L89">		return reg.get(num);</span>
+<span class="fc" id="L125">		return reg.get(num);</span>
 	}
 
 	public String getLazzy(String key, int num) {
-<span class="fc bfc" id="L93" title="All 2 branches covered.">		if (matcher != null) {</span>
-<span class="fc" id="L94">			final List&lt;String&gt; list = matcher.findFirstValuesByKeyPrefix(key);</span>
-<span class="pc bpc" id="L95" title="3 of 4 branches missed.">			if (list == null || list.size() == 0)</span>
-<span class="fc" id="L96">				return null;</span>
-<span class="nc" id="L97">			return list.get(num);</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">		if (matcher != null) {</span>
+<span class="fc" id="L130">			final List&lt;String&gt; list = matcher.findFirstValuesByKeyPrefix(key);</span>
+<span class="pc bpc" id="L131" title="3 of 4 branches missed.">			if (list == null || list.size() == 0)</span>
+<span class="fc" id="L132">				return null;</span>
+<span class="nc" id="L133">			return list.get(num);</span>
 		}
 
-<span class="fc bfc" id="L100" title="All 2 branches covered.">		for (Map.Entry&lt;String, RegexPartialMatch&gt; ent : data.entrySet()) {</span>
-<span class="fc bfc" id="L101" title="All 2 branches covered.">			if (ent.getKey().startsWith(key) == false)</span>
-<span class="fc" id="L102">				continue;</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		for (int i = 0; i &lt; size; i++) {</span>
+<span class="fc" id="L137">			final String value = lazzyValue(i, key, num);</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">			if (value != null) {</span>
+				// The first one found is the answer only because there is no other: the
+				// alternatives sharing a prefix (DISPLAY1, DISPLAY2...) belong to different
+				// branches of a RegexOr, so at most one of them has matched. Checked over the
+				// whole test suite. The HashMap used before had no defined order to fall back on.
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">				if (TeaVM.a())</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">					assert lazzyUnique(i, key, num) : &quot;Several groups match &quot; + key + &quot; in &quot; + this;</span>
+<span class="fc" id="L145">				return value;</span>
+			}
+		}
+<span class="fc" id="L148">		return null;</span>
+	}
 
-<span class="fc" id="L104">			final RegexPartialMatch match = ent.getValue();</span>
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">			if (num &gt;= match.size())</span>
-<span class="nc" id="L106">				continue;</span>
+	private String lazzyValue(int i, String key, int num) {
+<span class="fc bfc" id="L152" title="All 2 branches covered.">		if (names[i].startsWith(key) == false)</span>
+<span class="fc" id="L153">			return null;</span>
 
-<span class="fc bfc" id="L108" title="All 2 branches covered.">			if (match.get(num) != null)</span>
-<span class="fc" id="L109">				return ent.getValue().get(num);</span>
+<span class="fc" id="L155">		final RegexPartialMatch match = values[i];</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">		if (num &gt;= match.size())</span>
+<span class="nc" id="L157">			return null;</span>
 
-<span class="fc" id="L111">		}</span>
-<span class="fc" id="L112">		return null;</span>
+<span class="fc" id="L159">		return match.get(num);</span>
+	}
+
+	private boolean lazzyUnique(int found, String key, int num) {
+<span class="fc bfc" id="L163" title="All 2 branches covered.">		for (int i = found + 1; i &lt; size; i++)</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">			if (lazzyValue(i, key, num) != null)</span>
+<span class="nc" id="L165">				return false;</span>
+<span class="fc" id="L166">		return true;</span>
 	}
 
 	public int size() {
-<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (matcher != null)</span>
-<span class="nc" id="L117">			throw new UnsupportedOperationException();</span>
-<span class="nc" id="L118">		return data.size();</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (matcher != null)</span>
+<span class="nc" id="L171">			throw new UnsupportedOperationException();</span>
+<span class="nc" id="L172">		return size;</span>
 	}
 
 }
