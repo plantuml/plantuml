@@ -56,12 +56,12 @@ public class EaterInclude extends Eater {
 <span class="fc bfc" id="L56" title="All 2 branches covered.">		} else if (peekChar == '_') {</span>
 <span class="fc" id="L57">			checkAndEatChar(&quot;_&quot;);</span>
 <span class="fc" id="L58">			final char peekChar2 = peekChar();</span>
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">			if (peekChar2 == 'm') {</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">			if (peekChar2 == 'm') {</span>
 <span class="fc" id="L60">				checkAndEatChar(&quot;many&quot;);</span>
 <span class="fc" id="L61">				this.strategy = PreprocessorIncludeStrategy.MANY;</span>
 			} else {
-<span class="nc" id="L63">				checkAndEatChar(&quot;once&quot;);</span>
-<span class="nc" id="L64">				this.strategy = PreprocessorIncludeStrategy.ONCE;</span>
+<span class="fc" id="L63">				checkAndEatChar(&quot;once&quot;);</span>
+<span class="fc" id="L64">				this.strategy = PreprocessorIncludeStrategy.ONCE;</span>
 			}
 		}
 <span class="fc" id="L67">		skipSpaces();</span>

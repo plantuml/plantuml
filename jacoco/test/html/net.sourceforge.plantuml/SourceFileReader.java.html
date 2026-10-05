@@ -53,8 +53,8 @@ public class SourceFileReader extends SourceFileReaderAbstract implements ISourc
 	private File outputDirectory;
 
 	public SourceFileReader(boolean ignoreSuggestedName, File file) throws IOException {
-<span class="nc" id="L56">		this(ignoreSuggestedName, file, file.getAbsoluteFile().getParentFile());</span>
-<span class="nc" id="L57">	}</span>
+<span class="fc" id="L56">		this(ignoreSuggestedName, file, file.getAbsoluteFile().getParentFile());</span>
+<span class="fc" id="L57">	}</span>
 
 	public SourceFileReader(boolean ignoreSuggestedName, File file, File outputDirectory, String charset)
 			throws IOException {
@@ -63,9 +63,9 @@ public class SourceFileReader extends SourceFileReaderAbstract implements ISourc
 <span class="nc" id="L63">	}</span>
 
 	public SourceFileReader(boolean ignoreSuggestedName, final File file, File outputDirectory) throws IOException {
-<span class="nc" id="L66">		this(ignoreSuggestedName, Defines.createWithFileName(file), file, outputDirectory,</span>
-<span class="nc" id="L67">				Collections.&lt;String&gt;emptyList(), null, new FileFormatOption(FileFormat.PNG));</span>
-<span class="nc" id="L68">	}</span>
+<span class="fc" id="L66">		this(ignoreSuggestedName, Defines.createWithFileName(file), file, outputDirectory,</span>
+<span class="fc" id="L67">				Collections.&lt;String&gt;emptyList(), null, new FileFormatOption(FileFormat.PNG));</span>
+<span class="fc" id="L68">	}</span>
 
 	public SourceFileReader(boolean ignoreSuggestedName, final File file, File outputDirectory,
 			FileFormatOption fileFormatOption) throws IOException {

@@ -117,9 +117,9 @@ loadScripts(document, 'script');</script>
  <a href="../../nio/PathSystem.html#withoutHostFiles()"><code>PathSystem.withoutHostFiles()</code></a>).</li>
  <li><code>onOk(id, text)</code>: delivers the file. <code>id</code> is any
  non-empty string that identifies it for the host (typically its absolute
- path or URI), compared as it is: <code>!include_once</code> and a repeated
- <code>!include</code> recognise a file by it, and the includes written in
- that file receive it as <code>from</code>.</li>
+ path or URI), compared as it is. The include strategies count the identifier
+ together with the selector, so two diagrams of one file are two includes.
+ The includes written in that file receive its identifier as <code>from</code>.</li>
  <li><code>onErr(reason)</code>: the include fails. The reason is written to
  the console.</li>
  </ul>

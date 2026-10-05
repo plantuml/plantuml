@@ -77,9 +77,9 @@ import net.sourceforge.plantuml.nio.NFolder;
  * {@link net.sourceforge.plantuml.nio.PathSystem#withoutHostFiles()}).&lt;/li&gt;
  * &lt;li&gt;&lt;code&gt;onOk(id, text)&lt;/code&gt;: delivers the file. &lt;code&gt;id&lt;/code&gt; is any
  * non-empty string that identifies it for the host (typically its absolute
- * path or URI), compared as it is: &lt;code&gt;!include_once&lt;/code&gt; and a repeated
- * &lt;code&gt;!include&lt;/code&gt; recognise a file by it, and the includes written in
- * that file receive it as &lt;code&gt;from&lt;/code&gt;.&lt;/li&gt;
+ * path or URI), compared as it is. The include strategies count the identifier
+ * together with the selector, so two diagrams of one file are two includes.
+ * The includes written in that file receive its identifier as &lt;code&gt;from&lt;/code&gt;.&lt;/li&gt;
  * &lt;li&gt;&lt;code&gt;onErr(reason)&lt;/code&gt;: the include fails. The reason is written to
  * the console.&lt;/li&gt;
  * &lt;/ul&gt;

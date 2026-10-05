@@ -49,60 +49,70 @@ public class DiagramExtractor implements ReadLine {
 
 	private final ReadLine raw;
 <span class="fc" id="L51">	private boolean finished = false;</span>
+<span class="fc" id="L52">	private boolean found = false;</span>
 
-<span class="fc" id="L53">	public DiagramExtractor(ReadLine raw, String suf) {</span>
-<span class="fc" id="L54">		int block = 0;</span>
-<span class="fc" id="L55">		String uid = null;</span>
-<span class="pc bpc" id="L56" title="3 of 4 branches missed.">		if (suf != null &amp;&amp; DIGITS.matcher(suf).matches())</span>
-<span class="nc" id="L57">			block = Integer.parseInt(suf);</span>
+<span class="fc" id="L54">	public DiagramExtractor(ReadLine raw, String suf) {</span>
+<span class="fc" id="L55">		int block = 0;</span>
+<span class="fc" id="L56">		String uid = null;</span>
+<span class="fc bfc" id="L57" title="All 4 branches covered.">		if (suf != null &amp;&amp; DIGITS.matcher(suf).matches())</span>
+<span class="fc" id="L58">			block = Integer.parseInt(suf);</span>
 		else
-<span class="fc" id="L59">			uid = suf;</span>
+<span class="fc" id="L60">			uid = suf;</span>
 
-<span class="pc bpc" id="L61" title="1 of 2 branches missed.">		if (block &lt; 0)</span>
-<span class="nc" id="L62">			block = 0;</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (block &lt; 0)</span>
+<span class="nc" id="L63">			block = 0;</span>
 
-<span class="fc" id="L64">		this.raw = raw;</span>
-<span class="fc" id="L65">		StringLocated s = null;</span>
+<span class="fc" id="L65">		this.raw = raw;</span>
+<span class="fc" id="L66">		StringLocated s = null;</span>
 		try {
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">			while ((s = raw.readLine()) != null) {</span>
-<span class="pc bpc" id="L68" title="2 of 4 branches missed.">				if (StartUtils.isStartDirective(s.getString()) &amp;&amp; checkUid(uid, s)) {</span>
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">					if (block == 0)</span>
-<span class="fc" id="L70">						return;</span>
-<span class="nc" id="L71">					block--;</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">			while ((s = raw.readLine()) != null) {</span>
+<span class="fc bfc" id="L69" title="All 4 branches covered.">				if (StartUtils.isStartDirective(s.getString()) &amp;&amp; checkUid(uid, s)) {</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">					if (block == 0) {</span>
+<span class="fc" id="L71">						found = true;</span>
+<span class="fc" id="L72">						return;</span>
+					}
+<span class="fc" id="L74">					block--;</span>
 				}
 			}
-<span class="nc" id="L74">		} catch (IOException e) {</span>
-<span class="nc" id="L75">			Logme.error(e);</span>
-<span class="nc" id="L76">			Log.error(&quot;Error &quot; + e);</span>
-<span class="nc" id="L77">		}</span>
-<span class="nc" id="L78">		finished = true;</span>
-<span class="nc" id="L79">	}</span>
+<span class="nc" id="L77">		} catch (IOException e) {</span>
+<span class="nc" id="L78">			Logme.error(e);</span>
+<span class="nc" id="L79">			Log.error(&quot;Error &quot; + e);</span>
+<span class="fc" id="L80">		}</span>
+<span class="fc" id="L81">		finished = true;</span>
+<span class="fc" id="L82">	}</span>
 
 	private boolean checkUid(String uid, StringLocated s) {
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (uid == null)</span>
-<span class="fc" id="L83">			return true;</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (uid == null)</span>
+<span class="fc" id="L86">			return true;</span>
 
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (s.toString().matches(&quot;.*id=&quot; + uid + &quot;\\W.*&quot;))</span>
-<span class="nc" id="L86">			return true;</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		if (s.toString().matches(&quot;.*id=&quot; + uid + &quot;\\W.*&quot;))</span>
+<span class="fc" id="L89">			return true;</span>
 
-<span class="nc" id="L88">		return false;</span>
+<span class="fc" id="L91">		return false;</span>
 	}
 
 	public StringLocated readLine() throws IOException {
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (finished)</span>
-<span class="nc" id="L93">			return null;</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (finished)</span>
+<span class="nc" id="L96">			return null;</span>
 
-<span class="fc" id="L95">		final StringLocated result = raw.readLine();</span>
-<span class="pc bpc" id="L96" title="1 of 4 branches missed.">		if (result != null &amp;&amp; StartUtils.isEndDirective(result.getString())) {</span>
-<span class="fc" id="L97">			finished = true;</span>
-<span class="fc" id="L98">			return null;</span>
+<span class="fc" id="L98">		final StringLocated result = raw.readLine();</span>
+<span class="pc bpc" id="L99" title="1 of 4 branches missed.">		if (result != null &amp;&amp; StartUtils.isEndDirective(result.getString())) {</span>
+<span class="fc" id="L100">			finished = true;</span>
+<span class="fc" id="L101">			return null;</span>
 		}
-<span class="fc" id="L100">		return result;</span>
+<span class="fc" id="L103">		return result;</span>
 	}
 
 	public void close() throws IOException {
-<span class="fc" id="L104">		raw.close();</span>
-<span class="fc" id="L105">	}</span>
+<span class="fc" id="L107">		raw.close();</span>
+<span class="fc" id="L108">	}</span>
+
+	/**
+	 * Whether the diagram asked for is there: when it is not, nothing is read.
+	 */
+	public boolean isFound() {
+<span class="fc" id="L114">		return found;</span>
+	}
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

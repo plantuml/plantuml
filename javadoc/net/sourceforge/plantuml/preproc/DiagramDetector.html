@@ -125,9 +125,14 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ReadLine.html" title="interface in net.sourceforge.plantuml.preproc">ReadLine</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#extractFromFile(net.sourceforge.plantuml.nio.InputFile,java.lang.String)" class="member-name-link">extractFromFile</a><wbr>(<a href="../nio/InputFile.html" title="interface in net.sourceforge.plantuml.nio">InputFile</a>&nbsp;f2,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#extractFromFile(net.sourceforge.plantuml.nio.InputFile,java.lang.String,java.lang.String)" class="member-name-link">extractFromFile</a><wbr>(<a href="../nio/InputFile.html" title="interface in net.sourceforge.plantuml.nio">InputFile</a>&nbsp;f2,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;suf)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">The diagram a selector chooses in a file (<code>file!1</code>,
+ <code>file!ID</code>), or its first diagram without one; <code>null</code>
+ when the file holds no diagram, so that it is included whole.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ReadLine.html" title="interface in net.sourceforge.plantuml.preproc">ReadLine</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#extractFromUrl(net.sourceforge.plantuml.security.SURL,net.sourceforge.plantuml.text.StringLocated,java.lang.String,java.nio.charset.Charset)" class="member-name-link">extractFromUrl</a><wbr>(<a href="../security/SURL.html" title="class in net.sourceforge.plantuml.security">SURL</a>&nbsp;url,
  <a href="../text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&nbsp;s,
@@ -192,11 +197,15 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="extractFromFile(net.sourceforge.plantuml.nio.InputFile,java.lang.String)">
+<section class="detail" id="extractFromFile(net.sourceforge.plantuml.nio.InputFile,java.lang.String,java.lang.String)">
 <h3>extractFromFile</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ReadLine.html" title="interface in net.sourceforge.plantuml.preproc">ReadLine</a></span>&nbsp;<span class="element-name">extractFromFile</span><wbr><span class="parameters">(<a href="../nio/InputFile.html" title="interface in net.sourceforge.plantuml.nio">InputFile</a>&nbsp;f2,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description)</span>
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;suf)</span>
                                 throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block">The diagram a selector chooses in a file (<code>file!1</code>,
+ <code>file!ID</code>), or its first diagram without one; <code>null</code>
+ when the file holds no diagram, so that it is included whole.</div>
 <dl class="notes">
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
