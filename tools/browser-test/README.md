@@ -91,11 +91,13 @@ accident, no real bundle is needed, and no layout engine is involved.
 
 ## check-file-loader.js
 
-Checks how the engine reads the file of a local `!include`, which it can only do through the
-host-provided `PLANTUML_FILE_LOADER` callback, since it has no file system:
+Checks how the engine reads the file of a local `!include`, `!includesub` or `!theme ... from`,
+which it can only do through the host-provided `PLANTUML_FILE_LOADER` callback, since it has no
+file system:
 
-- with no loader set, behaviour is unchanged: a local include fails as a PlantUML error image,
-  and diagrams without one are untouched;
+- with no loader set, a local include fails as a PlantUML error image, as it always did, and so
+  does `!includesub` of a file (it used to be dropped silently); diagrams without a local include
+  are untouched;
 - with a loader, a file delivered asynchronously or synchronously is included; the loader
   receives the name the directive asks for (variables expanded, a `file!tag` selector split off)
   and `from = null` for an include in the diagram itself, and the including file's identifier
@@ -105,17 +107,23 @@ host-provided `PLANTUML_FILE_LOADER` callback, since it has no file system:
   `!include_once` reports an error, as in the Java build, and two diagrams of one file are two
   includes; a file holding a whole `@startuml` ... `@enduml` diagram contributes the inside of
   the diagram the selector chooses (`file!1`, `file!ID`), or of its first one, and a selector
-  that chooses none is an error; non-ASCII text arrives unchanged;
+  that chooses none, an invalid ID pattern or an overflowing index is an include error;
+  non-ASCII text arrives unchanged;
+- `!includesub file!PART` takes the sub of a delivered file, `!includesub PART` a sub of the
+  diagram itself (no loader needed), and `!theme NAME from DIR` reads `DIR/puml-theme-NAME.puml`
+  through the loader; its body keeps the caller's `from` (null for the diagram, otherwise
+  the calling file's ID), as in the Java build. An includesub body instead uses the sub file's
+  ID. Both paths restore the caller afterwards; a missing theme reports its name;
 - the first outcome wins (a second `ok`, an `err` after `ok` and an `ok` after a `false` decline
   change nothing), and only a non-empty string id with a string text is a delivery;
 - a loader that fails, throws, declines (returns `false`) or returns a promise that rejects
   makes the include fail as a PlantUML error image, never a hang or an unhandled page error,
   and a failure's message reaches the console; the engine has no timeout, so a loader that
   never settles leaves the rendering waiting, which is documented rather than exercised here;
-- a standard-library include, a URL include and `!includesub` never reach the file loader,
-  and neither does a relative include written in a standard-library file or in a bundled theme,
-  whether the diagram or a delivered file brought it in; the delivered file is `from` again
-  afterwards.
+- a standard-library include, a URL `!include` or `!includesub` and a theme from a URL never
+  reach the file loader, and neither does a relative include written in a standard-library file
+  or in a bundled theme, including through `!includesub` or `!theme ... from`. The caller's
+  `from` is restored afterwards, whether the caller is the diagram or a delivered file.
 
 The files live in an in-memory map on the page, keyed by an absolute path the page's loader
 resolves itself, so no file system is involved and no layout engine either.

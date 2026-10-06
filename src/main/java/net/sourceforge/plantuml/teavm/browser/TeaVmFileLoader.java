@@ -53,9 +53,10 @@ import net.sourceforge.plantuml.nio.InputFile;
 import net.sourceforge.plantuml.nio.NFolder;
 
 /**
- * Reads the file of a local <code>!include</code>, <code>!include_once</code>
- * or <code>!include_many</code> in the browser engine, through a function the
- * host provides.
+ * Reads the file of a local <code>!include</code>, <code>!include_once</code>,
+ * <code>!include_many</code> or <code>!includesub</code>, or of a
+ * <code>!theme ... from</code> a local folder, in the browser engine, through
+ * a function the host provides.
  * <p>
  * The browser engine has no file system, so on its own such an include can
  * only fail. A host that does have files (an editor extension, a desktop
@@ -67,19 +68,24 @@ import net.sourceforge.plantuml.nio.NFolder;
  * </pre>
  * <ul>
  * <li><code>path</code>: the file name the directive asks for, after variables
- * are expanded and a diagram selector (<code>file!tag</code>) is split off.
+ * are expanded and a selector (<code>file!tag</code>) is split off; for
+ * <code>!theme NAME from DIR</code>, <code>DIR/puml-theme-NAME.puml</code>.
  * It is handed over as it is: the engine resolves nothing.</li>
  * <li><code>from</code>: the file whose include is being resolved —
  * <code>null</code> for the diagram itself, otherwise the identifier the host
  * gave to the delivered file being evaluated, so that a relative name can be
- * resolved against that file. A standard-library file or a bundled theme being
+ * resolved against that file. A local theme keeps its caller's
+ * <code>from</code> for directives in its body, matching the Java build:
+ * <code>null</code> if the diagram called it, or the calling file's identifier.
+ * A standard-library file or a bundled theme being
  * evaluated never asks the host (see
  * {@link net.sourceforge.plantuml.nio.PathSystem#withoutHostFiles()}).</li>
  * <li><code>onOk(id, text)</code>: delivers the file. <code>id</code> is any
  * non-empty string that identifies it for the host (typically its absolute
  * path or URI), compared as it is. The include strategies count the identifier
  * together with the selector, so two diagrams of one file are two includes.
- * The includes written in that file receive its identifier as <code>from</code>.</li>
+ * The body of an include or an includesub uses this identifier as
+ * <code>from</code>; a local theme instead keeps its caller's context.</li>
  * <li><code>onErr(reason)</code>: the include fails. The reason is written to
  * the console.</li>
  * </ul>
@@ -95,8 +101,9 @@ import net.sourceforge.plantuml.nio.NFolder;
  * files may be read is decided by the host.
  * <p>
  * The same shape as <code>PLANTUML_STDLIB_LOADER</code> in
- * {@link TeaVmScriptLoader}. With no loader set, local includes fail exactly
- * as before.
+ * {@link TeaVmScriptLoader}. With no loader set, a local include fails, and
+ * so does an includesub of a file, which used to be ignored in the browser.
+ * An includesub of a section in the diagram itself needs no loader.
  */
 public final class TeaVmFileLoader {
 	// ::remove file when JAVA8
