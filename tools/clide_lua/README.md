@@ -188,3 +188,21 @@ turns it off.
 - `public` is read as text off the declaration line (see clide's
   `CLAUDE.md`, known limitations).
 - The script only reports; it changes nothing.
+
+## diagnose_atomic_parser.lua
+
+A diagnostic, not an audit: it asks clide and jdtls the same question about one
+class (`com.plantuml.ubrex.AtomicParser`) through every path clide has, and prints
+the answers side by side, to understand a surprising result of
+`list_could_be_private.lua` (a method reported "never called" that is called).
+It compares `find_symbol` (locations built by jdtls), `list_members`,
+`find_reference`, `find_callers` (another jdtls request), `find_declaration`
+started from a real call site, and a plain text search that does not involve
+jdtls. Nothing is modified.
+
+```
+python3 clide.py --lua tools/clide_lua/diagnose_atomic_parser.lua /path/to/plantuml
+```
+
+Paste the whole output when asking about it. The constants at the top
+(`FILE`, `TYPE`, `CALLER_FILE`, `CALL_REGEX`) point it at another class.
