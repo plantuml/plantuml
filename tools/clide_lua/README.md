@@ -164,6 +164,19 @@ is a partial result, and the last `[i/N]` line says where the daemon was.
 `TRACE_EVERY` (top of the script) prints one progress line every N types;
 `0` turns the progress lines off.
 
+### Cross-check: "never called" can be wrong
+
+`(never called)` means that jdtls found no reference at all. While jdtls has not
+finished indexing the project that is simply what it answers for every method:
+`start_clide.py` can print "ready" before the indexing is over on a project of
+PlantUML's size, and a script started right then lists callable methods as
+unused. Each `(never called)` candidate is therefore also looked for as plain
+text (`name(`) in `src/main/java`, and marked `SUSPECT` when it appears in
+another file. A name shared with an unrelated class gives a harmless false
+alarm; many `SUSPECT` lines mean the index was not ready: wait a few minutes
+after starting the daemon and run the script again. `CROSS_CHECK = false`
+turns it off.
+
 ### Limits
 
 - It is slow: one `find_reference` per public method, so a run on the whole of
