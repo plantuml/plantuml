@@ -208,7 +208,7 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="pc bpc" id="L208" title="1 of 2 branches missed.">		if (imageData == null)</span>
 <span class="nc" id="L209">			return emptyList();</span>
 
-<span class="pc bpc" id="L211" title="1 of 4 branches missed.">		if (imageData.containsCMapData() &amp;&amp; system instanceof TitledDiagram)</span>
+<span class="fc bfc" id="L211" title="All 4 branches covered.">		if (imageData.containsCMapData() &amp;&amp; system instanceof TitledDiagram)</span>
 <span class="fc" id="L212">			((TitledDiagram) system).exportCmap(suggestedFile, 0, imageData);</span>
 
 <span class="fc bfc" id="L214" title="All 4 branches covered.">		if (system instanceof TitledDiagram &amp;&amp; fileFormatOption.getFileFormat() == FileFormat.PNG)</span>
