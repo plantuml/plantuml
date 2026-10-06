@@ -153,6 +153,17 @@ reported as `FAILED`, the audit goes on). A method that implements or overrides
 something cannot be narrowed: it is only counted, unless `SHOW_OVERRIDES` is set
 to `true` at the top of the script.
 
+### Traces
+
+The script prints as it goes: `[i/N] path:line Type` **before** each type is
+examined (the last one seen is the one that was running), and each
+`candidate:` / `FAILED` line as soon as it is known, then the sorted report at
+the end. If the client gives the prompt back before the end (the connection
+dropped while the daemon goes on running the script), what was printed so far
+is a partial result, and the last `[i/N]` line says where the daemon was.
+`TRACE_EVERY` (top of the script) prints one progress line every N types;
+`0` turns the progress lines off.
+
 ### Limits
 
 - It is slow: one `find_reference` per public method, so a run on the whole of
