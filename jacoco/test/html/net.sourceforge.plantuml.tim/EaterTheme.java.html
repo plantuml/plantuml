@@ -65,11 +65,11 @@ public class EaterTheme extends Eater {
 <span class="fc" id="L65">		this.name = this.eatAllToEnd();</span>
 
 <span class="fc" id="L67">		final int x = this.name.toLowerCase().indexOf(&quot; from &quot;);</span>
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (x != -1) {</span>
-<span class="nc" id="L69">			final String fromTmp = this.name.substring(x + &quot; from &quot;.length()).trim();</span>
-<span class="nc" id="L70">			this.from = context.applyFunctionsAndVariables(memory, new StringLocated(fromTmp, getLineLocation()));</span>
-<span class="nc" id="L71">			this.name = this.name.substring(0, x).trim();</span>
-<span class="nc" id="L72">			this.context = context;</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (x != -1) {</span>
+<span class="fc" id="L69">			final String fromTmp = this.name.substring(x + &quot; from &quot;.length()).trim();</span>
+<span class="fc" id="L70">			this.from = context.applyFunctionsAndVariables(memory, new StringLocated(fromTmp, getLineLocation()));</span>
+<span class="fc" id="L71">			this.name = this.name.substring(0, x).trim();</span>
+<span class="fc" id="L72">			this.context = context;</span>
 		}
 
 <span class="fc" id="L75">		this.realName = context.applyFunctionsAndVariables(memory, new StringLocated(this.name, getLineLocation()));</span>
@@ -80,7 +80,7 @@ public class EaterTheme extends Eater {
 		try {
 <span class="fc" id="L81">			final Theme theme = ThemeUtils.loadTheme(pathSystem, realName, from, getStringLocated());</span>
 <span class="fc bfc" id="L82" title="All 2 branches covered.">			if (theme == null) {</span>
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">				final String location = (from == null) ? &quot;&quot; : &quot; in &quot; + from;</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">				final String location = (from == null) ? &quot;&quot; : &quot; in &quot; + from;</span>
 <span class="fc" id="L84">				throw new EaterException(&quot;Cannot load theme &quot; + realName + location, getStringLocated());</span>
 			}
 <span class="fc" id="L86">			return theme;</span>
@@ -94,8 +94,16 @@ public class EaterTheme extends Eater {
 <span class="nc" id="L94">		return name;</span>
 	}
 
+	/**
+	 * Whether the theme is read from a folder (&lt;code&gt;!theme NAME from DIR&lt;/code&gt;)
+	 * rather than bundled, from the standard library or from a URL.
+	 */
+	public boolean isFromLocalFolder() {
+<span class="nc" id="L102">		return ThemeUtils.isLocalFolder(from);</span>
+	}
+
 	public PathSystem getNewImportedFiles() {
-<span class="fc" id="L98">		return pathSystem;</span>
+<span class="fc" id="L106">		return pathSystem;</span>
 	}
 
 }
