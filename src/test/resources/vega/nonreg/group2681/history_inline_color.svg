@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="138px" preserveAspectRatio="none" style="width:84px;height:138px;background:#FFFFFF;" version="1.1" viewBox="0 0 84 138" width="84px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="A" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="12" y="72"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="12" x2="62" y1="96" y2="96"/>
+      <text fill="#000" font-size="14" x="32.319" y="87.889">A</text>
+    </g>
+    <ellipse cx="17" cy="23" fill="#FFD700" rx="11" ry="11" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+    <text fill="#F00" font-size="14" x="11.925" y="26.889">H</text>
+    <ellipse cx="57" cy="23" fill="#FFC0CB" rx="11" ry="11" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="49.213" y="26.889">H*</text>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="30.173,71.764,31.583,62.017,28.817,66.952,23.883,64.186,30.173,71.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M20.125,36.094 C22.806,45.61 25.408,54.849 28.817,66.952" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="43.827,71.764,50.117,64.186,45.183,66.952,42.417,62.017,43.827,71.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M53.875,36.094 C51.194,45.61 48.592,54.849 45.183,66.952" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

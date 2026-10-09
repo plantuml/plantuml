@@ -43,4 +43,9 @@ public class EntityImageDeepHistory extends EntityImagePseudoState {
 		super(entity, "H*");
 
 	}
+
+	@Override
+	protected String[] getImplicitStereotypes() {
+		return new String[] { "history", "deepHistory" };
+	}
 }

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="138px" preserveAspectRatio="none" style="width:140px;height:138px;background:#FFFFFF;" version="1.1" viewBox="0 0 140 138" width="140px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="A" data-source-line="11" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="6" y="72"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="56" y1="96" y2="96"/>
+      <text fill="#000" font-size="14" x="26.319" y="87.889">A</text>
+    </g>
+    <g class="entity" data-qualified-name="B" data-source-line="12" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="74" y="72"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="74" x2="124" y1="96" y2="96"/>
+      <text fill="#000" font-size="14" x="94.319" y="87.889">B</text>
+    </g>
+    <ellipse cx="31" cy="23" fill="#98FB98" rx="11" ry="11" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="25.925" y="26.889">H</text>
+    <ellipse cx="99" cy="23" fill="#FFD700" rx="11" ry="11" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="91.213" y="26.889">H*</text>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="31,71.764,35,62.764,31,66.764,27,62.764,31,71.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M31,36.094 C31,45.61 31,54.662 31,66.764" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0002" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="99,71.764,103,62.764,99,66.764,95,62.764,99,71.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M99,36.094 C99,45.61 99,54.662 99,66.764" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

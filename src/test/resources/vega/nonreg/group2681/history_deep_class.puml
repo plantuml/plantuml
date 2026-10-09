@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+<style>
+stateDiagram {
+  .history {
+    BackGroundColor palegreen
+  }
+  .deephistory {
+    BackGroundColor gold
+  }
+}
+</style>
+state A
+state B
+[H] --> A
+[H*] --> B
+@enduml

@@ -39,6 +39,7 @@ package net.sourceforge.plantuml.svek.image;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -61,6 +62,7 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 	private static final int SIZE = 22;
 	private final TextBlock desc;
 	private final Style style;
+	private final Colors colors;
 
 	public EntityImagePseudoState(Entity entity) {
 		this(entity, "H");
@@ -71,13 +73,31 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 		return StyleQueries.DIAMOND.add(getStyleName());
 	}
 
+	/**
+	 * Stereotype labels every history pseudo-state answers to, whether it was
+	 * written <code>[H]</code>, <code>state h &lt;&lt;history&gt;&gt;</code> or
+	 * the deep variant: this is what makes <code>.history { ... }</code> in a
+	 * <code>&lt;style&gt;</code> block reach all of them. A label such as
+	 * <code>history*</code> cannot be used as a style class name, hence the
+	 * separate {@link #getImplicitStereotypes()} of the deep history.
+	 */
+	protected String[] getImplicitStereotypes() {
+		return new String[] { "history" };
+	}
+
 	public EntityImagePseudoState(Entity entity, String historyText) {
 		super(entity);
 		final Stereotype stereotype = entity.getStereotype();
 
-		this.style = getSkinParam().getCurrentStyleBuilder().getMergedStyle(getStyleQuery().withStereotype(stereotype));
+		StyleQuery query = getStyleQuery().withStereotype(stereotype);
+		for (String implicit : getImplicitStereotypes())
+			query = query.withStereotype(implicit);
 
-		final FontConfiguration fontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
+		this.style = getSkinParam().getCurrentStyleBuilder().getMergedStyle(query);
+		this.colors = entity.getColors();
+
+		final FontConfiguration fontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet(),
+				colors);
 
 		this.desc = Display.create(historyText).create(fontConfiguration, HorizontalAlignment.CENTER, getSkinParam());
 	}
@@ -90,10 +110,11 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 	final public void drawU(UGraphic ug) {
 		final UEllipse circle = UEllipse.build(SIZE, SIZE);
 
-		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
-		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
+		final HColor borderColor = colors.getColor(style, PName.LineColor, getSkinParam().getIHtmlColorSet());
+		final HColor backgroundColor = colors.getColor(style, PName.BackGroundColor,
+				getSkinParam().getIHtmlColorSet());
 		final double shadow = style.getShadowing();
-		final UStroke stroke = style.getStroke();
+		final UStroke stroke = style.getStroke(colors);
 
 		circle.setDeltaShadow(shadow);
 		ug = ug.apply(stroke);

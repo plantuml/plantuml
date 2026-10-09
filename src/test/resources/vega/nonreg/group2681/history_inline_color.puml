@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+state A
+state hi <<history>> <<#gold>> <<##[dotted]blue>> <<###red>>
+state hd <<history*>> <<#pink>>
+hi --> A
+hd --> A
+@enduml
