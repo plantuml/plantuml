@@ -66,6 +66,14 @@ import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
 
 public class PathSystem {
 
+	/**
+	 * Request kinds reported to the browser host's file loader. These values are
+	 * part of the <code>PLANTUML_FILE_LOADER</code> contract (<code>request.kind</code>).
+	 */
+	public static final String KIND_INCLUDE = "include";
+	public static final String KIND_INCLUDESUB = "includesub";
+	public static final String KIND_THEME = "theme";
+
 	public static PathSystem fetch() {
 		// ::comment when JAVA8
 		if (TeaVM.isTeaVM())
@@ -259,23 +267,24 @@ public class PathSystem {
 		return currentFolder;
 	}
 
-	public InputFile getFile(String filename, String suffix) throws IOException {
-		return getInputFile(filename);
-	}
-
 	@Override
 	public String toString() {
 		return currentFolder.toString();
 	}
 
 	public InputFile getInputFile(String path) throws IOException {
-		return getInputFile(path, "include");
+		return getInputFile(path, KIND_INCLUDE);
 	}
 
 	/**
 	 * Reads a file, telling the browser host whether it is requested by an
 	 * include, an includesub or a theme. The kind is informational: the host
 	 * returns the whole file and the engine applies the directive to it.
+	 * <p>
+	 * Outside the browser build there is no host to tell, so the kind is ignored.
+	 *
+	 * @param kind {@link #KIND_INCLUDE}, {@link #KIND_INCLUDESUB} or
+	 *             {@link #KIND_THEME}
 	 */
 	public InputFile getInputFile(String path, String kind) throws IOException {
 		// ::comment when JAVA8
