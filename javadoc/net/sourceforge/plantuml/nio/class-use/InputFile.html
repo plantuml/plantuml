@@ -120,6 +120,13 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code><a href="../InputFile.html" title="interface in net.sourceforge.plantuml.nio">InputFile</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">PathSystem.</span><code><a href="../PathSystem.html#getInputFile(java.lang.String)" class="member-name-link">getInputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../InputFile.html" title="interface in net.sourceforge.plantuml.nio">InputFile</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">PathSystem.</span><code><a href="../PathSystem.html#getInputFile(java.lang.String,java.lang.String)" class="member-name-link">getInputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;kind)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Reads a file, telling the browser host whether it is requested by an
+ include, an includesub or a theme.</div>
+</div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">net.sourceforge.plantuml.nio</a> with parameters of type <a href="../InputFile.html" title="interface in net.sourceforge.plantuml.nio">InputFile</a></span></div>
 <div class="summary-table three-column-summary">
@@ -182,8 +189,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static <a href="../InputFile.html" title="interface in net.sourceforge.plantuml.nio">InputFile</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TeaVmFileLoader.</span><code><a href="../../teavm/browser/TeaVmFileLoader.html#getInputFile(java.lang.String,net.sourceforge.plantuml.nio.NFolder)" class="member-name-link">getInputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path,
- <a href="../NFolder.html" title="interface in net.sourceforge.plantuml.nio">NFolder</a>&nbsp;folder)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TeaVmFileLoader.</span><code><a href="../../teavm/browser/TeaVmFileLoader.html#getInputFile(java.lang.String,net.sourceforge.plantuml.nio.NFolder,java.lang.String)" class="member-name-link">getInputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path,
+ <a href="../NFolder.html" title="interface in net.sourceforge.plantuml.nio">NFolder</a>&nbsp;folder,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;kind)</code></div>
 <div class="col-last even-row-color">
 <div class="block">The file the host delivers for <code>path</code>, or <code>null</code> when
  no loader is set, when the host declines, or when it fails (the reason is

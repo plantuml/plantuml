@@ -104,7 +104,7 @@ loadScripts(document, 'script');</script>
  <code>PLANTUML_FILE_LOADER</code> on the global object:
 
  <pre>
- globalThis.PLANTUML_FILE_LOADER = function (path, from, onOk, onErr) { ... };
+ globalThis.PLANTUML_FILE_LOADER = function (path, from, onOk, onErr, request) { ... };
  </pre>
  <ul>
  <li><code>path</code>: the file name the directive asks for, after variables
@@ -128,6 +128,14 @@ loadScripts(document, 'script');</script>
  <code>from</code>; a local theme instead keeps its caller's context.</li>
  <li><code>onErr(reason)</code>: the include fails. The reason is written to
  the console.</li>
+ <li><code>request.kind</code>: <code>"include"</code> (also for
+ <code>!include_once</code> and <code>!include_many</code>),
+ <code>"includesub"</code> or <code>"theme"</code>. Hosts can distinguish
+ resource policies and diagnostics without inferring the operation from
+ the file name. This describes this request, not whether the file's contents
+ will be evaluated. The host still delivers the whole file; the engine
+ handles selectors, sub extraction and repeated includes. Existing loaders
+ can ignore the fifth argument.</li>
  </ul>
  The first outcome wins: a second callback, an exception or a rejection after
  it changes nothing. Returning <code>false</code> (strictly) before either
@@ -180,8 +188,9 @@ loadScripts(document, 'script');</script>
  <code>null</code> for any other file.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../../nio/InputFile.html" title="interface in net.sourceforge.plantuml.nio">InputFile</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getInputFile(java.lang.String,net.sourceforge.plantuml.nio.NFolder)" class="member-name-link">getInputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path,
- <a href="../../nio/NFolder.html" title="interface in net.sourceforge.plantuml.nio">NFolder</a>&nbsp;folder)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getInputFile(java.lang.String,net.sourceforge.plantuml.nio.NFolder,java.lang.String)" class="member-name-link">getInputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path,
+ <a href="../../nio/NFolder.html" title="interface in net.sourceforge.plantuml.nio">NFolder</a>&nbsp;folder,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;kind)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">The file the host delivers for <code>path</code>, or <code>null</code> when
  no loader is set, when the host declines, or when it fails (the reason is
@@ -206,10 +215,11 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="getInputFile(java.lang.String,net.sourceforge.plantuml.nio.NFolder)">
+<section class="detail" id="getInputFile(java.lang.String,net.sourceforge.plantuml.nio.NFolder,java.lang.String)">
 <h3>getInputFile</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../../nio/InputFile.html" title="interface in net.sourceforge.plantuml.nio">InputFile</a></span>&nbsp;<span class="element-name">getInputFile</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path,
- <a href="../../nio/NFolder.html" title="interface in net.sourceforge.plantuml.nio">NFolder</a>&nbsp;folder)</span></div>
+ <a href="../../nio/NFolder.html" title="interface in net.sourceforge.plantuml.nio">NFolder</a>&nbsp;folder,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;kind)</span></div>
 <div class="block">The file the host delivers for <code>path</code>, or <code>null</code> when
  no loader is set, when the host declines, or when it fails (the reason is
  written to the console, and the include then reports the usual "cannot
@@ -221,6 +231,8 @@ loadScripts(document, 'script');</script>
 <dd><code>folder</code> - where the include is written: <code>null</code> for the
                diagram itself, or the folder of a file this loader
                delivered. Any other folder has no host to ask.</dd>
+<dd><code>kind</code> - <code>"include"</code>, <code>"includesub"</code> or
+               <code>"theme"</code></dd>
 </dl>
 </section>
 </li>

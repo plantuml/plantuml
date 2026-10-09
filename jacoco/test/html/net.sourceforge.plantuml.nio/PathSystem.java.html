@@ -260,7 +260,7 @@ public class PathSystem {
 	}
 
 	public InputFile getFile(String filename, String suffix) throws IOException {
-<span class="fc" id="L263">		return getInputFile(filename);</span>
+<span class="nc" id="L263">		return getInputFile(filename);</span>
 	}
 
 	@Override
@@ -269,84 +269,93 @@ public class PathSystem {
 	}
 
 	public InputFile getInputFile(String path) throws IOException {
+<span class="fc" id="L272">		return getInputFile(path, &quot;include&quot;);</span>
+	}
+
+	/**
+	 * Reads a file, telling the browser host whether it is requested by an
+	 * include, an includesub or a theme. The kind is informational: the host
+	 * returns the whole file and the engine applies the directive to it.
+	 */
+	public InputFile getInputFile(String path, String kind) throws IOException {
 		// ::comment when JAVA8
 		// The browser build has no file system: a local file is whatever the host's
 		// file loader delivers, or null when there is none. A URL and a
 		// standard-library path keep their own routes (TContext handles both
 		// before coming here), and the engine's own files have no host to ask.
-<span class="pc bpc" id="L277" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
-<span class="nc bnc" id="L278" title="All 6 branches missed.">			if (hostFiles == false || path.startsWith(&quot;http://&quot;) || path.startsWith(&quot;https://&quot;)</span>
-<span class="nc bnc" id="L279" title="All 4 branches missed.">					|| (path.startsWith(&quot;&lt;&quot;) &amp;&amp; path.endsWith(&quot;&gt;&quot;)))</span>
-<span class="nc" id="L280">				return null;</span>
-<span class="nc" id="L281">			return TeaVmFileLoader.getInputFile(path, currentFolder);</span>
+<span class="pc bpc" id="L286" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
+<span class="nc bnc" id="L287" title="All 6 branches missed.">			if (hostFiles == false || path.startsWith(&quot;http://&quot;) || path.startsWith(&quot;https://&quot;)</span>
+<span class="nc bnc" id="L288" title="All 4 branches missed.">					|| (path.startsWith(&quot;&lt;&quot;) &amp;&amp; path.endsWith(&quot;&gt;&quot;)))</span>
+<span class="nc" id="L289">				return null;</span>
+<span class="nc" id="L290">			return TeaVmFileLoader.getInputFile(path, currentFolder, kind);</span>
 		}
 		// ::done
 
-<span class="pc bpc" id="L285" title="1 of 4 branches missed.">		if (path.startsWith(&quot;http://&quot;) || path.startsWith(&quot;https://&quot;)) {</span>
-<span class="fc" id="L286">			final SURL url = SURL.create(path);</span>
-<span class="pc bpc" id="L287" title="1 of 2 branches missed.">			if (url == null)</span>
-<span class="nc" id="L288">				throw new IOException(&quot;Cannot open URL &quot; + path);</span>
-<span class="fc" id="L289">			return new InputFileUrl(url);</span>
+<span class="pc bpc" id="L294" title="1 of 4 branches missed.">		if (path.startsWith(&quot;http://&quot;) || path.startsWith(&quot;https://&quot;)) {</span>
+<span class="fc" id="L295">			final SURL url = SURL.create(path);</span>
+<span class="pc bpc" id="L296" title="1 of 2 branches missed.">			if (url == null)</span>
+<span class="nc" id="L297">				throw new IOException(&quot;Cannot open URL &quot; + path);</span>
+<span class="fc" id="L298">			return new InputFileUrl(url);</span>
 		}
 
-<span class="pc bpc" id="L292" title="1 of 4 branches missed.">		if (path.startsWith(&quot;&lt;&quot;) &amp;&amp; path.endsWith(&quot;&gt;&quot;)) {</span>
-<span class="fc" id="L293">			final String full = path.substring(1, path.length() - 1).toLowerCase();</span>
-<span class="fc" id="L294">			final String libname = full.substring(0, full.indexOf('/'));</span>
-<span class="fc" id="L295">			final String filepath = full.substring(libname.length() + 1);</span>
-<span class="fc" id="L296">			return new InputFileStdlib(Stdlib.retrieve(libname), Paths.get(filepath));</span>
+<span class="pc bpc" id="L301" title="1 of 4 branches missed.">		if (path.startsWith(&quot;&lt;&quot;) &amp;&amp; path.endsWith(&quot;&gt;&quot;)) {</span>
+<span class="fc" id="L302">			final String full = path.substring(1, path.length() - 1).toLowerCase();</span>
+<span class="fc" id="L303">			final String libname = full.substring(0, full.indexOf('/'));</span>
+<span class="fc" id="L304">			final String filepath = full.substring(libname.length() + 1);</span>
+<span class="fc" id="L305">			return new InputFileStdlib(Stdlib.retrieve(libname), Paths.get(filepath));</span>
 		}
 
-<span class="fc bfc" id="L299" title="All 2 branches covered.">		if (path.startsWith(&quot;::&quot;)) {</span>
+<span class="fc bfc" id="L308" title="All 2 branches covered.">		if (path.startsWith(&quot;::&quot;)) {</span>
 			// non-standard syntax: resolve from process launch directory
-<span class="fc" id="L301">			String rel = path.substring(2); // remove leading &quot;::&quot;</span>
+<span class="fc" id="L310">			String rel = path.substring(2); // remove leading &quot;::&quot;</span>
 			// allow both ::/foo.puml and ::./foo.puml
-<span class="pc bpc" id="L303" title="1 of 2 branches missed.">			if (rel.startsWith(&quot;/&quot;))</span>
-<span class="nc" id="L304">				rel = rel.substring(1);</span>
-<span class="fc" id="L305">			final Path target = Paths.get(&quot;&quot;).toAbsolutePath().resolve(rel).normalize();</span>
-<span class="fc" id="L306">			final SFile result = SFile.fromFile(target.toFile());</span>
-<span class="pc bpc" id="L307" title="1 of 2 branches missed.">			if (result.isFileOk())</span>
-<span class="fc" id="L308">				return result;</span>
-<span class="nc" id="L309">			return null;</span>
-		}
-<span class="fc bfc" id="L311" title="All 2 branches covered.">		if (path.startsWith(&quot;~/&quot;)) {</span>
-			// Expand to the user's home directory
-<span class="fc" id="L313">			final String home = System.getProperty(&quot;user.home&quot;);</span>
-<span class="fc" id="L314">			final Path homePath = Paths.get(home).resolve(path.substring(2)).normalize();</span>
-<span class="fc" id="L315">			final SFile result = SFile.fromFile(homePath.toFile());</span>
+<span class="pc bpc" id="L312" title="1 of 2 branches missed.">			if (rel.startsWith(&quot;/&quot;))</span>
+<span class="nc" id="L313">				rel = rel.substring(1);</span>
+<span class="fc" id="L314">			final Path target = Paths.get(&quot;&quot;).toAbsolutePath().resolve(rel).normalize();</span>
+<span class="fc" id="L315">			final SFile result = SFile.fromFile(target.toFile());</span>
 <span class="pc bpc" id="L316" title="1 of 2 branches missed.">			if (result.isFileOk())</span>
 <span class="fc" id="L317">				return result;</span>
 <span class="nc" id="L318">			return null;</span>
 		}
+<span class="fc bfc" id="L320" title="All 2 branches covered.">		if (path.startsWith(&quot;~/&quot;)) {</span>
+			// Expand to the user's home directory
+<span class="fc" id="L322">			final String home = System.getProperty(&quot;user.home&quot;);</span>
+<span class="fc" id="L323">			final Path homePath = Paths.get(home).resolve(path.substring(2)).normalize();</span>
+<span class="fc" id="L324">			final SFile result = SFile.fromFile(homePath.toFile());</span>
+<span class="pc bpc" id="L325" title="1 of 2 branches missed.">			if (result.isFileOk())</span>
+<span class="fc" id="L326">				return result;</span>
+<span class="nc" id="L327">			return null;</span>
+		}
 
-<span class="fc" id="L321">		final InputFile result = currentFolder.getInputFile(Paths.get(path));</span>
+<span class="fc" id="L330">		final InputFile result = currentFolder.getInputFile(Paths.get(path));</span>
 		// NFolderZip never returns null, so check that the entry really exists
-<span class="fc bfc" id="L323" title="All 2 branches covered.">		final boolean missingInCurrentArchive = currentFolder instanceof NFolderZip</span>
-<span class="fc bfc" id="L324" title="All 2 branches covered.">				&amp;&amp; ((NFolderZip) currentFolder).contains(Paths.get(path)) == false;</span>
-<span class="fc bfc" id="L325" title="All 4 branches covered.">		if (result != null &amp;&amp; missingInCurrentArchive == false)</span>
-<span class="fc" id="L326">			return result;</span>
+<span class="fc bfc" id="L332" title="All 2 branches covered.">		final boolean missingInCurrentArchive = currentFolder instanceof NFolderZip</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">				&amp;&amp; ((NFolderZip) currentFolder).contains(Paths.get(path)) == false;</span>
+<span class="fc bfc" id="L334" title="All 4 branches covered.">		if (result != null &amp;&amp; missingInCurrentArchive == false)</span>
+<span class="fc" id="L335">			return result;</span>
 
 		// Not found from the current directory: look inside the archives given to
 		// !import, using the path as is (relative to the root of each archive).
-<span class="fc bfc" id="L330" title="All 2 branches covered.">		for (NFolderZip imported : importedFolders)</span>
-<span class="fc bfc" id="L331" title="All 2 branches covered.">			if (imported.contains(Paths.get(path)))</span>
-<span class="fc" id="L332">				return imported.getInputFile(Paths.get(path));</span>
+<span class="fc bfc" id="L339" title="All 2 branches covered.">		for (NFolderZip imported : importedFolders)</span>
+<span class="fc bfc" id="L340" title="All 2 branches covered.">			if (imported.contains(Paths.get(path)))</span>
+<span class="fc" id="L341">				return imported.getInputFile(Paths.get(path));</span>
 
 		// null for a regular folder; for an archive, an InputFile that reports the
 		// missing entry when read
-<span class="fc" id="L336">		return result;</span>
+<span class="fc" id="L345">		return result;</span>
 	}
 
 	public static void main(String[] args) {
-<span class="nc" id="L340">		System.out.println(PathSystem.fetch());</span>
-<span class="nc" id="L341">	}</span>
+<span class="nc" id="L349">		System.out.println(PathSystem.fetch());</span>
+<span class="nc" id="L350">	}</span>
 
 	public void addImportFile(SFile file) {
-<span class="fc" id="L344">		final NFolderZip zip = new NFolderZip(file.conv());</span>
-<span class="pc bpc" id="L345" title="1 of 2 branches missed.">		for (NFolderZip already : importedFolders)</span>
-<span class="nc bnc" id="L346" title="All 2 branches missed.">			if (already.toString().equals(zip.toString()))</span>
-<span class="nc" id="L347">				return;</span>
-<span class="fc" id="L348">		importedFolders.add(zip);</span>
-<span class="fc" id="L349">	}</span>
+<span class="fc" id="L353">		final NFolderZip zip = new NFolderZip(file.conv());</span>
+<span class="pc bpc" id="L354" title="1 of 2 branches missed.">		for (NFolderZip already : importedFolders)</span>
+<span class="nc bnc" id="L355" title="All 2 branches missed.">			if (already.toString().equals(zip.toString()))</span>
+<span class="nc" id="L356">				return;</span>
+<span class="fc" id="L357">		importedFolders.add(zip);</span>
+<span class="fc" id="L358">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
