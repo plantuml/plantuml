@@ -114,6 +114,10 @@ file system:
   through the loader; its body keeps the caller's `from` (null for the diagram, otherwise
   the calling file's ID), as in the Java build. An includesub body instead uses the sub file's
   ID. Both paths restore the caller afterwards; a missing theme reports its name;
+- a fifth argument identifies the request kind (`include`, `includesub` or `theme`),
+  including when a variable chooses the theme and when an ordinary include names a theme
+  file; nested requests report their own kind. A host can allow themes while refusing
+  includes of the same path, and existing four-parameter loaders still work;
 - the first outcome wins (a second `ok`, an `err` after `ok` and an `ok` after a `false` decline
   change nothing), and only a non-empty string id with a string text is a delivery;
 - a loader that fails, throws, declines (returns `false`) or returns a promise that rejects

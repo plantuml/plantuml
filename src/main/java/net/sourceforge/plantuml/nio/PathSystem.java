@@ -269,6 +269,15 @@ public class PathSystem {
 	}
 
 	public InputFile getInputFile(String path) throws IOException {
+		return getInputFile(path, "include");
+	}
+
+	/**
+	 * Reads a file, telling the browser host whether it is requested by an
+	 * include, an includesub or a theme. The kind is informational: the host
+	 * returns the whole file and the engine applies the directive to it.
+	 */
+	public InputFile getInputFile(String path, String kind) throws IOException {
 		// ::comment when JAVA8
 		// The browser build has no file system: a local file is whatever the host's
 		// file loader delivers, or null when there is none. A URL and a
@@ -278,7 +287,7 @@ public class PathSystem {
 			if (hostFiles == false || path.startsWith("http://") || path.startsWith("https://")
 					|| (path.startsWith("<") && path.endsWith(">")))
 				return null;
-			return TeaVmFileLoader.getInputFile(path, currentFolder);
+			return TeaVmFileLoader.getInputFile(path, currentFolder, kind);
 		}
 		// ::done
 

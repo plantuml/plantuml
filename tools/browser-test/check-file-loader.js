@@ -110,8 +110,8 @@ function resolve(base, rel) {
   }
   return '/' + out.join('/');
 }
-window.PLANTUML_FILE_LOADER = function (path, from, onOk, onErr) {
-  window.__loaderCalls.push({ path: path, from: from });
+window.PLANTUML_FILE_LOADER = function (path, from, onOk, onErr, request) {
+  window.__loaderCalls.push({ path: path, from: from, request: request });
   ${mode === 'decline' ? 'return false;' : ''}
   ${mode === 'throw' ? "throw new Error('loader exploded (simulated)');" : ''}
   ${mode === 'reject' ? "return (async function () { await new Promise(function (r) { setTimeout(r, 5); }); throw new Error('rejected after await (simulated)'); })();" : ''}
@@ -174,6 +174,7 @@ const failsAsIncludeError = r => !r.thrown && !!r.svg && isErrorImage(r.svg);
 const renderedAs = r => r.thrown || (r.svg ? (isErrorImage(r.svg) ? 'error image: ' + r.text.slice(0, 120)
   : 'svg without the expected content') : 'no svg: ' + r.text.slice(0, 120));
 const calls = r => JSON.stringify(r.loaderCalls || []);
+const locations = r => JSON.stringify((r.loaderCalls || []).map(({ path, from }) => ({ path, from })));
 
 (async () => {
   const port = await startServer(server);
@@ -310,7 +311,7 @@ const calls = r => JSON.stringify(r.loaderCalls || []);
   r = await renderOn(hook.page, diagram('!includesub common/subs.puml!PART', '!include greeting.puml'), opts);
   check('!includesub uses the delivered file as from and restores its caller afterwards',
     renders(r, 'Hello from leaf', 'Hello from greeting')
-    && calls(r) === JSON.stringify([
+    && locations(r) === JSON.stringify([
       { path: 'common/subs.puml', from: null },
       { path: '../parts/leaf.puml', from: '/project/docs/common/subs.puml' },
       { path: 'greeting.puml', from: null },
@@ -328,7 +329,7 @@ const calls = r => JSON.stringify(r.loaderCalls || []);
   r = await renderOn(hook.page, diagram('!theme including from themes'), opts);
   check('a local theme called by the diagram keeps from = null for its relative include',
     renders(r, 'Hello from greeting') && !r.svg.includes('WRONG_THEME_FOLDER')
-    && calls(r) === JSON.stringify([
+    && locations(r) === JSON.stringify([
       { path: 'themes/puml-theme-including.puml', from: null },
       { path: 'greeting.puml', from: null },
     ]),
@@ -337,7 +338,7 @@ const calls = r => JSON.stringify(r.loaderCalls || []);
   r = await renderOn(hook.page, diagram('!include common/themed.puml', '!include greeting.puml'), opts);
   check('a local theme keeps the calling file as from and restores the diagram afterwards',
     renders(r, 'Hello from theme caller', 'Hello after theme', 'Hello from greeting')
-    && !r.svg.includes('WRONG_THEME_FOLDER') && calls(r) === JSON.stringify([
+    && !r.svg.includes('WRONG_THEME_FOLDER') && locations(r) === JSON.stringify([
       { path: 'common/themed.puml', from: null },
       { path: '../themes/puml-theme-including.puml', from: '/project/docs/common/themed.puml' },
       { path: 'greeting.puml', from: '/project/docs/common/themed.puml' },
@@ -348,7 +349,7 @@ const calls = r => JSON.stringify(r.loaderCalls || []);
   r = await renderOn(hook.page, diagram('!theme missing from themes'), opts);
   check('a theme file refused by the loader reports the theme name without a fatal parsing error',
     failsAsIncludeError(r) && r.svg.includes('Cannot load theme missing in themes')
-    && !r.svg.includes('Fatal parsing error') && calls(r) === JSON.stringify([
+    && !r.svg.includes('Fatal parsing error') && locations(r) === JSON.stringify([
       { path: 'themes/puml-theme-missing.puml', from: null },
     ]), renderedAs(r) + '; calls: ' + calls(r));
   for (const what of ['!include <guardlib/sub>', '!include <guardlib/theme>',
@@ -389,6 +390,54 @@ const calls = r => JSON.stringify(r.loaderCalls || []);
       renderedAs(r) + '; calls: ' + calls(r));
   }
   check('no unhandled page errors on the hook page', hook.errors.length === 0, hook.errors.join(' | '));
+
+  // Resource policy and diagnostics need the operation, not a guess based on
+  // the filename. The host still delivers the whole file; selection is the
+  // engine's job, and a request does not prove its contents were evaluated.
+  for (const [lines, kinds] of [
+    [['!include greeting.puml'], ['include']],
+    [['!include_once greeting.puml'], ['include']],
+    [['!include_many greeting.puml'], ['include']],
+    [['!include two.puml!SECOND'], ['include']],
+    [['!includesub common/subs.puml!PART'], ['includesub', 'include']],
+    [['!theme local from themes'], ['theme']],
+    [['!include themes/puml-theme-local.puml'], ['include']],
+    [['!$theme = "local"', '!theme $theme from themes'], ['theme']],
+    [['!include common/themed.puml'], ['include', 'theme', 'include', 'include']],
+  ]) {
+    await hook.page.evaluate(() => { window.__loaderCalls.length = 0; });
+    r = await renderOn(hook.page, diagram(...lines), opts);
+    check('the loader knows the request kinds of ' + lines.join('; '),
+      JSON.stringify(r.loaderCalls.map(c => c.request && c.request.kind)) === JSON.stringify(kinds),
+      calls(r));
+  }
+
+  // A host can apply different policies to a theme and an ordinary include
+  // of the very same path, without parsing the diagram or the file name.
+  await hook.page.evaluate(() => {
+    window.__originalFileLoader = window.PLANTUML_FILE_LOADER;
+    window.PLANTUML_FILE_LOADER = function(path, from, ok, err, request) {
+      if (!request || request.kind !== 'theme') { err('only themes allowed'); return; }
+      return window.__originalFileLoader(path, from, ok, err, request);
+    };
+  });
+  r = await renderOn(hook.page, diagram('!theme local from themes'), opts);
+  check('a theme-only host accepts a local theme', renders(r, 'ping'), renderedAs(r));
+  r = await renderOn(hook.page, diagram('!include themes/puml-theme-local.puml'), opts);
+  check('a theme-only host refuses an ordinary include of the same path', failsAsIncludeError(r), renderedAs(r));
+
+  // Existing loaders may keep their four parameters and ignore the addition.
+  await hook.page.evaluate(() => {
+    window.PLANTUML_FILE_LOADER = function(path, from, ok, err) {
+      return window.__originalFileLoader(path, from, ok, err);
+    };
+  });
+  r = await renderOn(hook.page, diagram('!include two.puml!SECOND'), opts);
+  check('a four-parameter loader still delivers a selected diagram',
+    renders(r, 'Hello from second') && !r.svg.includes('Hello from first'), renderedAs(r));
+  r = await renderOn(hook.page, diagram('!theme local from themes'), opts);
+  check('a four-parameter loader still delivers a theme', renders(r, 'ping'), renderedAs(r));
+  check('no unhandled page errors after inspecting request kinds', hook.errors.length === 0, hook.errors.join(' | '));
 
   // Page 3: a loader that answers synchronously, from inside the call.
   const sync = await openPage('index-sync.html');

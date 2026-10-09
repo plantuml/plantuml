@@ -506,7 +506,7 @@ public class TContext {
 				final String filename = what.substring(0, idx);
 				final String blocname = what.substring(idx + 1);
 				try {
-					final InputFile f2 = pathSystem.getFile(filename, null);
+					final InputFile f2 = pathSystem.getInputFile(filename, "includesub");
 					if (f2 != null) {
 						saveImportedFiles = this.pathSystem;
 						this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());
