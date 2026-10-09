@@ -96,18 +96,18 @@ public final class RoundedContainer {
 <span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (nameHeight &gt; 0)</span>
 <span class="fc" id="L97">			ug.apply(UTranslate.dy(nameHeight)).draw(ULine.hline(dim.getWidth()));</span>
 
-<span class="pc bpc" id="L99" title="3 of 4 branches missed.">		if (descriptionHeight &gt; 0 &amp;&amp; nameHeight + descriptionHeight &gt; 0)</span>
-<span class="nc" id="L100">			ug.apply(UTranslate.dy(nameHeight + descriptionHeight)).draw(ULine.hline(dim.getWidth()));</span>
+<span class="pc bpc" id="L99" title="1 of 4 branches missed.">		if (descriptionHeight &gt; 0 &amp;&amp; nameHeight + descriptionHeight &gt; 0)</span>
+<span class="fc" id="L100">			ug.apply(UTranslate.dy(nameHeight + descriptionHeight)).draw(ULine.hline(dim.getWidth()));</span>
 
 <span class="fc" id="L102">	}</span>
 
 	private void drawCenter(UGraphic ug) {
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		if (descriptionHeight == 0)</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (descriptionHeight == 0)</span>
 <span class="fc" id="L106">			return;</span>
-<span class="nc" id="L107">		final URectangle rect = URectangle.build(dim.getWidth(), descriptionHeight);</span>
-<span class="nc" id="L108">		ug = ug.apply(UStroke.simple()).apply(centerBackcolor).apply(centerBackcolor.bg());</span>
-<span class="nc" id="L109">		ug.apply(UTranslate.dy(nameHeight)).draw(rect);</span>
+<span class="fc" id="L107">		final URectangle rect = URectangle.build(dim.getWidth(), descriptionHeight);</span>
+<span class="fc" id="L108">		ug = ug.apply(UStroke.simple()).apply(centerBackcolor).apply(centerBackcolor.bg());</span>
+<span class="fc" id="L109">		ug.apply(UTranslate.dy(nameHeight)).draw(rect);</span>
 
-<span class="nc" id="L111">	}</span>
+<span class="fc" id="L111">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -266,7 +266,7 @@ public class Style {
 	public FontConfiguration getFontConfiguration(HColorSet set, Colors colors) {
 <span class="fc" id="L267">		final UFont font = getUFont();</span>
 <span class="fc bfc" id="L268" title="All 2 branches covered.">		HColor color = colors == null ? null : colors.getColor(ColorType.TEXT);</span>
-<span class="pc bpc" id="L269" title="1 of 2 branches missed.">		if (color == null)</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">		if (color == null)</span>
 <span class="fc" id="L270">			color = value(PName.FontColor).asColor(set);</span>
 
 <span class="fc" id="L272">		final HColor hyperlinkColor = value(PName.HyperLinkColor).asColor(set);</span>
@@ -328,10 +328,10 @@ public class Style {
 
 	public UStroke getStroke(Colors colors) {
 <span class="fc" id="L330">		final UStroke stroke = colors.getSpecificLineStroke();</span>
-<span class="pc bpc" id="L331" title="1 of 2 branches missed.">		if (stroke == null)</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">		if (stroke == null)</span>
 <span class="fc" id="L332">			return getStroke();</span>
 
-<span class="nc" id="L334">		return stroke;</span>
+<span class="fc" id="L334">		return stroke;</span>
 	}
 
 	public LineBreakStrategy wrapWidth() {

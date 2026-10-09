@@ -99,8 +99,8 @@ public class CommandAddField extends SingleLineCommand2&lt;StateDiagram&gt; {
 <span class="fc" id="L99">		final String codeString = arg.getLazzy(&quot;CODE&quot;, 0);</span>
 
 		final Quark&lt;Entity&gt; quark;
-<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (diagram.getCurrentGroup().getName().equals(codeString))</span>
-<span class="nc" id="L103">			quark = diagram.getCurrentGroup().getQuark();</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">		if (diagram.getCurrentGroup().getName().equals(codeString))</span>
+<span class="fc" id="L103">			quark = diagram.getCurrentGroup().getQuark();</span>
 		else
 <span class="fc" id="L105">			quark = diagram.quarkInContext(true, diagram.cleanId(codeString));</span>
 

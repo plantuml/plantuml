@@ -183,7 +183,7 @@ public class CommandCreateState extends SingleLineCommand2&lt;StateDiagram&gt; {
 <span class="fc" id="L183">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(idShort));</span>
 
 <span class="fc" id="L185">		String display = arg.getLazzy(&quot;DISPLAY&quot;, 0);</span>
-<span class="pc bpc" id="L186" title="1 of 2 branches missed.">		if (display == null)</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">		if (display == null)</span>
 <span class="fc" id="L187">			display = quark.getName();</span>
 
 <span class="fc" id="L189">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>

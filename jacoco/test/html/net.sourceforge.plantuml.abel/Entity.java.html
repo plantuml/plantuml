@@ -614,22 +614,22 @@ import net.sourceforge.plantuml.utils.Position;
 <span class="fc" id="L614">				skinParam.getCurrentStyleBuilder());</span>
 <span class="fc" id="L615">		final List&lt;CharSequence&gt; details = getBodier().getRawBody();</span>
 
-<span class="pc bpc" id="L617" title="1 of 2 branches missed.">		if (details.size() == 0)</span>
+<span class="fc bfc" id="L617" title="All 2 branches covered.">		if (details.size() == 0)</span>
 <span class="fc" id="L618">			return new TextBlockEmpty();</span>
 
-<span class="nc bnc" id="L620" title="All 2 branches missed.">		if (style == null)</span>
+<span class="pc bpc" id="L620" title="1 of 2 branches missed.">		if (style == null)</span>
 <span class="nc" id="L621">			throw new IllegalArgumentException();</span>
-<span class="nc" id="L622">		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, style);</span>
+<span class="fc" id="L622">		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, style);</span>
 
-<span class="nc" id="L624">		Display display = null;</span>
-<span class="nc bnc" id="L625" title="All 2 branches missed.">		for (CharSequence s : details)</span>
-<span class="nc bnc" id="L626" title="All 2 branches missed.">			if (display == null)</span>
-<span class="nc" id="L627">				display = Display.getWithNewlines(skinParam.getPragma(), s.toString());</span>
+<span class="fc" id="L624">		Display display = null;</span>
+<span class="fc bfc" id="L625" title="All 2 branches covered.">		for (CharSequence s : details)</span>
+<span class="pc bpc" id="L626" title="1 of 2 branches missed.">			if (display == null)</span>
+<span class="fc" id="L627">				display = Display.getWithNewlines(skinParam.getPragma(), s.toString());</span>
 			else
 <span class="nc" id="L629">				display = display.addAll(Display.getWithNewlines(skinParam.getPragma(), s.toString()));</span>
 
-<span class="nc" id="L631">		final HorizontalAlignment horizontalAlignment = style.getHorizontalAlignment();</span>
-<span class="nc" id="L632">		return display.create(fontConfiguration, horizontalAlignment, skinParam);</span>
+<span class="fc" id="L631">		final HorizontalAlignment horizontalAlignment = style.getHorizontalAlignment();</span>
+<span class="fc" id="L632">		return display.create(fontConfiguration, horizontalAlignment, skinParam);</span>
 
 	}
 

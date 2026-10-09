@@ -101,18 +101,18 @@ public final class InnerStateAutonom extends TextBlockMemoized implements IEntit
 <span class="fc" id="L101">		this.url = group.getUrl99();</span>
 
 <span class="fc" id="L103">		this.stroke = group.getColors().getSpecificLineStroke();</span>
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (this.stroke == null)</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		if (this.stroke == null)</span>
 <span class="fc" id="L105">			this.stroke = style.getStroke();</span>
 
 <span class="fc" id="L107">		this.borderColor = group.getColors().getColor(ColorType.LINE);</span>
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (this.borderColor == null)</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		if (this.borderColor == null)</span>
 <span class="fc" id="L109">			this.borderColor = style.value(PName.LineColor).asColor(colorSet);</span>
 
 <span class="fc" id="L111">		this.northBackcolor = group.getColors().getColor(ColorType.BACK);</span>
 <span class="fc" id="L112">		this.centerBackColor = this.northBackcolor;</span>
 <span class="fc" id="L113">		this.southBackcolor = this.northBackcolor;</span>
 
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (this.northBackcolor == null) {</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		if (this.northBackcolor == null) {</span>
 <span class="fc" id="L116">			this.northBackcolor = styleBuilder</span>
 <span class="fc" id="L117">					.getMergedStyle(</span>
 <span class="fc" id="L118">							EntityImageStateCommon.STYLE.add(SName.name).withStereotype(group.getStereotype()))</span>

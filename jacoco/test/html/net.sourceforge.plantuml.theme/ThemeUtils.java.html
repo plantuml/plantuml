@@ -170,7 +170,7 @@ import net.sourceforge.plantuml.utils.Log;
 		}
 
 		// Then try local file
-<span class="fc" id="L173">		final InputFile localFile = pathSystem.getInputFile(getFilename(name), &quot;theme&quot;);</span>
+<span class="fc" id="L173">		final InputFile localFile = pathSystem.getInputFile(getFilename(name), PathSystem.KIND_THEME);</span>
 <span class="pc bpc" id="L174" title="1 of 2 branches missed.">		if (localFile != null) {</span>
 <span class="nc" id="L175">			final Reader br = localFile.getReader(UTF_8);</span>
 <span class="nc bnc" id="L176" title="All 2 branches missed.">			if (br != null)</span>
@@ -210,7 +210,7 @@ import net.sourceforge.plantuml.utils.Log;
 	}
 
 	private static Theme loadFileTheme(PathSystem pathSystem, String name, String from) throws IOException {
-<span class="fc" id="L213">		final InputFile file = pathSystem.getInputFile(getFullPath(from, name), &quot;theme&quot;);</span>
+<span class="fc" id="L213">		final InputFile file = pathSystem.getInputFile(getFullPath(from, name), PathSystem.KIND_THEME);</span>
 <span class="fc bfc" id="L214" title="All 2 branches covered.">		if (file == null)</span>
 <span class="fc" id="L215">			return null;</span>
 

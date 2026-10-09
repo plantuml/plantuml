@@ -123,20 +123,20 @@ import net.sourceforge.plantuml.utils.LineLocation;
 	}
 
 	public Entity getHistorical(LineLocation location) {
-<span class="nc" id="L126">		final Entity g = getCurrentGroup();</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (g.isRoot()) {</span>
-<span class="nc" id="L128">			final String idShort = &quot;*historical*&quot;;</span>
-<span class="nc" id="L129">			final Quark&lt;Entity&gt; quark = quarkInContext(true, cleanId(idShort));</span>
-<span class="nc bnc" id="L130" title="All 2 branches missed.">			if (quark.getData() == null)</span>
-<span class="nc" id="L131">				reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), &quot;&quot;), LeafType.PSEUDO_STATE,</span>
+<span class="fc" id="L126">		final Entity g = getCurrentGroup();</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		if (g.isRoot()) {</span>
+<span class="fc" id="L128">			final String idShort = &quot;*historical*&quot;;</span>
+<span class="fc" id="L129">			final Quark&lt;Entity&gt; quark = quarkInContext(true, cleanId(idShort));</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">			if (quark.getData() == null)</span>
+<span class="fc" id="L131">				reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), &quot;&quot;), LeafType.PSEUDO_STATE,</span>
 						null);
-<span class="nc" id="L133">			return quark.getData();</span>
+<span class="fc" id="L133">			return quark.getData();</span>
 		}
-<span class="nc" id="L135">		final String idShort = &quot;*historical*&quot; + g.getName();</span>
-<span class="nc" id="L136">		final Quark&lt;Entity&gt; quark = quarkInContext(true, cleanId(idShort));</span>
-<span class="nc bnc" id="L137" title="All 2 branches missed.">		if (quark.getData() == null)</span>
-<span class="nc" id="L138">			reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), &quot;&quot;), LeafType.PSEUDO_STATE, null);</span>
-<span class="nc" id="L139">		return quark.getData();</span>
+<span class="fc" id="L135">		final String idShort = &quot;*historical*&quot; + g.getName();</span>
+<span class="fc" id="L136">		final Quark&lt;Entity&gt; quark = quarkInContext(true, cleanId(idShort));</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (quark.getData() == null)</span>
+<span class="fc" id="L138">			reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), &quot;&quot;), LeafType.PSEUDO_STATE, null);</span>
+<span class="fc" id="L139">		return quark.getData();</span>
 	}
 
 	public Entity getHistorical(LineLocation location, String idShort) {
@@ -156,14 +156,14 @@ import net.sourceforge.plantuml.utils.LineLocation;
 	}
 
 	public Entity getDeepHistory(LineLocation location) {
-<span class="nc" id="L159">		final Entity g = getCurrentGroup();</span>
-<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (g.isRoot()) {</span>
-<span class="nc" id="L161">			final String idShort = &quot;*deephistory*&quot;;</span>
-<span class="nc" id="L162">			final Quark&lt;Entity&gt; quark = quarkInContext(true, cleanId(idShort));</span>
-<span class="nc bnc" id="L163" title="All 2 branches missed.">			if (quark.getData() == null)</span>
-<span class="nc" id="L164">				reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), &quot;&quot;), LeafType.DEEP_HISTORY,</span>
+<span class="fc" id="L159">		final Entity g = getCurrentGroup();</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">		if (g.isRoot()) {</span>
+<span class="fc" id="L161">			final String idShort = &quot;*deephistory*&quot;;</span>
+<span class="fc" id="L162">			final Quark&lt;Entity&gt; quark = quarkInContext(true, cleanId(idShort));</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">			if (quark.getData() == null)</span>
+<span class="fc" id="L164">				reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), &quot;&quot;), LeafType.DEEP_HISTORY,</span>
 						null);
-<span class="nc" id="L166">			return quark.getData();</span>
+<span class="fc" id="L166">			return quark.getData();</span>
 		}
 
 <span class="nc" id="L169">		final String idShort = &quot;*deephistory*&quot; + g.getName();</span>

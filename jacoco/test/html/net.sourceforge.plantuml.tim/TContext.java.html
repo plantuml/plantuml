@@ -506,7 +506,7 @@ public class TContext {
 <span class="fc" id="L506">				final String filename = what.substring(0, idx);</span>
 <span class="fc" id="L507">				final String blocname = what.substring(idx + 1);</span>
 				try {
-<span class="fc" id="L509">					final InputFile f2 = pathSystem.getInputFile(filename, &quot;includesub&quot;);</span>
+<span class="fc" id="L509">					final InputFile f2 = pathSystem.getInputFile(filename, PathSystem.KIND_INCLUDESUB);</span>
 <span class="pc bpc" id="L510" title="1 of 2 branches missed.">					if (f2 != null) {</span>
 <span class="fc" id="L511">						saveImportedFiles = this.pathSystem;</span>
 <span class="fc" id="L512">						this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());</span>

@@ -88,8 +88,8 @@ public final class GroupMakerStateSmetana {
 <span class="fc" id="L88">	}</span>
 
 	public IEntityImage getImage() {
-<span class="pc bpc" id="L91" title="3 of 4 branches missed.">		if (group.countChildren() == 0 &amp;&amp; group.groups().size() == 0)</span>
-<span class="nc" id="L92">			return new EntityImageState(group);</span>
+<span class="pc bpc" id="L91" title="1 of 4 branches missed.">		if (group.countChildren() == 0 &amp;&amp; group.groups().size() == 0)</span>
+<span class="fc" id="L92">			return new EntityImageState(group);</span>
 
 <span class="fc bfc" id="L94" title="All 2 branches covered.">		if (group.getGroupType() == GroupType.CONCURRENT_STATE)</span>
 <span class="fc" id="L95">			return PaddedEntityImage.uniform(subLayout(), REGION_PADDING);</span>

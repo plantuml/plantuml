@@ -316,8 +316,8 @@ public class Cluster implements Moveable {
 <span class="fc" id="L316">		final Style style = getStyle();</span>
 <span class="fc" id="L317">		final double shadowing = style.getShadowing();</span>
 		HColor borderColor;
-<span class="pc bpc" id="L319" title="1 of 2 branches missed.">		if (group.getColors().getColor(ColorType.LINE) != null)</span>
-<span class="nc" id="L320">			borderColor = group.getColors().getColor(ColorType.LINE);</span>
+<span class="fc bfc" id="L319" title="All 2 branches covered.">		if (group.getColors().getColor(ColorType.LINE) != null)</span>
+<span class="fc" id="L320">			borderColor = group.getColors().getColor(ColorType.LINE);</span>
 		else
 <span class="fc" id="L322">			borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
 <span class="fc" id="L323">		double rounded = style.value(PName.RoundCorner).asDouble();</span>
@@ -454,7 +454,7 @@ public class Cluster implements Moveable {
 <span class="fc" id="L454">		HColor borderColor = group.getColors().getColor(ColorType.LINE);</span>
 <span class="fc" id="L455">		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();</span>
 <span class="fc" id="L456">		final HColorSet colorSet = skinParam.getIHtmlColorSet();</span>
-<span class="pc bpc" id="L457" title="1 of 2 branches missed.">		if (borderColor == null) {</span>
+<span class="fc bfc" id="L457" title="All 2 branches covered.">		if (borderColor == null) {</span>
 <span class="fc" id="L458">			borderColor = EntityImageStateCommon.getStyleState(group.getStereotype(), styleBuilder)</span>
 <span class="fc" id="L459">					.value(PName.LineColor).asColor(colorSet);</span>
 		}
@@ -483,12 +483,12 @@ public class Cluster implements Moveable {
 		}
 
 <span class="fc" id="L485">		UStroke stroke = group.getColors().getSpecificLineStroke();</span>
-<span class="pc bpc" id="L486" title="1 of 2 branches missed.">		if (stroke == null) {</span>
+<span class="fc bfc" id="L486" title="All 2 branches covered.">		if (stroke == null) {</span>
 <span class="fc" id="L487">			final StyleBuilder styleBuilder4 = skinParam.getCurrentStyleBuilder();</span>
 <span class="fc" id="L488">			stroke = EntityImageStateCommon.getStyleState(group.getStereotype(), styleBuilder4).getStroke();</span>
 		}
 
-<span class="pc bpc" id="L491" title="1 of 2 branches missed.">		final double descriptionHeight = attributeHeight + (attributeHeight &gt; 0 ? IEntityImage.MARGIN : 0);</span>
+<span class="fc bfc" id="L491" title="All 2 branches covered.">		final double descriptionHeight = attributeHeight + (attributeHeight &gt; 0 ? IEntityImage.MARGIN : 0);</span>
 
 <span class="fc" id="L493">		final double nameHeight = clusterHeader.getTitle().calculateDimension(ug.getStringBounder()).getHeight()</span>
 				+ IEntityImage.MARGIN;
@@ -502,9 +502,9 @@ public class Cluster implements Moveable {
 <span class="fc" id="L502">				ug.apply(new UTranslate(rectangleArea.getMinX(), xyTitle.getY())), clusterHeader.getTitle(),</span>
 <span class="fc" id="L503">				IEntityImage.MARGIN, 0, rectangleArea.getWidth());</span>
 
-<span class="pc bpc" id="L505" title="1 of 2 branches missed.">		if (attributeHeight &gt; 0)</span>
-<span class="nc" id="L506">			attribute.drawU(ug.apply(new UTranslate(rectangleArea.getMinX() + IEntityImage.MARGIN,</span>
-<span class="nc" id="L507">					rectangleArea.getMinY() + nameHeight + IEntityImage.MARGIN / 2.0)));</span>
+<span class="fc bfc" id="L505" title="All 2 branches covered.">		if (attributeHeight &gt; 0)</span>
+<span class="fc" id="L506">			attribute.drawU(ug.apply(new UTranslate(rectangleArea.getMinX() + IEntityImage.MARGIN,</span>
+<span class="fc" id="L507">					rectangleArea.getMinY() + nameHeight + IEntityImage.MARGIN / 2.0)));</span>
 
 <span class="fc" id="L509">		final Stereotype stereotype = group.getStereotype();</span>
 <span class="pc bpc" id="L510" title="1 of 4 branches missed.">		final boolean withSymbol = stereotype != null &amp;&amp; stereotype.isWithOOSymbol();</span>

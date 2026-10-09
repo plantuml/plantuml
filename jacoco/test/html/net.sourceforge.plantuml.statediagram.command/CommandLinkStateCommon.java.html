@@ -243,14 +243,14 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2&lt;StateDiagram
 	}
 
 	private Entity getEntity(LineLocation location, StateDiagram diagram, final String code) {
-<span class="pc bpc" id="L246" title="1 of 2 branches missed.">		if (code.equalsIgnoreCase(&quot;[H]&quot;))</span>
-<span class="nc" id="L247">			return diagram.getHistorical(location);</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">		if (code.equalsIgnoreCase(&quot;[H]&quot;))</span>
+<span class="fc" id="L247">			return diagram.getHistorical(location);</span>
 
 <span class="pc bpc" id="L249" title="1 of 2 branches missed.">		if (code.endsWith(&quot;[H]&quot;))</span>
 <span class="nc" id="L250">			return diagram.getHistorical(location, code.substring(0, code.length() - 3));</span>
 
-<span class="pc bpc" id="L252" title="1 of 2 branches missed.">		if (code.equalsIgnoreCase(&quot;[H*]&quot;))</span>
-<span class="nc" id="L253">			return diagram.getDeepHistory(location);</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">		if (code.equalsIgnoreCase(&quot;[H*]&quot;))</span>
+<span class="fc" id="L253">			return diagram.getDeepHistory(location);</span>
 
 <span class="pc bpc" id="L255" title="1 of 2 branches missed.">		if (code.endsWith(&quot;[H*]&quot;))</span>
 <span class="nc" id="L256">			return diagram.getDeepHistory(location, code.substring(0, code.length() - 4));</span>

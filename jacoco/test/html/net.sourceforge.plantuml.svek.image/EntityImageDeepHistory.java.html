@@ -40,8 +40,13 @@ import net.sourceforge.plantuml.abel.Entity;
 public class EntityImageDeepHistory extends EntityImagePseudoState {
 
 	public EntityImageDeepHistory(Entity entity) {
-<span class="nc" id="L43">		super(entity, &quot;H*&quot;);</span>
+<span class="fc" id="L43">		super(entity, &quot;H*&quot;);</span>
 
-<span class="nc" id="L45">	}</span>
+<span class="fc" id="L45">	}</span>
+
+	@Override
+	protected String[] getImplicitStereotypes() {
+<span class="fc" id="L49">		return new String[] { &quot;history&quot;, &quot;deepHistory&quot; };</span>
+	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

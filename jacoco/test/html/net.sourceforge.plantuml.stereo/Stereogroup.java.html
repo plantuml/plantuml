@@ -116,7 +116,7 @@ public class Stereogroup {
 <span class="fc bfc" id="L116" title="All 2 branches covered.">		if (labels.size() == 0)</span>
 <span class="fc" id="L117">			return null;</span>
 
-<span class="pc bpc" id="L119" title="5 of 8 branches missed.">		switch (labels.get(0).toLowerCase()) {</span>
+<span class="pc bpc" id="L119" title="3 of 8 branches missed.">		switch (labels.get(0).toLowerCase()) {</span>
 		case &quot;choice&quot;:
 <span class="nc" id="L121">			return LeafType.STATE_CHOICE;</span>
 		case &quot;fork&quot;:
@@ -129,9 +129,9 @@ public class Stereogroup {
 		case &quot;end&quot;:
 <span class="nc" id="L130">			return LeafType.CIRCLE_END;</span>
 		case &quot;history&quot;:
-<span class="nc" id="L132">			return LeafType.PSEUDO_STATE;</span>
+<span class="fc" id="L132">			return LeafType.PSEUDO_STATE;</span>
 		case &quot;history*&quot;:
-<span class="nc" id="L134">			return LeafType.DEEP_HISTORY;</span>
+<span class="fc" id="L134">			return LeafType.DEEP_HISTORY;</span>
 		default:
 <span class="fc" id="L136">			return null;</span>
 		}
@@ -163,29 +163,29 @@ public class Stereogroup {
 	public Colors getInnerColors(HColorSet colorSet) throws NoSuchColorException {
 <span class="fc" id="L164">		Colors colors = Colors.empty();</span>
 <span class="fc bfc" id="L165" title="All 2 branches covered.">		for (String label : getLabels()) {</span>
-<span class="pc bpc" id="L166" title="1 of 2 branches missed.">			if (label.startsWith(&quot;###&quot;)) {</span>
-<span class="nc" id="L167">				label = label.substring(3);</span>
-<span class="nc" id="L168">				final HColor textColor = colorSet.getColorOrNull(label);</span>
-<span class="nc bnc" id="L169" title="All 2 branches missed.">				if (textColor != null)</span>
-<span class="nc" id="L170">					colors = colors.add(ColorType.TEXT, textColor);</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">			if (label.startsWith(&quot;###&quot;)) {</span>
+<span class="fc" id="L167">				label = label.substring(3);</span>
+<span class="fc" id="L168">				final HColor textColor = colorSet.getColorOrNull(label);</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">				if (textColor != null)</span>
+<span class="fc" id="L170">					colors = colors.add(ColorType.TEXT, textColor);</span>
 
-<span class="pc bpc" id="L172" title="1 of 2 branches missed.">			} else if (label.startsWith(&quot;##&quot;)) {</span>
-<span class="nc" id="L173">				label = label.substring(2);</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">			} else if (label.startsWith(&quot;##&quot;)) {</span>
+<span class="fc" id="L173">				label = label.substring(2);</span>
 
-<span class="nc bnc" id="L175" title="All 2 branches missed.">				if (label.charAt(0) == '[') {</span>
-<span class="nc" id="L176">					int x = label.indexOf(']');</span>
-<span class="nc bnc" id="L177" title="All 2 branches missed.">					if (x != -1) {</span>
-<span class="nc" id="L178">						colors = colors.addLegacyStroke(label.substring(1, x));</span>
-<span class="nc" id="L179">						label = label.substring(x + 1);</span>
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">				if (label.charAt(0) == '[') {</span>
+<span class="fc" id="L176">					int x = label.indexOf(']');</span>
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">					if (x != -1) {</span>
+<span class="fc" id="L178">						colors = colors.addLegacyStroke(label.substring(1, x));</span>
+<span class="fc" id="L179">						label = label.substring(x + 1);</span>
 					} else
 <span class="nc" id="L181">						label = &quot;&quot;;</span>
 				}
 
-<span class="nc bnc" id="L184" title="All 2 branches missed.">				if (label.length() &gt; 0) {</span>
-<span class="nc" id="L185">					final HColor lineColor = colorSet.getColorOrNull(label);</span>
-<span class="nc bnc" id="L186" title="All 2 branches missed.">					if (lineColor != null)</span>
-<span class="nc" id="L187">						colors = colors.add(ColorType.LINE, lineColor);</span>
-<span class="nc" id="L188">				}</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">				if (label.length() &gt; 0) {</span>
+<span class="fc" id="L185">					final HColor lineColor = colorSet.getColorOrNull(label);</span>
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">					if (lineColor != null)</span>
+<span class="fc" id="L187">						colors = colors.add(ColorType.LINE, lineColor);</span>
+<span class="fc" id="L188">				}</span>
 
 <span class="fc bfc" id="L190" title="All 2 branches covered.">			} else if (label.startsWith(&quot;#&quot;)) {</span>
 <span class="fc" id="L191">				colors = colors.mergeWith(new Colors(label, colorSet, ColorType.BACK));</span>

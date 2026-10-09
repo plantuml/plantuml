@@ -150,12 +150,19 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#drawU(net.sourceforge.plantuml.klimt.drawing.UGraphic)" class="member-name-link">drawU</a><wbr>(<a href="../../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../ShapeType.html" title="enum class in net.sourceforge.plantuml.svek">ShapeType</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getShapeType()" class="member-name-link">getShapeType</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../style/StyleQuery.html" title="class in net.sourceforge.plantuml.style">StyleQuery</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStyleQuery()" class="member-name-link">getStyleQuery</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getImplicitStereotypes()" class="member-name-link">getImplicitStereotypes</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Stereotype labels every history pseudo-state answers to, whether it was
+ written <code>[H]</code>, <code>state h &lt;&lt;history&gt;&gt;</code> or
+ the deep variant: this is what makes <code>.history { ...</code></div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../ShapeType.html" title="enum class in net.sourceforge.plantuml.svek">ShapeType</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getShapeType()" class="member-name-link">getShapeType</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../style/StyleQuery.html" title="class in net.sourceforge.plantuml.style">StyleQuery</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStyleQuery()" class="member-name-link">getStyleQuery</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -217,6 +224,18 @@ loadScripts(document, 'script');</script>
 <dt>Overrides:</dt>
 <dd><code><a href="../AbstractEntityImage.html#getStyleQuery()">getStyleQuery</a></code>&nbsp;in class&nbsp;<code><a href="../AbstractEntityImage.html" title="class in net.sourceforge.plantuml.svek">AbstractEntityImage</a></code></dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getImplicitStereotypes()">
+<h3>getImplicitStereotypes</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">getImplicitStereotypes</span>()</div>
+<div class="block">Stereotype labels every history pseudo-state answers to, whether it was
+ written <code>[H]</code>, <code>state h &lt;&lt;history&gt;&gt;</code> or
+ the deep variant: this is what makes <code>.history { ... }</code> in a
+ <code>&lt;style&gt;</code> block reach all of them. A label such as
+ <code>history*</code> cannot be used as a style class name, hence the
+ separate <a href="#getImplicitStereotypes()"><code>getImplicitStereotypes()</code></a> of the deep history.</div>
 </section>
 </li>
 <li>

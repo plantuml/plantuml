@@ -83,8 +83,8 @@ public class Colors {
 
 <span class="fc" id="L84">		final Colors result = copy();</span>
 <span class="fc" id="L85">		result.map.putAll(other.map);</span>
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		if (other.lineStyle != null)</span>
-<span class="nc" id="L87">			result.lineStyle = other.lineStyle;</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">		if (other.lineStyle != null)</span>
+<span class="fc" id="L87">			result.lineStyle = other.lineStyle;</span>
 
 <span class="fc" id="L89">		return result;</span>
 	}
@@ -136,10 +136,10 @@ public class Colors {
 	}
 
 	public UStroke getSpecificLineStroke() {
-<span class="pc bpc" id="L139" title="1 of 2 branches missed.">		if (lineStyle == null)</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">		if (lineStyle == null)</span>
 <span class="fc" id="L140">			return null;</span>
 
-<span class="nc" id="L142">		return lineStyle.getStroke3();</span>
+<span class="fc" id="L142">		return lineStyle.getStroke3();</span>
 	}
 
 	public Colors add(ColorType type, HColor color) {
@@ -169,9 +169,9 @@ public class Colors {
 	}
 
 	public Colors addLegacyStroke(String s) {
-<span class="nc" id="L172">		final Colors result = copy();</span>
-<span class="nc" id="L173">		result.lineStyle = LinkStyle.fromString1(StringUtils.goUpperCase(Objects.requireNonNull(s)));</span>
-<span class="nc" id="L174">		return result;</span>
+<span class="fc" id="L172">		final Colors result = copy();</span>
+<span class="fc" id="L173">		result.lineStyle = LinkStyle.fromString1(StringUtils.goUpperCase(Objects.requireNonNull(s)));</span>
+<span class="fc" id="L174">		return result;</span>
 
 	}
 
@@ -244,8 +244,8 @@ public class Colors {
 		}
 <span class="fc bfc" id="L245" title="All 2 branches covered.">		if (name == PName.LineColor) {</span>
 <span class="fc" id="L246">			final HColor color = map.get(ColorType.LINE);</span>
-<span class="pc bpc" id="L247" title="1 of 2 branches missed.">			if (color != null)</span>
-<span class="nc" id="L248">				return color;</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">			if (color != null)</span>
+<span class="fc" id="L248">				return color;</span>
 		}
 <span class="fc" id="L250">		return style.value(name).asColor(colorSet);</span>
 

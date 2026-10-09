@@ -135,8 +135,8 @@ import net.sourceforge.plantuml.text.Guillemet;
 <span class="pc bpc" id="L135" title="1 of 4 branches missed.">			if (isHideEmptyDescriptionForState &amp;&amp; leaf.getBodier().getRawBody().size() == 0)</span>
 <span class="fc" id="L136">				return new EntityImageStateEmptyDescription(leaf);</span>
 
-<span class="pc bpc" id="L138" title="1 of 2 branches missed.">			if (leaf.getStereotype() != null</span>
-<span class="nc bnc" id="L139" title="All 2 branches missed.">					&amp;&amp; &quot;&lt;&lt;sdlreceive&gt;&gt;&quot;.equals(leaf.getStereotype().getLabel(Guillemet.DOUBLE_COMPARATOR)))</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">			if (leaf.getStereotype() != null</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">					&amp;&amp; &quot;&lt;&lt;sdlreceive&gt;&gt;&quot;.equals(leaf.getStereotype().getLabel(Guillemet.DOUBLE_COMPARATOR)))</span>
 <span class="nc" id="L140">				return new EntityImageState2(leaf);</span>
 
 <span class="fc" id="L142">			return new EntityImageState(leaf);</span>
@@ -212,14 +212,14 @@ import net.sourceforge.plantuml.text.Guillemet;
 <span class="pc bpc" id="L212" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.ASSOCIATION)</span>
 <span class="nc" id="L213">			return new EntityImageAssociation(leaf);</span>
 
-<span class="pc bpc" id="L215" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.PSEUDO_STATE)</span>
-<span class="nc" id="L216">			return new EntityImagePseudoState(leaf);</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.PSEUDO_STATE)</span>
+<span class="fc" id="L216">			return new EntityImagePseudoState(leaf);</span>
 
 <span class="fc bfc" id="L218" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.STATE_TRANSITION_LABEL)</span>
 <span class="fc" id="L219">			return new EntityImageTransitionLabel(leaf);</span>
 
-<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.DEEP_HISTORY)</span>
-<span class="nc" id="L222">			return new EntityImageDeepHistory(leaf);</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.DEEP_HISTORY)</span>
+<span class="fc" id="L222">			return new EntityImageDeepHistory(leaf);</span>
 
 <span class="fc bfc" id="L224" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.TIPS)</span>
 <span class="fc" id="L225">			return new EntityImageTips(leaf, bibliotekon);</span>
