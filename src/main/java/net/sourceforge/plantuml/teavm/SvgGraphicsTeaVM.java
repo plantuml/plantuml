@@ -37,6 +37,8 @@ package net.sourceforge.plantuml.teavm;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.teavm.jso.JSBody;
 import org.teavm.jso.dom.html.HTMLDocument;
@@ -131,6 +133,9 @@ public class SvgGraphicsTeaVM {
 	}
 
 	public void startGroup(Map<UGroupType, String> attrs) {
+		// Close any active link before starting a new group (same as SvgGraphics)
+		closeTopActiveLinkIfNeeded();
+
 		final Element element = createSvgElement("g");
 		final TeaVMElementAdapter ielement = new TeaVMElementAdapter(element);
 		final PortableSvgDocument idocument = new TeaVMSvgDocument();
@@ -139,12 +144,154 @@ public class SvgGraphicsTeaVM {
 
 		currentGroup().appendChild(element);
 		groupStack.add(element);
+
+		// Restore link state inside the new group if needed
+		addTopOpenedLinkIfNeeded();
 	}
 
 	public void closeGroup() {
+		// Ensure any active link is closed first, so that it ends up inside this group
+		closeTopActiveLinkIfNeeded();
+
 		if (groupStack.size() > 1)
 			groupStack.remove(groupStack.size() - 1);
+
+		// Restore link state after closing the group if needed
+		addTopOpenedLinkIfNeeded();
 	}
+
+	// ========================================================================
+	// Hyperlinks
+	// ========================================================================
+
+	/**
+	 * Data of one opened link. Mirrors the private {@code LinkData} of
+	 * {@link SvgGraphics}, so that both backends emit the same {@code <a>} markup.
+	 */
+	private static class LinkData {
+		private final String url;
+		private final String title;
+		private final String target;
+
+		LinkData(String url, String title, String target) {
+			// SecurityUtils.ignoreThisLink() cannot be used here: its javascript: check is
+			// compiled out of the TeaVM build, so the filter is repeated locally.
+			if (url == null || isJavascriptLink(url))
+				this.url = "";
+			else
+				this.url = url;
+			this.title = title;
+			this.target = target;
+		}
+
+		private static boolean isJavascriptLink(String url) {
+			// Same rule as SecurityUtils.isJavascriptLink: non-letters are ignored,
+			// so that "java script:" or "JavaScript:" are caught too.
+			return url.toLowerCase().replaceAll("[^a-z]", "").startsWith("javascript");
+		}
+
+		private static final Pattern UNICODE_ESCAPE = Pattern.compile("\\<U\\+([0-9A-Fa-f]+)\\>");
+
+		private String getXlinkTitle() {
+			if (title == null)
+				return url;
+
+			final Matcher m = UNICODE_ESCAPE.matcher(title);
+			final StringBuffer sb = new StringBuffer(); // StringBuilder is not accepted by Matcher in Java 8
+			while (m.find()) {
+				final char c = (char) Integer.parseInt(m.group(1), 16);
+				m.appendReplacement(sb, "" + c);
+			}
+			m.appendTail(sb);
+
+			return sb.toString().replaceAll("\\\\n", "\n");
+		}
+
+		void updateAttributesOf(Element element) {
+			final String xlinkTitle = getXlinkTitle();
+			element.setAttribute("target", target);
+			element.setAttribute("href", url);
+			setXlinkAttribute(element, "href", url);
+			setXlinkAttribute(element, "type", "simple");
+			setXlinkAttribute(element, "actuate", "onRequest");
+			setXlinkAttribute(element, "show", "new");
+			element.setAttribute("title", xlinkTitle);
+			setXlinkAttribute(element, "title", xlinkTitle);
+		}
+	}
+
+	/**
+	 * Links that are currently open, the innermost one first. SVG does not support
+	 * nested links ({@code <a>} within {@code <a>}), so only the innermost one is
+	 * materialized as an element, on top of {@link #groupStack}.
+	 */
+	private final List<LinkData> activeLinks = new ArrayList<LinkData>();
+
+	/**
+	 * Opens a link. The {@code <a>} element is put on {@link #groupStack}, and is
+	 * attached to its parent only when closed, and only if it received a child.
+	 *
+	 * @see SvgGraphics#openLink(String, String, String)
+	 */
+	public void openLink(String url, String title, String target) {
+		// See https://github.com/plantuml/plantuml/issues/1951
+		// https://github.com/plantuml/plantuml/issues/2069
+		// https://github.com/plantuml/plantuml/issues/2148
+		closeTopActiveLinkIfNeeded();
+		activeLinks.add(0, new LinkData(url, title, target));
+		addTopOpenedLinkIfNeeded();
+	}
+
+	public void closeLink() {
+		if (activeLinks.size() == 0 || isLinkOnTop() == false)
+			throw new IllegalStateException("Attempting to close a link in an invalid state.");
+
+		closeTopActiveLinkIfNeeded();
+		activeLinks.remove(0);
+
+		// Re-create the element of the enclosing link, if any
+		addTopOpenedLinkIfNeeded();
+	}
+
+	/**
+	 * The {@code <a>} element of the innermost active link while it is on top of
+	 * {@link #groupStack}, {@code null} otherwise. Invariant: it is non-null if and
+	 * only if {@link #activeLinks} is not empty.
+	 */
+	private Element openedLink = null;
+
+	private boolean isLinkOnTop() {
+		return openedLink != null && currentGroup() == openedLink;
+	}
+
+	private void closeTopActiveLinkIfNeeded() {
+		if (activeLinks.size() == 0)
+			return;
+		if (isLinkOnTop() == false)
+			throw new IllegalStateException("Expected top element to be a link.");
+
+		final Element link = openedLink;
+		openedLink = null;
+		groupStack.remove(groupStack.size() - 1);
+		// An empty <a> is useless: skip it, as SvgGraphics does
+		if (hasChildNodes(link))
+			currentGroup().appendChild(link);
+	}
+
+	private void addTopOpenedLinkIfNeeded() {
+		if (activeLinks.size() == 0)
+			return;
+		openedLink = createSvgElement("a");
+		activeLinks.get(0).updateAttributesOf(openedLink);
+		groupStack.add(openedLink);
+	}
+
+	@JSBody(params = { "element" }, script = "return element.firstChild != null;")
+	private static native boolean hasChildNodes(Element element);
+
+	@JSBody(params = { "element", "name",
+			"value" }, script = "element.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:' + name, value);")
+	private static native void setXlinkAttribute(Element element, String name, String value);
 
 	/**
 	 * Embeds the PlantUML source into the SVG as a {@code plantuml-src} processing

@@ -79,17 +79,9 @@ import net.sourceforge.plantuml.utils.MyCollections;
 
 public class SecurityUtils {
 
-	// ::uncomment when __TEAVM__
-//	public static SecurityProfile getSecurityProfile() {
-//		return SecurityProfile.INSECURE;
-//	}
-	// ::done
-
 	public static boolean ignoreThisLink(String url) {
-		// ::comment when __TEAVM__
 		if (allowJavascriptInLink() == false && isJavascriptLink(url))
 			return true;
-		// ::done
 		return false;
 	}
 
@@ -99,22 +91,17 @@ public class SecurityUtils {
 	public static final String NO_CREDENTIALS = "<none>";
 
 	public synchronized static PortableImage readRasterImage(final ImageIcon imageIcon) {
-		// ::comment when __TEAVM__
 		final Image tmpImage = imageIcon.getImage();
 		if (imageIcon.getIconWidth() == -1)
-			// ::done
 			return null;
 
-		// ::comment when __TEAVM__
 		final PortableImage image = PortableImageFactory.build(imageIcon.getIconWidth(), imageIcon.getIconHeight(),
 				PortableImage.TYPE_INT_ARGB);
 		image.getGraphics().drawImage(tmpImage, 0, 0, null);
 		tmpImage.flush();
 		return image;
-		// ::done
 	}
 
-	// ::comment when __TEAVM__
 	/**
 	 * Whitelist of urls
 	 */
@@ -436,6 +423,5 @@ public class SecurityUtils {
 		}
 		return Json.object();
 	}
-	// ::done
 
 }
