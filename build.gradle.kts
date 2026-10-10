@@ -79,6 +79,29 @@ teavm {
 		// optimization.set(org.teavm.gradle.api.OptimizationLevel.NONE)
 		// outputDir defaults to build/generated/teavm/js
 	}
+	// Experimental: Java to C (gradlew generateC), see src/teavm-c/README.md
+	c {
+		mainClass.set("net.sourceforge.plantuml.teavm.c.HelloWorldC")
+		// Easier to read while experimenting
+		obfuscated.set(false)
+		shortFileNames.set(false)
+		// Heap size in MB (TeaVM default: 1 to 16)
+		maxHeapSize.set(64)
+		// outputDir defaults to build/generated/teavm/c
+	}
+}
+
+// TeaVM only writes the C sources: add a CMakeLists.txt next to them so the
+// native build is just "cmake + build" (Windows: MSVC or clang-cl, see README)
+val copyCMakeLists = tasks.register<Copy>("copyCMakeLists") {
+	from("src/teavm-c/CMakeLists.txt")
+	into(layout.buildDirectory.dir("generated/teavm/c"))
+}
+tasks.matching { it.name == "generateC" }.configureEach {
+	finalizedBy(copyCMakeLists)
+}
+copyCMakeLists.configure {
+	mustRunAfter("generateC")
 }
 
 tasks.compileJava {
@@ -99,7 +122,7 @@ configurations.compileClasspath {
 // TeaVM 0.15+ must RUN on Java 17+, but it can still consume Java 11 bytecode.
 // So the JAR stays compiled with --release 11 (see javacRelease above), and only
 // the JavaScript generation needs a JDK 17+ running Gradle.
-tasks.matching { it.name == "generateJavaScript" }.configureEach {
+tasks.matching { it.name == "generateJavaScript" || it.name == "generateC" }.configureEach {
 	doFirst {
 		check(JavaVersion.current() >= JavaVersion.VERSION_17) {
 			"TeaVM requires running Gradle on JDK 17+ (current: ${JavaVersion.current()}). " +
