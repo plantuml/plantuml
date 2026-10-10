@@ -255,6 +255,19 @@ data but not executing remote code) and for a Web Worker (no document to
 append a script tag to). With neither global set, behaviour is unchanged.
 `tools/browser-test/check-stdlib-loader.js` pins the whole contract.
 
+## Debug Logging
+
+The engine is silent by default: it prints nothing to the console and does not
+touch the host page's DOM. To get the step-by-step trace (and the timing text
+that `render()` writes into the element with `id="status"`), set a global before
+rendering:
+
+```js
+globalThis.PLANTUML_DEBUG = true;
+```
+
+Only the value `true` enables it. The demo pages in this directory set it.
+
 ## Local Files
 
 A local `!include` names a file rather than a library or a URL:

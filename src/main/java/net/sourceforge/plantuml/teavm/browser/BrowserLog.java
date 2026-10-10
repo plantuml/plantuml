@@ -22,7 +22,7 @@ public class BrowserLog {
 
 	private static void consoleMessage(String msg) {
 		// ::comment when JAVA8
-		if (TeaVM.isTeaVM()) {
+		if (TeaVM.isTeaVM() && isDebug()) {
 			final String message = getMessage(msg);
 			jsLog(message);
 		}
@@ -36,12 +36,23 @@ public class BrowserLog {
 
 	public static void jsStatusDuration() {
 		// ::comment when JAVA8
+		if (isDebug() == false)
+			return;
 		final String msg = START == 0 ? "" : Version.fullDescription();
 		jsStatus(getMessage(msg));
 		// ::done
 	}
 
 	// ::comment when JAVA8
+	/**
+	 * Debug output (console lines, and the text written into the element with
+	 * {@code id="status"}) is opt-in: the host sets
+	 * {@code globalThis.PLANTUML_DEBUG = true} before rendering. By default the
+	 * engine is silent and leaves the host page's DOM alone.
+	 */
+	@JSBody(script = "return globalThis.PLANTUML_DEBUG === true;")
+	public static native boolean isDebug();
+
 	@JSBody(params = "msg", script = "console.log(msg);")
 	public static native void jsLog(String msg);
 
