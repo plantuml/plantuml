@@ -35,13 +35,20 @@ DOM element **asynchronously**.  This has two consequences:
 1. You cannot read `targetElement.innerHTML` right after calling `render()`
    — the SVG is not there yet.
 2. When rendering multiple diagrams in the same page (same JS context),
-   you must **serialize** renders: wait for the first SVG to appear in the
-   DOM before starting the next render.  The engine uses shared internal
-   state and will silently overwrite the previous result otherwise.
+   you must **serialize** `render()` calls: wait for the first SVG to appear
+   in the DOM before starting the next one.  The engine keeps only the latest
+   waiting `render()` request (that is what a user typing needs), and will
+   silently overwrite the previous one otherwise.
 
 If you need the SVG as a string instead of a DOM element, use
 `renderToString(lines, onSuccess, onError)` — the callback receives the
-fully-formed SVG once rendering completes.
+fully-formed SVG once rendering completes.  Unlike `render()`, nothing is
+overwritten: calls may overlap, each one is queued, and exactly one of its two
+callbacks is called, once, in the order of the calls.  A host that renders
+several diagrams at the same time (a note with many code blocks, say) can call
+`renderToString` for each one without waiting.  If it only wants the latest
+result while the user types, it has to ignore the older ones itself, or use
+`render()`.
 
 In the iframe-per-diagram architecture described below, the serialization
 issue does not apply because each iframe has its own isolated engine instance.

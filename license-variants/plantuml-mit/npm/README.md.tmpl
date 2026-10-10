@@ -35,7 +35,9 @@ as a classic script beforehand.
   `lines` is an `Array<string>`.
 - `render(lines, targetId, { dark: true })` -- same, in dark mode.
 - `renderToString(lines, onSuccess, onError)` -- deliver the SVG as a string
-  to `onSuccess(svg)`; errors go to `onError(message)`.
+  to `onSuccess(svg)`; errors go to `onError(message)`. Calls may overlap:
+  each is queued, and exactly one of its callbacks is called, once, in the
+  order of the calls. (`render()` keeps only the latest waiting call.)
 
 Rendering is asynchronous: `render()` returns immediately and writes the SVG
 into the target element later. See

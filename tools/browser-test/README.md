@@ -159,3 +159,15 @@ exists but instance() is not a function) falls back the same way as an absent
 one. A control page with viz-global.js pins that the default path is
 unchanged (the Graphviz bridge is still used, and no note is logged).
 `node check-viz-fallback.js target=...`.
+
+## check-render-queue.js
+
+Checks how the engine queues render requests. `renderToString` calls may overlap (several in
+the same JS turn): every call is answered, exactly one of its two callbacks is called, once, in
+the order of the calls. `render` keeps its "latest wins" rule (of several calls in the same turn
+only the last is drawn), and a waiting `render` and waiting `renderToString` calls do not drop
+each other. Callbacks cannot stop the engine: a failure with no `onError` (`undefined` or
+`null`) and an `onSuccess` that throws both leave it answering later requests, and the second is
+reported with `console.error` without calling `onError` for the same request. Only sequence
+diagrams are used, so the page does not load `viz-global.js`.
+`node check-render-queue.js target=...`.
