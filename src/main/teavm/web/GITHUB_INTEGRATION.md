@@ -262,6 +262,20 @@ data but not executing remote code) and for a Web Worker (no document to
 append a script tag to). With neither global set, behaviour is unchanged.
 `tools/browser-test/check-stdlib-loader.js` pins the whole contract.
 
+## Graphviz When Bundled
+
+Loading `viz-global.js` with a script tag defines a global `Viz`, which is what
+the engine uses. A host that bundles `viz-global.js` into its own file gets no
+global: the UMD attaches `Viz` to the bundle's exports. Such a host passes it
+explicitly, before the first render:
+
+```js
+globalThis.PLANTUML_VIZ = Viz; // e.g. from @viz-js/viz
+```
+
+`PLANTUML_VIZ` takes precedence over a global `Viz`. Without either, diagrams
+that need Graphviz fall back to the Smetana layout engine.
+
 ## Debug Logging
 
 The engine is silent by default: it prints nothing to the console and does not

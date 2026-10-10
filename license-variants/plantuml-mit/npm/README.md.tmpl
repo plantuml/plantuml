@@ -31,6 +31,12 @@ The public surface is two functions exported from the `plantuml.js`
 ES2015 module. `viz-global.js` (the Graphviz layout engine) must be loaded
 as a classic script beforehand.
 
+If you bundle your host into a single file, `viz-global.js` (a UMD) attaches
+`Viz` to your bundle's exports instead of `globalThis`, and the engine does
+not see it. Hand it over yourself, before the first render:
+`globalThis.PLANTUML_VIZ = Viz;` (where `Viz` is however you obtained it,
+for example `@viz-js/viz`). It takes precedence over a global `Viz`.
+
 - `render(lines, targetId)` -- render into the DOM element with that `id`.
   `lines` is an `Array<string>`.
 - `render(lines, targetId, { dark: true })` -- same, in dark mode.
