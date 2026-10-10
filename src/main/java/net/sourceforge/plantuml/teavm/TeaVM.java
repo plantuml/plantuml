@@ -44,8 +44,10 @@ public class TeaVM {
 	 * Platform marker method used to distinguish TeaVM compilation from standard
 	 * JVM execution.
 	 *
-	 * When compiling to JavaScript, TeaVM resolves this method statically to
-	 * {@code true}. As a result, conditional branches like:
+	 * When compiling with TeaVM, whatever the target (JavaScript or C), this
+	 * method is resolved statically to {@code true}. Use {@link #isJavaScript()}
+	 * or {@link #isC()} for code that only works on one target. As a result,
+	 * conditional branches like:
 	 *
 	 * <pre>
 	 * if (TeaVM.isTeaVM()) {
@@ -70,7 +72,40 @@ public class TeaVM {
 	public static boolean isTeaVM() {
 		return false;
 	}
-	
+
+	/**
+	 * Platform marker resolved to {@code true} only when TeaVM compiles to
+	 * JavaScript. Use it to guard code that needs a browser or a JavaScript engine
+	 * ({@code @JSBody}, DOM, canvas, viz.js...).
+	 *
+	 * Note: TeaVM requires platform markers to be static methods returning
+	 * {@code boolean}; this is why there is one method per target rather than a
+	 * single method returning an enum (an enum comparison would not be folded at
+	 * compile time, so no dead code elimination would happen).
+	 *
+	 * @see #isTeaVM()
+	 */
+	// ::comment when JAVA8
+	@org.teavm.interop.PlatformMarker(org.teavm.interop.Platforms.JAVASCRIPT)
+	// ::done
+	public static boolean isJavaScript() {
+		return false;
+	}
+
+	/**
+	 * Platform marker resolved to {@code true} only when TeaVM compiles to C
+	 * (native executable, experimental).
+	 *
+	 * @see #isTeaVM()
+	 * @see #isJavaScript()
+	 */
+	// ::comment when JAVA8
+	@org.teavm.interop.PlatformMarker(org.teavm.interop.Platforms.C)
+	// ::done
+	public static boolean isC() {
+		return false;
+	}
+
 	/**
 	 * Guard method for assertions, ensuring they are removed from the
 	 * generated JavaScript output.
