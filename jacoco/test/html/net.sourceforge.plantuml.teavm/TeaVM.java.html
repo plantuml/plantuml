@@ -44,8 +44,10 @@ package net.sourceforge.plantuml.teavm;
 	 * Platform marker method used to distinguish TeaVM compilation from standard
 	 * JVM execution.
 	 *
-	 * When compiling to JavaScript, TeaVM resolves this method statically to
-	 * {@code true}. As a result, conditional branches like:
+	 * When compiling with TeaVM, whatever the target (JavaScript or C), this
+	 * method is resolved statically to {@code true}. Use {@link #isJavaScript()}
+	 * or {@link #isC()} for code that only works on one target. As a result,
+	 * conditional branches like:
 	 *
 	 * &lt;pre&gt;
 	 * if (TeaVM.isTeaVM()) {
@@ -68,9 +70,42 @@ package net.sourceforge.plantuml.teavm;
 	@org.teavm.interop.PlatformMarker
 	// ::done
 	public static boolean isTeaVM() {
-<span class="fc" id="L71">		return false;</span>
+<span class="fc" id="L73">		return false;</span>
 	}
-	
+
+	/**
+	 * Platform marker resolved to {@code true} only when TeaVM compiles to
+	 * JavaScript. Use it to guard code that needs a browser or a JavaScript engine
+	 * ({@code @JSBody}, DOM, canvas, viz.js...).
+	 *
+	 * Note: TeaVM requires platform markers to be static methods returning
+	 * {@code boolean}; this is why there is one method per target rather than a
+	 * single method returning an enum (an enum comparison would not be folded at
+	 * compile time, so no dead code elimination would happen).
+	 *
+	 * @see #isTeaVM()
+	 */
+	// ::comment when JAVA8
+	@org.teavm.interop.PlatformMarker(org.teavm.interop.Platforms.JAVASCRIPT)
+	// ::done
+	public static boolean isJavaScript() {
+<span class="nc" id="L92">		return false;</span>
+	}
+
+	/**
+	 * Platform marker resolved to {@code true} only when TeaVM compiles to C
+	 * (native executable, experimental).
+	 *
+	 * @see #isTeaVM()
+	 * @see #isJavaScript()
+	 */
+	// ::comment when JAVA8
+	@org.teavm.interop.PlatformMarker(org.teavm.interop.Platforms.C)
+	// ::done
+	public static boolean isC() {
+<span class="nc" id="L106">		return false;</span>
+	}
+
 	/**
 	 * Guard method for assertions, ensuring they are removed from the
 	 * generated JavaScript output.
@@ -84,7 +119,7 @@ package net.sourceforge.plantuml.teavm;
 	 * &lt;/pre&gt;
 	 */
 	public static boolean a() {
-<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		return !isTeaVM();</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		return !isTeaVM();</span>
 	}
 
 }

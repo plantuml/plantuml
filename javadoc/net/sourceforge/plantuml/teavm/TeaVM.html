@@ -127,6 +127,18 @@ loadScripts(document, 'script');</script>
  generated JavaScript output.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isC()" class="member-name-link">isC</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Platform marker resolved to <code>true</code> only when TeaVM compiles to C
+ (native executable, experimental).</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isJavaScript()" class="member-name-link">isJavaScript</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Platform marker resolved to <code>true</code> only when TeaVM compiles to
+ JavaScript.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isTeaVM()" class="member-name-link">isTeaVM</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Platform marker method used to distinguish TeaVM compilation from standard
@@ -170,8 +182,10 @@ loadScripts(document, 'script');</script>
 <div class="block">Platform marker method used to distinguish TeaVM compilation from standard
  JVM execution.
 
- When compiling to JavaScript, TeaVM resolves this method statically to
- <code>true</code>. As a result, conditional branches like:
+ When compiling with TeaVM, whatever the target (JavaScript or C), this
+ method is resolved statically to <code>true</code>. Use <a href="#isJavaScript()"><code>isJavaScript()</code></a>
+ or <a href="#isC()"><code>isC()</code></a> for code that only works on one target. As a result,
+ conditional branches like:
 
  <pre>
  if (TeaVM.isTeaVM()) {
@@ -189,6 +203,45 @@ loadScripts(document, 'script');</script>
  
  This mechanism is intended purely as a compile-time optimization hint for
  TeaVM, not as a runtime platform check.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isJavaScript()">
+<h3>isJavaScript</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isJavaScript</span>()</div>
+<div class="block">Platform marker resolved to <code>true</code> only when TeaVM compiles to
+ JavaScript. Use it to guard code that needs a browser or a JavaScript engine
+ (<code>@JSBody</code>, DOM, canvas, viz.js...).
+
+ Note: TeaVM requires platform markers to be static methods returning
+ <code>boolean</code>; this is why there is one method per target rather than a
+ single method returning an enum (an enum comparison would not be folded at
+ compile time, so no dead code elimination would happen).</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="#isTeaVM()"><code>isTeaVM()</code></a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isC()">
+<h3>isC</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isC</span>()</div>
+<div class="block">Platform marker resolved to <code>true</code> only when TeaVM compiles to C
+ (native executable, experimental).</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="#isTeaVM()"><code>isTeaVM()</code></a></li>
+<li><a href="#isJavaScript()"><code>isJavaScript()</code></a></li>
+</ul>
+</dd>
+</dl>
 </section>
 </li>
 <li>
