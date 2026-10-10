@@ -682,6 +682,48 @@
       "diagram_class": "SequenceDiagram"
     },
     {
+      "file": "nonreg/group2681/history_deep_class.puml",
+      "folder": "nonreg/group2681",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
+      "file": "nonreg/group2681/history_in_composite.puml",
+      "folder": "nonreg/group2681",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
+      "file": "nonreg/group2681/history_inline_color.puml",
+      "folder": "nonreg/group2681",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
+      "file": "nonreg/group2681/history_style_all_forms.puml",
+      "folder": "nonreg/group2681",
+      "status": "pass",
+      "description": "(6 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
+      "file": "nonreg/group2681/inline_stereotype_style.puml",
+      "folder": "nonreg/group2681",
+      "status": "pass",
+      "description": "(6 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
+      "file": "nonreg/group2681/name_description_body.puml",
+      "folder": "nonreg/group2681",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
       "file": "nonreg/group2712/down_direction.puml",
       "folder": "nonreg/group2712",
       "status": "pass",
@@ -3047,8 +3089,8 @@
     }
   ],
   "summary": {
-    "total": 398,
-    "passed": 394,
+    "total": 404,
+    "passed": 400,
     "failed": 0,
     "skipped": 4
   }

@@ -158,10 +158,7 @@ public class GraphicStrings extends TextBlockMemoized implements IEntityImage {
 		getTextBlock().drawU(ug.apply(fontConfiguration.getColor()));
 
 		if (image != null) {
-			if (position == GraphicPosition.BOTTOM)
-				ug.apply(new UTranslate((size.getWidth() - image.getWidth()) / 2, size.getHeight() - image.getHeight()))
-						.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)));
-			else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT)
+			if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT)
 				ug.apply(new UTranslate(size.getWidth() - image.getWidth(), size.getHeight() - image.getHeight()))
 						.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)));
 			else if (position == GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT)
@@ -179,9 +176,7 @@ public class GraphicStrings extends TextBlockMemoized implements IEntityImage {
 	private XDimension2D calculateDimensionInternal22(StringBounder stringBounder) {
 		XDimension2D dim = getTextBlock().calculateDimension(stringBounder);
 		if (image != null) {
-			if (position == GraphicPosition.BOTTOM)
-				dim = new XDimension2D(dim.getWidth(), dim.getHeight() + image.getHeight());
-			else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT
+			if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT
 					|| position == GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT)
 				// The image may be taller than the text (e.g. a distributor logo next to a
 				// few lines): the block must be tall enough for both.

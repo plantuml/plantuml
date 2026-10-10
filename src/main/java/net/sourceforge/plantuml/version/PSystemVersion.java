@@ -101,10 +101,6 @@ public class PSystemVersion extends PlainStringsDiagram {
 		return getImage("time15.png");
 	}
 
-	public static PortableImage getCharlieImage() {
-		return getImage("charlie.png");
-	}
-
 	public static PortableImage getPlantumlSmallIcon() {
 		return getImage("favicon.png");
 	}
@@ -121,25 +117,12 @@ public class PSystemVersion extends PlainStringsDiagram {
 		return getImage("dotd.png");
 	}
 
-	public static PortableImage getApple2Image() {
-		return getImageWebp("apple2.png");
-	}
-
 	private static PortableImage getImage(final String name) {
 		try {
 			final InputStream is = PSystemVersion.class.getResourceAsStream(name);
 			final PortableImage image = SImageIO.read(is);
 			is.close();
 			return image;
-		} catch (IOException e) {
-			Logme.error(e);
-		}
-		return PortableImageFactory.build(10, 10, BufferedImage.TYPE_INT_ARGB);
-	}
-
-	private static PortableImage getImageWebp(final String name) {
-		try (InputStream is = PSystemVersion.class.getResourceAsStream(name)) {
-			return SFile.getImageFromWebpButHeader(is);
 		} catch (IOException e) {
 			Logme.error(e);
 		}
