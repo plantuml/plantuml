@@ -90,6 +90,17 @@ The entire public surface is two exported functions:
 | `render(lines, targetId)` | Render a diagram into the DOM element with the given `id`. `lines` is an `Array<string>`. |
 | `render(lines, targetId, { dark: true })` | Same, but produces a dark-mode SVG. |
 | `renderToString(lines, onSuccess, onError)` | Render and deliver the SVG as a string via the `onSuccess(svg)` callback. Errors go to `onError(message)`. |
+| `renderToString(lines, onSuccess, onError, { dark: true, maxSvgSize: 8192 })` | Same, with the optional fourth `options` argument (see below). |
+
+Both functions accept the same optional `options` object as their last argument:
+
+| Option | Default | Effect |
+|--------|---------|--------|
+| `dark` | `false` | Produce a dark-mode SVG. |
+| `maxSvgSize` | `8192` | A diagram whose width or height exceeds this many pixels fails with an error (`onError` for `renderToString`) instead of producing a huge SVG. A larger number raises the limit, `0` disables the check. |
+
+Pass `null` or omit `options` to get the defaults. To get a dark SVG from
+`renderToString`, the fourth argument is required: `renderToString(lines, ok, err, { dark: true })`.
 
 `plantuml.js` is an ES2015 module; `viz-global.js` is a classic script that
 must be present before any rendering happens. The engine starts its
@@ -113,8 +124,14 @@ without blocking.
 Obsidian plugins are TypeScript, bundled with esbuild into a single
 `main.js` — `obsidian-plantuml` itself is built from the standard
 `obsidian-sample-plugin` template. `plantuml.js` and `viz-global.js` would
-ship as bundled assets alongside it, the same way the plugin already
-bundles whatever talks to its local-jar and server backends today.
+ship with it. Bundling them into `main.js` takes two precautions, because
+`viz-global.js` is a UMD: in a bundle it attaches `Viz` to the bundle's
+exports instead of `globalThis`, so the plugin hands it to the engine with
+`globalThis.PLANTUML_VIZ = Viz` (obtained from `@viz-js/viz`, for example)
+before the first render; and the package's `sideEffects` field lists the
+companion files (`emoji.js`, `openiconic.js`, `themes.js`, `viz-global.js`)
+so a bundler does not drop them. See
+[`GITHUB_INTEGRATION.md`](./GITHUB_INTEGRATION.md#graphviz-when-bundled).
 
 The plugin registers a markdown post-processor that hands PlantUML code
 blocks a target DOM element to render into. `renderToString()` fits that
@@ -131,18 +148,31 @@ function renderWithJsEngine(source, targetElement, dark) {
     const lines = source.split(/\r\n|\r|\n/);
     renderToString(
         lines,
-        svg => { targetElement.innerHTML = svg; },
-        error => { targetElement.setText(`PlantUML error: ${error}`); }
+        svg => {
+            // Obsidian's plugin review rejects innerHTML: parse the SVG instead.
+            const doc = new DOMParser().parseFromString(svg, "image/svg+xml");
+            targetElement.replaceChildren(document.importNode(doc.documentElement, true));
+        },
+        error => { targetElement.setText(`PlantUML error: ${error}`); },
+        { dark }
     );
 }
 ```
 
+The fourth argument is how the dark flag reaches the engine: without it,
+`renderToString` always produces a light-mode SVG. Calls may overlap, so a
+note with several PlantUML blocks can call `renderWithJsEngine` for each block
+without waiting; each call is answered once, in order.
 One Obsidian-specific constraint worth flagging up front: the community
 plugin review process doesn't allow fetching and `eval`-ing remote code at
 runtime. That's not a problem here — `plantuml.js` and `viz-global.js`
-would ship bundled inside the plugin's own package like any other asset,
-never fetched from a CDN at runtime, so this is a rendering-backend
-addition, not a new remote-code pattern to get past review.
+ship inside the plugin's own package, never fetched from a CDN at runtime,
+so this is a rendering-backend addition, not a new remote-code pattern to get
+past review. Support scripts the engine loads lazily (`themes.js`,
+`emoji.js`, `openiconic.js`, stdlib bundles) are loaded through a script tag
+by default; a host that cannot do that provides them as data with
+`PLANTUML_STDLIB_LOADER`, or inlines them in the bundle, in which case the
+engine uses the registered data.
 
 ## Key Advantages for this plugin
 

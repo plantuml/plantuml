@@ -54,6 +54,16 @@ import org.teavm.jso.JSObject;
  * </pre>
  */
 public class GraphVizjsTeaVMEngine {
+
+	/**
+	 * Where the Viz.js object comes from. A host that bundles viz-global.js (a UMD)
+	 * into its own file does not get a global {@code Viz}: the UMD attaches it to
+	 * the bundle's exports. Such a host sets {@code globalThis.PLANTUML_VIZ = Viz}
+	 * itself; it takes precedence over the global {@code Viz} that loading
+	 * viz-global.js with a script tag defines.
+	 */
+	private static final String FIND_VIZ_STMT = "var V = globalThis.PLANTUML_VIZ || (typeof Viz !== 'undefined' ? Viz : null);";
+
 	// ::remove file when JAVA8
 
 	/**
@@ -70,9 +80,9 @@ public class GraphVizjsTeaVMEngine {
 	 * so the caller should fall back to the Smetana layout engine. Logs a
 	 * one-time console note the first time the fallback is taken.
 	 */
-	@JSBody(script = "var missing = typeof Viz === 'undefined' || !Viz || typeof Viz.instance !== 'function';" +
-			"if (missing && !window.__plantumlSmetanaFallbackNoted) {" +
-			"  window.__plantumlSmetanaFallbackNoted = true;" +
+	@JSBody(script = FIND_VIZ_STMT + "var missing = !V || typeof V.instance !== 'function';" +
+			"if (missing && !globalThis.__plantumlSmetanaFallbackNoted) {" +
+			"  globalThis.__plantumlSmetanaFallbackNoted = true;" +
 			"  console.info('PlantUML: viz-global.js is not loaded, falling back to the Smetana layout engine');" +
 			"}" +
 			"return missing;")
@@ -94,11 +104,12 @@ public class GraphVizjsTeaVMEngine {
 	 * Uses Viz.js API: Viz.instance().then(viz => viz.renderString(dot, options))
 	 */
 	@JSBody(params = { "dotSource", "onSuccess", "onError" }, script =
-		"if (typeof Viz === 'undefined' || !Viz || typeof Viz.instance !== 'function') {" +
+		FIND_VIZ_STMT +
+		"if (!V || typeof V.instance !== 'function') {" +
 		"  onError('Viz is not loaded: this diagram type needs the Graphviz layout engine (viz-global.js). Load viz-global.js before rendering.');" +
 		"  return;" +
 		"}" +
-		"Viz.instance().then(function(viz) {" +
+		"V.instance().then(function(viz) {" +
 		"  try {" +
 		"    var svg = viz.renderString(dotSource, { format: 'svg', engine: 'dot' });" +
 		"    onSuccess(svg);" +
@@ -131,11 +142,12 @@ public class GraphVizjsTeaVMEngine {
 	 * JavaScript bridge for engine-specific rendering.
 	 */
 	@JSBody(params = { "dotSource", "engine", "onSuccess", "onError" }, script =
-		"if (typeof Viz === 'undefined' || !Viz || typeof Viz.instance !== 'function') {" +
+		FIND_VIZ_STMT +
+		"if (!V || typeof V.instance !== 'function') {" +
 		"  onError('Viz is not loaded: this diagram type needs the Graphviz layout engine (viz-global.js). Load viz-global.js before rendering.');" +
 		"  return;" +
 		"}" +
-		"Viz.instance().then(function(viz) {" +
+		"V.instance().then(function(viz) {" +
 		"  try {" +
 		"    var svg = viz.renderString(dotSource, { format: 'svg', engine: engine });" +
 		"    onSuccess(svg);" +

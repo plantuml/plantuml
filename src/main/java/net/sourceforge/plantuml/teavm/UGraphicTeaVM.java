@@ -70,6 +70,9 @@ public class UGraphicTeaVM extends AbstractUGraphic<SvgGraphicsTeaVM> implements
 	// shared, so registerDriver refuses to touch it afterwards.
 	private static final UDriver<?, SvgGraphicsTeaVM>[] DRIVERS = newDrivers();
 
+	// Same default as the Java SVG output (net.atmp.SvgOption#getLinkTarget)
+	private static final String LINK_TARGET = "_top";
+
 	@SuppressWarnings("unchecked")
 	private static UDriver<?, SvgGraphicsTeaVM>[] newDrivers() {
 		// "new UDriver<?, SvgGraphicsTeaVM>[n]" is not legal Java -- generic array creation --
@@ -147,12 +150,12 @@ public class UGraphicTeaVM extends AbstractUGraphic<SvgGraphicsTeaVM> implements
 
 	@Override
 	public void startUrl(Url url) {
-		// TODO: implement URL/link support
+		getSvgGraphics().openLink(url.getUrl(), url.getTooltip(), LINK_TARGET);
 	}
 
 	@Override
 	public void closeUrl() {
-		// TODO: implement URL/link support
+		getSvgGraphics().closeLink();
 	}
 
 	@Override

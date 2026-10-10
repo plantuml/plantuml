@@ -111,7 +111,10 @@ const pageHtml = mode => createModulePageHtml({
     (mode === 'base' ? `<script>window.PLANTUML_STDLIB_BASE = '/cdn/';</script>` : '')
     + (mode === 'hook' ? hookScript(null) : '')
     + (mode === 'hookfail' ? hookScript('fakelib') : '')
-    + (mode === 'decline' ? declineScript : ''),
+    + (mode === 'decline' ? declineScript : '')
+    // The host already registered the emoji and OpenIconic data (a bundler
+    // that inlined them): the declining hook must never be asked for them.
+    + (mode === 'preloaded' ? `<script src="/emoji.js"></script><script src="/openiconic.js"></script>` + declineScript : ''),
   modulePath: `/${file}`,
   moduleBody: makeRenderModuleBody({ maxSvgSize: 98304 }),
 });
@@ -128,6 +131,7 @@ const server = createMountedServer({
     '/index-hook.html': { contentType: 'text/html', body: pageHtml('hook') },
     '/index-hookfail.html': { contentType: 'text/html', body: pageHtml('hookfail') },
     '/index-decline.html': { contentType: 'text/html', body: pageHtml('decline') },
+    '/index-preloaded.html': { contentType: 'text/html', body: pageHtml('preloaded') },
     '/fakelib.min.js': { contentType: 'application/javascript', body: bundleScript('fakelib') },
     '/fakelink.min.js': { contentType: 'application/javascript', body: linkScript('fakelink', 'fakelib') },
     '/cdn/baselib.min.js': { contentType: 'application/javascript', body: bundleScript('baselib') },
@@ -241,6 +245,26 @@ const renderedAs = r => r.thrown || (r.svg ? (isErrorImage(r.svg) ? 'error image
     'loader calls: ' + (r.loaderCalls || []).join(', ') + '; requests: ' + requested.join(', '));
   check('no unhandled page errors on the decline page', decline.errors.length === 0,
     decline.errors.join(' | '));
+
+  // Page 6: emoji.js and openiconic.js were registered by the host before the
+  // first render (what a bundle does). The engine must use that data and not
+  // load the files again. Control: the decline page loads them on demand,
+  // through the hook first.
+  const SUPPORT = ['@startuml', 'Alice -> Bob : <:loop:> <&account-login>', '@enduml'];
+  r = await renderOn(decline.page, SUPPORT, { includeLoaderCalls: true, maxTextLength: 120 });
+  const controlCalls = r.loaderCalls || [];
+  check('control: without registered data, emoji.js and openiconic.js go through the loader',
+    controlCalls.includes('emoji.js') && controlCalls.includes('openiconic.js'),
+    'loader calls: ' + controlCalls.join(', '));
+  const preloaded = await openPage('index-preloaded.html');
+  r = await renderOn(preloaded.page, SUPPORT, { includeLoaderCalls: true, maxTextLength: 120 });
+  check('registered emoji and OpenIconic data render a diagram', !r.thrown && !!r.svg && !isErrorImage(r.svg),
+    renderedAs(r));
+  check('registered emoji and OpenIconic data are not loaded again',
+    r.loaderCalls && !r.loaderCalls.some(u => /emoji\.js|openiconic\.js/.test(u)),
+    'loader calls: ' + (r.loaderCalls || []).join(', '));
+  check('no unhandled page errors on the preloaded page', preloaded.errors.length === 0,
+    preloaded.errors.join(' | '));
 
   await browser.close();
   server.close();
