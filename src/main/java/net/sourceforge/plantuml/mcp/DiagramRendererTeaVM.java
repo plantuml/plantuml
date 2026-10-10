@@ -119,7 +119,7 @@ public class DiagramRendererTeaVM {
 	 * {@code PlantUMLBrowser.buildSvg} but targeting the headless
 	 * {@link UGraphicSvg} backend.
 	 */
-	private static String buildSvg(UgDiagram diagram) throws Exception {
+	public static String buildSvg(UgDiagram diagram) throws Exception {
 		final ColorMapper colorMapper = ColorMapper.IDENTITY;
 		final FileFormatOption fileFormatOption = new FileFormatOption(FileFormat.SVG_DETERMINISTIC);
 

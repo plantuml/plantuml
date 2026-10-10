@@ -283,6 +283,9 @@ public final class DotStringFactory implements Moveable {
 			throws IOException {
 		String dotString = createDotString(stringBounder, dotMode, dotOptions);
 
+		if (TeaVM.isC())
+			throw new IOException("Graphviz is not available in the TeaVM C build");
+
 		if (TeaVM.isTeaVM()) {
 			// Surface layout-engine failures (e.g. viz-global.js not loaded) as an
 			// IOException so GraphvizImageBuilder turns them into a crash report

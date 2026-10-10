@@ -178,7 +178,8 @@ public enum FileFormat {
 			Pragma pragma) {
 		// ::comment when JAVA8
 		if (TeaVM.isTeaVM()) {
-			if (this == SVG_DETERMINISTIC)
+			// TeaVM C has no canvas to measure the text: always the width table
+			if (this == SVG_DETERMINISTIC || TeaVM.isC())
 				return new StringBounderFromWidthTable(this);
 			return new StringBounderTeaVM();
 		}

@@ -87,6 +87,8 @@ public class PathSystem {
 	public JsonValue getTeaVMStdlibJson(String path) {
 		// ::revert when JAVA8
 		// return null;
+		if (TeaVM.isC())
+			return null;
 		path = path.replaceAll("\\.json$", "");
 		final String full = path.toLowerCase();
 		final int slash = full.indexOf('/');
@@ -109,6 +111,8 @@ public class PathSystem {
 	public InputStream getTeaVMStdlibInputStream(String path) {
 		// ::revert when JAVA8
 		// return null;
+		if (TeaVM.isC())
+			return null;
 		final String full = path.substring(1, path.length() - 1).toLowerCase();
 		final int slash = full.indexOf('/');
 		if (slash == -1)
@@ -136,7 +140,7 @@ public class PathSystem {
 	public String getTeaVMFileId(InputFile file) {
 		// ::revert when JAVA8
 		// return null;
-		if (TeaVM.isTeaVM() == false)
+		if (TeaVM.isC())
 			return null;
 
 		return TeaVmFileLoader.getId(file);
@@ -293,7 +297,7 @@ public class PathSystem {
 		// standard-library path keep their own routes (TContext handles both
 		// before coming here), and the engine's own files have no host to ask.
 		if (TeaVM.isTeaVM()) {
-			if (hostFiles == false || path.startsWith("http://") || path.startsWith("https://")
+			if (TeaVM.isC() || hostFiles == false || path.startsWith("http://") || path.startsWith("https://")
 					|| (path.startsWith("<") && path.endsWith(">")))
 				return null;
 			return TeaVmFileLoader.getInputFile(path, currentFolder, kind);

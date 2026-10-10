@@ -110,8 +110,10 @@ public class Emoji {
 
 	public static Emoji retrieve(String name) {
 		// ::comment when JAVA8
-		if (TeaVM.isTeaVM())
+		if (TeaVM.isJavaScript())
 			return retrieveFromJs(name.toLowerCase());
+		else if (TeaVM.isC())
+			return null;
 		else
 			// ::done
 			return ALL.get(name.toLowerCase());
@@ -169,7 +171,9 @@ public class Emoji {
 			return;
 
 		final List<String> data = new ArrayList<String>();
-		if (TeaVM.isTeaVM()) {
+		if (TeaVM.isC()) {
+			// No emoji data with TeaVM C
+		} else if (TeaVM.isTeaVM()) {
 			// ::comment when JAVA8
 			final String svgData = jsGetEmojiSvg(unicode);
 			if (svgData != null)

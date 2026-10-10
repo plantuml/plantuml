@@ -69,6 +69,7 @@ import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.teavm.PSystemBuilder2;
 import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.teavm.c.PSystemBuilderC;
 import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 import net.sourceforge.plantuml.text.StringLocated;
 
@@ -141,7 +142,7 @@ public class EmbeddedDiagram extends TextBlockMemoized implements Line, Atom {
 				// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
 				final TextBlock tb = getInternalTextBlock(stringBounder.getFileFormat());
 				final XDimension2D result = tb.calculateDimension(stringBounder);
-				PSystemBuilder2.getInstance().reset();
+				resetBuilder();
 				return result;
 				// ::done
 			}
@@ -154,12 +155,20 @@ public class EmbeddedDiagram extends TextBlockMemoized implements Line, Atom {
 	public TextBlock getInternalTextBlock(FileFormat fileFormat) throws Exception {
 		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
 		if (textBlock == null) {
-			PSystemBuilder2.getInstance().reset();
+			resetBuilder();
 			final UgDiagram ugDiagram = (UgDiagram) diagram;
 			textBlock = ugDiagram.getTextBlock(0, new FileFormatOption(fileFormat));
 		}
 		// ::done
 		return textBlock;
+	}
+
+	private static void resetBuilder() {
+		// The JavaScript and the C builds do not embed the same diagram factories
+		if (TeaVM.isC())
+			PSystemBuilderC.getInstance().reset();
+		else
+			PSystemBuilder2.getInstance().reset();
 	}
 
 	public void drawU(UGraphic ug) {
@@ -185,7 +194,7 @@ public class EmbeddedDiagram extends TextBlockMemoized implements Line, Atom {
 				final TextBlock tb = getInternalTextBlock(stringBounder.getFileFormat());
 				ug = ug.apply(HColors.transparent().bg());
 				tb.drawU(ug);
-				PSystemBuilder2.getInstance().reset();
+				resetBuilder();
 				// ::done
 			}
 		} catch (Exception e) {

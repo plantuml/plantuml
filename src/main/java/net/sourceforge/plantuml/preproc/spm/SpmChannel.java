@@ -41,6 +41,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import net.sourceforge.plantuml.brotli.BrotliInputStream;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.preproc.Stdlib;
 
 public enum SpmChannel {
@@ -66,6 +67,10 @@ public enum SpmChannel {
 //	}
 
 	public InputStream getInternalInputStream(String libname) throws IOException {
+		// Keeps the Brotli decoder and its big dictionary out of the TeaVM C build
+		if (TeaVM.isC())
+			throw new IOException("The standard library is not available in the TeaVM C build");
+
 		final String path = "stdlib/" + libname + "/" + getFileName();
 		return new BrotliInputStream(inputStream(path));
 	}

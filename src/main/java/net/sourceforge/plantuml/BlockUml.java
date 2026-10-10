@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.preproc.ReadLineWithYamlHeader;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.teavm.PSystemBuilder2;
 import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.teavm.c.PSystemBuilderC;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.TimLoader;
@@ -195,6 +196,8 @@ public class BlockUml {
 				system = PSystemBuilder.getInstance().createPSystem(pathSystem, data, rawSource, previous,
 						preprocessingArtifact);
 			// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
+			else if (TeaVM.isC())
+				system = PSystemBuilderC.getInstance().createDiagramFromPreprocessed(data, preprocessingArtifact);
 			else
 				system = PSystemBuilder2.getInstance().createDiagramFromPreprocessed(data, preprocessingArtifact);
 			// ::done
@@ -206,7 +209,9 @@ public class BlockUml {
 		if (preprocessorError)
 			return Collections.singletonList(Explanation.ofError("Preprocessor error"));
 
-		if (TeaVM.isTeaVM())
+		if (TeaVM.isC())
+			return PSystemBuilderC.getInstance().explain(data, preprocessingArtifact);
+		else if (TeaVM.isTeaVM())
 			return PSystemBuilder2.getInstance().explain(data, preprocessingArtifact);
 		else
 			return PSystemBuilder.getInstance().explain(pathSystem, data, rawSource, previous, preprocessingArtifact);

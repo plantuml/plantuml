@@ -72,8 +72,10 @@ public class OpenIconic {
 
 	public static OpenIconic retrieve(String name) {
 		// ::comment when JAVA8
-		if (TeaVM.isTeaVM())
+		if (TeaVM.isJavaScript())
 			return retrieveFromJs(name);
+		if (TeaVM.isC())
+			return null;
 		// ::done
 		final InputStream is = getResource(name);
 		if (is == null)

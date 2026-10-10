@@ -624,6 +624,11 @@ public class SURL {
 	}
 
 	public InputStream openStream() {
+		// java.net.URL goes through TeaVM's XHR connection, which is asynchronous and
+		// JavaScript only: it would make most of the code "async" for the C backend
+		if (TeaVM.isC())
+			return null;
+
 		if (TeaVM.isTeaVM()) {
 			try {
 				return internal.openStream();

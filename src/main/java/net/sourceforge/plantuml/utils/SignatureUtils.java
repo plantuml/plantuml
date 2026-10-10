@@ -69,7 +69,7 @@ public class SignatureUtils {
 	}
 
 	public static String getMD5Hex(String s) {
-		if (TeaVM.isTeaVM()) {
+		if (TeaVM.isJavaScript()) {
 			// ::revert when JAVA8
 			return md5Native(s);
 			// return null;
@@ -90,6 +90,10 @@ public class SignatureUtils {
 
 	public static synchronized byte[] getMD5raw(String s)
 			throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		// java.security.MessageDigest is missing from the TeaVM C classlib
+		if (TeaVM.isC())
+			return Md5.digest(s.getBytes(UTF_8));
+
 		final MessageDigest msgDigest = MessageDigest.getInstance("MD5");
 		msgDigest.update(s.getBytes(UTF_8));
 		return msgDigest.digest();

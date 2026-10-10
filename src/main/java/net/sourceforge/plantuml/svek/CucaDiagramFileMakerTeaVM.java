@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.klimt.drawing.font.StringBounderFromWidthTable;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.teavm.StringBounderTeaVM;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
 	// ::remove file when JAVA8
@@ -65,7 +66,7 @@ public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
 			throws IOException, InterruptedException {
 
 		final StringBounder stringBounder;
-		if (fileFormatOption.getFileFormat() == FileFormat.SVG_DETERMINISTIC)
+		if (fileFormatOption.getFileFormat() == FileFormat.SVG_DETERMINISTIC || TeaVM.isC())
 			stringBounder = new StringBounderFromWidthTable(FileFormat.SVG_DETERMINISTIC);
 		else
 			stringBounder = new StringBounderTeaVM();
