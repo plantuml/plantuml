@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.drawing.svg.PortableSvgDocument;
 import net.sourceforge.plantuml.klimt.drawing.svg.SvgGraphics;
+import net.sourceforge.plantuml.security.SecurityUtils;
 
 /**
  * SVG Graphics implementation for TeaVM. Uses browser's native DOM API instead
@@ -174,20 +175,13 @@ public class SvgGraphicsTeaVM {
 		private final String target;
 
 		LinkData(String url, String title, String target) {
-			// SecurityUtils.ignoreThisLink() cannot be used here: its javascript: check is
-			// compiled out of the TeaVM build, so the filter is repeated locally.
-			if (url == null || isJavascriptLink(url))
+			// javascript: security issue, same filter as the Java backend
+			if (url == null || SecurityUtils.ignoreThisLink(url))
 				this.url = "";
 			else
 				this.url = url;
 			this.title = title;
 			this.target = target;
-		}
-
-		private static boolean isJavascriptLink(String url) {
-			// Same rule as SecurityUtils.isJavascriptLink: non-letters are ignored,
-			// so that "java script:" or "JavaScript:" are caught too.
-			return url.toLowerCase().replaceAll("[^a-z]", "").startsWith("javascript");
 		}
 
 		private static final Pattern UNICODE_ESCAPE = Pattern.compile("\\<U\\+([0-9A-Fa-f]+)\\>");
