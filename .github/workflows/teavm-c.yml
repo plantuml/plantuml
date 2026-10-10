@@ -1,0 +1,114 @@
+name: TeaVM C (experimental)
+
+# Java -> C with TeaVM, then a native Windows executable built with MSVC.
+# See src/teavm-c/README.md.
+#
+# The generated C is platform independent: it is produced once on Linux, then
+# compiled and smoke-tested on one Windows runner per architecture.
+
+on:
+  push:
+    branches: [ master-c ]
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+
+  generate_c:
+    name: Generate C sources (TeaVM)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v7
+
+      - name: Set up java
+        uses: actions/setup-java@v6
+        with:
+          java-version: 21
+          distribution: temurin
+          cache: gradle
+
+      # ":" prefix: only the root project (plantuml-mcp-js also has a TeaVM
+      # plugin, and therefore a generateC task, without any C configuration)
+      - name: Generate C sources
+        run: ./gradlew --no-daemon :generateC
+
+      - name: List generated files
+        run: |
+          echo "::group::[build/generated/teavm/c]"
+          ls -la build/generated/teavm/c
+          echo "::endgroup::"
+          echo "$(wc -l < build/generated/teavm/c/all.txt) C files"
+          test -f build/generated/teavm/c/CMakeLists.txt
+
+      - name: Upload C sources
+        uses: actions/upload-artifact@v7
+        with:
+          name: teavm-c-sources
+          path: build/generated/teavm/c
+          retention-days: 7
+
+  build_windows:
+    name: Build windows-${{ matrix.arch }}
+    needs: generate_c
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: x64
+            runner: windows-latest
+            cmake_platform: x64
+          - arch: arm64
+            runner: windows-11-arm
+            cmake_platform: ARM64
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v7
+
+      - name: Download C sources
+        uses: actions/download-artifact@v8
+        with:
+          name: teavm-c-sources
+          path: c-sources
+
+      # No -G: CMake picks the newest Visual Studio generator installed on the
+      # runner (2022 or 2026), which finds MSVC by itself (no developer prompt).
+      # TeaVM's runtime requires MSVC: it detects Windows via _MSC_VER.
+      - name: Configure (MSVC, ${{ matrix.cmake_platform }})
+        shell: pwsh
+        run: cmake -S c-sources -B c-build -A ${{ matrix.cmake_platform }}
+
+      - name: Build
+        shell: pwsh
+        run: cmake --build c-build --config Release
+
+      - name: Smoke test (compare with the JVM output)
+        shell: pwsh
+        run: |
+          $exe = "c-sources/bin/Release/plantuml-c.exe"
+          Write-Host "Size: $((Get-Item $exe).Length) bytes"
+          $actual = (& $exe Arnaud) -join "`n"
+          if ($LASTEXITCODE -ne 0) { throw "plantuml-c.exe exited with code $LASTEXITCODE" }
+          $expected = (Get-Content src/teavm-c/expected-hello.txt) -join "`n"
+          Write-Host $actual
+          if ($actual -ne $expected) {
+            Write-Host "::error::Output differs from src/teavm-c/expected-hello.txt"
+            Write-Host "--- expected"
+            Write-Host $expected
+            exit 1
+          }
+
+      - name: Upload executable
+        uses: actions/upload-artifact@v7
+        with:
+          name: plantuml-c-windows-${{ matrix.arch }}
+          path: c-sources/bin/Release/plantuml-c.exe
+          retention-days: 30

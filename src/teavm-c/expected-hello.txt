@@ -1,0 +1,8 @@
+1. Hello from PlantUML compiled to C
+2. Hello Arnaud (1 args)
+3. Collections: [item0, item1, item2, item3, item4] 5
+4. Lambda: 144
+5. Exceptions: OK
+6. GC survived, total=2088890
+7. Double: 141.4213562373095
+8. Done

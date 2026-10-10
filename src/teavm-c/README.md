@@ -13,8 +13,11 @@ the tool chain. Each line it prints exercises one part of the runtime
 Requires Gradle running on JDK 17+ (like `generateJavaScript`):
 
 ```
-gradlew generateC
+gradlew :generateC
 ```
+
+The `:` prefix matters: the `plantuml-mcp-js` subproject also applies the TeaVM
+plugin, so a plain `generateC` would also run there and fail (no main class).
 
 Output: `build/generated/teavm/c/` (`all.txt` lists the `.c` files; Gradle
 also copies `CMakeLists.txt` from this folder there).
@@ -34,14 +37,27 @@ with C++", and make sure these components are selected:
 - MSVC ARM64/ARM64EC build tools
 - C++ CMake tools for Windows (provides `cmake` and `ninja`)
 
-Then open **"ARM64 Native Tools Command Prompt for VS 2022"** (or run
-`vcvarsall.bat arm64` in a regular prompt) and, from the repository root:
+Then load the MSVC environment in PowerShell (from the repository root).
+`-HostArch` only accepts `x86` or `amd64`: the x64 compiler runs under
+emulation, but it does generate native **ARM64** code (`-Arch arm64`):
+
+```
+$bt = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2022\BuildTools"
+& "$bt\Common7\Tools\Launch-VsDevShell.ps1" -Arch arm64 -HostArch amd64 -SkipAutomaticLocation
+cl    # the banner must end with "for ARM64"
+```
+
+This has to be done again in every new PowerShell window. Then:
 
 ```
 cmake -S build\generated\teavm\c -B build\c-native -G Ninja
 cmake --build build\c-native
 build\generated\teavm\c\bin\plantuml-c.exe Arnaud
 ```
+
+If `Launch-VsDevShell.ps1` or `vcvarsall.bat` is missing, the Build Tools
+installation is incomplete (for instance after an interrupted download): use
+"More > Repair" in the Visual Studio Installer.
 
 ### Linux / macOS
 
@@ -51,9 +67,17 @@ cmake --build build/c-native
 build/generated/teavm/c/bin/plantuml-c Arnaud
 ```
 
+## Continuous integration
+
+`.github/workflows/teavm-c.yml` runs on every push to `master-c`: it generates
+the C sources once on Linux, then builds and smoke-tests `plantuml-c.exe` on
+Windows x64 and Windows ARM64. The executables are available as workflow
+artifacts (`plantuml-c-windows-x64`, `plantuml-c-windows-arm64`).
+
 ## Expected output
 
-Same as on the JVM (`java ... net.sourceforge.plantuml.teavm.c.HelloWorldC Arnaud`):
+Same as on the JVM (`java ... net.sourceforge.plantuml.teavm.c.HelloWorldC Arnaud`),
+also stored in `expected-hello.txt` (used by the CI smoke test):
 
 ```
 1. Hello from PlantUML compiled to C
