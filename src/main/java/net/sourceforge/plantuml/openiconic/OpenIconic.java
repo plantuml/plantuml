@@ -110,11 +110,23 @@ public class OpenIconic {
 	private static void loadOpeniconicJsIfNeeded() {
 		if (openiconicJsLoaded)
 			return;
-		TeaVmScriptLoader.loadOnceSync("openiconic.js");
+		// Same as themes (ThemeUtils.loadJsTheme): data that is already registered, by a
+		// bundler that inlined openiconic.js or by the host, is used as is, and
+		// openiconic.js is only fetched when nothing is there.
+		if (jsHasOpeniconic() == false)
+			TeaVmScriptLoader.loadOnceSync("openiconic.js");
 		openiconicJsLoaded = true;
 	}
 
-	@JSBody(params = "name", script = "var o = window.PLANTUML_OPENICONIC;" + "return (o && o[name]) ? o[name] : null;")
+	// Read from the global object rather than from window (see Emoji).
+	private static final String GLOBAL = "var g = (typeof globalThis !== 'undefined') ? globalThis"
+			+ " : ((typeof self !== 'undefined') ? self : this);";
+
+	@JSBody(script = GLOBAL + "return !!(g && g.PLANTUML_OPENICONIC);")
+	private static native boolean jsHasOpeniconic();
+
+	@JSBody(params = "name", script = GLOBAL + "var o = g && g.PLANTUML_OPENICONIC;"
+			+ "return (o && o[name]) ? o[name] : null;")
 	private static native String jsGetPathLine(String name);
 	// ::done
 

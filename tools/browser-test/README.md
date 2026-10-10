@@ -82,7 +82,11 @@ globals that customize it:
   visible include error. Every lazily loaded support script (`themes.js`, `emoji.js`,
   `openiconic.js`) comes through the same loader, so the hook can decline a URL by returning
   false, and loading falls back to the script tag; the check pins that with a hook that
-  declines everything.
+  declines everything;
+- when the host already registered the emoji and OpenIconic data (`PLANTUML_EMOJI`,
+  `PLANTUML_OPENICONIC`, as a bundle that inlined `emoji.js` and `openiconic.js` does), the engine
+  uses it and does not ask for those files again; without registered data they are loaded on
+  demand.
 
 The stdlib libraries used are synthetic (one sequence participant each) and each exists only at
 the location its scenario is supposed to use, so a wrong loading path cannot render by
