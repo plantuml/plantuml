@@ -1,5 +1,8 @@
 package net.sourceforge.plantuml.teavm.browser;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.teavm.jso.JSBody;
 import org.teavm.jso.JSExport;
 import org.teavm.jso.JSFunctor;
@@ -138,10 +141,21 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
  * a time</li>
  * </ul>
  *
- * If multiple render requests arrive while one is being processed, only the
- * latest request is kept (the previous pending request is overwritten). This is
- * intentional: when a user is typing, we only care about rendering the latest
- * version.
+ * Requests wait in a queue, oldest first, and the worker answers them one at a
+ * time. Two rules decide what happens when several arrive before the worker is
+ * free:
+ * <ul>
+ * <li>{@code renderToString}: every request is kept and answered, in the order
+ * received. Each of its callbacks is called exactly once ({@code onSuccess} or
+ * {@code onError}); a host that renders many diagrams at the same time gets all
+ * of them back.</li>
+ * <li>{@code render}: only the latest request is kept, a new one replaces the
+ * {@code render} request still waiting. This is intentional: when a user is
+ * typing, we only care about rendering the latest version.</li>
+ * </ul>
+ *
+ * Neither kind drops the other. A callback that throws, or a missing callback,
+ * does not stop the worker.
  *
  * @see net.sourceforge.plantuml.teavm.GraphVizjsTeaVMEngine
  */
@@ -181,38 +195,73 @@ public class PlantUMLBrowser {
 	private static volatile boolean workerStarted = false;
 
 	/**
-	 * The PlantUML source lines to render, or null if no request is pending. Set by
-	 * the exported entry points, cleared by workerLoop() after processing.
+	 * One render request, as queued by the exported entry points and consumed by
+	 * {@link PlantUMLBrowser#workerLoop()}. Immutable: it is built by the caller's thread and read
+	 * by the worker.
 	 */
-	private static volatile String[] pendingLines;
+	private static final class Request {
+		/** The PlantUML source lines to render. */
+		private final String[] lines;
+
+		/**
+		 * The DOM element ID where the SVG should be inserted, or null for
+		 * renderToString requests.
+		 */
+		private final String elementId;
+
+		/** Success callback of a renderToString request, null for render-to-div. */
+		private final StringCallback onSuccess;
+
+		/** Error callback of a renderToString request, null for render-to-div. */
+		private final StringCallback onError;
+
+		/** Whether the request should use dark mode rendering. */
+		private final boolean darkMode;
+
+		/**
+		 * Maximum width/height (in pixels) allowed, resolved from the
+		 * {@code maxSvgSize} option ({@link #DEFAULT_MAX_SVG_SIZE} when absent). A
+		 * value {@code <= 0} means "no limit".
+		 */
+		private final int maxSvgSize;
+
+		private final boolean toElement;
+
+		private Request(String[] lines, String elementId, StringCallback onSuccess, StringCallback onError,
+				boolean darkMode, int maxSvgSize, boolean toElement) {
+			this.lines = lines;
+			this.elementId = elementId;
+			this.onSuccess = onSuccess;
+			this.onError = onError;
+			this.darkMode = darkMode;
+			this.maxSvgSize = maxSvgSize;
+			this.toElement = toElement;
+		}
+
+		/** A {@link PlantUMLBrowser#render} request: the SVG goes into a DOM element. */
+		private static Request forElement(String[] lines, String elementId, boolean darkMode, int maxSvgSize) {
+			return new Request(lines, elementId, null, null, darkMode, maxSvgSize, true);
+		}
+
+		/** A {@link PlantUMLBrowser#renderToString} request: the SVG goes to a callback. */
+		private static Request forCallbacks(String[] lines, StringCallback onSuccess, StringCallback onError,
+				boolean darkMode, int maxSvgSize) {
+			return new Request(lines, null, onSuccess, onError, darkMode, maxSvgSize, false);
+		}
+	}
 
 	/**
-	 * The DOM element ID where the SVG should be inserted, or null for
-	 * renderToString requests.
+	 * Requests waiting for the worker, oldest first. Guarded by {@link #LOCK}.
+	 *
+	 * <p>
+	 * Every {@link #renderToString} request stays in the queue until the worker has
+	 * answered it, so each of its callbacks is called exactly once. A
+	 * {@link #render} request is the exception: it replaces the {@code render}
+	 * request already waiting, if any (see {@link #enqueueRender}). The queue is
+	 * not bounded: a host that floods {@code renderToString} gets every diagram
+	 * rendered.
 	 */
-	private static volatile String pendingElementId;
-
-	/**
-	 * Success callback for renderToString requests, or null for render-to-div
-	 * requests.
-	 */
-	private static volatile StringCallback pendingOnSuccess;
-
-	/**
-	 * Error callback for renderToString requests, or null for render-to-div
-	 * requests.
-	 */
-	private static volatile StringCallback pendingOnError;
-
-	/** Whether the pending request should use dark mode rendering. */
-	private static volatile boolean pendingDarkMode;
-
-	/**
-	 * Maximum width/height (in pixels) allowed for the pending request, resolved
-	 * from the {@code maxSvgSize} option ({@link #DEFAULT_MAX_SVG_SIZE} when
-	 * absent). A value {@code <= 0} means "no limit".
-	 */
-	private static volatile int pendingMaxSvgSize = DEFAULT_MAX_SVG_SIZE;
+	private static final List<Request> QUEUE = new ArrayList<Request>();
 
 	// =========================================================================
 	// Lazy worker initialization
@@ -268,8 +317,10 @@ public class PlantUMLBrowser {
 	 * later from the worker thread.
 	 *
 	 * <p>
-	 * If a previous request is still pending (worker hasn't picked it up yet), it
-	 * will be overwritten. This is the desired behavior for live-typing scenarios.
+	 * If a previous {@code render} request is still waiting (the worker hasn't
+	 * picked it up yet), it is replaced by this one, and its diagram is never
+	 * drawn. This is the desired behavior for live-typing scenarios. Waiting
+	 * {@code renderToString} requests are not affected.
 	 *
 	 * @param lines     the PlantUML source code, split into lines by the JavaScript
 	 *                  caller
@@ -283,15 +334,26 @@ public class PlantUMLBrowser {
 	@JSExport
 	public static void render(String[] lines, String elementId, JSObject options) {
 		ensureWorkerStarted();
+		final Request request = Request.forElement(lines, elementId, isDark(options), resolveMaxSvgSize(options));
 		synchronized (LOCK) {
-			pendingLines = lines;
-			pendingElementId = elementId;
-			pendingOnSuccess = null;
-			pendingOnError = null;
-			pendingDarkMode = isDark(options);
-			pendingMaxSvgSize = resolveMaxSvgSize(options);
+			enqueueRender(request);
 			LOCK.notify();
 		}
+	}
+
+	/**
+	 * Adds a {@link #render} request to the queue, "latest wins": if a
+	 * {@code render} request is still waiting, it is replaced (in place) by this
+	 * one. Requests of the other kind are never touched. Must be called with
+	 * {@link #LOCK} held.
+	 */
+	private static void enqueueRender(Request request) {
+		for (int i = 0; i < QUEUE.size(); i++)
+			if (QUEUE.get(i).toElement) {
+				QUEUE.set(i, request);
+				return;
+			}
+		QUEUE.add(request);
 	}
 
 	/**
@@ -301,7 +363,11 @@ public class PlantUMLBrowser {
 	 * <p>
 	 * Same queueing and asynchronous behavior as {@link #render}: this method only
 	 * queues the request; the worker thread performs the actual rendering and
-	 * invokes the callback. A previous pending request will be overwritten.
+	 * invokes the callback. Unlike {@link #render}, requests are never dropped: each
+	 * call is queued behind the ones already waiting, and exactly one of
+	 * {@code onSuccess} and {@code onError} is called for it, once, in the order of
+	 * the calls. A callback that is {@code null} or that throws does not stop the
+	 * engine (an exception is reported with {@code console.error}).
 	 *
 	 * @param lines     the PlantUML source code, split into lines by the JavaScript
 	 *                  caller
@@ -316,13 +382,10 @@ public class PlantUMLBrowser {
 	public static void renderToString(String[] lines, StringCallback onSuccess, StringCallback onError,
 			JSObject options) {
 		ensureWorkerStarted();
+		final Request request = Request.forCallbacks(lines, onSuccess, onError, isDark(options),
+				resolveMaxSvgSize(options));
 		synchronized (LOCK) {
-			pendingLines = lines;
-			pendingElementId = null;
-			pendingOnSuccess = onSuccess;
-			pendingOnError = onError;
-			pendingDarkMode = isDark(options);
-			pendingMaxSvgSize = resolveMaxSvgSize(options);
+			QUEUE.add(request);
 			LOCK.notify();
 		}
 	}
@@ -381,15 +444,10 @@ public class PlantUMLBrowser {
 	 */
 	private static void workerLoop() {
 		while (true) {
-			String[] lines;
-			String elementId;
-			StringCallback onSuccess;
-			StringCallback onError;
-			boolean darkMode;
-			int maxSvgSize;
+			final Request request;
 
 			synchronized (LOCK) {
-				while (pendingLines == null) {
+				while (QUEUE.isEmpty()) {
 					try {
 						LOCK.wait();
 					} catch (InterruptedException e) {
@@ -397,27 +455,22 @@ public class PlantUMLBrowser {
 					}
 				}
 
-				// Capture the request and clear the pending state atomically.
-				lines = pendingLines;
-				elementId = pendingElementId;
-				onSuccess = pendingOnSuccess;
-				onError = pendingOnError;
-				darkMode = pendingDarkMode;
-				maxSvgSize = pendingMaxSvgSize;
-				pendingLines = null;
-				pendingElementId = null;
-				pendingOnSuccess = null;
-				pendingOnError = null;
-				pendingDarkMode = false;
-				pendingMaxSvgSize = DEFAULT_MAX_SVG_SIZE;
+				// Take the oldest request off the queue.
+				request = QUEUE.remove(0);
 			}
 
 			// Perform rendering OUTSIDE the synchronized block so new requests
 			// can be queued while we're rendering.
-			if (onSuccess != null)
-				doRenderToString(lines, onSuccess, onError, darkMode, maxSvgSize);
-			else
-				doRender(lines, elementId, darkMode, maxSvgSize);
+			try {
+				if (request.toElement)
+					doRender(request.lines, request.elementId, request.darkMode, request.maxSvgSize);
+				else
+					doRenderToString(request);
+			} catch (Throwable t) {
+				// Nothing may end this loop: a worker that dies leaves every later request
+				// unanswered, with no error anywhere.
+				consoleError("PlantUML: request failed: " + t);
+			}
 		}
 	}
 
@@ -525,12 +578,37 @@ public class PlantUMLBrowser {
 		BrowserLog.jsStatusDuration();
 	}
 
-	private static void doRenderToString(String[] lines, StringCallback onSuccess, StringCallback onError,
-			boolean darkMode, int maxSvgSize) {
+	/**
+	 * Renders a {@link #renderToString} request and answers it: exactly one of its
+	 * two callbacks is called, once.
+	 */
+	private static void doRenderToString(Request request) {
+		final String svg;
 		try {
-			onSuccess.call(serializeSvg(buildSvg(lines, darkMode, maxSvgSize).getSvgRoot()));
-		} catch (Exception e) {
-			onError.call(String.valueOf(e));
+			svg = serializeSvg(buildSvg(request.lines, request.darkMode, request.maxSvgSize).getSvgRoot());
+		} catch (Throwable t) {
+			deliver(request.onError, String.valueOf(t));
+			return;
+		}
+		// Outside the try block above: if the success callback throws, the error
+		// callback must not be called as well.
+		deliver(request.onSuccess, svg);
+	}
+
+	/**
+	 * Calls a host callback. A missing callback (the host did not pass one) is
+	 * ignored, and an exception thrown by the callback is contained, so that it
+	 * cannot stop the worker. It is reported with {@code console.error}, as an
+	 * error and not as debug output: it is a bug of the host that nothing else
+	 * would show.
+	 */
+	private static void deliver(StringCallback callback, String value) {
+		if (callback == null)
+			return;
+		try {
+			callback.call(value);
+		} catch (Throwable t) {
+			consoleError("PlantUML: callback threw: " + t);
 		}
 	}
 
@@ -545,6 +623,10 @@ public class PlantUMLBrowser {
 	/** Removes all child nodes from a DOM element. */
 	@JSBody(params = "el", script = "while(el.firstChild)el.removeChild(el.firstChild);")
 	private static native void removeAllChildren(HTMLElement el);
+
+	/** Reports an error to the console, whatever {@code PLANTUML_DEBUG} says. */
+	@JSBody(params = "msg", script = "console.error(msg);")
+	private static native void consoleError(String msg);
 
 	/** Serializes an SVG DOM element to a string. */
 	@JSBody(params = "svg", script = "return new XMLSerializer().serializeToString(svg);")

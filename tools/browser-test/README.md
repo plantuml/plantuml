@@ -82,7 +82,11 @@ globals that customize it:
   visible include error. Every lazily loaded support script (`themes.js`, `emoji.js`,
   `openiconic.js`) comes through the same loader, so the hook can decline a URL by returning
   false, and loading falls back to the script tag; the check pins that with a hook that
-  declines everything.
+  declines everything;
+- when the host already registered the emoji and OpenIconic data (`PLANTUML_EMOJI`,
+  `PLANTUML_OPENICONIC`, as a bundle that inlined `emoji.js` and `openiconic.js` does), the engine
+  uses it and does not ask for those files again; without registered data they are loaded on
+  demand.
 
 The stdlib libraries used are synthetic (one sequence participant each) and each exists only at
 the location its scenario is supposed to use, so a wrong loading path cannot render by
@@ -159,3 +163,15 @@ exists but instance() is not a function) falls back the same way as an absent
 one. A control page with viz-global.js pins that the default path is
 unchanged (the Graphviz bridge is still used, and no note is logged).
 `node check-viz-fallback.js target=...`.
+
+## check-render-queue.js
+
+Checks how the engine queues render requests. `renderToString` calls may overlap (several in
+the same JS turn): every call is answered, exactly one of its two callbacks is called, once, in
+the order of the calls. `render` keeps its "latest wins" rule (of several calls in the same turn
+only the last is drawn), and a waiting `render` and waiting `renderToString` calls do not drop
+each other. Callbacks cannot stop the engine: a failure with no `onError` (`undefined` or
+`null`) and an `onSuccess` that throws both leave it answering later requests, and the second is
+reported with `console.error` without calling `onError` for the same request. Only sequence
+diagrams are used, so the page does not load `viz-global.js`.
+`node check-render-queue.js target=...`.

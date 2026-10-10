@@ -31,11 +31,24 @@ The public surface is two functions exported from the `plantuml.js`
 ES2015 module. `viz-global.js` (the Graphviz layout engine) must be loaded
 as a classic script beforehand.
 
+If you bundle your host into a single file, `viz-global.js` (a UMD) attaches
+`Viz` to your bundle's exports instead of `globalThis`, and the engine does
+not see it. Hand it over yourself, before the first render:
+`globalThis.PLANTUML_VIZ = Viz;` (where `Viz` is however you obtained it,
+for example `@viz-js/viz`). It takes precedence over a global `Viz`.
+
 - `render(lines, targetId)` -- render into the DOM element with that `id`.
   `lines` is an `Array<string>`.
 - `render(lines, targetId, { dark: true })` -- same, in dark mode.
 - `renderToString(lines, onSuccess, onError)` -- deliver the SVG as a string
-  to `onSuccess(svg)`; errors go to `onError(message)`.
+  to `onSuccess(svg)`; errors go to `onError(message)`. Calls may overlap:
+  each is queued, and exactly one of its callbacks is called, once, in the
+  order of the calls. (`render()` keeps only the latest waiting call.)
+- `renderToString(lines, onSuccess, onError, options)` -- same, with the
+  optional `options` object that `render()` also accepts as its last argument:
+  `dark` (boolean, default `false`) for a dark-mode SVG, and `maxSvgSize`
+  (pixels, default `8192`) above which a diagram fails with an error instead of
+  producing a huge SVG; `0` disables the check.
 
 Rendering is asynchronous: `render()` returns immediately and writes the SVG
 into the target element later. See

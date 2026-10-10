@@ -20,6 +20,17 @@ The entire public surface is two exported functions:
 | `render(lines, targetId)` | Render a diagram into the DOM element with the given `id`. `lines` is an `Array<string>`. |
 | `render(lines, targetId, { dark: true })` | Same, but produces a dark-mode SVG. |
 | `renderToString(lines, onSuccess, onError)` | Render and deliver the SVG as a string via the `onSuccess(svg)` callback. Errors go to `onError(message)`. |
+| `renderToString(lines, onSuccess, onError, { dark: true, maxSvgSize: 8192 })` | Same, with the optional fourth `options` argument (see below). |
+
+Both functions accept the same optional `options` object as their last argument:
+
+| Option | Default | Effect |
+|--------|---------|--------|
+| `dark` | `false` | Produce a dark-mode SVG. |
+| `maxSvgSize` | `8192` | A diagram whose width or height exceeds this many pixels fails with an error (`onError` for `renderToString`) instead of producing a huge SVG. A larger number raises the limit, `0` disables the check. |
+
+Pass `null` or omit `options` to get the defaults. To get a dark SVG from
+`renderToString`, the fourth argument is required: `renderToString(lines, ok, err, { dark: true })`.
 
 `plantuml.js` is an ES2015 module loaded via `<script type="module">`.
 `viz-global.js` is a classic script loaded via a plain `<script>` tag and
@@ -35,13 +46,20 @@ DOM element **asynchronously**.  This has two consequences:
 1. You cannot read `targetElement.innerHTML` right after calling `render()`
    — the SVG is not there yet.
 2. When rendering multiple diagrams in the same page (same JS context),
-   you must **serialize** renders: wait for the first SVG to appear in the
-   DOM before starting the next render.  The engine uses shared internal
-   state and will silently overwrite the previous result otherwise.
+   you must **serialize** `render()` calls: wait for the first SVG to appear
+   in the DOM before starting the next one.  The engine keeps only the latest
+   waiting `render()` request (that is what a user typing needs), and will
+   silently overwrite the previous one otherwise.
 
 If you need the SVG as a string instead of a DOM element, use
 `renderToString(lines, onSuccess, onError)` — the callback receives the
-fully-formed SVG once rendering completes.
+fully-formed SVG once rendering completes.  Unlike `render()`, nothing is
+overwritten: calls may overlap, each one is queued, and exactly one of its two
+callbacks is called, once, in the order of the calls.  A host that renders
+several diagrams at the same time (a note with many code blocks, say) can call
+`renderToString` for each one without waiting.  If it only wants the latest
+result while the user types, it has to ignore the older ones itself, or use
+`render()`.
 
 In the iframe-per-diagram architecture described below, the serialization
 issue does not apply because each iframe has its own isolated engine instance.
@@ -254,6 +272,33 @@ This is the path for a browser extension (store rules allow fetching remote
 data but not executing remote code) and for a Web Worker (no document to
 append a script tag to). With neither global set, behaviour is unchanged.
 `tools/browser-test/check-stdlib-loader.js` pins the whole contract.
+
+## Graphviz When Bundled
+
+Loading `viz-global.js` with a script tag defines a global `Viz`, which is what
+the engine uses. A host that bundles `viz-global.js` into its own file gets no
+global: the UMD attaches `Viz` to the bundle's exports. Such a host passes it
+explicitly, before the first render:
+
+```js
+globalThis.PLANTUML_VIZ = Viz; // e.g. from @viz-js/viz
+```
+
+`PLANTUML_VIZ` takes precedence over a global `Viz`. Without either, diagrams
+that need Graphviz fall back to the Smetana layout engine.
+
+## Debug Logging
+
+The engine is silent by default: it prints nothing to the console and does not
+touch the host page's DOM. To get the step-by-step trace (and the timing text
+that `render()` writes into the element with `id="status"`), set a global before
+rendering:
+
+```js
+globalThis.PLANTUML_DEBUG = true;
+```
+
+Only the value `true` enables it. The demo pages in this directory set it.
 
 ## Local Files
 
