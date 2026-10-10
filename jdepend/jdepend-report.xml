@@ -1805,11 +1805,11 @@
                 <TotalClasses>3</TotalClasses>
                 <ConcreteClasses>3</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>19</Ca>
+                <Ca>18</Ca>
                 <Ce>10</Ce>
                 <A>0</A>
-                <I>0.34</I>
-                <D>0.66</D>
+                <I>0.36</I>
+                <D>0.64</D>
                 <V>1</V>
             </Stats>
 
@@ -1850,7 +1850,6 @@
                 <Package>net.sourceforge.plantuml.dedication</Package>
                 <Package>net.sourceforge.plantuml.donors</Package>
                 <Package>net.sourceforge.plantuml.dot</Package>
-                <Package>net.sourceforge.plantuml.eggs</Package>
                 <Package>net.sourceforge.plantuml.elk</Package>
                 <Package>net.sourceforge.plantuml.graphml</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing</Package>
@@ -6978,14 +6977,14 @@
 
         <Package name="net.sourceforge.plantuml.eggs">
             <Stats>
-                <TotalClasses>19</TotalClasses>
-                <ConcreteClasses>19</ConcreteClasses>
+                <TotalClasses>8</TotalClasses>
+                <ConcreteClasses>8</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>1</Ca>
-                <Ce>26</Ce>
+                <Ce>20</Ce>
                 <A>0</A>
-                <I>0.96</I>
-                <D>0.04</D>
+                <I>0.95</I>
+                <D>0.05</D>
                 <V>1</V>
             </Stats>
 
@@ -6993,20 +6992,8 @@
             </AbstractClasses>
 
             <ConcreteClasses>
-                <Class sourceFile="EggUtils.java">
-                    net.sourceforge.plantuml.eggs.EggUtils
-                </Class>
                 <Class sourceFile="GraphicsPath.java">
                     net.sourceforge.plantuml.eggs.GraphicsPath
-                </Class>
-                <Class sourceFile="PSystemAppleTwo.java">
-                    net.sourceforge.plantuml.eggs.PSystemAppleTwo
-                </Class>
-                <Class sourceFile="PSystemCharlie.java">
-                    net.sourceforge.plantuml.eggs.PSystemCharlie
-                </Class>
-                <Class sourceFile="PSystemCharlieFactory.java">
-                    net.sourceforge.plantuml.eggs.PSystemCharlieFactory
                 </Class>
                 <Class sourceFile="PSystemColors.java">
                     net.sourceforge.plantuml.eggs.PSystemColors$1
@@ -7014,26 +7001,11 @@
                 <Class sourceFile="PSystemColorsFactory.java">
                     net.sourceforge.plantuml.eggs.PSystemColorsFactory
                 </Class>
-                <Class sourceFile="PSystemEgg.java">
-                    net.sourceforge.plantuml.eggs.PSystemEgg
-                </Class>
-                <Class sourceFile="PSystemEggFactory.java">
-                    net.sourceforge.plantuml.eggs.PSystemEggFactory
-                </Class>
-                <Class sourceFile="PSystemLost.java">
-                    net.sourceforge.plantuml.eggs.PSystemLost
-                </Class>
-                <Class sourceFile="PSystemLostFactory.java">
-                    net.sourceforge.plantuml.eggs.PSystemLostFactory
-                </Class>
                 <Class sourceFile="PSystemPath.java">
                     net.sourceforge.plantuml.eggs.PSystemPath
                 </Class>
                 <Class sourceFile="PSystemPathFactory.java">
                     net.sourceforge.plantuml.eggs.PSystemPathFactory
-                </Class>
-                <Class sourceFile="PSystemRIP.java">
-                    net.sourceforge.plantuml.eggs.PSystemRIP
                 </Class>
                 <Class sourceFile="PSystemWelcome.java">
                     net.sourceforge.plantuml.eggs.PSystemWelcome
@@ -7044,23 +7016,14 @@
                 <Class sourceFile="QuoteUtils.java">
                     net.sourceforge.plantuml.eggs.QuoteUtils
                 </Class>
-                <Class sourceFile="SentenceDecoder.java">
-                    net.sourceforge.plantuml.eggs.SentenceDecoder
-                </Class>
-                <Class sourceFile="SentenceProducer.java">
-                    net.sourceforge.plantuml.eggs.SentenceProducer
-                </Class>
             </ConcreteClasses>
 
             <DependsUpon>
                 <Package>java.awt</Package>
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
-                <Package>java.math</Package>
-                <Package>java.nio.charset</Package>
                 <Package>java.util</Package>
                 <Package>java.util.regex</Package>
-                <Package>net.atmp</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.api</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
@@ -7068,16 +7031,13 @@
                 <Package>net.sourceforge.plantuml.klimt</Package>
                 <Package>net.sourceforge.plantuml.klimt.awt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
-                <Package>net.sourceforge.plantuml.klimt.drawing</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.g2d</Package>
-                <Package>net.sourceforge.plantuml.klimt.font</Package>
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.nio</Package>
                 <Package>net.sourceforge.plantuml.png</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.regex</Package>
-                <Package>net.sourceforge.plantuml.security</Package>
                 <Package>net.sourceforge.plantuml.version</Package>
             </DependsUpon>
 
@@ -10515,7 +10475,7 @@
                 <TotalClasses>14</TotalClasses>
                 <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
-                <Ca>80</Ca>
+                <Ca>79</Ca>
                 <Ce>14</Ce>
                 <A>0.36</A>
                 <I>0.15</I>
@@ -10613,7 +10573,6 @@
                 <Package>net.sourceforge.plantuml.donors</Package>
                 <Package>net.sourceforge.plantuml.dot</Package>
                 <Package>net.sourceforge.plantuml.ebnf</Package>
-                <Package>net.sourceforge.plantuml.eggs</Package>
                 <Package>net.sourceforge.plantuml.elk</Package>
                 <Package>net.sourceforge.plantuml.emoji</Package>
                 <Package>net.sourceforge.plantuml.explain</Package>
@@ -11322,7 +11281,7 @@
                 <TotalClasses>11</TotalClasses>
                 <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>90</Ca>
+                <Ca>89</Ca>
                 <Ce>6</Ce>
                 <A>0.18</A>
                 <I>0.06</I>
@@ -11406,7 +11365,6 @@
                 <Package>net.sourceforge.plantuml.donors</Package>
                 <Package>net.sourceforge.plantuml.dot</Package>
                 <Package>net.sourceforge.plantuml.ebnf</Package>
-                <Package>net.sourceforge.plantuml.eggs</Package>
                 <Package>net.sourceforge.plantuml.elk</Package>
                 <Package>net.sourceforge.plantuml.emoji</Package>
                 <Package>net.sourceforge.plantuml.explain</Package>
@@ -14087,11 +14045,11 @@
                 <TotalClasses>7</TotalClasses>
                 <ConcreteClasses>7</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>18</Ca>
+                <Ca>17</Ca>
                 <Ce>19</Ce>
                 <A>0</A>
-                <I>0.51</I>
-                <D>0.49</D>
+                <I>0.53</I>
+                <D>0.47</D>
                 <V>1</V>
             </Stats>
 
@@ -14153,7 +14111,6 @@
                 <Package>net.sourceforge.plantuml.directdot</Package>
                 <Package>net.sourceforge.plantuml.ditaa</Package>
                 <Package>net.sourceforge.plantuml.dot</Package>
-                <Package>net.sourceforge.plantuml.eggs</Package>
                 <Package>net.sourceforge.plantuml.jcckit</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.g2d</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.txt</Package>

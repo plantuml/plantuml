@@ -335,7 +335,7 @@ Total Classes: 7
 "jcckit.util" --> "java.lang"
 "jcckit.util" --> "java.util"
 
-class "net.atmp" %lighten("red", 34) {
+class "net.atmp" %lighten("red", 36) {
 Total Classes: 3
 }
 "net.atmp" --> "java.lang"
@@ -1376,17 +1376,14 @@ Total Classes: 26
 "net.sourceforge.plantuml.ebnf" --> "net.sourceforge.plantuml.style.value"
 "net.sourceforge.plantuml.ebnf" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.eggs" %lighten("red", 96) {
-Total Classes: 19
+class "net.sourceforge.plantuml.eggs" %lighten("red", 95) {
+Total Classes: 8
 }
 "net.sourceforge.plantuml.eggs" --> "java.awt"
 "net.sourceforge.plantuml.eggs" --> "java.io"
 "net.sourceforge.plantuml.eggs" --> "java.lang"
-"net.sourceforge.plantuml.eggs" --> "java.math"
-"net.sourceforge.plantuml.eggs" --> "java.nio.charset"
 "net.sourceforge.plantuml.eggs" --> "java.util"
 "net.sourceforge.plantuml.eggs" --> "java.util.regex"
-"net.sourceforge.plantuml.eggs" --> "net.atmp"
 "net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.api"
 "net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.command"
@@ -1394,16 +1391,13 @@ Total Classes: 19
 "net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.klimt"
 "net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.klimt.awt"
 "net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.klimt.color"
-"net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.klimt.drawing"
 "net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.klimt.drawing.g2d"
-"net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.klimt.font"
 "net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.png"
 "net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.regex"
-"net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.security"
 "net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.version"
 
 class "net.sourceforge.plantuml.elk" %lighten("red", 100) {
@@ -2820,7 +2814,7 @@ Total Classes: 6
 "net.sourceforge.plantuml.sdot" --> "net.sourceforge.plantuml.svek"
 "net.sourceforge.plantuml.sdot" --> "net.sourceforge.plantuml.svek.image"
 
-class "net.sourceforge.plantuml.security" %lighten("red", 51) {
+class "net.sourceforge.plantuml.security" %lighten("red", 53) {
 Total Classes: 7
 }
 "net.sourceforge.plantuml.security" --> "java.awt.image"
