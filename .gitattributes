@@ -10,3 +10,8 @@ src/test/resources/vega/** text eol=lf
 src/main/teavm/generated/** linguist-generated=true
 src/main/teavm/stdlib/** linguist-generated=true
 src/main/teavm/vendor/** linguist-vendored=true
+
+# Native sources of the TeaVM C build: third-party code and binary fonts
+src/teavm-c/native/plutovg/** linguist-vendored=true
+src/teavm-c/native/miniz/** linguist-vendored=true
+*.ttf binary

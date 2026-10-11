@@ -107,11 +107,29 @@ jobs:
             exit 1
           }
 
-      - name: Upload the SVG
+      - name: Smoke test (mindmap to PNG)
+        shell: pwsh
+        run: |
+          $exe = "c-sources/bin/Release/plantuml-c.exe"
+          & $exe mindmap.puml mindmap.png
+          if ($LASTEXITCODE -ne 0) { throw "plantuml-c.exe exited with code $LASTEXITCODE" }
+          if ((Test-Path mindmap.png) -eq $false) { throw "No PNG was written" }
+          $bytes = [System.IO.File]::ReadAllBytes("mindmap.png")
+          Write-Host "PNG: $($bytes.Length) bytes"
+          $signature = [System.Text.Encoding]::ASCII.GetString($bytes, 1, 3)
+          $text = [System.Text.Encoding]::ASCII.GetString($bytes)
+          if ($signature -ne "PNG" -or $text.Contains("iTXtplantuml") -eq $false) {
+            Write-Host "::error::The output is not the expected PNG"
+            exit 1
+          }
+
+      - name: Upload the SVG and the PNG
         uses: actions/upload-artifact@v7
         with:
-          name: mindmap-svg-windows-${{ matrix.arch }}
-          path: mindmap.svg
+          name: mindmap-windows-${{ matrix.arch }}
+          path: |
+            mindmap.svg
+            mindmap.png
           retention-days: 7
 
       - name: Upload executable

@@ -3,14 +3,17 @@
 # Adapted from TeaVM's own test harness (tools/junit/.../teavm-CMakeLists.txt).
 
 cmake_minimum_required(VERSION 3.15)
+
+# Release by default. This must come before project(): with MSVC, project()
+# itself sets CMAKE_BUILD_TYPE to Debug when it is empty.
+if (NOT DEFINED CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE STREQUAL "")
+	set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type")
+endif()
+
 project(plantuml_c C)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
-
-if (NOT CMAKE_BUILD_TYPE)
-	set(CMAKE_BUILD_TYPE Release)
-endif()
 
 if (MSVC)
 	# TeaVM's runtime detects Windows through _MSC_VER: use MSVC or clang-cl.
@@ -31,12 +34,47 @@ foreach(F IN LISTS TEAVM_GEN_FILE_LIST)
 	list(APPEND TEAVM_GEN_SOURCES ${PROJECT_SOURCE_DIR}/${F})
 endforeach()
 
-add_executable(plantuml-c ${TEAVM_GEN_SOURCES})
+# PNG output: plutovg (vendored, static) for rasterisation, a C facade called
+# from Java through TeaVM's @Import, and the fonts embedded in the executable.
+# Gradle copies src/teavm-c/native into native/ next to this file.
+set(BUILD_SHARED_LIBS OFF)
+set(PLUTOVG_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+# Only the embedded fonts: never load system fonts, the output must not depend on the machine
+set(PLUTOVG_DISABLE_FONT_FACE_CACHE_LOAD ON CACHE BOOL "" FORCE)
+add_subdirectory(native/plutovg)
+
+include(native/embed_font.cmake)
+set(FONT_SOURCES)
+foreach(STYLE regular bold italic bold_italic)
+	# regular -> Regular, bold_italic -> BoldItalic (names of the TTF files)
+	string(REPLACE "_" ";" WORDS ${STYLE})
+	set(FILE_STYLE "")
+	foreach(WORD IN LISTS WORDS)
+		string(SUBSTRING ${WORD} 0 1 FIRST)
+		string(TOUPPER ${FIRST} FIRST)
+		string(SUBSTRING ${WORD} 1 -1 REST)
+		string(APPEND FILE_STYLE ${FIRST}${REST})
+	endforeach()
+	set(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/font_liberation_sans_${STYLE}.c)
+	plantuml_embed_file(${PROJECT_SOURCE_DIR}/native/fonts/LiberationSans-${FILE_STYLE}.ttf ${OUTPUT}
+		plantuml_font_liberation_sans_${STYLE})
+	list(APPEND FONT_SOURCES ${OUTPUT})
+endforeach()
+
+# miniz (vendored amalgamation, MIT): deflate of the PNG encoder only
+add_library(miniz STATIC native/miniz/miniz.c)
+target_include_directories(miniz PUBLIC native/miniz)
+target_compile_definitions(miniz PUBLIC MINIZ_NO_STDIO MINIZ_NO_TIME MINIZ_NO_ARCHIVE_APIS
+	MINIZ_NO_ZLIB_COMPATIBLE_NAMES)
+
+add_executable(plantuml-c ${TEAVM_GEN_SOURCES} native/plantuml_canvas.c native/plantuml_png.c ${FONT_SOURCES})
+# The generated C includes "plantuml_canvas.h" (@Include of NativeCanvas)
+target_include_directories(plantuml-c PRIVATE native)
 
 if (WIN32)
-	target_link_libraries(plantuml-c)
+	target_link_libraries(plantuml-c plutovg miniz)
 elseif (APPLE)
-	target_link_libraries(plantuml-c m)
+	target_link_libraries(plantuml-c plutovg miniz m)
 else()
-	target_link_libraries(plantuml-c m rt)
+	target_link_libraries(plantuml-c plutovg miniz m rt)
 endif()

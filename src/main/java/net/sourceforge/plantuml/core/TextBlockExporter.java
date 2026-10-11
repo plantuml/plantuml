@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.braille.UGraphicBraille;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
+import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
@@ -67,6 +68,9 @@ import net.sourceforge.plantuml.klimt.drawing.eps.UGraphicEps;
 import net.sourceforge.plantuml.klimt.drawing.g2d.UGraphicG2d;
 import net.sourceforge.plantuml.klimt.drawing.hand.UGraphicHandwritten;
 import net.sourceforge.plantuml.klimt.drawing.html5.UGraphicHtml5;
+import net.sourceforge.plantuml.klimt.drawing.raster.RasterCanvas;
+import net.sourceforge.plantuml.klimt.drawing.raster.RasterPath;
+import net.sourceforge.plantuml.klimt.drawing.raster.UGraphicRaster;
 import net.sourceforge.plantuml.klimt.drawing.svg.UGraphicSvg;
 import net.sourceforge.plantuml.klimt.drawing.tikz.UGraphicTikz;
 import net.sourceforge.plantuml.klimt.drawing.txt.UGraphicTxt;
@@ -162,11 +166,58 @@ public class TextBlockExporter {
 			return new ImageDataSimple(0, 0);
 
 		final double scaleFactor = computeScaleFactor(dim);
+		checkScaleFactor(scaleFactor);
+		return draw(createUGraphic(dim, scaleFactor), os, dim, scaleFactor);
+	}
+
+	/**
+	 * Exports the {@link TextBlock} as SVG, exactly as {@link #exportTo} does, but
+	 * without referencing the drivers of the other formats: the TeaVM C build has
+	 * no AWT, and TeaVM compiles every method a reachable method calls, whatever
+	 * the file format.
+	 *
+	 * @param os the output stream to write to
+	 * @return image metadata (dimensions)
+	 * @throws IOException if an I/O error occurs
+	 */
+	public ImageData exportSvgTo(OutputStream os) throws IOException {
+		if (fileFormatOption.getFileFormat() != FileFormat.SVG)
+			throw new IllegalStateException("Not SVG: " + fileFormatOption.getFileFormat());
+
+		final XDimension2D dim = calculateFinalDimension();
+		final double scaleFactor = computeScaleFactor(dim);
+		checkScaleFactor(scaleFactor);
+		final Pragma p = pragma != null ? pragma : Pragma.createEmpty();
+		return draw(createUGraphicSVG(scaleFactor, dim, p), os, dim, scaleFactor);
+	}
+
+	/**
+	 * Exports the {@link TextBlock} as PNG without AWT, on a {@link RasterCanvas}
+	 * the factory creates: same image size, background and drawing as
+	 * {@link #exportTo}, with the drivers of {@link UGraphicRaster}. Used by the
+	 * TeaVM C build.
+	 *
+	 * @param os      the output stream to write to
+	 * @param factory creates the canvas of the image
+	 * @return image metadata (dimensions)
+	 * @throws IOException if an I/O error occurs
+	 */
+	public ImageData exportPngTo(OutputStream os, RasterCanvas.Factory factory) throws IOException {
+		if (fileFormatOption.getFileFormat() != FileFormat.PNG)
+			throw new IllegalStateException("Not PNG: " + fileFormatOption.getFileFormat());
+
+		final XDimension2D dim = calculateFinalDimension();
+		final double scaleFactor = computeScaleFactor(dim);
+		checkScaleFactor(scaleFactor);
+		return draw(createUGraphicRaster(scaleFactor, dim, factory), os, dim, scaleFactor);
+	}
+
+	private static void checkScaleFactor(double scaleFactor) {
 		if (scaleFactor <= 0)
 			throw new IllegalStateException("Bad scaleFactor");
+	}
 
-		UGraphic ug = createUGraphic(dim, scaleFactor);
-
+	private ImageData draw(UGraphic ug, OutputStream os, XDimension2D dim, double scaleFactor) throws IOException {
 		maybeDrawBorder(ug, dim);
 
 		ug = ug.apply(new UTranslate(margin.getLeft(), margin.getTop()));
@@ -353,6 +404,37 @@ public class TextBlockExporter {
 		if (this.backcolor instanceof HColorGradient)
 			ug.apply(this.backcolor.bg())
 					.draw(URectangle.build(im.getWidth() / scaleFactor, im.getHeight() / scaleFactor));
+
+		return ug;
+	}
+
+	// As createUGraphicPNG and EmptyImageBuilder (no watermark)
+	private UGraphic createUGraphicRaster(double scaleFactor, XDimension2D dim, RasterCanvas.Factory factory) {
+		XColor pngBackColor = new XColor(0, 0, 0, 0);
+
+		if (this.backcolor instanceof HColorSimple)
+			pngBackColor = this.backcolor.toColor(fileFormatOption.getColorMapper());
+
+		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.REPLACE_WHITE_BACKGROUND_BY_TRANSPARENT)
+				&& (XColor.WHITE.equals(pngBackColor) || XColor.BLACK.equals(pngBackColor)))
+			pngBackColor = new XColor(0, 0, 0, 0);
+
+		final int limit = GraphvizUtils.getenvImageLimit();
+		final int width = Math.min(limit, (int) (dim.getWidth() * scaleFactor));
+		final int height = Math.min(limit, (int) (dim.getHeight() * scaleFactor));
+		if (width <= 0 || height <= 0)
+			throw new IllegalArgumentException("width and height must be positive");
+
+		final RasterCanvas canvas = factory.create(width, height, pngBackColor.getAlpha() == 255);
+		if (pngBackColor.getAlpha() != 0) {
+			canvas.setColor(pngBackColor.getRGB());
+			canvas.fill(RasterPath.rectangle(0, 0, width, height, 0, 0));
+		}
+
+		final UGraphicRaster ug = new UGraphicRaster(backcolor, fileFormatOption.getColorMapper(), stringBounder,
+				canvas, scaleFactor);
+		if (this.backcolor instanceof HColorGradient)
+			ug.apply(this.backcolor.bg()).draw(URectangle.build(width / scaleFactor, height / scaleFactor));
 
 		return ug;
 	}

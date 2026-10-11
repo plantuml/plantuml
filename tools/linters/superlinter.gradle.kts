@@ -33,6 +33,8 @@ tasks.register<JavaExec>("checkstyleLint") {
 	description = "Runs Checkstyle (tools/linters/checkstyle.xml) on all Java files of src/, no Docker."
 	classpath = checkstyleLintCp
 	mainClass.set("com.puppycrawl.tools.checkstyle.Main")
+	// Checkstyle localizes its messages ("Debut de la verification..."): force English
+	jvmArgs("-Duser.language=en", "-Duser.country=US")
 
 	// Always checks every .java file under src/ (main, test...)
 	args("-c", "tools/linters/checkstyle.xml", "src")

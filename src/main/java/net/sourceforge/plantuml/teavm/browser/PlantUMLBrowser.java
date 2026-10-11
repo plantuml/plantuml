@@ -27,10 +27,10 @@ import net.sourceforge.plantuml.klimt.drawing.hand.UGraphicHandwritten;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.teavm.PSystemBuilder2;
 import net.sourceforge.plantuml.teavm.StringBounderTeaVM;
 import net.sourceforge.plantuml.teavm.SvgGraphicsTeaVM;
 import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
+import net.sourceforge.plantuml.teavm.js.PSystemBuilderJs;
 
 /**
  * PlantUML rendering engine for browser environments, compiled to a JavaScript
@@ -482,7 +482,7 @@ public class PlantUMLBrowser {
 	private static SvgGraphicsTeaVM buildSvg(String[] lines, boolean darkMode, int maxSvgSize) throws Exception {
 		final ColorMapper colorMapper = darkMode ? ColorMapper.TEAVM_DARK : ColorMapper.TEAVM_LIGHT;
 
-		final Diagram diagram = PSystemBuilder2.getInstance().createDiagram(lines);
+		final Diagram diagram = PSystemBuilderJs.getInstance().createDiagram(lines);
 		final FileFormatOption fileFormat = new FileFormatOption(FileFormat.SVG);
 
 		if (diagram instanceof UgDiagram == false)

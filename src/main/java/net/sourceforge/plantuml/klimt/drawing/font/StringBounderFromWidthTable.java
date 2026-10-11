@@ -80,12 +80,26 @@ public class StringBounderFromWidthTable implements StringBounder {
 	}
 
 	private double getCharWidth(UFont font, int cp) {
+		return getWidth(cp);
+	}
+
+	/**
+	 * Width of a character for a font of size {@code REFERENCE_SIZE} (16).
+	 */
+	static double getWidth(int cp) {
 		if (cp >= 0xFFFF)
 			return 16;
 		final int block = (cp >> 8) & 0xFF;
 		if (block >= BLOCKS.length)
 			return 13;
 		return getBlock(block).getWidth((char) cp);
+	}
+
+	/**
+	 * Width of a character as a fraction of the font size.
+	 */
+	static double getRelativeWidth(int cp) {
+		return getWidth(cp) / REFERENCE_SIZE;
 	}
 
 }

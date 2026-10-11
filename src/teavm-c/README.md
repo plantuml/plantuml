@@ -4,12 +4,19 @@ TeaVM can compile Java bytecode to C (in addition to JavaScript). The C
 backend ships with its own runtime and garbage collector, so the result is a
 native executable with no JVM.
 
-Current step: `MainC` renders **mindmap diagrams only, SVG only**. It reads
-the PlantUML source from a file (or the standard input) and writes the SVG in a
-file (or the standard output): `plantuml-c [input.puml [output.svg]]`. Prefer the
+Current step: `MainC` renders **mindmap diagrams only, in SVG or PNG**. It
+reads the PlantUML source from a file (or the standard input) and writes the SVG
+in a file (or the standard output), or the PNG when the output file name ends
+with `.png`: `plantuml-c [input.puml [output.svg|output.png]]`. Prefer the
 files on Windows, whose console encodes the standard streams. On a diagram error:
 a message on stderr and nothing on stdout. Other diagram
 types are commented out in `PSystemBuilderC` and will be added one by one.
+
+The SVG should be byte for byte the one `java -jar plantuml.jar -tsvg` writes on
+Windows (same version of PlantUML): same export code, and text measured as Java
+measures it on Windows. The PNG has the size and the layout of the one `-tpng`
+writes on Windows, and the same metadata (source of the diagram); only the
+antialiasing differs (see "PNG output" below).
 
 `HelloWorldC` (no PlantUML code involved) is kept to validate the tool chain
 alone: set it as `mainClass` of the `c` block in `build.gradle.kts`.
@@ -96,6 +103,105 @@ also stored in `expected-hello.txt` (used by the CI smoke test):
 8. Done
 ```
 
+## PNG output
+
+`UgDiagram.exportPng` runs the same code as `-tpng` (`TextBlockExporter.exportPngTo`:
+same image size and background), with `UGraphicRaster` (package
+`klimt.drawing.raster`) instead of `UGraphicG2d`: the same drivers, line for
+line, drawing on a `RasterCanvas` instead of a `Graphics2D`. In the C build the
+canvas is `PngCanvas`: Java calls a small C facade over
+[plutovg](https://github.com/sammycage/plutovg) through TeaVM's `@Import`,
+which draws with the embedded fonts and encodes the PNG in memory; Java adds
+PlantUML's chunks (`PngChunks`: copyleft, compressed source of the diagram).
+
+The PNG is encoded in C (`native/plantuml_png.c`) with the choices of PngIO
+on the JVM: an opaque image that fits in 256 colors gets a palette (a port of
+`Quantify555`), otherwise each channel loses its least significant bit (a port
+of `QuantifyPacked28`); the pixels are the ones PngIO writes for the same image
+(only the deflate implementation differs: miniz instead of zlib). Encoding works
+on the pixels of the surface, row by row: no copy of the image, and nothing in
+the Java heap (64 MB at most in the C build). Keep the C port in step with
+`net.sourceforge.plantuml.png.quant`.
+
+`UGraphicRasterTest` checks the drivers on the JVM, with a canvas drawing with
+Java2D: the PNG must be the one of `-tpng`, pixel for pixel.
+
+Not supported yet: shadows, patterns (stripes...), images and sprites, circled
+characters, the image map of links, the watermark; text is always drawn with
+Liberation Sans (no serif nor monospaced font embedded yet). TeaVM's
+`System.getenv` always returns null, so `PLANTUML_LIMIT_SIZE` is not read: the
+size of the image is limited to 4096 pixels.
+
+`PngDemoC` (package `net.sourceforge.plantuml.teavm.c.demo`) validates the
+native side alone, without PlantUML:
+
+```
+gradlew :generateC -PteavmCMainClass=PngDemoC
+cmake -S build/generated/teavm/c -B build/c-native
+cmake --build build/c-native
+build/generated/teavm/c/bin/plantuml-c demo.png
+```
+
+It draws a small mind map whose boxes are sized from the measured text, and a
+text sample on its baseline (red) between its ascent and descent lines (blue).
+It prints the font metrics and a few text widths: at 14 px, `Hello world` must
+be 69.248046875 wide, and ascent/descent 12.673828/2.9667969. These are exactly
+what Java2D gives for the same font with fractional metrics (and for Arial,
+whose metrics are the same).
+
+Native sources (`native/`, copied by Gradle next to the generated C):
+
+- `plantuml_canvas.h` / `.c`: the facade. Only `int`, `long`, `double` and
+  primitive arrays cross the boundary: a canvas is a `long` handle, text is a
+  UTF-16 `char[]` (TeaVM's String to C conversion depends on the C locale).
+  The Java side is `NativeCanvas` (raw bindings) and `PngCanvas` (the
+  `RasterCanvas`), in package `teavm.c`.
+- `plantuml_png.h` / `.c`: the PNG encoder (see above).
+- `miniz/`: miniz 3.1.2 (MIT), the amalgamated release (`miniz.c`, `miniz.h`),
+  unmodified: deflate and CRC of the PNG encoder only.
+- `plutovg/`: plutovg 1.3.3, unmodified (MIT; its rasterizer and stroker come
+  from FreeType, see `source/FTL.TXT`). It brings `stb_truetype` for fonts (its
+  `stb_image_write` is not used). Built as a static library, without its
+  system font loading: the output must not depend on the machine.
+- `fonts/`: Liberation Sans 2.1.5 (SIL Open Font License 1.1), metric
+  compatible with Arial, i.e. with what Java's "SansSerif" is on Windows.
+  `embed_font.cmake` turns the 4 TTF files (regular, bold, italic, bold italic)
+  into C arrays when CMake configures.
+
+## Text measurement with the embedded fonts
+
+`StringBounderEmbeddedFont` (package `klimt.drawing.font`) measures text
+without AWT, with the advance widths and vertical metrics of the embedded
+Liberation Sans, so that the layout matches the fonts the C build draws with.
+It reproduces `StringBounderAwt` on Windows: advances with fractional metrics
+(no kerning, no ligatures), and for the logical font "SansSerif" the line height
+of Java's composite font. "SansSerif" does not take every character from Arial:
+those Arial lacks (CJK...) and those of its exclusion ranges in Java's
+`fontconfig.properties` (dashes, typographic quotes, ellipsis...) come from
+fallback fonts. Their widths are measured once with Java on Windows and kept in
+`tools/font-metrics/sansserif-windows.txt`.
+Text with characters of complex scripts (combining marks, Hebrew...) may differ
+slightly: Java2D shapes it with HarfBuzz.
+
+The metrics come from `LiberationSansMetrics`, generated from the TTF files and
+the measured widths:
+
+```
+java tools/font-metrics/GenerateFontMetrics.java
+```
+
+To measure the widths again (on Windows only, with a Western locale):
+
+```
+gradlew compileJava
+java -cp build/classes/java/main tools/font-metrics/MeasureLogicalFonts.java
+java tools/font-metrics/GenerateFontMetrics.java
+```
+
+`StringBounderEmbeddedFontTest` checks the tables against Java2D on the same
+TTF files and the measured widths (any OS), and the whole bounder against
+`StringBounderAwt` on Windows.
+
 ## What differs from the JavaScript build
 
 - `TeaVM.isTeaVM()` is true for every TeaVM target, C included. Code that only
@@ -103,7 +209,14 @@ also stored in `expected-hello.txt` (used by the CI smoke test):
   guarded by `TeaVM.isJavaScript()`; `TeaVM.isC()` selects the C behavior. Emoji,
   OpenIconic, `!theme`, `!include` of a library and Graphviz are not available
   in C (Smetana is always used for the layout).
-- Text measurement: no AWT and no canvas, so `StringBounderFromWidthTable`.
+- Text measurement: no AWT and no canvas, so `StringBounderEmbeddedFont` (see
+  above), which measures as Java does on Windows.
+- Export: `UgDiagram.exportSvg` runs the same code as `-tsvg`
+  (`TextBlockExporter.exportSvgTo`), without referencing the drivers of the
+  other formats, which need AWT (TeaVM compiles every method a reachable method
+  calls).
+- Input: `MainC` reads the file with `ReadLineReader`, as the command line does
+  (byte order mark removed, U+2013 replaced by `-`).
 - Async code: TeaVM turns a method into "async" code (fibers) when it can reach
   an `@Async` method of its classlib, and its coroutine transformation then fails
   with an `ArrayIndexOutOfBoundsException` on some methods. Plain locks are not

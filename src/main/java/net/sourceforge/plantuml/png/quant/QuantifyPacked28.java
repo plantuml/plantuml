@@ -40,6 +40,15 @@ import java.awt.image.BufferedImage;
 import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.utils.Log;
 
+/**
+ * Replaces the least significant bit of each channel by its most significant one
+ * (see {@link QuantUtils#compressPackedARGB}), for a smaller PNG.
+ *
+ * <p>
+ * Ported to C for the TeaVM C build (src/teavm-c/native/plantuml_png.c): keep
+ * both in step.
+ * </p>
+ */
 public final class QuantifyPacked28 {
 
 	public static BufferedImage packMeIfPossible(BufferedImage src) {

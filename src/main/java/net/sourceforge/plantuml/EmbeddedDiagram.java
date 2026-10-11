@@ -67,9 +67,9 @@ import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.style.ISkinSimple;
-import net.sourceforge.plantuml.teavm.PSystemBuilder2;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.teavm.c.PSystemBuilderC;
+import net.sourceforge.plantuml.teavm.js.PSystemBuilderJs;
 import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 import net.sourceforge.plantuml.text.StringLocated;
 
@@ -168,7 +168,7 @@ public class EmbeddedDiagram extends TextBlockMemoized implements Line, Atom {
 		if (TeaVM.isC())
 			PSystemBuilderC.getInstance().reset();
 		else
-			PSystemBuilder2.getInstance().reset();
+			PSystemBuilderJs.getInstance().reset();
 	}
 
 	public void drawU(UGraphic ug) {

@@ -105,6 +105,11 @@ import net.sourceforge.plantuml.utils.Log;
  * <li>No dithering: banding artifacts are visible on gradients unless combined
  * with an error-diffusion algorithm (e.g. Floyd–Steinberg).</li>
  * </ul>
+ *
+ * <p>
+ * Ported to C for the TeaVM C build (src/teavm-c/native/plantuml_png.c): keep
+ * both in step.
+ * </p>
  */
 public final class Quantify555 {
 

@@ -33,7 +33,7 @@
  * 
  * 
  */
-package net.sourceforge.plantuml.teavm;
+package net.sourceforge.plantuml.teavm.js;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -74,6 +74,7 @@ import net.sourceforge.plantuml.salt.PSystemSaltFactory;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
 import net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
+import net.sourceforge.plantuml.teavm.TextareaSource;
 import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.TimLoader;
@@ -82,14 +83,14 @@ import net.sourceforge.plantuml.version.PSystemVersionFactory;
 import net.sourceforge.plantuml.wbs.WBSDiagramFactory;
 import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
 
-public class PSystemBuilder2 {
+public class PSystemBuilderJs {
 
-	private final static PSystemBuilder2 singleton = new PSystemBuilder2();
+	private final static PSystemBuilderJs singleton = new PSystemBuilderJs();
 
 	private final List<PSystemFactory> factories = new ArrayList<>();
 	private PSystemFactory lastFactory;
 
-	private PSystemBuilder2() {
+	private PSystemBuilderJs() {
 		factories.add(new SequenceDiagramFactory());
 		factories.add(new ClassDiagramFactory());
 		factories.add(new ActivityDiagramFactory());
@@ -119,7 +120,7 @@ public class PSystemBuilder2 {
 		// ::done
 	}
 
-	public static PSystemBuilder2 getInstance() {
+	public static PSystemBuilderJs getInstance() {
 		return singleton;
 	}
 
@@ -128,7 +129,7 @@ public class PSystemBuilder2 {
 	}
 
 	public Diagram createDiagram(String[] split) {
-		BrowserLog.consoleLog(PSystemBuilder2.class, "createDiagram start");
+		BrowserLog.consoleLog(PSystemBuilderJs.class, "createDiagram start");
 		final List<StringLocated> rawSource = TextareaSource.create(split, "textarea");
 
 		final PathSystem pathSystem = PathSystem.fetch();
@@ -136,11 +137,11 @@ public class PSystemBuilder2 {
 		final Charset charset = java.nio.charset.StandardCharsets.UTF_8;
 		final DefinitionsContainer definitions = null;
 
-		BrowserLog.consoleLog(PSystemBuilder2.class, "wip3");
+		BrowserLog.consoleLog(PSystemBuilderJs.class, "wip3");
 		final TimLoader timLoader = new TimLoader(pathSystem, defines, charset, definitions, rawSource.get(0));
-		BrowserLog.consoleLog(PSystemBuilder2.class, "wip4");
+		BrowserLog.consoleLog(PSystemBuilderJs.class, "wip4");
 		timLoader.load(rawSource);
-		BrowserLog.consoleLog(PSystemBuilder2.class, "createDiagram ok");
+		BrowserLog.consoleLog(PSystemBuilderJs.class, "createDiagram ok");
 		List<StringLocated> tmp = timLoader.getResultList();
 		Jaws.mutateExpands1(tmp);
 
@@ -191,11 +192,11 @@ public class PSystemBuilder2 {
 				continue;
 			if (f == lastFactory)
 				continue;
-			BrowserLog.consoleLog(PSystemBuilder2.class, "trying " + f.getClass());
+			BrowserLog.consoleLog(PSystemBuilderJs.class, "trying " + f.getClass());
 
 			final Diagram sys = f.createSystem(null, umlSource, null, preprocessing);
 			if (isOk(sys)) {
-				BrowserLog.consoleLog(PSystemBuilder2.class, "ok!");
+				BrowserLog.consoleLog(PSystemBuilderJs.class, "ok!");
 				this.lastFactory = f;
 				if (explainTypes != null) {
 					final List<Explanation> explanations = f.explain(null, umlSource, null, preprocessing);

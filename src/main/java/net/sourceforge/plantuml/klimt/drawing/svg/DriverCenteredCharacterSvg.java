@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UnusedSpace;
 import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class DriverCenteredCharacterSvg implements UDriver<UCenteredCharacter, SvgGraphics> {
 
@@ -66,7 +67,8 @@ public class DriverCenteredCharacterSvg implements UDriver<UCenteredCharacter, S
 		// For deterministic SVG output (used by tests), avoid rendering the glyph as a
 		// vector path derived from the system font (which differs across OS/JVM).
 		// Instead, emit a simple <text> element with a fixed font-family.
-		if (fileFormat == FileFormat.SVG_DETERMINISTIC) {
+		// Same in the TeaVM C build, which has no AWT to get the glyph outline.
+		if (fileFormat == FileFormat.SVG_DETERMINISTIC || TeaVM.isC()) {
 			svg.setFillColor(textColor.toSvg(mapper));
 			svg.text(String.valueOf(c), x - 5, y + 5, "monospace", 14, null, null, null, 0,
 					new HashMap<String, String>(), null);

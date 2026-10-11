@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.asciiart.TextStringBounder;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.klimt.drawing.debug.StringBounderDebug;
+import net.sourceforge.plantuml.klimt.drawing.font.StringBounderEmbeddedFont;
 import net.sourceforge.plantuml.klimt.drawing.font.StringBounderFromWidthTable;
 import net.sourceforge.plantuml.klimt.drawing.svg.SvgGraphics;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -178,9 +179,12 @@ public enum FileFormat {
 			Pragma pragma) {
 		// ::comment when JAVA8
 		if (TeaVM.isTeaVM()) {
-			// TeaVM C has no canvas to measure the text: always the width table
-			if (this == SVG_DETERMINISTIC || TeaVM.isC())
+			if (this == SVG_DETERMINISTIC)
 				return new StringBounderFromWidthTable(this);
+			// TeaVM C has no canvas to measure the text: the metrics of the fonts it
+			// embeds, which measure as Java does on Windows
+			if (TeaVM.isC())
+				return new StringBounderEmbeddedFont(this);
 			return new StringBounderTeaVM();
 		}
 		// ::done

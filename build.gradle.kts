@@ -81,7 +81,18 @@ teavm {
 	}
 	// Experimental: Java to C (gradlew generateC), see src/teavm-c/README.md
 	c {
-		mainClass.set("net.sourceforge.plantuml.teavm.c.MainC")
+		// -PteavmCMainClass=PngDemoC generates another entry point (see src/teavm-c/README.md).
+		// A simple name is looked up in the teavm.c packages: PowerShell splits an
+		// unquoted argument at its first dot, so a full name needs quotes there.
+		mainClass.set(providers.gradleProperty("teavmCMainClass").map { name ->
+			if (name.contains('.'))
+				name
+			else
+				listOf("net.sourceforge.plantuml.teavm.c.", "net.sourceforge.plantuml.teavm.c.demo.")
+					.map { it + name }
+					.firstOrNull { project.file("src/main/java/" + it.replace('.', '/') + ".java").exists() }
+					?: throw GradleException("teavmCMainClass: no class $name in the teavm.c packages")
+		}.orElse("net.sourceforge.plantuml.teavm.c.MainC"))
 		// Easier to read while experimenting
 		obfuscated.set(false)
 		shortFileNames.set(false)
@@ -96,15 +107,19 @@ teavm {
 }
 
 // TeaVM only writes the C sources: add a CMakeLists.txt next to them so the
-// native build is just "cmake + build" (Windows: MSVC or clang-cl, see README)
-val copyCMakeLists = tasks.register<Copy>("copyCMakeLists") {
+// native build is just "cmake + build" (Windows: MSVC or clang-cl, see README),
+// and the hand-written C they link with (plutovg, PNG facade, fonts) in native/
+val copyNativeSources = tasks.register<Copy>("copyNativeSources") {
 	from("src/teavm-c/CMakeLists.txt")
+	from("src/teavm-c/native") {
+		into("native")
+	}
 	into(layout.buildDirectory.dir("generated/teavm/c"))
 }
 tasks.matching { it.name == "generateC" }.configureEach {
-	finalizedBy(copyCMakeLists)
+	finalizedBy(copyNativeSources)
 }
-copyCMakeLists.configure {
+copyNativeSources.configure {
 	mustRunAfter("generateC")
 }
 
@@ -182,6 +197,8 @@ tasks.named<Jar>("jar") {
 
 tasks.named("check") {
     dependsOn(checkJarEntries)
+    // Checkstyle (tools/linters/checkstyle.xml, same as the CI), no Docker needed
+    dependsOn("checkstyleLint")
 }
 
 

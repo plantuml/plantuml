@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemUnsupported;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.raster.RasterCanvas;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.log.Logme;
@@ -147,6 +148,25 @@ public abstract class UgDiagram extends AbstractDiagram {
 		builder.status(status);
 
 		return builder.build();
+	}
+
+	/**
+	 * Exports the first image as SVG, as {@link #exportDiagram} does for
+	 * {@link FileFormat#SVG} (without its crash report), but without referencing
+	 * the drivers of the other formats: for the TeaVM C build, see
+	 * {@link TextBlockExporter#exportSvgTo}.
+	 */
+	public ImageData exportSvg(OutputStream os) throws Exception {
+		return getExporter(0, new FileFormatOption(FileFormat.SVG)).exportSvgTo(os);
+	}
+
+	/**
+	 * Exports the first image as PNG without AWT, on a {@link RasterCanvas} the
+	 * factory creates: for the TeaVM C build, see
+	 * {@link TextBlockExporter#exportPngTo}.
+	 */
+	public ImageData exportPng(OutputStream os, RasterCanvas.Factory factory) throws Exception {
+		return getExporter(0, new FileFormatOption(FileFormat.PNG)).exportPngTo(os, factory);
 	}
 
 	private int computeStatus(TextBlock textBlock) {
