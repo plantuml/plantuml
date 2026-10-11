@@ -54,6 +54,16 @@ import org.teavm.jso.JSObject;
  * &lt;/pre&gt;
  */
 <span class="nc" id="L56">public class GraphVizjsTeaVMEngine {</span>
+
+	/**
+	 * Where the Viz.js object comes from. A host that bundles viz-global.js (a UMD)
+	 * into its own file does not get a global {@code Viz}: the UMD attaches it to
+	 * the bundle's exports. Such a host sets {@code globalThis.PLANTUML_VIZ = Viz}
+	 * itself; it takes precedence over the global {@code Viz} that loading
+	 * viz-global.js with a script tag defines.
+	 */
+	private static final String FIND_VIZ_STMT = &quot;var V = globalThis.PLANTUML_VIZ || (typeof Viz !== 'undefined' ? Viz : null);&quot;;
+
 	// ::remove file when JAVA8
 
 	/**
@@ -70,9 +80,9 @@ import org.teavm.jso.JSObject;
 	 * so the caller should fall back to the Smetana layout engine. Logs a
 	 * one-time console note the first time the fallback is taken.
 	 */
-	@JSBody(script = &quot;var missing = typeof Viz === 'undefined' || !Viz || typeof Viz.instance !== 'function';&quot; +
-			&quot;if (missing &amp;&amp; !window.__plantumlSmetanaFallbackNoted) {&quot; +
-			&quot;  window.__plantumlSmetanaFallbackNoted = true;&quot; +
+	@JSBody(script = FIND_VIZ_STMT + &quot;var missing = !V || typeof V.instance !== 'function';&quot; +
+			&quot;if (missing &amp;&amp; !globalThis.__plantumlSmetanaFallbackNoted) {&quot; +
+			&quot;  globalThis.__plantumlSmetanaFallbackNoted = true;&quot; +
 			&quot;  console.info('PlantUML: viz-global.js is not loaded, falling back to the Smetana layout engine');&quot; +
 			&quot;}&quot; +
 			&quot;return missing;&quot;)
@@ -86,19 +96,20 @@ import org.teavm.jso.JSObject;
 	 * Sets up the JavaScript Promise handling and calls the callback when complete.
 	 */
 	private static void renderDotToSvg(String dotSource, AsyncCallback&lt;String&gt; callback) {
-<span class="nc" id="L89">		renderDotToSvgAsync(dotSource, result -&gt; callback.complete(result), error -&gt; callback.error(new RuntimeException(error)));</span>
-<span class="nc" id="L90">	}</span>
+<span class="nc" id="L99">		renderDotToSvgAsync(dotSource, result -&gt; callback.complete(result), error -&gt; callback.error(new RuntimeException(error)));</span>
+<span class="nc" id="L100">	}</span>
 
 	/**
 	 * JavaScript bridge that calls Viz.instance() and renders the DOT source.
 	 * Uses Viz.js API: Viz.instance().then(viz =&gt; viz.renderString(dot, options))
 	 */
 	@JSBody(params = { &quot;dotSource&quot;, &quot;onSuccess&quot;, &quot;onError&quot; }, script =
-		&quot;if (typeof Viz === 'undefined' || !Viz || typeof Viz.instance !== 'function') {&quot; +
+		FIND_VIZ_STMT +
+		&quot;if (!V || typeof V.instance !== 'function') {&quot; +
 		&quot;  onError('Viz is not loaded: this diagram type needs the Graphviz layout engine (viz-global.js). Load viz-global.js before rendering.');&quot; +
 		&quot;  return;&quot; +
 		&quot;}&quot; +
-		&quot;Viz.instance().then(function(viz) {&quot; +
+		&quot;V.instance().then(function(viz) {&quot; +
 		&quot;  try {&quot; +
 		&quot;    var svg = viz.renderString(dotSource, { format: 'svg', engine: 'dot' });&quot; +
 		&quot;    onSuccess(svg);&quot; +
@@ -124,18 +135,19 @@ import org.teavm.jso.JSObject;
 	 * Internal implementation for engine-specific rendering.
 	 */
 	private static void renderDotToSvg(String dotSource, String engine, AsyncCallback&lt;String&gt; callback) {
-<span class="nc" id="L127">		renderDotToSvgWithEngineAsync(dotSource, engine, result -&gt; callback.complete(result), error -&gt; callback.error(new RuntimeException(error)));</span>
-<span class="nc" id="L128">	}</span>
+<span class="nc" id="L138">		renderDotToSvgWithEngineAsync(dotSource, engine, result -&gt; callback.complete(result), error -&gt; callback.error(new RuntimeException(error)));</span>
+<span class="nc" id="L139">	}</span>
 
 	/**
 	 * JavaScript bridge for engine-specific rendering.
 	 */
 	@JSBody(params = { &quot;dotSource&quot;, &quot;engine&quot;, &quot;onSuccess&quot;, &quot;onError&quot; }, script =
-		&quot;if (typeof Viz === 'undefined' || !Viz || typeof Viz.instance !== 'function') {&quot; +
+		FIND_VIZ_STMT +
+		&quot;if (!V || typeof V.instance !== 'function') {&quot; +
 		&quot;  onError('Viz is not loaded: this diagram type needs the Graphviz layout engine (viz-global.js). Load viz-global.js before rendering.');&quot; +
 		&quot;  return;&quot; +
 		&quot;}&quot; +
-		&quot;Viz.instance().then(function(viz) {&quot; +
+		&quot;V.instance().then(function(viz) {&quot; +
 		&quot;  try {&quot; +
 		&quot;    var svg = viz.renderString(dotSource, { format: 'svg', engine: engine });&quot; +
 		&quot;    onSuccess(svg);&quot; +

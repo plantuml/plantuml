@@ -70,103 +70,106 @@ public class UGraphicTeaVM extends AbstractUGraphic&lt;SvgGraphicsTeaVM&gt; impl
 	// shared, so registerDriver refuses to touch it afterwards.
 <span class="nc" id="L71">	private static final UDriver&lt;?, SvgGraphicsTeaVM&gt;[] DRIVERS = newDrivers();</span>
 
+	// Same default as the Java SVG output (net.atmp.SvgOption#getLinkTarget)
+	private static final String LINK_TARGET = &quot;_top&quot;;
+
 	@SuppressWarnings(&quot;unchecked&quot;)
 	private static UDriver&lt;?, SvgGraphicsTeaVM&gt;[] newDrivers() {
 		// &quot;new UDriver&lt;?, SvgGraphicsTeaVM&gt;[n]&quot; is not legal Java -- generic array creation --
 		// so the raw array is created and converted here, once.
-<span class="nc" id="L77">		return new UDriver[UShapeKind.COUNT];</span>
+<span class="nc" id="L80">		return new UDriver[UShapeKind.COUNT];</span>
 	}
 
 	static {
-<span class="nc" id="L81">		put(URectangle.class, new DriverRectangleTeaVM());</span>
-<span class="nc" id="L82">		put(ULine.class, new DriverLineTeaVM());</span>
-<span class="nc" id="L83">		put(UPolygon.class, new DriverPolygonTeaVM());</span>
-<span class="nc" id="L84">		put(UEllipse.class, new DriverEllipseTeaVM());</span>
-<span class="nc" id="L85">		put(UText.class, new DriverTextTeaVM());</span>
-<span class="nc" id="L86">		put(UPath.class, new DriverPathTeaVM());</span>
+<span class="nc" id="L84">		put(URectangle.class, new DriverRectangleTeaVM());</span>
+<span class="nc" id="L85">		put(ULine.class, new DriverLineTeaVM());</span>
+<span class="nc" id="L86">		put(UPolygon.class, new DriverPolygonTeaVM());</span>
+<span class="nc" id="L87">		put(UEllipse.class, new DriverEllipseTeaVM());</span>
+<span class="nc" id="L88">		put(UText.class, new DriverTextTeaVM());</span>
+<span class="nc" id="L89">		put(UPath.class, new DriverPathTeaVM());</span>
 
-<span class="nc" id="L88">		put(UImage.class, new DriverImageTeaVM());</span>
-<span class="nc" id="L89">		put(UImageSvg.class, new DriverImageSvgTeaVM());</span>
-<span class="nc" id="L90">		put(DotPath.class, new DriverDotPathTeaVM());</span>
+<span class="nc" id="L91">		put(UImage.class, new DriverImageTeaVM());</span>
+<span class="nc" id="L92">		put(UImageSvg.class, new DriverImageSvgTeaVM());</span>
+<span class="nc" id="L93">		put(DotPath.class, new DriverDotPathTeaVM());</span>
 
-<span class="nc" id="L92">		put(UCenteredCharacter.class, new DriverCenteredCharacterTeaVM());</span>
+<span class="nc" id="L95">		put(UCenteredCharacter.class, new DriverCenteredCharacterTeaVM());</span>
 
 		// NOP drivers for shapes not yet implemented
-<span class="nc" id="L95">		put(UPixel.class, noopDriver());</span>
-<span class="nc" id="L96">	}</span>
+<span class="nc" id="L98">		put(UPixel.class, noopDriver());</span>
+<span class="nc" id="L99">	}</span>
 
 	// SHAPE ties the class to its driver, exactly as registerDriver does, so a driver written for
 	// another shape does not compile here. The second type argument of UDriver is the graphic
 	// object -- SvgGraphicsTeaVM, what this UGraphic draws into -- not the UGraphic itself.
 	private static &lt;SHAPE extends UShape&gt; void put(Class&lt;SHAPE&gt; cl, UDriver&lt;SHAPE, SvgGraphicsTeaVM&gt; driver) {
-<span class="nc" id="L102">		DRIVERS[UShapeKind.of(cl).ordinal()] = driver;</span>
-<span class="nc" id="L103">	}</span>
+<span class="nc" id="L105">		DRIVERS[UShapeKind.of(cl).ordinal()] = driver;</span>
+<span class="nc" id="L106">	}</span>
 
 	private UGraphicTeaVM(StringBounder stringBounder) {
-<span class="nc" id="L106">		super(stringBounder);</span>
-<span class="nc" id="L107">		useDrivers(DRIVERS);</span>
-<span class="nc" id="L108">	}</span>
+<span class="nc" id="L109">		super(stringBounder);</span>
+<span class="nc" id="L110">		useDrivers(DRIVERS);</span>
+<span class="nc" id="L111">	}</span>
 
 	public static UGraphicTeaVM build(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder,
 			SvgGraphicsTeaVM svg) {
-<span class="nc" id="L112">		final UGraphicTeaVM result = new UGraphicTeaVM(stringBounder);</span>
-<span class="nc" id="L113">		result.copy(defaultBackground, colorMapper, svg);</span>
-<span class="nc" id="L114">		return result;</span>
+<span class="nc" id="L115">		final UGraphicTeaVM result = new UGraphicTeaVM(stringBounder);</span>
+<span class="nc" id="L116">		result.copy(defaultBackground, colorMapper, svg);</span>
+<span class="nc" id="L117">		return result;</span>
 	}
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
-<span class="nc" id="L119">		return new UGraphicTeaVM(this);</span>
+<span class="nc" id="L122">		return new UGraphicTeaVM(this);</span>
 	}
 
 	// A copy takes its driver table from &quot;other&quot; (see AbstractUGraphic#copy) instead of building
 	// one, so this constructor deliberately does not register anything.
 	private UGraphicTeaVM(UGraphicTeaVM other) {
-<span class="nc" id="L125">		super(other.getStringBounder());</span>
-<span class="nc" id="L126">		copy(other);</span>
-<span class="nc" id="L127">	}</span>
+<span class="nc" id="L128">		super(other.getStringBounder());</span>
+<span class="nc" id="L129">		copy(other);</span>
+<span class="nc" id="L130">	}</span>
 
 	public SvgGraphicsTeaVM getSvgGraphics() {
-<span class="nc" id="L130">		return getGraphicObject();</span>
+<span class="nc" id="L133">		return getGraphicObject();</span>
 	}
 
 	@Override
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
-<span class="nc" id="L135">		throw new UnsupportedOperationException(&quot;TEAVM442&quot;);</span>
+<span class="nc" id="L138">		throw new UnsupportedOperationException(&quot;TEAVM442&quot;);</span>
 	}
 
 	@Override
 	public void startGroup(UGroup group) {
-<span class="nc" id="L140">		getSvgGraphics().startGroup(group.asMap());</span>
-<span class="nc" id="L141">	}</span>
+<span class="nc" id="L143">		getSvgGraphics().startGroup(group.asMap());</span>
+<span class="nc" id="L144">	}</span>
 
 	@Override
 	public void closeGroup() {
-<span class="nc" id="L145">		getSvgGraphics().closeGroup();</span>
-<span class="nc" id="L146">	}</span>
+<span class="nc" id="L148">		getSvgGraphics().closeGroup();</span>
+<span class="nc" id="L149">	}</span>
 
 	@Override
 	public void startUrl(Url url) {
-		// TODO: implement URL/link support
-<span class="nc" id="L151">	}</span>
+<span class="nc" id="L153">		getSvgGraphics().openLink(url.getUrl(), url.getTooltip(), LINK_TARGET);</span>
+<span class="nc" id="L154">	}</span>
 
 	@Override
 	public void closeUrl() {
-		// TODO: implement URL/link support
-<span class="nc" id="L156">	}</span>
+<span class="nc" id="L158">		getSvgGraphics().closeLink();</span>
+<span class="nc" id="L159">	}</span>
 
 	@Override
 	protected void drawComment(UComment comment) {
 		// TODO: implement comment support
-<span class="nc" id="L161">	}</span>
+<span class="nc" id="L164">	}</span>
 
 	@Override
 	public boolean matchesProperty(String propertyName) {
-<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (propertyName.equalsIgnoreCase(&quot;TEAVM&quot;))</span>
-<span class="nc" id="L166">			return true;</span>
-<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (propertyName.equalsIgnoreCase(&quot;SVG&quot;))</span>
-<span class="nc" id="L168">			return true;</span>
-<span class="nc" id="L169">		return super.matchesProperty(propertyName);</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (propertyName.equalsIgnoreCase(&quot;TEAVM&quot;))</span>
+<span class="nc" id="L169">			return true;</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (propertyName.equalsIgnoreCase(&quot;SVG&quot;))</span>
+<span class="nc" id="L171">			return true;</span>
+<span class="nc" id="L172">		return super.matchesProperty(propertyName);</span>
 	}
 
 }

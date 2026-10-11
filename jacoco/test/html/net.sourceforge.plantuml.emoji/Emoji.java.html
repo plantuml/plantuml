@@ -136,53 +136,66 @@ public class Emoji {
 		// ::comment when JAVA8
 <span class="nc bnc" id="L137" title="All 2 branches missed.">		if (emojiJsLoaded)</span>
 <span class="nc" id="L138">			return;</span>
-<span class="nc" id="L139">		TeaVmScriptLoader.loadOnceSync(&quot;emoji.js&quot;);</span>
-<span class="nc" id="L140">		emojiJsLoaded = true;</span>
+		// Same as themes (ThemeUtils.loadJsTheme): data that is already registered, by a
+		// bundler that inlined emoji.js or by the host (inside a Web Worker, say), is
+		// used as is, and emoji.js is only fetched when nothing is there.
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (jsHasEmoji() == false)</span>
+<span class="nc" id="L143">			TeaVmScriptLoader.loadOnceSync(&quot;emoji.js&quot;);</span>
+<span class="nc" id="L144">		emojiJsLoaded = true;</span>
 		// ::done
-<span class="nc" id="L142">	}</span>
+<span class="nc" id="L146">	}</span>
 
 	// ::comment when JAVA8
-	@JSBody(params = &quot;name&quot;, script = &quot;var s = window.PLANTUML_EMOJI_SHORTCUT;&quot;
+	// The data is read from the global object rather than from window, so that it
+	// can be registered where there is no window (a Web Worker). Same lookup as
+	// TeaVmScriptLoader.getTheme().
+	private static final String GLOBAL = &quot;var g = (typeof globalThis !== 'undefined') ? globalThis&quot;
+			+ &quot; : ((typeof self !== 'undefined') ? self : this);&quot;;
+
+	@JSBody(script = GLOBAL + &quot;return !!(g &amp;&amp; g.PLANTUML_EMOJI);&quot;)
+	private static native boolean jsHasEmoji();
+
+	@JSBody(params = &quot;name&quot;, script = GLOBAL + &quot;var s = g &amp;&amp; g.PLANTUML_EMOJI_SHORTCUT;&quot;
 			+ &quot;return (s &amp;&amp; s[name]) ? s[name] : null;&quot;)
 	private static native String jsGetShortcut(String name);
 
-	@JSBody(params = &quot;unicode&quot;, script = &quot;var e = window.PLANTUML_EMOJI;&quot;
+	@JSBody(params = &quot;unicode&quot;, script = GLOBAL + &quot;var e = g &amp;&amp; g.PLANTUML_EMOJI;&quot;
 			+ &quot;return (e &amp;&amp; e[unicode]) ? e[unicode] : null;&quot;)
 	private static native String jsGetEmojiSvg(String unicode);
 	// ::done
 
 	private synchronized void loadIfNeed() throws IOException {
-<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (parser != null)</span>
-<span class="nc" id="L156">			return;</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (parser != null)</span>
+<span class="nc" id="L169">			return;</span>
 
-<span class="nc" id="L158">		final List&lt;String&gt; data = new ArrayList&lt;String&gt;();</span>
-<span class="nc bnc" id="L159" title="All 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
+<span class="nc" id="L171">		final List&lt;String&gt; data = new ArrayList&lt;String&gt;();</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
 			// ::comment when JAVA8
-<span class="nc" id="L161">			final String svgData = jsGetEmojiSvg(unicode);</span>
-<span class="nc bnc" id="L162" title="All 2 branches missed.">			if (svgData != null)</span>
-<span class="nc" id="L163">				data.add(svgData);</span>
+<span class="nc" id="L174">			final String svgData = jsGetEmojiSvg(unicode);</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">			if (svgData != null)</span>
+<span class="nc" id="L176">				data.add(svgData);</span>
 			// ::done
-<span class="nc" id="L165">		} else {</span>
-<span class="nc" id="L166">			try (BufferedReader br = new BufferedReader(</span>
-<span class="nc" id="L167">					new InputStreamReader(Dummy.class.getResourceAsStream(unicode + &quot;.svg&quot;)))) {</span>
-<span class="nc" id="L168">				final String singleLine = br.readLine();</span>
-<span class="nc" id="L169">				data.add(singleLine);</span>
+<span class="nc" id="L178">		} else {</span>
+<span class="nc" id="L179">			try (BufferedReader br = new BufferedReader(</span>
+<span class="nc" id="L180">					new InputStreamReader(Dummy.class.getResourceAsStream(unicode + &quot;.svg&quot;)))) {</span>
+<span class="nc" id="L181">				final String singleLine = br.readLine();</span>
+<span class="nc" id="L182">				data.add(singleLine);</span>
 			}
 		}
-<span class="nc" id="L172">		this.parser = SvgSpriteParserFactory.create(data, null, null);</span>
-<span class="nc" id="L173">	}</span>
+<span class="nc" id="L185">		this.parser = SvgSpriteParserFactory.create(data, null, null);</span>
+<span class="nc" id="L186">	}</span>
 
 	public void drawU(UGraphic ug, double scale, HColor colorForMonochrome) {
 		try {
-<span class="nc" id="L177">			loadIfNeed();</span>
-<span class="nc" id="L178">		} catch (IOException e) {</span>
-<span class="nc" id="L179">			Logme.error(e);</span>
-<span class="nc" id="L180">		}</span>
-<span class="nc" id="L181">		parser.drawU(ug, scale, colorForMonochrome, colorForMonochrome);</span>
-<span class="nc" id="L182">	}</span>
+<span class="nc" id="L190">			loadIfNeed();</span>
+<span class="nc" id="L191">		} catch (IOException e) {</span>
+<span class="nc" id="L192">			Logme.error(e);</span>
+<span class="nc" id="L193">		}</span>
+<span class="nc" id="L194">		parser.drawU(ug, scale, colorForMonochrome, colorForMonochrome);</span>
+<span class="nc" id="L195">	}</span>
 
 	public String getShortcut() {
-<span class="nc" id="L185">		return shortcut;</span>
+<span class="nc" id="L198">		return shortcut;</span>
 	}
 
 //	public static void main(String[] args) throws IOException {

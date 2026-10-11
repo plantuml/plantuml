@@ -16969,14 +16969,14 @@
 
         <Package name="net.sourceforge.plantuml.teavm.browser">
             <Stats>
-                <TotalClasses>7</TotalClasses>
-                <ConcreteClasses>3</ConcreteClasses>
+                <TotalClasses>8</TotalClasses>
+                <ConcreteClasses>4</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
                 <Ca>1</Ca>
                 <Ce>6</Ce>
-                <A>0.57</A>
+                <A>0.5</A>
                 <I>0.86</I>
-                <D>0.43</D>
+                <D>0.36</D>
                 <V>1</V>
             </Stats>
 
@@ -16996,6 +16996,9 @@
             </AbstractClasses>
 
             <ConcreteClasses>
+                <Class sourceFile="PlantUMLBrowser.java">
+                    net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser$Request
+                </Class>
                 <Class sourceFile="TeaVmFileLoader.java">
                     net.sourceforge.plantuml.teavm.browser.TeaVmFileLoader$Answer
                 </Class>

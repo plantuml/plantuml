@@ -79,18 +79,10 @@ import net.sourceforge.plantuml.utils.MyCollections;
 
 <span class="nc" id="L80">public class SecurityUtils {</span>
 
-	// ::uncomment when __TEAVM__
-//	public static SecurityProfile getSecurityProfile() {
-//		return SecurityProfile.INSECURE;
-//	}
-	// ::done
-
 	public static boolean ignoreThisLink(String url) {
-		// ::comment when __TEAVM__
-<span class="pc bpc" id="L90" title="2 of 4 branches missed.">		if (allowJavascriptInLink() == false &amp;&amp; isJavascriptLink(url))</span>
-<span class="nc" id="L91">			return true;</span>
-		// ::done
-<span class="fc" id="L93">		return false;</span>
+<span class="pc bpc" id="L83" title="2 of 4 branches missed.">		if (allowJavascriptInLink() == false &amp;&amp; isJavascriptLink(url))</span>
+<span class="nc" id="L84">			return true;</span>
+<span class="fc" id="L85">		return false;</span>
 	}
 
 	/**
@@ -99,22 +91,17 @@ import net.sourceforge.plantuml.utils.MyCollections;
 	public static final String NO_CREDENTIALS = &quot;&lt;none&gt;&quot;;
 
 	public synchronized static PortableImage readRasterImage(final ImageIcon imageIcon) {
-		// ::comment when __TEAVM__
-<span class="nc" id="L103">		final Image tmpImage = imageIcon.getImage();</span>
-<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (imageIcon.getIconWidth() == -1)</span>
-			// ::done
-<span class="nc" id="L106">			return null;</span>
+<span class="nc" id="L94">		final Image tmpImage = imageIcon.getImage();</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (imageIcon.getIconWidth() == -1)</span>
+<span class="nc" id="L96">			return null;</span>
 
-		// ::comment when __TEAVM__
-<span class="nc" id="L109">		final PortableImage image = PortableImageFactory.build(imageIcon.getIconWidth(), imageIcon.getIconHeight(),</span>
+<span class="nc" id="L98">		final PortableImage image = PortableImageFactory.build(imageIcon.getIconWidth(), imageIcon.getIconHeight(),</span>
 				PortableImage.TYPE_INT_ARGB);
-<span class="nc" id="L111">		image.getGraphics().drawImage(tmpImage, 0, 0, null);</span>
-<span class="nc" id="L112">		tmpImage.flush();</span>
-<span class="nc" id="L113">		return image;</span>
-		// ::done
+<span class="nc" id="L100">		image.getGraphics().drawImage(tmpImage, 0, 0, null);</span>
+<span class="nc" id="L101">		tmpImage.flush();</span>
+<span class="nc" id="L102">		return image;</span>
 	}
 
-	// ::comment when __TEAVM__
 	/**
 	 * Whitelist of urls
 	 */
@@ -132,84 +119,84 @@ import net.sourceforge.plantuml.utils.MyCollections;
 	 * Standard BasicAuth authentication interceptor, to generate a
 	 * SecurityAuthentication from credentials.
 	 */
-<span class="fc" id="L135">	private static final SecurityAuthorizeManager PUBLIC_AUTH_MANAGER = new SecurityDefaultNoopAuthorizeManager();</span>
+<span class="fc" id="L122">	private static final SecurityAuthorizeManager PUBLIC_AUTH_MANAGER = new SecurityDefaultNoopAuthorizeManager();</span>
 
 	/**
 	 * Standard interceptor for public endpoint access.
 	 */
-<span class="fc" id="L140">	private static final SecurityAccessInterceptor PUBLIC_ACCESS_INTERCEPTOR = new SecurityDefaultNoopAccessInterceptor();</span>
+<span class="fc" id="L127">	private static final SecurityAccessInterceptor PUBLIC_ACCESS_INTERCEPTOR = new SecurityDefaultNoopAccessInterceptor();</span>
 
 	/**
 	 * Standard TokenAuth authorize manager, to generate a SecurityAuthentication
 	 * from credentials.
 	 */
-<span class="fc" id="L146">	private static final SecurityAuthorizeManager TOKEN_AUTH_MANAGER = new TokenAuthAuthorizeManager();</span>
+<span class="fc" id="L133">	private static final SecurityAuthorizeManager TOKEN_AUTH_MANAGER = new TokenAuthAuthorizeManager();</span>
 
 	/**
 	 * Standard token access interceptor.
 	 */
-<span class="fc" id="L151">	private static final SecurityAccessInterceptor TOKEN_ACCESS_INTERCEPTOR = new TokenAuthAccessInterceptor();</span>
+<span class="fc" id="L138">	private static final SecurityAccessInterceptor TOKEN_ACCESS_INTERCEPTOR = new TokenAuthAccessInterceptor();</span>
 
 	/**
 	 * Standard BasicAuth authorize manager, to generate a SecurityAuthentication
 	 * from credentials.
 	 */
-<span class="fc" id="L157">	private static final SecurityAuthorizeManager BASICAUTH_AUTH_MANAGER = new BasicAuthAuthorizeManager();</span>
+<span class="fc" id="L144">	private static final SecurityAuthorizeManager BASICAUTH_AUTH_MANAGER = new BasicAuthAuthorizeManager();</span>
 
 	/**
 	 * Standard BasicAuth access interceptor.
 	 */
-<span class="fc" id="L162">	private static final SecurityAccessInterceptor BASICAUTH_ACCESS_INTERCEPTOR = new BasicAuthAccessInterceptor();</span>
+<span class="fc" id="L149">	private static final SecurityAccessInterceptor BASICAUTH_ACCESS_INTERCEPTOR = new BasicAuthAccessInterceptor();</span>
 
 	/**
 	 * OAuth2 client credentials authorization manager.
 	 */
-<span class="fc" id="L167">	private static final SecurityAuthorizeManager OAUTH2_CLIENT_AUTH_MANAGER = new OAuth2ClientAccessAuthorizeManager();</span>
+<span class="fc" id="L154">	private static final SecurityAuthorizeManager OAUTH2_CLIENT_AUTH_MANAGER = new OAuth2ClientAccessAuthorizeManager();</span>
 
 	/**
 	 * OAuth2 resource owner authorization manager.
 	 */
-<span class="fc" id="L172">	private static final SecurityAuthorizeManager OAUTH2_RESOURCEOWNER_AUTH_MANAGER = new OAuth2ResourceOwnerAccessAuthorizeManager();</span>
+<span class="fc" id="L159">	private static final SecurityAuthorizeManager OAUTH2_RESOURCEOWNER_AUTH_MANAGER = new OAuth2ResourceOwnerAccessAuthorizeManager();</span>
 
 	/**
 	 * Standard 'bearer' OAuth2 access interceptor.
 	 */
-<span class="fc" id="L177">	private static final SecurityAccessInterceptor OAUTH2_ACCESS_INTERCEPTOR = new OAuth2AccessInterceptor();</span>
+<span class="fc" id="L164">	private static final SecurityAccessInterceptor OAUTH2_ACCESS_INTERCEPTOR = new OAuth2AccessInterceptor();</span>
 
 	/**
 	 * Filesystem-save characters.
 	 */
-<span class="fc" id="L182">	private static final Pattern SECURE_CHARS = Pattern.compile(&quot;^[a-zA-Z0-9\\-]+$&quot;);</span>
+<span class="fc" id="L169">	private static final Pattern SECURE_CHARS = Pattern.compile(&quot;^[a-zA-Z0-9\\-]+$&quot;);</span>
 
-<span class="fc" id="L184">	static private SecurityProfile current = null;</span>
+<span class="fc" id="L171">	static private SecurityProfile current = null;</span>
 
 	public static synchronized SecurityProfile getSecurityProfile() {
-<span class="fc bfc" id="L187" title="All 2 branches covered.">		if (current == null)</span>
-<span class="fc" id="L188">			current = SecurityProfile.init();</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">		if (current == null)</span>
+<span class="fc" id="L175">			current = SecurityProfile.init();</span>
 
-<span class="fc" id="L190">		return current;</span>
+<span class="fc" id="L177">		return current;</span>
 	}
 
 	private static boolean isJavascriptLink(String url) {
-<span class="fc" id="L194">		return url.toLowerCase().replaceAll(&quot;[^a-z]&quot;, &quot;&quot;).startsWith(&quot;javascript&quot;);</span>
+<span class="fc" id="L181">		return url.toLowerCase().replaceAll(&quot;[^a-z]&quot;, &quot;&quot;).startsWith(&quot;javascript&quot;);</span>
 	}
 
 	private static boolean allowJavascriptInLink() {
-<span class="fc" id="L198">		final String env = getenv(&quot;PLANTUML_ALLOW_JAVASCRIPT_IN_LINK&quot;);</span>
-<span class="fc" id="L199">		return &quot;true&quot;.equalsIgnoreCase(env);</span>
+<span class="fc" id="L185">		final String env = getenv(&quot;PLANTUML_ALLOW_JAVASCRIPT_IN_LINK&quot;);</span>
+<span class="fc" id="L186">		return &quot;true&quot;.equalsIgnoreCase(env);</span>
 	}
 
 	public static String getenv(String name) {
-<span class="fc" id="L203">		String result = System.getProperty(name);</span>
-<span class="fc bfc" id="L204" title="All 2 branches covered.">		if (StringUtils.isNotEmpty(result))</span>
-<span class="fc" id="L205">			return result;</span>
+<span class="fc" id="L190">		String result = System.getProperty(name);</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">		if (StringUtils.isNotEmpty(result))</span>
+<span class="fc" id="L192">			return result;</span>
 
-<span class="fc" id="L207">		result = System.getenv(name);</span>
-<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		if (StringUtils.isNotEmpty(result))</span>
-<span class="nc" id="L209">			return result;</span>
+<span class="fc" id="L194">		result = System.getenv(name);</span>
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">		if (StringUtils.isNotEmpty(result))</span>
+<span class="nc" id="L196">			return result;</span>
 
-<span class="fc" id="L211">		final String alternateName = name.replace(&quot;.&quot;, &quot;_&quot;).toUpperCase();</span>
-<span class="fc" id="L212">		return System.getenv(alternateName);</span>
+<span class="fc" id="L198">		final String alternateName = name.replace(&quot;.&quot;, &quot;_&quot;).toUpperCase();</span>
+<span class="fc" id="L199">		return System.getenv(alternateName);</span>
 	}
 
 //	/**
@@ -231,67 +218,67 @@ import net.sourceforge.plantuml.utils.MyCollections;
 	 * @see #SECURITY_ALLOW_NONSSL_AUTH
 	 */
 	public static boolean isNonSSLAuthenticationAllowed() {
-<span class="nc" id="L234">		return Boolean.parseBoolean(getenv(SECURITY_ALLOW_NONSSL_AUTH));</span>
+<span class="nc" id="L221">		return Boolean.parseBoolean(getenv(SECURITY_ALLOW_NONSSL_AUTH));</span>
 	}
 
 	public static List&lt;SFile&gt; getPath(String prop) {
-<span class="fc" id="L238">		final List&lt;SFile&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L239">		String paths = getenv(prop);</span>
-<span class="fc bfc" id="L240" title="All 2 branches covered.">		if (paths == null) {</span>
-<span class="fc" id="L241">			return MyCollections.unmodifiableList(result);</span>
+<span class="fc" id="L225">		final List&lt;SFile&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L226">		String paths = getenv(prop);</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">		if (paths == null) {</span>
+<span class="fc" id="L228">			return MyCollections.unmodifiableList(result);</span>
 		}
-<span class="fc" id="L243">		paths = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(paths);</span>
-<span class="fc" id="L244">		final StringTokenizer st = new StringTokenizer(paths, System.getProperty(&quot;path.separator&quot;));</span>
-<span class="fc bfc" id="L245" title="All 2 branches covered.">		while (st.hasMoreTokens()) {</span>
-<span class="fc" id="L246">			final String tmp = st.nextToken();</span>
+<span class="fc" id="L230">		paths = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(paths);</span>
+<span class="fc" id="L231">		final StringTokenizer st = new StringTokenizer(paths, System.getProperty(&quot;path.separator&quot;));</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">		while (st.hasMoreTokens()) {</span>
+<span class="fc" id="L233">			final String tmp = st.nextToken();</span>
 			try {
-<span class="fc" id="L248">				final SFile f = new SFile(tmp).getCanonicalFile();</span>
-<span class="fc bfc" id="L249" title="All 2 branches covered.">				if (f.isDirectory())</span>
-<span class="fc" id="L250">					result.add(f);</span>
-<span class="nc" id="L251">			} catch (IOException e) {</span>
-<span class="nc" id="L252">				Log.info(() -&gt; &quot;Cannot access to &quot; + tmp + &quot;. &quot; + e);</span>
-<span class="fc" id="L253">			}</span>
-<span class="fc" id="L254">		}</span>
-<span class="fc" id="L255">		return MyCollections.unmodifiableList(result);</span>
+<span class="fc" id="L235">				final SFile f = new SFile(tmp).getCanonicalFile();</span>
+<span class="fc bfc" id="L236" title="All 2 branches covered.">				if (f.isDirectory())</span>
+<span class="fc" id="L237">					result.add(f);</span>
+<span class="nc" id="L238">			} catch (IOException e) {</span>
+<span class="nc" id="L239">				Log.info(() -&gt; &quot;Cannot access to &quot; + tmp + &quot;. &quot; + e);</span>
+<span class="fc" id="L240">			}</span>
+<span class="fc" id="L241">		}</span>
+<span class="fc" id="L242">		return MyCollections.unmodifiableList(result);</span>
 	}
 
 	public static boolean allowSvgText() {
-<span class="fc" id="L259">		return true;</span>
+<span class="fc" id="L246">		return true;</span>
 	}
 
 	public static java.io.PrintWriter createPrintWriter(OutputStream os) {
-<span class="nc" id="L263">		return new PrintWriter(os);</span>
+<span class="nc" id="L250">		return new PrintWriter(os);</span>
 	}
 
 	public static java.io.PrintWriter createPrintWriter(OutputStream os, boolean append) {
-<span class="nc" id="L267">		return new PrintWriter(os, append);</span>
+<span class="nc" id="L254">		return new PrintWriter(os, append);</span>
 	}
 
 	public static PrintStream createPrintStream(OutputStream os) {
-<span class="fc" id="L271">		return new PrintStream(os);</span>
+<span class="fc" id="L258">		return new PrintStream(os);</span>
 	}
 
 	public static PrintStream createPrintStream(OutputStream os, boolean autoFlush, String charset)
 			throws UnsupportedEncodingException {
-<span class="nc" id="L276">		return new PrintStream(os, autoFlush, charset);</span>
+<span class="nc" id="L263">		return new PrintStream(os, autoFlush, charset);</span>
 	}
 
 	public static PrintStream createPrintStream(OutputStream os, boolean autoFlush, Charset charset)
 			throws UnsupportedEncodingException {
-<span class="fc" id="L281">		return new PrintStream(os, autoFlush, charset.name());</span>
+<span class="fc" id="L268">		return new PrintStream(os, autoFlush, charset.name());</span>
 	}
 
 	// ----
 	public static FileReader createFileReader(String path) throws FileNotFoundException {
-<span class="nc" id="L286">		return new FileReader(path);</span>
+<span class="nc" id="L273">		return new FileReader(path);</span>
 	}
 
 	public static java.io.PrintWriter createPrintWriter(String path) throws FileNotFoundException {
-<span class="fc" id="L290">		return new PrintWriter(path);</span>
+<span class="fc" id="L277">		return new PrintWriter(path);</span>
 	}
 
 	public static FileOutputStream createFileOutputStream(String path) throws FileNotFoundException {
-<span class="fc" id="L294">		return new FileOutputStream(path);</span>
+<span class="fc" id="L281">		return new FileOutputStream(path);</span>
 	}
 
 	/**
@@ -301,21 +288,21 @@ import net.sourceforge.plantuml.utils.MyCollections;
 	 * @return the manager.
 	 */
 	public static SecurityAuthorizeManager getAuthenticationManager(SecurityCredentials credentialConfiguration) {
-<span class="pc bpc" id="L304" title="1 of 2 branches missed.">		if (credentialConfiguration == SecurityCredentials.NONE) {</span>
-<span class="fc" id="L305">			return PUBLIC_AUTH_MANAGER;</span>
-<span class="nc bnc" id="L306" title="All 2 branches missed.">		} else if (&quot;tokenauth&quot;.equalsIgnoreCase(credentialConfiguration.getType())) {</span>
-<span class="nc" id="L307">			return TOKEN_AUTH_MANAGER;</span>
-<span class="nc bnc" id="L308" title="All 2 branches missed.">		} else if (&quot;basicauth&quot;.equalsIgnoreCase(credentialConfiguration.getType())) {</span>
-<span class="nc" id="L309">			return BASICAUTH_AUTH_MANAGER;</span>
-<span class="nc bnc" id="L310" title="All 2 branches missed.">		} else if (&quot;oauth2&quot;.equalsIgnoreCase(credentialConfiguration.getType())) {</span>
-<span class="nc" id="L311">			String grantType = credentialConfiguration.getPropertyStr(&quot;grantType&quot;);</span>
-<span class="nc bnc" id="L312" title="All 2 branches missed.">			if (&quot;client_credentials&quot;.equalsIgnoreCase(grantType)) {</span>
-<span class="nc" id="L313">				return OAUTH2_CLIENT_AUTH_MANAGER;</span>
-<span class="nc bnc" id="L314" title="All 2 branches missed.">			} else if (&quot;password&quot;.equalsIgnoreCase(grantType)) {</span>
-<span class="nc" id="L315">				return OAUTH2_RESOURCEOWNER_AUTH_MANAGER;</span>
+<span class="pc bpc" id="L291" title="1 of 2 branches missed.">		if (credentialConfiguration == SecurityCredentials.NONE) {</span>
+<span class="fc" id="L292">			return PUBLIC_AUTH_MANAGER;</span>
+<span class="nc bnc" id="L293" title="All 2 branches missed.">		} else if (&quot;tokenauth&quot;.equalsIgnoreCase(credentialConfiguration.getType())) {</span>
+<span class="nc" id="L294">			return TOKEN_AUTH_MANAGER;</span>
+<span class="nc bnc" id="L295" title="All 2 branches missed.">		} else if (&quot;basicauth&quot;.equalsIgnoreCase(credentialConfiguration.getType())) {</span>
+<span class="nc" id="L296">			return BASICAUTH_AUTH_MANAGER;</span>
+<span class="nc bnc" id="L297" title="All 2 branches missed.">		} else if (&quot;oauth2&quot;.equalsIgnoreCase(credentialConfiguration.getType())) {</span>
+<span class="nc" id="L298">			String grantType = credentialConfiguration.getPropertyStr(&quot;grantType&quot;);</span>
+<span class="nc bnc" id="L299" title="All 2 branches missed.">			if (&quot;client_credentials&quot;.equalsIgnoreCase(grantType)) {</span>
+<span class="nc" id="L300">				return OAUTH2_CLIENT_AUTH_MANAGER;</span>
+<span class="nc bnc" id="L301" title="All 2 branches missed.">			} else if (&quot;password&quot;.equalsIgnoreCase(grantType)) {</span>
+<span class="nc" id="L302">				return OAUTH2_RESOURCEOWNER_AUTH_MANAGER;</span>
 			}
 		}
-<span class="nc" id="L318">		return PUBLIC_AUTH_MANAGER;</span>
+<span class="nc" id="L305">		return PUBLIC_AUTH_MANAGER;</span>
 	}
 
 	/**
@@ -325,20 +312,20 @@ import net.sourceforge.plantuml.utils.MyCollections;
 	 * @return the interceptor.
 	 */
 	public static SecurityAccessInterceptor getAccessInterceptor(SecurityAuthentication authentication) {
-<span class="nc bnc" id="L328" title="All 2 branches missed.">		if (authentication != null) {</span>
-<span class="nc" id="L329">			String type = authentication.getType();</span>
-<span class="nc bnc" id="L330" title="All 2 branches missed.">			if (&quot;public&quot;.equals(type)) {</span>
-<span class="nc" id="L331">				return PUBLIC_ACCESS_INTERCEPTOR;</span>
-<span class="nc bnc" id="L332" title="All 2 branches missed.">			} else if (&quot;tokenauth&quot;.equalsIgnoreCase(type)) {</span>
-<span class="nc" id="L333">				return TOKEN_ACCESS_INTERCEPTOR;</span>
-<span class="nc bnc" id="L334" title="All 2 branches missed.">			} else if (&quot;basicauth&quot;.equalsIgnoreCase(type)) {</span>
-<span class="nc" id="L335">				return BASICAUTH_ACCESS_INTERCEPTOR;</span>
-<span class="nc bnc" id="L336" title="All 2 branches missed.">			} else if (&quot;oauth2&quot;.equalsIgnoreCase(type)) {</span>
-<span class="nc" id="L337">				return OAUTH2_ACCESS_INTERCEPTOR;</span>
+<span class="nc bnc" id="L315" title="All 2 branches missed.">		if (authentication != null) {</span>
+<span class="nc" id="L316">			String type = authentication.getType();</span>
+<span class="nc bnc" id="L317" title="All 2 branches missed.">			if (&quot;public&quot;.equals(type)) {</span>
+<span class="nc" id="L318">				return PUBLIC_ACCESS_INTERCEPTOR;</span>
+<span class="nc bnc" id="L319" title="All 2 branches missed.">			} else if (&quot;tokenauth&quot;.equalsIgnoreCase(type)) {</span>
+<span class="nc" id="L320">				return TOKEN_ACCESS_INTERCEPTOR;</span>
+<span class="nc bnc" id="L321" title="All 2 branches missed.">			} else if (&quot;basicauth&quot;.equalsIgnoreCase(type)) {</span>
+<span class="nc" id="L322">				return BASICAUTH_ACCESS_INTERCEPTOR;</span>
+<span class="nc bnc" id="L323" title="All 2 branches missed.">			} else if (&quot;oauth2&quot;.equalsIgnoreCase(type)) {</span>
+<span class="nc" id="L324">				return OAUTH2_ACCESS_INTERCEPTOR;</span>
 			}
 		}
 		// Unknown? Fall back to public:
-<span class="nc" id="L341">		return PUBLIC_ACCESS_INTERCEPTOR;</span>
+<span class="nc" id="L328">		return PUBLIC_ACCESS_INTERCEPTOR;</span>
 	}
 
 	/**
@@ -348,17 +335,17 @@ import net.sourceforge.plantuml.utils.MyCollections;
 	 * @return boolean, if exists
 	 */
 	public static boolean existsSecurityCredentials(String userToken) {
-<span class="fc" id="L351">		SFile securityPath = getSecurityPath();</span>
-<span class="fc bfc" id="L352" title="All 2 branches covered.">		if (securityPath != null) {</span>
+<span class="fc" id="L338">		SFile securityPath = getSecurityPath();</span>
+<span class="fc bfc" id="L339" title="All 2 branches covered.">		if (securityPath != null) {</span>
 			// SFile does not allow access to the security path (to hide the credentials in
 			// DSL scripts)
-<span class="fc" id="L355">			File securityFilePath = securityPath.conv();</span>
-<span class="fc" id="L356">			File userCredentials = new File(securityFilePath, userToken + &quot;.credential&quot;);</span>
-<span class="pc bpc" id="L357" title="3 of 6 branches missed.">			return userCredentials.exists() &amp;&amp; userCredentials.canRead() &amp;&amp; !userCredentials.isDirectory()</span>
-<span class="pc bpc" id="L358" title="1 of 2 branches missed.">					&amp;&amp; userCredentials.length() &gt; 2;</span>
+<span class="fc" id="L342">			File securityFilePath = securityPath.conv();</span>
+<span class="fc" id="L343">			File userCredentials = new File(securityFilePath, userToken + &quot;.credential&quot;);</span>
+<span class="pc bpc" id="L344" title="3 of 6 branches missed.">			return userCredentials.exists() &amp;&amp; userCredentials.canRead() &amp;&amp; !userCredentials.isDirectory()</span>
+<span class="pc bpc" id="L345" title="1 of 2 branches missed.">					&amp;&amp; userCredentials.length() &gt; 2;</span>
 
 		}
-<span class="fc" id="L361">		return false;</span>
+<span class="fc" id="L348">		return false;</span>
 	}
 
 	/**
@@ -368,18 +355,18 @@ import net.sourceforge.plantuml.utils.MyCollections;
 	 * @return the credentials or NONE
 	 */
 	public static SecurityCredentials loadSecurityCredentials(String userToken) {
-<span class="pc bpc" id="L371" title="2 of 6 branches missed.">		if (userToken != null &amp;&amp; checkFileSystemSaveCharactersStrict(userToken) &amp;&amp; !NO_CREDENTIALS.equals(userToken)) {</span>
-<span class="fc" id="L372">			final SFile securityPath = getSecurityPath();</span>
-<span class="pc bpc" id="L373" title="1 of 2 branches missed.">			if (securityPath != null) {</span>
+<span class="pc bpc" id="L358" title="2 of 6 branches missed.">		if (userToken != null &amp;&amp; checkFileSystemSaveCharactersStrict(userToken) &amp;&amp; !NO_CREDENTIALS.equals(userToken)) {</span>
+<span class="fc" id="L359">			final SFile securityPath = getSecurityPath();</span>
+<span class="pc bpc" id="L360" title="1 of 2 branches missed.">			if (securityPath != null) {</span>
 				// SFile does not allow access to the security path (to hide the credentials in
 				// DSL scripts)
-<span class="fc" id="L376">				File securityFilePath = securityPath.conv();</span>
-<span class="fc" id="L377">				File userCredentials = new File(securityFilePath, userToken + &quot;.credential&quot;);</span>
-<span class="fc" id="L378">				JsonValue jsonValue = loadJson(userCredentials);</span>
-<span class="fc" id="L379">				return SecurityCredentials.fromJson(jsonValue);</span>
+<span class="fc" id="L363">				File securityFilePath = securityPath.conv();</span>
+<span class="fc" id="L364">				File userCredentials = new File(securityFilePath, userToken + &quot;.credential&quot;);</span>
+<span class="fc" id="L365">				JsonValue jsonValue = loadJson(userCredentials);</span>
+<span class="fc" id="L366">				return SecurityCredentials.fromJson(jsonValue);</span>
 			}
 		}
-<span class="fc" id="L382">		return SecurityCredentials.NONE;</span>
+<span class="fc" id="L369">		return SecurityCredentials.NONE;</span>
 	}
 
 	/**
@@ -393,8 +380,8 @@ import net.sourceforge.plantuml.utils.MyCollections;
 	 * @see #SECURE_CHARS
 	 */
 	private static boolean checkFileSystemSaveCharactersStrict(String pathNameToken) {
-<span class="pc bpc" id="L396" title="1 of 4 branches missed.">		return StringUtils.isNotEmpty(pathNameToken) &amp;&amp; SECURE_CHARS.matcher(pathNameToken).matches()</span>
-<span class="fc bfc" id="L397" title="All 2 branches covered.">				&amp;&amp; pathNameToken.length() &lt;= 64;</span>
+<span class="pc bpc" id="L383" title="1 of 4 branches missed.">		return StringUtils.isNotEmpty(pathNameToken) &amp;&amp; SECURE_CHARS.matcher(pathNameToken).matches()</span>
+<span class="fc bfc" id="L384" title="All 2 branches covered.">				&amp;&amp; pathNameToken.length() &lt;= 64;</span>
 	}
 
 	/**
@@ -407,15 +394,15 @@ import net.sourceforge.plantuml.utils.MyCollections;
 	 * @return SFile folder or null
 	 */
 	public static SFile getSecurityPath() {
-<span class="fc" id="L410">		List&lt;SFile&gt; paths = getPath(PATHS_SECURITY);</span>
-<span class="fc bfc" id="L411" title="All 2 branches covered.">		if (!paths.isEmpty()) {</span>
-<span class="fc" id="L412">			SFile secureSFile = paths.get(0);</span>
-<span class="fc" id="L413">			File securityFolder = secureSFile.conv();</span>
-<span class="pc bpc" id="L414" title="2 of 4 branches missed.">			if (securityFolder.exists() &amp;&amp; securityFolder.isDirectory()) {</span>
-<span class="fc" id="L415">				return secureSFile;</span>
+<span class="fc" id="L397">		List&lt;SFile&gt; paths = getPath(PATHS_SECURITY);</span>
+<span class="fc bfc" id="L398" title="All 2 branches covered.">		if (!paths.isEmpty()) {</span>
+<span class="fc" id="L399">			SFile secureSFile = paths.get(0);</span>
+<span class="fc" id="L400">			File securityFolder = secureSFile.conv();</span>
+<span class="pc bpc" id="L401" title="2 of 4 branches missed.">			if (securityFolder.exists() &amp;&amp; securityFolder.isDirectory()) {</span>
+<span class="fc" id="L402">				return secureSFile;</span>
 			}
 		}
-<span class="fc" id="L418">		return null;</span>
+<span class="fc" id="L405">		return null;</span>
 	}
 
 	/**
@@ -426,17 +413,16 @@ import net.sourceforge.plantuml.utils.MyCollections;
 	 * @return a Json vale (maybe empty)
 	 */
 	private static JsonValue loadJson(File jsonFile) {
-<span class="pc bpc" id="L429" title="3 of 6 branches missed.">		if (jsonFile.exists() &amp;&amp; jsonFile.canRead() &amp;&amp; jsonFile.length() &gt; 2) {</span>
+<span class="pc bpc" id="L416" title="3 of 6 branches missed.">		if (jsonFile.exists() &amp;&amp; jsonFile.canRead() &amp;&amp; jsonFile.length() &gt; 2) {</span>
 			// we have a file with at least two bytes and readable, hopefully it's a JSON
-<span class="fc" id="L431">			try (Reader r = new BufferedReader(new FileReader(jsonFile))) {</span>
-<span class="fc" id="L432">				return Json.parse(r);</span>
-<span class="nc" id="L433">			} catch (IOException e) {</span>
-<span class="nc" id="L434">				Logme.error(e);</span>
+<span class="fc" id="L418">			try (Reader r = new BufferedReader(new FileReader(jsonFile))) {</span>
+<span class="fc" id="L419">				return Json.parse(r);</span>
+<span class="nc" id="L420">			} catch (IOException e) {</span>
+<span class="nc" id="L421">				Logme.error(e);</span>
 			}
 		}
-<span class="nc" id="L437">		return Json.object();</span>
+<span class="nc" id="L424">		return Json.object();</span>
 	}
-	// ::done
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

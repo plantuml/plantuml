@@ -201,10 +201,21 @@ loadScripts(document, 'script');</script>
  a time</li>
  </ul>
 
- If multiple render requests arrive while one is being processed, only the
- latest request is kept (the previous pending request is overwritten). This is
- intentional: when a user is typing, we only care about rendering the latest
- version.</div>
+ Requests wait in a queue, oldest first, and the worker answers them one at a
+ time. Two rules decide what happens when several arrive before the worker is
+ free:
+ <ul>
+ <li><code>renderToString</code>: every request is kept and answered, in the order
+ received. Each of its callbacks is called exactly once (<code>onSuccess</code> or
+ <code>onError</code>); a host that renders many diagrams at the same time gets all
+ of them back.</li>
+ <li><code>render</code>: only the latest request is kept, a new one replaces the
+ <code>render</code> request still waiting. This is intentional: when a user is
+ typing, we only care about rendering the latest version.</li>
+ </ul>
+
+ Neither kind drops the other. A callback that throws, or a missing callback,
+ does not stop the worker.</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -330,8 +341,10 @@ loadScripts(document, 'script');</script>
  later from the worker thread.
 
  <p>
- If a previous request is still pending (worker hasn't picked it up yet), it
- will be overwritten. This is the desired behavior for live-typing scenarios.</div>
+ If a previous <code>render</code> request is still waiting (the worker hasn't
+ picked it up yet), it is replaced by this one, and its diagram is never
+ drawn. This is the desired behavior for live-typing scenarios. Waiting
+ <code>renderToString</code> requests are not affected.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>lines</code> - the PlantUML source code, split into lines by the JavaScript
@@ -358,7 +371,11 @@ loadScripts(document, 'script');</script>
  <p>
  Same queueing and asynchronous behavior as <a href="#render(java.lang.String%5B%5D,java.lang.String,org.teavm.jso.JSObject)"><code>render(java.lang.String[], java.lang.String, org.teavm.jso.JSObject)</code></a>: this method only
  queues the request; the worker thread performs the actual rendering and
- invokes the callback. A previous pending request will be overwritten.</div>
+ invokes the callback. Unlike <a href="#render(java.lang.String%5B%5D,java.lang.String,org.teavm.jso.JSObject)"><code>render(java.lang.String[], java.lang.String, org.teavm.jso.JSObject)</code></a>, requests are never dropped: each
+ call is queued behind the ones already waiting, and exactly one of
+ <code>onSuccess</code> and <code>onError</code> is called for it, once, in the order of
+ the calls. A callback that is <code>null</code> or that throws does not stop the
+ engine (an exception is reported with <code>console.error</code>).</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>lines</code> - the PlantUML source code, split into lines by the JavaScript
