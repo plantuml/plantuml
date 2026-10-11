@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Md5.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.utils</a> &gt; <span class="el_source">Md5.java</span></div><h1>Md5.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.utils;
+
+/**
+ * Minimal pure-Java MD5 (RFC 1321), for targets where
+ * {@code java.security.MessageDigest} is not available (TeaVM C).
+ */
+public class Md5 {
+
+<span class="nc" id="L44">	private static final int[] SHIFTS = { 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 5, 9, 14, 20, 5,</span>
+			9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 6, 10,
+			15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21 };
+
+<span class="nc" id="L48">	private static final int[] K = new int[64];</span>
+
+	static {
+<span class="nc bnc" id="L51" title="All 2 branches missed.">		for (int i = 0; i &lt; 64; i++)</span>
+<span class="nc" id="L52">			K[i] = (int) (long) Math.floor(Math.abs(Math.sin(i + 1)) * 4294967296.0);</span>
+<span class="nc" id="L53">	}</span>
+
+	private Md5() {
+	}
+
+	public static byte[] digest(byte[] data) {
+<span class="nc" id="L59">		final int padLen = ((data.length + 8) / 64 + 1) * 64;</span>
+<span class="nc" id="L60">		final byte[] msg = new byte[padLen];</span>
+<span class="nc" id="L61">		System.arraycopy(data, 0, msg, 0, data.length);</span>
+<span class="nc" id="L62">		msg[data.length] = (byte) 0x80;</span>
+<span class="nc" id="L63">		final long bitLen = (long) data.length * 8L;</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		for (int i = 0; i &lt; 8; i++)</span>
+<span class="nc" id="L65">			msg[padLen - 8 + i] = (byte) (bitLen &gt;&gt;&gt; (8 * i));</span>
+
+<span class="nc" id="L67">		int a0 = 0x67452301;</span>
+<span class="nc" id="L68">		int b0 = 0xefcdab89;</span>
+<span class="nc" id="L69">		int c0 = 0x98badcfe;</span>
+<span class="nc" id="L70">		int d0 = 0x10325476;</span>
+
+<span class="nc" id="L72">		final int[] w = new int[16];</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		for (int off = 0; off &lt; padLen; off += 64) {</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">			for (int i = 0; i &lt; 16; i++) {</span>
+<span class="nc" id="L75">				final int j = off + i * 4;</span>
+<span class="nc" id="L76">				w[i] = (msg[j] &amp; 0xff) | (msg[j + 1] &amp; 0xff) &lt;&lt; 8 | (msg[j + 2] &amp; 0xff) &lt;&lt; 16</span>
+						| (msg[j + 3] &amp; 0xff) &lt;&lt; 24;
+			}
+<span class="nc" id="L79">			int a = a0;</span>
+<span class="nc" id="L80">			int b = b0;</span>
+<span class="nc" id="L81">			int c = c0;</span>
+<span class="nc" id="L82">			int d = d0;</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">			for (int i = 0; i &lt; 64; i++) {</span>
+				int f;
+				int g;
+<span class="nc bnc" id="L86" title="All 2 branches missed.">				if (i &lt; 16) {</span>
+<span class="nc" id="L87">					f = (b &amp; c) | (~b &amp; d);</span>
+<span class="nc" id="L88">					g = i;</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">				} else if (i &lt; 32) {</span>
+<span class="nc" id="L90">					f = (d &amp; b) | (~d &amp; c);</span>
+<span class="nc" id="L91">					g = (5 * i + 1) % 16;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">				} else if (i &lt; 48) {</span>
+<span class="nc" id="L93">					f = b ^ c ^ d;</span>
+<span class="nc" id="L94">					g = (3 * i + 5) % 16;</span>
+				} else {
+<span class="nc" id="L96">					f = c ^ (b | ~d);</span>
+<span class="nc" id="L97">					g = (7 * i) % 16;</span>
+				}
+<span class="nc" id="L99">				final int tmp = d;</span>
+<span class="nc" id="L100">				d = c;</span>
+<span class="nc" id="L101">				c = b;</span>
+<span class="nc" id="L102">				b = b + Integer.rotateLeft(a + f + K[i] + w[g], SHIFTS[i]);</span>
+<span class="nc" id="L103">				a = tmp;</span>
+			}
+<span class="nc" id="L105">			a0 += a;</span>
+<span class="nc" id="L106">			b0 += b;</span>
+<span class="nc" id="L107">			c0 += c;</span>
+<span class="nc" id="L108">			d0 += d;</span>
+		}
+
+<span class="nc" id="L111">		final byte[] out = new byte[16];</span>
+<span class="nc" id="L112">		final int[] state = { a0, b0, c0, d0 };</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		for (int i = 0; i &lt; 4; i++)</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">			for (int j = 0; j &lt; 4; j++)</span>
+<span class="nc" id="L115">				out[i * 4 + j] = (byte) (state[i] &gt;&gt;&gt; (8 * j));</span>
+<span class="nc" id="L116">		return out;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

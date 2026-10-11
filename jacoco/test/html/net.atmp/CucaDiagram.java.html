@@ -472,7 +472,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 			// fallback of the JVM branch below (the pragma short-circuits, so the
 			// probe and its one-time console note only run on the default path).
 			// ::revert when JAVA8
-<span class="nc bnc" id="L475" title="All 4 branches missed.">			maker = (this.isUseSmetana() || net.sourceforge.plantuml.teavm.GraphVizjsTeaVMEngine.vizMissingFallback()) ? new CucaDiagramFileMakerSmetana(this) : new CucaDiagramFileMakerTeaVM(this);</span>
+<span class="nc bnc" id="L475" title="All 6 branches missed.">			maker = (TeaVM.isC() || this.isUseSmetana() || net.sourceforge.plantuml.teavm.GraphVizjsTeaVMEngine.vizMissingFallback()) ? new CucaDiagramFileMakerSmetana(this) : new CucaDiagramFileMakerTeaVM(this);</span>
 		// maker = new CucaDiagramFileMakerSmetana(this);
 		// ::done
 <span class="pc bpc" id="L478" title="1 of 2 branches missed.">		else if (this.isUseElk())</span>

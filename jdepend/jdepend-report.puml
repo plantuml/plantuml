@@ -646,7 +646,7 @@ Total Classes: 1
 "net.sourceforge.plantuml.ant" --> "java.util.concurrent"
 "net.sourceforge.plantuml.ant" --> "net.sourceforge.plantuml"
 
-class "net.sourceforge.plantuml.api" %lighten("red", 91) {
+class "net.sourceforge.plantuml.api" %lighten("red", 89) {
 Total Classes: 10
 }
 "net.sourceforge.plantuml.api" --> "java.lang"
@@ -1502,7 +1502,7 @@ Total Classes: 1
 }
 "net.sourceforge.plantuml.emoji.data" --> "java.lang"
 
-class "net.sourceforge.plantuml.error" %lighten("red", 62) {
+class "net.sourceforge.plantuml.error" %lighten("red", 57) {
 Total Classes: 3
 }
 "net.sourceforge.plantuml.error" --> "java.lang"
@@ -1514,7 +1514,7 @@ Total Classes: 3
 "net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.text"
 
-class "net.sourceforge.plantuml.explain" %lighten("red", 100) {
+class "net.sourceforge.plantuml.explain" %lighten("red", 92) {
 Total Classes: 4
 }
 "net.sourceforge.plantuml.explain" --> "java.io"
@@ -1925,7 +1925,7 @@ Total Classes: 2
 "net.sourceforge.plantuml.help" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.help" --> "net.sourceforge.plantuml.style"
 
-class "net.sourceforge.plantuml.jaws" %lighten("red", 67) {
+class "net.sourceforge.plantuml.jaws" %lighten("red", 63) {
 Total Classes: 4
 }
 "net.sourceforge.plantuml.jaws" --> "java.lang"
@@ -2432,7 +2432,7 @@ Total Classes: 2
 "net.sourceforge.plantuml.mda" --> "net.sourceforge.plantuml.api.mda.option2"
 "net.sourceforge.plantuml.mda" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.mindmap" %lighten("red", 95) {
+class "net.sourceforge.plantuml.mindmap" %lighten("red", 99) {
 Total Classes: 11
 }
 "net.sourceforge.plantuml.mindmap" --> "java.lang"
@@ -2668,7 +2668,7 @@ Total Classes: 5
 "net.sourceforge.plantuml.posimo" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.posimo" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.preproc" %lighten("red", 38) {
+class "net.sourceforge.plantuml.preproc" %lighten("red", 37) {
 Total Classes: 17
 }
 "net.sourceforge.plantuml.preproc" --> "java.io"
@@ -3305,6 +3305,25 @@ Total Classes: 8
 "net.sourceforge.plantuml.teavm.browser" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.teavm.browser" --> "org.teavm.jso"
 
+class "net.sourceforge.plantuml.teavm.c" %lighten("red", 100) {
+Total Classes: 1
+}
+"net.sourceforge.plantuml.teavm.c" --> "java.lang"
+"net.sourceforge.plantuml.teavm.c" --> "java.nio.charset"
+"net.sourceforge.plantuml.teavm.c" --> "java.util"
+"net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml"
+"net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.api"
+"net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.core"
+"net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.error"
+"net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.explain"
+"net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.jaws"
+"net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.mindmap"
+"net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.nio"
+"net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.preproc"
+"net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.teavm"
+"net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.text"
+"net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.tim"
+
 class "net.sourceforge.plantuml.teavm.headless" %lighten("red", 67) {
 Total Classes: 3
 }
@@ -3317,7 +3336,7 @@ Total Classes: 1
 "net.sourceforge.plantuml.telnet" --> "java.lang"
 "net.sourceforge.plantuml.telnet" --> "java.net"
 
-class "net.sourceforge.plantuml.text" %lighten("red", 30) {
+class "net.sourceforge.plantuml.text" %lighten("red", 29) {
 Total Classes: 5
 }
 "net.sourceforge.plantuml.text" --> "java.lang"
@@ -3340,7 +3359,7 @@ Total Classes: 1
 }
 "net.sourceforge.plantuml.tikz" --> "java.util"
 
-class "net.sourceforge.plantuml.tim" %lighten("red", 94) {
+class "net.sourceforge.plantuml.tim" %lighten("red", 90) {
 Total Classes: 40
 }
 "net.sourceforge.plantuml.tim" --> "java.lang"
@@ -3472,8 +3491,8 @@ Total Classes: 4
 "net.sourceforge.plantuml.url" --> "java.util"
 "net.sourceforge.plantuml.url" --> "net.sourceforge.plantuml.klimt.geom"
 
-class "net.sourceforge.plantuml.utils" %lighten("red", 43.99999999999999) {
-Total Classes: 20
+class "net.sourceforge.plantuml.utils" %lighten("red", 43.00000000000001) {
+Total Classes: 21
 }
 "net.sourceforge.plantuml.utils" --> "java.io"
 "net.sourceforge.plantuml.utils" --> "java.lang"

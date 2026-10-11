@@ -119,7 +119,7 @@ import net.sourceforge.plantuml.log.Logme;
 	 * {@code PlantUMLBrowser.buildSvg} but targeting the headless
 	 * {@link UGraphicSvg} backend.
 	 */
-	private static String buildSvg(UgDiagram diagram) throws Exception {
+	public static String buildSvg(UgDiagram diagram) throws Exception {
 <span class="nc" id="L123">		final ColorMapper colorMapper = ColorMapper.IDENTITY;</span>
 <span class="nc" id="L124">		final FileFormatOption fileFormatOption = new FileFormatOption(FileFormat.SVG_DETERMINISTIC);</span>
 

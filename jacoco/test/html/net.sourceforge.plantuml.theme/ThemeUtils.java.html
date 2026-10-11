@@ -86,7 +86,7 @@ import net.sourceforge.plantuml.utils.Log;
 			// regular &quot;Cannot load theme&quot; error instead of silently ignoring the
 			// directive.
 <span class="nc bnc" id="L88" title="All 2 branches missed.">			if (from == null)</span>
-<span class="nc" id="L89">				return loadJsTheme(name);</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">				return TeaVM.isJavaScript() ? loadJsTheme(name) : null;</span>
 <span class="nc bnc" id="L90" title="All 2 branches missed.">			if (isLocalFolder(from) == false)</span>
 <span class="nc" id="L91">				return null;</span>
 		}

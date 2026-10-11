@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PSystemBuilderC.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.teavm.c</a> &gt; <span class="el_source">PSystemBuilderC.java</span></div><h1>PSystemBuilderC.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ * 
+ */
+package net.sourceforge.plantuml.teavm.c;
+
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import net.sourceforge.plantuml.DefinitionsContainer;
+import net.sourceforge.plantuml.UgDiagram;
+import net.sourceforge.plantuml.annotation.DuplicateCode;
+import net.sourceforge.plantuml.api.PSystemFactory;
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.error.PSystemError;
+import net.sourceforge.plantuml.error.PSystemErrorPreprocessor;
+import net.sourceforge.plantuml.error.PSystemErrorUtils;
+import net.sourceforge.plantuml.error.PSystemUnsupported;
+import net.sourceforge.plantuml.explain.Explanation;
+import net.sourceforge.plantuml.explain.PSystemExplain;
+import net.sourceforge.plantuml.jaws.Jaws;
+import net.sourceforge.plantuml.mindmap.MindMapDiagramFactory;
+import net.sourceforge.plantuml.nio.PathSystem;
+import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.teavm.TextareaSource;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.tim.TimLoader;
+
+public class PSystemBuilderC {
+
+<span class="nc" id="L67">	private final static PSystemBuilderC singleton = new PSystemBuilderC();</span>
+
+<span class="nc" id="L69">	private final List&lt;PSystemFactory&gt; factories = new ArrayList&lt;&gt;();</span>
+	private PSystemFactory lastFactory;
+
+<span class="nc" id="L72">	private PSystemBuilderC() {</span>
+		// Only MindMap for now (other diagrams will be added step by step)
+<span class="nc" id="L74">		factories.add(new MindMapDiagramFactory());</span>
+<span class="nc" id="L75">	}</span>
+
+	public static PSystemBuilderC getInstance() {
+<span class="nc" id="L78">		return singleton;</span>
+	}
+
+	public void reset() {
+<span class="nc" id="L82">		lastFactory = null;</span>
+<span class="nc" id="L83">	}</span>
+
+	public Diagram createDiagram(String[] split) {
+<span class="nc" id="L86">		final List&lt;StringLocated&gt; rawSource = TextareaSource.create(split, &quot;c&quot;);</span>
+
+<span class="nc" id="L88">		final PathSystem pathSystem = PathSystem.fetch();</span>
+<span class="nc" id="L89">		final Defines defines = Defines.createEmpty();</span>
+<span class="nc" id="L90">		final Charset charset = java.nio.charset.StandardCharsets.UTF_8;</span>
+<span class="nc" id="L91">		final DefinitionsContainer definitions = null;</span>
+
+<span class="nc" id="L93">		final TimLoader timLoader = new TimLoader(pathSystem, defines, charset, definitions, rawSource.get(0));</span>
+<span class="nc" id="L94">		timLoader.load(rawSource);</span>
+<span class="nc" id="L95">		List&lt;StringLocated&gt; tmp = timLoader.getResultList();</span>
+<span class="nc" id="L96">		Jaws.mutateExpands1(tmp);</span>
+
+<span class="nc" id="L98">		final PreprocessingArtifact preprocessing = timLoader.getPreprocessingArtifact();</span>
+
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (timLoader.isPreprocessorError())</span>
+<span class="nc" id="L101">			return new PSystemErrorPreprocessor(tmp, timLoader.getDebug(), preprocessing);</span>
+
+<span class="nc" id="L103">		return createDiagramFromPreprocessed(tmp, preprocessing);</span>
+	}
+
+	@DuplicateCode(reference = &quot;PSystemBuilder&quot;)
+	public Diagram createDiagramFromPreprocessed(List&lt;StringLocated&gt; source, PreprocessingArtifact preprocessing) {
+<span class="nc" id="L108">		final UmlSource umlSource = UmlSource.create(source, false);</span>
+
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (umlSource.getTotalLineCount() &lt; 10)</span>
+<span class="nc" id="L111">			lastFactory = null;</span>
+
+<span class="nc" id="L113">		umlSource.patchBase64();</span>
+
+<span class="nc" id="L115">		final Collection&lt;DiagramType&gt; explainTypes = umlSource.getExplainTypes();</span>
+		final Collection&lt;DiagramType&gt; diagramTypes;
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (explainTypes == null)</span>
+<span class="nc" id="L118">			diagramTypes = umlSource.getDiagramTypes();</span>
+		else
+<span class="nc" id="L120">			diagramTypes = explainTypes;</span>
+
+<span class="nc" id="L122">		final UgDiagram basicCheck = PSystemErrorUtils.checkBasicError(diagramTypes, source, preprocessing, umlSource);</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (basicCheck != null)</span>
+<span class="nc" id="L124">			return basicCheck;</span>
+
+<span class="nc" id="L126">		final List&lt;PSystemError&gt; errors = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L128" title="All 4 branches missed.">		if (lastFactory != null &amp;&amp; diagramTypes.contains(lastFactory.getDiagramType())) {</span>
+<span class="nc" id="L129">			final Diagram sys = lastFactory.createSystem(null, umlSource, null, preprocessing);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">			if (isOk(sys)) {</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">				if (explainTypes != null) {</span>
+<span class="nc" id="L132">					final List&lt;Explanation&gt; explanations = lastFactory.explain(null, umlSource, null, preprocessing);</span>
+<span class="nc" id="L133">					return new PSystemExplain(umlSource, preprocessing, explanations);</span>
+				}
+<span class="nc" id="L135">				return sys;</span>
+			}
+<span class="nc" id="L137">			errors.add((PSystemError) sys);</span>
+		}
+
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		for (PSystemFactory f : factories) {</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">			if (!diagramTypes.contains(f.getDiagramType()))</span>
+<span class="nc" id="L142">				continue;</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">			if (f == lastFactory)</span>
+<span class="nc" id="L144">				continue;</span>
+	
+<span class="nc" id="L146">			final Diagram sys = f.createSystem(null, umlSource, null, preprocessing);</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">			if (isOk(sys)) {</span>
+<span class="nc" id="L148">						this.lastFactory = f;</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">				if (explainTypes != null) {</span>
+<span class="nc" id="L150">					final List&lt;Explanation&gt; explanations = f.explain(null, umlSource, null, preprocessing);</span>
+<span class="nc" id="L151">					return new PSystemExplain(umlSource, preprocessing, explanations);</span>
+				}
+<span class="nc" id="L153">				return sys;</span>
+			}
+<span class="nc" id="L155">			errors.add((PSystemError) sys);</span>
+<span class="nc" id="L156">		}</span>
+
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (errors.size() == 0)</span>
+<span class="nc" id="L159">			return new PSystemUnsupported(umlSource, preprocessing);</span>
+
+<span class="nc" id="L161">		return PSystemErrorUtils.merge(errors);</span>
+	}
+
+	private boolean isOk(Diagram ps) {
+<span class="nc bnc" id="L165" title="All 6 branches missed.">		if (ps == null || ps instanceof PSystemError || ps instanceof PSystemUnsupported)</span>
+<span class="nc" id="L166">			return false;</span>
+
+<span class="nc" id="L168">		return true;</span>
+	}
+
+	/**
+	 * Explains, line by line, how the given preprocessed source is parsed.
+	 *
+	 * &lt;p&gt;
+	 * TeaVM counterpart of {@link net.sourceforge.plantuml.PSystemBuilder#explain}.
+	 * It builds the {@link UmlSource} the same way as
+	 * {@link #createDiagramFromPreprocessed(List, PreprocessingArtifact)}, finds
+	 * the first factory that produces a valid diagram for the detected type, and
+	 * delegates to its {@code explain}. {@code pathSystem} and {@code previous} are
+	 * {@code null} here, as everywhere else in this builder.
+	 *
+	 * @param source        the preprocessed source lines
+	 * @param preprocessing the preprocessing artifact
+	 * @return the list of explanations, or {@code null} if no factory matched
+	 */
+	@DuplicateCode(reference = &quot;PSystemBuilder&quot;)
+	public List&lt;Explanation&gt; explain(List&lt;StringLocated&gt; source, PreprocessingArtifact preprocessing) {
+<span class="nc" id="L188">		final UmlSource umlSource = UmlSource.create(source, false);</span>
+<span class="nc" id="L189">		umlSource.patchBase64();</span>
+
+<span class="nc" id="L191">		final Collection&lt;DiagramType&gt; diagramTypes = umlSource.getDiagramTypes();</span>
+
+<span class="nc bnc" id="L193" title="All 2 branches missed.">		for (PSystemFactory systemFactory : factories) {</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">			if (diagramTypes.contains(systemFactory.getDiagramType()) == false)</span>
+<span class="nc" id="L195">				continue;</span>
+
+<span class="nc" id="L197">			final Diagram sys = systemFactory.createSystem(null, umlSource, null, preprocessing);</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">			if (isOk(sys))</span>
+<span class="nc" id="L199">				return systemFactory.explain(null, umlSource, null, preprocessing);</span>
+<span class="nc" id="L200">		}</span>
+
+<span class="nc" id="L202">		return null;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

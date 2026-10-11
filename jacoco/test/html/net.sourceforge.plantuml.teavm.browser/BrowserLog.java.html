@@ -22,7 +22,7 @@ import net.sourceforge.plantuml.version.Version;
 
 	private static void consoleMessage(String msg) {
 		// ::comment when JAVA8
-<span class="pc bpc" id="L25" title="3 of 4 branches missed.">		if (TeaVM.isTeaVM() &amp;&amp; isDebug()) {</span>
+<span class="pc bpc" id="L25" title="3 of 4 branches missed.">		if (TeaVM.isJavaScript() &amp;&amp; isDebug()) {</span>
 <span class="nc" id="L26">			final String message = getMessage(msg);</span>
 <span class="nc" id="L27">			jsLog(message);</span>
 		}
@@ -36,7 +36,7 @@ import net.sourceforge.plantuml.version.Version;
 
 	public static void jsStatusDuration() {
 		// ::comment when JAVA8
-<span class="nc bnc" id="L39" title="All 2 branches missed.">		if (isDebug() == false)</span>
+<span class="nc bnc" id="L39" title="All 4 branches missed.">		if (TeaVM.isJavaScript() == false || isDebug() == false)</span>
 <span class="nc" id="L40">			return;</span>
 <span class="nc bnc" id="L41" title="All 2 branches missed.">		final String msg = START == 0 ? &quot;&quot; : Version.fullDescription();</span>
 <span class="nc" id="L42">		jsStatus(getMessage(msg));</span>

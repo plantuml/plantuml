@@ -69,7 +69,7 @@ import org.teavm.jso.JSBody;
 	}
 
 	public static String getMD5Hex(String s) {
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (TeaVM.isJavaScript()) {</span>
 			// ::revert when JAVA8
 <span class="nc" id="L74">			return md5Native(s);</span>
 			// return null;
@@ -90,120 +90,124 @@ import org.teavm.jso.JSBody;
 
 	public static synchronized byte[] getMD5raw(String s)
 			throws NoSuchAlgorithmException, UnsupportedEncodingException {
-<span class="fc" id="L93">		final MessageDigest msgDigest = MessageDigest.getInstance(&quot;MD5&quot;);</span>
-<span class="fc" id="L94">		msgDigest.update(s.getBytes(UTF_8));</span>
-<span class="fc" id="L95">		return msgDigest.digest();</span>
+		// java.security.MessageDigest is missing from the TeaVM C classlib
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (TeaVM.isC())</span>
+<span class="nc" id="L95">			return Md5.digest(s.getBytes(UTF_8));</span>
+
+<span class="fc" id="L97">		final MessageDigest msgDigest = MessageDigest.getInstance(&quot;MD5&quot;);</span>
+<span class="fc" id="L98">		msgDigest.update(s.getBytes(UTF_8));</span>
+<span class="fc" id="L99">		return msgDigest.digest();</span>
 	}
 
 	public static synchronized byte[] salting(String pass, byte[] salt)
 			throws NoSuchAlgorithmException, InvalidKeySpecException {
-<span class="nc" id="L100">		final int iterations = 500;</span>
-<span class="nc" id="L101">		final int keyLength = 512;</span>
-<span class="nc" id="L102">		final SecretKeyFactory skf = SecretKeyFactory.getInstance(&quot;PBKDF2WithHmacSHA1&quot;);</span>
-<span class="nc" id="L103">		final PBEKeySpec spec = new PBEKeySpec(pass.toCharArray(), salt, iterations, keyLength);</span>
-<span class="nc" id="L104">		final SecretKey key = skf.generateSecret(spec);</span>
-<span class="nc" id="L105">		final byte[] tmp = key.getEncoded();</span>
-<span class="nc" id="L106">		return tmp;</span>
+<span class="nc" id="L104">		final int iterations = 500;</span>
+<span class="nc" id="L105">		final int keyLength = 512;</span>
+<span class="nc" id="L106">		final SecretKeyFactory skf = SecretKeyFactory.getInstance(&quot;PBKDF2WithHmacSHA1&quot;);</span>
+<span class="nc" id="L107">		final PBEKeySpec spec = new PBEKeySpec(pass.toCharArray(), salt, iterations, keyLength);</span>
+<span class="nc" id="L108">		final SecretKey key = skf.generateSecret(spec);</span>
+<span class="nc" id="L109">		final byte[] tmp = key.getEncoded();</span>
+<span class="nc" id="L110">		return tmp;</span>
 	}
 
 	public static String getSignature(String s) {
 		try {
-<span class="nc" id="L111">			final byte[] digest = getMD5raw(s);</span>
-<span class="nc" id="L112">			return toString(digest);</span>
-<span class="nc" id="L113">		} catch (NoSuchAlgorithmException e) {</span>
-<span class="nc" id="L114">			Logme.error(e);</span>
-<span class="nc" id="L115">			throw new UnsupportedOperationException(e);</span>
-<span class="nc" id="L116">		} catch (UnsupportedEncodingException e) {</span>
-<span class="nc" id="L117">			Logme.error(e);</span>
-<span class="nc" id="L118">			throw new UnsupportedOperationException(e);</span>
+<span class="nc" id="L115">			final byte[] digest = getMD5raw(s);</span>
+<span class="nc" id="L116">			return toString(digest);</span>
+<span class="nc" id="L117">		} catch (NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L118">			Logme.error(e);</span>
+<span class="nc" id="L119">			throw new UnsupportedOperationException(e);</span>
+<span class="nc" id="L120">		} catch (UnsupportedEncodingException e) {</span>
+<span class="nc" id="L121">			Logme.error(e);</span>
+<span class="nc" id="L122">			throw new UnsupportedOperationException(e);</span>
 		}
 	}
 
 	public static String toString(byte data[]) {
-<span class="nc" id="L123">		final AsciiEncoder coder = new AsciiEncoder();</span>
-<span class="nc" id="L124">		return coder.encode(data);</span>
+<span class="nc" id="L127">		final AsciiEncoder coder = new AsciiEncoder();</span>
+<span class="nc" id="L128">		return coder.encode(data);</span>
 	}
 
 	public static String getSHA512Hex(String s) {
 		try {
-<span class="nc" id="L129">			final byte[] digest = getSHA512raw(s);</span>
-<span class="nc bnc" id="L130" title="All 4 branches missed.">			if (TeaVM.a()) assert digest.length == 64;</span>
-<span class="nc" id="L131">			return toHexString(digest);</span>
-<span class="nc" id="L132">		} catch (NoSuchAlgorithmException e) {</span>
-<span class="nc" id="L133">			Logme.error(e);</span>
-<span class="nc" id="L134">			throw new UnsupportedOperationException(e);</span>
-<span class="nc" id="L135">		} catch (UnsupportedEncodingException e) {</span>
-<span class="nc" id="L136">			Logme.error(e);</span>
-<span class="nc" id="L137">			throw new UnsupportedOperationException(e);</span>
+<span class="nc" id="L133">			final byte[] digest = getSHA512raw(s);</span>
+<span class="nc bnc" id="L134" title="All 4 branches missed.">			if (TeaVM.a()) assert digest.length == 64;</span>
+<span class="nc" id="L135">			return toHexString(digest);</span>
+<span class="nc" id="L136">		} catch (NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L137">			Logme.error(e);</span>
+<span class="nc" id="L138">			throw new UnsupportedOperationException(e);</span>
+<span class="nc" id="L139">		} catch (UnsupportedEncodingException e) {</span>
+<span class="nc" id="L140">			Logme.error(e);</span>
+<span class="nc" id="L141">			throw new UnsupportedOperationException(e);</span>
 		}
 	}
 
 	public static byte[] getSHA512raw(String s) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-<span class="nc" id="L142">		return getSHA512raw(s.getBytes(UTF_8));</span>
+<span class="nc" id="L146">		return getSHA512raw(s.getBytes(UTF_8));</span>
 	}
 
 	public static synchronized byte[] getSHA512raw(byte data[])
 			throws NoSuchAlgorithmException, UnsupportedEncodingException {
-<span class="nc" id="L147">		final MessageDigest msgDigest = MessageDigest.getInstance(&quot;SHA-512&quot;);</span>
-<span class="nc" id="L148">		msgDigest.update(data);</span>
-<span class="nc" id="L149">		return msgDigest.digest();</span>
+<span class="nc" id="L151">		final MessageDigest msgDigest = MessageDigest.getInstance(&quot;SHA-512&quot;);</span>
+<span class="nc" id="L152">		msgDigest.update(data);</span>
+<span class="nc" id="L153">		return msgDigest.digest();</span>
 	}
 
 	public static String getSignatureSha512(SFile f) throws IOException {
-<span class="nc" id="L153">		try (InputStream is = f.openFile()) {</span>
-<span class="nc" id="L154">			return getSignatureSha512(is);</span>
+<span class="nc" id="L157">		try (InputStream is = f.openFile()) {</span>
+<span class="nc" id="L158">			return getSignatureSha512(is);</span>
 		}
 	}
 
 	public static synchronized String getSignatureSha512(InputStream is) throws IOException {
 		try {
-<span class="nc" id="L160">			final MessageDigest msgDigest = MessageDigest.getInstance(&quot;SHA-512&quot;);</span>
-<span class="nc" id="L161">			int read = 0;</span>
-<span class="nc bnc" id="L162" title="All 2 branches missed.">			while ((read = is.read()) != -1)</span>
-<span class="nc" id="L163">				msgDigest.update((byte) read);</span>
+<span class="nc" id="L164">			final MessageDigest msgDigest = MessageDigest.getInstance(&quot;SHA-512&quot;);</span>
+<span class="nc" id="L165">			int read = 0;</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">			while ((read = is.read()) != -1)</span>
+<span class="nc" id="L167">				msgDigest.update((byte) read);</span>
 
-<span class="nc" id="L165">			final byte[] digest = msgDigest.digest();</span>
-<span class="nc" id="L166">			return toString(digest);</span>
-<span class="nc" id="L167">		} catch (NoSuchAlgorithmException e) {</span>
-<span class="nc" id="L168">			Logme.error(e);</span>
-<span class="nc" id="L169">			throw new UnsupportedOperationException(e);</span>
-<span class="nc" id="L170">		} catch (UnsupportedEncodingException e) {</span>
-<span class="nc" id="L171">			Logme.error(e);</span>
-<span class="nc" id="L172">			throw new UnsupportedOperationException(e);</span>
+<span class="nc" id="L169">			final byte[] digest = msgDigest.digest();</span>
+<span class="nc" id="L170">			return toString(digest);</span>
+<span class="nc" id="L171">		} catch (NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L172">			Logme.error(e);</span>
+<span class="nc" id="L173">			throw new UnsupportedOperationException(e);</span>
+<span class="nc" id="L174">		} catch (UnsupportedEncodingException e) {</span>
+<span class="nc" id="L175">			Logme.error(e);</span>
+<span class="nc" id="L176">			throw new UnsupportedOperationException(e);</span>
 		}
 	}
 
 	public static String getSignatureWithoutImgSrc(String s) {
-<span class="nc" id="L177">		s = getSignature(purge(s));</span>
-<span class="nc" id="L178">		return s;</span>
+<span class="nc" id="L181">		s = getSignature(purge(s));</span>
+<span class="nc" id="L182">		return s;</span>
 	}
 
 	public static String purge(String s) {
-<span class="nc" id="L182">		final String regex = &quot;(?i)\\&lt;img\\s+src=\&quot;(?:[^\&quot;]+[/\\\\])?([^/\\\\\\d.]+)\\d*(\\.\\w+)\&quot;/\\&gt;&quot;;</span>
-<span class="nc" id="L183">		s = s.replaceAll(regex, &quot;&lt;img src=\&quot;$1$2\&quot;/&gt;&quot;);</span>
-<span class="nc" id="L184">		final String regex2 = &quot;(?i)image=\&quot;(?:[^\&quot;]+[/\\\\])?([^/\\\\\\d.]+)\\d*(\\.\\w+)\&quot;&quot;;</span>
-<span class="nc" id="L185">		s = s.replaceAll(regex2, &quot;image=\&quot;$1$2\&quot;&quot;);</span>
-<span class="nc" id="L186">		return s;</span>
+<span class="nc" id="L186">		final String regex = &quot;(?i)\\&lt;img\\s+src=\&quot;(?:[^\&quot;]+[/\\\\])?([^/\\\\\\d.]+)\\d*(\\.\\w+)\&quot;/\\&gt;&quot;;</span>
+<span class="nc" id="L187">		s = s.replaceAll(regex, &quot;&lt;img src=\&quot;$1$2\&quot;/&gt;&quot;);</span>
+<span class="nc" id="L188">		final String regex2 = &quot;(?i)image=\&quot;(?:[^\&quot;]+[/\\\\])?([^/\\\\\\d.]+)\\d*(\\.\\w+)\&quot;&quot;;</span>
+<span class="nc" id="L189">		s = s.replaceAll(regex2, &quot;image=\&quot;$1$2\&quot;&quot;);</span>
+<span class="nc" id="L190">		return s;</span>
 	}
 
 	public static synchronized String getSignature(SFile f) throws IOException {
-<span class="nc" id="L190">		try (final InputStream is = f.openFile()) {</span>
-<span class="nc" id="L191">			final MessageDigest msgDigest = MessageDigest.getInstance(&quot;MD5&quot;);</span>
-<span class="nc bnc" id="L192" title="All 2 branches missed.">			if (is == null)</span>
-<span class="nc" id="L193">				throw new FileNotFoundException();</span>
+<span class="nc" id="L194">		try (final InputStream is = f.openFile()) {</span>
+<span class="nc" id="L195">			final MessageDigest msgDigest = MessageDigest.getInstance(&quot;MD5&quot;);</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">			if (is == null)</span>
+<span class="nc" id="L197">				throw new FileNotFoundException();</span>
 
-<span class="nc" id="L195">			int read = -1;</span>
-<span class="nc bnc" id="L196" title="All 2 branches missed.">			while ((read = is.read()) != -1)</span>
-<span class="nc" id="L197">				msgDigest.update((byte) read);</span>
+<span class="nc" id="L199">			int read = -1;</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">			while ((read = is.read()) != -1)</span>
+<span class="nc" id="L201">				msgDigest.update((byte) read);</span>
 
-<span class="nc" id="L199">			final byte[] digest = msgDigest.digest();</span>
-<span class="nc" id="L200">			return toString(digest);</span>
-<span class="nc" id="L201">		} catch (NoSuchAlgorithmException e) {</span>
-<span class="nc" id="L202">			Logme.error(e);</span>
-<span class="nc" id="L203">			throw new UnsupportedOperationException(e);</span>
-<span class="nc" id="L204">		} catch (UnsupportedEncodingException e) {</span>
-<span class="nc" id="L205">			Logme.error(e);</span>
-<span class="nc" id="L206">			throw new UnsupportedOperationException(e);</span>
+<span class="nc" id="L203">			final byte[] digest = msgDigest.digest();</span>
+<span class="nc" id="L204">			return toString(digest);</span>
+<span class="nc" id="L205">		} catch (NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L206">			Logme.error(e);</span>
+<span class="nc" id="L207">			throw new UnsupportedOperationException(e);</span>
+<span class="nc" id="L208">		} catch (UnsupportedEncodingException e) {</span>
+<span class="nc" id="L209">			Logme.error(e);</span>
+<span class="nc" id="L210">			throw new UnsupportedOperationException(e);</span>
 		}
 	}
 
