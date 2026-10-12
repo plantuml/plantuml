@@ -630,12 +630,25 @@ public class SURL {
 			return null;
 
 		if (TeaVM.isTeaVM()) {
-			try {
-				return internal.openStream();
-			} catch (IOException e) {
-				System.err.println("SURL::openStream " + e);
+			// Not java.net.URL either in JavaScript: its XHR connection suspends the
+			// calling thread (TeaVM coroutines). The content is fetched from JavaScript
+			// between two rendering attempts instead (PendingResources): null until then.
+			// ::revert when JAVA8
+			// return null;
+			final net.sourceforge.plantuml.teavm.js.browser.PendingResources.Answer answer = net.sourceforge.plantuml.teavm.js.browser.PendingResources
+					.url(internal.toString());
+			if (answer == null)
+				return null;
+			if (answer.getError() != null) {
+				System.err.println("SURL::openStream " + answer.getError());
 				return null;
 			}
+			final String text = answer.getText();
+			final byte[] data = new byte[text.length()];
+			for (int i = 0; i < data.length; i++)
+				data[i] = (byte) text.charAt(i);
+			return new ByteArrayInputStream(data);
+			// ::done
 		} else {
 			if (isUrlOk()) {
 				final byte[] data = getBytes();
