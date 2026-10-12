@@ -126,8 +126,8 @@ file system:
   change nothing), and only a non-empty string id with a string text is a delivery;
 - a loader that fails, throws, declines (returns `false`) or returns a promise that rejects
   makes the include fail as a PlantUML error image, never a hang or an unhandled page error,
-  and a failure's message reaches the console; the engine has no timeout, so a loader that
-  never settles leaves the rendering waiting, which is documented rather than exercised here;
+  and a failure's message reaches the console; a loader that never settles fails the include
+  after 60 s (exercised by `check-resource-rounds.js`);
 - a standard-library include, a URL `!include` or `!includesub` and a theme from a URL never
   reach the file loader, and neither does a relative include written in a standard-library file
   or in a bundled theme, including through `!includesub` or `!theme ... from`. The caller's
@@ -163,6 +163,29 @@ exists but instance() is not a function) falls back the same way as an absent
 one. A control page with viz-global.js pins that the default path is
 unchanged (the Graphviz bridge is still used, and no note is logged).
 `node check-viz-fallback.js target=...`.
+
+## check-resource-rounds.js
+
+Checks how the engine gets what a diagram needs from JavaScript without waiting for it. The
+engine has no thread and uses no TeaVM coroutine: a rendering that misses a resource (the Viz.js
+instance, `themes.js`, `emoji.js`, `openiconic.js`, a `<lib>.min.js` bundle, a file of
+`PLANTUML_FILE_LOADER`) is discarded, the resource is loaded with JavaScript callbacks, and the
+diagram is rendered again. The check pins that:
+
+- a callback is never called before `renderToString` returns;
+- an include chain 13 files deep renders, one level per round, and the host is asked once per
+  file during a rendering, and again at the next one (so an edited file is seen);
+- rendering again is invisible: the same source gives the same SVG, a console warning is written
+  once rather than once per round, and `render()` writes its target only with the final result;
+- `render()` keeps "latest wins" while a request waits for its resources (the engine built with
+  a worker thread drew the older diagram in that case);
+- a request made from a callback is answered after the callback returns;
+- past 20 rounds the request fails with a message naming what is still missing, and a loader
+  that never answers fails the include after 60 seconds; the engine answers later requests in
+  both cases.
+
+It takes a little over a minute, most of it waiting for the loader that never answers.
+`node check-resource-rounds.js target=...`.
 
 ## check-render-queue.js
 

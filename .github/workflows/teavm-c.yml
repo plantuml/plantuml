@@ -46,6 +46,21 @@ jobs:
           echo "$(wc -l < build/generated/teavm/c/all.txt) C files"
           test -f build/generated/teavm/c/CMakeLists.txt
 
+      # TeaVM turns into coroutines (fibers) every method that can reach a suspension
+      # (Thread.sleep, Object.wait, @Async, java.net.URL...), and its transformation
+      # fails on some of them: see tools/teavm-coroutines/README.md.
+      - name: Check that the C sources contain no coroutine
+        run: python3 tools/teavm-coroutines/check_no_coroutines.py build/generated/teavm/c
+
+      # Same check for the JavaScript engines (browser and headless), built from the
+      # same code: browser-test.yml does it too, but does not run on this branch.
+      - name: Check that the JavaScript engines contain no coroutine
+        run: |
+          ./gradlew --no-daemon :generateJavaScript :plantuml-mcp-js:generateJavaScript
+          python3 tools/teavm-coroutines/check_no_coroutines.py \
+            build/generated/teavm/js/plantuml.js \
+            plantuml-mcp-js/build/generated/teavm/js/plantuml-mcp-js.js
+
       - name: Upload C sources
         uses: actions/upload-artifact@v7
         with:

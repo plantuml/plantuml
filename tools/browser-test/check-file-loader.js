@@ -35,9 +35,9 @@
 //
 // - The loader fails (onErr), throws, rejects or declines (returns false): the
 //   include fails as a PlantUML error image, never as a hang or an unhandled
-//   page error, and a failure's message reaches the console. The engine has
-//   no timeout, so a loader that never settles leaves the rendering waiting;
-//   that case is documented, not exercised here.
+//   page error, and a failure's message reaches the console. A loader that
+//   never settles fails the include after 60 s; check-resource-rounds.js
+//   exercises that case.
 //
 // - `!includesub file!PART` and `!theme NAME from DIR` read their file through
 //   the loader too (DIR/puml-theme-NAME.puml).

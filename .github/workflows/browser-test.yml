@@ -51,6 +51,16 @@ jobs:
           test -f license-variants/plantuml-mit/build/npm-plantuml/plantuml.js
           test -f license-variants/plantuml-mit/build/npm-plantuml/themes.js
 
+      # The engine must not rely on TeaVM coroutines (threads, Object.wait(), @Async...):
+      # see tools/teavm-coroutines/README.md. The headless engine (MCP server) is built
+      # from the same code, through another entry point, so it is checked as well.
+      - name: Check that the engines contain no coroutine
+        run: |
+          ./gradlew :plantuml-mcp-js:generateJavaScript --no-daemon
+          python3 tools/teavm-coroutines/check_no_coroutines.py \
+            license-variants/plantuml-mit/build/npm-plantuml/plantuml.js \
+            plantuml-mcp-js/build/generated/teavm/js/plantuml-mcp-js.js
+
       - name: Set up Node
         uses: actions/setup-node@v7
         with:
@@ -92,6 +102,9 @@ jobs:
 
       - name: Check render queue
         run: node tools/browser-test/check-render-queue.js target=license-variants/plantuml-mit/build/npm-plantuml
+
+      - name: Check resource rounds
+        run: node tools/browser-test/check-resource-rounds.js target=license-variants/plantuml-mit/build/npm-plantuml
 
       - name: Add Gradle title to Summary
         run: echo "## Gradle" >> "$GITHUB_STEP_SUMMARY"
