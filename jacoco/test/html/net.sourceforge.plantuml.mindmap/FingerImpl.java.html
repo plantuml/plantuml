@@ -90,7 +90,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="fc" id="L90">	private FingerImpl(Idea idea, ISkinParam skinParam, boolean direction) {</span>
 <span class="fc" id="L91">		this.idea = idea;</span>
 <span class="fc" id="L92">		this.skinParam = skinParam;</span>
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		this.direction = direction ? 1 : -1;</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		this.direction = direction ? 1 : -1;</span>
 <span class="fc" id="L94">	}</span>
 
 	private ClockwiseTopRightBottomLeft getMargin() {
@@ -101,14 +101,14 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="fc" id="L101">		final StringBounder stringBounder = ug.getStringBounder();</span>
 <span class="fc" id="L102">		final TextBlock phalanx = getPhalanx();</span>
 <span class="fc" id="L103">		final XDimension2D dimPhalanx = phalanx.calculateDimension(stringBounder);</span>
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (drawPhalanx) {</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		if (drawPhalanx) {</span>
 			final double posX;
 			final double posY;
 <span class="pc bpc" id="L107" title="1 of 2 branches missed.">			if (isTopToBottom()) {</span>
 <span class="nc" id="L108">				posX = -getPhalanxThickness(stringBounder) / 2;</span>
 <span class="nc bnc" id="L109" title="All 2 branches missed.">				posY = direction == 1 ? 0 : -dimPhalanx.getHeight();</span>
 			} else {
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">				posX = direction == 1 ? 0 : -dimPhalanx.getWidth();</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">				posX = direction == 1 ? 0 : -dimPhalanx.getWidth();</span>
 <span class="fc" id="L112">				posY = -getPhalanxThickness(stringBounder) / 2;</span>
 			}
 <span class="fc" id="L114">			phalanx.drawU(ug.apply(new UTranslate(posX, posY)));</span>
@@ -217,8 +217,8 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	private TextBlock getPhalanx() {
-<span class="pc bpc" id="L220" title="1 of 2 branches missed.">		if (drawPhalanx == false)</span>
-<span class="nc" id="L221">			return TextBlockUtils.empty(0, 0);</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">		if (drawPhalanx == false)</span>
+<span class="fc" id="L221">			return TextBlockUtils.empty(0, 0);</span>
 
 <span class="fc" id="L223">		final Style style = getStyle();</span>
 
@@ -272,8 +272,8 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	public void doNotDrawFirstPhalanx() {
-<span class="nc" id="L275">		this.drawPhalanx = false;</span>
-<span class="nc" id="L276">	}</span>
+<span class="fc" id="L275">		this.drawPhalanx = false;</span>
+<span class="fc" id="L276">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -63,9 +63,9 @@ import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.ReadLineWithYamlHeader;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.teavm.PSystemBuilder2;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.teavm.c.PSystemBuilderC;
+import net.sourceforge.plantuml.teavm.js.PSystemBuilderJs;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.TimLoader;
@@ -199,7 +199,7 @@ public class BlockUml {
 <span class="nc bnc" id="L199" title="All 2 branches missed.">			else if (TeaVM.isC())</span>
 <span class="nc" id="L200">				system = PSystemBuilderC.getInstance().createDiagramFromPreprocessed(data, preprocessingArtifact);</span>
 			else
-<span class="nc" id="L202">				system = PSystemBuilder2.getInstance().createDiagramFromPreprocessed(data, preprocessingArtifact);</span>
+<span class="nc" id="L202">				system = PSystemBuilderJs.getInstance().createDiagramFromPreprocessed(data, preprocessingArtifact);</span>
 			// ::done
 		}
 <span class="fc" id="L205">		return system;</span>
@@ -212,7 +212,7 @@ public class BlockUml {
 <span class="pc bpc" id="L212" title="1 of 2 branches missed.">		if (TeaVM.isC())</span>
 <span class="nc" id="L213">			return PSystemBuilderC.getInstance().explain(data, preprocessingArtifact);</span>
 <span class="pc bpc" id="L214" title="1 of 2 branches missed.">		else if (TeaVM.isTeaVM())</span>
-<span class="nc" id="L215">			return PSystemBuilder2.getInstance().explain(data, preprocessingArtifact);</span>
+<span class="nc" id="L215">			return PSystemBuilderJs.getInstance().explain(data, preprocessingArtifact);</span>
 		else
 <span class="fc" id="L217">			return PSystemBuilder.getInstance().explain(pathSystem, data, rawSource, previous, preprocessingArtifact);</span>
 	}

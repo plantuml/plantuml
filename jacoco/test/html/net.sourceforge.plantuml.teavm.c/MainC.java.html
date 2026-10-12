@@ -34,7 +34,8 @@
  */
 package net.sourceforge.plantuml.teavm.c;
 
-import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -44,62 +45,95 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import net.sourceforge.plantuml.UgDiagram;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemError;
-import net.sourceforge.plantuml.mcp.DiagramRendererTeaVM;
 import net.sourceforge.plantuml.mcp.McpResult;
+import net.sourceforge.plantuml.preproc.ReadLine;
+import net.sourceforge.plantuml.preproc.ReadLineReader;
+import net.sourceforge.plantuml.text.StringLocated;
 
 /**
  * Entry point of the experimental TeaVM C backend.
  *
  * &lt;pre&gt;
- * plantuml-c [input.puml [output.svg]]
+ * plantuml-c [input.puml [output.svg|output.png]]
  * &lt;/pre&gt;
  *
  * Reads a PlantUML source from the given file (the standard input if there is
  * none) and writes the SVG in the given file (the standard output if there is
- * none). Passing the files is the safest way on Windows, where the console
- * encodes the standard streams. Only mindmap diagrams are supported for now
- * (see {@link PSystemBuilderC}).
+ * none), or the PNG when the name of the output file ends with &quot;.png&quot;. Passing
+ * the files is the safest way on Windows, where the console encodes the
+ * standard streams. Only mindmap diagrams are supported for now (see
+ * {@link PSystemBuilderC}).
+ *
+ * The SVG is the one {@code java -jar plantuml.jar -tsvg} writes on Windows:
+ * same export code ({@link UgDiagram#exportSvg}), and text measured with the
+ * metrics of the embedded fonts, which are those of Java's fonts on Windows
+ * (see {@code StringBounderEmbeddedFont}). The PNG has the size and the layout
+ * of the one {@code -tpng} writes, drawn by plutovg ({@link PngCanvas}) with
+ * the drivers of the JVM ({@link UgDiagram#exportPng}): only the antialiasing
+ * differs.
  *
  * On a diagram error, the message is written on stderr and nothing on stdout.
  * There is no non-zero exit code: {@code System.exit} does not exist in the
  * classlib of the TeaVM C backend.
  */
-<span class="nc" id="L71">public class MainC {</span>
+<span class="nc" id="L84">public class MainC {</span>
+	// ::remove file when JAVA8
 
 	public static void main(String[] args) throws IOException {
-<span class="nc" id="L74">		final List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		final InputStream is = args.length &gt; 0 ? new FileInputStream(args[0]) : System.in;</span>
-<span class="nc" id="L76">		final BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));</span>
-		String line;
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		while ((line = reader.readLine()) != null)</span>
-<span class="nc" id="L79">			lines.add(line);</span>
-
-<span class="nc" id="L81">		final Diagram diagram = PSystemBuilderC.getInstance().createDiagram(lines.toArray(new String[0]));</span>
-
-<span class="nc bnc" id="L83" title="All 4 branches missed.">		if (diagram instanceof PSystemError || diagram instanceof UgDiagram == false) {</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">			System.err.println(diagram == null ? &quot;No diagram&quot; : new McpResult(diagram).getErrorMessage());</span>
-<span class="nc" id="L85">			return;</span>
+		final InputStream is;
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (args.length &gt; 0) {</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">			if (new File(args[0]).isFile() == false) {</span>
+<span class="nc" id="L91">				System.err.println(&quot;File not found: &quot; + args[0]);</span>
+<span class="nc" id="L92">				return;</span>
+			}
+<span class="nc" id="L94">			is = new FileInputStream(args[0]);</span>
+		} else {
+<span class="nc" id="L96">			is = System.in;</span>
 		}
 
-		final String svg;
-		try {
-<span class="nc" id="L90">			svg = DiagramRendererTeaVM.buildSvg((UgDiagram) diagram);</span>
-<span class="nc" id="L91">		} catch (Exception e) {</span>
-<span class="nc" id="L92">			System.err.println(&quot;Rendering failed: &quot; + e);</span>
-<span class="nc" id="L93">			return;</span>
-<span class="nc" id="L94">		}</span>
+		// Read as the command line reads a file (byte order mark, U+2013...)
+<span class="nc" id="L100">		final List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L101">		try (ReadLine reader = ReadLineReader.create(new InputStreamReader(is, StandardCharsets.UTF_8), &quot;c&quot;)) {</span>
+			StringLocated line;
+<span class="nc bnc" id="L103" title="All 2 branches missed.">			while ((line = reader.readLine()) != null)</span>
+<span class="nc" id="L104">				lines.add(line.getString());</span>
+		}
 
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (args.length &gt; 1) {</span>
-<span class="nc" id="L97">			try (OutputStream os = new FileOutputStream(args[1])) {</span>
-<span class="nc" id="L98">				os.write(svg.getBytes(StandardCharsets.UTF_8));</span>
+<span class="nc" id="L107">		final Diagram diagram = PSystemBuilderC.getInstance().createDiagram(lines.toArray(new String[0]));</span>
+
+<span class="nc bnc" id="L109" title="All 4 branches missed.">		if (diagram instanceof PSystemError || diagram instanceof UgDiagram == false) {</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">			System.err.println(diagram == null ? &quot;No diagram&quot; : new McpResult(diagram).getErrorMessage());</span>
+<span class="nc" id="L111">			return;</span>
+		}
+
+<span class="nc bnc" id="L114" title="All 4 branches missed.">		final boolean png = args.length &gt; 1 &amp;&amp; args[1].toLowerCase(Locale.ROOT).endsWith(&quot;.png&quot;);</span>
+		final byte[] image;
+		try {
+<span class="nc" id="L117">			final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">			if (png)</span>
+<span class="nc" id="L119">				((UgDiagram) diagram).exportPng(baos, PngCanvas::new);</span>
+			else
+<span class="nc" id="L121">				((UgDiagram) diagram).exportSvg(baos);</span>
+<span class="nc" id="L122">			image = baos.toByteArray();</span>
+<span class="nc" id="L123">		} catch (Exception e) {</span>
+<span class="nc" id="L124">			System.err.println(&quot;Rendering failed: &quot; + e);</span>
+<span class="nc" id="L125">			return;</span>
+<span class="nc" id="L126">		}</span>
+
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (args.length &gt; 1) {</span>
+<span class="nc" id="L129">			try (OutputStream os = new FileOutputStream(args[1])) {</span>
+<span class="nc" id="L130">				os.write(image);</span>
 			}
-		} else
-<span class="nc" id="L101">			System.out.println(svg);</span>
-<span class="nc" id="L102">	}</span>
+		} else {
+<span class="nc" id="L133">			System.out.write(image, 0, image.length);</span>
+<span class="nc" id="L134">			System.out.flush();</span>
+		}
+<span class="nc" id="L136">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

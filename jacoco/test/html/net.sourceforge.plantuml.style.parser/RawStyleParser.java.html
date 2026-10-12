@@ -102,10 +102,10 @@ public final class RawStyleParser {
 <span class="fc" id="L102">				closeCurrentRule();</span>
 <span class="fc bfc" id="L103" title="All 2 branches covered.">			} else if (c == '@') {</span>
 <span class="fc" id="L104">				parseAtRule();</span>
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">			} else if (c == ':') {</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">			} else if (c == ':') {</span>
 				// A selector may be written with a leading colon, e.g. &quot;:foo {&quot;.
-<span class="nc" id="L107">				ins.jump();</span>
-<span class="nc" id="L108">				parseSelectorHead(readIdentifier());</span>
+<span class="fc" id="L107">				ins.jump();</span>
+<span class="fc" id="L108">				parseSelectorHead(readIdentifier());</span>
 			} else {
 <span class="fc" id="L110">				parseStatementStartingWithIdentifier();</span>
 			}

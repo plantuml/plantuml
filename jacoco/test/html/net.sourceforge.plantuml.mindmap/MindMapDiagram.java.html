@@ -117,8 +117,8 @@ public class MindMapDiagram extends TitledDiagram {
 <span class="fc bfc" id="L117" title="All 2 branches covered.">		if (stereotype != null)</span>
 <span class="fc" id="L118">			label = label.removeEndingStereotype();</span>
 
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (last().isFull(level))</span>
-<span class="nc" id="L121">			this.mindmaps.add(new MindMap(getSkinParam()));</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (last().isFull(level))</span>
+<span class="fc" id="L121">			this.mindmaps.add(new MindMap(getSkinParam()));</span>
 
 <span class="fc" id="L123">		return last().addIdeaInternal(stereotype, backColor, level, label, shape, direction);</span>
 	}

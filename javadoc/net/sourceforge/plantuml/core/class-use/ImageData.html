@@ -170,6 +170,22 @@ loadScripts(document, 'script');</script>
  <a href="../../FileFormatOption.html" title="class in net.sourceforge.plantuml">FileFormatOption</a>&nbsp;fileFormat)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">UgDiagram.</span><code><a href="../../UgDiagram.html#exportPng(java.io.OutputStream,net.sourceforge.plantuml.klimt.drawing.raster.RasterCanvas.Factory)" class="member-name-link">exportPng</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;os,
+ <a href="../../klimt/drawing/raster/RasterCanvas.Factory.html" title="interface in net.sourceforge.plantuml.klimt.drawing.raster">RasterCanvas.Factory</a>&nbsp;factory)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Exports the first image as PNG without AWT, on a <a href="../../klimt/drawing/raster/RasterCanvas.html" title="interface in net.sourceforge.plantuml.klimt.drawing.raster"><code>RasterCanvas</code></a> the
+ factory creates: for the TeaVM C build, see
+ <a href="../TextBlockExporter.html#exportPngTo(java.io.OutputStream,net.sourceforge.plantuml.klimt.drawing.raster.RasterCanvas.Factory)"><code>TextBlockExporter.exportPngTo(java.io.OutputStream, net.sourceforge.plantuml.klimt.drawing.raster.RasterCanvas.Factory)</code></a>.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">UgDiagram.</span><code><a href="../../UgDiagram.html#exportSvg(java.io.OutputStream)" class="member-name-link">exportSvg</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;os)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Exports the first image as SVG, as <a href="../../UgDiagram.html#exportDiagram(java.io.OutputStream,int,net.sourceforge.plantuml.FileFormatOption)"><code>UgDiagram.exportDiagram(java.io.OutputStream, int, net.sourceforge.plantuml.FileFormatOption)</code></a> does for
+ <a href="../../FileFormat.html#SVG"><code>FileFormat.SVG</code></a> (without its crash report), but without referencing
+ the drivers of the other formats: for the TeaVM C build, see
+ <a href="../TextBlockExporter.html#exportSvgTo(java.io.OutputStream)"><code>TextBlockExporter.exportSvgTo(java.io.OutputStream)</code></a>.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">FileImageData.</span><code><a href="../../FileImageData.html#getImageData()" class="member-name-link">getImageData</a>()</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
@@ -253,9 +269,25 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>protected <a href="../ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">AbstractDiagram.</span><code><a href="../AbstractDiagram.html#exportGraphml(java.io.OutputStream)" class="member-name-link">exportGraphml</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;os)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>protected <a href="../ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">AbstractDiagram.</span><code><a href="../AbstractDiagram.html#exportScxml(java.io.OutputStream)" class="member-name-link">exportScxml</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;os)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TextBlockExporter.</span><code><a href="../TextBlockExporter.html#exportPngTo(java.io.OutputStream,net.sourceforge.plantuml.klimt.drawing.raster.RasterCanvas.Factory)" class="member-name-link">exportPngTo</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;os,
+ <a href="../../klimt/drawing/raster/RasterCanvas.Factory.html" title="interface in net.sourceforge.plantuml.klimt.drawing.raster">RasterCanvas.Factory</a>&nbsp;factory)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Exports the <a href="../../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape"><code>TextBlock</code></a> as PNG without AWT, on a <a href="../../klimt/drawing/raster/RasterCanvas.html" title="interface in net.sourceforge.plantuml.klimt.drawing.raster"><code>RasterCanvas</code></a>
+ the factory creates: same image size, background and drawing as
+ <a href="../TextBlockExporter.html#exportTo(java.io.OutputStream)"><code>TextBlockExporter.exportTo(java.io.OutputStream)</code></a>, with the drivers of <a href="../../klimt/drawing/raster/UGraphicRaster.html" title="class in net.sourceforge.plantuml.klimt.drawing.raster"><code>UGraphicRaster</code></a>.</div>
+</div>
+<div class="col-first odd-row-color"><code>protected <a href="../ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">AbstractDiagram.</span><code><a href="../AbstractDiagram.html#exportScxml(java.io.OutputStream)" class="member-name-link">exportScxml</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;os)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TextBlockExporter.</span><code><a href="../TextBlockExporter.html#exportSvgTo(java.io.OutputStream)" class="member-name-link">exportSvgTo</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;os)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Exports the <a href="../../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape"><code>TextBlock</code></a> as SVG, exactly as <a href="../TextBlockExporter.html#exportTo(java.io.OutputStream)"><code>TextBlockExporter.exportTo(java.io.OutputStream)</code></a> does, but
+ without referencing the drivers of the other formats: the TeaVM C build has
+ no AWT, and TeaVM compiles every method a reachable method calls, whatever
+ the file format.</div>
+</div>
 <div class="col-first odd-row-color"><code><a href="../ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">TextBlockExporter.</span><code><a href="../TextBlockExporter.html#exportTo(java.io.OutputStream)" class="member-name-link">exportTo</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;os)</code></div>
 <div class="col-last odd-row-color">

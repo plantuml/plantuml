@@ -61,15 +61,15 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="fc" id="L61">	}</span>
 
 	private void computeFinger() {
-<span class="pc bpc" id="L64" title="1 of 4 branches missed.">		if (this.reverse.hasFinger() == false &amp;&amp; this.regular.hasFinger() == false) {</span>
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">			if (this.reverse.hasChildren())</span>
-<span class="nc" id="L66">				reverse.initFinger(skinParam, false);</span>
+<span class="fc bfc" id="L64" title="All 4 branches covered.">		if (this.reverse.hasFinger() == false &amp;&amp; this.regular.hasFinger() == false) {</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">			if (this.reverse.hasChildren())</span>
+<span class="fc" id="L66">				reverse.initFinger(skinParam, false);</span>
 
-<span class="pc bpc" id="L68" title="3 of 4 branches missed.">			if (this.reverse.hasFinger() == false || this.regular.hasChildren())</span>
+<span class="pc bpc" id="L68" title="1 of 4 branches missed.">			if (this.reverse.hasFinger() == false || this.regular.hasChildren())</span>
 <span class="fc" id="L69">				regular.initFinger(skinParam, true);</span>
 
-<span class="pc bpc" id="L71" title="3 of 4 branches missed.">			if (this.reverse.hasFinger() &amp;&amp; this.regular.hasFinger())</span>
-<span class="nc" id="L72">				this.reverse.doNotDrawFirstPhalanx();</span>
+<span class="pc bpc" id="L71" title="1 of 4 branches missed.">			if (this.reverse.hasFinger() &amp;&amp; this.regular.hasFinger())</span>
+<span class="fc" id="L72">				this.reverse.doNotDrawFirstPhalanx();</span>
 
 		}
 <span class="fc" id="L75">	}</span>
@@ -135,8 +135,8 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="nc" id="L135">				return CommandExecutionResult.error(&quot;Bad indentation&quot;);</span>
 
 <span class="fc" id="L137">			level /= multiplier;</span>
-<span class="pc bpc" id="L138" title="1 of 2 branches missed.">			if (direction == false)</span>
-<span class="nc" id="L139">				return this.reverse.add(skinParam.getCurrentStyleBuilder(), backColor, level, label, shape, stereotype);</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">			if (direction == false)</span>
+<span class="fc" id="L139">				return this.reverse.add(skinParam.getCurrentStyleBuilder(), backColor, level, label, shape, stereotype);</span>
 
 <span class="fc" id="L141">			return this.regular.add(skinParam.getCurrentStyleBuilder(), backColor, level, label, shape, stereotype);</span>
 <span class="nc" id="L142">		} catch (NoStyleAvailableException e) {</span>
@@ -146,7 +146,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	boolean isFull(int level) {
-<span class="pc bpc" id="L149" title="1 of 4 branches missed.">		return level == 0 &amp;&amp; this.regular.hasRoot();</span>
+<span class="fc bfc" id="L149" title="All 4 branches covered.">		return level == 0 &amp;&amp; this.regular.hasRoot();</span>
 	}
 
 }

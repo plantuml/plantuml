@@ -132,6 +132,7 @@ net.sourceforge.plantuml.klimt.drawing.font
 net.sourceforge.plantuml.klimt.drawing.g2d
 net.sourceforge.plantuml.klimt.drawing.hand
 net.sourceforge.plantuml.klimt.drawing.html5
+net.sourceforge.plantuml.klimt.drawing.raster
 net.sourceforge.plantuml.klimt.drawing.svg
 net.sourceforge.plantuml.klimt.drawing.tikz
 net.sourceforge.plantuml.klimt.drawing.txt
@@ -202,7 +203,9 @@ net.sourceforge.plantuml.syntax
 net.sourceforge.plantuml.teavm
 net.sourceforge.plantuml.teavm.browser
 net.sourceforge.plantuml.teavm.c
+net.sourceforge.plantuml.teavm.c.demo
 net.sourceforge.plantuml.teavm.headless
+net.sourceforge.plantuml.teavm.js
 net.sourceforge.plantuml.telnet
 net.sourceforge.plantuml.text
 net.sourceforge.plantuml.theme

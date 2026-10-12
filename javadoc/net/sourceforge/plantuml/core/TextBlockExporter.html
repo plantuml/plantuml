@@ -144,6 +144,22 @@ loadScripts(document, 'script');</script>
  output format.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#exportPngTo(java.io.OutputStream,net.sourceforge.plantuml.klimt.drawing.raster.RasterCanvas.Factory)" class="member-name-link">exportPngTo</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;os,
+ <a href="../klimt/drawing/raster/RasterCanvas.Factory.html" title="interface in net.sourceforge.plantuml.klimt.drawing.raster">RasterCanvas.Factory</a>&nbsp;factory)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Exports the <a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape"><code>TextBlock</code></a> as PNG without AWT, on a <a href="../klimt/drawing/raster/RasterCanvas.html" title="interface in net.sourceforge.plantuml.klimt.drawing.raster"><code>RasterCanvas</code></a>
+ the factory creates: same image size, background and drawing as
+ <a href="#exportTo(java.io.OutputStream)"><code>exportTo(java.io.OutputStream)</code></a>, with the drivers of <a href="../klimt/drawing/raster/UGraphicRaster.html" title="class in net.sourceforge.plantuml.klimt.drawing.raster"><code>UGraphicRaster</code></a>.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#exportSvgTo(java.io.OutputStream)" class="member-name-link">exportSvgTo</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;os)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Exports the <a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape"><code>TextBlock</code></a> as SVG, exactly as <a href="#exportTo(java.io.OutputStream)"><code>exportTo(java.io.OutputStream)</code></a> does, but
+ without referencing the drivers of the other formats: the TeaVM C build has
+ no AWT, and TeaVM compiles every method a reachable method calls, whatever
+ the file format.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#exportTo(java.io.OutputStream)" class="member-name-link">exportTo</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;os)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Exports the <a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape"><code>TextBlock</code></a> to the given <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link"><code>OutputStream</code></a>.</div>
@@ -176,6 +192,46 @@ loadScripts(document, 'script');</script>
 <dd><code>os</code> - the output stream to write to</dd>
 <dt>Returns:</dt>
 <dd>image metadata (dimensions, optional cmap data)</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if an I/O error occurs</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="exportSvgTo(java.io.OutputStream)">
+<h3>exportSvgTo</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></span>&nbsp;<span class="element-name">exportSvgTo</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;os)</span>
+                      throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block">Exports the <a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape"><code>TextBlock</code></a> as SVG, exactly as <a href="#exportTo(java.io.OutputStream)"><code>exportTo(java.io.OutputStream)</code></a> does, but
+ without referencing the drivers of the other formats: the TeaVM C build has
+ no AWT, and TeaVM compiles every method a reachable method calls, whatever
+ the file format.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>os</code> - the output stream to write to</dd>
+<dt>Returns:</dt>
+<dd>image metadata (dimensions)</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if an I/O error occurs</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="exportPngTo(java.io.OutputStream,net.sourceforge.plantuml.klimt.drawing.raster.RasterCanvas.Factory)">
+<h3>exportPngTo</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></span>&nbsp;<span class="element-name">exportPngTo</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;os,
+ <a href="../klimt/drawing/raster/RasterCanvas.Factory.html" title="interface in net.sourceforge.plantuml.klimt.drawing.raster">RasterCanvas.Factory</a>&nbsp;factory)</span>
+                      throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block">Exports the <a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape"><code>TextBlock</code></a> as PNG without AWT, on a <a href="../klimt/drawing/raster/RasterCanvas.html" title="interface in net.sourceforge.plantuml.klimt.drawing.raster"><code>RasterCanvas</code></a>
+ the factory creates: same image size, background and drawing as
+ <a href="#exportTo(java.io.OutputStream)"><code>exportTo(java.io.OutputStream)</code></a>, with the drivers of <a href="../klimt/drawing/raster/UGraphicRaster.html" title="class in net.sourceforge.plantuml.klimt.drawing.raster"><code>UGraphicRaster</code></a>. Used by the
+ TeaVM C build.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>os</code> - the output stream to write to</dd>
+<dd><code>factory</code> - creates the canvas of the image</dd>
+<dt>Returns:</dt>
+<dd>image metadata (dimensions)</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if an I/O error occurs</dd>
 </dl>

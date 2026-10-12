@@ -67,9 +67,9 @@ import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.style.ISkinSimple;
-import net.sourceforge.plantuml.teavm.PSystemBuilder2;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.teavm.c.PSystemBuilderC;
+import net.sourceforge.plantuml.teavm.js.PSystemBuilderJs;
 import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 import net.sourceforge.plantuml.text.StringLocated;
 
@@ -168,7 +168,7 @@ public class EmbeddedDiagram extends TextBlockMemoized implements Line, Atom {
 <span class="nc bnc" id="L168" title="All 2 branches missed.">		if (TeaVM.isC())</span>
 <span class="nc" id="L169">			PSystemBuilderC.getInstance().reset();</span>
 		else
-<span class="nc" id="L171">			PSystemBuilder2.getInstance().reset();</span>
+<span class="nc" id="L171">			PSystemBuilderJs.getInstance().reset();</span>
 <span class="nc" id="L172">	}</span>
 
 	public void drawU(UGraphic ug) {

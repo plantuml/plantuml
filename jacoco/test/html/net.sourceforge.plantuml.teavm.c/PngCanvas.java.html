@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PngCanvas.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.teavm.c</a> &gt; <span class="el_source">PngCanvas.java</span></div><h1>PngCanvas.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.teavm.c;
+
+import net.sourceforge.plantuml.klimt.drawing.raster.ArcsToCubics;
+import net.sourceforge.plantuml.klimt.drawing.raster.RasterCanvas;
+import net.sourceforge.plantuml.klimt.drawing.raster.RasterPath;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFace;
+
+/**
+ * The {@link RasterCanvas} of the TeaVM C build: drawn by plutovg (see
+ * {@link NativeCanvas}), text with the fonts embedded in the executable
+ * (Liberation Sans, whatever the family: the other families are not embedded
+ * yet), never the fonts of the machine. The PNG is encoded in C, as PngIO does
+ * on the JVM (src/teavm-c/native/plantuml_png.h).
+ *
+ * A canvas holds native memory: {@link #dispose} releases it.
+ */
+public final class PngCanvas implements RasterCanvas {
+	// ::remove file when JAVA8
+
+	private long handle;
+	private final boolean opaque;
+<span class="nc" id="L57">	private double scale = 1;</span>
+
+	// The clip set on the native canvas, which only changes it when it differs
+	// (setting a clip saves and restores the native state)
+	private boolean clipped;
+	private double clipX;
+	private double clipY;
+	private double clipWidth;
+	private double clipHeight;
+
+<span class="nc" id="L67">	private final ArcsToCubics replay = new ArcsToCubics() {</span>
+		@Override
+		protected void doMoveTo(double x, double y) {
+<span class="nc" id="L70">			NativeCanvas.moveTo(handle, x, y);</span>
+<span class="nc" id="L71">		}</span>
+
+		@Override
+		protected void doLineTo(double x, double y) {
+<span class="nc" id="L75">			NativeCanvas.lineTo(handle, x, y);</span>
+<span class="nc" id="L76">		}</span>
+
+		@Override
+		protected void doCubicTo(double x1, double y1, double x2, double y2, double x3, double y3) {
+<span class="nc" id="L80">			NativeCanvas.cubicTo(handle, x1, y1, x2, y2, x3, y3);</span>
+<span class="nc" id="L81">		}</span>
+
+		@Override
+		protected void doClosePath() {
+<span class="nc" id="L85">			NativeCanvas.closePath(handle);</span>
+<span class="nc" id="L86">		}</span>
+
+		@Override
+		public void rectangle(double x, double y, double width, double height, double arcWidth, double arcHeight) {
+			// Arcs are diameters, the native rectangle takes radii
+<span class="nc" id="L91">			NativeCanvas.rect(handle, x, y, width, height, arcWidth / 2, arcHeight / 2);</span>
+<span class="nc" id="L92">		}</span>
+
+		@Override
+		public void ellipse(double x, double y, double width, double height) {
+<span class="nc" id="L96">			NativeCanvas.ellipse(handle, x + width / 2, y + height / 2, width / 2, height / 2);</span>
+<span class="nc" id="L97">		}</span>
+	};
+
+	/**
+	 * @param opaque the image will get an opaque background, see
+	 *               {@link RasterCanvas.Factory}
+	 */
+<span class="nc" id="L104">	public PngCanvas(int width, int height, boolean opaque) {</span>
+<span class="nc" id="L105">		this.opaque = opaque;</span>
+<span class="nc bnc" id="L106" title="All 4 branches missed.">		if (width &lt;= 0 || height &lt;= 0)</span>
+<span class="nc" id="L107">			throw new IllegalArgumentException(&quot;Bad size &quot; + width + &quot;x&quot; + height);</span>
+<span class="nc" id="L108">		this.handle = NativeCanvas.create(width, height);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (handle == 0)</span>
+<span class="nc" id="L110">			throw new IllegalStateException(&quot;Cannot create a &quot; + width + &quot;x&quot; + height + &quot; canvas&quot;);</span>
+<span class="nc" id="L111">	}</span>
+
+	private long handle() {
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (handle == 0)</span>
+<span class="nc" id="L115">			throw new IllegalStateException(&quot;Canvas disposed&quot;);</span>
+<span class="nc" id="L116">		return handle;</span>
+	}
+
+	@Override
+	public void scale(double factor) {
+<span class="nc" id="L121">		NativeCanvas.scale(handle(), factor);</span>
+<span class="nc" id="L122">		scale *= factor;</span>
+<span class="nc" id="L123">	}</span>
+
+	@Override
+	public void setColor(int argb) {
+<span class="nc" id="L127">		NativeCanvas.setColor(handle(), argb);</span>
+<span class="nc" id="L128">	}</span>
+
+	@Override
+	public void setLinearGradient(double x1, double y1, double x2, double y2, double[] offsets, int[] colors,
+			int spread) {
+<span class="nc" id="L133">		NativeCanvas.setLinearGradient(handle(), x1, y1, x2, y2, offsets, colors, Math.min(offsets.length, 16),</span>
+				spread);
+<span class="nc" id="L135">	}</span>
+
+	@Override
+	public void setStroke(double thickness, double dashVisible, double dashSpace) {
+		// Java2D draws a zero width as the thinnest line: one device pixel
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		if (thickness &lt;= 0)</span>
+<span class="nc" id="L141">			thickness = 1 / scale;</span>
+<span class="nc" id="L142">		NativeCanvas.setStroke(handle(), thickness, dashVisible, dashSpace);</span>
+<span class="nc" id="L143">	}</span>
+
+	@Override
+	public void setClip(double x, double y, double width, double height) {
+<span class="nc bnc" id="L147" title="All 10 branches missed.">		if (clipped &amp;&amp; x == clipX &amp;&amp; y == clipY &amp;&amp; width == clipWidth &amp;&amp; height == clipHeight)</span>
+<span class="nc" id="L148">			return;</span>
+<span class="nc" id="L149">		NativeCanvas.setClip(handle(), x, y, width, height);</span>
+<span class="nc" id="L150">		clipped = true;</span>
+<span class="nc" id="L151">		clipX = x;</span>
+<span class="nc" id="L152">		clipY = y;</span>
+<span class="nc" id="L153">		clipWidth = width;</span>
+<span class="nc" id="L154">		clipHeight = height;</span>
+<span class="nc" id="L155">	}</span>
+
+	@Override
+	public void resetClip() {
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		if (clipped == false)</span>
+<span class="nc" id="L160">			return;</span>
+<span class="nc" id="L161">		NativeCanvas.resetClip(handle());</span>
+<span class="nc" id="L162">		clipped = false;</span>
+<span class="nc" id="L163">	}</span>
+
+	@Override
+	public void fill(RasterPath path) {
+<span class="nc" id="L167">		handle();</span>
+<span class="nc" id="L168">		path.visit(replay);</span>
+<span class="nc" id="L169">		NativeCanvas.fill(handle);</span>
+<span class="nc" id="L170">	}</span>
+
+	@Override
+	public void stroke(RasterPath path) {
+<span class="nc" id="L174">		handle();</span>
+<span class="nc" id="L175">		path.visit(replay);</span>
+<span class="nc" id="L176">		NativeCanvas.stroke(handle);</span>
+<span class="nc" id="L177">	}</span>
+
+	@Override
+	public void drawString(String text, UFont font, double x, double y, double angle) {
+<span class="nc" id="L181">		setFont(font);</span>
+<span class="nc" id="L182">		final char[] chars = text.toCharArray();</span>
+<span class="nc" id="L183">		NativeCanvas.fillText(handle, chars, chars.length, x, y, angle);</span>
+<span class="nc" id="L184">	}</span>
+
+	/**
+	 * Advance width of the text, as the native canvas draws it.
+	 */
+	public double getTextWidth(String text, UFont font) {
+<span class="nc" id="L190">		setFont(font);</span>
+<span class="nc" id="L191">		final char[] chars = text.toCharArray();</span>
+<span class="nc" id="L192">		return NativeCanvas.textWidth(handle, chars, chars.length);</span>
+	}
+
+	/**
+	 * @return ascent, descent (both positive) and line gap of the font
+	 */
+	public double[] getFontMetrics(UFont font) {
+<span class="nc" id="L199">		setFont(font);</span>
+<span class="nc" id="L200">		final double[] metrics = new double[3];</span>
+<span class="nc" id="L201">		NativeCanvas.fontMetrics(handle, metrics);</span>
+<span class="nc" id="L202">		return metrics;</span>
+	}
+
+	private void setFont(UFont font) {
+<span class="nc" id="L206">		final UFontFace face = font.getFontFace();</span>
+		final int id;
+<span class="nc bnc" id="L208" title="All 2 branches missed.">		if (face.isBold())</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">			id = face.isItalic() ? NativeCanvas.FONT_SANS_BOLD_ITALIC : NativeCanvas.FONT_SANS_BOLD;</span>
+		else
+<span class="nc bnc" id="L211" title="All 2 branches missed.">			id = face.isItalic() ? NativeCanvas.FONT_SANS_ITALIC : NativeCanvas.FONT_SANS;</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">		if (NativeCanvas.setFont(handle(), id, font.getSize2D()) != 0)</span>
+<span class="nc" id="L213">			throw new IllegalStateException(&quot;No embedded font&quot;);</span>
+<span class="nc" id="L214">	}</span>
+
+	@Override
+	public byte[] toPng() {
+<span class="nc bnc" id="L218" title="All 2 branches missed.">		final int size = NativeCanvas.encodePng(handle(), opaque ? 1 : 0);</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">		if (size &lt; 0)</span>
+<span class="nc" id="L220">			throw new IllegalStateException(&quot;PNG encoding failed&quot;);</span>
+<span class="nc" id="L221">		final byte[] result = new byte[size];</span>
+<span class="nc" id="L222">		NativeCanvas.copyPng(handle, result);</span>
+<span class="nc" id="L223">		return result;</span>
+	}
+
+	@Override
+	public void dispose() {
+<span class="nc bnc" id="L228" title="All 2 branches missed.">		if (handle != 0) {</span>
+<span class="nc" id="L229">			NativeCanvas.destroy(handle);</span>
+<span class="nc" id="L230">			handle = 0;</span>
+		}
+<span class="nc" id="L232">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

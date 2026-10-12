@@ -27,10 +27,10 @@ import net.sourceforge.plantuml.klimt.drawing.hand.UGraphicHandwritten;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.teavm.PSystemBuilder2;
 import net.sourceforge.plantuml.teavm.StringBounderTeaVM;
 import net.sourceforge.plantuml.teavm.SvgGraphicsTeaVM;
 import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
+import net.sourceforge.plantuml.teavm.js.PSystemBuilderJs;
 
 /**
  * PlantUML rendering engine for browser environments, compiled to a JavaScript
@@ -482,7 +482,7 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
 	private static SvgGraphicsTeaVM buildSvg(String[] lines, boolean darkMode, int maxSvgSize) throws Exception {
 <span class="nc bnc" id="L483" title="All 2 branches missed.">		final ColorMapper colorMapper = darkMode ? ColorMapper.TEAVM_DARK : ColorMapper.TEAVM_LIGHT;</span>
 
-<span class="nc" id="L485">		final Diagram diagram = PSystemBuilder2.getInstance().createDiagram(lines);</span>
+<span class="nc" id="L485">		final Diagram diagram = PSystemBuilderJs.getInstance().createDiagram(lines);</span>
 <span class="nc" id="L486">		final FileFormatOption fileFormat = new FileFormatOption(FileFormat.SVG);</span>
 
 <span class="nc bnc" id="L488" title="All 2 branches missed.">		if (diagram instanceof UgDiagram == false)</span>

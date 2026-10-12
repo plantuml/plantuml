@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RasterPath.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.drawing.raster</a> &gt; <span class="el_source">RasterPath.java</span></div><h1>RasterPath.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.klimt.drawing.raster;
+
+import java.util.Arrays;
+
+/**
+ * A shape to fill or stroke on a {@link RasterCanvas}: a sequence of segments,
+ * as a {@code java.awt.geom.GeneralPath}, where rectangles, ellipses and arcs
+ * stay whole (each canvas draws them the way it draws them best, Java2D with
+ * its own shapes).
+ */
+<span class="fc" id="L45">public final class RasterPath {</span>
+
+	public static final int MOVE_TO = 0;
+	public static final int LINE_TO = 1;
+	/** Control point 1, control point 2, end point. */
+	public static final int CUBIC_TO = 2;
+	public static final int CLOSE = 3;
+	/**
+	 * x, y, width, height, arcWidth, arcHeight: as {@code RoundRectangle2D}, the
+	 * arcs are the diameters of the corners (a plain rectangle when both are 0).
+	 */
+	public static final int RECTANGLE = 4;
+	/** x, y, width, height of the bounding box, as {@code Ellipse2D}. */
+	public static final int ELLIPSE = 5;
+	/**
+	 * x, y, width, height of the bounding box, start, extent: an open arc, as
+	 * {@code Arc2D} (degrees, counterclockwise on screen, 0 at 3 o'clock).
+	 */
+	public static final int ARC = 6;
+	/**
+	 * rx, ry, x axis rotation (degrees), large arc flag, sweep flag, x, y: an
+	 * elliptical arc from the current point, as in SVG.
+	 */
+	public static final int ARC_TO = 7;
+
+<span class="fc" id="L70">	private static final int[] SIZES = { 2, 2, 6, 0, 6, 4, 6, 7 };</span>
+
+<span class="fc" id="L72">	private int[] types = new int[8];</span>
+<span class="fc" id="L73">	private double[] coords = new double[32];</span>
+	private int count;
+	private int coordCount;
+
+	public static RasterPath rectangle(double x, double y, double width, double height, double arcWidth,
+			double arcHeight) {
+<span class="fc" id="L79">		return new RasterPath().add(RECTANGLE, x, y, width, height, arcWidth, arcHeight);</span>
+	}
+
+	public static RasterPath ellipse(double x, double y, double width, double height) {
+<span class="nc" id="L83">		return new RasterPath().add(ELLIPSE, x, y, width, height);</span>
+	}
+
+	public static RasterPath arc(double x, double y, double width, double height, double start, double extent) {
+<span class="nc" id="L87">		return new RasterPath().add(ARC, x, y, width, height, start, extent);</span>
+	}
+
+	public static RasterPath line(double x1, double y1, double x2, double y2) {
+<span class="fc" id="L91">		return new RasterPath().moveTo(x1, y1).lineTo(x2, y2);</span>
+	}
+
+	public RasterPath moveTo(double x, double y) {
+<span class="fc" id="L95">		return add(MOVE_TO, x, y);</span>
+	}
+
+	public RasterPath lineTo(double x, double y) {
+<span class="fc" id="L99">		return add(LINE_TO, x, y);</span>
+	}
+
+	public RasterPath cubicTo(double x1, double y1, double x2, double y2, double x3, double y3) {
+<span class="fc" id="L103">		return add(CUBIC_TO, x1, y1, x2, y2, x3, y3);</span>
+	}
+
+	public RasterPath arcTo(double rx, double ry, double rotation, boolean largeArc, boolean sweep, double x,
+			double y) {
+<span class="nc bnc" id="L108" title="All 4 branches missed.">		return add(ARC_TO, rx, ry, rotation, largeArc ? 1 : 0, sweep ? 1 : 0, x, y);</span>
+	}
+
+	public RasterPath closePath() {
+<span class="nc" id="L112">		return add(CLOSE);</span>
+	}
+
+	private RasterPath add(int type, double... values) {
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (values.length != SIZES[type])</span>
+<span class="nc" id="L117">			throw new IllegalArgumentException();</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (count == types.length)</span>
+<span class="nc" id="L119">			types = Arrays.copyOf(types, count * 2);</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (coordCount + values.length &gt; coords.length)</span>
+<span class="nc" id="L121">			coords = Arrays.copyOf(coords, Math.max(coords.length * 2, coordCount + values.length));</span>
+<span class="fc" id="L122">		types[count++] = type;</span>
+<span class="fc" id="L123">		System.arraycopy(values, 0, coords, coordCount, values.length);</span>
+<span class="fc" id="L124">		coordCount += values.length;</span>
+<span class="fc" id="L125">		return this;</span>
+	}
+
+	public boolean isEmpty() {
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		return count == 0;</span>
+	}
+
+	/**
+	 * Calls the visitor for every segment, in order.
+	 */
+	public void visit(Visitor visitor) {
+<span class="fc" id="L136">		int c = 0;</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">		for (int i = 0; i &lt; count; i++) {</span>
+<span class="fc" id="L138">			final double[] v = coords;</span>
+<span class="pc bpc" id="L139" title="5 of 9 branches missed.">			switch (types[i]) {</span>
+			case MOVE_TO:
+<span class="fc" id="L141">				visitor.moveTo(v[c], v[c + 1]);</span>
+<span class="fc" id="L142">				break;</span>
+			case LINE_TO:
+<span class="fc" id="L144">				visitor.lineTo(v[c], v[c + 1]);</span>
+<span class="fc" id="L145">				break;</span>
+			case CUBIC_TO:
+<span class="fc" id="L147">				visitor.cubicTo(v[c], v[c + 1], v[c + 2], v[c + 3], v[c + 4], v[c + 5]);</span>
+<span class="fc" id="L148">				break;</span>
+			case CLOSE:
+<span class="nc" id="L150">				visitor.closePath();</span>
+<span class="nc" id="L151">				break;</span>
+			case RECTANGLE:
+<span class="fc" id="L153">				visitor.rectangle(v[c], v[c + 1], v[c + 2], v[c + 3], v[c + 4], v[c + 5]);</span>
+<span class="fc" id="L154">				break;</span>
+			case ELLIPSE:
+<span class="nc" id="L156">				visitor.ellipse(v[c], v[c + 1], v[c + 2], v[c + 3]);</span>
+<span class="nc" id="L157">				break;</span>
+			case ARC:
+<span class="nc" id="L159">				visitor.arc(v[c], v[c + 1], v[c + 2], v[c + 3], v[c + 4], v[c + 5]);</span>
+<span class="nc" id="L160">				break;</span>
+			case ARC_TO:
+<span class="nc bnc" id="L162" title="All 4 branches missed.">				visitor.arcTo(v[c], v[c + 1], v[c + 2], v[c + 3] != 0, v[c + 4] != 0, v[c + 5], v[c + 6]);</span>
+<span class="nc" id="L163">				break;</span>
+			default:
+<span class="nc" id="L165">				throw new IllegalStateException();</span>
+			}
+<span class="fc" id="L167">			c += SIZES[types[i]];</span>
+		}
+<span class="fc" id="L169">	}</span>
+
+	/**
+	 * The segments of a {@link RasterPath}, see its constants.
+	 */
+	public interface Visitor {
+
+		public void moveTo(double x, double y);
+
+		public void lineTo(double x, double y);
+
+		public void cubicTo(double x1, double y1, double x2, double y2, double x3, double y3);
+
+		public void closePath();
+
+		public void rectangle(double x, double y, double width, double height, double arcWidth, double arcHeight);
+
+		public void ellipse(double x, double y, double width, double height);
+
+		public void arc(double x, double y, double width, double height, double start, double extent);
+
+		public void arcTo(double rx, double ry, double rotation, boolean largeArc, boolean sweep, double x, double y);
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UGraphicRaster.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.drawing.raster</a> &gt; <span class="el_source">UGraphicRaster.java</span></div><h1>UGraphicRaster.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.klimt.drawing.raster;
+
+import java.io.IOException;
+import java.io.OutputStream;
+
+import net.sourceforge.plantuml.klimt.UClip;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic;
+import net.sourceforge.plantuml.klimt.drawing.AbstractUGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.shape.DotPath;
+import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.UImage;
+import net.sourceforge.plantuml.klimt.shape.UImageSvg;
+import net.sourceforge.plantuml.klimt.shape.UImageTikz;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.UPixel;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.klimt.shape.UText;
+
+/**
+ * PNG output without AWT: the drivers of {@code UGraphicG2d}, drawing on a
+ * {@link RasterCanvas} instead of a {@code Graphics2D} (the TeaVM C build has
+ * no AWT).
+ *
+ * &lt;p&gt;
+ * Not supported yet: shadows, patterns, images, circled characters, links
+ * (image map).
+ */
+public class UGraphicRaster extends AbstractUGraphic&lt;RasterCanvas&gt; {
+
+	private final double dpiFactor;
+
+	@Override
+	protected AbstractCommonUGraphic copyUGraphic() {
+<span class="fc" id="L74">		return new UGraphicRaster(this);</span>
+	}
+
+	private UGraphicRaster(UGraphicRaster other) {
+<span class="fc" id="L78">		super(other.getStringBounder());</span>
+<span class="fc" id="L79">		copy(other);</span>
+<span class="fc" id="L80">		this.dpiFactor = other.dpiFactor;</span>
+<span class="fc" id="L81">	}</span>
+
+	public UGraphicRaster(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder,
+			RasterCanvas canvas, double dpiFactor) {
+<span class="fc" id="L85">		super(stringBounder);</span>
+<span class="fc" id="L86">		copy(defaultBackground, colorMapper, canvas);</span>
+<span class="fc" id="L87">		this.dpiFactor = dpiFactor;</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (dpiFactor != 1.0)</span>
+<span class="nc" id="L89">			canvas.scale(dpiFactor);</span>
+<span class="fc" id="L90">		register();</span>
+<span class="fc" id="L91">	}</span>
+
+	private void register() {
+<span class="fc" id="L94">		registerDriver(URectangle.class, new DriverRectangleRaster());</span>
+<span class="fc" id="L95">		registerDriver(UText.class, new DriverTextRaster(getStringBounder()));</span>
+<span class="fc" id="L96">		registerDriver(ULine.class, new DriverLineRaster());</span>
+<span class="fc" id="L97">		registerDriver(UPixel.class, new DriverPixelRaster());</span>
+<span class="fc" id="L98">		registerDriver(UPolygon.class, new DriverPolygonRaster());</span>
+<span class="fc" id="L99">		registerDriver(UEllipse.class, new DriverEllipseRaster());</span>
+<span class="fc" id="L100">		registerDriver(DotPath.class, new DriverDotPathRaster());</span>
+<span class="fc" id="L101">		registerDriver(UPath.class, new DriverPathRaster());</span>
+<span class="fc" id="L102">		ignoreShape(UImage.class);</span>
+<span class="fc" id="L103">		ignoreShape(UImageSvg.class);</span>
+<span class="fc" id="L104">		ignoreShape(UImageTikz.class);</span>
+<span class="fc" id="L105">		ignoreShape(UCenteredCharacter.class);</span>
+<span class="fc" id="L106">	}</span>
+
+	@Override
+	protected void beforeDraw() {
+<span class="fc" id="L110">		super.beforeDraw();</span>
+<span class="fc" id="L111">		final UClip clip = getClip();</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (clip == null)</span>
+<span class="fc" id="L113">			getGraphicObject().resetClip();</span>
+		else
+<span class="nc" id="L115">			getGraphicObject().setClip(clip.getX(), clip.getY(), clip.getWidth(), clip.getHeight());</span>
+<span class="fc" id="L116">	}</span>
+
+	@Override
+	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
+<span class="fc" id="L120">		final RasterCanvas canvas = getGraphicObject();</span>
+		try {
+<span class="fc" id="L122">			os.write(PngChunks.addPlantUmlChunks(canvas.toPng(), metadata, dpi));</span>
+		} finally {
+<span class="fc" id="L124">			canvas.dispose();</span>
+		}
+<span class="fc" id="L126">	}</span>
+
+	@Override
+	public double dpiFactor() {
+<span class="nc" id="L130">		return dpiFactor;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

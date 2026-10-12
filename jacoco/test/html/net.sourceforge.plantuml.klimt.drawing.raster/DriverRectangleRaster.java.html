@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DriverRectangleRaster.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.drawing.raster</a> &gt; <span class="el_source">DriverRectangleRaster.java</span></div><h1>DriverRectangleRaster.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.klimt.drawing.raster;
+
+import net.sourceforge.plantuml.klimt.UParam;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UDriver;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+
+/**
+ * As {@code DriverRectangleG2d}, without shadow nor pattern for now.
+ */
+<span class="fc" id="L46">public class DriverRectangleRaster implements UDriver&lt;URectangle, RasterCanvas&gt; {</span>
+
+	@Override
+	public void draw(URectangle rect, double x, double y, ColorMapper mapper, UParam param, RasterCanvas canvas) {
+<span class="fc" id="L50">		canvas.setStroke(param.getStroke().getThickness(), 0, 0);</span>
+<span class="fc" id="L51">		final RasterPath shape = RasterPath.rectangle(x, y, rect.getWidth(), rect.getHeight(), rect.getRx(),</span>
+<span class="fc" id="L52">				rect.getRy());</span>
+
+<span class="fc" id="L54">		final HColor back = param.getBackcolor();</span>
+<span class="fc" id="L55">		final HColor color = param.getColor();</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">		if (RasterPaints.isGradient(back)) {</span>
+<span class="nc" id="L57">			RasterPaints.setGradient(canvas, x, y, mapper, rect.getWidth(), rect.getHeight(), back);</span>
+<span class="nc" id="L58">			canvas.fill(shape);</span>
+<span class="nc" id="L59">			RasterPaints.drawBorder(param, color, mapper, rect.getWidth(), rect.getHeight(), shape, canvas, x, y);</span>
+		} else {
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">			if (back.isTransparent() == false) {</span>
+<span class="fc" id="L62">				canvas.setColor(RasterPaints.argb(back, mapper));</span>
+<span class="fc" id="L63">				RasterPaints.setStroke(param.getStroke(), canvas);</span>
+<span class="fc" id="L64">				canvas.fill(shape);</span>
+			}
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">			if (color.equals(back) == false)</span>
+<span class="fc" id="L67">				RasterPaints.drawBorder(param, color, mapper, rect.getWidth(), rect.getHeight(), shape, canvas, x,</span>
+						y);
+		}
+<span class="fc" id="L70">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PngDemoC.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.teavm.c.demo</a> &gt; <span class="el_source">PngDemoC.java</span></div><h1>PngDemoC.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.teavm.c.demo;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
+import net.sourceforge.plantuml.klimt.drawing.raster.RasterPath;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFace;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
+import net.sourceforge.plantuml.teavm.c.PngCanvas;
+
+/**
+ * Entry point validating PNG output in the TeaVM C build, before any PlantUML
+ * code is involved: Java calls a C facade over plutovg through TeaVM's
+ * {@code @Import}, draws shapes and text with an embedded font, and gets the
+ * PNG back as a byte[].
+ *
+ * Build it with
+ * {@code gradlew :generateC -PteavmCMainClass=PngDemoC},
+ * then run {@code plantuml-c [output.png]} (default: demo.png).
+ *
+ * The picture is a small mind map whose boxes are sized from the measured
+ * text, plus a text sample with its ascent, baseline and descent lines: the
+ * text must sit exactly on the red baseline. Measurements are printed, to be
+ * compared with Java (Arial has the same metrics as Liberation Sans).
+ */
+<span class="nc" id="L62">public class PngDemoC {</span>
+	// ::remove folder when JAVA8
+
+	private static final int WHITE = 0xFFFFFFFF;
+	private static final int BLACK = 0xFF000000;
+	private static final int BORDER = 0xFF181818;
+	private static final int FILL = 0xFFF1F1F1;
+	private static final int RED = 0xFFE00000;
+	private static final int BLUE = 0xFF2060E0;
+
+	private static final int FONT_SIZE = 14;
+	private static final double MARGIN_X = 10;
+	private static final double MARGIN_Y = 8;
+
+	public static void main(String[] args) throws IOException {
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		final String output = args.length &gt; 0 ? args[0] : &quot;demo.png&quot;;</span>
+<span class="nc" id="L78">		final UFont font = UFontFactory.build(&quot;SansSerif&quot;, UFontFace.normal(), FONT_SIZE);</span>
+
+		final byte[] png;
+<span class="nc" id="L81">		final PngCanvas canvas = new PngCanvas(480, 260, true);</span>
+		try {
+<span class="nc" id="L83">			canvas.setColor(WHITE);</span>
+<span class="nc" id="L84">			canvas.fill(RasterPath.rectangle(0, 0, 480, 260, 0, 0));</span>
+
+<span class="nc" id="L86">			final double[] metrics = canvas.getFontMetrics(font);</span>
+<span class="nc" id="L87">			System.out.println(&quot;Font size &quot; + FONT_SIZE + &quot;: ascent=&quot; + metrics[0] + &quot; descent=&quot; + metrics[1]</span>
+					+ &quot; lineGap=&quot; + metrics[2]);
+<span class="nc bnc" id="L89" title="All 2 branches missed.">			for (String s : new String[] { &quot;Hello world&quot;, &quot;PlantUML&quot;, &quot;Accents: \u00e9\u00e0\u00e7\u00f6 \u20ac&quot; })</span>
+<span class="nc" id="L90">				System.out.println(&quot;Width of \&quot;&quot; + s + &quot;\&quot;: &quot; + canvas.getTextWidth(s, font));</span>
+
+			// A small mind map: boxes sized from the measured text
+<span class="nc" id="L93">			final double[] root = box(canvas, font, metrics, &quot;PlantUML&quot;, 30, 90);</span>
+<span class="nc" id="L94">			final double[] svg = box(canvas, font, metrics, &quot;SVG&quot;, 250, 30);</span>
+<span class="nc" id="L95">			final double[] png2 = box(canvas, font, metrics, &quot;PNG natif&quot;, 250, 150);</span>
+<span class="nc" id="L96">			link(canvas, root, svg);</span>
+<span class="nc" id="L97">			link(canvas, root, png2);</span>
+
+			// Text sample on its baseline, with the ascent and descent lines
+<span class="nc" id="L100">			final String sample = &quot;Accents: \u00e9\u00e0\u00e7\u00f6 \u20ac \u2013 Hxgjp&quot;;</span>
+<span class="nc" id="L101">			final double x = 30;</span>
+<span class="nc" id="L102">			final double baseline = 230;</span>
+<span class="nc" id="L103">			final double width = canvas.getTextWidth(sample, font);</span>
+<span class="nc" id="L104">			canvas.setStroke(1, 0, 0);</span>
+<span class="nc" id="L105">			canvas.setColor(BLUE);</span>
+<span class="nc" id="L106">			canvas.stroke(RasterPath.line(x, baseline - metrics[0], x + width, baseline - metrics[0]));</span>
+<span class="nc" id="L107">			canvas.stroke(RasterPath.line(x, baseline + metrics[1], x + width, baseline + metrics[1]));</span>
+<span class="nc" id="L108">			canvas.setColor(RED);</span>
+<span class="nc" id="L109">			canvas.stroke(RasterPath.line(x, baseline, x + width, baseline));</span>
+<span class="nc" id="L110">			canvas.setColor(BLACK);</span>
+<span class="nc" id="L111">			canvas.drawString(sample, font, x, baseline, 0);</span>
+
+<span class="nc" id="L113">			png = canvas.toPng();</span>
+		} finally {
+<span class="nc" id="L115">			canvas.dispose();</span>
+		}
+
+<span class="nc" id="L118">		try (OutputStream os = new FileOutputStream(output)) {</span>
+<span class="nc" id="L119">			os.write(png);</span>
+		}
+<span class="nc" id="L121">		System.out.println(&quot;Written &quot; + output + &quot; (&quot; + png.length + &quot; bytes)&quot;);</span>
+<span class="nc" id="L122">	}</span>
+
+	/**
+	 * Draws a rounded box around the text, its top left corner at (x, y).
+	 *
+	 * @return x, y, width, height of the box
+	 */
+	private static double[] box(PngCanvas canvas, UFont font, double[] metrics, String text, double x, double y) {
+<span class="nc" id="L130">		final double width = canvas.getTextWidth(text, font) + 2 * MARGIN_X;</span>
+<span class="nc" id="L131">		final double height = metrics[0] + metrics[1] + 2 * MARGIN_Y;</span>
+<span class="nc" id="L132">		final RasterPath shape = RasterPath.rectangle(x, y, width, height, 12, 12);</span>
+<span class="nc" id="L133">		canvas.setColor(FILL);</span>
+<span class="nc" id="L134">		canvas.fill(shape);</span>
+<span class="nc" id="L135">		canvas.setColor(BORDER);</span>
+<span class="nc" id="L136">		canvas.setStroke(1.5, 0, 0);</span>
+<span class="nc" id="L137">		canvas.stroke(shape);</span>
+<span class="nc" id="L138">		canvas.setColor(BLACK);</span>
+<span class="nc" id="L139">		canvas.drawString(text, font, x + MARGIN_X, y + MARGIN_Y + metrics[0], 0);</span>
+<span class="nc" id="L140">		return new double[] { x, y, width, height };</span>
+	}
+
+	private static void link(PngCanvas canvas, double[] from, double[] to) {
+<span class="nc" id="L144">		final double x1 = from[0] + from[2];</span>
+<span class="nc" id="L145">		final double y1 = from[1] + from[3] / 2;</span>
+<span class="nc" id="L146">		final double x2 = to[0];</span>
+<span class="nc" id="L147">		final double y2 = to[1] + to[3] / 2;</span>
+<span class="nc" id="L148">		final double middle = (x1 + x2) / 2;</span>
+<span class="nc" id="L149">		canvas.setColor(BORDER);</span>
+<span class="nc" id="L150">		canvas.setStroke(1, 0, 0);</span>
+<span class="nc" id="L151">		canvas.stroke(new RasterPath().moveTo(x1, y1).cubicTo(middle, y1, middle, y2, x2, y2));</span>
+<span class="nc" id="L152">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

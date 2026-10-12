@@ -96,14 +96,23 @@ loadScripts(document, 'script');</script>
 <div class="block">Entry point of the experimental TeaVM C backend.
 
  <pre>
- plantuml-c [input.puml [output.svg]]
+ plantuml-c [input.puml [output.svg|output.png]]
  </pre>
 
  Reads a PlantUML source from the given file (the standard input if there is
  none) and writes the SVG in the given file (the standard output if there is
- none). Passing the files is the safest way on Windows, where the console
- encodes the standard streams. Only mindmap diagrams are supported for now
- (see <a href="PSystemBuilderC.html" title="class in net.sourceforge.plantuml.teavm.c"><code>PSystemBuilderC</code></a>).
+ none), or the PNG when the name of the output file ends with ".png". Passing
+ the files is the safest way on Windows, where the console encodes the
+ standard streams. Only mindmap diagrams are supported for now (see
+ <a href="PSystemBuilderC.html" title="class in net.sourceforge.plantuml.teavm.c"><code>PSystemBuilderC</code></a>).
+
+ The SVG is the one <code>java -jar plantuml.jar -tsvg</code> writes on Windows:
+ same export code (<a href="../../UgDiagram.html#exportSvg(java.io.OutputStream)"><code>UgDiagram.exportSvg(java.io.OutputStream)</code></a>), and text measured with the
+ metrics of the embedded fonts, which are those of Java's fonts on Windows
+ (see <code>StringBounderEmbeddedFont</code>). The PNG has the size and the layout
+ of the one <code>-tpng</code> writes, drawn by plutovg (<a href="PngCanvas.html" title="class in net.sourceforge.plantuml.teavm.c"><code>PngCanvas</code></a>) with
+ the drivers of the JVM (<a href="../../UgDiagram.html#exportPng(java.io.OutputStream,net.sourceforge.plantuml.klimt.drawing.raster.RasterCanvas.Factory)"><code>UgDiagram.exportPng(java.io.OutputStream, net.sourceforge.plantuml.klimt.drawing.raster.RasterCanvas.Factory)</code></a>): only the antialiasing
+ differs.
 
  On a diagram error, the message is written on stderr and nothing on stdout.
  There is no non-zero exit code: <code>System.exit</code> does not exist in the

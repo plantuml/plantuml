@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StringBounderEmbeddedFont.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.drawing.font</a> &gt; <span class="el_source">StringBounderEmbeddedFont.java</span></div><h1>StringBounderEmbeddedFont.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.klimt.drawing.font;
+
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontContext;
+import net.sourceforge.plantuml.klimt.font.UFontFace;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.text.RichText;
+import net.sourceforge.plantuml.text.StyledString;
+
+/**
+ * Measures text with the metrics of the fonts embedded in PlantUML (Liberation
+ * Sans), without AWT, so that the TeaVM C build lays out exactly as the JVM does
+ * on Windows, and draws with the very same fonts.
+ *
+ * &lt;p&gt;
+ * It reproduces what {@code StringBounderAwt} gives on Windows, where Java maps
+ * its logical font &quot;SansSerif&quot; to Arial (whose metrics are Liberation Sans's):
+ * &lt;ul&gt;
+ * &lt;li&gt;a character is as wide as its glyph's advance (fractional metrics: no
+ * rounding, no kerning, no ligatures);&lt;/li&gt;
+ * &lt;li&gt;a logical font is a composite: its line also makes room for the fonts it
+ * falls back on for other scripts, which raise its ascent and descent to at
+ * least {@link #LOGICAL_MIN_ASCENT} and {@link #LOGICAL_MIN_DESCENT}; and the
+ * characters it does not take from Arial (those Arial lacks, and those of
+ * Arial's exclusion ranges in Java's fontconfig.properties, such as dashes and
+ * typographic quotes) have the widths Java gives them on Windows, measured once
+ * by tools/font-metrics/MeasureLogicalFonts.java;&lt;/li&gt;
+ * &lt;li&gt;a font named Arial (or Liberation Sans) is a physical font: its own line
+ * height, and its missing glyph for the characters it lacks.&lt;/li&gt;
+ * &lt;/ul&gt;
+ * Other families (serif, monospace...) are measured as &quot;SansSerif&quot; for now: only
+ * Liberation Sans is embedded.
+ *
+ * &lt;p&gt;
+ * Known difference: when a text contains a character of a complex script
+ * (combining marks U+0300-036F, Hebrew, Arabic, Indic, Thai, bidi controls...),
+ * Java2D shapes the whole text with HarfBuzz, which can move a mark's base or
+ * hide a soft hyphen. Other text (precomposed accents, Greek, Cyrillic...)
+ * measures exactly as with Java2D.
+ */
+public class StringBounderEmbeddedFont implements StringBounder {
+
+	/**
+	 * Minimum ascent and descent of Java's logical fonts on Windows, in 2048ths of
+	 * the size, as measured with Java on Windows by the rockuml project
+	 * (https://github.com/h3ll5ur7er/rockuml).
+	 */
+	private static final double LOGICAL_MIN_ASCENT = 2059.0 / 2048.0;
+	private static final double LOGICAL_MIN_DESCENT = 450.0 / 2048.0;
+
+	private final FileFormat fileFormat;
+	private final boolean windowsWidths;
+
+	public StringBounderEmbeddedFont(FileFormat fileFormat) {
+<span class="fc" id="L92">		this(fileFormat, true);</span>
+<span class="fc" id="L93">	}</span>
+
+<span class="fc" id="L95">	private StringBounderEmbeddedFont(FileFormat fileFormat, boolean windowsWidths) {</span>
+<span class="fc" id="L96">		this.fileFormat = fileFormat;</span>
+<span class="fc" id="L97">		this.windowsWidths = windowsWidths;</span>
+<span class="fc" id="L98">	}</span>
+
+	/**
+	 * A bounder without the widths measured with Java on Windows, for
+	 * tools/font-metrics/MeasureLogicalFonts.java only: for the characters that
+	 * do not come from Arial, logical fonts use PlantUML's width table.
+	 */
+	public static StringBounderEmbeddedFont withoutWindowsWidths(FileFormat fileFormat) {
+<span class="fc" id="L106">		return new StringBounderEmbeddedFont(fileFormat, false);</span>
+	}
+
+	@Override
+	public FileFormat getFileFormat() {
+<span class="nc" id="L111">		return fileFormat;</span>
+	}
+
+	@Override
+	public XDimension2D calculateDimension(UFont font, String text) {
+		// Same as StringBounderAwt
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		if (RichText.isRich(text)) {</span>
+<span class="nc" id="L118">			double width = 0;</span>
+<span class="nc" id="L119">			double height = 0;</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">			for (StyledString s : StyledString.build(text)) {</span>
+<span class="nc" id="L121">				final UFont newFont = s.getStyle().mutateFont(font);</span>
+<span class="nc" id="L122">				final XDimension2D rect = calculateDimensionInternal(newFont, s.getText());</span>
+<span class="nc" id="L123">				width += rect.getWidth();</span>
+<span class="nc" id="L124">				height = Math.max(height, rect.getHeight());</span>
+<span class="nc" id="L125">			}</span>
+<span class="nc" id="L126">			return new XDimension2D(width, height);</span>
+		}
+<span class="fc" id="L128">		return calculateDimensionInternal(font, text);</span>
+	}
+
+	@Override
+	public double getDescent(UFont font, String text) {
+<span class="fc" id="L133">		final EmbeddedFontMetrics metrics = getMetrics(font.getFontFace());</span>
+<span class="fc" id="L134">		final double size = font.getSize2D();</span>
+<span class="fc" id="L135">		final double descent = relative(metrics, metrics.getDescent());</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		if (isLogical(font, text))</span>
+<span class="fc" id="L137">			return Math.max(descent, LOGICAL_MIN_DESCENT) * size;</span>
+<span class="fc" id="L138">		return descent * size;</span>
+	}
+
+	private XDimension2D calculateDimensionInternal(UFont font, String text) {
+<span class="fc bfc" id="L142" title="All 2 branches covered.">		if (text.length() == 0)</span>
+<span class="fc" id="L143">			return new XDimension2D(0, 0);</span>
+
+<span class="fc" id="L145">		final EmbeddedFontMetrics metrics = getMetrics(font.getFontFace());</span>
+<span class="fc" id="L146">		final boolean logical = isLogical(font, text);</span>
+<span class="fc" id="L147">		final double size = font.getSize2D();</span>
+<span class="fc" id="L148">		final int style = getStyle(font.getFontFace());</span>
+
+<span class="fc" id="L150">		double width = 0;</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">		for (int i = 0; i &lt; text.length();) {</span>
+<span class="fc" id="L152">			final int cp = text.codePointAt(i);</span>
+<span class="fc" id="L153">			width += getRelativeAdvance(metrics, logical, style, cp);</span>
+<span class="fc" id="L154">			i += Character.charCount(cp);</span>
+<span class="fc" id="L155">		}</span>
+
+<span class="fc" id="L157">		double ascent = relative(metrics, metrics.getAscent());</span>
+<span class="fc" id="L158">		double descent = relative(metrics, metrics.getDescent());</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">		if (logical) {</span>
+<span class="fc" id="L160">			ascent = Math.max(ascent, LOGICAL_MIN_ASCENT);</span>
+<span class="fc" id="L161">			descent = Math.max(descent, LOGICAL_MIN_DESCENT);</span>
+		}
+<span class="fc" id="L163">		final double leading = relative(metrics, metrics.getLineGap());</span>
+<span class="fc" id="L164">		return new XDimension2D(width * size, (ascent + descent + leading) * size);</span>
+	}
+
+	/**
+	 * Advance of a character as a fraction of the font size.
+	 */
+	private double getRelativeAdvance(EmbeddedFontMetrics metrics, boolean logical, int style, int cp) {
+<span class="fc bfc" id="L171" title="All 2 branches covered.">		if (isInvisible(cp))</span>
+<span class="fc" id="L172">			return 0;</span>
+<span class="fc bfc" id="L173" title="All 4 branches covered.">		if (logical &amp;&amp; windowsWidths) {</span>
+<span class="fc" id="L174">			final int measured = LiberationSansMetrics.WINDOWS_SANS_SERIF.getWidth(cp, style);</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">			if (measured &gt;= 0)</span>
+<span class="fc" id="L176">				return measured / 2048.0;</span>
+		}
+<span class="fc" id="L178">		final int advance = metrics.getAdvance(cp);</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">		if (advance &gt;= 0)</span>
+<span class="fc" id="L180">			return relative(metrics, advance);</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">		if (logical)</span>
+<span class="fc" id="L182">			return StringBounderFromWidthTable.getRelativeWidth(cp);</span>
+<span class="nc" id="L183">		return relative(metrics, metrics.getMissingAdvance());</span>
+	}
+
+	/**
+	 * Characters Java2D replaces by an invisible glyph of no width, although the
+	 * font has no glyph for them.
+	 */
+	private static boolean isInvisible(int cp) {
+<span class="fc bfc" id="L191" title="All 10 branches covered.">		return cp == '\t' || cp == '\n' || cp == '\r' || cp == 0x2028 || cp == 0x2029;</span>
+	}
+
+	private static double relative(EmbeddedFontMetrics metrics, int units) {
+<span class="fc" id="L195">		return units / (double) metrics.getUnitsPerEm();</span>
+	}
+
+	private static int getStyle(UFontFace face) {
+<span class="fc bfc" id="L199" title="All 2 branches covered.">		if (face.isBold())</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">			return face.isItalic() ? MeasuredWidths.BOLD_ITALIC : MeasuredWidths.BOLD;</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">		return face.isItalic() ? MeasuredWidths.ITALIC : MeasuredWidths.REGULAR;</span>
+	}
+
+	private static EmbeddedFontMetrics getMetrics(UFontFace face) {
+<span class="fc bfc" id="L205" title="All 2 branches covered.">		if (face.isBold())</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">			return face.isItalic() ? LiberationSansMetrics.BOLD_ITALIC : LiberationSansMetrics.BOLD;</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">		return face.isItalic() ? LiberationSansMetrics.ITALIC : LiberationSansMetrics.REGULAR;</span>
+	}
+
+	/**
+	 * Whether Java would use a logical (composite) font: anything but an explicit
+	 * Arial, Java falling back to the logical font &quot;Dialog&quot; for unknown families.
+	 */
+	private static boolean isLogical(UFont font, String text) {
+<span class="fc" id="L215">		final String family = firstFamily(font.getFamily(text, UFontContext.SVG));</span>
+<span class="pc bpc" id="L216" title="1 of 4 branches missed.">		return family.equals(&quot;arial&quot;) == false &amp;&amp; family.equals(&quot;liberation sans&quot;) == false;</span>
+	}
+
+	static String firstFamily(String definition) {
+<span class="fc" id="L220">		final int comma = definition.indexOf(',');</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">		final String first = comma == -1 ? definition : definition.substring(0, comma);</span>
+<span class="fc" id="L222">		return StringUtils.goLowerCase(first.replace('&quot;', ' ').replace('\'', ' ').trim());</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
