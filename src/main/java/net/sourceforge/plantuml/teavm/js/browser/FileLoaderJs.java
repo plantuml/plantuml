@@ -104,9 +104,16 @@ import net.sourceforge.plantuml.nio.NFolder;
  * function: the rejection of the promise it returns fails the include, while
  * the value it fulfils with is ignored, so a file is only ever delivered
  * through <code>onOk</code>. A host that neither calls a callback, nor
- * returns <code>false</code>, nor rejects, leaves the rendering waiting: there
- * is no timeout in the engine. The engine never reads anything itself: which
- * files may be read is decided by the host.
+ * returns <code>false</code>, nor rejects within
+ * {@link PendingResources#ROUND_TIMEOUT_MS} makes the include fail, with a
+ * message saying so; a later answer is ignored. The engine never reads anything
+ * itself: which files may be read is decided by the host.
+ * <p>
+ * The engine never waits for the host: the diagram is rendered, the include
+ * fails while its file is not there yet, and the diagram is rendered again
+ * once the host has answered (see {@link PendingResources}). So the loader is
+ * called once per file, kind and <code>from</code> during one rendering, before
+ * the rendering whose result is delivered, and again at the next rendering.
  * <p>
  * The same shape as <code>PLANTUML_STDLIB_LOADER</code> in
  * {@link ScriptLoaderJs}. With no loader set, a local include fails, and
@@ -131,10 +138,9 @@ public final class FileLoaderJs {
 
 	/**
 	 * Asks the host for a file. Returns <code>false</code> when the host declines
-	 * it before any callback; <code>true</code> otherwise. When it returns
-	 * <code>true</code>, the caller waits until a callback or a rejected promise
-	 * settles the request. If neither happens, the caller keeps waiting because
-	 * the engine has no timeout. A missing identifier, a text that is not a
+	 * it before any callback; <code>true</code> otherwise, and then exactly one
+	 * of the two callbacks is called later, or never when the host never answers.
+	 * A missing identifier, a text that is not a
 	 * string, an exception, a rejected promise and a reason that cannot be turned
 	 * into a string all become a failure; anything after the first outcome is
 	 * ignored.
@@ -166,14 +172,15 @@ public final class FileLoaderJs {
 			+ "}"
 			+ "if (result === false && settled === false) { settled = true; return false; }"
 			+ "return true;")
-	private static native boolean load(String path, String from, String kind, Loaded onOk, ScriptLoaderJs.Err onErr);
+	static native boolean load(String path, String from, String kind, Loaded onOk, ScriptLoaderJs.Err onErr);
 
 	/**
-	 * The file the host delivers for <code>path</code>, or <code>null</code> when
-	 * no loader is set, when the host declines, or when it fails (the reason is
+	 * The file the host delivered for <code>path</code>, or <code>null</code> when
+	 * no loader is set, when the host declines, when it fails (the reason is
 	 * written to the console, and the include then reports the usual "cannot
-	 * include"). Blocks until the host answers, so it MUST be called from a
-	 * TeaVM thread context, like {@link ScriptLoaderJs#loadOnceSync(String)}.
+	 * include"), or when the host has not been asked yet: the file is then noted
+	 * as missing, and the diagram is rendered again once the host has answered
+	 * (see {@link PendingResources}). Never waits.
 	 *
 	 * @param path   the file name the directive asks for
 	 * @param folder where the include is written: <code>null</code> for the
@@ -189,38 +196,15 @@ public final class FileLoaderJs {
 			return null;
 
 		final String from = folder == null ? null : ((HostFolder) folder).from;
-		final Answer answer = new Answer();
-		synchronized (answer) {
-			final boolean handled = load(path, from, kind, (id, text) -> {
-				synchronized (answer) {
-					answer.id = id;
-					answer.text = text;
-					answer.complete = true;
-					answer.notify();
-				}
-			}, (reason) -> {
-				synchronized (answer) {
-					answer.error = reason;
-					answer.complete = true;
-					answer.notify();
-				}
-			});
-			if (handled == false)
-				return null;
+		final PendingResources.Answer answer = PendingResources.file(path, from, kind);
+		if (answer == null || answer.isDeclined())
+			return null;
 
-			while (answer.complete == false) {
-				try {
-					answer.wait();
-				} catch (InterruptedException e) {
-					// retry
-				}
-			}
-		}
-		if (answer.error != null) {
-			ScriptLoaderJs.consoleWarn("PlantUML: cannot include " + path + ": " + answer.error);
+		if (answer.getError() != null) {
+			ScriptLoaderJs.consoleWarn("PlantUML: cannot include " + path + ": " + answer.getError());
 			return null;
 		}
-		return new HostFile(answer.id, answer.text);
+		return new HostFile(answer.getId(), answer.getText());
 	}
 
 	/**
@@ -234,13 +218,6 @@ public final class FileLoaderJs {
 			return ((HostFile) file).id;
 
 		return null;
-	}
-
-	private static final class Answer {
-		private boolean complete;
-		private String id;
-		private String text;
-		private String error;
 	}
 
 	private static final class HostFile implements InputFile {

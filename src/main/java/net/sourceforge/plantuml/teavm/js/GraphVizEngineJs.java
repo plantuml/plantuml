@@ -34,23 +34,27 @@
  */
 package net.sourceforge.plantuml.teavm.js;
 
-import org.teavm.interop.Async;
-import org.teavm.interop.AsyncCallback;
 import org.teavm.jso.JSBody;
-import org.teavm.jso.JSFunctor;
 import org.teavm.jso.JSObject;
 
+import net.sourceforge.plantuml.teavm.js.browser.PendingResources;
+import net.sourceforge.plantuml.teavm.js.browser.ScriptLoaderJs;
+
 /**
- * TeaVM engine for rendering DOT graphs to SVG using Viz.js.
+ * Renders DOT graphs to SVG with Viz.js, synchronously.
  * <p>
- * This class provides a bridge between Java code running in TeaVM and the
- * Viz.js JavaScript library. It handles the asynchronous nature of
- * Viz.instance() using TeaVM's @Async annotation.
+ * In {@code @viz-js/viz} 3.x, only {@code Viz.instance()} is asynchronous (it
+ * loads the WebAssembly module); {@code renderString} on the instance is
+ * synchronous. So the instance is created once, from JavaScript
+ * ({@link #prepare(ScriptLoaderJs.Ok)}), and kept on the global object as
+ * {@code __plantumlVizInstance}; rendering then just calls it. Nothing waits
+ * in Java: when the instance is not ready yet, rendering notes it as missing
+ * and fails, and the diagram is rendered again once it is ready (see
+ * {@link PendingResources}).
  * <p>
  * Usage:
  * <pre>
- * String dot = "digraph G { A -> B; }";
- * String svg = GraphVizjsTeaVMEngine.renderDotToSvg(dot);
+ * String svg = GraphVizEngineJs.renderDotToSvg("digraph G { A -> B; }");
  * </pre>
  */
 public class GraphVizEngineJs {
@@ -64,21 +68,18 @@ public class GraphVizEngineJs {
 	 */
 	private static final String FIND_VIZ_STMT = "var V = globalThis.PLANTUML_VIZ || (typeof Viz !== 'undefined' ? Viz : null);";
 
+	private static final String NOT_LOADED = "Viz is not loaded: this diagram type needs the Graphviz layout engine (viz-global.js). Load viz-global.js before rendering.";
+
 	// ::remove file when JAVA8
 
-	/**
-	 * Renders a DOT graph description to SVG format.
-	 * <p>
-	 * This method is asynchronous from JavaScript's perspective but appears
-	 * synchronous to the Java caller thanks to TeaVM's @Async mechanism.
-	 *
-	 * @param dotSource the graph description in DOT format
-	 * @return the rendered SVG as a string
-	 */
 	/**
 	 * True when the Viz.js bridge (viz-global.js) is NOT loaded on the page,
 	 * so the caller should fall back to the Smetana layout engine. Logs a
 	 * one-time console note the first time the fallback is taken.
+	 * <p>
+	 * A Viz.js that is loaded but whose instance cannot be created (the
+	 * WebAssembly module fails to load) is not a fallback: the diagram reports
+	 * that failure, naming Viz.
 	 */
 	@JSBody(script = FIND_VIZ_STMT + "var missing = !V || typeof V.instance !== 'function';" +
 			"if (missing && !globalThis.__plantumlSmetanaFallbackNoted) {" +
@@ -88,38 +89,18 @@ public class GraphVizEngineJs {
 			"return missing;")
 	public static native boolean vizMissingFallback();
 
-	@Async
-	public static native String renderDotToSvg(String dotSource);
-
 	/**
-	 * Internal implementation called by TeaVM's async mechanism.
-	 * Sets up the JavaScript Promise handling and calls the callback when complete.
+	 * Renders a DOT graph description to SVG format, with the {@code dot}
+	 * engine.
+	 *
+	 * @param dotSource the graph description in DOT format
+	 * @return the rendered SVG as a string
+	 * @throws RuntimeException when Viz.js is not loaded, failed to load, is
+	 *                          still loading, or fails on this graph
 	 */
-	private static void renderDotToSvg(String dotSource, AsyncCallback<String> callback) {
-		renderDotToSvgAsync(dotSource, result -> callback.complete(result), error -> callback.error(new RuntimeException(error)));
+	public static String renderDotToSvg(String dotSource) {
+		return renderDotToSvg(dotSource, "dot");
 	}
-
-	/**
-	 * JavaScript bridge that calls Viz.instance() and renders the DOT source.
-	 * Uses Viz.js API: Viz.instance().then(viz => viz.renderString(dot, options))
-	 */
-	@JSBody(params = { "dotSource", "onSuccess", "onError" }, script =
-		FIND_VIZ_STMT +
-		"if (!V || typeof V.instance !== 'function') {" +
-		"  onError('Viz is not loaded: this diagram type needs the Graphviz layout engine (viz-global.js). Load viz-global.js before rendering.');" +
-		"  return;" +
-		"}" +
-		"V.instance().then(function(viz) {" +
-		"  try {" +
-		"    var svg = viz.renderString(dotSource, { format: 'svg', engine: 'dot' });" +
-		"    onSuccess(svg);" +
-		"  } catch(e) {" +
-		"    onError(e.toString());" +
-		"  }" +
-		"}).catch(function(err) {" +
-		"  onError(err.toString());" +
-		"});")
-	private static native void renderDotToSvgAsync(String dotSource, StringCallback onSuccess, StringCallback onError);
 
 	/**
 	 * Renders a DOT graph using a specific GraphViz engine.
@@ -127,44 +108,85 @@ public class GraphVizEngineJs {
 	 * @param dotSource the graph description in DOT format
 	 * @param engine    the GraphViz engine to use (dot, neato, fdp, sfdp, twopi, circo)
 	 * @return the rendered SVG as a string
+	 * @throws RuntimeException when Viz.js is not loaded, failed to load, is
+	 *                          still loading, or fails on this graph
 	 */
-	@Async
-	public static native String renderDotToSvg(String dotSource, String engine);
-
-	/**
-	 * Internal implementation for engine-specific rendering.
-	 */
-	private static void renderDotToSvg(String dotSource, String engine, AsyncCallback<String> callback) {
-		renderDotToSvgWithEngineAsync(dotSource, engine, result -> callback.complete(result), error -> callback.error(new RuntimeException(error)));
+	public static String renderDotToSvg(String dotSource, String engine) {
+		if (isReady() == false) {
+			final String failure = getFailure(NOT_LOADED);
+			if (failure != null)
+				throw new RuntimeException(failure);
+			// The instance is being created: this attempt is discarded, and the diagram
+			// is rendered again once it is ready.
+			PendingResources.requireViz();
+			throw new RuntimeException("Viz is loading");
+		}
+		final JSObject result = renderString(dotSource, engine);
+		final String error = getProperty(result, "error");
+		if (error != null)
+			throw new RuntimeException(error);
+		return getProperty(result, "svg");
 	}
 
-	/**
-	 * JavaScript bridge for engine-specific rendering.
-	 */
-	@JSBody(params = { "dotSource", "engine", "onSuccess", "onError" }, script =
-		FIND_VIZ_STMT +
-		"if (!V || typeof V.instance !== 'function') {" +
-		"  onError('Viz is not loaded: this diagram type needs the Graphviz layout engine (viz-global.js). Load viz-global.js before rendering.');" +
-		"  return;" +
-		"}" +
-		"V.instance().then(function(viz) {" +
-		"  try {" +
-		"    var svg = viz.renderString(dotSource, { format: 'svg', engine: engine });" +
-		"    onSuccess(svg);" +
-		"  } catch(e) {" +
-		"    onError(e.toString());" +
-		"  }" +
-		"}).catch(function(err) {" +
-		"  onError(err.toString());" +
-		"});")
-	private static native void renderDotToSvgWithEngineAsync(String dotSource, String engine, StringCallback onSuccess, StringCallback onError);
+	/** Whether the Viz.js instance has been created. */
+	@JSBody(script = "return !!globalThis.__plantumlVizInstance;")
+	private static native boolean isReady();
 
 	/**
-	 * Callback interface for receiving string results from JavaScript.
+	 * Why there is no instance: Viz.js is not on the page, or creating the
+	 * instance failed; <code>null</code> when it is being created, or was never
+	 * asked for.
 	 */
-	@JSFunctor
-	private interface StringCallback extends JSObject {
-		void call(String value);
-	}
-	
+	@JSBody(params = "notLoaded", script = FIND_VIZ_STMT
+			+ "if (!V || typeof V.instance !== 'function') return notLoaded;"
+			+ "var e = globalThis.__plantumlVizError;"
+			+ "return (typeof e === 'string') ? e : null;")
+	private static native String getFailure(String notLoaded);
+
+	/**
+	 * Creates the Viz.js instance, once, and calls <code>done</code> when it is
+	 * there or when creating it failed (the reason is then kept as
+	 * {@code __plantumlVizError}), or at once when there is nothing to wait for.
+	 * Concurrent calls share the same creation.
+	 */
+	@JSBody(params = "done", script = FIND_VIZ_STMT
+			+ "var g = globalThis;"
+			+ "if (g.__plantumlVizInstance || typeof g.__plantumlVizError === 'string'"
+			+ "    || !V || typeof V.instance !== 'function') { done(); return; }"
+			+ "if (g.__plantumlVizWaiting) { g.__plantumlVizWaiting.push(done); return; }"
+			+ "g.__plantumlVizWaiting = [done];"
+			+ "var flush = function() {"
+			+ "  var list = g.__plantumlVizWaiting; g.__plantumlVizWaiting = null;"
+			+ "  for (var i = 0; i < list.length; i++) list[i]();"
+			+ "};"
+			+ "try {"
+			+ "  Promise.resolve(V.instance()).then(function(viz) {"
+			+ "    if (viz && typeof viz.renderString === 'function') g.__plantumlVizInstance = viz;"
+			+ "    else g.__plantumlVizError = 'Viz.instance() did not give a Viz instance';"
+			+ "    flush();"
+			+ "  }, function(err) {"
+			+ "    g.__plantumlVizError = String(err);"
+			+ "    flush();"
+			+ "  });"
+			+ "} catch (e) {"
+			+ "  g.__plantumlVizError = String(e);"
+			+ "  flush();"
+			+ "}")
+	public static native void prepare(ScriptLoaderJs.Ok done);
+
+	/**
+	 * Renders with the instance, synchronously. Viz.js throws on a graph it
+	 * cannot render; the exception is caught here, so that nothing thrown by
+	 * JavaScript crosses into Java, and returned as {@code error}.
+	 */
+	@JSBody(params = { "dotSource", "engine" }, script = "try {"
+			+ "  return { svg: globalThis.__plantumlVizInstance.renderString(dotSource, { format: 'svg', engine: engine }) };"
+			+ "} catch (e) {"
+			+ "  return { error: String(e) };"
+			+ "}")
+	private static native JSObject renderString(String dotSource, String engine);
+
+	@JSBody(params = { "obj", "key" }, script = "var v = obj[key]; return (typeof v === 'string') ? v : null;")
+	private static native String getProperty(JSObject obj, String key);
+
 }

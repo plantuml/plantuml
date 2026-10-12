@@ -1,8 +1,6 @@
 package net.sourceforge.plantuml.teavm.js.headless;
 
 import java.io.IOException;
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.List;
 
 import org.teavm.jso.JSExport;
@@ -14,6 +12,7 @@ import net.sourceforge.plantuml.explain.Explanation;
 import net.sourceforge.plantuml.mcp.McpResult;
 import net.sourceforge.plantuml.mcp.SyntaxChecker;
 import net.sourceforge.plantuml.teavm.DiagramRendererTeaVM;
+import net.sourceforge.plantuml.teavm.js.browser.RenderQueue;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.version.Version;
 
@@ -44,10 +43,12 @@ import net.sourceforge.plantuml.version.Version;
  * a structured diagnostic, without rendering.</li>
  * <li>{@link #renderSvg(String, ResultCallback)} &mdash; parses and renders a
  * single diagram to a deterministic SVG. Asynchronous: the result JSON is
- * delivered through a callback, because diagrams that need Graphviz call the
- * Viz.js engine, whose {@code @Async} bridge can only suspend from a TeaVM
- * worker thread (see {@link net.sourceforge.plantuml.teavm.js.browser.PlantUMLBrowser}
- * for the same constraint).</li>
+ * delivered through a callback, because what the diagram needs from JavaScript
+ * (the Viz.js instance for Graphviz layouts, a URL...) only arrives
+ * asynchronously; the diagram is rendered again once it is there (see
+ * {@link RenderQueue}, shared with
+ * {@link net.sourceforge.plantuml.teavm.js.browser.PlantUMLBrowser}). No thread
+ * and no TeaVM coroutine are involved.</li>
  * </ul>
  */
 public class PlantUMLHeadless {
@@ -123,67 +124,34 @@ public class PlantUMLHeadless {
 		void call(String json);
 	}
 
-	// =========================================================================
-	// Render worker thread
-	//
-	// Rendering must run on a TeaVM thread so that the Viz.js @Async bridge
-	// (GraphVizjsTeaVMEngine) can suspend. An @JSExport called directly from
-	// JavaScript runs in a native JS context, where suspension is illegal. So
-	// renderSvg() only queues a request and wakes the worker; the worker does the
-	// actual rendering in a coroutine context and invokes the callback.
-	// =========================================================================
+	/** A {@link #renderSvg} request. */
+	private static final class RenderJob extends RenderQueue.Job {
+		private final String source;
+		private final ResultCallback callback;
+		private String json;
 
-	private static final Object LOCK = new Object();
-
-	private static volatile boolean workerStarted = false;
-
-	private static final class RenderRequest {
-		final String source;
-		final ResultCallback callback;
-
-		RenderRequest(String source, ResultCallback callback) {
+		private RenderJob(String source, ResultCallback callback) {
 			this.source = source;
 			this.callback = callback;
 		}
-	}
 
-	// A real queue (not a single slot like PlantUMLBrowser): an MCP server may
-	// receive several independent render_diagram calls, and none must be dropped.
-	private static final Deque<RenderRequest> QUEUE = new ArrayDeque<>();
-
-	private static void ensureWorkerStarted() {
-		if (workerStarted == false) {
-			synchronized (LOCK) {
-				if (workerStarted == false) {
-					new Thread(PlantUMLHeadless::workerLoop, "plantuml-headless-render").start();
-					workerStarted = true;
-				}
-			}
-		}
-	}
-
-	private static void workerLoop() {
-		while (true) {
-			final RenderRequest request;
-			synchronized (LOCK) {
-				while (QUEUE.isEmpty()) {
-					try {
-						LOCK.wait();
-					} catch (InterruptedException e) {
-						// Not expected; just retry.
-					}
-				}
-				request = QUEUE.removeFirst();
-			}
-
-			// Render OUTSIDE the lock so new requests can be queued meanwhile.
-			String json;
+		@Override
+		protected void attempt() {
 			try {
-				json = renderSvgToJson(request.source);
+				json = renderSvgToJson(source);
 			} catch (Throwable e) {
 				json = errorJson("Could not render the diagram source: " + e);
 			}
-			request.callback.call(json);
+		}
+
+		@Override
+		protected void deliver() {
+			callback.call(json);
+		}
+
+		@Override
+		protected void giveUp(String message) {
+			callback.call(errorJson(message));
 		}
 	}
 
@@ -192,7 +160,8 @@ public class PlantUMLHeadless {
 	 *
 	 * <p>
 	 * Asynchronous: the result is delivered as a JSON string through
-	 * {@code callback}. On success the JSON has the shape:
+	 * {@code callback}, never before this call returns. Requests are answered
+	 * one at a time, in the order of the calls, each exactly once. On success the JSON has the shape:
 	 *
 	 * <pre>
 	 * {
@@ -213,16 +182,12 @@ public class PlantUMLHeadless {
 	 */
 	@JSExport
 	public static void renderSvg(String source, ResultCallback callback) {
-		ensureWorkerStarted();
-		synchronized (LOCK) {
-			QUEUE.addLast(new RenderRequest(source, callback));
-			LOCK.notify();
-		}
+		RenderQueue.submit(new RenderJob(source, callback));
 	}
 
 	/**
-	 * Synchronous core of {@link #renderSvg(String, ResultCallback)}, run on the
-	 * worker thread. Returns the result JSON string.
+	 * Synchronous core of {@link #renderSvg(String, ResultCallback)}: one
+	 * rendering attempt. Returns the result JSON string.
 	 */
 	private static String renderSvgToJson(String source) {
 		final McpResult result;

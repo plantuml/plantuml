@@ -115,8 +115,10 @@ public class OpenIconic {
 		// Same as themes (ThemeUtils.loadJsTheme): data that is already registered, by a
 		// bundler that inlined openiconic.js or by the host, is used as is, and
 		// openiconic.js is only fetched when nothing is there.
-		if (jsHasOpeniconic() == false)
-			ScriptLoaderJs.loadOnceSync("openiconic.js");
+		// Never waits: when openiconic.js is not loaded yet, this rendering attempt
+		// goes on without icons and is rendered again once it is (PendingResources).
+		if (jsHasOpeniconic() == false && ScriptLoaderJs.require("openiconic.js") == false)
+			return;
 		openiconicJsLoaded = true;
 	}
 

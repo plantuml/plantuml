@@ -141,8 +141,10 @@ public class Emoji {
 		// Same as themes (ThemeUtils.loadJsTheme): data that is already registered, by a
 		// bundler that inlined emoji.js or by the host (inside a Web Worker, say), is
 		// used as is, and emoji.js is only fetched when nothing is there.
-		if (jsHasEmoji() == false)
-			ScriptLoaderJs.loadOnceSync("emoji.js");
+		// Never waits: when emoji.js is not loaded yet, this rendering attempt goes on
+		// without emoji and is rendered again once it is (PendingResources).
+		if (jsHasEmoji() == false && ScriptLoaderJs.require("emoji.js") == false)
+			return;
 		emojiJsLoaded = true;
 		// ::done
 	}

@@ -7,11 +7,6 @@ import org.teavm.jso.JSObject;
 public final class ScriptLoaderJs {
 	// ::remove file when JAVA8
 
-	private static final Object LOCK = new Object();
-	private static volatile boolean loadSuccess;
-	private static volatile String loadError;
-	private static volatile boolean loadComplete;
-
 	@JSFunctor
 	public interface Ok extends JSObject {
 		void invoke();
@@ -130,9 +125,12 @@ public final class ScriptLoaderJs {
 
 	/**
 	 * Writes a warning to the browser console, where the page author will see it.
+	 * A warning of a rendering attempt that is discarded is not written (see
+	 * {@link PendingResources#warn(String)}).
 	 */
-	@JSBody(params = "message", script = "if (typeof console !== 'undefined' && console.warn) console.warn(message);")
-	public static native void consoleWarn(String message);
+	public static void consoleWarn(String message) {
+		PendingResources.warn(message);
+	}
 
 	/**
 	 * 
@@ -205,45 +203,25 @@ public final class ScriptLoaderJs {
 	private static native boolean isLoaded(String url);
 
 	/**
-	 * Loads a script synchronously. Blocks until the script is loaded. MUST be
-	 * called from a TeaVM thread context (not from native JS).
+	 * Whether the script is loaded on the page. It never waits: when the script
+	 * is not loaded, it is noted as missing for the running attempt, which will be
+	 * rendered again once it is (see {@link PendingResources}), and this returns
+	 * <code>false</code>, which callers handle like a script that does not
+	 * define what they look for.
+	 *
+	 * @throws RuntimeException with the reason, when loading the script already
+	 *                          failed during the current request
 	 */
-	public static void loadOnceSync(String url) {
+	public static boolean require(String url) {
 		// Fast path: already loaded
 		if (isLoaded(url))
-			return;
+			return true;
 
-		synchronized (LOCK) {
-			loadComplete = false;
-			loadSuccess = false;
-			loadError = null;
+		final PendingResources.Answer answer = PendingResources.script(url);
+		if (answer != null && answer.getError() != null)
+			throw new RuntimeException(answer.getError());
 
-			loadOnce(url, () -> {
-				synchronized (LOCK) {
-					loadSuccess = true;
-					loadComplete = true;
-					LOCK.notify();
-				}
-			}, (msg) -> {
-				synchronized (LOCK) {
-					loadSuccess = false;
-					loadError = msg;
-					loadComplete = true;
-					LOCK.notify();
-				}
-			});
-
-			while (!loadComplete) {
-				try {
-					LOCK.wait();
-				} catch (InterruptedException e) {
-					// retry
-				}
-			}
-
-			if (!loadSuccess)
-				throw new RuntimeException(loadError);
-		}
+		return false;
 	}
 
 	private ScriptLoaderJs() {

@@ -131,7 +131,9 @@ public class ThemeUtils {
 		String content = ScriptLoaderJs.getTheme(name);
 		if (content == null) {
 			try {
-				ScriptLoaderJs.loadOnceSync(THEMES_JS);
+				// Never waits: when themes.js is not loaded yet, this rendering attempt
+				// goes on unthemed and is rendered again once it is (PendingResources).
+				ScriptLoaderJs.require(THEMES_JS);
 			} catch (RuntimeException fetchFailed) {
 				// hasThemes() decides below; a failed fetch and a fetch that did not
 				// define the map are the same situation.

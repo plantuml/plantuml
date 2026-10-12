@@ -1,8 +1,5 @@
 package net.sourceforge.plantuml.teavm.js.browser;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.teavm.jso.JSBody;
 import org.teavm.jso.JSExport;
 import org.teavm.jso.JSFunctor;
@@ -80,82 +77,46 @@ import net.sourceforge.plantuml.teavm.js.UGraphicJs;
  * This separation keeps the Java code minimal and allows maximum flexibility
  * for web developers to integrate PlantUML however they want.
  *
- * <h2>Why we need a worker thread</h2>
+ * <h2>No thread, no coroutine</h2>
  *
- * TeaVM compiles Java to JavaScript, but JavaScript is single-threaded and
- * event-driven. To support Java's synchronous blocking APIs (like
- * {@code Thread.sleep()} or {@code Object.wait()}), TeaVM uses a
- * coroutine-based approach that transforms blocking calls into asynchronous
- * JavaScript Promises.
+ * There is no worker thread, and nothing in the engine suspends (no TeaVM
+ * coroutine: see tools/teavm-coroutines). What the rendering needs from JavaScript and
+ * can only get asynchronously (the Viz.js instance, support scripts such as
+ * {@code emoji.js} or {@code <lib>.min.js}, files of
+ * {@code PLANTUML_FILE_LOADER}, URLs) is handled by rendering again: an
+ * attempt that misses one is discarded, the resources are loaded with
+ * JavaScript callbacks, and the diagram is rendered again from its source (see
+ * {@link PendingResources} and {@link RenderQueue}).
  *
- * <h3>The Viz.js constraint</h3>
+ * <p>
+ * The exported functions only queue the request and return: the rendering
+ * starts from a later JavaScript task ({@code setTimeout}), as it did when a
+ * worker thread did it, so the callbacks are never called before the function
+ * returns.
  *
- * PlantUML uses Viz.js (a JavaScript port of GraphViz) to render class
- * diagrams, component diagrams, and other diagrams that require graph layout.
- * Viz.js has an asynchronous API:
+ * <h2>Order of the answers</h2>
  *
- * <pre>
- * Viz.instance().then(viz =&gt; viz.renderString(dot, options))
- * </pre>
- *
- * Our {@code GraphVizjsTeaVMEngine} class uses TeaVM's {@code @Async}
- * annotation to make this async call appear synchronous to Java code. However,
- * this only works when called from a "TeaVM coroutine context" - essentially,
- * from within a TeaVM thread.
- *
- * <h3>What happens without the worker thread</h3>
- *
- * If JavaScript calls our render function directly (e.g., from a
- * {@code setTimeout} callback or an event listener), the call happens in a
- * "native JS context", not a TeaVM coroutine context. When the code reaches the
- * Viz.js async call, TeaVM throws:
- *
- * <pre>
- * Error: Suspension point reached from non-threading context
- * (perhaps, from native JS method).
- * See https://teavm.org/docs/runtime/coroutines.html
- * </pre>
- *
- * <h3>The solution: a dedicated worker thread</h3>
- *
- * We solve this by:
- * <ol>
- * <li>Lazily starting a background thread on the first call to {@link #render}
- * or {@link #renderToString}</li>
- * <li>Having the exported function just queue a render request and wake the
- * thread</li>
- * <li>The worker thread performs the actual rendering in the correct coroutine
- * context</li>
- * </ol>
- *
- * This pattern ensures all PlantUML rendering (including Viz.js calls) happens
- * in a context where TeaVM's async-to-sync transformation works correctly.
- *
- * <h2>Thread safety</h2>
- *
- * The class uses a simple producer-consumer pattern:
- * <ul>
- * <li>Producer: {@link #render} / {@link #renderToString} called from JS, sets
- * pending request and notifies</li>
- * <li>Consumer: {@code workerLoop()} waits for requests, processes them one at
- * a time</li>
- * </ul>
- *
- * Requests wait in a queue, oldest first, and the worker answers them one at a
- * time. Two rules decide what happens when several arrive before the worker is
- * free:
+ * Requests are answered one at a time, oldest first. Two rules decide what
+ * happens when several are waiting:
  * <ul>
  * <li>{@code renderToString}: every request is kept and answered, in the order
  * received. Each of its callbacks is called exactly once ({@code onSuccess} or
  * {@code onError}); a host that renders many diagrams at the same time gets all
  * of them back.</li>
  * <li>{@code render}: only the latest request is kept, a new one replaces the
- * {@code render} request still waiting. This is intentional: when a user is
- * typing, we only care about rendering the latest version.</li>
+ * {@code render} request still waiting, including one waiting for its
+ * resources. This is intentional: when a user is typing, we only care about
+ * rendering the latest version.</li>
  * </ul>
  *
  * Neither kind drops the other. A callback that throws, or a missing callback,
- * does not stop the worker.
+ * does not stop the engine. A request made from a callback (or while a request
+ * waits for its resources) is queued behind the ones already waiting: it is
+ * never rendered in the middle of another one.
+ *
+ * <p>
+ * The DOM element of {@code render} is only written with the result of the
+ * attempt that is kept, so a discarded attempt never shows.
  *
  * @see net.sourceforge.plantuml.teavm.js.GraphVizEngineJs
  */
@@ -178,110 +139,110 @@ public class PlantUMLBrowser {
 	private static final int DEFAULT_MAX_SVG_SIZE = 8192;
 
 	// =========================================================================
-	// Worker thread synchronization
-	//
-	// We use a simple wait/notify pattern. The worker thread waits on LOCK until
-	// pendingLines becomes non-null, then processes the request and sets it back
-	// to null.
+	// Requests
 	// =========================================================================
 
-	/** Lock object for synchronizing between JS requests and worker thread. */
-	private static final Object LOCK = new Object();
-
-	/**
-	 * Whether the worker thread has been started. Guarded by {@link #LOCK} for the
-	 * start transition; read without locking on the fast path.
-	 */
-	private static volatile boolean workerStarted = false;
-
-	/**
-	 * One render request, as queued by the exported entry points and consumed by
-	 * {@link PlantUMLBrowser#workerLoop()}. Immutable: it is built by the caller's thread and read
-	 * by the worker.
-	 */
-	private static final class Request {
-		/** The PlantUML source lines to render. */
+	/** A {@link #render} request: the SVG goes into a DOM element. */
+	private static final class ElementJob extends RenderQueue.Job {
 		private final String[] lines;
-
-		/**
-		 * The DOM element ID where the SVG should be inserted, or null for
-		 * renderToString requests.
-		 */
 		private final String elementId;
-
-		/** Success callback of a renderToString request, null for render-to-div. */
-		private final StringCallback onSuccess;
-
-		/** Error callback of a renderToString request, null for render-to-div. */
-		private final StringCallback onError;
-
-		/** Whether the request should use dark mode rendering. */
 		private final boolean darkMode;
-
-		/**
-		 * Maximum width/height (in pixels) allowed, resolved from the
-		 * {@code maxSvgSize} option ({@link #DEFAULT_MAX_SVG_SIZE} when absent). A
-		 * value {@code <= 0} means "no limit".
-		 */
 		private final int maxSvgSize;
+		private SvgGraphicsJs svg;
+		private Throwable failure;
 
-		private final boolean toElement;
-
-		private Request(String[] lines, String elementId, StringCallback onSuccess, StringCallback onError,
-				boolean darkMode, int maxSvgSize, boolean toElement) {
+		private ElementJob(String[] lines, String elementId, boolean darkMode, int maxSvgSize) {
 			this.lines = lines;
 			this.elementId = elementId;
+			this.darkMode = darkMode;
+			this.maxSvgSize = maxSvgSize;
+		}
+
+		@Override
+		protected boolean replaces(RenderQueue.Job waiting) {
+			// "Latest wins": a render request still waiting is dropped, in place.
+			return waiting instanceof ElementJob;
+		}
+
+		@Override
+		protected void attempt() {
+			BrowserLog.reset();
+			svg = null;
+			failure = null;
+			try {
+				svg = buildSvg(lines, darkMode, maxSvgSize);
+			} catch (Throwable t) {
+				failure = t;
+			}
+		}
+
+		@Override
+		protected void deliver() {
+			final HTMLElement out = HTMLDocument.current().getElementById(elementId);
+			if (out != null) {
+				if (svg != null) {
+					removeAllChildren(out);
+					appendSvgElement(out, svg.getSvgRoot());
+				} else {
+					out.setTextContent(String.valueOf(failure));
+				}
+			}
+			BrowserLog.jsStatusDuration();
+		}
+
+		@Override
+		protected void giveUp(String message) {
+			final HTMLElement out = HTMLDocument.current().getElementById(elementId);
+			if (out != null)
+				out.setTextContent(message);
+		}
+	}
+
+	/** A {@link #renderToString} request: the SVG goes to a callback. */
+	private static final class CallbackJob extends RenderQueue.Job {
+		private final String[] lines;
+		private final StringCallback onSuccess;
+		private final StringCallback onError;
+		private final boolean darkMode;
+		private final int maxSvgSize;
+		private String svg;
+		private Throwable failure;
+
+		private CallbackJob(String[] lines, StringCallback onSuccess, StringCallback onError, boolean darkMode,
+				int maxSvgSize) {
+			this.lines = lines;
 			this.onSuccess = onSuccess;
 			this.onError = onError;
 			this.darkMode = darkMode;
 			this.maxSvgSize = maxSvgSize;
-			this.toElement = toElement;
 		}
 
-		/** A {@link PlantUMLBrowser#render} request: the SVG goes into a DOM element. */
-		private static Request forElement(String[] lines, String elementId, boolean darkMode, int maxSvgSize) {
-			return new Request(lines, elementId, null, null, darkMode, maxSvgSize, true);
-		}
-
-		/** A {@link PlantUMLBrowser#renderToString} request: the SVG goes to a callback. */
-		private static Request forCallbacks(String[] lines, StringCallback onSuccess, StringCallback onError,
-				boolean darkMode, int maxSvgSize) {
-			return new Request(lines, null, onSuccess, onError, darkMode, maxSvgSize, false);
-		}
-	}
-
-	/**
-	 * Requests waiting for the worker, oldest first. Guarded by {@link #LOCK}.
-	 *
-	 * <p>
-	 * Every {@link #renderToString} request stays in the queue until the worker has
-	 * answered it, so each of its callbacks is called exactly once. A
-	 * {@link #render} request is the exception: it replaces the {@code render}
-	 * request already waiting, if any (see {@link #enqueueRender}). The queue is
-	 * not bounded: a host that floods {@code renderToString} gets every diagram
-	 * rendered.
-	 */
-	private static final List<Request> QUEUE = new ArrayList<Request>();
-
-	// =========================================================================
-	// Lazy worker initialization
-	// =========================================================================
-
-	/**
-	 * Starts the worker thread on the first call. Subsequent calls are no-ops.
-	 *
-	 * Because the TeaVM JS output is an ES2015 module, there is no {@code main()}
-	 * entry point that runs automatically at load time, so we defer thread creation
-	 * until the first render request arrives.
-	 */
-	private static void ensureWorkerStarted() {
-		if (workerStarted == false) {
-			synchronized (LOCK) {
-				if (workerStarted == false) {
-					new Thread(PlantUMLBrowser::workerLoop, "plantuml-render").start();
-					workerStarted = true;
-				}
+		@Override
+		protected void attempt() {
+			svg = null;
+			failure = null;
+			try {
+				svg = serializeSvg(buildSvg(lines, darkMode, maxSvgSize).getSvgRoot());
+			} catch (Throwable t) {
+				failure = t;
 			}
+		}
+
+		/**
+		 * Exactly one of the two callbacks is called, once. If the success callback
+		 * throws, the error callback is not called as well.
+		 */
+		@Override
+		protected void deliver() {
+			if (svg != null)
+				PlantUMLBrowser.deliver(onSuccess, svg);
+			else
+				PlantUMLBrowser.deliver(onError, String.valueOf(failure));
+		}
+
+		@Override
+		protected void giveUp(String message) {
+			PlantUMLBrowser.deliver(onError, message);
 		}
 	}
 
@@ -302,25 +263,15 @@ public class PlantUMLBrowser {
 	 * {@code elementId}.
 	 *
 	 * <p>
-	 * This method does NOT perform the rendering itself — it only queues the
-	 * request and wakes up the worker thread. This is necessary because:
-	 *
-	 * <ol>
-	 * <li>This method is called from a native JS context (event handler,
-	 * setTimeout, etc.)</li>
-	 * <li>Viz.js async calls require a TeaVM coroutine context</li>
-	 * <li>The worker thread provides that coroutine context</li>
-	 * </ol>
-	 *
-	 * <p>
 	 * This call is asynchronous: it returns immediately, and the SVG is inserted
-	 * later from the worker thread.
+	 * later, once its turn has come and its resources are there (see the class
+	 * documentation).
 	 *
 	 * <p>
-	 * If a previous {@code render} request is still waiting (the worker hasn't
-	 * picked it up yet), it is replaced by this one, and its diagram is never
-	 * drawn. This is the desired behavior for live-typing scenarios. Waiting
-	 * {@code renderToString} requests are not affected.
+	 * If a previous {@code render} request is still waiting, it is replaced by
+	 * this one, and its diagram is never drawn. This is the desired behavior for
+	 * live-typing scenarios. Waiting {@code renderToString} requests are not
+	 * affected.
 	 *
 	 * @param lines     the PlantUML source code, split into lines by the JavaScript
 	 *                  caller
@@ -333,27 +284,7 @@ public class PlantUMLBrowser {
 	 */
 	@JSExport
 	public static void render(String[] lines, String elementId, JSObject options) {
-		ensureWorkerStarted();
-		final Request request = Request.forElement(lines, elementId, isDark(options), resolveMaxSvgSize(options));
-		synchronized (LOCK) {
-			enqueueRender(request);
-			LOCK.notify();
-		}
-	}
-
-	/**
-	 * Adds a {@link #render} request to the queue, "latest wins": if a
-	 * {@code render} request is still waiting, it is replaced (in place) by this
-	 * one. Requests of the other kind are never touched. Must be called with
-	 * {@link #LOCK} held.
-	 */
-	private static void enqueueRender(Request request) {
-		for (int i = 0; i < QUEUE.size(); i++)
-			if (QUEUE.get(i).toElement) {
-				QUEUE.set(i, request);
-				return;
-			}
-		QUEUE.add(request);
+		RenderQueue.submit(new ElementJob(lines, elementId, isDark(options), resolveMaxSvgSize(options)));
 	}
 
 	/**
@@ -361,10 +292,9 @@ public class PlantUMLBrowser {
 	 * {@code onSuccess} callback. Errors go to {@code onError}.
 	 *
 	 * <p>
-	 * Same queueing and asynchronous behavior as {@link #render}: this method only
-	 * queues the request; the worker thread performs the actual rendering and
-	 * invokes the callback. Unlike {@link #render}, requests are never dropped: each
-	 * call is queued behind the ones already waiting, and exactly one of
+	 * Same queueing and asynchronous behavior as {@link #render}: a callback is
+	 * never called before this call returns. Unlike {@link #render}, requests are never dropped:
+	 * each call is queued behind the ones already waiting, and exactly one of
 	 * {@code onSuccess} and {@code onError} is called for it, once, in the order of
 	 * the calls. A callback that is {@code null} or that throws does not stop the
 	 * engine (an exception is reported with {@code console.error}).
@@ -381,13 +311,7 @@ public class PlantUMLBrowser {
 	@JSExport
 	public static void renderToString(String[] lines, StringCallback onSuccess, StringCallback onError,
 			JSObject options) {
-		ensureWorkerStarted();
-		final Request request = Request.forCallbacks(lines, onSuccess, onError, isDark(options),
-				resolveMaxSvgSize(options));
-		synchronized (LOCK) {
-			QUEUE.add(request);
-			LOCK.notify();
-		}
+		RenderQueue.submit(new CallbackJob(lines, onSuccess, onError, isDark(options), resolveMaxSvgSize(options)));
 	}
 
 	// =========================================================================
@@ -419,59 +343,6 @@ public class PlantUMLBrowser {
 	private static int resolveMaxSvgSize(JSObject opts) {
 		final int value = extractMaxSvgSize(opts);
 		return value < 0 ? DEFAULT_MAX_SVG_SIZE : value;
-	}
-
-	// =========================================================================
-	// Worker thread
-	// =========================================================================
-
-	/**
-	 * Main loop for the worker thread. Runs forever, processing render requests.
-	 * 
-	 * This method executes in a TeaVM coroutine context, which means:
-	 * <ul>
-	 * <li>{@code LOCK.wait()} is properly transformed to async JS</li>
-	 * <li>Viz.js async calls (via @Async annotation) work correctly</li>
-	 * </ul>
-	 * 
-	 * The loop:
-	 * <ol>
-	 * <li>Waits until a render request is available (pendingLines != null)</li>
-	 * <li>Captures and clears the request atomically</li>
-	 * <li>Performs the rendering (may involve async Viz.js calls)</li>
-	 * <li>Repeats forever</li>
-	 * </ol>
-	 */
-	private static void workerLoop() {
-		while (true) {
-			final Request request;
-
-			synchronized (LOCK) {
-				while (QUEUE.isEmpty()) {
-					try {
-						LOCK.wait();
-					} catch (InterruptedException e) {
-						// Interruption is not expected, but if it happens, just retry
-					}
-				}
-
-				// Take the oldest request off the queue.
-				request = QUEUE.remove(0);
-			}
-
-			// Perform rendering OUTSIDE the synchronized block so new requests
-			// can be queued while we're rendering.
-			try {
-				if (request.toElement)
-					doRender(request.lines, request.elementId, request.darkMode, request.maxSvgSize);
-				else
-					doRenderToString(request);
-			} catch (Throwable t) {
-				// Nothing may end this loop: a worker that dies leaves every later request
-				// unanswered, with no error anywhere.
-				consoleError("PlantUML: request failed: " + t);
-			}
-		}
 	}
 
 	// =========================================================================
@@ -562,43 +433,10 @@ public class PlantUMLBrowser {
 		return documentBackground;
 	}
 
-	private static void doRender(String[] lines, String elementId, boolean darkMode, int maxSvgSize) {
-		final HTMLElement out = HTMLDocument.current().getElementById(elementId);
-		if (out == null)
-			return;
-
-		try {
-			BrowserLog.reset();
-			final SvgGraphicsJs svg = buildSvg(lines, darkMode, maxSvgSize);
-			removeAllChildren(out);
-			appendSvgElement(out, svg.getSvgRoot());
-		} catch (Exception e) {
-			out.setTextContent(String.valueOf(e));
-		}
-		BrowserLog.jsStatusDuration();
-	}
-
-	/**
-	 * Renders a {@link #renderToString} request and answers it: exactly one of its
-	 * two callbacks is called, once.
-	 */
-	private static void doRenderToString(Request request) {
-		final String svg;
-		try {
-			svg = serializeSvg(buildSvg(request.lines, request.darkMode, request.maxSvgSize).getSvgRoot());
-		} catch (Throwable t) {
-			deliver(request.onError, String.valueOf(t));
-			return;
-		}
-		// Outside the try block above: if the success callback throws, the error
-		// callback must not be called as well.
-		deliver(request.onSuccess, svg);
-	}
-
 	/**
 	 * Calls a host callback. A missing callback (the host did not pass one) is
 	 * ignored, and an exception thrown by the callback is contained, so that it
-	 * cannot stop the worker. It is reported with {@code console.error}, as an
+	 * cannot stop the engine. It is reported with {@code console.error}, as an
 	 * error and not as debug output: it is a bug of the host that nothing else
 	 * would show.
 	 */
@@ -608,7 +446,7 @@ public class PlantUMLBrowser {
 		try {
 			callback.call(value);
 		} catch (Throwable t) {
-			consoleError("PlantUML: callback threw: " + t);
+			RenderQueue.consoleError("PlantUML: callback threw: " + t);
 		}
 	}
 
@@ -623,10 +461,6 @@ public class PlantUMLBrowser {
 	/** Removes all child nodes from a DOM element. */
 	@JSBody(params = "el", script = "while(el.firstChild)el.removeChild(el.firstChild);")
 	private static native void removeAllChildren(HTMLElement el);
-
-	/** Reports an error to the console, whatever {@code PLANTUML_DEBUG} says. */
-	@JSBody(params = "msg", script = "console.error(msg);")
-	private static native void consoleError(String msg);
 
 	/** Serializes an SVG DOM element to a string. */
 	@JSBody(params = "svg", script = "return new XMLSerializer().serializeToString(svg);")

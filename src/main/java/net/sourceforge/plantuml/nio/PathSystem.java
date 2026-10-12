@@ -188,8 +188,9 @@ public class PathSystem {
 
 	private boolean loadTeaVMStdlibBundle(String libname) {
 		try {
-			ScriptLoaderJs.loadOnceSync(libname + ".min.js");
-			return true;
+			// Never waits: when the bundle is not loaded yet, this rendering attempt
+			// fails the include and is rendered again once it is (PendingResources).
+			return ScriptLoaderJs.require(libname + ".min.js");
 		} catch (RuntimeException e) {
 			ScriptLoaderJs
 					.consoleWarn("PlantUML: cannot load stdlib bundle " + libname + ".min.js: " + e.getMessage());
