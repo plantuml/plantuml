@@ -57,9 +57,11 @@ MCP client (LM Studio, Claude Desktop, ...)
 Unlike the root project's TeaVM *browser* build (`PlantUMLBrowser`), the
 headless entry point keeps things minimal: `plantuml_version`, `check_syntax`
 and `explain_diagram` are synchronous and return plain strings. `render_diagram`
-is asynchronous — it runs on a TeaVM worker thread and relies on the Viz.js
-(`@viz-js/viz`) WASM build for Graphviz-dependent layouts — delivering its result
-JSON through a callback that `server.js` wraps in a Promise.
+is asynchronous — it relies on the Viz.js (`@viz-js/viz`) WASM build for
+Graphviz-dependent layouts, whose instance is only created asynchronously —
+delivering its result JSON through a callback that `server.js` wraps in a
+Promise. The engine uses no thread: the diagram is rendered again once the
+instance is ready.
 
 ## Building
 

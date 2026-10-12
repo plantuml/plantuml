@@ -375,10 +375,18 @@ rejection of the promise it returns fails the include, while a fulfilled value
 delivers nothing, so the file must still come through `ok`. The first outcome
 wins; a later callback or rejection is ignored. Returning `false` (strictly),
 without calling either callback, declines the file, which then fails as if no
-loader were set. The engine has no timeout: a loader that neither calls a
-callback, returns `false`, nor rejects leaves the rendering waiting, so a host
-that performs network I/O should enforce its own timeout and call `err` when
-it expires.
+loader were set. A loader that neither calls a callback, returns `false`, nor
+rejects within 60 seconds makes the include fail, with a message on the
+console; a later answer is ignored. A host that performs network I/O may still
+enforce a shorter timeout of its own and call `err` when it expires.
+
+The engine never waits for the loader. It renders the diagram, notes the files
+it did not have yet, asks the loader for them, and renders the diagram again
+once every answer is in, as many times as the include depth requires (at most
+20). So during one rendering the loader is called once per file (path, `from`
+and kind), and it is called again at the next rendering, which is how an
+edited file is seen. Nothing of a discarded rendering reaches the page: not
+the drawing, not its console warnings.
 
 The loader is only asked for local names. Standard-library includes, URL
 includes, `!includedef` and a `!theme` from a library or a URL keep their

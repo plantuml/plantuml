@@ -43,8 +43,8 @@ console.debug = (...args) => console.error(...args);
 // --- Provide the Viz.js engine to the TeaVM code ----------------------------
 //
 // Diagrams that need Graphviz layout (class, state, component, ...) call
-// GraphVizjsTeaVMEngine, whose @JSBody expects a global `Viz` exposing
-// `Viz.instance()` (the same shape Viz.js has in the browser). In Node we get
+// GraphVizEngineJs, which expects a global `Viz` exposing `Viz.instance()`
+// (the same shape Viz.js has in the browser). In Node we get
 // that from the @viz-js/viz package (WASM build of Graphviz). The instance
 // promise is memoized so the WASM module is loaded only once.
 import * as vizModule from "@viz-js/viz";
@@ -153,9 +153,10 @@ server.tool(
       ),
   },
   async ({ source }) => {
-    // engine.renderSvg is asynchronous: it runs the render on a TeaVM worker
-    // thread (required so the Viz.js @Async bridge can suspend) and delivers
-    // the result JSON string through a callback. Wrap it in a Promise.
+    // engine.renderSvg is asynchronous: what the diagram needs from JavaScript
+    // (the Viz.js instance) only arrives asynchronously, so the engine renders
+    // the diagram again once it is there, and delivers the result JSON string
+    // through a callback. Wrap it in a Promise.
     const json = await new Promise((resolve) => {
       engine.renderSvg(source, (result) => resolve(result));
     });

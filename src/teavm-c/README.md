@@ -224,3 +224,6 @@ TTF files and the measured widths (any OS), and the whole bounder against
   `java.net.URL.openStream()` (XHR connection, JavaScript only): `SURL.openStream`
   returns `null` in C. Any new use of `java.net.URL`, `Thread.sleep`,
   `Object.wait`... on the path from `MainC` will bring the problem back.
+  The JavaScript build uses no coroutine either (no worker thread, no `@Async`:
+  see `PendingResources`), and `tools/teavm-coroutines/check_no_coroutines.py`
+  fails the CI when either output contains one again.
