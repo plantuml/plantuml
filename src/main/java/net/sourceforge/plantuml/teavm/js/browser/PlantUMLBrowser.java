@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.teavm.browser;
+package net.sourceforge.plantuml.teavm.js.browser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +27,10 @@ import net.sourceforge.plantuml.klimt.drawing.hand.UGraphicHandwritten;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.teavm.StringBounderTeaVM;
-import net.sourceforge.plantuml.teavm.SvgGraphicsTeaVM;
-import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
 import net.sourceforge.plantuml.teavm.js.PSystemBuilderJs;
+import net.sourceforge.plantuml.teavm.js.StringBounderTeaVM;
+import net.sourceforge.plantuml.teavm.js.SvgGraphicsJs;
+import net.sourceforge.plantuml.teavm.js.UGraphicJs;
 
 /**
  * PlantUML rendering engine for browser environments, compiled to a JavaScript
@@ -157,7 +157,7 @@ import net.sourceforge.plantuml.teavm.js.PSystemBuilderJs;
  * Neither kind drops the other. A callback that throws, or a missing callback,
  * does not stop the worker.
  *
- * @see net.sourceforge.plantuml.teavm.GraphVizjsTeaVMEngine
+ * @see net.sourceforge.plantuml.teavm.js.GraphVizEngineJs
  */
 public class PlantUMLBrowser {
 	// ::remove file when JAVA8
@@ -479,7 +479,7 @@ public class PlantUMLBrowser {
 	// =========================================================================
 
 	/** Parses and renders PlantUML source lines to an SVG graphics context. */
-	private static SvgGraphicsTeaVM buildSvg(String[] lines, boolean darkMode, int maxSvgSize) throws Exception {
+	private static SvgGraphicsJs buildSvg(String[] lines, boolean darkMode, int maxSvgSize) throws Exception {
 		final ColorMapper colorMapper = darkMode ? ColorMapper.TEAVM_DARK : ColorMapper.TEAVM_LIGHT;
 
 		final Diagram diagram = PSystemBuilderJs.getInstance().createDiagram(lines);
@@ -496,16 +496,16 @@ public class PlantUMLBrowser {
 		if (tbBackcolor == null && diagram instanceof TitledDiagram)
 			tbBackcolor = getPaintableDocumentBackground((TitledDiagram) diagram);
 
-		final SvgGraphicsTeaVM svg;
+		final SvgGraphicsJs svg;
 
 		if (tbBackcolor == null) {
-			svg = new SvgGraphicsTeaVM();
+			svg = new SvgGraphicsJs();
 			tbBackcolor = darkMode ? HColors.BLACK : HColors.WHITE;
 		} else {
-			svg = new SvgGraphicsTeaVM(tbBackcolor.toSvg(colorMapper));
+			svg = new SvgGraphicsJs(tbBackcolor.toSvg(colorMapper));
 		}
 
-		UGraphic ug = UGraphicTeaVM.build(tbBackcolor, colorMapper, STRING_BOUNDER, svg);
+		UGraphic ug = UGraphicJs.build(tbBackcolor, colorMapper, STRING_BOUNDER, svg);
 
 		if (diagram instanceof TitledDiagram)
 			tb = DiagramChromeFactory.create(tb, (TitledDiagram) ugDiagram,
@@ -569,7 +569,7 @@ public class PlantUMLBrowser {
 
 		try {
 			BrowserLog.reset();
-			final SvgGraphicsTeaVM svg = buildSvg(lines, darkMode, maxSvgSize);
+			final SvgGraphicsJs svg = buildSvg(lines, darkMode, maxSvgSize);
 			removeAllChildren(out);
 			appendSvgElement(out, svg.getSvgRoot());
 		} catch (Exception e) {

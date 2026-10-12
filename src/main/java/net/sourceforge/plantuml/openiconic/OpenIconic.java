@@ -60,7 +60,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockMemoized;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.teavm.TeaVM;
-import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
+import net.sourceforge.plantuml.teavm.js.browser.ScriptLoaderJs;
 
 public class OpenIconic {
 
@@ -116,7 +116,7 @@ public class OpenIconic {
 		// bundler that inlined openiconic.js or by the host, is used as is, and
 		// openiconic.js is only fetched when nothing is there.
 		if (jsHasOpeniconic() == false)
-			TeaVmScriptLoader.loadOnceSync("openiconic.js");
+			ScriptLoaderJs.loadOnceSync("openiconic.js");
 		openiconicJsLoaded = true;
 	}
 

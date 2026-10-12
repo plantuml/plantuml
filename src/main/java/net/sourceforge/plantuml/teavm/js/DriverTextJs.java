@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.teavm;
+package net.sourceforge.plantuml.teavm.js;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.klimt.font.FontStyle;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.shape.UText;
 
-public class DriverTextTeaVM implements UDriver<UText, SvgGraphicsTeaVM> {
+public class DriverTextJs implements UDriver<UText, SvgGraphicsJs> {
 	// ::remove file when JAVA8
 
 	// Collects extra colored lines (underline/strikethrough) that cannot be
@@ -62,7 +62,7 @@ public class DriverTextTeaVM implements UDriver<UText, SvgGraphicsTeaVM> {
 			deltaYs.add(deltaY);
 		}
 
-		void drawAll(double x, double y, double width, UFont font, ColorMapper mapper, SvgGraphicsTeaVM svg) {
+		void drawAll(double x, double y, double width, UFont font, ColorMapper mapper, SvgGraphicsJs svg) {
 			for (int i = 0; i < colors.size(); i++) {
 				svg.setStrokeColor(colors.get(i).toSvg(mapper));
 				svg.setStrokeWidth(font.getSize2D() / 28.0);
@@ -72,7 +72,7 @@ public class DriverTextTeaVM implements UDriver<UText, SvgGraphicsTeaVM> {
 	}
 
 	@Override
-	public void draw(UText shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
+	public void draw(UText shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsJs svg) {
 		final UClip clip = param.getClip();
 		if (clip != null && clip.isInside(x, y) == false)
 			return;
@@ -138,7 +138,7 @@ public class DriverTextTeaVM implements UDriver<UText, SvgGraphicsTeaVM> {
 				shape.getOrientation());
 
 		// Draw extra lines for colored underline/strike
-		final double width = SvgGraphicsTeaVM.getTextWidth(shape.getText(), fontFamily, fontSize);
+		final double width = SvgGraphicsJs.getTextWidth(shape.getText(), fontFamily, fontSize);
 		extraLines.drawAll(x, y, width, font, mapper, svg);
 	}
 }

@@ -35,13 +35,13 @@
  */
 package net.sourceforge.plantuml.openiconic;
 
-import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 

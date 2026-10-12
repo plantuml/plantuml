@@ -3,7 +3,7 @@
 // TeaVM headless JS build powering the Node-based PlantUML MCP server.
 //
 // Compiles a minimal, DOM-free entry point
-// (net.sourceforge.plantuml.teavm.headless.PlantUMLHeadless) to JavaScript, so
+// (net.sourceforge.plantuml.teavm.js.headless.PlantUMLHeadless) to JavaScript, so
 // the MCP server can run on a plain Node process with no Java runtime and no
 // browser. This is the lower-barrier-to-entry counterpart of the Java
 // Spring-AI based plantuml-mcp server (which requires a JRE).
@@ -56,7 +56,7 @@ tasks.withType<JavaCompile>().configureEach {
 
 teavm {
 	js {
-		mainClass.set("net.sourceforge.plantuml.teavm.headless.PlantUMLHeadless")
+		mainClass.set("net.sourceforge.plantuml.teavm.js.headless.PlantUMLHeadless")
 		moduleType.set(org.teavm.gradle.api.JSModuleType.ES2015)
 		// Keep the output readable for the MVP; tighten (obfuscate) later once
 		// the chain is validated.

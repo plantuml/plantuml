@@ -32,7 +32,7 @@
  * Original Author:  Arnaud Roques
  *
  */
-package net.sourceforge.plantuml.teavm.c;
+package net.sourceforge.plantuml.teavm.c.demo;
 
 import java.util.ArrayList;
 import java.util.HashMap;

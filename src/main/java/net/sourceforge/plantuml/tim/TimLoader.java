@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.teavm.browser.BrowserLog;
+import net.sourceforge.plantuml.teavm.js.browser.BrowserLog;
 import net.sourceforge.plantuml.text.StringLocated;
 
 public class TimLoader {

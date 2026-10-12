@@ -292,7 +292,7 @@ public final class DotStringFactory implements Moveable {
 			// image instead of an uncaught exception escaping the render call.
 			// ::revert when JAVA8
 			try {
-				return net.sourceforge.plantuml.teavm.GraphVizjsTeaVMEngine.renderDotToSvg(dotString);
+				return net.sourceforge.plantuml.teavm.js.GraphVizEngineJs.renderDotToSvg(dotString);
 			} catch (RuntimeException e) {
 				throw new IOException(e.getMessage(), e);
 			}

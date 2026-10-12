@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.teavm.headless;
+package net.sourceforge.plantuml.teavm.js.headless;
 
 import java.io.IOException;
 import java.util.ArrayDeque;
@@ -11,9 +11,9 @@ import org.teavm.jso.JSObject;
 
 import net.sourceforge.plantuml.explain.DiagramExplainer;
 import net.sourceforge.plantuml.explain.Explanation;
-import net.sourceforge.plantuml.mcp.DiagramRendererTeaVM;
 import net.sourceforge.plantuml.mcp.McpResult;
 import net.sourceforge.plantuml.mcp.SyntaxChecker;
+import net.sourceforge.plantuml.teavm.DiagramRendererTeaVM;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.version.Version;
 
@@ -21,7 +21,7 @@ import net.sourceforge.plantuml.version.Version;
  * Headless TeaVM entry point for the PlantUML MCP server (Node/stdio).
  *
  * <p>
- * Unlike {@link net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser}, this
+ * Unlike {@link net.sourceforge.plantuml.teavm.js.browser.PlantUMLBrowser}, this
  * class exposes no DOM- or Graphviz-dependent code: just plain text-returning
  * functions usable from a plain Node process, with no browser and no Java
  * runtime.
@@ -30,7 +30,7 @@ import net.sourceforge.plantuml.version.Version;
  * The actual work is delegated to the shared MCP classes ({@link SyntaxChecker}
  * / {@link McpResult}), so the logic is not duplicated between the Java server
  * and this JS build. This class only adapts their result to a JSON string,
- * built as a native JS object via {@link TeaVmJson} and serialized with
+ * built as a native JS object via {@link JsonJs} and serialized with
  * {@code JSON.stringify} (escaping handled by the platform). The Node wrapper
  * simply {@code JSON.parse}s the result.
  *
@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.version.Version;
  * single diagram to a deterministic SVG. Asynchronous: the result JSON is
  * delivered through a callback, because diagrams that need Graphviz call the
  * Viz.js engine, whose {@code @Async} bridge can only suspend from a TeaVM
- * worker thread (see {@link net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser}
+ * worker thread (see {@link net.sourceforge.plantuml.teavm.js.browser.PlantUMLBrowser}
  * for the same constraint).</li>
  * </ul>
  */
@@ -266,74 +266,74 @@ public class PlantUMLHeadless {
 		try {
 			explanations = new DiagramExplainer().explain(source);
 		} catch (IOException e) {
-			final JSObject array = TeaVmJson.newArray();
-			TeaVmJson.pushObject(array,
+			final JSObject array = JsonJs.newArray();
+			JsonJs.pushObject(array,
 					explanationToJson(null, "Could not read the diagram source: " + e.getMessage(), -1));
-			return TeaVmJson.stringify(array);
+			return JsonJs.stringify(array);
 		}
 
-		final JSObject array = TeaVmJson.newArray();
+		final JSObject array = JsonJs.newArray();
 		for (int i = 0; i < explanations.size(); i++) {
 			final Explanation explanation = explanations.get(i);
 			final LineLocation location = explanation.getLocation();
 			// getPosition() is 0-based; the public contract exposes a 1-based line.
 			final int line = location == null ? -1 : location.getPosition() + 1;
-			TeaVmJson.pushObject(array, explanationToJson(explanation.getInput(), explanation.getExplain(), line));
+			JsonJs.pushObject(array, explanationToJson(explanation.getInput(), explanation.getExplain(), line));
 		}
-		return TeaVmJson.stringify(array);
+		return JsonJs.stringify(array);
 	}
 
 	private static JSObject explanationToJson(List<String> input, String explain, int line) {
-		final JSObject json = TeaVmJson.newObject();
-		TeaVmJson.putObject(json, "input", input == null ? TeaVmJson.newArray() : toJsArray(input));
-		TeaVmJson.putString(json, "explain", explain);
+		final JSObject json = JsonJs.newObject();
+		JsonJs.putObject(json, "input", input == null ? JsonJs.newArray() : toJsArray(input));
+		JsonJs.putString(json, "explain", explain);
 		if (line > 0)
-			TeaVmJson.putInt(json, "lineNumber", line);
+			JsonJs.putInt(json, "lineNumber", line);
 		return json;
 	}
 
 	private static String okJson(McpResult result) {
-		final JSObject json = TeaVmJson.newObject();
-		TeaVmJson.putBoolean(json, "valid", true);
-		TeaVmJson.putString(json, "diagramType", result.getDiagramType());
-		TeaVmJson.putInt(json, "lineCount", result.getLineCount());
-		TeaVmJson.putObject(json, "warnings", toJsArray(result.getWarnings()));
-		return TeaVmJson.stringify(json);
+		final JSObject json = JsonJs.newObject();
+		JsonJs.putBoolean(json, "valid", true);
+		JsonJs.putString(json, "diagramType", result.getDiagramType());
+		JsonJs.putInt(json, "lineCount", result.getLineCount());
+		JsonJs.putObject(json, "warnings", toJsArray(result.getWarnings()));
+		return JsonJs.stringify(json);
 	}
 
 	private static String renderOkJson(McpResult result) {
-		final JSObject json = TeaVmJson.newObject();
-		TeaVmJson.putBoolean(json, "valid", true);
-		TeaVmJson.putString(json, "diagramType", result.getDiagramType());
-		TeaVmJson.putInt(json, "lineCount", result.getLineCount());
-		TeaVmJson.putObject(json, "warnings", toJsArray(result.getWarnings()));
-		TeaVmJson.addStringSafe(json, "svg", result.getSvg());
-		return TeaVmJson.stringify(json);
+		final JSObject json = JsonJs.newObject();
+		JsonJs.putBoolean(json, "valid", true);
+		JsonJs.putString(json, "diagramType", result.getDiagramType());
+		JsonJs.putInt(json, "lineCount", result.getLineCount());
+		JsonJs.putObject(json, "warnings", toJsArray(result.getWarnings()));
+		JsonJs.addStringSafe(json, "svg", result.getSvg());
+		return JsonJs.stringify(json);
 	}
 
 	private static String errorJson(McpResult result) {
-		final JSObject json = TeaVmJson.newObject();
-		TeaVmJson.putBoolean(json, "valid", false);
-		TeaVmJson.putInt(json, "lineCount", result.getLineCount());
+		final JSObject json = JsonJs.newObject();
+		JsonJs.putBoolean(json, "valid", false);
+		JsonJs.putInt(json, "lineCount", result.getLineCount());
 		if (result.getErrorLineNumber() > 0)
-			TeaVmJson.putInt(json, "errorLineNumber", result.getErrorLineNumber());
-		TeaVmJson.addStringSafe(json, "errorMessage", result.getErrorMessage());
-		TeaVmJson.addStringSafe(json, "errorLine", result.getErrorLine());
-		TeaVmJson.addStringSafe(json, "errorContext", result.getErrorContext());
-		return TeaVmJson.stringify(json);
+			JsonJs.putInt(json, "errorLineNumber", result.getErrorLineNumber());
+		JsonJs.addStringSafe(json, "errorMessage", result.getErrorMessage());
+		JsonJs.addStringSafe(json, "errorLine", result.getErrorLine());
+		JsonJs.addStringSafe(json, "errorContext", result.getErrorContext());
+		return JsonJs.stringify(json);
 	}
 
 	private static String errorJson(String errorMessage) {
-		final JSObject json = TeaVmJson.newObject();
-		TeaVmJson.putBoolean(json, "valid", false);
-		TeaVmJson.addStringSafe(json, "errorMessage", errorMessage);
-		return TeaVmJson.stringify(json);
+		final JSObject json = JsonJs.newObject();
+		JsonJs.putBoolean(json, "valid", false);
+		JsonJs.addStringSafe(json, "errorMessage", errorMessage);
+		return JsonJs.stringify(json);
 	}
 
 	private static JSObject toJsArray(List<String> values) {
-		final JSObject array = TeaVmJson.newArray();
+		final JSObject array = JsonJs.newArray();
 		for (int i = 0; i < values.size(); i++)
-			TeaVmJson.push(array, values.get(i));
+			JsonJs.push(array, values.get(i));
 		return array;
 	}
 

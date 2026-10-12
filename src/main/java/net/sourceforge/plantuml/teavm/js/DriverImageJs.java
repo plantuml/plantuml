@@ -33,5 +33,31 @@
  * 
  *
  */
-package net.sourceforge.plantuml.teavm.browser;
-// ::remove folder when JAVA8
+package net.sourceforge.plantuml.teavm.js;
+
+import net.sourceforge.plantuml.klimt.UParam;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.drawing.UDriver;
+import net.sourceforge.plantuml.klimt.shape.UImage;
+
+/**
+ * TeaVM driver for rendering images in SVG. Converts PortableImage to PNG data
+ * URL using browser's canvas API, then embeds as an SVG image element.
+ */
+public class DriverImageJs implements UDriver<UImage, SvgGraphicsJs> {
+	// ::remove file when JAVA8
+
+	@Override
+	public void draw(UImage shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsJs svg) {
+		final PortableImage image = shape.getImage(1.0);
+		final int width = image.getWidth();
+		final int height = image.getHeight();
+
+		// Convert image to PNG data URL via canvas
+		final String dataUrl = image.toPngDataUrl();
+
+		// Draw as embedded image in SVG
+		svg.drawImage(dataUrl, x, y, width, height);
+	}
+}

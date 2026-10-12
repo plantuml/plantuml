@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.openiconic;
 
 import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
-
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 
 public class SvgPosition {

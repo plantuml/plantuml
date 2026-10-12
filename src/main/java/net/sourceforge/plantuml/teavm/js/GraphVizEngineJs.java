@@ -32,7 +32,7 @@
  * Original Author:  Arnaud Roques
  *
  */
-package net.sourceforge.plantuml.teavm;
+package net.sourceforge.plantuml.teavm.js;
 
 import org.teavm.interop.Async;
 import org.teavm.interop.AsyncCallback;
@@ -53,7 +53,7 @@ import org.teavm.jso.JSObject;
  * String svg = GraphVizjsTeaVMEngine.renderDotToSvg(dot);
  * </pre>
  */
-public class GraphVizjsTeaVMEngine {
+public class GraphVizEngineJs {
 
 	/**
 	 * Where the Viz.js object comes from. A host that bundles viz-global.js (a UMD)

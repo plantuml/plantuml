@@ -1,5 +1,5 @@
 /**
- * Provides classes used to manage JS-PlantUML using TeaVM.
+ * Provides code shared by the JavaScript and C targets.
  * 
  */
 package net.sourceforge.plantuml.teavm;

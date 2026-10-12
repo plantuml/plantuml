@@ -49,7 +49,6 @@ import java.util.TreeMap;
 import org.teavm.jso.JSBody;
 // ::done
 
-import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.emoji.data.Dummy;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -57,7 +56,8 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.svg.parser.ISvgSpriteParser;
 import net.sourceforge.plantuml.svg.parser.SvgSpriteParserFactory;
 import net.sourceforge.plantuml.teavm.TeaVM;
-import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
+import net.sourceforge.plantuml.teavm.js.browser.ScriptLoaderJs;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 
 // Emojji from https://twemoji.twitter.com/
@@ -142,7 +142,7 @@ public class Emoji {
 		// bundler that inlined emoji.js or by the host (inside a Web Worker, say), is
 		// used as is, and emoji.js is only fetched when nothing is there.
 		if (jsHasEmoji() == false)
-			TeaVmScriptLoader.loadOnceSync("emoji.js");
+			ScriptLoaderJs.loadOnceSync("emoji.js");
 		emojiJsLoaded = true;
 		// ::done
 	}
@@ -150,7 +150,7 @@ public class Emoji {
 	// ::comment when JAVA8
 	// The data is read from the global object rather than from window, so that it
 	// can be registered where there is no window (a Web Worker). Same lookup as
-	// TeaVmScriptLoader.getTheme().
+	// ScriptLoaderJs.getTheme().
 	private static final String GLOBAL = "var g = (typeof globalThis !== 'undefined') ? globalThis"
 			+ " : ((typeof self !== 'undefined') ? self : this);";
 

@@ -30,7 +30,7 @@ build/generated/teavm/js/
   vendor/fflate-*.min.js   <- vendor/     (everything else stays under vendor/)
 ```
 
-This flat layout is a public contract: `TeaVmScriptLoader` fetches
+This flat layout is a public contract: `ScriptLoaderJs` fetches
 `<lib>.min.js`, `themes.js`, `emoji.js` and `openiconic.js` relative to the page
 (or to `PLANTUML_STDLIB_BASE`), `PLANTUML_STDLIB_LOADER` hooks receive those bare
 names, and the integration docs tell hosts to deploy the files side by side.

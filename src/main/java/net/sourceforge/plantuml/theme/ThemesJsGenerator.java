@@ -51,7 +51,7 @@ import java.util.List;
  * {@link ThemeUtils#loadBundledOrLocalTheme} cannot reach
  * <code>/themes/puml-theme-*.puml</code>. This generator writes those same
  * files into a JS map on <code>PLANTUML_THEMES</code>, which the engine loads
- * on demand through {@code TeaVmScriptLoader}, exactly like
+ * on demand through {@code ScriptLoaderJs}, exactly like
  * <code>emoji.js</code> and <code>openiconic.js</code>.
  * <p>
  * Run it after adding or editing a theme:

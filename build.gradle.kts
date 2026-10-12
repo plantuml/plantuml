@@ -71,7 +71,7 @@ repositories {
 
 teavm {
 	js {
-		mainClass.set("net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser")
+		mainClass.set("net.sourceforge.plantuml.teavm.js.browser.PlantUMLBrowser")
 		moduleType.set(org.teavm.gradle.api.JSModuleType.ES2015)
 		obfuscated.set(true)
 		optimization.set(org.teavm.gradle.api.OptimizationLevel.BALANCED)
@@ -836,7 +836,7 @@ tasks.register("teavm") {
 		// existing files). The sources are split by origin under src/main/teavm
 		// (see its README.md and issue #2870), but the deployed layout stays
 		// FLAT: <lib>.min.js, themes.js, viz-global.js... sit next to
-		// plantuml.js, which is what TeaVmScriptLoader, PLANTUML_STDLIB_BASE,
+		// plantuml.js, which is what ScriptLoaderJs, PLANTUML_STDLIB_BASE,
 		// PLANTUML_STDLIB_LOADER hooks and the integration docs rely on.
 		copy {
 			from(teavmSrcDir.dir("web"))        // hand-written pages/scripts (keeps preview/)

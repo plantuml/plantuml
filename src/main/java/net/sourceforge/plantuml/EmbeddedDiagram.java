@@ -70,7 +70,7 @@ import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.teavm.c.PSystemBuilderC;
 import net.sourceforge.plantuml.teavm.js.PSystemBuilderJs;
-import net.sourceforge.plantuml.teavm.browser.BrowserLog;
+import net.sourceforge.plantuml.teavm.js.browser.BrowserLog;
 import net.sourceforge.plantuml.text.StringLocated;
 
 public class EmbeddedDiagram extends TextBlockMemoized implements Line, Atom {

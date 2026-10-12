@@ -23,7 +23,7 @@ dependencies {
 
 teavm {
 	js {
-		mainClass.set("net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser")
+		mainClass.set("net.sourceforge.plantuml.teavm.js.browser.PlantUMLBrowser")
 		moduleType.set(org.teavm.gradle.api.JSModuleType.ES2015)
 		obfuscated.set(true)
 		optimization.set(org.teavm.gradle.api.OptimizationLevel.BALANCED)

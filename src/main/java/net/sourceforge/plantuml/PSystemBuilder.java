@@ -218,7 +218,7 @@ public class PSystemBuilder {
 
 	}
 
-	@DuplicateCode(reference = "PSystemBuilder2")
+	@DuplicateCode(reference = "PSystemBuilderJs")
 	final public Diagram createPSystem(PathSystem pathSystem, List<StringLocated> source, List<StringLocated> rawSource,
 			Previous previous, PreprocessingArtifact preprocessing) {
 

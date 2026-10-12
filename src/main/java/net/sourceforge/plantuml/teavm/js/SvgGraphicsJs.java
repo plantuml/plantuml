@@ -32,7 +32,7 @@
  * Original Author:  Arnaud Roques
  *
  */
-package net.sourceforge.plantuml.teavm;
+package net.sourceforge.plantuml.teavm.js;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.security.SecurityUtils;
  * SVG Graphics implementation for TeaVM. Uses browser's native DOM API instead
  * of javax.xml.
  */
-public class SvgGraphicsTeaVM {
+public class SvgGraphicsJs {
 	// ::remove file when JAVA8
 
 	private static final String SVG_NS = "http://www.w3.org/2000/svg";
@@ -80,7 +80,7 @@ public class SvgGraphicsTeaVM {
 	private Element pendingBackground = null;
 
 	
-	public SvgGraphicsTeaVM() {
+	public SvgGraphicsJs() {
 		this(null);
 	}
 
@@ -93,7 +93,7 @@ public class SvgGraphicsTeaVM {
 	 * {@link #updateSvgSize(double, double, double)} once the actual diagram
 	 * dimensions and scale factor are known.
 	 */
-	public SvgGraphicsTeaVM(String defaultBackgroundcolor) {
+	public SvgGraphicsJs(String defaultBackgroundcolor) {
 		this.document = HTMLDocument.current();
 
 		// Create SVG root element
@@ -138,8 +138,8 @@ public class SvgGraphicsTeaVM {
 		closeTopActiveLinkIfNeeded();
 
 		final Element element = createSvgElement("g");
-		final TeaVMElementAdapter ielement = new TeaVMElementAdapter(element);
-		final PortableSvgDocument idocument = new TeaVMSvgDocument();
+		final ElementAdapterJs ielement = new ElementAdapterJs(element);
+		final PortableSvgDocument idocument = new SvgDocumentJs();
 		for (Map.Entry<UGroupType, String> entry : attrs.entrySet())
 			idocument.applyGroupAttribute(ielement, entry.getKey(), entry.getValue());
 

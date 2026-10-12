@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,26 +30,37 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.teavm;
+package net.sourceforge.plantuml.teavm.js;
 
-import org.teavm.jso.JSBody;
-import org.teavm.jso.dom.xml.Element;
+import net.sourceforge.plantuml.klimt.UParam;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UDriver;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
 
-import net.sourceforge.plantuml.klimt.drawing.svg.IElement;
-import net.sourceforge.plantuml.klimt.drawing.svg.PortableSvgDocument;
-
-public class TeaVMSvgDocument extends PortableSvgDocument {
+/**
+ * Driver for rendering UCenteredCharacter in TeaVM/SVG.
+ * 
+ * This is a simplified implementation that uses SVG text element with
+ * text-anchor="middle" and dominant-baseline for centering, instead of
+ * converting the character to a path (which would require AWT).
+ */
+public class DriverCenteredCharacterJs implements UDriver<UCenteredCharacter, SvgGraphicsJs> {
 	// ::remove file when JAVA8
 
 	@Override
-	public IElement createElement(String name) {
-		return new TeaVMElementAdapter(createSvgElement(name));
+	public void draw(UCenteredCharacter characterCircled, double x, double y, ColorMapper mapper, UParam param,
+			SvgGraphicsJs svg) {
+		final char c = characterCircled.getChar();
+		final UFont font = characterCircled.getFont();
+		final HColor textColor = param.getColor();
+		final String text = String.valueOf(c);
+
+		svg.setFillColor(textColor.toSvg(mapper));
+		svg.drawCenteredCharacter(c, x, y, "monospace", font.getSize());
 	}
-
-	@JSBody(params = { "tagName" }, script = "return document.createElementNS('http://www.w3.org/2000/svg', tagName);")
-	private static native Element createSvgElement(String tagName);
-
 }

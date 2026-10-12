@@ -184,7 +184,7 @@ exposes the same kind of tools but requires a Java runtime.
 ## Architecture
 
 ```
-plantuml (root project)                 net.sourceforge.plantuml.teavm.headless.PlantUMLHeadless
+plantuml (root project)                 net.sourceforge.plantuml.teavm.js.headless.PlantUMLHeadless
         │                               a minimal, DOM-free entry point (@JSExport)
         ▼
 plantuml-mcp-js (this subproject)        TeaVM compiles the engine to ES2015 JavaScript

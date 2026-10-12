@@ -2,15 +2,15 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,34 +30,26 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.teavm;
+package net.sourceforge.plantuml.teavm.js;
 
-import net.sourceforge.plantuml.klimt.UParam;
-import net.sourceforge.plantuml.klimt.awt.PortableImage;
-import net.sourceforge.plantuml.klimt.color.ColorMapper;
-import net.sourceforge.plantuml.klimt.drawing.UDriver;
-import net.sourceforge.plantuml.klimt.shape.UImage;
+import org.teavm.jso.JSBody;
+import org.teavm.jso.dom.xml.Element;
 
-/**
- * TeaVM driver for rendering images in SVG. Converts PortableImage to PNG data
- * URL using browser's canvas API, then embeds as an SVG image element.
- */
-public class DriverImageTeaVM implements UDriver<UImage, SvgGraphicsTeaVM> {
+import net.sourceforge.plantuml.klimt.drawing.svg.IElement;
+import net.sourceforge.plantuml.klimt.drawing.svg.PortableSvgDocument;
+
+public class SvgDocumentJs extends PortableSvgDocument {
 	// ::remove file when JAVA8
 
 	@Override
-	public void draw(UImage shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
-		final PortableImage image = shape.getImage(1.0);
-		final int width = image.getWidth();
-		final int height = image.getHeight();
-
-		// Convert image to PNG data URL via canvas
-		final String dataUrl = image.toPngDataUrl();
-
-		// Draw as embedded image in SVG
-		svg.drawImage(dataUrl, x, y, width, height);
+	public IElement createElement(String name) {
+		return new ElementAdapterJs(createSvgElement(name));
 	}
+
+	@JSBody(params = { "tagName" }, script = "return document.createElementNS('http://www.w3.org/2000/svg', tagName);")
+	private static native Element createSvgElement(String tagName);
+
 }

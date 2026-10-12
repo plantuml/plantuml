@@ -1,10 +1,10 @@
-package net.sourceforge.plantuml.teavm.browser;
+package net.sourceforge.plantuml.teavm.js.browser;
 
 import org.teavm.jso.JSBody;
 import org.teavm.jso.JSFunctor;
 import org.teavm.jso.JSObject;
 
-public final class TeaVmScriptLoader {
+public final class ScriptLoaderJs {
 	// ::remove file when JAVA8
 
 	private static final Object LOCK = new Object();
@@ -246,6 +246,6 @@ public final class TeaVmScriptLoader {
 		}
 	}
 
-	private TeaVmScriptLoader() {
+	private ScriptLoaderJs() {
 	}
 }

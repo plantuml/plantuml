@@ -33,59 +33,38 @@
  * 
  *
  */
-package net.sourceforge.plantuml.teavm;
+package net.sourceforge.plantuml.teavm.js;
 
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
-import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
 
-public class DriverLineTeaVM implements UDriver<ULine, SvgGraphicsTeaVM> {
+public class DriverPolygonJs implements UDriver<UPolygon, SvgGraphicsJs> {
 	// ::remove file when JAVA8
 
 	@Override
-	public void draw(ULine line, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
-		double x2 = x + line.getDX();
-		double y2 = y + line.getDY();
-
-		final UClip clip = param.getClip();
-		if (clip != null) {
-			if (clip.isInside(x, y) == false && clip.isInside(x2, y2) == false) {
-				if (x == x2) {
-					final double newY1 = clipY(clip, y);
-					final double newY2 = clipY(clip, y2);
-					if (newY1 == newY2)
-						return;
-					y = newY1;
-					y2 = newY2;
-				} else {
-					return;
-				}
-			} else if (clip.isInside(x, y) == false || clip.isInside(x2, y2) == false) {
-				if (x != x2 && y != y2)
-					return;
-				if (y == y2) {
-					x = clipX(clip, x);
-					x2 = clipX(clip, x2);
-				} else if (x == x2) {
-					y = clipY(clip, y);
-					y2 = clipY(clip, y2);
-				}
-			}
+	public void draw(UPolygon polygon, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsJs svg) {
+		// Convert polygon points to array
+		final double[] points = new double[polygon.getPoints().size() * 2];
+		int i = 0;
+		for (XPoint2D pt : polygon.getPoints()) {
+			points[i++] = x + pt.getX();
+			points[i++] = y + pt.getY();
 		}
 
-		DriverRectangleTeaVM.applyStrokeColor(svg, mapper, param);
+		final UClip clip = param.getClip();
+		if (clip != null)
+			for (int j = 0; j < points.length; j += 2)
+				if (clip.isInside(points[j], points[j + 1]) == false)
+					return;
+
+		DriverRectangleJs.applyFillColor(svg, mapper, param);
+		DriverRectangleJs.applyStrokeColor(svg, mapper, param);
 		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
 
-		svg.drawLine(x, y, x2, y2);
-	}
-
-	private static double clipX(UClip clip, double xp) {
-		return Math.max(clip.getX(), Math.min(xp, clip.getX() + clip.getWidth()));
-	}
-
-	private static double clipY(UClip clip, double yp) {
-		return Math.max(clip.getY(), Math.min(yp, clip.getY() + clip.getHeight()));
+		svg.drawPolygon(points);
 	}
 }

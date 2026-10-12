@@ -33,45 +33,22 @@
  * 
  *
  */
-package net.sourceforge.plantuml.teavm;
+package net.sourceforge.plantuml.teavm.js;
 
-import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
-import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.UImageSvg;
 
-public class DriverEllipseTeaVM implements UDriver<UEllipse, SvgGraphicsTeaVM> {
+/**
+ * TeaVM driver for rendering embedded SVG images. Embeds SVG content directly
+ * into the output SVG.
+ */
+public class DriverImageSvgJs implements UDriver<UImageSvg, SvgGraphicsJs> {
 	// ::remove file when JAVA8
 
 	@Override
-	public void draw(UEllipse ellipse, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
-		final double width = ellipse.getWidth();
-		final double height = ellipse.getHeight();
-
-		final UClip clip = param.getClip();
-		if (clip != null) {
-			if (clip.isInside(x, y) == false)
-				return;
-			if (clip.isInside(x + width, y + height) == false)
-				return;
-		}
-
-		DriverRectangleTeaVM.applyFillColor(svg, mapper, param);
-		DriverRectangleTeaVM.applyStrokeColor(svg, mapper, param);
-		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
-
-		// UEllipse uses width/height, but SVG ellipse uses rx/ry (radii)
-		// And x,y is top-left corner for UEllipse, but center for SVG
-		final double cx = x + width / 2;
-		final double cy = y + height / 2;
-		final double rx = width / 2;
-		final double ry = height / 2;
-
-		if (Math.abs(rx - ry) < 0.01)
-			svg.drawCircle(cx, cy, rx);
-		else
-			svg.drawEllipse(cx, cy, rx, ry);
-
+	public void draw(UImageSvg image, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsJs svg) {
+		svg.drawSvgImage(image, x, y);
 	}
 }

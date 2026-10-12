@@ -33,38 +33,61 @@
  * 
  *
  */
-package net.sourceforge.plantuml.teavm;
+package net.sourceforge.plantuml.teavm.js;
 
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
-import net.sourceforge.plantuml.klimt.geom.XPoint2D;
-import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
 
-public class DriverPolygonTeaVM implements UDriver<UPolygon, SvgGraphicsTeaVM> {
+public class DriverRectangleJs implements UDriver<URectangle, SvgGraphicsJs> {
 	// ::remove file when JAVA8
 
 	@Override
-	public void draw(UPolygon polygon, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
-		// Convert polygon points to array
-		final double[] points = new double[polygon.getPoints().size() * 2];
-		int i = 0;
-		for (XPoint2D pt : polygon.getPoints()) {
-			points[i++] = x + pt.getX();
-			points[i++] = y + pt.getY();
-		}
+	public void draw(URectangle rect, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsJs svg) {
+		final double rx = rect.getRx();
+		final double ry = rect.getRy();
+		double width = rect.getWidth();
+		double height = rect.getHeight();
 
-		final UClip clip = param.getClip();
-		if (clip != null)
-			for (int j = 0; j < points.length; j += 2)
-				if (clip.isInside(points[j], points[j + 1]) == false)
-					return;
-
-		DriverRectangleTeaVM.applyFillColor(svg, mapper, param);
-		DriverRectangleTeaVM.applyStrokeColor(svg, mapper, param);
+		applyFillColor(svg, mapper, param);
+		applyStrokeColor(svg, mapper, param);
 		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
 
-		svg.drawPolygon(points);
+		final UClip clip = param.getClip();
+		if (clip != null) {
+			final double clipRight = clip.getX() + clip.getWidth();
+			final double clipBottom = clip.getY() + clip.getHeight();
+			final double newX = Math.max(x, clip.getX());
+			final double newY = Math.max(y, clip.getY());
+			width = Math.min(x + width, clipRight) - newX;
+			height = Math.min(y + height, clipBottom) - newY;
+			x = newX;
+			y = newY;
+			if (width <= 0 || height <= 0)
+				return;
+		}
+
+		svg.drawRectangle(x, y, width, height, rx / 2, ry / 2);
+	}
+
+	public static void applyFillColor(SvgGraphicsJs svg, ColorMapper mapper, UParam param) {
+		final HColor background = param.getBackcolor();
+		if (background == null) {
+			svg.setFillColor("none");
+		} else {
+			svg.setFillColor(background.toSvg(mapper));
+		}
+	}
+
+	public static void applyStrokeColor(SvgGraphicsJs svg, ColorMapper mapper, UParam param) {
+		final HColor color = param.getColor();
+		if (color == null) {
+			svg.setStrokeColor("none");
+		} else {
+			svg.setStrokeColor(color.toSvg(mapper));
+		}
 	}
 }

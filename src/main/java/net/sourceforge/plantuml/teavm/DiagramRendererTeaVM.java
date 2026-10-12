@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.mcp;
+package net.sourceforge.plantuml.teavm;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -64,6 +64,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.mcp.McpResult;
 
 /**
  * Renders a single PlantUML diagram to a deterministic SVG, in a headless,
@@ -71,7 +72,7 @@ import net.sourceforge.plantuml.log.Logme;
  *
  * <p>
  * This is the headless counterpart of
- * {@link net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser}: it follows
+ * {@link net.sourceforge.plantuml.teavm.js.browser.PlantUMLBrowser}: it follows
  * the same "build the {@link TextBlock}, decorate it with chrome, draw it onto a
  * {@link UGraphic}" pipeline, but writes to the dependency-free
  * {@link UGraphicSvg} backend (a string-producing SVG mini-DOM) instead of the

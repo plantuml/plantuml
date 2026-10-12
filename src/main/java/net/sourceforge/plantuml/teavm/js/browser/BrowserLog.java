@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.teavm.browser;
+package net.sourceforge.plantuml.teavm.js.browser;
 
 // ::comment when JAVA8
 import org.teavm.jso.JSBody;

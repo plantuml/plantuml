@@ -32,7 +32,7 @@
  * Original Author:  Arnaud Roques
  *
  */
-package net.sourceforge.plantuml.teavm.headless;
+package net.sourceforge.plantuml.teavm.js.headless;
 
 import org.teavm.jso.JSBody;
 import org.teavm.jso.JSObject;
@@ -47,13 +47,13 @@ import org.teavm.jso.JSObject;
  * point builds a native JS object/array through these {@code @JSBody} helpers
  * and serializes it with the platform's {@code JSON.stringify}. This mirrors
  * the {@code stringify} helper already used by
- * {@link net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader}.
+ * {@link net.sourceforge.plantuml.teavm.js.browser.ScriptLoaderJs}.
  *
  * <p>
  * All methods are TeaVM-only (they compile to plain JS); they are not meant to
  * be called from a normal JVM.
  */
-public final class TeaVmJson {
+public final class JsonJs {
 	// ::remove file when JAVA8
 
 	/** @return a fresh, empty JS object ({@code {}}). */
@@ -70,7 +70,7 @@ public final class TeaVmJson {
 
 	public static void addStringSafe(final JSObject json, String key, String value) {
 		if (value != null && value.isEmpty() == false)
-			TeaVmJson.putString(json, key, value);
+			JsonJs.putString(json, key, value);
 	}
 
 	/** Sets {@code obj[key] = value} for an integer value. */
@@ -103,6 +103,6 @@ public final class TeaVmJson {
 	@JSBody(params = "obj", script = "return obj == null ? null : JSON.stringify(obj);")
 	public static native String stringify(JSObject obj);
 
-	private TeaVmJson() {
+	private JsonJs() {
 	}
 }

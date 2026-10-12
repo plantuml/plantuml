@@ -34,7 +34,7 @@
  *
  */
 
-package net.sourceforge.plantuml.teavm.browser;
+package net.sourceforge.plantuml.teavm.js.browser;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -109,11 +109,11 @@ import net.sourceforge.plantuml.nio.NFolder;
  * files may be read is decided by the host.
  * <p>
  * The same shape as <code>PLANTUML_STDLIB_LOADER</code> in
- * {@link TeaVmScriptLoader}. With no loader set, a local include fails, and
+ * {@link ScriptLoaderJs}. With no loader set, a local include fails, and
  * so does an includesub of a file, which used to be ignored in the browser.
  * An includesub of a section in the diagram itself needs no loader.
  */
-public final class TeaVmFileLoader {
+public final class FileLoaderJs {
 	// ::remove file when JAVA8
 
 	@JSFunctor
@@ -166,14 +166,14 @@ public final class TeaVmFileLoader {
 			+ "}"
 			+ "if (result === false && settled === false) { settled = true; return false; }"
 			+ "return true;")
-	private static native boolean load(String path, String from, String kind, Loaded onOk, TeaVmScriptLoader.Err onErr);
+	private static native boolean load(String path, String from, String kind, Loaded onOk, ScriptLoaderJs.Err onErr);
 
 	/**
 	 * The file the host delivers for <code>path</code>, or <code>null</code> when
 	 * no loader is set, when the host declines, or when it fails (the reason is
 	 * written to the console, and the include then reports the usual "cannot
 	 * include"). Blocks until the host answers, so it MUST be called from a
-	 * TeaVM thread context, like {@link TeaVmScriptLoader#loadOnceSync(String)}.
+	 * TeaVM thread context, like {@link ScriptLoaderJs#loadOnceSync(String)}.
 	 *
 	 * @param path   the file name the directive asks for
 	 * @param folder where the include is written: <code>null</code> for the
@@ -217,7 +217,7 @@ public final class TeaVmFileLoader {
 			}
 		}
 		if (answer.error != null) {
-			TeaVmScriptLoader.consoleWarn("PlantUML: cannot include " + path + ": " + answer.error);
+			ScriptLoaderJs.consoleWarn("PlantUML: cannot include " + path + ": " + answer.error);
 			return null;
 		}
 		return new HostFile(answer.id, answer.text);
@@ -297,6 +297,6 @@ public final class TeaVmFileLoader {
 		}
 	}
 
-	private TeaVmFileLoader() {
+	private FileLoaderJs() {
 	}
 }

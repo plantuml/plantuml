@@ -54,9 +54,9 @@ import net.sourceforge.plantuml.security.SURL;
 //::comment when JAVA8
 import org.teavm.jso.JSObject;
 import net.sourceforge.plantuml.teavm.TeaVM;
-import net.sourceforge.plantuml.teavm.browser.BrowserLog;
-import net.sourceforge.plantuml.teavm.browser.TeaVmFileLoader;
-import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
+import net.sourceforge.plantuml.teavm.js.browser.BrowserLog;
+import net.sourceforge.plantuml.teavm.js.browser.FileLoaderJs;
+import net.sourceforge.plantuml.teavm.js.browser.ScriptLoaderJs;
 //::done
 
 // Replacement for FileSystem
@@ -100,10 +100,10 @@ public class PathSystem {
 		if (libname == null)
 			return null;
 
-		final JSObject data = TeaVmScriptLoader.getRaw_PLANTUML_STDLIB_JSON(libname, filepath);
+		final JSObject data = ScriptLoaderJs.getRaw_PLANTUML_STDLIB_JSON(libname, filepath);
 		if (data == null)
 			return null;
-		final String json = TeaVmScriptLoader.stringify(data);
+		final String json = ScriptLoaderJs.stringify(data);
 		return Json.parse(json);
 		// ::done
 	}
@@ -123,10 +123,10 @@ public class PathSystem {
 		if (libname == null)
 			return null;
 
-		final JSObject data = TeaVmScriptLoader.getRaw_PLANTUML_STDLIB(libname, filepath);
+		final JSObject data = ScriptLoaderJs.getRaw_PLANTUML_STDLIB(libname, filepath);
 		if (data == null)
 			return null;
-		final String content = TeaVmScriptLoader.joinLines(data);
+		final String content = ScriptLoaderJs.joinLines(data);
 		return new ByteArrayInputStream(content.getBytes(java.nio.charset.StandardCharsets.UTF_8));
 		// ::done
 	}
@@ -143,7 +143,7 @@ public class PathSystem {
 		if (TeaVM.isC())
 			return null;
 
-		return TeaVmFileLoader.getId(file);
+		return FileLoaderJs.getId(file);
 		// ::done
 	}
 
@@ -188,22 +188,22 @@ public class PathSystem {
 
 	private boolean loadTeaVMStdlibBundle(String libname) {
 		try {
-			TeaVmScriptLoader.loadOnceSync(libname + ".min.js");
+			ScriptLoaderJs.loadOnceSync(libname + ".min.js");
 			return true;
 		} catch (RuntimeException e) {
-			TeaVmScriptLoader
+			ScriptLoaderJs
 					.consoleWarn("PlantUML: cannot load stdlib bundle " + libname + ".min.js: " + e.getMessage());
 			return false;
 		}
 	}
 
 	private Map<String, String> getInfo(final String libname) {
-		final JSObject info = TeaVmScriptLoader.getRaw_PLANTUML_STDLIB_INFO(libname);
+		final JSObject info = ScriptLoaderJs.getRaw_PLANTUML_STDLIB_INFO(libname);
 		final Map<String, String> map = new HashMap<>();
 		if (info != null) {
-			final String keys = TeaVmScriptLoader.getObjectKeys(info);
+			final String keys = ScriptLoaderJs.getObjectKeys(info);
 			for (String key : keys.split(",")) {
-				final String value = TeaVmScriptLoader.getStringProperty(info, key);
+				final String value = ScriptLoaderJs.getStringProperty(info, key);
 				BrowserLog.consoleLog(getClass(), "info[" + libname + "] " + key + " = " + value);
 				map.put(key, value);
 			}
@@ -300,7 +300,7 @@ public class PathSystem {
 			if (TeaVM.isC() || hostFiles == false || path.startsWith("http://") || path.startsWith("https://")
 					|| (path.startsWith("<") && path.endsWith(">")))
 				return null;
-			return TeaVmFileLoader.getInputFile(path, currentFolder, kind);
+			return FileLoaderJs.getInputFile(path, currentFolder, kind);
 		}
 		// ::done
 

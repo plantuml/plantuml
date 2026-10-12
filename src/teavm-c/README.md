@@ -89,7 +89,7 @@ artifacts (`plantuml-c-windows-x64`, `plantuml-c-windows-arm64`).
 
 ## Expected output
 
-Same as on the JVM (`java ... net.sourceforge.plantuml.teavm.c.HelloWorldC Arnaud`),
+Same as on the JVM (`java ... net.sourceforge.plantuml.teavm.c.demo.HelloWorldC Arnaud`),
 also stored in `expected-hello.txt` (used by the CI smoke test):
 
 ```
