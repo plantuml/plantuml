@@ -42,13 +42,12 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.UncommentReadLine;
-import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.text.StringLocated;
 
 public class DiagramSourceCompressor implements StringCompressor {
 
-	private final static Pattern2 pattern = Pattern2.cmpile("(?s)^[%s]*(@startuml[^\\n\\r]*)?[%s]*(.*?)[%s]*(@enduml)?[%s]*$");
+	private static final String START_UML = "@startuml";
+	private static final String END_UML = "@enduml";
 
 	public String compress(final String data) throws IOException {
 		final ReadLine r = new UncommentReadLine(ReadLineReader.create(new StringReader(data), "COMPRESS"));
@@ -79,12 +78,9 @@ public class DiagramSourceCompressor implements StringCompressor {
 		sb.append(s.getString());
 	}
 
-	private String compressOld(String s) throws IOException {
-		final Matcher2 m = pattern.matcher(s, 0);
-		if (m.find()) {
-			return clean(m.group(2));
-		}
-		return "";
+	// Package-private, as the other cleaning methods below, so that they can be unit tested
+	String compressOld(String s) throws IOException {
+		return clean(stripStartEnd(s, true));
 	}
 
 	public String decompress(String s) {
@@ -100,22 +96,110 @@ public class DiagramSourceCompressor implements StringCompressor {
 		return result;
 	}
 
-	private String clean(String s) {
+	String clean(String s) {
 		// s = s.replace("\0", "");
 		s = StringUtils.trin(s);
 		s = clean1(s);
-		s = s.replaceAll("@enduml[^\\n\\r]*", "");
-		s = s.replaceAll("@startuml[^\\n\\r]*", "");
+		s = removeFromToken(s, END_UML);
+		s = removeFromToken(s, START_UML);
 		s = StringUtils.trin(s);
 		return s;
 	}
 
-	private String clean1(String s) {
-		final Matcher2 m = pattern.matcher(s, 0);
-		if (m.matches())
-			return m.group(2);
+	/**
+	 * Same as {@code s.replaceAll(token + "[^\\n\\r]*", "")}, with the token taken
+	 * literally: removes every occurrence of the token, and the rest of its
+	 * line (up to, and not including, the next {@code \n} or {@code \r}).
+	 * <p>
+	 * Plain loop, like {@link #stripStartEnd}, so that the cost does not depend
+	 * on the regex engine of the TeaVM build when the source is big (issue
+	 * #2934).
+	 */
+	static String removeFromToken(String s, String token) {
+		int pos = s.indexOf(token);
+		if (pos == -1)
+			return s;
 
-		return s;
+		final int len = s.length();
+		final StringBuilder sb = new StringBuilder(len);
+		int from = 0;
+		while (pos != -1) {
+			sb.append(s, from, pos);
+			from = pos + token.length();
+			while (from < len && s.charAt(from) != '\n' && s.charAt(from) != '\r')
+				from++;
+			pos = s.indexOf(token, from);
+		}
+		sb.append(s, from, len);
+		return sb.toString();
+	}
+
+	private String clean1(String s) {
+		return stripStartEnd(s, false);
+	}
+
+	/**
+	 * What {@code [%s]} stands for in a PlantUML regex: {@code \s} and the
+	 * non-breaking space. This is deliberately not {@link StringUtils#isTrimmable},
+	 * which is wider (every char up to the space, control chars included).
+	 */
+	static boolean isBlank(char c) {
+		return c == ' ' || c == '\t' || c == '\n' || c == '\u000B' || c == '\f' || c == '\r' || c == '\u00A0';
+	}
+
+	/**
+	 * The line terminators, besides {@code \n} and {@code \r} which are blanks, that
+	 * a regex {@code $} accepts just before the end of the input.
+	 */
+	private static boolean isOtherLineTerminator(char c) {
+		return c == '\u0085' || c == '\u2028' || c == '\u2029';
+	}
+
+	/**
+	 * Returns what group 2 captures in the regex
+	 * <pre>(?s)^[%s]*(@startuml[^\n\r]*)?[%s]*(.*?)[%s]*(@enduml)?[%s]*$</pre>
+	 * that is, the text without its leading blanks, without a first
+	 * {@code @startuml} line, without its trailing blanks and without a final
+	 * {@code @enduml}.
+	 * <p>
+	 * It is computed with plain loops because that regex, applied to a whole
+	 * diagram source, overflows the JavaScript call stack in the TeaVM build as
+	 * soon as the source is a few KB long (issue #2934): the lazy {@code (.*?)}
+	 * costs one stack frame per character there.
+	 *
+	 * @param dollarBeforeFinalTerminator {@code true} for {@code Matcher.find()},
+	 *                                    where {@code $} also matches before a
+	 *                                    final U+0085, U+2028 or U+2029;
+	 *                                    {@code false} for {@code Matcher.matches()},
+	 *                                    where the match must reach the very end
+	 */
+	static String stripStartEnd(String s, boolean dollarBeforeFinalTerminator) {
+		final int len = s.length();
+		int start = 0;
+		while (start < len && isBlank(s.charAt(start)))
+			start++;
+
+		if (s.startsWith(START_UML, start)) {
+			start += START_UML.length();
+			while (start < len && s.charAt(start) != '\n' && s.charAt(start) != '\r')
+				start++;
+			while (start < len && isBlank(s.charAt(start)))
+				start++;
+		}
+
+		int end = len;
+		if (dollarBeforeFinalTerminator && end > start && isOtherLineTerminator(s.charAt(end - 1)))
+			end--;
+		while (end > start && isBlank(s.charAt(end - 1)))
+			end--;
+
+		final int endUml = end - END_UML.length();
+		if (endUml >= start && s.startsWith(END_UML, endUml)) {
+			end = endUml;
+			while (end > start && isBlank(s.charAt(end - 1)))
+				end--;
+		}
+		return s.substring(start, end);
 	}
 
 }
