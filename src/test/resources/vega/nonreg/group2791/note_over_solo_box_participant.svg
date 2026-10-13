@@ -3,20 +3,28 @@
   <g font-family="sans-serif" lengthAdjust="spacing">
     <rect fill="#DDD" height="172" style="stroke:#181818;stroke-width:0.5;" width="322.075" x="16" y="11"/>
     <text fill="#000" font-size="13" font-weight="700" textLength="31.119" x="161.478" y="21.111">Box A</text>
-    <g>
-      <title>a</title>
-      <rect fill="#000" fill-opacity="0" height="91" width="8" x="173.537" y="57"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="177.037" x2="177.037" y1="57" y2="148"/>
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="a" data-source-line="2" id="part1-lifeline">
+      <g>
+        <title>a</title>
+        <rect fill="#000" fill-opacity="0" height="91" width="8" x="173.537" y="57"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="177.037" x2="177.037" y1="57" y2="148"/>
+      </g>
     </g>
-    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="166.144" y="28"/>
-    <text fill="#000" font-size="14" x="173.144" y="45.889">a</text>
-    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="166.144" y="148"/>
-    <text fill="#000" font-size="14" x="173.144" y="165.889">a</text>
-    <line style="stroke:#181818;stroke-width:1;" x1="177.037" x2="219.037" y1="84" y2="84"/>
-    <line style="stroke:#181818;stroke-width:1;" x1="219.037" x2="219.037" y1="84" y2="97"/>
-    <line style="stroke:#181818;stroke-width:1;" x1="178.037" x2="219.037" y1="97" y2="97"/>
-    <polygon fill="#181818" points="188.037,93,178.037,97,188.037,101,184.037,97" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-    <text fill="#000" font-size="13" textLength="24.538" x="184.037" y="79.111">msg</text>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="a" data-source-line="2" id="part1-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="166.144" y="28"/>
+      <text fill="#000" font-size="14" x="173.144" y="45.889">a</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="a" data-source-line="2" id="part1-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="166.144" y="148"/>
+      <text fill="#000" font-size="14" x="173.144" y="165.889">a</text>
+    </g>
+    <g class="message" data-entity-1="part1" data-entity-2="part1" data-source-line="5" id="msg1">
+      <line style="stroke:#181818;stroke-width:1;" x1="177.037" x2="219.037" y1="84" y2="84"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="219.037" x2="219.037" y1="84" y2="97"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="178.037" x2="219.037" y1="97" y2="97"/>
+      <polygon fill="#181818" points="188.037,93,178.037,97,188.037,101,184.037,97" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#000" font-size="13" textLength="24.538" x="184.037" y="79.111">msg</text>
+    </g>
     <path d="M25,110 L25,133 L329,133 L329,120 L319,110 L25,110" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
     <path d="M319,110 L319,120 L329,120 L319,110" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
     <text fill="#000" font-size="13" textLength="283.075" x="31" y="125.111">a very very very very very long note over the participant</text>

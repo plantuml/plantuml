@@ -154,7 +154,9 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 		area.setLevel(levelIgnore);
 		area.setLiveDeltaSize(CommunicationTile.LIVE_DELTA_SIZE);
 		ug = ug.apply(UTranslate.dx(x1));
+		ug.startGroup(message.groupTypeMessage());
 		comp.drawU(ug, area, (Context2D) ug);
+		ug.closeGroup();
 	}
 
 	public double getPreferredHeight() {

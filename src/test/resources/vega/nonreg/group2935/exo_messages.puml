@@ -1,0 +1,10 @@
+---
+output: svg
+expected-description: (2 participants)
+---
+@startuml
+participant Alpha
+participant Bravo
+[-> Alpha : from the left
+Bravo ->] : to the right
+@enduml

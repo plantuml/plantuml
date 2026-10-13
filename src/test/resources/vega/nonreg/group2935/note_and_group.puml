@@ -1,0 +1,18 @@
+---
+output: svg
+expected-description: (3 participants)
+---
+@startuml
+participant Alpha
+participant Bravo
+participant Charlie
+Alpha -> Bravo : before
+note right of Bravo : a note
+alt ok
+  Bravo -> Charlie : yes
+else ko
+  Charlie --> Alpha : no
+end
+... delay ...
+Alpha -> Charlie : after
+@enduml

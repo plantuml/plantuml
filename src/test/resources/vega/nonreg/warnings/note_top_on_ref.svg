@@ -3,26 +3,40 @@
   <g font-family="sans-serif" lengthAdjust="spacing">
     <rect fill="#FFC" height="15" rx="2.5" ry="2.5" style="stroke:#FD8;stroke-width:3;" width="332.125" x="8" y="8"/>
     <text fill="#000" font-family="monospace" font-size="10" textLength="322.125" x="15" y="17">'note top' is not supported on a 'ref': this note is ignored. Use 'note left' or 'note right'</text>
-    <g>
-      <title>A</title>
-      <rect fill="#000" fill-opacity="0" height="72" width="8" x="18.181" y="59"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="21.681" x2="21.681" y1="59" y2="131"/>
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="A" data-source-line="1" id="part1-lifeline">
+      <g>
+        <title>A</title>
+        <rect fill="#000" fill-opacity="0" height="72" width="8" x="18.181" y="59"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="21.681" x2="21.681" y1="59" y2="131"/>
+      </g>
     </g>
-    <g>
-      <title>B</title>
-      <rect fill="#000" fill-opacity="0" height="72" width="8" x="51.544" y="59"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="55.044" x2="55.044" y1="59" y2="131"/>
+    <g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="B" data-source-line="1" id="part2-lifeline">
+      <g>
+        <title>B</title>
+        <rect fill="#000" fill-opacity="0" height="72" width="8" x="51.544" y="59"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="55.044" x2="55.044" y1="59" y2="131"/>
+      </g>
     </g>
-    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="10" y="30"/>
-    <text fill="#000" font-size="14" x="17" y="47.889">A</text>
-    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="43.363" y="30"/>
-    <text fill="#000" font-size="14" x="50.363" y="47.889">B</text>
-    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="10" y="131"/>
-    <text fill="#000" font-size="14" x="17" y="148.889">A</text>
-    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="43.363" y="131"/>
-    <text fill="#000" font-size="14" x="50.363" y="148.889">B</text>
-    <polygon fill="#181818" points="43.044,69,53.044,73,43.044,77,47.044,73" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-    <line style="stroke:#181818;stroke-width:1;" x1="21.681" x2="49.044" y1="73" y2="73"/>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="A" data-source-line="1" id="part1-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="10" y="30"/>
+      <text fill="#000" font-size="14" x="17" y="47.889">A</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part2" data-qualified-name="B" data-source-line="1" id="part2-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="43.363" y="30"/>
+      <text fill="#000" font-size="14" x="50.363" y="47.889">B</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="A" data-source-line="1" id="part1-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="10" y="131"/>
+      <text fill="#000" font-size="14" x="17" y="148.889">A</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="B" data-source-line="1" id="part2-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="43.363" y="131"/>
+      <text fill="#000" font-size="14" x="50.363" y="148.889">B</text>
+    </g>
+    <g class="message" data-entity-1="part1" data-entity-2="part2" data-source-line="1" id="msg1">
+      <polygon fill="#181818" points="43.044,69,53.044,73,43.044,77,47.044,73" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="21.681" x2="49.044" y1="73" y2="73"/>
+    </g>
     <rect fill="none" height="35" style="stroke:#000;stroke-width:1.5;" width="60.113" x="12" y="81"/>
     <path d="M12,81 L72,81 L72,86 L62,96 L12,96 L12,81" fill="#EEE" style="stroke:#000;stroke-width:2;"/>
     <text fill="#000" font-size="13" font-weight="700" textLength="15.113" x="25" y="93.111">ref</text>

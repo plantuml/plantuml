@@ -52,6 +52,8 @@ import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 import net.sourceforge.plantuml.style.WithStyle;
 import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.klimt.UGroup;
+import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.warning.Warning;
 
@@ -59,6 +61,7 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 
 	private Stereotype stereotype;
 	private LineLocation location;
+	private String uid;
 
 	public void getStereotype(Stereotype stereotype) {
 		this.stereotype = stereotype;
@@ -295,6 +298,31 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 
 	public StyleBuilder getStyleBuilder() {
 		return styleBuilder;
+	}
+
+	/**
+	 * Identifier of this message in the SVG (<code>msg1</code>, <code>msg2</code>,
+	 * ...), numbered in the order the messages appear in the diagram.
+	 */
+	public final String getUid() {
+		return uid;
+	}
+
+	public final void setUid(String uid) {
+		this.uid = uid;
+	}
+
+	/**
+	 * The SVG group wrapping the drawing of this message, so that tools can style
+	 * or link it (class, id, source line and the two participants).
+	 */
+	public final UGroup groupTypeMessage() {
+		final UGroup group = new UGroup(location);
+		group.put(UGroupType.CLASS, "message");
+		group.put(UGroupType.DATA_PARTICIPANT_1, getParticipant1().getUid());
+		group.put(UGroupType.DATA_PARTICIPANT_2, getParticipant2().getUid());
+		group.put(UGroupType.DATA_UID, uid);
+		return group;
 	}
 
 	public LineLocation getLineLocation() {

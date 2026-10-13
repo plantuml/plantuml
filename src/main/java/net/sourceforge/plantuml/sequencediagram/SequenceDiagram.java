@@ -197,10 +197,13 @@ public class SequenceDiagram extends TitledDiagram {
 		return participantsget(code) != null;
 	}
 
+	private int messageCount;
+
 	public CommandExecutionResult addMessage(AbstractMessage m) {
 		if (m.isParallel())
 			m.setParallelBrother(getLastAbstractMessage());
 
+		m.setUid("msg" + (++messageCount));
 		lastEventWithDeactivate = m;
 		lastDelay = null;
 		events.add(m);

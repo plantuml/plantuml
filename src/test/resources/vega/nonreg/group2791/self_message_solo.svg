@@ -3,24 +3,34 @@
   <g font-family="sans-serif" lengthAdjust="spacing">
     <rect fill="#DDD" height="179" style="stroke:#181818;stroke-width:0.5;" width="219.631" x="16" y="11"/>
     <text fill="#000" font-size="13" font-weight="700" textLength="31.119" x="110.256" y="21.111">Box A</text>
-    <g>
-      <title>a</title>
-      <rect fill="#000" fill-opacity="0" height="98" width="8" x="178.131" y="57"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="181.631" x2="181.631" y1="57" y2="155"/>
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="a" data-source-line="2" id="part1-lifeline">
+      <g>
+        <title>a</title>
+        <rect fill="#000" fill-opacity="0" height="98" width="8" x="178.131" y="57"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="181.631" x2="181.631" y1="57" y2="155"/>
+      </g>
     </g>
-    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="170.738" y="28"/>
-    <text fill="#000" font-size="14" x="177.738" y="45.889">a</text>
-    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="170.738" y="155"/>
-    <text fill="#000" font-size="14" x="177.738" y="172.889">a</text>
-    <line style="stroke:#181818;stroke-width:1;" x1="181.631" x2="223.631" y1="84" y2="84"/>
-    <line style="stroke:#181818;stroke-width:1;" x1="223.631" x2="223.631" y1="84" y2="97"/>
-    <line style="stroke:#181818;stroke-width:1;" x1="182.631" x2="223.631" y1="97" y2="97"/>
-    <polygon fill="#181818" points="192.631,93,182.631,97,192.631,101,188.631,97" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-    <text fill="#000" font-size="13" textLength="24.538" x="188.631" y="79.111">msg</text>
-    <line style="stroke:#181818;stroke-width:1;" x1="139.631" x2="180.631" y1="124" y2="124"/>
-    <line style="stroke:#181818;stroke-width:1;" x1="139.631" x2="139.631" y1="124" y2="137"/>
-    <line style="stroke:#181818;stroke-width:1;" x1="139.631" x2="179.631" y1="137" y2="137"/>
-    <polygon fill="#181818" points="169.631,133,179.631,137,169.631,141,173.631,137" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-    <text fill="#000" font-size="13" textLength="147.631" x="27" y="119.111">long long long long long msg</text>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="a" data-source-line="2" id="part1-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="170.738" y="28"/>
+      <text fill="#000" font-size="14" x="177.738" y="45.889">a</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="a" data-source-line="2" id="part1-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="170.738" y="155"/>
+      <text fill="#000" font-size="14" x="177.738" y="172.889">a</text>
+    </g>
+    <g class="message" data-entity-1="part1" data-entity-2="part1" data-source-line="5" id="msg1">
+      <line style="stroke:#181818;stroke-width:1;" x1="181.631" x2="223.631" y1="84" y2="84"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="223.631" x2="223.631" y1="84" y2="97"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="182.631" x2="223.631" y1="97" y2="97"/>
+      <polygon fill="#181818" points="192.631,93,182.631,97,192.631,101,188.631,97" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#000" font-size="13" textLength="24.538" x="188.631" y="79.111">msg</text>
+    </g>
+    <g class="message" data-entity-1="part1" data-entity-2="part1" data-source-line="6" id="msg2">
+      <line style="stroke:#181818;stroke-width:1;" x1="139.631" x2="180.631" y1="124" y2="124"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="139.631" x2="139.631" y1="124" y2="137"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="139.631" x2="179.631" y1="137" y2="137"/>
+      <polygon fill="#181818" points="169.631,133,179.631,137,169.631,141,173.631,137" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#000" font-size="13" textLength="147.631" x="27" y="119.111">long long long long long msg</text>
+    </g>
   </g>
 </svg>

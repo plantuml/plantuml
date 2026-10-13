@@ -149,6 +149,14 @@ public class LivingSpace {
 	}
 
 	public void drawLineAndLiveboxes(UGraphic ug, double height, Context2D context) {
+		// Only the line is in the lifeline group, not the liveboxes
+		ug.startGroup(p.groupTypeLifeline(skinParam.getPragma()));
+		drawLine(ug, height, context);
+		ug.closeGroup();
+		liveboxes.drawBoxes(ug, context, getFirstCreateY(), height);
+	}
+
+	private void drawLine(UGraphic ug, double height, Context2D context) {
 		// The line is drawn only over the alive segments: a participant may be
 		// created and destroyed several times
 		boolean alive = create == false;
@@ -163,8 +171,6 @@ public class LivingSpace {
 		}
 		if (alive)
 			mutingLine.drawLine(ug, context, aliveSince, height);
-
-		liveboxes.drawBoxes(ug, context, getFirstCreateY(), height);
 	}
 
 	private double getFirstCreateY() {
@@ -205,6 +211,8 @@ public class LivingSpace {
 		}
 		final Area area = new Area(dim);
 		final Url url = getParticipant().getUrl();
+		final boolean isHead = type == headType;
+		ug.startGroup(isHead ? p.groupTypeHead(skinParam.getPragma()) : p.groupTypeTail(skinParam.getPragma()));
 		if (url != null) {
 			ug.startUrl(url);
 		}
@@ -212,6 +220,7 @@ public class LivingSpace {
 		if (url != null) {
 			ug.closeUrl();
 		}
+		ug.closeGroup();
 	}
 
 	public XDimension2D getHeadPreferredDimension(StringBounder stringBounder) {

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="124px" preserveAspectRatio="none" style="width:131px;height:124px;background:#FFFFFF;" version="1.1" viewBox="0 0 131 124" width="131px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="Alpha" data-source-line="1" id="part1-lifeline">
+      <g>
+        <title>Alpha</title>
+        <rect fill="#000" fill-opacity="0" height="45" width="8" x="31.438" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="34.938" x2="34.938" y1="39" y2="84"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="Bravo" data-source-line="2" id="part2-lifeline">
+      <g>
+        <title>Bravo</title>
+        <rect fill="#000" fill-opacity="0" height="45" width="8" x="91.663" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="95.163" x2="95.163" y1="39" y2="84"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="Alpha" data-source-line="1" id="part1-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.875" x="10" y="10"/>
+      <text fill="#000" font-size="14" textLength="35.875" x="17" y="27.889">Alpha</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part2" data-qualified-name="Bravo" data-source-line="2" id="part2-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="50.575" x="69.875" y="10"/>
+      <text fill="#000" font-size="14" textLength="36.575" x="76.875" y="27.889">Bravo</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="Alpha" data-source-line="1" id="part1-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.875" x="10" y="84"/>
+      <text fill="#000" font-size="14" textLength="35.875" x="17" y="101.889">Alpha</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="Bravo" data-source-line="2" id="part2-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="50.575" x="69.875" y="84"/>
+      <text fill="#000" font-size="14" textLength="36.575" x="76.875" y="101.889">Bravo</text>
+    </g>
+    <g class="message" data-entity-1="part1" data-entity-2="part2" data-source-line="3" id="msg1">
+      <polygon fill="#181818" points="83.163,62,93.163,66,83.163,70,87.163,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="34.938" x2="89.163" y1="66" y2="66"/>
+      <text fill="#000" font-size="13" textLength="27.544" x="41.938" y="61.111">hello</text>
+    </g>
+  </g>
+</svg>

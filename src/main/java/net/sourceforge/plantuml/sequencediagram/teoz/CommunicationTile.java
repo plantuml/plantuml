@@ -366,7 +366,9 @@ public class CommunicationTile extends AbstractCommunicationTile {
 						VerticalAlignment.TOP, HorizontalAlignment.LEFT);
 
 		}
+		ug.startGroup(message.groupTypeMessage());
 		comp.drawU(ug, area, (Context2D) ug);
+		ug.closeGroup();
 	}
 
 	private void drawMulticast(final UGraphic ug) {

@@ -150,7 +150,9 @@ public class CommunicationExoTile extends AbstractTile {
 		final Area area = Area.create(x2 - x1, dim.getHeight());
 		area.setTextDeltaX(textDeltaX);
 		ug = ug.apply(UTranslate.dx(x1));
+		ug.startGroup(message.groupTypeMessage());
 		comp.drawU(ug, area, (Context2D) ug);
+		ug.closeGroup();
 	}
 
 	private boolean isShortArrow() {

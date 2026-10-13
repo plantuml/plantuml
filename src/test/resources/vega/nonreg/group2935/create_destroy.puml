@@ -1,0 +1,12 @@
+---
+output: svg
+expected-description: (3 participants)
+---
+@startuml
+actor Alpha
+participant Bravo
+create Charlie
+Alpha -> Charlie : new
+Bravo -> Charlie : use
+destroy Charlie
+@enduml
