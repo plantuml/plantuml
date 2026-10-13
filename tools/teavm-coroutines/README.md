@@ -40,12 +40,20 @@ the diagram is rendered again from its source. Do not add a thread, a
   when obfuscated) and the points where a thread suspends
   (`thread.suspend(`). TeaVM always emits its own `Object.monitorEnter()` as a
   coroutine, with the `monitorEnterWait()` it suspends in, even when nothing
-  calls it: one of each is allowed, nothing more. When the output is not
+  calls it: exactly one of each is expected. When the output is not
   obfuscated, the names of the coroutines are listed.
 - C: the functions that check whether their fiber is resuming
-  (`meth_otr_Fiber_isResuming`), outside TeaVM's own runtime and except
-  `Object.monitorEnter()`, for the same reason. They are listed with their
-  file.
+  (`meth_otr_Fiber_isResuming`), outside TeaVM's own runtime. There must be
+  none, apart from `Object.monitorEnter()`, for the same reason, which must be
+  found. The others are listed with their file.
+
+That runtime coroutine is expected, not merely allowed, because it proves that
+the patterns still match what TeaVM writes. If a TeaVM upgrade renamed `$ptr`,
+`thread.suspend` or `Fiber_isResuming`, the script would otherwise find
+nothing and pass, whatever the code contains. It fails instead, saying that its
+patterns no longer match: look at how the new version writes its coroutines
+(the readable output of a build with a `Thread.sleep` on the path of an entry
+point shows one) and update the patterns.
 
 Before the coroutines were removed, the script reported 1,939 coroutines and
 4 suspension points for the browser engine (`Object.wait`,

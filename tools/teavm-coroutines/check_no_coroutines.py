@@ -23,9 +23,14 @@ import sys
 # it (without Thread.start(), synchronized blocks use monitorEnterSync()).
 # Anything beyond that one state machine and that one suspension is PlantUML
 # code turned into a coroutine.
-ALLOWED_JS_STATE_MACHINES = 1
-ALLOWED_JS_SUSPENSIONS = 1
-ALLOWED_C_FUNCTIONS = {"meth_jl_Object_monitorEnter"}
+#
+# That runtime coroutine is also the proof that the patterns below still match
+# what TeaVM writes: it must be found, exactly once. If a TeaVM upgrade renamed
+# what they look for, they would find nothing and a check on "at most" would
+# pass silently; this one fails and says so.
+EXPECTED_JS_STATE_MACHINES = 1
+EXPECTED_JS_SUSPENSIONS = 1
+EXPECTED_C_FUNCTION = "meth_jl_Object_monitorEnter"
 
 # Readable output: "switch ($ptr)"; obfuscated output: "switch($p)".
 JS_STATE_MACHINE = re.compile(r"switch\s*\(\s*\$p(?:tr)?\s*\)")
@@ -50,11 +55,15 @@ def check_js(path):
             current = m.group(1) or m.group(2)
         if JS_STATE_MACHINE.search(line) and current and current not in names and len(names) < 40:
             names.append(current)
-    ok = machines <= ALLOWED_JS_STATE_MACHINES and suspensions <= ALLOWED_JS_SUSPENSIONS
-    print("%s %s: %d coroutine(s) (allowed %d), %d suspension point(s) (allowed %d)"
-          % ("OK  " if ok else "FAIL", path, machines, ALLOWED_JS_STATE_MACHINES,
-             suspensions, ALLOWED_JS_SUSPENSIONS))
-    if not ok and names:
+    ok = machines == EXPECTED_JS_STATE_MACHINES and suspensions == EXPECTED_JS_SUSPENSIONS
+    print("%s %s: %d coroutine(s), %d suspension point(s) (expected %d and %d: TeaVM's Object.monitorEnter)"
+          % ("OK  " if ok else "FAIL", path, machines, suspensions,
+             EXPECTED_JS_STATE_MACHINES, EXPECTED_JS_SUSPENSIONS))
+    if machines < EXPECTED_JS_STATE_MACHINES or suspensions < EXPECTED_JS_SUSPENSIONS:
+        print("     TeaVM's own coroutine was not found: the patterns of this script no longer match"
+              " the output (new TeaVM version?), so it cannot tell whether coroutines are back."
+              " Update them (see README.md).")
+    elif not ok and names:
         print("     coroutines (first ones, readable output only): " + ", ".join(names))
     return ok
 
@@ -65,6 +74,7 @@ def check_c(directory):
         print("FAIL %s: no classes/ directory (not a TeaVM C output?)" % directory)
         return False
     found = []
+    expected_seen = False
     for root, _, files in os.walk(classes):
         for name in files:
             if not name.endswith(".c"):
@@ -78,11 +88,17 @@ def check_c(directory):
                         current = m.group(1)
                     elif C_COROUTINE.search(line) and current is not None:
                         rel = os.path.relpath(path, classes)
-                        if current not in ALLOWED_C_FUNCTIONS and not rel.startswith("org" + os.sep + "teavm" + os.sep + "runtime"):
+                        if current == EXPECTED_C_FUNCTION:
+                            expected_seen = True
+                        elif not rel.startswith("org" + os.sep + "teavm" + os.sep + "runtime"):
                             found.append("%s (%s)" % (current, rel))
                         current = None
-    ok = not found
+    ok = expected_seen and not found
     print("%s %s: %d coroutine(s) outside the TeaVM runtime" % ("OK  " if ok else "FAIL", directory, len(found)))
+    if not expected_seen:
+        print("     TeaVM's own coroutine (%s) was not found: the patterns of this script no longer"
+              " match the output (new TeaVM version?), so it cannot tell whether coroutines are back."
+              " Update them (see README.md)." % EXPECTED_C_FUNCTION)
     for entry in sorted(found)[:40]:
         print("     " + entry)
     return ok
