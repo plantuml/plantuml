@@ -81,12 +81,16 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="nc" id="L81">						return new PSystemKeycheck(source, m.group(1), m.group(2), preprocessing);</span>
 
 				}
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">				if (line.matches(&quot;(?i)^keycheck\\s+[0-9a-z]+\\s*$&quot;)) {</span>
+<span class="nc" id="L85">					final String key = line.trim().substring(&quot;keycheck&quot;.length()).trim();</span>
+<span class="nc" id="L86">					return new PSystemKeycheck(source, key, preprocessing);</span>
+				}
 			}
-<span class="nc" id="L85">		} catch (Exception e) {</span>
-<span class="nc" id="L86">			Log.error(&quot;Error &quot; + e);</span>
+<span class="nc" id="L89">		} catch (Exception e) {</span>
+<span class="nc" id="L90">			Log.error(&quot;Error &quot; + e);</span>
 
-<span class="fc" id="L88">		}</span>
-<span class="fc" id="L89">		return null;</span>
+<span class="fc" id="L92">		}</span>
+<span class="fc" id="L93">		return null;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
