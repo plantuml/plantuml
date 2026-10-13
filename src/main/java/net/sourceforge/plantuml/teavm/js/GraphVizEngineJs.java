@@ -90,6 +90,29 @@ public class GraphVizEngineJs {
 	public static native boolean vizMissingFallback();
 
 	/**
+	 * Whether a layout can call {@link #renderDotToSvg(String)} now: the
+	 * instance is there, or creating it failed (which {@code renderDotToSvg}
+	 * then reports). When it is not there yet, it is noted as missing and this
+	 * returns <code>false</code>: the attempt will be discarded and rendered
+	 * again once the instance is ready, so the caller should stop at once rather
+	 * than compute a layout for nothing.
+	 */
+	public static boolean isAvailable() {
+		if (isReady() || getFailure(NOT_LOADED) != null)
+			return true;
+		PendingResources.requireViz();
+		return false;
+	}
+
+	/**
+	 * Forgets why creating the instance failed, so that the next request tries
+	 * again: a network failure while loading the WebAssembly module may be
+	 * transient. Called at the start of each request.
+	 */
+	@JSBody(script = "delete globalThis.__plantumlVizError;")
+	public static native void forgetFailure();
+
+	/**
 	 * Renders a DOT graph description to SVG format, with the {@code dot}
 	 * engine.
 	 *
@@ -146,7 +169,8 @@ public class GraphVizEngineJs {
 	/**
 	 * Creates the Viz.js instance, once, and calls <code>done</code> when it is
 	 * there or when creating it failed (the reason is then kept as
-	 * {@code __plantumlVizError}), or at once when there is nothing to wait for.
+	 * {@code __plantumlVizError}, until the next request: see
+	 * {@link #forgetFailure()}), or at once when there is nothing to wait for.
 	 * Concurrent calls share the same creation.
 	 */
 	@JSBody(params = "done", script = FIND_VIZ_STMT

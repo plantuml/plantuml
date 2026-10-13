@@ -12,6 +12,7 @@ import net.sourceforge.plantuml.explain.Explanation;
 import net.sourceforge.plantuml.mcp.McpResult;
 import net.sourceforge.plantuml.mcp.SyntaxChecker;
 import net.sourceforge.plantuml.teavm.DiagramRendererTeaVM;
+import net.sourceforge.plantuml.teavm.js.browser.PendingResources;
 import net.sourceforge.plantuml.teavm.js.browser.RenderQueue;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.version.Version;
@@ -44,7 +45,7 @@ import net.sourceforge.plantuml.version.Version;
  * <li>{@link #renderSvg(String, ResultCallback)} &mdash; parses and renders a
  * single diagram to a deterministic SVG. Asynchronous: the result JSON is
  * delivered through a callback, because what the diagram needs from JavaScript
- * (the Viz.js instance for Graphviz layouts, a URL...) only arrives
+ * (the Viz.js instance for Graphviz layouts...) only arrives
  * asynchronously; the diagram is rendered again once it is there (see
  * {@link RenderQueue}, shared with
  * {@link net.sourceforge.plantuml.teavm.js.browser.PlantUMLBrowser}). No thread
@@ -192,7 +193,13 @@ public class PlantUMLHeadless {
 	private static String renderSvgToJson(String source) {
 		final McpResult result;
 		try {
-			result = new DiagramRendererTeaVM().render(source);
+			result = new DiagramRendererTeaVM() {
+				@Override
+				protected boolean isDiscarded() {
+					// The attempt missed a resource: it will be rendered again (RenderQueue)
+					return PendingResources.hasMissing();
+				}
+			}.render(source);
 		} catch (IOException e) {
 			return errorJson("Could not render the diagram source: " + e.getMessage());
 		}

@@ -83,7 +83,7 @@ import net.sourceforge.plantuml.teavm.js.UGraphicJs;
  * coroutine: see tools/teavm-coroutines). What the rendering needs from JavaScript and
  * can only get asynchronously (the Viz.js instance, support scripts such as
  * {@code emoji.js} or {@code <lib>.min.js}, files of
- * {@code PLANTUML_FILE_LOADER}, URLs) is handled by rendering again: an
+ * {@code PLANTUML_FILE_LOADER}) is handled by rendering again: an
  * attempt that misses one is discarded, the resources are loaded with
  * JavaScript callbacks, and the diagram is rendered again from its source (see
  * {@link PendingResources} and {@link RenderQueue}).
@@ -222,7 +222,10 @@ public class PlantUMLBrowser {
 			svg = null;
 			failure = null;
 			try {
-				svg = serializeSvg(buildSvg(lines, darkMode, maxSvgSize).getSvgRoot());
+				final SvgGraphicsJs graphics = buildSvg(lines, darkMode, maxSvgSize);
+				// null: discarded attempt, which is never delivered
+				if (graphics != null)
+					svg = serializeSvg(graphics.getSvgRoot());
 			} catch (Throwable t) {
 				failure = t;
 			}
@@ -349,11 +352,18 @@ public class PlantUMLBrowser {
 	// Rendering
 	// =========================================================================
 
-	/** Parses and renders PlantUML source lines to an SVG graphics context. */
+	/**
+	 * Parses and renders PlantUML source lines to an SVG graphics context, or
+	 * returns <code>null</code> when the parsing missed a resource: the attempt
+	 * is going to be discarded (see {@link RenderQueue}), so it stops before the
+	 * layout and the drawing.
+	 */
 	private static SvgGraphicsJs buildSvg(String[] lines, boolean darkMode, int maxSvgSize) throws Exception {
 		final ColorMapper colorMapper = darkMode ? ColorMapper.TEAVM_DARK : ColorMapper.TEAVM_LIGHT;
 
 		final Diagram diagram = PSystemBuilderJs.getInstance().createDiagram(lines);
+		if (PendingResources.hasMissing())
+			return null;
 		final FileFormatOption fileFormat = new FileFormatOption(FileFormat.SVG);
 
 		if (diagram instanceof UgDiagram == false)

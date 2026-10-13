@@ -624,31 +624,13 @@ public class SURL {
 	}
 
 	public InputStream openStream() {
-		// java.net.URL goes through TeaVM's XHR connection, which is asynchronous and
-		// JavaScript only: it would make most of the code "async" for the C backend
-		if (TeaVM.isC())
-			return null;
-
+		// No URL is read by the TeaVM builds (JavaScript and C). java.net.URL goes
+		// through TeaVM's XHR connection, an @Async method: reachable from here, it
+		// would turn most of PlantUML into coroutines (see tools/teavm-coroutines).
+		// Nothing calls this at run time anyway: !include, !includesub, !theme, sprite
+		// and <img> of a URL are refused before getting here in the TeaVM builds.
 		if (TeaVM.isTeaVM()) {
-			// Not java.net.URL either in JavaScript: its XHR connection suspends the
-			// calling thread (TeaVM coroutines). The content is fetched from JavaScript
-			// between two rendering attempts instead (PendingResources): null until then.
-			// ::revert when JAVA8
-			// return null;
-			final net.sourceforge.plantuml.teavm.js.browser.PendingResources.Answer answer = net.sourceforge.plantuml.teavm.js.browser.PendingResources
-					.url(internal.toString());
-			if (answer == null)
-				return null;
-			if (answer.getError() != null) {
-				System.err.println("SURL::openStream " + answer.getError());
-				return null;
-			}
-			final String text = answer.getText();
-			final byte[] data = new byte[text.length()];
-			for (int i = 0; i < data.length; i++)
-				data[i] = (byte) text.charAt(i);
-			return new ByteArrayInputStream(data);
-			// ::done
+			return null;
 		} else {
 			if (isUrlOk()) {
 				final byte[] data = getBytes();

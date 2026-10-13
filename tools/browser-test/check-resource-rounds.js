@@ -22,7 +22,9 @@
 // - a request made from a callback is answered, after the current one;
 // - past 20 rounds, the request fails with a message naming what is missing;
 // - a host that never answers makes the include fail after 60 s instead of
-//   leaving the engine waiting forever, and later requests are answered.
+//   leaving the engine waiting forever, and later requests are answered;
+// - a failure to create the Viz.js instance (the WebAssembly module did not
+//   load) fails that request only: the next one tries again.
 const path = require('path');
 const { createCheckReporter } = require('../lib/browser-check');
 const { parseTargetArg } = require('../lib/browser-cli');
@@ -179,7 +181,30 @@ const { check, finish } = createCheckReporter();
   const afterHang = await run(['@startuml', '!include chain1.puml', '@enduml']);
   check('the engine answers the next request after a hung loader', !!afterHang.ok && afterHang.ok.includes('level1'));
 
-  check('no unhandled page errors', pageErrors.length === 0, pageErrors.join(' | '));
+  // 8. A transient failure of Viz.instance(), on a page of its own (the Viz.js
+  // instance is created once per page).
+  const flaky = await openReadyPage(browser, `http://127.0.0.1:${port}/index.html`, {
+    readyExpression: 'window.__ready',
+    beforeGoto: p => p.addInitScript(() => {
+      let calls = 0;
+      Object.defineProperty(globalThis, 'PLANTUML_VIZ', {
+        configurable: true,
+        get: () => ({ instance: () => (++calls === 1 ? Promise.reject(new Error('flaky wasm download')) : globalThis.Viz.instance()) }),
+      });
+    }),
+  });
+  const classDiagram = ['@startuml', 'class Flaky', 'Flaky --> Other', '@enduml'];
+  const runFlaky = () => flaky.page.evaluate(l => window.__h.withTimeout(window.__h.rts(l), 60000), classDiagram);
+  const firstFlaky = await runFlaky();
+  const secondFlaky = await runFlaky();
+  check('a failed Viz.instance() is reported, naming the failure',
+    !!firstFlaky.ok && /flaky wasm download/.test(firstFlaky.ok), JSON.stringify(firstFlaky).slice(0, 200));
+  check('the next request tries Viz.instance() again, and renders',
+    !!secondFlaky.ok && secondFlaky.ok.includes('Flaky') && !/flaky wasm download/.test(secondFlaky.ok),
+    JSON.stringify(secondFlaky).slice(0, 200));
+  await flaky.page.close();
+
+  check('no unhandled page errors', pageErrors.concat(flaky.errors).length === 0, pageErrors.concat(flaky.errors).join(' | '));
   check('no TeaVM suspension error on the console',
     consoleMessages.every(m => !/Suspension point|non-threading context/.test(m.text)));
 

@@ -100,6 +100,8 @@ public class DiagramRendererTeaVM {
 
 		final BlockUml blockUml = blocks.get(0);
 		final Diagram diagram = blockUml.getDiagram();
+		if (isDiscarded())
+			return McpResult.renderError(diagram, "Rendering discarded: resources are being loaded");
 
 		// On a parse error (or a non-graphical diagram) there is no SVG to
 		// produce: report the structured diagnostic only.
@@ -113,6 +115,16 @@ public class DiagramRendererTeaVM {
 			Logme.error(e);
 			return McpResult.renderError(diagram, "Rendering failed: " + e);
 		}
+	}
+
+	/**
+	 * Whether the result of this rendering will be thrown away, checked once the
+	 * diagram is parsed so that the layout and the drawing are skipped. Never on
+	 * the JVM; the JavaScript engine renders a diagram again when the parsing
+	 * missed a resource that only arrives asynchronously, and overrides this.
+	 */
+	protected boolean isDiscarded() {
+		return false;
 	}
 
 	/**

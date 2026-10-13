@@ -482,6 +482,15 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 		else
 			maker = new CucaDiagramFileMakerSvek(this);
 
+		// ::comment when JAVA8
+		// The browser build renders the diagram again once the Viz.js instance is
+		// ready (PendingResources): an attempt made before is discarded, so it stops
+		// here instead of computing a layout for nothing.
+		if (TeaVM.isJavaScript() && maker instanceof CucaDiagramFileMakerTeaVM
+				&& net.sourceforge.plantuml.teavm.js.GraphVizEngineJs.isAvailable() == false)
+			throw new IOException("Viz is loading");
+		// ::done
+
 		return maker.getTextBlock(getDotStrings(), fileFormatOption);
 	}
 

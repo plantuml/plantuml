@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.teavm.js.GraphVizEngineJs;
  * The resources a rendering needs from the JavaScript side, which only arrive
  * asynchronously: support scripts (<code>emoji.js</code>, <code>themes.js</code>,
  * <code>&lt;lib&gt;.min.js</code>...), files of the host's
- * <code>PLANTUML_FILE_LOADER</code>, URLs, and the Viz.js instance.
+ * <code>PLANTUML_FILE_LOADER</code>, and the Viz.js instance.
  *
  * <h2>Why</h2>
  *
@@ -110,13 +110,11 @@ public final class PendingResources {
 
 	private static final String SCRIPT = "script";
 	private static final String FILE = "file";
-	private static final String URL = "url";
 	private static final String VIZ = "viz";
 
 	/**
 	 * The answer of a loader. A successful one has no error; for a file, it also
-	 * has the identifier and text the host delivered; for a URL, the bytes as a
-	 * string of chars 0 to 255.
+	 * has the identifier and text the host delivered.
 	 */
 	public static final class Answer {
 		private final String id;
@@ -208,10 +206,14 @@ public final class PendingResources {
 	// Attempts (driven by RenderQueue)
 	// =========================================================================
 
-	/** Forgets the answers of the previous request. */
+	/**
+	 * Forgets the answers of the previous request, and a failure to create the
+	 * Viz.js instance, which is tried again.
+	 */
 	static void startRequest() {
 		answers = new HashMap<String, Answer>();
 		missing.clear();
+		GraphVizEngineJs.forgetFailure();
 	}
 
 	static void startAttempt() {
@@ -233,7 +235,15 @@ public final class PendingResources {
 				nativeWarn(message);
 	}
 
-	static boolean hasMissing() {
+	/**
+	 * Whether the running attempt has missed a resource, and will therefore be
+	 * discarded: what it computes from now on is wasted. The includes, themes and
+	 * libraries are all resolved while the diagram is parsed, so a rendering
+	 * checks this after parsing and stops there (see
+	 * {@code PlantUMLBrowser.buildSvg}); only Viz.js is asked for later, by the
+	 * layout.
+	 */
+	public static boolean hasMissing() {
 		return missing.isEmpty() == false;
 	}
 
@@ -281,14 +291,6 @@ public final class PendingResources {
 	 */
 	static Answer file(String path, String from, String kind) {
 		return lookup(new Wanted(FILE, FILE + "\n" + path + "\n" + from + "\n" + kind, path, from, kind));
-	}
-
-	/**
-	 * The content of a URL, or <code>null</code> when it has not been fetched
-	 * yet (it is then noted as missing).
-	 */
-	public static Answer url(String url) {
-		return lookup(new Wanted(URL, URL + "\n" + url, url, null, null));
 	}
 
 	/** Notes that the Viz.js instance is needed and not ready yet. */
@@ -347,9 +349,6 @@ public final class PendingResources {
 						reason -> round.settle(key, Answer.failed(reason)));
 				if (handled == false)
 					round.settle(key, Answer.declinedByHost());
-			} else if (URL.equals(wanted.type)) {
-				fetchUrl(wanted.path, text -> round.settle(key, Answer.ok(null, text)),
-						message -> round.settle(key, Answer.failed(message)));
 			} else {
 				GraphVizEngineJs.prepare(() -> round.settle(key, Answer.ok(null, null)));
 			}
@@ -404,50 +403,5 @@ public final class PendingResources {
 	/** Runs the callback from a later task, never from the current one. */
 	@JSBody(params = "callback", script = "Promise.resolve().then(function() { callback(); });")
 	private static native void later(ScriptLoaderJs.Ok callback);
-
-	/**
-	 * Fetches a URL as bytes, delivered as a string of chars 0 to 255. Uses
-	 * <code>fetch</code> (browsers, Web Workers, Node 18+), or
-	 * <code>XMLHttpRequest</code> where there is no <code>fetch</code>. A
-	 * response that is not a success (404...) is a failure.
-	 */
-	@JSBody(params = { "url", "onOk", "onErr" }, script = "var g = (typeof globalThis !== 'undefined') ? globalThis"
-			+ " : ((typeof self !== 'undefined') ? self : this);"
-			+ "var fail = function(e) {"
-			+ "  var m; try { m = (e && e.message !== undefined) ? String(e.message) : String(e); } catch (x) { m = ''; }"
-			+ "  onErr(m || ('Cannot fetch ' + url));"
-			+ "};"
-			+ "var deliver = function(buffer) {"
-			+ "  var bytes = new Uint8Array(buffer), s = '', n = 0x8000;"
-			+ "  for (var i = 0; i < bytes.length; i += n)"
-			+ "    s += String.fromCharCode.apply(null, bytes.subarray(i, i + n));"
-			+ "  onOk(s);"
-			+ "};"
-			+ "try {"
-			+ "  if (typeof g.fetch === 'function') {"
-			+ "    g.fetch(url).then(function(r) {"
-			+ "      if (!r.ok) throw new Error('HTTP ' + r.status + ' for ' + url);"
-			+ "      return r.arrayBuffer();"
-			+ "    }).then(deliver, fail);"
-			+ "  } else if (typeof XMLHttpRequest !== 'undefined') {"
-			+ "    var x = new XMLHttpRequest();"
-			+ "    x.open('GET', url, true);"
-			+ "    x.responseType = 'arraybuffer';"
-			+ "    x.onload = function() {"
-			+ "      if (x.status >= 200 && x.status < 300) deliver(x.response);"
-			+ "      else fail('HTTP ' + x.status + ' for ' + url);"
-			+ "    };"
-			+ "    x.onerror = function() { fail('Cannot fetch ' + url); };"
-			+ "    x.send();"
-			+ "  } else {"
-			+ "    fail('No fetch() in this JavaScript runtime');"
-			+ "  }"
-			+ "} catch (e) { fail(e); }")
-	private static native void fetchUrl(String url, StringCallback onOk, ScriptLoaderJs.Err onErr);
-
-	@org.teavm.jso.JSFunctor
-	private interface StringCallback extends JSObject {
-		void invoke(String value);
-	}
 
 }
