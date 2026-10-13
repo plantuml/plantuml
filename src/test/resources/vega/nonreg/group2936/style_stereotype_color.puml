@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (2 entities)
+---
+@startuml
+<style>
+stereotype {
+  FontColor red
+}
+</style>
+class class_stereo <<stereotype>>
+stereotype stereotype
+@enduml

@@ -1,0 +1,18 @@
+---
+output: svg
+expected-description: (2 entities)
+---
+@startuml
+package "com.tie" {
+  package "services" {
+    class HelloService <<Service>> {
+      +getHelloMessage(): String
+    }
+  }
+  class HelloController <<RestController>> {
+    -helloService: HelloService
+    +String hello()
+  }
+  HelloController --> HelloService : uses
+}
+@enduml

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="199px" preserveAspectRatio="none" style="width:206px;height:199px;background:#000000;" version="1.1" viewBox="0 0 206 199" width="206px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class HelloService-->
+    <g class="entity" data-qualified-name="HelloService" data-source-line="8" id="ent0001">
+      <rect fill="#000" height="66" rx="2.5" ry="2.5" style="stroke:#FFF;stroke-width:0.5;" width="183.938" x="6" y="117"/>
+      <ellipse cx="54.344" cy="135" fill="#000" rx="11" ry="11" style="stroke:#FFF;stroke-width:1;"/>
+      <text fill="#FFF" font-family="monospace" font-size="14" x="49.344" y="140">C</text>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="53.4" x="87.519" y="131.333">«Service»</text>
+      <text fill="#FFF" font-size="14" textLength="78.75" x="74.844" y="144.889">HelloService</text>
+      <line style="stroke:#FFF;stroke-width:0.5;" x1="7" x2="188.938" y1="153" y2="153"/>
+      <line style="stroke:#FFF;stroke-width:0.5;" x1="7" x2="188.938" y1="161" y2="161"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="173.5" fill="#000" rx="3" ry="3" style="stroke:#FFF;stroke-width:1;"/>
+      </g>
+      <text fill="#FFF" font-size="14" textLength="157.938" x="26" y="175.889">getHelloMessage(): String</text>
+    </g>
+    <!--class HelloController-->
+    <g class="entity" data-qualified-name="HelloController" data-source-line="11" id="ent0002">
+      <rect fill="#000" height="52" rx="2.5" ry="2.5" style="stroke:#FFF;stroke-width:0.5;" width="124.75" x="35.5" y="12"/>
+      <ellipse cx="50.5" cy="30" fill="#000" rx="11" ry="11" style="stroke:#FFF;stroke-width:1;"/>
+      <text fill="#FFF" font-family="monospace" font-size="14" x="45.5" y="35">C</text>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="90.075" x="65.838" y="26.333">«RestController»</text>
+      <text fill="#FFF" font-size="14" textLength="92.75" x="64.5" y="39.889">HelloController</text>
+      <line style="stroke:#FFF;stroke-width:0.5;" x1="36.5" x2="159.25" y1="48" y2="48"/>
+      <line style="stroke:#FFF;stroke-width:0.5;" x1="36.5" x2="159.25" y1="56" y2="56"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk3">
+      <polygon fill="#FFF" points="98,116.771,102,107.771,98,111.771,94,107.771,98,116.771" style="stroke:#FFF;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M98,64.236 C98,79.84 98,95.017 98,111.771" fill="none" style="stroke:#FFF;stroke-width:1;"/>
+      <text fill="#FFF" font-size="13" textLength="27.463" x="100" y="94.111">uses</text>
+    </g>
+  </g>
+</svg>

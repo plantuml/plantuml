@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (1 entities)
+---
+@startuml
+<style>
+root {
+  BackGroundColor black
+  FontColor white
+  LineColor white
+}
+</style>
+class Box<T> <<Container>>
+@enduml

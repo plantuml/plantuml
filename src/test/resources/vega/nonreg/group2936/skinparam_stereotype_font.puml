@@ -1,0 +1,9 @@
+---
+output: svg
+expected-description: (1 entities)
+---
+@startuml
+skinparam ClassStereotypeFontColor green
+skinparam ClassStereotypeFontSize 9
+class A <<Service>>
+@enduml

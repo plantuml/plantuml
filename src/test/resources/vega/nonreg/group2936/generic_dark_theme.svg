@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="80px" preserveAspectRatio="none" style="width:127px;height:80px;background:#000000;" version="1.1" viewBox="0 0 127 80" width="127px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Box-->
+    <g class="entity" data-qualified-name="Box" data-source-line="8" id="ent0001">
+      <rect fill="#000" height="52" rx="2.5" ry="2.5" style="stroke:#FFF;stroke-width:0.5;" width="104.75" x="6" y="12"/>
+      <ellipse cx="21" cy="30" fill="#000" rx="11" ry="11" style="stroke:#FFF;stroke-width:1;"/>
+      <text fill="#FFF" font-family="monospace" font-size="14" x="16" y="35">C</text>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="65.4" x="33" y="26.333">«Container»</text>
+      <text fill="#FFF" font-size="14" textLength="24.15" x="53.625" y="39.889">Box</text>
+      <rect fill="#000" height="14" style="stroke:#FFF;stroke-width:1;stroke-dasharray:2,2;" width="9.35" x="104.4" y="9"/>
+      <text fill="#FFF" font-size="12" font-style="italic" x="105.4" y="19.333">T</text>
+      <line style="stroke:#FFF;stroke-width:0.5;" x1="7" x2="109.75" y1="48" y2="48"/>
+      <line style="stroke:#FFF;stroke-width:0.5;" x1="7" x2="109.75" y1="56" y2="56"/>
+    </g>
+  </g>
+</svg>

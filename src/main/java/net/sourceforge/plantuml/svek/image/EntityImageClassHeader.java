@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
@@ -77,6 +78,12 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 	@Override
 	public StyleQuery getStyleQuery() {
 		return StyleQueries.CLASSDIAG_CLASS_HEADER;
+	}
+
+	private FontConfiguration getStereotypeFontConfiguration(Stereotype stereotype) {
+		final Style styleStereo = getSkinParam().getCurrentStyleBuilder()
+				.getMergedStyle(StyleQueries.CLASSDIAG_CLASS.add(SName.stereotype).forStereotypeItself(stereotype));
+		return styleStereo.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 	}
 
 	public EntityImageClassHeader(Entity entity, PortionShower portionShower) {
@@ -126,8 +133,7 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 			stereo = null;
 		else
 			stereo = TextBlockUtils.withMargin(Display.create(stereotypeLabels).create(
-					FontConfiguration.create(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),
-					HorizontalAlignment.CENTER, getSkinParam()), 1, 0);
+					getStereotypeFontConfiguration(stereotype), HorizontalAlignment.CENTER, getSkinParam()), 1, 0);
 
 		TextBlock genericBlock;
 		if (generic == null) {
@@ -138,8 +144,7 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 					.withStereostyles(entity.getStereostyles()));
 
 			genericBlock = Display.getWithNewlines(getSkinParam().getPragma(), generic).create(
-					FontConfiguration.create(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),
-					HorizontalAlignment.CENTER, getSkinParam());
+					getStereotypeFontConfiguration(stereotype), HorizontalAlignment.CENTER, getSkinParam());
 			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);
 
 			final HColor classBackground = styleGeneric.value(PName.BackGroundColor)

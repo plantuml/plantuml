@@ -1,0 +1,9 @@
+---
+output: svg
+expected-description: (2 entities)
+---
+@startuml
+skinparam ClassStereotypeFontColor<<Service>> orange
+class A <<Service>>
+class B <<Other>>
+@enduml

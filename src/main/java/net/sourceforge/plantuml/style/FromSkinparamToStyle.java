@@ -190,6 +190,11 @@ public class FromSkinparamToStyle {
 		addConvert("classFontColor", PName.FontColor, SName.element, SName.class_, SName.header);
 		addConvert("classFontName", PName.FontName, SName.element, SName.class_, SName.header);
 
+		addConvert("classStereotypeFontSize", PName.FontSize, SName.element, SName.class_, SName.stereotype);
+		addConvert("classStereotypeFontStyle", PName.FontStyle, SName.element, SName.class_, SName.stereotype);
+		addConvert("classStereotypeFontColor", PName.FontColor, SName.element, SName.class_, SName.stereotype);
+		addConvert("classStereotypeFontName", PName.FontName, SName.element, SName.class_, SName.stereotype);
+
 		addConvert("classAttributeFontSize", PName.FontSize, SName.element, SName.class_);
 		addConvert("classAttributeFontStyle", PName.FontStyle, SName.element, SName.class_);
 		addConvert("classAttributeFontColor", PName.FontColor, SName.element, SName.class_);

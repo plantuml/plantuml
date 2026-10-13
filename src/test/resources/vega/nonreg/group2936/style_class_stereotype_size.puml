@@ -1,0 +1,17 @@
+---
+output: svg
+expected-description: (1 entities)
+---
+@startuml
+<style>
+classDiagram {
+  class {
+    stereotype {
+      FontColor green
+      FontSize 20
+    }
+  }
+}
+</style>
+class A <<Service>>
+@enduml

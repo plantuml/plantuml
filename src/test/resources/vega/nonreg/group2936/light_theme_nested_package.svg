@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="388px" preserveAspectRatio="none" style="width:302px;height:388px;background:#FFFFFF;" version="1.1" viewBox="0 0 302 388" width="302px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster com-->
+    <g class="cluster" data-qualified-name="com" data-source-line="3" id="ent0004">
+      <path d="M16.5,4 L43.925,4 A3.75,3.75 0 0 1 46.425,6.5 L53.425,24 L291.5,24 A2.5,2.5 0 0 1 294,26.5 L294,361.5 A2.5,2.5 0 0 1 291.5,364 L16.5,364 A2.5,2.5 0 0 1 14,361.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="53.425" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.425" x="18" y="16.889">com</text>
+    </g>
+    <!--cluster tie-->
+    <g class="cluster" data-qualified-name="com.tie" data-source-line="1" id="ent0001">
+      <path d="M32.5,45 L48.287,45 A3.75,3.75 0 0 1 50.787,47.5 L57.787,65 L275.5,65 A2.5,2.5 0 0 1 278,67.5 L278,345.5 A2.5,2.5 0 0 1 275.5,348 L32.5,348 A2.5,2.5 0 0 1 30,345.5 L30,47.5 A2.5,2.5 0 0 1 32.5,45" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="30" x2="57.787" y1="65" y2="65"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="14.787" x="34" y="57.889">tie</text>
+    </g>
+    <!--cluster services-->
+    <g class="cluster" data-qualified-name="com.tie.services" data-source-line="2" id="ent0002">
+      <path d="M48.5,209 L100.863,209 A3.75,3.75 0 0 1 103.363,211.5 L110.363,229 L259.5,229 A2.5,2.5 0 0 1 262,231.5 L262,329.5 A2.5,2.5 0 0 1 259.5,332 L48.5,332 A2.5,2.5 0 0 1 46,329.5 L46,211.5 A2.5,2.5 0 0 1 48.5,209" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="46" x2="110.363" y1="229" y2="229"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="51.363" x="50" y="221.889">services</text>
+    </g>
+    <!--class HelloController-->
+    <g class="entity" data-qualified-name="com.tie.HelloController" data-source-line="7" id="ent0005">
+      <rect fill="#F1F1F1" height="80" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="184.988" x="61.5" y="86"/>
+      <ellipse cx="103.607" cy="104" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="98.607" y="109">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="90.075" x="124.968" y="100.333">«RestController»</text>
+      <text fill="#000" font-size="14" textLength="92.75" x="123.631" y="113.889">HelloController</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="62.5" x2="245.488" y1="122" y2="122"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="69.5" y="131.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="158.988" x="81.5" y="136.889">helloService: HelloService</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="62.5" x2="245.488" y1="144" y2="144"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="72.5" cy="156.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="75.513" x="81.5" y="158.889">String hello()</text>
+    </g>
+    <!--class HelloService-->
+    <g class="entity" data-qualified-name="com.tie.services.HelloService" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="66" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="183.938" x="62" y="250"/>
+      <ellipse cx="110.344" cy="268" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="105.344" y="273">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="53.4" x="143.519" y="264.333">«Service»</text>
+      <text fill="#000" font-size="14" textLength="78.75" x="130.844" y="277.889">HelloService</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="63" x2="244.938" y1="286" y2="286"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="63" x2="244.938" y1="294" y2="294"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="73" cy="306.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="157.938" x="82" y="308.889">getHelloMessage(): String</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0003" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="154,249.949,158,240.949,154,244.949,150,240.949,154,249.949" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M154,166.113 C154,192.031 154,220.613 154,244.949" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="27.463" x="156" y="196.111">uses</text>
+    </g>
+  </g>
+</svg>

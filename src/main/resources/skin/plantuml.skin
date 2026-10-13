@@ -213,6 +213,14 @@ classDiagram,componentDiagram,objectDiagram {
   }
 }
 
+classDiagram {
+  class {
+    stereotype {
+      FontSize 12
+    }
+  }
+}
+
 visibilityIcon {
   public {
     LineColor #038048
