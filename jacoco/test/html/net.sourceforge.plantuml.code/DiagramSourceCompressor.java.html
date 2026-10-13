@@ -42,80 +42,164 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.UncommentReadLine;
-import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.text.StringLocated;
 
-<span class="fc" id="L49">public class DiagramSourceCompressor implements StringCompressor {</span>
+<span class="fc" id="L47">public class DiagramSourceCompressor implements StringCompressor {</span>
 
-<span class="fc" id="L51">	private final static Pattern2 pattern = Pattern2.cmpile(&quot;(?s)^[%s]*(@startuml[^\\n\\r]*)?[%s]*(.*?)[%s]*(@enduml)?[%s]*$&quot;);</span>
+	private static final String START_UML = &quot;@startuml&quot;;
+	private static final String END_UML = &quot;@enduml&quot;;
 
 	public String compress(final String data) throws IOException {
-<span class="fc" id="L54">		final ReadLine r = new UncommentReadLine(ReadLineReader.create(new StringReader(data), &quot;COMPRESS&quot;));</span>
-<span class="fc" id="L55">		final StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L56">		final StringBuilder full = new StringBuilder();</span>
-<span class="fc" id="L57">		StringLocated s = null;</span>
-<span class="fc" id="L58">		boolean startDone = false;</span>
-<span class="fc bfc" id="L59" title="All 2 branches covered.">		while ((s = r.readLine()) != null) {</span>
-<span class="fc" id="L60">			append(full, s);</span>
-<span class="fc bfc" id="L61" title="All 2 branches covered.">			if (s.getString().startsWith(&quot;@startuml&quot;)) {</span>
-<span class="fc" id="L62">				startDone = true;</span>
-<span class="fc bfc" id="L63" title="All 2 branches covered.">			} else if (s.getString().startsWith(&quot;@enduml&quot;)) {</span>
-<span class="fc" id="L64">				return sb.toString();</span>
-<span class="fc bfc" id="L65" title="All 2 branches covered.">			} else if (startDone) {</span>
-<span class="fc" id="L66">				append(sb, s);</span>
+<span class="fc" id="L53">		final ReadLine r = new UncommentReadLine(ReadLineReader.create(new StringReader(data), &quot;COMPRESS&quot;));</span>
+<span class="fc" id="L54">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L55">		final StringBuilder full = new StringBuilder();</span>
+<span class="fc" id="L56">		StringLocated s = null;</span>
+<span class="fc" id="L57">		boolean startDone = false;</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		while ((s = r.readLine()) != null) {</span>
+<span class="fc" id="L59">			append(full, s);</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">			if (s.getString().startsWith(&quot;@startuml&quot;)) {</span>
+<span class="fc" id="L61">				startDone = true;</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">			} else if (s.getString().startsWith(&quot;@enduml&quot;)) {</span>
+<span class="fc" id="L63">				return sb.toString();</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">			} else if (startDone) {</span>
+<span class="fc" id="L65">				append(sb, s);</span>
 			}
 		}
-<span class="fc bfc" id="L69" title="All 2 branches covered.">		if (startDone == false) {</span>
-<span class="fc" id="L70">			return compressOld(full.toString());</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (startDone == false) {</span>
+<span class="fc" id="L69">			return compressOld(full.toString());</span>
 		}
-<span class="fc" id="L72">		return sb.toString();</span>
+<span class="fc" id="L71">		return sb.toString();</span>
 	}
 
 	private void append(final StringBuilder sb, StringLocated s) {
-<span class="fc bfc" id="L76" title="All 2 branches covered.">		if (sb.length() &gt; 0) {</span>
-<span class="fc" id="L77">			sb.append('\n');</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		if (sb.length() &gt; 0) {</span>
+<span class="fc" id="L76">			sb.append('\n');</span>
 		}
-<span class="fc" id="L79">		sb.append(s.getString());</span>
-<span class="fc" id="L80">	}</span>
+<span class="fc" id="L78">		sb.append(s.getString());</span>
+<span class="fc" id="L79">	}</span>
 
-	private String compressOld(String s) throws IOException {
-<span class="fc" id="L83">		final Matcher2 m = pattern.matcher(s, 0);</span>
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (m.find()) {</span>
-<span class="fc" id="L85">			return clean(m.group(2));</span>
-		}
-<span class="nc" id="L87">		return &quot;&quot;;</span>
+	// Package-private, as the other cleaning methods below, so that they can be unit tested
+	String compressOld(String s) throws IOException {
+<span class="fc" id="L83">		return clean(stripStartEnd(s, true));</span>
 	}
 
 	public String decompress(String s) {
-<span class="fc" id="L91">		String result = clean(s);</span>
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (result.startsWith(&quot;@start&quot;)) {</span>
-<span class="nc" id="L93">			return result;</span>
+<span class="fc" id="L87">		String result = clean(s);</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (result.startsWith(&quot;@start&quot;)) {</span>
+<span class="nc" id="L89">			return result;</span>
 		}
-<span class="fc" id="L95">		result = &quot;@startuml\n&quot; + result;</span>
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (result.endsWith(&quot;\n&quot;) == false) {</span>
-<span class="fc" id="L97">			result += &quot;\n&quot;;</span>
+<span class="fc" id="L91">		result = &quot;@startuml\n&quot; + result;</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (result.endsWith(&quot;\n&quot;) == false) {</span>
+<span class="fc" id="L93">			result += &quot;\n&quot;;</span>
 		}
-<span class="fc" id="L99">		result += &quot;@enduml&quot;;</span>
-<span class="fc" id="L100">		return result;</span>
+<span class="fc" id="L95">		result += &quot;@enduml&quot;;</span>
+<span class="fc" id="L96">		return result;</span>
 	}
 
-	private String clean(String s) {
+	String clean(String s) {
 		// s = s.replace(&quot;\0&quot;, &quot;&quot;);
+<span class="fc" id="L101">		s = StringUtils.trin(s);</span>
+<span class="fc" id="L102">		s = clean1(s);</span>
+<span class="fc" id="L103">		s = removeFromToken(s, END_UML);</span>
+<span class="fc" id="L104">		s = removeFromToken(s, START_UML);</span>
 <span class="fc" id="L105">		s = StringUtils.trin(s);</span>
-<span class="fc" id="L106">		s = clean1(s);</span>
-<span class="fc" id="L107">		s = s.replaceAll(&quot;@enduml[^\\n\\r]*&quot;, &quot;&quot;);</span>
-<span class="fc" id="L108">		s = s.replaceAll(&quot;@startuml[^\\n\\r]*&quot;, &quot;&quot;);</span>
-<span class="fc" id="L109">		s = StringUtils.trin(s);</span>
-<span class="fc" id="L110">		return s;</span>
+<span class="fc" id="L106">		return s;</span>
+	}
+
+	/**
+	 * Same as {@code s.replaceAll(token + &quot;[^\\n\\r]*&quot;, &quot;&quot;)}, with the token taken
+	 * literally: removes every occurrence of the token, and the rest of its
+	 * line (up to, and not including, the next {@code \n} or {@code \r}).
+	 * &lt;p&gt;
+	 * Plain loop, like {@link #stripStartEnd}, so that the cost does not depend
+	 * on the regex engine of the TeaVM build when the source is big (issue
+	 * #2934).
+	 */
+	static String removeFromToken(String s, String token) {
+<span class="fc" id="L119">		int pos = s.indexOf(token);</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (pos == -1)</span>
+<span class="fc" id="L121">			return s;</span>
+
+<span class="fc" id="L123">		final int len = s.length();</span>
+<span class="fc" id="L124">		final StringBuilder sb = new StringBuilder(len);</span>
+<span class="fc" id="L125">		int from = 0;</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		while (pos != -1) {</span>
+<span class="fc" id="L127">			sb.append(s, from, pos);</span>
+<span class="fc" id="L128">			from = pos + token.length();</span>
+<span class="fc bfc" id="L129" title="All 6 branches covered.">			while (from &lt; len &amp;&amp; s.charAt(from) != '\n' &amp;&amp; s.charAt(from) != '\r')</span>
+<span class="fc" id="L130">				from++;</span>
+<span class="fc" id="L131">			pos = s.indexOf(token, from);</span>
+		}
+<span class="fc" id="L133">		sb.append(s, from, len);</span>
+<span class="fc" id="L134">		return sb.toString();</span>
 	}
 
 	private String clean1(String s) {
-<span class="fc" id="L114">		final Matcher2 m = pattern.matcher(s, 0);</span>
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (m.matches())</span>
-<span class="fc" id="L116">			return m.group(2);</span>
+<span class="fc" id="L138">		return stripStartEnd(s, false);</span>
+	}
 
-<span class="nc" id="L118">		return s;</span>
+	/**
+	 * What {@code [%s]} stands for in a PlantUML regex: {@code \s} and the
+	 * non-breaking space. This is deliberately not {@link StringUtils#isTrimmable},
+	 * which is wider (every char up to the space, control chars included).
+	 */
+	static boolean isBlank(char c) {
+<span class="fc bfc" id="L147" title="All 14 branches covered.">		return c == ' ' || c == '\t' || c == '\n' || c == '\u000B' || c == '\f' || c == '\r' || c == '\u00A0';</span>
+	}
+
+	/**
+	 * The line terminators, besides {@code \n} and {@code \r} which are blanks, that
+	 * a regex {@code $} accepts just before the end of the input.
+	 */
+	private static boolean isOtherLineTerminator(char c) {
+<span class="fc bfc" id="L155" title="All 6 branches covered.">		return c == '\u0085' || c == '\u2028' || c == '\u2029';</span>
+	}
+
+	/**
+	 * Returns what group 2 captures in the regex
+	 * &lt;pre&gt;(?s)^[%s]*(@startuml[^\n\r]*)?[%s]*(.*?)[%s]*(@enduml)?[%s]*$&lt;/pre&gt;
+	 * that is, the text without its leading blanks, without a first
+	 * {@code @startuml} line, without its trailing blanks and without a final
+	 * {@code @enduml}.
+	 * &lt;p&gt;
+	 * It is computed with plain loops because that regex, applied to a whole
+	 * diagram source, overflows the JavaScript call stack in the TeaVM build as
+	 * soon as the source is a few KB long (issue #2934): the lazy {@code (.*?)}
+	 * costs one stack frame per character there.
+	 *
+	 * @param dollarBeforeFinalTerminator {@code true} for {@code Matcher.find()},
+	 *                                    where {@code $} also matches before a
+	 *                                    final U+0085, U+2028 or U+2029;
+	 *                                    {@code false} for {@code Matcher.matches()},
+	 *                                    where the match must reach the very end
+	 */
+	static String stripStartEnd(String s, boolean dollarBeforeFinalTerminator) {
+<span class="fc" id="L177">		final int len = s.length();</span>
+<span class="fc" id="L178">		int start = 0;</span>
+<span class="fc bfc" id="L179" title="All 4 branches covered.">		while (start &lt; len &amp;&amp; isBlank(s.charAt(start)))</span>
+<span class="fc" id="L180">			start++;</span>
+
+<span class="fc bfc" id="L182" title="All 2 branches covered.">		if (s.startsWith(START_UML, start)) {</span>
+<span class="fc" id="L183">			start += START_UML.length();</span>
+<span class="fc bfc" id="L184" title="All 6 branches covered.">			while (start &lt; len &amp;&amp; s.charAt(start) != '\n' &amp;&amp; s.charAt(start) != '\r')</span>
+<span class="fc" id="L185">				start++;</span>
+<span class="fc bfc" id="L186" title="All 4 branches covered.">			while (start &lt; len &amp;&amp; isBlank(s.charAt(start)))</span>
+<span class="fc" id="L187">				start++;</span>
+		}
+
+<span class="fc" id="L190">		int end = len;</span>
+<span class="fc bfc" id="L191" title="All 6 branches covered.">		if (dollarBeforeFinalTerminator &amp;&amp; end &gt; start &amp;&amp; isOtherLineTerminator(s.charAt(end - 1)))</span>
+<span class="fc" id="L192">			end--;</span>
+<span class="fc bfc" id="L193" title="All 4 branches covered.">		while (end &gt; start &amp;&amp; isBlank(s.charAt(end - 1)))</span>
+<span class="fc" id="L194">			end--;</span>
+
+<span class="fc" id="L196">		final int endUml = end - END_UML.length();</span>
+<span class="fc bfc" id="L197" title="All 4 branches covered.">		if (endUml &gt;= start &amp;&amp; s.startsWith(END_UML, endUml)) {</span>
+<span class="fc" id="L198">			end = endUml;</span>
+<span class="fc bfc" id="L199" title="All 4 branches covered.">			while (end &gt; start &amp;&amp; isBlank(s.charAt(end - 1)))</span>
+<span class="fc" id="L200">				end--;</span>
+		}
+<span class="fc" id="L202">		return s.substring(start, end);</span>
 	}
 
 }
