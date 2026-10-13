@@ -63,6 +63,16 @@ delivering its result JSON through a callback that `server.js` wraps in a
 Promise. The engine uses no thread: the diagram is rendered again once the
 instance is ready.
 
+`check_syntax` and `explain_diagram` cannot wait: what a diagram loads
+asynchronously (a theme, a standard library bundle, a file of
+`PLANTUML_FILE_LOADER`) counts as missing for them, while `render_diagram`
+renders the diagram again once it is there. This server provides none of
+these resources to the engine, so today the three tools agree: `!theme` is
+ignored with a warning on stderr, and `!include <lib/...>` or a local
+`!include` is reported as `cannot include`. A host that provides them
+asynchronously (`PLANTUML_STDLIB_LOADER`, `PLANTUML_FILE_LOADER`) would get
+them in `render_diagram` only, and a false error from the two others.
+
 ## Building
 
 The JavaScript engine is built by the `plantuml-mcp-js` Gradle subproject,
