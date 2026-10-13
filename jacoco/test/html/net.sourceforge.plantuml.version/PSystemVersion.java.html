@@ -256,9 +256,10 @@ public class PSystemVersion extends PlainStringsDiagram {
 <span class="nc" id="L256">			strings.add(license.getContext());</span>
 <span class="nc" id="L257">			strings.add(license.getGenerationDate().toString());</span>
 <span class="nc" id="L258">			strings.add(license.getExpirationDate().toString());</span>
-<span class="nc" id="L259">			im = LicenseInfo.retrieveDistributorImage(license);</span>
+<span class="nc" id="L259">			strings.add(license.getKeyStart() + &quot;...&quot;);</span>
+<span class="nc" id="L260">			im = LicenseInfo.retrieveDistributorImage(license);</span>
 		}
-<span class="nc" id="L261">		return new PSystemVersion(source, strings, im, preprocessing);</span>
+<span class="nc" id="L262">		return new PSystemVersion(source, strings, im, preprocessing);</span>
 	}
 	// ::done
 
@@ -274,11 +275,11 @@ public class PSystemVersion extends PlainStringsDiagram {
 //	}
 
 	public DiagramDescription getDescription() {
-<span class="fc" id="L277">		return new DiagramDescription(&quot;(Version)&quot;);</span>
+<span class="fc" id="L278">		return new DiagramDescription(&quot;(Version)&quot;);</span>
 	}
 
 	public List&lt;String&gt; getLines() {
-<span class="nc" id="L281">		return MyCollections.unmodifiableList(strings);</span>
+<span class="nc" id="L282">		return MyCollections.unmodifiableList(strings);</span>
 	}
 
 }

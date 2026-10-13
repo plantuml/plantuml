@@ -75,8 +75,8 @@ public class PLSSignature {
 <span class="nc" id="L75">		this.context = context;</span>
 <span class="nc" id="L76">	}</span>
 
-	private LicenseInfo toLicenseInfo() {
-<span class="nc" id="L79">		return new LicenseInfo(LicenseType.fromInt(type), now, exp, owner, context, sha);</span>
+	private LicenseInfo toLicenseInfo(String key) {
+<span class="nc" id="L79">		return new LicenseInfo(LicenseType.fromInt(type), now, exp, owner, context, sha, key);</span>
 	}
 
 	/**
@@ -184,7 +184,7 @@ public class PLSSignature {
 <span class="nc" id="L184">			return LicenseInfo.NONE;</span>
 		}
 
-<span class="nc" id="L187">		return sig2.toLicenseInfo();</span>
+<span class="nc" id="L187">		return sig2.toLicenseInfo(key);</span>
 	}
 
 	public static LicenseInfo retrieveDistributor(String key) throws IOException, NoSuchAlgorithmException {
@@ -193,7 +193,7 @@ public class PLSSignature {
 <span class="nc bnc" id="L193" title="All 2 branches missed.">		if (sig2 == null) {</span>
 <span class="nc" id="L194">			return LicenseInfo.NONE;</span>
 		}
-<span class="nc" id="L196">		return sig2.toLicenseInfo();</span>
+<span class="nc" id="L196">		return sig2.toLicenseInfo(key);</span>
 	}
 
 	private static byte[] decode(String key) throws IOException {
