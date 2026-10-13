@@ -200,38 +200,38 @@ public class Participant implements SpecificBackcolorable, WithStyle, AsciiBlock
 	}
 
 	public UGroup groupTypeTail(Pragma pragma) {
-<span class="nc" id="L203">		final UGroup group = new UGroup(location);</span>
-<span class="nc" id="L204">		group.put(UGroupType.CLASS, &quot;participant participant-tail&quot;);</span>
-<span class="nc" id="L205">		group.put(UGroupType.DATA_QUALIFIED_NAME, code);</span>
-<span class="nc" id="L206">		group.put(UGroupType.DATA_PARTICIPANT, code);</span>
-<span class="nc" id="L207">		group.put(UGroupType.DATA_ENTITY_UID, uid);</span>
-<span class="nc" id="L208">		group.put(UGroupType.DATA_UID, uid + &quot;-tail&quot;);</span>
+<span class="fc" id="L203">		final UGroup group = new UGroup(location);</span>
+<span class="fc" id="L204">		group.put(UGroupType.CLASS, &quot;participant participant-tail&quot;);</span>
+<span class="fc" id="L205">		group.put(UGroupType.DATA_QUALIFIED_NAME, code);</span>
+<span class="fc" id="L206">		group.put(UGroupType.DATA_PARTICIPANT, code);</span>
+<span class="fc" id="L207">		group.put(UGroupType.DATA_ENTITY_UID, uid);</span>
+<span class="fc" id="L208">		group.put(UGroupType.DATA_UID, uid + &quot;-tail&quot;);</span>
 
-<span class="nc" id="L210">		return group;</span>
+<span class="fc" id="L210">		return group;</span>
 	}
 
 	public UGroup groupTypeHead(Pragma pragma) {
-<span class="nc" id="L214">		final UGroup group = new UGroup(location);</span>
-<span class="nc" id="L215">		group.put(UGroupType.CLASS, &quot;participant participant-head&quot;);</span>
-<span class="nc" id="L216">		group.put(UGroupType.DATA_QUALIFIED_NAME, code);</span>
-<span class="nc" id="L217">		group.put(UGroupType.DATA_PARTICIPANT, code);</span>
-<span class="nc" id="L218">		group.put(UGroupType.DATA_ENTITY_UID, uid);</span>
-<span class="nc" id="L219">		group.put(UGroupType.DATA_UID, uid + &quot;-head&quot;);</span>
-<span class="nc" id="L220">		return group;</span>
+<span class="fc" id="L214">		final UGroup group = new UGroup(location);</span>
+<span class="fc" id="L215">		group.put(UGroupType.CLASS, &quot;participant participant-head&quot;);</span>
+<span class="fc" id="L216">		group.put(UGroupType.DATA_QUALIFIED_NAME, code);</span>
+<span class="fc" id="L217">		group.put(UGroupType.DATA_PARTICIPANT, code);</span>
+<span class="fc" id="L218">		group.put(UGroupType.DATA_ENTITY_UID, uid);</span>
+<span class="fc" id="L219">		group.put(UGroupType.DATA_UID, uid + &quot;-head&quot;);</span>
+<span class="fc" id="L220">		return group;</span>
 	}
 
 	public UGroup groupTypeLifeline(Pragma pragma) {
-<span class="nc" id="L224">		final UGroup group = new UGroup(location);</span>
-<span class="nc" id="L225">		group.put(UGroupType.CLASS, &quot;participant-lifeline&quot;);</span>
-<span class="nc" id="L226">		group.put(UGroupType.DATA_UID, uid + &quot;-lifeline&quot;);</span>
-<span class="nc" id="L227">		group.put(UGroupType.DATA_QUALIFIED_NAME, code);</span>
-<span class="nc" id="L228">		group.put(UGroupType.DATA_PARTICIPANT, code);</span>
-<span class="nc" id="L229">		group.put(UGroupType.DATA_ENTITY_UID, uid);</span>
-<span class="nc" id="L230">		return group;</span>
+<span class="fc" id="L224">		final UGroup group = new UGroup(location);</span>
+<span class="fc" id="L225">		group.put(UGroupType.CLASS, &quot;participant-lifeline&quot;);</span>
+<span class="fc" id="L226">		group.put(UGroupType.DATA_UID, uid + &quot;-lifeline&quot;);</span>
+<span class="fc" id="L227">		group.put(UGroupType.DATA_QUALIFIED_NAME, code);</span>
+<span class="fc" id="L228">		group.put(UGroupType.DATA_PARTICIPANT, code);</span>
+<span class="fc" id="L229">		group.put(UGroupType.DATA_ENTITY_UID, uid);</span>
+<span class="fc" id="L230">		return group;</span>
 	}
 
 	public String getUid() {
-<span class="nc" id="L234">		return uid;</span>
+<span class="fc" id="L234">		return uid;</span>
 	}
 
 	// ASCII rendering: the participant draws its own head (the top box).

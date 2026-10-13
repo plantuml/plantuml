@@ -149,30 +149,36 @@ public class LivingSpace {
 <span class="fc" id="L149">	}</span>
 
 	public void drawLineAndLiveboxes(UGraphic ug, double height, Context2D context) {
+		// Only the line is in the lifeline group, not the liveboxes
+<span class="fc" id="L153">		ug.startGroup(p.groupTypeLifeline(skinParam.getPragma()));</span>
+<span class="fc" id="L154">		drawLine(ug, height, context);</span>
+<span class="fc" id="L155">		ug.closeGroup();</span>
+<span class="fc" id="L156">		liveboxes.drawBoxes(ug, context, getFirstCreateY(), height);</span>
+<span class="fc" id="L157">	}</span>
+
+	private void drawLine(UGraphic ug, double height, Context2D context) {
 		// The line is drawn only over the alive segments: a participant may be
 		// created and destroyed several times
-<span class="fc bfc" id="L154" title="All 2 branches covered.">		boolean alive = create == false;</span>
-<span class="fc" id="L155">		double aliveSince = 0;</span>
-<span class="fc bfc" id="L156" title="All 2 branches covered.">		for (Map.Entry&lt;Double, Boolean&gt; ent : aliveChanges.entrySet()) {</span>
-<span class="pc bpc" id="L157" title="1 of 4 branches missed.">			if (alive == false &amp;&amp; ent.getValue())</span>
-<span class="fc" id="L158">				aliveSince = ent.getKey();</span>
-<span class="pc bpc" id="L159" title="2 of 4 branches missed.">			else if (alive &amp;&amp; ent.getValue() == false)</span>
-<span class="fc" id="L160">				mutingLine.drawLine(ug, context, aliveSince, ent.getKey());</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">		boolean alive = create == false;</span>
+<span class="fc" id="L163">		double aliveSince = 0;</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">		for (Map.Entry&lt;Double, Boolean&gt; ent : aliveChanges.entrySet()) {</span>
+<span class="pc bpc" id="L165" title="1 of 4 branches missed.">			if (alive == false &amp;&amp; ent.getValue())</span>
+<span class="fc" id="L166">				aliveSince = ent.getKey();</span>
+<span class="pc bpc" id="L167" title="2 of 4 branches missed.">			else if (alive &amp;&amp; ent.getValue() == false)</span>
+<span class="fc" id="L168">				mutingLine.drawLine(ug, context, aliveSince, ent.getKey());</span>
 
-<span class="fc" id="L162">			alive = ent.getValue();</span>
-<span class="fc" id="L163">		}</span>
-<span class="fc bfc" id="L164" title="All 2 branches covered.">		if (alive)</span>
-<span class="fc" id="L165">			mutingLine.drawLine(ug, context, aliveSince, height);</span>
-
-<span class="fc" id="L167">		liveboxes.drawBoxes(ug, context, getFirstCreateY(), height);</span>
-<span class="fc" id="L168">	}</span>
+<span class="fc" id="L170">			alive = ent.getValue();</span>
+<span class="fc" id="L171">		}</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">		if (alive)</span>
+<span class="fc" id="L173">			mutingLine.drawLine(ug, context, aliveSince, height);</span>
+<span class="fc" id="L174">	}</span>
 
 	private double getFirstCreateY() {
-<span class="fc bfc" id="L171" title="All 2 branches covered.">		for (Map.Entry&lt;Double, Boolean&gt; ent : aliveChanges.entrySet())</span>
-<span class="fc bfc" id="L172" title="All 2 branches covered.">			if (ent.getValue())</span>
-<span class="fc" id="L173">				return ent.getKey();</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">		for (Map.Entry&lt;Double, Boolean&gt; ent : aliveChanges.entrySet())</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">			if (ent.getValue())</span>
+<span class="fc" id="L179">				return ent.getKey();</span>
 
-<span class="fc" id="L175">		return 0;</span>
+<span class="fc" id="L181">		return 0;</span>
 	}
 
 	// public void addDelayTile(DelayTile tile) {
@@ -181,121 +187,124 @@ public class LivingSpace {
 
 	public void drawHead(UGraphic ug, Context2D context, VerticalAlignment verticalAlignment,
 			HorizontalAlignment horizontalAlignment) {
-<span class="fc" id="L184">		drawHeadOrTail(ug, context, verticalAlignment, horizontalAlignment, headType);</span>
-<span class="fc" id="L185">	}</span>
+<span class="fc" id="L190">		drawHeadOrTail(ug, context, verticalAlignment, horizontalAlignment, headType);</span>
+<span class="fc" id="L191">	}</span>
 
 	public void drawTail(UGraphic ug, Context2D context, VerticalAlignment verticalAlignment,
 			HorizontalAlignment horizontalAlignment) {
-<span class="fc" id="L189">		drawHeadOrTail(ug, context, verticalAlignment, horizontalAlignment, tailType);</span>
-<span class="fc" id="L190">	}</span>
+<span class="fc" id="L195">		drawHeadOrTail(ug, context, verticalAlignment, horizontalAlignment, tailType);</span>
+<span class="fc" id="L196">	}</span>
 
 	private void drawHeadOrTail(UGraphic ug, Context2D context, VerticalAlignment verticalAlignment,
 			HorizontalAlignment horizontalAlignment, ComponentType type) {
-<span class="fc bfc" id="L194" title="All 4 branches covered.">		if (create &amp;&amp; verticalAlignment == VerticalAlignment.BOTTOM) {</span>
-<span class="fc" id="L195">			return;</span>
+<span class="fc bfc" id="L200" title="All 4 branches covered.">		if (create &amp;&amp; verticalAlignment == VerticalAlignment.BOTTOM) {</span>
+<span class="fc" id="L201">			return;</span>
 		}
-<span class="fc" id="L197">		final Component comp = rose.createComponentParticipant(p, type, null, skinParam,</span>
-<span class="fc" id="L198">				p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));</span>
-<span class="fc" id="L199">		final XDimension2D dim = comp.getPreferredDimension(ug.getStringBounder());</span>
-<span class="pc bpc" id="L200" title="1 of 2 branches missed.">		if (horizontalAlignment == HorizontalAlignment.RIGHT) {</span>
-<span class="nc" id="L201">			ug = ug.apply(UTranslate.dx(-dim.getWidth()));</span>
+<span class="fc" id="L203">		final Component comp = rose.createComponentParticipant(p, type, null, skinParam,</span>
+<span class="fc" id="L204">				p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));</span>
+<span class="fc" id="L205">		final XDimension2D dim = comp.getPreferredDimension(ug.getStringBounder());</span>
+<span class="pc bpc" id="L206" title="1 of 2 branches missed.">		if (horizontalAlignment == HorizontalAlignment.RIGHT) {</span>
+<span class="nc" id="L207">			ug = ug.apply(UTranslate.dx(-dim.getWidth()));</span>
 		}
-<span class="pc bpc" id="L203" title="1 of 2 branches missed.">		if (verticalAlignment == VerticalAlignment.CENTER) {</span>
-<span class="nc" id="L204">			ug = ug.apply(UTranslate.dy(-dim.getHeight() / 2));</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">		if (verticalAlignment == VerticalAlignment.CENTER) {</span>
+<span class="nc" id="L210">			ug = ug.apply(UTranslate.dy(-dim.getHeight() / 2));</span>
 		}
-<span class="fc" id="L206">		final Area area = new Area(dim);</span>
-<span class="fc" id="L207">		final Url url = getParticipant().getUrl();</span>
-<span class="fc bfc" id="L208" title="All 2 branches covered.">		if (url != null) {</span>
-<span class="fc" id="L209">			ug.startUrl(url);</span>
+<span class="fc" id="L212">		final Area area = new Area(dim);</span>
+<span class="fc" id="L213">		final Url url = getParticipant().getUrl();</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">		final boolean isHead = type == headType;</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">		ug.startGroup(isHead ? p.groupTypeHead(skinParam.getPragma()) : p.groupTypeTail(skinParam.getPragma()));</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">		if (url != null) {</span>
+<span class="fc" id="L217">			ug.startUrl(url);</span>
 		}
-<span class="fc" id="L211">		comp.drawU(ug, area, context);</span>
-<span class="fc bfc" id="L212" title="All 2 branches covered.">		if (url != null) {</span>
-<span class="fc" id="L213">			ug.closeUrl();</span>
+<span class="fc" id="L219">		comp.drawU(ug, area, context);</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">		if (url != null) {</span>
+<span class="fc" id="L221">			ug.closeUrl();</span>
 		}
-<span class="fc" id="L215">	}</span>
+<span class="fc" id="L223">		ug.closeGroup();</span>
+<span class="fc" id="L224">	}</span>
 
 	public XDimension2D getHeadPreferredDimension(StringBounder stringBounder) {
-<span class="fc" id="L218">		final Component comp = rose.createComponentParticipant(p, headType, null, skinParam,</span>
-<span class="fc" id="L219">				p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));</span>
-<span class="fc" id="L220">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
-<span class="fc" id="L221">		return dim;</span>
+<span class="fc" id="L227">		final Component comp = rose.createComponentParticipant(p, headType, null, skinParam,</span>
+<span class="fc" id="L228">				p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));</span>
+<span class="fc" id="L229">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
+<span class="fc" id="L230">		return dim;</span>
 	}
 
 	private double getPreferredWidth(StringBounder stringBounder) {
-<span class="fc" id="L225">		return getHeadPreferredDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L234">		return getHeadPreferredDimension(stringBounder).getWidth();</span>
 	}
 
 	public Real getPosC(StringBounder stringBounder) {
-<span class="fc bfc" id="L229" title="All 2 branches covered.">		if (posC == null) {</span>
-<span class="fc" id="L230">			this.posC = posB.addFixed(this.getPreferredWidth(stringBounder) / 2);</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">		if (posC == null) {</span>
+<span class="fc" id="L239">			this.posC = posB.addFixed(this.getPreferredWidth(stringBounder) / 2);</span>
 		}
-<span class="fc" id="L232">		return posC;</span>
+<span class="fc" id="L241">		return posC;</span>
 	}
 
 	public Real getPosC2(StringBounder stringBounder) {
-<span class="fc" id="L236">		final double delta = liveboxes.getMaxPosition(stringBounder);</span>
-<span class="fc" id="L237">		return getPosC(stringBounder).addFixed(delta);</span>
+<span class="fc" id="L245">		final double delta = liveboxes.getMaxPosition(stringBounder);</span>
+<span class="fc" id="L246">		return getPosC(stringBounder).addFixed(delta);</span>
 	}
 
 	public Real getPosD(StringBounder stringBounder) {
-<span class="fc bfc" id="L241" title="All 2 branches covered.">		if (posD == null) {</span>
-<span class="fc" id="L242">			this.posD = posB.addFixed(this.getPreferredWidth(stringBounder));</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">		if (posD == null) {</span>
+<span class="fc" id="L251">			this.posD = posB.addFixed(this.getPreferredWidth(stringBounder));</span>
 		}
 		// System.err.println(&quot;LivingSpace::getPosD &quot;+posD.getCurrentValue());
-<span class="fc" id="L245">		return posD;</span>
+<span class="fc" id="L254">		return posD;</span>
 	}
 
 	public Real getPosB(StringBounder stringBounder) {
-<span class="fc" id="L249">		return posB;</span>
+<span class="fc" id="L258">		return posB;</span>
 	}
 
 	public Participant getParticipant() {
-<span class="fc" id="L253">		return p;</span>
+<span class="fc" id="L262">		return p;</span>
 	}
 
 	public void goCreate(double y) {
-<span class="fc" id="L257">		this.aliveChanges.put(y, Boolean.TRUE);</span>
-<span class="fc" id="L258">		this.create = true;</span>
-<span class="fc" id="L259">	}</span>
+<span class="fc" id="L266">		this.aliveChanges.put(y, Boolean.TRUE);</span>
+<span class="fc" id="L267">		this.create = true;</span>
+<span class="fc" id="L268">	}</span>
 
 	public void goCreate() {
-<span class="fc" id="L262">		this.create = true;</span>
-<span class="fc" id="L263">	}</span>
-
-	public void goDestroy(double y) {
-<span class="fc" id="L266">		this.aliveChanges.put(y, Boolean.FALSE);</span>
-<span class="fc" id="L267">	}</span>
-
-	public void delayOn(double y, double height) {
-<span class="fc" id="L270">		mutingLine.delayOn(y, height);</span>
-<span class="fc" id="L271">		liveboxes.delayOn(y, height);</span>
+<span class="fc" id="L271">		this.create = true;</span>
 <span class="fc" id="L272">	}</span>
 
+	public void goDestroy(double y) {
+<span class="fc" id="L275">		this.aliveChanges.put(y, Boolean.FALSE);</span>
+<span class="fc" id="L276">	}</span>
+
+	public void delayOn(double y, double height) {
+<span class="fc" id="L279">		mutingLine.delayOn(y, height);</span>
+<span class="fc" id="L280">		liveboxes.delayOn(y, height);</span>
+<span class="fc" id="L281">	}</span>
+
 	public ParticipantEnglober getEnglober() {
-<span class="fc" id="L275">		return englober;</span>
+<span class="fc" id="L284">		return englober;</span>
 	}
 
 	private double marginBefore;
 	private double marginAfter;
 
 	public void ensureMarginBefore(double margin) {
-<span class="pc bpc" id="L282" title="1 of 2 branches missed.">		if (margin &lt; 0)</span>
-<span class="nc" id="L283">			throw new IllegalArgumentException();</span>
-<span class="fc" id="L284">		this.marginBefore = Math.max(marginBefore, margin);</span>
-<span class="fc" id="L285">	}</span>
+<span class="pc bpc" id="L291" title="1 of 2 branches missed.">		if (margin &lt; 0)</span>
+<span class="nc" id="L292">			throw new IllegalArgumentException();</span>
+<span class="fc" id="L293">		this.marginBefore = Math.max(marginBefore, margin);</span>
+<span class="fc" id="L294">	}</span>
 
 	public void ensureMarginAfter(double margin) {
-<span class="pc bpc" id="L288" title="1 of 2 branches missed.">		if (margin &lt; 0)</span>
-<span class="nc" id="L289">			throw new IllegalArgumentException();</span>
-<span class="fc" id="L290">		this.marginAfter = Math.max(marginAfter, margin);</span>
-<span class="fc" id="L291">	}</span>
+<span class="pc bpc" id="L297" title="1 of 2 branches missed.">		if (margin &lt; 0)</span>
+<span class="nc" id="L298">			throw new IllegalArgumentException();</span>
+<span class="fc" id="L299">		this.marginAfter = Math.max(marginAfter, margin);</span>
+<span class="fc" id="L300">	}</span>
 
 	public Real getPosA(StringBounder stringBounder) {
-<span class="fc" id="L294">		return getPosB(stringBounder).addFixed(-marginBefore);</span>
+<span class="fc" id="L303">		return getPosB(stringBounder).addFixed(-marginBefore);</span>
 	}
 
 	public Real getPosE(StringBounder stringBounder) {
-<span class="fc" id="L298">		return getPosD(stringBounder).addFixed(marginAfter);</span>
+<span class="fc" id="L307">		return getPosD(stringBounder).addFixed(marginAfter);</span>
 	}
 
 	// Live counterparts of getPosA()/getPosE() above, for the one caller that
@@ -339,11 +348,11 @@ public class LivingSpace {
 	// to just this one call site, that keeps every other Real in the graph
 	// -- and every other existing reference -- exactly as it already was.
 	public Real getPosALive(StringBounder stringBounder) {
-<span class="fc" id="L342">		return RealUtils.withLiveOffset(getPosB(stringBounder), () -&gt; -marginBefore);</span>
+<span class="fc" id="L351">		return RealUtils.withLiveOffset(getPosB(stringBounder), () -&gt; -marginBefore);</span>
 	}
 
 	public Real getPosELive(StringBounder stringBounder) {
-<span class="fc" id="L346">		return RealUtils.withLiveOffset(getPosD(stringBounder), () -&gt; marginAfter);</span>
+<span class="fc" id="L355">		return RealUtils.withLiveOffset(getPosD(stringBounder), () -&gt; marginAfter);</span>
 	}
 
 	// ---------------------------------------------------------------------
@@ -366,60 +375,60 @@ public class LivingSpace {
 	private Real asciiPosD;
 
 	private int asciiWidth() {
-<span class="fc" id="L369">		return p.asciiDimension().getWidth();</span>
+<span class="fc" id="L378">		return p.asciiDimension().getWidth();</span>
 	}
 
 	public void setAsciiPosB(Real asciiPosB) {
-<span class="fc" id="L373">		this.asciiPosB = asciiPosB;</span>
-<span class="fc" id="L374">	}</span>
+<span class="fc" id="L382">		this.asciiPosB = asciiPosB;</span>
+<span class="fc" id="L383">	}</span>
 
 	public Real getAsciiPosB() {
-<span class="fc" id="L377">		return asciiPosB;</span>
+<span class="fc" id="L386">		return asciiPosB;</span>
 	}
 
 	public Real getAsciiPosC() {
-<span class="fc bfc" id="L381" title="All 2 branches covered.">		if (asciiPosC == null)</span>
-<span class="fc" id="L382">			this.asciiPosC = asciiPosB.addFixed(asciiWidth() / 2);</span>
+<span class="fc bfc" id="L390" title="All 2 branches covered.">		if (asciiPosC == null)</span>
+<span class="fc" id="L391">			this.asciiPosC = asciiPosB.addFixed(asciiWidth() / 2);</span>
 
-<span class="fc" id="L384">		return asciiPosC;</span>
+<span class="fc" id="L393">		return asciiPosC;</span>
 	}
 
 	public Real getAsciiPosD() {
-<span class="fc bfc" id="L388" title="All 2 branches covered.">		if (asciiPosD == null)</span>
-<span class="fc" id="L389">			this.asciiPosD = asciiPosB.addFixed(asciiWidth());</span>
+<span class="fc bfc" id="L397" title="All 2 branches covered.">		if (asciiPosD == null)</span>
+<span class="fc" id="L398">			this.asciiPosD = asciiPosB.addFixed(asciiWidth());</span>
 
-<span class="fc" id="L391">		return asciiPosD;</span>
+<span class="fc" id="L400">		return asciiPosD;</span>
 	}
 
 	private int asciiMarginBefore;
 	private int asciiMarginAfter;
 
 	public void ensureAsciiMarginBefore(int margin) {
-<span class="nc bnc" id="L398" title="All 2 branches missed.">		if (margin &lt; 0)</span>
-<span class="nc" id="L399">			throw new IllegalArgumentException();</span>
-<span class="nc" id="L400">		this.asciiMarginBefore = Math.max(asciiMarginBefore, margin);</span>
-<span class="nc" id="L401">	}</span>
+<span class="nc bnc" id="L407" title="All 2 branches missed.">		if (margin &lt; 0)</span>
+<span class="nc" id="L408">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L409">		this.asciiMarginBefore = Math.max(asciiMarginBefore, margin);</span>
+<span class="nc" id="L410">	}</span>
 
 	public void ensureAsciiMarginAfter(int margin) {
-<span class="nc bnc" id="L404" title="All 2 branches missed.">		if (margin &lt; 0)</span>
-<span class="nc" id="L405">			throw new IllegalArgumentException();</span>
-<span class="nc" id="L406">		this.asciiMarginAfter = Math.max(asciiMarginAfter, margin);</span>
-<span class="nc" id="L407">	}</span>
+<span class="nc bnc" id="L413" title="All 2 branches missed.">		if (margin &lt; 0)</span>
+<span class="nc" id="L414">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L415">		this.asciiMarginAfter = Math.max(asciiMarginAfter, margin);</span>
+<span class="nc" id="L416">	}</span>
 
 	public Real getAsciiPosA() {
-<span class="fc" id="L410">		return getAsciiPosB().addFixed(-asciiMarginBefore);</span>
+<span class="fc" id="L419">		return getAsciiPosB().addFixed(-asciiMarginBefore);</span>
 	}
 
 	public Real getAsciiPosE() {
-<span class="fc" id="L414">		return getAsciiPosD().addFixed(asciiMarginAfter);</span>
+<span class="fc" id="L423">		return getAsciiPosD().addFixed(asciiMarginAfter);</span>
 	}
 
 	public Real getAsciiLifeColumn() {
-<span class="fc" id="L418">		return getAsciiPosC();</span>
+<span class="fc" id="L427">		return getAsciiPosC();</span>
 	}
 
 	public Real getAsciiLeftColumn() {
-<span class="fc" id="L422">		return getAsciiPosB();</span>
+<span class="fc" id="L431">		return getAsciiPosB();</span>
 	}
 
 }
