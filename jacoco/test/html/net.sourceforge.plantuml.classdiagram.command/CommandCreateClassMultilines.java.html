@@ -262,11 +262,11 @@ public class CommandCreateClassMultilines extends CommandMultilines2&lt;ClassDia
 <span class="fc" id="L262">		diagram.setLastEntity(entity);</span>
 
 <span class="fc" id="L264">		entity.setVisibilityModifier(visibilityModifier);</span>
-<span class="pc bpc" id="L265" title="1 of 2 branches missed.">		if (stereotype != null) {</span>
-<span class="nc" id="L266">			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),</span>
-<span class="nc" id="L267">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
-<span class="nc" id="L268">					diagram.getSkinParam().getIHtmlColorSet()));</span>
-<span class="nc" id="L269">			entity.setStereostyle(stereotype);</span>
+<span class="fc bfc" id="L265" title="All 2 branches covered.">		if (stereotype != null) {</span>
+<span class="fc" id="L266">			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),</span>
+<span class="fc" id="L267">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
+<span class="fc" id="L268">					diagram.getSkinParam().getIHtmlColorSet()));</span>
+<span class="fc" id="L269">			entity.setStereostyle(stereotype);</span>
 		}
 
 <span class="fc" id="L272">		final String urlString = line0.get(UrlBuilder.URL_KEY, 0);</span>

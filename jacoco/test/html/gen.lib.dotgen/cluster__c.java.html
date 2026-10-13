@@ -585,7 +585,7 @@ try {
     }
 <span class="fc bfc" id="L586" title="All 2 branches covered.">    for (r = GD_minrank(subg); r &lt;= GD_maxrank(subg); r++) {</span>
 <span class="fc" id="L587">	rl = GD_rankleader(subg).get_(r);</span>
-<span class="pc bpc" id="L588" title="1 of 2 branches missed.">	if (ND_UF_size(rl) &gt; 1)</span>
+<span class="fc bfc" id="L588" title="All 2 branches covered.">	if (ND_UF_size(rl) &gt; 1)</span>
 <span class="fc" id="L589">	    ND_UF_size(rl, ND_UF_size(rl)-1);</span>
     }
 } finally {
@@ -673,7 +673,7 @@ try {
 <span class="fc bfc" id="L673" title="All 2 branches covered.">	for (orig = agfstout(zz, g, n); orig!=null; orig = agnxtout(zz, g, orig)) {</span>
 <span class="fc bfc" id="L674" title="All 2 branches covered.">	    if ((e = ED_to_virt(orig))!=null) {</span>
 <span class="pc bpc" id="L675" title="1 of 4 branches missed.">		while (e!=null &amp;&amp; (ND_node_type(vn = aghead(e))) == VIRTUAL) {</span>
-<span class="pc bpc" id="L676" title="1 of 2 branches missed.">		    if (ND_clust(vn) == null)</span>
+<span class="fc bfc" id="L676" title="All 2 branches covered.">		    if (ND_clust(vn) == null)</span>
 <span class="fc" id="L677">			ND_clust(vn, g);</span>
 <span class="fc" id="L678">		    e = (ST_Agedge_s) ND_out(aghead(e)).list.get_(0);</span>
 		}
