@@ -50,8 +50,10 @@ const server = createMountedServer({
   mounts: [{ prefix: '/', dir }],
 });
 
-// The embedded source differs whenever the source text does, so it is excluded from comparisons.
-const shape = svg => svg.replace(/<\?plantuml-src[^?]*\?>/g, '');
+// The embedded source differs whenever the source text does, and so does data-source-line (the line
+// of the source that drew a group, which moves as soon as a `!theme` line is added), so both are
+// excluded from comparisons.
+const shape = svg => svg.replace(/<\?plantuml-src[^?]*\?>/g, '').replace(/ data-source-line="[^"]*"/g, '');
 const hash = svg => crypto.createHash('sha256').update(shape(svg)).digest('hex');
 // A theme file starts with a YAML header; the body alone is what !theme executes.
 const themeBody = name => THEMES[name].replace(/^---\n[\s\S]*?\n---\n/, '');
