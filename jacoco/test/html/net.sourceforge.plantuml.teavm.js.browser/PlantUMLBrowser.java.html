@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PlantUMLBrowser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.teavm.js.browser</a> &gt; <span class="el_source">PlantUMLBrowser.java</span></div><h1>PlantUMLBrowser.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml.teavm.js.browser;
+
+import org.teavm.jso.JSBody;
+import org.teavm.jso.JSExport;
+import org.teavm.jso.JSFunctor;
+import org.teavm.jso.JSObject;
+import org.teavm.jso.dom.html.HTMLDocument;
+import org.teavm.jso.dom.html.HTMLElement;
+import org.teavm.jso.dom.xml.Element;
+
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.Scale;
+import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.UgDiagram;
+import net.sourceforge.plantuml.core.AbstractDiagram;
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.DiagramChromeFactory;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.hand.UGraphicHandwritten;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.teavm.js.PSystemBuilderJs;
+import net.sourceforge.plantuml.teavm.js.StringBounderTeaVM;
+import net.sourceforge.plantuml.teavm.js.SvgGraphicsJs;
+import net.sourceforge.plantuml.teavm.js.UGraphicJs;
+
+/**
+ * PlantUML rendering engine for browser environments, compiled to a JavaScript
+ * ES2015 module via TeaVM.
+ *
+ * &lt;h2&gt;Overview&lt;/h2&gt;
+ *
+ * This class provides a bridge between JavaScript code running in a browser and
+ * the PlantUML Java rendering engine. The compiled output ({@code plantuml.js})
+ * is an ES2015 module that exports two functions: {@code render} and
+ * {@code renderToString}.
+ *
+ * &lt;h2&gt;Usage from JavaScript&lt;/h2&gt;
+ *
+ * &lt;pre&gt;
+ * &amp;lt;script type=&quot;module&quot;&amp;gt;
+ *   import { render, renderToString } from './plantuml.js';
+ *
+ *   // Render directly into a DOM element
+ *   const source = &quot;@startuml\nAlice -&amp;gt; Bob : hello\n@enduml&quot;;
+ *   const lines = source.split(/\r\n|\r|\n/);
+ *   render(lines, &quot;diagram-output-id&quot;);
+ *
+ *   // Or get the SVG as a string
+ *   renderToString(lines,
+ *     svg =&amp;gt; console.log(svg),
+ *     err =&amp;gt; console.error(err)
+ *   );
+ * &amp;lt;/script&amp;gt;
+ * &lt;/pre&gt;
+ *
+ * Both functions accept an optional {@code options} object as the last
+ * argument, e.g. {@code { dark: true }} to enable dark-mode rendering, or
+ * {@code { maxSvgSize: 9999 } } to raise the maximum SVG width/height (in
+ * pixels) beyond the default of {@value #DEFAULT_MAX_SVG_SIZE}. Passing
+ * {@code { maxSvgSize: 0 } } disables the size check entirely.
+ *
+ * &lt;h2&gt;Architecture: JavaScript-driven paradigm&lt;/h2&gt;
+ *
+ * The design follows a &quot;JS-driven&quot; architecture where:
+ * &lt;ul&gt;
+ * &lt;li&gt;&lt;b&gt;JavaScript handles:&lt;/b&gt; UI events, user input, debouncing, line
+ * splitting, DOM element selection, and overall application flow&lt;/li&gt;
+ * &lt;li&gt;&lt;b&gt;Java handles:&lt;/b&gt; PlantUML parsing and SVG rendering only&lt;/li&gt;
+ * &lt;/ul&gt;
+ *
+ * This separation keeps the Java code minimal and allows maximum flexibility
+ * for web developers to integrate PlantUML however they want.
+ *
+ * &lt;h2&gt;No thread, no coroutine&lt;/h2&gt;
+ *
+ * There is no worker thread, and nothing in the engine suspends (no TeaVM
+ * coroutine: see tools/teavm-coroutines). What the rendering needs from JavaScript and
+ * can only get asynchronously (the Viz.js instance, support scripts such as
+ * {@code emoji.js} or {@code &lt;lib&gt;.min.js}, files of
+ * {@code PLANTUML_FILE_LOADER}) is handled by rendering again: an
+ * attempt that misses one is discarded, the resources are loaded with
+ * JavaScript callbacks, and the diagram is rendered again from its source (see
+ * {@link PendingResources} and {@link RenderQueue}).
+ *
+ * &lt;p&gt;
+ * The exported functions only queue the request and return: the rendering
+ * starts from a later JavaScript task ({@code setTimeout}), as it did when a
+ * worker thread did it, so the callbacks are never called before the function
+ * returns.
+ *
+ * &lt;h2&gt;Order of the answers&lt;/h2&gt;
+ *
+ * Requests are answered one at a time, oldest first. Two rules decide what
+ * happens when several are waiting:
+ * &lt;ul&gt;
+ * &lt;li&gt;{@code renderToString}: every request is kept and answered, in the order
+ * received. Each of its callbacks is called exactly once ({@code onSuccess} or
+ * {@code onError}); a host that renders many diagrams at the same time gets all
+ * of them back.&lt;/li&gt;
+ * &lt;li&gt;{@code render}: only the latest request is kept, a new one replaces the
+ * {@code render} request still waiting, including one waiting for its
+ * resources. This is intentional: when a user is typing, we only care about
+ * rendering the latest version.&lt;/li&gt;
+ * &lt;/ul&gt;
+ *
+ * Neither kind drops the other. A callback that throws, or a missing callback,
+ * does not stop the engine. A request made from a callback (or while a request
+ * waits for its resources) is queued behind the ones already waiting: it is
+ * never rendered in the middle of another one.
+ *
+ * &lt;p&gt;
+ * The DOM element of {@code render} is only written with the result of the
+ * attempt that is kept, so a discarded attempt never shows.
+ *
+ * @see net.sourceforge.plantuml.teavm.js.GraphVizEngineJs
+ */
+<span class="nc" id="L123">public class PlantUMLBrowser {</span>
+	// ::remove file when JAVA8
+
+	// =========================================================================
+	// Rendering configuration
+	// =========================================================================
+
+<span class="nc" id="L130">	private static final StringBounder STRING_BOUNDER = new StringBounderTeaVM();</span>
+
+	/**
+	 * Default maximum width or height (in pixels) before refusing to render.
+	 * Callers may override this per-call via the {@code maxSvgSize} rendering
+	 * option; a value of {@code 0} disables the check entirely. SVG output has
+	 * no raster memory cost, so this default exists only as a sane guard rail,
+	 * not a hard technical ceiling.
+	 */
+	private static final int DEFAULT_MAX_SVG_SIZE = 8192;
+
+	// =========================================================================
+	// Requests
+	// =========================================================================
+
+	/** A {@link #render} request: the SVG goes into a DOM element. */
+	private static final class ElementJob extends RenderQueue.Job {
+		private final String[] lines;
+		private final String elementId;
+		private final boolean darkMode;
+		private final int maxSvgSize;
+		private SvgGraphicsJs svg;
+		private Throwable failure;
+
+<span class="nc" id="L154">		private ElementJob(String[] lines, String elementId, boolean darkMode, int maxSvgSize) {</span>
+<span class="nc" id="L155">			this.lines = lines;</span>
+<span class="nc" id="L156">			this.elementId = elementId;</span>
+<span class="nc" id="L157">			this.darkMode = darkMode;</span>
+<span class="nc" id="L158">			this.maxSvgSize = maxSvgSize;</span>
+<span class="nc" id="L159">		}</span>
+
+		@Override
+		protected boolean replaces(RenderQueue.Job waiting) {
+			// &quot;Latest wins&quot;: a render request still waiting is dropped, in place.
+<span class="nc" id="L164">			return waiting instanceof ElementJob;</span>
+		}
+
+		@Override
+		protected void attempt() {
+<span class="nc" id="L169">			BrowserLog.reset();</span>
+<span class="nc" id="L170">			svg = null;</span>
+<span class="nc" id="L171">			failure = null;</span>
+			try {
+<span class="nc" id="L173">				svg = buildSvg(lines, darkMode, maxSvgSize);</span>
+<span class="nc" id="L174">			} catch (Throwable t) {</span>
+<span class="nc" id="L175">				failure = t;</span>
+<span class="nc" id="L176">			}</span>
+<span class="nc" id="L177">		}</span>
+
+		@Override
+		protected void deliver() {
+<span class="nc" id="L181">			final HTMLElement out = HTMLDocument.current().getElementById(elementId);</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">			if (out != null) {</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">				if (svg != null) {</span>
+<span class="nc" id="L184">					removeAllChildren(out);</span>
+<span class="nc" id="L185">					appendSvgElement(out, svg.getSvgRoot());</span>
+				} else {
+<span class="nc" id="L187">					out.setTextContent(String.valueOf(failure));</span>
+				}
+			}
+<span class="nc" id="L190">			BrowserLog.jsStatusDuration();</span>
+<span class="nc" id="L191">		}</span>
+
+		@Override
+		protected void giveUp(String message) {
+<span class="nc" id="L195">			final HTMLElement out = HTMLDocument.current().getElementById(elementId);</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">			if (out != null)</span>
+<span class="nc" id="L197">				out.setTextContent(message);</span>
+<span class="nc" id="L198">		}</span>
+	}
+
+	/** A {@link #renderToString} request: the SVG goes to a callback. */
+	private static final class CallbackJob extends RenderQueue.Job {
+		private final String[] lines;
+		private final StringCallback onSuccess;
+		private final StringCallback onError;
+		private final boolean darkMode;
+		private final int maxSvgSize;
+		private String svg;
+		private Throwable failure;
+
+		private CallbackJob(String[] lines, StringCallback onSuccess, StringCallback onError, boolean darkMode,
+<span class="nc" id="L212">				int maxSvgSize) {</span>
+<span class="nc" id="L213">			this.lines = lines;</span>
+<span class="nc" id="L214">			this.onSuccess = onSuccess;</span>
+<span class="nc" id="L215">			this.onError = onError;</span>
+<span class="nc" id="L216">			this.darkMode = darkMode;</span>
+<span class="nc" id="L217">			this.maxSvgSize = maxSvgSize;</span>
+<span class="nc" id="L218">		}</span>
+
+		@Override
+		protected void attempt() {
+<span class="nc" id="L222">			svg = null;</span>
+<span class="nc" id="L223">			failure = null;</span>
+			try {
+<span class="nc" id="L225">				final SvgGraphicsJs graphics = buildSvg(lines, darkMode, maxSvgSize);</span>
+				// null: discarded attempt, which is never delivered
+<span class="nc bnc" id="L227" title="All 2 branches missed.">				if (graphics != null)</span>
+<span class="nc" id="L228">					svg = serializeSvg(graphics.getSvgRoot());</span>
+<span class="nc" id="L229">			} catch (Throwable t) {</span>
+<span class="nc" id="L230">				failure = t;</span>
+<span class="nc" id="L231">			}</span>
+<span class="nc" id="L232">		}</span>
+
+		/**
+		 * Exactly one of the two callbacks is called, once. If the success callback
+		 * throws, the error callback is not called as well.
+		 */
+		@Override
+		protected void deliver() {
+<span class="nc bnc" id="L240" title="All 2 branches missed.">			if (svg != null)</span>
+<span class="nc" id="L241">				PlantUMLBrowser.deliver(onSuccess, svg);</span>
+			else
+<span class="nc" id="L243">				PlantUMLBrowser.deliver(onError, String.valueOf(failure));</span>
+<span class="nc" id="L244">		}</span>
+
+		@Override
+		protected void giveUp(String message) {
+<span class="nc" id="L248">			PlantUMLBrowser.deliver(onError, message);</span>
+<span class="nc" id="L249">		}</span>
+	}
+
+	// =========================================================================
+	// Exported entry points (called from JavaScript)
+	// =========================================================================
+
+	/**
+	 * Single-string JS callback, used for both success (SVG) and error (message).
+	 */
+	@JSFunctor
+	public interface StringCallback extends JSObject {
+		void call(String value);
+	}
+
+	/**
+	 * Renders a PlantUML diagram into the DOM element identified by
+	 * {@code elementId}.
+	 *
+	 * &lt;p&gt;
+	 * This call is asynchronous: it returns immediately, and the SVG is inserted
+	 * later, once its turn has come and its resources are there (see the class
+	 * documentation).
+	 *
+	 * &lt;p&gt;
+	 * If a previous {@code render} request is still waiting, it is replaced by
+	 * this one, and its diagram is never drawn. This is the desired behavior for
+	 * live-typing scenarios. Waiting {@code renderToString} requests are not
+	 * affected.
+	 *
+	 * @param lines     the PlantUML source code, split into lines by the JavaScript
+	 *                  caller
+	 * @param elementId the {@code id} of the HTML element where the SVG should be
+	 *                  rendered
+	 * @param options   optional JS object with rendering options (e.g. {@code {
+	 *                  dark: true, maxSvgSize: 8192 }}); may be {@code null}.
+	 *                  {@code maxSvgSize} overrides {@link #DEFAULT_MAX_SVG_SIZE};
+	 *                  {@code 0} disables the size check.
+	 */
+	@JSExport
+	public static void render(String[] lines, String elementId, JSObject options) {
+<span class="nc" id="L290">		RenderQueue.submit(new ElementJob(lines, elementId, isDark(options), resolveMaxSvgSize(options)));</span>
+<span class="nc" id="L291">	}</span>
+
+	/**
+	 * Renders a PlantUML diagram and delivers the resulting SVG as a string via the
+	 * {@code onSuccess} callback. Errors go to {@code onError}.
+	 *
+	 * &lt;p&gt;
+	 * Same queueing and asynchronous behavior as {@link #render}: a callback is
+	 * never called before this call returns. Unlike {@link #render}, requests are never dropped:
+	 * each call is queued behind the ones already waiting, and exactly one of
+	 * {@code onSuccess} and {@code onError} is called for it, once, in the order of
+	 * the calls. A callback that is {@code null} or that throws does not stop the
+	 * engine (an exception is reported with {@code console.error}).
+	 *
+	 * @param lines     the PlantUML source code, split into lines by the JavaScript
+	 *                  caller
+	 * @param onSuccess callback invoked with the SVG string when rendering succeeds
+	 * @param onError   callback invoked with an error message when rendering fails
+	 * @param options   optional JS object with rendering options (e.g. {@code {
+	 *                  dark: true, maxSvgSize: 8192 }}); may be {@code null}.
+	 *                  {@code maxSvgSize} overrides {@link #DEFAULT_MAX_SVG_SIZE};
+	 *                  {@code 0} disables the size check.
+	 */
+	@JSExport
+	public static void renderToString(String[] lines, StringCallback onSuccess, StringCallback onError,
+			JSObject options) {
+<span class="nc" id="L317">		RenderQueue.submit(new CallbackJob(lines, onSuccess, onError, isDark(options), resolveMaxSvgSize(options)));</span>
+<span class="nc" id="L318">	}</span>
+
+	// =========================================================================
+	// Options extraction (called from JavaScript)
+	// =========================================================================
+
+	/**
+	 * Extracts the {@code dark} boolean property from a JavaScript options object.
+	 * Returns {@code false} if the object is null/undefined or if the property is
+	 * absent.
+	 */
+	@JSBody(params = &quot;opts&quot;, script = &quot;return (opts &amp;&amp; opts.dark === true);&quot;)
+	private static native boolean isDark(JSObject opts);
+
+	/**
+	 * Extracts the {@code maxSvgSize} numeric property from a JavaScript options
+	 * object. Returns {@code -1} as a sentinel when the object is null/undefined
+	 * or the property is absent/not a number, meaning &quot;use the default&quot;.
+	 */
+	@JSBody(params = &quot;opts&quot;, script = &quot;return (opts &amp;&amp; typeof opts.maxSvgSize === 'number') ? opts.maxSvgSize : -1;&quot;)
+	private static native int extractMaxSvgSize(JSObject opts);
+
+	/**
+	 * Resolves the effective max-SVG-size limit from the {@code options} object:
+	 * the caller-supplied {@code maxSvgSize} when present, otherwise
+	 * {@link #DEFAULT_MAX_SVG_SIZE}. A resolved value {@code &lt;= 0} means
+	 * &quot;no limit&quot;.
+	 */
+	private static int resolveMaxSvgSize(JSObject opts) {
+<span class="nc" id="L347">		final int value = extractMaxSvgSize(opts);</span>
+<span class="nc bnc" id="L348" title="All 2 branches missed.">		return value &lt; 0 ? DEFAULT_MAX_SVG_SIZE : value;</span>
+	}
+
+	// =========================================================================
+	// Rendering
+	// =========================================================================
+
+	/**
+	 * Parses and renders PlantUML source lines to an SVG graphics context, or
+	 * returns &lt;code&gt;null&lt;/code&gt; when the parsing missed a resource: the attempt
+	 * is going to be discarded (see {@link RenderQueue}), so it stops before the
+	 * layout and the drawing.
+	 */
+	private static SvgGraphicsJs buildSvg(String[] lines, boolean darkMode, int maxSvgSize) throws Exception {
+<span class="nc bnc" id="L362" title="All 2 branches missed.">		final ColorMapper colorMapper = darkMode ? ColorMapper.TEAVM_DARK : ColorMapper.TEAVM_LIGHT;</span>
+
+<span class="nc" id="L364">		final Diagram diagram = PSystemBuilderJs.getInstance().createDiagram(lines);</span>
+<span class="nc bnc" id="L365" title="All 2 branches missed.">		if (PendingResources.hasMissing())</span>
+<span class="nc" id="L366">			return null;</span>
+<span class="nc" id="L367">		final FileFormatOption fileFormat = new FileFormatOption(FileFormat.SVG);</span>
+
+<span class="nc bnc" id="L369" title="All 2 branches missed.">		if (diagram instanceof UgDiagram == false)</span>
+<span class="nc" id="L370">			throw new RuntimeException(&quot;Unsupported diagram type&quot;);</span>
+
+<span class="nc" id="L372">		final Scale scale = ((AbstractDiagram) diagram).getScale();</span>
+<span class="nc" id="L373">		final UgDiagram ugDiagram = (UgDiagram) diagram;</span>
+<span class="nc" id="L374">		TextBlock tb = ugDiagram.getTextBlock(0, fileFormat);</span>
+
+<span class="nc" id="L376">		HColor tbBackcolor = tb.getBackcolor();</span>
+<span class="nc bnc" id="L377" title="All 4 branches missed.">		if (tbBackcolor == null &amp;&amp; diagram instanceof TitledDiagram)</span>
+<span class="nc" id="L378">			tbBackcolor = getPaintableDocumentBackground((TitledDiagram) diagram);</span>
+
+		final SvgGraphicsJs svg;
+
+<span class="nc bnc" id="L382" title="All 2 branches missed.">		if (tbBackcolor == null) {</span>
+<span class="nc" id="L383">			svg = new SvgGraphicsJs();</span>
+<span class="nc bnc" id="L384" title="All 2 branches missed.">			tbBackcolor = darkMode ? HColors.BLACK : HColors.WHITE;</span>
+		} else {
+<span class="nc" id="L386">			svg = new SvgGraphicsJs(tbBackcolor.toSvg(colorMapper));</span>
+		}
+
+<span class="nc" id="L389">		UGraphic ug = UGraphicJs.build(tbBackcolor, colorMapper, STRING_BOUNDER, svg);</span>
+
+<span class="nc bnc" id="L391" title="All 2 branches missed.">		if (diagram instanceof TitledDiagram)</span>
+<span class="nc" id="L392">			tb = DiagramChromeFactory.create(tb, (TitledDiagram) ugDiagram,</span>
+<span class="nc" id="L393">					((TitledDiagram) ugDiagram).getSkinParam(), ugDiagram.getWarnings(), ((TitledDiagram) diagram).getTitle());</span>
+
+<span class="nc bnc" id="L395" title="All 2 branches missed.">		if (ugDiagram.isHandwritten())</span>
+<span class="nc" id="L396">			ug = new UGraphicHandwritten(ug);</span>
+
+<span class="nc" id="L398">		tb.drawU(ug);</span>
+
+<span class="nc" id="L400">		final XDimension2D dim = tb.calculateDimension(STRING_BOUNDER);</span>
+
+<span class="nc bnc" id="L402" title="All 6 branches missed.">		if (maxSvgSize &gt; 0 &amp;&amp; (dim.getWidth() &gt; maxSvgSize || dim.getHeight() &gt; maxSvgSize))</span>
+<span class="nc" id="L403">			throw new RuntimeException(&quot;Diagram too large for browser rendering: &quot; + (int) dim.getWidth() + &quot;x&quot;</span>
+<span class="nc" id="L404">					+ (int) dim.getHeight() + &quot; (max &quot; + maxSvgSize + &quot;; override via the maxSvgSize option, or set it to 0 to disable this check)&quot;);</span>
+
+<span class="nc bnc" id="L406" title="All 2 branches missed.">		final double scaleFactor = scale == null ? 1.0 : scale.getScale(dim.getWidth(), dim.getHeight());</span>
+<span class="nc" id="L407">		svg.updateSvgSize(dim.getWidth(), dim.getHeight(), scaleFactor);</span>
+
+		// Embed the PlantUML source as a plantuml-src processing instruction, so the
+		// generated SVG can be re-imported/edited later, just like the SVGs produced
+		// by the classic Java backend and editor.plantuml.com.
+		// https://github.com/plantuml/plantuml/issues/2761
+<span class="nc" id="L413">		svg.addCommentMetadata(String.join(&quot;\n&quot;, lines));</span>
+
+<span class="nc" id="L415">		return svg;</span>
+	}
+
+	/**
+	 * Returns the document background of the diagram when it should be painted,
+	 * or null to keep the historic behaviour of painting nothing.
+	 * &lt;p&gt;
+	 * The document background is where both {@code skinparam backgroundColor} and
+	 * a theme background land; it never surfaces on the TextBlock, so it is read
+	 * from the merged root.document style, exactly like {@code ImageBuilder.styled()}
+	 * does for the Java build.
+	 * &lt;p&gt;
+	 * The color is judged in its plain (light mapped) form so the decision is the
+	 * same in both modes: transparent never paints, and the skin default of white
+	 * must keep painting nothing, in dark mode too, where the skin pairs white
+	 * with a dark value but the page has always supplied its own backdrop.
+	 * Returning null also keeps the historic WHITE/BLACK fallback in
+	 * {@code buildSvg} as the contrast reference for automatic colors.
+	 */
+	private static HColor getPaintableDocumentBackground(TitledDiagram diagram) {
+<span class="nc" id="L435">		final HColor documentBackground = diagram.calculateBackColor();</span>
+<span class="nc bnc" id="L436" title="All 2 branches missed.">		if (documentBackground == null)</span>
+<span class="nc" id="L437">			return null;</span>
+
+<span class="nc" id="L439">		final String plainColor = documentBackground.toSvg(ColorMapper.TEAVM_LIGHT);</span>
+<span class="nc bnc" id="L440" title="All 4 branches missed.">		if (&quot;#00000000&quot;.equals(plainColor) || &quot;#FFFFFF&quot;.equals(plainColor))</span>
+<span class="nc" id="L441">			return null;</span>
+
+<span class="nc" id="L443">		return documentBackground;</span>
+	}
+
+	/**
+	 * Calls a host callback. A missing callback (the host did not pass one) is
+	 * ignored, and an exception thrown by the callback is contained, so that it
+	 * cannot stop the engine. It is reported with {@code console.error}, as an
+	 * error and not as debug output: it is a bug of the host that nothing else
+	 * would show.
+	 */
+	private static void deliver(StringCallback callback, String value) {
+<span class="nc bnc" id="L454" title="All 2 branches missed.">		if (callback == null)</span>
+<span class="nc" id="L455">			return;</span>
+		try {
+<span class="nc" id="L457">			callback.call(value);</span>
+<span class="nc" id="L458">		} catch (Throwable t) {</span>
+<span class="nc" id="L459">			RenderQueue.consoleError(&quot;PlantUML: callback threw: &quot; + t);</span>
+<span class="nc" id="L460">		}</span>
+<span class="nc" id="L461">	}</span>
+
+	// =========================================================================
+	// JavaScript interop utilities
+	// =========================================================================
+
+	/** Appends an SVG element as a child of a DOM element. */
+	@JSBody(params = { &quot;p&quot;, &quot;svg&quot; }, script = &quot;p.appendChild(svg);&quot;)
+	private static native void appendSvgElement(HTMLElement p, Element svg);
+
+	/** Removes all child nodes from a DOM element. */
+	@JSBody(params = &quot;el&quot;, script = &quot;while(el.firstChild)el.removeChild(el.firstChild);&quot;)
+	private static native void removeAllChildren(HTMLElement el);
+
+	/** Serializes an SVG DOM element to a string. */
+	@JSBody(params = &quot;svg&quot;, script = &quot;return new XMLSerializer().serializeToString(svg);&quot;)
+	private static native String serializeSvg(Element svg);
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

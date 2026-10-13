@@ -49,7 +49,6 @@ import java.util.TreeMap;
 import org.teavm.jso.JSBody;
 // ::done
 
-import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.emoji.data.Dummy;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -57,7 +56,8 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.svg.parser.ISvgSpriteParser;
 import net.sourceforge.plantuml.svg.parser.SvgSpriteParserFactory;
 import net.sourceforge.plantuml.teavm.TeaVM;
-import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
+import net.sourceforge.plantuml.teavm.js.browser.ScriptLoaderJs;
+import net.sourceforge.plantuml.utils.MyCollections;
 
 
 // Emojji from https://twemoji.twitter.com/
@@ -141,16 +141,18 @@ public class Emoji {
 		// Same as themes (ThemeUtils.loadJsTheme): data that is already registered, by a
 		// bundler that inlined emoji.js or by the host (inside a Web Worker, say), is
 		// used as is, and emoji.js is only fetched when nothing is there.
-<span class="nc bnc" id="L144" title="All 2 branches missed.">		if (jsHasEmoji() == false)</span>
-<span class="nc" id="L145">			TeaVmScriptLoader.loadOnceSync(&quot;emoji.js&quot;);</span>
-<span class="nc" id="L146">		emojiJsLoaded = true;</span>
+		// Never waits: when emoji.js is not loaded yet, this rendering attempt goes on
+		// without emoji and is rendered again once it is (PendingResources).
+<span class="nc bnc" id="L146" title="All 4 branches missed.">		if (jsHasEmoji() == false &amp;&amp; ScriptLoaderJs.require(&quot;emoji.js&quot;) == false)</span>
+<span class="nc" id="L147">			return;</span>
+<span class="nc" id="L148">		emojiJsLoaded = true;</span>
 		// ::done
-<span class="nc" id="L148">	}</span>
+<span class="nc" id="L150">	}</span>
 
 	// ::comment when JAVA8
 	// The data is read from the global object rather than from window, so that it
 	// can be registered where there is no window (a Web Worker). Same lookup as
-	// TeaVmScriptLoader.getTheme().
+	// ScriptLoaderJs.getTheme().
 	private static final String GLOBAL = &quot;var g = (typeof globalThis !== 'undefined') ? globalThis&quot;
 			+ &quot; : ((typeof self !== 'undefined') ? self : this);&quot;;
 
@@ -167,39 +169,39 @@ public class Emoji {
 	// ::done
 
 	private synchronized void loadIfNeed() throws IOException {
-<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (parser != null)</span>
-<span class="nc" id="L171">			return;</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (parser != null)</span>
+<span class="nc" id="L173">			return;</span>
 
-<span class="nc" id="L173">		final List&lt;String&gt; data = new ArrayList&lt;String&gt;();</span>
-<span class="nc bnc" id="L174" title="All 2 branches missed.">		if (TeaVM.isC()) {</span>
+<span class="nc" id="L175">		final List&lt;String&gt; data = new ArrayList&lt;String&gt;();</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">		if (TeaVM.isC()) {</span>
 			// No emoji data with TeaVM C
-<span class="nc bnc" id="L176" title="All 2 branches missed.">		} else if (TeaVM.isTeaVM()) {</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">		} else if (TeaVM.isTeaVM()) {</span>
 			// ::comment when JAVA8
-<span class="nc" id="L178">			final String svgData = jsGetEmojiSvg(unicode);</span>
-<span class="nc bnc" id="L179" title="All 2 branches missed.">			if (svgData != null)</span>
-<span class="nc" id="L180">				data.add(svgData);</span>
+<span class="nc" id="L180">			final String svgData = jsGetEmojiSvg(unicode);</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">			if (svgData != null)</span>
+<span class="nc" id="L182">				data.add(svgData);</span>
 			// ::done
-<span class="nc" id="L182">		} else {</span>
-<span class="nc" id="L183">			try (BufferedReader br = new BufferedReader(</span>
-<span class="nc" id="L184">					new InputStreamReader(Dummy.class.getResourceAsStream(unicode + &quot;.svg&quot;)))) {</span>
-<span class="nc" id="L185">				final String singleLine = br.readLine();</span>
-<span class="nc" id="L186">				data.add(singleLine);</span>
+<span class="nc" id="L184">		} else {</span>
+<span class="nc" id="L185">			try (BufferedReader br = new BufferedReader(</span>
+<span class="nc" id="L186">					new InputStreamReader(Dummy.class.getResourceAsStream(unicode + &quot;.svg&quot;)))) {</span>
+<span class="nc" id="L187">				final String singleLine = br.readLine();</span>
+<span class="nc" id="L188">				data.add(singleLine);</span>
 			}
 		}
-<span class="nc" id="L189">		this.parser = SvgSpriteParserFactory.create(data, null, null);</span>
-<span class="nc" id="L190">	}</span>
+<span class="nc" id="L191">		this.parser = SvgSpriteParserFactory.create(data, null, null);</span>
+<span class="nc" id="L192">	}</span>
 
 	public void drawU(UGraphic ug, double scale, HColor colorForMonochrome) {
 		try {
-<span class="nc" id="L194">			loadIfNeed();</span>
-<span class="nc" id="L195">		} catch (IOException e) {</span>
-<span class="nc" id="L196">			Logme.error(e);</span>
-<span class="nc" id="L197">		}</span>
-<span class="nc" id="L198">		parser.drawU(ug, scale, colorForMonochrome, colorForMonochrome);</span>
-<span class="nc" id="L199">	}</span>
+<span class="nc" id="L196">			loadIfNeed();</span>
+<span class="nc" id="L197">		} catch (IOException e) {</span>
+<span class="nc" id="L198">			Logme.error(e);</span>
+<span class="nc" id="L199">		}</span>
+<span class="nc" id="L200">		parser.drawU(ug, scale, colorForMonochrome, colorForMonochrome);</span>
+<span class="nc" id="L201">	}</span>
 
 	public String getShortcut() {
-<span class="nc" id="L202">		return shortcut;</span>
+<span class="nc" id="L204">		return shortcut;</span>
 	}
 
 //	public static void main(String[] args) throws IOException {

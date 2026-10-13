@@ -3181,6 +3181,7 @@ Total Classes: 66
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.svek.extremity"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.svek.image"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.teavm"
+"net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.teavm.js"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.utils"
 
@@ -3277,34 +3278,12 @@ Total Classes: 2
 "net.sourceforge.plantuml.syntax" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.syntax" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.teavm" %lighten("red", 30) {
-Total Classes: 20
+class "net.sourceforge.plantuml.teavm" %lighten("red", 6) {
+Total Classes: 2
 }
 "net.sourceforge.plantuml.teavm" --> "java.io"
 "net.sourceforge.plantuml.teavm" --> "java.lang"
 "net.sourceforge.plantuml.teavm" --> "java.util"
-"net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml"
-"net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml.klimt"
-"net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml.klimt.awt"
-"net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml.klimt.color"
-"net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml.klimt.drawing"
-"net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml.klimt.drawing.svg"
-"net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml.klimt.font"
-"net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml.klimt.geom"
-"net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml.klimt.shape"
-"net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml.url"
-"net.sourceforge.plantuml.teavm" --> "org.teavm.jso"
-"net.sourceforge.plantuml.teavm" --> "org.teavm.jso.dom.xml"
-
-class "net.sourceforge.plantuml.teavm.browser" %lighten("red", 64) {
-Total Classes: 8
-}
-"net.sourceforge.plantuml.teavm.browser" --> "java.io"
-"net.sourceforge.plantuml.teavm.browser" --> "java.lang"
-"net.sourceforge.plantuml.teavm.browser" --> "java.nio.charset"
-"net.sourceforge.plantuml.teavm.browser" --> "java.nio.file"
-"net.sourceforge.plantuml.teavm.browser" --> "net.sourceforge.plantuml.nio"
-"net.sourceforge.plantuml.teavm.browser" --> "org.teavm.jso"
 
 class "net.sourceforge.plantuml.teavm.c" %lighten("red", 100) {
 Total Classes: 3
@@ -3326,11 +3305,46 @@ Total Classes: 3
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.tim"
 
-class "net.sourceforge.plantuml.teavm.headless" %lighten("red", 67) {
+class "net.sourceforge.plantuml.teavm.js" %lighten("red", 89) {
+Total Classes: 18
+}
+"net.sourceforge.plantuml.teavm.js" --> "java.io"
+"net.sourceforge.plantuml.teavm.js" --> "java.lang"
+"net.sourceforge.plantuml.teavm.js" --> "java.util"
+"net.sourceforge.plantuml.teavm.js" --> "net.sourceforge.plantuml"
+"net.sourceforge.plantuml.teavm.js" --> "net.sourceforge.plantuml.klimt"
+"net.sourceforge.plantuml.teavm.js" --> "net.sourceforge.plantuml.klimt.awt"
+"net.sourceforge.plantuml.teavm.js" --> "net.sourceforge.plantuml.klimt.color"
+"net.sourceforge.plantuml.teavm.js" --> "net.sourceforge.plantuml.klimt.drawing"
+"net.sourceforge.plantuml.teavm.js" --> "net.sourceforge.plantuml.klimt.drawing.svg"
+"net.sourceforge.plantuml.teavm.js" --> "net.sourceforge.plantuml.klimt.font"
+"net.sourceforge.plantuml.teavm.js" --> "net.sourceforge.plantuml.klimt.geom"
+"net.sourceforge.plantuml.teavm.js" --> "net.sourceforge.plantuml.klimt.shape"
+"net.sourceforge.plantuml.teavm.js" --> "net.sourceforge.plantuml.teavm.js.browser"
+"net.sourceforge.plantuml.teavm.js" --> "net.sourceforge.plantuml.url"
+"net.sourceforge.plantuml.teavm.js" --> "org.teavm.jso"
+"net.sourceforge.plantuml.teavm.js" --> "org.teavm.jso.dom.xml"
+
+class "net.sourceforge.plantuml.teavm.js.browser" %lighten("red", 83) {
+Total Classes: 12
+}
+"net.sourceforge.plantuml.teavm.js.browser" --> "java.io"
+"net.sourceforge.plantuml.teavm.js.browser" --> "java.lang"
+"net.sourceforge.plantuml.teavm.js.browser" --> "java.nio.charset"
+"net.sourceforge.plantuml.teavm.js.browser" --> "java.nio.file"
+"net.sourceforge.plantuml.teavm.js.browser" --> "java.util"
+"net.sourceforge.plantuml.teavm.js.browser" --> "net.sourceforge.plantuml.nio"
+"net.sourceforge.plantuml.teavm.js.browser" --> "net.sourceforge.plantuml.teavm.js"
+"net.sourceforge.plantuml.teavm.js.browser" --> "org.teavm.jso"
+"net.sourceforge.plantuml.teavm.js.browser" --> "org.teavm.jso.dom.html"
+
+class "net.sourceforge.plantuml.teavm.js.headless" %lighten("red", 67) {
 Total Classes: 3
 }
-"net.sourceforge.plantuml.teavm.headless" --> "java.lang"
-"net.sourceforge.plantuml.teavm.headless" --> "org.teavm.jso"
+"net.sourceforge.plantuml.teavm.js.headless" --> "java.lang"
+"net.sourceforge.plantuml.teavm.js.headless" --> "net.sourceforge.plantuml.teavm"
+"net.sourceforge.plantuml.teavm.js.headless" --> "net.sourceforge.plantuml.teavm.js.browser"
+"net.sourceforge.plantuml.teavm.js.headless" --> "org.teavm.jso"
 
 class "net.sourceforge.plantuml.telnet" %lighten("red", 100) {
 Total Classes: 1
@@ -3374,7 +3388,7 @@ Total Classes: 40
 "net.sourceforge.plantuml.tim" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.tim" --> "net.sourceforge.plantuml.preproc2"
 "net.sourceforge.plantuml.tim" --> "net.sourceforge.plantuml.teavm"
-"net.sourceforge.plantuml.tim" --> "net.sourceforge.plantuml.teavm.browser"
+"net.sourceforge.plantuml.tim" --> "net.sourceforge.plantuml.teavm.js.browser"
 "net.sourceforge.plantuml.tim" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.tim" --> "net.sourceforge.plantuml.tim.builtin"
 "net.sourceforge.plantuml.tim" --> "net.sourceforge.plantuml.tim.expression"
@@ -3748,6 +3762,10 @@ Total Classes: 9
 "org.stathissideris.ascii2image.text" --> "java.util.regex"
 
 class "org.teavm.jso"{
+
+}
+
+class "org.teavm.jso.dom.html"{
 
 }
 

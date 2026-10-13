@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GraphVizEngineJs.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.teavm.js</a> &gt; <span class="el_source">GraphVizEngineJs.java</span></div><h1>GraphVizEngineJs.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.teavm.js;
+
+import org.teavm.jso.JSBody;
+import org.teavm.jso.JSObject;
+
+import net.sourceforge.plantuml.teavm.js.browser.PendingResources;
+import net.sourceforge.plantuml.teavm.js.browser.ScriptLoaderJs;
+
+/**
+ * Renders DOT graphs to SVG with Viz.js, synchronously.
+ * &lt;p&gt;
+ * In {@code @viz-js/viz} 3.x, only {@code Viz.instance()} is asynchronous (it
+ * loads the WebAssembly module); {@code renderString} on the instance is
+ * synchronous. So the instance is created once, from JavaScript
+ * ({@link #prepare(ScriptLoaderJs.Ok)}), and kept on the global object as
+ * {@code __plantumlVizInstance}; rendering then just calls it. Nothing waits
+ * in Java: when the instance is not ready yet, rendering notes it as missing
+ * and fails, and the diagram is rendered again once it is ready (see
+ * {@link PendingResources}).
+ * &lt;p&gt;
+ * Usage:
+ * &lt;pre&gt;
+ * String svg = GraphVizEngineJs.renderDotToSvg(&quot;digraph G { A -&gt; B; }&quot;);
+ * &lt;/pre&gt;
+ */
+<span class="nc" id="L60">public class GraphVizEngineJs {</span>
+
+	/**
+	 * Where the Viz.js object comes from. A host that bundles viz-global.js (a UMD)
+	 * into its own file does not get a global {@code Viz}: the UMD attaches it to
+	 * the bundle's exports. Such a host sets {@code globalThis.PLANTUML_VIZ = Viz}
+	 * itself; it takes precedence over the global {@code Viz} that loading
+	 * viz-global.js with a script tag defines.
+	 */
+	private static final String FIND_VIZ_STMT = &quot;var V = globalThis.PLANTUML_VIZ || (typeof Viz !== 'undefined' ? Viz : null);&quot;;
+
+	private static final String NOT_LOADED = &quot;Viz is not loaded: this diagram type needs the Graphviz layout engine (viz-global.js). Load viz-global.js before rendering.&quot;;
+
+	// ::remove file when JAVA8
+
+	/**
+	 * True when the Viz.js bridge (viz-global.js) is NOT loaded on the page,
+	 * so the caller should fall back to the Smetana layout engine. Logs a
+	 * one-time console note the first time the fallback is taken.
+	 * &lt;p&gt;
+	 * A Viz.js that is loaded but whose instance cannot be created (the
+	 * WebAssembly module fails to load) is not a fallback: the diagram reports
+	 * that failure, naming Viz.
+	 */
+	@JSBody(script = FIND_VIZ_STMT + &quot;var missing = !V || typeof V.instance !== 'function';&quot; +
+			&quot;if (missing &amp;&amp; !globalThis.__plantumlSmetanaFallbackNoted) {&quot; +
+			&quot;  globalThis.__plantumlSmetanaFallbackNoted = true;&quot; +
+			&quot;  console.info('PlantUML: viz-global.js is not loaded, falling back to the Smetana layout engine');&quot; +
+			&quot;}&quot; +
+			&quot;return missing;&quot;)
+	public static native boolean vizMissingFallback();
+
+	/**
+	 * Whether a layout can call {@link #renderDotToSvg(String)} now: the
+	 * instance is there, or creating it failed (which {@code renderDotToSvg}
+	 * then reports). When it is not there yet, it is noted as missing and this
+	 * returns &lt;code&gt;false&lt;/code&gt;: the attempt will be discarded and rendered
+	 * again once the instance is ready, so the caller should stop at once rather
+	 * than compute a layout for nothing.
+	 */
+	public static boolean isAvailable() {
+<span class="nc bnc" id="L101" title="All 4 branches missed.">		if (isReady() || getFailure(NOT_LOADED) != null)</span>
+<span class="nc" id="L102">			return true;</span>
+<span class="nc" id="L103">		PendingResources.requireViz();</span>
+<span class="nc" id="L104">		return false;</span>
+	}
+
+	/**
+	 * Forgets why creating the instance failed, so that the next request tries
+	 * again: a network failure while loading the WebAssembly module may be
+	 * transient. Called at the start of each request.
+	 */
+	@JSBody(script = &quot;delete globalThis.__plantumlVizError;&quot;)
+	public static native void forgetFailure();
+
+	/**
+	 * Renders a DOT graph description to SVG format, with the {@code dot}
+	 * engine.
+	 *
+	 * @param dotSource the graph description in DOT format
+	 * @return the rendered SVG as a string
+	 * @throws RuntimeException when Viz.js is not loaded, failed to load, is
+	 *                          still loading, or fails on this graph
+	 */
+	public static String renderDotToSvg(String dotSource) {
+<span class="nc" id="L125">		return renderDotToSvg(dotSource, &quot;dot&quot;);</span>
+	}
+
+	/**
+	 * Renders a DOT graph using a specific GraphViz engine.
+	 *
+	 * @param dotSource the graph description in DOT format
+	 * @param engine    the GraphViz engine to use (dot, neato, fdp, sfdp, twopi, circo)
+	 * @return the rendered SVG as a string
+	 * @throws RuntimeException when Viz.js is not loaded, failed to load, is
+	 *                          still loading, or fails on this graph
+	 */
+	public static String renderDotToSvg(String dotSource, String engine) {
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (isReady() == false) {</span>
+<span class="nc" id="L139">			final String failure = getFailure(NOT_LOADED);</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">			if (failure != null)</span>
+<span class="nc" id="L141">				throw new RuntimeException(failure);</span>
+			// The instance is being created: this attempt is discarded, and the diagram
+			// is rendered again once it is ready.
+<span class="nc" id="L144">			PendingResources.requireViz();</span>
+<span class="nc" id="L145">			throw new RuntimeException(&quot;Viz is loading&quot;);</span>
+		}
+<span class="nc" id="L147">		final JSObject result = renderString(dotSource, engine);</span>
+<span class="nc" id="L148">		final String error = getProperty(result, &quot;error&quot;);</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		if (error != null)</span>
+<span class="nc" id="L150">			throw new RuntimeException(error);</span>
+<span class="nc" id="L151">		return getProperty(result, &quot;svg&quot;);</span>
+	}
+
+	/** Whether the Viz.js instance has been created. */
+	@JSBody(script = &quot;return !!globalThis.__plantumlVizInstance;&quot;)
+	private static native boolean isReady();
+
+	/**
+	 * Why there is no instance: Viz.js is not on the page, or creating the
+	 * instance failed; &lt;code&gt;null&lt;/code&gt; when it is being created, or was never
+	 * asked for.
+	 */
+	@JSBody(params = &quot;notLoaded&quot;, script = FIND_VIZ_STMT
+			+ &quot;if (!V || typeof V.instance !== 'function') return notLoaded;&quot;
+			+ &quot;var e = globalThis.__plantumlVizError;&quot;
+			+ &quot;return (typeof e === 'string') ? e : null;&quot;)
+	private static native String getFailure(String notLoaded);
+
+	/**
+	 * Creates the Viz.js instance, once, and calls &lt;code&gt;done&lt;/code&gt; when it is
+	 * there or when creating it failed (the reason is then kept as
+	 * {@code __plantumlVizError}, until the next request: see
+	 * {@link #forgetFailure()}), or at once when there is nothing to wait for.
+	 * Concurrent calls share the same creation.
+	 */
+	@JSBody(params = &quot;done&quot;, script = FIND_VIZ_STMT
+			+ &quot;var g = globalThis;&quot;
+			+ &quot;if (g.__plantumlVizInstance || typeof g.__plantumlVizError === 'string'&quot;
+			+ &quot;    || !V || typeof V.instance !== 'function') { done(); return; }&quot;
+			+ &quot;if (g.__plantumlVizWaiting) { g.__plantumlVizWaiting.push(done); return; }&quot;
+			+ &quot;g.__plantumlVizWaiting = [done];&quot;
+			+ &quot;var flush = function() {&quot;
+			+ &quot;  var list = g.__plantumlVizWaiting; g.__plantumlVizWaiting = null;&quot;
+			+ &quot;  for (var i = 0; i &lt; list.length; i++) list[i]();&quot;
+			+ &quot;};&quot;
+			+ &quot;try {&quot;
+			+ &quot;  Promise.resolve(V.instance()).then(function(viz) {&quot;
+			+ &quot;    if (viz &amp;&amp; typeof viz.renderString === 'function') g.__plantumlVizInstance = viz;&quot;
+			+ &quot;    else g.__plantumlVizError = 'Viz.instance() did not give a Viz instance';&quot;
+			+ &quot;    flush();&quot;
+			+ &quot;  }, function(err) {&quot;
+			+ &quot;    g.__plantumlVizError = String(err);&quot;
+			+ &quot;    flush();&quot;
+			+ &quot;  });&quot;
+			+ &quot;} catch (e) {&quot;
+			+ &quot;  g.__plantumlVizError = String(e);&quot;
+			+ &quot;  flush();&quot;
+			+ &quot;}&quot;)
+	public static native void prepare(ScriptLoaderJs.Ok done);
+
+	/**
+	 * Renders with the instance, synchronously. Viz.js throws on a graph it
+	 * cannot render; the exception is caught here, so that nothing thrown by
+	 * JavaScript crosses into Java, and returned as {@code error}.
+	 */
+	@JSBody(params = { &quot;dotSource&quot;, &quot;engine&quot; }, script = &quot;try {&quot;
+			+ &quot;  return { svg: globalThis.__plantumlVizInstance.renderString(dotSource, { format: 'svg', engine: engine }) };&quot;
+			+ &quot;} catch (e) {&quot;
+			+ &quot;  return { error: String(e) };&quot;
+			+ &quot;}&quot;)
+	private static native JSObject renderString(String dotSource, String engine);
+
+	@JSBody(params = { &quot;obj&quot;, &quot;key&quot; }, script = &quot;var v = obj[key]; return (typeof v === 'string') ? v : null;&quot;)
+	private static native String getProperty(JSObject obj, String key);
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

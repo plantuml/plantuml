@@ -65,7 +65,7 @@ loadScripts(document, 'script');</script>
  <a href="https://plantuml.com/security" target="_top">
  PlantUML Security</a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.teavm.browser">net.sourceforge.plantuml.teavm.browser</a></div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.teavm.js.browser">net.sourceforge.plantuml.teavm.js.browser</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 <section class="class-uses">
@@ -152,22 +152,24 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="net.sourceforge.plantuml.teavm.browser">
-<h2>Uses of <a href="../NFolder.html" title="interface in net.sourceforge.plantuml.nio">NFolder</a> in <a href="../../teavm/browser/package-summary.html">net.sourceforge.plantuml.teavm.browser</a></h2>
-<div class="caption"><span>Methods in <a href="../../teavm/browser/package-summary.html">net.sourceforge.plantuml.teavm.browser</a> with parameters of type <a href="../NFolder.html" title="interface in net.sourceforge.plantuml.nio">NFolder</a></span></div>
+<section class="detail" id="net.sourceforge.plantuml.teavm.js.browser">
+<h2>Uses of <a href="../NFolder.html" title="interface in net.sourceforge.plantuml.nio">NFolder</a> in <a href="../../teavm/js/browser/package-summary.html">net.sourceforge.plantuml.teavm.js.browser</a></h2>
+<div class="caption"><span>Methods in <a href="../../teavm/js/browser/package-summary.html">net.sourceforge.plantuml.teavm.js.browser</a> with parameters of type <a href="../NFolder.html" title="interface in net.sourceforge.plantuml.nio">NFolder</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static <a href="../InputFile.html" title="interface in net.sourceforge.plantuml.nio">InputFile</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TeaVmFileLoader.</span><code><a href="../../teavm/browser/TeaVmFileLoader.html#getInputFile(java.lang.String,net.sourceforge.plantuml.nio.NFolder,java.lang.String)" class="member-name-link">getInputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path,
+<div class="col-second even-row-color"><span class="type-name-label">FileLoaderJs.</span><code><a href="../../teavm/js/browser/FileLoaderJs.html#getInputFile(java.lang.String,net.sourceforge.plantuml.nio.NFolder,java.lang.String)" class="member-name-link">getInputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path,
  <a href="../NFolder.html" title="interface in net.sourceforge.plantuml.nio">NFolder</a>&nbsp;folder,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;kind)</code></div>
 <div class="col-last even-row-color">
-<div class="block">The file the host delivers for <code>path</code>, or <code>null</code> when
- no loader is set, when the host declines, or when it fails (the reason is
+<div class="block">The file the host delivered for <code>path</code>, or <code>null</code> when
+ no loader is set, when the host declines, when it fails (the reason is
  written to the console, and the include then reports the usual "cannot
- include").</div>
+ include"), or when the host has not been asked yet: the file is then noted
+ as missing, and the diagram is rendered again once the host has answered
+ (see <a href="../../teavm/js/browser/PendingResources.html" title="class in net.sourceforge.plantuml.teavm.js.browser"><code>PendingResources</code></a>).</div>
 </div>
 </div>
 </section>

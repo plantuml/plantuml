@@ -201,11 +201,11 @@ net.sourceforge.plantuml.svg.parser
 net.sourceforge.plantuml.swing
 net.sourceforge.plantuml.syntax
 net.sourceforge.plantuml.teavm
-net.sourceforge.plantuml.teavm.browser
 net.sourceforge.plantuml.teavm.c
 net.sourceforge.plantuml.teavm.c.demo
-net.sourceforge.plantuml.teavm.headless
 net.sourceforge.plantuml.teavm.js
+net.sourceforge.plantuml.teavm.js.browser
+net.sourceforge.plantuml.teavm.js.headless
 net.sourceforge.plantuml.telnet
 net.sourceforge.plantuml.text
 net.sourceforge.plantuml.theme

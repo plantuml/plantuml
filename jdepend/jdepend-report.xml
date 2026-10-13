@@ -2122,8 +2122,8 @@
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.swing</Package>
                 <Package>net.sourceforge.plantuml.syntax</Package>
-                <Package>net.sourceforge.plantuml.teavm</Package>
                 <Package>net.sourceforge.plantuml.teavm.c</Package>
+                <Package>net.sourceforge.plantuml.teavm.js</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
                 <Package>net.sourceforge.plantuml.tim</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram</Package>
@@ -9636,7 +9636,7 @@
                 <Package>net.sourceforge.plantuml.svek.extremity</Package>
                 <Package>net.sourceforge.plantuml.svek.image</Package>
                 <Package>net.sourceforge.plantuml.svg.parser</Package>
-                <Package>net.sourceforge.plantuml.teavm</Package>
+                <Package>net.sourceforge.plantuml.teavm.js</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram.graphic</Package>
                 <Package>net.sourceforge.plantuml.version</Package>
@@ -9705,7 +9705,7 @@
                 <Package>net.sourceforge.plantuml.svek.extremity</Package>
                 <Package>net.sourceforge.plantuml.svg.parser</Package>
                 <Package>net.sourceforge.plantuml.swing</Package>
-                <Package>net.sourceforge.plantuml.teavm</Package>
+                <Package>net.sourceforge.plantuml.teavm.js</Package>
                 <Package>net.sourceforge.plantuml.version</Package>
             </UsedBy>
         </Package>
@@ -9919,7 +9919,7 @@
                 <Package>net.sourceforge.plantuml.svek.extremity</Package>
                 <Package>net.sourceforge.plantuml.svek.image</Package>
                 <Package>net.sourceforge.plantuml.svg.parser</Package>
-                <Package>net.sourceforge.plantuml.teavm</Package>
+                <Package>net.sourceforge.plantuml.teavm.js</Package>
                 <Package>net.sourceforge.plantuml.tim.builtin</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram.command</Package>
@@ -10606,7 +10606,7 @@
                 <Package>net.sourceforge.plantuml.svek.extremity</Package>
                 <Package>net.sourceforge.plantuml.svek.image</Package>
                 <Package>net.sourceforge.plantuml.svg.parser</Package>
-                <Package>net.sourceforge.plantuml.teavm</Package>
+                <Package>net.sourceforge.plantuml.teavm.js</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram.graphic</Package>
                 <Package>net.sourceforge.plantuml.version</Package>
@@ -11177,7 +11177,7 @@
 
             <UsedBy>
                 <Package>net.sourceforge.plantuml.klimt.drawing.hand</Package>
-                <Package>net.sourceforge.plantuml.teavm</Package>
+                <Package>net.sourceforge.plantuml.teavm.js</Package>
             </UsedBy>
         </Package>
 
@@ -11503,7 +11503,7 @@
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.svek.image</Package>
                 <Package>net.sourceforge.plantuml.svg.parser</Package>
-                <Package>net.sourceforge.plantuml.teavm</Package>
+                <Package>net.sourceforge.plantuml.teavm.js</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram.graphic</Package>
                 <Package>net.sourceforge.plantuml.version</Package>
@@ -11731,7 +11731,7 @@
                 <Package>net.sourceforge.plantuml.svek.extremity</Package>
                 <Package>net.sourceforge.plantuml.svek.image</Package>
                 <Package>net.sourceforge.plantuml.svg.parser</Package>
-                <Package>net.sourceforge.plantuml.teavm</Package>
+                <Package>net.sourceforge.plantuml.teavm.js</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram.graphic</Package>
                 <Package>net.sourceforge.plantuml.url</Package>
@@ -11985,7 +11985,7 @@
                 <Package>net.sourceforge.plantuml.svek.extremity</Package>
                 <Package>net.sourceforge.plantuml.svek.image</Package>
                 <Package>net.sourceforge.plantuml.svg.parser</Package>
-                <Package>net.sourceforge.plantuml.teavm</Package>
+                <Package>net.sourceforge.plantuml.teavm.js</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram.graphic</Package>
                 <Package>net.sourceforge.plantuml.version</Package>
@@ -12548,8 +12548,8 @@
                 <Package>net.sourceforge.plantuml.skin</Package>
                 <Package>net.sourceforge.plantuml.statediagram</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
-                <Package>net.sourceforge.plantuml.teavm.browser</Package>
                 <Package>net.sourceforge.plantuml.teavm.c</Package>
+                <Package>net.sourceforge.plantuml.teavm.js.browser</Package>
                 <Package>net.sourceforge.plantuml.tim</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram</Package>
                 <Package>net.sourceforge.plantuml.wbs</Package>
@@ -15991,9 +15991,9 @@
                 <ConcreteClasses>56</ConcreteClasses>
                 <AbstractClasses>10</AbstractClasses>
                 <Ca>21</Ca>
-                <Ce>35</Ce>
+                <Ce>36</Ce>
                 <A>0.15</A>
-                <I>0.62</I>
+                <I>0.63</I>
                 <D>0.22</D>
                 <V>1</V>
             </Stats>
@@ -16236,6 +16236,7 @@
                 <Package>net.sourceforge.plantuml.svek.extremity</Package>
                 <Package>net.sourceforge.plantuml.svek.image</Package>
                 <Package>net.sourceforge.plantuml.teavm</Package>
+                <Package>net.sourceforge.plantuml.teavm.js</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
                 <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
@@ -16909,80 +16910,26 @@
 
         <Package name="net.sourceforge.plantuml.teavm">
             <Stats>
-                <TotalClasses>20</TotalClasses>
-                <ConcreteClasses>19</ConcreteClasses>
-                <AbstractClasses>1</AbstractClasses>
-                <Ca>44</Ca>
-                <Ce>15</Ce>
-                <A>0.05</A>
-                <I>0.25</I>
-                <D>0.7</D>
+                <TotalClasses>2</TotalClasses>
+                <ConcreteClasses>2</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>45</Ca>
+                <Ce>3</Ce>
+                <A>0</A>
+                <I>0.06</I>
+                <D>0.94</D>
                 <V>1</V>
             </Stats>
 
             <AbstractClasses>
-                <Class sourceFile="GraphVizjsTeaVMEngine.java">
-                    net.sourceforge.plantuml.teavm.GraphVizjsTeaVMEngine$StringCallback
-                </Class>
             </AbstractClasses>
 
             <ConcreteClasses>
-                <Class sourceFile="DriverCenteredCharacterTeaVM.java">
-                    net.sourceforge.plantuml.teavm.DriverCenteredCharacterTeaVM
-                </Class>
-                <Class sourceFile="DriverDotPathTeaVM.java">
-                    net.sourceforge.plantuml.teavm.DriverDotPathTeaVM
-                </Class>
-                <Class sourceFile="DriverEllipseTeaVM.java">
-                    net.sourceforge.plantuml.teavm.DriverEllipseTeaVM
-                </Class>
-                <Class sourceFile="DriverImageSvgTeaVM.java">
-                    net.sourceforge.plantuml.teavm.DriverImageSvgTeaVM
-                </Class>
-                <Class sourceFile="DriverImageTeaVM.java">
-                    net.sourceforge.plantuml.teavm.DriverImageTeaVM
-                </Class>
-                <Class sourceFile="DriverLineTeaVM.java">
-                    net.sourceforge.plantuml.teavm.DriverLineTeaVM
-                </Class>
-                <Class sourceFile="DriverPathTeaVM.java">
-                    net.sourceforge.plantuml.teavm.DriverPathTeaVM
-                </Class>
-                <Class sourceFile="DriverPolygonTeaVM.java">
-                    net.sourceforge.plantuml.teavm.DriverPolygonTeaVM
-                </Class>
-                <Class sourceFile="DriverRectangleTeaVM.java">
-                    net.sourceforge.plantuml.teavm.DriverRectangleTeaVM
-                </Class>
-                <Class sourceFile="DriverTextTeaVM.java">
-                    net.sourceforge.plantuml.teavm.DriverTextTeaVM
-                </Class>
-                <Class sourceFile="DriverTextTeaVM.java">
-                    net.sourceforge.plantuml.teavm.DriverTextTeaVM$ExtraLines
-                </Class>
                 <Class sourceFile="EmbeddedResources.java">
                     net.sourceforge.plantuml.teavm.EmbeddedResources
                 </Class>
-                <Class sourceFile="StringBounderTeaVM.java">
-                    net.sourceforge.plantuml.teavm.StringBounderTeaVM$1
-                </Class>
-                <Class sourceFile="StringBounderTeaVM.java">
-                    net.sourceforge.plantuml.teavm.StringBounderTeaVM$2
-                </Class>
-                <Class sourceFile="StringBounderTeaVM.java">
-                    net.sourceforge.plantuml.teavm.StringBounderTeaVM$CacheKey
-                </Class>
                 <Class sourceFile="TeaVM.java">
                     net.sourceforge.plantuml.teavm.TeaVM
-                </Class>
-                <Class sourceFile="TeaVMElementAdapter.java">
-                    net.sourceforge.plantuml.teavm.TeaVMElementAdapter
-                </Class>
-                <Class sourceFile="TeaVMSvgDocument.java">
-                    net.sourceforge.plantuml.teavm.TeaVMSvgDocument
-                </Class>
-                <Class sourceFile="UGraphicTeaVM.java">
-                    net.sourceforge.plantuml.teavm.UGraphicTeaVM
                 </Class>
             </ConcreteClasses>
 
@@ -16990,18 +16937,6 @@
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
-                <Package>net.sourceforge.plantuml</Package>
-                <Package>net.sourceforge.plantuml.klimt</Package>
-                <Package>net.sourceforge.plantuml.klimt.awt</Package>
-                <Package>net.sourceforge.plantuml.klimt.color</Package>
-                <Package>net.sourceforge.plantuml.klimt.drawing</Package>
-                <Package>net.sourceforge.plantuml.klimt.drawing.svg</Package>
-                <Package>net.sourceforge.plantuml.klimt.font</Package>
-                <Package>net.sourceforge.plantuml.klimt.geom</Package>
-                <Package>net.sourceforge.plantuml.klimt.shape</Package>
-                <Package>net.sourceforge.plantuml.url</Package>
-                <Package>org.teavm.jso</Package>
-                <Package>org.teavm.jso.dom.xml</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -17044,68 +16979,12 @@
                 <Package>net.sourceforge.plantuml.sequencediagram.teoz</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.teavm.c</Package>
+                <Package>net.sourceforge.plantuml.teavm.js.headless</Package>
                 <Package>net.sourceforge.plantuml.tim</Package>
                 <Package>net.sourceforge.plantuml.tim.iterator</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram.graphic</Package>
                 <Package>net.sourceforge.plantuml.utils</Package>
                 <Package>net.sourceforge.plantuml.wbs</Package>
-            </UsedBy>
-        </Package>
-
-        <Package name="net.sourceforge.plantuml.teavm.browser">
-            <Stats>
-                <TotalClasses>8</TotalClasses>
-                <ConcreteClasses>4</ConcreteClasses>
-                <AbstractClasses>4</AbstractClasses>
-                <Ca>1</Ca>
-                <Ce>6</Ce>
-                <A>0.5</A>
-                <I>0.86</I>
-                <D>0.36</D>
-                <V>1</V>
-            </Stats>
-
-            <AbstractClasses>
-                <Class sourceFile="PlantUMLBrowser.java">
-                    net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser$StringCallback
-                </Class>
-                <Class sourceFile="TeaVmFileLoader.java">
-                    net.sourceforge.plantuml.teavm.browser.TeaVmFileLoader$Loaded
-                </Class>
-                <Class sourceFile="TeaVmScriptLoader.java">
-                    net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader$Err
-                </Class>
-                <Class sourceFile="TeaVmScriptLoader.java">
-                    net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader$Ok
-                </Class>
-            </AbstractClasses>
-
-            <ConcreteClasses>
-                <Class sourceFile="PlantUMLBrowser.java">
-                    net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser$Request
-                </Class>
-                <Class sourceFile="TeaVmFileLoader.java">
-                    net.sourceforge.plantuml.teavm.browser.TeaVmFileLoader$Answer
-                </Class>
-                <Class sourceFile="TeaVmFileLoader.java">
-                    net.sourceforge.plantuml.teavm.browser.TeaVmFileLoader$HostFile
-                </Class>
-                <Class sourceFile="TeaVmFileLoader.java">
-                    net.sourceforge.plantuml.teavm.browser.TeaVmFileLoader$HostFolder
-                </Class>
-            </ConcreteClasses>
-
-            <DependsUpon>
-                <Package>java.io</Package>
-                <Package>java.lang</Package>
-                <Package>java.nio.charset</Package>
-                <Package>java.nio.file</Package>
-                <Package>net.sourceforge.plantuml.nio</Package>
-                <Package>org.teavm.jso</Package>
-            </DependsUpon>
-
-            <UsedBy>
-                <Package>net.sourceforge.plantuml.tim</Package>
             </UsedBy>
         </Package>
 
@@ -17160,13 +17039,185 @@
             </UsedBy>
         </Package>
 
-        <Package name="net.sourceforge.plantuml.teavm.headless">
+        <Package name="net.sourceforge.plantuml.teavm.js">
+            <Stats>
+                <TotalClasses>18</TotalClasses>
+                <ConcreteClasses>18</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>2</Ca>
+                <Ce>16</Ce>
+                <A>0</A>
+                <I>0.89</I>
+                <D>0.11</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="DriverCenteredCharacterJs.java">
+                    net.sourceforge.plantuml.teavm.js.DriverCenteredCharacterJs
+                </Class>
+                <Class sourceFile="DriverDotPathJs.java">
+                    net.sourceforge.plantuml.teavm.js.DriverDotPathJs
+                </Class>
+                <Class sourceFile="DriverEllipseJs.java">
+                    net.sourceforge.plantuml.teavm.js.DriverEllipseJs
+                </Class>
+                <Class sourceFile="DriverImageJs.java">
+                    net.sourceforge.plantuml.teavm.js.DriverImageJs
+                </Class>
+                <Class sourceFile="DriverImageSvgJs.java">
+                    net.sourceforge.plantuml.teavm.js.DriverImageSvgJs
+                </Class>
+                <Class sourceFile="DriverLineJs.java">
+                    net.sourceforge.plantuml.teavm.js.DriverLineJs
+                </Class>
+                <Class sourceFile="DriverPathJs.java">
+                    net.sourceforge.plantuml.teavm.js.DriverPathJs
+                </Class>
+                <Class sourceFile="DriverPolygonJs.java">
+                    net.sourceforge.plantuml.teavm.js.DriverPolygonJs
+                </Class>
+                <Class sourceFile="DriverRectangleJs.java">
+                    net.sourceforge.plantuml.teavm.js.DriverRectangleJs
+                </Class>
+                <Class sourceFile="DriverTextJs.java">
+                    net.sourceforge.plantuml.teavm.js.DriverTextJs
+                </Class>
+                <Class sourceFile="DriverTextJs.java">
+                    net.sourceforge.plantuml.teavm.js.DriverTextJs$ExtraLines
+                </Class>
+                <Class sourceFile="ElementAdapterJs.java">
+                    net.sourceforge.plantuml.teavm.js.ElementAdapterJs
+                </Class>
+                <Class sourceFile="GraphVizEngineJs.java">
+                    net.sourceforge.plantuml.teavm.js.GraphVizEngineJs
+                </Class>
+                <Class sourceFile="StringBounderTeaVM.java">
+                    net.sourceforge.plantuml.teavm.js.StringBounderTeaVM$1
+                </Class>
+                <Class sourceFile="StringBounderTeaVM.java">
+                    net.sourceforge.plantuml.teavm.js.StringBounderTeaVM$2
+                </Class>
+                <Class sourceFile="StringBounderTeaVM.java">
+                    net.sourceforge.plantuml.teavm.js.StringBounderTeaVM$CacheKey
+                </Class>
+                <Class sourceFile="SvgDocumentJs.java">
+                    net.sourceforge.plantuml.teavm.js.SvgDocumentJs
+                </Class>
+                <Class sourceFile="UGraphicJs.java">
+                    net.sourceforge.plantuml.teavm.js.UGraphicJs
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.io</Package>
+                <Package>java.lang</Package>
+                <Package>java.util</Package>
+                <Package>net.sourceforge.plantuml</Package>
+                <Package>net.sourceforge.plantuml.klimt</Package>
+                <Package>net.sourceforge.plantuml.klimt.awt</Package>
+                <Package>net.sourceforge.plantuml.klimt.color</Package>
+                <Package>net.sourceforge.plantuml.klimt.drawing</Package>
+                <Package>net.sourceforge.plantuml.klimt.drawing.svg</Package>
+                <Package>net.sourceforge.plantuml.klimt.font</Package>
+                <Package>net.sourceforge.plantuml.klimt.geom</Package>
+                <Package>net.sourceforge.plantuml.klimt.shape</Package>
+                <Package>net.sourceforge.plantuml.teavm.js.browser</Package>
+                <Package>net.sourceforge.plantuml.url</Package>
+                <Package>org.teavm.jso</Package>
+                <Package>org.teavm.jso.dom.xml</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.svek</Package>
+                <Package>net.sourceforge.plantuml.teavm.js.browser</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="net.sourceforge.plantuml.teavm.js.browser">
+            <Stats>
+                <TotalClasses>12</TotalClasses>
+                <ConcreteClasses>7</ConcreteClasses>
+                <AbstractClasses>5</AbstractClasses>
+                <Ca>3</Ca>
+                <Ce>9</Ce>
+                <A>0.42</A>
+                <I>0.75</I>
+                <D>0.17</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+                <Class sourceFile="FileLoaderJs.java">
+                    net.sourceforge.plantuml.teavm.js.browser.FileLoaderJs$Loaded
+                </Class>
+                <Class sourceFile="PlantUMLBrowser.java">
+                    net.sourceforge.plantuml.teavm.js.browser.PlantUMLBrowser$StringCallback
+                </Class>
+                <Class sourceFile="RenderQueue.java">
+                    net.sourceforge.plantuml.teavm.js.browser.RenderQueue$Job
+                </Class>
+                <Class sourceFile="ScriptLoaderJs.java">
+                    net.sourceforge.plantuml.teavm.js.browser.ScriptLoaderJs$Err
+                </Class>
+                <Class sourceFile="ScriptLoaderJs.java">
+                    net.sourceforge.plantuml.teavm.js.browser.ScriptLoaderJs$Ok
+                </Class>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="FileLoaderJs.java">
+                    net.sourceforge.plantuml.teavm.js.browser.FileLoaderJs$HostFile
+                </Class>
+                <Class sourceFile="FileLoaderJs.java">
+                    net.sourceforge.plantuml.teavm.js.browser.FileLoaderJs$HostFolder
+                </Class>
+                <Class sourceFile="PendingResources.java">
+                    net.sourceforge.plantuml.teavm.js.browser.PendingResources$Answer
+                </Class>
+                <Class sourceFile="PendingResources.java">
+                    net.sourceforge.plantuml.teavm.js.browser.PendingResources$Round
+                </Class>
+                <Class sourceFile="PlantUMLBrowser.java">
+                    net.sourceforge.plantuml.teavm.js.browser.PlantUMLBrowser$CallbackJob
+                </Class>
+                <Class sourceFile="PlantUMLBrowser.java">
+                    net.sourceforge.plantuml.teavm.js.browser.PlantUMLBrowser$ElementJob
+                </Class>
+                <Class sourceFile="ScriptLoaderJs.java">
+                    net.sourceforge.plantuml.teavm.js.browser.ScriptLoaderJs
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.io</Package>
+                <Package>java.lang</Package>
+                <Package>java.nio.charset</Package>
+                <Package>java.nio.file</Package>
+                <Package>java.util</Package>
+                <Package>net.sourceforge.plantuml.nio</Package>
+                <Package>net.sourceforge.plantuml.teavm.js</Package>
+                <Package>org.teavm.jso</Package>
+                <Package>org.teavm.jso.dom.html</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.teavm.js</Package>
+                <Package>net.sourceforge.plantuml.teavm.js.headless</Package>
+                <Package>net.sourceforge.plantuml.tim</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="net.sourceforge.plantuml.teavm.js.headless">
             <Stats>
                 <TotalClasses>3</TotalClasses>
                 <ConcreteClasses>2</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>0</Ca>
-                <Ce>2</Ce>
+                <Ce>4</Ce>
                 <A>0.33</A>
                 <I>1</I>
                 <D>0.33</D>
@@ -17175,21 +17226,23 @@
 
             <AbstractClasses>
                 <Class sourceFile="PlantUMLHeadless.java">
-                    net.sourceforge.plantuml.teavm.headless.PlantUMLHeadless$ResultCallback
+                    net.sourceforge.plantuml.teavm.js.headless.PlantUMLHeadless$ResultCallback
                 </Class>
             </AbstractClasses>
 
             <ConcreteClasses>
-                <Class sourceFile="PlantUMLHeadless.java">
-                    net.sourceforge.plantuml.teavm.headless.PlantUMLHeadless$RenderRequest
+                <Class sourceFile="JsonJs.java">
+                    net.sourceforge.plantuml.teavm.js.headless.JsonJs
                 </Class>
-                <Class sourceFile="TeaVmJson.java">
-                    net.sourceforge.plantuml.teavm.headless.TeaVmJson
+                <Class sourceFile="PlantUMLHeadless.java">
+                    net.sourceforge.plantuml.teavm.js.headless.PlantUMLHeadless$1
                 </Class>
             </ConcreteClasses>
 
             <DependsUpon>
                 <Package>java.lang</Package>
+                <Package>net.sourceforge.plantuml.teavm</Package>
+                <Package>net.sourceforge.plantuml.teavm.js.browser</Package>
                 <Package>org.teavm.jso</Package>
             </DependsUpon>
 
@@ -17537,7 +17590,7 @@
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.preproc2</Package>
                 <Package>net.sourceforge.plantuml.teavm</Package>
-                <Package>net.sourceforge.plantuml.teavm.browser</Package>
+                <Package>net.sourceforge.plantuml.teavm.js.browser</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
                 <Package>net.sourceforge.plantuml.tim.builtin</Package>
                 <Package>net.sourceforge.plantuml.tim.expression</Package>
@@ -18323,7 +18376,7 @@
                 <Package>net.sourceforge.plantuml.sequencediagram.graphic</Package>
                 <Package>net.sourceforge.plantuml.statediagram.command</Package>
                 <Package>net.sourceforge.plantuml.svek.image</Package>
-                <Package>net.sourceforge.plantuml.teavm</Package>
+                <Package>net.sourceforge.plantuml.teavm.js</Package>
             </UsedBy>
         </Package>
 
@@ -19523,6 +19576,10 @@
             <error>No stats available: package referenced, but not analyzed.</error>
         </Package>
 
+        <Package name="org.teavm.jso.dom.html">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
         <Package name="org.teavm.jso.dom.xml">
             <error>No stats available: package referenced, but not analyzed.</error>
         </Package>
@@ -20016,10 +20073,7 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="com.plantuml.ubrex.builder">
@@ -20030,10 +20084,7 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="gen.lib.cdt">
@@ -20091,34 +20142,43 @@
 
         <Package Name="net.atmp">
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml">
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.abel">
             <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.activitydiagram">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.activitydiagram.command">
@@ -20129,10 +20189,7 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.activitydiagram3">
@@ -20140,20 +20197,20 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.activitydiagram3.command">
             <Package>net.sourceforge.plantuml.decoration</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.activitydiagram3.ftile">
@@ -20162,10 +20219,9 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.activitydiagram3.ftile.vcompact">
@@ -20173,10 +20229,9 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond">
@@ -20184,10 +20239,9 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.activitydiagram3.ftile.vertical">
@@ -20195,10 +20249,9 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.activitydiagram3.gtile">
@@ -20206,28 +20259,30 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.ant">
             <Package>net.sourceforge.plantuml</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.api">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.api.mda.option2">
@@ -20238,20 +20293,17 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.api.v2">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.argon2">
@@ -20275,10 +20327,9 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.asciiverse">
@@ -20287,29 +20338,29 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.board">
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.bpm">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.braille">
@@ -20318,10 +20369,8 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.chart">
@@ -20329,76 +20378,82 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.chart.command">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.cheneer">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.cheneer.command">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.classdiagram">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.classdiagram.command">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.code">
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.command">
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.command.note">
@@ -20408,49 +20463,47 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.command.note.sequence">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.core">
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.crash">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.cruise">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.cucadiagram">
@@ -20458,19 +20511,19 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.decoration">
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.decoration.symbol">
@@ -20478,10 +20531,9 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.dedication">
@@ -20491,75 +20543,80 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.definition">
             <Package>net.sourceforge.plantuml.klimt.sprite</Package>
             <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.descdiagram">
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.descdiagram.command">
             <Package>net.sourceforge.plantuml.skin</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.directdot">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.ditaa">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.donors">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.dot">
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.ebnf">
@@ -20567,20 +20624,19 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.eggs">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.elk">
@@ -20588,73 +20644,9 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.elk.proxy">
-            <Package>net.sourceforge.plantuml.log</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.elk.proxy.core">
-            <Package>net.sourceforge.plantuml.elk.proxy.core.util</Package>
-            <Package>net.sourceforge.plantuml.elk.proxy</Package>
-            <Package>net.sourceforge.plantuml.log</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.elk.proxy.core.math">
-            <Package>net.sourceforge.plantuml.elk.proxy</Package>
-            <Package>net.sourceforge.plantuml.log</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.elk.proxy.core.options">
-            <Package>net.sourceforge.plantuml.elk.proxy</Package>
-            <Package>net.sourceforge.plantuml.log</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.elk.proxy.core.util">
-            <Package>net.sourceforge.plantuml.elk.proxy</Package>
-            <Package>net.sourceforge.plantuml.log</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.elk.proxy.graph">
-            <Package>net.sourceforge.plantuml.elk.proxy</Package>
-            <Package>net.sourceforge.plantuml.log</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.elk.proxy.graph.util">
-            <Package>net.sourceforge.plantuml.elk.proxy</Package>
-            <Package>net.sourceforge.plantuml.log</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.emoji">
@@ -20662,20 +20654,19 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.error">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.explain">
@@ -20683,74 +20674,59 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.filesdiagram">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.flashcode">
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.flowdiagram">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.font">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.ftp">
-            <Package>net.sourceforge.plantuml.log</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.gantt">
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.gantt.command">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.gantt.core">
@@ -20760,10 +20736,7 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.gantt.data">
@@ -20774,10 +20747,7 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.gantt.draw">
@@ -20788,27 +20758,28 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.gantt.draw.header">
             <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.gantt.lang">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.gantt.ngm">
@@ -20822,10 +20793,14 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.gantt.solver">
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.gantt.core</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.gantt.timescale">
@@ -20836,10 +20811,7 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.gitlog">
@@ -20849,27 +20821,29 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.golem">
             <Package>net.sourceforge.plantuml</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.graphml">
             <Package>net.sourceforge.plantuml.descdiagram</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.hcl">
@@ -20879,20 +20853,17 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.help">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.jaws">
@@ -20902,20 +20873,17 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.jcckit">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.json">
@@ -20925,10 +20893,7 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.jsondiagram">
@@ -20938,22 +20903,22 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt">
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.klimt.awt">
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt.color">
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt.compress">
@@ -20961,10 +20926,9 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt.creole">
@@ -20972,10 +20936,9 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt.creole.atom">
@@ -20984,10 +20947,9 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt.creole.command">
@@ -20996,10 +20958,9 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt.creole.legacy">
@@ -21007,10 +20968,9 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt.drawing">
@@ -21018,10 +20978,9 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt.drawing.debug">
@@ -21029,17 +20988,20 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt.drawing.eps">
             <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt.drawing.font">
@@ -21047,25 +21009,30 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt.drawing.g2d">
             <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt.drawing.hand">
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt.drawing.html5">
@@ -21073,56 +21040,72 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt.drawing.raster">
             <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt.drawing.svg">
             <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt.drawing.tikz">
             <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt.drawing.txt">
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt.drawing.visio">
             <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt.font">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt.geom">
@@ -21130,10 +21113,8 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt.shape">
@@ -21141,42 +21122,40 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt.sprite">
             <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.log">
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.math">
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.mcp">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.mda">
@@ -21186,20 +21165,17 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.mindmap">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.nwdiag">
@@ -21208,17 +21184,20 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.nwdiag.core">
             <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.nwdiag.next">
@@ -21228,19 +21207,17 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.objectdiagram">
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.openiconic">
@@ -21251,10 +21228,7 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.openpdf">
@@ -21262,30 +21236,29 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.packetdiag">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.packetdiag.command">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.picoweb">
@@ -21296,10 +21269,7 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.plasma">
@@ -21309,18 +21279,17 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.png">
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.posimo">
@@ -21329,36 +21298,33 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.preproc">
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.preproc2">
             <Package>net.sourceforge.plantuml.preproc</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.real">
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.regex">
@@ -21369,10 +21335,7 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.regexdiagram">
@@ -21382,28 +21345,27 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.salt">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.salt.element">
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.salt.factory">
@@ -21411,10 +21373,10 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.sdot">
@@ -21422,34 +21384,40 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.security">
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.security.authentication.oauth">
             <Package>net.sourceforge.plantuml.security</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.sequencediagram">
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.sequencediagram.command">
@@ -21459,10 +21427,8 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.sequencediagram.graphic">
@@ -21470,17 +21436,9 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.sequencediagram.puma">
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.sequencediagram.teoz">
@@ -21490,19 +21448,19 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.skin">
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.skin.rose">
@@ -21510,20 +21468,19 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.statediagram">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.statediagram.command">
@@ -21533,10 +21490,7 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.stats">
@@ -21544,10 +21498,10 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.stereo">
@@ -21559,44 +21513,47 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.style">
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.style.parser">
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.style.value">
             <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.sudoku">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.svek">
@@ -21604,18 +21561,19 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.svek.extremity">
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.svek.image">
@@ -21623,10 +21581,9 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.svg.parser">
@@ -21634,10 +21591,9 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.swing">
@@ -21647,115 +21603,171 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.syntax">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.teavm">
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.teavm.c">
             <Package>net.sourceforge.plantuml.klimt.drawing.raster</Package>
             <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+        </Package>
+
+        <Package Name="net.sourceforge.plantuml.teavm.js">
+            <Package>net.sourceforge.plantuml.klimt.drawing.svg</Package>
             <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+        </Package>
+
+        <Package Name="net.sourceforge.plantuml.teavm.js.browser">
+            <Package>net.sourceforge.plantuml.teavm.js</Package>
+            <Package>net.sourceforge.plantuml.klimt.drawing.svg</Package>
+            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+        </Package>
+
+        <Package Name="net.sourceforge.plantuml.teavm.js.headless">
+            <Package>net.sourceforge.plantuml.teavm.js.browser</Package>
+            <Package>net.sourceforge.plantuml.teavm.js</Package>
+            <Package>net.sourceforge.plantuml.klimt.drawing.svg</Package>
+            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.text">
             <Package>net.sourceforge.plantuml</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.theme">
             <Package>net.sourceforge.plantuml.preproc</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.tim">
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.tim.builtin">
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.tim.expression">
             <Package>net.sourceforge.plantuml.tim</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.tim.iterator">
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.text</Package>
+            <Package>net.sourceforge.plantuml</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.timingdiagram">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.timingdiagram.command">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.timingdiagram.graphic">
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.url">
@@ -21764,10 +21776,8 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.utils">
@@ -21776,10 +21786,7 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.version">
@@ -21787,45 +21794,41 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.vizjs">
             <Package>net.sourceforge.plantuml.dot</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.wbs">
             <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.windowsdot">
-            <Package>net.sourceforge.plantuml.log</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.wire">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.xmi">
@@ -21833,10 +21836,10 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.xmlsc">
@@ -21844,20 +21847,23 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.yaml">
             <Package>net.sourceforge.plantuml.preproc</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.style</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.yaml.parser">
@@ -21868,10 +21874,7 @@
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.style</Package>
             <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
         </Package>
 
         <Package Name="org.stathissideris.ascii2image.core">

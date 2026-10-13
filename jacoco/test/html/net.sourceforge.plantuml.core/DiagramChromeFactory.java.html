@@ -71,7 +71,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.svek.DecorateEntityImage;
-import net.sourceforge.plantuml.teavm.browser.BrowserLog;
+import net.sourceforge.plantuml.teavm.js.browser.BrowserLog;
 import net.sourceforge.plantuml.warning.Warning;
 
 /**

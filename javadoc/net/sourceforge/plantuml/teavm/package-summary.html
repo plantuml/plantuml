@@ -71,7 +71,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="package-signature">package <span class="element-name">net.sourceforge.plantuml.teavm</span></div>
 <section class="package-description" id="package-description">
-<div class="block">Provides classes used to manage JS-PlantUML using TeaVM.</div>
+<div class="block">Provides code shared by the JavaScript and C targets.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -85,11 +85,7 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Contains classes for processing PlantUML source files.</div>
 </div>
-<div class="col-first odd-row-color"><a href="browser/package-summary.html">net.sourceforge.plantuml.teavm.browser</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="c/package-summary.html">net.sourceforge.plantuml.teavm.c</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="headless/package-summary.html">net.sourceforge.plantuml.teavm.headless</a></div>
+<div class="col-first odd-row-color"><a href="c/package-summary.html">net.sourceforge.plantuml.teavm.c</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><a href="js/package-summary.html">net.sourceforge.plantuml.teavm.js</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -102,65 +98,26 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="DriverCenteredCharacterTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DriverCenteredCharacterTeaVM</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="DiagramRendererTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DiagramRendererTeaVM</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">Driver for rendering UCenteredCharacter in TeaVM/SVG.</div>
+<div class="block">Renders a single PlantUML diagram to a deterministic SVG, in a headless,
+ DOM-free and AWT-free way suitable for the TeaVM/Node build.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="DriverDotPathTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DriverDotPathTeaVM</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">Driver for rendering DotPath (Bezier curves from Graphviz) in TeaVM/SVG.</div>
-</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="DriverEllipseTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DriverEllipseTeaVM</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="DriverImageSvgTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DriverImageSvgTeaVM</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">TeaVM driver for rendering embedded SVG images.</div>
-</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="DriverImageTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DriverImageTeaVM</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="EmbeddedResources.html" title="class in net.sourceforge.plantuml.teavm">EmbeddedResources</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="EmbeddedResourcesGenerator.html" title="class in net.sourceforge.plantuml.teavm">EmbeddedResourcesGenerator</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">TeaVM driver for rendering images in SVG.</div>
-</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="DriverLineTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DriverLineTeaVM</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="DriverPathTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DriverPathTeaVM</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="DriverPolygonTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DriverPolygonTeaVM</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="DriverRectangleTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DriverRectangleTeaVM</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="DriverTextTeaVM.html" title="class in net.sourceforge.plantuml.teavm">DriverTextTeaVM</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="EmbeddedResources.html" title="class in net.sourceforge.plantuml.teavm">EmbeddedResources</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="EmbeddedResourcesGenerator.html" title="class in net.sourceforge.plantuml.teavm">EmbeddedResourcesGenerator</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Generates <code>EmbeddedResources.java</code> by reading
  <code>skin/plantuml.skin</code> from the main resources directory and encoding it
  as a Base64 string literal.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="GraphVizjsTeaVMEngine.html" title="class in net.sourceforge.plantuml.teavm">GraphVizjsTeaVMEngine</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">TeaVM engine for rendering DOT graphs to SVG using Viz.js.</div>
-</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="StringBounderTeaVM.html" title="class in net.sourceforge.plantuml.teavm">StringBounderTeaVM</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="SvgGraphicsTeaVM.html" title="class in net.sourceforge.plantuml.teavm">SvgGraphicsTeaVM</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">SVG Graphics implementation for TeaVM.</div>
-</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="TeaVM.html" title="class in net.sourceforge.plantuml.teavm">TeaVM</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="TeaVMElementAdapter.html" title="class in net.sourceforge.plantuml.teavm">TeaVMElementAdapter</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="TeaVMSvgDocument.html" title="class in net.sourceforge.plantuml.teavm">TeaVMSvgDocument</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="TextareaSource.html" title="class in net.sourceforge.plantuml.teavm">TextareaSource</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Turns the raw content of the browser editor into the source lines given to
  the preprocessor, with the same tolerance as editor.plantuml.com (#2907).</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="UGraphicTeaVM.html" title="class in net.sourceforge.plantuml.teavm">UGraphicTeaVM</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
 </div>
 </div>
 </li>

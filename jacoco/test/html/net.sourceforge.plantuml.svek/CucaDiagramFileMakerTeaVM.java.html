@@ -52,8 +52,8 @@ import net.sourceforge.plantuml.klimt.drawing.font.StringBounderEmbeddedFont;
 import net.sourceforge.plantuml.klimt.drawing.font.StringBounderFromWidthTable;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.teavm.StringBounderTeaVM;
 import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.teavm.js.StringBounderTeaVM;
 
 public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
 	// ::remove file when JAVA8
