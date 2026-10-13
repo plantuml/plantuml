@@ -69,6 +69,14 @@ public class PSystemKeycheck extends UgSimpleDiagram {
 		this.key = key;
 	}
 
+	/**
+	 * Checks a key alone: distributor, or named for this machine. Nothing is
+	 * installed.
+	 */
+	public PSystemKeycheck(UmlSource source, String key, PreprocessingArtifact preprocessing) {
+		this(source, null, key, preprocessing);
+	}
+
 	@Override
 	public void drawU(UGraphic ug) {
 		try {
@@ -91,15 +99,29 @@ public class PSystemKeycheck extends UgSimpleDiagram {
 	private TextBlock getTextBlock() {
 		final List<String> strings = header();
 		try {
-			final LicenseInfo info = PLSSignature.retrieveNamed(sig, key, false);
+			final LicenseInfo info = sig == null ? LicenseInfo.retrieveDistributorOrNamed(key)
+					: PLSSignature.retrieveNamed(sig, key, false);
 			strings.add("<u>Provided license information</u>:");
 			License.addLicenseInfo(strings, info);
+			if (info.isNone())
+				strings.add("No valid license found. A named license is bound to the machine it was issued for.");
+			else if (sig == null)
+				addDetails(strings, info);
 			strings.add(" ");
 		} catch (Exception e) {
 			Logme.error(e);
 			strings.add("<i>Error:</i> " + e);
 		}
 		return GraphicStrings.createBlackOnWhite(strings);
+	}
+
+	private void addDetails(final List<String> strings, LicenseInfo info) {
+		strings.add("|      TYPE : " + info.getLicenseType());
+		strings.add("|      GENERATED : " + info.getGenerationDate());
+		if (info.getLicenseType() == LicenseType.DISTRIBUTOR)
+			strings.add("|      LOGO SHA-512 : " + info.getShaStart() + "...");
+		strings.add("|      STATUS : " + (info.isValid() ? "valid" : "expired"));
+		strings.add("|  ");
 	}
 
 	private ArrayList<String> header() {

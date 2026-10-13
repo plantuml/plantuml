@@ -71,7 +71,9 @@ public class LicenseInfo {
 	private static LicenseInfo cache;
 
 	private final static Preferences prefs = Preferences.userNodeForPackage(LicenseInfo.class);
-	public final static LicenseInfo NONE = new LicenseInfo(LicenseType.NONE, 0, 0, null, null, null);
+	public final static LicenseInfo NONE = new LicenseInfo(LicenseType.NONE, 0, 0, null, null, null, null);
+
+	private final static int KEY_START_LENGTH = 8;
 
 	private final LicenseType type;
 	private final long generationDate;
@@ -79,15 +81,17 @@ public class LicenseInfo {
 	private final String owner;
 	private final String context;
 	private final byte[] sha;
+	private final String keyStart;
 
 	public LicenseInfo(LicenseType type, long generationDate, long expirationDate, String owner, String context,
-			byte[] sha) {
+			byte[] sha, String key) {
 		this.type = type;
 		this.generationDate = generationDate;
 		this.expirationDate = expirationDate;
 		this.owner = owner;
 		this.context = context;
 		this.sha = sha;
+		this.keyStart = key == null ? null : key.substring(0, Math.min(KEY_START_LENGTH, key.length()));
 	}
 
 	public static void persistMe(String key) throws BackingStoreException {
@@ -142,6 +146,23 @@ public class LicenseInfo {
 			}
 		}
 		return LicenseInfo.NONE;
+	}
+
+	/**
+	 * Decodes a key without installing it: first as a distributor license (which
+	 * is not bound to a machine), then as a named license for this machine.
+	 */
+	public static LicenseInfo retrieveDistributorOrNamed(final String key) {
+		if (key.length() > 99 && key.matches("^[0-9a-z]+$")) {
+			try {
+				final LicenseInfo distributor = PLSSignature.retrieveDistributor(key);
+				if (distributor.isNone() == false)
+					return distributor;
+			} catch (Exception e) {
+				Log.info(() -> "Error retrieving distributor license info" + e);
+			}
+		}
+		return retrieveNamed(key);
 	}
 
 	public static PortableImage retrieveDistributorImage(LicenseInfo licenseInfo) {
@@ -254,6 +275,23 @@ public class LicenseInfo {
 
 	public final String getOwner() {
 		return owner;
+	}
+
+	/**
+	 * First characters of the license key this information was read from, or null
+	 * when there is no license. Enough to tell which key is actually loaded, without
+	 * disclosing it.
+	 */
+	public final String getKeyStart() {
+		return keyStart;
+	}
+
+	/**
+	 * First hexadecimal digits of the SHA-512 stored in the key: the hash of the
+	 * distributor.png logo for a distributor license.
+	 */
+	public final String getShaStart() {
+		return sha == null ? null : SignatureUtils.toHexString(sha).substring(0, KEY_START_LENGTH);
 	}
 
 	public boolean isNone() {

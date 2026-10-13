@@ -130,12 +130,13 @@ public class License {
 
 	private void header2(final List<String> text, LicenseInfo licenseInfo, boolean withQrcode) {
 		text.add(" ");
-		text.add("(C) Copyright 2009-2024, Arnaud Roques");
+		text.add("(C) Copyright 2009-2027, Arnaud Roques");
 		text.add(" ");
 		text.add("Project Info:  https://plantuml.com");
 		text.add(" ");
 
-		if (licenseInfo.isValid() == false) {
+		// No support links nor QR codes for a Professional Edition (even an expired one)
+		if (licenseInfo.isNone()) {
 			text.add("If you like this project or if you find it useful, you can support us at:");
 			text.add(" ");
 			text.add("https://plantuml.com/patreon (only 1$ per month!)");
@@ -374,18 +375,23 @@ public class License {
 		if (licenseInfo.getLicenseType() == LicenseType.NAMED) {
 			text.add("| ");
 			text.add("|      LICENSED TO : " + licenseInfo.getOwner());
-			text.add(
-					"|      EXPIRATION DATE : " + DateFormat.getDateInstance().format(licenseInfo.getExpirationDate()));
-			text.add("|  ");
+			addKeyAndExpiration(text, licenseInfo);
 		} else if (licenseInfo.getLicenseType() == LicenseType.DISTRIBUTOR) {
 			text.add("|  ");
 			text.add("|      DISTRIBUTED BY : " + licenseInfo.getOwner());
-			text.add("|  ");
+			addKeyAndExpiration(text, licenseInfo);
 		}
 		if (licenseInfo.getLicenseType() != LicenseType.UNKNOWN && licenseInfo.hasExpired()) {
 			text.add("|      <i>Warning: Your license has expired.");
 			text.add("|  ");
 		}
+	}
+
+	// Always displayed, whether the license is still valid or not
+	private static void addKeyAndExpiration(final List<String> text, LicenseInfo licenseInfo) {
+		text.add("|      LICENSE KEY : " + licenseInfo.getKeyStart() + "...");
+		text.add("|      EXPIRATION DATE : " + DateFormat.getDateInstance().format(licenseInfo.getExpirationDate()));
+		text.add("|  ");
 	}
 
 }

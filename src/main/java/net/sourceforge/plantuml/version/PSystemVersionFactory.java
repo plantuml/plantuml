@@ -81,6 +81,10 @@ public class PSystemVersionFactory extends PSystemSingleLineFactory {
 						return new PSystemKeycheck(source, m.group(1), m.group(2), preprocessing);
 
 				}
+				if (line.matches("(?i)^keycheck\\s+[0-9a-z]+\\s*$")) {
+					final String key = line.trim().substring("keycheck".length()).trim();
+					return new PSystemKeycheck(source, key, preprocessing);
+				}
 			}
 		} catch (Exception e) {
 			Log.error("Error " + e);

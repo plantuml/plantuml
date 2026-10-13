@@ -75,8 +75,8 @@ public class PLSSignature {
 		this.context = context;
 	}
 
-	private LicenseInfo toLicenseInfo() {
-		return new LicenseInfo(LicenseType.fromInt(type), now, exp, owner, context, sha);
+	private LicenseInfo toLicenseInfo(String key) {
+		return new LicenseInfo(LicenseType.fromInt(type), now, exp, owner, context, sha, key);
 	}
 
 	/**
@@ -184,7 +184,7 @@ public class PLSSignature {
 			return LicenseInfo.NONE;
 		}
 
-		return sig2.toLicenseInfo();
+		return sig2.toLicenseInfo(key);
 	}
 
 	public static LicenseInfo retrieveDistributor(String key) throws IOException, NoSuchAlgorithmException {
@@ -193,7 +193,7 @@ public class PLSSignature {
 		if (sig2 == null) {
 			return LicenseInfo.NONE;
 		}
-		return sig2.toLicenseInfo();
+		return sig2.toLicenseInfo(key);
 	}
 
 	private static byte[] decode(String key) throws IOException {

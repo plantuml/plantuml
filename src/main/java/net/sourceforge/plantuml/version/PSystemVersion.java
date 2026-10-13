@@ -256,6 +256,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 			strings.add(license.getContext());
 			strings.add(license.getGenerationDate().toString());
 			strings.add(license.getExpirationDate().toString());
+			strings.add(license.getKeyStart() + "...");
 			im = LicenseInfo.retrieveDistributorImage(license);
 		}
 		return new PSystemVersion(source, strings, im, preprocessing);
